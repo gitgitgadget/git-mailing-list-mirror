@@ -1,69 +1,96 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [GIT PULL] over 1000+ translations on Bulgarian for you to pull
-Date: Mon, 12 May 2014 10:06:52 +0800
-Message-ID: <CANYiYbH7hpPxteLKe+NUYPF28sBMeMKQse+t6AWPFvDnqYZOpg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] index-pack: distinguish missing objects from type errors
+Date: Mon, 12 May 2014 00:38:39 -0400
+Message-ID: <20140512043839.GA2252@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Alexander Shopov <ash@kambanaria.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon May 12 04:07:01 2014
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 12 06:38:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wjfds-0002jP-61
-	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 04:07:00 +0200
+	id 1Wji0o-0003p0-Rj
+	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 06:38:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754323AbaELCGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2014 22:06:55 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:41703 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751753AbaELCGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2014 22:06:54 -0400
-Received: by mail-wg0-f47.google.com with SMTP id x12so6073432wgg.6
-        for <git@vger.kernel.org>; Sun, 11 May 2014 19:06:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=yeui1dPwkIC7txzQ949rIE8xZAfQG9wevtBlFoeLSCM=;
-        b=k7ofBIG9zdVAVp373MLYr0BwOMgRh3SjXCBGhzP+omjlztXa7Xrse9zvOuFBjx753O
-         xfhPCIqRaDGvcbsBIx3k0NUwkcnqG5mIyR5acUroIAYGtc7b78kaIbajbaTbZYBfQ3Ea
-         YEeuUM7tDEE2aUXN1YHFmqkzTOkyr/ORcF9tuEOvTcrijs/Z74B6jyogBC/Mj/OkCBv+
-         9HMvhe3zVhkSFtxjPjjrBJMto0HROHtZXXyqFJdHX8qlFMl+WO6aAfPy1w/5ETc+/i4D
-         tOuB+pxC3yIOycZPAs9TkOLSmO1Bsm5/4ca+EcuB0NjiEqQuac/Ln07jZ+U6cDHF3TJF
-         VEjg==
-X-Received: by 10.180.80.232 with SMTP id u8mr13227240wix.13.1399860412910;
- Sun, 11 May 2014 19:06:52 -0700 (PDT)
-Received: by 10.217.57.130 with HTTP; Sun, 11 May 2014 19:06:52 -0700 (PDT)
+	id S1750822AbaELEio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2014 00:38:44 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49633 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750717AbaELEio (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2014 00:38:44 -0400
+Received: (qmail 29739 invoked by uid 102); 12 May 2014 04:38:42 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 11 May 2014 23:38:42 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 May 2014 00:38:39 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248689>
 
-Hi Junio,
+When we fetch a pack that does not contain an object we
+expected to receive, we get an error like:
 
-The following changes since commit b28aeab4ec1df28f3be3cb62ff4b85e5332d8d13:
+  $ git init --bare tmp.git && cd tmp.git
+  $ git fetch ../parent.git
+  [...]
+  error: Could not read 964953ec7bcc0245cb1d0db4095455edd21a2f2e
+  fatal: Failed to traverse parents of commit b8247b40caf6704fe52736cdece6d6aae87471aa
+  error: ../parent.git did not send all necessary objects
 
-  Git 2.0-rc3 (2014-05-09 11:23:55 -0700)
+This comes from the check_everything_connected rev-list. If
+we try cloning the same repo (rather than a fetch), we end
+up using index-pack's --check-self-contained-and-connected
+option instead, which produces output like:
 
-are available in the git repository at:
+  $ git clone --no-local --bare parent.git tmp.git
+  [...]
+  fatal: object of unexpected type
+  fatal: index-pack failed
 
-  git://github.com/git-l10n/git-po master
+Not only is the sha1 missing, but it's a misleading message.
+There's no type problem, but rather a missing object
+problem; we don't notice the difference because we simply
+compare OBJ_BAD != OBJ_BLOB.  Let's provide a different
+message for this case:
 
-for you to fetch changes up to 1c3c8410ef02750b8be84cea32ffee8f70918ae9:
+  $ git clone --no-local --bare parent.git tmp.git
+  fatal: did not receive expected object 6b00a8c61ed379d5f925a72c1987c9c52129d364
+  fatal: index-pack failed
 
-  l10n: Updated Bulgarian translation of git (1307t0f921u) (2014-05-11
-17:09:01 +0300)
+While we're at it, let's also improve a true type mismatch
+error to look like
 
-----------------------------------------------------------------
-Alexander Shopov (1):
-      l10n: Updated Bulgarian translation of git (1307t0f921u)
+  fatal: object 6b00a8c61ed379d5f925a72c1987c9c52129d364: expected type blob, got tree
 
- po/bg.po | 5033 ++++++++++++++++++++++++++++++++++----------------------------
- 1 file changed, 2755 insertions(+), 2278 deletions(-)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/index-pack.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---
-Jiang Xin
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index b9f6e12..35643e5 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -200,8 +200,13 @@ static unsigned check_object(struct object *obj)
+ 	if (!(obj->flags & FLAG_CHECKED)) {
+ 		unsigned long size;
+ 		int type = sha1_object_info(obj->sha1, &size);
+-		if (type != obj->type || type <= 0)
+-			die(_("object of unexpected type"));
++		if (type <= 0)
++			die(_("did not receive expected object %s"),
++			      sha1_to_hex(obj->sha1));
++		if (type != obj->type)
++			die(_("object %s: expected type %s, found %s"),
++			    sha1_to_hex(obj->sha1),
++			    typename(obj->type), typename(type));
+ 		obj->flags |= FLAG_CHECKED;
+ 		return 1;
+ 	}
+-- 
+2.0.0.rc1.436.g03cb729
