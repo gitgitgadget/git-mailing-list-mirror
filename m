@@ -1,87 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] inline constant return from error() function
-Date: Mon, 12 May 2014 14:56:45 -0400
-Message-ID: <20140512185645.GA32569@sigill.intra.peff.net>
-References: <20140505212938.GA16715@sigill.intra.peff.net>
- <20140506151441.GA25768@sigill.intra.peff.net>
- <20140512184426.GO9218@google.com>
+From: =?windows-1252?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: Error using git-remote-hg
+Date: Mon, 12 May 2014 21:01:57 +0200
+Message-ID: <53711AA5.4040001@web.de>
+References: <ACDAFE7C-6615-4E44-AE6C-C12CD001EF4F@lltech.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 12 20:56:58 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+To: Charles Brossollet <chbrosso@lltech.fr>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 12 21:02:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjvPA-0005LP-BU
-	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 20:56:52 +0200
+	id 1WjvUK-0005pS-6G
+	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 21:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754402AbaELS4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2014 14:56:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50093 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752721AbaELS4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2014 14:56:48 -0400
-Received: (qmail 17634 invoked by uid 102); 12 May 2014 18:56:47 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 May 2014 13:56:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 May 2014 14:56:45 -0400
-Content-Disposition: inline
-In-Reply-To: <20140512184426.GO9218@google.com>
+	id S1752578AbaELTCH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2014 15:02:07 -0400
+Received: from mout.web.de ([212.227.15.14]:64599 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751973AbaELTCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2014 15:02:06 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MEmc2-1WZU1J3Zqk-00Fyjr; Mon, 12 May 2014 21:02:04
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <ACDAFE7C-6615-4E44-AE6C-C12CD001EF4F@lltech.fr>
+X-Provags-ID: V03:K0:4PRz/bn6NyY0gA3F1Wjtw/vsh3vCqXe9CV4L+Y8zYxjfLPuNWtD
+ hNAOfre/6ABiXESUJfQ7v+2uGKnMXpx6I521bfyvgzprRFNMPDVEYWr+++j6rFuKTAfOdYg
+ ixXHOE3YR/Fys/ueGiQtE0WsaOhx5tIVbnHgJSsiKfpuN7sF+/l/xC34FuKobrvuNmApwjt
+ SlFffkWJ7e882RrClJQ6Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248723>
 
-On Mon, May 12, 2014 at 11:44:26AM -0700, Jonathan Nieder wrote:
-
-> > --- a/git-compat-util.h
-> > +++ b/git-compat-util.h
-> > @@ -331,7 +331,11 @@ extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)))
-> >   * using the function as usual.
-> >   */
-> >  #if defined(__GNUC__) && ! defined(__clang__)
-> > -#define error(...) (error(__VA_ARGS__), -1)
-> > +static inline int const_error(void)
-> > +{
-> > +	return -1;
-> > +}
-> > +#define error(...) (error(__VA_ARGS__), const_error())
+> I'm using git 1.9.3 on Mac OS X 10.9.2, with hg 3.0 installed with brew.
 > 
-> I wish we could just make error() an inline function that calls some
-> print_error() helper, but I don't believe all compilers used to build
-> git are smart enough to inline uses of varargs.  So this looks like
-> the right thing to do.
+> It used to work before, on this same repository, since then git and hg were both upgraded.
+In short: The remote helper of Git 1.9.3 is not compatible with hg 3.0
+You can eiher downgrade hg, or rebuild Git and cherry-pick this commit:
 
-Not just "not all compilers", but "not even gcc". If you declare it
-always_inline, gcc will even complain "you can't do that, it has
-varargs".
+commit 58aee0864adeeb5363f2a06728596f9c9315811f
+Author: Felipe Contreras <felipe.contreras@gmail.com>
+Date:   Sat May 3 21:16:54 2014 -0500
 
-For my curiosity, is there any compiler which _does_ inline varargs
-calls? Clang would be the obvious guess.
+    remote-hg: add support for hg v3.0
 
-> I kind of wish we weren't in so much of an arms race with static
-> analyzers.  Is there some standard way to submit our code as "an idiom
-> that should continue not to produce warnings" to be included in a
-> testsuite and prevent problems in the future?
-
-I agree the arms race is frustrating, but I think the compiler is being
-completely reasonable in this case. It has flagged code where it knows
-a variable may be uninitialized depending on the return value from
-error(). The only reason I as a human know it's a false positive is that
-I know error() will always return -1. So it's not an idiom here, so much
-as letting the compiler know everything we know.
-
-It would just be nice if there was an easier way to do it.
-
-I do think giving the compiler that information is nicer than an
-attribute saying "trust me, it's initialized". The constant return not
-only silences the warnings, but it may actually let the compiler produce
-better code (both in these cases, but in the hundreds of other spots
-that call error()).
-
--Peff
+HTH
+/Torsten
