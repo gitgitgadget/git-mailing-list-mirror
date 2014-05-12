@@ -1,79 +1,58 @@
-From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
-Subject: Re: GIT, libcurl and GSS-Negotiate
-Date: Mon, 12 May 2014 20:01:59 +0200
-Message-ID: <1399917719.2595.5.camel@centaur.cmartin.tk>
-References: <CAPc4eF__gWMy=E-8tdpMn_irA4m7mYF3=cwN6JeAqJsdPshNLw@mail.gmail.com>
-	 <20140426174718.GC238861@vauxhall.crustytoothpaste.net>
-	 <CAPc4eF-aT47aEPmmPPkPRfntTNdNp=c4+OK_CPdq_7YB6rxDug@mail.gmail.com>
-	 <20140510210132.GD45511@vauxhall.crustytoothpaste.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] inline constant return from error() function
+Date: Mon, 12 May 2014 14:13:26 -0400
+Message-ID: <20140512181326.GA31164@sigill.intra.peff.net>
+References: <20140505212938.GA16715@sigill.intra.peff.net>
+ <20140506151441.GA25768@sigill.intra.peff.net>
+ <xmqqppjqczhq.fsf@gitster.dls.corp.google.com>
+ <20140507030254.GC20726@sigill.intra.peff.net>
+ <xmqqppjkut6s.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Ivo Bellin Salarin <ivo.bellinsalarin@gmail.com>,
-	git@vger.kernel.org
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Mon May 12 20:09:21 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 12 20:13:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wjuf8-0000vC-LW
-	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 20:09:19 +0200
+	id 1WjujG-00088Z-HN
+	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 20:13:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952AbaELSJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2014 14:09:12 -0400
-Received: from mx0.elegosoft.com ([78.47.87.163]:53141 "EHLO mx0.elegosoft.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752245AbaELSJL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2014 14:09:11 -0400
-X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 May 2014 14:09:10 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by mx0.elegosoft.com (Postfix) with ESMTP id 54B0BDE05B;
-	Mon, 12 May 2014 20:02:06 +0200 (CEST)
-Received: from mx0.elegosoft.com ([127.0.0.1])
-	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id klBIgLUUJUtB; Mon, 12 May 2014 20:02:04 +0200 (CEST)
-Received: from centaur.local (p57A971DA.dip0.t-ipconnect.de [87.169.113.218])
-	by mx0.elegosoft.com (Postfix) with ESMTPSA id 94253DE054;
-	Mon, 12 May 2014 20:02:03 +0200 (CEST)
-In-Reply-To: <20140510210132.GD45511@vauxhall.crustytoothpaste.net>
-X-Mailer: Evolution 3.12.1-1 
+	id S1752414AbaELSNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2014 14:13:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50064 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751291AbaELSNa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2014 14:13:30 -0400
+Received: (qmail 15092 invoked by uid 102); 12 May 2014 18:13:29 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 12 May 2014 13:13:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 May 2014 14:13:26 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqppjkut6s.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248716>
 
-On Sat, 2014-05-10 at 21:01 +0000, brian m. carlson wrote:
-> On Mon, May 05, 2014 at 12:21:33PM +0200, Ivo Bellin Salarin wrote:
-> > Well, I'm on Windows.
-> > using `git version 1.9.2.msysgit.0`.
-> > 
-> > You can find all the exchanges, recorded with wireshark, of the
-> > following usecases:
-> > * git vanilla (not working),
-> > * VisualStudio2013 with libgit (working)
-> > * curl (--ntlm, working)
-> > * curl (--negotiate, not working)
+On Sun, May 11, 2014 at 10:22:03AM -0700, Junio C Hamano wrote:
+
+> The alternative you mentioned up-thread "... to write out "return
+> error(...)"  as "error(...); return -1". In some ways that is more
+> readable, though it is more verbose..." has one more downside you
+> did not mention, and the approach to encapsulate it inside error()
+> will not have it: new call-sites to error() do not have to worry
+> about the issue with this approach.
 > 
-> Okay, so what it looks like is that for some reason, the server and
-> libcurl refuse to connect with Negotiate authentication.  git uses
-> CURLAUTH_ANY, and libcurl picks the best choice: Negotiate.  The
-> difference between your setup and mine is that I'm using Negotiate with
-> Kerberos 5, and you're using Negotiate with NTLM.
-> 
-> What it looks like is happening is that git is offering Negotiate data,
-> and then your server is responding with a 401 Unauthorized.  libgit2
-> (presumably using WinHTTP) continues in this case, retrying with a
-> longer set of credential containing more data, but git gives up.
+> Until it breaks, that is.  But that goes without saying with the
+> "it's something we can count on" pre-condition in place ;-).
 
-While libgit2 does use WinHTTP by default on Windows, Visual Studio
-overrides this and uses their own HTTP transport (which makes the .NET
-stack to handle it) because of the way the prefer to do things, with
-just the one persistent connection to TFS.
+Yeah, I agree with this thinking. I'd rather not do something that
+impacts each callsite until we have exhausted other options that hide
+the complexity in the definition.
 
-But details aside, the code Visual Studio uses to do authentication has
-nothing to do with any of the others.
-
-   cmn
+-Peff
