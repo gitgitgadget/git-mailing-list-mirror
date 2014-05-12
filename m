@@ -1,57 +1,108 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Should git-remote-hg/bzr be part of the core?
-Date: Mon, 12 May 2014 13:00:20 +0200
-Message-ID: <87wqdruurf.fsf@fencepost.gnu.org>
-References: <537008f06ceb8_8e47492f89f@nysa.notmuch>
-	<53709788.2050201@alum.mit.edu>
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: [PATCH] gitk: Allow displaying time zones from author and commit
+ timestamps
+Date: Mon, 12 May 2014 07:25:58 -0400 (EDT)
+Message-ID: <alpine.DEB.2.02.1405120722570.44324@all-night-tool.MIT.EDU>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org,
-	git-fc@googlegroups.com, Richard Hansen <rhansen@bbn.com>,
-	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Christophe Simonis <christophe@kn.gl>,
-	Dusty Phillips <dusty@linux.ca>, Jeff King <peff@peff.net>,
-	John Keeping <john@keeping.me.uk>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon May 12 13:01:36 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Tim Guirgies <lt.infiltrator@gmail.com>, git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon May 12 13:31:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjnzA-0006PC-K0
-	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 13:01:32 +0200
+	id 1WjoRs-0005ti-9Z
+	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 13:31:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752944AbaELLB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2014 07:01:29 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:43141 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752AbaELLB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2014 07:01:28 -0400
-Received: from localhost ([127.0.0.1]:42174 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wjnz2-00042w-Nl; Mon, 12 May 2014 07:01:25 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 8B39EE0F55; Mon, 12 May 2014 13:00:20 +0200 (CEST)
-In-Reply-To: <53709788.2050201@alum.mit.edu> (Michael Haggerty's message of
-	"Mon, 12 May 2014 11:42:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1751442AbaELLbH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2014 07:31:07 -0400
+Received: from dmz-mailsec-scanner-6.mit.edu ([18.7.68.35]:64194 "EHLO
+	dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750752AbaELLbG (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 May 2014 07:31:06 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 May 2014 07:31:06 EDT
+X-AuditID: 12074423-f79916d000000c54-68-5370afcb513c
+Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
+	(using TLS with cipher AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by dmz-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 9B.74.03156.BCFA0735; Mon, 12 May 2014 07:26:03 -0400 (EDT)
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id s4CBQ2sW024419;
+	Mon, 12 May 2014 07:26:02 -0400
+Received: from localhost (all-night-tool.mit.edu [18.9.64.12])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id s4CBPx3v028088
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Mon, 12 May 2014 07:26:00 -0400
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrHIsWRmVeSWpSXmKPExsUixG6nont6fUGwwfStNhZdV7qZLFZcncNs
+	8eqqlsWaI4vZLfqXdrA5sHrsnHWX3ePQ4Q5Gj7m7+hg9Pm+SC2CJ4rJJSc3JLEst0rdL4Mr4
+	v38Ga8Fanor2/w9YGxgPcXYxcnJICJhIbF/4kRnCFpO4cG89WxcjF4eQwGwmia9rmpghnI2M
+	Et9X7GUFqRIS2M0kcXVjGYjNIqAtsaV1OTuIzSagJjF3w2Qgm4NDREBVYv0FIZAws8AURonL
+	7+xAbGGBMIn7r1eBjeEV8JBomLGECcQWFdCV2Ny9lA0iLihxcuYTFoheLYnl07exTGDkm4Uk
+	NQtJagEj0ypG2ZTcKt3cxMyc4tRk3eLkxLy81CJdM73czBK91JTSTYzgYHRR3sH456DSIUYB
+	DkYlHl4P5oJgIdbEsuLK3EOMkhxMSqK8RcuAQnxJ+SmVGYnFGfFFpTmpxYcYJTiYlUR4T04E
+	yvGmJFZWpRblw6SkOViUxHnfWlsFCwmkJ5akZqemFqQWwWRlODiUJHg/rQNqFCxKTU+tSMvM
+	KUFIM3FwggznARq+C6SGt7ggMbc4Mx0if4pRUUqcVwckIQCSyCjNg+uFJYtXjOJArwjz3gWp
+	4gEmGrjuV0CDmYAGW0nngwwuSURISTUwav77ujHQNfXa5a0nNZtfLGq91vFb9ZhlyqIFf3j0
+	9y3ce2uun2bb7MUbzTqPnpSTmGLfmP43riEy5JeYtHnLNdvW6znHP4qqLKiWas458/kRj/UX
+	nfOz/iR8ZP4haxFzUPXwhY5dV19ZxitbtPuUqN9dbBb2/3RI1uXtJ3fEv3qg0V2Y 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248699>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Now gitk can be configured to display author and commit dates in their
+original timezone, by putting %z into datetimeformat in ~/.gitk.
 
-> This email is written in sorrow, not in anger.  Felipe, you seem to
-> have so much potential.  If you would put as much effort in conducting
-> social interactions as you do in coding, [...]
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+Re-sending from 2011:
+http://thread.gmane.org/gmane.comp.version-control.git/165286/focus=174786
 
-I think that's where you are mistaken.  We are not talking about a lack
-of effort here.  It is just not spent conducively.
+ gitk | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
+diff --git a/gitk b/gitk
+index 90764e8..b4712cd 100755
+--- a/gitk
++++ b/gitk
+@@ -11575,7 +11575,29 @@ proc prefsok {} {
+ proc formatdate {d} {
+     global datetimeformat
+     if {$d ne {}} {
+-	set d [clock format [lindex $d 0] -format $datetimeformat]
++	# If $datetimeformat includes a timezone, display in the
++	# timezone of the argument.  Otherwise, display in local time.
++	if {[string match {*%[zZ]*} $datetimeformat]} {
++	    if {[catch {set d [clock format [lindex $d 0] -timezone [lindex $d 1] -format $datetimeformat]}]} {
++		# Tcl < 8.5 does not support -timezone.  Emulate it by
++		# setting TZ (e.g. TZ=<-0430>+04:30).
++		global env
++		if {[info exists env(TZ)]} {
++		    set savedTZ $env(TZ)
++		}
++		set zone [lindex $d 1]
++		set sign [string map {+ - - +} [string index $zone 0]]
++		set env(TZ) <$zone>$sign[string range $zone 1 2]:[string range $zone 3 4]
++		set d [clock format [lindex $d 0] -format $datetimeformat]
++		if {[info exists savedTZ]} {
++		    set env(TZ) $savedTZ
++		} else {
++		    unset env(TZ)
++		}
++	    }
++	} else {
++	    set d [clock format [lindex $d 0] -format $datetimeformat]
++	}
+     }
+     return $d
+ }
 -- 
-David Kastrup
+2.0.0.rc3
