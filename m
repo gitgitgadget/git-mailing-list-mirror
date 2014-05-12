@@ -1,84 +1,79 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Should git-remote-hg/bzr be part of the core?
-Date: Mon, 12 May 2014 12:13:10 -0500
-Message-ID: <5371012674244_222d1297308d1@nysa.notmuch>
-References: <537008f06ceb8_8e47492f89f@nysa.notmuch>
- <53709788.2050201@alum.mit.edu>
- <5370a47bee98c_139611a92fc29@nysa.notmuch>
- <5370B920.2060506@alum.mit.edu>
- <5370beb4b2483_168f13a72fc57@nysa.notmuch>
- <5370D015.10300@alum.mit.edu>
+From: Carlos =?ISO-8859-1?Q?Mart=EDn?= Nieto <cmn@elego.de>
+Subject: Re: GIT, libcurl and GSS-Negotiate
+Date: Mon, 12 May 2014 20:01:59 +0200
+Message-ID: <1399917719.2595.5.camel@centaur.cmartin.tk>
+References: <CAPc4eF__gWMy=E-8tdpMn_irA4m7mYF3=cwN6JeAqJsdPshNLw@mail.gmail.com>
+	 <20140426174718.GC238861@vauxhall.crustytoothpaste.net>
+	 <CAPc4eF-aT47aEPmmPPkPRfntTNdNp=c4+OK_CPdq_7YB6rxDug@mail.gmail.com>
+	 <20140510210132.GD45511@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Richard Hansen <rhansen@bbn.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1cw==?= <tboegi@web.de>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Christophe Simonis <christophe@kn.gl>,
-	Dusty Phillips <dusty@linux.ca>, Jeff King <peff@peff.net>,
-	John Keeping <john@keeping.me.uk>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	git@vger.kernel.org, git-fc@googlegroups.com
-X-From: git-owner@vger.kernel.org Mon May 12 19:24:15 2014
+Cc: Ivo Bellin Salarin <ivo.bellinsalarin@gmail.com>,
+	git@vger.kernel.org
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon May 12 20:09:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjtxV-0000Sd-TK
-	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 19:24:14 +0200
+	id 1Wjuf8-0000vC-LW
+	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 20:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759263AbaELRYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2014 13:24:09 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:35975 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759217AbaELRYH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2014 13:24:07 -0400
-Received: by mail-ob0-f173.google.com with SMTP id wm4so8592914obc.32
-        for <git@vger.kernel.org>; Mon, 12 May 2014 10:24:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=fuZtmulSCWKvOSiAq3TgSIL7JNFz3vr1dYp52ODC4vg=;
-        b=R3DjpbytWQEi2v468CK5sVUrS/qqrUq6irThVxAOZlgga9/ngFxzb9iM0/aSwx1s6H
-         zhZSMF2zLPjz5ilMWmWL+kBjC3f0oGwK/cAvAkYP0JjsIHEwemKDYoNHeXWwhysG1YBq
-         4goBxJRPoADXYAUckJRrE6c3Ydbbk2KbIWPDRuhCW6OfpeMp9BLxXWuLcekIh9TonpPz
-         E5waCF0uU/FxOCIK92WAQyyhqV76z4svhLBbAlKUBn9A3RsruVmlKMEeM6Gd/opMiaLV
-         7/i10F2JbEhgZn4fCOwnINxni4Kh5SgnYEF6GpgEF6GD6/cENHzx0ZTWZJzr3jL+en6K
-         iLEQ==
-X-Received: by 10.60.231.134 with SMTP id tg6mr5341959oec.84.1399915446634;
-        Mon, 12 May 2014 10:24:06 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id f1sm50767014oej.5.2014.05.12.10.24.03
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 May 2014 10:24:06 -0700 (PDT)
-In-Reply-To: <5370D015.10300@alum.mit.edu>
+	id S1754952AbaELSJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2014 14:09:12 -0400
+Received: from mx0.elegosoft.com ([78.47.87.163]:53141 "EHLO mx0.elegosoft.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752245AbaELSJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2014 14:09:11 -0400
+X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 May 2014 14:09:10 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by mx0.elegosoft.com (Postfix) with ESMTP id 54B0BDE05B;
+	Mon, 12 May 2014 20:02:06 +0200 (CEST)
+Received: from mx0.elegosoft.com ([127.0.0.1])
+	by localhost (mx0.elegosoft.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id klBIgLUUJUtB; Mon, 12 May 2014 20:02:04 +0200 (CEST)
+Received: from centaur.local (p57A971DA.dip0.t-ipconnect.de [87.169.113.218])
+	by mx0.elegosoft.com (Postfix) with ESMTPSA id 94253DE054;
+	Mon, 12 May 2014 20:02:03 +0200 (CEST)
+In-Reply-To: <20140510210132.GD45511@vauxhall.crustytoothpaste.net>
+X-Mailer: Evolution 3.12.1-1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248715>
 
-Michael Haggerty wrote:
-> On 05/12/2014 02:29 PM, Felipe Contreras wrote:
-> > Michael Haggerty wrote:
-> > [...]
-> >> 2. Moving git-remote-hg into the core would require you to continue your
-> >>    presence on the Git mailing list.
+On Sat, 2014-05-10 at 21:01 +0000, brian m. carlson wrote:
+> On Mon, May 05, 2014 at 12:21:33PM +0200, Ivo Bellin Salarin wrote:
+> > Well, I'm on Windows.
+> > using `git version 1.9.2.msysgit.0`.
 > > 
-> > That is another red herring. Moving them back to the contrib/ area which
-> > is what Junio proposed would also require my presence on the list. Is
-> > that what you want?
+> > You can find all the exchanges, recorded with wireshark, of the
+> > following usecases:
+> > * git vanilla (not working),
+> > * VisualStudio2013 with libgit (working)
+> > * curl (--ntlm, working)
+> > * curl (--negotiate, not working)
 > 
-> No, actually my preference is that git-remote-hg be separated from the
-> Git project altogether, for the reasons that I stated earlier.
+> Okay, so what it looks like is that for some reason, the server and
+> libcurl refuse to connect with Negotiate authentication.  git uses
+> CURLAUTH_ANY, and libcurl picks the best choice: Negotiate.  The
+> difference between your setup and mine is that I'm using Negotiate with
+> Kerberos 5, and you're using Negotiate with NTLM.
+> 
+> What it looks like is happening is that git is offering Negotiate data,
+> and then your server is responding with a 401 Unauthorized.  libgit2
+> (presumably using WinHTTP) continues in this case, retrying with a
+> longer set of credential containing more data, but git gives up.
 
-Exactly. So your point 2. is completely irrelevant to the contrb/ vs.
-core debate.
+While libgit2 does use WinHTTP by default on Windows, Visual Studio
+overrides this and uses their own HTTP transport (which makes the .NET
+stack to handle it) because of the way the prefer to do things, with
+just the one persistent connection to TFS.
 
--- 
-Felipe Contreras
+But details aside, the code Visual Studio uses to do authentication has
+nothing to do with any of the others.
+
+   cmn
