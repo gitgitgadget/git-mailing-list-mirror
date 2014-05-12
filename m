@@ -1,49 +1,78 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [BUGFIX/RFC] git-show: fix 'git show -s' to not add extra
- terminator after merge commit
-Date: Tue, 13 May 2014 02:26:25 +0300
-Message-ID: <20140512232600.GA6857@wheezy.local>
-References: <20140511232505.GA29104@wheezy.local>
- <xmqqk39qu96o.fsf@gitster.dls.corp.google.com>
+From: Yann Dirson <ydirson@free.fr>
+Subject: [BUG] git-gui regression in 2.0rcX within submodule
+Date: Tue, 13 May 2014 01:45:19 +0200
+Message-ID: <20140512234518.GB5529@home.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 13 01:26:39 2014
+To: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 13 01:45:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjzcA-0005kG-Km
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 01:26:34 +0200
+	id 1WjzuT-0000X3-FV
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 01:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559AbaELX0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2014 19:26:31 -0400
-Received: from p3plsmtpa06-09.prod.phx3.secureserver.net ([173.201.192.110]:34892
-	"EHLO p3plsmtpa06-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751272AbaELX0a (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 May 2014 19:26:30 -0400
-Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa06-09.prod.phx3.secureserver.net with 
-	id 1BSP1o0083gsSd601BSVfR; Mon, 12 May 2014 16:26:30 -0700
+	id S1751406AbaELXpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2014 19:45:22 -0400
+Received: from smtp4-g21.free.fr ([212.27.42.4]:61565 "EHLO smtp4-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751272AbaELXpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 May 2014 19:45:21 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 19B4B4C802E
+	for <git@vger.kernel.org>; Tue, 13 May 2014 01:44:12 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.82)
+	(envelope-from <ydirson@free.fr>)
+	id 1WjzuJ-0002l5-Bk
+	for git@vger.kernel.org; Tue, 13 May 2014 01:45:19 +0200
 Content-Disposition: inline
-In-Reply-To: <xmqqk39qu96o.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248744>
 
-On Mon, May 12, 2014 at 09:59:39AM -0700, Junio C Hamano wrote:
-> A good way to double-check may be to see the fixes to the tests to
-> correct their wrong expectations, and if the updated expectation is
-> sensible.
+In 2.0rc2, git-gui is unable to work inside submodules, where 1.9.2
+did not show such a problem:
 
-I have sent the fixes to tests. To me they look sensible.
 
-Also fixed the things you pointed out.
+yann@home:~$ cd /tmp/
+yann@home:tmp$ mkdir foo
+yann@home:tmp$ cd foo/
+yann@home:foo$ git init
+Initialized empty Git repository in /tmp/foo/.git/
+yann@home:foo (master)$ git submodule add git://git.debian.org/git/collab-maint/tulip.git debian
+Cloning into 'debian'...
+remote: Counting objects: 317, done.
+remote: Compressing objects: 100% (199/199), done.
+remote: Total 317 (delta 184), reused 166 (delta 95)
+Receiving objects: 100% (317/317), 73.81 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (184/184), done.
+Checking connectivity... done.
+yann@home:foo (master)$ git status 
+On branch master
 
--- 
-Max
+Initial commit
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+        new file:   .gitmodules
+        new file:   debian
+
+yann@home:foo (master)$ (cd debian/ && git gui)
+[errors out after showing the following error dialog]
+
+| No working directory ../../../debian:
+| 
+| couldn't change working directory
+| to "../../../debian": no such file or
+| directory
+
+
+strace shows the failing chdir call is from git-gui itself, after
+getcwd() told him that it is in the dir that is indeed the workdir
+already.
