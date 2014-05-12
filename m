@@ -1,106 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 0/4] remote-hg: more improvements
-Date: Mon, 12 May 2014 17:21:42 -0500
-Message-ID: <537149765d67b_377bc653042f@nysa.notmuch>
-References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
- <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
- <536a83097302f_76ff7a52ec6c@nysa.notmuch>
- <xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
- <536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
- <xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
- <536ad9601b73b_3caaa612ecdc@nysa.notmuch>
- <CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
- <xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
- <53712cd889ba9_2ea6e1f2f82f@nysa.notmuch>
- <xmqqzjimpw7x.fsf@gitster.dls.corp.google.com>
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH 1/2] git-show: fix 'git show -s' to not add extra terminator
+ after merge commit
+Date: Tue, 13 May 2014 01:42:34 +0300
+Message-ID: <20140512224234.GA32316@wheezy.local>
+References: <20140512223517.GA32205@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 13 00:32:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 13 00:42:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wjym3-0003Fi-HN
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 00:32:43 +0200
+	id 1Wjyvj-0002p0-N9
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 00:42:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751850AbaELWcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2014 18:32:39 -0400
-Received: from mail-oa0-f52.google.com ([209.85.219.52]:42597 "EHLO
-	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751100AbaELWcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 May 2014 18:32:39 -0400
-Received: by mail-oa0-f52.google.com with SMTP id eb12so9006850oac.39
-        for <git@vger.kernel.org>; Mon, 12 May 2014 15:32:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=z3e3j2nyonqNQkghrNuUYOcV5gXiOYfPTX4sZQSR5ec=;
-        b=gSTscPlWXpHaLvl1dGNHO539F7T2rc7rcjK2MO8jhSBpwHBRYo9SmFjwd21cFRs2/M
-         vyecZwDve/7NyIPzD+NM2sVgqK19ifwZJ7eUNCkbP63JIfgVUKVRois+xlpfAG4l3vjl
-         /hL7XvPg0fyuv9sWc9KC6mxZ+IkLOwjjw29IzYs5ngwaB1oDYrX6tgJndgYI5HHeNz1O
-         +ZYSY6Z2cG+A1LQKr7EycbE71q0giYOHGXeZfv2ei4HRfef/QNPfj7fT8XUGzQf6UJlL
-         GAtItsoepJfH5lWW+LS7yX2Wb1xwtWihntt5qZDD3CtwHloJ3iIzIk0GuTf4i6XSXqeC
-         KUhQ==
-X-Received: by 10.182.120.5 with SMTP id ky5mr37128070obb.11.1399933958673;
-        Mon, 12 May 2014 15:32:38 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id zv18sm22544283obb.27.2014.05.12.15.32.36
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 May 2014 15:32:37 -0700 (PDT)
-In-Reply-To: <xmqqzjimpw7x.fsf@gitster.dls.corp.google.com>
+	id S1751301AbaELWmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2014 18:42:40 -0400
+Received: from p3plsmtpa09-09.prod.phx3.secureserver.net ([173.201.193.238]:53089
+	"EHLO p3plsmtpa09-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751100AbaELWmj (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 May 2014 18:42:39 -0400
+X-Greylist: delayed 433 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 May 2014 18:42:39 EDT
+Received: from wheezy.local ([82.181.158.170])
+	by p3plsmtpa09-09.prod.phx3.secureserver.net with 
+	id 1AiY1o00P3gsSd601Aiexk; Mon, 12 May 2014 15:42:39 -0700
+Content-Disposition: inline
+In-Reply-To: <20140512223517.GA32205@wheezy.local>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248737>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Junio C Hamano wrote:
-> > ...
-> >> I was originally led to believe that its code quality was good
-> >> enough, and that was why I merged the bottom three patches of the
-> >> series even down to 'next' in the first place.  But after seeing the
-> >> "Of course" response that led to [*1*], which made me recall many
-> >> patch-review interactions with him, I have started to have doubts.
-> >
-> > This is bullshit, and a wrong direction fallacy.
-> >
-> > Event #1:
-> > Junio rejects the graduation
-> > http://article.gmane.org/gmane.comp.version-control.git/248263
-> >
-> > Event #2:
-> > I give up improving remote helpers in git.git
-> > http://thread.gmane.org/gmane.comp.version-control.git/248063/focus=248341
-> >
-> > Junio is trying to make you believe that his decision (#1) was caused by
-> > something I did (#2). Don't fall into that trap, #2 happened *AFTER* #1,
-> > it can't possibly be the cause.
-> 
-> I think you misunderstood.
-> 
-> I never said that I do not want it to graduate up (out is an option)
-> based on code quality.
+When git show -s is called for merge commit it prints extra newline
+after any merge commit and the next one. This looks especially ugly for
+--oneline and other single-line formats. Looks very much like a bug.
 
-Fair enough, that was my understanding up until today.
+The code in question exists since commit 3969cf7db1. Probably the
+correct condition should be in fact
+"opt->output_format & DIFF_FORMAT_DIFFSTAT".
 
-> But because I was asked, I thought about it, and then answered
-> honestly.  I do not know what a trap you perceive is about, and I am
-> not interested in your responses.
+Test t7007-show.sh is also modified to cover this case.
+---
+ combine-diff.c  | 3 ++-
+ t/t7007-show.sh | 8 ++++++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-Philippe Vaucher didn't ask about quality, he asked about moving out of
-contrib.
-
+diff --git a/combine-diff.c b/combine-diff.c
+index 3b92c448..ff6ceaf 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1331,7 +1331,8 @@ void diff_tree_combined(const unsigned char *sha1,
+ 		if (show_log_first && i == 0) {
+ 			show_log(rev);
+ 
+-			if (rev->verbose_header && opt->output_format)
++			if (rev->verbose_header && opt->output_format &&
++			    opt->output_format != DIFF_FORMAT_NO_OUTPUT)
+ 				printf("%s%c", diff_line_prefix(opt),
+ 				       opt->line_termination);
+ 		}
+diff --git a/t/t7007-show.sh b/t/t7007-show.sh
+index e41fa00..de22812 100755
+--- a/t/t7007-show.sh
++++ b/t/t7007-show.sh
+@@ -25,6 +25,7 @@ test_expect_success 'set up a bit of history' '
+ 	git checkout -b side HEAD^^ &&
+ 	test_commit side2 &&
+ 	test_commit side3
++	test_merge merge main3
+ '
+ 
+ test_expect_success 'showing two commits' '
+@@ -109,8 +110,11 @@ test_expect_success 'showing range' '
+ '
+ 
+ test_expect_success '-s suppresses diff' '
+-	echo main3 >expect &&
+-	git show -s --format=%s main3 >actual &&
++	cat >expect <<-\EOF &&
++	merge
++	main3
++	EOF
++	git show -s --format=%s merge main3 >actual &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
-Felipe Contreras
+1.8.5.2.421.g4cdf8d0
