@@ -1,50 +1,103 @@
 From: Max Kirillov <max@max630.net>
-Subject: [PATCH 0/2] fix 'git show -s' to not add extra terminator after
- merge commit
-Date: Tue, 13 May 2014 01:35:18 +0300
-Message-ID: <20140512223517.GA32205@wheezy.local>
+Subject: [PATCH 2/2] t: git-show: adapt tests to fixed 'git show'
+Date: Tue, 13 May 2014 01:43:43 +0300
+Message-ID: <20140512224343.GB32316@wheezy.local>
+References: <20140512223517.GA32205@wheezy.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 13 00:43:19 2014
+X-From: git-owner@vger.kernel.org Tue May 13 00:43:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjywJ-0003of-3u
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 00:43:19 +0200
+	id 1Wjywn-0004fx-20
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 00:43:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751451AbaELWnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 May 2014 18:43:15 -0400
-Received: from p3plsmtpa08-05.prod.phx3.secureserver.net ([173.201.193.106]:40829
-	"EHLO p3plsmtpa08-05.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751100AbaELWnP (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 May 2014 18:43:15 -0400
+	id S1751518AbaELWnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 May 2014 18:43:45 -0400
+Received: from p3plsmtpa09-09.prod.phx3.secureserver.net ([173.201.193.238]:56024
+	"EHLO p3plsmtpa09-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751100AbaELWnp (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 May 2014 18:43:45 -0400
 Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa08-05.prod.phx3.secureserver.net with 
-	id 1AbG1o0083gsSd601AbMCg; Mon, 12 May 2014 15:35:23 -0700
+	by p3plsmtpa09-09.prod.phx3.secureserver.net with 
+	id 1Ajh1o00H3gsSd601Ajk5P; Mon, 12 May 2014 15:43:45 -0700
 Content-Disposition: inline
+In-Reply-To: <20140512223517.GA32205@wheezy.local>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248739>
 
-* fix the CC issues
-* add fixes for existing tests
+'git show' used to print extra newline after merge commit, and it was
+recorded so into the test reference data. Now when the behavior is
+fixed, the tests should be updated.
 
-Max Kirillov (2):
-  git-show: fix 'git show -s' to not add extra terminator after merge commit
-  t: git-show: adapt tests to fixed 'git show'
-
- combine-diff.c                |  3 ++-
+Note that '--format=%s' works like '--pretty=tformat:%s'. This
+is why non-merging cases pass, like t3505-cherry-pick-empty.sh
+for example, though they look very similarly.
+---
  t/t1507-rev-parse-upstream.sh |  2 +-
- t/t7007-show.sh               |  8 ++++++--
  t/t7600-merge.sh              | 11 +++++------
- 4 files changed, 14 insertions(+), 10 deletions(-)
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
+diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
+index 2a19e79..672280b 100755
+--- a/t/t1507-rev-parse-upstream.sh
++++ b/t/t1507-rev-parse-upstream.sh
+@@ -100,7 +100,7 @@ test_expect_success 'merge my-side@{u} records the correct name' '
+ 	git branch -D new ;# can fail but is ok
+ 	git branch -t new my-side@{u} &&
+ 	git merge -s ours new@{u} &&
+-	git show -s --pretty=format:%s >actual &&
++	git show -s --pretty=tformat:%s >actual &&
+ 	echo "Merge remote-tracking branch ${sq}origin/side${sq}" >expect &&
+ 	test_cmp expect actual
+ )
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 10aa028..b164621 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -57,11 +57,10 @@ create_merge_msgs () {
+ 		git log --no-merges ^HEAD c2 c3
+ 	} >squash.1-5-9 &&
+ 	: >msg.nologff &&
+-	echo >msg.nolognoff &&
++	: >msg.nolognoff &&
+ 	{
+ 		echo "* tag 'c3':" &&
+-		echo "  commit 3" &&
+-		echo
++		echo "  commit 3"
+ 	} >msg.log
+ }
+ 
+@@ -71,7 +70,7 @@ verify_merge () {
+ 	git diff --exit-code &&
+ 	if test -n "$3"
+ 	then
+-		git show -s --pretty=format:%s HEAD >msg.act &&
++		git show -s --pretty=tformat:%s HEAD >msg.act &&
+ 		test_cmp "$3" msg.act
+ 	fi
+ }
+@@ -620,10 +619,10 @@ test_expect_success 'merge early part of c2' '
+ 	git tag c6 &&
+ 	git branch -f c5-branch c5 &&
+ 	git merge c5-branch~1 &&
+-	git show -s --pretty=format:%s HEAD >actual.branch &&
++	git show -s --pretty=tformat:%s HEAD >actual.branch &&
+ 	git reset --keep HEAD^ &&
+ 	git merge c5~1 &&
+-	git show -s --pretty=format:%s HEAD >actual.tag &&
++	git show -s --pretty=tformat:%s HEAD >actual.tag &&
+ 	test_cmp expected.branch actual.branch &&
+ 	test_cmp expected.tag actual.tag
+ '
 -- 
 1.8.5.2.421.g4cdf8d0
