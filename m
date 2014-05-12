@@ -1,114 +1,120 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Should git-remote-hg/bzr be part of the core?
-Date: Sun, 11 May 2014 18:34:08 -0500
-Message-ID: <537008f06ceb8_8e47492f89f@nysa.notmuch>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: optimising a push by fetching objects from nearby repos
+Date: Mon, 12 May 2014 07:20:59 +0530
+Message-ID: <53702903.20904@gmail.com>
+References: <536E2C19.3000202@gmail.com>	<xmqqtx8xuz3b.fsf@gitster.dls.corp.google.com>	<536ECC93.1070102@gmail.com> <1399772049733.13154@student.bi.no>	<536EDC1C.5040101@gmail.com> <1399777917522.41294@student.bi.no>	<536F08C5.3010705@gmail.com> <xmqqbnv4ur7t.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Richard Hansen <rhansen@bbn.com>,
-	Torsten =?UTF-8?B?QsO2Z2Vyc2hhdXNlbg==?= <tboegi@web.de>,
-	Antoine Pelisse <apelisse@gmail.com>,
-	Christophe Simonis <christophe@kn.gl>,
-	Dusty Phillips <dusty@linux.ca>, Jeff King <peff@peff.net>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org, git-fc@googlegroups.com
-X-From: git-owner@vger.kernel.org Mon May 12 01:35:14 2014
+Cc: "Storm-Olsen\, Marius" <Marius.Storm-Olsen@student.bi.no>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	milki <milki@rescomp.berkeley.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon May 12 03:51:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WjdGy-0002in-US
-	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 01:35:13 +0200
+	id 1WjfOi-0007RY-NQ
+	for gcvg-git-2@plane.gmane.org; Mon, 12 May 2014 03:51:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758228AbaEKXfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 May 2014 19:35:07 -0400
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:45465 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758096AbaEKXeS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 May 2014 19:34:18 -0400
-Received: by mail-oa0-f44.google.com with SMTP id o6so440017oag.31
-        for <git@vger.kernel.org>; Sun, 11 May 2014 16:34:17 -0700 (PDT)
+	id S1755437AbaELBvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 May 2014 21:51:07 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:38164 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755288AbaELBvF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 May 2014 21:51:05 -0400
+Received: by mail-pa0-f45.google.com with SMTP id ey11so7268455pad.32
+        for <git@vger.kernel.org>; Sun, 11 May 2014 18:51:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:subject:mime-version:content-type
-         :content-transfer-encoding;
-        bh=uHxY1uS7le4p8vyR/EDwcJ4nwzbZ8ALjCPyYVupl/ec=;
-        b=xPdRM7Je2e+KoBgnZQL02FsBF19OcSDQhmMQ4V15PU7CuabP9AL3XsXQkNo8GtD7Kd
-         IzNdmkhuMDrPKbWZClZ1nNTEc+z2S2PSQ1X/C3iZd0vLdfRL4g9q2u09gHLHmCJJXLU2
-         Hg8nyHcbQilAqdNnXJBqjL2UH1sIs8Q4Qux3ci8tTMrKvyWX5jP5iMneip3Il7yMnLTS
-         ztoOebOz7Tn+6/KgiO7SO4KvAWSubw9+MOEW///ntJoL7BJnG5xdLyhhA6bpe7h0Xzni
-         OuI0XP7KJM4Iif9okW0uTIsVJ7BxAotgEThRnAbo1cyWtkAwcPiHD0ZfUdiWtjli76q5
-         Wy+Q==
-X-Received: by 10.182.249.18 with SMTP id yq18mr10263303obc.37.1399851257107;
-        Sun, 11 May 2014 16:34:17 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id js4sm42718056oeb.3.2014.05.11.16.34.14
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=6zuka9Bflk62Drr2IKHLIeKYKDhB00CuYVotUsLP9v4=;
+        b=CfrFlJd5+kuCb2lBGZF/8stPr2mP/WxVUAi0vqidiXFWQB1cCi6Oznamf4rGqwt9/j
+         oEpR63q9JKDljvsASOwXThOYNG4EZbxzebJ5ssjgLqYweHUln378jQ55V/UhJDSeMs2x
+         6sAZ1YfgzV+b4dPtM9yFPgHLUR+JTB4RPHFMlsBLLj8nEVosVzo6eXItICUt/Sj+F6Ri
+         C42egKU66L6J1s/nNhj2CytOBaBpMwZD+CniWMGrFQb0XQyX/v1YMY6oaQG9ATboCe7b
+         mVGvLsRR4pSo0FMNeWvH+aDU0/cazZXDUWvKTqYJ1hM6npRgTJPNRgdPw27xbXuRt2RX
+         GQfA==
+X-Received: by 10.66.66.135 with SMTP id f7mr49920087pat.22.1399859464747;
+        Sun, 11 May 2014 18:51:04 -0700 (PDT)
+Received: from sita-lt.atc.tcs.com ([117.216.214.74])
+        by mx.google.com with ESMTPSA id fk4sm41829840pab.23.2014.05.11.18.51.00
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 11 May 2014 16:34:16 -0700 (PDT)
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 11 May 2014 18:51:03 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqqbnv4ur7t.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248686>
 
-Hi,
+On 05/11/2014 11:34 PM, Junio C Hamano wrote:
+> Sitaram Chamarty <sitaramc@gmail.com> writes:
+>
+>> But what I was looking for was validation from git.git folks of the idea
+>> of replicating what "git clone -l" does, for an *existing* repo.
+>>
+>> For example, I'm assuming that bringing in only the objects -- without
+>> any of the refs pointing to them, making them all dangling objects --
+>> will still allow the optimisation to occur (i.e., git will still say "oh
+>> yeah I have these objects, even if they're dangling so I won't ask for
+>> them from the pusher" and not "oh these are dangling objects; so I don't
+>> recognise them from this perspective -- you'll have to send me those
+>> again").
+>
+> So here is an educated guess by a git.git folk.  I haven't read the
+> codepath for some time, so I may be missing some details:
+>
+>   - The set of objects sent over the wire in "push" direction is
+>     determined by the receiving end listing what it has to the
+>     sending end, and then the sending end excluding what the
+>     receiving end told that it already has.
+>
+>   - The receiving end tells the sending end what it has by showing
+>     the names of its refs and their values.
+>
+> Having otherwise dangling objects in your object store alone will
+> not make them reachable from the refs shown to the sending end.  But
+> there is another trick the receiving end employes.
+>
+>   - The receiving end also includes the refs and their values that
+>     appear in the repository it borrows objects from its alternate
+>     repositories, when it tells what objects it already has to the
+>     sending end.
+>
+> So what you "assumed" is not entirely correct---bringing in only the
+> objects will not give you any optimization.
+>
+> But because we infer from the location of the object store
+> (i.e. "objects" directory) where the refs that point at these
+> borrowed objects exist (i.e. in "../refs" relative to that "objects"
+> directory) in order to make sure that we do not have to say "oh
+> these are dangling but we know their history is not broken", we
+> still get the same optimisation.
 
-Recently Junio said he was willing to hear the opinion of other people
-regarding the move from contrib to the core[1]. This move is already
-under way, but suddenly Junio changed his mind.
+Thanks!
 
-I have repeatedly asked him to clarify what argument changed his mind,
-but he hasn't done so. Hopefully he will do that in this thread, but
-I'll jump ahead and assume it's this one by John Keeping[2]:
+Everything makes sense.  However, I'm not using the alternates
+mechanism.
 
-  I do not want to end up in a situation where an update to Git is
-  blocked by a distribution because git-remote-hg is not updated to
-  support newer versions of Mercurial sufficiently quickly; this
-  previously happened in Gentoo due to git-svn and meant that was stuck
-  on 1.7.8 until 1.7.13 was released [X].
+Since gitolite has the advantage of allowing me to do something before
+and something after the git-receive-pack, I'm fetching all the refs into
+a temporary namespace before, and deleting all of them after.  So, just
+for the duration of the push, the refs do exist, and optimisation (of
+network traffic) therefore happens.
 
-Now, I feel I addressed this argument at length, specially in this
-thread [3], but I'll try to provide a summary of the strongest arguments
-against:
+In addition, since I check that the user has read access to the lender
+repo (and don't do this optimisation if he does not), there is -- by
+definition -- no security issue, in the sense that he cannot get
+anything from the lender repo that he could not have got directly.
 
- 1) We can make the tests optional, say 't/optional'. So if they don't
-    pass, the build of Git is not broken. Additionally, distributions
-    might prefer to run test-essential if they don't want to run these
-    optional tests.
- 
- 2) There's already continuous integration builds[4] to make sure all
-    the possible incoming changes in Mercurial are detected early on.
+Thanks for all your help again, especially the very clear explanation!
 
- 3) There has been a *single* case where a new Mercurial (3.0) broke
-    things. This is due to the fact of how I implemented certain
-    functionality due to limitations in Mercurial's API. Mercurial
-    authors can be contacted to improve the API and minimize the
-    possibility of it happening again.
-
-Given these arguments, I don't see how moving git-remote-hg to the core
-could possibly cause any problems, and I don't understand why Junio
-would think otherwise. Even if such a breakage causes a problem to the
-whole Git, it would make sense to demote these tools *when* such a
-problem comes (which I argue it won't). Does it make sense to you that
-you get thrown in jail for a crime you haven't committed merely because
-someone thinks it's likely you will?
-
-Given the huge amount of work I've put in these remote helpers, and the
-fact that Junio said since day 1 he wanted these in the core[5] (and I
-was operating under that assumption), I think the demotion back to the
-contrib area (and therefore out-of-tree) should be made carefully, and
-not from one day to he next as it happened.
-
-Thoughts?
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/248676
-[2] http://article.gmane.org/gmane.comp.version-control.git/248167
-[3] http://article.gmane.org/gmane.comp.version-control.git/248683
-[4] https://travis-ci.org/felipec/git
-[5] http://article.gmane.org/gmane.comp.version-control.git/220277
-
--- 
-Felipe Contreras
+regards
+sitaram
