@@ -1,102 +1,94 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] contrib: remote-helpers: add move warnings (v2.0)
-Date: Tue, 13 May 2014 17:22:25 -0500
-Message-ID: <53729b2150a84_34aa9e5304e0@nysa.notmuch>
-References: <1400016596-13178-1-git-send-email-felipe.contreras@gmail.com>
- <xmqq7g5pmj5r.fsf@gitster.dls.corp.google.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: Watchman support for git
+Date: Tue, 13 May 2014 18:38:27 -0400
+Organization: Twitter
+Message-ID: <1400020707.14179.13.camel@stross>
+References: <1399072451-15561-1-git-send-email-dturner@twopensource.com>
+	 <CACsJy8B6AVOHH7HhreqvusQN=UFZzj1mkjqekrOb62Lmq_8VQw@mail.gmail.com>
+	 <1399747109.11843.137.camel@stross>
+	 <CACsJy8Cazm+6ixw3r8WYfdFYeD01Lmf0PSF0sdsh7PGy_6WDTQ@mail.gmail.com>
+	 <1399848982.11843.161.camel@stross>
+	 <CACsJy8C_j2bKVwqOQtOqGFkc_-_AmY=bQXquRfL-aqk=z9YKdw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 00:33:30 2014
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 14 00:38:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkLGI-0003iW-GZ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 00:33:26 +0200
+	id 1WkLLH-0003zW-RV
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 00:38:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754174AbaEMWdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 18:33:23 -0400
-Received: from mail-ob0-f173.google.com ([209.85.214.173]:32952 "EHLO
-	mail-ob0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753192AbaEMWdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 18:33:22 -0400
-Received: by mail-ob0-f173.google.com with SMTP id wm4so1183419obc.4
-        for <git@vger.kernel.org>; Tue, 13 May 2014 15:33:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=GiYy7T3vMhnMRSPYUZRQCJ9O3+DS1/Dr210L1eHmY6U=;
-        b=NeciG02iQuRzHIPrQ18rbxQHX7WW/y77KRi5ckGOLOrNAa8AFTXyIZ40L1W8X+wMyX
-         jU2Ymj5d7gy3eeJqHimP01eJmPyYlrzHV3efqIGpRqiGBOhEKAwVh3rVv7+LWgAzKJ35
-         f8TVBsI0NN5AKfZI37i5mXg15Zd6XvVQ4NxKtrZqrE7SVH7IE8sioAhwQI9QHiCXJwMU
-         XEBdQK1+vcG45eWS8OMessWes2lCRqalazvOk7yAcE4QwahYcUzMsy3auwYrZNsKHIgQ
-         ElWvUn/UWdeEpnFCpgss5wYVIylE90slliiFIjgz2QDDZnLqnYbLK+/Czra5XeE+SMgj
-         ShSA==
-X-Received: by 10.182.5.65 with SMTP id q1mr6390200obq.74.1400020401619;
-        Tue, 13 May 2014 15:33:21 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id w8sm55339638oel.14.2014.05.13.15.33.20
+	id S1754499AbaEMWic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 18:38:32 -0400
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:54157 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753870AbaEMWib (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 18:38:31 -0400
+Received: by mail-qc0-f172.google.com with SMTP id l6so1482927qcy.3
+        for <git@vger.kernel.org>; Tue, 13 May 2014 15:38:30 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=DopAjDl/K0m62lkBcg5XplCgk7+PLNykfzUksGwOZkQ=;
+        b=UnCAZShp1WeeL4XI8NJkeyar76X2LSTc8Olao/lQxmQufHcG29Npk8Be7OX4FOPShT
+         hyH5cJ0HdkDe9soaTAOC1WbHFRwI7UvkaNwU8kvby62Oh/qlG6LXkiuCoyDP1WyjTcip
+         Q3uGBmIVz/qo8LbOjQqvLR4UUYIVXB8kBLaHdGpbd5tvJjjn0RTh3mu1T3o7AiD++oXS
+         9gtTtHLd/uGYtFf8Hb0qZlEc2My6jWzp8iCFD1LyETyxy1kC/NZ5aEd5avYK/ua7PVXf
+         R1NigE4NoaR+fqNMeC+9ARKf7cyd9NWPtA5HXepUB/5ECywD7QlNvNcdr2VNa0TYW0vG
+         9I5A==
+X-Gm-Message-State: ALoCoQk1sWkMZTvBhRaaWyOfwFuefGBBQhQjbGgvij1TPi39RPEUYOlVWLJkoJy3cADPIMzCI0Ru
+X-Received: by 10.140.51.74 with SMTP id t68mr49667827qga.50.1400020710187;
+        Tue, 13 May 2014 15:38:30 -0700 (PDT)
+Received: from [172.17.2.145] ([38.104.173.198])
+        by mx.google.com with ESMTPSA id l46sm12808465qga.21.2014.05.13.15.38.28
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 May 2014 15:33:21 -0700 (PDT)
-In-Reply-To: <xmqq7g5pmj5r.fsf@gitster.dls.corp.google.com>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Tue, 13 May 2014 15:38:29 -0700 (PDT)
+In-Reply-To: <CACsJy8C_j2bKVwqOQtOqGFkc_-_AmY=bQXquRfL-aqk=z9YKdw@mail.gmail.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248876>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Mon, 2014-05-12 at 17:45 +0700, Duy Nguyen wrote:
+> This is your quote from above, moved down a bit:
 > 
-> > The tools are now maintained out-of-tree, and they have a regression in
-> > v2.0.
+> > update_fs_cache should only have to update based on what it has learned
+> > from watchman.  So if no .gitignore has been changed, it should not have
+> > to do very much work.
+> >
+> > I could take the fe_excluded check and move it above the
+> > last_exclude_matching check in fs_cache_is_excluded; it causes t7300 to
+> > fail when run under watchman but presumably that's fixable
 > 
-> You seem not to understand at all what a regression is.
-> 
-> My understanding is that versions of remote-hg shipped with all
-> versions of Git did not work with Hg 3.0, so not working with Hg 3.0
-> is a regression in v2.0 at all.
+> So you exclude files early and make the real read_directory() pass do
+> pretty much nothing. This is probably not a good idea. Assume that I
+> touch $TOP/.gitignore then do something other than "git status" (or
+> "git add") then I have to pay read_directory() cost.
 
-I explained to you multiple times already that is a different issue, but
-it somehow doesn't get through your skull.
+I'm not sure I understand this. read_directory does something: it checks
+the fs_cache (instead of the filesystem) for untracked files.
 
-Let me try a different approach.
+> Back to the open vs fs_cache_open and the number of .gitignore files
+> above. I touch $TOP/.gitignore then do "git status" to make it read
+> all .gitignore files (6k of them) and change between open and
+> fs_cache_open. I think the numbers still  do not make any visible
+> difference (~1620-1630ms).
 
-git-remote-bzr has a regression in Git v2.0.
+Yes, I would expect no win in that case.  fs_cache_open will only save
+time in the common case where there is no .gitignore file, because it
+saves an open() call.  If every possible .gitignore file exists, of
+course it makes no difference.  But also, your processor may be
+sufficiently slow that the context-switch penalty for open() is less
+than the hash table lookup.  
 
-Did you get the BAZAAR part? That's right, this is unrelated to
-Mercurial v3.0 because it doesn't have anything to do with Mercurial.
-
-*BOTH* git-remote-hg and git-remote-bzr have a regression in Git v2.0.
-
-> A recent report was about Hg 3.0 not working with 1.9.3, but I think
-> you earlier said all versions of Git does not work with Hg 3.0, and I
-> can believe it.  That is hardly a regression.
-> 
-> You could argue that Hg has a new regression to its external users
-> of its API when it went to 3.0.  We actually had a similar breakage
-> in 1.5.4, where it was reported late in the cycle after -rc0 [*1*]
-> that cgit that linked with our internal API libgit.a was broken by a
-> change on our side, which resulted in us fixing the breakage (even
-> though technically you may be able to say that it was cgit's fault
-> to link with libgit.a in the first place) with 18125644 (Move
-> sha1_file_to_archive into libgit, 2008-01-14) very late in the
-> cycle.  Calling that a regression in cgit would have been insane,
-> even if we did not patch our side up to accomodate it.
-> 
-> Stop this idiocy.
-
-Sigh, you just don't seem to understand that you are thinking about a
-different issue. I don't think there's any other way I can explain it to
-you.
-
--- 
-Felipe Contreras
+For me, the win from fs_cache_open is about 7%.  
