@@ -1,63 +1,68 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 2/2] wincred: avoid overwriting configured variables
-Date: Tue, 13 May 2014 08:34:36 +0200
-Message-ID: <CABPQNSYU5haMzdy2cDn=KF2+j_aFK19Ju+x+LTeex6JqWJMncQ@mail.gmail.com>
-References: <20140430064610.GA22094@camelia.ucw.cz> <CABPQNSZsviaGqFeKZE4ofF6HoUQrPvNPuowar4YDjk_Mbu5iCQ@mail.gmail.com>
- <20140430112724.GA22929@camelia.ucw.cz> <CABPQNSafKXDLyBj5OYW-PPWdxfxQtC23vKQsQ-_Pa1empU=n8g@mail.gmail.com>
- <20140513055953.GA28182@camelia.ucw.cz> <20140513060144.GC28182@camelia.ucw.cz>
-Reply-To: kusmabite@gmail.com
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: [PATCH 2/2] wincred: avoid overwriting configured variables
+Date: Tue, 13 May 2014 08:53:35 +0200
+Organization: <)><
+Message-ID: <20140513065335.GA28417@camelia.ucw.cz>
+References: <20140430064610.GA22094@camelia.ucw.cz> <CABPQNSZsviaGqFeKZE4ofF6HoUQrPvNPuowar4YDjk_Mbu5iCQ@mail.gmail.com> <20140430112724.GA22929@camelia.ucw.cz> <CABPQNSafKXDLyBj5OYW-PPWdxfxQtC23vKQsQ-_Pa1empU=n8g@mail.gmail.com> <20140513055953.GA28182@camelia.ucw.cz> <20140513060144.GC28182@camelia.ucw.cz> <CABPQNSYU5haMzdy2cDn=KF2+j_aFK19Ju+x+LTeex6JqWJMncQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>, Pat Thoyts <patthoyts@users.sourceforge.net>, 
-	msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBDR53PPJ7YHRBJP2Y2NQKGQEXN4FDLI@googlegroups.com Tue May 13 08:35:19 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRBJP2Y2NQKGQEXN4FDLI@googlegroups.com>
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+        Pat Thoyts <patthoyts@users.sourceforge.net>,
+        msysGit <msysgit@googlegroups.com>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: msysgit+bncBCU63DXMWULRB4ECY6NQKGQEB7C6Y3A@googlegroups.com Tue May 13 08:53:38 2014
+Return-path: <msysgit+bncBCU63DXMWULRB4ECY6NQKGQEB7C6Y3A@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f184.google.com ([209.85.220.184])
+Received: from mail-lb0-f186.google.com ([209.85.217.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBJP2Y2NQKGQEXN4FDLI@googlegroups.com>)
-	id 1Wk6J4-0006jK-RZ
-	for gcvm-msysgit@m.gmane.org; Tue, 13 May 2014 08:35:19 +0200
-Received: by mail-vc0-f184.google.com with SMTP id hq16sf1564698vcb.21
-        for <gcvm-msysgit@m.gmane.org>; Mon, 12 May 2014 23:35:18 -0700 (PDT)
+	(envelope-from <msysgit+bncBCU63DXMWULRB4ECY6NQKGQEB7C6Y3A@googlegroups.com>)
+	id 1Wk6an-0003Tz-QK
+	for gcvm-msysgit@m.gmane.org; Tue, 13 May 2014 08:53:37 +0200
+Received: by mail-lb0-f186.google.com with SMTP id c11sf763753lbj.13
+        for <gcvm-msysgit@m.gmane.org>; Mon, 12 May 2014 23:53:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=LrPpz/+2lhjPnDUeHsFTEoEf9tiDu2Z3TOZKKttKmwE=;
-        b=EHSFUqv3O7o+tuW7HQWq+P4Lh/AwA5TyC65IFd4xqKgJ3cGpSgfsFy+IFDlNJrhKwq
-         zO/CWAiHt3Ju690WmtLRjwKvGYkQ45L8QukiNBkIDNdBvOIbdpMxtBlrybksBJ0jPVF6
-         UUH9gBLemPr2gbwfJt/zXjx55r920ocJQj0R1Yjf4GGrGOhA43QXvMKzVtm3++38xhIw
-         cTJ2xDb64xR5Ok3sepy/EmnrnqN0sqmK806e5IRZtitAbLx8pf54d/avroy/GolT+L/K
-         7JbxsbsTpRBoyR8uOfaDM7nfMVitMyOex233guAERTcvM0cLsjyqWMPL7PdB+GrqaTs/
-         kpCw==
-X-Received: by 10.50.92.34 with SMTP id cj2mr305862igb.4.1399962917996;
-        Mon, 12 May 2014 23:35:17 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=ZiWXeu1Jm8tGZYMbxG0VO+SkxFO9DsWqZjy3XjC2sTo=;
+        b=GKjHZNiagKJELFjSMxXj4G6qrkh2hl/kEa59r67tt4P6dfVXUzs8k5+Vt9SBJj8Y+B
+         Pf2ecSp4xElEY5Lzp76BZ1agiZBaT6pE7fPnG19ZayIgNvhwwSByIKyA0aGoGap7Gyng
+         THlgQCnJ+7Fvl7MlpPp0rGkBzfqIa1LnKIcLiwYOM6t7nmndwGgXcVlezXHh3pzI2IHp
+         prmIhwacruL1AAAqZt1Ek36WcEyHvoXDw7trxOERCVTrwV7MNi5qlGb0TtUYtTGcWRSX
+         qxtUKU2wJuwL6Bt6oHrYEoUH2NGSjoDMR1wfb0dS+nY/mTmE5uD8v+SqswODQZUcNX0g
+         exCA==
+X-Received: by 10.180.109.161 with SMTP id ht1mr98133wib.6.1399964017487;
+        Mon, 12 May 2014 23:53:37 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.25.70 with SMTP id a6ls2597841igg.42.canary; Mon, 12 May
- 2014 23:35:17 -0700 (PDT)
-X-Received: by 10.66.138.17 with SMTP id qm17mr5663103pab.34.1399962917136;
-        Mon, 12 May 2014 23:35:17 -0700 (PDT)
-Received: from mail-ig0-x234.google.com (mail-ig0-x234.google.com [2607:f8b0:4001:c05::234])
-        by gmr-mx.google.com with ESMTPS id ng6si654218igb.2.2014.05.12.23.35.17
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 12 May 2014 23:35:17 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::234 as permitted sender) client-ip=2607:f8b0:4001:c05::234;
-Received: by mail-ig0-f180.google.com with SMTP id c1so18451igq.7
-        for <msysgit@googlegroups.com>; Mon, 12 May 2014 23:35:17 -0700 (PDT)
-X-Received: by 10.50.85.37 with SMTP id e5mr51576600igz.43.1399962917014; Mon,
- 12 May 2014 23:35:17 -0700 (PDT)
-Received: by 10.64.166.135 with HTTP; Mon, 12 May 2014 23:34:36 -0700 (PDT)
-In-Reply-To: <20140513060144.GC28182@camelia.ucw.cz>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::234
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Received: by 10.180.104.1 with SMTP id ga1ls856633wib.41.canary; Mon, 12 May
+ 2014 23:53:36 -0700 (PDT)
+X-Received: by 10.14.218.9 with SMTP id j9mr760530eep.2.1399964016466;
+        Mon, 12 May 2014 23:53:36 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id u49si1704070eeo.1.2014.05.12.23.53.36
+        for <msysgit@googlegroups.com>;
+        Mon, 12 May 2014 23:53:36 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 34F581C00EF;
+	Tue, 13 May 2014 08:53:36 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s4D6rZFd028453;
+	Tue, 13 May 2014 08:53:35 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s4D6rZ3G028452;
+	Tue, 13 May 2014 08:53:35 +0200
+In-Reply-To: <CABPQNSYU5haMzdy2cDn=KF2+j_aFK19Ju+x+LTeex6JqWJMncQ@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -68,40 +73,61 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248751>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248752>
 
-On Tue, May 13, 2014 at 8:01 AM, Stepan Kasal <kasal@ucw.cz> wrote:
-> From: Pat Thoyts <patthoyts@users.sourceforge.net>
-> Date: Wed, 24 Oct 2012 00:15:29 +0100
->
-> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
-> ---
->  contrib/credential/wincred/Makefile | 4 ----
->  1 file changed, 4 deletions(-)
->
-> diff --git a/contrib/credential/wincred/Makefile b/contrib/credential/wincred/Makefile
-> index 39fa5e0..e64cd9a 100644
-> --- a/contrib/credential/wincred/Makefile
-> +++ b/contrib/credential/wincred/Makefile
-> @@ -1,9 +1,5 @@
->  all: git-credential-wincred.exe
->
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Date: Wed, 24 Oct 2012 00:15:29 +0100
+
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+---
+
+Hi kusma,
+
+On Tue, May 13, 2014 at 08:34:36AM +0200, Erik Faye-Lund wrote:
+> Would it be better to set these if not already set, i.e:
+> 
 > -CC = gcc
 > -RM = rm -f
 > -CFLAGS = -O2 -Wall
-> -
+> +CC ?= gcc
+> +RM ?= rm -f
+> +CFLAGS ?= -O2 -Wall
+> 
+> instead?
 
-Would it be better to set these if not already set, i.e:
+... and moving it after the two includes, so that it does not
+override the values set there?
 
+Can you ack this?
+
+ contrib/credential/wincred/Makefile | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/credential/wincred/Makefile b/contrib/credential/wincred/Makefile
+index 39fa5e0..6e992c0 100644
+--- a/contrib/credential/wincred/Makefile
++++ b/contrib/credential/wincred/Makefile
+@@ -1,12 +1,12 @@
+ all: git-credential-wincred.exe
+ 
 -CC = gcc
 -RM = rm -f
 -CFLAGS = -O2 -Wall
+-
+ -include ../../../config.mak.autogen
+ -include ../../../config.mak
+ 
 +CC ?= gcc
 +RM ?= rm -f
 +CFLAGS ?= -O2 -Wall
-
-instead?
++
+ prefix ?= /usr/local
+ libexecdir ?= $(prefix)/libexec/git-core
+ 
+-- 
+1.9.2.msysgit.0.161.g83227c1
 
 -- 
 -- 
