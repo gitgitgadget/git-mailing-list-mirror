@@ -1,134 +1,180 @@
 From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT v2 07/29] Added test cases for "guilt fold".
-Date: Tue, 13 May 2014 17:30:24 -0400
-Message-ID: <20140513213024.GF4791@meili.valhalla.31bits.net>
-References: <1400013065-27919-1-git-send-email-cederp@opera.com>
- <1400013065-27919-8-git-send-email-cederp@opera.com>
+Subject: Re: [GUILT 19/28] Check that "guilt graph" works when working on a
+ branch with a comma.
+Date: Tue, 13 May 2014 17:33:22 -0400
+Message-ID: <20140513213321.GG4791@meili.valhalla.31bits.net>
+References: <1395387126-13681-1-git-send-email-cederp@opera.com>
+ <1395387126-13681-20-git-send-email-cederp@opera.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Tue May 13 23:30:24 2014
+X-From: git-owner@vger.kernel.org Tue May 13 23:33:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkKHH-0001cc-8m
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 23:30:23 +0200
+	id 1WkKK7-0006bg-Um
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 23:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754431AbaEMVaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 17:30:20 -0400
-Received: from josefsipek.net ([64.9.206.49]:1724 "EHLO josefsipek.net"
+	id S1754583AbaEMVdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 17:33:17 -0400
+Received: from josefsipek.net ([64.9.206.49]:1732 "EHLO josefsipek.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753463AbaEMVaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 17:30:18 -0400
+	id S1754046AbaEMVdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 17:33:15 -0400
 Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
-	by josefsipek.net (Postfix) with ESMTPSA id 76B1A55654;
-	Tue, 13 May 2014 17:30:17 -0400 (EDT)
+	by josefsipek.net (Postfix) with ESMTPSA id 0C7D455654;
+	Tue, 13 May 2014 17:33:15 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <1400013065-27919-8-git-send-email-cederp@opera.com>
+In-Reply-To: <1395387126-13681-20-git-send-email-cederp@opera.com>
 User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248861>
 
-On Tue, May 13, 2014 at 10:30:43PM +0200, Per Cederqvist wrote:
-> Test that we can combine any combination of patches with empty and
-> non-empty messages, both with and without guilt.diffstat.  (All
-> patches are empty.)
+On Fri, Mar 21, 2014 at 08:31:57AM +0100, Per Cederqvist wrote:
+> git branch names can contain commas.  Check that "guilt graph" works
+> even in that case.
 > 
 > Signed-off-by: Per Cederqvist <cederp@opera.com>
 > ---
->  regression/t-035.out | 467 +++++++++++++++++++++++++++++++++++++++++++++++++++
->  regression/t-035.sh  |  62 +++++++
->  2 files changed, 529 insertions(+)
->  create mode 100644 regression/t-035.out
->  create mode 100755 regression/t-035.sh
->
-...
-> diff --git a/regression/t-035.sh b/regression/t-035.sh
-> new file mode 100755
-> index 0000000..e914b32
-> --- /dev/null
-> +++ b/regression/t-035.sh
-> @@ -0,0 +1,62 @@
-> +#!/bin/bash
-> +#
-> +# Test the fold code
-> +#
-> +
-> +source "$REG_DIR/scaffold"
-> +
-> +cmd setup_repo
-> +
+>  regression/t-033.out | 62 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  regression/t-033.sh  | 37 +++++++++++++++++++++++++++++++
+>  2 files changed, 99 insertions(+)
+> 
+> diff --git a/regression/t-033.out b/regression/t-033.out
+> index 76613f9..e638d7b 100644
+> --- a/regression/t-033.out
+> +++ b/regression/t-033.out
+> @@ -1,3 +1,65 @@
+>  % setup_repo
+>  % guilt graph
+>  No patch applied.
+> +% git checkout -b a,graph master
+> +Switched to a new branch 'a,graph'
+> +% guilt init
+> +% guilt new a.patch
+> +% guilt pop
+> +All patches popped.
+> +% guilt push
+> +Applying patch..a.patch
+> +Patch applied.
+> +% guilt graph
+> +digraph G {
+> +# checking rev 95275d7c05c6a6176d3941374115b91272877f6c
+> +	"95275d7c05c6a6176d3941374115b91272877f6c" [label="a.patch"]
+> +}
+> +% git add file.txt
+> +% guilt refresh
+> +Patch a.patch refreshed
+> +% guilt pop
+> +All patches popped.
+> +% guilt push
+> +Applying patch..a.patch
+> +Patch applied.
+> +% guilt graph
+> +digraph G {
+> +# checking rev ff2775f8d1dc753f635830adcc3a067e0b681e2d
+> +	"ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label="a.patch"]
+> +}
+> +% guilt new b.patch
+> +% git add file2.txt
+> +% guilt refresh
+> +Patch b.patch refreshed
+> +% guilt pop
+> +Now at a.patch.
+> +% guilt push
+> +Applying patch..b.patch
+> +Patch applied.
+> +% guilt graph
+> +digraph G {
+> +# checking rev c7014443c33d2b0237293687ceb9cbd38313df65
+> +	"c7014443c33d2b0237293687ceb9cbd38313df65" [label="b.patch"]
+> +# checking rev ff2775f8d1dc753f635830adcc3a067e0b681e2d
+> +	"ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label="a.patch"]
+> +}
+> +% guilt new c.patch
+> +% git add file.txt
+> +% guilt refresh
+> +Patch c.patch refreshed
+> +% guilt pop
+> +Now at b.patch.
+> +% guilt push
+> +Applying patch..c.patch
+> +Patch applied.
+> +% guilt graph
+> +digraph G {
+> +# checking rev 891bc14b5603474c9743fd04f3da888644413dc5
+> +	"891bc14b5603474c9743fd04f3da888644413dc5" [label="c.patch"]
+> +# checking rev c7014443c33d2b0237293687ceb9cbd38313df65
+> +	"c7014443c33d2b0237293687ceb9cbd38313df65" [label="b.patch"]
+> +# checking rev ff2775f8d1dc753f635830adcc3a067e0b681e2d
+> +	"ff2775f8d1dc753f635830adcc3a067e0b681e2d" [label="a.patch"]
+> +	"891bc14b5603474c9743fd04f3da888644413dc5" -> "ff2775f8d1dc753f635830adcc3a067e0b681e2d"; // ?
+> +}
+> diff --git a/regression/t-033.sh b/regression/t-033.sh
+> index ae40577..57dce78 100755
+> --- a/regression/t-033.sh
+> +++ b/regression/t-033.sh
+> @@ -3,9 +3,46 @@
+>  # Test the graph code
+>  #
+>  
 > +function fixup_time_info
 > +{
 > +	cmd guilt pop
-> +	touch -a -m -t "$TOUCH_DATE" ".git/patches/master/$1"
+> +	touch -a -m -t "$TOUCH_DATE" ".git/patches/a,graph/$1"
 > +	cmd guilt push
 > +}
 > +
-> +function empty_patch
-> +{
-> +	cmd guilt new "empty$1"
-> +	fixup_time_info "empty$1"
-> +}
-> +
-> +function nonempty_patch
-> +{
-> +	if [ "$1" = -2 ]; then
-> +		msg="Another commit message."
-> +	else
-> +		msg="A commit message."
-> +	fi
-> +
-> +	cmd guilt new -f -s -m "$msg" "nonempty$1"
-> +	fixup_time_info "nonempty$1"
-> +}
-> +
-> +for using_diffstat in true false; do
-> +	cmd git config guilt.diffstat $using_diffstat
-> +	for patcha in empty nonempty; do
-> +		for patchb in empty nonempty; do
-> +
-> +			if [ $patcha = $patchb ]
-> +			then
+>  source "$REG_DIR/scaffold"
+>  
+>  cmd setup_repo
+>  
 
-I know that this is before patch 29, but ... style? ;)
+A comment here to justify this seemingly useless guilt-graph call?  Maybe
+adding one of the '%%' lines between each section.  Otherwise, this looks
+good.
 
-Otherwise, looks good.  I like this way better than the unrolled loop in v1
-of this patch.
-
-Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-
-
-> +				suffixa=-1
-> +				suffixb=-2
-> +			else
-> +				suffixa=
-> +				suffixb=
-> +			fi
+>  shouldfail guilt graph
+>  
+> +cmd git checkout -b a,graph master
 > +
-> +			echo "%% $patcha + $patchb (diffstat=$using_diffstat)"
-> +			${patcha}_patch $suffixa
-> +			${patchb}_patch $suffixb
-> +			cmd guilt pop
-> +			cmd guilt fold $patchb$suffixb
-> +			fixup_time_info $patcha$suffixa
-> +			cmd list_files
-> +			cmd guilt pop
-> +			cmd guilt delete -f $patcha$suffixa
-> +			cmd list_files
+> +cmd guilt init
 > +
-> +		done
-> +	done
-> +done
+> +cmd guilt new a.patch
+> +
+> +fixup_time_info a.patch
+> +cmd guilt graph
+> +
+> +cmd echo a >> file.txt
+> +cmd git add file.txt
+> +cmd guilt refresh
+> +fixup_time_info a.patch
+> +cmd guilt graph
+> +
+> +# An unrelated file. No deps.
+> +cmd guilt new b.patch
+> +cmd echo b >> file2.txt
+> +cmd git add file2.txt
+> +cmd guilt refresh
+> +fixup_time_info b.patch
+> +cmd guilt graph
+> +
+> +# An change to an old file. Should add a dependency.
+> +cmd guilt new c.patch
+> +cmd echo c >> file.txt
+> +cmd git add file.txt
+> +cmd guilt refresh
+> +fixup_time_info c.patch
+> +cmd guilt graph
 > -- 
 > 1.8.3.1
 > 
 
 -- 
-*NOTE: This message is ROT-13 encrypted twice for extra protection*
+Ready; T=0.01/0.01 17:32:39
