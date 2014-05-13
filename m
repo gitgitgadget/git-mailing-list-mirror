@@ -1,95 +1,61 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT v2 29/29] Added a short style guide, and Emacs settings.
-Date: Tue, 13 May 2014 22:31:05 +0200
-Message-ID: <1400013065-27919-30-git-send-email-cederp@opera.com>
-References: <1400013065-27919-1-git-send-email-cederp@opera.com>
-Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
-To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Tue May 13 22:38:24 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] contrib: completion: fix 'eread()' namespace
+Date: Tue, 13 May 2014 13:41:15 -0700
+Message-ID: <xmqqvbt9mmxg.fsf@gitster.dls.corp.google.com>
+References: <1399987279-12487-1-git-send-email-felipe.contreras@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git-fc@googlegroups.com, git@vger.kernel.org,
+	SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= <szeder@ira.uka.de>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 13 22:41:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkJSu-0000Zn-Br
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 22:38:20 +0200
+	id 1WkJVw-0005nG-S3
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 22:41:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754786AbaEMUiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 16:38:14 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:50140 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753303AbaEMUiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 16:38:11 -0400
-Received: by mail-lb0-f171.google.com with SMTP id 10so720000lbg.30
-        for <git@vger.kernel.org>; Tue, 13 May 2014 13:38:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=esb1b0gLKkBLKAADjF3XQG/2tK1M56Xnx3tSO3CVCdY=;
-        b=AS4aSnoe5J2L9KThNiytp7N3WQ/SpLoufhCdODBIYeGn2jKXX+nQ4igMPpQfaSH9uf
-         oSJRVMhCyzifBZQ10az7tc8oKAcxRtSy1yq/13gBH/rtyH+kdVMyBX7ehJ1Pkwhli0NN
-         mT9H++6FLNGZPov7KNhM3sDO8ls1o6985qRzFGVsUSrvpeilI+40koc6XXP/fQQu9W4z
-         IJe6y9nBiEV0ewX6vog+SlIvF5VLsgFOYLsDy4kgj0VQkcFTzSIRH+jF78mEYYoX/d3O
-         W69CX9X4wb91xHOVDj9oi+r7+7r6ymSjqv2NXLehO94zk51iCKETMbFd99s2kQ9eGrO4
-         XKgQ==
-X-Gm-Message-State: ALoCoQly3ClB0j+0RtZLgR+ucZm0hMmgbDJIyY4CfnVBt4Q9k/kEG6tC1RNMVIa44yCW1bQEgq3V
-X-Received: by 10.152.197.69 with SMTP id is5mr14252902lac.10.1400013490181;
-        Tue, 13 May 2014 13:38:10 -0700 (PDT)
-Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id m2sm11431763lbp.31.2014.05.13.13.38.08
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 13 May 2014 13:38:09 -0700 (PDT)
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1400013065-27919-1-git-send-email-cederp@opera.com>
+	id S1755088AbaEMUlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 16:41:25 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58603 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754067AbaEMUlY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 16:41:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BEE5F178D9;
+	Tue, 13 May 2014 16:41:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AwR5O39bwjeJxAANrNxih1KEQ8g=; b=lPXN+Y
+	dLLcG8vwLuTHY5L1uRWBeX9xKW4xjm9u7X7l7720AraWVHbLyGzrzdO+WOq84J2x
+	NiqhTiHlNUiHxfNWoF1VoIQOkc0BxPOwa+1NDB7HEGkh6eQnB+uDDKWwdyFvs4lj
+	q2Eapj0LOzxstXUyBqY20y82f/SJ6a6PTctxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VK5vnUJuBHFzaZSRG+Lp5MKkBVEzWIcv
+	wstUP0RI9nGg6kDW2hZpyP/OUvaOxNvI1VsDbWxLgwB45tSTIu0BobWyjZEiLWNC
+	71qSEctU3W6JCr+mc0n/HhdQumouD4lAxn88LbeFRy53pUUALwNkjU+l7LVNQZaL
+	n6eJAIFEgD8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B3985178D8;
+	Tue, 13 May 2014 16:41:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6A914178C4;
+	Tue, 13 May 2014 16:41:17 -0400 (EDT)
+In-Reply-To: <1399987279-12487-1-git-send-email-felipe.contreras@gmail.com>
+	(Felipe Contreras's message of "Tue, 13 May 2014 08:21:19 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: EEC1705E-DADE-11E3-8F94-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248847>
 
-Signed-off-by: Per Cederqvist <cederp@opera.com>
----
- .dir-locals.el             |  3 +++
- Documentation/Contributing | 15 +++++++++++++++
- 2 files changed, 18 insertions(+)
- create mode 100644 .dir-locals.el
+A reasonable regression fix.  Will queue for 2.0 final.
 
-diff --git a/.dir-locals.el b/.dir-locals.el
-new file mode 100644
-index 0000000..50ef2b7
---- /dev/null
-+++ b/.dir-locals.el
-@@ -0,0 +1,3 @@
-+((nil . ((indent-tabs-mode . t)
-+	 (tab-width . 8)))
-+ (sh-mode . ((sh-basic-offset . 8))))
-diff --git a/Documentation/Contributing b/Documentation/Contributing
-index abf3480..0da49d6 100644
---- a/Documentation/Contributing
-+++ b/Documentation/Contributing
-@@ -4,6 +4,21 @@ Documentation/SubmittingPatches file. :)
- 
- 1) Hack on the code a bit
- 
-+Please follow this style guide:
-+
-+ - Use tabs for indentation.
-+
-+ - Put "then" on the same line as "if".
-+
-+ - Follow the style of the existing code, except if it breaks the
-+   above guidlines.
-+
-+ - If you change the code to conform to the style guide, please do so
-+   in a separate commit that does not change anything else.
-+
-+Please check that you change does not break "make test".  Please add
-+new testcases for any new functionality, and if you fix a bug.
-+
- 2) Make a patch:
- 
- Use "diff -up" or "diff -uprN" to create patches. Or simply use git to
--- 
-1.8.3.1
+Thanks.
