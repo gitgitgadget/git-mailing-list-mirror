@@ -1,147 +1,147 @@
 From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT v2 16/29] Fix backslash handling when creating names of
- imported patches.
-Date: Tue, 13 May 2014 18:09:57 -0400
-Message-ID: <20140513220957.GN4791@meili.valhalla.31bits.net>
+Subject: Re: [GUILT v2 26/29] "guilt pop" now fails when there are no more
+ patches to pop.
+Date: Tue, 13 May 2014 18:23:04 -0400
+Message-ID: <20140513222304.GO4791@meili.valhalla.31bits.net>
 References: <1400013065-27919-1-git-send-email-cederp@opera.com>
- <1400013065-27919-17-git-send-email-cederp@opera.com>
+ <1400013065-27919-27-git-send-email-cederp@opera.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Wed May 14 00:10:01 2014
+X-From: git-owner@vger.kernel.org Wed May 14 00:23:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkKtc-0007JO-MR
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 00:10:01 +0200
+	id 1WkL6E-0003M2-Mx
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 00:23:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755045AbaEMWJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 18:09:57 -0400
-Received: from josefsipek.net ([64.9.206.49]:1668 "EHLO josefsipek.net"
+	id S1753112AbaEMWW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 18:22:59 -0400
+Received: from josefsipek.net ([64.9.206.49]:1703 "EHLO josefsipek.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754646AbaEMWJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 18:09:51 -0400
+	id S1753632AbaEMWW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 18:22:58 -0400
 Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
-	by josefsipek.net (Postfix) with ESMTPSA id 2340A55654;
-	Tue, 13 May 2014 18:09:50 -0400 (EDT)
+	by josefsipek.net (Postfix) with ESMTPSA id 3238755654;
+	Tue, 13 May 2014 18:22:57 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <1400013065-27919-17-git-send-email-cederp@opera.com>
+In-Reply-To: <1400013065-27919-27-git-send-email-cederp@opera.com>
 User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248873>
 
-On Tue, May 13, 2014 at 10:30:52PM +0200, Per Cederqvist wrote:
-> The 'echo %s' construct sometimes processes escape sequences.  (This
+Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 
-%s?  Should this be $s?
-
-Otherwise, looks good.
-
-> happens, for instance, under Ubuntu 14.04 when /bin/sh is actually
-> dash.)  We don't want that to happen when we are importing commits, so
-> use 'printf %s "$s"' instead.
+On Tue, May 13, 2014 at 10:31:02PM +0200, Per Cederqvist wrote:
+> This is analogous to how "guilt push" now fails when there are no more
+> patches to push.  Like push, the "--all" argument still succeeds even
+> if there was no need to pop anything.
 > 
-> (The -E option of bash that explicitly disables backslash expansion is
-> not portable; it is not supported by dash.)
+> Updated the test suite.
 > 
 > Signed-off-by: Per Cederqvist <cederp@opera.com>
 > ---
->  guilt-import-commit  |  2 +-
->  regression/t-034.out | 14 +++++++-------
->  2 files changed, 8 insertions(+), 8 deletions(-)
+>  guilt-pop            | 17 +++++++++++------
+>  regression/t-021.out |  2 ++
+>  regression/t-021.sh  |  6 ++++++
+>  regression/t-061.sh  |  6 +++++-
+>  4 files changed, 24 insertions(+), 7 deletions(-)
 > 
-> diff --git a/guilt-import-commit b/guilt-import-commit
-> index 6260c56..45f2404 100755
-> --- a/guilt-import-commit
-> +++ b/guilt-import-commit
-> @@ -30,7 +30,7 @@ for rev in `git rev-list $rhash`; do
+> diff --git a/guilt-pop b/guilt-pop
+> index f0e647f..191313e 100755
+> --- a/guilt-pop
+> +++ b/guilt-pop
+> @@ -49,9 +49,19 @@ fi
+>  patch="$1"
+>  [ ! -z "$all" ] && patch="-a"
 >  
->  	# Try to convert the first line of the commit message to a
->  	# valid patch name.
-> -	fname=`echo $s | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
-> +	fname=`printf %s "$s" | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
->  			-e "s/['\\[{}]//g" -e 's/]//g' -e 's/\*/-/g' \
->  			-e 's/\?/-/g' -e 's/\.\.\.*/./g' -e 's/^\.//' \
->  			-e 's/\.patch$//' -e 's/\.$//' | tr A-Z a-z`
-> diff --git a/regression/t-034.out b/regression/t-034.out
-> index 7bc9459..bda4399 100644
-> --- a/regression/t-034.out
-> +++ b/regression/t-034.out
-> @@ -236,7 +236,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
->  About to begin conversion...
->  Current head: 2a8b1889aa5066193bac978e6bf5073ffcfa6541
->  Converting 2a8b1889 as can-have-embedded-single-slashes
-> -Converting 0a46f8fa as backslash-isorbidden
-> +Converting 0a46f8fa as backslash-is-forbidden
->  Converting aedb74fd as x
->  Converting 30187ed0 as cannot@have@the@sequence@at-brace
->  Converting 106e8e5a as cannot_end_in_
-> @@ -300,7 +300,7 @@ Applying patch..cannot@have@the@sequence@at-brace.patch
->  Patch applied.
->  Applying patch..x.patch
->  Patch applied.
-> -Applying patch..backslash-isorbidden.patch
-> +Applying patch..backslash-is-forbidden.patch
->  Patch applied.
->  Applying patch..can-have-embedded-single-slashes.patch
->  Patch applied.
-> @@ -311,7 +311,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
+> +# Treat "guilt pop" as "guilt pop -n 1".
+> +if [ -z "$patch" ]; then
+> +	patch=1
+> +	num=t
+> +fi
+> +
+>  if [ ! -s "$applied" ]; then
+>  	disp "No patches applied."
+> -	exit 0
+> +	if [ "$patch" = "-a" ]; then
+> +		exit 0
+> +	else
+> +		exit 1
+> +	fi
+>  elif [ "$patch" = "-a" ]; then
+>  	# we are supposed to pop all patches
 >  
->      Can/have/embedded/single/slashes
+> @@ -68,11 +78,6 @@ elif [ ! -z "$num" ]; then
+>  	# catch underflow
+>  	[ $eidx -lt 0 ] && eidx=0
+>  	[ $eidx -eq $sidx ] && die "No patches requested to be removed."
+> -elif [ -z "$patch" ]; then
+> -	# we are supposed to pop only the current patch on the stack
+> -
+> -	sidx=`wc -l < "$applied"`
+> -	eidx=`expr $sidx - 1`
+>  else
+>  	# we're supposed to pop only up to a patch, make sure the patch is
+>  	# in the series
+> diff --git a/regression/t-021.out b/regression/t-021.out
+> index 9b42d9c..58be12f 100644
+> --- a/regression/t-021.out
+> +++ b/regression/t-021.out
+> @@ -287,6 +287,8 @@ index 0000000..8baef1b
+>  +++ b/def
+>  @@ -0,0 +1 @@
+>  +abc
+> +% guilt pop
+> +No patches applied.
+>  % guilt push --all
+>  Applying patch..modify
+>  Patch applied.
+> diff --git a/regression/t-021.sh b/regression/t-021.sh
+> index 614e870..e0d2dc1 100755
+> --- a/regression/t-021.sh
+> +++ b/regression/t-021.sh
+> @@ -23,6 +23,12 @@ guilt series | _tac | while read n ; do
+>  done
 >  
-> -commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-isorbidden.patch)
-> +commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-is-forbidden.patch)
->  Author: Author Name <author@email>
->  Date:   Mon Jan 1 00:00:00 2007 +0000
+>  #
+> +# pop when there is nothing to pop
+> +#
+> +
+> +shouldfail guilt pop
+> +
+> +#
+>  # push all
+>  #
+>  cmd guilt push --all
+> diff --git a/regression/t-061.sh b/regression/t-061.sh
+> index 1411baa..6192f1b 100755
+> --- a/regression/t-061.sh
+> +++ b/regression/t-061.sh
+> @@ -48,7 +48,11 @@ cmd list_files
 >  
-> @@ -518,8 +518,6 @@ d .git/patches/master
->  d .git/refs/patches
->  d .git/refs/patches/master
->  f 06beca7069b9e576bd431f65d13862ed5d3e2a0f  .git/patches/master/ctrlisforbidden.patch
-> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/series
-> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/status
->  f 09b7e9be44ae5ec3a4bb30f5ee9d4ebc2c042f64  .git/patches/master/two_consecutive_dots_(.)_is_forbidden.patch
->  f 0b971c9a17aeca2319c93d700ffd98acc2a93451  .git/patches/master/question-mark-is-forbidden.patch
->  f 2b8392f63d61efc12add554555adae30883993cc  .git/patches/master/cannot-end-in-slash-.patch
-> @@ -529,7 +527,7 @@ f 34e07c584032df137f19bdb66d93f316f00a5ac8  .git/patches/master/tildeisforbidden
->  f 49bab499826b63deb2bd704629d60c7268c57aee  .git/patches/master/the_sequence_-._is_forbidden.patch
->  f 5bcddb8ccb6e6e5e8a61e9e56cb2e0f70cbab2f5  .git/patches/master/cannot@have@the@sequence@at-brace.patch
->  f 637b982fe14a240de181ae63226b27e0c406b3dc  .git/patches/master/asterisk-is-forbidden.patch
-> -f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-isorbidden.patch
-> +f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-is-forbidden.patch
->  f 7b103c3c7ae298cd2334f6f49da48bae1424f77b  .git/patches/master/crisalsoforbidden.patch
->  f 9b810b8c63779c51d2e7f61ab59cd49835041563  .git/patches/master/x.patch
->  f a22958d9ae9976fd7b2b5a9d0bcd44bf7ad9b08a  .git/patches/master/caretisforbidden.patch
-> @@ -537,6 +535,8 @@ f ab325bf5a432937fc6f231d3e8a773a62d53952b  .git/patches/master/multiple-slashes
->  f cb9cffbd4465bddee266c20ccebd14eb687eaa89  .git/patches/master/delisforbidden.patch
->  f d0885a1a1fdee0fd1e4fedce3f7acd3100540bc4  .git/patches/master/openbracketisforbidden.patch
->  f d2903523fb66a346596eabbdd1bda4e52b266440  .git/patches/master/check-multiple-.-dots-.-foo.patch
-> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/series
-> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/status
->  f dfc11f76394059909671af036598c5fbe33001ba  .git/patches/master/space_is_forbidden.patch
->  f e47474c52d6c893f36d0457f885a6dd1267742bb  .git/patches/master/colon_is_forbidden.patch
->  f e7a5f8912592d9891e6159f5827c8b4f372cc406  .git/patches/master/the_sequence_.lock-_is_forbidden.patch
-> @@ -548,7 +548,7 @@ r 1626a11d979a1e9e775c766484172212277153df  .git/refs/patches/master/asterisk-is
->  r 3a0d5ccef0359004fcaa9cee98fbd6a2c4432e74  .git/refs/patches/master/tildeisforbidden.patch
->  r 434e07cacdd8e7eb4723e67cb2d100b3a4121a3a  .git/refs/patches/master/can-have-embedded-single-slashes.patch
->  r 74df14ab3a0ec9a0382998fbf167ebb1b0a36c6a  .git/refs/patches/master/question-mark-is-forbidden.patch
-> -r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-isorbidden.patch
-> +r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-is-forbidden.patch
->  r 96a3e92c4df85f52362ce4f6d31983c462db9ae9  .git/refs/patches/master/a-component-may-not-end-in-foolock.patch
->  r 9fc9677b61880f9159838e89f714893e0a2fcafb  .git/refs/patches/master/delisforbidden.patch
->  r a275ed5d7f10ea88c986852ee95a7d5a61663b5f  .git/refs/patches/master/cannot@have@the@sequence@at-brace.patch
+>  for i in `seq 5`
+>  do
+> -	cmd guilt pop
+> +	if [ $i -ge 5 ]; then
+> +		shouldfail guilt pop
+> +	else
+> +		cmd guilt pop
+> +	fi
+>  	cmd git for-each-ref
+>  	cmd guilt push
+>  	cmd git for-each-ref
 > -- 
 > 1.8.3.1
 > 
 
 -- 
-I have always wished for my computer to be as easy to use as my telephone;
-my wish has come true because I can no longer figure out how to use my
-telephone.
-		- Bjarne Stroustrup
+Linux, n.:
+  Generous programmers from around the world all join forces to help
+  you shoot yourself in the foot for free. 
