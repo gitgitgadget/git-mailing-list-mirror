@@ -1,87 +1,91 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT v2 13/29] Check that "guilt header '.*'" fails.
-Date: Tue, 13 May 2014 22:30:49 +0200
-Message-ID: <1400013065-27919-14-git-send-email-cederp@opera.com>
+Subject: [GUILT v2 10/29] Run test_failed if the exit status of a test script is bad.
+Date: Tue, 13 May 2014 22:30:46 +0200
+Message-ID: <1400013065-27919-11-git-send-email-cederp@opera.com>
 References: <1400013065-27919-1-git-send-email-cederp@opera.com>
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Tue May 13 22:35:47 2014
+X-From: git-owner@vger.kernel.org Tue May 13 22:35:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkJQQ-0004n2-0x
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 22:35:46 +0200
+	id 1WkJQP-0004n2-02
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 22:35:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755156AbaEMUfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 16:35:41 -0400
-Received: from mail-lb0-f175.google.com ([209.85.217.175]:60867 "EHLO
-	mail-lb0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752819AbaEMUfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 16:35:39 -0400
-Received: by mail-lb0-f175.google.com with SMTP id l4so706968lbv.20
-        for <git@vger.kernel.org>; Tue, 13 May 2014 13:35:37 -0700 (PDT)
+	id S1755151AbaEMUfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 16:35:22 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:64584 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753823AbaEMUfR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 16:35:17 -0400
+Received: by mail-la0-f41.google.com with SMTP id e16so723719lan.28
+        for <git@vger.kernel.org>; Tue, 13 May 2014 13:34:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4KaPcCrOhvifmR6kVqqshYkiPoeMmjYldhuspZj1FAQ=;
-        b=NlAPtdovfpV7qzn5/KMi3Kb0+NrtdkswOoCqPbI5pOZCEL9pupOmXVYf0UGAMsZYWw
-         Li/sWEjW51V1wJGCixQdavGD/UJBBUAcA6tLmneRT9iNS+J8sB5UKYez5/ai2gqZX7Gk
-         yucasvRNUc+9wnx5uc5xk8t2XYqf37g/4IRURyI7okib9lLxrkGlPnspJ6l5RwzJ1xV1
-         vpIliB/2dZ8iiNph69Dv7yltukeofOJMU2x6/zAgEIYacHMiCiqgVMZXO32R2jNddYS4
-         FqFxew1AF/pnZE+3vMaBTzLrVbIGajakB2w5oK1o4JT4bVRKxPOXKI5EvFr61WeCsYV0
-         JdQQ==
-X-Gm-Message-State: ALoCoQnravlh9x1o/RDUPvVY0AewIPfKyAkZFqek7PexPVdd4lhZtxNOZV7OEYR2t8otaN4U8H2S
-X-Received: by 10.112.67.35 with SMTP id k3mr29901653lbt.17.1400013337670;
-        Tue, 13 May 2014 13:35:37 -0700 (PDT)
+        bh=scDdJhwo1TN/TmV+6arU07pJLMLtgHL65y585o8jJk0=;
+        b=eqWKQ3V1r/ghaZgiVuQbcQitGrdyH2bE5YYPD98wVh16bZRJvv+3eKIqTAeX+RKhsb
+         ocjWnb0r0J+8PtkmIHoS48Odp8X/Wmz7EKQZV477HfkfUCKPfU07L2fGFcwOw8CZ9m/J
+         qLTsCRhjBBIvhz57v84UONWfgeqZutkqwOa9HXOsejp4CeWyT6JAcwVVdbwcLWq/I3kR
+         ns2BMS7kW4MYDZ68Qy8AbN55kCrQXzVuJFa/XsqqVmetrNu3JWg6GmonxVNAqL5jNXxP
+         1l7H2WvZzsyDdyaMwsLSLPgmSs9hTU7KapotAnV8ndYkf6Bx/QA5+7tSnJTiDASzh9Jl
+         Bw1A==
+X-Gm-Message-State: ALoCoQlkTWq9oeZ9M1iI4Oz/wgjpST4N0lK35NzUshLrAoswalzp3KpnxZqy59RislPlA5xR3TUz
+X-Received: by 10.112.139.166 with SMTP id qz6mr30068768lbb.13.1400013288777;
+        Tue, 13 May 2014 13:34:48 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id m2sm11431763lbp.31.2014.05.13.13.35.35
+        by mx.google.com with ESMTPSA id m2sm11431763lbp.31.2014.05.13.13.34.46
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 13 May 2014 13:35:36 -0700 (PDT)
+        Tue, 13 May 2014 13:34:47 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1400013065-27919-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248828>
+
+There were two problems with the old code:
+
+ - Since "set -e" is in effect (that is set in scaffold) the run-test
+   script exited immediately if a t-*.sh script failed.  This is not
+   nice, as we want the error report that test_failed prints.
+
+ - The code ran "cd -" between running the t-*.sh script and checking
+   the exit status, so the exit status was lost.  (Actually, the exit
+   status was saved in $ERR, but nothing ever looked at $ERR.)
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
 ---
- regression/t-028.out | 7 +++++++
- regression/t-028.sh  | 4 ++++
- 2 files changed, 11 insertions(+)
+ regression/run-tests | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/regression/t-028.out b/regression/t-028.out
-index 1564c09..ea72a3a 100644
---- a/regression/t-028.out
-+++ b/regression/t-028.out
-@@ -49,3 +49,10 @@ Signed-off-by: Commiter Name <commiter@email>
+diff --git a/regression/run-tests b/regression/run-tests
+index a10e796..8e0af9f 100755
+--- a/regression/run-tests
++++ b/regression/run-tests
+@@ -55,11 +55,15 @@ function run_test
  
- % guilt header non-existant
- Patch non-existant is not in the series
-+% guilt header .*
-+.* does not uniquely identify a patch. Did you mean any of these?
-+  modify
-+  add
-+  remove
-+  mode
-+  patch-with-some-desc
-diff --git a/regression/t-028.sh b/regression/t-028.sh
-index 88e9adb..2ce0378 100755
---- a/regression/t-028.sh
-+++ b/regression/t-028.sh
-@@ -31,4 +31,8 @@ done
- 
- shouldfail guilt header non-existant
- 
-+# This is an evil variant of a non-existant patch.  However, this
-+# patch name is a regexp that just happens to match an existing patch.
-+shouldfail guilt header '.*'
+ 	# run the test
+ 	cd "$REPODIR" > /dev/null
+-	"$REG_DIR/t-$1.sh" 2>&1 > "$LOGFILE"
+-	ERR=$?
++	if "$REG_DIR/t-$1.sh" 2>&1 > "$LOGFILE"; then
++		ERR=false
++	else
++		ERR=true
++	fi
 +
- # FIXME: how do we check that -e works?
+ 	cd - > /dev/null
+ 
+-	[ $? -ne 0 ] && test_failed
++	$ERR && test_failed
+ 	diff -u "t-$1.out" "$LOGFILE" || test_failed
+ 
+ 	echo "done."
 -- 
 1.8.3.1
