@@ -1,112 +1,179 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Error using git-remote-hg
-Date: Tue, 13 May 2014 14:09:55 -0500
-Message-ID: <53726e0355875_4aa4b312f892@nysa.notmuch>
-References: <ACDAFE7C-6615-4E44-AE6C-C12CD001EF4F@lltech.fr>
- <53711AA5.4040001@web.de>
- <53712309a8d5e_2ea6e1f2f888@nysa.notmuch>
- <23A431B4-FCD5-4E8A-A854-30ED30A09D5F@lltech.fr>
- <537233CC.3050904@web.de>
- <xmqq61l9powd.fsf@gitster.dls.corp.google.com>
- <20140513184800.GF9051@wst420>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/2] t: git-show: adapt tests to fixed 'git show'
+Date: Tue, 13 May 2014 12:26:42 -0700
+Message-ID: <xmqqiop9o4y5.fsf@gitster.dls.corp.google.com>
+References: <20140512230943.GC32316@wheezy.local>
+	<20140512231107.GE32316@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	Charles Brossollet <chbrosso@lltech.fr>, git@vger.kernel.org,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: William Giokas <1007380@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 13 21:21:06 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Tue May 13 21:27:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkIG5-0008RX-8g
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 21:21:01 +0200
+	id 1WkIM2-0001tg-Go
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 21:27:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944AbaEMTU6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 15:20:58 -0400
-Received: from mail-ob0-f172.google.com ([209.85.214.172]:43536 "EHLO
-	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753249AbaEMTU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 15:20:56 -0400
-Received: by mail-ob0-f172.google.com with SMTP id wp18so947485obc.31
-        for <git@vger.kernel.org>; Tue, 13 May 2014 12:20:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=ilS63Fve+fTLlR8v5McU71iqzOBvL0s8+HErOHjwkjs=;
-        b=N9hWFz5gXkRqQIMOXWLvvu3d8JSeW6MWuhfY8KBdVSyeMsMJvARpyjsl9MgjEfZWe5
-         UQ1ndE0Hm3lO4m9N/1kHAE4gETjmLvocE5MoXOKCjmje6MJL8Vv6lbxvi8Otwjq9ItB3
-         O/QqFBg41bfbws6gJcC/ZWcfBhWDfQ3nCFXQuo0vJk2RNSnO3QB1OEMVHHzl5oOAYu1U
-         5UT1yWJ7dfeke4iAvmCtUaDRiu4SFXdUXYRa5e3Jj/M+n8OYjNhXJAA1upe4TCyauQei
-         PPqHtqGPw1xEK51bcZ7d0Dc12Jiz2z4WSt3gwXghV6kQf1mb7Xo2LXG0on5+0skAjmvW
-         HOZg==
-X-Received: by 10.60.51.136 with SMTP id k8mr1277974oeo.33.1400008856407;
-        Tue, 13 May 2014 12:20:56 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id jy6sm27513477obc.25.2014.05.13.12.20.50
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 May 2014 12:20:50 -0700 (PDT)
-In-Reply-To: <20140513184800.GF9051@wst420>
+	id S1753566AbaEMT1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 15:27:07 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61789 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752464AbaEMT1D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 15:27:03 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5729118A26;
+	Tue, 13 May 2014 15:27:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xVlLWmh+YrzKemj6UEoxrCOWa9E=; b=lnOOVb
+	70NaN5NC4NHUEr6oKK/1gRbmmvuLa+xtmE9tC6zcPTi+f7VOA1JhFeDUxDPDV2t6
+	m5oIMkEYu4rGKSnqaVaFhUx5c+kX1h9sNi8AZRq+6KPCk/pLHCvKrREfyg/8SYyO
+	P4dnzhka3ChYD9LDohfRCc3A2xkpMBr5Sa718=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hWQig5m/g2M24i74AtAKjj1AtNc4V6S2
+	Xu66tf2wP8Ve/QCtiEUEFWMGUGfI0577gcLmKXPnVYW1KZjxehURmcsTP7CbfqgQ
+	DOW2xbh1LyvnEDiADgMxpGwcfCYpO7PWpZHwovWAg2gB9qA7ngscYhCkaQfwyToK
+	Uzr5T5IZNf0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4C75D18A25;
+	Tue, 13 May 2014 15:27:03 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A934B189E9;
+	Tue, 13 May 2014 15:26:44 -0400 (EDT)
+In-Reply-To: <20140512231107.GE32316@wheezy.local> (Max Kirillov's message of
+	"Tue, 13 May 2014 02:11:07 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 84CAC678-DAD4-11E3-BDB8-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248808>
 
-William Giokas wrote:
-> On Tue, May 13, 2014 at 10:30:26AM -0700, Junio C Hamano wrote:
+Max Kirillov <max@max630.net> writes:
 
-> >     Why do we "import changegroup" unconditionally, even though it
-> >     is only used in the new codepath meant only for version 3.0 or
-> >     higher, not inside the "if" block that decides if we need that
-> >     module? 
+> 'git show' used to print extra newline after merge commit, and it was
+> recorded so into the test reference data. Now when the behavior is
+> fixed, the tests should be updated.
+>
+> Signed-off-by: Max Kirillov <max@max630.net>
+> ---
 
-> changegroup is prefectly /okay/ to import unconditionally, though as you
-> say it will never be used.
+Hmph.  Having these as two separate commits would mean that 1/2
+alone will break the test, hurting bisectability a little bit.  The
+necessary adjustments in this patch is small enough that we may be
+better off squashing them into one.
 
-As you say, it's perfectly OK.
+>  t/t1507-rev-parse-upstream.sh |  2 +-
+>  t/t7600-merge.sh              | 11 +++++------
+>  2 files changed, 6 insertions(+), 7 deletions(-)
+>
+> diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
+> index 2a19e79..672280b 100755
+> --- a/t/t1507-rev-parse-upstream.sh
+> +++ b/t/t1507-rev-parse-upstream.sh
+> @@ -100,7 +100,7 @@ test_expect_success 'merge my-side@{u} records the correct name' '
+>  	git branch -D new ;# can fail but is ok
+>  	git branch -t new my-side@{u} &&
+>  	git merge -s ours new@{u} &&
+> -	git show -s --pretty=format:%s >actual &&
+> +	git show -s --pretty=tformat:%s >actual &&
+>  	echo "Merge remote-tracking branch ${sq}origin/side${sq}" >expect &&
+>  	test_cmp expect actual
+>  )
 
-> We can also be even more explicit with what we import by doing something
-> like::
-> 
->   try:
->       from mercurial.changegroup import getbundle
-> 
->   except ImportError:
->       def getbundle(__empty__, **kwargs):
->           return repo.getbundle(**kwargs)
+This seems to me that it is updating how the output is produced, not
+updating the expected outputs from commands with arguments we have
+been testing.  I have been expecting to see changes to the pieces of
+the code that prepare the expected output, so that we can compare
+old expectations, which would have been expecting something strange,
+with new expectations from the updated code, which would show that
+the new behaviour is a welcome change because it would produce more
+sensible output.
 
-We could try that, but that would assume we want to maintain getbundle()
-for the long run, and I personally don't want to do that. I would rather
-contact the Mercurial developers about ways in which the push() method
-can be improved so we don't need to have our own version. Hopefully
-after it's improved we wouldn't have to call getbundle().
+Having said all that, for this particular test piece, I agree with
+the patch that using --pretty=tformat:%s is a lot more sensible and
+using --pretty=format:%s and expecting its output to be terminated
+with the newline was an unrealistic test.  After all, "tformat" is
+the version with "line terminator" semantics, as opposed to "item
+separator" semantics offered by "--pretty=format:", and the test
+merely was depending on the bug to expect a complete line output
+(i.e. "echo" without "-n"), which you fixed.  The new test makes a
+lot more sense and is relevant to the real world use, and I would
+have preferred to see it explained as such in the log message.
 
-Moreover, eventually there will be a Mercurial 4.0, even 5.0, and at
-some point we would want to remove the hacks for older versions. When we
-do so we would want the import to remain unconditionally, and remove the
-'check_version(3, 0)' which is already helping to explain what the code
-is for without the need of comments.
+> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+> index 10aa028..b164621 100755
+> --- a/t/t7600-merge.sh
+> +++ b/t/t7600-merge.sh
+> @@ -57,11 +57,10 @@ create_merge_msgs () {
+>  		git log --no-merges ^HEAD c2 c3
+>  	} >squash.1-5-9 &&
+>  	: >msg.nologff &&
+> -	echo >msg.nolognoff &&
+> +	: >msg.nolognoff &&
+>  	{
+>  		echo "* tag 'c3':" &&
+> -		echo "  commit 3" &&
+> -		echo
+> +		echo "  commit 3"
+>  	} >msg.log
+>  }
 
-> I was really sad to see that, and didn't have time to really look at it
-> because of work and other projects, but I hope this presents a better
-> solution than the current patch.
+These are updating the expectation.  We used to expect an
+unnecessary trailing blank line, and now we do not, which clearly
+shows that the previous fix is a welcome change.
 
-Either way Junio doesn't maintain this code, I do. And it's not
-maintained in git.git, git's maintained out-of-tree (thanks to Junio's
-decisions).
+> @@ -71,7 +70,7 @@ verify_merge () {
+>  	git diff --exit-code &&
+>  	if test -n "$3"
+>  	then
+> -		git show -s --pretty=format:%s HEAD >msg.act &&
+> +		git show -s --pretty=tformat:%s HEAD >msg.act &&
+>  		test_cmp "$3" msg.act
+>  	fi
+>  }
 
-So please post your suggestions and patches to git-fc@googlegroups.com,
-and use the latest code at https://github.com/felipec/git-remote-hg.
+It is hard to judge what is fed as "$3" here without context, but
+this is in line with the "--pretty=tformat aka --format is the
+normal thing to use" we saw in 1507.  The same for the other hunk.
 
-Cheers.
+> @@ -620,10 +619,10 @@ test_expect_success 'merge early part of c2' '
+>  	git tag c6 &&
+>  	git branch -f c5-branch c5 &&
+>  	git merge c5-branch~1 &&
+> -	git show -s --pretty=format:%s HEAD >actual.branch &&
+> +	git show -s --pretty=tformat:%s HEAD >actual.branch &&
+>  	git reset --keep HEAD^ &&
+>  	git merge c5~1 &&
+> -	git show -s --pretty=format:%s HEAD >actual.tag &&
+> +	git show -s --pretty=tformat:%s HEAD >actual.tag &&
+>  	test_cmp expected.branch actual.branch &&
+>  	test_cmp expected.tag actual.tag
+>  '
 
--- 
-Felipe Contreras
+How about squashing these two into a single patch, and at the end of
+the log message for 1/2, add this to explain the changes to the
+test:
+
+    Also existing tests are updated to demonstrate the new
+    behaviour.  Earlier, the tests that used "git show -s
+    --pretty=format:%s", even though "--pretty=format:%s" calls for
+    item separator semantics and does not ask for the terminating
+    newline after the last item, expected the output to end with
+    such a newline.  They were relying on the buggy behaviour.  Use
+    of "--format=%s", which is equivalent to "--pretty=tformat:%s"
+    that asks for a terminating newline after each item, is a more
+    realistic way to use the command.
+
+    The update to verify_merge in t7600 adjusts the the merge
+    message that used to expect an extra blank line in the output,
+    which has been eliminated with this fix.
+
+or something like that?
