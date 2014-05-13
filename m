@@ -1,119 +1,84 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: [PATCH 2/2] wincred: avoid overwriting configured variables
-Date: Tue, 13 May 2014 15:53:56 +0200
-Organization: <)><
-Message-ID: <20140513135356.GA30110@camelia.ucw.cz>
-References: <20140430064610.GA22094@camelia.ucw.cz> <CABPQNSZsviaGqFeKZE4ofF6HoUQrPvNPuowar4YDjk_Mbu5iCQ@mail.gmail.com> <20140430112724.GA22929@camelia.ucw.cz> <CABPQNSafKXDLyBj5OYW-PPWdxfxQtC23vKQsQ-_Pa1empU=n8g@mail.gmail.com> <20140513055953.GA28182@camelia.ucw.cz> <20140513060144.GC28182@camelia.ucw.cz> <CABPQNSYU5haMzdy2cDn=KF2+j_aFK19Ju+x+LTeex6JqWJMncQ@mail.gmail.com> <CAMP44s2p0t9cBg=rOdY74MKOYzekCoCj8K20F8ARjQ0RQmJygg@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 2/3] Add read-cache--daemon
+Date: Tue, 13 May 2014 16:06:30 +0200
+Message-ID: <CABPQNSZoo_GD6c6_9my1=+6b2noHWhQSGtYAz-MHE76G-SyyQA@mail.gmail.com>
+References: <CAJo=hJtgijOOMPbFjvTUaENw=hr0YixYmy1UkdqEd=CpLZ5L2A@mail.gmail.com>
+ <1399979737-8577-1-git-send-email-pclouds@gmail.com> <1399979737-8577-3-git-send-email-pclouds@gmail.com>
+ <CABPQNSaSDRhuQYey0ad6J0cXrCzrK1CYZQar5GgUM8g3JVmRSA@mail.gmail.com>
+ <CACsJy8BFEtXQc7mO1pvdeQ9GMofcW0H2uJF=E6yfN4SwQWgRbw@mail.gmail.com>
+ <CABPQNSbu9uVh_LZqQupG9TJe0_ggA1EmAWnk8H7+xOBvcsrcOg@mail.gmail.com> <CACsJy8Du+tvQ=EhZ0rdumeQwfcenhg6R9pbGcYV9bCMqSfHzfw@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Pat Thoyts <patthoyts@users.sourceforge.net>,
-        msysGit <msysgit@googlegroups.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: msysgit+bncBCU63DXMWULRB5WHZCNQKGQEDLT26NQ@googlegroups.com Tue May 13 15:54:00 2014
-Return-path: <msysgit+bncBCU63DXMWULRB5WHZCNQKGQEDLT26NQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f183.google.com ([209.85.217.183])
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 13 16:09:02 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRB5WHZCNQKGQEDLT26NQ@googlegroups.com>)
-	id 1WkD9b-0003sh-9Z
-	for gcvm-msysgit@m.gmane.org; Tue, 13 May 2014 15:53:59 +0200
-Received: by mail-lb0-f183.google.com with SMTP id s7sf33850lbd.20
-        for <gcvm-msysgit@m.gmane.org>; Tue, 13 May 2014 06:53:58 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WkDO5-0002SH-Ld
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 16:08:58 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S933870AbaEMOIx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 10:08:53 -0400
+Received: from mail-ie0-f179.google.com ([209.85.223.179]:46750 "EHLO
+	mail-ie0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760527AbaEMOHL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 10:07:11 -0400
+Received: by mail-ie0-f179.google.com with SMTP id rd18so349389iec.38
+        for <git@vger.kernel.org>; Tue, 13 May 2014 07:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:organization:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=ossrD4MNL8y70Y+gM9RFOBtN8d0qgNVZJfzW/B5KSuo=;
-        b=ld6IJ6+ta3ePZDGLe6sP8LfojlQvQSt3fhYOeIes0AnaH1BnLNlfJy+MvcXhfFGnZD
-         BNZRcPc3FILkMZwDnrcASdYG61aqwS4CZoSh5Oyg5rAPwsuE5F6VWNmqOJ/E3WqpzHAm
-         oVh+VskkeVzmwSzM5kqaQzjY9Lup4LENLA/PMIIqxst68gFiachk3xMIO04k6qoAYSCC
-         oCN1aRjDWb2U4kOrWGr4GMWYDY4AMcARhy8Bznbdj97gvjxEC6bDQZJyjr+l0TmZLrfj
-         lTx0PURF3ZSl0lvRqFEXjKNNZISExXyQAehvQdfW7rYT9iaesl4NfpqAYxyyzQgTTM/k
-         z8BQ==
-X-Received: by 10.152.116.44 with SMTP id jt12mr17389lab.10.1399989238856;
-        Tue, 13 May 2014 06:53:58 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.170.228 with SMTP id ap4ls58361lac.20.gmail; Tue, 13 May
- 2014 06:53:57 -0700 (PDT)
-X-Received: by 10.112.219.42 with SMTP id pl10mr2636lbc.22.1399989237939;
-        Tue, 13 May 2014 06:53:57 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id u49si2052134eeo.1.2014.05.13.06.53.57
-        for <msysgit@googlegroups.com>;
-        Tue, 13 May 2014 06:53:57 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 9957A1C010E;
-	Tue, 13 May 2014 15:53:57 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s4DDrvp1030224;
-	Tue, 13 May 2014 15:53:57 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s4DDruQ7030223;
-	Tue, 13 May 2014 15:53:56 +0200
-In-Reply-To: <CAMP44s2p0t9cBg=rOdY74MKOYzekCoCj8K20F8ARjQ0RQmJygg@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248784>
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=5xXMPtMp+5ukNeD1thoOlSJ6QMNiugOoW/kyj5vntbM=;
+        b=E2g37cY4eHDGn1+1dnrKrg0Eaied/xGtnHL1M96Bgqv0ZuWjU12vm9V119EpNhlEJT
+         mN/lioK6IRBVQeWUP9acY8C+IDaOWUrfCb1m3oteMnRZq5YZuXjcUy7H4RnpqzHwY0et
+         9twwP3hQplBeXjJ6SqDkdU+pMtTQbAV2G2gpyHTMq2v037a2fZ6tyWRGSTdnAc76Eq4W
+         YfqqPJWn/vCwt/ssCZXGBRIbRe3E1oIaDhuEVM6GCFSVBLxPeMjOos5XrzyPyBq/UgM9
+         dgcc24aU8b6+JUHh9seqpnezqU+08gbJEXYSt/nC/MUxSerAWQVYN78gHDwss9Ss4NFN
+         gIrg==
+X-Received: by 10.50.238.229 with SMTP id vn5mr56776562igc.45.1399990031168;
+ Tue, 13 May 2014 07:07:11 -0700 (PDT)
+Received: by 10.64.166.135 with HTTP; Tue, 13 May 2014 07:06:30 -0700 (PDT)
+In-Reply-To: <CACsJy8Du+tvQ=EhZ0rdumeQwfcenhg6R9pbGcYV9bCMqSfHzfw@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248785>
 
-Hello,
+On Tue, May 13, 2014 at 3:49 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Tue, May 13, 2014 at 8:37 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+>> On Tue, May 13, 2014 at 3:01 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+>>> What do you think is a good replacement for unix socket on Windows?
+>>> It's only used to refresh the cache in the daemon, no sensitive data
+>>> sent over, so security is not a problem. I'm thinking maybe just
+>>> TCP/IP server, but that's going to be a system-wide daemon.. Perhaps
+>>> the windows daemon could just monitor $GIT_DIR/index and refresh it?
+>>
+>> Windows has support for Named Pipes, which seems like the right kind
+>> of communication channel. However, the programming model differs quite
+>> a bit from unix-sockets:
+>>
+>> http://msdn.microsoft.com/en-us/library/windows/desktop/aa365594%28v=vs.85%29.aspx
+>
+> Yeah that was my first option, but if code cannot be shared to
+> differences then we probably should go another way. The old
+> FindWindow/PostMessage still works with modern Windows, right? Maybe
+> we could create a window with a name derived from the daemon's pid and
+> save the name in the index, then PostMessage can signal the daemon. On
+> the UNIX front, we store pid and send SIGUSR1 instead..The good thing
+> here is the Git side will be very simple (PostMessage vs kill).
 
-On Tue, May 13, 2014 at 08:18:26AM -0500, Felipe Contreras wrote:
-> Set by whom? If it's by the environment you should be running 'make -e'.
+Hmmm.... I'm a bit worried about having to load in USER32.DLL just to
+read the cache that way. But it seems we already do that, thanks to
+compat/poll/poll.c (it depends on DispatchMessage,
+MsgWaitForMultipleObjects, PeekMessage and TranslateMessage, all from
+that DLL).
 
-... or on command line (through recursive make, prehaps).
-But these both take precedence over makefile assignments.
-
-Another issue is the interaction with included makefile fragments.
-Actually, both
-	CC = gcc
-	-include ../../../config.mak
-and
-	-include ../../../config.mak
-	CC ?= gcc
-are very close.  (They would differ if config.mak contained "?=".)
-
-I was confused by the former, but perhaps it's only me.
-
-Stepan
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Preferably, we should delay-load USER32.DLL in compat/poll/poll.c, but
+if we start needing it for the reading the index, it'll be loaded by
+the vast majority of processes anyway.
