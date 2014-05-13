@@ -1,88 +1,147 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib: remote-helpers: add move warnings (v2.0)
-Date: Tue, 13 May 2014 15:02:40 -0700
-Message-ID: <xmqq7g5pmj5r.fsf@gitster.dls.corp.google.com>
-References: <1400016596-13178-1-git-send-email-felipe.contreras@gmail.com>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT v2 16/29] Fix backslash handling when creating names of
+ imported patches.
+Date: Tue, 13 May 2014 18:09:57 -0400
+Message-ID: <20140513220957.GN4791@meili.valhalla.31bits.net>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+ <1400013065-27919-17-git-send-email-cederp@opera.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 00:02:53 2014
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Wed May 14 00:10:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkKmi-0004E2-2g
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 00:02:52 +0200
+	id 1WkKtc-0007JO-MR
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 00:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754234AbaEMWCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 18:02:48 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57801 "EHLO smtp.pobox.com"
+	id S1755045AbaEMWJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 18:09:57 -0400
+Received: from josefsipek.net ([64.9.206.49]:1668 "EHLO josefsipek.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753065AbaEMWCr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 18:02:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CE6BE1878E;
-	Tue, 13 May 2014 18:02:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Fg38LsAjKySA6CHAYySSawgboJ8=; b=HtfFO9
-	jikthd1ol1Krhl3M/cKpMUorckuEyipcgwAjEAd9J1a6DiZHP3M/PW6MDUmxKkI8
-	q2YzmNCmktGGT54NopUycEOUo8uklND5+/esv/q1K3tdsRkBb4URi9rDTefEklEt
-	7Qty4jymviVuCJcTbMsPLebDCXPR7yYPSw2cw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mJ6M5IoTYVSPteIAt2pfuPlAfhnPPx8I
-	heZsZjLB1FEMofUL4LDYRKzOYjlS8aGiEfHUvSu28qobfXcY8TZ2bbVuG9rKepTa
-	lwsCwwaRgZakGujBDfAGjo6tqtg3P6B1ukPlwEWOStCW7Yx7RcvKF/Mqki1OcAWA
-	Q0vobS2jMow=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C5BA61878D;
-	Tue, 13 May 2014 18:02:46 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9410B1877A;
-	Tue, 13 May 2014 18:02:41 -0400 (EDT)
-In-Reply-To: <1400016596-13178-1-git-send-email-felipe.contreras@gmail.com>
-	(Felipe Contreras's message of "Tue, 13 May 2014 16:29:56 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4DF26C58-DAEA-11E3-9540-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1754646AbaEMWJv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 18:09:51 -0400
+Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
+	by josefsipek.net (Postfix) with ESMTPSA id 2340A55654;
+	Tue, 13 May 2014 18:09:50 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1400013065-27919-17-git-send-email-cederp@opera.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248872>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Tue, May 13, 2014 at 10:30:52PM +0200, Per Cederqvist wrote:
+> The 'echo %s' construct sometimes processes escape sequences.  (This
 
-> The tools are now maintained out-of-tree, and they have a regression in
-> v2.0.
+%s?  Should this be $s?
 
-You seem not to understand at all what a regression is.
+Otherwise, looks good.
 
-My understanding is that versions of remote-hg shipped with all
-versions of Git did not work with Hg 3.0, so not working with Hg 3.0
-is a regression in v2.0 at all.  A recent report was about Hg 3.0
-not working with 1.9.3, but I think you earlier said all versions of
-Git does not work with Hg 3.0, and I can believe it.  That is hardly
-a regression.
+> happens, for instance, under Ubuntu 14.04 when /bin/sh is actually
+> dash.)  We don't want that to happen when we are importing commits, so
+> use 'printf %s "$s"' instead.
+> 
+> (The -E option of bash that explicitly disables backslash expansion is
+> not portable; it is not supported by dash.)
+> 
+> Signed-off-by: Per Cederqvist <cederp@opera.com>
+> ---
+>  guilt-import-commit  |  2 +-
+>  regression/t-034.out | 14 +++++++-------
+>  2 files changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/guilt-import-commit b/guilt-import-commit
+> index 6260c56..45f2404 100755
+> --- a/guilt-import-commit
+> +++ b/guilt-import-commit
+> @@ -30,7 +30,7 @@ for rev in `git rev-list $rhash`; do
+>  
+>  	# Try to convert the first line of the commit message to a
+>  	# valid patch name.
+> -	fname=`echo $s | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
+> +	fname=`printf %s "$s" | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
+>  			-e "s/['\\[{}]//g" -e 's/]//g' -e 's/\*/-/g' \
+>  			-e 's/\?/-/g' -e 's/\.\.\.*/./g' -e 's/^\.//' \
+>  			-e 's/\.patch$//' -e 's/\.$//' | tr A-Z a-z`
+> diff --git a/regression/t-034.out b/regression/t-034.out
+> index 7bc9459..bda4399 100644
+> --- a/regression/t-034.out
+> +++ b/regression/t-034.out
+> @@ -236,7 +236,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
+>  About to begin conversion...
+>  Current head: 2a8b1889aa5066193bac978e6bf5073ffcfa6541
+>  Converting 2a8b1889 as can-have-embedded-single-slashes
+> -Converting 0a46f8fa as backslash-isorbidden
+> +Converting 0a46f8fa as backslash-is-forbidden
+>  Converting aedb74fd as x
+>  Converting 30187ed0 as cannot@have@the@sequence@at-brace
+>  Converting 106e8e5a as cannot_end_in_
+> @@ -300,7 +300,7 @@ Applying patch..cannot@have@the@sequence@at-brace.patch
+>  Patch applied.
+>  Applying patch..x.patch
+>  Patch applied.
+> -Applying patch..backslash-isorbidden.patch
+> +Applying patch..backslash-is-forbidden.patch
+>  Patch applied.
+>  Applying patch..can-have-embedded-single-slashes.patch
+>  Patch applied.
+> @@ -311,7 +311,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
+>  
+>      Can/have/embedded/single/slashes
+>  
+> -commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-isorbidden.patch)
+> +commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-is-forbidden.patch)
+>  Author: Author Name <author@email>
+>  Date:   Mon Jan 1 00:00:00 2007 +0000
+>  
+> @@ -518,8 +518,6 @@ d .git/patches/master
+>  d .git/refs/patches
+>  d .git/refs/patches/master
+>  f 06beca7069b9e576bd431f65d13862ed5d3e2a0f  .git/patches/master/ctrlisforbidden.patch
+> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/series
+> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/status
+>  f 09b7e9be44ae5ec3a4bb30f5ee9d4ebc2c042f64  .git/patches/master/two_consecutive_dots_(.)_is_forbidden.patch
+>  f 0b971c9a17aeca2319c93d700ffd98acc2a93451  .git/patches/master/question-mark-is-forbidden.patch
+>  f 2b8392f63d61efc12add554555adae30883993cc  .git/patches/master/cannot-end-in-slash-.patch
+> @@ -529,7 +527,7 @@ f 34e07c584032df137f19bdb66d93f316f00a5ac8  .git/patches/master/tildeisforbidden
+>  f 49bab499826b63deb2bd704629d60c7268c57aee  .git/patches/master/the_sequence_-._is_forbidden.patch
+>  f 5bcddb8ccb6e6e5e8a61e9e56cb2e0f70cbab2f5  .git/patches/master/cannot@have@the@sequence@at-brace.patch
+>  f 637b982fe14a240de181ae63226b27e0c406b3dc  .git/patches/master/asterisk-is-forbidden.patch
+> -f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-isorbidden.patch
+> +f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-is-forbidden.patch
+>  f 7b103c3c7ae298cd2334f6f49da48bae1424f77b  .git/patches/master/crisalsoforbidden.patch
+>  f 9b810b8c63779c51d2e7f61ab59cd49835041563  .git/patches/master/x.patch
+>  f a22958d9ae9976fd7b2b5a9d0bcd44bf7ad9b08a  .git/patches/master/caretisforbidden.patch
+> @@ -537,6 +535,8 @@ f ab325bf5a432937fc6f231d3e8a773a62d53952b  .git/patches/master/multiple-slashes
+>  f cb9cffbd4465bddee266c20ccebd14eb687eaa89  .git/patches/master/delisforbidden.patch
+>  f d0885a1a1fdee0fd1e4fedce3f7acd3100540bc4  .git/patches/master/openbracketisforbidden.patch
+>  f d2903523fb66a346596eabbdd1bda4e52b266440  .git/patches/master/check-multiple-.-dots-.-foo.patch
+> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/series
+> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/status
+>  f dfc11f76394059909671af036598c5fbe33001ba  .git/patches/master/space_is_forbidden.patch
+>  f e47474c52d6c893f36d0457f885a6dd1267742bb  .git/patches/master/colon_is_forbidden.patch
+>  f e7a5f8912592d9891e6159f5827c8b4f372cc406  .git/patches/master/the_sequence_.lock-_is_forbidden.patch
+> @@ -548,7 +548,7 @@ r 1626a11d979a1e9e775c766484172212277153df  .git/refs/patches/master/asterisk-is
+>  r 3a0d5ccef0359004fcaa9cee98fbd6a2c4432e74  .git/refs/patches/master/tildeisforbidden.patch
+>  r 434e07cacdd8e7eb4723e67cb2d100b3a4121a3a  .git/refs/patches/master/can-have-embedded-single-slashes.patch
+>  r 74df14ab3a0ec9a0382998fbf167ebb1b0a36c6a  .git/refs/patches/master/question-mark-is-forbidden.patch
+> -r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-isorbidden.patch
+> +r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-is-forbidden.patch
+>  r 96a3e92c4df85f52362ce4f6d31983c462db9ae9  .git/refs/patches/master/a-component-may-not-end-in-foolock.patch
+>  r 9fc9677b61880f9159838e89f714893e0a2fcafb  .git/refs/patches/master/delisforbidden.patch
+>  r a275ed5d7f10ea88c986852ee95a7d5a61663b5f  .git/refs/patches/master/cannot@have@the@sequence@at-brace.patch
+> -- 
+> 1.8.3.1
+> 
 
-You could argue that Hg has a new regression to its external users
-of its API when it went to 3.0.  We actually had a similar breakage
-in 1.5.4, where it was reported late in the cycle after -rc0 [*1*]
-that cgit that linked with our internal API libgit.a was broken by a
-change on our side, which resulted in us fixing the breakage (even
-though technically you may be able to say that it was cgit's fault
-to link with libgit.a in the first place) with 18125644 (Move
-sha1_file_to_archive into libgit, 2008-01-14) very late in the
-cycle.  Calling that a regression in cgit would have been insane,
-even if we did not patch our side up to accomodate it.
-
-Stop this idiocy.
-
-
-[References]
-
-*1* http://thread.gmane.org/gmane.comp.version-control.git/70117/focus=71064
+-- 
+I have always wished for my computer to be as easy to use as my telephone;
+my wish has come true because I can no longer figure out how to use my
+telephone.
+		- Bjarne Stroustrup
