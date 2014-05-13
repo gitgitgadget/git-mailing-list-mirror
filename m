@@ -1,111 +1,124 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
-Date: Tue, 13 May 2014 17:52:09 -0500
-Message-ID: <5372a2192893b_36d4a0330448@nysa.notmuch>
-References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
- <1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
- <xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com>
- <536d4e7ba8ea_585ea5308a9@nysa.notmuch>
- <CACPiFCKoegOj+dxAw87UgrrwrvPSDoFzyxZV1bEPNseiK2M7vw@mail.gmail.com>
- <xmqqsiodo7o6.fsf@gitster.dls.corp.google.com>
- <53726a577d6aa_4aa4b312f862@nysa.notmuch>
- <xmqqegzxmlsr.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v6 03/42] refs.c: add a strbuf argument to
+ ref_transaction_commit for error logging
+Date: Tue, 13 May 2014 16:10:12 -0700
+Message-ID: <20140513231012.GY9218@google.com>
+References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
+ <1398976662-6962-4-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 01:03:14 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed May 14 01:10:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkLj7-0002Y3-Oe
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 01:03:14 +0200
+	id 1WkLq5-00060F-5Z
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 01:10:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753838AbaEMXDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 19:03:09 -0400
-Received: from mail-ob0-f176.google.com ([209.85.214.176]:38659 "EHLO
-	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752687AbaEMXDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 19:03:07 -0400
-Received: by mail-ob0-f176.google.com with SMTP id wo20so1228057obc.21
-        for <git@vger.kernel.org>; Tue, 13 May 2014 16:03:06 -0700 (PDT)
+	id S1753041AbaEMXKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 19:10:18 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:53384 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752150AbaEMXKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 19:10:16 -0400
+Received: by mail-pa0-f53.google.com with SMTP id kp14so836929pab.40
+        for <git@vger.kernel.org>; Tue, 13 May 2014 16:10:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=j0yXkIMmEuxaRn1o+Cz3n7mUflbQo8YpaCQ73g5tBH8=;
-        b=RfMRPlafImjYEG91Ib+BgJ+hlQ6d0XyWO5xN8LXikpc06R90O/Rn6sFKyKsj+04+2B
-         0sJxEG1f0D+tiqWeQaMf1VYJVZVA7zQgNZ6Lvi2LYfqBQ2f0bt0iYQ3m+/iE942ZVC2L
-         xzwDl1fQOCl8dCFzNoEU21Rwur0YjdY9ltHu4mkNlylSNyhzcCpnhsYLhRe21ayo9D+x
-         x4wSfu8gX9qIMNkvYEuLL8y/eRejdpyPpcScVDPfyV1Ru58LXUgRw/5EiDgUtvkZ3OJO
-         Oh7KuAfo6JevdoBKtBLCvukLdTBDNW8DhVExvY35SNfNs+a7OytbLwi6TeeKJlONfqOa
-         jAug==
-X-Received: by 10.182.165.73 with SMTP id yw9mr45376290obb.39.1400022186185;
-        Tue, 13 May 2014 16:03:06 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id r3sm24720961obi.23.2014.05.13.16.03.04
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=Xh3/bxt1wKSRXaPkzhATlmwhgqdDSmjmUe/IB9kElhw=;
+        b=0lH+rLy9NASE+UbpUH4YI04rbMOyWQc51E4jqcDo54VmkU4vL1K0ReB6X2qXnJap3Q
+         5/kINu7Al4DPgEDyuaOStHQN93t/kZybekBN68dfaPVb+8ZvnkYx0KsoiQatwap2qxNP
+         W8R+pae7SGR42XJtjUNkUIeVaJ/tJ0BaJgzHrIY+iLKHO6KH93jQOz1hM8p1qzLeqrY1
+         84Kh8ma0HaRB/Rn3bCVlvBSLiTXnycKqVBs/s7ocqgpaR7TRy1f31jVC+u2Rb78ETvtd
+         X+bOUacQE6abBvfwOuywc28NpNB7ZYvPYexxDEkX9S02WBOOZjxRV0YK5U5ZP7KmfX6K
+         BqDw==
+X-Received: by 10.66.66.199 with SMTP id h7mr16490pat.30.1400022615631;
+        Tue, 13 May 2014 16:10:15 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xk3sm30165304pbb.65.2014.05.13.16.10.14
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 May 2014 16:03:05 -0700 (PDT)
-In-Reply-To: <xmqqegzxmlsr.fsf@gitster.dls.corp.google.com>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 13 May 2014 16:10:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1398976662-6962-4-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248885>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Junio, do you honestly think I am a troll?
-> 
-> You certainly are acting like one, aren't you?
+Ronnie Sahlberg wrote:
 
-I'm deeply offended by the fact that would think that I'm purposely
-intent on provoking people, or disrupting more important discussions.
+> Add a strbuf argument to _commit so that we can pass an error string back to
+> the caller. So that we can do error logging from the caller instead of from
+> _commit.
+>
+> Longer term plan is to first convert all callers to use onerr==QUIET_ON_ERR
+> and craft any log messages from the callers themselves and finally remove the
+> onerr argument completely.
 
-I understand how my style of communication can upset people, mainly
-because people are not used to frankness. But I thought you of all
-people would see how much effort I've put into so many areas of Git, and
-therefore that my primary objective is to improve Git, not offend
-people. That you would understand that me offending people is a
-side-effect of me trying to improve Git, not that I improve Git just so
-I can offend people.
+Very nice.
 
-I understand why you would choose not to reply to some mails that might
-be too flammable, or unimportant, or difficult. But in this case, the
-culmination of countless hours of work, what I had in mind since the
-beginning; that the tools graduate into the core, was finally there, and
-you took it away. And then you didn't give an explanation, and then you
-ignored me.
+[...]
+> +++ b/refs.c
+[...]
+> @@ -3443,6 +3444,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+>  					       update->flags,
+>  					       &update->type, onerr);
+>  		if (!update->lock) {
+> +			if (err)
+> +				strbuf_addf(err ,"Cannot lock the ref '%s'.",
+> +					    update->refname);
 
-I thought you would understand that most of the code that arrived to the
-mailing list had different versions behind, experiments, discussion in
-different channels, tests, and that was the reason why most of the code
-I submitted to remote-hg and remote-bzr simply worked, and it was
-simple. And why when other people did the same, the results were not so
-satisfactory.
+Tiny nit: whitespace.
 
-But no, apparently you didn't value my work at all. Maybe you thought
-each line I sent took me the time it takes to write a tweet, maybe you
-thought because it's in Python even kids in primary school could write
-it.
+[...]
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -268,9 +268,12 @@ void ref_transaction_delete(struct ref_transaction *transaction,
+>   * Commit all of the changes that have been queued in transaction, as
+>   * atomically as possible.  Return a nonzero value if there is a
+>   * problem.  The ref_transaction is freed by this function.
+> + * If err is non-NULL we will add an error string to it to explain why
+> + * the transaction failed.
 
-In fact it's worth so little to you that it's not even worth the time to
-respond *one* question, not even in consideration of all these years of
-effort.
+Probably worth mentioning the error string doesn't end with a newline
+so the caller knows how to use it.
 
-And then you have the nerve to call me a troll on top of that?
+With the whitespace fix and with or without the comment tweak,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-I'm done with you. Consider the bridge burned.
-
-Good bye.
-
--- 
-Felipe Contreras
+diff --git i/refs.c w/refs.c
+index 64e8feb..2ca3169 100644
+--- i/refs.c
++++ w/refs.c
+@@ -3445,7 +3445,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 					       &update->type, onerr);
+ 		if (!update->lock) {
+ 			if (err)
+-				strbuf_addf(err ,"Cannot lock the ref '%s'.",
++				strbuf_addf(err, "Cannot lock the ref '%s'.",
+ 					    update->refname);
+ 			ret = 1;
+ 			goto cleanup;
+diff --git i/refs.h w/refs.h
+index ff87e14..d45212f 100644
+--- i/refs.h
++++ w/refs.h
+@@ -268,8 +268,8 @@ void ref_transaction_delete(struct ref_transaction *transaction,
+  * Commit all of the changes that have been queued in transaction, as
+  * atomically as possible.  Return a nonzero value if there is a
+  * problem.  The ref_transaction is freed by this function.
+- * If err is non-NULL we will add an error string to it to explain why
+- * the transaction failed.
++ * If err is non-NULL we will append an error string (with no trailing
++ * newline) to it to explain why the transaction failed.
+  */
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   const char *msg, struct strbuf *err,
