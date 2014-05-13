@@ -1,102 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 1/2] Remove 'git archimport'
-Date: Tue, 13 May 2014 11:19:54 -0700
-Message-ID: <xmqq1tvxpmlw.fsf@gitster.dls.corp.google.com>
-References: <1399599203-13991-1-git-send-email-felipe.contreras@gmail.com>
-	<1399599203-13991-2-git-send-email-felipe.contreras@gmail.com>
-	<CAAhxitED0iV+Pcird2kZzt3nSnr83+isBDZF2Czmh0LzNzQf8g@mail.gmail.com>
+Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
+Date: Tue, 13 May 2014 11:27:53 -0700
+Message-ID: <xmqqsiodo7o6.fsf@gitster.dls.corp.google.com>
+References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
+	<1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
+	<xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com>
+	<536d4e7ba8ea_585ea5308a9@nysa.notmuch>
+	<CACPiFCKoegOj+dxAw87UgrrwrvPSDoFzyxZV1bEPNseiK2M7vw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>,
-	Martin Langhoff <martin.langhoff@gmail.com>
-To: Martin Langhoff <martin@laptop.org>
-X-From: git-owner@vger.kernel.org Tue May 13 20:20:14 2014
+	Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 13 20:32:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkHJE-0008It-Ra
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 20:20:13 +0200
+	id 1WkHUl-00039l-Ib
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 20:32:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754072AbaEMSUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 14:20:07 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58666 "EHLO smtp.pobox.com"
+	id S1754290AbaEMScB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 14:32:01 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58418 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753277AbaEMSUA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 14:20:00 -0400
+	id S1754058AbaEMScA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 14:32:00 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 31449166D7;
-	Tue, 13 May 2014 14:19:59 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AAC3816FE4;
+	Tue, 13 May 2014 14:31:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=o77zR5LYnQ5irZU/n6W1rUh3UPg=; b=derC6U
-	mkpMnZmpZoX+taM9/VmAJ9/MZXexkEYk+Im08bV4Wf/sNZBBDxFyhB8bccplOFOn
-	MJBu4qqH0/4b/4ZFsTTxpTzBWGI3tyX+DRErs7m5EtDGmBAKoKHo2Cjrmb5CByk4
-	WWjtKEbxZJOwpQxOoDXAt5tYgNZ5eomMVMwns=
+	:content-type; s=sasl; bh=vyUGhfr4BmJEozqMhrkHoB/CCGI=; b=UMCeGZ
+	xF6ylHLvtN7vQBotE5gHpBvER97PDWd8+rBDlfDQ0MajBbxW9BTxtM6iBXNxhvdR
+	e3AEZDKRRJgTI9eGvZZH6XP3a0LEpEtpphsswhtU2rYWtFCwKM6r1j/y2n8bI7cN
+	QVtp8gtiCdSa7398BhSKQUIK8p0BBHvZepK/c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gLSgEO3sYPm53xgKl7wlyFNtYnOiYAOy
-	ZypyhUT/FoTn4vnRMx6zotLKkZdEGKeM2sdkDpcV7KP++0D04VRf5sgihCVZwjEW
-	KWBAnvl1kk4XJqptup8xl5tSKJys/lYv0dYzmV1ByBGcDKyEtpFicQMEJ/bzaHrg
-	uY8wJsbWPQ0=
+	:content-type; q=dns; s=sasl; b=GsBLfTjYH9a1QByNgQNKHDlD2xOPaaSC
+	G6gVyWU9DL21aEnLMg8j1ywpCWVTtmPPJH8EA1eCPo3C5L6vEdJHh0Dba1UbFw9I
+	9g6gRZ1L8m2zsYYb4J22F/lmZBCrsCiythg2GvxxMpjY/kqZ9p7fjoiKic2l0Rpb
+	73MD0YLWZrw=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 263B5166D6;
-	Tue, 13 May 2014 14:19:59 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9E45F16FE2;
+	Tue, 13 May 2014 14:31:59 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 63BA8166D2;
-	Tue, 13 May 2014 14:19:56 -0400 (EDT)
-In-Reply-To: <CAAhxitED0iV+Pcird2kZzt3nSnr83+isBDZF2Czmh0LzNzQf8g@mail.gmail.com>
-	(Martin Langhoff's message of "Tue, 13 May 2014 14:01:24 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 92A0A16CAA;
+	Tue, 13 May 2014 14:27:54 -0400 (EDT)
+In-Reply-To: <CACPiFCKoegOj+dxAw87UgrrwrvPSDoFzyxZV1bEPNseiK2M7vw@mail.gmail.com>
+	(Martin Langhoff's message of "Tue, 13 May 2014 14:10:29 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2FB55652-DACB-11E3-8758-9CEB01674E00-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 4CB18F9A-DACC-11E3-A33E-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248799>
 
-Martin Langhoff <martin@laptop.org> writes:
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-> On Thu, May 8, 2014 at 9:33 PM, Felipe Contreras
+> On Fri, May 9, 2014 at 5:54 PM, Felipe Contreras
 > <felipe.contreras@gmail.com> wrote:
->> No updates since 2010, and no tests.
+>> You are once more twisting the sequence of events.
 >
-> NAK.
+> Found this gem looking for background to the proposed removal to code of mine.
 >
-> IMHO, this is quite unfriendly.
->
-> Is this removal based on your opinion, or Junio's position (or
-> consensus from maintainers from the list)? If there is a clear
-> consensus or direction for old code such as this, please let me know
-> (but copy martin.langhoff@gmail.com, not just my very old address!).
->
->> Plus, foreign SCM tools should live out-of-tree anyway.
->
-> Says who? Is there consensus on this?
->
-> It's generally the privilege of the maintainer -- in this case Junio
-> or perhaps Linus -- to take harsh stances like this.
->
-> Junio, what's your position?
+> Felipe, if you are wanting to have a war of words with Junio, go have
+> it, with him.
 
-We may think longer when somebody proposes to add a new thing that
-may better live outside our tree (including the contrib/ area) than
-we used to, simply because Git is more mature these days and the
-ecosystem is there to support successful third-party tools, but
-removal of existing subcommands needs to weigh the impact of such a
-removal to existing users. "No recent updates" does not say anything
-with respect to that---we cannot tell between "The tool is perfect
-to fill needs of the users" and "Even though the users are reporting
-issues, the area maintainer is not being responsive" by non activity
-alone, and we know there weren't many unresponded issues in the
-recent past.
-
-"There is no longer any project that still hosts anything worth
-salvaging in tla", if such a claim can be substantiated, might be a
-valid reason to propose a removal, but I do not think this is such a
-proposal.
+Please don't feed the troll.  I was happy to be done with it.
