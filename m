@@ -1,167 +1,83 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [GIT GUI PATCH] git-gui: use vcompare when comparing the git version
-Date: Tue, 13 May 2014 23:24:00 +0200
-Message-ID: <53728D70.4020506@web.de>
-References: <CAFOYHZBPLZhVuf=bO0hPcUH2_0WXFSqk=_CqoUWBRixQc0L==Q@mail.gmail.com>	<CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com> <871tw7xg3o.fsf@fox.patthoyts.tk> <5369E0A3.4040701@gmail.com> <5369E58D.4030908@gmail.com>
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: [GUILT v2 00/29] Teach guilt import-commit how to create legal
+ patch names, and more
+Date: Tue, 13 May 2014 23:29:55 +0200
+Message-ID: <CAP=KgsTvt7btB0EO75UeW2SejeXm9u7nfPLf0J2M+Y2H=u9s5w@mail.gmail.com>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+	<20140513204546.GB11391@thunk.org>
+	<20140513205443.GB4791@meili.valhalla.31bits.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>,
-	patthoyts@users.sourceforge.net
-X-From: git-owner@vger.kernel.org Tue May 13 23:24:21 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "Theodore Ts'o" <tytso@mit.edu>, Git List <git@vger.kernel.org>
+To: Jeff Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Tue May 13 23:30:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkKBQ-00006R-VJ
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 23:24:21 +0200
+	id 1WkKGu-000106-3y
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 23:30:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295AbaEMVYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 17:24:14 -0400
-Received: from mout.web.de ([212.227.15.3]:62067 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752150AbaEMVYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 17:24:13 -0400
-Received: from [192.168.178.41] ([84.132.184.198]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MYw63-1WFN9G3kJv-00Vj6f; Tue, 13 May 2014 23:24:02
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <5369E58D.4030908@gmail.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:ZtrXYp/4NAf7RhM/EPheRUidNgh2pAdaPYCJyHiY290Vl+Rj/8q
- yJFmaZ1WdLaMNvpa7uhkw8t4w1e5bbzi3E/HnuyLDAMgmZ0z+wMeRyRgwdkaZjbODnsxcAz
- zN8aKQKo7s3ACMFIx1et1dhe/c2ftFd82ezSgsMKXdpdepAkUsy8n8LzRYW3g/0FZ+R8mzB
- QEu0CTKUuC43Dzk0jBzzw==
+	id S1754882AbaEMV35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 17:29:57 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:63825 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753497AbaEMV34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 17:29:56 -0400
+Received: by mail-ig0-f172.google.com with SMTP id uy17so5772131igb.11
+        for <git@vger.kernel.org>; Tue, 13 May 2014 14:29:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=hhUu/b24TteNlRyZl5bfpJYy119bjCA3JS0XV2IQtLs=;
+        b=T1qhwtVen27cfwfs0lCuz5Bt0fTNJxeplOkGu21VbT4bC1lvenvL4ACdbprEttDCEK
+         QAvSHqR57iUZjJtinHd7FykmdTe7pVqcbBmkgat3OtLXjCNhKXkD8+ywTRbX7LDLL3LG
+         M69F+tH5165zR+qGT9D8y2gtjXi7k0iGfJCMHcgqYHPITrT3VrdSC5/nsU9UyjSQfh70
+         /l3a/iBVupcljIG/2tdSLNSVa2OA3fiVNC0s5k7iB0UIb1mIpN/W/Kkw+r5zAqs/MylQ
+         f7OiqIk6zC4FczdA+VH+eJqPANUhkdgnuyFjOCCgoKJCfM6zclco64rQsDUpfpzUAW/F
+         NhhA==
+X-Gm-Message-State: ALoCoQkSDHo9kLAU2Y61JEzrFnPkCc7KljDXiW/00QOn41Kr7Nlkq6u1inr0Y0H9M8Fyyhz70e/6
+X-Received: by 10.42.30.71 with SMTP id u7mr1934398icc.20.1400016595645; Tue,
+ 13 May 2014 14:29:55 -0700 (PDT)
+Received: by 10.43.89.66 with HTTP; Tue, 13 May 2014 14:29:55 -0700 (PDT)
+In-Reply-To: <20140513205443.GB4791@meili.valhalla.31bits.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248859>
 
-Since git 2.0.0 starting git gui in a submodule using a gitfile fails with
-the following error:
-
-   No working directory ../../../<path>
-
-   couldn't change working directory
-   to "../../../<path>": no such file or
-   directory
-
-This is because "git rev-parse --show-toplevel" is only run when git gui
-sees a git version of at least 1.7.0 (which is the version in which the
---show-toplevel option was introduced). But it uses vsatisfies to check
-that, which is documented to return false when the major version changes,
-which is not what we want here.
-
-Change vsatisfies to vcompare when testing for a git version to avoid the
-problem when the major version changes (but still use vsatisfies in those
-places where the Tk version is checked). This is done for both the place
-that caused the reported bug and another spot where the git version is
-tested for another feature.
-
-Reported-by: Chris Packham <judge.packham@gmail.com>
-Reported-by: Yann Dirson <ydirson@free.fr>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
-
-Am 07.05.2014 09:49, schrieb Chris Packham:
-> On 07/05/14 19:28, Chris Packham wrote:
->> On 07/05/14 00:10, Pat Thoyts wrote:
->>> Chris Packham <judge.packham@gmail.com> writes:
->>>
->>>> On Tue, Apr 29, 2014 at 2:56 PM, Chris Packham <judge.packham@gmail.com> wrote:
->>>>> Hi Pat,
->>>>>
->>>>> I'm running git 2.0.0-rc0 (haven't got round to pulling down rc1 yet)
->>>>> which includes gitgui-0.19.0 and I'm getting a new error when I run
->>>>> 'git gui' in a repository with a .git file (created by git submodule).
->>>>>
->>>>> I can send you a screencap of the error message off list if you want
->>>>> but the text is
->>>>>
->>>>> "No working directory ../../../<repo>
->>>>>
->>>>> couldn't change working directory to ../../../<repo>: no such file or directory"
->>>>
->>>> My tcl is a little rusty but I think the problem might be this snippet.
->>>>
->>>> # v1.7.0 introduced --show-toplevel to return the canonical work-tree
->>>> if {[package vsatisfies $_git_version 1.7.0]} {
->>>>    if { [is_Cygwin] } {
->>>>        catch {set _gitworktree [exec cygpath --windows [git rev-parse
->>>> --show-toplevel]]}
->>>>    } else {
->>>>        set _gitworktree [git rev-parse --show-toplevel]
->>>>    }
->>>> } else {
->>>>    # try to set work tree from environment, core.worktree or use
->>>>    # cdup to obtain a relative path to the top of the worktree. If
->>>>    # run from the top, the ./ prefix ensures normalize expands pwd.
->>>>    if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
->>>>        set _gitworktree [get_config core.worktree]
->>>>        if {$_gitworktree eq ""} {
->>>>            set _gitworktree [file normalize ./[git rev-parse --show-cdup]]
->>>>        }
->>>>    }
->>>> }
->>>>
->>>> The  vsatisfies call probably doesn't handle '2.0.0.rc0' and the
->>>> fallback behaviour probably needs to normalise core.worktree
->>>>
->>>
->>> The _git_version variable has already been trimmed to remove such
->>> suffixes so the version comparison here will be ok. 
+On Tue, May 13, 2014 at 10:54 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> On Tue, May 13, 2014 at 04:45:47PM -0400, Theodore Ts'o wrote:
+>> On Tue, May 13, 2014 at 10:30:36PM +0200, Per Cederqvist wrote:
+> ...
+>> >  - Changed behavior: by default, guilt no longer changes branch when
+>> >    you push a patch.  You need to do "git config guilt.reusebranch
+>> >    false" to re-enable that.  This patch sets the default value of
+>> >    guilt.reusebranch to true; it should in my opinion change to false
+>> >    a year or two after the next release.
 >>
->> I don't think that's true 'git rev-parse --show-toplevel' does the right
->> thing - if it's run.
-> 
-> We'll the trimming works but vstatisfies doesn't
-> 
->   puts $_git_version
->   puts [package vsatisfies $_git_version 1.7.0]
-> 
->   2.0.0
->   0
+>> We've been living with the "origin" -> "guilt/origin" branch change
+>> for a year already, and in fact, these days I've gotten used to the
+>> new behavior.  Is it really worth it to change the default?
+>
+> So, at first I was skeptical about the branch name prefix change.  I've used
+> it for about a year now, and I love it.  When I first read Per's idea to
+> change the default to the old-style, I was a bit sad but I understand the
+> motivation.
+>
+> I'm open to either mode being the default since it's easy enough for me to
+> change it for me (thanks, ~/.gitconfig) but I think more people should
+> benefit from the added safety against accidental git-push.  (I also like
+> being able to use guilt/master..master to get only the commits I care
+> about.)  Thoughts?
 
-Yup, looks like vsatisfies is doing just what it is supposed to (according
-to http://www.astro.princeton.edu/~rhl/Tcl-Tk_docs/tcl/package.n.html):
+I don't have a strong opinion on which the default value should be.
+The scenario where it matters, when you run multiple versions of
+guilt against the same directory, is probably very rare in practice.
+If it is mentioned in the release note that it can be changed if needed,
+that is probably good enough.
 
-   package vsatisfies version1 version2
-       Returns 1 if scripts written for version2 will work unchanged
-       with version1 (i.e. version1 is equal to or greater than version2
-       and they both have the same major version number), 0 otherwise.
-
-The bump in the major number from 1 to 2 makes vsatisfies assume that the
-version is not compatible anymore, I believe we should have used vcompare
-here and in another place.
-
-
- git-gui.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index cf2209b..ed2418b 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -1283,7 +1283,7 @@ load_config 0
- apply_config
-
- # v1.7.0 introduced --show-toplevel to return the canonical work-tree
--if {[package vsatisfies $_git_version 1.7.0]} {
-+if {[package vcompare $_git_version 1.7.0]} {
- 	if { [is_Cygwin] } {
- 		catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
- 	} else {
-@@ -1539,7 +1539,7 @@ proc rescan_stage2 {fd after} {
- 		close $fd
- 	}
-
--	if {[package vsatisfies $::_git_version 1.6.3]} {
-+	if {[package vcompare $::_git_version 1.6.3]} {
- 		set ls_others [list --exclude-standard]
- 	} else {
- 		set ls_others [list --exclude-per-directory=.gitignore]
--- 
-2.0.0.rc3.2.g998f840
+    /ceder
