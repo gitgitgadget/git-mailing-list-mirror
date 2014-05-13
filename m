@@ -1,71 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bash prompt "namespace" issue
-Date: Tue, 13 May 2014 11:52:21 -0700
-Message-ID: <xmqqoaz1o6je.fsf@gitster.dls.corp.google.com>
-References: <20140513081849.5dql886xw080ww88@webmail.informatik.kit.edu>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
+Date: Tue, 13 May 2014 13:54:15 -0500
+Message-ID: <53726a577d6aa_4aa4b312f862@nysa.notmuch>
+References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
+ <1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
+ <xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com>
+ <536d4e7ba8ea_585ea5308a9@nysa.notmuch>
+ <CACPiFCKoegOj+dxAw87UgrrwrvPSDoFzyxZV1bEPNseiK2M7vw@mail.gmail.com>
+ <xmqqsiodo7o6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
-To: szeder@ira.uka.de
-X-From: git-owner@vger.kernel.org Tue May 13 20:52:47 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 13 21:05:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkHol-0003Sa-09
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 20:52:47 +0200
+	id 1WkI0s-0007eq-35
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 21:05:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754741AbaEMSwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 14:52:43 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64329 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754721AbaEMSwh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 14:52:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1881617F81;
-	Tue, 13 May 2014 14:52:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SVPpJlHpqUv0U7hS1u0xW4yqnYU=; b=iUDszw
-	70dzCBhwHnBXty1SgXt1WCXadLjhkA0/ch6jftZXyBK4iRMWEaxyLZK7dSQDzVXw
-	BcIZ/Uce+dR/FZne3kKpp3xFD5crgB6J4u67oeZ6jqA9xwdr5TbIxDPsbOiWxeYc
-	zwesuSMb0dCMHykojYvMtHI+k1LhUFTOyEhnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c8+ImmQ67kcSNbQtQvi3Tp7eF0r4vTzV
-	oLgjAK905LdJQwHgypWWWGtQseloWQjJVgmtTGGbmGMOsN3VGB8N+nPny8AMHB5q
-	btw4gfQS30F6KxGQ9VtE6ZJAlWEyNf8QnHymEbM+EMoxQsR8UtKcbb5YRIvM0d9L
-	rOxHts9JUzY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0AED417F80;
-	Tue, 13 May 2014 14:52:32 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CD7D917F61;
-	Tue, 13 May 2014 14:52:22 -0400 (EDT)
-In-Reply-To: <20140513081849.5dql886xw080ww88@webmail.informatik.kit.edu>
-	(szeder@ira.uka.de's message of "Tue, 13 May 2014 08:18:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B7D54818-DACF-11E3-AE25-9CEB01674E00-77302942!pb-smtp0.pobox.com
+	id S1754056AbaEMTFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 15:05:14 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:39960 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751409AbaEMTFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 15:05:12 -0400
+Received: by mail-oa0-f43.google.com with SMTP id l6so943275oag.30
+        for <git@vger.kernel.org>; Tue, 13 May 2014 12:05:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=FAitGLwJHrk4iS5TpBsYqEXP3JfYaBrZHZeFvTJeYyw=;
+        b=H75M9TCdXRoYl4qWewFJS2P0yALRZz1y2uzKb00lKKNaYqnBW1RU6gFx27WJYJzA7a
+         XksavaDsNv1Wnd4joORlKsZohqKghZ3jOSB0fUu/LYOLIolyCmL5WSODgMs4hldIt6z7
+         YrrW77GzGx+lZASA9cKFvvUqnm0YegT/ObHSL015Bz9LdWKTF9wKrJw1+wNGUNjTA6jg
+         rzA+lMaKighM4OsbWCqvHfWpcdeuZlifr/laCOCxOmkjiNGDXzfI8wNlkdC28C+GbCYt
+         gcsxE/TEbbJyyQlGAQix0knOiOAqxoBpkJC5jYPP+9+jhDOfEh5w6a6og7nucmylg8u9
+         qGBg==
+X-Received: by 10.60.115.202 with SMTP id jq10mr44744113oeb.0.1400007912269;
+        Tue, 13 May 2014 12:05:12 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ml9sm62448970oeb.2.2014.05.13.12.05.10
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 May 2014 12:05:11 -0700 (PDT)
+In-Reply-To: <xmqqsiodo7o6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248805>
 
-szeder@ira.uka.de writes:
+Junio C Hamano wrote:
+> Martin Langhoff <martin.langhoff@gmail.com> writes:
+> 
+> > On Fri, May 9, 2014 at 5:54 PM, Felipe Contreras
+> > <felipe.contreras@gmail.com> wrote:
+> >> You are once more twisting the sequence of events.
+> >
+> > Found this gem looking for background to the proposed removal to code of mine.
+> >
+> > Felipe, if you are wanting to have a war of words with Junio, go have
+> > it, with him.
+> 
+> Please don't feed the troll.  I was happy to be done with it.
 
-> Commit 59d3924fb (prompt: fix missing file errors in zsh) added the  
-> helper function eread() to git-prompt.sh.  That function should be in  
-> the git "namespace", i.e. prefixed with __git_, otherwise it might  
-> collide with a function of the same name in the user's environment.
->
-> It's already in master and I don't have the means to send a patch  
-> fixing this ATM, sorry.
+I was going to let this comment go (as I let the endless stream of
+ad hominem attacks go), but this just one ridiculous.
 
-Thanks.  I think the patch Felipe posted to rename it to __git_eread
-is a reasonable regression fix, so I'll queue it on top of the
-problematic commit 59d3924f (prompt: fix missing file errors in zsh,
-2014-04-11) and merge the result to 'master'.
+I've contributed 400 patches, changed 12700 lines, sent 4200 mails on
+the list. Then I'm not happy with a decision you made, and I ask you
+*one* question to clarify your rationale, and I'm still waiting for an
+answer.
+
+I think after this insane amount of work I'm entitled to an answer for
+this *one* question.
+
+Instead you passive aggressively label me as a troll?
+
+This is really disquieting.
+
+Junio, do you honestly think I am a troll? Have at least the decency of
+telling it to me.
+
+-- 
+Felipe Contreras
