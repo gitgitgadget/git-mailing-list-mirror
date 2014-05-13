@@ -1,7 +1,7 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT v2 10/29] Run test_failed if the exit status of a test script is bad.
-Date: Tue, 13 May 2014 22:30:46 +0200
-Message-ID: <1400013065-27919-11-git-send-email-cederp@opera.com>
+Subject: [GUILT v2 12/29] "guilt header": more robust header selection.
+Date: Tue, 13 May 2014 22:30:48 +0200
+Message-ID: <1400013065-27919-13-git-send-email-cederp@opera.com>
 References: <1400013065-27919-1-git-send-email-cederp@opera.com>
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
@@ -11,81 +11,102 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkJQP-0004n2-02
+	id 1WkJQP-0004n2-Gd
 	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 22:35:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755151AbaEMUfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 16:35:22 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:64584 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753823AbaEMUfR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 16:35:17 -0400
-Received: by mail-la0-f41.google.com with SMTP id e16so723719lan.28
-        for <git@vger.kernel.org>; Tue, 13 May 2014 13:34:48 -0700 (PDT)
+	id S932142AbaEMUfa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 16:35:30 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:47127 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753823AbaEMUfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 16:35:25 -0400
+Received: by mail-la0-f42.google.com with SMTP id el20so722502lab.29
+        for <git@vger.kernel.org>; Tue, 13 May 2014 13:35:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=scDdJhwo1TN/TmV+6arU07pJLMLtgHL65y585o8jJk0=;
-        b=eqWKQ3V1r/ghaZgiVuQbcQitGrdyH2bE5YYPD98wVh16bZRJvv+3eKIqTAeX+RKhsb
-         ocjWnb0r0J+8PtkmIHoS48Odp8X/Wmz7EKQZV477HfkfUCKPfU07L2fGFcwOw8CZ9m/J
-         qLTsCRhjBBIvhz57v84UONWfgeqZutkqwOa9HXOsejp4CeWyT6JAcwVVdbwcLWq/I3kR
-         ns2BMS7kW4MYDZ68Qy8AbN55kCrQXzVuJFa/XsqqVmetrNu3JWg6GmonxVNAqL5jNXxP
-         1l7H2WvZzsyDdyaMwsLSLPgmSs9hTU7KapotAnV8ndYkf6Bx/QA5+7tSnJTiDASzh9Jl
-         Bw1A==
-X-Gm-Message-State: ALoCoQlkTWq9oeZ9M1iI4Oz/wgjpST4N0lK35NzUshLrAoswalzp3KpnxZqy59RislPlA5xR3TUz
-X-Received: by 10.112.139.166 with SMTP id qz6mr30068768lbb.13.1400013288777;
-        Tue, 13 May 2014 13:34:48 -0700 (PDT)
+        bh=EtqEi4XS77d2J0C/doSy0a42nMSz13dmvWHIZ6LJ03E=;
+        b=aarzbNpuKnjmrRN6PZNI7UrSXIBbyrV/w9TpeD5j5sd0Ix/iguB+luJUbins0nsCqe
+         cHwW8ZVP5o5rQuQUkSvgKzfr6pkyEMngYGjft3SRkdDEK/w2q8J/APVI4CdBt12WdWa2
+         3RqWaZTofxSs/KH4knd9IXw0wr8u8lF0CDriIuEwZmMTA+2V81cW64gNq6/zNcPk+KyL
+         oh7ZIR/I5qLRlEadOtJ69C9hgdggGO06YmgC/oVyb5FYkjmfkM9+Bsr6/BTzBelxVdcx
+         f8HADK+OiSGtGnnSsbEmZAw+N+uFoloYmvoh6Kb728NeRi3CRPw2MhzlipcUV+qUKLUi
+         NHEA==
+X-Gm-Message-State: ALoCoQmRaJHRmrY7D//1mi+nHY8I4iU98Jlg+OHVp+jOvS0KXo8huE0NOdPzuygWimOS7YEG8G/M
+X-Received: by 10.112.67.35 with SMTP id k3mr29900900lbt.17.1400013323670;
+        Tue, 13 May 2014 13:35:23 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id m2sm11431763lbp.31.2014.05.13.13.34.46
+        by mx.google.com with ESMTPSA id m2sm11431763lbp.31.2014.05.13.13.35.21
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 13 May 2014 13:34:47 -0700 (PDT)
+        Tue, 13 May 2014 13:35:21 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1400013065-27919-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248829>
 
-There were two problems with the old code:
+If you run something like "guilt header '.*'" the command would crash,
+because the grep comand that tries to ensure that the patch exist
+would detect a match, but the later code expected the match to be
+exact.
 
- - Since "set -e" is in effect (that is set in scaffold) the run-test
-   script exited immediately if a t-*.sh script failed.  This is not
-   nice, as we want the error report that test_failed prints.
+Fixed by comparing exact strings.
 
- - The code ran "cd -" between running the t-*.sh script and checking
-   the exit status, so the exit status was lost.  (Actually, the exit
-   status was saved in $ERR, but nothing ever looked at $ERR.)
+And as a creeping feature "guilt header" will now try to use the
+supplied patch name as an unachored regexp if no exact match was
+found.  If the regexp yields a unique match, it is used; if more than
+one patch matches, the names of all patches are listed and the command
+fails.  (Exercise left to the reader: generalized this so that "guilt
+push" also accepts a unique regular expression.)
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
 ---
- regression/run-tests | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ guilt-header | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/regression/run-tests b/regression/run-tests
-index a10e796..8e0af9f 100755
---- a/regression/run-tests
-+++ b/regression/run-tests
-@@ -55,11 +55,15 @@ function run_test
+diff --git a/guilt-header b/guilt-header
+index 41e00cc..4701b31 100755
+--- a/guilt-header
++++ b/guilt-header
+@@ -45,10 +45,32 @@ esac
+ [ -z "$patch" ] && die "No patches applied."
  
- 	# run the test
- 	cd "$REPODIR" > /dev/null
--	"$REG_DIR/t-$1.sh" 2>&1 > "$LOGFILE"
--	ERR=$?
-+	if "$REG_DIR/t-$1.sh" 2>&1 > "$LOGFILE"; then
-+		ERR=false
-+	else
-+		ERR=true
+ # check that patch exists in the series
+-ret=`get_full_series | grep -e "^$patch\$" | wc -l`
+-if [ $ret -eq 0 ]; then
+-	die "Patch $patch is not in the series"
++full_series=`get_tmp_file series`
++get_full_series > "$full_series"
++found_patch=
++while read x; do
++	if [ "$x" = "$patch" ]; then
++		found_patch="$patch"
++		break
 +	fi
-+
- 	cd - > /dev/null
++done < "$full_series"
++if [ -z "$found_patch" ]; then
++	TMP_MATCHES=`get_tmp_file series`
++	grep "$patch" < "$full_series" > "$TMP_MATCHES"
++	nr=`wc -l < $TMP_MATCHES`
++	if [ $nr -gt 1 ]; then
++		echo "$patch does not uniquely identify a patch. Did you mean any of these?" >&2
++		sed 's/^/  /' "$TMP_MATCHES" >&2
++		rm -f "$TMP_MATCHES"
++		exit 1
++	elif [ $nr -eq 0 ]; then
++		rm -f "$TMP_MATCHES"
++		die "Patch $patch is not in the series"
++	fi
++	found_patch=`cat $TMP_MATCHES`
++	rm -f "$TMP_MATCHES"
+ fi
++patch="$found_patch"
  
--	[ $? -ne 0 ] && test_failed
-+	$ERR && test_failed
- 	diff -u "t-$1.out" "$LOGFILE" || test_failed
+ # FIXME: warn if we're editing an applied patch
  
- 	echo "done."
 -- 
 1.8.3.1
