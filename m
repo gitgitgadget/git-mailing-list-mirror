@@ -1,72 +1,98 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT v2 02/29] Allow "guilt delete -f" to run from a dir which contains spaces.
-Date: Tue, 13 May 2014 22:30:38 +0200
-Message-ID: <1400013065-27919-3-git-send-email-cederp@opera.com>
+Subject: [GUILT v2 03/29] Added test case for "guilt delete -f".
+Date: Tue, 13 May 2014 22:30:39 +0200
+Message-ID: <1400013065-27919-4-git-send-email-cederp@opera.com>
 References: <1400013065-27919-1-git-send-email-cederp@opera.com>
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Tue May 13 22:32:31 2014
+X-From: git-owner@vger.kernel.org Tue May 13 22:32:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkJNG-0007t2-3m
-	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 22:32:30 +0200
+	id 1WkJNZ-0008Qf-NO
+	for gcvg-git-2@plane.gmane.org; Tue, 13 May 2014 22:32:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752919AbaEMUc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 16:32:27 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:38289 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752708AbaEMUc0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 16:32:26 -0400
-Received: by mail-lb0-f174.google.com with SMTP id n15so699587lbi.5
-        for <git@vger.kernel.org>; Tue, 13 May 2014 13:32:24 -0700 (PDT)
+	id S1754746AbaEMUcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 16:32:47 -0400
+Received: from mail-la0-f52.google.com ([209.85.215.52]:59499 "EHLO
+	mail-la0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753185AbaEMUch (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 16:32:37 -0400
+Received: by mail-la0-f52.google.com with SMTP id gl10so700651lab.25
+        for <git@vger.kernel.org>; Tue, 13 May 2014 13:32:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=m0Y5h2W60kBK4mvCeOwPqfjfvu8A89bXEHqkc7CmGXo=;
-        b=IHJU0d73nu5tuVBhv31mvGM+ma8m9GVTSRJ9EUfd0dqmB9SbIerGZnX6Cec85SZwZi
-         jtnXxRi/hSOMR8FJN7AmPlPlbMPpQlhxJmsMvXXQwm8NAWAPtXXvNfjZHfRQwODLf2/w
-         Zvyd6f2Xhvk1W45Z81D7iGt38FYZUHvXFyu1WROED6UffT4M7Xfyz81rWInw0zft6Rz/
-         cndAKaPUhRc8mWWT8O/7C2LvSZL7hn4hibCXJaQr/w6WHHNHocumyM/NNE/ACaMA7KSA
-         rG2vfSTxF+rPVJDMuYAB0DXsMDG31Jw6SoSaTnSpa0abiP9HV/LCjLoHCryBUPcPNyG1
-         ZshA==
-X-Gm-Message-State: ALoCoQlcmTMyuq+GUaHRn17lMxkMg9ZrLqZ0k/dYKXChoRsxhCXgfyShj205xNf/OTDHG2gHQZTf
-X-Received: by 10.112.171.67 with SMTP id as3mr30478331lbc.10.1400013144723;
-        Tue, 13 May 2014 13:32:24 -0700 (PDT)
+        bh=feFFMhScDRe/a+FC4wabr67+e68FNjSy+P3KVS7PS1c=;
+        b=EL155su2ARcPlr3GUz/RtixjYttvl5OlCEOwWzzndgk8SIGaMDAy8tSyp1vZJy8PEX
+         PYrb3X8uU1h/mBpqz0gkMPPicuHB9w9SdVb06eI0uHqUEcg+rooykSlOvHbSQaE3vfob
+         2LZH1bctZ1GZP62MfAyFXXcfs6V48uLaToN144TTcHR00e71xmzPxL8ecizofDKutD/H
+         sEF25Qo2M4/0j+KG3ap7lvce07R8e2VlB9cSLcDeqJCddo95oAL3yCiOK/L7+vN5fYpT
+         Fn6F25ZrKbayf2EEIpezpbj5mPHd6BQSR6zkCSlBXxJz3OMTtMtKOfDfqZYl52hv+Mi0
+         nOEw==
+X-Gm-Message-State: ALoCoQn448I0obTQd2ZfFC1yvyPN3U9pz0Ne9j6c2KyMInxJ11RG5TY8W4T6VxRr9JZdD/BjbTWf
+X-Received: by 10.112.199.234 with SMTP id jn10mr29997918lbc.8.1400013155215;
+        Tue, 13 May 2014 13:32:35 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id m2sm11431763lbp.31.2014.05.13.13.32.23
+        by mx.google.com with ESMTPSA id m2sm11431763lbp.31.2014.05.13.13.32.33
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 13 May 2014 13:32:23 -0700 (PDT)
+        Tue, 13 May 2014 13:32:34 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1400013065-27919-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248818>
+
+Ensure that the file really is deleted.
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
 Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 ---
- guilt-delete | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ regression/t-026.out | 15 +++++++++++++++
+ regression/t-026.sh  |  5 ++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/guilt-delete b/guilt-delete
-index 3e394f8..967ac10 100755
---- a/guilt-delete
-+++ b/guilt-delete
-@@ -49,7 +49,7 @@ series_remove_patch "$patch"
+diff --git a/regression/t-026.out b/regression/t-026.out
+index 3b9fb14..be50b48 100644
+--- a/regression/t-026.out
++++ b/regression/t-026.out
+@@ -29,3 +29,18 @@ f 7848194fd2e9ee0eb6589482900687d799d60a12  .git/patches/master/series
+ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
++% guilt new delete-me
++% guilt pop
++All patches popped.
++% guilt delete -f delete-me
++% list_files
++d .git/patches
++d .git/patches/master
++d .git/refs/patches
++d .git/refs/patches/master
++f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
++f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
++f 7848194fd2e9ee0eb6589482900687d799d60a12  .git/patches/master/series
++f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
++f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
++f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+diff --git a/regression/t-026.sh b/regression/t-026.sh
+index 0ccdf85..e25d0df 100755
+--- a/regression/t-026.sh
++++ b/regression/t-026.sh
+@@ -20,4 +20,7 @@ cmd guilt delete add
  
- guilt_hook "delete" "$patch"
+ cmd list_files
  
--[ ! -z "$force" ] && rm -f $GUILT_DIR/$branch/$patch
-+[ ! -z "$force" ] && rm -f "$GUILT_DIR/$branch/$patch"
- 
- exit 0
- 
+-# FIXME: test delete -f
++cmd guilt new delete-me
++cmd guilt pop
++cmd guilt delete -f delete-me
++cmd list_files
 -- 
 1.8.3.1
