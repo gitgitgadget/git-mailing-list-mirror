@@ -1,84 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] contrib: remote-helpers: add move warnings (v2.0)
-Date: Tue, 13 May 2014 17:47:18 -0500
-Message-ID: <5372a0f6650d2_36c411ff3002e@nysa.notmuch>
-References: <1400016596-13178-1-git-send-email-felipe.contreras@gmail.com>
- <xmqq7g5pmj5r.fsf@gitster.dls.corp.google.com>
- <53729b2150a84_34aa9e5304e0@nysa.notmuch>
- <xmqq38gdmhdo.fsf@gitster.dls.corp.google.com>
+From: James Denholm <nod.helm@gmail.com>
+Subject: Re: [PATCH v2] contrib/subtree bugfix: Can't `add` annotated tag
+Date: Tue, 13 May 2014 23:02:01 +0000
+Message-ID: <20140513230201.GA32562@debian>
+References: <1399954138-2807-1-git-send-email-nod.helm@gmail.com>
+ <xmqqa9alo4lm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 00:58:19 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Kevin Cagle <kcagle@micron.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 14 01:02:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkLeN-0002po-H3
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 00:58:19 +0200
+	id 1WkLi8-0000qR-23
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 01:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753679AbaEMW6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 18:58:16 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:53075 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752150AbaEMW6P (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 18:58:15 -0400
-Received: by mail-ob0-f181.google.com with SMTP id wm4so1216754obc.40
-        for <git@vger.kernel.org>; Tue, 13 May 2014 15:58:14 -0700 (PDT)
+	id S1754617AbaEMXCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 19:02:08 -0400
+Received: from mail-wi0-f169.google.com ([209.85.212.169]:63226 "EHLO
+	mail-wi0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752687AbaEMXCF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 19:02:05 -0400
+Received: by mail-wi0-f169.google.com with SMTP id hi2so7861004wib.4
+        for <git@vger.kernel.org>; Tue, 13 May 2014 16:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=zM6YAx5tBmsmJ4yBOSmZHAVa8hCmxH77UC+KrbEzHOU=;
-        b=jAlpxh+jYoG00D2yrpbFlhZKC+PgDCnUiq6OB4kBwnd5rlcS72qQeC8PeaxZ4q4CPR
-         hGbdn63aPNmojQJZGZD/2CwqCQr5eWsC5joyEIOyi4nzjReXXhuh3yZKKELYwUCI6ZHN
-         oUbjNT+BKaavli6fKssKY4uVEm7vmrkxVm9n6lDW5FJSBJ5pk6wQYojydD6cgXyd2CP+
-         jqfdklURhskWuhpTNrXVdsP72W41GBY3TibuHsF8RyaCxK0MMIoB03RPX//IVyZs9YeH
-         dug+j71sLfxDu0IGIOxtpdLwaQdR8UPRXj/d0sx6fE0Rr3IEe5U7CoiAXKsLVGIMfKaK
-         7psw==
-X-Received: by 10.60.51.136 with SMTP id k8mr2282807oeo.33.1400021894928;
-        Tue, 13 May 2014 15:58:14 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id jr2sm28443921obb.8.2014.05.13.15.58.13
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=BmCc7JZ35nDs4PScuXr/Jbira/HuAp/Af4dOBOb4zUE=;
+        b=gyWcjjjXqA8HCRssH9vtq0GmX4HYTQDdP1gRLlsTv5EdGa9SrPhRMFaUVxXxRv7jHl
+         Gy/ung8EI6sFm8VuintDuzk1KD1W/KxJczRZhi8WSfmZCnqkBAEI4U4R0EarWjQRMmuj
+         aWaB1+V9mL+xZpAClqyttFfciWCxHgNo/uu1DVEIBWKJFSw76rwjuwZjFWki1FGc/PM3
+         Sboop1idvGkNeMmC1GkeJO/nTtwU7rTZ5Kew07P7Buf0Af0C3TucbFDQHYSkUDyd6l0G
+         dWhCrnDquscG6xyz2krb62YNzEzyWaEmpZuBXlGwoLTV3Qt7qYhvqnZA9PAPNeRgkhmn
+         hFIA==
+X-Received: by 10.180.85.163 with SMTP id i3mr23418880wiz.14.1400022124254;
+        Tue, 13 May 2014 16:02:04 -0700 (PDT)
+Received: from debian ([2a04:1980:3100:1aac:21b:21ff:feda:4cbe])
+        by mx.google.com with ESMTPSA id hr4sm23980927wjb.28.2014.05.13.16.02.03
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 May 2014 15:58:14 -0700 (PDT)
-In-Reply-To: <xmqq38gdmhdo.fsf@gitster.dls.corp.google.com>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 13 May 2014 16:02:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqa9alo4lm.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248883>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Tue, May 13, 2014 at 12:34:13PM -0700, Junio C Hamano wrote:
+> James Denholm <nod.helm@gmail.com> writes:
+> > I felt that defining revp would be a little more self-documenting than
+> > using $rev^0.
 > 
-> > Sigh, you just don't seem to understand that you are thinking about a
-> > different issue. I don't think there's any other way I can explain it to
-> > you.
-> 
-> Perhaps pointing out which commit(s) to revert might be a good point
-> to start.
+> That is a good decision, but as long as we are attempting to peel,
+> don't we want to stop the damage when it does not peel to a commit?
 
-Oh, now you realize it might be nice to avoid this regression I warned
-you about.
+I'm not sure that can actually happen - peel_committish is essentially
+implemented as `rev-parse $arg^0` (though with a bit of bling, of
+course), and to my understanding FETCH_HEAD will always parse to a
+committish - I could have missed something, of course.
 
-Why don't you continue schooling me about what constitutes a regression?
-I'm such a slow learner.
+subtree Will need error-catching at some point, of course, triggering
+resets or at least suggesting instructions to the user, but I think
+that's a touch out of the scope of a bugfix at this point (and, to be
+honest, I personally can't allocate the time to that for about a month
+due to the dark shadow of academic exams). Indeed, what to do in those
+cases is probably worth (re-)discussing the overall design and aims of
+subtree for, and so I'm not confident that I currently know the best way
+to do that.
 
-I was going to do more than pointing to commits, I was going to provide
-the fixes with test cases and a detailed explanation. But then you made
-your decision.
+> I'll tentatively queue this.  Thanks.
 
-This patch is what I'm suggesting you to do now. And I'll repeat what I
-already told you.
+Awesome, thanks again for this and the feedback.
 
-Good luck with your tree.
-
--- 
-Felipe Contreras
+---
+Regards,
+James Denholm.
