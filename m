@@ -1,115 +1,109 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] grep -I: do not bother to read known-binary files
-Date: Wed, 14 May 2014 15:44:42 -0400
-Message-ID: <20140514194442.GD2715@sigill.intra.peff.net>
-References: <20140514154419.GA4517@camelia.ucw.cz>
- <xmqqbnv0l02r.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
+Date: Wed, 14 May 2014 14:35:08 -0500
+Message-ID: <5373c56c5c531_56d6e3b30449@nysa.notmuch>
+References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
+ <1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
+ <xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com>
+ <536d4e7ba8ea_585ea5308a9@nysa.notmuch>
+ <CACPiFCKoegOj+dxAw87UgrrwrvPSDoFzyxZV1bEPNseiK2M7vw@mail.gmail.com>
+ <xmqqsiodo7o6.fsf@gitster.dls.corp.google.com>
+ <53726a577d6aa_4aa4b312f862@nysa.notmuch>
+ <xmqqegzxmlsr.fsf@gitster.dls.corp.google.com>
+ <CACPiFCKpx9e-swWW4KEfY9YkG7s0uPTs_aftV-NbXGkvMqtf-A@mail.gmail.com>
+ <53729ccf26bb0_34aa9e53047f@nysa.notmuch>
+ <CAGK7Mr63X3+XXuRUEcBwwnwrOrbip8VUebtL-tM3R8PYBPEXuQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	msysGit <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBDO2DJFKTEFBBLMPZ6NQKGQEPGH5Q6I@googlegroups.com Wed May 14 21:44:47 2014
-Return-path: <msysgit+bncBDO2DJFKTEFBBLMPZ6NQKGQEPGH5Q6I@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ob0-f190.google.com ([209.85.214.190])
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 14 21:46:13 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBBLMPZ6NQKGQEPGH5Q6I@googlegroups.com>)
-	id 1Wkf6c-0000pu-RJ
-	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 21:44:46 +0200
-Received: by mail-ob0-f190.google.com with SMTP id wm4sf5293obc.17
-        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 12:44:45 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wkf7z-0004DP-JZ
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 21:46:11 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751480AbaENTqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 15:46:07 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:58919 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750962AbaENTqF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 15:46:05 -0400
+Received: by mail-ob0-f176.google.com with SMTP id wo20so46680obc.21
+        for <git@vger.kernel.org>; Wed, 14 May 2014 12:46:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=CpaxgX9fKsXjSLzRor8/QUsSFLSW2qrGC4jUkNM83dI=;
-        b=pOnMs9c4rflWvGTeFKvq1xW2zKbIcbixdDeuvg/FP8IFrG1mjy6Lv7bNuny1h1FH09
-         eAqwzQIbXFR+V7bIIOp4kICU0hsti6iat/I1sv8dKe5NCtVmgR57/Rruup4ZF0+CGgMU
-         DSajE/OLWeaZswVBacr8FwiaNMhwC1dOnp6r8Z4UyLNvClz26V+2oKfUcqxV7liI91VL
-         fvbdRZ8PBOBVY9Buo2yjMyZdocf3B9v8VpQc6+iu/jy4QAWH+1qNiG5OSPVDmtuf0L/V
-         g3+VC2G9+z+bmruw4EV2PS4UJMvlMx9n4wA00j9t2fsfLveLLempSFMZvDCnVU0n+/QS
-         KXuQ==
-X-Received: by 10.50.103.104 with SMTP id fv8mr442804igb.2.1400096685948;
-        Wed, 14 May 2014 12:44:45 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.66.237 with SMTP id i13ls3016112igt.32.gmail; Wed, 14 May
- 2014 12:44:45 -0700 (PDT)
-X-Received: by 10.68.253.66 with SMTP id zy2mr2675936pbc.1.1400096685179;
-        Wed, 14 May 2014 12:44:45 -0700 (PDT)
-Received: from peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id b5si274715igl.0.2014.05.14.12.44.44
-        for <msysgit@googlegroups.com>;
-        Wed, 14 May 2014 12:44:45 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 10573 invoked by uid 102); 14 May 2014 19:44:44 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 May 2014 14:44:44 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 May 2014 15:44:42 -0400
-In-Reply-To: <xmqqbnv0l02r.fsf@gitster.dls.corp.google.com>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248942>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=4Elp4hDFa4wmoIytmBzGhSWD8JEQzpKjEYZKpIaC6JM=;
+        b=vYBWuMONIB+jtDHikiVKtATtoV9jsastrho1YkFp0hCTqG7j1vaRAxUFDSE+PJ5tdZ
+         qdl8VBAPOaEhSSOah28/QByeRyZxrzo8dXAONrihRzTmfFr3Lfwn4VgsFE6YUMwh5mLh
+         LMT/2wiY+/dRZhoSdbG3ivSxOiBHIxqy7HA8gk3A/JENtvIhe2WRVJHKA52CAt9AgbJH
+         XRuFzTBsXGn4FhiY6N27BdhVEuauKuWq+317qsdwuuBer+MubvQvz9+MCcIuLa4+buN4
+         sR+FKQlTzkFO0H30f7rrYrEwjBkrxynKfXddM7tVDh8PQoVtEVf3IhT4z5u0SGH3vKi9
+         G8kA==
+X-Received: by 10.60.37.199 with SMTP id a7mr5625533oek.41.1400096765253;
+        Wed, 14 May 2014 12:46:05 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id r3sm4876308obi.23.2014.05.14.12.46.04
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 May 2014 12:46:04 -0700 (PDT)
+In-Reply-To: <CAGK7Mr63X3+XXuRUEcBwwnwrOrbip8VUebtL-tM3R8PYBPEXuQ@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248943>
 
-On Wed, May 14, 2014 at 10:52:28AM -0700, Junio C Hamano wrote:
-
-> I do not think checking 'text' is the right way to do this.  The
-> attribute controls the eof normalization, and people sometimes want
-> to keep CRLF terminated files in the repository no matter what the
-> platform is (an example I heard is a sample protocol exchange over
-> textual network protocol such as HTTP and SMTP), and the way to do
-> so is to unset it.  That would still let them look for patterns in
-> and compare the changes to these paths.
+Philippe Vaucher wrote:
+> >> I have had patches and contributions rejected in the past, sometimes
+> >> rudely. Same has happened to many others, if you contribute long
+> >> enough, it is pretty much guaranteed that it will happen to you.
+> >> Maintainer is wrong, or you are wrong, or someone is just having a bad
+> >> day.
+> >
+> > This is not about a couple of patches I worked in a weekend being
+> > rejected. This is about the work I've been doing since the past two
+> > years almost like a full-time job dropped to the floor with no
+> > explanation at all. I started with the expectation that they were going
+> > to move to the core, because Junio said so, then he changed his mind and
+> > didn't want to explain his reasoning.
+> >
+> > It's not just a bad day.
 > 
-> Looking for "Marking files as binary" in gitattributes(5) gives us a
-> more authoritative alternative, I think.  In short:
+> Here are two posts where Junio and Michael Haggerty explain the
+> reasoning to you:
 > 
->  - If 'diff' is Unset, or
->  - If 'diff' is Set to X and diff.X.binary is true
->
-> then the contents are not suitable for human consumption.
+> - http://article.gmane.org/gmane.comp.version-control.git/248727
+> - http://article.gmane.org/gmane.comp.version-control.git/248693
+> 
+> Basically, in your case it boils down to your social manners.
 
-I responded elsewhere in the thread that I think the patch under
-discussion is redundant at this point, but just to clarify: grep
-currently uses the rules you give above, as it builds on the userdiff
-driver code.
+You are not paying attention at all.
 
--Peff
+Junio did *not* use my social manners as a reason to block the
+graduation, nor the quality of the code, he used a *TECHNICAL* reason.
+
+Prior to his decision there were no complaints about my "manners" since
+I returned. It was his *TECHNICAL* decision that triggered this.
+
+Junio never explained his *TECHNICAL* reason, and Michael Haggerty
+simply said "there are good technical arguments for and against
+moving git-remote-hg out of contrib", that was all his explanation for
+the *TECHNICAL* reason.
+
+You, and other people, are using the behavior I displayed *AFTER* Junio
+made his *TECHNICAL* decision as the cause for his decision not to
+graduate. That's a wrong direction fallacy.
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Felipe Contreras
