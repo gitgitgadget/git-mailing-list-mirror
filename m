@@ -1,113 +1,122 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 0/4] remote-hg: more improvements
-Date: Wed, 14 May 2014 15:51:39 +0200
-Message-ID: <87a9aktqms.fsf@fencepost.gnu.org>
-References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
-	<536a83097302f_76ff7a52ec6c@nysa.notmuch>
-	<xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
-	<536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
-	<xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
-	<536ad9601b73b_3caaa612ecdc@nysa.notmuch>
-	<CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
-	<xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
-	<CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
-	<87mweku2pt.fsf@fencepost.gnu.org>
-	<CAGK7Mr5ezbTVyq2wr7kYWjab6V1srrYwkqSGjo1GuPnkSuGWTQ@mail.gmail.com>
-	<87iop8u1km.fsf@fencepost.gnu.org>
-	<CAGK7Mr4N5L+jRE0ykBHvopgGv1x4iNXAK+_94R5KhBxHHqMYmA@mail.gmail.com>
-	<87egzwtthf.fsf@fencepost.gnu.org>
-	<CAGK7Mr6XTxpeJLSqL8PZMS8w+YCqxLrC5wX-dg4BdEaW3QAYTA@mail.gmail.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v6 02/42] refs.c: allow passing NULL to ref_transaction_free
+Date: Wed, 14 May 2014 08:14:11 -0700
+Message-ID: <CAL=YDWkV1QbhEB=LSX6mvJWonMz81xE4j1xd2O+J413po968ag@mail.gmail.com>
+References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
+	<1398976662-6962-3-git-send-email-sahlberg@google.com>
+	<20140513224422.GX9218@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 15:51:59 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 14 17:14:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkZbA-0004Iq-SQ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 15:51:57 +0200
+	id 1Wkasr-0003zv-3P
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 17:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755809AbaENNvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 09:51:53 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:45537 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755801AbaENNvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 09:51:52 -0400
-Received: from localhost ([127.0.0.1]:44578 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WkZb4-000335-F5; Wed, 14 May 2014 09:51:51 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 8F3F1E05FE; Wed, 14 May 2014 15:51:39 +0200 (CEST)
-In-Reply-To: <CAGK7Mr6XTxpeJLSqL8PZMS8w+YCqxLrC5wX-dg4BdEaW3QAYTA@mail.gmail.com>
-	(Philippe Vaucher's message of "Wed, 14 May 2014 15:13:24 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1752625AbaENPON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 11:14:13 -0400
+Received: from mail-vc0-f174.google.com ([209.85.220.174]:55771 "EHLO
+	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751447AbaENPOM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 11:14:12 -0400
+Received: by mail-vc0-f174.google.com with SMTP id lh14so2636936vcb.33
+        for <git@vger.kernel.org>; Wed, 14 May 2014 08:14:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=LMnTxrFkFg5ozE5FYxrA3jGZRHDLJHW4ykEXEIy0uGw=;
+        b=Rw7Y999BPXctrGX02QtI6lVAcc6ZhG3pchzLGR1Z8JZnlf5htyeDo2YWp+klWMrs+n
+         eug3u5qiho8qAL0o1z0AumYj6RqvWCFbY6FJVVFE8zVfLxR7yV9MTpHE8u0wYpq6UmbE
+         V9j/z4Mxo2DtmuH8LZ5cXJYT7mak9amfRIey+lnsolefdxVg7JV2f+LbmNNgt+LK0Gun
+         +uetPxbv406mENq5wFPCl7MzhZRlcEoeiDg16Me40gedfe3d90VoVInoJhZ6dsHWTsz6
+         9vXDlhjDSkOdtFutDnatt5E0FXK5V7K+GJTwvLIJw9l0QfggPIb6b9nTHFhOMKRAuHwI
+         sd7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=LMnTxrFkFg5ozE5FYxrA3jGZRHDLJHW4ykEXEIy0uGw=;
+        b=X49zVEITyRt6bCyE+NbccuvhojGcIPq4d3Jxm6qFHEOw0hR2wVCrlflwNqSHgK/nC6
+         p+chRV+jNlK98DjVNR9j7dQYywpXjqhdaFLgtOqrHJOeZjdS4+Zb+Lc9kqZ4aKh7fWgY
+         oG0XXVQkkjdY4RNnc+LU08821o/GwA/4zEvLmMv61Cba7h4PZhfebS2UuLPRyWRf/jOM
+         Q0TL1kYvHdKm6YYEiTlq2bPM/2XCNbuAwgp86KWh7UGfjT1fhb9ASuMVJzi3LAnnhe68
+         +ycy5ruwuxatNNL+CoDv9nqcptEHZOdMtYqQ97/YF1AxjIsOHHb1xG6UMWbjD8hb7LaV
+         +LaQ==
+X-Gm-Message-State: ALoCoQlgsvHjb5fSyc9icgOEJSKzMAOoY9Iz1N2NVPFg9++mQ8Bh+/MKQD8uGguaZ7FoJcG+QpJH
+X-Received: by 10.58.112.8 with SMTP id im8mr1966751veb.35.1400080451474; Wed,
+ 14 May 2014 08:14:11 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Wed, 14 May 2014 08:14:11 -0700 (PDT)
+In-Reply-To: <20140513224422.GX9218@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248917>
 
-Philippe Vaucher <philippe.vaucher@gmail.com> writes:
+Thanks.
+I changed the commit message.
 
-> I'm sorry that my words aren't clear enough for you to infer the point
-> I'm trying to make. Let's try something simpler: what I was saying is
-> that bad behavior will get you into trouble when contributing (and
-> thus it's important to behave nicely), where Felipe usualy says bad
-> behavior is irrelevant because only truth/quality is important.
-
-Do you feel Felipe is in control of what you label bad behavior?  Do you
-feel you are in control over how you react to his behavior?
-
-> Yes it's unfortunate. The amount of talent in our societies that is
-> wasted because of communication problems is probably quite high. I
-> didn't find a way around "being social" in any human based community
-> yet, but if you have an idea please share.
-
-"being social" as an isolated feat is self-contradictory.  The question
-is how to function in a particular social context.  Stock answers apply
-to stock behaviors and are obviously most efficient to apply.
-
-Yesterday my girl friend bought back a mare she had sold two years ago
-because its owner did not manage to get along with it.  It's a
-temperamental animal that learns and performs amazingly well for its
-comparatively compact build.  But it's highest in rank "or else", and so
-in the end it got locked up in its stable box most of the time in order
-to avoid injuries to other horses.  Now it's back here at the riding
-school, and there is little question that there will be some injuries
-before things settle down again even though most of the horses here know
-it already.
-
-> The only way I can see working is that for someone to act as a
-> mediator between the grumpy contributor and the community, but the
-> role of this person is not very pleasant. That or maybe have merges
-> done by some kind of robot with some AI about patch quality, but I
-> doubt it is technically feasible yet.
-
-Well, humans are more complex.  There are no sure-fire recipes even for
-working with horses: some of them here have their separate paddocks
-because things would not settle down, some of them have standard
-conflicts, there are occasional injuries.  The most important "standard
-recipe" is to make sure that the areas accessible to multiple horses do
-not have dead ends small enough for one horse to be able to corner
-another.  That's not really fabulous but still pretty essential.  Also
-enough room all around, obviously.
-
-Now humans are often held in conditions that are not species-appropriate
-and lead to a buildup of tension.  Try finding an undisturbed spot in a
-typical city suitable for devouring a bread roll you hunted down without
-getting other predators eyeing your prey.  Almost impossible.
-
-It may be that distributed version control systems offer more
-possibilities for organizing cooperation in a manner leaving graceful
-escape paths when things don't work out.  It's not what one want to have
-to rely on permanently but it may be worth thinking about ways to make
-consequences from difficulties less "inevitable" and/or grave.
-
--- 
-David Kastrup
+On Tue, May 13, 2014 at 3:44 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
+>
+>> Allow ref_transaction_free to be called with NULL and in extension allow
+>> ref_transaction_rollback to be called for a NULL transaction.
+>
+> In extension = as a result?
+>
+> Makes sense.  It lets someone do the usual
+>
+>         struct ref_transaction *transaction;
+>         int ret = 0;
+>
+>         if (something_fails()) {
+>                 ret = -1;
+>                 goto cleanup;
+>         }
+>         ...
+>
+>  cleanup:
+>         ref_transaction_free(transaction);
+>         return ret;
+>
+> just like you can already do with free().
+>
+>> This allows us to write code that will
+>>
+>>   if ( (!transaction ||
+>>         ref_transaction_update(...))  ||
+>>       (ref_transaction_commit(...) && !(transaction = NULL)) {
+>>           ref_transaction_rollback(transaction);
+>>           ...
+>>   }
+>
+> Somewhere in the whitespace and parentheses I'm lost.
+>
+> Is the idea that when ref_transaction_commit fails it will have
+> freed the transaction so we need not to roll back to prevent a
+> double free?  I think it would be simpler for the caller to
+> unconditionally set transaction to NULL after calling
+> ref_transaction_commit in such a case to avoid use-after-free.
+>
+> Even better if it is the caller's responsibility to free
+> the transaction.  At any rate, it doesn't seem related to this
+> patch.
+>
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -3303,6 +3303,9 @@ static void ref_transaction_free(struct ref_transaction *transaction)
+>>  {
+>>       int i;
+>>
+>> +     if (!transaction)
+>> +             return;
+>
+> Except for the unclear commit message,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
