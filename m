@@ -1,128 +1,385 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git grep -O -i: if the pager is 'less', pass
- the '-i' option
-Date: Wed, 14 May 2014 15:07:17 -0400
-Message-ID: <20140514190716.GA2715@sigill.intra.peff.net>
-References: <20140514155010.GA4592@camelia.ucw.cz>
- <xmqq7g5okztp.fsf@gitster.dls.corp.google.com>
- <20140514182654.GA9218@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] contrib: remote-helpers: add move warnings (v2.0)
+Date: Wed, 14 May 2014 12:06:35 -0700
+Message-ID: <xmqqppjgji2s.fsf@gitster.dls.corp.google.com>
+References: <1400016596-13178-1-git-send-email-felipe.contreras@gmail.com>
+	<xmqq7g5pmj5r.fsf@gitster.dls.corp.google.com>
+	<53729b2150a84_34aa9e5304e0@nysa.notmuch>
+	<xmqq38gdmhdo.fsf@gitster.dls.corp.google.com>
+	<5372a0f6650d2_36c411ff3002e@nysa.notmuch>
+	<5372D205.4040004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, Stepan Kasal <kasal@ucw.cz>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	msysGit <msysgit@googlegroups.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: msysgit+bncBDO2DJFKTEFBB2H5Z2NQKGQEERD24CA@googlegroups.com Wed May 14 21:07:27 2014
-Return-path: <msysgit+bncBDO2DJFKTEFBB2H5Z2NQKGQEERD24CA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yk0-f186.google.com ([209.85.160.186])
+Content-Type: text/plain; charset=us-ascii
+Cc: Felipe Contreras <felipe.contreras@gmail.com>, git@vger.kernel.org
+To: Marius Storm-Olsen <mstormo@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 14 21:18:03 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBB2H5Z2NQKGQEERD24CA@googlegroups.com>)
-	id 1WkeWQ-0002ir-7Z
-	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 21:07:22 +0200
-Received: by mail-yk0-f186.google.com with SMTP id q9sf195987ykb.23
-        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 12:07:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=CWN2s/dibMTI3cIb8700KT4mK6+PN8iZ96JhSaqJHTA=;
-        b=osLFV+kN9xkq0fvv0gij9T0EaYYDC70Oym/ZND81I3eJsXwhgc3EdW1pmiOH8t3GAr
-         6TP0xK+UowV4qkfVHglH131CkDRQvxQtAtFFeLLXu3gPpYnI2xWzsF/mrDjL7uaeQlNS
-         MY0YEr49HDCnO1JigLEFcPjVjLRr2HiASKfajIcM+Pc31KA6+w0jO5UdgsfnpUzxz8tq
-         nNzo0bft8AI5wzcnv23Ut8l2igaUsIGv8NyGXErS7qEKtN6sc+0jgI5tbOE9mAKAgU17
-         7muDxSnrFy3W3pUCs7rtS6kEB+azYorY/IkfzPfRdUqZnoOodoTqoScbTDXKiiSq2PG3
-         ArCQ==
-X-Received: by 10.50.59.179 with SMTP id a19mr886319igr.10.1400094441235;
-        Wed, 14 May 2014 12:07:21 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.50.174 with SMTP id d14ls2943255igo.13.gmail; Wed, 14 May
- 2014 12:07:20 -0700 (PDT)
-X-Received: by 10.66.102.36 with SMTP id fl4mr2496194pab.20.1400094440649;
-        Wed, 14 May 2014 12:07:20 -0700 (PDT)
-Received: from peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id la2si199168igb.1.2014.05.14.12.07.20
-        for <msysgit@googlegroups.com>;
-        Wed, 14 May 2014 12:07:20 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 8387 invoked by uid 102); 14 May 2014 19:07:20 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 May 2014 14:07:20 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 May 2014 15:07:17 -0400
-In-Reply-To: <20140514182654.GA9218@google.com>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248936>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wkegj-0006ms-SP
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 21:18:02 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751683AbaENTR4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 15:17:56 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56265 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750857AbaENTRz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 15:17:55 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A05AC16F3C;
+	Wed, 14 May 2014 15:17:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AnFq23MmBaqB7oHcIIGjx8+xP/c=; b=wHWQxX
+	CxanKIhhO/vnOYDAXeBzIoKbLk5BaML5+3Nz2Urvo74nL3kM2go41qEA/SagNQrf
+	N28ZS+JIxL1ZzeNVaVr6FJoS4zNIgi26ImlFqTYuEfvzGHaaeRoTxpjm8Qrb7ELq
+	3ksQQETmTk6sS1uXYGwr5aZpupDHsKBe5GxMM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cDs7QT1u2BtGObhg4L4nz5b39DjyDgur
+	rAsaZ8sKzjFp0DZ46k+Ogh47NW2gQLc57F11NpFDP/rtgVZHCSSfbNO9GWE192Iy
+	UmWr1NHmXzGe0W58QXuC+qbD+kG9Z4Iy/ERfuuAfOQn8kDBZT7El7S95Av1jCoy7
+	nYEJvb/ybIg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 95F2616F3A;
+	Wed, 14 May 2014 15:17:49 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3426E1644F;
+	Wed, 14 May 2014 15:06:37 -0400 (EDT)
+In-Reply-To: <5372D205.4040004@gmail.com> (Marius Storm-Olsen's message of
+	"Tue, 13 May 2014 21:16:37 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DF7E2BCA-DB9A-11E3-B8E8-DDB853EDF712-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248937>
 
-On Wed, May 14, 2014 at 11:26:54AM -0700, Jonathan Nieder wrote:
+Marius Storm-Olsen <mstormo@gmail.com> writes:
 
-> "git grep" has other options that affect interpretation of the pattern
-> which this patch does not help with:
-> 
->  * -v / --ignore-match: probably should disable this feature of -O.
->  * -E / --extended-regexp
->  * -P / --perl-regexp
->  * -F / --fixed-strings: ideally would auto-escape regex specials.
->  * -e<pattern1> --or -e<pattern2>
-> 
-> And git grep -Ovi has a similar bug, for which the fix is to add
-> \c to the pattern instead of passing an -I option.
+> On 5/13/2014 5:47 PM, Felipe Contreras wrote:
+>> I was going to do more than pointing to commits, I was going to
+>> provide the fixes with test cases and a detailed explanation. But
+>> then you made your decision.
+>
+> I believe the regression in question, mentioned at the bottom of this post
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/248263/focus=248269
+>
+>     "Since you are not going to do so, I do not feel compelled to fix
+>      the synchronization crash regression that is present in v2.0.0-rc2
+>      and I already warned you about."
+>
+> is referring to this patch
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/247546/focus=247549
+>
+> but I admit, I'm getting a bit fuzzy around these discussions.
 
-We've already found the lines of interest to the user. It would be nice
-if we could somehow point the pager at them by number, rather than
-repeating the (slightly incompatible) search.
+Thanks for trying to help.
 
-We can do "less +25", but that only points it to the first instance (and
-doesn't highlight it), whereas the current code lets the repeat-search
-find other instances. I don't think there's a way to queue up a set of
-interesting lines to visit in less. At least I could not think of one.
+The patch you pointed out however names 2594a79 as the culprit, but
+it has been in 1.8.3 and upwards, so I am not sure what to say.  As
+I do not recall seeing anything about "I already warned you about",
+I fished the archive again, but the closest I found was this:
 
-This is more or less how I ended up at the design of contrib/git-jump,
-which uses quickfix lists to make such a queue (only editors
-understand those, not pagers, but I consider being dumped into the
-editor a feature :) ).
+    http://thread.gmane.org/gmane.comp.version-control.git/248063/focus=248601
 
-> But as is, it's an improvement, so (except that "-i" should be
-> replaced by "-I") it seems like a good change.
+in which we heard "You won't be able to find the breakage." when I
+hinted bisecting.  The only thing we saw was "I already said this
+multiple times, but let me be clear once more: MASTER HAS A
+REGRESSION (for all versions of Mercurial)." and I can believe if he
+said that exact phrase multiple times, but I do not think he said
+anything useful than "I broke 2.0 prereleases" anywhere---at least I
+didn't find any "... with this commit in what way".
 
-Agreed. Thanks for the list of problematic options.
+So at this point, I would have to say that the users of remote-hg is
+taken hostage by its author.  One safe way forward at this point in
+order to avoid regression would be to revert everything done by him
+as suspicious, but that is a route that is too overcautious even for
+me, and I am not willing to travel that road.
 
--Peff
+The "synch crash regression" points me more towards 3994e64d
+(transport-helper: fix sync issue on crashes, 2014-04-12), though.
+I would happily revert the merge d508e4a that pulled the topic into
+v2.0.0-rc1.
 
+-- >8 --
+Subject: [PATCH] Revert "Merge branch 'fc/transport-helper-sync-error-fix'"
+
+This reverts commit d508e4a8e2391ae2596403b6478d01cf3d5f928f,
+reversing changes made to e42552135a2a396f37053a89f44952ea907870b2.
+
+The author of the original topic says he broke the upcoming 2.0
+release with something that relates to "synchronization crash
+regression" while refusing to give further specifics, so this would
+unfortunately be the safest option for the upcoming release.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/RelNotes/2.0.0.txt |  4 ---
+ t/t5801-remote-helpers.sh        | 31 +++++------------
+ transport-helper.c               | 73 ++++++++++++++++------------------------
+ 3 files changed, 37 insertions(+), 71 deletions(-)
+
+diff --git a/Documentation/RelNotes/2.0.0.txt b/Documentation/RelNotes/2.0.0.txt
+index 6e628d4..97f7df0 100644
+--- a/Documentation/RelNotes/2.0.0.txt
++++ b/Documentation/RelNotes/2.0.0.txt
+@@ -88,10 +88,6 @@ UI, Workflows & Features
+  * "git grep" learned to behave in a way similar to native grep when
+    "-h" (no header) and "-c" (count) options are given.
+ 
+- * "git push" via transport-helper interface (e.g. remote-hg) has
+-   been updated to allow forced ref updates in a way similar to the
+-   natively supported transports.
+-
+  * The "simple" mode is the default for "git push".
+ 
+  * "git add -u" and "git add -A", when run without any pathspec, is a
+diff --git a/t/t5801-remote-helpers.sh b/t/t5801-remote-helpers.sh
+index a00a660..25fd2e7 100755
+--- a/t/t5801-remote-helpers.sh
++++ b/t/t5801-remote-helpers.sh
+@@ -212,30 +212,19 @@ test_expect_success 'push update refs failure' '
+ 	echo "update fail" >>file &&
+ 	git commit -a -m "update fail" &&
+ 	git rev-parse --verify testgit/origin/heads/update >expect &&
+-	test_expect_code 1 env GIT_REMOTE_TESTGIT_FAILURE="non-fast forward" \
+-		git push origin update &&
++	GIT_REMOTE_TESTGIT_PUSH_ERROR="non-fast forward" &&
++	export GIT_REMOTE_TESTGIT_PUSH_ERROR &&
++	test_expect_code 1 git push origin update &&
+ 	git rev-parse --verify testgit/origin/heads/update >actual &&
+ 	test_cmp expect actual
+ 	)
+ '
+ 
+-clean_mark () {
+-	cut -f 2 -d ' ' "$1" |
+-	git cat-file --batch-check |
+-	grep commit |
+-	sort >$(basename "$1")
+-}
+-
+-cmp_marks () {
+-	test_when_finished "rm -rf git.marks testgit.marks" &&
+-	clean_mark ".git/testgit/$1/git.marks" &&
+-	clean_mark ".git/testgit/$1/testgit.marks" &&
+-	test_cmp git.marks testgit.marks
+-}
+-
+ test_expect_success 'proper failure checks for fetching' '
+-	(cd local &&
+-	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git fetch 2>error &&
++	(GIT_REMOTE_TESTGIT_FAILURE=1 &&
++	export GIT_REMOTE_TESTGIT_FAILURE &&
++	cd local &&
++	test_must_fail git fetch 2> error &&
+ 	cat error &&
+ 	grep -q "Error while running fast-import" error
+ 	)
+@@ -243,11 +232,7 @@ test_expect_success 'proper failure checks for fetching' '
+ 
+ test_expect_success 'proper failure checks for pushing' '
+ 	(cd local &&
+-	git checkout -b crash master &&
+-	echo crash >>file &&
+-	git commit -a -m crash &&
+-	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git push --all &&
+-	cmp_marks origin
++	test_must_fail env GIT_REMOTE_TESTGIT_FAILURE=1 git push --all
+ 	)
+ '
+ 
+diff --git a/transport-helper.c b/transport-helper.c
+index b468e4f..86e1679 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -58,7 +58,7 @@ static int recvline_fh(FILE *helper, struct strbuf *buffer, const char *name)
+ 	if (strbuf_getline(buffer, helper, '\n') == EOF) {
+ 		if (debug)
+ 			fprintf(stderr, "Debug: Remote helper quit.\n");
+-		return 1;
++		exit(128);
+ 	}
+ 
+ 	if (debug)
+@@ -71,6 +71,12 @@ static int recvline(struct helper_data *helper, struct strbuf *buffer)
+ 	return recvline_fh(helper->out, buffer, helper->name);
+ }
+ 
++static void xchgline(struct helper_data *helper, struct strbuf *buffer)
++{
++	sendline(helper, buffer);
++	recvline(helper, buffer);
++}
++
+ static void write_constant(int fd, const char *str)
+ {
+ 	if (debug)
+@@ -157,8 +163,7 @@ static struct child_process *get_helper(struct transport *transport)
+ 	while (1) {
+ 		const char *capname;
+ 		int mandatory = 0;
+-		if (recvline(data, &buf))
+-			exit(128);
++		recvline(data, &buf);
+ 
+ 		if (!*buf.buf)
+ 			break;
+@@ -195,9 +200,15 @@ static struct child_process *get_helper(struct transport *transport)
+ 		} else if (!strcmp(capname, "signed-tags")) {
+ 			data->signed_tags = 1;
+ 		} else if (starts_with(capname, "export-marks ")) {
+-			data->export_marks = xstrdup(capname + strlen("export-marks "));
++			struct strbuf arg = STRBUF_INIT;
++			strbuf_addstr(&arg, "--export-marks=");
++			strbuf_addstr(&arg, capname + strlen("export-marks "));
++			data->export_marks = strbuf_detach(&arg, NULL);
+ 		} else if (starts_with(capname, "import-marks")) {
+-			data->import_marks = xstrdup(capname + strlen("import-marks "));
++			struct strbuf arg = STRBUF_INIT;
++			strbuf_addstr(&arg, "--import-marks=");
++			strbuf_addstr(&arg, capname + strlen("import-marks "));
++			data->import_marks = strbuf_detach(&arg, NULL);
+ 		} else if (starts_with(capname, "no-private-update")) {
+ 			data->no_private_update = 1;
+ 		} else if (mandatory) {
+@@ -296,9 +307,7 @@ static int set_helper_option(struct transport *transport,
+ 		quote_c_style(value, &buf, NULL, 0);
+ 	strbuf_addch(&buf, '\n');
+ 
+-	sendline(data, &buf);
+-	if (recvline(data, &buf))
+-		exit(128);
++	xchgline(data, &buf);
+ 
+ 	if (!strcmp(buf.buf, "ok"))
+ 		ret = 0;
+@@ -370,8 +379,7 @@ static int fetch_with_fetch(struct transport *transport,
+ 	sendline(data, &buf);
+ 
+ 	while (1) {
+-		if (recvline(data, &buf))
+-			exit(128);
++		recvline(data, &buf);
+ 
+ 		if (starts_with(buf.buf, "lock ")) {
+ 			const char *name = buf.buf + 5;
+@@ -422,8 +430,6 @@ static int get_exporter(struct transport *transport,
+ 	struct helper_data *data = transport->data;
+ 	struct child_process *helper = get_helper(transport);
+ 	int argc = 0, i;
+-	struct strbuf tmp = STRBUF_INIT;
+-
+ 	memset(fastexport, 0, sizeof(*fastexport));
+ 
+ 	/* we need to duplicate helper->in because we want to use it after
+@@ -434,14 +440,10 @@ static int get_exporter(struct transport *transport,
+ 	fastexport->argv[argc++] = "--use-done-feature";
+ 	fastexport->argv[argc++] = data->signed_tags ?
+ 		"--signed-tags=verbatim" : "--signed-tags=warn-strip";
+-	if (data->export_marks) {
+-		strbuf_addf(&tmp, "--export-marks=%s.tmp", data->export_marks);
+-		fastexport->argv[argc++] = strbuf_detach(&tmp, NULL);
+-	}
+-	if (data->import_marks) {
+-		strbuf_addf(&tmp, "--import-marks=%s", data->import_marks);
+-		fastexport->argv[argc++] = strbuf_detach(&tmp, NULL);
+-	}
++	if (data->export_marks)
++		fastexport->argv[argc++] = data->export_marks;
++	if (data->import_marks)
++		fastexport->argv[argc++] = data->import_marks;
+ 
+ 	for (i = 0; i < revlist_args->nr; i++)
+ 		fastexport->argv[argc++] = revlist_args->items[i].string;
+@@ -561,9 +563,7 @@ static int process_connect_service(struct transport *transport,
+ 		goto exit;
+ 
+ 	sendline(data, &cmdbuf);
+-	if (recvline_fh(input, &cmdbuf, name))
+-		exit(128);
+-
++	recvline_fh(input, &cmdbuf, name);
+ 	if (!strcmp(cmdbuf.buf, "")) {
+ 		data->no_disconnect_req = 1;
+ 		if (debug)
+@@ -739,22 +739,16 @@ static int push_update_ref_status(struct strbuf *buf,
+ 	return !(status == REF_STATUS_OK);
+ }
+ 
+-static int push_update_refs_status(struct helper_data *data,
++static void push_update_refs_status(struct helper_data *data,
+ 				    struct ref *remote_refs,
+ 				    int flags)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct ref *ref = remote_refs;
+-	int ret = 0;
+-
+ 	for (;;) {
+ 		char *private;
+ 
+-		if (recvline(data, &buf)) {
+-			ret = 1;
+-			break;
+-		}
+-
++		recvline(data, &buf);
+ 		if (!buf.len)
+ 			break;
+ 
+@@ -772,7 +766,6 @@ static int push_update_refs_status(struct helper_data *data,
+ 		free(private);
+ 	}
+ 	strbuf_release(&buf);
+-	return ret;
+ }
+ 
+ static int push_refs_with_push(struct transport *transport,
+@@ -853,7 +846,8 @@ static int push_refs_with_push(struct transport *transport,
+ 	sendline(data, &buf);
+ 	strbuf_release(&buf);
+ 
+-	return push_update_refs_status(data, remote_refs, flags);
++	push_update_refs_status(data, remote_refs, flags);
++	return 0;
+ }
+ 
+ static int push_refs_with_export(struct transport *transport,
+@@ -911,15 +905,7 @@ static int push_refs_with_export(struct transport *transport,
+ 
+ 	if (finish_command(&exporter))
+ 		die("Error while running fast-export");
+-	if (push_update_refs_status(data, remote_refs, flags))
+-		return 1;
+-
+-	if (data->export_marks) {
+-		strbuf_addf(&buf, "%s.tmp", data->export_marks);
+-		rename(buf.buf, data->export_marks);
+-		strbuf_release(&buf);
+-	}
+-
++	push_update_refs_status(data, remote_refs, flags);
+ 	return 0;
+ }
+ 
+@@ -988,8 +974,7 @@ static struct ref *get_refs_list(struct transport *transport, int for_push)
+ 
+ 	while (1) {
+ 		char *eov, *eon;
+-		if (recvline(data, &buf))
+-			exit(128);
++		recvline(data, &buf);
+ 
+ 		if (!*buf.buf)
+ 			break;
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+2.0.0-rc3-417-gef3bd82
