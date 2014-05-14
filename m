@@ -1,112 +1,90 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 0/4] remote-hg: more improvements
-Date: Wed, 14 May 2014 16:39:59 -0500
-Message-ID: <5373e2af9ae58_592416ad2f892@nysa.notmuch>
-References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
- <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
- <536a83097302f_76ff7a52ec6c@nysa.notmuch>
- <xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
- <536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
- <xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
- <536ad9601b73b_3caaa612ecdc@nysa.notmuch>
- <CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
- <xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
- <CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
- <87mweku2pt.fsf@fencepost.gnu.org>
- <CAGK7Mr5ezbTVyq2wr7kYWjab6V1srrYwkqSGjo1GuPnkSuGWTQ@mail.gmail.com>
- <87iop8u1km.fsf@fencepost.gnu.org>
- <CAGK7Mr4N5L+jRE0ykBHvopgGv1x4iNXAK+_94R5KhBxHHqMYmA@mail.gmail.com>
- <87egzwtthf.fsf@fencepost.gnu.org>
- <CAGK7Mr6XTxpeJLSqL8PZMS8w+YCqxLrC5wX-dg4BdEaW3QAYTA@mail.gmail.com>
- <87a9aktqms.fsf@fencepost.gnu.org>
- <CAGK7Mr7jhpizoHuA9NDnyNPy_rr8_R0m8-hCFO3CDn2Hbh3_pQ@mail.gmail.com>
- <5373cfb744982_57c3bfb300a0@nysa.notmuch>
- <87mwekrsap.fsf@fencepost.gnu.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
+Date: Wed, 14 May 2014 14:57:32 -0700
+Message-ID: <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
+References: <20140514184145.GA25699@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 23:51:01 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Wagner <accounts@mwagner.org>
+To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 14 23:57:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkh4m-00033F-Cv
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:51:00 +0200
+	id 1WkhBI-0002Mf-Oq
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:57:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752673AbaENVu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 17:50:58 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:44499 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752205AbaENVu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 17:50:57 -0400
-Received: by mail-ob0-f171.google.com with SMTP id wn1so222414obc.16
-        for <git@vger.kernel.org>; Wed, 14 May 2014 14:50:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=YWkbCwlm12g7+XVvCPAmwN+dM1F1vcBmxRfjjtXN22g=;
-        b=dDla1rmjvtdXFz3LIwahakNavGI+kFbGLfuktXn5odW3RQ36NTIcCT0fQJhr+id3nK
-         JuwydIeQC5pdaVl406Vkq8kbH59VxdSWQqM0zhZUoYbAXfmnTmJzzdkaqHAqeawD0I8J
-         MeAY1f1j8efBrMidBmmayurIba6lAQP2YrEbz6AlPknmCK2rJLRGPgFxzSLXpy8X6qKE
-         w+XVwR0zP4NpsvsEfuAuHn1MX/ZT8AJtxs7MU7EbWwUXUlpeu+bR5D44zkNkhoPZCE4Q
-         f+lnqq++jvN7eVnf5ZdMjwIP0cIujsGcO3vCjoU/B6sEcfjpiid7J8Td8sqEUNwW43VJ
-         X84Q==
-X-Received: by 10.182.33.6 with SMTP id n6mr6153956obi.48.1400104257299;
-        Wed, 14 May 2014 14:50:57 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id qh7sm5415319obc.13.2014.05.14.14.50.55
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 May 2014 14:50:56 -0700 (PDT)
-In-Reply-To: <87mwekrsap.fsf@fencepost.gnu.org>
+	id S1752442AbaENV5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 17:57:40 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58491 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751407AbaENV5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 17:57:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 92135180FF;
+	Wed, 14 May 2014 17:57:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=d9cbqGAzdAzJmz58PAwJ+No/Zyg=; b=sTG76u
+	dfl8dzgwR5c6lBQhkSBdRjCXLf4f2N72DFueqlqb6t23cCXWNRk06NdevexH1UPu
+	Jwnv+5ztlGfAI73bVr8IZWBe1G37ZaMId+zewAE4KKs/E2jrL1h5DSMR0AsQEP6l
+	yslR9vpaBQWlpY/6asuwVmuKvxXRSjwJhTJ0g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dfwJBfzyFirUX5yrUpzJZEaXnE7AFxue
+	/e1O3wnzUQkywsPvu4nmsWs6fJMj1iy41d9BlP0l5B/46VoQfQrM7qHqFNSC238T
+	3gtyFU/R6w69emCYk9NTbwKpc6MxOvrrOxImEhNICFNR3b9Jkc0mOhIDdy/89R7L
+	xRssk8OaYqU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 89517180FD;
+	Wed, 14 May 2014 17:57:39 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3C2B6180EC;
+	Wed, 14 May 2014 17:57:34 -0400 (EDT)
+In-Reply-To: <20140514184145.GA25699@localhost.localdomain> (Michael Wagner's
+	message of "Wed, 14 May 2014 20:41:45 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C1288FAE-DBB2-11E3-96ED-DDB853EDF712-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249003>
 
-David Kastrup wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Philippe Vaucher wrote:
-> 
-> [...]
-> 
-> >> > Do you feel Felipe is in control of what you label bad behavior?  Do you
-> >> > feel you are in control over how you react to his behavior?
-> >> 
-> >> I feel that Felipe cannot control this (or decided not to),
-> >
-> > I am pretty much in control of my behavior. Those who know me
-> > personally know that I *never* get angry.
-> 
-> You are missing the point.  The point is not what effect your behavior
-> has on you but what it has on others.
+Michael Wagner <accounts@mwagner.org> writes:
 
-If me saying "I do not believe in God" has a negative effect on Mark,
-your answer seems to be "do not tell Mark the truth". If Mark was a
-co-worker and I had no option but to interact with him, I would probably
-do something along those lines if possible. But if Mark was a member of
-an open source project, I do have an option and I'd rather tell it like
-it is. If Mark has a problem with that, I can always avoid Mark, or just
-leave the project (say if Mark was the maintainer).
+> Perl has an internal encoding used to store text strings. Currently, trying to
+> view files with UTF-8 encoded names results in an error (either "404 - Cannot
+> find file" [blob_plain] or "XML Parsing Error" [blob]). Converting these UTF-8
+> encoded file names into Perl's internal format resolves these errors.
+>
+> Signed-off-by: Michael Wagner <accounts@mwagner.org>
+> ---
 
-In both cases Mark is wrong. I do understand that most people would
-rather comprimise their beliefs in order to win penguing points. I'm
-not that way.
+Cc'ing Jakub, who have been the area maintainer, for comments.
 
-If I can't speak my mind in an open source project where I'm
-contributing my time *for free*, I do not want to be part of that
-project. It's the project that's wrong, not me, and it's the project
-that looses, not me.
+One thing I wonder is that, if there are some additional calls to
+encode() necessary before we embed $file_name (which are now decoded
+to the internal string form, not a byte-sequence that happens to be
+in utf-8) in the generated pages, if we were to do this change.
 
--- 
-Felipe Contreras
+>  gitweb/gitweb.perl | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index a9f57d6..6046977 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1056,7 +1056,7 @@ sub evaluate_and_validate_params {
+>  		}
+>  	}
+>  
+> -	our $file_name = $input_params{'file_name'};
+> +	our $file_name = decode("utf-8", $input_params{'file_name'});
+>  	if (defined $file_name) {
+>  		if (!is_valid_pathname($file_name)) {
+>  			die_error(400, "Invalid file parameter");
