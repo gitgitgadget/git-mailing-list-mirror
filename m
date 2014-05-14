@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v7 38/42] refs.c: call lock_ref_sha1_basic directly from commit
-Date: Wed, 14 May 2014 14:17:12 -0700
-Message-ID: <1400102236-30082-39-git-send-email-sahlberg@google.com>
+Subject: [PATCH v7 16/42] branch.c: use ref transaction for all ref updates
+Date: Wed, 14 May 2014 14:16:50 -0700
+Message-ID: <1400102236-30082-17-git-send-email-sahlberg@google.com>
 References: <1400102236-30082-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,89 +11,135 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkgYY-0002V2-2o
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:17:42 +0200
+	id 1WkgYW-0002V2-Ev
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:17:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753387AbaENVRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 17:17:38 -0400
-Received: from mail-ob0-f202.google.com ([209.85.214.202]:51429 "EHLO
-	mail-ob0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753151AbaENVRd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 17:17:33 -0400
-Received: by mail-ob0-f202.google.com with SMTP id wm4so40789obc.5
-        for <git@vger.kernel.org>; Wed, 14 May 2014 14:17:32 -0700 (PDT)
+	id S1753300AbaENVR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 17:17:29 -0400
+Received: from mail-qc0-f201.google.com ([209.85.216.201]:47899 "EHLO
+	mail-qc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752773AbaENVR0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 17:17:26 -0400
+Received: by mail-qc0-f201.google.com with SMTP id l6so34056qcy.2
+        for <git@vger.kernel.org>; Wed, 14 May 2014 14:17:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=rAXQTXaquxsbGhT+4+r+JVZbyIigszCN7rXiswWsGYs=;
-        b=QAQr7qR1nU91HaECuErB7i89J4SJvm7N0E5JY48e0GEjbC5Fc+kgPa1+bOxYBZUr6J
-         J0IAnXL1CVgRrGcq5SyUtPiCPQEuSqtxdbpy7Tacl+OzrpS8V0zDRzvWXynAbOFlbIv7
-         XEEF4pdOoyEN62QqFzvsuxJxGUAOoP+NxcIk4j56pxwexN22s4xhSDqs9WoVZ9f/vAK8
-         KYXdPBEzq2LDoF0qPrJO19kitmUWr7c8aCsdeZ+lnxLnlxMR0A7h0CExAM0FevGayZKg
-         OcbBMvlLRHg4m5KXIDjNwHHAFAoNfDx7S/Q1cUzPUsUD7WWRPMSBCojBEG+mXWggf2lN
-         U6KQ==
+        bh=kGMRox28ZzTzds9F1rqQ4Sn/5NTBXhSj88RT/mC9zxk=;
+        b=mCB0O0gZoxqgMu7ECkrpPKcegAy+GIxT5yvdI8WOzf0ThRJE6u1Hpta2Fih3pis3Lz
+         uJgLCHtjtxKD2RI2fjNb16yK+uGdozLvkF2QCpIu8FEXzblC4vWXd4rUOzKGkTRrTk2B
+         HLaJvqy6ki2IjyLYl9bKBdyzxBGqbAjIZDsj6QjTtvtqATvtgWUPL7ky5AkBzV55CnJU
+         noR2WYoTzjX4iXrCwM07k533Ekuu5qBDgHVfB8ihqrUi5dZ14loleipPgEZnhHuefock
+         LumxPiWtRe2ThFTqrrO4sRZCLzliY7tGY/56rwPLwMB3v4fPF8z35bO/Lpue1ABPeIyT
+         i7Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=rAXQTXaquxsbGhT+4+r+JVZbyIigszCN7rXiswWsGYs=;
-        b=KFJkqkEnIIsleYb8icnXEgv1awvpyw762/SkTnIbDOkrh0267JhbUhKAKg797iOtkv
-         1Pwec7/KjeY5WMV4o8ywspdVjNB0jWe93FqG2nLJdOxEDTqu/HUMZFQpvLIsOSUOdsAG
-         kvPUsy2hdAVppvJ3SL6cxa+Dcdw4TiuYQF8E3aTbUKlBUhTfwqWtHJHMxsULq9yeTAUV
-         H3OTLaRQHjnpzQSC8LfIp68EsUQEMchHFv8nALaveVjtMi5WDRbM9yiWRb/INZ6KtPjZ
-         hOAJpFtriHWjn6IvJVpT97M+j7zoRfYt+1ev1u+XHPO4yD+4PSRUo6DaSZwR4P1mcARd
-         szLQ==
-X-Gm-Message-State: ALoCoQm2gxdzVpJ5BkJMJUsOfQQCE+CSD/ERBDnpUSNGDN5OnMGqXrHTCFVZCeAd2qDQ1YeCq8r2
-X-Received: by 10.43.173.71 with SMTP id ob7mr2681596icc.19.1400102252769;
-        Wed, 14 May 2014 14:17:32 -0700 (PDT)
+        bh=kGMRox28ZzTzds9F1rqQ4Sn/5NTBXhSj88RT/mC9zxk=;
+        b=YJNAD43xr0nWhsSE+JRvXQxzKzeaozJBNTdeClDhUfDWY2PVxLBi9DuniUU42wedCD
+         XLNUCvzbl1o+NMiobdIMPu6KaXIcESt8okOraU6hgTfJJ4pa4qSz7TDXE30H30qQGJAo
+         81boprpMzu7n+T4wSxPQdY7EdsWThonGd1s4SjvJuddQ/ez73bKV3h7iGPQDn56PskIV
+         dWQMWaxSFQFPkfJBlYPWgnrqT+sR+jjFtC4/ry0XKhl47X/b/2CryuuEw7SrgIvypqEr
+         NHEy6BriPRZoEXBbj5iDodUqT8JJmAO/xSCRjqKEBkh3P8tR39btz19k5F8w67n628NX
+         rgoQ==
+X-Gm-Message-State: ALoCoQlbsmuFGmmJbFjZ+WcZwPDS+ElX+RunU5+cZV9uvcMZzVQBgs6531jvgK7Ec2JjIYy7OITh
+X-Received: by 10.58.141.200 with SMTP id rq8mr2914903veb.31.1400102245399;
+        Wed, 14 May 2014 14:17:25 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id l7si146200yho.1.2014.05.14.14.17.32
+        by gmr-mx.google.com with ESMTPS id k43si145558yhq.3.2014.05.14.14.17.25
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 May 2014 14:17:32 -0700 (PDT)
+        Wed, 14 May 2014 14:17:25 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 98C2F31C1F8;
-	Wed, 14 May 2014 14:17:32 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 41FA231C1F8;
+	Wed, 14 May 2014 14:17:25 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 5A965E0CB6; Wed, 14 May 2014 14:17:32 -0700 (PDT)
+	id 05C25E0973; Wed, 14 May 2014 14:17:24 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.471.g2055d11.dirty
 In-Reply-To: <1400102236-30082-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248959>
 
-Skip using the lock_any_ref_for_update wrapper and call lock_ref_sha1_basic
-directly from the commit function.
+Change create_branch to use a ref transaction when creating the new branch.
+ref_transaction_create will check that the ref does not already exist and fail
+otherwise meaning that we no longer need to keep a lock on the ref during the
+setup_tracking. This simplifies the code since we can now do the transaction
+in one single step.
+
+If the forcing flag is false then use ref_transaction_create since this will
+fail if the ref already exist. Otherwise use ref_transaction_update.
+
+This also fixes a race condition in the old code where two concurrent
+create_branch could race since the lock_any_ref_for_update/write_ref_sha1
+did not protect against the ref already existsing. I.e. one thread could end up
+overwriting a branch even if the forcing flag is false.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ branch.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 6556417..a376dd6 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3476,12 +3476,12 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
+diff --git a/branch.c b/branch.c
+index 660097b..2aa5c82 100644
+--- a/branch.c
++++ b/branch.c
+@@ -226,7 +226,6 @@ void create_branch(const char *head,
+ 		   int force, int reflog, int clobber_head,
+ 		   int quiet, enum branch_track track)
+ {
+-	struct ref_lock *lock = NULL;
+ 	struct commit *commit;
+ 	unsigned char sha1[20];
+ 	char *real_ref, msg[PATH_MAX + 20];
+@@ -285,15 +284,6 @@ void create_branch(const char *head,
+ 		die(_("Not a valid branch point: '%s'."), start_name);
+ 	hashcpy(sha1, commit->object.sha1);
  
--		update->lock = lock_any_ref_for_update(update->refname,
--						       (update->have_old ?
--							update->old_sha1 :
--							NULL),
--						       update->flags,
--						       &update->type);
-+		update->lock = lock_ref_sha1_basic(update->refname,
-+						   (update->have_old ?
-+						    update->old_sha1 :
-+						    NULL),
-+						   update->flags,
-+						   &update->type);
- 		if (!update->lock) {
- 			if (err)
- 				strbuf_addf(err, "Cannot lock the ref '%s'.",
+-	if (!dont_change_ref) {
+-		lock = lock_any_ref_for_update(ref.buf, NULL, 0, NULL);
+-		if (!lock)
+-			die_errno(_("Failed to lock ref for update"));
+-	}
+-
+-	if (reflog)
+-		log_all_ref_updates = 1;
+-
+ 	if (forcing)
+ 		snprintf(msg, sizeof msg, "branch: Reset to %s",
+ 			 start_name);
+@@ -301,13 +291,25 @@ void create_branch(const char *head,
+ 		snprintf(msg, sizeof msg, "branch: Created from %s",
+ 			 start_name);
+ 
++	if (reflog)
++		log_all_ref_updates = 1;
++
++	if (!dont_change_ref) {
++		struct ref_transaction *transaction;
++		struct strbuf err = STRBUF_INIT;
++
++		transaction = ref_transaction_begin();
++		if (!transaction ||
++			ref_transaction_update(transaction, ref.buf, sha1,
++					       null_sha1, 0, !forcing) ||
++			ref_transaction_commit(transaction, msg, &err))
++				die_errno(_("%s: failed to write ref: %s"),
++					  ref.buf, err.buf);
++	}
++
+ 	if (real_ref && track)
+ 		setup_tracking(ref.buf + 11, real_ref, track, quiet);
+ 
+-	if (!dont_change_ref)
+-		if (write_ref_sha1(lock, sha1, msg) < 0)
+-			die_errno(_("Failed to write ref"));
+-
+ 	strbuf_release(&ref);
+ 	free(real_ref);
+ }
 -- 
 2.0.0.rc3.471.g2055d11.dirty
