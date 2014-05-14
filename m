@@ -1,98 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v6 08/42] refs.c: change ref_transaction_update() to do
- error checking and return status
-Date: Wed, 14 May 2014 16:40:15 -0700
-Message-ID: <20140514234015.GE9218@google.com>
-References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
- <1398976662-6962-9-git-send-email-sahlberg@google.com>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
+Date: Wed, 14 May 2014 19:50:08 -0400
+Message-ID: <CACPiFC+mrCufS1hakS8w5-PHuoqC+ktMmX+mRGNLAZpaQqjA_A@mail.gmail.com>
+References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
+ <1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
+ <xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com> <536d4e7ba8ea_585ea5308a9@nysa.notmuch>
+ <CACPiFCKoegOj+dxAw87UgrrwrvPSDoFzyxZV1bEPNseiK2M7vw@mail.gmail.com>
+ <xmqqsiodo7o6.fsf@gitster.dls.corp.google.com> <53726a577d6aa_4aa4b312f862@nysa.notmuch>
+ <xmqqegzxmlsr.fsf@gitster.dls.corp.google.com> <CACPiFCKpx9e-swWW4KEfY9YkG7s0uPTs_aftV-NbXGkvMqtf-A@mail.gmail.com>
+ <53729ccf26bb0_34aa9e53047f@nysa.notmuch> <CAGK7Mr63X3+XXuRUEcBwwnwrOrbip8VUebtL-tM3R8PYBPEXuQ@mail.gmail.com>
+ <5373c56c5c531_56d6e3b30449@nysa.notmuch> <xmqq38gcjcuw.fsf@gitster.dls.corp.google.com>
+ <5373fc12bc5e4_7411589304eb@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu May 15 01:40:25 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 15 01:50:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkimc-0005kg-Vf
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 01:40:23 +0200
+	id 1WkiwV-0004xn-Oj
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 01:50:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752334AbaENXkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 19:40:19 -0400
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:35969 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750973AbaENXkS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 19:40:18 -0400
-Received: by mail-pb0-f45.google.com with SMTP id um1so246598pbc.32
-        for <git@vger.kernel.org>; Wed, 14 May 2014 16:40:18 -0700 (PDT)
+	id S1751813AbaENXuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 19:50:32 -0400
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:41551 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751722AbaENXua (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 19:50:30 -0400
+Received: by mail-vc0-f171.google.com with SMTP id lc6so3425042vcb.2
+        for <git@vger.kernel.org>; Wed, 14 May 2014 16:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=EYP2Xs3Nxu82TxCh/vGvNEyqg5NYb2MC68ZQa/DCP2s=;
-        b=FF1PMSKBYHRUiIYrsXAE0JQk8QYyvpt61x9AQ1EnlOkps6uxRtQsJNjUz9rLxh6FJ0
-         Bo3BiiwA4NRNDTeNnd6UIFjOOzD3KK5GJho4n+8WzptgL+Xd0M4Kl9T73m+Rn8zA64tZ
-         YamdqteusCSnpdkvlEdZrMc1pEvpGSH06U4snY/hivEi8UqZGfRTxQKsOcxMtEBD2E/6
-         Wrx6TNX27mM/LoqaBjkhxEAyqx02rDIoyXh5do2n6BnFQDRndUWXirO6XtQcsnzKxnwn
-         uShrek/1aB4u93zrH72eyjD2SrbZMC4DhlQLQPRRDxh0ZwWup2PZg00k/FkiY145ljCO
-         mgnA==
-X-Received: by 10.68.222.105 with SMTP id ql9mr8163533pbc.4.1400110818253;
-        Wed, 14 May 2014 16:40:18 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id be7sm13400087pad.9.2014.05.14.16.40.17
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 14 May 2014 16:40:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1398976662-6962-9-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=0/fm7brCt1dJsHMi1jP4Ur8BOui0xSkQzhe4pNdRVok=;
+        b=z4R+DHyuyOOo4rvXLDuqXNgofEqQbg/Lq5hMb17mw4MO7gWvW54Vdj8yzukBiBfxn0
+         8MPnE5kD+D78fNczUyQO5VRZ6egVvvaccxitfFv4VMk2AG+zlj/9UwlIrCIRJp3VSFfY
+         e6PQvCqI4EvXdav90+mgfZwszhj34U8kwvM3jkYEAT6BXxjQ2I+Az4gDUPa3D8NF+rzK
+         mVCyH2KAOrlTBDYoQZFceEz1NvrR6gPO0e8iEOumG3gka3nLd/rn2UTPGg/PZ6vwfH6d
+         Vym+QFUMdDi/7x0DBv+I+VCA6JrUsq1eomtUWO5nEMV+E2Sjz5mPCIjC1cUsUuZCW6yW
+         xH3w==
+X-Received: by 10.58.116.175 with SMTP id jx15mr5375569veb.9.1400111430009;
+ Wed, 14 May 2014 16:50:30 -0700 (PDT)
+Received: by 10.220.183.138 with HTTP; Wed, 14 May 2014 16:50:08 -0700 (PDT)
+In-Reply-To: <5373fc12bc5e4_7411589304eb@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249050>
 
-Ronnie Sahlberg wrote:
+On Wed, May 14, 2014 at 7:28 PM, Felipe Contreras
+<felipe.contreras@gmail.com> wrote:
+> Do we no longer have to be afraid of that? WHY? All the responses from
+> the contrib cleanup patches seem to suggest that pretty much *everyone*
 
-> Update ref_transaction_update() do some basic error checking and return
-> true on error. Update all callers to check ref_transaction_update() for error.
-> There are currently no conditions in _update that will return error but there
-> will be in the future.
->
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> ---
->  builtin/update-ref.c | 10 ++++++----
->  refs.c               |  9 +++++++--
->  refs.h               | 10 +++++-----
->  3 files changed, 18 insertions(+), 11 deletions(-)
+The responses also been clear in that you are toxic. You've hijacked
+this mailing list on a personal crusade over a particular point over
+which Junio has discretion.
 
-Revisiting comments from [1]:
+We get it. You disagree with the maintainer. It is clear now. Learn to
+live with it; or at least let everyone else be.
 
- * When I call ref_transaction_update, what does it mean that I get
-   a nonzero return value?  Does it mean the _update failed and had
-   no effect?  What will I want to do next: should I try again or
-   print an error and exit?
+Can we call Hitler on this one and close these threads now?
 
-   Ideally I should be able to answer these questions by reading
-   the signature of ref_transaction_update and the comment documenting
-   it.  The comment doesn't say anything about what errors
-   mean here.
+You sent a nice email saying bridges are burned. We get the point.
+It's over. Bridges burned. NO CARRIER.
 
- * the error message change for the have_old && !old_sha1 case (to add
-   "BUG:" so users know the impossible has happened and translators
-   know not to bother with it) seems to have snuck ahead into patch 28
-   (refs.c: add transaction.status and track OPEN/CLOSED/ERROR).
+Bye now.
 
- * It would be easier to make sense of the error path (does the error
-   message have enough information?  Will the user be bewildered?)
-   if there were an example of how ref_transaction_update can fail.
 
-   There still doesn't seem to be one by the end of the series.
 
-The general idea still seems sensible.
-
-Thanks,
-Jonathan
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/246437/focus=247115
+m
+-- 
+ martin.langhoff@gmail.com
+ -  ask interesting questions
+ - don't get distracted with shiny stuff  - working code first
+ ~ http://docs.moodle.org/en/User:Martin_Langhoff
