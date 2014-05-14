@@ -1,24 +1,25 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH] grep -I: do not bother to read known-binary files
-Date: Wed, 14 May 2014 15:41:29 -0400
-Message-ID: <20140514194128.GC2715@sigill.intra.peff.net>
+Date: Wed, 14 May 2014 15:44:42 -0400
+Message-ID: <20140514194442.GD2715@sigill.intra.peff.net>
 References: <20140514154419.GA4517@camelia.ucw.cz>
+ <xmqqbnv0l02r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>,
+Cc: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBDO2DJFKTEFBB24NZ6NQKGQEVHMKUII@googlegroups.com Wed May 14 21:41:34 2014
-Return-path: <msysgit+bncBDO2DJFKTEFBB24NZ6NQKGQEVHMKUII@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBDO2DJFKTEFBBLMPZ6NQKGQEPGH5Q6I@googlegroups.com Wed May 14 21:44:47 2014
+Return-path: <msysgit+bncBDO2DJFKTEFBBLMPZ6NQKGQEPGH5Q6I@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yh0-f57.google.com ([209.85.213.57])
+Received: from mail-ob0-f190.google.com ([209.85.214.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBB24NZ6NQKGQEVHMKUII@googlegroups.com>)
-	id 1Wkf3U-0001NW-QT
-	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 21:41:32 +0200
-Received: by mail-yh0-f57.google.com with SMTP id c41sf600521yho.2
-        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 12:41:32 -0700 (PDT)
+	(envelope-from <msysgit+bncBDO2DJFKTEFBBLMPZ6NQKGQEPGH5Q6I@googlegroups.com>)
+	id 1Wkf6c-0000pu-RJ
+	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 21:44:46 +0200
+Received: by mail-ob0-f190.google.com with SMTP id wm4sf5293obc.17
+        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 12:44:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=date:from:to:cc:subject:message-id:references:mime-version
@@ -26,31 +27,31 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type
          :content-disposition;
-        bh=+Ilf1FJ6s5e5w/5ISGkIxYle1U+Mil+vPTfYlffv7Ns=;
-        b=Bg+ihMfe/jtfqdhpb3wjtI+mF+yz/WmV4KDCkax0YbsCQaZY7eyjd53AR7mzY0Z61L
-         T+dHqVD+0Hsqf1nZJXV3bUAA7BWSDOobx7CawvMxmXC+kA72ZGVWOcXcepk+lhU6R6To
-         +sfGzs5EyeUCyTjZ0/VNS32Ye5zxA1E6okpjFg65I1XvOVC8NLbxJkKvjlf59gD30a73
-         J7SfrxOafCQu1tz6cVEdz2AB/Dzg+KKkUwP1mcqSNrvQXj/TKDYwa9XVVUrIws/X2gjV
-         hQ1shBdPhj4Stbm4u0Y8YMXVR0TleYpB0b2+etARJbyeFl6ial1vZo7Hp4eR0ZNRdjIR
-         MB0A==
-X-Received: by 10.140.47.201 with SMTP id m67mr44001qga.29.1400096492017;
-        Wed, 14 May 2014 12:41:32 -0700 (PDT)
+        bh=CpaxgX9fKsXjSLzRor8/QUsSFLSW2qrGC4jUkNM83dI=;
+        b=pOnMs9c4rflWvGTeFKvq1xW2zKbIcbixdDeuvg/FP8IFrG1mjy6Lv7bNuny1h1FH09
+         eAqwzQIbXFR+V7bIIOp4kICU0hsti6iat/I1sv8dKe5NCtVmgR57/Rruup4ZF0+CGgMU
+         DSajE/OLWeaZswVBacr8FwiaNMhwC1dOnp6r8Z4UyLNvClz26V+2oKfUcqxV7liI91VL
+         fvbdRZ8PBOBVY9Buo2yjMyZdocf3B9v8VpQc6+iu/jy4QAWH+1qNiG5OSPVDmtuf0L/V
+         g3+VC2G9+z+bmruw4EV2PS4UJMvlMx9n4wA00j9t2fsfLveLLempSFMZvDCnVU0n+/QS
+         KXuQ==
+X-Received: by 10.50.103.104 with SMTP id fv8mr442804igb.2.1400096685948;
+        Wed, 14 May 2014 12:44:45 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.19.9 with SMTP id 9ls2436423qgg.75.gmail; Wed, 14 May 2014
- 12:41:31 -0700 (PDT)
-X-Received: by 10.236.171.169 with SMTP id r29mr2268612yhl.32.1400096491315;
-        Wed, 14 May 2014 12:41:31 -0700 (PDT)
+Received: by 10.50.66.237 with SMTP id i13ls3016112igt.32.gmail; Wed, 14 May
+ 2014 12:44:45 -0700 (PDT)
+X-Received: by 10.68.253.66 with SMTP id zy2mr2675936pbc.1.1400096685179;
+        Wed, 14 May 2014 12:44:45 -0700 (PDT)
 Received: from peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id jj2si1332998igb.3.2014.05.14.12.41.31
+        by gmr-mx.google.com with SMTP id b5si274715igl.0.2014.05.14.12.44.44
         for <msysgit@googlegroups.com>;
-        Wed, 14 May 2014 12:41:31 -0700 (PDT)
+        Wed, 14 May 2014 12:44:45 -0700 (PDT)
 Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 10416 invoked by uid 102); 14 May 2014 19:41:31 -0000
+Received: (qmail 10573 invoked by uid 102); 14 May 2014 19:44:44 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 May 2014 14:41:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 May 2014 15:41:29 -0400
-In-Reply-To: <20140514154419.GA4517@camelia.ucw.cz>
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 May 2014 14:44:44 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 May 2014 15:44:42 -0400
+In-Reply-To: <xmqqbnv0l02r.fsf@gitster.dls.corp.google.com>
 X-Original-Sender: peff@peff.net
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
  (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
@@ -66,36 +67,30 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248942>
 
-On Wed, May 14, 2014 at 05:44:19PM +0200, Stepan Kasal wrote:
+On Wed, May 14, 2014 at 10:52:28AM -0700, Junio C Hamano wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Date: Mon, 8 Nov 2010 16:10:43 +0100
+> I do not think checking 'text' is the right way to do this.  The
+> attribute controls the eof normalization, and people sometimes want
+> to keep CRLF terminated files in the repository no matter what the
+> platform is (an example I heard is a sample protocol exchange over
+> textual network protocol such as HTTP and SMTP), and the way to do
+> so is to unset it.  That would still let them look for patterns in
+> and compare the changes to these paths.
 > 
-> Incidentally, this makes grep -I respect the "binary" attribute (actually,
-> the "-text" attribute, but "binary" implies that).
+> Looking for "Marking files as binary" in gitattributes(5) gives us a
+> more authoritative alternative, I think.  In short:
 > 
-> Since the attributes are not thread-safe, we now need to switch off
-> threading if -I was passed.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
-> ---
-> 
-> Hi,
-> this patch has been in msysgit for 3.5 years.
-> Stepan
+>  - If 'diff' is Unset, or
+>  - If 'diff' is Set to X and diff.X.binary is true
+>
+> then the contents are not suitable for human consumption.
 
-Hrm. Is this patch still necessary? In the time since this patch was
-written, we did 0826579 (grep: load file data after checking
-binary-ness, 2012-02-02), which should do the same thing. It deals with
-the threading via a lock, but we later learned in 9dd5245 (grep:
-pre-load userdiff drivers when threaded, 2012-02-02) to hoist that bit
-out.
-
-So I suspect this patch at best is doing nothing, and at worst is
-wasting extra time doing redundant attribute checks.
+I responded elsewhere in the thread that I think the patch under
+discussion is redundant at this point, but just to clarify: grep
+currently uses the rules you give above, as it builds on the userdiff
+driver code.
 
 -Peff
 
