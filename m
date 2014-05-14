@@ -1,93 +1,163 @@
-From: Philippe Vaucher <philippe.vaucher@gmail.com>
-Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
-Date: Wed, 14 May 2014 14:51:09 +0200
-Message-ID: <CAGK7Mr63X3+XXuRUEcBwwnwrOrbip8VUebtL-tM3R8PYBPEXuQ@mail.gmail.com>
-References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
- <1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
- <xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com> <536d4e7ba8ea_585ea5308a9@nysa.notmuch>
- <CACPiFCKoegOj+dxAw87UgrrwrvPSDoFzyxZV1bEPNseiK2M7vw@mail.gmail.com>
- <xmqqsiodo7o6.fsf@gitster.dls.corp.google.com> <53726a577d6aa_4aa4b312f862@nysa.notmuch>
- <xmqqegzxmlsr.fsf@gitster.dls.corp.google.com> <CACPiFCKpx9e-swWW4KEfY9YkG7s0uPTs_aftV-NbXGkvMqtf-A@mail.gmail.com>
- <53729ccf26bb0_34aa9e53047f@nysa.notmuch>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT v2 16/29] Fix backslash handling when creating names of
+ imported patches.
+Date: Wed, 14 May 2014 09:06:39 -0400
+Message-ID: <20140514130639.GA1582@meili.valhalla.31bits.net>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+ <1400013065-27919-17-git-send-email-cederp@opera.com>
+ <20140513220957.GN4791@meili.valhalla.31bits.net>
+ <CAP=KgsQMRZymUnojGqyZPdKsepfmHvuyUhAkWqrZ_GnybgMqxA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Martin Langhoff <martin.langhoff@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 14:51:53 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Wed May 14 15:06:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkYev-0004DY-Gl
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 14:51:45 +0200
+	id 1WkYtM-0002YG-J4
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 15:06:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754683AbaENMvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 08:51:41 -0400
-Received: from mail-oa0-f48.google.com ([209.85.219.48]:57481 "EHLO
-	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751674AbaENMvk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 08:51:40 -0400
-Received: by mail-oa0-f48.google.com with SMTP id i4so2069411oah.21
-        for <git@vger.kernel.org>; Wed, 14 May 2014 05:51:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=enGY3Rn0vBUymOI0o98g8rfX0P/QhBAWb05On/IOyhY=;
-        b=jnBuCyxBA1oGfbah7tegp7etRSizsIQKqRrIhKgPmCB6qrGH/7qQbXN0XY/MA1RNjv
-         xXA8NIcOzREdy0v+ZbnB3YZ73++ia4FYz/0cAoTCnaGkpmyjbPxMgsOuB7xGTfJZ/Nhm
-         PtN5eGUJDvvQ7gSUgqurW0Fx7JkexO1BZCEWNjcUDRcPun9PCfDrknUgMQSRPjZXR4R9
-         tIL913qSY5zm6WfntZb1v/5PKAyParh+I8jGmMNIh0+dEt0xL6kOnB+YAIKQpsdB7vx5
-         dstfiwe8iC6mtaxERtbr5FsrmYaWQd6Pg/9vFYTigE0+Yc0sVEYfCRUqUnMXOaJswy4r
-         RW4g==
-X-Received: by 10.60.65.99 with SMTP id w3mr3313387oes.7.1400071899791; Wed,
- 14 May 2014 05:51:39 -0700 (PDT)
-Received: by 10.76.76.228 with HTTP; Wed, 14 May 2014 05:51:09 -0700 (PDT)
-In-Reply-To: <53729ccf26bb0_34aa9e53047f@nysa.notmuch>
+	id S1754122AbaENNGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 09:06:36 -0400
+Received: from josefsipek.net ([64.9.206.49]:1683 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751527AbaENNGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 09:06:36 -0400
+Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
+	by josefsipek.net (Postfix) with ESMTPSA id C93AA55654;
+	Wed, 14 May 2014 09:06:34 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CAP=KgsQMRZymUnojGqyZPdKsepfmHvuyUhAkWqrZ_GnybgMqxA@mail.gmail.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248913>
 
->> I have had patches and contributions rejected in the past, sometimes
->> rudely. Same has happened to many others, if you contribute long
->> enough, it is pretty much guaranteed that it will happen to you.
->> Maintainer is wrong, or you are wrong, or someone is just having a bad
->> day.
->
-> This is not about a couple of patches I worked in a weekend being
-> rejected. This is about the work I've been doing since the past two
-> years almost like a full-time job dropped to the floor with no
-> explanation at all. I started with the expectation that they were going
-> to move to the core, because Junio said so, then he changed his mind and
-> didn't want to explain his reasoning.
->
-> It's not just a bad day.
+On Wed, May 14, 2014 at 10:56:18AM +0200, Per Cederqvist wrote:
+> On Wed, May 14, 2014 at 12:09 AM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> > On Tue, May 13, 2014 at 10:30:52PM +0200, Per Cederqvist wrote:
+> >> The 'echo %s' construct sometimes processes escape sequences.  (This
+> >
+> > %s?  Should this be $s?
+> 
+> Yes. Will fix that typo in v3 of the patch series.
 
-Here are two posts where Junio and Michael Haggerty explain the
-reasoning to you:
+ok, Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 
-- http://article.gmane.org/gmane.comp.version-control.git/248727
-- http://article.gmane.org/gmane.comp.version-control.git/248693
+>     /ceder
+> 
+> > Otherwise, looks good.
+> >
+> >> happens, for instance, under Ubuntu 14.04 when /bin/sh is actually
+> >> dash.)  We don't want that to happen when we are importing commits, so
+> >> use 'printf %s "$s"' instead.
+> >>
+> >> (The -E option of bash that explicitly disables backslash expansion is
+> >> not portable; it is not supported by dash.)
+> >>
+> >> Signed-off-by: Per Cederqvist <cederp@opera.com>
+> >> ---
+> >>  guilt-import-commit  |  2 +-
+> >>  regression/t-034.out | 14 +++++++-------
+> >>  2 files changed, 8 insertions(+), 8 deletions(-)
+> >>
+> >> diff --git a/guilt-import-commit b/guilt-import-commit
+> >> index 6260c56..45f2404 100755
+> >> --- a/guilt-import-commit
+> >> +++ b/guilt-import-commit
+> >> @@ -30,7 +30,7 @@ for rev in `git rev-list $rhash`; do
+> >>
+> >>       # Try to convert the first line of the commit message to a
+> >>       # valid patch name.
+> >> -     fname=`echo $s | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
+> >> +     fname=`printf %s "$s" | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
+> >>                       -e "s/['\\[{}]//g" -e 's/]//g' -e 's/\*/-/g' \
+> >>                       -e 's/\?/-/g' -e 's/\.\.\.*/./g' -e 's/^\.//' \
+> >>                       -e 's/\.patch$//' -e 's/\.$//' | tr A-Z a-z`
+> >> diff --git a/regression/t-034.out b/regression/t-034.out
+> >> index 7bc9459..bda4399 100644
+> >> --- a/regression/t-034.out
+> >> +++ b/regression/t-034.out
+> >> @@ -236,7 +236,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
+> >>  About to begin conversion...
+> >>  Current head: 2a8b1889aa5066193bac978e6bf5073ffcfa6541
+> >>  Converting 2a8b1889 as can-have-embedded-single-slashes
+> >> -Converting 0a46f8fa as backslash-isorbidden
+> >> +Converting 0a46f8fa as backslash-is-forbidden
+> >>  Converting aedb74fd as x
+> >>  Converting 30187ed0 as cannot@have@the@sequence@at-brace
+> >>  Converting 106e8e5a as cannot_end_in_
+> >> @@ -300,7 +300,7 @@ Applying patch..cannot@have@the@sequence@at-brace.patch
+> >>  Patch applied.
+> >>  Applying patch..x.patch
+> >>  Patch applied.
+> >> -Applying patch..backslash-isorbidden.patch
+> >> +Applying patch..backslash-is-forbidden.patch
+> >>  Patch applied.
+> >>  Applying patch..can-have-embedded-single-slashes.patch
+> >>  Patch applied.
+> >> @@ -311,7 +311,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
+> >>
+> >>      Can/have/embedded/single/slashes
+> >>
+> >> -commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-isorbidden.patch)
+> >> +commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-is-forbidden.patch)
+> >>  Author: Author Name <author@email>
+> >>  Date:   Mon Jan 1 00:00:00 2007 +0000
+> >>
+> >> @@ -518,8 +518,6 @@ d .git/patches/master
+> >>  d .git/refs/patches
+> >>  d .git/refs/patches/master
+> >>  f 06beca7069b9e576bd431f65d13862ed5d3e2a0f  .git/patches/master/ctrlisforbidden.patch
+> >> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/series
+> >> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/status
+> >>  f 09b7e9be44ae5ec3a4bb30f5ee9d4ebc2c042f64  .git/patches/master/two_consecutive_dots_(.)_is_forbidden.patch
+> >>  f 0b971c9a17aeca2319c93d700ffd98acc2a93451  .git/patches/master/question-mark-is-forbidden.patch
+> >>  f 2b8392f63d61efc12add554555adae30883993cc  .git/patches/master/cannot-end-in-slash-.patch
+> >> @@ -529,7 +527,7 @@ f 34e07c584032df137f19bdb66d93f316f00a5ac8  .git/patches/master/tildeisforbidden
+> >>  f 49bab499826b63deb2bd704629d60c7268c57aee  .git/patches/master/the_sequence_-._is_forbidden.patch
+> >>  f 5bcddb8ccb6e6e5e8a61e9e56cb2e0f70cbab2f5  .git/patches/master/cannot@have@the@sequence@at-brace.patch
+> >>  f 637b982fe14a240de181ae63226b27e0c406b3dc  .git/patches/master/asterisk-is-forbidden.patch
+> >> -f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-isorbidden.patch
+> >> +f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-is-forbidden.patch
+> >>  f 7b103c3c7ae298cd2334f6f49da48bae1424f77b  .git/patches/master/crisalsoforbidden.patch
+> >>  f 9b810b8c63779c51d2e7f61ab59cd49835041563  .git/patches/master/x.patch
+> >>  f a22958d9ae9976fd7b2b5a9d0bcd44bf7ad9b08a  .git/patches/master/caretisforbidden.patch
+> >> @@ -537,6 +535,8 @@ f ab325bf5a432937fc6f231d3e8a773a62d53952b  .git/patches/master/multiple-slashes
+> >>  f cb9cffbd4465bddee266c20ccebd14eb687eaa89  .git/patches/master/delisforbidden.patch
+> >>  f d0885a1a1fdee0fd1e4fedce3f7acd3100540bc4  .git/patches/master/openbracketisforbidden.patch
+> >>  f d2903523fb66a346596eabbdd1bda4e52b266440  .git/patches/master/check-multiple-.-dots-.-foo.patch
+> >> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/series
+> >> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/status
+> >>  f dfc11f76394059909671af036598c5fbe33001ba  .git/patches/master/space_is_forbidden.patch
+> >>  f e47474c52d6c893f36d0457f885a6dd1267742bb  .git/patches/master/colon_is_forbidden.patch
+> >>  f e7a5f8912592d9891e6159f5827c8b4f372cc406  .git/patches/master/the_sequence_.lock-_is_forbidden.patch
+> >> @@ -548,7 +548,7 @@ r 1626a11d979a1e9e775c766484172212277153df  .git/refs/patches/master/asterisk-is
+> >>  r 3a0d5ccef0359004fcaa9cee98fbd6a2c4432e74  .git/refs/patches/master/tildeisforbidden.patch
+> >>  r 434e07cacdd8e7eb4723e67cb2d100b3a4121a3a  .git/refs/patches/master/can-have-embedded-single-slashes.patch
+> >>  r 74df14ab3a0ec9a0382998fbf167ebb1b0a36c6a  .git/refs/patches/master/question-mark-is-forbidden.patch
+> >> -r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-isorbidden.patch
+> >> +r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-is-forbidden.patch
+> >>  r 96a3e92c4df85f52362ce4f6d31983c462db9ae9  .git/refs/patches/master/a-component-may-not-end-in-foolock.patch
+> >>  r 9fc9677b61880f9159838e89f714893e0a2fcafb  .git/refs/patches/master/delisforbidden.patch
+> >>  r a275ed5d7f10ea88c986852ee95a7d5a61663b5f  .git/refs/patches/master/cannot@have@the@sequence@at-brace.patch
+> >> --
+> >> 1.8.3.1
+> >>
+> >
+> > --
+> > I have always wished for my computer to be as easy to use as my telephone;
+> > my wish has come true because I can no longer figure out how to use my
+> > telephone.
+> >                 - Bjarne Stroustrup
 
-Basically, in your case it boils down to your social manners. Despite
-the (good) work you did, many people think the community and git as a
-whole as more to loose by having to deal with your theatrics,
-especially since you try to take everyone hostage of your situations.
-No amount of "arguing" (calling it "ad hominem" etc) will change
-anything at this point, you have to accept that your social actions
-have a big part of responsibility in this.
-
-IMHO, you should change your behavior into a more respectful one and
-give people some time to discover you changed, otherwise it is
-innevitable that you'll just get banned/ignored by mostly everyone.
-
-We spent way too much energy dealing with these silly issues, please
-find a way to deal with it that doesn't annoy everyone and doens't
-affect the friendlyness of the mailing list.
-
-Philippe
+-- 
+Real Programmers consider "what you see is what you get" to be just as bad a
+concept in Text Editors as it is in women. No, the Real Programmer wants a
+"you asked for it, you got it" text editor -- complicated, cryptic,
+powerful, unforgiving, dangerous.
