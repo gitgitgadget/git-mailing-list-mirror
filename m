@@ -1,174 +1,136 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [GIT GUI PATCH] git-gui: use vcompare when comparing the git
- version
-Date: Wed, 14 May 2014 09:49:33 +0200
-Message-ID: <5373200D.7020108@web.de>
-References: <CAFOYHZBPLZhVuf=bO0hPcUH2_0WXFSqk=_CqoUWBRixQc0L==Q@mail.gmail.com>	<CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com> <871tw7xg3o.fsf@fox.patthoyts.tk> <5369E0A3.4040701@gmail.com> <5369E58D.4030908@gmail.com> <53728D70.4020506@web.de>
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: [GUILT v2 06/29] Fix the do_get_patch function.
+Date: Wed, 14 May 2014 10:46:31 +0200
+Message-ID: <CAP=KgsTDXkVEpKDVwqhbjY7hGLe97htDjBmiTb-zB7g6WvvKpA@mail.gmail.com>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+	<1400013065-27919-7-git-send-email-cederp@opera.com>
+	<20140513211326.GE4791@meili.valhalla.31bits.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Chris Packham <judge.packham@gmail.com>,
-	patthoyts@users.sourceforge.net, GIT <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 14 09:49:55 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Jeff Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Wed May 14 10:46:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkTwo-0001Uw-JF
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 09:49:55 +0200
+	id 1WkUpi-0007qh-Ak
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 10:46:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836AbaENHtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 03:49:51 -0400
-Received: from mout.web.de ([212.227.15.14]:58458 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750781AbaENHtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 03:49:49 -0400
-Received: from [192.168.178.41] ([84.132.184.45]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MSrYf-1WKwsx1Wj7-00RtW1; Wed, 14 May 2014 09:49:38
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <53728D70.4020506@web.de>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:ldLZH7wMzlx6BhFssZiTbXxpcZeTwharLC6Ldsy6kl8CSlJreg/
- AcODvMQCnCBzXiyKd1oWipG+vuJlPKgwGCtiY1C7zxuS7ORQU8Qa5G/utxh8ZwHYqD6w0xD
- 8MCOHytxTX/L5kz3DWbgqOglxFM97ETgoYGTGcq44CN4fhQMG1jXJFkMSW1ZLX0XiJXCFu1
- T9SDMTd9K3ixBafQAKwhQ==
+	id S1752232AbaENIqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 04:46:35 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:56030 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407AbaENIqc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 04:46:32 -0400
+Received: by mail-ie0-f182.google.com with SMTP id tp5so1511329ieb.41
+        for <git@vger.kernel.org>; Wed, 14 May 2014 01:46:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=c7Abw6qmwUNDQa6f3Sfy/t1G0irKKMxKBCDTPbMPAfc=;
+        b=hlaHYoEvaZOy2Bb4sIT1bDg3uK1BCvu1z/kWbx5gSS0qvCi4YTSwNAGuLnjUHnxAsf
+         1V3LXEeFifYdT6wNLi0jAEQhtXbVi7OS5EGcIzQHwPXsy4AmhMq0oToXyXW8Ay9d2ZTP
+         mvFqSymNgqi05hW08lBloj2n4viuSxnBIbluPUMT6EWKU2QwUgPzy/fCdzV4Xe2x1DwT
+         ltWWpX6ODLmCWlT0LWRSgfIAzZJCaiReM2+Ze6jjQyNbw3Ihw5de6HuSHPigiksE53UG
+         rw/5RuFq8g3AVLou2eWnOAOSMBIFHhi70oZO6umUTEFW0NywDXTzwp+Y0oRqmxXUOZbZ
+         Sacg==
+X-Gm-Message-State: ALoCoQmZVxHAZuDUUgmn2Tuolc/nc1oqi42SmpqO/6R7vebHIbN7UEA/ivZqwauODKN9X8Vc5iVA
+X-Received: by 10.42.30.71 with SMTP id u7mr2098793icc.20.1400057191576; Wed,
+ 14 May 2014 01:46:31 -0700 (PDT)
+Received: by 10.43.89.66 with HTTP; Wed, 14 May 2014 01:46:31 -0700 (PDT)
+In-Reply-To: <20140513211326.GE4791@meili.valhalla.31bits.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248897>
 
-Junio, I believe this issue needs to be fixed before 2.0 final. Otherwise
-git gui will not work inside submodules anymore due to the major version
-number change from 1 to 2. I'd like to hear Pat's opinion on this; even
-though I think my patch is less risky (as it doesn't change behavior for
-pre-2 versions), he might like Chris' proposal better.
+On Tue, May 13, 2014 at 11:13 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
 
-Am 13.05.2014 23:24, schrieb Jens Lehmann:
-> Since git 2.0.0 starting git gui in a submodule using a gitfile fails with
-> the following error:
-> 
->    No working directory ../../../<path>
-> 
->    couldn't change working directory
->    to "../../../<path>": no such file or
->    directory
-> 
-> This is because "git rev-parse --show-toplevel" is only run when git gui
-> sees a git version of at least 1.7.0 (which is the version in which the
-> --show-toplevel option was introduced). But it uses vsatisfies to check
-> that, which is documented to return false when the major version changes,
-> which is not what we want here.
-> 
-> Change vsatisfies to vcompare when testing for a git version to avoid the
-> problem when the major version changes (but still use vsatisfies in those
-> places where the Tk version is checked). This is done for both the place
-> that caused the reported bug and another spot where the git version is
-> tested for another feature.
-> 
-> Reported-by: Chris Packham <judge.packham@gmail.com>
-> Reported-by: Yann Dirson <ydirson@free.fr>
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
-> 
-> Am 07.05.2014 09:49, schrieb Chris Packham:
->> On 07/05/14 19:28, Chris Packham wrote:
->>> On 07/05/14 00:10, Pat Thoyts wrote:
->>>> Chris Packham <judge.packham@gmail.com> writes:
->>>>
->>>>> On Tue, Apr 29, 2014 at 2:56 PM, Chris Packham <judge.packham@gmail.com> wrote:
->>>>>> Hi Pat,
->>>>>>
->>>>>> I'm running git 2.0.0-rc0 (haven't got round to pulling down rc1 yet)
->>>>>> which includes gitgui-0.19.0 and I'm getting a new error when I run
->>>>>> 'git gui' in a repository with a .git file (created by git submodule).
->>>>>>
->>>>>> I can send you a screencap of the error message off list if you want
->>>>>> but the text is
->>>>>>
->>>>>> "No working directory ../../../<repo>
->>>>>>
->>>>>> couldn't change working directory to ../../../<repo>: no such file or directory"
->>>>>
->>>>> My tcl is a little rusty but I think the problem might be this snippet.
->>>>>
->>>>> # v1.7.0 introduced --show-toplevel to return the canonical work-tree
->>>>> if {[package vsatisfies $_git_version 1.7.0]} {
->>>>>    if { [is_Cygwin] } {
->>>>>        catch {set _gitworktree [exec cygpath --windows [git rev-parse
->>>>> --show-toplevel]]}
->>>>>    } else {
->>>>>        set _gitworktree [git rev-parse --show-toplevel]
->>>>>    }
->>>>> } else {
->>>>>    # try to set work tree from environment, core.worktree or use
->>>>>    # cdup to obtain a relative path to the top of the worktree. If
->>>>>    # run from the top, the ./ prefix ensures normalize expands pwd.
->>>>>    if {[catch { set _gitworktree $env(GIT_WORK_TREE) }]} {
->>>>>        set _gitworktree [get_config core.worktree]
->>>>>        if {$_gitworktree eq ""} {
->>>>>            set _gitworktree [file normalize ./[git rev-parse --show-cdup]]
->>>>>        }
->>>>>    }
->>>>> }
->>>>>
->>>>> The  vsatisfies call probably doesn't handle '2.0.0.rc0' and the
->>>>> fallback behaviour probably needs to normalise core.worktree
->>>>>
->>>>
->>>> The _git_version variable has already been trimmed to remove such
->>>> suffixes so the version comparison here will be ok. 
->>>
->>> I don't think that's true 'git rev-parse --show-toplevel' does the right
->>> thing - if it's run.
+> On Tue, May 13, 2014 at 10:30:42PM +0200, Per Cederqvist wrote:
+>> A patch file consists of:
 >>
->> We'll the trimming works but vstatisfies doesn't
+>> (1) the description
+>> (2) optional diffstat
+>> (3) the patches
 >>
->>   puts $_git_version
->>   puts [package vsatisfies $_git_version 1.7.0]
+>> When extracting the patch, we only want part 3.  The do_get_patch used
+>> to give us part 2 and part 3.  That made for instance this series of
+>> operations fail if guilt.diffstat is true:
 >>
->>   2.0.0
->>   0
-> 
-> Yup, looks like vsatisfies is doing just what it is supposed to (according
-> to http://www.astro.princeton.edu/~rhl/Tcl-Tk_docs/tcl/package.n.html):
-> 
->    package vsatisfies version1 version2
->        Returns 1 if scripts written for version2 will work unchanged
->        with version1 (i.e. version1 is equal to or greater than version2
->        and they both have the same major version number), 0 otherwise.
-> 
-> The bump in the major number from 1 to 2 makes vsatisfies assume that the
-> version is not compatible anymore, I believe we should have used vcompare
-> here and in another place.
-> 
-> 
->  git-gui.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-gui.sh b/git-gui.sh
-> index cf2209b..ed2418b 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -1283,7 +1283,7 @@ load_config 0
->  apply_config
-> 
->  # v1.7.0 introduced --show-toplevel to return the canonical work-tree
-> -if {[package vsatisfies $_git_version 1.7.0]} {
-> +if {[package vcompare $_git_version 1.7.0]} {
->  	if { [is_Cygwin] } {
->  		catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
->  	} else {
-> @@ -1539,7 +1539,7 @@ proc rescan_stage2 {fd after} {
->  		close $fd
->  	}
-> 
-> -	if {[package vsatisfies $::_git_version 1.6.3]} {
-> +	if {[package vcompare $::_git_version 1.6.3]} {
->  		set ls_others [list --exclude-standard]
->  	} else {
->  		set ls_others [list --exclude-per-directory=.gitignore]
-> 
+>>     guilt push empty-1
+>>     guilt push empty-2
+>>     guilt pop
+>>     guilt fold empty-2
+>>     guilt pop
+>>     guilt push
+>
+> I would probably include the actual error here.  I got the following (using
+> patch names a & b):
+>
+> $ guilt pop
+> Now at a.
+> $ guilt fold b
+> error: No changes
+> $ guilt pop
+> All patches popped.
+> $ guilt pu
+> Applying patch..a
+> error: No changes
+> To force apply this patch, use 'guilt push -f'
+
+A bit strange.  I see that I made an error in the commands. It should be
+"guilt new empty-1" and "guilt new empty-2".  The updated example in the
+commit message looks like this:
+
+    $ guilt new empty-1
+    $ guilt new empty-2
+    $ guilt pop
+    Now at empty-1
+    $ guilt fold empty-2
+    $ guilt pop
+    All patches popped.
+    $ guilt push
+    Applying patch..empty-1
+    fatal: unrecognized input
+    To force apply this patch, use 'guilt push -f'
+
+> The diff itself is good.
+>
+> Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+
+Unless you object I'll add this signed-off line even though I'm
+improving the commit message in preparation for version 3
+of the patch series.
+
+    /ceder
+
+>>
+>> Signed-off-by: Per Cederqvist <cederp@opera.com>
+>> ---
+>>  guilt | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/guilt b/guilt
+>> index 8701481..3fc524e 100755
+>> --- a/guilt
+>> +++ b/guilt
+>> @@ -334,7 +334,7 @@ do_get_patch()
+>>  {
+>>       awk '
+>>  BEGIN{}
+>> -/^(diff |---$|--- )/ {patch = 1}
+>> +/^(diff |--- )/ {patch = 1}
+>>  patch == 1 {print $0}
+>>  END{}
+>>  ' < "$1"
+>> --
+>> 1.8.3.1
+>>
+>
+> --
+> I already backed up the [server] once, I can do it again.
+>                 - a sysadmin threatening to do more frequent backups
