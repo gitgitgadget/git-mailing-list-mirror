@@ -1,123 +1,131 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] contrib: remote-helpers: add move warnings (v2.0)
-Date: Wed, 14 May 2014 15:51:55 -0500
-Message-ID: <5373d76b965c1_592416ad2f8ca@nysa.notmuch>
-References: <1400016596-13178-1-git-send-email-felipe.contreras@gmail.com>
- <xmqq7g5pmj5r.fsf@gitster.dls.corp.google.com>
- <53729b2150a84_34aa9e5304e0@nysa.notmuch>
- <xmqq38gdmhdo.fsf@gitster.dls.corp.google.com>
- <5372a0f6650d2_36c411ff3002e@nysa.notmuch>
- <5372D205.4040004@gmail.com>
- <xmqqppjgji2s.fsf@gitster.dls.corp.google.com>
- <5373c6668871b_56d6e3b30451@nysa.notmuch>
- <xmqqha4sjelx.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] grep -I: do not bother to read known-binary files
+Date: Wed, 14 May 2014 14:15:42 -0700
+Message-ID: <xmqqy4y4hxj5.fsf@gitster.dls.corp.google.com>
+References: <20140514154419.GA4517@camelia.ucw.cz>
+	<20140514194128.GC2715@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Marius Storm-Olsen <mstormo@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 23:03:01 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Stepan Kasal <kasal@ucw.cz>,  GIT Mailing-list <git@vger.kernel.org>,  Johannes Schindelin <johannes.schindelin@gmx.de>,  msysGit <msysgit@googlegroups.com>
+To: Jeff King <peff@peff.net>
+X-From: msysgit+bncBCG77UMM3EJRBDF2Z6NQKGQEGMNYTSY@googlegroups.com Wed May 14 23:15:59 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBDF2Z6NQKGQEGMNYTSY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ie0-f183.google.com ([209.85.223.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkgKH-0004jY-Uc
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:02:58 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753300AbaENVCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 17:02:54 -0400
-Received: from mail-ob0-f174.google.com ([209.85.214.174]:43640 "EHLO
-	mail-ob0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751378AbaENVCx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 17:02:53 -0400
-Received: by mail-ob0-f174.google.com with SMTP id uz6so155731obc.33
-        for <git@vger.kernel.org>; Wed, 14 May 2014 14:02:53 -0700 (PDT)
+	(envelope-from <msysgit+bncBCG77UMM3EJRBDF2Z6NQKGQEGMNYTSY@googlegroups.com>)
+	id 1WkgWr-0000EI-VH
+	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 23:15:58 +0200
+Received: by mail-ie0-f183.google.com with SMTP id as1sf22528iec.0
+        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 14:15:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=XL1m2RjMlY5LfXThfhQ95f4mXgFfiDypJgZ7WXcUU7g=;
-        b=olEGsewPmELitcXTObcG3bM1uR9A4s7hnGhq0LRen8c+thtsH63tK/190afky8SHUJ
-         7N3kkQfWKpdYcChV0/xwRcl2WW/5XAs0zTR3z9vgNDKbo0zbKGW7zjJPt3GKSKLYbonX
-         zDgRubibF5wdULVG0vqhag2qUhSBzOH+NLOE92FkfjxrtqzV9dwgk1SEg0Wqo5tSSfyn
-         TLawzpZkv4XD9irGiC2GGqhbaqwQ+gxKQZlhiJKhmGUVN27kftbVtARTV7O4zQD77BUQ
-         4sPMlCSwTvlqzbxkOF1FTwE5dvXz4tTY13X+kJmbD28UmIiW3bD7OyEkOP8B2EGW3bKK
-         Df5Q==
-X-Received: by 10.182.2.72 with SMTP id 8mr5960446obs.21.1400101373134;
-        Wed, 14 May 2014 14:02:53 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id b9sm9858029oel.4.2014.05.14.14.02.51
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 May 2014 14:02:52 -0700 (PDT)
-In-Reply-To: <xmqqha4sjelx.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248952>
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=CuhtoL62g47+H+D7git7iCSaGqyv9n5XbDKG5jnUARI=;
+        b=yfaw4pyMEcvEzjal414xOj1fKmxPFEmBucFkOHEmjv6UB73jiWzXNUp75WC9GOPk0o
+         aTpnF0lJuUBZc7smw3QyGHo2BVzMch1BYaksia8NWVFiRzgSlcRps7620LwxetVJGjdg
+         yQ1D080o90nnABfX7TtfjVreMsB/LDDFC0sCPhq0vvTVU7Vbncs+MA52vTAfT9ZY8wwt
+         eK+7FeLsm928J7os/OdOfqht1y/YyA8rtQ0961YKbelR+NeTy7mgTrYxKeocT17wJsIl
+         ZtcTb3dqh2OniN0HqGvitOl6VZiOtQorIWiAHlUtSy/rppFw1vL+EebtC2tosbzRgX3r
+         L+oQ==
+X-Received: by 10.50.103.10 with SMTP id fs10mr193816igb.12.1400102156981;
+        Wed, 14 May 2014 14:15:56 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.25.70 with SMTP id a6ls3599635igg.42.canary; Wed, 14 May
+ 2014 14:15:56 -0700 (PDT)
+X-Received: by 10.66.163.33 with SMTP id yf1mr382073pab.19.1400102156172;
+        Wed, 14 May 2014 14:15:56 -0700 (PDT)
+Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id h5si430324qce.1.2014.05.14.14.15.56
+        for <msysgit@googlegroups.com>;
+        Wed, 14 May 2014 14:15:56 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DE1EA18B84;
+	Wed, 14 May 2014 17:15:55 -0400 (EDT)
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D304B18B83;
+	Wed, 14 May 2014 17:15:55 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 71D6418B4F;
+	Wed, 14 May 2014 17:15:44 -0400 (EDT)
+In-Reply-To: <20140514194128.GC2715@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 14 May 2014 15:41:29 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E9374A0E-DBAC-11E3-A1D1-DDB853EDF712-77302942!pb-smtp0.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248953>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Junio C Hamano wrote:
-> >> So at this point, I would have to say that the users of remote-hg is
-> >> taken hostage by its author.
-> >
-> > The users of remote-hg are being affected negatively *because* of your
-> > decisions.
-> >
-> > You have the power to help them by answering a simple question. Yet you
-> > refuse to do that.
-> >
-> > It's all on you.
-> 
-> That is exactly what I would call "taking users hostage".
-> 
-> I think I already answered that one question:
+Jeff King <peff@peff.net> writes:
 
-> in $gmane/248853 with:
-> 
->     You certainly are acting like one, aren't you?
-> 
-> Do you need more?
+> On Wed, May 14, 2014 at 05:44:19PM +0200, Stepan Kasal wrote:
+>
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Date: Mon, 8 Nov 2010 16:10:43 +0100
+>> 
+>> Incidentally, this makes grep -I respect the "binary" attribute (actually,
+>> the "-text" attribute, but "binary" implies that).
+>> 
+>> Since the attributes are not thread-safe, we now need to switch off
+>> threading if -I was passed.
+>> 
+>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+>> ---
+>> 
+>> Hi,
+>> this patch has been in msysgit for 3.5 years.
+>> Stepan
+>
+> Hrm. Is this patch still necessary? In the time since this patch was
+> written, we did 0826579 (grep: load file data after checking
+> binary-ness, 2012-02-02), which should do the same thing. It deals with
+> the threading via a lock, but we later learned in 9dd5245 (grep:
+> pre-load userdiff drivers when threaded, 2012-02-02) to hoist that bit
+> out.
 
-You know full well this is not the question I asked you repeatedly. Stop
-trying to spin the readers.
+Wow, power of Git history ;-)
 
-I asked you here:
-http://article.gmane.org/gmane.comp.version-control.git/248683
+> So I suspect this patch at best is doing nothing, and at worst is
+> wasting extra time doing redundant attribute checks.
 
-And here:
-http://article.gmane.org/gmane.comp.version-control.git/248348
-
-And here:
-http://article.gmane.org/gmane.comp.version-control.git/248368
-
-I made it clear you were not answering the qustion here:
-http://article.gmane.org/gmane.comp.version-control.git/248685
-
-And here:
-http://article.gmane.org/gmane.comp.version-control.git/248701
-
-And here (apparently deleted mail):
-1400013572-30232-1-git-send-email-felipe.contreras@gmail.com
-
-And probably many other times.
-
-And I will ask you once again.
-
-Please answer this *one* question:
-
-1) Please clarify the reason why you blocked the graduation of remote
-   helpers. Please give the full rationale and do not point to other
-   mails, or other peoples' explanations. If necessary attach such
-   explanations to your full reasoning.
-
-This is the *one* question you have refused to answer over and over.
+Sounds like a sensible conclusion.  Thanks.
 
 -- 
-Felipe Contreras
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
