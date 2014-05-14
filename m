@@ -1,215 +1,180 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v7 40/42] refs.c: pass a skip list to name_conflict_fn
-Date: Wed, 14 May 2014 14:17:14 -0700
-Message-ID: <1400102236-30082-41-git-send-email-sahlberg@google.com>
+Subject: [PATCH v7 41/42] refs.c: make rename_ref use a transaction
+Date: Wed, 14 May 2014 14:17:15 -0700
+Message-ID: <1400102236-30082-42-git-send-email-sahlberg@google.com>
 References: <1400102236-30082-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 14 23:19:25 2014
+X-From: git-owner@vger.kernel.org Wed May 14 23:19:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkga9-00056h-0m
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:19:21 +0200
+	id 1WkgaT-0005tc-8l
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753249AbaENVSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 17:18:24 -0400
-Received: from mail-oa0-f73.google.com ([209.85.219.73]:35213 "EHLO
-	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753375AbaENVRd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 17:17:33 -0400
-Received: by mail-oa0-f73.google.com with SMTP id i4so40947oah.0
+	id S1752831AbaENVSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 17:18:20 -0400
+Received: from mail-vc0-f202.google.com ([209.85.220.202]:52858 "EHLO
+	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753187AbaENVRe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 17:17:34 -0400
+Received: by mail-vc0-f202.google.com with SMTP id hr9so429377vcb.5
         for <git@vger.kernel.org>; Wed, 14 May 2014 14:17:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JCk/YCM/mXpurxwzg708oboh21y12kzjxyYUJDk18DE=;
-        b=aRvon/VA+tB5bHxtOY5vjK1hPVj0jU3BWUCXqxofZcs7DntuX7mRH1f5hAo1G6KpvJ
-         YsRJSIrbIpX9gWhX4GAhR2w58fARjAuToK5kCPyj1KWaXfOv+qSnHFIQoeBB6sA7daPJ
-         jQBI0D3fsx6a/IW3TAwOOfiYVptDv3nVl/I2lgiwUdI/25bngtfiU/iw2ePKe8/5JWGI
-         OgadNVAvI/+xpXkmlRRkiATG8RArsYBQqyYls8YnixhsqFDXHshaMg2ahcGUPRvynk+W
-         SPMq+Rvq9d0D3RDQCGdAuViVuxcpLi0kpA8V+huOEhz4EeS5vsnkPjJN/cyqDNSKvJBW
-         ec9g==
+        bh=ZPl1Nl3b5CWNXu/KUVfdzDf5BuRYzHD8+c4uPNaE4jo=;
+        b=gKCi/7ZmRfLFWKMpIHKA1xAJph2RSfJjVjZOmjU5GgxO3TYsEMTQxzycSqBpzQlBph
+         pVBT//HE0LZZg8IPon+1xgrda5YPyx3rct7+tos+oaZ12PPRsUILD+0kp0hfgWvouhrd
+         WVIvZPCSvorDmVZNC+Hy9ttmoVYgb5LGbVjb6GjxNsZXQ4gG30AJyLIdCA0NYByrUQn6
+         qM2s1Iui/IKmGpQP0IY/1Qb3tXPdqyKj4zLbZVw4LSDuXNbti+ib9NMQnu2b8Ggtj2LA
+         Df8XAwR3sLcY700uV4DrANZuQ8XJPrptS206DXVbR3uptvStdAOYEdE+KNKtOhWr1PnN
+         WAGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=JCk/YCM/mXpurxwzg708oboh21y12kzjxyYUJDk18DE=;
-        b=YhF138Ax2S5FtYuOkgCGgNStUs/Hjv3bcXqtaynNylrJibH8j48EY8Tft7v52piH9d
-         B7ZwZOgp5k/wPDDNtt+k7P2Nb6WtkHRqdqvSn23BFzknWgTC6d4Rwq9K3BF+ARahlmE+
-         4ka2Md07X9K4n5s/fY0WjPB6ARyvPM7gQpA4yxsgF4+BrMZt9ZP0rtQASU21rtIBhszm
-         Qe523Z2k7hG62FywlxlfpPXZX5v/rXvbu2otDcelzexWXXBajAEmWS082eFuRJ2gMdTx
-         k+COuTwpKWqD5QSWABTkMj17KNs2s9PlvKU4MrGxya/QOW/YamWlsZtzfWMqh1O4a9cH
-         aw8w==
-X-Gm-Message-State: ALoCoQnIe6i5C623BeEo/49uGK7oMMKXWZ3ohUXBmunMGc8U759tWb0rbb3Y3MUt+cDlQFfuijN5
-X-Received: by 10.182.135.167 with SMTP id pt7mr3022349obb.14.1400102253468;
+        bh=ZPl1Nl3b5CWNXu/KUVfdzDf5BuRYzHD8+c4uPNaE4jo=;
+        b=LqiCHDWZH7DEBvdNX2MZBhzc5S0VhPcBWzELoX+oaZOrtWHmPmboBGyqHc38iS9D3y
+         KwfHzkK1wVyU+cqE3vVwLgoqyZRk+KUgOp/n9/FnJ3CyGstQhcBbjBlprstHVCWQyM2P
+         eAJhNlerJEUsgqzYzs42V8zv7jLAoN182rXg719Y8Eg4suc9XzPXuqO9frdU5b3K9QIz
+         Mu+CT0Nsly6GHJBPC+q6GCxEcdLWHgXlfcw4ywuV3cQ9HrkY6PmyNacTVoAusXhD0vs5
+         I9YatpRLEs2vzmBT50PF9n7doGuaqhBggO1rZ59fKHwGEPqSqDkkYGj1lFnQwd1ekVzR
+         lfWA==
+X-Gm-Message-State: ALoCoQmjUXHwfyEctY64i0hzHPeALi1V5XaKX8pOE5Nr5KZV/8y3mlCn8vlQrsEe9Gac8u8FnqjN
+X-Received: by 10.236.159.39 with SMTP id r27mr2842974yhk.7.1400102253781;
         Wed, 14 May 2014 14:17:33 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id n68si71405yhj.5.2014.05.14.14.17.33
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id k43si145580yhq.3.2014.05.14.14.17.33
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Wed, 14 May 2014 14:17:33 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 37AE55A42DA;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 8264531C1F8;
 	Wed, 14 May 2014 14:17:33 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id EF822E0CB6; Wed, 14 May 2014 14:17:32 -0700 (PDT)
+	id 44D67E0973; Wed, 14 May 2014 14:17:33 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.471.g2055d11.dirty
 In-Reply-To: <1400102236-30082-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248970>
 
-Allow passing a list of refs to skip checking to name_conflict_fn.
-There are some conditions where we want to allow a temporary conflict and skip
-checking those refs. For example if we have a transaction that
-1, guarantees that m is a packed refs and there is no loose ref for m
-2, the transaction will delete m from the packed ref
-3, the transaction will create conflicting m/m
-
-For this case we want to be able to lock and create m/m since we know that the
-conflict is only transient. I.e. the conflict will be automatically resolved
-by the transaction when it deletes m.
+Change rename_ref to use a single transaction to perform the ref rename.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 43 +++++++++++++++++++++++++++++++++----------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ refs.c | 73 ++++++++++++++++++------------------------------------------------
+ 1 file changed, 20 insertions(+), 53 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 6b8b7fe..7569f4e 100644
+index 7569f4e..8e12386 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -798,11 +798,19 @@ struct name_conflict_cb {
- 	const char *refname;
- 	const char *oldrefname;
- 	const char *conflicting_refname;
-+	const char **skip;
-+	int skipnum;
- };
+@@ -2591,9 +2591,10 @@ static int rename_tmp_log(const char *newrefname)
  
- static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
+ int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
  {
- 	struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
-+	int i;
-+	for(i = 0; i < data->skipnum; i++) {
-+		if (!strcmp(entry->name, data->skip[i])) {
-+			return 0;
-+		}
-+	}
- 	if (data->oldrefname && !strcmp(data->oldrefname, entry->name))
- 		return 0;
- 	if (names_conflict(data->refname, entry->name)) {
-@@ -817,15 +825,21 @@ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
-  * conflicting with the name of an existing reference in dir.  If
-  * oldrefname is non-NULL, ignore potential conflicts with oldrefname
-  * (e.g., because oldrefname is scheduled for deletion in the same
-- * operation).
-+ * operation). skip contains a list of refs we want to skip checking for
-+ * conflicts with. Refs may be skipped due to us knowing that it will
-+ * be deleted later during a transaction that deletes one reference and then
-+ * creates a new conflicting reference. For example a rename from m to m/m.
-  */
- static int is_refname_available(const char *refname, const char *oldrefname,
--				struct ref_dir *dir)
-+				struct ref_dir *dir,
-+				const char **skip, int skipnum)
- {
- 	struct name_conflict_cb data;
- 	data.refname = refname;
- 	data.oldrefname = oldrefname;
- 	data.conflicting_refname = NULL;
-+	data.skip = skip;
-+	data.skipnum = skipnum;
- 
- 	sort_ref_dir(dir);
- 	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
-@@ -2037,7 +2051,8 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 
- static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 					    const unsigned char *old_sha1,
--					    int flags, int *type_p)
-+					    int flags, int *type_p,
-+					    const char **skip, int skipnum)
- {
- 	char *ref_file;
- 	const char *orig_refname = refname;
-@@ -2084,7 +2099,9 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	 * name is a proper prefix of our refname.
- 	 */
- 	if (missing &&
--	     !is_refname_available(refname, NULL, get_packed_refs(&ref_cache))) {
-+	     !is_refname_available(refname, NULL,
-+				   get_packed_refs(&ref_cache),
-+				   skip, skipnum)) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
- 	}
-@@ -2142,7 +2159,7 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
- 					 const unsigned char *old_sha1,
- 					 int flags, int *type_p)
- {
--	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p);
-+	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p, NULL, 0);
- }
- 
- /*
-@@ -2581,6 +2598,9 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+-	unsigned char sha1[20], orig_sha1[20];
+-	int flag = 0, logmoved = 0;
+-	struct ref_lock *lock;
++	unsigned char sha1[20];
++	int flag = 0;
++	struct ref_transaction *transaction;
++	struct strbuf err = STRBUF_INIT;
+ 	struct stat loginfo;
  	int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
  	const char *symref = NULL;
- 
-+	if (!strcmp(oldrefname, newrefname))
-+		return 0;
-+
+@@ -2604,7 +2605,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
  	if (log && S_ISLNK(loginfo.st_mode))
  		return error("reflog for %s is a symlink", oldrefname);
  
-@@ -2591,10 +2611,12 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	if (!symref)
- 		return error("refname %s not found", oldrefname);
+-	symref = resolve_ref_unsafe(oldrefname, orig_sha1, 1, &flag);
++	symref = resolve_ref_unsafe(oldrefname, sha1, 1, &flag);
+ 	if (flag & REF_ISSYMREF)
+ 		return error("refname %s is a symbolic ref, renaming it is not supported",
+ 			oldrefname);
+@@ -2626,62 +2627,28 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	if (pack_refs(PACK_REFS_ALL | PACK_REFS_PRUNE))
+ 		return error("unable to pack refs");
  
--	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(&ref_cache)))
-+	if (!is_refname_available(newrefname, oldrefname,
-+				  get_packed_refs(&ref_cache), NULL, 0))
- 		return 1;
+-	if (delete_ref(oldrefname, orig_sha1, REF_NODEREF)) {
+-		error("unable to delete old %s", oldrefname);
+-		goto rollback;
+-	}
+-
+-	if (!read_ref_full(newrefname, sha1, 1, NULL) &&
+-	    delete_ref(newrefname, sha1, REF_NODEREF)) {
+-		if (errno==EISDIR) {
+-			if (remove_empty_directories(git_path("%s", newrefname))) {
+-				error("Directory not empty: %s", newrefname);
+-				goto rollback;
+-			}
+-		} else {
+-			error("unable to delete existing %s", newrefname);
+-			goto rollback;
+-		}
++	transaction = ref_transaction_begin();
++	if (!transaction ||
++	    ref_transaction_delete(transaction, oldrefname, sha1,
++				   REF_NODEREF | REF_ISPACKONLY,
++				   1, NULL) ||
++	    ref_transaction_update(transaction, newrefname, sha1,
++				   NULL, 0, 0, logmsg) ||
++	    ref_transaction_commit(transaction, &err)) {
++		ref_transaction_rollback(transaction);
++		error("rename_ref failed: %s", err.buf);
++		strbuf_release(&err);
++		goto rollbacklog;
+ 	}
++	ref_transaction_free(transaction);
  
--	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(&ref_cache)))
-+	if (!is_refname_available(newrefname, oldrefname,
-+				  get_loose_refs(&ref_cache), NULL, 0))
- 		return 1;
- 
- 	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
-@@ -2627,7 +2649,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 
- 	logmoved = log;
- 
--	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL);
-+	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL, NULL, 0);
- 	if (!lock) {
- 		error("unable to lock %s for update", newrefname);
- 		goto rollback;
-@@ -2642,7 +2664,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	return 0;
- 
-  rollback:
--	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL);
-+	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL, NULL, 0);
- 	if (!lock) {
- 		error("unable to lock %s for rollback", oldrefname);
+ 	if (log && rename_tmp_log(newrefname))
+-		goto rollback;
+-
+-	logmoved = log;
+-
+-	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL, NULL, 0);
+-	if (!lock) {
+-		error("unable to lock %s for update", newrefname);
+-		goto rollback;
+-	}
+-	lock->force_write = 1;
+-	hashcpy(lock->old_sha1, orig_sha1);
+-	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
+-		error("unable to write current sha1 into %s", newrefname);
+-		goto rollback;
+-	}
+-
+-	return 0;
+-
+- rollback:
+-	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL, NULL, 0);
+-	if (!lock) {
+-		error("unable to lock %s for rollback", oldrefname);
  		goto rollbacklog;
-@@ -3501,7 +3523,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 						    update->old_sha1 :
- 						    NULL),
- 						   update->flags,
--						   &update->type);
-+						   &update->type,
-+						   delnames, delnum);
- 		if (!update->lock) {
- 			if (err)
- 				strbuf_addf(err, "Cannot lock the ref '%s'.",
+-	}
+ 
+-	lock->force_write = 1;
+-	flag = log_all_ref_updates;
+-	log_all_ref_updates = 0;
+-	if (write_ref_sha1(lock, orig_sha1, NULL))
+-		error("unable to write current sha1 into %s", oldrefname);
+-	log_all_ref_updates = flag;
++	return 0;
+ 
+  rollbacklog:
+-	if (logmoved && rename(git_path("logs/%s", newrefname), git_path("logs/%s", oldrefname)))
+-		error("unable to restore logfile %s from %s: %s",
+-			oldrefname, newrefname, strerror(errno));
+-	if (!logmoved && log &&
++	if (log &&
+ 	    rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", oldrefname)))
+ 		error("unable to restore logfile %s from "TMP_RENAMED_LOG": %s",
+ 			oldrefname, strerror(errno));
 -- 
 2.0.0.rc3.471.g2055d11.dirty
