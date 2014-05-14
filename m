@@ -1,165 +1,216 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v7 08/42] refs.c: change ref_transaction_update() to do error checking and return status
-Date: Wed, 14 May 2014 14:16:42 -0700
-Message-ID: <1400102236-30082-9-git-send-email-sahlberg@google.com>
-References: <1400102236-30082-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH v7 00/42] Use ref transactions for all ref updates
+Date: Wed, 14 May 2014 14:16:34 -0700
+Message-ID: <1400102236-30082-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 14 23:21:19 2014
+X-From: git-owner@vger.kernel.org Wed May 14 23:21:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkgc2-0001Ck-2J
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:21:18 +0200
+	id 1WkgcB-0001WN-De
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753784AbaENVVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 17:21:14 -0400
-Received: from mail-pb0-f73.google.com ([209.85.160.73]:57410 "EHLO
-	mail-pb0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752711AbaENVRX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 17:17:23 -0400
-Received: by mail-pb0-f73.google.com with SMTP id ma3so36549pbc.4
-        for <git@vger.kernel.org>; Wed, 14 May 2014 14:17:22 -0700 (PDT)
+	id S1752843AbaENVRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 17:17:21 -0400
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:49971 "EHLO
+	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752711AbaENVRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 17:17:19 -0400
+Received: by mail-qc0-f202.google.com with SMTP id x3so34079qcv.1
+        for <git@vger.kernel.org>; Wed, 14 May 2014 14:17:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=edpt6bC0uYtn5A/45jFQyjaxLLV74k44mXzvqkTcohU=;
-        b=d+vCqppR8xyBrQ19VrhLKbFFkaL04CFiwdmgHdod3EqKxsAf353I1yHFyDCyte5XVA
-         34ESvFvNe34VrlDxJpqdwRIOMZUTeYq/dn/wIRXW83r2DzTpFJO0ogaNNY/OaYGdVcYR
-         mci5m+ynrsKrs1qc5/PbpX5PMky2S6LXFHKOY9EXU1jFeEel2W4N9KHLETET0YBGbtj/
-         UIG716owfZLbgRUKGSZvFKSJQD/5Y+qHeYOiFqVQh9jBiSyPJdm9w8HQqBWpqbGQj2qY
-         AjaCooyQA6VSlqPCqCUcc94h0ZB46ypl7RBbMmvqVsiYaSgnITerDBCraWwM9ZmCTTzA
-         a/Mw==
+        h=from:to:cc:subject:date:message-id;
+        bh=J0Zui7v/UVlY+B4LYsyX5EE1LW5nbJCbhAHnIDJQ6x8=;
+        b=B58Y7HnsCPJycU11khVlDAD1OvTYlLSHoLPOSAqDTZUfTKW62DFMR4oSgIS+J0DIWL
+         P90VdN1ZZXZt77fKxwHE2/LjECf1IZobkam3xiELG1DZJGf/rHmHcoXKPjRy9lAFcsnI
+         3lJ4upVaN+Fo6wobK2/KtQZZDWRezBOxptkFhoFZ0smLjMF5/ZXtv8uT9bNxCZqpTBy3
+         8E9YQyZvnlC5fxEVJx9lfIHPt2F80WNj8LZDs3lLRyOnNxJ1p/LA7QO8Mm80FO2xZJW4
+         g+EoGWzgizdv2g6t89f9MPzJwmrZKYCVh+334jSdKhDNvs7q2+vUzs1CNdl4hqHDQCbs
+         mYvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=edpt6bC0uYtn5A/45jFQyjaxLLV74k44mXzvqkTcohU=;
-        b=BXZNGYr4kcyO2qOoTZyhsjZakbqK2ifENngfBBrD1YsuFOd6ObejBde6W9q/XdGkLZ
-         zgub2Xi9ctn3akRd5h//cyi7nIJD4OiT9BRy9DejGUeW9zBNn3wtj9MNztaJ1p4Ti3L1
-         QKvObTsR8sI6xFGksx+1Iuppsm/VuXygGcm/No1Us9STJ0JV36S9VZU8eJBDVIQIvRjx
-         3vxJNqAzNesj8QUtzSL4ItmThZK7JsAYdWx8Fd7hI5TVUPoJ37j9zRGuMkSPDULeLB6k
-         hrV0nU5cYuveg/VMUfMtlgYpRFm8EfeXYK+dAz9dwHvGK4PcFoRn26L4Mgha92GIvxT3
-         heGA==
-X-Gm-Message-State: ALoCoQkUb4E2FZ48ejkJOp41fozKAiK/aF52pPG4V6lpfhiZzFVIPG6Yca0vdQhQWN/5/AdhcETi
-X-Received: by 10.66.190.202 with SMTP id gs10mr3108483pac.0.1400102242738;
-        Wed, 14 May 2014 14:17:22 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=J0Zui7v/UVlY+B4LYsyX5EE1LW5nbJCbhAHnIDJQ6x8=;
+        b=SBuKxQtSsyMc9jDjRtIVA49bNCTsuTqbqXE1l32Q9qrG9f+BaRJ2Wou8HbOGdThezQ
+         0mzH/tUZYvSj29TEwzqHzgn1FqZsJK7mvgn9nMF6u25opwbt3IrcsTyJ71YfCaVtrS90
+         uIJc346mu+hwK+Sn0nlJhD+wK6T7rl36HYBWKlrjWqYK+csPN9BQTnUmVP33Z1t4XSCN
+         DRXL4NhbTpqbTcawingzMEbdOCrAS6QRxh1Y+ySMbW3NbopPNoeIADhFWS/k0pGqPthh
+         5Ldgo18jac292AesiIcZUibxcDpNTlZ2irV5W5XOc5CrCJngxv9WtZtvr4lYTog26vTL
+         osUg==
+X-Gm-Message-State: ALoCoQn3unWWPVabxgVniUXV4wE9k1Fagqvs0wn7/agvd+HVxix+I/igDKEFEtgrUH2E/ILpMEWw
+X-Received: by 10.52.90.168 with SMTP id bx8mr2551988vdb.5.1400102238716;
+        Wed, 14 May 2014 14:17:18 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id k43si145551yhq.3.2014.05.14.14.17.22
+        by gmr-mx.google.com with ESMTPS id c50si144146yhl.7.2014.05.14.14.17.18
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 May 2014 14:17:22 -0700 (PDT)
+        Wed, 14 May 2014 14:17:18 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 712555A4292;
-	Wed, 14 May 2014 14:17:22 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 7CCA15A4292;
+	Wed, 14 May 2014 14:17:18 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 1BCE6E0CB6; Wed, 14 May 2014 14:17:22 -0700 (PDT)
+	id 216B4E0973; Wed, 14 May 2014 14:17:18 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.471.g2055d11.dirty
-In-Reply-To: <1400102236-30082-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248991>
 
-Update ref_transaction_update() do some basic error checking and return
-non-zero on error. Update all callers to check ref_transaction_update() for
-error. There are currently no conditions in _update that will return error but
-there will be in the future.
+This patch series can also be found at
+https://github.com/rsahlberg/git/tree/ref-transactions
 
-Also check for BUGs during update and die(BUG:...) if we are calling
-_update with have_old but the old_sha1 pointer is NULL.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- builtin/update-ref.c | 10 ++++++----
- refs.c               |  9 +++++++--
- refs.h               | 11 ++++++-----
- 3 files changed, 19 insertions(+), 11 deletions(-)
+This patch series is based on next and expands on the transaction API. It
+converts all ref updates, inside refs.c as well as external, to use the
+transaction API for updates. This makes most of the ref updates to become
+atomic when there are failures locking or writing to a ref.
 
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 2bef2a0..59c4d6b 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -197,8 +197,9 @@ static const char *parse_cmd_update(struct strbuf *input, const char *next)
- 	if (*next != line_termination)
- 		die("update %s: extra input: %s", refname, next);
- 
--	ref_transaction_update(transaction, refname, new_sha1, old_sha1,
--			       update_flags, have_old);
-+	if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
-+				   update_flags, have_old))
-+		die("update %s: failed", refname);
- 
- 	update_flags = 0;
- 	free(refname);
-@@ -286,8 +287,9 @@ static const char *parse_cmd_verify(struct strbuf *input, const char *next)
- 	if (*next != line_termination)
- 		die("verify %s: extra input: %s", refname, next);
- 
--	ref_transaction_update(transaction, refname, new_sha1, old_sha1,
--			       update_flags, have_old);
-+	if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
-+				   update_flags, have_old))
-+		die("failed transaction update for %s", refname);
- 
- 	update_flags = 0;
- 	free(refname);
-diff --git a/refs.c b/refs.c
-index bfba348..77b27ce 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3342,19 +3342,24 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
- 	return update;
- }
- 
--void ref_transaction_update(struct ref_transaction *transaction,
-+int ref_transaction_update(struct ref_transaction *transaction,
- 			    const char *refname,
- 			    const unsigned char *new_sha1,
- 			    const unsigned char *old_sha1,
- 			    int flags, int have_old)
- {
--	struct ref_update *update = add_update(transaction, refname);
-+	struct ref_update *update;
-+
-+	if (have_old && !old_sha1)
-+		die("have_old is true but old_sha1 is NULL");
- 
-+	update = add_update(transaction, refname);
- 	hashcpy(update->new_sha1, new_sha1);
- 	update->flags = flags;
- 	update->have_old = have_old;
- 	if (have_old)
- 		hashcpy(update->old_sha1, old_sha1);
-+	return 0;
- }
- 
- void ref_transaction_create(struct ref_transaction *transaction,
-diff --git a/refs.h b/refs.h
-index 555ee59..57103aa 100644
---- a/refs.h
-+++ b/refs.h
-@@ -242,12 +242,13 @@ void ref_transaction_rollback(struct ref_transaction *transaction);
-  * be deleted.  If have_old is true, then old_sha1 holds the value
-  * that the reference should have had before the update, or zeros if
-  * it must not have existed beforehand.
-+ * Function returns 0 on success and non-zero on failure.
-  */
--void ref_transaction_update(struct ref_transaction *transaction,
--			    const char *refname,
--			    const unsigned char *new_sha1,
--			    const unsigned char *old_sha1,
--			    int flags, int have_old);
-+int ref_transaction_update(struct ref_transaction *transaction,
-+			   const char *refname,
-+			   const unsigned char *new_sha1,
-+			   const unsigned char *old_sha1,
-+			   int flags, int have_old);
- 
- /*
-  * Add a reference creation to transaction.  new_sha1 is the value
+This version completes the work to convert all ref updates to use transactions.
+Now that all updates are through transactions I will start working on
+cleaning up the reading of refs and to create an api for managing reflogs but
+all that will go in a different patch series.
+
+Version 7:
+ - Updated commit messages per JNs review comments.
+ - Changed REF_ISPRUNING and REF_ISPACKONLY to be private flags and not
+   exposed through refs.h
+
+Version 6:
+ - Convert all updates in refs.c to use transactions too.
+
+Version 5:
+ - Reword commit messages for having _create/_delete/_update returning
+   success/failure. There are no conditions yet that return an error from
+   these failures but there will be in the future. So we still check the
+   return from these functions in the callers in preparation for this.
+ - Don't leak memory by just passing a strbuf_detach() pointer to functions.
+   Use <obj>.buf and explicitely strbuf_release the data afterwards.
+ - Remove the function update_ref_lock.
+ - Remove the function update_ref_write.
+ - Track transaction status and die(BUG:) if we call _create/_delete/_update/
+   _commit for a transaction that is not OPEN.
+
+Version 4:
+ - Rename patch series from "Use ref transactions from most callers" to
+   "Use ref transactions for all ref updates".
+ - Convert all external ref writes to use transactions and make write_ref_sha1
+   and lock_ref_sha1 static functions.
+ - Change the ref commit and free handling so we no longer pass pointer to
+   pointer to _commit. _commit no longer frees the transaction. The caller
+   MUST call _free itself.
+ - Change _commit to take a strbuf pointer instead of a char* for error
+   reporting back to the caller.
+ - Re-add the walker patch after fixing it.
+
+Version 3:
+ - Remove the walker patch for now. Walker needs more complex solution
+   so defer it until the basics are done.
+ - Remove the onerr argument to ref_transaction_commit(). All callers
+   that need to die() on error now have to do this explicitely.
+ - Pass an error string from ref_transaction_commit() back to the callers
+   so that they can craft a nice error message upon failures.
+ - Make ref_transaction_rollback() accept NULL as argument.
+ - Change ref_transaction_commit() to take a pointer to pointer argument for
+   the transaction and have it clear the callers pointer to NULL when
+   invoked. This allows for much nicer handling of transaction rollback on
+   failure.
+Version 2:
+ - Add a patch to ref_transaction_commit to make it honor onerr even if the
+   error triggered in ref_Transaction_commit itself rather than in a call
+   to other functions (that already honor onerr).
+ - Add a patch to make the update_ref() helper function use transactions
+   internally.
+ - Change ref_transaction_update to die() instead of error() if we pass
+   if a NULL old_sha1 but have have_old == true.
+ - Change ref_transaction_create to die() instead of error() if new_sha1
+   is false but we pass it a null_sha1.
+ - Change ref_transaction_delete die() instead of error() if we pass
+   if a NULL old_sha1 but have have_old == true.
+ - Change several places to do  if(!transaction || ref_transaction_update()
+   || ref_Transaction_commit()) die(generic-message) instead of checking each
+   step separately and having a different message for each failure.
+   Most users are likely not interested in what step of the transaction
+   failed and only whether it failed or not.
+ - Change commit.c to only pass a pointer to ref_transaction_update
+   iff current_head is non-NULL.
+   The previous patch used to compute a garbage pointer for
+   current_head->object.sha1 and relied on the fact that ref_transaction_update
+   would not try to dereference this pointer if !!current_head was 0.
+ - Updated commit message for the walker_fetch change to try to justify why
+   the change in locking semantics should not be harmful.
+
+
+Ronnie Sahlberg (42):
+  refs.c: constify the sha arguments for
+    ref_transaction_create|delete|update
+  refs.c: allow passing NULL to ref_transaction_free
+  refs.c: add a strbuf argument to ref_transaction_commit for error
+    logging
+  refs.c: make ref_update_reject_duplicates take a strbuf argument for
+    errors
+  update-ref.c: log transaction error from the update_ref
+  refs.c: make update_ref_write update a strbuf on failure
+  refs.c: remove the onerr argument to ref_transaction_commit
+  refs.c: change ref_transaction_update() to do error checking and
+    return status
+  refs.c: change ref_transaction_create to do error checking and return
+    status
+  refs.c: ref_transaction_delete to check for error and return status
+  tag.c: use ref transactions when doing updates
+  replace.c: use the ref transaction functions for updates
+  commit.c: use ref transactions for updates
+  sequencer.c: use ref transactions for all ref updates
+  fast-import.c: change update_branch to use ref transactions
+  branch.c: use ref transaction for all ref updates
+  refs.c: change update_ref to use a transaction
+  refs.c: free the transaction before returning when number of updates
+    is 0
+  refs.c: ref_transaction_commit should not free the transaction
+  fetch.c: clear errno before calling functions that might set it
+  fetch.c: change s_update_ref to use a ref transaction
+  fetch.c: use a single ref transaction for all ref updates
+  receive-pack.c: use a reference transaction for updating the refs
+  fast-import.c: use a ref transaction when dumping tags
+  walker.c: use ref transaction for ref updates
+  refs.c: make write_ref_sha1 static
+  refs.c: make lock_ref_sha1 static
+  refs.c: add transaction.status and track OPEN/CLOSED/ERROR
+  refs.c: remove the update_ref_lock function
+  refs.c: remove the update_ref_write function
+  refs.c: remove lock_ref_sha1
+  refs.c: make prune_ref use a transaction to delete the ref
+  refs.c: make delete_ref use a transaction
+  refs.c: pass the ref log message to _create/delete/update instead of
+    _commit
+  refs.c: pass NULL as *flags to read_ref_full
+  refs.c: pack all refs before we start to rename a ref
+  refs.c: move the check for valid refname to lock_ref_sha1_basic
+  refs.c: call lock_ref_sha1_basic directly from commit
+  refs.c: add a new flag for transaction delete for refs we know are
+    packed only
+  refs.c: pass a skip list to name_conflict_fn
+  refs.c: make rename_ref use a transaction
+  refs.c: remove forward declaration of write_ref_sha1
+
+ branch.c               |  31 ++--
+ builtin/commit.c       |  24 ++-
+ builtin/fetch.c        |  29 ++--
+ builtin/receive-pack.c |  20 +--
+ builtin/replace.c      |  15 +-
+ builtin/tag.c          |  15 +-
+ builtin/update-ref.c   |  32 ++--
+ fast-import.c          |  39 +++--
+ refs.c                 | 413 ++++++++++++++++++++++++++++---------------------
+ refs.h                 |  48 +++---
+ sequencer.c            |  24 ++-
+ t/t3200-branch.sh      |   2 +-
+ walker.c               |  51 +++---
+ 13 files changed, 422 insertions(+), 321 deletions(-)
+
 -- 
 2.0.0.rc3.471.g2055d11.dirty
