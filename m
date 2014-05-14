@@ -1,179 +1,198 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH v3] git-show: fix 'git show -s' to not add extra terminator
- after merge commit
-Date: Thu, 15 May 2014 01:12:45 +0300
-Message-ID: <20140514221245.GA22918@wheezy.local>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] run_diff_files: do not look at uninitialized stat data
+Date: Wed, 14 May 2014 18:13:06 -0400
+Message-ID: <20140514221306.GA5020@sigill.intra.peff.net>
+References: <CAPZ477Ot8MiTUNx1AwDTb5sGDDerDvBY=znsK4Fhcb5taYsaHA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu May 15 00:12:55 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Elliott Cable <me@ell.io>
+X-From: git-owner@vger.kernel.org Thu May 15 00:13:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkhPz-0004bv-8P
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:12:55 +0200
+	id 1WkhQI-0005FU-Go
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:13:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752775AbaENWMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 18:12:51 -0400
-Received: from p3plsmtpa11-10.prod.phx3.secureserver.net ([68.178.252.111]:56279
-	"EHLO p3plsmtpa11-10.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751407AbaENWMu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 May 2014 18:12:50 -0400
-Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa11-10.prod.phx3.secureserver.net with 
-	id 1yCj1o0033gsSd601yCoCG; Wed, 14 May 2014 15:12:50 -0700
+	id S1752814AbaENWNK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 18:13:10 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51771 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751407AbaENWNJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 18:13:09 -0400
+Received: (qmail 21518 invoked by uid 102); 14 May 2014 22:13:08 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 May 2014 17:13:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 May 2014 18:13:06 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CAPZ477Ot8MiTUNx1AwDTb5sGDDerDvBY=znsK4Fhcb5taYsaHA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249007>
 
-When git show -s is called for merge commit it prints extra newline
-after any merge commit. This differs from output for commits with one
-parent. Fix it by more thorough checking that diff output is disabled.
+On Sun, May 11, 2014 at 02:20:57PM -0500, Elliott Cable wrote:
 
-The code in question exists since commit 3969cf7db1. The additional
-newline is really needed for cases when patch is requested, test
-t4013-diff-various.sh contains cases which can demonstrate behavior when
-the condition is restricted further.
+> So, I've spent some time in the #git channel on Freenode chatting
+> about this, and we couldn't figure it out. I can't reproduce it in a
+> newly-made repository, but it's reproducible with the repository I've
+> been working in.
+>
+>     > git status
+>     On branch Master
+>     Your branch is ahead of 'ec/Master' by 2 commits.
+>      (use "git push" to publish your local commits)
+> 
+>     nothing to commit, working directory clean
+>     > g diff --find-copies-harder
+>     diff --git i/Executables/paws.js w/Executables/paws.js
+>     old mode 100755
+>     new mode 100644
+>     > stat -f '%p' Executables/paws.js
+>     100755
+>     >
 
-Tests:
+Thanks for a thorough bug report. I was able to reproduce it. The
+problem is related to accessing uninitialized memory, so it may vary
+from system to system, or even run to run.
 
-Added merge commit to 'set up a bit of history' case in t7007-show.sh to
-cover the fix.
+The test I've included below seems to trigger reliably for me. I
+wouldn't be surprised if it does not trigger on other people's systems,
+but I think it does not hurt to include it (the behavior it tests
+for certainly _should_ be what happens).
 
-Existing tests are updated to demonstrate the new behaviour.  Earlier,
-the tests that used "git show -s --pretty=format:%s", even though
-"--pretty=format:%s" calls for item separator semantics and does not ask
-for the terminating newline after the last item, expected the output to
-end with such a newline.  They were relying on the buggy behaviour.  Use
-of "--format=%s", which is equivalent to "--pretty=tformat:%s" that asks
-for a terminating newline after each item, is a more realistic way to
-use the command.
+-- >8 --
+Subject: run_diff_files: do not look at uninitialized stat data
 
-In the test 'merge log messages' the expected data is changed, because
-it was explicitly listing the extra newline. Also the msg.nologff and
-msg.nolognoff expected files are replaced by one msg.nolog, because they
-were diffing because of the bug, and now there should be no difference.
+If we try to diff an index entry marked CE_VALID (because it
+was marked with --assume-unchanged), we do not bother even
+running stat() on the file to see if it was removed. This
+started long ago with 540e694 (Prevent diff machinery from
+examining assume-unchanged entries on worktree, 2009-08-11).
 
-Signed-off-by: Max Kirillov <max@max630.net>
+However, the subsequent code may look at our "struct stat"
+and expect to find actual data; currently it will find
+whatever cruft was left on the stack. This can cause
+problems in two situations:
+
+  1. We call match_stat_with_submodule with the stat data,
+     so a submodule may be erroneously marked as changed.
+
+  2. If --find-copies-harder is in effect, we pass all
+     entries, even unchanged ones, to diff_change, so it can
+     list them as rename/copy sources. Since we found no
+     change, we assume that function will realize it and not
+     actually display any diff output. However, we end up
+     feeding it a bogus mode, leading it to sometimes claim
+     there was a mode change.
+
+We can fix both by splitting the CE_VALID and regular code
+paths, and making sure only to look at the stat information
+in the latter. Furthermore, we push the declaration of our
+"struct stat" down into the code paths that actually set it,
+so we cannot accidentally access it uninitialized in future
+code.
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-Changes compared to v2:
-* fixed && chaining
-* squashed commit fixing test with commit fixing behavior.
-  Also simplified t7600 a bit - now different expected data
-  are not needed
-* rephrased the commit message. Have made some experiments with
-  changing the condition, added a note about it in place of
-  assumptions. Also commented the tests change. After some
-  struggling to explain choices with own words copied the
-  Junio's paragraph.
- combine-diff.c                |  3 ++-
- t/t1507-rev-parse-upstream.sh |  2 +-
- t/t7007-show.sh               | 10 +++++++---
- t/t7600-merge.sh              | 11 +++++------
- 4 files changed, 15 insertions(+), 11 deletions(-)
+The patch is kind of nasty due to re-indenting. "diff -b" makes it much
+clearer.
 
-diff --git a/combine-diff.c b/combine-diff.c
-index 3b92c448..ff6ceaf 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -1331,7 +1331,8 @@ void diff_tree_combined(const unsigned char *sha1,
- 		if (show_log_first && i == 0) {
- 			show_log(rev);
+ diff-lib.c                       | 34 ++++++++++++++++++++++------------
+ t/t4039-diff-assume-unchanged.sh | 11 +++++++++++
+ 2 files changed, 33 insertions(+), 12 deletions(-)
+
+diff --git a/diff-lib.c b/diff-lib.c
+index 0448729..62aee81 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -97,7 +97,6 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		diff_unmerged_stage = 2;
+ 	entries = active_nr;
+ 	for (i = 0; i < entries; i++) {
+-		struct stat st;
+ 		unsigned int oldmode, newmode;
+ 		struct cache_entry *ce = active_cache[i];
+ 		int changed;
+@@ -115,6 +114,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 			unsigned int wt_mode = 0;
+ 			int num_compare_stages = 0;
+ 			size_t path_len;
++			struct stat st;
  
--			if (rev->verbose_header && opt->output_format)
-+			if (rev->verbose_header && opt->output_format &&
-+			    opt->output_format != DIFF_FORMAT_NO_OUTPUT)
- 				printf("%s%c", diff_line_prefix(opt),
- 				       opt->line_termination);
+ 			path_len = ce_namelen(ce);
+ 
+@@ -195,26 +195,36 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 			continue;
+ 
+ 		/* If CE_VALID is set, don't look at workdir for file removal */
+-		changed = (ce->ce_flags & CE_VALID) ? 0 : check_removed(ce, &st);
+-		if (changed) {
+-			if (changed < 0) {
+-				perror(ce->name);
++		if (ce->ce_flags & CE_VALID) {
++			changed = 0;
++			newmode = ce->ce_mode;
++		}
++		else {
++			struct stat st;
++
++			changed = check_removed(ce, &st);
++			if (changed) {
++				if (changed < 0) {
++					perror(ce->name);
++					continue;
++				}
++				diff_addremove(&revs->diffopt, '-', ce->ce_mode,
++					       ce->sha1, !is_null_sha1(ce->sha1),
++					       ce->name, 0);
+ 				continue;
+ 			}
+-			diff_addremove(&revs->diffopt, '-', ce->ce_mode,
+-				       ce->sha1, !is_null_sha1(ce->sha1),
+-				       ce->name, 0);
+-			continue;
++
++			changed = match_stat_with_submodule(&revs->diffopt, ce, &st,
++							    ce_option, &dirty_submodule);
++			newmode = ce_mode_from_stat(ce, st.st_mode);
  		}
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index 2a19e79..672280b 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -100,7 +100,7 @@ test_expect_success 'merge my-side@{u} records the correct name' '
- 	git branch -D new ;# can fail but is ok
- 	git branch -t new my-side@{u} &&
- 	git merge -s ours new@{u} &&
--	git show -s --pretty=format:%s >actual &&
-+	git show -s --pretty=tformat:%s >actual &&
- 	echo "Merge remote-tracking branch ${sq}origin/side${sq}" >expect &&
- 	test_cmp expect actual
- )
-diff --git a/t/t7007-show.sh b/t/t7007-show.sh
-index e41fa00..1b824fe 100755
---- a/t/t7007-show.sh
-+++ b/t/t7007-show.sh
-@@ -24,7 +24,8 @@ test_expect_success 'set up a bit of history' '
- 	git tag -m "annotated tag" annotated &&
- 	git checkout -b side HEAD^^ &&
- 	test_commit side2 &&
--	test_commit side3
-+	test_commit side3 &&
-+	test_merge merge main3
+-		changed = match_stat_with_submodule(&revs->diffopt, ce, &st,
+-						    ce_option, &dirty_submodule);
++
+ 		if (!changed && !dirty_submodule) {
+ 			ce_mark_uptodate(ce);
+ 			if (!DIFF_OPT_TST(&revs->diffopt, FIND_COPIES_HARDER))
+ 				continue;
+ 		}
+ 		oldmode = ce->ce_mode;
+-		newmode = ce_mode_from_stat(ce, st.st_mode);
+ 		diff_change(&revs->diffopt, oldmode, newmode,
+ 			    ce->sha1, (changed ? null_sha1 : ce->sha1),
+ 			    !is_null_sha1(ce->sha1), (changed ? 0 : !is_null_sha1(ce->sha1)),
+diff --git a/t/t4039-diff-assume-unchanged.sh b/t/t4039-diff-assume-unchanged.sh
+index 9d9498b..23c0e35 100755
+--- a/t/t4039-diff-assume-unchanged.sh
++++ b/t/t4039-diff-assume-unchanged.sh
+@@ -28,4 +28,15 @@ test_expect_success 'diff-files does not examine assume-unchanged entries' '
+ 	test -z "$(git diff-files -- one)"
  '
  
- test_expect_success 'showing two commits' '
-@@ -109,8 +110,11 @@ test_expect_success 'showing range' '
- '
- 
- test_expect_success '-s suppresses diff' '
--	echo main3 >expect &&
--	git show -s --format=%s main3 >actual &&
-+	cat >expect <<-\EOF &&
-+	merge
-+	main3
-+	EOF
-+	git show -s --format=%s merge main3 >actual &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 10aa028..b164621 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -57,11 +57,10 @@ create_merge_msgs () {
- 		git log --no-merges ^HEAD c2 c3
- 	} >squash.1-5-9 &&
- 	: >msg.nologff &&
--	echo >msg.nolognoff &&
-+	: >msg.nolognoff &&
- 	{
- 		echo "* tag 'c3':" &&
--		echo "  commit 3" &&
--		echo
-+		echo "  commit 3"
- 	} >msg.log
- }
- 
-@@ -71,7 +70,7 @@ verify_merge () {
- 	git diff --exit-code &&
- 	if test -n "$3"
- 	then
--		git show -s --pretty=format:%s HEAD >msg.act &&
-+		git show -s --pretty=tformat:%s HEAD >msg.act &&
- 		test_cmp "$3" msg.act
- 	fi
- }
-@@ -620,10 +619,10 @@ test_expect_success 'merge early part of c2' '
- 	git tag c6 &&
- 	git branch -f c5-branch c5 &&
- 	git merge c5-branch~1 &&
--	git show -s --pretty=format:%s HEAD >actual.branch &&
-+	git show -s --pretty=tformat:%s HEAD >actual.branch &&
- 	git reset --keep HEAD^ &&
- 	git merge c5~1 &&
--	git show -s --pretty=format:%s HEAD >actual.tag &&
-+	git show -s --pretty=tformat:%s HEAD >actual.tag &&
- 	test_cmp expected.branch actual.branch &&
- 	test_cmp expected.tag actual.tag
- '
++test_expect_success POSIXPERM 'find-copies-harder is not confused by mode bits' '
++	echo content >exec &&
++	chmod +x exec &&
++	git add exec &&
++	git commit -m exec &&
++	git update-index --assume-unchanged exec &&
++	>expect &&
++	git diff-files --find-copies-harder -- exec >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
-1.8.5.2.421.g4cdf8d0
+2.0.0.rc1.436.g03cb729
