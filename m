@@ -1,301 +1,212 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 06/31] refs.c: add a transaction function to append a reflog entry
-Date: Wed, 14 May 2014 15:13:05 -0700
-Message-ID: <1400105610-21194-7-git-send-email-sahlberg@google.com>
+Subject: [PATCH 10/31] reflog.c: use a reflog transaction when writing during expire
+Date: Wed, 14 May 2014 15:13:09 -0700
+Message-ID: <1400105610-21194-11-git-send-email-sahlberg@google.com>
 References: <1400105610-21194-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 15 00:15:18 2014
+X-From: git-owner@vger.kernel.org Thu May 15 00:15:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkhSH-0000ZF-DP
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:15:17 +0200
+	id 1WkhSO-0000lQ-C2
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753282AbaENWPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 18:15:06 -0400
-Received: from mail-yh0-f74.google.com ([209.85.213.74]:57658 "EHLO
-	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753242AbaENWNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 18:13:35 -0400
-Received: by mail-yh0-f74.google.com with SMTP id 29so442382yhl.1
-        for <git@vger.kernel.org>; Wed, 14 May 2014 15:13:34 -0700 (PDT)
+	id S1753893AbaENWPE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 18:15:04 -0400
+Received: from mail-ob0-f201.google.com ([209.85.214.201]:34994 "EHLO
+	mail-ob0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407AbaENWNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 18:13:36 -0400
+Received: by mail-ob0-f201.google.com with SMTP id wn1so56762obc.4
+        for <git@vger.kernel.org>; Wed, 14 May 2014 15:13:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=26tCp1+jtraXp6pgCugnRgOcyJZVSg9AVxKInnMYXWY=;
-        b=IYvS1C2vjsJ9z/+WU8VSz2d8bgauSsoqwqtRBA7aYJOGjioG56+MgrYCZO4QsU3Opp
-         9twxP9rT+H5Zamfnvtk46M/qjS5Fz6atrgCnJ5+d+SWrCb6LLxPUDvxiacHCxRR86PjI
-         s3iC4H5cn99Mah4wajl9OT1FwbNaF3pY5kpHyYgiiFb0RMBmxU9wEqYxJTAa6kgRcfP5
-         uIh6/rLFu7D8/cNSd+yJeFsGTn+ypKSQCQeflb8GExElssksG6qpFdviG3cELM2je5bi
-         SECBsoAqKaX5MtrM9aoe0TGbs26TBHWP/TNtxtm0hilqdOYtznY9zW57mQ+1MaA6VYTg
-         DWGw==
+        bh=I4p2HW0DBc+tlzaT5kVolWFR8EDn7t8mUoQI70VI3Uc=;
+        b=one+LHbvu1yCOW0YpDVHQKWnwOLVeQkIoEZ89wjKAYKiBh6MDqfwh2LsUyQxSlYCCj
+         hLttGh/yIP58vzqqVaEcG8SvYtsIXydGgyzL2lLCkE3+H9nsqqf7h+HPkHegsIFKDMCp
+         0Y8Cu1HajDEPyG84XMK5RnhTco0n1VWskTJNNMpFniPQfhgguIQRPOS1ABU2T1JSy0dQ
+         5cqGbGyKC0ywo/fCH2mZ5OWynLoaVHwaK5AjXQuUPrTbuvTlrDsmqUG4p5x8um+u1GUA
+         v0lmLcjhj2vjxOeWirTn2HNz0cKmh6cLQjqk481UbauOTVnN0MPYxcOssSuKvfxLiTJl
+         mbQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=26tCp1+jtraXp6pgCugnRgOcyJZVSg9AVxKInnMYXWY=;
-        b=PfOoXlGbxc0R3HdFxTr8NvtqEt7NrygVIBMdcuQr5bULKwG9RNr4d4U756VUQZCWT3
-         viIwG0jx74HIY+2LqMYZNjJlg/gh55gVeU4tc3tjFIx15IrMLHYFAuXWvYGbrowCMGxv
-         mz3wZd5lPYcBIX72aX0xK0JKqsS+hVGWds3HPOFDfqmJP3o6zQX0dAZR+Dqp2eYMDsZ+
-         RMBYs9eJdDRUF/xRxYyI3CZ5G4WAoy99jtJKIDoJR5FzSevzCgykHWx0OTIvIjBK4yPn
-         QJhldcBtzTb62EYbEqBMF42h+6FsrewG9rkimy/emOrxHWi7mYHf1S8srMjjQHfH80kX
-         JGYQ==
-X-Gm-Message-State: ALoCoQn2QUbkKMP/jCEI+75oSJKUKbp9CtzR87cCa5ez0sWmTPfLeWzuczF5dYCKzMKH20MIjnz/
-X-Received: by 10.58.168.137 with SMTP id zw9mr3291192veb.15.1400105614553;
-        Wed, 14 May 2014 15:13:34 -0700 (PDT)
+        bh=I4p2HW0DBc+tlzaT5kVolWFR8EDn7t8mUoQI70VI3Uc=;
+        b=dWGxXlOEx8hnpjDI7fbp3o/ce1qEGfU8OJ+VJY4F1+xTtzWaagbTc7ktXz5vfFCzgX
+         Ls44yqlEkvRVIhy3MtZBDCun4xA0ttOfyJmzkMynpHvwAC+2Eu8RkA3058fKd9E+n572
+         m6OSrm2H/B/GmStDhF1tInJFV+VUIBa3Cxp8cwzjlvazo8Uo7IZzewoC0kbE86DQq/ZL
+         oGkXPiKnSLaUU/+qS+7lwPDADcrD5ffZLUjT4IXB0RwbknOKo2PKwDmSs8Fb3jm3z2M4
+         Fr2Jjl3mmA9SRvUSoi0+Lkydzv7DupwY4eFAyg4vcQVnV0YbBQ117sCmiANfxgDWcAMv
+         fvHg==
+X-Gm-Message-State: ALoCoQmX+njvNKfdkhlLCP/I2DZgLY8QsEggRicJ0zQhMhdq2B/3N43iZqfrvu2vP7n0yuIdzREX
+X-Received: by 10.182.106.229 with SMTP id gx5mr3144719obb.31.1400105615945;
+        Wed, 14 May 2014 15:13:35 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id c50si150747yhl.7.2014.05.14.15.13.34
+        by gmr-mx.google.com with ESMTPS id h18si153002yhj.0.2014.05.14.15.13.35
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 May 2014 15:13:34 -0700 (PDT)
+        Wed, 14 May 2014 15:13:35 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 575045A41E5;
-	Wed, 14 May 2014 15:13:34 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id AD0495A41E5;
+	Wed, 14 May 2014 15:13:35 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 03311E0CB6; Wed, 14 May 2014 15:13:33 -0700 (PDT)
+	id 6DE41E0973; Wed, 14 May 2014 15:13:35 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.506.g3739a35
 In-Reply-To: <1400105610-21194-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249035>
 
-Define a new transaction update type, UPDATE_LOG, and a new function
-transaction_update_reflog. This function will lock the reflog and append
-an entry to it during transaction commit.
+Use a transaction when doing the updates of the reflog during expire_reflog.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-
-Conflicts:
-	refs.h
 ---
- refs.c | 107 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- refs.h |  13 ++++++++
- 2 files changed, 117 insertions(+), 3 deletions(-)
+ builtin/reflog.c | 54 ++++++++++++++++++++++--------------------------------
+ refs.c           |  4 ++--
+ 2 files changed, 24 insertions(+), 34 deletions(-)
 
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index e8a8fb1..5f07647 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -33,7 +33,8 @@ struct cmd_reflog_expire_cb {
+ };
+ 
+ struct expire_reflog_cb {
+-	FILE *newlog;
++	struct ref_transaction *t;
++	const char *refname;
+ 	enum {
+ 		UE_NORMAL,
+ 		UE_ALWAYS,
+@@ -316,20 +317,16 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
+ 	if (cb->cmd->recno && --(cb->cmd->recno) == 0)
+ 		goto prune;
+ 
+-	if (cb->newlog) {
+-		char sign = (tz < 0) ? '-' : '+';
+-		int zone = (tz < 0) ? (-tz) : tz;
+-		fprintf(cb->newlog, "%s %s %s %lu %c%04d\t%s",
+-			sha1_to_hex(osha1), sha1_to_hex(nsha1),
+-			email, timestamp, sign, zone,
+-			message);
++	if (cb->t) {
++		transaction_update_reflog(cb->t, cb->refname, nsha1, osha1,
++					  email, timestamp, tz, message, 0);
+ 		hashcpy(cb->last_kept_sha1, nsha1);
+ 	}
+ 	if (cb->cmd->verbose)
+ 		printf("keep %s", message);
+ 	return 0;
+  prune:
+-	if (!cb->newlog)
++	if (!cb->t)
+ 		printf("would prune %s", message);
+ 	else if (cb->cmd->verbose)
+ 		printf("prune %s", message);
+@@ -354,12 +351,12 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
+ 	struct cmd_reflog_expire_cb *cmd = cb_data;
+ 	struct expire_reflog_cb cb;
+ 	struct ref_lock *lock;
+-	char *log_file, *newlog_path = NULL;
+ 	struct commit *tip_commit;
+ 	struct commit_list *tips;
+ 	int status = 0;
+ 
+ 	memset(&cb, 0, sizeof(cb));
++	cb.refname = ref;
+ 
+ 	/*
+ 	 * we take the lock for the ref itself to prevent it from
+@@ -368,12 +365,14 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
+ 	lock = lock_any_ref_for_update(ref, sha1, 0, NULL);
+ 	if (!lock)
+ 		return error("cannot lock ref '%s'", ref);
+-	log_file = git_pathdup("logs/%s", ref);
+ 	if (!reflog_exists(ref))
+ 		goto finish;
+ 	if (!cmd->dry_run) {
+-		newlog_path = git_pathdup("logs/%s.lock", ref);
+-		cb.newlog = fopen(newlog_path, "w");
++		cb.t = transaction_begin();
++		transaction_update_reflog(cb.t, cb.refname,
++					  null_sha1, null_sha1, NULL,
++					  0, 0, NULL,
++					  REFLOG_TRUNCATE);
+ 	}
+ 
+ 	cb.cmd = cmd;
+@@ -420,31 +419,22 @@ static int expire_reflog(const char *ref, const unsigned char *sha1, int unused,
+ 		}
+ 	}
+  finish:
+-	if (cb.newlog) {
+-		if (fclose(cb.newlog)) {
+-			status |= error("%s: %s", strerror(errno),
+-					newlog_path);
+-			unlink(newlog_path);
+-		} else if (cmd->updateref &&
+-			(write_in_full(lock->lock_fd,
+-				sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
+-			 write_str_in_full(lock->lock_fd, "\n") != 1 ||
+-			 close_ref(lock) < 0)) {
++	if (cb.t) {
++		if (cmd->updateref &&
++		    (write_in_full(lock->lock_fd,
++				   sha1_to_hex(cb.last_kept_sha1), 40) != 40 ||
++		     write_str_in_full(lock->lock_fd, "\n") != 1 ||
++		     close_ref(lock) < 0)) {
+ 			status |= error("Couldn't write %s",
+ 				lock->lk->filename);
+-			unlink(newlog_path);
+-		} else if (rename(newlog_path, log_file)) {
+-			status |= error("cannot rename %s to %s",
+-					newlog_path, log_file);
+-			unlink(newlog_path);
++			transaction_rollback(cb.t);
++		} else if (transaction_commit(cb.t, NULL)) {
++			status |= error("cannot commit reflog for %s", ref);
+ 		} else if (cmd->updateref && commit_ref(lock)) {
+ 			status |= error("Couldn't set %s", lock->ref_name);
+-		} else {
+-			adjust_shared_perm(log_file);
+ 		}
++		transaction_free(cb.t);
+ 	}
+-	free(newlog_path);
+-	free(log_file);
+ 	unlock_ref(lock);
+ 	return status;
+ }
 diff --git a/refs.c b/refs.c
-index 98c6c00..d8a1568 100644
+index e7ede03..5a5f9df 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3249,6 +3249,7 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+@@ -2766,8 +2766,8 @@ static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
+ 		      committer);
+ 	if (msglen)
+ 		len += copy_msg(logrec + len - 1, msg) - 1;
+-	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
  
- enum transaction_update_type {
-        UPDATE_SHA1 = 0,
-+       UPDATE_LOG = 1,
- };
- 
- /**
-@@ -3266,6 +3267,12 @@ struct ref_update {
- 	struct ref_lock *lock;
- 	int type;
- 	const char *msg;
-+
-+	/* used by reflog updates */
-+	int reflog_fd;
-+	struct lock_file reflog_lock;
-+	const char *committer;
-+
- 	const char refname[FLEX_ARRAY];
- };
- 
-@@ -3300,7 +3307,8 @@ void transaction_free(struct ref_transaction *transaction)
- 		return;
- 
- 	for (i = 0; i < transaction->nr; i++) {
--	  free((char *)transaction->updates[i]->msg);
-+		free((char *)transaction->updates[i]->committer);
-+		free((char *)transaction->updates[i]->msg);
- 		free(transaction->updates[i]);
- 	}
- 	free(transaction->updates);
-@@ -3331,6 +3339,38 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
- 	return update;
- }
- 
-+int transaction_update_reflog(struct ref_transaction *transaction,
-+			      const char *refname,
-+			      const unsigned char *new_sha1,
-+			      const unsigned char *old_sha1,
-+			      const unsigned char *email,
-+			      unsigned long timestamp, int tz,
-+			      const char *msg,
-+			      int flags)
-+{
-+	struct ref_update *update;
-+
-+	update = add_update(transaction, refname, UPDATE_LOG);
-+	hashcpy(update->new_sha1, new_sha1);
-+	hashcpy(update->old_sha1, old_sha1);
-+	update->reflog_fd = -1;
-+	if (email) {
-+		struct strbuf buf = STRBUF_INIT;
-+		char sign = (tz < 0) ? '-' : '+';
-+		int zone = (tz < 0) ? (-tz) : tz;
-+
-+		strbuf_addf(&buf, "%s %lu %c%04d", email, timestamp, sign,
-+			    zone);
-+		update->committer = xstrdup(buf.buf);
-+		strbuf_release(&buf);
-+	}
-+	if (msg)
-+		update->msg = xstrdup(msg);
-+	update->flags = flags;
-+
-+	return 0;
-+}
-+
- int transaction_update_sha1(struct ref_transaction *transaction,
- 			    const char *refname,
- 			    const unsigned char *new_sha1,
-@@ -3440,6 +3480,8 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
- {
- 	int i;
- 	for (i = 1; i < n; i++)
-+		if (updates[i]->update_type != UPDATE_SHA1)
-+			continue;
- 		if (!strcmp(updates[i - 1]->refname, updates[i]->refname)) {
- 			const char *str =
- 				"Multiple updates for ref '%s' not allowed.";
-@@ -3479,14 +3521,18 @@ int transaction_commit(struct ref_transaction *transaction,
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
- 
-+		if (update->update_type != UPDATE_SHA1)
-+			continue;
- 		if (update->flags & REF_ISPACKONLY)
- 			delnames[delnum++] = update->refname;
- 	}
- 
--	/* Acquire all locks while verifying old values */
-+	/* Acquire all ref locks while verifying old values */
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
- 
-+		if (update->update_type != UPDATE_SHA1)
-+			continue;
- 		if (update->flags & REF_ISPACKONLY)
- 			continue;
- 
-@@ -3506,10 +3552,32 @@ int transaction_commit(struct ref_transaction *transaction,
++	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
+ 	free(logrec);
+ 	if (written != len)
+ 		return -1;
+@@ -3634,7 +3634,7 @@ int transaction_commit(struct ref_transaction *transaction,
  		}
  	}
  
--	/* Perform updates first so live commits remain referenced */
-+	/* Lock all reflog files */
-+	for (i = 0; i < n; i++) {
-+		struct ref_update *update = updates[i];
-+
-+		if (update->update_type != UPDATE_LOG)
-+			continue;
-+		update->reflog_fd = hold_lock_file_for_append(
-+					&update->reflog_lock,
-+					git_path("logs/%s", update->refname),
-+					0);
-+		if (update->reflog_fd < 0) {
-+			const char *str = "Cannot lock reflog for '%s'.";
-+
-+			ret = -1;
-+			if (err)
-+				strbuf_addf(err, str, update->refname);
-+			goto cleanup;
-+		}
-+	}
-+
-+	/* Perform ref updates first so live commits remain referenced */
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
- 
-+		if (update->update_type != UPDATE_SHA1)
-+			continue;
- 		if (!is_null_sha1(update->new_sha1)) {
- 			ret = write_ref_sha1(update->lock, update->new_sha1,
- 					     update->msg);
-@@ -3528,6 +3596,8 @@ int transaction_commit(struct ref_transaction *transaction,
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
- 
-+		if (update->update_type != UPDATE_SHA1)
-+			continue;
- 		if (update->flags & REF_ISPACKONLY)
- 			continue;
- 
-@@ -3538,6 +3608,36 @@ int transaction_commit(struct ref_transaction *transaction,
- 		}
- 	}
- 
-+	/* Update all reflog files */
-+	for (i = 0; i < n; i++) {
-+		struct ref_update *update = updates[i];
-+
-+		if (update->update_type != UPDATE_LOG)
-+			continue;
-+		if (update->reflog_fd == -1)
-+			continue;
-+
-+		if (log_ref_write_fd(update->reflog_fd, update->old_sha1,
-+				     update->new_sha1,
-+				     update->committer, update->msg)) {
-+			rollback_lock_file(&update->reflog_lock);
-+			update->reflog_fd = -1;
-+		}
-+	}
-+
-+	/* Unock all reflog files */
-+	for (i = 0; i < n; i++) {
-+		struct ref_update *update = updates[i];
-+
-+		if (update->update_type != UPDATE_LOG)
-+			continue;
-+		if (update->reflog_fd == -1)
-+			continue;
-+		if (commit_lock_file(&update->reflog_lock)) {
-+			update->reflog_fd = -1;
-+		}
-+	}
-+
- 	ret |= repack_without_refs(delnames, delnum);
- 	for (i = 0; i < delnum; i++)
- 		unlink_or_warn(git_path("logs/%s", delnames[i]));
-@@ -3688,4 +3788,5 @@ int ref_is_hidden(const char *refname)
- 			return 1;
- 	}
- 	return 0;
-+
- }
-diff --git a/refs.h b/refs.h
-index 127c12f..2e22a26 100644
---- a/refs.h
-+++ b/refs.h
-@@ -134,6 +134,7 @@ extern int peel_ref(const char *refname, unsigned char *sha1);
- 
- /** Locks any ref (for 'HEAD' type refs). */
- #define REF_NODEREF	0x01
-+
- extern struct ref_lock *lock_any_ref_for_update(const char *refname,
- 						const unsigned char *old_sha1,
- 						int flags, int *type_p);
-@@ -269,6 +270,18 @@ int transaction_delete_sha1(struct ref_transaction *transaction,
- 			    int flags, int have_old, const char *msg);
- 
- /*
-+ * Append a reflog entry for refname.
-+ */
-+int transaction_update_reflog(struct ref_transaction *transaction,
-+			      const char *refname,
-+			      const unsigned char *new_sha1,
-+			      const unsigned char *old_sha1,
-+			      const unsigned char *email,
-+			      unsigned long timestamp, int tz,
-+			      const char *msg,
-+			      int flags);
-+
-+/*
-  * Commit all of the changes that have been queued in transaction, as
-  * atomically as possible.  Return a nonzero value if there is a
-  * problem. If err is non-NULL we will add an error string to it to explain
+-	/* Update all reflog files
++	/* Update all reflog files.
+ 	   We have already done all ref updates and deletes.
+ 	   There is not much we can do here if there are any reflog
+ 	   update errors, other than complain.
 -- 
 2.0.0.rc3.506.g3739a35
