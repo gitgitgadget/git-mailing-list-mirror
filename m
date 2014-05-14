@@ -1,175 +1,198 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 0/4] remote-hg: more improvements
-Date: Wed, 14 May 2014 15:19:03 -0500
-Message-ID: <5373cfb744982_57c3bfb300a0@nysa.notmuch>
-References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
- <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
- <536a83097302f_76ff7a52ec6c@nysa.notmuch>
- <xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
- <536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
- <xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
- <536ad9601b73b_3caaa612ecdc@nysa.notmuch>
- <CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
- <xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
- <CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
- <87mweku2pt.fsf@fencepost.gnu.org>
- <CAGK7Mr5ezbTVyq2wr7kYWjab6V1srrYwkqSGjo1GuPnkSuGWTQ@mail.gmail.com>
- <87iop8u1km.fsf@fencepost.gnu.org>
- <CAGK7Mr4N5L+jRE0ykBHvopgGv1x4iNXAK+_94R5KhBxHHqMYmA@mail.gmail.com>
- <87egzwtthf.fsf@fencepost.gnu.org>
- <CAGK7Mr6XTxpeJLSqL8PZMS8w+YCqxLrC5wX-dg4BdEaW3QAYTA@mail.gmail.com>
- <87a9aktqms.fsf@fencepost.gnu.org>
- <CAGK7Mr7jhpizoHuA9NDnyNPy_rr8_R0m8-hCFO3CDn2Hbh3_pQ@mail.gmail.com>
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: [GUILT v2 08/29] Added more test cases for "guilt new": empty patches.
+Date: Wed, 14 May 2014 22:38:08 +0200
+Message-ID: <CAP=KgsRoi0P0zYYPD+aZX0FYi7eXL6cY5w-Y+rVJfjBhrhd+Ww@mail.gmail.com>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+	<1400013065-27919-9-git-send-email-cederp@opera.com>
+	<20140514171040.GF1582@meili.valhalla.31bits.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Philippe Vaucher <philippe.vaucher@gmail.com>,
-	David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed May 14 22:30:12 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Jeff Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Wed May 14 22:38:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkfoY-0001du-Om
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 22:30:11 +0200
+	id 1WkfwQ-0004H1-3u
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 22:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752390AbaENUaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 16:30:04 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]:57901 "EHLO
-	mail-oa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752352AbaENUaC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 16:30:02 -0400
-Received: by mail-oa0-f42.google.com with SMTP id j17so114898oag.15
-        for <git@vger.kernel.org>; Wed, 14 May 2014 13:30:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=1sHuWvJo1BErXgBkTht9rPljFoqDAnRAimQ2M+uN+4c=;
-        b=yYqU5mn8YSKLuhDWhNYUIMbq0OPt6oGmv7sJKqhYIj0Khl56xROdTCWMRyCwv93Bzq
-         HxAYnDoqaHLduSrO40fCZshMHFNG79UPI2Pz6j/6ltptsMnsQBlYNtDevD0nuSbwe9Bo
-         Jb5YDZVIjByYPjSQpsqNxO3pK9YukiK8y7W3VkybsHiRVR/U5O/oGAiDynRMRgmw11d7
-         09sB9SddPVrdtAWAz2FOJP7Sf3HBSxAhD2Ym4+gfI69T0beun1XoA2IZCV1UBY1hiSix
-         Z5ZUHbu+6e8VwAfxQdSSeDhdQ2Ecw9LJuPGe7mvHXJqu/AQEW/JFahx2BlamgroQixSj
-         1bKQ==
-X-Received: by 10.60.44.204 with SMTP id g12mr5784404oem.38.1400099401795;
-        Wed, 14 May 2014 13:30:01 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id z8sm7475594oey.5.2014.05.14.13.30.00
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 May 2014 13:30:01 -0700 (PDT)
-In-Reply-To: <CAGK7Mr7jhpizoHuA9NDnyNPy_rr8_R0m8-hCFO3CDn2Hbh3_pQ@mail.gmail.com>
+	id S1751407AbaENUiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 16:38:10 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:34398 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751118AbaENUiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 16:38:09 -0400
+Received: by mail-ie0-f174.google.com with SMTP id at1so109860iec.33
+        for <git@vger.kernel.org>; Wed, 14 May 2014 13:38:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=OgEtsmy2+t6HhCsGUZ8NBgeLF+r6NzksxpmkSiFXgAY=;
+        b=FbSgGwf4bfsVBSZKbPbwO3An0Ih+lUDdpTSkm/h0EQ8TRVaJZt44qOpycGVYRblATz
+         6dYmZpRKDWQJAwoOxYkzsLDTnzp+vup5UiD5Qz0/hDo1m4AqVlwk63pIDmYkV9S9/cEf
+         ciJsnn8o3lK1w4FCf1ItSbiBqqtiI4QATbDg3o0epstXm2iqURyDUfjc0JzPLBOt06QN
+         OQYjDaHJHSiGXvQT+ZH4+2WjHho5MvvqwCCMbAb54ealRojAYPHzkQn05iq51JmNUq9e
+         SVS5Ch1UQyZu8IwIFnsLzQm1zakoVzT6X+vODtvZti9DASE4bWaJnPRExS0VqRgQDydm
+         wP1A==
+X-Gm-Message-State: ALoCoQkkg1Z4WKjzdcz0zwvAoO6JGinLqKCTYeuYFf6cQw0W3l9vJkqVlIB21T6Nl4b1+Y9Ykyze
+X-Received: by 10.50.147.9 with SMTP id tg9mr69847646igb.31.1400099888617;
+ Wed, 14 May 2014 13:38:08 -0700 (PDT)
+Received: by 10.43.89.66 with HTTP; Wed, 14 May 2014 13:38:08 -0700 (PDT)
+In-Reply-To: <20140514171040.GF1582@meili.valhalla.31bits.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248949>
 
-Philippe Vaucher wrote:
-> >> I'm sorry that my words aren't clear enough for you to infer the point
-> >> I'm trying to make. Let's try something simpler: what I was saying is
-> >> that bad behavior will get you into trouble when contributing (and
-> >> thus it's important to behave nicely), where Felipe usualy says bad
-> >> behavior is irrelevant because only truth/quality is important.
-> >
-> > Do you feel Felipe is in control of what you label bad behavior?  Do you
-> > feel you are in control over how you react to his behavior?
-> 
-> I feel that Felipe cannot control this (or decided not to),
+On Wed, May 14, 2014 at 7:10 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> On Tue, May 13, 2014 at 10:30:44PM +0200, Per Cederqvist wrote:
+>> Test that empty patches are handled correctly, both with and without
+>> the guilt.diffstat configuration option.
+>>
+>> Signed-off-by: Per Cederqvist <cederp@opera.com>
+>> ---
+>>  regression/t-020.out | 250 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>>  regression/t-020.sh  |  60 +++++++++++++
+>>  2 files changed, 310 insertions(+)
+>>
+>> diff --git a/regression/t-020.out b/regression/t-020.out
+>> index af45734..7e07efa 100644
+>> --- a/regression/t-020.out
+>> +++ b/regression/t-020.out
+>> @@ -1128,3 +1128,253 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+> ...
+>> +% git log -p
+>> +commit c7a139f532a43c3c8b0e068cac04f8f6af0f94e1
+>> +Author: Author Name <author@email>
+>> +Date:   Mon Jan 1 00:00:00 2007 +0000
+>> +
+>> +    patch empty.patch
+>> +
+>> +commit d4850419ccc1146c7169f500725ce504b9774ed0
+>> +Author: Author Name <author@email>
+>> +Date:   Mon Jan 1 00:00:00 2007 +0000
+>> +
+>> +    initial
+>> +
+>> +    Signed-off-by: Commiter Name <commiter@email>
+>> +
+>> +diff --git a/def b/def
+>> +new file mode 100644
+>> +index 0000000..8baef1b
+>> +--- /dev/null
+>> ++++ b/def
+>> +@@ -0,0 +1 @@
+>> ++abc
+>> +% git config guilt.diffstat false
+>> +---
+>> +
+>
+> I'm a bit confused about the above.  It looks like contents of an empty
+> patch with an empty diffstat.  But the only time I see a cat in the .sh file
+> is when you rewrite... oh I got it.  I'll comment about it by the 'cat'.
+>
+> ...
+>> diff --git a/regression/t-020.sh b/regression/t-020.sh
+>> index cdd08ba..906aec6 100755
+>> --- a/regression/t-020.sh
+>> +++ b/regression/t-020.sh
+>> @@ -5,6 +5,13 @@
+>>
+>>  source "$REG_DIR/scaffold"
+>>
+>> +function fixup_time_info
+>> +{
+>> +     cmd guilt pop
+>> +     touch -a -m -t "$TOUCH_DATE" ".git/patches/master/$1"
+>> +     cmd guilt push
+>> +}
+>> +
+>>  cmd setup_repo
+>>
+>>  #
+>> @@ -69,6 +76,59 @@ done
+>>
+>>  cmd list_files
+>>
+>> +# push an empty patch with no commit message
+>> +cmd guilt new empty.patch
+>> +fixup_time_info empty.patch
+>> +cmd list_files
+>> +cmd git log -p
+>> +
+>> +# Ensure we can push the empty patch even when guilt.diffstat is true.
+>> +cmd git config guilt.diffstat true
+>> +cmd guilt refresh
+>> +fixup_time_info empty.patch
+>> +cmd list_files
+>> +cmd git log -p
+>> +cmd git config guilt.diffstat false
+>> +
+>> +# Let the patch have a commit message, but no data.
+>> +cat .git/patches/master/empty.patch <<EOF
+>
+> cat > .git/.../empty.patch <<EOF
+> ...
+> EOF
+>
+> Otherwise, you'll just cat the existing patch and that's it.
 
-I am pretty much in control of my behavior. Those who know me personally
-know that I *never* get angry.
+Yes. The intent was to modify empty.patch.  This is a bit
+embarrassing, since it should have been obvious from
+the output of "git log -p" that the modification didn't work
+as I intended. :-)
 
-The problem is that what you label as "bad behavior" I do not. For
-example the atheist billboard that said "You KNOW it's a Myth. This
-Season, Celebrate REASON!" caused a lot of furor, and people all over
-U.S.A. said "you cannot say that!", "that's offensive!", "it's a war
-against Christmass", "that shouldn't be tolerated in modern
-society", and so on.
+I'll fix in the v3 series.
 
-Of course, it should be tolerated in a modern society, and it should not
-be offensive, those are facts. Of course people can disagree with those
-facts (but those people are wrong).
+    /ceder
 
-The atheists are not engaging in bad behavior, it's just that the
-majority constituted by religious and bend-over-backwards-liberals have
-a different definition of "bad behavior" (a wrong definition).
-
-So if somebody convinced me that my behavior is indeed bad, I would certainly
-change it, but I do not think it's "bad". Just the same way nobody has
-convinced many atheists that their behavior in those billboards is bad.
-And they can't convince them, because they would need logic, reason, and
-evidence, and the atheists have them.
-
-> > Yesterday my girl friend bought back a mare she had sold two years ago
-> > because its owner did not manage to get along with it.  It's a
-> > temperamental animal that learns and performs amazingly well for its
-> > comparatively compact build.  But it's highest in rank "or else", and so
-> > in the end it got locked up in its stable box most of the time in order
-> > to avoid injuries to other horses.  Now it's back here at the riding
-> > school, and there is little question that there will be some injuries
-> > before things settle down again even though most of the horses here know
-> > it already.
-> 
-> I think that is the point: behave properly or be isolated to avoid
-> harming others. Wether you control your behavior or not has little to
-> do with it, it's your behavior that counts. That's how it works in
-> pretty much any communities I know of.
-
-Except the largest and most important communities; countries. In the
-vast majority of countries what is labeled as "bad" (a.k.a. illegal) has
-had much more consideration (millenia) than in most online communities
-(barely decades). Saying something is stupid might be considered "bad" to
-some people, but not all, so you can't get thrown in jail for doing
-that, even though some peple thing it's "harming others". For example,
-saying "religion is stupid". In order to be thrown in jail you have to
-do something _truly_ bad, something we all agree is harming others.
-
-In online communities facts don't matter, if the majority thinks you are
-doing something bad (even if you are not), you get thrown to jail (or
-virtual jail).
-
-> > It may be that distributed version control systems offer more
-> > possibilities for organizing cooperation in a manner leaving graceful
-> > escape paths when things don't work out.  It's not what one want to have
-> > to rely on permanently but it may be worth thinking about ways to make
-> > consequences from difficulties less "inevitable" and/or grave.
-> 
-> Sure, I believe my proposal of acting on bad behavior earlier would
-> prevent incidents like this one, because it would defuse situations
-> before they settle in. But that's just a proposal, I'm just an
-> observer here.
-
-What you label "bad behavior" started *because* of Junio's decision.
-
-Junio made an important (to me) decision based on a *TECHNICAL* reason
-he never explained. My "bad behavior" basically consisted in pointing
-out Junio's bad behavior.
-
-In this case I'm not very dissimilar to Edward Snowden. Snowden did
-somethig "bad" in the eyes of many people, but he did it *because* of
-something deeper and more important. It was the government that caused
-Snowden's actions, and it is the government's bad behavior that is
-important. But if you look at the mass media, they don't concentrate on
-the government's actions (that's risky), they concentrate on Snowden.
-
-This might have changed after Snowden gained support, but at least
-initially it was this way.
-
-You are doing exactly the same as the mass media. Instead of looking at
-the actions of Junio, namely his *TECHNICAL* decision which *triggered*
-my "bad behavior", you look at me, the easy target, and ignore the real
-problem.
-
-Wait, wait! Before focusing on deciding whether leaking documents is
-"bad", and how exactly it was carried out, why don't you concentrate on
-the real issue; the fact that the government is spying on everyone. Nah!
-that's haaard. Let's obliterate the little guy.
-
--- 
-Felipe Contreras
+>> +Fix a bug.
+>> +
+>> +From: Per Cederqvist <ceder@lysator.liu.se>
+>> +
+>> +This commit fixes a serious bug.
+>> +
+>> +FIXME:
+>> +    - add a test case
+>> +    - track down the bug
+>> +    - actually fix it
+>> +EOF
+>> +
+>> +fixup_time_info empty.patch
+>> +cmd list_files
+>> +cmd git log -p
+>> +
+>> +# And once more, with an empty diffstat.
+>> +
+>> +cmd git config guilt.diffstat true
+>> +cmd guilt refresh
+>> +fixup_time_info empty.patch
+>> +cmd list_files
+>> +cmd git log -p
+>> +
+>> +# Restore the diffstat setting and remove the empty patch.
+>> +cmd git config guilt.diffstat false
+>> +cmd guilt refresh
+>> +fixup_time_info empty.patch
+>> +cmd list_files
+>> +cmd git log -p
+>> +# (Cannot delete an applied patch)
+>> +shouldfail guilt delete empty.patch
+>> +cmd guilt pop -a
+>> +cmd guilt delete -f empty.patch
+>> +cmd list_files
+>> +cmd git log -p
+>> +
+>>  # FIXME:
+>>  #   --all
+>>  #   -a
+>> --
+>> 1.8.3.1
+>>
+>
+> --
+> Fact: 23.6% of all statistics are generated randomly.
