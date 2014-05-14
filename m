@@ -1,125 +1,161 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH] git grep -O -i: if the pager is 'less', pass the
- '-i' option
-Date: Wed, 14 May 2014 17:50:10 +0200
-Organization: <)><
-Message-ID: <20140514155010.GA4592@camelia.ucw.cz>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT v2 28/29] Added guilt.reusebranch configuration option.
+Date: Wed, 14 May 2014 11:53:24 -0400
+Message-ID: <20140514155324.GE1582@meili.valhalla.31bits.net>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+ <1400013065-27919-29-git-send-email-cederp@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-        msysGit <msysgit@googlegroups.com>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBNFBZ2NQKGQEOCFZCRY@googlegroups.com Wed May 14 17:50:13 2014
-Return-path: <msysgit+bncBCU63DXMWULRBNFBZ2NQKGQEOCFZCRY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f64.google.com ([74.125.82.64])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Wed May 14 17:53:24 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBNFBZ2NQKGQEOCFZCRY@googlegroups.com>)
-	id 1WkbRd-0001em-0w
-	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 17:50:13 +0200
-Received: by mail-wg0-f64.google.com with SMTP id m15sf198566wgh.29
-        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 08:50:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:mime-version:organization
-         :user-agent:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=Ur5EkUNzpvTrjmhC0ZhaDi1FsX2ZrcZQ6JlWWv8OMEU=;
-        b=xUosfHZy+RiMJqxU27HBB2S0gl6Bam5NoCRbLd2kfWKYTlySqm+rzz8b9+18t23Uco
-         rhBpRQ1S6xLw64oqRl+smQ4Crl9FCgbns7qHE7N/I2Rbb4BKi0PG3fvd3KfmelZARpxY
-         eBxoMEgSbGN5Dc+i8R0XmqGfW+HoZOpFXtQF6ZI1U/rwjAKkklT5y4p4wttqnmjw6nKt
-         3mIcj0xJ++DCDYV1M7H0MLrS2VPFELD9dKAlMwIvRg9MFZmXz16EoF8DU9sAMM8GXt0l
-         KNTWBwadQWSX8UwZVjMzMKVJuOsG0CFEcYP+e90LqXpZa4+iD84+NEhn6a9qMXHCGrRu
-         PJ5w==
-X-Received: by 10.152.2.228 with SMTP id 4mr15072lax.37.1400082612718;
-        Wed, 14 May 2014 08:50:12 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.153.6.12 with SMTP id cq12ls128052lad.86.gmail; Wed, 14 May
- 2014 08:50:11 -0700 (PDT)
-X-Received: by 10.152.36.226 with SMTP id t2mr432422laj.1.1400082611714;
-        Wed, 14 May 2014 08:50:11 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id u49si773218eeo.1.2014.05.14.08.50.11
-        for <msysgit@googlegroups.com>;
-        Wed, 14 May 2014 08:50:11 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 6BEE61C0089;
-	Wed, 14 May 2014 17:50:11 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s4EFoBqR004598;
-	Wed, 14 May 2014 17:50:11 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s4EFoA7v004597;
-	Wed, 14 May 2014 17:50:11 +0200
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WkbUi-0000d2-9z
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 17:53:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754595AbaENPxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 11:53:20 -0400
+Received: from josefsipek.net ([64.9.206.49]:1644 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751554AbaENPxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 11:53:19 -0400
+Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
+	by josefsipek.net (Postfix) with ESMTPSA id C993255654;
+	Wed, 14 May 2014 11:53:17 -0400 (EDT)
 Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248922>
+In-Reply-To: <1400013065-27919-29-git-send-email-cederp@opera.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248923>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Tue, 8 Feb 2011 00:17:24 -0600
+On Tue, May 13, 2014 at 10:31:04PM +0200, Per Cederqvist wrote:
+> When the option is true (the default), Guilt does not create a new Git
+> branch when patches are applied.  This way, you can switch between
+> Guilt 0.35 and the current version of Guilt with no issues.
+> 
+> At a future time, maybe a year after Guilt with guilt.reusebranch
+> support is released, the default should be changed to "false" to take
+> advantage of the ability to use a separate Git branch when patches are
+> applied.
+> 
+> Signed-off-by: Per Cederqvist <cederp@opera.com>
+> ---
+>  guilt                |  28 +++-
+>  regression/scaffold  |   1 +
+>  regression/t-062.out | 441 +++++++++++++++++++++++++++++++++++++++++++++++++++
+>  regression/t-062.sh  | 137 ++++++++++++++++
+>  4 files changed, 601 insertions(+), 6 deletions(-)
+>  create mode 100644 regression/t-062.out
+>  create mode 100755 regression/t-062.sh
+...
+> diff --git a/guilt b/guilt
+> index 9947acc..7c830eb 100755
+> --- a/guilt
+> +++ b/guilt
+...
+> @@ -928,13 +935,22 @@ else
+>  	die "Unsupported operating system: $UNAME_S"
+>  fi
+>  
+> -if [ "$branch" = "$raw_git_branch" ] && [ -n "`get_top 2>/dev/null`" ]
+> -then
+> -    # This is for compat with old repositories that still have a
+> -    # pushed patch without the new-style branch prefix.
+> -    old_style_prefix=true
+> +if [ -n "`get_top 2>/dev/null`" ]; then
+> +	# If there is at least one pushed patch, we set
+> +	# old_style_prefix according to how it was pushed.  It is only
+> +	# possible to change the prefix style while no patches are
+> +	# applied.
+> +	if [ "$branch" = "$raw_git_branch" ]; then
+> +		old_style_prefix=true
+> +	else
+> +		old_style_prefix=false
+> +	fi
+>  else
+> -    old_style_prefix=false
+> +	if $reuse_branch; then
+> +		old_style_prefix=true
+> +	else
+> +		old_style_prefix=false
+> +	fi
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
-Hi,
-this patch has been in msysgit for 3 1/4 years.
-  Stepan
+I don't know if this is a good idea or not, but:
 
- builtin/grep.c | 3 +++
- 1 file changed, 3 insertions(+)
+	old_style_prefix="$reuse_branch"
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 8073fbe..6c82a29 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -897,6 +897,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		if (len > 4 && is_dir_sep(pager[len - 5]))
- 			pager += len - 4;
- 
-+		if (opt.ignore_case && !strcmp("less", pager))
-+			string_list_append(&path_list, "-i");
-+
- 		if (!strcmp("less", pager) || !strcmp("vi", pager)) {
- 			struct strbuf buf = STRBUF_INIT;
- 			strbuf_addf(&buf, "+/%s%s",
+>  fi
+>  
+>  _main "$@"
+> diff --git a/regression/scaffold b/regression/scaffold
+> index e4d7487..e4d2f35 100644
+> --- a/regression/scaffold
+> +++ b/regression/scaffold
+> @@ -93,6 +93,7 @@ function setup_git_repo
+>  	git config log.date default
+>  	git config log.decorate no
+>  	git config guilt.diffstat false
+> +	git config guilt.reusebranch false
+>  }
+>  
+>  function setup_guilt_repo
+...
+> diff --git a/regression/t-062.sh b/regression/t-062.sh
+> new file mode 100755
+> index 0000000..85596ca
+> --- /dev/null
+> +++ b/regression/t-062.sh
+> @@ -0,0 +1,137 @@
+...
+> +function fixup_time_info
+> +{
+> +	touch -a -m -t "$TOUCH_DATE" ".git/patches/master/$1"
+> +}
+> +
+> +cmd setup_repo
+> +
+> +cmd git config guilt.reusebranch true
+> +
+> +cmd guilt push -a
+> +cmd list_files
+> +cmd git for-each-ref
+> +
+> +cmd git for-each-ref
+> +
+> +cmd list_files
+
+duplicate list_files & for-each-ref
+
+> +
+> +for i in `seq 5`; do
+> +	if [ $i -ge 5 ]; then
+> +		shouldfail guilt pop
+> +	else
+> +		cmd guilt pop
+> +	fi
+> +	cmd git for-each-ref
+> +	cmd guilt push
+> +	cmd git for-each-ref
+> +	cmd guilt pop
+> +	cmd git for-each-ref
+> +done
+> +
+> +# Check that "pop -a" does the right thing.
+
+What exactly is the right thing?  no-op since the above loop poped
+everything?  (I'd make the comment say what the "right thing" is.)
+
+Jeff.
+
 -- 
-1.9.2.msysgit.0.335.gd2a461f
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like
+that.
+		- Linus Torvalds
