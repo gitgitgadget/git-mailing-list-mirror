@@ -1,129 +1,165 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 2/2] wincred: avoid overwriting configured variables
-Date: Wed, 14 May 2014 10:49:27 +0200
-Message-ID: <CABPQNSYcWrK08Gx=eXWWYLmezx-hLQgrgGyGnuZ4nxVqh=UAnQ@mail.gmail.com>
-References: <20140430064610.GA22094@camelia.ucw.cz> <CABPQNSZsviaGqFeKZE4ofF6HoUQrPvNPuowar4YDjk_Mbu5iCQ@mail.gmail.com>
- <20140430112724.GA22929@camelia.ucw.cz> <CABPQNSafKXDLyBj5OYW-PPWdxfxQtC23vKQsQ-_Pa1empU=n8g@mail.gmail.com>
- <20140513055953.GA28182@camelia.ucw.cz> <20140513060144.GC28182@camelia.ucw.cz>
- <CABPQNSYU5haMzdy2cDn=KF2+j_aFK19Ju+x+LTeex6JqWJMncQ@mail.gmail.com>
- <20140513065335.GA28417@camelia.ucw.cz> <CABPQNSbb-rdTjCDYoC7uApfcMH8Q0Y-w4Tm9UiN6PhEeD-Gv6Q@mail.gmail.com>
- <20140514084509.GA3134@camelia.ucw.cz>
-Reply-To: kusmabite@gmail.com
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: [GUILT v2 16/29] Fix backslash handling when creating names of
+ imported patches.
+Date: Wed, 14 May 2014 10:56:18 +0200
+Message-ID: <CAP=KgsQMRZymUnojGqyZPdKsepfmHvuyUhAkWqrZ_GnybgMqxA@mail.gmail.com>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+	<1400013065-27919-17-git-send-email-cederp@opera.com>
+	<20140513220957.GN4791@meili.valhalla.31bits.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>, Pat Thoyts <patthoyts@users.sourceforge.net>, 
-	msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBDR53PPJ7YHRBP64ZSNQKGQEXDKYLDI@googlegroups.com Wed May 14 10:50:09 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRBP64ZSNQKGQEXDKYLDI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ig0-f184.google.com ([209.85.213.184])
+Cc: Git List <git@vger.kernel.org>
+To: Jeff Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Wed May 14 10:56:29 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBP64ZSNQKGQEXDKYLDI@googlegroups.com>)
-	id 1WkUt7-0006yC-Gr
-	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 10:50:09 +0200
-Received: by mail-ig0-f184.google.com with SMTP id r2sf147171igi.11
-        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 01:50:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=XdTM+aJgEy1b+2oHj41cHmCULWON2nJJSz04MXrdoAk=;
-        b=GZ0P4S8l29ooEiYM/MAoHygp5mQ1DnPeguhbi9UDIXZKyXQoAbM1j57zOkCe4+D0k7
-         6GAVww0E93bat4TnDcCITFxPGGKD9s1td8QPBwfLNNkxmYvUMgTB/uHPhiU9Ji9xckN/
-         UUJOe4Je+RpjE+Nq6q/2NxOa3A5xZqINjitXSHxtwGiZm70a1fMPj67DSZhpoeTH8WP5
-         5icn10FxE5OghKsans+Ow4D1vX+XeT1LQ/fymlSlpMqz0/w4sjC6KEhHRQ1vxQx0U2ct
-         i2nzBbJVpcmSa1doOj674/tNmxr1oor38GEtBUo7l5Yyw3P/liLqOIx6dV8vNBiIzo8i
-         hnow==
-X-Received: by 10.50.108.6 with SMTP id hg6mr796155igb.9.1400057408409;
-        Wed, 14 May 2014 01:50:08 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.43.225 with SMTP id z1ls2691482igl.43.gmail; Wed, 14 May
- 2014 01:50:07 -0700 (PDT)
-X-Received: by 10.66.173.75 with SMTP id bi11mr1205083pac.4.1400057407772;
-        Wed, 14 May 2014 01:50:07 -0700 (PDT)
-Received: from mail-ie0-x22e.google.com (mail-ie0-x22e.google.com [2607:f8b0:4001:c03::22e])
-        by gmr-mx.google.com with ESMTPS id jj2si1184394igb.3.2014.05.14.01.50.07
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 14 May 2014 01:50:07 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::22e as permitted sender) client-ip=2607:f8b0:4001:c03::22e;
-Received: by mail-ie0-x22e.google.com with SMTP id at1so1538337iec.19
-        for <msysgit@googlegroups.com>; Wed, 14 May 2014 01:50:07 -0700 (PDT)
-X-Received: by 10.42.161.69 with SMTP id s5mr1147965icx.70.1400057407671; Wed,
- 14 May 2014 01:50:07 -0700 (PDT)
-Received: by 10.64.166.135 with HTTP; Wed, 14 May 2014 01:49:27 -0700 (PDT)
-In-Reply-To: <20140514084509.GA3134@camelia.ucw.cz>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::22e
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248899>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WkUzB-0004N3-BU
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 10:56:25 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752948AbaENI4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 04:56:21 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:59626 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751320AbaENI4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 04:56:19 -0400
+Received: by mail-ie0-f178.google.com with SMTP id rd18so1505098iec.23
+        for <git@vger.kernel.org>; Wed, 14 May 2014 01:56:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=VAczJsJFteiFeoW+qOH0S88dvzIHAb4WXDLgoiwUWYM=;
+        b=EAFZNobZJ21gkPWQw4gR32qTiWlI6rTqjV0xs5nkeOqQFMPylVCSc/PfKTvEhvKG/6
+         Ud5r0YMZKWZxph2+TBEWxzm+XGs/OUyBmSOX3ZqwL5JcmFe2U8TFWGDCzrlaDQyYRjiu
+         kRfpuVryn2mAA0cLmxy2HikzEf1x/WREuJr4wjg0pPlwu9upkiZFhv9pZXhfpU1dID8P
+         KvAYjB7oy+h1dcI002resbn8hqoqWTnCiHMv05lXZlyJCQ4AuqNu2Pk6VxR5YrbxLXic
+         1MYooKiZuwGFv3ybu/w6+ozmlx84OzEP9ei7hv4E5AN3t/z0fa/Z1OmYf+qx39JoPmBy
+         EX6A==
+X-Gm-Message-State: ALoCoQnM76rXJFTNqRqk1E0vopjlOsMesMFHVm0XrM+LP8JXwlOmQ3TwibWeNrEYzdGUKJaWK/4B
+X-Received: by 10.50.79.161 with SMTP id k1mr3224889igx.31.1400057778207; Wed,
+ 14 May 2014 01:56:18 -0700 (PDT)
+Received: by 10.43.89.66 with HTTP; Wed, 14 May 2014 01:56:18 -0700 (PDT)
+In-Reply-To: <20140513220957.GN4791@meili.valhalla.31bits.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248900>
 
-On Wed, May 14, 2014 at 10:45 AM, Stepan Kasal <kasal@ucw.cz> wrote:
-> Hello kusma,
+On Wed, May 14, 2014 at 12:09 AM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> On Tue, May 13, 2014 at 10:30:52PM +0200, Per Cederqvist wrote:
+>> The 'echo %s' construct sometimes processes escape sequences.  (This
 >
-> On Tue, May 13, 2014 at 08:56:54AM +0200, Erik Faye-Lund wrote:
->> > --- a/contrib/credential/wincred/Makefile
->> > +++ b/contrib/credential/wincred/Makefile
->> > @@ -1,12 +1,12 @@
->> >  all: git-credential-wincred.exe
->> >
->> > -CC = gcc
->> > -RM = rm -f
->> > -CFLAGS = -O2 -Wall
->> > -
->> >  -include ../../../config.mak.autogen
->> >  -include ../../../config.mak
->> >
->> > +CC ?= gcc
->> > +RM ?= rm -f
->> > +CFLAGS ?= -O2 -Wall
->> > +
->> >  prefix ?= /usr/local
->> >  libexecdir ?= $(prefix)/libexec/git-core
->> >
+> %s?  Should this be $s?
+
+Yes. Will fix that typo in v3 of the patch series.
+
+    /ceder
+
+> Otherwise, looks good.
+>
+>> happens, for instance, under Ubuntu 14.04 when /bin/sh is actually
+>> dash.)  We don't want that to happen when we are importing commits, so
+>> use 'printf %s "$s"' instead.
 >>
->> Yeah, looks good to me.
+>> (The -E option of bash that explicitly disables backslash expansion is
+>> not portable; it is not supported by dash.)
+>>
+>> Signed-off-by: Per Cederqvist <cederp@opera.com>
+>> ---
+>>  guilt-import-commit  |  2 +-
+>>  regression/t-034.out | 14 +++++++-------
+>>  2 files changed, 8 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/guilt-import-commit b/guilt-import-commit
+>> index 6260c56..45f2404 100755
+>> --- a/guilt-import-commit
+>> +++ b/guilt-import-commit
+>> @@ -30,7 +30,7 @@ for rev in `git rev-list $rhash`; do
+>>
+>>       # Try to convert the first line of the commit message to a
+>>       # valid patch name.
+>> -     fname=`echo $s | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
+>> +     fname=`printf %s "$s" | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
+>>                       -e "s/['\\[{}]//g" -e 's/]//g' -e 's/\*/-/g' \
+>>                       -e 's/\?/-/g' -e 's/\.\.\.*/./g' -e 's/^\.//' \
+>>                       -e 's/\.patch$//' -e 's/\.$//' | tr A-Z a-z`
+>> diff --git a/regression/t-034.out b/regression/t-034.out
+>> index 7bc9459..bda4399 100644
+>> --- a/regression/t-034.out
+>> +++ b/regression/t-034.out
+>> @@ -236,7 +236,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
+>>  About to begin conversion...
+>>  Current head: 2a8b1889aa5066193bac978e6bf5073ffcfa6541
+>>  Converting 2a8b1889 as can-have-embedded-single-slashes
+>> -Converting 0a46f8fa as backslash-isorbidden
+>> +Converting 0a46f8fa as backslash-is-forbidden
+>>  Converting aedb74fd as x
+>>  Converting 30187ed0 as cannot@have@the@sequence@at-brace
+>>  Converting 106e8e5a as cannot_end_in_
+>> @@ -300,7 +300,7 @@ Applying patch..cannot@have@the@sequence@at-brace.patch
+>>  Patch applied.
+>>  Applying patch..x.patch
+>>  Patch applied.
+>> -Applying patch..backslash-isorbidden.patch
+>> +Applying patch..backslash-is-forbidden.patch
+>>  Patch applied.
+>>  Applying patch..can-have-embedded-single-slashes.patch
+>>  Patch applied.
+>> @@ -311,7 +311,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
+>>
+>>      Can/have/embedded/single/slashes
+>>
+>> -commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-isorbidden.patch)
+>> +commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-is-forbidden.patch)
+>>  Author: Author Name <author@email>
+>>  Date:   Mon Jan 1 00:00:00 2007 +0000
+>>
+>> @@ -518,8 +518,6 @@ d .git/patches/master
+>>  d .git/refs/patches
+>>  d .git/refs/patches/master
+>>  f 06beca7069b9e576bd431f65d13862ed5d3e2a0f  .git/patches/master/ctrlisforbidden.patch
+>> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/series
+>> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/status
+>>  f 09b7e9be44ae5ec3a4bb30f5ee9d4ebc2c042f64  .git/patches/master/two_consecutive_dots_(.)_is_forbidden.patch
+>>  f 0b971c9a17aeca2319c93d700ffd98acc2a93451  .git/patches/master/question-mark-is-forbidden.patch
+>>  f 2b8392f63d61efc12add554555adae30883993cc  .git/patches/master/cannot-end-in-slash-.patch
+>> @@ -529,7 +527,7 @@ f 34e07c584032df137f19bdb66d93f316f00a5ac8  .git/patches/master/tildeisforbidden
+>>  f 49bab499826b63deb2bd704629d60c7268c57aee  .git/patches/master/the_sequence_-._is_forbidden.patch
+>>  f 5bcddb8ccb6e6e5e8a61e9e56cb2e0f70cbab2f5  .git/patches/master/cannot@have@the@sequence@at-brace.patch
+>>  f 637b982fe14a240de181ae63226b27e0c406b3dc  .git/patches/master/asterisk-is-forbidden.patch
+>> -f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-isorbidden.patch
+>> +f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-is-forbidden.patch
+>>  f 7b103c3c7ae298cd2334f6f49da48bae1424f77b  .git/patches/master/crisalsoforbidden.patch
+>>  f 9b810b8c63779c51d2e7f61ab59cd49835041563  .git/patches/master/x.patch
+>>  f a22958d9ae9976fd7b2b5a9d0bcd44bf7ad9b08a  .git/patches/master/caretisforbidden.patch
+>> @@ -537,6 +535,8 @@ f ab325bf5a432937fc6f231d3e8a773a62d53952b  .git/patches/master/multiple-slashes
+>>  f cb9cffbd4465bddee266c20ccebd14eb687eaa89  .git/patches/master/delisforbidden.patch
+>>  f d0885a1a1fdee0fd1e4fedce3f7acd3100540bc4  .git/patches/master/openbracketisforbidden.patch
+>>  f d2903523fb66a346596eabbdd1bda4e52b266440  .git/patches/master/check-multiple-.-dots-.-foo.patch
+>> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/series
+>> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/status
+>>  f dfc11f76394059909671af036598c5fbe33001ba  .git/patches/master/space_is_forbidden.patch
+>>  f e47474c52d6c893f36d0457f885a6dd1267742bb  .git/patches/master/colon_is_forbidden.patch
+>>  f e7a5f8912592d9891e6159f5827c8b4f372cc406  .git/patches/master/the_sequence_.lock-_is_forbidden.patch
+>> @@ -548,7 +548,7 @@ r 1626a11d979a1e9e775c766484172212277153df  .git/refs/patches/master/asterisk-is
+>>  r 3a0d5ccef0359004fcaa9cee98fbd6a2c4432e74  .git/refs/patches/master/tildeisforbidden.patch
+>>  r 434e07cacdd8e7eb4723e67cb2d100b3a4121a3a  .git/refs/patches/master/can-have-embedded-single-slashes.patch
+>>  r 74df14ab3a0ec9a0382998fbf167ebb1b0a36c6a  .git/refs/patches/master/question-mark-is-forbidden.patch
+>> -r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-isorbidden.patch
+>> +r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-is-forbidden.patch
+>>  r 96a3e92c4df85f52362ce4f6d31983c462db9ae9  .git/refs/patches/master/a-component-may-not-end-in-foolock.patch
+>>  r 9fc9677b61880f9159838e89f714893e0a2fcafb  .git/refs/patches/master/delisforbidden.patch
+>>  r a275ed5d7f10ea88c986852ee95a7d5a61663b5f  .git/refs/patches/master/cannot@have@the@sequence@at-brace.patch
+>> --
+>> 1.8.3.1
+>>
 >
-> thanks, but it looks you replied only to my personal mail.  Was it
-> intentional?
-
-No, sorry about that.
-
-Consider the patches
-
-Acked-by: Erik Faye-Lund <kusmabite@gmail.com>
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> --
+> I have always wished for my computer to be as easy to use as my telephone;
+> my wish has come true because I can no longer figure out how to use my
+> telephone.
+>                 - Bjarne Stroustrup
