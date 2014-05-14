@@ -1,131 +1,151 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] grep -I: do not bother to read known-binary files
-Date: Wed, 14 May 2014 14:15:42 -0700
-Message-ID: <xmqqy4y4hxj5.fsf@gitster.dls.corp.google.com>
-References: <20140514154419.GA4517@camelia.ucw.cz>
-	<20140514194128.GC2715@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Stepan Kasal <kasal@ucw.cz>,  GIT Mailing-list <git@vger.kernel.org>,  Johannes Schindelin <johannes.schindelin@gmx.de>,  msysGit <msysgit@googlegroups.com>
-To: Jeff King <peff@peff.net>
-X-From: msysgit+bncBCG77UMM3EJRBDF2Z6NQKGQEGMNYTSY@googlegroups.com Wed May 14 23:15:59 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBDF2Z6NQKGQEGMNYTSY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ie0-f183.google.com ([209.85.223.183])
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v7 10/42] refs.c: ref_transaction_delete to check for error and return status
+Date: Wed, 14 May 2014 14:16:44 -0700
+Message-ID: <1400102236-30082-11-git-send-email-sahlberg@google.com>
+References: <1400102236-30082-1-git-send-email-sahlberg@google.com>
+Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 14 23:17:36 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBDF2Z6NQKGQEGMNYTSY@googlegroups.com>)
-	id 1WkgWr-0000EI-VH
-	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 23:15:58 +0200
-Received: by mail-ie0-f183.google.com with SMTP id as1sf22528iec.0
-        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 14:15:57 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WkgYM-0002Gl-61
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:17:30 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753061AbaENVR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 17:17:26 -0400
+Received: from mail-pb0-f73.google.com ([209.85.160.73]:35318 "EHLO
+	mail-pb0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752967AbaENVRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 17:17:23 -0400
+Received: by mail-pb0-f73.google.com with SMTP id ma3so37080pbc.0
+        for <git@vger.kernel.org>; Wed, 14 May 2014 14:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=CuhtoL62g47+H+D7git7iCSaGqyv9n5XbDKG5jnUARI=;
-        b=yfaw4pyMEcvEzjal414xOj1fKmxPFEmBucFkOHEmjv6UB73jiWzXNUp75WC9GOPk0o
-         aTpnF0lJuUBZc7smw3QyGHo2BVzMch1BYaksia8NWVFiRzgSlcRps7620LwxetVJGjdg
-         yQ1D080o90nnABfX7TtfjVreMsB/LDDFC0sCPhq0vvTVU7Vbncs+MA52vTAfT9ZY8wwt
-         eK+7FeLsm928J7os/OdOfqht1y/YyA8rtQ0961YKbelR+NeTy7mgTrYxKeocT17wJsIl
-         ZtcTb3dqh2OniN0HqGvitOl6VZiOtQorIWiAHlUtSy/rppFw1vL+EebtC2tosbzRgX3r
-         L+oQ==
-X-Received: by 10.50.103.10 with SMTP id fs10mr193816igb.12.1400102156981;
-        Wed, 14 May 2014 14:15:56 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.25.70 with SMTP id a6ls3599635igg.42.canary; Wed, 14 May
- 2014 14:15:56 -0700 (PDT)
-X-Received: by 10.66.163.33 with SMTP id yf1mr382073pab.19.1400102156172;
-        Wed, 14 May 2014 14:15:56 -0700 (PDT)
-Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id h5si430324qce.1.2014.05.14.14.15.56
-        for <msysgit@googlegroups.com>;
-        Wed, 14 May 2014 14:15:56 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DE1EA18B84;
-	Wed, 14 May 2014 17:15:55 -0400 (EDT)
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D304B18B83;
-	Wed, 14 May 2014 17:15:55 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 71D6418B4F;
-	Wed, 14 May 2014 17:15:44 -0400 (EDT)
-In-Reply-To: <20140514194128.GC2715@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 14 May 2014 15:41:29 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E9374A0E-DBAC-11E3-A1D1-DDB853EDF712-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248953>
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=J/h1aGdkSq0uVZZRuhgkCFMENxwsskt9gaZdICJBxzY=;
+        b=Oj2CYBkSuX870w7TLNNSH/7/qH1iRynJSWX8kWENIGEIX/2G4CzJ5Tvta1ebzaWNNJ
+         axe5HOjicFhy2/2K0BKI+/IO2MRQw0AdnEP7IBn/tvWbD1NNAQona51cd+DmzS8zoEuw
+         5GmSV7V6koHNbNCxNSzzJTcuEVG58GjYxveYTgnLtHqtoXMDQebSSbuPvtmS7qFqgPCm
+         XgmslcM9Lo/lYiw1bfKLflysKZgwNzJCcqBBkmP+LZBM3qWJ4gCjoLKbnnLv7v966mET
+         2iwXwhWo4/2j6ifMis7kJ7LSpPzDEwMG66eeo/SMHK7kGY+pMkPCG0F50S6jaFDxX4ol
+         QeLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=J/h1aGdkSq0uVZZRuhgkCFMENxwsskt9gaZdICJBxzY=;
+        b=SgLUOkjF6CtWifRk1M+yLuUjY6GUYPqfIZjIfKtwt3tiIOCQivN+fwnXMPuj9Vhfpc
+         MNRuM8Z2kCJYj8qKCZfatNcXHIxnd3Mg4R6H0Inn4A8zKKQcQFxiJctgLsli00VLbi2K
+         SgOThYejB/m/ilTzyrY9sF5Uc8qVJAeFx5UDxZRv5vsR3kkDj8U3TBHeao259HGwhwyb
+         mvfHNPWC88yXoZp8Raz01anNJ80iIsvFdYuSfyjBFx0P8Rtm9iUvtaAo/yEawLcoBY5B
+         DSaUGFYDs20Y795wsy5OBxqB1/GMGe5wDqRde6yg15ubL0EXA9EkQKWG3Ry5UXH42GQG
+         WioQ==
+X-Gm-Message-State: ALoCoQkca+Qw6FUr+xNSwO4PMwFImvliQE6sNcADPsYY/o0jNslMork7eI/1c+IPuIDAMebv7FDj
+X-Received: by 10.66.169.231 with SMTP id ah7mr3164840pac.40.1400102243332;
+        Wed, 14 May 2014 14:17:23 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id k43si145552yhq.3.2014.05.14.14.17.23
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 14 May 2014 14:17:23 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 2A8415A4292;
+	Wed, 14 May 2014 14:17:23 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id DA3A0E0CB6; Wed, 14 May 2014 14:17:22 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.rc3.471.g2055d11.dirty
+In-Reply-To: <1400102236-30082-1-git-send-email-sahlberg@google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248954>
 
-Jeff King <peff@peff.net> writes:
+Change ref_transaction_delete() to do basic error checking and return
+non-zero of error. Update all callers to check the return for
+ref_transaction_delete(). There are currently no conditions in _delete that
+will return error but there will be in the future.
 
-> On Wed, May 14, 2014 at 05:44:19PM +0200, Stepan Kasal wrote:
->
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->> Date: Mon, 8 Nov 2010 16:10:43 +0100
->> 
->> Incidentally, this makes grep -I respect the "binary" attribute (actually,
->> the "-text" attribute, but "binary" implies that).
->> 
->> Since the attributes are not thread-safe, we now need to switch off
->> threading if -I was passed.
->> 
->> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
->> ---
->> 
->> Hi,
->> this patch has been in msysgit for 3.5 years.
->> Stepan
->
-> Hrm. Is this patch still necessary? In the time since this patch was
-> written, we did 0826579 (grep: load file data after checking
-> binary-ness, 2012-02-02), which should do the same thing. It deals with
-> the threading via a lock, but we later learned in 9dd5245 (grep:
-> pre-load userdiff drivers when threaded, 2012-02-02) to hoist that bit
-> out.
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ builtin/update-ref.c |  5 +++--
+ refs.c               | 15 ++++++++++-----
+ refs.h               |  9 +++++----
+ 3 files changed, 18 insertions(+), 11 deletions(-)
 
-Wow, power of Git history ;-)
-
-> So I suspect this patch at best is doing nothing, and at worst is
-> wasting extra time doing redundant attribute checks.
-
-Sounds like a sensible conclusion.  Thanks.
-
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 3fab810..fc3512f 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -257,8 +257,9 @@ static const char *parse_cmd_delete(struct strbuf *input, const char *next)
+ 	if (*next != line_termination)
+ 		die("delete %s: extra input: %s", refname, next);
+ 
+-	ref_transaction_delete(transaction, refname, old_sha1,
+-			       update_flags, have_old);
++	if (ref_transaction_delete(transaction, refname, old_sha1,
++				   update_flags, have_old))
++		die("failed transaction delete for %s", refname);
+ 
+ 	update_flags = 0;
+ 	free(refname);
+diff --git a/refs.c b/refs.c
+index df376fa..64e3d53 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3381,19 +3381,24 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ 	return 0;
+ }
+ 
+-void ref_transaction_delete(struct ref_transaction *transaction,
+-			    const char *refname,
+-			    const unsigned char *old_sha1,
+-			    int flags, int have_old)
++int ref_transaction_delete(struct ref_transaction *transaction,
++			   const char *refname,
++			   const unsigned char *old_sha1,
++			   int flags, int have_old)
+ {
+-	struct ref_update *update = add_update(transaction, refname);
++	struct ref_update *update;
+ 
++	if (have_old && !old_sha1)
++		die("have_old is true but old_sha1 is NULL");
++
++	update = add_update(transaction, refname);
+ 	update->flags = flags;
+ 	update->have_old = have_old;
+ 	if (have_old) {
+ 		assert(!is_null_sha1(old_sha1));
+ 		hashcpy(update->old_sha1, old_sha1);
+ 	}
++	return 0;
+ }
+ 
+ int update_ref(const char *action, const char *refname,
+diff --git a/refs.h b/refs.h
+index d4c068d..6026edf 100644
+--- a/refs.h
++++ b/refs.h
+@@ -266,11 +266,12 @@ int ref_transaction_create(struct ref_transaction *transaction,
+  * Add a reference deletion to transaction.  If have_old is true, then
+  * old_sha1 holds the value that the reference should have had before
+  * the update (which must not be the null SHA-1).
++ * Function returns 0 on success and non-zero on failure.
+  */
+-void ref_transaction_delete(struct ref_transaction *transaction,
+-			    const char *refname,
+-			    const unsigned char *old_sha1,
+-			    int flags, int have_old);
++int ref_transaction_delete(struct ref_transaction *transaction,
++			   const char *refname,
++			   const unsigned char *old_sha1,
++			   int flags, int have_old);
+ 
+ /*
+  * Commit all of the changes that have been queued in transaction, as
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+2.0.0.rc3.471.g2055d11.dirty
