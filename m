@@ -1,58 +1,53 @@
-From: Chris Packham <judge.packham@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
 Subject: Re: [GIT GUI PATCH] git-gui: use vcompare when comparing the git
  version
-Date: Wed, 14 May 2014 19:46:16 +1200
-Message-ID: <53731F48.1000801@gmail.com>
+Date: Wed, 14 May 2014 09:49:33 +0200
+Message-ID: <5373200D.7020108@web.de>
 References: <CAFOYHZBPLZhVuf=bO0hPcUH2_0WXFSqk=_CqoUWBRixQc0L==Q@mail.gmail.com>	<CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com> <871tw7xg3o.fsf@fox.patthoyts.tk> <5369E0A3.4040701@gmail.com> <5369E58D.4030908@gmail.com> <53728D70.4020506@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: GIT <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>, patthoyts@users.sourceforge.net
-X-From: git-owner@vger.kernel.org Wed May 14 09:46:31 2014
+Cc: Chris Packham <judge.packham@gmail.com>,
+	patthoyts@users.sourceforge.net, GIT <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 14 09:49:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkTtT-00023k-4z
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 09:46:27 +0200
+	id 1WkTwo-0001Uw-JF
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 09:49:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143AbaENHqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 03:46:23 -0400
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:44921 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460AbaENHqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 03:46:22 -0400
-Received: by mail-pb0-f47.google.com with SMTP id rp16so58442pbb.34
-        for <git@vger.kernel.org>; Wed, 14 May 2014 00:46:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=B97L2+ncjnXeqgco0NeqQEicEGv7u7egwJOgjrKGJYQ=;
-        b=Av17R30XNeJQtdc3p3xkuLYZaCJ+UjUEQcxPZ9+iTAYRw+niiqFgpplnSYydGM5b+u
-         e0dJ+0dgtHngc4YBl+pNXkFGOBDjwlM1u5kvIO8bkGLky5VCyVFcmPwfAfg4h90ilmvQ
-         SWQyls/ycnWn9dYxz9eZvvJ1WKI87Xw6Ip3ph4cXJOiTpGHw0r3NS9ydZvUZgRkamXJA
-         +HexEi+WOgcPEVaCi6wB0XcEIxLCzHXFuvhU5ywUnyeJtl+i6SjVo1jzqMK+TWwYLiR+
-         CoJRAUUshZ/yBCOSCmd6jv6BnbEjYPC6xN06yJLaRo2zQyZBcmwf1CDpLMPF3GDGisj5
-         oH2Q==
-X-Received: by 10.69.26.103 with SMTP id ix7mr2363041pbd.41.1400053581688;
-        Wed, 14 May 2014 00:46:21 -0700 (PDT)
-Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id ha3sm1932824pbc.5.2014.05.14.00.46.18
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 14 May 2014 00:46:20 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+	id S1752836AbaENHtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 03:49:51 -0400
+Received: from mout.web.de ([212.227.15.14]:58458 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750781AbaENHtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 03:49:49 -0400
+Received: from [192.168.178.41] ([84.132.184.45]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MSrYf-1WKwsx1Wj7-00RtW1; Wed, 14 May 2014 09:49:38
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
 In-Reply-To: <53728D70.4020506@web.de>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:ldLZH7wMzlx6BhFssZiTbXxpcZeTwharLC6Ldsy6kl8CSlJreg/
+ AcODvMQCnCBzXiyKd1oWipG+vuJlPKgwGCtiY1C7zxuS7ORQU8Qa5G/utxh8ZwHYqD6w0xD
+ 8MCOHytxTX/L5kz3DWbgqOglxFM97ETgoYGTGcq44CN4fhQMG1jXJFkMSW1ZLX0XiJXCFu1
+ T9SDMTd9K3ixBafQAKwhQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248896>
 
-On 14/05/14 09:24, Jens Lehmann wrote:
+Junio, I believe this issue needs to be fixed before 2.0 final. Otherwise
+git gui will not work inside submodules anymore due to the major version
+number change from 1 to 2. I'd like to hear Pat's opinion on this; even
+though I think my patch is less risky (as it doesn't change behavior for
+pre-2 versions), he might like Chris' proposal better.
+
+Am 13.05.2014 23:24, schrieb Jens Lehmann:
 > Since git 2.0.0 starting git gui in a submodule using a gitfile fails with
 > the following error:
 > 
@@ -73,28 +68,11 @@ On 14/05/14 09:24, Jens Lehmann wrote:
 > places where the Tk version is checked). This is done for both the place
 > that caused the reported bug and another spot where the git version is
 > tested for another feature.
->
+> 
 > Reported-by: Chris Packham <judge.packham@gmail.com>
 > Reported-by: Yann Dirson <ydirson@free.fr>
 > Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 > ---
-
-Looks good to me (refer to previous comment about being rusty with tcl).
-More importantly
-
- Tested-by: Chris Packham <judge.packham@gmail.com>
-
-There is the alternative I posted which just does away with the version
-checks (actually that only addressed one of the vcompare call sites).
-
-There are also these checks that I guess are correct (if not
-inconsistent) but again who is still using git 1.5.3?
-
-git-gui.sh:1098:        >= 1.5.3 {
-lib/blame.tcl:800:                      if {[git-version >= 1.5.3]} {
-lib/blame.tcl:849:      if {[git-version >= 1.5.3]} {
-lib/checkout_op.tcl:513:        >= 1.5.3 {
-
 > 
 > Am 07.05.2014 09:49, schrieb Chris Packham:
 >> On 07/05/14 19:28, Chris Packham wrote:
