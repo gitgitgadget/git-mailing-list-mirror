@@ -1,83 +1,66 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] contrib: remote-helpers: add move warnings (v2.0)
-Date: Tue, 13 May 2014 18:37:58 -0500
-Message-ID: <5372acd699145_7e25141b300bb@nysa.notmuch>
-References: <1400016596-13178-1-git-send-email-felipe.contreras@gmail.com>
- <xmqq7g5pmj5r.fsf@gitster.dls.corp.google.com>
- <53729b2150a84_34aa9e5304e0@nysa.notmuch>
- <CAL=YDW=jCEtfEmvO-173jpJB0f3mJ2+efihprVw+MpVjxyyExQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v6 04/42] refs.c: make ref_update_reject_duplicates take
+ a strbuf argument for errors
+Date: Tue, 13 May 2014 17:04:02 -0700
+Message-ID: <20140514000402.GZ9218@google.com>
+References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
+ <1398976662-6962-5-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Ronnie Sahlberg <sahlberg@google.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 01:49:09 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed May 14 02:04:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkMRY-0001i8-GQ
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 01:49:08 +0200
+	id 1WkMg8-0001MT-Qk
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 02:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755296AbaEMXtD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 19:49:03 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:54706 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754910AbaEMXsz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 19:48:55 -0400
-Received: by mail-ob0-f171.google.com with SMTP id wn1so1275847obc.2
-        for <git@vger.kernel.org>; Tue, 13 May 2014 16:48:55 -0700 (PDT)
+	id S1751883AbaENAEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 20:04:09 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:39647 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169AbaENAEG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 20:04:06 -0400
+Received: by mail-pa0-f50.google.com with SMTP id fb1so883229pad.37
+        for <git@vger.kernel.org>; Tue, 13 May 2014 17:04:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=ElVZB4pQQGInmDPLFJTZpXMcdqfA83uDpdgn0V/JgRo=;
-        b=Bi4LMo3HlV+TYwtNvBK6Kix7/EgIFRqyLq3WX0kmyLvCXGPqs0Fne4+i2HD0VQkI6i
-         h9nvXQYV5iNuef1ldRZZegl4FDoE1G6jBWcljyKpATN8X6sbl/dqFrD1jgaByM2+xCTu
-         xEO0Lo4EOTtylacm8V51OcqmxU4VKtIbCYOJ/PlMgqcAUjH5t8aNIgoxSN8h6mF509ht
-         D3ec2Xbmi+1W1Ze4U7bUOcZFoMiX+Gx7FlOc001llHusqEMUACSHM7IMFXZM8l9bUkb9
-         00wPpDfT8yIKng9HANAzWAB1JRhkDnP2vhwZKAdguRK7EQiuMVdt1vbhH/1o6D/rvCjt
-         7uTA==
-X-Received: by 10.182.97.97 with SMTP id dz1mr65645obb.13.1400024935238;
-        Tue, 13 May 2014 16:48:55 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id dw5sm177800obb.0.2014.05.13.16.48.54
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=i8idEmj9kUgp4xQu/AjgBUYryJISiiiFtnbvCv9LEe0=;
+        b=J4rrV7QhZ2cC87AsCm9HSCzjAL7c/IfcQLstRQavDTrcdd3AFdWqLAOo9oy+Sj7YWM
+         AVlaXwjuRPWSSHwWiWJ51G+SI/wtfmKsASPDMyoWeuoKMcZZQc0ritLhpKJPAD9GH4Ct
+         51C+mOLMKxEp/5Vfpj6lr6Nsc9DjuugnRVtC28lgJlS4OzdDH84S+3C5JMRP3zNoNaUw
+         yVvwejTLt4Byld4JYEpwWDP8cpR9ChictNqzLgd/YWaRfHZvcN1ThB3NTtRn2mr6Zq7O
+         UCp4nxIYnUMuP7ixe2vDXQwSuIfDeTpK5Z8/BQQpUtrBOTKSLFzyIVRCfJ0IlYXNRevt
+         RojQ==
+X-Received: by 10.66.102.39 with SMTP id fl7mr136771pab.43.1400025845026;
+        Tue, 13 May 2014 17:04:05 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id oa3sm134505pbb.15.2014.05.13.17.04.04
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 May 2014 16:48:54 -0700 (PDT)
-In-Reply-To: <CAL=YDW=jCEtfEmvO-173jpJB0f3mJ2+efihprVw+MpVjxyyExQ@mail.gmail.com>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 13 May 2014 17:04:04 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1398976662-6962-5-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248892>
 
 Ronnie Sahlberg wrote:
-> Could you please calm down and adjust your behavior.  This constant
-> hostility and rudeness makes the mailing list very unpleasant.
 
-I explaind that to him multiple times. In the mail I replied to he is
-once again assuming I'm a *insert-your-favorite-non-smart-adjective*,
-and explaining to me what a regression is.
+> Make ref_update_reject_duplicates return any error that occurs through a
+> new strbuf argument.
 
-How many times must one repeat something before one is entitled so thay
-something is not "getting through the skull" of another person? 5? 10?
-20?
+Sensible.  The caller-visible effect would be that now
+ref_transaction_commit() can pass back a helpful error message through
+its "err" argument when asked to make multiple updates for the same
+ref.
 
-But fine, let's assume I do have to adjust my behavior. Maybe I should
-have said "it doesn't register in your brain", or just "it fails to grab
-your attention".
-
-But if I have to adjust for saying that (which was true), what do you
-say to Junio for saying this? (which was not)
-
-> > Stop this idiocy.
-
-I presume nothing, because Junio is a riskier target.
-
--- 
-Felipe Contreras
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
