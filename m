@@ -1,77 +1,120 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] contrib: remote-helpers: add move warnings (v2.0)
-Date: Wed, 14 May 2014 14:26:22 -0500
-Message-ID: <5373c35e95731_56d6e3b30469@nysa.notmuch>
-References: <1400016596-13178-1-git-send-email-felipe.contreras@gmail.com>
- <xmqq7g5pmj5r.fsf@gitster.dls.corp.google.com>
- <53729b2150a84_34aa9e5304e0@nysa.notmuch>
- <CAL=YDW=jCEtfEmvO-173jpJB0f3mJ2+efihprVw+MpVjxyyExQ@mail.gmail.com>
- <5372acd699145_7e25141b300bb@nysa.notmuch>
- <CAL=YDW=W1-fDXzQJFbv0xASErzq8gtKE1K_P9FVAYCAEWdEUNA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] grep -I: do not bother to read known-binary files
+Date: Wed, 14 May 2014 15:41:29 -0400
+Message-ID: <20140514194128.GC2715@sigill.intra.peff.net>
+References: <20140514154419.GA4517@camelia.ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Ronnie Sahlberg <sahlberg@google.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 21:37:35 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	msysGit <msysgit@googlegroups.com>
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: msysgit+bncBDO2DJFKTEFBB24NZ6NQKGQEVHMKUII@googlegroups.com Wed May 14 21:41:34 2014
+Return-path: <msysgit+bncBDO2DJFKTEFBB24NZ6NQKGQEVHMKUII@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yh0-f57.google.com ([209.85.213.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkezc-0000a6-3W
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 21:37:32 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751609AbaENThY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 15:37:24 -0400
-Received: from mail-ob0-f181.google.com ([209.85.214.181]:49814 "EHLO
-	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751391AbaENThX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 15:37:23 -0400
-Received: by mail-ob0-f181.google.com with SMTP id wm4so35798obc.12
-        for <git@vger.kernel.org>; Wed, 14 May 2014 12:37:22 -0700 (PDT)
+	(envelope-from <msysgit+bncBDO2DJFKTEFBB24NZ6NQKGQEVHMKUII@googlegroups.com>)
+	id 1Wkf3U-0001NW-QT
+	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 21:41:32 +0200
+Received: by mail-yh0-f57.google.com with SMTP id c41sf600521yho.2
+        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 12:41:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=6nDVVQ4VlKzcfeEx9MqtRIXWuNNWqldXJk9By4yyiRE=;
-        b=NpDwY94UBRFOZv3pukKCoO4po4OBh6tZ0+UKA4EG/gDWxZ426bnEdgrR4TkuTMkqTM
-         cV4+xUmxgrdXWJ+R36DQ+LrhvFMEuXFmG2UFs4vuApH5cTAisL7c6631kJy2a+6Ak/bw
-         x9it/pbjqvWeptMZWxxx3u7p/3pfLDUPn4j+npM9+t53Bu3eo6lMbSeGuq02QgAymTo3
-         CSMqMplrzhgmHTCvltbxc3o1cUmSPUmAw7kayGnI8hlBnV+jUr2FdkUTvkeYzlHKfeui
-         +0wT9Kipy/tLen3ti6HVTrNu099Q1AbM5LpgMmI0InzxmRyNmZFF3uBPMOjRmQ2TfgsT
-         eRAg==
-X-Received: by 10.182.43.132 with SMTP id w4mr5492367obl.41.1400096242626;
-        Wed, 14 May 2014 12:37:22 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id x14sm4842421obp.19.2014.05.14.12.37.18
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 May 2014 12:37:21 -0700 (PDT)
-In-Reply-To: <CAL=YDW=W1-fDXzQJFbv0xASErzq8gtKE1K_P9FVAYCAEWdEUNA@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248940>
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition;
+        bh=+Ilf1FJ6s5e5w/5ISGkIxYle1U+Mil+vPTfYlffv7Ns=;
+        b=Bg+ihMfe/jtfqdhpb3wjtI+mF+yz/WmV4KDCkax0YbsCQaZY7eyjd53AR7mzY0Z61L
+         T+dHqVD+0Hsqf1nZJXV3bUAA7BWSDOobx7CawvMxmXC+kA72ZGVWOcXcepk+lhU6R6To
+         +sfGzs5EyeUCyTjZ0/VNS32Ye5zxA1E6okpjFg65I1XvOVC8NLbxJkKvjlf59gD30a73
+         J7SfrxOafCQu1tz6cVEdz2AB/Dzg+KKkUwP1mcqSNrvQXj/TKDYwa9XVVUrIws/X2gjV
+         hQ1shBdPhj4Stbm4u0Y8YMXVR0TleYpB0b2+etARJbyeFl6ial1vZo7Hp4eR0ZNRdjIR
+         MB0A==
+X-Received: by 10.140.47.201 with SMTP id m67mr44001qga.29.1400096492017;
+        Wed, 14 May 2014 12:41:32 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.19.9 with SMTP id 9ls2436423qgg.75.gmail; Wed, 14 May 2014
+ 12:41:31 -0700 (PDT)
+X-Received: by 10.236.171.169 with SMTP id r29mr2268612yhl.32.1400096491315;
+        Wed, 14 May 2014 12:41:31 -0700 (PDT)
+Received: from peff.net (cloud.peff.net. [50.56.180.127])
+        by gmr-mx.google.com with SMTP id jj2si1332998igb.3.2014.05.14.12.41.31
+        for <msysgit@googlegroups.com>;
+        Wed, 14 May 2014 12:41:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
+Received: (qmail 10416 invoked by uid 102); 14 May 2014 19:41:31 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 14 May 2014 14:41:30 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 May 2014 15:41:29 -0400
+In-Reply-To: <20140514154419.GA4517@camelia.ucw.cz>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
+ sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248941>
 
-Ronnie Sahlberg wrote:
-> On Tue, May 13, 2014 at 4:37 PM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > But if I have to adjust for saying that (which was true), what do you
-> > say to Junio for saying this? (which was not)
+On Wed, May 14, 2014 at 05:44:19PM +0200, Stepan Kasal wrote:
+
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Mon, 8 Nov 2010 16:10:43 +0100
 > 
-> I know I shouldn't but I will respond anyway.
+> Incidentally, this makes grep -I respect the "binary" attribute (actually,
+> the "-text" attribute, but "binary" implies that).
 > 
-> The problem is about you and your behaviour. Not Junio or anyone else.
+> Since the attributes are not thread-safe, we now need to switch off
+> threading if -I was passed.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+> ---
+> 
+> Hi,
+> this patch has been in msysgit for 3.5 years.
+> Stepan
 
-Right. So when I say something moderately aggressive (but true), I'm the
-problem, when Junio says something worst (and false), he is not.
+Hrm. Is this patch still necessary? In the time since this patch was
+written, we did 0826579 (grep: load file data after checking
+binary-ness, 2012-02-02), which should do the same thing. It deals with
+the threading via a lock, but we later learned in 9dd5245 (grep:
+pre-load userdiff drivers when threaded, 2012-02-02) to hoist that bit
+out.
 
-Got it.
+So I suspect this patch at best is doing nothing, and at worst is
+wasting extra time doing redundant attribute checks.
+
+-Peff
 
 -- 
-Felipe Contreras
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
