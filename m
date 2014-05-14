@@ -1,94 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH 0/4] remote-hg: more improvements
-Date: Wed, 14 May 2014 15:34:37 -0700
-Message-ID: <xmqq1tvwhtvm.fsf@gitster.dls.corp.google.com>
+Date: Wed, 14 May 2014 17:30:03 -0500
+Message-ID: <5373ee6be6d88_7411589304d6@nysa.notmuch>
 References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
-	<536a83097302f_76ff7a52ec6c@nysa.notmuch>
-	<xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
-	<536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
-	<xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
-	<536ad9601b73b_3caaa612ecdc@nysa.notmuch>
-	<CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
-	<xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
-	<CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
-	<87mweku2pt.fsf@fencepost.gnu.org>
-	<xmqq61l8hubw.fsf@gitster.dls.corp.google.com>
-	<87a9akro14.fsf@fencepost.gnu.org>
+ <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+ <536a83097302f_76ff7a52ec6c@nysa.notmuch>
+ <xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
+ <536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
+ <xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
+ <536ad9601b73b_3caaa612ecdc@nysa.notmuch>
+ <CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
+ <xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
+ <CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
+ <87mweku2pt.fsf@fencepost.gnu.org>
+ <CAGK7Mr5ezbTVyq2wr7kYWjab6V1srrYwkqSGjo1GuPnkSuGWTQ@mail.gmail.com>
+ <87iop8u1km.fsf@fencepost.gnu.org>
+ <CAGK7Mr4N5L+jRE0ykBHvopgGv1x4iNXAK+_94R5KhBxHHqMYmA@mail.gmail.com>
+ <87egzwtthf.fsf@fencepost.gnu.org>
+ <CAGK7Mr6XTxpeJLSqL8PZMS8w+YCqxLrC5wX-dg4BdEaW3QAYTA@mail.gmail.com>
+ <87a9aktqms.fsf@fencepost.gnu.org>
+ <CAGK7Mr7jhpizoHuA9NDnyNPy_rr8_R0m8-hCFO3CDn2Hbh3_pQ@mail.gmail.com>
+ <5373cfb744982_57c3bfb300a0@nysa.notmuch>
+ <87mwekrsap.fsf@fencepost.gnu.org>
+ <5373e2af9ae58_592416ad2f892@nysa.notmuch>
+ <87egzwrovr.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu May 15 00:34:49 2014
+	Junio C Hamano <gitster@pobox.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 15 00:41:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkhlA-0001i6-1e
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:34:48 +0200
+	id 1WkhrH-0000CZ-Bk
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:41:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754157AbaENWeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 18:34:44 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60254 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753537AbaENWen (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 18:34:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CE751815F;
-	Wed, 14 May 2014 18:34:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YV84W8UCyYhdzZ4H4gb3daSyLTQ=; b=GsZ3bN
-	R6wfT6VMl0n1x3fwOYRPnEzhtJlcluCn1n2MYBv5nviuECYuGmgE1Wlf7YxMM5PY
-	HYEosrxvOAHYLMa1PlAteldn6Vzr3PZCNp96m37kzWJo1vxG9XY6RFoIHONcZFPE
-	Dgo2+81qIiiGhDRV4W21f3y/68jQjtHPNzVak=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dTIvVPX8mqBgprlC08Q24CLp6ljsying
-	D0NE8VzjiPKWtVQKAskPFYYD52Rgma4fdcPRxoSGRGfbHuGUY8jtkMiYar6SlM8h
-	n2EKDTKc7zmp/3AXvV/W+peluW+cYbH+TcMvAvHGGXoryE1os7h3zlMB91PfW99G
-	1aJMnFeH1mI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 630831815E;
-	Wed, 14 May 2014 18:34:42 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4284D1815C;
-	Wed, 14 May 2014 18:34:39 -0400 (EDT)
-In-Reply-To: <87a9akro14.fsf@fencepost.gnu.org> (David Kastrup's message of
-	"Thu, 15 May 2014 00:30:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EF60B342-DBB7-11E3-81C2-DDB853EDF712-77302942!pb-smtp0.pobox.com
+	id S1752628AbaENWlC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 18:41:02 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:53591 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752143AbaENWlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 18:41:00 -0400
+Received: by mail-oa0-f43.google.com with SMTP id l6so285667oag.16
+        for <git@vger.kernel.org>; Wed, 14 May 2014 15:41:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=Qd6PKuK+wAf3ZFWA4kH7hc2kGIExSzWcO2J0EfMNzkM=;
+        b=vCnPmHWMSAl0LTzdrOT/CvkoH1pk41VvWqYk+CFxTV2ka5hZptyMyRmYOOvtQ+0sLn
+         pdIzey/w2exzehDi1FkRBLQSFl/z6+49Jxl56EqXLa4KqT5fBIAM85fG2dpQWxGBeSwn
+         03NdAw0aeirlTtaPoirbNDV7j3zprsSGyUtn56P3LbtQxtx4cWHPPX6NovOPqOVGLp7E
+         yPRJ5jiRM2ht/Lrxr3/hAPb5Q3mDV1X60wll2MfbfxXjNpJ+0+vQQrwRnilzY1j6cMmn
+         fKe+TgF89CYZmEI/9R9rdWn2Fx2pGaZPnE/nIxqIU7wXsHOUo0vjM7TkgApmvsL06cP+
+         BVew==
+X-Received: by 10.182.47.196 with SMTP id f4mr6355360obn.50.1400107260500;
+        Wed, 14 May 2014 15:41:00 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id b7sm10599347oed.7.2014.05.14.15.40.59
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 May 2014 15:40:59 -0700 (PDT)
+In-Reply-To: <87egzwrovr.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249044>
 
-David Kastrup <dak@gnu.org> writes:
+David Kastrup wrote:
+> Shouting "your God is an imaginary shithead" every time you see Mark
 
->>> I'm not entirely convinced of that: there is something akin to drop-dead
->>> gorgeous code: code that is so well done that it would not matter with
->>> regard to its maintenance whether or not its author dropped dead because
->>> it's both done well as well as documented in a manner where the original
->>> author could not offer significant additional help.
->>
->> I would have to say that you are living in a fantasy land.  During
->> the entire life of Git, I do not think I ever saw such a code that
->> is perfect from the get-go and did not require any maintenance to
->> adjust to the changing time.
->
-> You are attacking a straw man.  "where the original author could not
-> offer significant _additional_ help" does not at all equate "does not
-> require any maintenance".
+There's no point in discussing with an unconstructive person as you.
+I've made my point, you are just talking nonsense.
 
-Ahh, I realize that I misread what you wrote.  Yes, I do agree with
-you that we have a lot of pieces of code, with log messages we can
-find with the help of blame, that the author himself does not need
-to be present for them to be maintained properly.  Making all the
-code in Git like that may be an unattainable goal, but calling the
-effort to make that happen "living in a fantasy land" is utterly
-wrong.  Sorry about confusion.
+Every rational person on this list knows that if I wanted to, I could be
+much more offsensive and insulting.
+
+-- 
+Felipe Contreras
