@@ -1,124 +1,132 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v6 05/42] update-ref.c: log transaction error from the
- update_ref
-Date: Wed, 14 May 2014 15:08:31 -0700
-Message-ID: <20140514220831.GB9218@google.com>
-References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
- <1398976662-6962-6-git-send-email-sahlberg@google.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 0/4] remote-hg: more improvements
+Date: Thu, 15 May 2014 00:12:24 +0200
+Message-ID: <87egzwrovr.fsf@fencepost.gnu.org>
+References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
+	<xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+	<536a83097302f_76ff7a52ec6c@nysa.notmuch>
+	<xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
+	<536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
+	<xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
+	<536ad9601b73b_3caaa612ecdc@nysa.notmuch>
+	<CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
+	<xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
+	<CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
+	<87mweku2pt.fsf@fencepost.gnu.org>
+	<CAGK7Mr5ezbTVyq2wr7kYWjab6V1srrYwkqSGjo1GuPnkSuGWTQ@mail.gmail.com>
+	<87iop8u1km.fsf@fencepost.gnu.org>
+	<CAGK7Mr4N5L+jRE0ykBHvopgGv1x4iNXAK+_94R5KhBxHHqMYmA@mail.gmail.com>
+	<87egzwtthf.fsf@fencepost.gnu.org>
+	<CAGK7Mr6XTxpeJLSqL8PZMS8w+YCqxLrC5wX-dg4BdEaW3QAYTA@mail.gmail.com>
+	<87a9aktqms.fsf@fencepost.gnu.org>
+	<CAGK7Mr7jhpizoHuA9NDnyNPy_rr8_R0m8-hCFO3CDn2Hbh3_pQ@mail.gmail.com>
+	<5373cfb744982_57c3bfb300a0@nysa.notmuch>
+	<87mwekrsap.fsf@fencepost.gnu.org>
+	<5373e2af9ae58_592416ad2f892@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu May 15 00:08:45 2014
+Content-Type: text/plain
+Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 15 00:12:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkhLq-0002Qg-Hh
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:08:38 +0200
+	id 1WkhPa-0003qD-N2
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:12:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752711AbaENWIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 18:08:35 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:41531 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751059AbaENWIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 18:08:34 -0400
-Received: by mail-pa0-f43.google.com with SMTP id hz1so160915pad.30
-        for <git@vger.kernel.org>; Wed, 14 May 2014 15:08:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ccoVEHB3ZUGK1CNnGeoiLtaK1PQwoUf752RgEohBYJg=;
-        b=TmLVAr+yAb/cmdnb6VuIvZb7yS+DYW2OogSoJ8zyBaICSBhttZ6vEbyNjrHUpCITkn
-         f7YOxQWAyhhfgDECmq1UphNj5VVTrV9Wrc3fjl5DsbyUL1jxrkdRmjbEc2iCAi9PD483
-         0X1nkufaVp30FJQ4DaeKmIw5vwwCd3uDQ7F7qETKUgW3/g2rX3uUxcfy88l/FwKL7GnC
-         7W0BG8MASXNdwR2Jo8eGOOFkLUr7FhXlUjr8QYLL3QfOoKHe/gFEYcdS5+i6kTuVcfbE
-         UAn6iWCXqQGEhMZ6wdB/d4hvxAW3Px7cwI3czs2HukYlEkL/WSmdAJasIrNqDbeLFLpF
-         Cwsg==
-X-Received: by 10.68.254.5 with SMTP id ae5mr7373232pbd.83.1400105314051;
-        Wed, 14 May 2014 15:08:34 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id vf9sm5293421pbc.94.2014.05.14.15.08.32
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 14 May 2014 15:08:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1398976662-6962-6-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752660AbaENWM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 18:12:27 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:57126 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407AbaENWM0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 18:12:26 -0400
+Received: from localhost ([127.0.0.1]:56167 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WkhPV-0001QS-8k; Wed, 14 May 2014 18:12:25 -0400
+Received: by lola (Postfix, from userid 1000)
+	id E5669E0BD9; Thu, 15 May 2014 00:12:24 +0200 (CEST)
+In-Reply-To: <5373e2af9ae58_592416ad2f892@nysa.notmuch> (Felipe Contreras's
+	message of "Wed, 14 May 2014 16:39:59 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249005>
 
-Hi,
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Ronnie Sahlberg wrote:
+> David Kastrup wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> 
+>> > Philippe Vaucher wrote:
+>> 
+>> [...]
+>> 
+>> >> > Do you feel Felipe is in control of what you label bad behavior?  Do you
+>> >> > feel you are in control over how you react to his behavior?
+>> >> 
+>> >> I feel that Felipe cannot control this (or decided not to),
+>> >
+>> > I am pretty much in control of my behavior. Those who know me
+>> > personally know that I *never* get angry.
+>> 
+>> You are missing the point.  The point is not what effect your behavior
+>> has on you but what it has on others.
+>
+> If me saying "I do not believe in God" has a negative effect on Mark,
+> your answer seems to be "do not tell Mark the truth".
 
-> --- a/builtin/update-ref.c
-> +++ b/builtin/update-ref.c
-> @@ -342,6 +342,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
-[...]
-> @@ -359,17 +360,16 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
-[...]
->  		if (delete || no_deref || argc > 0)
->  			usage_with_options(git_update_ref_usage, options);
->  		if (end_null)
->  			line_termination = '\0';
->  		update_refs_stdin();
-> -		ret = ref_transaction_commit(transaction, msg, NULL,
-> -					     UPDATE_REFS_DIE_ON_ERR);
-> -		return ret;
-> +		if (ref_transaction_commit(transaction, msg, &err,
-> +					   UPDATE_REFS_QUIET_ON_ERR))
-> +			die("%s", err.buf);
+Shouting "your God is an imaginary shithead" every time you see Mark and
+asking everybody in the room "Isn't it right that Mark's God is an
+imaginary shithead?  Can anybody here testify having seen him?" whenever
+anybody is there, and occasionally calling him and others on the phone
+when you have nothing else to do and tell him that you consider his God
+an imaginary shithead and him a gullible fool to believe otherwise...
 
-Nice.  I like this much more than passing a flag to each function to
-tell it how to handle errors. :)
+Do you really think that's the way you are going to earn people's
+respect?  By prouding yourself on having seen through Mark's purported
+stupidity and pointing it out to everybody?
 
-ref_transaction_commit didn't have any stray codepaths that return
-some other exit code instead of die()-ing with UPDATE_REFS_DIE_ON_ERR,
-so this should be safe as far as the exit code is concerned.
+> But if Mark was a member of an open source project, I do have an
+> option and I'd rather tell it like it is.
 
-The only danger would be that some codepath leaves 'err' alone and
-forgets to write a messages, so we die with
+And everybody else, of course, is wrong about it.  And only you are
+right.  All you need to do is to be as obnoxious as you can manage, and
+you'll win everyone over to your side.
 
-	"fatal: "
+Don't kid yourself: you are doing this entire sad spectacle only to
+satisfy your own self-righteousness, just to be able to tell yourself
+"all those people working on Git with the exception of myself are
+pitiable fools and/or bad persons letting Junio pull the wool over their
+eyes".
 
-Alas, it looks like this patch can do that.
+You've made your point.  People don't agree with it.  Repeating your
+point over and over will not change that.
 
- i. The call to update_ref_write can error out without updating the
-    error string.
+> If Mark has a problem with that, I can always avoid Mark, or just
+> leave the project (say if Mark was the maintainer).
+>
+> In both cases Mark is wrong. I do understand that most people would
+> rather comprimise their beliefs in order to win penguing points. I'm
+> not that way.
 
- ii. delete_ref_loose can print a message and then fail without updating
-     the error string so the output looks like
+No, you rather compromise your standing in order to win your beliefs.
+Take them.  They are yours.  Nobody else wants them.  Even if there
+would have been merit in them originally, after revomiting them a dozen
+times on people's laps they just want the stench to go away.
 
-	warning: unable to unlink .git/refs/heads/master.lock: Permission denied
-	fatal:
-	$
+> If I can't speak my mind in an open source project where I'm
+> contributing my time *for free*, I do not want to be part of that
+> project. It's the project that's wrong, not me, and it's the project
+> that looses, not me.
 
- iii. repack_without_refs can similarly return an error
+Well, you are a sore winner for sure.
 
-	error: Unable to create '/home/jrn/test/.git/packed-refs.lock: Permission denied
-	error: cannot delete 'refs/heads/master' from packed refs
-	fatal:
-	$
-
- iv. commit_lock_file in commit_packed_refs is silent on error.
-     repack_without_refs probably intends to write a message in that
-     case but doesn't :(
-
-I wish there were some way to automatically detect missed spots or
-make them stand out (like with the current "return error()" idiom a
-bare "return -1" stands out).
-
-(i) is fixed by a later patch.  It would be better to put that before
-this one for bisectability.
-
-I don't see fixes to (ii), (iii), and (iv) in the series yet from a
-quick glance.
-
-Thanks,
-Jonathan
+-- 
+David Kastrup
