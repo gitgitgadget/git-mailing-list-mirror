@@ -1,201 +1,91 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH] git format-patch --signature <string | file>
-Date: Tue, 13 May 2014 18:53:56 -0700
-Message-ID: <20140514015356.GA21893@hudson.localdomain>
-References: <1399969296-31598-1-git-send-email-jmmahler@gmail.com>
- <20140513160712.GA30685@google.com>
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: Re: [PATCH] contrib: remote-helpers: add move warnings (v2.0)
+Date: Tue, 13 May 2014 21:16:37 -0500
+Message-ID: <5372D205.4040004@gmail.com>
+References: <1400016596-13178-1-git-send-email-felipe.contreras@gmail.com> <xmqq7g5pmj5r.fsf@gitster.dls.corp.google.com> <53729b2150a84_34aa9e5304e0@nysa.notmuch> <xmqq38gdmhdo.fsf@gitster.dls.corp.google.com> <5372a0f6650d2_36c411ff3002e@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="IJpNTDwzlM2Ie8A6"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 14 03:54:11 2014
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 14 04:16:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkOOY-0000vW-00
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 03:54:10 +0200
+	id 1WkOkN-0006UO-AY
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 04:16:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989AbaENByF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 May 2014 21:54:05 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:34026 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751110AbaENByB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 May 2014 21:54:01 -0400
-Received: by mail-pa0-f47.google.com with SMTP id lf10so986212pab.34
-        for <git@vger.kernel.org>; Tue, 13 May 2014 18:54:01 -0700 (PDT)
+	id S1753088AbaENCQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 May 2014 22:16:39 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:56269 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752463AbaENCQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 May 2014 22:16:39 -0400
+Received: by mail-ie0-f180.google.com with SMTP id as1so1194667iec.25
+        for <git@vger.kernel.org>; Tue, 13 May 2014 19:16:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:date:to:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=TfOymRfan+9Yl8JbO1Wkh9mhF3YSwQGjr4jvFb4/68o=;
-        b=QdA01BAKdaJqlWmCGKjVnHywZzvpsOGt1RgJGp4cbYeoKQxS0IfDSSYHy0o1WlwGX2
-         dNQTtcEghSrHz/bycjkXRVO4mDOfxEUV3kDvwzQ+bSrr8mwEWpm2spvkcFHQXTuN619K
-         PDpXwxymugwx1f+ob4dNBm+6oFcjymxXonWjYGspvcgpMkIhwfXkGxNJyLmnuZb4dV/T
-         vUAWt61kOT88UUnVNRom3VlckLzQfU8dDtfbDjBMmOOmSz+3h8JUo8tH19YA2rOXiOog
-         KLqqWMxwBUftt13zob7kXmPqwALtO8GBkQtdIxvOq1NmwGoR+RALeYRggpx5qDf9/6i8
-         K6hg==
-X-Received: by 10.67.4.138 with SMTP id ce10mr779383pad.12.1400032441347;
-        Tue, 13 May 2014 18:54:01 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id nx12sm1340012pab.6.2014.05.13.18.53.57
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 13 May 2014 18:53:59 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Tue, 13 May 2014 18:53:56 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20140513160712.GA30685@google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=o1XwIZhI4A1O9BkErZ6tY9C7GW+ao+rt99CtFAwZCy4=;
+        b=gDjOet0eo1XBMlJLc6tvgQWlaInWpkv+6o+j7XiWg6YsuJ86IvIRJ+DxHT15rnjbJm
+         SSBrGjzCK4FjsQ+pf+pTvmzfErNdOTqZd7KzACsWGtJLmUg0exrkebVLx86H/N6xO846
+         J8BFaMtJ/4N59aQh2mwEA6cU+gxBsg9UciVzF2kM3CQTW/tS8kt17rpuSi62kpM78cJf
+         moFsfay1riQv8/tVtW4/5EAV3dWvKFfTKX9lPboYNipuRIrBoXktF3a0kpCdQh94SipW
+         cNlzNJrKUUkO/PNv96h0Fm+DF1ewpmGEZy+9G9nNJBeF6lX/qVykfOVOq8B7ISx5gNhH
+         EqTg==
+X-Received: by 10.43.35.143 with SMTP id sw15mr490375icb.29.1400033798406;
+        Tue, 13 May 2014 19:16:38 -0700 (PDT)
+Received: from [10.0.0.29] (c-98-197-19-2.hsd1.tx.comcast.net. [98.197.19.2])
+        by mx.google.com with ESMTPSA id y15sm1919003igy.2.2014.05.13.19.16.37
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 13 May 2014 19:16:37 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <5372a0f6650d2_36c411ff3002e@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248894>
 
+On 5/13/2014 5:47 PM, Felipe Contreras wrote:
+> Junio C Hamano wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>
+>>> Sigh, you just don't seem to understand that you are thinking
+>>> about a different issue. I don't think there's any other way I
+>>> can explain it to you.
+>>
+>> Perhaps pointing out which commit(s) to revert might be a good
+>> point to start.
+>
+> Oh, now you realize it might be nice to avoid this regression I
+> warned you about.
+>
+> Why don't you continue schooling me about what constitutes a
+> regression? I'm such a slow learner.
+>
+> I was going to do more than pointing to commits, I was going to
+> provide the fixes with test cases and a detailed explanation. But
+> then you made your decision.
 
---IJpNTDwzlM2Ie8A6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I believe the regression in question, mentioned at the bottom of this post
+ 
+http://thread.gmane.org/gmane.comp.version-control.git/248263/focus=248269
 
+     "Since you are not going to do so, I do not feel compelled to fix
+      the synchronization crash regression that is present in v2.0.0-rc2
+      and I already warned you about."
 
-On Tue, May 13, 2014 at 09:07:12AM -0700, Jonathan Nieder wrote:
-> Hi,
-> 
-> Jeremiah Mahler wrote:
-> 
-> >   # from a string
-> >   $ git format-patch --signature "from a string" origin
-> >
-> >   # or from a file
-> >   $ git format-patch --signature ~/.signature origin
-> 
-> Interesting.  But... what if I want my patch to end with
-> 
-> 	-- 
-> 	/home/jrnieder/.signature
-> 
-> ?  It seems safer to introduce a separate --signature-file option.
-> 
+is referring to this patch
+ 
+http://thread.gmane.org/gmane.comp.version-control.git/247546/focus=247549
 
-It is probably smarter to avoid that corner case entirely.
-Good idea.
-
-> [...]
-> >  builtin/log.c | 26 ++++++++++++++++++++++++--
-> >  1 file changed, 24 insertions(+), 2 deletions(-)
-> 
-> Tests?
-> 
-
-I added a test which checks that a valid patch is produced and that
-the signature from the file appears in the output.
-
-> Thanks and hope that helps,
-> Jonathan
-
-Attached is a revised patch.
+but I admit, I'm getting a bit fuzzy around these discussions.
 
 -- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
-
---IJpNTDwzlM2Ie8A6
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="0001-format-patch-signature-file-file.patch"
-
->From e5cbeaf50d85236d6dd53e64f8f7cf466b1acecd Mon Sep 17 00:00:00 2001
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Date: Tue, 13 May 2014 18:10:53 -0700
-Subject: [PATCH] format-patch --signature-file <file>
-
-Added feature that allows a signature file to be used with format-patch.
-
-  $ git format-patch --signature-file ~/.signature origin
-
-Now signatures with newlines and other special characters can
-be easily included.
-
-Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
----
- builtin/log.c           | 24 ++++++++++++++++++++++++
- t/t4014-format-patch.sh | 13 +++++++++++++
- 2 files changed, 37 insertions(+)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 39e8836..1ec733b 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1147,6 +1147,27 @@ static int from_callback(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
-+static int signature_file_callback(const struct option *opt, const char *arg,
-+							int unset)
-+{
-+	const char **signature = opt->value;
-+	static char buf[1024];
-+	size_t sz;
-+	FILE *fp;
-+
-+	fp = fopen(arg, "r");
-+	if (fp) {
-+		sz = sizeof(buf);
-+		sz = fread(buf, 1, sz - 1, fp);
-+		buf[sz] = '\0';
-+		*signature = buf;
-+		fclose(fp);
-+	} else {
-+		*signature = arg;
-+	}
-+	return 0;
-+}
-+
- int cmd_format_patch(int argc, const char **argv, const char *prefix)
- {
- 	struct commit *commit;
-@@ -1230,6 +1251,9 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    PARSE_OPT_OPTARG, thread_callback },
- 		OPT_STRING(0, "signature", &signature, N_("signature"),
- 			    N_("add a signature")),
-+		{ OPTION_CALLBACK, 0, "signature-file", &signature, N_("signature-file"),
-+				N_("add a signature from contents of a file"),
-+			    PARSE_OPT_NONEG, signature_file_callback },
- 		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
- 		OPT_END()
- 	};
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 9c80633..19b67e3 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -762,6 +762,19 @@ test_expect_success 'format-patch --signature="" suppresses signatures' '
- 	! grep "^-- \$" output
- '
- 
-+cat > expect << EOF
-+Test User <test.email@kernel.org>
-+http://git.kernel.org/cgit/git/git.git
-+git.kernel.org/?p=git/git.git;a=summary
-+EOF
-+
-+test_expect_success 'format-patch --signature-file file' '
-+	git format-patch --stdout --signature-file expect -1 >output &&
-+	check_patch output &&
-+	fgrep -x -f output expect >output2 &&
-+	diff expect output2
-+'
-+
- test_expect_success TTY 'format-patch --stdout paginates' '
- 	rm -f pager_used &&
- 	test_terminal env GIT_PAGER="wc >pager_used" git format-patch --stdout --all &&
--- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
-
-
-
---IJpNTDwzlM2Ie8A6--
+.marius
