@@ -1,117 +1,93 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 0/4] remote-hg: more improvements
-Date: Wed, 14 May 2014 14:50:04 +0200
-Message-ID: <87egzwtthf.fsf@fencepost.gnu.org>
-References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
-	<536a83097302f_76ff7a52ec6c@nysa.notmuch>
-	<xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
-	<536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
-	<xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
-	<536ad9601b73b_3caaa612ecdc@nysa.notmuch>
-	<CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
-	<xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
-	<CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
-	<87mweku2pt.fsf@fencepost.gnu.org>
-	<CAGK7Mr5ezbTVyq2wr7kYWjab6V1srrYwkqSGjo1GuPnkSuGWTQ@mail.gmail.com>
-	<87iop8u1km.fsf@fencepost.gnu.org>
-	<CAGK7Mr4N5L+jRE0ykBHvopgGv1x4iNXAK+_94R5KhBxHHqMYmA@mail.gmail.com>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
+Date: Wed, 14 May 2014 14:51:09 +0200
+Message-ID: <CAGK7Mr63X3+XXuRUEcBwwnwrOrbip8VUebtL-tM3R8PYBPEXuQ@mail.gmail.com>
+References: <1399662703-355-1-git-send-email-felipe.contreras@gmail.com>
+ <1399662703-355-2-git-send-email-felipe.contreras@gmail.com>
+ <xmqqbnv6yb9l.fsf@gitster.dls.corp.google.com> <536d4e7ba8ea_585ea5308a9@nysa.notmuch>
+ <CACPiFCKoegOj+dxAw87UgrrwrvPSDoFzyxZV1bEPNseiK2M7vw@mail.gmail.com>
+ <xmqqsiodo7o6.fsf@gitster.dls.corp.google.com> <53726a577d6aa_4aa4b312f862@nysa.notmuch>
+ <xmqqegzxmlsr.fsf@gitster.dls.corp.google.com> <CACPiFCKpx9e-swWW4KEfY9YkG7s0uPTs_aftV-NbXGkvMqtf-A@mail.gmail.com>
+ <53729ccf26bb0_34aa9e53047f@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Philippe Vaucher <philippe.vaucher@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 14:50:25 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Martin Langhoff <martin.langhoff@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 14 14:51:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkYdb-0002iC-Qv
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 14:50:24 +0200
+	id 1WkYev-0004DY-Gl
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 14:51:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755075AbaENMuT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 08:50:19 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:44282 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751468AbaENMuR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 08:50:17 -0400
-Received: from localhost ([127.0.0.1]:43323 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WkYdU-00088n-St; Wed, 14 May 2014 08:50:17 -0400
-Received: by lola (Postfix, from userid 1000)
-	id D7E53E0D4F; Wed, 14 May 2014 14:50:04 +0200 (CEST)
-In-Reply-To: <CAGK7Mr4N5L+jRE0ykBHvopgGv1x4iNXAK+_94R5KhBxHHqMYmA@mail.gmail.com>
-	(Philippe Vaucher's message of "Wed, 14 May 2014 14:11:37 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1754683AbaENMvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 08:51:41 -0400
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:57481 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751674AbaENMvk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 08:51:40 -0400
+Received: by mail-oa0-f48.google.com with SMTP id i4so2069411oah.21
+        for <git@vger.kernel.org>; Wed, 14 May 2014 05:51:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=enGY3Rn0vBUymOI0o98g8rfX0P/QhBAWb05On/IOyhY=;
+        b=jnBuCyxBA1oGfbah7tegp7etRSizsIQKqRrIhKgPmCB6qrGH/7qQbXN0XY/MA1RNjv
+         xXA8NIcOzREdy0v+ZbnB3YZ73++ia4FYz/0cAoTCnaGkpmyjbPxMgsOuB7xGTfJZ/Nhm
+         PtN5eGUJDvvQ7gSUgqurW0Fx7JkexO1BZCEWNjcUDRcPun9PCfDrknUgMQSRPjZXR4R9
+         tIL913qSY5zm6WfntZb1v/5PKAyParh+I8jGmMNIh0+dEt0xL6kOnB+YAIKQpsdB7vx5
+         dstfiwe8iC6mtaxERtbr5FsrmYaWQd6Pg/9vFYTigE0+Yc0sVEYfCRUqUnMXOaJswy4r
+         RW4g==
+X-Received: by 10.60.65.99 with SMTP id w3mr3313387oes.7.1400071899791; Wed,
+ 14 May 2014 05:51:39 -0700 (PDT)
+Received: by 10.76.76.228 with HTTP; Wed, 14 May 2014 05:51:09 -0700 (PDT)
+In-Reply-To: <53729ccf26bb0_34aa9e53047f@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248912>
 
-Philippe Vaucher <philippe.vaucher@gmail.com> writes:
-
->> Basically you have to write in a manner "if a seedy stranger gave me
->> that code on a street corner, I would have no problem checking it
->> in".  In practice, the shortcuts offering themselves through civil
->> behavior and mutual trust get a lot more work done.
+>> I have had patches and contributions rejected in the past, sometimes
+>> rudely. Same has happened to many others, if you contribute long
+>> enough, it is pretty much guaranteed that it will happen to you.
+>> Maintainer is wrong, or you are wrong, or someone is just having a bad
+>> day.
 >
-> My point was more that it's very hard to produce high quality commits
-> without social interaction with others explaining what you missed,
-> stuffs you overlooked, etc.
+> This is not about a couple of patches I worked in a weekend being
+> rejected. This is about the work I've been doing since the past two
+> years almost like a full-time job dropped to the floor with no
+> explanation at all. I started with the expectation that they were going
+> to move to the core, because Junio said so, then he changed his mind and
+> didn't want to explain his reasoning.
+>
+> It's not just a bad day.
 
-You are overgeneralizing.  You are assuming that it's easier for
-everybody to interact with humans rather than the Tao of Computing.
+Here are two posts where Junio and Michael Haggerty explain the
+reasoning to you:
 
-> And there B issues quickly isolate you.
+- http://article.gmane.org/gmane.comp.version-control.git/248727
+- http://article.gmane.org/gmane.comp.version-control.git/248693
 
-Unless you were isolated to start with.
+Basically, in your case it boils down to your social manners. Despite
+the (good) work you did, many people think the community and git as a
+whole as more to loose by having to deal with your theatrics,
+especially since you try to take everyone hostage of your situations.
+No amount of "arguing" (calling it "ad hominem" etc) will change
+anything at this point, you have to accept that your social actions
+have a big part of responsibility in this.
 
-> Anyway, I think we are speaking about different things. All I'm saying
-> is that humans are social creatures and that thinking you can
-> contribute to projects ran by humans without according a high
-> importance to social behaviors (like Felipe thinks) is not possible.
+IMHO, you should change your behavior into a more respectful one and
+give people some time to discover you changed, otherwise it is
+innevitable that you'll just get banned/ignored by mostly everyone.
 
-You are assuming that "according a high importance to social behaviors"
-is all that it takes for anybody.  Do you tell the beggar on the next
-street corner that "according a high importance to earning millions"
-would be all that would be necessary for him to afford anything to drink
-that he'd like?
+We spent way too much energy dealing with these silly issues, please
+find a way to deal with it that doesn't annoy everyone and doens't
+affect the friendlyness of the mailing list.
 
-> Threads like this are proof that while technical quality might be
-> important for the short term, social behaviors is impossible to ignore
-> in the long term.
-
-Not really.
-
-> Both are very important to be an appreciated contributor, or to
-> contribute at all in the long term.
-
-The one thing where social behavior comes in is noticing who tends to be
-running free software projects.
-
-There is the mythical "scratching one's itch" theory, but it does not
-fit the bill.  Those people who invest enough time into a project's
-progress to make a fundamental difference tend to do it at the cost of
-not having any worthwhile amount of time left actually _using_ the
-product.
-
-People mainly working on music software create very little music
-themselves, people mainly working on text processing software do not
-write many texts themselves, people writing high-performance operating
-systems have very little use for high-performance operating systems
-themselves.
-
-All of this might have started at one time as scratching their own itch,
-but once their contributions become significant, it's almost always the
-itches of others they are scratching, and continue to scratch, feeling
-responsible for them due to the skills they have been not as much
-blessed or cursed but entrusted with.
-
-And programming and social skills tend to be packaged separately.  So
-not everybody is gifted with being able to contribute _gracefully_.
-
--- 
-David Kastrup
+Philippe
