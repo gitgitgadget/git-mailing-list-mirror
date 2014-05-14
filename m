@@ -1,86 +1,89 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v7 42/42] refs.c: remove forward declaration of write_ref_sha1
-Date: Wed, 14 May 2014 14:17:16 -0700
-Message-ID: <1400102236-30082-43-git-send-email-sahlberg@google.com>
+Subject: [PATCH v7 35/42] refs.c: pass NULL as *flags to read_ref_full
+Date: Wed, 14 May 2014 14:17:09 -0700
+Message-ID: <1400102236-30082-36-git-send-email-sahlberg@google.com>
 References: <1400102236-30082-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 14 23:18:38 2014
+X-From: git-owner@vger.kernel.org Wed May 14 23:18:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkgZJ-0003MV-3k
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:18:29 +0200
+	id 1WkgZJ-0003MV-L6
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 23:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753118AbaENVSV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 17:18:21 -0400
-Received: from mail-ie0-f202.google.com ([209.85.223.202]:53846 "EHLO
-	mail-ie0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753086AbaENVRe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 17:17:34 -0400
-Received: by mail-ie0-f202.google.com with SMTP id ar20so40689iec.3
-        for <git@vger.kernel.org>; Wed, 14 May 2014 14:17:33 -0700 (PDT)
+	id S1753282AbaENVSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 17:18:25 -0400
+Received: from mail-pb0-f74.google.com ([209.85.160.74]:42550 "EHLO
+	mail-pb0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753348AbaENVRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 17:17:32 -0400
+Received: by mail-pb0-f74.google.com with SMTP id rr13so36122pbb.5
+        for <git@vger.kernel.org>; Wed, 14 May 2014 14:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Ea31jrDj8cwE8PcWJ6HIM8w72I/ueIzoTDX/NB23tdA=;
-        b=MJ/2GhFUDzhro4oAEONXtFBgiV/vadgEDCmeELfiSQnaQwWpLF+ZJVyP8t9aL4AZX7
-         g3RMI2rfeweuijEoari+zRi3Wv/rh6V0t/XU7ID/UFzWDau6APVXBMyxRiuA8y8PbYJY
-         M8ZRiTgXe4tu61bwOwqKqcWUsVjpFr6L+WuwQpEDykDejGL3mHYYD3qrG4DWgXWc7pCl
-         YiiauFKzHDNRGAWY+E5yEr8xkgu+ljbTBOK6FdferlG/TROehSIwo81J1tE+BdYjmMkX
-         5CJG7DzAC3pG30eTGZlhqsSb8KTvz/rhFi67fLjfUCVVaRYlS5r4kKMRqshdZQToTUc8
-         nQKQ==
+        bh=Vnj8wUEXT633dJXPLjPu2Pcv937gW9X3XEj7evVIns8=;
+        b=eiZscMRmRzlum3KuemXxglcTd86kBAO0So6dTqiSTYnecAJsHpsSDXtzSNCyzw74+G
+         KMQb302Fkj6c4fLbychfXzOTjU3rnwHVVzspzC9jm+zET6ww0QtH2A45n4PAJHaOkkCH
+         eyNkPCvpFjjttmw/0ivQ5JquLR8Qnl5Uo/wsKsoyPr9rMKO8kueQJe2CdbjCTOihgEbb
+         tiElYFPEQweeIwUzagjHG9h/7RyesdasA24xkdolwMRXN8gWmwbvuWncGvXXLyErfsTR
+         uzpPEgzIWyp8U/lwFttvYq+yP+DcLWU6G6568FgRyvhlYdAJ5Q0pViPCaExcXtaRrgN6
+         JKhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Ea31jrDj8cwE8PcWJ6HIM8w72I/ueIzoTDX/NB23tdA=;
-        b=XBvUS9lpWOC2XNxc3omWJZA78qPZcTdRc2OObbYCP14KXlKY19vg7WXmB0LJgsHfnh
-         7s9O68NigKfS86CroGfBLLIwmg+U6rZ7Sk9G9TlMu17lpMy+krEaCtmxsi1bUddxsJHn
-         WPPydsdGWAkyJFueePXz29k6CE6CE53QfkrOm3w8qS/BOtQfca9o+yZ5I++hgH1KxpMi
-         IKcSajybM43Sz3m0S7Dg9CiIZFVtEYLYvJ+VA2TN7e+PKezshZ2f4NAAtcmzCZ5rzABg
-         5YrDwIrKrm/Q6TCDhTSb1z8qKq1tDzU7vaatgu9l7m6HbU4RJaKgF393Kc9UAm2rS1jB
-         HYmg==
-X-Gm-Message-State: ALoCoQlm6AUS3ZSAHFtzr7naAVL2XHcV7/cUAXxyUdp6ggwt+NYs1rwaOUnF/M6u3fxQeCisRNYl
-X-Received: by 10.50.178.200 with SMTP id da8mr3454264igc.6.1400102253854;
-        Wed, 14 May 2014 14:17:33 -0700 (PDT)
+        bh=Vnj8wUEXT633dJXPLjPu2Pcv937gW9X3XEj7evVIns8=;
+        b=Jl7ePBC1RX4KNzDbQ+MOwj+uL9QD9mBO+JtnbdQ3KTuqIXGG3zl9V6ieIkcUasDLgc
+         /XFtrpyuztyDXfiWCFMcSlfn/2LZBH0b7Xd9H4QFaDeCuzUkl+Jx0TEgYx4xlx7cxM3f
+         Zo/NdvB8RQhXzOMI1MYI8ykRhmQf6zgwwcioYfvEIF+BydOCWKwz0jb/n5MPz5OYpghe
+         7Sve3bsRvQfi+MS1BHsB7Z4i0aYleUZigeHJ0gTUhV0GmfX+FYoVz73u5nVZB5UAaHaQ
+         mrC4LPncE19oFUVICmMTDmh+K5NZOPNdJ7EvsP3AH9BacE9S2XetDhp5nlmqrtb3dxKU
+         G5wA==
+X-Gm-Message-State: ALoCoQkU8H3IcjLuhn8JGHDfrMAJHDEI6s4VhVkMsvi85Ilyqfuex75s67nvQ5k5B+X1wu9Y14LU
+X-Received: by 10.66.65.109 with SMTP id w13mr372894pas.21.1400102251816;
+        Wed, 14 May 2014 14:17:31 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id c50si144174yhl.7.2014.05.14.14.17.33
+        by gmr-mx.google.com with ESMTPS id k43si145573yhq.3.2014.05.14.14.17.31
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 May 2014 14:17:33 -0700 (PDT)
+        Wed, 14 May 2014 14:17:31 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id AE3B85A42DA;
-	Wed, 14 May 2014 14:17:33 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 9FDEE5A4345;
+	Wed, 14 May 2014 14:17:31 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 904B8E0CB6; Wed, 14 May 2014 14:17:33 -0700 (PDT)
+	id 63DA7E0973; Wed, 14 May 2014 14:17:31 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.471.g2055d11.dirty
 In-Reply-To: <1400102236-30082-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248963>
+
+We call read_ref_full with a pointer to flags from rename_ref but since
+we never actually use the returned flags we can just pass NULL here instead.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 2 --
- 1 file changed, 2 deletions(-)
+ refs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/refs.c b/refs.c
-index 8e12386..aed700b 100644
+index 9ac9f38..cb14420 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -260,8 +260,6 @@ struct ref_entry {
- };
+@@ -2601,7 +2601,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 		goto rollback;
+ 	}
  
- static void read_loose_refs(const char *dirname, struct ref_dir *dir);
--static int write_ref_sha1(struct ref_lock *lock,
--			  const unsigned char *sha1, const char *logmsg);
- 
- static struct ref_dir *get_ref_dir(struct ref_entry *entry)
- {
+-	if (!read_ref_full(newrefname, sha1, 1, &flag) &&
++	if (!read_ref_full(newrefname, sha1, 1, NULL) &&
+ 	    delete_ref(newrefname, sha1, REF_NODEREF)) {
+ 		if (errno==EISDIR) {
+ 			if (remove_empty_directories(git_path("%s", newrefname))) {
 -- 
 2.0.0.rc3.471.g2055d11.dirty
