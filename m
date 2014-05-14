@@ -1,165 +1,115 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: Re: [GUILT v2 16/29] Fix backslash handling when creating names of
- imported patches.
-Date: Wed, 14 May 2014 10:56:18 +0200
-Message-ID: <CAP=KgsQMRZymUnojGqyZPdKsepfmHvuyUhAkWqrZ_GnybgMqxA@mail.gmail.com>
-References: <1400013065-27919-1-git-send-email-cederp@opera.com>
-	<1400013065-27919-17-git-send-email-cederp@opera.com>
-	<20140513220957.GN4791@meili.valhalla.31bits.net>
+From: Philippe Vaucher <philippe.vaucher@gmail.com>
+Subject: Re: [PATCH 0/4] remote-hg: more improvements
+Date: Wed, 14 May 2014 11:12:12 +0200
+Message-ID: <CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
+References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
+ <xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com> <536a83097302f_76ff7a52ec6c@nysa.notmuch>
+ <xmqqvbth8ha9.fsf@gitster.dls.corp.google.com> <536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
+ <xmqqoaz95ees.fsf@gitster.dls.corp.google.com> <536ad9601b73b_3caaa612ecdc@nysa.notmuch>
+ <CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com> <xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Wed May 14 10:56:29 2014
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 14 11:12:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkUzB-0004N3-BU
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 10:56:25 +0200
+	id 1WkVF4-0006at-5v
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 11:12:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752948AbaENI4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 04:56:21 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:59626 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751320AbaENI4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 04:56:19 -0400
-Received: by mail-ie0-f178.google.com with SMTP id rd18so1505098iec.23
-        for <git@vger.kernel.org>; Wed, 14 May 2014 01:56:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=VAczJsJFteiFeoW+qOH0S88dvzIHAb4WXDLgoiwUWYM=;
-        b=EAFZNobZJ21gkPWQw4gR32qTiWlI6rTqjV0xs5nkeOqQFMPylVCSc/PfKTvEhvKG/6
-         Ud5r0YMZKWZxph2+TBEWxzm+XGs/OUyBmSOX3ZqwL5JcmFe2U8TFWGDCzrlaDQyYRjiu
-         kRfpuVryn2mAA0cLmxy2HikzEf1x/WREuJr4wjg0pPlwu9upkiZFhv9pZXhfpU1dID8P
-         KvAYjB7oy+h1dcI002resbn8hqoqWTnCiHMv05lXZlyJCQ4AuqNu2Pk6VxR5YrbxLXic
-         1MYooKiZuwGFv3ybu/w6+ozmlx84OzEP9ei7hv4E5AN3t/z0fa/Z1OmYf+qx39JoPmBy
-         EX6A==
-X-Gm-Message-State: ALoCoQnM76rXJFTNqRqk1E0vopjlOsMesMFHVm0XrM+LP8JXwlOmQ3TwibWeNrEYzdGUKJaWK/4B
-X-Received: by 10.50.79.161 with SMTP id k1mr3224889igx.31.1400057778207; Wed,
- 14 May 2014 01:56:18 -0700 (PDT)
-Received: by 10.43.89.66 with HTTP; Wed, 14 May 2014 01:56:18 -0700 (PDT)
-In-Reply-To: <20140513220957.GN4791@meili.valhalla.31bits.net>
+	id S1752739AbaENJMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 05:12:46 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:38549 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751055AbaENJMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 05:12:42 -0400
+Received: by mail-oa0-f47.google.com with SMTP id i7so1817752oag.34
+        for <git@vger.kernel.org>; Wed, 14 May 2014 02:12:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Ayjhpa4RbI4f9X0GrhvGM3eE2wsXZ4cVLGvUuCUPcn4=;
+        b=VG0/ywso+XZSP2mnoXQ2T0xfxt0gSVlNF+mJwnxy0RepG0zubUUYVYa8fwTZjXBTIP
+         qjktVSC5JdVotSYfYdRYzgOIYpIlUyvffeOgTxMX/bUKJ2LezVg+nXn5Vqm6EcCaif2a
+         QDCIJOYaSBoFU1mq14C3HmX63Fh+dLUgHyA9jPUaL/Tag4Uddbw7XrvxfJVscBMZcfIC
+         AYi+1oMdKAPvmpO8Dsz6RR0US2btAI76jAioe1LnaniYEmrx4InRfCAgGrUL9Z+/DDEf
+         SamGntf8FigH96hXt34Hm23yywbY4Huc7hFhRligHs3wdChT3rAVwI+Awn/hF5UEWNGz
+         ikNg==
+X-Received: by 10.182.28.104 with SMTP id a8mr2248523obh.30.1400058762245;
+ Wed, 14 May 2014 02:12:42 -0700 (PDT)
+Received: by 10.76.76.228 with HTTP; Wed, 14 May 2014 02:12:12 -0700 (PDT)
+In-Reply-To: <xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248901>
 
-On Wed, May 14, 2014 at 12:09 AM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> On Tue, May 13, 2014 at 10:30:52PM +0200, Per Cederqvist wrote:
->> The 'echo %s' construct sometimes processes escape sequences.  (This
+>>> It is *way* beyond the quality of any other tool in 'contrib/' and even
+>>> some tools in the core, like 'git-request-pull' (which has known bugs),
+>>> and probably even 'git-pt'.
+>>
+>> Junio, can you comment on this? I understand this probably doesn't
+>> really affect the issue at hand, but it'd help clarify if it's ever
+>> possible to move out of contrib/ nowadays.
 >
-> %s?  Should this be $s?
-
-Yes. Will fix that typo in v3 of the patch series.
-
-    /ceder
-
-> Otherwise, looks good.
+> I was originally led to believe that its code quality was good
+> enough, and that was why I merged the bottom three patches of the
+> series even down to 'next' in the first place.  But after seeing the
+> "Of course" response that led to [*1*], which made me recall many
+> patch-review interactions with him, I have started to have doubts.
 >
->> happens, for instance, under Ubuntu 14.04 when /bin/sh is actually
->> dash.)  We don't want that to happen when we are importing commits, so
->> use 'printf %s "$s"' instead.
->>
->> (The -E option of bash that explicitly disables backslash expansion is
->> not portable; it is not supported by dash.)
->>
->> Signed-off-by: Per Cederqvist <cederp@opera.com>
->> ---
->>  guilt-import-commit  |  2 +-
->>  regression/t-034.out | 14 +++++++-------
->>  2 files changed, 8 insertions(+), 8 deletions(-)
->>
->> diff --git a/guilt-import-commit b/guilt-import-commit
->> index 6260c56..45f2404 100755
->> --- a/guilt-import-commit
->> +++ b/guilt-import-commit
->> @@ -30,7 +30,7 @@ for rev in `git rev-list $rhash`; do
->>
->>       # Try to convert the first line of the commit message to a
->>       # valid patch name.
->> -     fname=`echo $s | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
->> +     fname=`printf %s "$s" | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
->>                       -e "s/['\\[{}]//g" -e 's/]//g' -e 's/\*/-/g' \
->>                       -e 's/\?/-/g' -e 's/\.\.\.*/./g' -e 's/^\.//' \
->>                       -e 's/\.patch$//' -e 's/\.$//' | tr A-Z a-z`
->> diff --git a/regression/t-034.out b/regression/t-034.out
->> index 7bc9459..bda4399 100644
->> --- a/regression/t-034.out
->> +++ b/regression/t-034.out
->> @@ -236,7 +236,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
->>  About to begin conversion...
->>  Current head: 2a8b1889aa5066193bac978e6bf5073ffcfa6541
->>  Converting 2a8b1889 as can-have-embedded-single-slashes
->> -Converting 0a46f8fa as backslash-isorbidden
->> +Converting 0a46f8fa as backslash-is-forbidden
->>  Converting aedb74fd as x
->>  Converting 30187ed0 as cannot@have@the@sequence@at-brace
->>  Converting 106e8e5a as cannot_end_in_
->> @@ -300,7 +300,7 @@ Applying patch..cannot@have@the@sequence@at-brace.patch
->>  Patch applied.
->>  Applying patch..x.patch
->>  Patch applied.
->> -Applying patch..backslash-isorbidden.patch
->> +Applying patch..backslash-is-forbidden.patch
->>  Patch applied.
->>  Applying patch..can-have-embedded-single-slashes.patch
->>  Patch applied.
->> @@ -311,7 +311,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
->>
->>      Can/have/embedded/single/slashes
->>
->> -commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-isorbidden.patch)
->> +commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-is-forbidden.patch)
->>  Author: Author Name <author@email>
->>  Date:   Mon Jan 1 00:00:00 2007 +0000
->>
->> @@ -518,8 +518,6 @@ d .git/patches/master
->>  d .git/refs/patches
->>  d .git/refs/patches/master
->>  f 06beca7069b9e576bd431f65d13862ed5d3e2a0f  .git/patches/master/ctrlisforbidden.patch
->> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/series
->> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/status
->>  f 09b7e9be44ae5ec3a4bb30f5ee9d4ebc2c042f64  .git/patches/master/two_consecutive_dots_(.)_is_forbidden.patch
->>  f 0b971c9a17aeca2319c93d700ffd98acc2a93451  .git/patches/master/question-mark-is-forbidden.patch
->>  f 2b8392f63d61efc12add554555adae30883993cc  .git/patches/master/cannot-end-in-slash-.patch
->> @@ -529,7 +527,7 @@ f 34e07c584032df137f19bdb66d93f316f00a5ac8  .git/patches/master/tildeisforbidden
->>  f 49bab499826b63deb2bd704629d60c7268c57aee  .git/patches/master/the_sequence_-._is_forbidden.patch
->>  f 5bcddb8ccb6e6e5e8a61e9e56cb2e0f70cbab2f5  .git/patches/master/cannot@have@the@sequence@at-brace.patch
->>  f 637b982fe14a240de181ae63226b27e0c406b3dc  .git/patches/master/asterisk-is-forbidden.patch
->> -f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-isorbidden.patch
->> +f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-is-forbidden.patch
->>  f 7b103c3c7ae298cd2334f6f49da48bae1424f77b  .git/patches/master/crisalsoforbidden.patch
->>  f 9b810b8c63779c51d2e7f61ab59cd49835041563  .git/patches/master/x.patch
->>  f a22958d9ae9976fd7b2b5a9d0bcd44bf7ad9b08a  .git/patches/master/caretisforbidden.patch
->> @@ -537,6 +535,8 @@ f ab325bf5a432937fc6f231d3e8a773a62d53952b  .git/patches/master/multiple-slashes
->>  f cb9cffbd4465bddee266c20ccebd14eb687eaa89  .git/patches/master/delisforbidden.patch
->>  f d0885a1a1fdee0fd1e4fedce3f7acd3100540bc4  .git/patches/master/openbracketisforbidden.patch
->>  f d2903523fb66a346596eabbdd1bda4e52b266440  .git/patches/master/check-multiple-.-dots-.-foo.patch
->> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/series
->> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/status
->>  f dfc11f76394059909671af036598c5fbe33001ba  .git/patches/master/space_is_forbidden.patch
->>  f e47474c52d6c893f36d0457f885a6dd1267742bb  .git/patches/master/colon_is_forbidden.patch
->>  f e7a5f8912592d9891e6159f5827c8b4f372cc406  .git/patches/master/the_sequence_.lock-_is_forbidden.patch
->> @@ -548,7 +548,7 @@ r 1626a11d979a1e9e775c766484172212277153df  .git/refs/patches/master/asterisk-is
->>  r 3a0d5ccef0359004fcaa9cee98fbd6a2c4432e74  .git/refs/patches/master/tildeisforbidden.patch
->>  r 434e07cacdd8e7eb4723e67cb2d100b3a4121a3a  .git/refs/patches/master/can-have-embedded-single-slashes.patch
->>  r 74df14ab3a0ec9a0382998fbf167ebb1b0a36c6a  .git/refs/patches/master/question-mark-is-forbidden.patch
->> -r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-isorbidden.patch
->> +r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-is-forbidden.patch
->>  r 96a3e92c4df85f52362ce4f6d31983c462db9ae9  .git/refs/patches/master/a-component-may-not-end-in-foolock.patch
->>  r 9fc9677b61880f9159838e89f714893e0a2fcafb  .git/refs/patches/master/delisforbidden.patch
->>  r a275ed5d7f10ea88c986852ee95a7d5a61663b5f  .git/refs/patches/master/cannot@have@the@sequence@at-brace.patch
->> --
->> 1.8.3.1
->>
+> The code quality of Git that many projects have come to trust their
+> code with is much more than just "the code at each moment keeps
+> working for the users as long as the original author is around".
+> The maintainer of a port to the platform X may lose access to the
+> platform after switching jobs, the maintainer of a bridge to the
+> foreign system Y may stop needing to talk to the foreign system
+> after completing the switch to Git.  Anybody can be hit by a bus,
+> get sick, or simply lose interest in his past creations.
 >
-> --
-> I have always wished for my computer to be as easy to use as my telephone;
-> my wish has come true because I can no longer figure out how to use my
-> telephone.
->                 - Bjarne Stroustrup
+> By reading "git log contrib/remote-helpers" and comparing it with
+> the logs for the rest of the system, you would realize that the
+> former would not lead to a quality discussion similar to the one
+> that led to [*2*], which was only possible because the change was
+> adequately described to allow anybody to understand the original
+> issue the change was meant to solve.  The commit that made the
+> original change made it easy to ask a critical question: "You are
+> improving B but at the same time breaking A.  Can we do better to
+> help both A and B?"  And it allowed us to move forward without
+> having to rob Peter to pay Paul.
+>
+> Granted, these contrib/ patches were applied with the understanding
+> that contrib/ stuff can be substandard, because having anything is
+> often better than having nothing, and you cannot go back in time to
+> update the history to make these commits more useful to others who
+> will come later.  But I would be lying if I said that I would expect
+> that things will suddenly improve and that the codebase will be
+> maintained for the long haul in a healthy way the minute we move it
+> out of contrib/ to the core.  Especially after seeing [*1*], which
+> is just one of the examples that illustrate that there clearly is no
+> will to explain the changes to help others who come later to help
+> maintaining the code.  "I'll take good care of the codebase", "I've
+> spend the time to make it better", "Me, me, me", is not what the
+> open source process is about.
+
+Thanks for the explanation. I think it underlines well the A)
+technical issues (quality commits) and the B) social issues (ability
+to communicate in a friendly way & respond constructively), which we
+discovered are both *essential* for contributing to git.
+
+Neglate one or the other, and sooner or later people will refuse to
+collaborate with you, because it's just too much "work" to deal with
+the downsides.
+
+My hope is that for future events of this nature to be detected sooner
+and dealt with more rigidly, e.g by making it clear this or that
+behavior is not acceptable. I think part of the problem here is that
+we let the situation install itself, by accepting B-side issues just
+because A-side was ok, hopeful that B-side would solve itself.
+
+Philippe
