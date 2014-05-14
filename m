@@ -1,163 +1,122 @@
 From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT v2 16/29] Fix backslash handling when creating names of
- imported patches.
-Date: Wed, 14 May 2014 09:06:39 -0400
-Message-ID: <20140514130639.GA1582@meili.valhalla.31bits.net>
+Subject: Re: [GUILT v2 25/29] "guilt push" now fails when there are no more
+ patches to push.
+Date: Wed, 14 May 2014 09:07:15 -0400
+Message-ID: <20140514130715.GB1582@meili.valhalla.31bits.net>
 References: <1400013065-27919-1-git-send-email-cederp@opera.com>
- <1400013065-27919-17-git-send-email-cederp@opera.com>
- <20140513220957.GN4791@meili.valhalla.31bits.net>
- <CAP=KgsQMRZymUnojGqyZPdKsepfmHvuyUhAkWqrZ_GnybgMqxA@mail.gmail.com>
+ <1400013065-27919-26-git-send-email-cederp@opera.com>
+ <20140513214114.GI4791@meili.valhalla.31bits.net>
+ <CAP=KgsRrtkRZB24CebZsunE=Mc55+NNjoGKLxCPa=KY-GDJ-+w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>
 To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Wed May 14 15:06:44 2014
+X-From: git-owner@vger.kernel.org Wed May 14 15:07:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkYtM-0002YG-J4
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 15:06:41 +0200
+	id 1WkYtw-0003ym-8l
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 15:07:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754122AbaENNGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 09:06:36 -0400
-Received: from josefsipek.net ([64.9.206.49]:1683 "EHLO josefsipek.net"
+	id S1755075AbaENNHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 09:07:10 -0400
+Received: from josefsipek.net ([64.9.206.49]:1695 "EHLO josefsipek.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751527AbaENNGg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 09:06:36 -0400
+	id S1751076AbaENNHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 09:07:09 -0400
 Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
-	by josefsipek.net (Postfix) with ESMTPSA id C93AA55654;
-	Wed, 14 May 2014 09:06:34 -0400 (EDT)
+	by josefsipek.net (Postfix) with ESMTPSA id 92AB855659;
+	Wed, 14 May 2014 09:07:08 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <CAP=KgsQMRZymUnojGqyZPdKsepfmHvuyUhAkWqrZ_GnybgMqxA@mail.gmail.com>
+In-Reply-To: <CAP=KgsRrtkRZB24CebZsunE=Mc55+NNjoGKLxCPa=KY-GDJ-+w@mail.gmail.com>
 User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248914>
 
-On Wed, May 14, 2014 at 10:56:18AM +0200, Per Cederqvist wrote:
-> On Wed, May 14, 2014 at 12:09 AM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> > On Tue, May 13, 2014 at 10:30:52PM +0200, Per Cederqvist wrote:
-> >> The 'echo %s' construct sometimes processes escape sequences.  (This
-> >
-> > %s?  Should this be $s?
-> 
-> Yes. Will fix that typo in v3 of the patch series.
-
-ok, Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
-
->     /ceder
-> 
-> > Otherwise, looks good.
-> >
-> >> happens, for instance, under Ubuntu 14.04 when /bin/sh is actually
-> >> dash.)  We don't want that to happen when we are importing commits, so
-> >> use 'printf %s "$s"' instead.
+On Wed, May 14, 2014 at 11:27:19AM +0200, Per Cederqvist wrote:
+> On Tue, May 13, 2014 at 11:41 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> > On Tue, May 13, 2014 at 10:31:01PM +0200, Per Cederqvist wrote:
+> >> This makes it easier to script operations on the entire queue, for
+> >> example run the test suite on each patch in the queue:
 > >>
-> >> (The -E option of bash that explicitly disables backslash expansion is
-> >> not portable; it is not supported by dash.)
+> >>     guilt pop -a;while guilt push; do make test||break; done
+> >>
+> >> This brings "guilt push" in line with the push operation in Mercurial
+> >> Queues (hg qpush), which fails when there are no patches to apply.
+> >>
+> >> Updated the test suite.
+> >>
+> >> "guilt push -a" still does not fail.  (It successfully manages to
+> >> ensure that all patches are pushed, even if it did not have to do
+> >> anything to make it so.)
 > >>
 > >> Signed-off-by: Per Cederqvist <cederp@opera.com>
 > >> ---
-> >>  guilt-import-commit  |  2 +-
-> >>  regression/t-034.out | 14 +++++++-------
-> >>  2 files changed, 8 insertions(+), 8 deletions(-)
+> >>  guilt-push           | 19 ++++++-----
+> >>  regression/t-020.out | 89 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+> >>  regression/t-020.sh  | 13 +++++++-
+> >>  3 files changed, 113 insertions(+), 8 deletions(-)
+> > ...
+> >> diff --git a/regression/t-020.sh b/regression/t-020.sh
+> >> index 906aec6..0f9f85d 100755
+> >> --- a/regression/t-020.sh
+> >> +++ b/regression/t-020.sh
+> >> @@ -26,6 +26,17 @@ guilt series | while read n ; do
+> >>  done
 > >>
-> >> diff --git a/guilt-import-commit b/guilt-import-commit
-> >> index 6260c56..45f2404 100755
-> >> --- a/guilt-import-commit
-> >> +++ b/guilt-import-commit
-> >> @@ -30,7 +30,7 @@ for rev in `git rev-list $rhash`; do
+> >>  #
+> >> +# pushing when there is nothing to push
+> >> +#
+> >> +
+> >> +shouldfail guilt push
+> >> +cmd guilt push -a
+> >> +
+> >> +cmd list_files
+> >> +
+> >> +cmd git log -p
+> >
+> > I don't particularly care for the git-log.  Otherwise it looks good.
+> >
+> > Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+> 
+> In my defense, I was just continuing the pattern already
+> established in that file. Anyhow, I'll add a new commit to
+> the patch series that removes all "git log -p" from all tests.
+> (They are present in both t-020.sh and t-021.sh.)
+
+Sounds good.  Thanks,
+
+Jeff.
+
+>     /ceder
+> 
+> >> +
+> >> +#
+> >>  # pop all
+> >>  #
+> >>  cmd guilt pop --all
+> >> @@ -61,7 +72,7 @@ cmd guilt pop --all
 > >>
-> >>       # Try to convert the first line of the commit message to a
-> >>       # valid patch name.
-> >> -     fname=`echo $s | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
-> >> +     fname=`printf %s "$s" | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
-> >>                       -e "s/['\\[{}]//g" -e 's/]//g' -e 's/\*/-/g' \
-> >>                       -e 's/\?/-/g' -e 's/\.\.\.*/./g' -e 's/^\.//' \
-> >>                       -e 's/\.patch$//' -e 's/\.$//' | tr A-Z a-z`
-> >> diff --git a/regression/t-034.out b/regression/t-034.out
-> >> index 7bc9459..bda4399 100644
-> >> --- a/regression/t-034.out
-> >> +++ b/regression/t-034.out
-> >> @@ -236,7 +236,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
-> >>  About to begin conversion...
-> >>  Current head: 2a8b1889aa5066193bac978e6bf5073ffcfa6541
-> >>  Converting 2a8b1889 as can-have-embedded-single-slashes
-> >> -Converting 0a46f8fa as backslash-isorbidden
-> >> +Converting 0a46f8fa as backslash-is-forbidden
-> >>  Converting aedb74fd as x
-> >>  Converting 30187ed0 as cannot@have@the@sequence@at-brace
-> >>  Converting 106e8e5a as cannot_end_in_
-> >> @@ -300,7 +300,7 @@ Applying patch..cannot@have@the@sequence@at-brace.patch
-> >>  Patch applied.
-> >>  Applying patch..x.patch
-> >>  Patch applied.
-> >> -Applying patch..backslash-isorbidden.patch
-> >> +Applying patch..backslash-is-forbidden.patch
-> >>  Patch applied.
-> >>  Applying patch..can-have-embedded-single-slashes.patch
-> >>  Patch applied.
-> >> @@ -311,7 +311,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
-> >>
-> >>      Can/have/embedded/single/slashes
-> >>
-> >> -commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-isorbidden.patch)
-> >> +commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-is-forbidden.patch)
-> >>  Author: Author Name <author@email>
-> >>  Date:   Mon Jan 1 00:00:00 2007 +0000
-> >>
-> >> @@ -518,8 +518,6 @@ d .git/patches/master
-> >>  d .git/refs/patches
-> >>  d .git/refs/patches/master
-> >>  f 06beca7069b9e576bd431f65d13862ed5d3e2a0f  .git/patches/master/ctrlisforbidden.patch
-> >> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/series
-> >> -f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/status
-> >>  f 09b7e9be44ae5ec3a4bb30f5ee9d4ebc2c042f64  .git/patches/master/two_consecutive_dots_(.)_is_forbidden.patch
-> >>  f 0b971c9a17aeca2319c93d700ffd98acc2a93451  .git/patches/master/question-mark-is-forbidden.patch
-> >>  f 2b8392f63d61efc12add554555adae30883993cc  .git/patches/master/cannot-end-in-slash-.patch
-> >> @@ -529,7 +527,7 @@ f 34e07c584032df137f19bdb66d93f316f00a5ac8  .git/patches/master/tildeisforbidden
-> >>  f 49bab499826b63deb2bd704629d60c7268c57aee  .git/patches/master/the_sequence_-._is_forbidden.patch
-> >>  f 5bcddb8ccb6e6e5e8a61e9e56cb2e0f70cbab2f5  .git/patches/master/cannot@have@the@sequence@at-brace.patch
-> >>  f 637b982fe14a240de181ae63226b27e0c406b3dc  .git/patches/master/asterisk-is-forbidden.patch
-> >> -f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-isorbidden.patch
-> >> +f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-is-forbidden.patch
-> >>  f 7b103c3c7ae298cd2334f6f49da48bae1424f77b  .git/patches/master/crisalsoforbidden.patch
-> >>  f 9b810b8c63779c51d2e7f61ab59cd49835041563  .git/patches/master/x.patch
-> >>  f a22958d9ae9976fd7b2b5a9d0bcd44bf7ad9b08a  .git/patches/master/caretisforbidden.patch
-> >> @@ -537,6 +535,8 @@ f ab325bf5a432937fc6f231d3e8a773a62d53952b  .git/patches/master/multiple-slashes
-> >>  f cb9cffbd4465bddee266c20ccebd14eb687eaa89  .git/patches/master/delisforbidden.patch
-> >>  f d0885a1a1fdee0fd1e4fedce3f7acd3100540bc4  .git/patches/master/openbracketisforbidden.patch
-> >>  f d2903523fb66a346596eabbdd1bda4e52b266440  .git/patches/master/check-multiple-.-dots-.-foo.patch
-> >> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/series
-> >> +f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/status
-> >>  f dfc11f76394059909671af036598c5fbe33001ba  .git/patches/master/space_is_forbidden.patch
-> >>  f e47474c52d6c893f36d0457f885a6dd1267742bb  .git/patches/master/colon_is_forbidden.patch
-> >>  f e7a5f8912592d9891e6159f5827c8b4f372cc406  .git/patches/master/the_sequence_.lock-_is_forbidden.patch
-> >> @@ -548,7 +548,7 @@ r 1626a11d979a1e9e775c766484172212277153df  .git/refs/patches/master/asterisk-is
-> >>  r 3a0d5ccef0359004fcaa9cee98fbd6a2c4432e74  .git/refs/patches/master/tildeisforbidden.patch
-> >>  r 434e07cacdd8e7eb4723e67cb2d100b3a4121a3a  .git/refs/patches/master/can-have-embedded-single-slashes.patch
-> >>  r 74df14ab3a0ec9a0382998fbf167ebb1b0a36c6a  .git/refs/patches/master/question-mark-is-forbidden.patch
-> >> -r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-isorbidden.patch
-> >> +r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-is-forbidden.patch
-> >>  r 96a3e92c4df85f52362ce4f6d31983c462db9ae9  .git/refs/patches/master/a-component-may-not-end-in-foolock.patch
-> >>  r 9fc9677b61880f9159838e89f714893e0a2fcafb  .git/refs/patches/master/delisforbidden.patch
-> >>  r a275ed5d7f10ea88c986852ee95a7d5a61663b5f  .git/refs/patches/master/cannot@have@the@sequence@at-brace.patch
+> >>  npatches=`guilt series | wc -l`
+> >>  for n in `_seq -2 $npatches`; do
+> >> -     if [ $n -ge 0 ]; then
+> >> +     if [ $n -gt 0 ]; then
+> >>               cmd guilt push -n $n
+> >>       else
+> >>               shouldfail guilt push -n $n
 > >> --
 > >> 1.8.3.1
 > >>
 > >
 > > --
-> > I have always wished for my computer to be as easy to use as my telephone;
-> > my wish has come true because I can no longer figure out how to use my
-> > telephone.
-> >                 - Bjarne Stroustrup
+> > Evolution, n.:
+> >   A hypothetical process whereby infinitely improbable events occur with
+> >   alarming frequency, order arises from chaos, and no one is given credit.
 
 -- 
-Real Programmers consider "what you see is what you get" to be just as bad a
-concept in Text Editors as it is in women. No, the Real Programmer wants a
-"you asked for it, you got it" text editor -- complicated, cryptic,
-powerful, unforgiving, dangerous.
+UNIX is user-friendly ... it's just selective about who its friends are
