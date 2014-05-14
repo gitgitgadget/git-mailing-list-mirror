@@ -1,176 +1,244 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 21/31] refs.c allow multiple updates of the same ref in a transaction
-Date: Wed, 14 May 2014 15:13:20 -0700
-Message-ID: <1400105610-21194-22-git-send-email-sahlberg@google.com>
+Subject: [PATCH 09/31] refs.c: allow multiple reflog updates during a single transaction
+Date: Wed, 14 May 2014 15:13:08 -0700
+Message-ID: <1400105610-21194-10-git-send-email-sahlberg@google.com>
 References: <1400105610-21194-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 15 00:14:53 2014
+X-From: git-owner@vger.kernel.org Thu May 15 00:15:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkhRr-00088M-Qw
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:14:52 +0200
+	id 1WkhS7-0000IL-Nv
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:15:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753676AbaENWOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 18:14:08 -0400
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:61177 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753448AbaENWNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 18:13:40 -0400
-Received: by mail-vc0-f202.google.com with SMTP id hr9so443085vcb.5
-        for <git@vger.kernel.org>; Wed, 14 May 2014 15:13:39 -0700 (PDT)
+	id S1753411AbaENWNh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 18:13:37 -0400
+Received: from mail-ob0-f201.google.com ([209.85.214.201]:64178 "EHLO
+	mail-ob0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753378AbaENWNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 18:13:36 -0400
+Received: by mail-ob0-f201.google.com with SMTP id wn1so56968obc.2
+        for <git@vger.kernel.org>; Wed, 14 May 2014 15:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vASTXXpMCIJcN2OP6AC/hiA9e+n5spvOHAQIlzd1obI=;
-        b=LbzKxW7uSaHkSy58QIEvhbZ3IvNKsA8z0yfctcTQuAfFf8+XYOlUFhmA/ZcKN3/pwB
-         GNiGp2z+wDKEZEycd40mwLtjhNbF8v/P5Vela9v5Lw0L+XHGPtsmNXwzaC6E4S7cYb19
-         Pp4x5SHDs1ooT5ODWcIx8s10VXmrhdYZUjDm8vDrJIqmUcr+Sf2UUhF2JVf+cyWr1MPh
-         BPagLh4+FplAQwlTF92Ji52OBShl7vvsJnexXS4GKl2FBsN4A2QDw3IpcO+V49SOVAiY
-         ftElYLP+r/JVCDMccGhMQ8GO3zjban4N/67rc1uTVAw6Y8QlGJsNtOV7irfe+32Ei0uD
-         NbIQ==
+        bh=w369WeX1uvJDX62+AyNvZ6ozZZbKoHQcRdPjT8rmTxo=;
+        b=BO53s+xtDOaqM7ouzE57xP8yqzI3ttPWktkUPVr0nRVjz6WGBePCGp/EFpeuGwY26G
+         Pd4LpwQsDK74hgEwozHoCher1j1p8fFV4fjky8WB1PRmNDrAG/jwZ6sMYhANqHPLbVZc
+         wq1pZZTiciA8vyw/mQJioQGWE7QNLnK9+Go1d2Gtn2Pjykf5EtxSzqw6PVDrb20YqITl
+         +6QdjbfdrJHvwQrmEYVVYLmchGomsghtiL1Oly+mEcVQUx0Eggra9XF4DIhUFdzxJwHZ
+         I3UdEPUYOcVnxwW+XM5P3DXzztV0Cxq0GlKvCxgZAjYBm0eAlr398Vo70nk3TRVI97yJ
+         8kVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=vASTXXpMCIJcN2OP6AC/hiA9e+n5spvOHAQIlzd1obI=;
-        b=grNzcPEcO3OF4HllmXS4k14Bwb+6BpZDkDLxaAxciwEElUaH8fv0VHwFQk09TbdmLD
-         crObPXbVW7/p1z2Mi8qL8zeJlEWoJjs80//8bN4+6kOw0gz1Xv/J+wBgZ/zDwpgugXzb
-         GG/YoXsNT/BrLvIbC5iSkeL+EzCnesqXxkSXoQzkpAIsy3jacuANpAMAlgqcK09EJO98
-         1YfNL5hXfLSXU6ZHKd56azIGwDxzhzCiJTRnqDcRRBsnUCm2XQlQ6EWn5BGKNkmvnnAP
-         Sa9tODwZ+LVIrroN2bNpUVVJCaJ0pPM5ZutTmfLO2UYzs3I5fWG9WlINtzTOPrQNHMIV
-         BaHg==
-X-Gm-Message-State: ALoCoQn/ZMQ1iUAQWRju8goUg0Mr+F8pT7YGPhf+gLxScY6P1bY9hGd/0rSTCeJ3FHHYaBCD0Bf1
-X-Received: by 10.236.128.195 with SMTP id f43mr2639475yhi.45.1400105619612;
-        Wed, 14 May 2014 15:13:39 -0700 (PDT)
+        bh=w369WeX1uvJDX62+AyNvZ6ozZZbKoHQcRdPjT8rmTxo=;
+        b=mzfUa+Y1tPX98+Ba3MOg/9LSXWv6BjZ/AHpF8WeFU80GPCBBDPgsGhmnDsY+znk+3w
+         qljXPiW7qVgvVPljcYNVoPjJy9kvZlIfRnYcOd+nGdiVVeWA0wLj/hjFXgzjdvuf8t6O
+         Tmw67aH7t+ssVT1/YcFF21SvmBhXn8E99d+f6pTMO43qUL/eNhnUiyH0bEIc+5XjDW1u
+         mH13fm67kPD0Ck0jam9XHxiRlKpsFip/R3NgBpPcXA0QYc3PIWQOiIDI92aUTYkhvNtD
+         Va+QZ+yxCCuCiYu9+0inEitI3ATXE0NX6AEDsKu9/B5dv4/nQdNA7hRGauOm3HHrjG6p
+         kOBw==
+X-Gm-Message-State: ALoCoQkoYLpo8u5lHqKriI+tp7LAoOV45Wee5g60RqRrJ1tEVtTiLHRU0qatcK6ESd2Tl/Dl39dn
+X-Received: by 10.50.130.102 with SMTP id od6mr1169546igb.0.1400105615553;
+        Wed, 14 May 2014 15:13:35 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id y50si151871yhk.4.2014.05.14.15.13.39
+        by gmr-mx.google.com with ESMTPS id y50si151864yhk.4.2014.05.14.15.13.35
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 14 May 2014 15:13:39 -0700 (PDT)
+        Wed, 14 May 2014 15:13:35 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 5765B31C25B;
-	Wed, 14 May 2014 15:13:39 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 55C7231C1F8;
+	Wed, 14 May 2014 15:13:35 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 39C73E038E; Wed, 14 May 2014 15:13:39 -0700 (PDT)
+	id 162D8E038E; Wed, 14 May 2014 15:13:35 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.506.g3739a35
 In-Reply-To: <1400105610-21194-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249027>
 
-Allow multiple updates of a ref in the same transaction as long as
-each update has have_old and old_sha1 matches the new_sha1 of the
-previous update.
+Allow to make multiple reflog updates to the same ref during a transaction.
+This means we only need to lock the reflog once, during the first update that
+touches the reflog, and that all further updates can just write the reflog
+entry since the reflog is already locked.
 
-Add a test that verifies that a valid sequence such as
-  create ref a
-  update ref b a
-  update ref c b
-works and a test that an invalid sequence such as this still fails:
-  update ref a c
-  update ref b b
-  update ref c c
+This allows us to write code such as:
+
+t = transaction_begin()
+transaction_reflog_update(t, "foo", REFLOG_TRUNCATE, NULL);
+loop-over-somehting...
+   transaction_reflog_update(t, "foo", 0, <message>);
+transaction_commit(t)
+
+where we first truncate the reflog and then build the new content one line at a
+time.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c                | 23 +++++++++++++++++------
- t/t1400-update-ref.sh | 23 +++++++++++++++++++++--
- 2 files changed, 38 insertions(+), 8 deletions(-)
+ refs.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 49 insertions(+), 9 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 76cab6e..87cdd91 100644
+index a3f60ad..e7ede03 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3455,12 +3455,6 @@ int transaction_update_sha1(struct ref_transaction *transaction,
- 	if (update->lock)
- 		return 0;
+@@ -37,6 +37,10 @@ static inline int bad_ref_char(int ch)
+  *  need to lock the loose ref during the transaction.
+  */
+ #define REF_ISPACKONLY	0x0200
++/** Only the first reflog update needs to lock the reflog file. Further updates
++ *  just use the lock taken by the first update.
++ */
++#define UPDATE_REFLOG_NOLOCK 0x0300
  
--	/* If we could not lock the ref it means we either collided with a
--	   different command or that we tried to perform a second update to
--	   the same ref from within the same transaction.
--	*/
--	transaction->status = REF_TRANSACTION_ERROR;
--
- 	/* -1 is the update we just added. Start at -2 and find the most recent
- 	   previous update for this ref.
- 	*/
-@@ -3472,6 +3466,23 @@ int transaction_update_sha1(struct ref_transaction *transaction,
- 			    update->refname))
- 			break;
- 	}
-+	/* If the current update has_old==1 and old_sha1 matches the new_sha1
-+	 * of the previous update then merge the two updates into one.
-+	 */
-+	if (i >= 0 && update->have_old && !hashcmp(update->old_sha1,
-+			   transaction->updates[i]->new_sha1)) {
-+		hashcpy(transaction->updates[i]->new_sha1, update->new_sha1);
-+		transaction->nr--;
-+		free((char *)transaction->updates[transaction->nr]->msg);
-+		free(transaction->updates[transaction->nr]);
-+		return 0;
+ /*
+  * Try to read one refname component from the front of refname.  Return
+@@ -3252,6 +3256,7 @@ enum transaction_update_type {
+        UPDATE_LOG = 1,
+ };
+ 
++
+ /**
+  * Information needed for a single ref update.  Set new_sha1 to the
+  * new value or to zero to delete the ref.  To check the old value
+@@ -3262,7 +3267,7 @@ struct ref_update {
+ 	enum transaction_update_type update_type;
+ 	unsigned char new_sha1[20];
+ 	unsigned char old_sha1[20];
+-	int flags; /* REF_NODEREF? */
++	int flags; /* REF_NODEREF? or private flags */
+ 	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
+ 	struct ref_lock *lock;
+ 	int type;
+@@ -3270,8 +3275,9 @@ struct ref_update {
+ 
+ 	/* used by reflog updates */
+ 	int reflog_fd;
+-	struct lock_file reflog_lock;
++	struct lock_file *reflog_lock;
+ 	const char *committer;
++	struct ref_update *orig_update; /* For UPDATE_REFLOG_NOLOCK */
+ 
+ 	const char refname[FLEX_ARRAY];
+ };
+@@ -3349,8 +3355,23 @@ int transaction_update_reflog(struct ref_transaction *transaction,
+ 			      int flags)
+ {
+ 	struct ref_update *update;
++	int i;
+ 
+ 	update = add_update(transaction, refname, UPDATE_LOG);
++	update->flags = flags;
++	for (i = 0; i < transaction->nr - 1; i++) {
++		if (transaction->updates[i]->update_type != UPDATE_LOG)
++			continue;
++		if (!strcmp(transaction->updates[i]->refname,
++			    update->refname)) {
++			update->flags |= UPDATE_REFLOG_NOLOCK;
++			update->orig_update = transaction->updates[i];
++			break;
++		}
 +	}
-+	/* If we could not lock the ref it means we either collided with a
-+	   different command or that we tried to perform a second update to
-+	   the same ref from within the same transaction.
-+	*/
-+	transaction->status = REF_TRANSACTION_ERROR;
++	if (!(update->flags & UPDATE_REFLOG_NOLOCK))
++	  update->reflog_lock = xcalloc(1, sizeof(struct lock_file));
 +
- 	if (err)
- 		if (i >= 0) {
- 			const char *str =
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index f9b7bef..078cd4b 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -446,7 +446,7 @@ test_expect_success 'stdin fails option with unknown name' '
- 	grep "fatal: option unknown: unknown" err
- '
+ 	hashcpy(update->new_sha1, new_sha1);
+ 	hashcpy(update->old_sha1, old_sha1);
+ 	update->reflog_fd = -1;
+@@ -3366,7 +3387,6 @@ int transaction_update_reflog(struct ref_transaction *transaction,
+ 	}
+ 	if (msg)
+ 		update->msg = xstrdup(msg);
+-	update->flags = flags;
  
--test_expect_success 'stdin fails with duplicate refs' '
-+test_expect_success 'stdin fails with duplicate create refs' '
- 	cat >stdin <<-EOF &&
- 	create $a $m
- 	create $b $m
-@@ -464,6 +464,25 @@ test_expect_success 'stdin create ref works' '
- 	test_cmp expect actual
- '
+ 	return 0;
+ }
+@@ -3479,7 +3499,7 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ 					struct strbuf *err)
+ {
+ 	int i;
+-	for (i = 1; i < n; i++)
++	for (i = 1; i < n; i++) {
+ 		if (updates[i]->update_type != UPDATE_SHA1)
+ 			continue;
+ 		if (!strcmp(updates[i - 1]->refname, updates[i]->refname)) {
+@@ -3490,6 +3510,7 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
  
-+test_expect_success 'stdin succeeds with correctly chained update refs' '
-+	cat >stdin <<-EOF &&
-+	update $a $A $m
-+	update $a $B $A
-+	update $a $C $B
-+	EOF
-+	git update-ref --stdin <stdin
-+'
+ 			return 1;
+ 		}
++	}
+ 	return 0;
+ }
+ 
+@@ -3558,10 +3579,15 @@ int transaction_commit(struct ref_transaction *transaction,
+ 
+ 		if (update->update_type != UPDATE_LOG)
+ 			continue;
++		if (update->flags & UPDATE_REFLOG_NOLOCK) {
++			update->reflog_fd = update->orig_update->reflog_fd;
++			update->reflog_lock = update->orig_update->reflog_lock;
++			continue;
++		}
+ 		update->reflog_fd = hold_lock_file_for_append(
+-					&update->reflog_lock,
++					update->reflog_lock,
+ 					git_path("logs/%s", update->refname),
+-					0);
++					LOCK_NODEREF);
+ 		if (update->reflog_fd < 0) {
+ 			const char *str = "Cannot lock reflog for '%s'.";
+ 
+@@ -3630,20 +3656,22 @@ int transaction_commit(struct ref_transaction *transaction,
+ 						    update->new_sha1,
+ 						    update->committer,
+ 						    update->msg)) {
+-			rollback_lock_file(&update->reflog_lock);
++			rollback_lock_file(update->reflog_lock);
+ 			update->reflog_fd = -1;
+ 		}
+ 	}
+ 
+-	/* Unock all reflog files */
++	/* Commit all reflog files */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
+ 		if (update->update_type != UPDATE_LOG)
+ 			continue;
++		if (update->flags & UPDATE_REFLOG_NOLOCK)
++			continue;
+ 		if (update->reflog_fd == -1)
+ 			continue;
+-		if (commit_lock_file(&update->reflog_lock)) {
++		if (commit_lock_file(update->reflog_lock)) {
+ 			update->reflog_fd = -1;
+ 		}
+ 	}
+@@ -3654,6 +3682,18 @@ int transaction_commit(struct ref_transaction *transaction,
+ 	clear_loose_ref_cache(&ref_cache);
+ 
+ cleanup:
++	/* Rollback any reflog files that are still open */
++	for (i = 0; i < n; i++) {
++		struct ref_update *update = updates[i];
 +
-+test_expect_success 'stdin fails with incorrectly chained update refs' '
-+	cat >stdin <<-EOF &&
-+	update $a $A $C
-+	update $a $B $B
-+	update $a $B $B
-+	EOF
-+	test_must_fail git update-ref --stdin <stdin &&
-+	grep "fatal: Multiple updates for ref '"'"'$a'"'"' not allowed." err
-+'
-+
- test_expect_success 'stdin succeeds with quoted argument' '
- 	git update-ref -d $a &&
- 	echo "create $a \"$m\"" >stdin &&
-@@ -786,7 +805,7 @@ test_expect_success 'stdin -z fails option with unknown name' '
- 	grep "fatal: option unknown: unknown" err
- '
++		if (update->update_type != UPDATE_LOG)
++			continue;
++		if (update->flags & UPDATE_REFLOG_NOLOCK)
++			continue;
++		if (update->reflog_fd == -1)
++			continue;
++		rollback_lock_file(update->reflog_lock);
++	}
+ 	transaction->status = ret ? REF_TRANSACTION_ERROR
+ 	  : REF_TRANSACTION_CLOSED;
  
--test_expect_success 'stdin -z fails with duplicate refs' '
-+test_expect_success 'stdin -z fails with duplicate create refs' '
- 	printf $F "create $a" "$m" "create $b" "$m" "create $a" "$m" >stdin &&
- 	test_must_fail git update-ref -z --stdin <stdin 2>err &&
- 	grep "fatal: Multiple updates for ref '"'"'$a'"'"' not allowed." err
 -- 
 2.0.0.rc3.506.g3739a35
