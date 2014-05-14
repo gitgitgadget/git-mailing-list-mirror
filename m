@@ -1,69 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Stepan Kasal <kasal@ucw.cz>
 Subject: Re: [PATCH] git grep -O -i: if the pager is 'less', pass
  the '-i' option
-Date: Wed, 14 May 2014 11:26:54 -0700
-Message-ID: <20140514182654.GA9218@google.com>
-References: <20140514155010.GA4592@camelia.ucw.cz>
- <xmqq7g5okztp.fsf@gitster.dls.corp.google.com>
+Date: Wed, 14 May 2014 20:35:27 +0200
+Organization: <)><
+Message-ID: <20140514183527.GA5422@camelia.ucw.cz>
+References: <20140514155010.GA4592@camelia.ucw.cz> <xmqq7g5okztp.fsf@gitster.dls.corp.google.com> <20140514182654.GA9218@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	msysGit <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBD6LRKOE4AIRB4XKZ2NQKGQEUHH3HGQ@googlegroups.com Wed May 14 20:27:00 2014
-Return-path: <msysgit+bncBD6LRKOE4AIRB4XKZ2NQKGQEUHH3HGQ@googlegroups.com>
+Cc: Junio C Hamano <gitster@pobox.com>, GIT Mailing-list <git@vger.kernel.org>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        msysGit <msysgit@googlegroups.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: msysgit+bncBCU63DXMWULRB4POZ2NQKGQEL3E66HY@googlegroups.com Wed May 14 20:35:33 2014
+Return-path: <msysgit+bncBCU63DXMWULRB4POZ2NQKGQEL3E66HY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ob0-f184.google.com ([209.85.214.184])
+Received: from mail-wg0-f57.google.com ([74.125.82.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBD6LRKOE4AIRB4XKZ2NQKGQEUHH3HGQ@googlegroups.com>)
-	id 1WkdtL-0000ub-Ba
-	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 20:26:59 +0200
-Received: by mail-ob0-f184.google.com with SMTP id vb8sf591702obc.21
-        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 11:26:58 -0700 (PDT)
+	(envelope-from <msysgit+bncBCU63DXMWULRB4POZ2NQKGQEL3E66HY@googlegroups.com>)
+	id 1Wke1a-0003jB-3V
+	for gcvm-msysgit@m.gmane.org; Wed, 14 May 2014 20:35:30 +0200
+Received: by mail-wg0-f57.google.com with SMTP id l18sf226693wgh.2
+        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 11:35:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
+         :in-reply-to:organization:user-agent:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type:content-disposition;
-        bh=GXPIVHRNlWyHRaNHuShcBG4sQwnAM+FVGnLguR4H670=;
-        b=ciPcaDARV6tn5HkORRVfZejkniu2LfD574AOOixi+BjsR5hcx3B1Rf7ZOKSeIkpOLm
-         OuBe84rqf/5T9OV1yjWjwYJaQ+OfIzNP0aLrqF+N1H8y6e/7RgyAiGYfCC4iXtuqdUUR
-         l0mZqOmTK+H33zMERLqBD3xwsTZjnCb+1Nv0sX1uOgI+qE45cx5jo875n5OMQyB38fE2
-         PWfv0G7/MA4LWmZ5AP7TvxD9PALLDJSaspHhbBfFOjib41dqJqYQ11VDpI+MY3uY3L40
-         yP8Z6s2WT6crESNW95COjqY2jNOsJ0ityAv3JRsNkyTVdTjZVBzfWV+uSmTD2OgZT89c
-         7Gww==
-X-Received: by 10.50.112.135 with SMTP id iq7mr174105igb.0.1400092018494;
-        Wed, 14 May 2014 11:26:58 -0700 (PDT)
+        bh=VF9jhvy7Y+TibKRHhtoRODzAe4rnmK/ov3dG3sDvLtA=;
+        b=fi5Wb/gbGIqlQ1yvgpWefZN77MPFMdSM2UuzldsBVQ95HXySt8n/cXcdrohgeJah7O
+         j7aFZ53KiPwXvHgCutMx+ANRCXQtupdJEiQmEARUuAReSxu4eYUiZIz3jpciLkb366hH
+         WcL9/EPpiGfELzwuiyhGquq+W+DuhFqArh2RuskDPA/SbvzMxMOl4XOoF/FXexdNu/7u
+         Mq3IMROV+Dsbue2ut3U+xQUjenWFPMo3XEVoIjjL8vT2ZTuaVz6+FHXxQs3B4NFImLEn
+         vMual3DmEhH6FF1NXRRXEz5GP6O+Zjlt4fKkxV4GhL6VIXUiH/Ket/J9VmtOzW5Ns3XI
+         8wpQ==
+X-Received: by 10.152.6.168 with SMTP id c8mr31121laa.27.1400092529736;
+        Wed, 14 May 2014 11:35:29 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.154.99 with SMTP id vn3ls2943350igb.39.gmail; Wed, 14 May
- 2014 11:26:58 -0700 (PDT)
-X-Received: by 10.50.73.132 with SMTP id l4mr18046427igv.5.1400092017996;
-        Wed, 14 May 2014 11:26:57 -0700 (PDT)
-Received: from mail-pb0-x231.google.com (mail-pb0-x231.google.com [2607:f8b0:400e:c01::231])
-        by gmr-mx.google.com with ESMTPS id jx10si582694pbd.2.2014.05.14.11.26.57
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 14 May 2014 11:26:57 -0700 (PDT)
-Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:400e:c01::231 as permitted sender) client-ip=2607:f8b0:400e:c01::231;
-Received: by mail-pb0-f49.google.com with SMTP id jt11so2000687pbb.36
-        for <msysgit@googlegroups.com>; Wed, 14 May 2014 11:26:57 -0700 (PDT)
-X-Received: by 10.68.194.134 with SMTP id hw6mr6319366pbc.49.1400092017872;
-        Wed, 14 May 2014 11:26:57 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id is5sm4757775pbb.8.2014.05.14.11.26.56
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 14 May 2014 11:26:57 -0700 (PDT)
-In-Reply-To: <xmqq7g5okztp.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Original-Sender: jrnieder@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:400e:c01::231
- as permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Received: by 10.152.30.73 with SMTP id q9ls20855lah.23.gmail; Wed, 14 May 2014
+ 11:35:28 -0700 (PDT)
+X-Received: by 10.112.168.198 with SMTP id zy6mr448777lbb.15.1400092528795;
+        Wed, 14 May 2014 11:35:28 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id u49si896336eeo.1.2014.05.14.11.35.28
+        for <msysgit@googlegroups.com>;
+        Wed, 14 May 2014 11:35:28 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 8970F1C00BE;
+	Wed, 14 May 2014 20:35:28 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s4EIZSij005443;
+	Wed, 14 May 2014 20:35:28 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s4EIZRKJ005442;
+	Wed, 14 May 2014 20:35:27 +0200
+In-Reply-To: <20140514182654.GA9218@google.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -75,59 +75,17 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248933>
 
-Hi,
+Hello,
 
-Junio C Hamano wrote:
-> Stepan Kasal <kasal@ucw.cz> writes:
+On Wed, May 14, 2014 at 11:26:54AM -0700, Jonathan Nieder wrote:
+> But as is, it's an improvement, so (except that "-i" should be
+> replaced by "-I") it seems like a good change.
 
->> --- a/builtin/grep.c
->> +++ b/builtin/grep.c
->> @@ -897,6 +897,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
->>  		if (len > 4 && is_dir_sep(pager[len - 5]))
->>  			pager += len - 4;
->>  
->> +		if (opt.ignore_case && !strcmp("less", pager))
->> +			string_list_append(&path_list, "-i");
->
-> I have a feeling that this goes against the recent trend of not
-> mucking with the expectation of the users on their pagers, if I
-> recall correctly the arguments for dropping S from the default given
-> to an unconfigured LESS environment variable.
+indeed, "-I" would match the semantics of git-grep -i .
 
-It's just missing an explanation.
-
-When <command> happens to be the magic string "less", today
-
-	git grep -O<command> -e<pattern>
-
-helpfully passes +/<pattern> to less so you can navigate through
-the results within a file using the n and shift+n keystrokes.
-
-Alas, that doesn't do the right thing for a case-insensitive match.
-For that case we should pass --IGNORE-CASE to "less" so that n and
-shift+n can move between results ignoring case in the pattern.
-(That's -I, not -i, because it ought to work even when the pattern
-contains capital letters.)
-
-"git grep" has other options that affect interpretation of the pattern
-which this patch does not help with:
-
- * -v / --ignore-match: probably should disable this feature of -O.
- * -E / --extended-regexp
- * -P / --perl-regexp
- * -F / --fixed-strings: ideally would auto-escape regex specials.
- * -e<pattern1> --or -e<pattern2>
-
-And git grep -Ovi has a similar bug, for which the fix is to add
-\c to the pattern instead of passing an -I option.
-
-But as is, it's an improvement, so (except that "-i" should be
-replaced by "-I") it seems like a good change.
-
-Hope that helps,
-Jonathan
+Stepan
 
 -- 
 -- 
