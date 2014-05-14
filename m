@@ -1,233 +1,120 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Please pull the patch series "use the $( ... ) construct for command substitution"
-Date: Wed, 14 May 2014 19:14:58 +0200
-Message-ID: <vpqoaz0i8od.fsf@anie.imag.fr>
-References: <CA+EOSBk4YvQHTG=gRd1TF9gX0OgjLpjRidh7NAa9wmjr6bSkBQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t5539 fails on ubuntu for v2.0.0-rc2
+Date: Wed, 14 May 2014 10:11:11 -0700
+Message-ID: <xmqqiop8l1zk.fsf@gitster.dls.corp.google.com>
+References: <536A8FF8.7080909@fabiodalfonso.com>
+	<xmqqeh056z6q.fsf@gitster.dls.corp.google.com>
+	<20140508041423.GC26630@sigill.intra.peff.net>
+	<536B1DF4.5080109@fabiodalfonso.com>
+	<20140509155945.GG18197@sigill.intra.peff.net>
+	<xmqqy4yavewk.fsf@gitster.dls.corp.google.com>
+	<20140510140259.GA6836@sigill.intra.peff.net>
+	<20140514101440.GA10173@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 14 19:15:24 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Fabio D'Alfonso <fabio.dalfonso@fabiodalfonso.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 14 19:15:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkclx-0002pG-P4
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 19:15:18 +0200
+	id 1WkcmA-0003GQ-Lp
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 19:15:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756387AbaENRPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 13:15:08 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47599 "EHLO shiva.imag.fr"
+	id S1756082AbaENRPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 13:15:23 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55434 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754880AbaENRPC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 13:15:02 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s4EHEuYt006784
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 14 May 2014 19:14:56 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s4EHEwCi009593;
-	Wed, 14 May 2014 19:14:58 +0200
-In-Reply-To: <CA+EOSBk4YvQHTG=gRd1TF9gX0OgjLpjRidh7NAa9wmjr6bSkBQ@mail.gmail.com>
-	(Elia Pinto's message of "Wed, 14 May 2014 17:23:05 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 14 May 2014 19:14:57 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s4EHEuYt006784
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1400692497.07952@xgUK/5XGJ77G7KesM05jiQ
+	id S1756429AbaENROw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 13:14:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DEF09154E2;
+	Wed, 14 May 2014 13:14:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RDmwjQ29Wffce6vbAKwWClBed64=; b=vVCsSm
+	ICH49+Z8svpMihvVdcTjhgpS2HFokksC7npZgQSs81+yxQLZ7FyXz3Zn6er9RBzb
+	TjKQaI91diWbmbKAi4/Phyger7+qWQHVSt/eqWuMZXkM6rOawaXDhVeqWqH0JA0e
+	A/JXSLFbF6/jiBwnYENDJj3+w+7ZMU9CIXtnU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t3+nlSw7/8vQIYsQfOOYDtDDey2n8ESq
+	nPD4rEh/eP7k6NBNxXgXPp6fxOeLX+fIjvWB/Rq//uTw6/fUOBKY73nj1A+rWJ0R
+	a9pJXeZKk+OFvaxqwkrwqPB1jagusR2/fXnx/lpSxTRYglYDRYBBI1R1xkIM46CC
+	73/Pc1oT7q8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C85F5154DF;
+	Wed, 14 May 2014 13:14:51 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 39239151CB;
+	Wed, 14 May 2014 13:11:13 -0400 (EDT)
+In-Reply-To: <20140514101440.GA10173@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 14 May 2014 06:14:40 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C07AB37A-DB8A-11E3-87E7-9CEB01674E00-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248928>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> The following changes since commit 6308767f0bb58116cb405e1f4f77f5dfc1589920:
+> On Sat, May 10, 2014 at 10:02:59AM -0400, Jeff King wrote:
 >
+>> On Fri, May 09, 2014 at 02:08:27PM -0700, Junio C Hamano wrote:
+>> 
+>> > >   3. Just disable the http tests when run as root.
+>> > >
+>> > > I think I'd favor 3. But I'd like to be sure that being root is the
+>> > > problem.
+>> > 
+>> > I agree with both the conclusion and the precondition.
+>> 
+>> Here's the patch.
+>> 
+>> The problem starts in v1.9.2, not in v2.0.0, so it's not technically a
+>> regression in this cycle. And we are awfully late in the -rc period. But
+>> it is just a change in the test script, and one that seems rather
+>> unlikely to produce unexpected side effects. I'll leave it you whether
+>> you want to queue it for v2.0.0, or for the next maint release.
 >
->   Merge branch 'fc/prompt-zsh-read-from-file' (2014-05-13 11:53:14 -0700)
->
->
-> are available in the git repository at:
->
->
->   https://github.com/devzero2000/git-core.git  ep/shell-command-substitution-v4
+> Hrm, sorry, I was wrong about this. I had thought the
+> auto-network-testing had gone into v1.9.2, but it didn't. So this _is_ a
+> potential regression in v2.0.0. It's still relatively minor, affecting
+> only the test suite, so it can probably wait for post-v2.0.0 if you
+> don't want to do another -rc.
 
-There's a mis-replacement of multiple `..` `..` on the same line in
-t9300-fast-import.sh. I've sent you a pull request with a fixup.
+A bit more disturbing is that I did not get the impression that we
+know the exact reason why these http tests, especially the getwpuid
+call, fail for Fabio when run as root.  And if my impression is
+correct, then "do not run tests as root" applied as a "solution" to
+the failure report, would merely be sweeping the problem under the
+rug, even though it is a very good advice in general.
 
-I'm not sure about this one:
+Is it a bug in the server itself that it fails to do getpwuid, or is
+it because the system Fabio's on is somehow screwed up?
 
-commit e69c77e580d56d587381066f56027c8a596c237a
-Author: Elia Pinto <gitter.spiros@gmail.com>
-Date:   Wed May 14 03:28:11 2014 -0700
+Until the latter can be ruled out, we might be better off not doing
+anything, which may give interested parties an easier way to dig
+deeper into the real cause of getpwuid failing, no?  Such a digging
+may even result in a better solution (e.g. finding a specific
+pattern of misconfigured systems and stop tests only on them).
 
-    t9137-git-svn-dcommit-clobber-series.sh: use the $( ... ) construct for command substitution
-[...]
-@@ -38,20 +38,20 @@ test_expect_success 'some unrelated changes to git' "
-        "
- 
- test_expect_success 'change file but in unrelated area' "
--       test x\"\`sed -n -e 4p < file\`\" = x4 &&
--       test x\"\`sed -n -e 7p < file\`\" = x7 &&
-+       test x"$(sed -n -e 4p < file)" = x4 &&
-+       test x"$(sed -n -e 7p < file)" = x7 &&
-              ^
-            here
+Personally, I do not think running our tests as root is an
+interesting enough problem to warrant the effort from us to dig only
+to come up with such a "better solution", and I would be perfectly
+happy to apply the "do not run this test as root" patch, or even a
+broader "we do not let any test run as root, unless individual tests
+explicitly ask us to allow it" somewhere in test-lib.sh included by
+everybody.  That may sweep the issue under the rug as a side effect,
+but it is OK because it is not the primary mission of our tests to
+find issues in either httpd binaries or the system configuration
+that may cause the httpd server misbehave in the first place.
 
-We're inside " from the test_expect_success line. We used to have a
-literal " (because of the backslash), we now have a closing " because
-you removed the \. So, the sed command used to be protected by
-double-quotes, and it is now outside them. Compare:
-
-$ sh -c "echo \"\`date\`\""                 
-Wed May 14 18:47:54 MEST 2014
-$ sh -c "echo "$(date)""                    
-Wed
-
-In your case, it doesn't break because the expected output of sed
-contains no space, but that seems dangerous to me.
-
-I do not understand the use of the \ in front of the ` in the original
-code.
-
-The correct code should be
-
-	test x\"$(sed -n -e 4p < file)\" = x4 &&
-
-I guess.
-
-        perl -i.bak -p -e 's/^4\$/4444/' file &&
-        perl -i.bak -p -e 's/^7\$/7777/' file &&
--       test x\"\`sed -n -e 4p < file\`\" = x4444 &&
--       test x\"\`sed -n -e 7p < file\`\" = x7777 &&
-+       test x"$(sed -n -e 4p < file)" = x4444 &&
-+       test x"$(sed -n -e 7p < file)" = x7777 &&
-
-Likewise.
-
--               test x\"\`sed -n -e 4p < file\`\" = x4444 &&
--               test x\"\`sed -n -e 7p < file\`\" = x7777 &&
--               test x\"\`sed -n -e 58p < file\`\" = x5588 &&
--               test x\"\`sed -n -e 61p < file\`\" = x6611
-+               test x"$(sed -n -e 4p < file)" = x4444 &&
-+               test x"$(sed -n -e 7p < file)" = x7777 &&
-+               test x"$(sed -n -e 58p < file)" = x5588 &&
-+               test x"$(sed -n -e 61p < file)" = x6611
-
-Likewise.
-
-
-More or less the same issue with
-
-commit 020568b9c36c023810a3482b7b73bcadd6406a85
-Author: Elia Pinto <gitter.spiros@gmail.com>
-Date:   Mon Apr 28 05:49:50 2014 -0700
-
-    t9114-git-svn-dcommit-merge.sh: use the $( ... ) construct for command substitution
-[...]
-diff --git a/t/t9114-git-svn-dcommit-merge.sh b/t/t9114-git-svn-dcommit-merge.sh
-index fb41876..cf2e25f 100755
---- a/t/t9114-git-svn-dcommit-merge.sh
-+++ b/t/t9114-git-svn-dcommit-merge.sh
-@@ -68,8 +68,8 @@ test_expect_success 'setup git mirror and merge' '
- test_debug 'gitk --all & sleep 1'
- 
- test_expect_success 'verify pre-merge ancestry' "
--       test x\`git rev-parse --verify refs/heads/svn^2\` = \
--            x\`git rev-parse --verify refs/heads/merge\` &&
-+       test x\$(git rev-parse --verify refs/heads/svn^2\) = \
-+            x\$(git rev-parse --verify refs/heads/merge\) &&
-        git cat-file commit refs/heads/svn^ | grep '^friend$'
-        "
-
-I'm not sure what's the intent of the \ in front of ` in the original
-code, but changing it to $(...) changes the meaning:
-
-$ sh -c "echo \`date\`" 
-Wed May 14 18:58:19 MEST 2014
-$ sh -c "echo \$(date\)"
-sh: 1: Syntax error: end of file unexpected (expecting ")")
-
-I didn't investigate closely, but I'm getting test failures without your
-patch, and the script stops in the middle with it so it does break
-something.
-
-@@ -80,10 +80,10 @@ test_expect_success 'git svn dcommit merges' "
- test_debug 'gitk --all & sleep 1'
- 
- test_expect_success 'verify post-merge ancestry' "
--       test x\`git rev-parse --verify refs/heads/svn\` = \
--            x\`git rev-parse --verify refs/remotes/origin/trunk \` &&
--       test x\`git rev-parse --verify refs/heads/svn^2\` = \
--            x\`git rev-parse --verify refs/heads/merge\` &&
-+       test x\$(git rev-parse --verify refs/heads/svn\) = \
-+            x\$(git rev-parse --verify refs/remotes/origin/trunk \) &&
-+       test x\$(git rev-parse --verify refs/heads/svn^2\) = \
-+            x\$(git rev-parse --verify refs/heads/merge\) &&
-
-Likewise.
-
-
-commit 7e29ac501ce24aa5af3a50f839cd3ad176481a96
-Author: Elia Pinto <gitter.spiros@gmail.com>
-Date:   Wed Mar 26 04:48:40 2014 -0700
-
-    t9100-git-svn-basic.sh: use the $( ... ) construct for command substitution
-    
--test_expect_success 'able to dcommit to a subdirectory' "
-+test_expect_success 'able to dcommit to a subdirectory' '
-
-There is an actual change other than sed + review and trivial fix here.
-That makes the review harder. Such change should IMHO not be part of the
-same series.
-
--       git commit -m '/bar/d should be in the log' &&
-+       git commit -m "bar/d should be in the log" &&
-
-You lost a / here.
-
-        git svn dcommit -i bar &&
--       test -z \"\`git diff refs/heads/my-bar refs/remotes/bar\`\" &&
-+       test -z $(git diff refs/heads/my-bar refs/remotes/bar) &&
-
-Did you not loos the \"...\" whitespace protection here?
-
--       test -z \"\`git diff refs/heads/my-bar refs/remotes/bar\`\" &&
-+       test -z "$(git diff refs/heads/my-bar refs/remotes/bar)" &&
-
-That seems to be the correct way of doing what you tried right above.
-
-commit b438455b7b97d90a1b8da4ec4e9de0063c20f63c
-Author: Elia Pinto <gitter.spiros@gmail.com>
-Date:   Wed Mar 26 04:48:40 2014 -0700
-
-    t9107-git-svn-migrate.sh: use the $( ... ) construct for command substitution
-
-[...]
-
-@@ -75,7 +75,7 @@ test_expect_success 'multi-fetch works on partial urls + paths' "
-        for i in trunk a b tags/0.1 tags/0.2 tags/0.3; do
-                git rev-parse --verify refs/remotes/origin/\$i^0 >> refs.out || exit 1;
-            done &&
--       test -z \"\`sort < refs.out | uniq -d\`\" &&
-+       test -z \"\$(sort < refs.out | uniq -d\)\" &&
-
-Same problem as above, this \$( is broken.
-
-My advice: apply my small fix for multiple `...` `...`, and eject the
-other patches from the series for now, they are distracting reviewers.
-
-That should lead to a trivially-correct series with ~80 patches. Once
-this one is accepted, the 4 remaining patches can be fixed and reviewed
-more carefully (Cc Eric Wong <normalperson@yhbt.net> since the patches
-are about git-svn).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+So...
