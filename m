@@ -1,132 +1,179 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 0/4] remote-hg: more improvements
-Date: Thu, 15 May 2014 00:12:24 +0200
-Message-ID: <87egzwrovr.fsf@fencepost.gnu.org>
-References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
-	<xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
-	<536a83097302f_76ff7a52ec6c@nysa.notmuch>
-	<xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
-	<536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
-	<xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
-	<536ad9601b73b_3caaa612ecdc@nysa.notmuch>
-	<CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
-	<xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
-	<CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
-	<87mweku2pt.fsf@fencepost.gnu.org>
-	<CAGK7Mr5ezbTVyq2wr7kYWjab6V1srrYwkqSGjo1GuPnkSuGWTQ@mail.gmail.com>
-	<87iop8u1km.fsf@fencepost.gnu.org>
-	<CAGK7Mr4N5L+jRE0ykBHvopgGv1x4iNXAK+_94R5KhBxHHqMYmA@mail.gmail.com>
-	<87egzwtthf.fsf@fencepost.gnu.org>
-	<CAGK7Mr6XTxpeJLSqL8PZMS8w+YCqxLrC5wX-dg4BdEaW3QAYTA@mail.gmail.com>
-	<87a9aktqms.fsf@fencepost.gnu.org>
-	<CAGK7Mr7jhpizoHuA9NDnyNPy_rr8_R0m8-hCFO3CDn2Hbh3_pQ@mail.gmail.com>
-	<5373cfb744982_57c3bfb300a0@nysa.notmuch>
-	<87mwekrsap.fsf@fencepost.gnu.org>
-	<5373e2af9ae58_592416ad2f892@nysa.notmuch>
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH v3] git-show: fix 'git show -s' to not add extra terminator
+ after merge commit
+Date: Thu, 15 May 2014 01:12:45 +0300
+Message-ID: <20140514221245.GA22918@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 15 00:12:32 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu May 15 00:12:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkhPa-0003qD-N2
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:12:31 +0200
+	id 1WkhPz-0004bv-8P
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 00:12:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752660AbaENWM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 18:12:27 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:57126 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751407AbaENWM0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 18:12:26 -0400
-Received: from localhost ([127.0.0.1]:56167 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WkhPV-0001QS-8k; Wed, 14 May 2014 18:12:25 -0400
-Received: by lola (Postfix, from userid 1000)
-	id E5669E0BD9; Thu, 15 May 2014 00:12:24 +0200 (CEST)
-In-Reply-To: <5373e2af9ae58_592416ad2f892@nysa.notmuch> (Felipe Contreras's
-	message of "Wed, 14 May 2014 16:39:59 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1752775AbaENWMv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 18:12:51 -0400
+Received: from p3plsmtpa11-10.prod.phx3.secureserver.net ([68.178.252.111]:56279
+	"EHLO p3plsmtpa11-10.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751407AbaENWMu (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 May 2014 18:12:50 -0400
+Received: from wheezy.local ([82.181.158.170])
+	by p3plsmtpa11-10.prod.phx3.secureserver.net with 
+	id 1yCj1o0033gsSd601yCoCG; Wed, 14 May 2014 15:12:50 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249005>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249006>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+When git show -s is called for merge commit it prints extra newline
+after any merge commit. This differs from output for commits with one
+parent. Fix it by more thorough checking that diff output is disabled.
 
-> David Kastrup wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> 
->> > Philippe Vaucher wrote:
->> 
->> [...]
->> 
->> >> > Do you feel Felipe is in control of what you label bad behavior?  Do you
->> >> > feel you are in control over how you react to his behavior?
->> >> 
->> >> I feel that Felipe cannot control this (or decided not to),
->> >
->> > I am pretty much in control of my behavior. Those who know me
->> > personally know that I *never* get angry.
->> 
->> You are missing the point.  The point is not what effect your behavior
->> has on you but what it has on others.
->
-> If me saying "I do not believe in God" has a negative effect on Mark,
-> your answer seems to be "do not tell Mark the truth".
+The code in question exists since commit 3969cf7db1. The additional
+newline is really needed for cases when patch is requested, test
+t4013-diff-various.sh contains cases which can demonstrate behavior when
+the condition is restricted further.
 
-Shouting "your God is an imaginary shithead" every time you see Mark and
-asking everybody in the room "Isn't it right that Mark's God is an
-imaginary shithead?  Can anybody here testify having seen him?" whenever
-anybody is there, and occasionally calling him and others on the phone
-when you have nothing else to do and tell him that you consider his God
-an imaginary shithead and him a gullible fool to believe otherwise...
+Tests:
 
-Do you really think that's the way you are going to earn people's
-respect?  By prouding yourself on having seen through Mark's purported
-stupidity and pointing it out to everybody?
+Added merge commit to 'set up a bit of history' case in t7007-show.sh to
+cover the fix.
 
-> But if Mark was a member of an open source project, I do have an
-> option and I'd rather tell it like it is.
+Existing tests are updated to demonstrate the new behaviour.  Earlier,
+the tests that used "git show -s --pretty=format:%s", even though
+"--pretty=format:%s" calls for item separator semantics and does not ask
+for the terminating newline after the last item, expected the output to
+end with such a newline.  They were relying on the buggy behaviour.  Use
+of "--format=%s", which is equivalent to "--pretty=tformat:%s" that asks
+for a terminating newline after each item, is a more realistic way to
+use the command.
 
-And everybody else, of course, is wrong about it.  And only you are
-right.  All you need to do is to be as obnoxious as you can manage, and
-you'll win everyone over to your side.
+In the test 'merge log messages' the expected data is changed, because
+it was explicitly listing the extra newline. Also the msg.nologff and
+msg.nolognoff expected files are replaced by one msg.nolog, because they
+were diffing because of the bug, and now there should be no difference.
 
-Don't kid yourself: you are doing this entire sad spectacle only to
-satisfy your own self-righteousness, just to be able to tell yourself
-"all those people working on Git with the exception of myself are
-pitiable fools and/or bad persons letting Junio pull the wool over their
-eyes".
+Signed-off-by: Max Kirillov <max@max630.net>
+---
+Changes compared to v2:
+* fixed && chaining
+* squashed commit fixing test with commit fixing behavior.
+  Also simplified t7600 a bit - now different expected data
+  are not needed
+* rephrased the commit message. Have made some experiments with
+  changing the condition, added a note about it in place of
+  assumptions. Also commented the tests change. After some
+  struggling to explain choices with own words copied the
+  Junio's paragraph.
+ combine-diff.c                |  3 ++-
+ t/t1507-rev-parse-upstream.sh |  2 +-
+ t/t7007-show.sh               | 10 +++++++---
+ t/t7600-merge.sh              | 11 +++++------
+ 4 files changed, 15 insertions(+), 11 deletions(-)
 
-You've made your point.  People don't agree with it.  Repeating your
-point over and over will not change that.
-
-> If Mark has a problem with that, I can always avoid Mark, or just
-> leave the project (say if Mark was the maintainer).
->
-> In both cases Mark is wrong. I do understand that most people would
-> rather comprimise their beliefs in order to win penguing points. I'm
-> not that way.
-
-No, you rather compromise your standing in order to win your beliefs.
-Take them.  They are yours.  Nobody else wants them.  Even if there
-would have been merit in them originally, after revomiting them a dozen
-times on people's laps they just want the stench to go away.
-
-> If I can't speak my mind in an open source project where I'm
-> contributing my time *for free*, I do not want to be part of that
-> project. It's the project that's wrong, not me, and it's the project
-> that looses, not me.
-
-Well, you are a sore winner for sure.
-
+diff --git a/combine-diff.c b/combine-diff.c
+index 3b92c448..ff6ceaf 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -1331,7 +1331,8 @@ void diff_tree_combined(const unsigned char *sha1,
+ 		if (show_log_first && i == 0) {
+ 			show_log(rev);
+ 
+-			if (rev->verbose_header && opt->output_format)
++			if (rev->verbose_header && opt->output_format &&
++			    opt->output_format != DIFF_FORMAT_NO_OUTPUT)
+ 				printf("%s%c", diff_line_prefix(opt),
+ 				       opt->line_termination);
+ 		}
+diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
+index 2a19e79..672280b 100755
+--- a/t/t1507-rev-parse-upstream.sh
++++ b/t/t1507-rev-parse-upstream.sh
+@@ -100,7 +100,7 @@ test_expect_success 'merge my-side@{u} records the correct name' '
+ 	git branch -D new ;# can fail but is ok
+ 	git branch -t new my-side@{u} &&
+ 	git merge -s ours new@{u} &&
+-	git show -s --pretty=format:%s >actual &&
++	git show -s --pretty=tformat:%s >actual &&
+ 	echo "Merge remote-tracking branch ${sq}origin/side${sq}" >expect &&
+ 	test_cmp expect actual
+ )
+diff --git a/t/t7007-show.sh b/t/t7007-show.sh
+index e41fa00..1b824fe 100755
+--- a/t/t7007-show.sh
++++ b/t/t7007-show.sh
+@@ -24,7 +24,8 @@ test_expect_success 'set up a bit of history' '
+ 	git tag -m "annotated tag" annotated &&
+ 	git checkout -b side HEAD^^ &&
+ 	test_commit side2 &&
+-	test_commit side3
++	test_commit side3 &&
++	test_merge merge main3
+ '
+ 
+ test_expect_success 'showing two commits' '
+@@ -109,8 +110,11 @@ test_expect_success 'showing range' '
+ '
+ 
+ test_expect_success '-s suppresses diff' '
+-	echo main3 >expect &&
+-	git show -s --format=%s main3 >actual &&
++	cat >expect <<-\EOF &&
++	merge
++	main3
++	EOF
++	git show -s --format=%s merge main3 >actual &&
+ 	test_cmp expect actual
+ '
+ 
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index 10aa028..b164621 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -57,11 +57,10 @@ create_merge_msgs () {
+ 		git log --no-merges ^HEAD c2 c3
+ 	} >squash.1-5-9 &&
+ 	: >msg.nologff &&
+-	echo >msg.nolognoff &&
++	: >msg.nolognoff &&
+ 	{
+ 		echo "* tag 'c3':" &&
+-		echo "  commit 3" &&
+-		echo
++		echo "  commit 3"
+ 	} >msg.log
+ }
+ 
+@@ -71,7 +70,7 @@ verify_merge () {
+ 	git diff --exit-code &&
+ 	if test -n "$3"
+ 	then
+-		git show -s --pretty=format:%s HEAD >msg.act &&
++		git show -s --pretty=tformat:%s HEAD >msg.act &&
+ 		test_cmp "$3" msg.act
+ 	fi
+ }
+@@ -620,10 +619,10 @@ test_expect_success 'merge early part of c2' '
+ 	git tag c6 &&
+ 	git branch -f c5-branch c5 &&
+ 	git merge c5-branch~1 &&
+-	git show -s --pretty=format:%s HEAD >actual.branch &&
++	git show -s --pretty=tformat:%s HEAD >actual.branch &&
+ 	git reset --keep HEAD^ &&
+ 	git merge c5~1 &&
+-	git show -s --pretty=format:%s HEAD >actual.tag &&
++	git show -s --pretty=tformat:%s HEAD >actual.tag &&
+ 	test_cmp expected.branch actual.branch &&
+ 	test_cmp expected.tag actual.tag
+ '
 -- 
-David Kastrup
+1.8.5.2.421.g4cdf8d0
