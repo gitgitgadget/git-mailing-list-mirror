@@ -1,198 +1,102 @@
-From: Per Cederqvist <cederp@opera.com>
-Subject: Re: [GUILT v2 08/29] Added more test cases for "guilt new": empty patches.
-Date: Wed, 14 May 2014 22:38:08 +0200
-Message-ID: <CAP=KgsRoi0P0zYYPD+aZX0FYi7eXL6cY5w-Y+rVJfjBhrhd+Ww@mail.gmail.com>
-References: <1400013065-27919-1-git-send-email-cederp@opera.com>
-	<1400013065-27919-9-git-send-email-cederp@opera.com>
-	<20140514171040.GF1582@meili.valhalla.31bits.net>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 0/4] remote-hg: more improvements
+Date: Wed, 14 May 2014 22:58:38 +0200
+Message-ID: <87mwekrsap.fsf@fencepost.gnu.org>
+References: <1399169814-20201-1-git-send-email-felipe.contreras@gmail.com>
+	<xmqq8uqdbgqg.fsf@gitster.dls.corp.google.com>
+	<536a83097302f_76ff7a52ec6c@nysa.notmuch>
+	<xmqqvbth8ha9.fsf@gitster.dls.corp.google.com>
+	<536a999e2c0c_76ff7a52ec1e@nysa.notmuch>
+	<xmqqoaz95ees.fsf@gitster.dls.corp.google.com>
+	<536ad9601b73b_3caaa612ecdc@nysa.notmuch>
+	<CAGK7Mr4DYuU34Zf_3fRQFkT+1TGOkpfLPUnQh=tYh6EMtBEt9A@mail.gmail.com>
+	<xmqq8uq6rd30.fsf@gitster.dls.corp.google.com>
+	<CAGK7Mr7AcqKnEBk1NwzJFJVSSQE9uWTE00zi+B9z6i0V5tBrEg@mail.gmail.com>
+	<87mweku2pt.fsf@fencepost.gnu.org>
+	<CAGK7Mr5ezbTVyq2wr7kYWjab6V1srrYwkqSGjo1GuPnkSuGWTQ@mail.gmail.com>
+	<87iop8u1km.fsf@fencepost.gnu.org>
+	<CAGK7Mr4N5L+jRE0ykBHvopgGv1x4iNXAK+_94R5KhBxHHqMYmA@mail.gmail.com>
+	<87egzwtthf.fsf@fencepost.gnu.org>
+	<CAGK7Mr6XTxpeJLSqL8PZMS8w+YCqxLrC5wX-dg4BdEaW3QAYTA@mail.gmail.com>
+	<87a9aktqms.fsf@fencepost.gnu.org>
+	<CAGK7Mr7jhpizoHuA9NDnyNPy_rr8_R0m8-hCFO3CDn2Hbh3_pQ@mail.gmail.com>
+	<5373cfb744982_57c3bfb300a0@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Wed May 14 22:38:19 2014
+Content-Type: text/plain
+Cc: Philippe Vaucher <philippe.vaucher@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 14 22:58:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkfwQ-0004H1-3u
-	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 22:38:18 +0200
+	id 1WkgGC-0002lD-2z
+	for gcvg-git-2@plane.gmane.org; Wed, 14 May 2014 22:58:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751407AbaENUiK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 16:38:10 -0400
-Received: from mail-ie0-f174.google.com ([209.85.223.174]:34398 "EHLO
-	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751118AbaENUiJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 16:38:09 -0400
-Received: by mail-ie0-f174.google.com with SMTP id at1so109860iec.33
-        for <git@vger.kernel.org>; Wed, 14 May 2014 13:38:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=OgEtsmy2+t6HhCsGUZ8NBgeLF+r6NzksxpmkSiFXgAY=;
-        b=FbSgGwf4bfsVBSZKbPbwO3An0Ih+lUDdpTSkm/h0EQ8TRVaJZt44qOpycGVYRblATz
-         6dYmZpRKDWQJAwoOxYkzsLDTnzp+vup5UiD5Qz0/hDo1m4AqVlwk63pIDmYkV9S9/cEf
-         ciJsnn8o3lK1w4FCf1ItSbiBqqtiI4QATbDg3o0epstXm2iqURyDUfjc0JzPLBOt06QN
-         OQYjDaHJHSiGXvQT+ZH4+2WjHho5MvvqwCCMbAb54ealRojAYPHzkQn05iq51JmNUq9e
-         SVS5Ch1UQyZu8IwIFnsLzQm1zakoVzT6X+vODtvZti9DASE4bWaJnPRExS0VqRgQDydm
-         wP1A==
-X-Gm-Message-State: ALoCoQkkg1Z4WKjzdcz0zwvAoO6JGinLqKCTYeuYFf6cQw0W3l9vJkqVlIB21T6Nl4b1+Y9Ykyze
-X-Received: by 10.50.147.9 with SMTP id tg9mr69847646igb.31.1400099888617;
- Wed, 14 May 2014 13:38:08 -0700 (PDT)
-Received: by 10.43.89.66 with HTTP; Wed, 14 May 2014 13:38:08 -0700 (PDT)
-In-Reply-To: <20140514171040.GF1582@meili.valhalla.31bits.net>
+	id S1751838AbaENU6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 May 2014 16:58:40 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:55750 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751175AbaENU6j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 May 2014 16:58:39 -0400
+Received: from localhost ([127.0.0.1]:54791 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1WkgG6-00036f-HK; Wed, 14 May 2014 16:58:38 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 06D55E0BDF; Wed, 14 May 2014 22:58:38 +0200 (CEST)
+In-Reply-To: <5373cfb744982_57c3bfb300a0@nysa.notmuch> (Felipe Contreras's
+	message of "Wed, 14 May 2014 15:19:03 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/248950>
 
-On Wed, May 14, 2014 at 7:10 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> On Tue, May 13, 2014 at 10:30:44PM +0200, Per Cederqvist wrote:
->> Test that empty patches are handled correctly, both with and without
->> the guilt.diffstat configuration option.
->>
->> Signed-off-by: Per Cederqvist <cederp@opera.com>
->> ---
->>  regression/t-020.out | 250 +++++++++++++++++++++++++++++++++++++++++++++++++++
->>  regression/t-020.sh  |  60 +++++++++++++
->>  2 files changed, 310 insertions(+)
->>
->> diff --git a/regression/t-020.out b/regression/t-020.out
->> index af45734..7e07efa 100644
->> --- a/regression/t-020.out
->> +++ b/regression/t-020.out
->> @@ -1128,3 +1128,253 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-> ...
->> +% git log -p
->> +commit c7a139f532a43c3c8b0e068cac04f8f6af0f94e1
->> +Author: Author Name <author@email>
->> +Date:   Mon Jan 1 00:00:00 2007 +0000
->> +
->> +    patch empty.patch
->> +
->> +commit d4850419ccc1146c7169f500725ce504b9774ed0
->> +Author: Author Name <author@email>
->> +Date:   Mon Jan 1 00:00:00 2007 +0000
->> +
->> +    initial
->> +
->> +    Signed-off-by: Commiter Name <commiter@email>
->> +
->> +diff --git a/def b/def
->> +new file mode 100644
->> +index 0000000..8baef1b
->> +--- /dev/null
->> ++++ b/def
->> +@@ -0,0 +1 @@
->> ++abc
->> +% git config guilt.diffstat false
->> +---
->> +
->
-> I'm a bit confused about the above.  It looks like contents of an empty
-> patch with an empty diffstat.  But the only time I see a cat in the .sh file
-> is when you rewrite... oh I got it.  I'll comment about it by the 'cat'.
->
-> ...
->> diff --git a/regression/t-020.sh b/regression/t-020.sh
->> index cdd08ba..906aec6 100755
->> --- a/regression/t-020.sh
->> +++ b/regression/t-020.sh
->> @@ -5,6 +5,13 @@
->>
->>  source "$REG_DIR/scaffold"
->>
->> +function fixup_time_info
->> +{
->> +     cmd guilt pop
->> +     touch -a -m -t "$TOUCH_DATE" ".git/patches/master/$1"
->> +     cmd guilt push
->> +}
->> +
->>  cmd setup_repo
->>
->>  #
->> @@ -69,6 +76,59 @@ done
->>
->>  cmd list_files
->>
->> +# push an empty patch with no commit message
->> +cmd guilt new empty.patch
->> +fixup_time_info empty.patch
->> +cmd list_files
->> +cmd git log -p
->> +
->> +# Ensure we can push the empty patch even when guilt.diffstat is true.
->> +cmd git config guilt.diffstat true
->> +cmd guilt refresh
->> +fixup_time_info empty.patch
->> +cmd list_files
->> +cmd git log -p
->> +cmd git config guilt.diffstat false
->> +
->> +# Let the patch have a commit message, but no data.
->> +cat .git/patches/master/empty.patch <<EOF
->
-> cat > .git/.../empty.patch <<EOF
-> ...
-> EOF
->
-> Otherwise, you'll just cat the existing patch and that's it.
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-Yes. The intent was to modify empty.patch.  This is a bit
-embarrassing, since it should have been obvious from
-the output of "git log -p" that the modification didn't work
-as I intended. :-)
+> Philippe Vaucher wrote:
 
-I'll fix in the v3 series.
+[...]
 
-    /ceder
-
->> +Fix a bug.
->> +
->> +From: Per Cederqvist <ceder@lysator.liu.se>
->> +
->> +This commit fixes a serious bug.
->> +
->> +FIXME:
->> +    - add a test case
->> +    - track down the bug
->> +    - actually fix it
->> +EOF
->> +
->> +fixup_time_info empty.patch
->> +cmd list_files
->> +cmd git log -p
->> +
->> +# And once more, with an empty diffstat.
->> +
->> +cmd git config guilt.diffstat true
->> +cmd guilt refresh
->> +fixup_time_info empty.patch
->> +cmd list_files
->> +cmd git log -p
->> +
->> +# Restore the diffstat setting and remove the empty patch.
->> +cmd git config guilt.diffstat false
->> +cmd guilt refresh
->> +fixup_time_info empty.patch
->> +cmd list_files
->> +cmd git log -p
->> +# (Cannot delete an applied patch)
->> +shouldfail guilt delete empty.patch
->> +cmd guilt pop -a
->> +cmd guilt delete -f empty.patch
->> +cmd list_files
->> +cmd git log -p
->> +
->>  # FIXME:
->>  #   --all
->>  #   -a
->> --
->> 1.8.3.1
->>
+>> > Do you feel Felipe is in control of what you label bad behavior?  Do you
+>> > feel you are in control over how you react to his behavior?
+>> 
+>> I feel that Felipe cannot control this (or decided not to),
 >
-> --
-> Fact: 23.6% of all statistics are generated randomly.
+> I am pretty much in control of my behavior. Those who know me
+> personally know that I *never* get angry.
+
+You are missing the point.  The point is not what effect your behavior
+has on you but what it has on others.  As you are unable to attribute
+feelings to others (like you appear unable to attribute reason to them),
+you are unable to control it.
+
+It's like repairing clockwork when your hands are numb and have never
+been otherwise.
+
+"When something does not work, apply extra force" does not work with
+clockwork.  It does not work with people, either.
+
+> The problem is that what you label as "bad behavior" I do not.
+
+It does not matter what you or others want to label it.  The effects are
+there anyway.
+
+> So if somebody convinced me that my behavior is indeed bad, I would
+> certainly change it, but I do not think it's "bad".
+
+What effect your behavior has on others is not dependent on what you
+think about it.
+
+If you convinced yourself to be standing perfectly balanced and find
+yourself falling, there is no point in not catching yourself before
+smashing your head open just because you _know_ you have been standing
+perfectly upright.
+
+-- 
+David Kastrup
