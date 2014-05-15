@@ -1,125 +1,130 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v6 13/42] commit.c: use ref transactions for updates
-Date: Wed, 14 May 2014 18:11:34 -0700
-Message-ID: <20140515011134.GJ9218@google.com>
-References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
- <1398976662-6962-14-git-send-email-sahlberg@google.com>
+From: Michael Wagner <accounts@mwagner.org>
+Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
+Date: Thu, 15 May 2014 07:08:20 +0200
+Message-ID: <20140515050820.GA30785@localhost.localdomain>
+References: <20140514184145.GA25699@localhost.localdomain>
+ <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
+ <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu May 15 03:11:47 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 15 07:08:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkkD3-00059I-Mr
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 03:11:46 +0200
+	id 1Wknu9-0008TG-BB
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 07:08:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022AbaEOBLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 May 2014 21:11:38 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:53043 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751139AbaEOBLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 May 2014 21:11:37 -0400
-Received: by mail-pa0-f46.google.com with SMTP id kq14so333221pab.19
-        for <git@vger.kernel.org>; Wed, 14 May 2014 18:11:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=BPDC+oKb8yGKcooGD4xMzjfz2t/+msY2Gcg5O9if578=;
-        b=tsaXfiVXCO3EL2gnn1M78KtCKg3ipkktPJ9GVL6cqVIWRaUVTxV4C6JGQiaV3/jz7T
-         +q4YX/rSXL08hMhr1vGOmBkdCHFu7Z72UR6M4XHXVzXwxEMP97c49nuGIcoXT9fMwkc4
-         2kDCgqpY8EggXCseGMGLsG24HR0UsxsF/tmL1KuTZPkVz1iPCdoE/gHpy/lm/6ATcmTs
-         5/cFkoOp8LFn9i+qBSd/RRAJMXffz6vDNA5cNDwjOjQ0TcJxFcvf2hCrFpDPp3LzYOiF
-         NSD926YrUw3M/Z2/GwEeNrjolzsa5qpmxI4zHbU0ZcLVqURiOdo2WJdlTCRxIWIp8lGO
-         7lgg==
-X-Received: by 10.66.139.38 with SMTP id qv6mr8368670pab.123.1400116297073;
-        Wed, 14 May 2014 18:11:37 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id gg3sm5771893pbc.34.2014.05.14.18.11.35
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 14 May 2014 18:11:36 -0700 (PDT)
+	id S1751276AbaEOFIZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 May 2014 01:08:25 -0400
+Received: from caelum.uberspace.de ([95.143.172.212]:46533 "EHLO
+	caelum.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751059AbaEOFIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 01:08:24 -0400
+Received: (qmail 1538 invoked from network); 15 May 2014 05:08:22 -0000
+Received: from localhost (HELO localhost) (127.0.0.1)
+  by caelum.uberspace.de with SMTP; 15 May 2014 05:08:22 -0000
 Content-Disposition: inline
-In-Reply-To: <1398976662-6962-14-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249058>
 
-Ronnie Sahlberg wrote:
+On Thu, May 15, 2014 at 12:25:45AM +0200, Jakub Nar=C4=99bski wrote:
+> On Wed, May 14, 2014 at 11:57 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+> > Michael Wagner <accounts@mwagner.org> writes:
+> >
+> >> Perl has an internal encoding used to store text strings. Currentl=
+y, trying to
+> >> view files with UTF-8 encoded names results in an error (either "4=
+04 - Cannot
+> >> find file" [blob_plain] or "XML Parsing Error" [blob]). Converting=
+ these UTF-8
+> >> encoded file names into Perl's internal format resolves these erro=
+rs.
+>=20
+> Could you give us an example?  What is important is whether filename
+> is passed via path_info or via query string.
+>=20
 
-[...]
-> +++ b/builtin/commit.c
-> @@ -1541,11 +1541,12 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
-[...]
-> @@ -1667,16 +1668,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
->  	strbuf_release(&author_ident);
->  	free_commit_extra_headers(extra);
->  
-> -	ref_lock = lock_any_ref_for_update("HEAD",
-> -					   !current_head
-> -					   ? NULL
-> -					   : current_head->object.sha1,
-> -					   0, NULL);
-> -	if (!ref_lock) {
-> -		rollback_index_files();
-> -		die(_("cannot lock HEAD ref"));
-> -	}
-> -
->  	nl = strchr(sb.buf, '\n');
->  	if (nl)
->  		strbuf_setlen(&sb, nl + 1 - sb.buf);
-> 	else
-> 		strbuf_addch(&sb, '\n');
->  	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
->  	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
->  
-> -	if (write_ref_sha1(ref_lock, sha1, sb.buf) < 0) {
-> +	transaction = ref_transaction_begin();
-> +	if (!transaction ||
-> +	    ref_transaction_update(transaction, "HEAD", sha1,
-> +				   current_head ?
-> +				   current_head->object.sha1 : NULL,
-> +				   0, !!current_head) ||
-> +	    ref_transaction_commit(transaction, sb.buf, &err)) {
->  		rollback_index_files();
-> -		die(_("cannot update HEAD ref"));
-> +		die(_("HEAD: cannot update ref: %s"), err.buf);
+There is a file named "G=C3=BCtekriterien.txt" in my repository. Trying=
+ to
+view this file as "blob_plain" produces an 404 error (displaying the
+file name with an additional print statement):
 
-Same question about !transaction (it also applies to later patches but I
-won't mention it any more).
+$ REQUEST_METHOD=3DGET QUERY_STRING=3D'p=3Dnotes.git;a=3Dblob_plain;f=3D=
+work/G%C3%83%C2%BCtekriterien.txt;hb=3DHEAD' ./gitweb.cgi
 
-The error message changed from
+work/G=C3=83=C2=BCtekriterien.txt
+Status: 404 Not Found
 
-	fatal: cannot lock HEAD ref
+Decoding the UTF-8 encoded file name (again with an additional print
+statement):
 
-to
+$ REQUEST_METHOD=3DGET QUERY_STRING=3D'p=3Dnotes.git;a=3Dblob_plain;f=3D=
+work/G%C3%83%C2%BCtekriterien.txt;hb=3DHEAD' ./gitweb.cgi
 
-	fatal: HEAD: cannot update ref: Cannot lock the ref 'HEAD'.
+work/G=C3=BCtekriterien.txt
+Content-disposition: inline; filename=3D"work/G=C3=BCtekriterien.txt"
 
-Does the message from ref_transaction_commit always say what ref
-was being updated when it failed?  If so, it's tempting to just use
-the message as-is:
+> Because in evaluate_uri() there is
+>=20
+>      our $path_info =3D decode_utf8($ENV{"PATH_INFO"});
+>=20
+> and in evaluate_query_params() there is
+>=20
+>     $input_params{$name} =3D decode_utf8($cgi->param($symbol));
+>=20
+> >> Signed-off-by: Michael Wagner <accounts@mwagner.org>
+> >> ---
+> >
+> > Cc'ing Jakub, who have been the area maintainer, for comments.
+> >
+> > One thing I wonder is that, if there are some additional calls to
+> > encode() necessary before we embed $file_name (which are now decode=
+d
+> > to the internal string form, not a byte-sequence that happens to be
+> > in utf-8) in the generated pages, if we were to do this change.
 
-	fatal: Cannot lock the ref 'HEAD'
+The generated pages show the correct file names.=20
 
-If the caller should add to the message, it could say something about
-the context --- e.g.,
-
-	fatal: cannot update HEAD with new commit: cannot lock the ref 'HEAD'
-
-Looking at that,
-
-	die("%s", err.buf)
-
-seems simplest since even if "git commit" was being called in a loop,
-it's already clear that git was trying to lock HEAD to advance it.
-
-Thanks,
-Jonathan
+>=20
+> There should be no problem with output encoding.  esc_path(), which
+> should be used for filenames, includes to_utf8, which in turn uses
+> decode($fallback_encoding, $str, Encode::FB_DEFAULT);
+>=20
+> >>  gitweb/gitweb.perl | 2 +-
+> >>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> >> index a9f57d6..6046977 100755
+> >> --- a/gitweb/gitweb.perl
+> >> +++ b/gitweb/gitweb.perl
+> >> @@ -1056,7 +1056,7 @@ sub evaluate_and_validate_params {
+> >>               }
+> >>       }
+> >>
+> >> -     our $file_name =3D $input_params{'file_name'};
+> >> +     our $file_name =3D decode("utf-8", $input_params{'file_name'=
+});
+> >>       if (defined $file_name) {
+> >>               if (!is_valid_pathname($file_name)) {
+> >>                       die_error(400, "Invalid file parameter");
+>=20
+> Hmm... all %input_params should have been properly decoded
+> already, how it was missed?
+>=20
+> Also, branchname (hash_base etc.), search query, filename in file_par=
+ent,
+> project name can be UTF-8 too, so it is at best partial fix.
+>=20
+> --=20
+> Jakub Nar=C4=99bski
