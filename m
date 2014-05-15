@@ -1,100 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: regression: request-pull with signed tag lacks tags/ in master
-Date: Thu, 15 May 2014 12:13:18 -0700
-Message-ID: <xmqqr43uetyp.fsf@gitster.dls.corp.google.com>
-References: <20140515163901.GA1403@redhat.com>
-	<xmqqzjiiev1a.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git grep -O -i: if the pager is 'less', pass
+ the '-i' option
+Date: Thu, 15 May 2014 15:18:24 -0400
+Message-ID: <20140515191824.GB29746@sigill.intra.peff.net>
+References: <20140514155010.GA4592@camelia.ucw.cz>
+ <xmqq7g5okztp.fsf@gitster.dls.corp.google.com>
+ <20140514182654.GA9218@google.com>
+ <20140514190716.GA2715@sigill.intra.peff.net>
+ <alpine.DEB.1.00.1405151944410.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Thu May 15 21:13:31 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Stepan Kasal <kasal@ucw.cz>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncBDO2DJFKTEFBBBFG2SNQKGQELPHO4CY@googlegroups.com Thu May 15 21:18:29 2014
+Return-path: <msysgit+bncBDO2DJFKTEFBBBFG2SNQKGQELPHO4CY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-oa0-f59.google.com ([209.85.219.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wl15u-0006Rz-4q
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 21:13:30 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753686AbaEOTN0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 15:13:26 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52132 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752648AbaEOTNZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 15:13:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F00DC16872;
-	Thu, 15 May 2014 15:13:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uxASwK2Q33IQb6/1IlgwM98TfeU=; b=aHm1ZN
-	2AkOZNIvzS0mKrkV5tYOAWbBMwcuDq4aO7W9hpv9b2+vy8d4XAKLfIzgkCrKVmSE
-	vMLh6+dBt4RjJokX2Ykd8CzilMSoCJwx7sNpuYPphzIAX7D4Y2j/qCWed+RbKqDf
-	iUdrSqiH9uP7XtRouDvQz1slEHeaHQaOCkQTE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lZBuWuAH0cOUWy/u2NmCLxRizo//wT+B
-	htOiP69tWbgHibSjYiBMyNrADWZsn5HP3cD/1EADQR8dyqTVNSPFaJ44Si4rfc4D
-	3Pdce3V1JqGVJt5twZA+AuLsz2/yWRdYPJ083CLg3ttZxx39w1h+E/ojwNj9JSom
-	AqmI3s3CnB0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E5DD616871;
-	Thu, 15 May 2014 15:13:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id ED1A91686B;
-	Thu, 15 May 2014 15:13:19 -0400 (EDT)
-In-Reply-To: <xmqqzjiiev1a.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 15 May 2014 11:50:09 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F9F761AE-DC64-11E3-9656-DDB853EDF712-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249186>
+	(envelope-from <msysgit+bncBDO2DJFKTEFBBBFG2SNQKGQELPHO4CY@googlegroups.com>)
+	id 1Wl1Aj-0003HN-7H
+	for gcvm-msysgit@m.gmane.org; Thu, 15 May 2014 21:18:29 +0200
+Received: by mail-oa0-f59.google.com with SMTP id eb12sf421124oac.14
+        for <gcvm-msysgit@m.gmane.org>; Thu, 15 May 2014 12:18:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition;
+        bh=SHq5I/SeqtkdFgO1SWhjmEUbI3dlBO1YoUvsadUZ1Ag=;
+        b=Mo9a1IgZegN4cGbABiSD8Qf03XUM7XnAYMYo8WkRTUWIFZm7AEvnK7i5gIsv4DeNgl
+         4WWnFErKlcUzFosb45ID5AqcNoAAWCcstbsYozXe4hWHzH/KeZtrri9eLM9UpYiy0nYm
+         7B/eGCKZDPNff7SkZgLDw3FGK6ogrjPUWw1XAew72gT2NzdbyYu7GjjBL3v7vPpUuNN9
+         RN5nXxdstwVY5etvJeIzMd1e2XOh841+mHJQ1NBrtPv0nyeMzjNDEMGFI0tIK2jgikUC
+         4kzST8OMwk+IQc+nxd53J0YYJcENg4CajombZeC0+ydMrVfj12C1TMAEcf7yKqCJjaJy
+         90Mw==
+X-Received: by 10.50.73.69 with SMTP id j5mr364654igv.14.1400181508371;
+        Thu, 15 May 2014 12:18:28 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.253.161 with SMTP id ab1ls569159igd.9.gmail; Thu, 15 May
+ 2014 12:18:27 -0700 (PDT)
+X-Received: by 10.66.157.138 with SMTP id wm10mr3461627pab.23.1400181507828;
+        Thu, 15 May 2014 12:18:27 -0700 (PDT)
+Received: from peff.net (cloud.peff.net. [50.56.180.127])
+        by gmr-mx.google.com with SMTP id b5si557784igl.0.2014.05.15.12.18.27
+        for <msysgit@googlegroups.com>;
+        Thu, 15 May 2014 12:18:27 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
+Received: (qmail 30374 invoked by uid 102); 15 May 2014 19:18:27 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 May 2014 14:18:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 May 2014 15:18:24 -0400
+In-Reply-To: <alpine.DEB.1.00.1405151944410.14982@s15462909.onlinehome-server.info>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
+ sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249187>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, May 15, 2014 at 07:46:49PM +0200, Johannes Schindelin wrote:
 
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
->
->> looks like pull requests with signed git got broken in git master:
+> > We've already found the lines of interest to the user. It would be nice
+> > if we could somehow point the pager at them by number, rather than
+> > repeating the (slightly incompatible) search.
+> 
+> FWIW it is exactly that type of "I want your patch to do more than you do"
+> type of comments that makes it impossible for myself to contribute patches
+> anymore. It just does not fit inside my Git time budget anymore.
+
+I'm sorry you took it that way. What I meant to say was "it would be
+nice if we could do it this other way, which is more robust, but I don't
+think it is easy.  Let's take the patch". I.e., when I later said:
+
+>>> But as is, it's an improvement, so (except that "-i" should be
+>>> replaced by "-I") it seems like a good change.
 >>
->> [mst@robin qemu]$ /usr/bin/git --version
->> git version 1.8.3.1
->> [mst@robin qemu]$ git --version
->> git version 2.0.0.rc1.18.gac53fc6.dirty
->> [mst@robin qemu]$ 
->> [mst@robin qemu]$ /usr/bin/git request-pull origin/master git://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git for_upstream |grep git.kernel.org
->>   git://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
->>
->>
->> [mst@robin qemu]$ git request-pull origin/master git://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git for_upstream |grep git.kernel.org
->>   git://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git for_upstream
->>
->> this for_upstream syntax is a problem because it does not work
->> for older git clients who might get this request.
->>
->> Didn't bisect yet - anyone knows what broke this?
->
-> Linus ;-)  The series that ends with ec44507, I think.
+>>Agreed. Thanks for the list of problematic options.
 
-My reading of the earlier parts of the series is that Linus wanted
-us never dwim "for-upstream" to "tags/for-upstream" or any other ref
-that happens to point at the same commit as for-upstream you have.
-The changes done for that purpose covered various cases a bit too
-widely, and "request-pull ... tags/for_upstream" were incorrectly
-stripped to a request to pull "for_upstream", which was fixed by
-5aae66bd (request-pull: resurrect "pretty refname" feature,
-2014-02-25).
+the "agreed" there is with "it seems like a good change".
 
-But that fix does not resurrect the dwimming forbid by the earlier
-parts of the series to turn "for_upstream" into "tags/for_upstream".
+And I also wanted to point people to existing work, if they did want to
+explore doing it that other way.  I really didn't expect anything from
+you (beyond s/i/I/, as Jonathan suggested).
 
-What would you get if you do this?
+> Besides, it breaks exactly the intended usage. My intent is not just to
+> see the matching lines in the pager, but to be able to adjust the search
+> pattern further if needed. Your suggestion completely breaks that usage.
 
-    $ git request-pull origin/master \
-      git://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git \
-      tags/for_upstream | grep git.kernel.org
+Thanks, this is a point I hadn't considered.
+
+-Peff
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
