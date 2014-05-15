@@ -1,105 +1,99 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v9 39/44] refs.c: move the check for valid refname to lock_ref_sha1_basic
-Date: Thu, 15 May 2014 16:15:36 -0700
-Message-ID: <1400195741-22996-40-git-send-email-sahlberg@google.com>
+Subject: [PATCH v9 40/44] refs.c: call lock_ref_sha1_basic directly from commit
+Date: Thu, 15 May 2014 16:15:37 -0700
+Message-ID: <1400195741-22996-41-git-send-email-sahlberg@google.com>
 References: <1400195741-22996-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 16 01:16:35 2014
+X-From: git-owner@vger.kernel.org Fri May 16 01:16:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wl4t5-0005L1-Eq
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 01:16:31 +0200
+	id 1Wl4tC-0005dx-DH
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 01:16:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756073AbaEOXQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 19:16:28 -0400
-Received: from mail-yh0-f74.google.com ([209.85.213.74]:49705 "EHLO
-	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755717AbaEOXPq (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756250AbaEOXQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 19:16:27 -0400
+Received: from mail-ie0-f201.google.com ([209.85.223.201]:37216 "EHLO
+	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756073AbaEOXPq (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 15 May 2014 19:15:46 -0400
-Received: by mail-yh0-f74.google.com with SMTP id 29so719462yhl.3
+Received: by mail-ie0-f201.google.com with SMTP id rp18so388990iec.4
         for <git@vger.kernel.org>; Thu, 15 May 2014 16:15:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=l8QM0ormfVQEWXmcm4H+t+Fkh96a4pUCqat+DePLv+E=;
-        b=ogifvGtEFbBgxTYdlR2/as8DSD6kEg+dW8yYRdEf9CDj0j7HZ9R1/618RpwW6XeDxT
-         qM1hTS8o/uc9qWoedKjWLpcpuCGP7ZucJ2yeR2XKeobaRNso8MuW0f0KnSguPcACI3/2
-         sKcdoog5DfNmaADz6TZK+cbzpqwcyKxLhQ7lf7uMxWSdsyd+1AQ/w9BoBCDPG06yFwf5
-         06c+6YBFHx2H+2BIPKwWXyzvpjKt1JBAt6Eh7I2S06VK0Jt+plr7aiNOmVSXP3rbDOhv
-         z4rJC9BKceuF7LKaK1Epkj2dFXR3h14qIjZ/+vDwY8ST0uHMIi1IhkeLfRoKTui9/mAA
-         JRcQ==
+        bh=P1ksDCIa9dN4o3qRgfGBDwBAjIUNjGiRNbSJlkHCRDM=;
+        b=JPuvLsCVa+JqzIEvJ1J/3kJGE1Pp1xCYp+v8j65JTKSFDvq1zP1JJPftBjUcy3LfXT
+         Vm6FzxZF96/sR96owBjgLnhQzMU44U7E1W++oqlNcdjJA13OhypgDzYT9gkckPnxd2vo
+         T74uGySl0qeblBjTZffK4aXDCSPrvwSAFmjbtE7evwRYeDVCTuJH79kSdaQ0G5NUwBEe
+         iksX1OgGysHRtXhcYWxEcIkpEd9Eli1BCzuKaEHtSpJX+Y87oKJRzEX9+hpwb2Z74xH+
+         +h2ubOTRyIJA40g53hH/WPozh/9puhmciQ8vT36RmsGObKnBRste83qNlzWndvzSovkC
+         P7Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=l8QM0ormfVQEWXmcm4H+t+Fkh96a4pUCqat+DePLv+E=;
-        b=i1Lkl9LBOm7fpR3jpNNLb7wtjvd8nt9bLo753XP7sUhw9DNNB/UvFBlnLOrPIyDDC5
-         yqJInxKpAOeyhFheWje0cHNjw2qOOehjqdunJ6Ardo3T5CuKvIbSUPaEWTXkGbS0L8w+
-         9DusikWaDQGTkIySgu6nNyfU1I/Qes7xABvuZ7gjkNR2weUUO+lsMqDD1v9cj5BCH0Z1
-         AOGOOPLfnfG+e3Sg6WsRBUyJm3Tf1aO6xkLfG7+TZh0s3kSzFbtxAqQtJMe5Oi7rhrsv
-         18tyxlrI4jWh950hJWuXGBhCquQKtVCvpFofzNzgByvnnf5NMjiYhlCChz6jZ8n7GjDs
-         Oi7g==
-X-Gm-Message-State: ALoCoQmfB2hhYX6uMoQ7mOIdOo9rkQruLYqk24Ehq0X6pI3/cnKYvJ8ZLL1jCN4U7NXJfW2smmX9
-X-Received: by 10.236.123.68 with SMTP id u44mr5810523yhh.19.1400195746248;
+        bh=P1ksDCIa9dN4o3qRgfGBDwBAjIUNjGiRNbSJlkHCRDM=;
+        b=L2QDmeOOjYWYHOpjhtwwI07PhLahCfrOVtf+sz8Mq5hcj7jMiP+pGb+3eJzArILRuj
+         B22o77wFu4d6+vS+vwF2D+CimVFiPT2TIYrNN1XQuw4Cj0ML1R9dpjbv6aRmRZfzBEnp
+         du97oO8Is9KlcmdFSu2Tv7iUdWb8wbeNr23rVm6RQ9Af2YoGvAkJbG31yuDukuGQ2x3b
+         UMK5cKgYLclNTocbCVxDlaa3OB2RrnF6mnMYlGLyChkv4wIgl2+wqCd2BM1HT2nwhtpO
+         C78AR5//PlBiqBKq1VTssaMCvlS5ibt7xn32nyUyBNluOSLR3L5cj1yMP7TImoszEH8L
+         p2HA==
+X-Gm-Message-State: ALoCoQkKiOjX/T6KUosuDdVb9mCmXqqRYtQbK62gsGWLPhumO7fmpgXK+uort+ULnk4dTM6lsYbf
+X-Received: by 10.42.50.9 with SMTP id y9mr5477429icf.1.1400195746368;
         Thu, 15 May 2014 16:15:46 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id y50si318645yhk.4.2014.05.15.16.15.46
+        by gmr-mx.google.com with ESMTPS id n68si244843yhj.5.2014.05.15.16.15.46
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 15 May 2014 16:15:46 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 1E6F731C1CD;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 3763D31C259;
 	Thu, 15 May 2014 16:15:46 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id EEF95E0475; Thu, 15 May 2014 16:15:45 -0700 (PDT)
+	id 13C3EE0B9F; Thu, 15 May 2014 16:15:45 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.477.gffe78a2
 In-Reply-To: <1400195741-22996-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249234>
 
-Move the check for check_refname_format from lock_any_ref_for_update
-to lock_ref_sha1_basic. At some later stage we will get rid of
-lock_any_ref_for_update completely.
-
-This leaves lock_any_ref_for_updates as a no-op wrapper which could be removed.
-But this wrapper is also called from an external caller and we will soon
-make changes to the signature to lock_ref_sha1_basic that we do not want to
-expose to that caller.
+Skip using the lock_any_ref_for_update wrapper and call lock_ref_sha1_basic
+directly from the commit function.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ refs.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index fb36cba..baa620f 100644
+index baa620f..87113af 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2044,6 +2044,9 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	int missing = 0;
- 	int attempts_remaining = 3;
+@@ -3521,12 +3521,12 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
  
-+	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
-+		return NULL;
-+
- 	lock = xcalloc(1, sizeof(struct ref_lock));
- 	lock->lock_fd = -1;
- 
-@@ -2135,8 +2138,6 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
- 					 const unsigned char *old_sha1,
- 					 int flags, int *type_p)
- {
--	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
--		return NULL;
- 	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p);
- }
- 
+-		update->lock = lock_any_ref_for_update(update->refname,
+-						       (update->have_old ?
+-							update->old_sha1 :
+-							NULL),
+-						       update->flags,
+-						       &update->type);
++		update->lock = lock_ref_sha1_basic(update->refname,
++						   (update->have_old ?
++						    update->old_sha1 :
++						    NULL),
++						   update->flags,
++						   &update->type);
+ 		if (!update->lock) {
+ 			if (err)
+ 				strbuf_addf(err, "Cannot lock the ref '%s'.",
 -- 
 2.0.0.rc3.477.gffe78a2
