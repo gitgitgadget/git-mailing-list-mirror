@@ -1,77 +1,58 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v6 10/42] refs.c: ref_transaction_delete to check for
- error and return status
-Date: Thu, 15 May 2014 09:26:19 -0700
-Message-ID: <CAL=YDWnkbyWk4iTaOey7bsoQc+Maqu7z5tOy3Vj-jX-3OjCakQ@mail.gmail.com>
-References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
-	<1398976662-6962-11-git-send-email-sahlberg@google.com>
-	<20140515001904.GG9218@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] git-show: fix 'git show -s' to not add extra terminator after merge commit
+Date: Thu, 15 May 2014 09:33:08 -0700
+Message-ID: <xmqqwqdngfy3.fsf@gitster.dls.corp.google.com>
+References: <20140514221245.GA22918@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 15 18:26:25 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Thu May 15 18:33:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkyUC-0004JF-Ha
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 18:26:24 +0200
+	id 1WkybG-0006G0-5n
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 18:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751715AbaEOQ0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 12:26:21 -0400
-Received: from mail-ve0-f175.google.com ([209.85.128.175]:63199 "EHLO
-	mail-ve0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751255AbaEOQ0U (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 12:26:20 -0400
-Received: by mail-ve0-f175.google.com with SMTP id jw12so1595097veb.20
-        for <git@vger.kernel.org>; Thu, 15 May 2014 09:26:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=/0DNMHBfUfIeh5PrqYT0ivuXfgguPnVLH4ey/XhRdZo=;
-        b=BWj/k947Oxv4+LqS34pIvLj/1wucZtGWgJLUe5y/u6NdUlYEj3NCFdYLhc70Y8vVQg
-         AQn4aoscRLq2l/Ns3f+rJ6DJ+vhkBH57KQSgn+SwxQ+pPdTfH8OIFmbSywOrn0WIUPRF
-         hulGQrlsfEwfGCI/V0kMyL0iVQDnTS+Xfp4W7Ai1RbZ5Y28ZtqpG4Qe5XamFz3jojElS
-         FgxhGvEBg+G8OlXghIr+Zj7Y44yKhTdqgIsg9ykHd4GNPyhmceiLTcmhIDo5ifsQW8dL
-         GUmSqZ8nPCyzmPJzBs4uvR2DpCp+vxUlY3essMMPFWwJDwH7zPGlT1y871ZBKfdDpCi5
-         NnPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=/0DNMHBfUfIeh5PrqYT0ivuXfgguPnVLH4ey/XhRdZo=;
-        b=Z0/Qg3mJz0HR+770RYVEhp404TthIrfKMATcIjYYGbkmTG0S3g+8/MSl74AmkxBuj8
-         XzYHjL0D62ipLiAsyJG0O/FM5SRlLOkYlUyKO4W68Z0U16Wu6DNZJ8xKUu9KlFHGoGKr
-         VJasbHMTL7rkkXbNtNKw9uBcjxBlhntusE/zQHrnpDpYP8mxWAk4hwCOlb0jZXtTODDp
-         j2wpdmRiTOSiCE7wK7oO27227XLzlN5q4PCDo8k4yeeFbXXB3/bhKxsvCSchyttoLtu2
-         4Ixr4lPq0CbzNIP9UJI/8tCqlODNyYl48G7Xl4o4WFTeIQqI/4Bd3QrYsP4GafTAZuD9
-         2iPw==
-X-Gm-Message-State: ALoCoQm84RAw+Sh60Pj1N8yt1WZF++s0jpxJnriOJusnSDAylLCIo8YMDwLNQgPWjSybLLhnIMka
-X-Received: by 10.52.37.135 with SMTP id y7mr1955373vdj.38.1400171179669; Thu,
- 15 May 2014 09:26:19 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Thu, 15 May 2014 09:26:19 -0700 (PDT)
-In-Reply-To: <20140515001904.GG9218@google.com>
+	id S1751614AbaEOQdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 12:33:37 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52289 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751255AbaEOQdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 12:33:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4D23715013;
+	Thu, 15 May 2014 12:33:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4OHvZ94JBIhJNkzx6Zv8iFWgr4U=; b=BVeAQ9
+	IOTgo/jVelZQmU0p2ytniKFKDc1qN8nEV2E/TUokqpKJXxe8Qcc2zVin3F7UOXDe
+	BTOti3yj3Twio8xVpncUA29m0JcInkW+gY7pJHh6R+grBgNfVi3NXQkceWSrecgo
+	XQ3n/u+gwUi1OT58p4a1x2MQcmjYOWtk22FIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U+YOjH3nQuyLJeRD34E4C7bm0B4j9vKz
+	IS3x9GoVDVZEMlzubiuqi2VHOPKlE1u9vh9YDnx4KtUPxzxVFxndpB8T/z0MZ0Wf
+	XiifsjY85uow31Wz/XldgKRiySb3nYz8a/N4M5+FUFu0Dg8YnSX+q7XP22zTle9v
+	S4LdNrxJ3CI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 362A215012;
+	Thu, 15 May 2014 12:33:36 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6508016FAE;
+	Thu, 15 May 2014 12:33:10 -0400 (EDT)
+In-Reply-To: <20140514221245.GA22918@wheezy.local> (Max Kirillov's message of
+	"Thu, 15 May 2014 01:12:45 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9A3976AA-DC4E-11E3-AEBB-DDB853EDF712-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249110>
 
-On Wed, May 14, 2014 at 5:19 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
->
->> Change ref_transaction_delete() to do basic error checking and return
->> status. Update all callers to check the return for ref_transaction_delete()
->> There are currently no conditions in _delete that will return error but there
->> will be in the future.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->
-> Same comments as _delete and _update. :)
-
-Done.
-Thanks.
+Thanks, will replace the topic.
