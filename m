@@ -1,49 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 01/10] check_bindir: don't use the -a or -o option with the test command
-Date: Thu, 15 May 2014 07:21:41 -0700
-Message-ID: <1400163710-28333-1-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 03/10] contrib/examples/git-commit.sh: don't use the -a or -o option with the test command
+Date: Thu, 15 May 2014 07:21:43 -0700
+Message-ID: <1400163710-28333-3-git-send-email-gitter.spiros@gmail.com>
+References: <1400163710-28333-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 15 16:22:01 2014
+X-From: git-owner@vger.kernel.org Thu May 15 16:22:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkwXo-0007Vp-Ku
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 16:22:01 +0200
+	id 1WkwXv-0007sh-1p
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 16:22:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752996AbaEOOV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 10:21:56 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:44775 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751541AbaEOOVz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 10:21:55 -0400
-Received: by mail-pb0-f43.google.com with SMTP id up15so1170278pbc.2
-        for <git@vger.kernel.org>; Thu, 15 May 2014 07:21:54 -0700 (PDT)
+	id S1754362AbaEOOV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 10:21:58 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:53308 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751689AbaEOOV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 10:21:57 -0400
+Received: by mail-pa0-f50.google.com with SMTP id fb1so1140089pad.37
+        for <git@vger.kernel.org>; Thu, 15 May 2014 07:21:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=64iHjfGfCOKD7v3ImjyWjlhOOaavERHxennMRUYMw/M=;
-        b=ujjaWLUO/Vpa5DrViNWUX0R9igSF7nGuZvEBZwVRgSHsXJK25PKiTvqThmTn5q4aa6
-         OYDKQYXjRhcKEP97NsVkloP5wAR7n6ZxyByS/5AArwqKWFVzNOjHo5AyHBeFFzCAdzRV
-         iXUdM+rj5oSld9W5bPs7u/i6aU6FUBYHRC9KHsuirwntrd8iWxo19vI8h+Gz82g6fT3j
-         fhAmMfuNjh6LaJHMRx9M3PNtf76molXlRuH66+JCAWASBy68gALjf89kcV/lrwBKaV8d
-         nfikFxPH81cROaEydyBfU1ef+YFkXYtttyg7ZpIvGgz/TX6dRnOe2KgBm6IRssihyUtC
-         lTbw==
-X-Received: by 10.66.141.144 with SMTP id ro16mr12450804pab.131.1400163714722;
-        Thu, 15 May 2014 07:21:54 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=hnb0ZWSFm6Y+4LIBXa030zGsfCJTBJkUahD/jBXLRTk=;
+        b=QAWxx+55FrfzX9AUz/N1zdvo+nrwESMxVyq0u0Xgl4EcPDAMhC8zYxfzX3xrjkpf1H
+         KwwQujeF2xo3y8W0CiausDGxuf5AKHDy9HJnPAmpHm/1JFArsrBt8metKkF/maIvIzgX
+         6Q24cmj54kvG5pnx/OAyolDOCshwi5DXGSVGEt+4Oqij4Dv5AsV30a321siP/TwT1Ork
+         GZegOZPLJyRXuUNQDsnHsvGYRecsr34DjwRNPvNKgb4VX+bIi5Fmy5pL54UzOGJrlJEP
+         8YVy8gKbZKCcS2an1D1EKWJsyzyOu9TuyxIQXcqKTPS6COMYFCRz1d/M8JnGF6k4zT6p
+         vrXw==
+X-Received: by 10.68.164.229 with SMTP id yt5mr12874261pbb.28.1400163716788;
+        Thu, 15 May 2014 07:21:56 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id sy2sm9397666pbc.28.2014.05.15.07.21.53
+        by mx.google.com with ESMTPSA id sy2sm9397666pbc.28.2014.05.15.07.21.55
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 15 May 2014 07:21:53 -0700 (PDT)
+        Thu, 15 May 2014 07:21:56 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1400163710-28333-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249092>
 
 Even though POSIX.1 lists -a/-o as options to "test", they are
 marked "Obsolescent XSI". Scripts using these expressions
@@ -96,21 +98,30 @@ Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
 Inspired from this discussion http://permalink.gmane.org/gmane.comp.version-control.git/137056
 
- check_bindir |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/examples/git-commit.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/check_bindir b/check_bindir
-index a1c4c3e..623eadc 100755
---- a/check_bindir
-+++ b/check_bindir
-@@ -2,7 +2,7 @@
- bindir="$1"
- gitexecdir="$2"
- gitcmd="$3"
--if test "$bindir" != "$gitexecdir" -a -x "$gitcmd"
-+if test "$bindir" != "$gitexecdir" && test -x "$gitcmd"
+diff --git a/contrib/examples/git-commit.sh b/contrib/examples/git-commit.sh
+index 5cafe2e..934505b 100755
+--- a/contrib/examples/git-commit.sh
++++ b/contrib/examples/git-commit.sh
+@@ -51,7 +51,7 @@ run_status () {
+ 		export GIT_INDEX_FILE
+ 	fi
+ 
+-	if test "$status_only" = "t" -o "$use_status_color" = "t"; then
++	if test "$status_only" = "t" || test "$use_status_color" = "t"; then
+ 		color=
+ 	else
+ 		color=--nocolor
+@@ -296,7 +296,7 @@ t,,,[1-9]*)
+ 	die "No paths with -i does not make sense." ;;
+ esac
+ 
+-if test ! -z "$templatefile" -a -z "$log_given"
++if test ! -z "$templatefile" && test -z "$log_given"
  then
- 	echo
- 	echo "!! You have installed git-* commands to new gitexecdir."
+ 	if test ! -f "$templatefile"
+ 	then
 -- 
 1.7.10.4
