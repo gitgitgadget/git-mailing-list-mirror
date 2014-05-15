@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 05/10] contrib/examples/git-repack.sh: don't use the -a or -b option with the test command
-Date: Thu, 15 May 2014 07:17:32 -0700
-Message-ID: <1400163457-28285-5-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 06/10] contrib/examples/git-resolve.sh: don't use the -a or -b option with the test command
+Date: Thu, 15 May 2014 07:17:33 -0700
+Message-ID: <1400163457-28285-6-git-send-email-gitter.spiros@gmail.com>
 References: <1400163457-28285-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 15 16:18:12 2014
+X-From: git-owner@vger.kernel.org Thu May 15 16:18:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkwU7-0005or-BY
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 16:18:11 +0200
+	id 1WkwUd-00076C-32
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 16:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755044AbaEOOSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 10:18:05 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:64374 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754249AbaEOORr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 10:17:47 -0400
-Received: by mail-pa0-f53.google.com with SMTP id kp14so1129092pab.26
-        for <git@vger.kernel.org>; Thu, 15 May 2014 07:17:47 -0700 (PDT)
+	id S1755038AbaEOOSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 10:18:04 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:52523 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754469AbaEOORs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 10:17:48 -0400
+Received: by mail-pa0-f49.google.com with SMTP id lj1so1134500pab.36
+        for <git@vger.kernel.org>; Thu, 15 May 2014 07:17:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=YGk0e6IMc+oJzHMtiIbt6Bvg09bBmfo8aPgegZoLjxw=;
-        b=Kx0KN04A/qllaWSH0T/k0zL2IbG+WABCwaHD/ozl044/HRhYXK5AyBm6ZJ1+HLYJ+n
-         mh961OU8RpQE8DWUyHWs473LYevflOwuRlswX6qHmrd002/SZOeLdjPyvXpDY7te8IiC
-         lrcQCKsvjJqN1C/SL9MHwf8y7toaVYFWPTZK/AnsSkciYON/X7wQE7qzHlzeUj8ESTJf
-         rQkjtOdQDBsHqlvAPJAfIK81P97dwFCfeSIC7nkvwod9zwKsrvbiAAh1z6c3vOAyNHe9
-         MX1xNKGqs9xN2rjezW+3e7pRU47h3gqexnMtmbiFInbsUdc7spSt2ODLkL+ICPk+U25q
-         ghNA==
-X-Received: by 10.68.203.39 with SMTP id kn7mr12764778pbc.141.1400163467122;
-        Thu, 15 May 2014 07:17:47 -0700 (PDT)
+        bh=9LNHJ2Y9puSBhMfGRJ6Ef9wOXAaV0GP6Z0i5NgUxflY=;
+        b=qPbJ7us18eicxbzUFHu61BkNvLQMZuKnd+GmnWCuSFmGddfS8yVjUBNc9UXmmgp0Sc
+         50faDXCrjhaKUccw4Xwz3Jj3nmEp7DjHEjFOeJPB2STLQ3TUtwnQKCo4QOK0iioPfKPx
+         qhZdN9fUidMaMErFViFxgilgTUMetMJjV+pJQoe4sLSnlsVzzhe74isRLiumUkty4OKK
+         OBm9h/dcXE+tvhteI1KjkfcHDRH0WJbC2dFc5sBmzRQH+J2YPRTX+WO3oo+R4tTeWJdY
+         fEwauYlXVWrFdBefvsUz8dJtUpF/ZkIxvvXZxzSL3kG9TiWFxfOyGChvdunO8MG6Oyhy
+         GfsA==
+X-Received: by 10.69.15.2 with SMTP id fk2mr12738332pbd.123.1400163468047;
+        Thu, 15 May 2014 07:17:48 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id as12sm21782704pac.43.2014.05.15.07.17.46
+        by mx.google.com with ESMTPSA id as12sm21782704pac.43.2014.05.15.07.17.47
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 15 May 2014 07:17:46 -0700 (PDT)
+        Thu, 15 May 2014 07:17:47 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1400163457-28285-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249089>
 
 Even though POSIX.1 lists -a/-o as options to "test", they are
 marked "Obsolescent XSI". Scripts using these expressions
@@ -98,23 +98,21 @@ Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
 Inspired from this discussion http://permalink.gmane.org/gmane.comp.version-control.git/137056
 
- contrib/examples/git-repack.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ contrib/examples/git-resolve.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/contrib/examples/git-repack.sh b/contrib/examples/git-repack.sh
-index f312405..96e3fed 100755
---- a/contrib/examples/git-repack.sh
-+++ b/contrib/examples/git-repack.sh
-@@ -76,8 +76,8 @@ case ",$all_into_one," in
- 				existing="$existing $e"
- 			fi
- 		done
--		if test -n "$existing" -a -n "$unpack_unreachable" -a \
--			-n "$remove_redundant"
-+		if test -n "$existing" && test -n "$unpack_unreachable" && \
-+			test -n "$remove_redundant"
+diff --git a/contrib/examples/git-resolve.sh b/contrib/examples/git-resolve.sh
+index 48d0fc9..70fdc27 100755
+--- a/contrib/examples/git-resolve.sh
++++ b/contrib/examples/git-resolve.sh
+@@ -76,7 +76,7 @@ case "$common" in
+ 			2>/dev/null || continue
+ 		# Count the paths that are unmerged.
+ 		cnt=$(GIT_INDEX_FILE=$G git ls-files --unmerged | wc -l)
+-		if test $best_cnt -le 0 -o $cnt -le $best_cnt
++		if test $best_cnt -le 0 || test $cnt -le $best_cnt
  		then
- 			# This may have arbitrary user arguments, so we
- 			# have to protect it against whitespace splitting
+ 			best=$c
+ 			best_cnt=$cnt
 -- 
 1.7.10.4
