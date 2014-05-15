@@ -1,151 +1,133 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v6 05/42] update-ref.c: log transaction error from the update_ref
-Date: Thu, 15 May 2014 08:47:59 -0700
-Message-ID: <CAL=YDWmsD6ajY0f+yfqW+8Tp7NOE6HvYFGgrUGRFswwXBvP6-w@mail.gmail.com>
-References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
-	<1398976662-6962-6-git-send-email-sahlberg@google.com>
-	<20140514220831.GB9218@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 10/10] git-submodule.sh: don't use the -a or -b option
+ with the test command
+Date: Thu, 15 May 2014 08:58:22 -0700
+Message-ID: <20140515155821.GA27279@google.com>
+References: <1400163457-28285-1-git-send-email-gitter.spiros@gmail.com>
+ <1400163457-28285-10-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 15 17:48:07 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 15 17:58:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkxt9-0005vV-3Q
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 17:48:07 +0200
+	id 1Wky3I-00089o-0R
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 17:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131AbaEOPsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 11:48:01 -0400
-Received: from mail-vc0-f176.google.com ([209.85.220.176]:43864 "EHLO
-	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753670AbaEOPsA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 11:48:00 -0400
-Received: by mail-vc0-f176.google.com with SMTP id lg15so4574152vcb.21
-        for <git@vger.kernel.org>; Thu, 15 May 2014 08:47:59 -0700 (PDT)
+	id S1754059AbaEOP6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 11:58:31 -0400
+Received: from mail-pb0-f42.google.com ([209.85.160.42]:55441 "EHLO
+	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753687AbaEOP6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 11:58:30 -0400
+Received: by mail-pb0-f42.google.com with SMTP id md12so1273840pbc.15
+        for <git@vger.kernel.org>; Thu, 15 May 2014 08:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=uBaenc0dGPXJFJe6xXZRO+GeqDqs+ZvvK6YDtnTcVEg=;
-        b=VT5BdMkUGKyGiIqkRLskZL8/NZoIzT07mfnLR1PUshokZ27XSKS/7zsvR0Abq8hj76
-         j7gp+po5h2ZCpyGCTvrLrYoDFQaJv/WpUf8ifbDwYQkjn9wDGn21lC4IcQSBSY7SxHcK
-         pLGkl/RBb5r/C+FLSv+g8GLNd3sawBWyCIZVq6YStpKXFEIMAMn6LWK9P6mKOuknm8s7
-         L4oV+jrAjwbQpp8CeuaC7r3SZdCw5+uQ+hJ7J01aTQtdFtgRixBTjMLxiaV2F2+xDAqp
-         vGivhdbBgHvW8uY6AMqQdz+Ro9/ZxGLz5hl6JnneldIbX6D0ImUeUcG8CdHCbFFK3Qkj
-         sIjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=uBaenc0dGPXJFJe6xXZRO+GeqDqs+ZvvK6YDtnTcVEg=;
-        b=l4gnPQ8xpplF5VZV/kTrKb2Rp7QWPDmDBPfIt6upRS1kQ3s0SxPUbQMMumdiftGesU
-         ysw7Bg7CQVWQ4bo5KVKmsUSXnsB0eaqtxFNluRgsNVPzakum1FDiKp+OD1vtyN5z2yF4
-         rRuYoI5viFxM+lmftuMhwPQl1OV4d1qO+98JlmmdS0WgiOyM72CvujivFBFPsVk8akP/
-         gJqoXkv80CTblQPvOg6uLrFHpycCFLOciSbfH3i3Wkbl5dYF92sd7QQE1+k1Bo+q2Zia
-         mnbzeSmKDcI8BGQHDf8xZuqj0C6v9GuucnBZSFSggGC2dYZx1EE3lX85cuCJbrUj4flA
-         QIYA==
-X-Gm-Message-State: ALoCoQnq0/FJUfz5O2gZA2Y+qHUx1o5++hKU2YNht90ZV/hG7ZbUf/ecq7I5RiCZe5MhX0Fc5OJu
-X-Received: by 10.58.66.195 with SMTP id h3mr874090vet.57.1400168879664; Thu,
- 15 May 2014 08:47:59 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Thu, 15 May 2014 08:47:59 -0700 (PDT)
-In-Reply-To: <20140514220831.GB9218@google.com>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=bceL4HQjLKp94QQmVOS3ZdVh5VFfdRXj4u7S7VShwt4=;
+        b=jnPmkMyRB/atf5X8FeHzHW6Nk3coi8W3TZ2S9NQfYee71ZDgmZ2bcSB9FE4JpmsvL4
+         l9vmOs7OYwuMTPJAA7tOuLydx22CGdpGIVkh4qdT7ykFKsAsaULo12EBJNMIJE9T/PRs
+         oQYs+eBjt4wQTAsWj4OF4cBDVny4wsyg97q3opkEJHbVrKoWnB/ajabGzsPEjG3tEGQZ
+         nKVeGjEDqjEz5liJ/CUFx3YIwDLAZsuDtTwdP9RytsuBlT/JCAIT/u+WjYqoUbhXjZth
+         aYYTipJJ6XoPn8RK2O3jRw4G0Agv9N+GmJH4vYUNLpZ1OYtRZ9Tip38kVyEkx4g6Pl6m
+         zAvA==
+X-Received: by 10.68.235.6 with SMTP id ui6mr13257117pbc.45.1400169510120;
+        Thu, 15 May 2014 08:58:30 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id iq10sm9795977pbc.14.2014.05.15.08.58.29
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 15 May 2014 08:58:29 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1400163457-28285-10-git-send-email-gitter.spiros@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249104>
 
-On Wed, May 14, 2014 at 3:08 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->
-> Ronnie Sahlberg wrote:
->
->> --- a/builtin/update-ref.c
->> +++ b/builtin/update-ref.c
->> @@ -342,6 +342,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
-> [...]
->> @@ -359,17 +360,16 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
-> [...]
->>               if (delete || no_deref || argc > 0)
->>                       usage_with_options(git_update_ref_usage, options);
->>               if (end_null)
->>                       line_termination = '\0';
->>               update_refs_stdin();
->> -             ret = ref_transaction_commit(transaction, msg, NULL,
->> -                                          UPDATE_REFS_DIE_ON_ERR);
->> -             return ret;
->> +             if (ref_transaction_commit(transaction, msg, &err,
->> +                                        UPDATE_REFS_QUIET_ON_ERR))
->> +                     die("%s", err.buf);
->
-> Nice.  I like this much more than passing a flag to each function to
-> tell it how to handle errors. :)
->
-> ref_transaction_commit didn't have any stray codepaths that return
-> some other exit code instead of die()-ing with UPDATE_REFS_DIE_ON_ERR,
-> so this should be safe as far as the exit code is concerned.
->
-> The only danger would be that some codepath leaves 'err' alone and
-> forgets to write a messages, so we die with
->
->         "fatal: "
->
-> Alas, it looks like this patch can do that.
->
->  i. The call to update_ref_write can error out without updating the
->     error string.
+Elia Pinto wrote:
 
-Fixed.
-I reordered the patches so the change to update_ref_write to take an
-err argument will come before the change to update-ref.c as you
-suggested.
+> Even though POSIX.1 lists -a/-o as options to "test", they are
+> marked "Obsolescent XSI". Scripts using these expressions
+> should be converted  as follow:
+[... many lines snipped ...]
 
->
->  ii. delete_ref_loose can print a message and then fail without updating
->      the error string so the output looks like
->
->         warning: unable to unlink .git/refs/heads/master.lock: Permission denied
->         fatal:
->         $
->
+This is a very long description, and it doesn't leave me excited by
+the change.
 
-Fixed.
-I have added a new patch before the change to update-ref.c to add err
-to delete_ref_loose.
+Is there some potential bug this prevents, or is it just a style
+fix?  If the latter, do we have a way of checking for new examples
+of the same thing to avoid having to repeat the same patch again in
+the future?
 
->  iii. repack_without_refs can similarly return an error
->
->         error: Unable to create '/home/jrn/test/.git/packed-refs.lock: Permission denied
->         error: cannot delete 'refs/heads/master' from packed refs
->         fatal:
->         $
->
->  iv. commit_lock_file in commit_packed_refs is silent on error.
->      repack_without_refs probably intends to write a message in that
->      case but doesn't :(
+Are there any platforms that were broken which this fixes?  Even
+posh seems to understand -a and -o.
 
-Fixed.
-I added a patch to take an err argument to repack_without_refs and
-update it for both
-conditions iii and iv.
+Nowadays Documentation/CodingGuidelines says
 
+ - Fixing style violations while working on a real change as a
+   preparatory clean-up step is good, but otherwise avoid useless code
+   churn for the sake of conforming to the style.
 
+   "Once it _is_ in the tree, it's not really worth the patch noise to
+   go and fix it up."
+   Cf. http://article.gmane.org/gmane.linux.kernel/943020
 
->
-> I wish there were some way to automatically detect missed spots or
-> make them stand out (like with the current "return error()" idiom a
-> bare "return -1" stands out).
->
-> (i) is fixed by a later patch.  It would be better to put that before
-> this one for bisectability.
->
-> I don't see fixes to (ii), (iii), and (iv) in the series yet from a
-> quick glance.
+which I think goes too far (some patterns really are error prone
+or distracting and it can be worth fixing them tree-wide), but it
+makes a reasonable case that an idiom not being preferred in the
+style guide is not *on its own* enough reason to change it.
 
-Fixed in the next version of the patch series I will send out.
-Thanks.
+Perhaps something like the following would work?
+
+	tree-wide: convert test -a/-o to && and ||
+
+	The interaction with unary operators and operator precedence
+	for && and || are better known than -a and -o, and for that
+	reason we prefer them.  Replace all existing instances in git
+	of -a and -o to save readers from the burden of thinking
+	about such things.
+
+	Add a check-non-portable-shell.pl to avoid more instances of
+	test -a and -o arising in the future.
+
+[...]
+> -			test $status = D -o $status = T && echo "$sm_path" && continue
+> +			 ( test $status = D || test $status = T ) && echo "$sm_path" && continue
+
+There's no need for a subshell for this.  Better to use a block:
+
+			{
+				test "$status" = D ||
+				test "$status" = T
+			} &&
+			echo "$sm_path" &&
+			continue
+
+or an if statement:
+
+			if test "$status" = D || test "$status" = T
+			then
+				echo "$sm_path"
+				continue
+			fi
+
+or case:
+
+			case $status in
+			D|T)
+				echo "$sm_path"
+				continue
+				;;
+			esac
+
+Hope that helps,
+Jonathan
