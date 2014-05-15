@@ -1,71 +1,94 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
-Date: Thu, 15 May 2014 22:45:22 +0200
-Message-ID: <CANQwDwffdbqD96OadyECFs=6WY_t+_0b63L5yAZVQ8aXrMvHHA@mail.gmail.com>
-References: <20140514184145.GA25699@localhost.localdomain> <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
- <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
- <20140515050820.GA30785@localhost.localdomain> <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
- <20140515184808.GA7964@localhost.localdomain> <CANQwDwe+GJ+yAYWdVfMaHq97zGXBoepCfUdLiaQD9LFoz3SiOA@mail.gmail.com>
- <xmqqmweiessl.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v8 13/44] tag.c: use ref transactions when doing updates
+Date: Thu, 15 May 2014 14:11:56 -0700
+Message-ID: <20140515211156.GK26471@google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+ <1400174999-26786-14-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Wagner <accounts@mwagner.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 15 22:46:11 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu May 15 23:12:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wl2XZ-0005n7-Q2
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 22:46:10 +0200
+	id 1Wl2wi-0002iq-Ma
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 23:12:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755837AbaEOUqF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 May 2014 16:46:05 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:54285 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755652AbaEOUqD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 May 2014 16:46:03 -0400
-Received: by mail-oa0-f47.google.com with SMTP id i7so1920746oag.34
-        for <git@vger.kernel.org>; Thu, 15 May 2014 13:46:02 -0700 (PDT)
+	id S1755632AbaEOVMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 17:12:01 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:56593 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755538AbaEOVMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 17:12:00 -0400
+Received: by mail-pb0-f43.google.com with SMTP id up15so1588043pbc.16
+        for <git@vger.kernel.org>; Thu, 15 May 2014 14:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=87FocE0A2XW2javBFf9cFIowZ1gUHHVh0JF0zzFmZbg=;
-        b=zo3UY0Pbr+reNmUF2QiPBMDnq01zWhw9JVh4vcYN3c9Uu0OgMh9f3LsUt8A7r84GWb
-         KoQqahUMMgx4/WoWqDA76mVS0MJUuHDcxEQbi/SfXytdji18L+b6GiSJALW3GMJ21NZG
-         yeippo4EWoKukIK482ivRMEBi8EyeJ3fMQNBPYa1DoIVWVRKfsRvpcXwpZ97GknGjjtE
-         8jFWhZ3Tln1OEZ+NNAJ1RzYAtFu/yH47lT8dQNuBjC03H9zLPXoftdzhUtWlldbtcDBT
-         iqHdDAxUJM3C8Sgvme71WKlkCMVh1ytHwSKJMksvYSg+X8tbkeiHZoYx6xvFktUfgKQp
-         PMUw==
-X-Received: by 10.60.17.132 with SMTP id o4mr12515520oed.34.1400186762687;
- Thu, 15 May 2014 13:46:02 -0700 (PDT)
-Received: by 10.76.132.4 with HTTP; Thu, 15 May 2014 13:45:22 -0700 (PDT)
-In-Reply-To: <xmqqmweiessl.fsf@gitster.dls.corp.google.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=1eQbT0xjrBQSxLmcHEEQx3VZbZApzOEYKoh3o78UQRU=;
+        b=MEhb8PH/rLvDhKV+ktlgkuxcqtIVqrrBX/laI/kY7WjnLW8CjZr9c02REHw7C7BHAS
+         sxplN/kZ0RBx7YpETvYBZI0t9oeaIxYh9aXaEEdyIdS8tTnG3fL3OApuNZFspHvE9Z5R
+         9pCdI+i6qbz2jFTgoYylHKcKgLrZIzj2dki1OIz6O2HqLT93Y5zVfJ24qwjQHEJtqC2w
+         WN5en17PKTlrPx3OkpBv6qqhBtlzjISz6oaoD4AjjQnR9L3I2HpEa9bMFuDoKmo32RGY
+         covRgQxFqTDBvnKsWZD4UPaJz/qYcRBajWJyuYo1kCCNgLLtTEWAUfmONfipV2c/NCNT
+         N4Nw==
+X-Received: by 10.68.133.229 with SMTP id pf5mr15496339pbb.115.1400188319555;
+        Thu, 15 May 2014 14:11:59 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id gz11sm10759702pbd.1.2014.05.15.14.11.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 15 May 2014 14:11:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1400174999-26786-14-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249201>
 
-On Thu, May 15, 2014 at 9:38 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
->
->> Writing test for this would not be easy, and require some HTML
->> parser (WWW::Mechanize, Web::Scraper, HTML::Query, pQuery,
->> ... or low level HTML::TreeBuilder, or other low level parser).
->
-> Hmph.  Is it more than just looking for a specific run of %xx we
-> would expect to see in the output of the tree view for a repository
-> in which there is one tree with non-ASCII name?
+Ronnie Sahlberg wrote:
 
-There is if we want to check (in non-fragile way) that said
-specific run is in 'href' *attribute* of 'a' element (link target).
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -701,11 +702,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>  	if (annotate)
+>  		create_tag(object, tag, &buf, &opt, prev, object);
+>  
+> -	lock = lock_any_ref_for_update(ref.buf, prev, 0, NULL);
+> -	if (!lock)
+> -		die(_("%s: cannot lock the ref"), ref.buf);
+> -	if (write_ref_sha1(lock, object, NULL) < 0)
+> -		die(_("%s: cannot update the ref"), ref.buf);
+> +	transaction = ref_transaction_begin();
+> +	if (!transaction ||
+> +	    ref_transaction_update(transaction, ref.buf, object, prev,
+> +				   0, !is_null_sha1(prev)) ||
+> +	    ref_transaction_commit(transaction, NULL, &err))
+> +		die(_("%s: cannot update the ref: %s"), ref.buf, err.buf);
 
---=20
-Jakub Narebski
+The error string says what ref it was trying to update, so
+
+		die("%s", err.buf);
+
+should be enough.  (E.g.,
+
+	fatal: refs/tags/v1.0: cannot lock the ref
+
+would become
+
+	fatal: Cannot lock the ref 'refs/tags/v1.0'.
+
+instead of
+
+	fatal: refs/tags/v1.0: cannot update the ref: Cannot lock the ref 'refs/tags/v1.0'.
+
+.)
+
+Thanks,
+Jonathan
