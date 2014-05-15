@@ -1,137 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] transport-helper: add trailing --
-Date: Thu, 15 May 2014 05:00:13 -0400
-Message-ID: <20140515090013.GB27033@sigill.intra.peff.net>
-References: <20140515053214.GA12133@camelia.ucw.cz>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
+Date: Thu, 15 May 2014 10:04:24 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
+References: <20140514184145.GA25699@localhost.localdomain> <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com> <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com> <20140515050820.GA30785@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBDO2DJFKTEFBBIEE2KNQKGQEHGEYUAI@googlegroups.com Thu May 15 11:00:19 2014
-Return-path: <msysgit+bncBDO2DJFKTEFBBIEE2KNQKGQEHGEYUAI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pb0-f63.google.com ([209.85.160.63])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-2?Q?Jakub_Nar=EAbski?= <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Michael Wagner <accounts@mwagner.org>
+X-From: git-owner@vger.kernel.org Thu May 15 11:04:55 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBBIEE2KNQKGQEHGEYUAI@googlegroups.com>)
-	id 1WkrWU-0003QC-09
-	for gcvm-msysgit@m.gmane.org; Thu, 15 May 2014 11:00:18 +0200
-Received: by mail-pb0-f63.google.com with SMTP id rr13sf217385pbb.8
-        for <gcvm-msysgit@m.gmane.org>; Thu, 15 May 2014 02:00:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=sB9EpMfkNCRhSuCzo6+Nt2s44ebJrdev5emhfcOO96w=;
-        b=k+6Uy4tv3hHtuPJeTwRvCB2ryB9G62ZRoygPQ57MYLmZ7elQW86JcmThKOoAflnANM
-         ACQ4v/Ud7lbJXxH7Nadi4EBaaUXaHDIserntC9VNKd9IE3kSbiH075VWgtfchK/SVwIm
-         JEZx/B9YZfdJLU8iDiz1ps29wlvjZamt8XBOWl/oIr1GRzEEN8ErtQng+syaHyWQkf6L
-         kSJvD3GVoXeWsKLPb/goydcivLDoyK9OgBQPDHHhXkmwY3j80xmlLPSNmYyI6LyRkm11
-         Mv+r0VS4t/kPPt9NAD9eVCUb2/yOfC/duGOCT46J+rs4EOiVr29ZNufHjgK1aNpATMXX
-         cBoA==
-X-Received: by 10.50.61.144 with SMTP id p16mr982273igr.16.1400144416606;
-        Thu, 15 May 2014 02:00:16 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.122.97 with SMTP id lr1ls286973igb.35.gmail; Thu, 15 May
- 2014 02:00:15 -0700 (PDT)
-X-Received: by 10.67.5.165 with SMTP id cn5mr1962298pad.9.1400144415850;
-        Thu, 15 May 2014 02:00:15 -0700 (PDT)
-Received: from peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id b5si416654igl.0.2014.05.15.02.00.15
-        for <msysgit@googlegroups.com>;
-        Thu, 15 May 2014 02:00:15 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 21644 invoked by uid 102); 15 May 2014 09:00:15 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 May 2014 04:00:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 May 2014 05:00:13 -0400
-In-Reply-To: <20140515053214.GA12133@camelia.ucw.cz>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249076>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wkrap-0006fP-Pz
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 11:04:48 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751642AbaEOJEn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 May 2014 05:04:43 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:51358 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751000AbaEOJEl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 05:04:41 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s4F94R4X016725
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 15 May 2014 11:04:28 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s4F94Pw2016721;
+	Thu, 15 May 2014 11:04:25 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <20140515050820.GA30785@localhost.localdomain>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 15 May 2014 11:04:29 +0200 (CEST)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249077>
 
-On Thu, May 15, 2014 at 07:32:14AM +0200, Stepan Kasal wrote:
+Michael Wagner:
 
-> From: Sverre Rabbelier <srabbelier@gmail.com>
-> Date: Sat, 28 Aug 2010 20:49:01 -0500
-> 
-> [PT: ensure we add an additional element to the argv array]
-> 
-> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
-> ---
-> 
-> Hi,
->   this patch was present in msysgit from Mar 2012.
-> Do you like it?
-> I'm sorry, there is no author signoff; is the patch small enough?
+> Decoding the UTF-8 encoded file name (again with an additional print
+> statement):
+>
+> $ REQUEST_METHOD=3DGET QUERY_STRING=3D'p=3Dnotes.git;a=3Dblob_plain;f=
+=3Dwork/G%C3%83%C2%BCtekriterien.txt;hb=3DHEAD' ./gitweb.cgi
+>
+> work/G=FCtekriterien.txt
+> Content-disposition: inline; filename=3D"work/G=FCtekriterien.txt"
 
-It needs an explanation in the commit message, too. As Felipe noted, I
-do not think it would help with ambiguity, but it should not hurt, and
-is a reasonable defensive thing to do (but I did not think about it too
-long, so maybe Sverre has an example that needs it).
+You should fix the code path that created that URI, though, as it is=20
+not what you expected.
 
-> diff --git a/transport-helper.c b/transport-helper.c
-> index 0e7c330..a01ea47 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -429,7 +429,7 @@ static int get_exporter(struct transport *transport,
->  	/* we need to duplicate helper->in because we want to use it after
->  	 * fastexport is done with it. */
->  	fastexport->out = dup(helper->in);
-> -	fastexport->argv = xcalloc(6 + revlist_args->nr, sizeof(*fastexport->argv));
-> +	fastexport->argv = xcalloc(7 + revlist_args->nr, sizeof(*fastexport->argv));
+%C3%83 decodes to U+00C3 Latin Capital Letter A With Tilde
+%C2%BC decodes to U+00BC Vulgar Graction One Quarter
 
-It would be nice if this were an argv_array so we would not have to
-worry about managing the array size. This is one of several spots that
-leaks array memory that I have been meaning to fix.
+The proper UTF-8 encoding for =FC (U+00FC) is, as you can probably gues=
+s from=20
+looking at which two characters the sequence above yielded, C3 BC,=20
+which in a URI is represented as %C3%BC.
 
-I just posted a series that addresses those leaks and converts this
-site. I do not want to hold your patch hostage to my series, but
-depending on the review on my series, you may want to re-roll this on
-top; you would drop the line above, and change:
+Your QUERY_STRING should thus be
 
-> +	fastexport->argv[argc++] = "--";
+   p=3Dnotes.git;a=3Dblob_plain;f=3Dwork/G%C3%BCtekriterien.txt;hb=3DHE=
+AD
 
-to:
+which probably works as expected.
 
-    argv_array_push(&fastexport->args, "--");
+What is happening is that whatever is generating the URI us=20
+UTF-8-encoding the string twice (i.e., it generates a string with the=20
+proper C3 BC in it, and then interprets it as iso-8859-1 data and runs=20
+that through a UTF-8 encoder again, yielding the C3 83 C2 BC sequence=20
+you see above).
 
--Peff
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+--=20
+\\// Peter - http://www.softwolves.pp.se/
