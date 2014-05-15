@@ -1,119 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git grep -O -i: if the pager is 'less', pass
- the '-i' option
-Date: Thu, 15 May 2014 21:01:44 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1405152100350.14982@s15462909.onlinehome-server.info>
-References: <20140514155010.GA4592@camelia.ucw.cz> <xmqq7g5okztp.fsf@gitster.dls.corp.google.com> <20140514182654.GA9218@google.com> <xmqqvbt8jjlg.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1405151943310.14982@s15462909.onlinehome-server.info>
- <20140515175344.GM9218@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v8 06/44] refs.c: add an err argument ro delete_loose_ref
+Date: Thu, 15 May 2014 12:04:34 -0700
+Message-ID: <20140515190434.GF26471@google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+ <1400174999-26786-7-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Stepan Kasal <kasal@ucw.cz>, 
-    GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: msysgit+bncBCZPH74Q5YNRBGU62SNQKGQE7NNPNHQ@googlegroups.com Thu May 15 21:01:48 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBGU62SNQKGQE7NNPNHQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f185.google.com ([74.125.82.185])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu May 15 21:04:42 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBGU62SNQKGQE7NNPNHQ@googlegroups.com>)
-	id 1Wl0uZ-0002a1-3L
-	for gcvm-msysgit@m.gmane.org; Thu, 15 May 2014 21:01:47 +0200
-Received: by mail-we0-f185.google.com with SMTP id w61sf146935wes.2
-        for <gcvm-msysgit@m.gmane.org>; Thu, 15 May 2014 12:01:46 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wl0xN-0001Y7-Bz
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 21:04:41 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752799AbaEOTEi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 15:04:38 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:53389 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000AbaEOTEh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 15:04:37 -0400
+Received: by mail-pa0-f52.google.com with SMTP id fa1so1450033pad.39
+        for <git@vger.kernel.org>; Thu, 15 May 2014 12:04:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=xMRBF+msaabQCZyL2Tt/cAyRV0UpTmjz49nB/UiUt3Y=;
-        b=hiaTwvri00iB7msBie/H4LhocBjd0Y2q3nOgm5RxtUQhSg5kKhAmeCVAlZYdZabQKJ
-         0D8rmR7nLl0HWaD2l7qvGoVgWhkyW+U2gAek+WzKQKkZL4NWzxMfgnst1+mNyvXdbr7S
-         x+m8hYhW4yBjdLJrwDHX7ttqgJBHAMW4l0ufXYTcVWyo5eYu6xMWaiS4FgfbpWoCFzzY
-         mB4uQ8gZ7an3gqXp+6+vaQziCdthKrmEgZhB/UlD9vozaKySmKfvM+fdpB/mizlXW1VA
-         ox/+345B0N8zjqJYETgNqxaguTFJ6rS0lfeLZ/Evi71bxYk3PxBW5GuMQkxE1JhLR3U8
-         yyrA==
-X-Received: by 10.152.120.37 with SMTP id kz5mr26592lab.30.1400180506844;
-        Thu, 15 May 2014 12:01:46 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.87.178 with SMTP id az18ls72947lab.4.gmail; Thu, 15 May
- 2014 12:01:46 -0700 (PDT)
-X-Received: by 10.152.36.6 with SMTP id m6mr1175880laj.0.1400180506222;
-        Thu, 15 May 2014 12:01:46 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.15.18])
-        by gmr-mx.google.com with ESMTPS id r49si1975972eep.0.2014.05.15.12.01.46
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 15 May 2014 12:01:46 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.18 as permitted sender) client-ip=212.227.15.18;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx101) with ESMTPSA (Nemesis) id 0MH4Os-1WYPjG3TBi-00DnOq;
- Thu, 15 May 2014 21:01:44 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <20140515175344.GM9218@google.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:BBjzoQ4CikEkn2Q4Guhn6P1IzKdCln2Dqhe8ZvceyHLiKkJvh8k
- i0ic5U4OQH0ubQV9JSorhaDOPU1uHCzPHsYigzNDeZ77ApCDW31VJJtJv77JtFy1pmn9xzP
- zGVsRH7Fbm32ZJteib9kevwYb3lvEnpTY3yFrW+373hWKgdkFibBuYFh9V1T07H6DL+OENQ
- jAO/O05sjc1Lpzo7GiUXQ==
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.18 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249182>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=TPabDXj8otbjOjvQR6Bugunq+9/7KKOA1MVvSy1w1Xc=;
+        b=mkRWok4YLwMNBbyp3ToMCDirqhhgRK2KDTZnZa+x0HlFY6G0ZXFte/UHNc9YPwGn1v
+         gjSqA5KLW2SWOfgjLiZMSrEfoPwrBvkp87dg3xAxupTYIrdqETkNQgFhGN3rIrsw1ImK
+         0ioPCKtj77Sue6KgdORHPsgc3+Qg/fs3sHKU1bLlntS3H4BlZamSReKl4k2WImKkx/n6
+         J+meQJeS8o7h3xpaCPPrSPfGbbg7z+5cVEBygH4Xcr5afaEb/SlXLpL6PfUrvsKCJF9i
+         ZNfF3tKbgAbi+5xLADr43LN1+6OlOa0Bp57jAjvYVByet2Pqhk1ij/VYIw7pSUr+WiBU
+         Fpqg==
+X-Received: by 10.66.233.9 with SMTP id ts9mr14940305pac.37.1400180676850;
+        Thu, 15 May 2014 12:04:36 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id gu11sm10416037pbd.38.2014.05.15.12.04.35
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 15 May 2014 12:04:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1400174999-26786-7-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249183>
 
-Hi,
+Ronnie Sahlberg wrote:
 
-On Thu, 15 May 2014, Jonathan Nieder wrote:
+> [Subject: refs.c: add an err argument ro delete_loose_ref]
 
-> Johannes Schindelin wrote:
-> > On Wed, 14 May 2014, Junio C Hamano wrote:
-> 
-> >> Spot on.  The change, especially with "-I", makes sense.
-> >
-> > Except that it was not tested with -I. If you change it that way and it
-> > stops working on Windows, it's useless to me.
-> 
-> Are you saying that less on Windows doesn't have an "-I" option?
+s/ro/to/
+s/delete_loose_ref/delete_ref_loose/
 
-I did not say that.
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2484,17 +2484,22 @@ static int repack_without_ref(const char *refname)
+>  	return repack_without_refs(&refname, 1, NULL);
+>  }
+>  
+> -static int delete_ref_loose(struct ref_lock *lock, int flag)
+> +static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
 
-> version.c tells me it was added in v266 (1994-12-26).
+Should this get an onerr flag to suppress the message to stderr
+or unconditionally suppress it when err != NULL?
 
-Thanks. That was the thing I was really looking for: an indication that -I
-is not a new-fangled thing but a well-tested option that even old greps
-have.
+[...]
+>  		lock->lk->filename[i] = 0;
+> -		err = unlink_or_warn(lock->lk->filename);
+> +		res = unlink_or_warn(lock->lk->filename);
 
-Ciao,
-Dscho
+It seems like in the new error handling scheme there should be a new
+variant on wrapper.c's warn_if_unremovable:
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+	static int add_err_if_unremovable(const char *op, const char *file, struct strbuf *err, int rc)
+	{
+		int err = errno;
+		if (rc < 0 && err != ENOENT) {
+			strbuf_addf(err, "unable to %s %s: %s",
+				    op, file, strerror(errno));
+			errno = err;
+		}
+		return rc;
+	}
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+	static int unlink_or_err(const char *file, struct strbuf *err)
+	{
+		return add_err_if_unremovable("unlink", file, err, unlink(file));
+	}
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+		res = unlink_or_err(lock->lk->filename, err);
