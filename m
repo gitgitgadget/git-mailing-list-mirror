@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v9 24/44] fetch.c: use a single ref transaction for all ref updates
-Date: Thu, 15 May 2014 16:15:21 -0700
-Message-ID: <1400195741-22996-25-git-send-email-sahlberg@google.com>
+Subject: [PATCH v9 31/44] refs.c: remove the update_ref_lock function
+Date: Thu, 15 May 2014 16:15:28 -0700
+Message-ID: <1400195741-22996-32-git-send-email-sahlberg@google.com>
 References: <1400195741-22996-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,178 +11,115 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wl4tb-0006Yi-Sm
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 01:17:04 +0200
+	id 1Wl4tg-0006jI-1W
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 01:17:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756259AbaEOXQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 19:16:59 -0400
-Received: from mail-qc0-f202.google.com ([209.85.216.202]:44164 "EHLO
-	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756037AbaEOXPq (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756273AbaEOXRB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 19:17:01 -0400
+Received: from mail-ob0-f201.google.com ([209.85.214.201]:57211 "EHLO
+	mail-ob0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756051AbaEOXPq (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 15 May 2014 19:15:46 -0400
-Received: by mail-qc0-f202.google.com with SMTP id x3so325120qcv.1
+Received: by mail-ob0-f201.google.com with SMTP id wn1so390640obc.4
         for <git@vger.kernel.org>; Thu, 15 May 2014 16:15:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=DiQWuKx9EUeg03Qi29TuyyZL70aAeR6SBgdT5ExSAEE=;
-        b=iKRZUyBO45wGCSkKJmJ4exf1c+2JAjsVREppNhLps9K84lmGuqE2J9oC99Cmqh1Z+B
-         ILhETmtGrA6HCEv4mZ9pl2DGfVxu4xiJYyBV6k9TdkXccYa9nvaQJwfmbA9ucZYDuedo
-         kvX2gQoXvkV4Zg4EO8GqUPF2SQ1jsNq1gr0cTnKV9vkq4PpYFDCE+iDzm1R3pL04U68k
-         0ol8a+EByfmXOgjDYvtRM2mMZn+BGJGhlqVwidZWpI15+SrDSK+Hs19S63jKS6oJFYLj
-         n/xbIwasSby7kRM3ZA6kE1K1owTuTyGt+YcN3BkIJzhkYtyARbYtT4tP4g+MUA227oGM
-         Zs/w==
+        bh=TGAF8zIugwiPJjqRuxbWryG7HefcQMnqnKwxLnr17s0=;
+        b=IPyW7p3+4ZV2OXDiANtYGe8vIkLI5Ztziggccx9IP59bqzOWj3t+qb1W2vmRHbRsQq
+         PdMhShSIgChtV3v2LIBx1gWUksZbF6PwVyxKNKUgh4BBAE8sUVLx7ooej0I2SZ1W1dbk
+         jOBEjWkm4L82LldOIO+pdSN1etAOE7OqweGrDPPqcA2K2my60bwCF4YGk/msDsd/1p71
+         4BaNiHx4EficG6ZoXjUPZhOLRqTqBmHhupDv83sv+HVzfGqO6ZJwQkj5mUhMQ6NBBHeV
+         LQqxO1NEKgg9wr4btDeYZCDBalYESGhE8DvlKYgDX02YdIxqApROJNUt5z657d+bT2tA
+         PTfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=DiQWuKx9EUeg03Qi29TuyyZL70aAeR6SBgdT5ExSAEE=;
-        b=LsNCBgiQy17cgh9ndc+3yi9gEJd0LxfhKzdp9sR51/Q59i0FIXH5x79px0TruRM4mH
-         jTn3VG4u6G+YIds/6pPnzTVRBAAX0zdCeSNRGkWddW0hO2j15xRJi9oiAgLmfa9jE+Qy
-         Ie52YG7pEcoM1NFt9m3wA+4j9bvbIumRPEIgZ63DAq9KG9F8vonpJ7FiBbFaevQrSd8J
-         nrGCNi57qQxIsaoftoYxTrPgHx+t/3O4apF6XikruoRC9TzVxRBcd+CTJTHWS4q/qDYk
-         fRXzVLVin5WoIs2NyZp3eFFqxQQzb6joutfm0aGI5551GpFwQcgzNYvMQZRekSJUc34q
-         mYdA==
-X-Gm-Message-State: ALoCoQklI33OJG1PEI/KDT30lKivacIMgp/5TZmj+HrdsROse+RY4OlNuZGT8AcG6QqiibX2bLeS
-X-Received: by 10.236.77.194 with SMTP id d42mr5591814yhe.21.1400195745563;
+        bh=TGAF8zIugwiPJjqRuxbWryG7HefcQMnqnKwxLnr17s0=;
+        b=GUbmZg2uf/K95XbqVMGlquyaOqN6L4TxmZwOCYfKSm8AIByzl8FIGLa8Rz7SzVWw03
+         0WmreZINMIS6dRtq8IE/H5L40Smtr25JuQiIJAQrIxqfXp1NYlGOr1lpv0Agearn0L/r
+         e3gvGFRNGDsb4lqDTKZsEEromqJ4lljnHVhRL7E33jN1hdKAK4PdMKXZFGBHHktjxg5M
+         FhkBGtfjecq7eqbUpGl6dKdgdCNh1xTajJSMFKhqEu52l2iDr9qaJBg2ZMgdeOX/dHT5
+         4vcDN8PZ0sg0gABeqLSzSeoL22FRt7fP4UDZFwrdvvIFYshcw27ZTwn9H2vqx54icrfN
+         RfFw==
+X-Gm-Message-State: ALoCoQnmGu936R9xChhladdSX8B9XRoqb2sxqrPO9dmUnymhDs6bT6qaPWKio/rV2VbDc2cVKVkC
+X-Received: by 10.182.24.5 with SMTP id q5mr6569710obf.23.1400195745948;
         Thu, 15 May 2014 16:15:45 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id n68si244838yhj.5.2014.05.15.16.15.45
+        by gmr-mx.google.com with ESMTPS id c50si317566yhl.7.2014.05.15.16.15.45
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 15 May 2014 16:15:45 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 53F7B31C1CD;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id C7F2F31C259;
 	Thu, 15 May 2014 16:15:45 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 30523E115F; Thu, 15 May 2014 16:15:45 -0700 (PDT)
+	id A4235E0528; Thu, 15 May 2014 16:15:45 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.477.gffe78a2
 In-Reply-To: <1400195741-22996-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249245>
 
-Change store_updated_refs to use a single ref transaction for all refs that
-are updated during the fetch. This makes the fetch more atomic when update
-failures occur.
-
-Since ref update failures will now no longer occur in the code path for
-updating a single ref in s_update_ref, we no longer have as detailed error
-message logging the exact reference and the ref log action as in the old cod
-Instead since we fail the entire transaction we log a much more generic
-message. But since we commit the transaction using MSG_ON_ERR we will log
-an error containing the ref name if either locking of writing the ref would
-so the regression in the log message is minor.
-
-This will also change the order in which errors are checked for and logged
-which may alter which error will be logged if there are multiple errors
-occuring during a fetch.
-
-For example, assume we have a fetch for two refs that both would fail.
-Where the first ref would fail with ENOTDIR due to a directory in the ref
-path not existing, and the second ref in the fetch would fail due to
-the check in update_logical_ref():
-        if (current_branch &&
-            !strcmp(ref->name, current_branch->name) &&
-            !(update_head_ok || is_bare_repository()) &&
-            !is_null_sha1(ref->old_sha1)) {
-                /*
-                 * If this is the head, and it's not okay to update
-                 * the head, and the old value of the head isn't empty...
-                 */
-
-In the old code since we would update the refs one ref at a time we would
-first fail the ENOTDIR and then fail the second update of HEAD as well.
-But since the first ref failed with ENOTDIR we would eventually fail the who
-fetch with STORE_REF_ERROR_DF_CONFLICT
-
-In the new code, since we defer committing the transaction until all refs
-have been processed, we would now detect that the second ref was bad and
-rollback the transaction before we would even try start writing the update t
-disk and thus we would not return STORE_REF_ERROR_DF_CONFLICT for this case.
-
-I think this new behaviour is more correct, since if there was a problem
-we would not even try to commit the transaction but need to highlight this
-change in how/what errors are reported.
-This change in what error is returned only occurs if there are multiple
-refs that fail to update and only some, but not all, of them fail due to
-ENOTDIR.
+Since we now only call update_ref_lock with onerr==QUIET_ON_ERR we no longer
+need this function and can replace it with just calling lock_any_ref_for_update
+directly.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/fetch.c | 34 ++++++++++++++++------------------
- 1 file changed, 16 insertions(+), 18 deletions(-)
+ refs.c | 30 ++++++------------------------
+ 1 file changed, 6 insertions(+), 24 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index c9b5954..5b0cc31 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -45,6 +45,7 @@ static struct transport *gsecondary;
- static const char *submodule_prefix = "";
- static const char *recurse_submodules_default;
- static int shown_url;
-+static struct ref_transaction *transaction;
- 
- static int option_parse_recurse_submodules(const struct option *opt,
- 				   const char *arg, int unset)
-@@ -373,27 +374,13 @@ static int s_update_ref(const char *action,
- 			struct ref *ref,
- 			int check_old)
- {
--	char msg[1024];
--	char *rla = getenv("GIT_REFLOG_ACTION");
--	struct ref_transaction *transaction;
--
- 	if (dry_run)
- 		return 0;
--	if (!rla)
--		rla = default_rla.buf;
--	snprintf(msg, sizeof(msg), "%s: %s", rla, action);
- 
--	errno = 0;
--	transaction = ref_transaction_begin();
--	if (!transaction ||
--	    ref_transaction_update(transaction, ref->name, ref->new_sha1,
--				   ref->old_sha1, 0, check_old, NULL) ||
--	    ref_transaction_commit(transaction, msg, NULL)) {
--		ref_transaction_rollback(transaction);
--		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
--					  STORE_REF_ERROR_OTHER;
--	}
--	ref_transaction_free(transaction);
-+	if (ref_transaction_update(transaction, ref->name, ref->new_sha1,
-+				   ref->old_sha1, 0, check_old, NULL))
-+		return STORE_REF_ERROR_OTHER;
-+
- 	return 0;
+diff --git a/refs.c b/refs.c
+index 3fb5cb8..3b0d574 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3283,24 +3283,6 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+ 	return retval;
  }
  
-@@ -565,6 +552,13 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 		goto abort;
- 	}
+-static struct ref_lock *update_ref_lock(const char *refname,
+-					const unsigned char *oldval,
+-					int flags, int *type_p,
+-					enum action_on_err onerr)
+-{
+-	struct ref_lock *lock;
+-	lock = lock_any_ref_for_update(refname, oldval, flags, type_p);
+-	if (!lock) {
+-		const char *str = "Cannot lock the ref '%s'.";
+-		switch (onerr) {
+-		case UPDATE_REFS_MSG_ON_ERR: error(str, refname); break;
+-		case UPDATE_REFS_DIE_ON_ERR: die(str, refname); break;
+-		case UPDATE_REFS_QUIET_ON_ERR: break;
+-		}
+-	}
+-	return lock;
+-}
+-
+ static int update_ref_write(const char *action, const char *refname,
+ 			    const unsigned char *sha1, struct ref_lock *lock,
+ 			    struct strbuf *err, enum action_on_err onerr)
+@@ -3547,12 +3529,12 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
  
-+	errno = 0;
-+	transaction = ref_transaction_begin();
-+	if (!transaction) {
-+		rc = error(_("cannot start ref transaction\n"));
-+		goto abort;
-+	}
-+
- 	/*
- 	 * We do a pass for each fetch_head_status type in their enum order, so
- 	 * merged entries are written before not-for-merge. That lets readers
-@@ -676,6 +670,10 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 			}
- 		}
- 	}
-+	if (ref_transaction_commit(transaction, "fetch_ref transaction", NULL))
-+		rc |= errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
-+		  STORE_REF_ERROR_OTHER;
-+	ref_transaction_free(transaction);
- 
- 	if (rc & STORE_REF_ERROR_DF_CONFLICT)
- 		error(_("some local refs could not be updated; try running\n"
+-		update->lock = update_ref_lock(update->refname,
+-					       (update->have_old ?
+-						update->old_sha1 : NULL),
+-					       update->flags,
+-					       &update->type,
+-					       UPDATE_REFS_QUIET_ON_ERR);
++		update->lock = lock_any_ref_for_update(update->refname,
++						       (update->have_old ?
++							update->old_sha1 :
++							NULL),
++						       update->flags,
++						       &update->type);
+ 		if (!update->lock) {
+ 			if (err)
+ 				strbuf_addf(err, "Cannot lock the ref '%s'.",
 -- 
 2.0.0.rc3.477.gffe78a2
