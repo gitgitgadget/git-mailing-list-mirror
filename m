@@ -1,108 +1,110 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v8 14/44] replace.c: use the ref transaction functions for updates
-Date: Thu, 15 May 2014 15:30:39 -0700
-Message-ID: <CAL=YDWk0S4StNcZhz6JDBEe2dpvVsCTqROZ+100Cv012t9FNrg@mail.gmail.com>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
-	<1400174999-26786-15-git-send-email-sahlberg@google.com>
-	<20140515211835.GL26471@google.com>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT v2 12/29] "guilt header": more robust header selection.
+Date: Thu, 15 May 2014 18:46:58 -0400
+Message-ID: <20140515224658.GA1334@meili.valhalla.31bits.net>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+ <1400013065-27919-13-git-send-email-cederp@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 16 00:30:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Fri May 16 00:46:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wl4Am-00007X-0b
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 00:30:44 +0200
+	id 1Wl4QU-0001oh-Lt
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 00:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753701AbaEOWak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 18:30:40 -0400
-Received: from mail-ve0-f169.google.com ([209.85.128.169]:35771 "EHLO
-	mail-ve0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751076AbaEOWaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 18:30:39 -0400
-Received: by mail-ve0-f169.google.com with SMTP id jx11so2142560veb.14
-        for <git@vger.kernel.org>; Thu, 15 May 2014 15:30:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=vyKJOUNxYtEGs+Yu5eYHMsQLLWDs36/82v/xMrGOEEA=;
-        b=b8Etq1JYmlPERzvVTG9Zvw3XqPORWJUhWHV0muXHfnOj4k9VaBGscAVRc0cwDhxW2I
-         JmQMW9F6eztfhjTSQEgTdJePh8JxOC4aPDYrEFbAEqbLmx63ew7Grpxgqy/5yBcLTeOR
-         SYOJy/KEJkh/TTnMU+xNd2Az2RiTLZaFN044CPGTlOZPLV0Qwuaii6hvonFYYY7U+JW9
-         ORVBCUMbFUdiYlyJyN6BmwLRT+Ws8nAAjhcRiwD7NnYrgzuWTnLnb7TNoB+Lbv9iBI+D
-         2bkOsma06izsrXuhDVvtO4GpIGjDuI/CM5oiJCM8DOJwgG8MSKTUJHPTJLqOFtaFUPCR
-         SDqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=vyKJOUNxYtEGs+Yu5eYHMsQLLWDs36/82v/xMrGOEEA=;
-        b=hUn2n0/VxdwTUFX1mNnhMRw68NXn0fffIKYZlyMXWgHTCFz0V/MLvL6ujs03vTMkw1
-         9Uq31Kok8EoCI8TRpXe2q5X3P6VGWsSRLMciJOQPnVfy+teufMB3ui5qnrXwh1zdfDpT
-         jicauIzv/xUEb59frG8JJlzQYedNCATUA30/a4QZbr/axXEUFywhkYGQ8wr0Lv1dVfbi
-         YsBzj6c5quZ6i6PO7y+SF83W+arzwCzqMUlLHCYlS26x7jxDVMHf+s7p3MyZZWjp4WuJ
-         Jo/UpM2d+g4PZZ0Sw+5X8fJFjCFxZexH0dM2mqP/wPJM/uPMmkjKasz6ZnG8VmTTlL+A
-         fRNQ==
-X-Gm-Message-State: ALoCoQnUKBeAJTgnSg7HC050UwgFUmypduYwIpufblHadHa2ZTN2AW4g1a9MDFa/CCJV+FlrBEOj
-X-Received: by 10.58.13.104 with SMTP id g8mr10634551vec.16.1400193039145;
- Thu, 15 May 2014 15:30:39 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Thu, 15 May 2014 15:30:39 -0700 (PDT)
-In-Reply-To: <20140515211835.GL26471@google.com>
+	id S1753105AbaEOWqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 18:46:55 -0400
+Received: from josefsipek.net ([64.9.206.49]:1703 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752291AbaEOWqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 18:46:54 -0400
+Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
+	by josefsipek.net (Postfix) with ESMTPSA id E0BC955654;
+	Thu, 15 May 2014 18:46:52 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1400013065-27919-13-git-send-email-cederp@opera.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249214>
 
-On Thu, May 15, 2014 at 2:18 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
->
->> --- a/builtin/replace.c
->> +++ b/builtin/replace.c
-> [...]
->> @@ -156,11 +157,12 @@ static int replace_object_sha1(const char *object_ref,
->>       else if (!force)
->>               die("replace ref '%s' already exists", ref);
->>
->> -     lock = lock_any_ref_for_update(ref, prev, 0, NULL);
->> -     if (!lock)
->> -             die("%s: cannot lock the ref", ref);
->> -     if (write_ref_sha1(lock, repl, NULL) < 0)
->> -             die("%s: cannot update the ref", ref);
->> +     transaction = ref_transaction_begin();
->> +     if (!transaction ||
->> +         ref_transaction_update(transaction, ref, repl, prev,
->> +                                0, !is_null_sha1(prev)) ||
->> +         ref_transaction_commit(transaction, NULL, &err))
->> +             die("%s: failed to replace ref: %s", ref, err.buf);
->
-> This would write
->
->         fatal: refs/replace/09c779943364d893c190066c385e6112af421db3: failed to replace ref: Cannot lock the ref 'refs/replace/09c779943364d893c190066c385e6112af421db3'.
->
-> Perhaps something like
->
->         $ git replace foo bar
->         fatal: replace foo: Cannot lock the ref 'refs/replace/09c779943364d893c190066c385e6112af421db3'.
->
-> would make sense (die("replace %s: %s", object_ref, err.buf)).  Plain
->
->         $ git replace foo bar
->         fatal: Cannot lock the ref 'refs/replace/09c779943364d893c190066c385e6112af421db3'.
->
-> also seems fine (die("%s", err.buf)).
+On Tue, May 13, 2014 at 10:30:48PM +0200, Per Cederqvist wrote:
+> If you run something like "guilt header '.*'" the command would crash,
+> because the grep comand that tries to ensure that the patch exist
+> would detect a match, but the later code expected the match to be
+> exact.
+> 
+> Fixed by comparing exact strings.
+> 
+> And as a creeping feature "guilt header" will now try to use the
+> supplied patch name as an unachored regexp if no exact match was
+> found.  If the regexp yields a unique match, it is used; if more than
+> one patch matches, the names of all patches are listed and the command
+> fails.  (Exercise left to the reader: generalized this so that "guilt
+> push" also accepts a unique regular expression.)
+> 
+> Signed-off-by: Per Cederqvist <cederp@opera.com>
+> ---
+>  guilt-header | 28 +++++++++++++++++++++++++---
+>  1 file changed, 25 insertions(+), 3 deletions(-)
+> 
+> diff --git a/guilt-header b/guilt-header
+> index 41e00cc..4701b31 100755
+> --- a/guilt-header
+> +++ b/guilt-header
+> @@ -45,10 +45,32 @@ esac
+>  [ -z "$patch" ] && die "No patches applied."
+>  
+>  # check that patch exists in the series
+> -ret=`get_full_series | grep -e "^$patch\$" | wc -l`
+> -if [ $ret -eq 0 ]; then
+> -	die "Patch $patch is not in the series"
+> +full_series=`get_tmp_file series`
+> +get_full_series > "$full_series"
+> +found_patch=
+> +while read x; do
+> +	if [ "$x" = "$patch" ]; then
+> +		found_patch="$patch"
+> +		break
+> +	fi
+> +done < "$full_series"
 
-Done.
+We have to use a temp file instead of a 'get_full_series | while read x; do ...'
+because that'd create a subshell, correct?
 
-I used : die("%s", err.buf)
-since this is consistent with most of the other if-transaction-failed-die()
+> +if [ -z "$found_patch" ]; then
+> +	TMP_MATCHES=`get_tmp_file series`
+> +	grep "$patch" < "$full_series" > "$TMP_MATCHES"
+> +	nr=`wc -l < $TMP_MATCHES`
+> +	if [ $nr -gt 1 ]; then
+> +		echo "$patch does not uniquely identify a patch. Did you mean any of these?" >&2
+> +		sed 's/^/  /' "$TMP_MATCHES" >&2
+> +		rm -f "$TMP_MATCHES"
+> +		exit 1
+> +	elif [ $nr -eq 0 ]; then
+> +		rm -f "$TMP_MATCHES"
+> +		die "Patch $patch is not in the series"
+> +	fi
+> +	found_patch=`cat $TMP_MATCHES`
+> +	rm -f "$TMP_MATCHES"
+>  fi
+> +patch="$found_patch"
 
->
-> Thanks,
-> Jonathan
+Do we not delete $full_series?
+
+>  
+>  # FIXME: warn if we're editing an applied patch
+>  
+> -- 
+> 1.8.3.1
+> 
+
+-- 
+OpenIndiana ibdm: 8 cores, 12 GB RAM
