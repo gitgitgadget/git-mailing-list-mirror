@@ -1,80 +1,112 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/6] get_importer: use run-command's internal argv_array
-Date: Thu, 15 May 2014 04:35:06 -0400
-Message-ID: <20140515083506.GF26866@sigill.intra.peff.net>
+Subject: [PATCH 7/6] argv-array: drop "detach" code
+Date: Thu, 15 May 2014 04:41:03 -0400
+Message-ID: <20140515084102.GA28461@sigill.intra.peff.net>
 References: <20140515082943.GA26473@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 15 10:35:18 2014
+X-From: git-owner@vger.kernel.org Thu May 15 10:41:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkr8H-0005sl-Vo
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 10:35:18 +0200
+	id 1WkrE1-00040k-Dr
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 10:41:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192AbaEOIfK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 04:35:10 -0400
-Received: from cloud.peff.net ([50.56.180.127]:52066 "HELO peff.net"
+	id S1751797AbaEOIlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 04:41:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52069 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752167AbaEOIfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 04:35:08 -0400
-Received: (qmail 20399 invoked by uid 102); 15 May 2014 08:35:08 -0000
+	id S1751039AbaEOIlF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 04:41:05 -0400
+Received: (qmail 20726 invoked by uid 102); 15 May 2014 08:41:05 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 May 2014 03:35:08 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 May 2014 04:35:06 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 May 2014 03:41:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 May 2014 04:41:03 -0400
 Content-Disposition: inline
 In-Reply-To: <20140515082943.GA26473@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249074>
 
-This saves a few lines and lets us avoid having to clean up
-the memory manually when the command finishes.
+The argv_array_detach function (and associated free() function) was
+really only useful for transferring ownership of the memory to a "struct
+child_process". Now that we have an internal argv_array in that struct,
+there are no callers left.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- transport-helper.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+This is a bonus enabled by the earlier patches. However, there is one
+commit in pu that uses it when dealing with environment variables.
+However, it is actually leaking memory, and should probably just use the
+array directly (and it's one of my commits that's due to be re-rolled
+anyway).
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 9f8f3b1..d9063d7 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -394,18 +394,16 @@ static int get_importer(struct transport *transport, struct child_process *fasti
- {
- 	struct child_process *helper = get_helper(transport);
- 	struct helper_data *data = transport->data;
--	struct argv_array argv = ARGV_ARRAY_INIT;
- 	int cat_blob_fd, code;
- 	memset(fastimport, 0, sizeof(*fastimport));
- 	fastimport->in = helper->out;
--	argv_array_push(&argv, "fast-import");
--	argv_array_push(&argv, debug ? "--stats" : "--quiet");
-+	argv_array_push(&fastimport->args, "fast-import");
-+	argv_array_push(&fastimport->args, debug ? "--stats" : "--quiet");
- 
- 	if (data->bidi_import) {
- 		cat_blob_fd = xdup(helper->in);
--		argv_array_pushf(&argv, "--cat-blob-fd=%d", cat_blob_fd);
-+		argv_array_pushf(&fastimport->args, "--cat-blob-fd=%d", cat_blob_fd);
+ Documentation/technical/api-argv-array.txt |  8 --------
+ argv-array.c                               | 20 --------------------
+ argv-array.h                               |  2 --
+ 3 files changed, 30 deletions(-)
+
+diff --git a/Documentation/technical/api-argv-array.txt b/Documentation/technical/api-argv-array.txt
+index a6b7d83..1a79781 100644
+--- a/Documentation/technical/api-argv-array.txt
++++ b/Documentation/technical/api-argv-array.txt
+@@ -53,11 +53,3 @@ Functions
+ `argv_array_clear`::
+ 	Free all memory associated with the array and return it to the
+ 	initial, empty state.
+-
+-`argv_array_detach`::
+-	Detach the argv array from the `struct argv_array`, transferring
+-	ownership of the allocated array and strings.
+-
+-`argv_array_free_detached`::
+-	Free the memory allocated by a `struct argv_array` that was later
+-	detached and is now no longer needed.
+diff --git a/argv-array.c b/argv-array.c
+index 9e960d5..256741d 100644
+--- a/argv-array.c
++++ b/argv-array.c
+@@ -68,23 +68,3 @@ void argv_array_clear(struct argv_array *array)
  	}
--	fastimport->argv = argv.argv;
- 	fastimport->git_cmd = 1;
+ 	argv_array_init(array);
+ }
+-
+-const char **argv_array_detach(struct argv_array *array, int *argc)
+-{
+-	const char **argv =
+-		array->argv == empty_argv || array->argc == 0 ? NULL : array->argv;
+-	if (argc)
+-		*argc = array->argc;
+-	argv_array_init(array);
+-	return argv;
+-}
+-
+-void argv_array_free_detached(const char **argv)
+-{
+-	if (argv) {
+-		int i;
+-		for (i = 0; argv[i]; i++)
+-			free((char **)argv[i]);
+-		free(argv);
+-	}
+-}
+diff --git a/argv-array.h b/argv-array.h
+index 85ba438..c65e6e8 100644
+--- a/argv-array.h
++++ b/argv-array.h
+@@ -19,7 +19,5 @@ LAST_ARG_MUST_BE_NULL
+ void argv_array_pushl(struct argv_array *, ...);
+ void argv_array_pop(struct argv_array *);
+ void argv_array_clear(struct argv_array *);
+-const char **argv_array_detach(struct argv_array *array, int *argc);
+-void argv_array_free_detached(const char **argv);
  
- 	code = start_command(fastimport);
-@@ -476,7 +474,6 @@ static int fetch_with_import(struct transport *transport,
- 
- 	if (finish_command(&fastimport))
- 		die("Error while running fast-import");
--	argv_array_free_detached(fastimport.argv);
- 
- 	/*
- 	 * The fast-import stream of a remote helper that advertises
+ #endif /* ARGV_ARRAY_H */
 -- 
 2.0.0.rc1.436.g03cb729
