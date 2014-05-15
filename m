@@ -1,87 +1,133 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v6 09/42] refs.c: change ref_transaction_create to do
- error checking and return status
-Date: Thu, 15 May 2014 09:56:31 -0700
-Message-ID: <20140515165631.GC27279@google.com>
-References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
- <1398976662-6962-10-git-send-email-sahlberg@google.com>
- <20140515000409.GF9218@google.com>
- <CAL=YDWn5+_jA55KGx74We=41ngxSDA6yKJbuZ=3zy8gZTYPYnQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] open_sha1_file: report "most interesting" errno
+Date: Thu, 15 May 2014 10:02:06 -0700
+Message-ID: <xmqqbnuzgelt.fsf@gitster.dls.corp.google.com>
+References: <20140515085405.GA27033@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu May 15 18:56:40 2014
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 15 19:02:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkyxT-0006Gi-1M
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 18:56:39 +0200
+	id 1Wkz32-00058k-RG
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 19:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753752AbaEOQ4f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 12:56:35 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:64578 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752316AbaEOQ4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 12:56:34 -0400
-Received: by mail-pa0-f54.google.com with SMTP id bj1so1320341pad.27
-        for <git@vger.kernel.org>; Thu, 15 May 2014 09:56:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=z/xfewaohNF+roJQhG7Pg7OhzrLu27t7H7PF4gKMooo=;
-        b=ksEVGMofIElVX2EV9tNFr70DkmdHyhMnGDCzcfmm8AKBUCrQFDfMrXxOSa7DDnpaVT
-         afWeLV2yf6hmeE/8tLuCZBSJM+RYBbDoEDZ6JmF7GtbMuRVSCVLz9G2kRI7a3X17+TXD
-         HtFEJO8VzygkcAnt1VrweYN5zOghiJJD/q5jYrVl0Y+dS16xUt3fOkTWqxOiWut7HnTB
-         mXPtAFVX2Im8fOZn3ArWY9YzdkbribqfhiWJx6pRDYHRDUqNkoYki7Y0geqcWqH8IN4D
-         0D+MD6MgcudN0Hk76ffBNrq2O/ukZIa1hqpkjGKMXE0ufTOWDnoDiSMba1yf9xfaZYYH
-         fVZg==
-X-Received: by 10.66.226.172 with SMTP id rt12mr14033173pac.101.1400172994309;
-        Thu, 15 May 2014 09:56:34 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id sv10sm9988827pbc.74.2014.05.15.09.56.33
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 15 May 2014 09:56:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAL=YDWn5+_jA55KGx74We=41ngxSDA6yKJbuZ=3zy8gZTYPYnQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753167AbaEORCV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 13:02:21 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62062 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752183AbaEORCU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 13:02:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 48AE716537;
+	Thu, 15 May 2014 13:02:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MwT/CN8lwz/gU6N6dlR0kNRd6rk=; b=aSlnl/
+	5b/aNyhuz2G8Zq96pdwXwqpg4LkdX1vALnfYLIoWvHnsUObomzOxTYBvd7bJpTpH
+	LmF9soPf+xlT8byH6FW9wPF1xMhhh7JNWHTfc8s1nhy1/tYxtWKxiIPFNQGj/Oet
+	n2xmb4LuYGhdn0C//13ykBAaVzNMdPZiQhDpk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Beeakcn47r6KqH/lmYMyptd1CdB1mSDN
+	5HwVt2p8H2xCjXgl0i4i0ESAl9lEirurTLzjQqkGsJyp5MLtamwkfRYWvJvHgNn8
+	b8mUgoMRoPjPYBiB7Li/3dcb1xUMmHj6HqX0KQQH5bWXkjZlIfuk2aZZuYWyvgs9
+	9sZC/xtNGk8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3ABD416535;
+	Thu, 15 May 2014 13:02:19 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 526451651A;
+	Thu, 15 May 2014 13:02:09 -0400 (EDT)
+In-Reply-To: <20140515085405.GA27033@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 15 May 2014 04:54:06 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A6B44528-DC52-11E3-A160-DDB853EDF712-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249118>
 
-Ronnie Sahlberg wrote:
-> On Wed, May 14, 2014 at 5:04 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Jeff King <peff@peff.net> writes:
 
->> If it were ever triggered, the message
->>
->>         error: some bad thing
->>         fatal: failed transaction create for refs/heads/master
->>
->> looks overly verbose and unclear.  Something like
->>
->>         fatal: cannot create ref refs/heads/master: some bad thing
+> When we try to open a loose object file, we first attempt to
+> open in the local object database, and then try any
+> alternates. This means that the errno value when we return
+> will be from the last place we looked (and due to the way
+> the code is structured, simply ENOENT if we do not have have
+> any alternates).
 >
-> I changed it to :
->    die("cannot create ref '%s'", refname);
+> This can cause confusing error messages, as read_sha1_file
+> checks for ENOENT when reporting a missing object. If errno
+> is something else, we report that. If it is ENOENT, but
+> has_loose_object reports that we have it, then we claim the
+> object is corrupted. For example:
 >
-> But it would still mean you would have
->          error: some bad thing
->          fatal: cannot create 'refs/heads/master'
->
-> To make it better we have to wait until the end of the second patch
-> series, ref-transactions-next
-> where we will have an err argument to _update/_create/_delete too and
-> thus we can do this from update-ref.c :
->
->    if (transaction_create_sha1(transaction, refname, new_sha1,
->        update_flags, msg, &err))
->    die("%s", err.buf);
+>     $ chmod 0 .git/objects/??/*
+>     $ git rev-list --all
+>     fatal: loose object b2d6fab18b92d49eac46dc3c5a0bcafabda20131 (stored in .git/objects/b2/d6fab18b92d49eac46dc3c5a0bcafabda20131) is corrupt
 
-Thanks.  Sounds good.
+Hmmmmmmmm.  So we keep track of a more interesting errno we get from
+some other place than what we get for this local loose object, and
+we no longer give this message pointing at the local loose
+object---is that the idea?
+
+What I am wondering is that this report we give in the new code
+
+>     $ git rev-list --all
+>     fatal: failed to read object b2d6fab18b92d49eac46dc3c5a0bcafabda20131: Permission denied
+
+may want to say which of the various possible places we saw this
+most interesting errno, which I think was the original motivation
+came from e8b15e61 (sha1_file: Show the the type and path to corrupt
+objects, 2010-06-10) that added "(stored in ...)".
+
+But that may involve a larger surgery, and I definitely do not want
+to add unnecessary logic in the common-case codepath to keep track
+of pieces of information that are only used in the error codepath,
+so it smells like that this is the best fix to the issue the commit
+message describes.
+
+Thanks.
+
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  sha1_file.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 3e9f55f..34d527f 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1437,19 +1437,23 @@ static int open_sha1_file(const unsigned char *sha1)
+>  {
+>  	int fd;
+>  	struct alternate_object_database *alt;
+> +	int most_interesting_errno;
+>  
+>  	fd = git_open_noatime(sha1_file_name(sha1));
+>  	if (fd >= 0)
+>  		return fd;
+> +	most_interesting_errno = errno;
+>  
+>  	prepare_alt_odb();
+> -	errno = ENOENT;
+>  	for (alt = alt_odb_list; alt; alt = alt->next) {
+>  		fill_sha1_path(alt->name, sha1);
+>  		fd = git_open_noatime(alt->base);
+>  		if (fd >= 0)
+>  			return fd;
+> +		if (most_interesting_errno == ENOENT)
+> +			most_interesting_errno = errno;
+>  	}
+> +	errno = most_interesting_errno;
+>  	return -1;
+>  }
