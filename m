@@ -1,152 +1,135 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v9 06/44] refs.c: add an err argument to delete_ref_loose
-Date: Thu, 15 May 2014 16:15:03 -0700
-Message-ID: <1400195741-22996-7-git-send-email-sahlberg@google.com>
+Subject: [PATCH v9 34/44] refs.c: make prune_ref use a transaction to delete the ref
+Date: Thu, 15 May 2014 16:15:31 -0700
+Message-ID: <1400195741-22996-35-git-send-email-sahlberg@google.com>
 References: <1400195741-22996-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 16 01:16:22 2014
+X-From: git-owner@vger.kernel.org Fri May 16 01:16:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wl4sv-0004pQ-Kn
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 01:16:21 +0200
+	id 1Wl4t4-0005L1-Tr
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 01:16:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756203AbaEOXQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 19:16:14 -0400
-Received: from mail-ve0-f201.google.com ([209.85.128.201]:54246 "EHLO
-	mail-ve0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754921AbaEOXPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 19:15:50 -0400
-Received: by mail-ve0-f201.google.com with SMTP id db11so325821veb.0
-        for <git@vger.kernel.org>; Thu, 15 May 2014 16:15:49 -0700 (PDT)
+	id S1756245AbaEOXQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 19:16:24 -0400
+Received: from mail-ve0-f202.google.com ([209.85.128.202]:64960 "EHLO
+	mail-ve0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755094AbaEOXPr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 19:15:47 -0400
+Received: by mail-ve0-f202.google.com with SMTP id pa12so326355veb.1
+        for <git@vger.kernel.org>; Thu, 15 May 2014 16:15:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Pt6u0fDS2Qbg90ik8NY7Pw3rPqL4n7ngdtEBw+HrFks=;
-        b=BoKl0s+IfFClLoE0nom1++9vjPJP681X3YNWURwAzrFxLokQ/YW5rCnr91QCa3X5y7
-         SoSc9CvUUJ9xjLFgt+8YtjstpnX/MyatNuqd45dlMbTqaRRqW+432NO4LIKmIERul8Vg
-         eNjEoG2IjPru5D3MmiVVKHmSka0q33khiBWP3uEHFbrD7znmpd0BNNqG2OLL/MVolDz7
-         /apPoCg0Ip7+WIzyLu5EypmCPnC94VIZ+m1kWOH6ZhYuCxg2TYmDBMCbmi419/Y3Znui
-         F7XILLxZ3ASFaHmFtAkYItBF0dZkn+JYjqNZyd8WSPxrVtkVGvlGFLX6kuAHWUxrE1ze
-         xVFQ==
+        bh=QMSzLnMxRtF/OcqWzTFlbjuS2uYJL7oadDtMuUs03gs=;
+        b=HRHYiH9PxoErRtgunshtdEiahjyHvZhWmmKNdoQ/zc6d7sHziCqt6qtfpEIUNA07C4
+         8QHA+OWmvVieqVJiYDJwJuNSXInjNH7j6WUYIHMGeknpYGAjG1+AGvHsUtP1YLUc2AV5
+         J76qENSsAWqC3r8F/a4RR3R6S1Y0rj99tOXestBwYdUbgQS47LBffm4ax42IkBxPW/Ro
+         bDoRVYy0yfv2tAe6YrIEDeioftc4CzgX6xRmGo9FsbIWM5Fj3Wy+GSxOA6p9qXfFKwaX
+         vo3sDYEF/VHmBjzaC9ocp6dcF5NrBDMJDSHOXB9If+CuJtT41rJV3Rd/8hLRyF6/DWto
+         NXPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Pt6u0fDS2Qbg90ik8NY7Pw3rPqL4n7ngdtEBw+HrFks=;
-        b=P3cMxgQQ6VzhHp6yl/Zxav96+1dxTshg7FgIFAXUaiirsZx9mc+JtOW68QIeuFQAZP
-         IDa0ODBRMxTH2i9Dm0ZG5zoXPDGCvrmp5yoDnc7EU7IBXslDpJDTRfeo2ZZdGNm6PuO8
-         W0Mavj78jNheTeXZLd5gxAO5VV3u5D+l9KzxJZhdRfBT7MHjJ7ckcv+zzNyZBqFnuPyy
-         WOxWSdnQc4Kc42WIZHdnYHojnE9kgSRAnPE58fHMMmyLE9XdYWhWglttRaCY7fGv81nw
-         hTXtfFq4SPVbYC2YQ57oB8+SZcBMHVKF9adSr7intxQH77ziotfAuTa1hoQNwGnIKoJH
-         R6SQ==
-X-Gm-Message-State: ALoCoQlS/MuFkaxCX66qcyEXlGIE3DDJeQnYsBO0fu8O8BfeTv5wLLd8brbM5kdkEfh72Th5DZjj
-X-Received: by 10.236.36.33 with SMTP id v21mr5511443yha.53.1400195749770;
-        Thu, 15 May 2014 16:15:49 -0700 (PDT)
+        bh=QMSzLnMxRtF/OcqWzTFlbjuS2uYJL7oadDtMuUs03gs=;
+        b=ceiDPDUveR/Etnh0nw6svyqYXck03ts3XYUt2YW5nxuGhPFW0VgYGC5YlabEOaAJSQ
+         o+ckx0kP/mX7qpTsXLCQP9oNOdoithgX+n4ApTd8gco+Mt6oAiBVa70brbv4h38NHE0s
+         9m5zhGwaEjZ2g0dMd6z14QMkCu1dkMLLto6nMv/BGU4ptkZt/ltLg/FQFTnx5juUWBAg
+         iiezSsGGVPdTWC+ReUJ2wwPnagqbG3MR/WQObMMKj4DKlWRP0ftfEn2y2vX32fUO2R5P
+         M6tT9hmRKuKbTh2QbcO/BnfbI9VtqZdmig5RyIBW8cgRzBF3q9Ax9saB4ebWsQS13PhY
+         2JQg==
+X-Gm-Message-State: ALoCoQlnHTRJMzJskHP6csEoQWCUhLI2HIatuLTUa05kzrTajhimhYrxf1lNu/LBIozrY+GXRSff
+X-Received: by 10.58.43.170 with SMTP id x10mr6381852vel.36.1400195746066;
+        Thu, 15 May 2014 16:15:46 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id k43si318887yhq.3.2014.05.15.16.15.49
+        by gmr-mx.google.com with ESMTPS id a44si318075yhb.6.2014.05.15.16.15.46
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 May 2014 16:15:49 -0700 (PDT)
+        Thu, 15 May 2014 16:15:46 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 98BDE31C314;
-	Thu, 15 May 2014 16:15:44 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id E4F5431C1ED;
+	Thu, 15 May 2014 16:15:45 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 4476CE103B; Thu, 15 May 2014 16:15:44 -0700 (PDT)
+	id BF2BAE0F39; Thu, 15 May 2014 16:15:45 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.477.gffe78a2
 In-Reply-To: <1400195741-22996-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249231>
 
-Add an err argument to delete_loose_ref so that we can pass a descriptive
-error string back to the caller. Pass the err argument from transaction
-commit to this function so that transaction users will have a nice error
-string if the transaction failed due to delete_loose_ref.
-
-Add a new function unlink_or_err that we can call from delete_ref_loose. This
-function is similar to unlink_or_warn except that we can pass it an err
-argument. If err is non-NULL the function will populate err instead of
-printing a warning().
+Change prune_ref to delete the ref using a ref transaction. To do this we also
+need to add a new flag REF_ISPRUNING that will tell the transaction that we
+do not want to delete this ref from the packed refs. This flag is private to
+refs.c and not exposed to external callers.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 39 +++++++++++++++++++++++++++++++++------
- 1 file changed, 33 insertions(+), 6 deletions(-)
+ refs.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index 4ebf130..e4d35c9 100644
+index 99b110f..f88263e 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2491,17 +2491,43 @@ static int repack_without_ref(const char *refname)
- 	return repack_without_refs(&refname, 1, NULL);
- }
- 
--static int delete_ref_loose(struct ref_lock *lock, int flag)
-+static int add_err_if_unremovable(const char *op, const char *file,
-+				  struct strbuf *e, int rc)
-+{
-+	int err = errno;
-+	if (rc < 0 && err != ENOENT) {
-+		strbuf_addf(e, "unable to %s %s: %s",
-+			    op, file, strerror(errno));
-+		errno = err;
-+	}
-+	return rc;
-+}
-+
-+static int unlink_or_err(const char *file, struct strbuf *err)
-+{
-+	if (err)
-+		return add_err_if_unremovable("unlink", file, err,
-+					      unlink(file));
-+	else
-+		return unlink_or_warn(file);
-+}
-+
-+static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
- {
- 	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
- 		/* loose */
--		int err, i = strlen(lock->lk->filename) - 5; /* .lock */
-+		int res, i = strlen(lock->lk->filename) - 5; /* .lock */
- 
- 		lock->lk->filename[i] = 0;
--		err = unlink_or_warn(lock->lk->filename);
-+		res = unlink_or_err(lock->lk->filename, err);
- 		lock->lk->filename[i] = '.';
--		if (err && errno != ENOENT)
-+		if (res && errno != ENOENT) {
-+			if (err)
-+				strbuf_addf(err,
-+					    "failed to delete loose ref '%s'",
-+					    lock->lk->filename);
- 			return 1;
-+		}
- 	}
+@@ -29,6 +29,11 @@ static inline int bad_ref_char(int ch)
  	return 0;
  }
-@@ -2514,7 +2540,7 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
- 	lock = lock_ref_sha1_basic(refname, sha1, delopt, &flag);
- 	if (!lock)
- 		return 1;
--	ret |= delete_ref_loose(lock, flag);
-+	ret |= delete_ref_loose(lock, flag, NULL);
  
- 	/* removing the loose one could have resurrected an earlier
- 	 * packed one.  Also, if it was not loose we need to repack
-@@ -3499,7 +3525,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
++/** Used as a flag to ref_transaction_delete when a loose ref is beeing
++ *  pruned.
++ */
++#define REF_ISPRUNING	0x0100
++
+ /*
+  * Try to read one refname component from the front of refname.  Return
+  * the length of the component found, or -1 if the component is not
+@@ -2330,17 +2335,24 @@ static void try_remove_empty_parents(char *name)
+ /* make sure nobody touched the ref, and unlink */
+ static void prune_ref(struct ref_to_prune *r)
+ {
+-	struct ref_lock *lock;
++	struct ref_transaction *transaction;
++	struct strbuf err = STRBUF_INIT;
+ 
+ 	if (check_refname_format(r->name + 5, 0))
+ 		return;
+ 
+-	lock = lock_ref_sha1_basic(r->name, r->sha1, 0, NULL);
+-	if (lock) {
+-		unlink_or_warn(git_path("%s", r->name));
+-		unlock_ref(lock);
+-		try_remove_empty_parents(r->name);
++	transaction = ref_transaction_begin();
++	if (!transaction ||
++	    ref_transaction_delete(transaction, r->name, r->sha1,
++				   REF_ISPRUNING, 1, &err) ||
++	    ref_transaction_commit(transaction, NULL, &err)) {
++		ref_transaction_rollback(transaction);
++		warning("prune_ref: %s", err.buf);
++		strbuf_release(&err);
++		return;
+ 	}
++	ref_transaction_free(transaction);
++	try_remove_empty_parents(r->name);
+ }
+ 
+ static void prune_refs(struct ref_to_prune *r)
+@@ -3543,9 +3555,10 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		struct ref_update *update = updates[i];
  
  		if (update->lock) {
- 			delnames[delnum++] = update->lock->ref_name;
--			ret |= delete_ref_loose(update->lock, update->type);
-+			ret |= delete_ref_loose(update->lock, update->type,
-+						err);
+-			delnames[delnum++] = update->lock->ref_name;
+ 			ret |= delete_ref_loose(update->lock, update->type,
+ 						err);
++			if (!(update->flags & REF_ISPRUNING))
++				delnames[delnum++] = update->lock->ref_name;
  		}
  	}
  
