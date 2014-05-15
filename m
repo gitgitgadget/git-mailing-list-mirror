@@ -1,30 +1,25 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git grep -O -i: if the pager is 'less', pass
- the '-i' option
-Date: Thu, 15 May 2014 15:18:24 -0400
-Message-ID: <20140515191824.GB29746@sigill.intra.peff.net>
-References: <20140514155010.GA4592@camelia.ucw.cz>
- <xmqq7g5okztp.fsf@gitster.dls.corp.google.com>
- <20140514182654.GA9218@google.com>
- <20140514190716.GA2715@sigill.intra.peff.net>
- <alpine.DEB.1.00.1405151944410.14982@s15462909.onlinehome-server.info>
+Subject: Re: [PATCH] grep -I: do not bother to read known-binary files
+Date: Thu, 15 May 2014 15:22:26 -0400
+Message-ID: <20140515192226.GC29746@sigill.intra.peff.net>
+References: <20140514154419.GA4517@camelia.ucw.cz>
+ <20140514194128.GC2715@sigill.intra.peff.net>
+ <alpine.DEB.1.00.1405151940170.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Stepan Kasal <kasal@ucw.cz>,
-	GIT Mailing-list <git@vger.kernel.org>,
+Cc: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>,
 	msysGit <msysgit@googlegroups.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBDO2DJFKTEFBBBFG2SNQKGQELPHO4CY@googlegroups.com Thu May 15 21:18:29 2014
-Return-path: <msysgit+bncBDO2DJFKTEFBBBFG2SNQKGQELPHO4CY@googlegroups.com>
+X-From: msysgit+bncBDO2DJFKTEFBB5FH2SNQKGQEMG4CH3I@googlegroups.com Thu May 15 21:22:31 2014
+Return-path: <msysgit+bncBDO2DJFKTEFBB5FH2SNQKGQEMG4CH3I@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-oa0-f59.google.com ([209.85.219.59])
+Received: from mail-ie0-f184.google.com ([209.85.223.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBBBFG2SNQKGQELPHO4CY@googlegroups.com>)
-	id 1Wl1Aj-0003HN-7H
-	for gcvm-msysgit@m.gmane.org; Thu, 15 May 2014 21:18:29 +0200
-Received: by mail-oa0-f59.google.com with SMTP id eb12sf421124oac.14
-        for <gcvm-msysgit@m.gmane.org>; Thu, 15 May 2014 12:18:28 -0700 (PDT)
+	(envelope-from <msysgit+bncBDO2DJFKTEFBB5FH2SNQKGQEMG4CH3I@googlegroups.com>)
+	id 1Wl1Ec-0005uB-6C
+	for gcvm-msysgit@m.gmane.org; Thu, 15 May 2014 21:22:30 +0200
+Received: by mail-ie0-f184.google.com with SMTP id at1sf421352iec.11
+        for <gcvm-msysgit@m.gmane.org>; Thu, 15 May 2014 12:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=date:from:to:cc:subject:message-id:references:mime-version
@@ -32,31 +27,31 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type
          :content-disposition;
-        bh=SHq5I/SeqtkdFgO1SWhjmEUbI3dlBO1YoUvsadUZ1Ag=;
-        b=Mo9a1IgZegN4cGbABiSD8Qf03XUM7XnAYMYo8WkRTUWIFZm7AEvnK7i5gIsv4DeNgl
-         4WWnFErKlcUzFosb45ID5AqcNoAAWCcstbsYozXe4hWHzH/KeZtrri9eLM9UpYiy0nYm
-         7B/eGCKZDPNff7SkZgLDw3FGK6ogrjPUWw1XAew72gT2NzdbyYu7GjjBL3v7vPpUuNN9
-         RN5nXxdstwVY5etvJeIzMd1e2XOh841+mHJQ1NBrtPv0nyeMzjNDEMGFI0tIK2jgikUC
-         4kzST8OMwk+IQc+nxd53J0YYJcENg4CajombZeC0+ydMrVfj12C1TMAEcf7yKqCJjaJy
-         90Mw==
-X-Received: by 10.50.73.69 with SMTP id j5mr364654igv.14.1400181508371;
-        Thu, 15 May 2014 12:18:28 -0700 (PDT)
+        bh=4hB6qUgh7qnsDf0PPeFmo36cP0zbGmCW+VrSPMCv3yA=;
+        b=drnHoxSlR/Nq7ulwIsnHyuG8sZ/Y4VWlMWhjgwgZbtxR4UgIsSIlg6CGalu3aiLS+6
+         h5/zAeg2fMHYpR+2sTsw9Np+JZnnxV0QF7mKdVz0I7J6hx1kVhW0BRSLe6aNwdVk68u+
+         S6LJOvOznmnECZCzCMVAywHOJW6EufFyNP8XKx0BPCF0OZvJ1UINSgcCCtm4NZUST2oG
+         UKUiXksixoQ4xt0oeiCLNKpftqKanpHVjzfwRVkjp5XOjAQmemMnrfoIIgfc6vmRgOFp
+         fX94tyMxrD+D8RqcS0vObmaPdcSjpOmSrbDkt6dFtODiL6IHuzQZn3ObemxHGTsU5P0E
+         UYgg==
+X-Received: by 10.140.50.83 with SMTP id r77mr56297qga.15.1400181749318;
+        Thu, 15 May 2014 12:22:29 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.253.161 with SMTP id ab1ls569159igd.9.gmail; Thu, 15 May
- 2014 12:18:27 -0700 (PDT)
-X-Received: by 10.66.157.138 with SMTP id wm10mr3461627pab.23.1400181507828;
-        Thu, 15 May 2014 12:18:27 -0700 (PDT)
+Received: by 10.140.106.98 with SMTP id d89ls364484qgf.57.gmail; Thu, 15 May
+ 2014 12:22:28 -0700 (PDT)
+X-Received: by 10.236.159.39 with SMTP id r27mr5646799yhk.7.1400181748871;
+        Thu, 15 May 2014 12:22:28 -0700 (PDT)
 Received: from peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id b5si557784igl.0.2014.05.15.12.18.27
+        by gmr-mx.google.com with SMTP id jj2si1617762igb.3.2014.05.15.12.22.28
         for <msysgit@googlegroups.com>;
-        Thu, 15 May 2014 12:18:27 -0700 (PDT)
+        Thu, 15 May 2014 12:22:28 -0700 (PDT)
 Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 30374 invoked by uid 102); 15 May 2014 19:18:27 -0000
+Received: (qmail 30565 invoked by uid 102); 15 May 2014 19:22:28 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 May 2014 14:18:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 May 2014 15:18:24 -0400
-In-Reply-To: <alpine.DEB.1.00.1405151944410.14982@s15462909.onlinehome-server.info>
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 15 May 2014 14:22:28 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 May 2014 15:22:26 -0400
+In-Reply-To: <alpine.DEB.1.00.1405151940170.14982@s15462909.onlinehome-server.info>
 X-Original-Sender: peff@peff.net
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
  (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
@@ -72,38 +67,31 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249188>
 
-On Thu, May 15, 2014 at 07:46:49PM +0200, Johannes Schindelin wrote:
+On Thu, May 15, 2014 at 07:42:00PM +0200, Johannes Schindelin wrote:
 
-> > We've already found the lines of interest to the user. It would be nice
-> > if we could somehow point the pager at them by number, rather than
-> > repeating the (slightly incompatible) search.
+> > Hrm. Is this patch still necessary? In the time since this patch was
+> > written, we did 0826579 (grep: load file data after checking
+> > binary-ness, 2012-02-02)
 > 
-> FWIW it is exactly that type of "I want your patch to do more than you do"
-> type of comments that makes it impossible for myself to contribute patches
-> anymore. It just does not fit inside my Git time budget anymore.
+> I have no time to test this but I trust that you made sure that it works
+> as advertised. In my case, there were about 500 gigabytes of image data
+> intermixed with code, and waiting for 'git grep' was not funny at all (and
+> I did not have time back then to go through a full code submission cycle
+> on the Git mailing list, either).
+> 
+> So I guess we can drop my patch.
 
-I'm sorry you took it that way. What I meant to say was "it would be
-nice if we could do it this other way, which is more robust, but I don't
-think it is easy.  Let's take the patch". I.e., when I later said:
+Certainly I tested it at the time (those commits I referenced contain
+timing information), and it should have improved the workload you
+describe. I did not test before/after the patch in this thread, but only
+read it and noticed that it was trying to do the same thing (that is why
+I said "I suspect...").
 
->>> But as is, it's an improvement, so (except that "-i" should be
->>> replaced by "-I") it seems like a good change.
->>
->>Agreed. Thanks for the list of problematic options.
-
-the "agreed" there is with "it seems like a good change".
-
-And I also wanted to point people to existing work, if they did want to
-explore doing it that other way.  I really didn't expect anything from
-you (beyond s/i/I/, as Jonathan suggested).
-
-> Besides, it breaks exactly the intended usage. My intent is not just to
-> see the matching lines in the pager, but to be able to adjust the search
-> pattern further if needed. Your suggestion completely breaks that usage.
-
-Thanks, this is a point I hadn't considered.
+As the person who is proposing the patch for git.git, I would hope
+Stepan would follow up on such review and confirm whether or not it is
+still needed.
 
 -Peff
 
