@@ -1,75 +1,151 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] run_diff_files: do not look at uninitialized stat data
-Date: Thu, 15 May 2014 09:37:50 -0700
-Message-ID: <xmqqsiobgfq9.fsf@gitster.dls.corp.google.com>
-References: <CAPZ477Ot8MiTUNx1AwDTb5sGDDerDvBY=znsK4Fhcb5taYsaHA@mail.gmail.com>
-	<20140514221306.GA5020@sigill.intra.peff.net>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v6 11/42] tag.c: use ref transactions when doing updates
+Date: Thu, 15 May 2014 09:45:01 -0700
+Message-ID: <CAL=YDWk8uZzJyex0YoBx81KhJZjS99qW1nV2AOe=rZhgoYRAcg@mail.gmail.com>
+References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
+	<1398976662-6962-12-git-send-email-sahlberg@google.com>
+	<20140515002738.GH9218@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elliott Cable <me@ell.io>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 15 18:38:20 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 15 18:45:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkyfj-0001m9-5o
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 18:38:19 +0200
+	id 1WkymO-0002vc-CK
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 18:45:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754684AbaEOQiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 12:38:13 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55270 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754122AbaEOQiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 12:38:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 77FBA1541A;
-	Thu, 15 May 2014 12:38:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HRtYpgHpShhpeoxCaaTw2eBunF8=; b=ZXY8Qg
-	x1+DecOPS2k0PC92DH0Ew379vN6y4emiRancTNyIEj5694CUwUzEEmQ+3SH4wg8e
-	H3h0cQVyY4jJ9jor7xWSvdhOoe73ehQKYqJy6+MEdPUUtCVQaOZD8Bvt8PXS06Y3
-	GG4E3gNDbuFyY12e2rcwyUhzPUVVv6RffiXnM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Mde0T8cY9gx58zPGoTLa4fFzdsYPBjoH
-	rlQu545T0zPhBMf06VHGyMsgzJaUrf4JJND5Dt7eVATn2fNPTH8pMFoaUqT/usfj
-	XFslyJ8R9TAoH8MkDPnTPhKXQcAC292l1UFc3x9xS8vynPCAxLNxKelgEaSJkR33
-	lGMUcLx53s8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E98615419;
-	Thu, 15 May 2014 12:38:10 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B4A34153D8;
-	Thu, 15 May 2014 12:37:52 -0400 (EDT)
-In-Reply-To: <20140514221306.GA5020@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 14 May 2014 18:13:06 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4281216E-DC4F-11E3-B4B0-DDB853EDF712-77302942!pb-smtp0.pobox.com
+	id S1752014AbaEOQpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 12:45:04 -0400
+Received: from mail-ve0-f179.google.com ([209.85.128.179]:36776 "EHLO
+	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751255AbaEOQpD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 12:45:03 -0400
+Received: by mail-ve0-f179.google.com with SMTP id oy12so1610288veb.38
+        for <git@vger.kernel.org>; Thu, 15 May 2014 09:45:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=8JDI/leuxvyGqOxK/Do0+XLsWeac176hnhr9IShLT+s=;
+        b=iUp/Sfm1cmwMUUPcLZB++5EbvyAnKaT00Y+TOzUKwgvFtkDJM0Z0LfOS7IvCbmEC+f
+         XoAmhnuSiWHNlRwDEDoah8UgcGfOmBx8Nhlkq6D9OTbOOF0ZwnOPPh6z1y6pUDcN8NNq
+         JrsodSfIfwnSFh3bpXCKY3f+uCeh/CHt8PIogrpmiFtsYaQRyBkf98WXSoQIix0B0xNV
+         6khXEK8IyWv+7ugWnCvazelBs9QgaEsMbGuqPGEKUj8kJXJsFVp7n4LXWMrIwaTZ7IOB
+         TeBeOvLlVFV6liMBoCGoSUs04PRO3//FbZEhDZB6x+CQZNFCtenoY0wQO28Ik8JBQhXK
+         gmyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=8JDI/leuxvyGqOxK/Do0+XLsWeac176hnhr9IShLT+s=;
+        b=XdJdFjaBRAwUQ57pJvEAI+2YB2vUcVtZE0iplIu3Nvb7eHgFCSvv55mFNQrkChbAeF
+         lid15g9OcockBoVEqNQB0Gx1O2HY0oqvn+hyXvYz8X6kDtFrzmC7zMBzmRO1aS9g2Ush
+         sb46U3izk+JPz5hv+Vd6FOgnMlmcsycNh8zG50uL4N6e/abd9BY07WD05m/uSoi+C26C
+         wNYAgHGdNfjL6tiOeETKjDw5ckSYw/7tCx2hAH18p43V9XkNiZozAiltGMroZJtjVdoD
+         rbF055yFU4ouLN5DHKRhKRvroyrTk58OSTDNU5wYoeZecgiAiBojGmdsZAiFZ/JvCeH9
+         KKEA==
+X-Gm-Message-State: ALoCoQlTbVIomn8s29LXm8TtWbSzJEYCHMCl+Jhe5c7UNsb+U+HJMuzX1wL00vt7ZMJTBl/SFa3T
+X-Received: by 10.221.26.10 with SMTP id rk10mr9477413vcb.0.1400172301673;
+ Thu, 15 May 2014 09:45:01 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Thu, 15 May 2014 09:45:01 -0700 (PDT)
+In-Reply-To: <20140515002738.GH9218@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249112>
 
-Jeff King <peff@peff.net> writes:
-
-> Thanks for a thorough bug report. I was able to reproduce it. The
-> ...
-> -- >8 --
-> Subject: run_diff_files: do not look at uninitialized stat data
-> ...
-> We can fix both by splitting the CE_VALID and regular code
-> paths, and making sure only to look at the stat information
-> in the latter. Furthermore, we push the declaration of our
-> "struct stat" down into the code paths that actually set it,
-> so we cannot accidentally access it uninitialized in future
-> code.
+On Wed, May 14, 2014 at 5:27 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
 >
-> Signed-off-by: Jeff King <peff@peff.net>
+>> --- a/builtin/tag.c
+>> +++ b/builtin/tag.c
+>> @@ -701,11 +702,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>>       if (annotate)
+>>               create_tag(object, tag, &buf, &opt, prev, object);
+>>
+>> -     lock = lock_any_ref_for_update(ref.buf, prev, 0, NULL);
+>> -     if (!lock)
+>> -             die(_("%s: cannot lock the ref"), ref.buf);
+>> -     if (write_ref_sha1(lock, object, NULL) < 0)
+>> -             die(_("%s: cannot update the ref"), ref.buf);
+>> +     transaction = ref_transaction_begin();
+>> +     if (!transaction ||
+>> +         ref_transaction_update(transaction, ref.buf, object, prev,
+>> +                                0, !is_null_sha1(prev)) ||
+>> +         ref_transaction_commit(transaction, NULL, &err))
+>> +             die(_("%s: cannot update the ref: %s"), ref.buf, err.buf);
+>
+> Makes sense for the _update and _commit case.  (BTW, why is have_old
+> a separate boolean instead of a bit in flags?)
+>
+> For the _begin() case, can ref_transaction_begin() ever fail?  xcalloc
+> die()s on allocation failure.  So I think it's fine to assume
+> transaction is non-null (i.e., drop the !transaction condition), or if
+> you want to be defensive, then label it as a bug --- e.g.:
+>
+>         if (!transaction)
+>                 die("BUG: ref_transaction_begin() returned NULL?");
+>
+> Otherwise if ref_transaction_begin regresses in the future and this
+> case is tripped then the message would be
+>
+>         fatal: refs/tags/v1.0: cannot update the ref:
+>
+> which is not as obvious an indicator that the user should contact
+> the mailing list.
 
-Thanks for an excellent work, as always.  Will queue.
+For the current refs implementation, _begin can never return NULL
+since the only failure mode would be OOM in which case we die().
+And then for that case we could remove the !transaction check since transaction
+can never be NULL here.
+
+(I am not a big fan of die() in general)
+
+However, if we implement a different datastore for refs in the future
+it is likely that
+the ref_transaction_begin equivalent for that backend could well start returning
+failures for a lot other reasons than just OOM.
+
+I could imagine that tdb_transaction_start() could fail for a
+corrupted database.
+An SQL based backend could fail due to the client library failing to
+open a socket to the db,
+etc.
+
+
+But you bring a good point about the error message.
+
+Instead of the suggestions above, would you accept an alternative
+approach where I would
+add an err argument to ref_transaction_begin() instead?
+
+For a hypothetical mysql backend, this could then do something like :
+
+>> +     transaction = ref_transaction_begin();
+>> +     if (!transaction ||
+>> +         ref_transaction_update(transaction, ref.buf, object, prev,
+>> +                                0, !is_null_sha1(prev)) ||
+>> +         ref_transaction_commit(transaction, NULL, &err))
+>> +             die(_("%s: cannot update the ref: %s"), ref.buf, err.buf);
+
+Which could then result in output like
+
+fatal: refs/heads/master: cannot update the ref: failed to connect to
+mysql database ...
+
+
+
+So I suggest that instead of doing these changes I will add an err
+argument to ref_transaction_begin.
+Does that sound ok with you?
+
+
+>
+> Thanks,
+> Jonathan
