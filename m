@@ -1,107 +1,119 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v6 14/42] sequencer.c: use ref transactions for all ref
- updates
-Date: Thu, 15 May 2014 10:35:57 -0700
-Message-ID: <20140515173557.GL9218@google.com>
-References: <1398976662-6962-1-git-send-email-sahlberg@google.com>
- <1398976662-6962-15-git-send-email-sahlberg@google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] grep -I: do not bother to read known-binary files
+Date: Thu, 15 May 2014 19:42:00 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1405151940170.14982@s15462909.onlinehome-server.info>
+References: <20140514154419.GA4517@camelia.ucw.cz> <20140514194128.GC2715@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu May 15 19:36:12 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>, 
+    msysGit <msysgit@googlegroups.com>
+To: Jeff King <peff@peff.net>
+X-From: msysgit+bncBCZPH74Q5YNRB27Y2ONQKGQEVEVRW5I@googlegroups.com Thu May 15 19:42:05 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRB27Y2ONQKGQEVEVRW5I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-we0-f185.google.com ([74.125.82.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkzZh-0000xp-Sa
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 19:36:10 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755544AbaEORgD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 13:36:03 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:38434 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751614AbaEORgB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 13:36:01 -0400
-Received: by mail-pb0-f53.google.com with SMTP id md12so1376993pbc.12
-        for <git@vger.kernel.org>; Thu, 15 May 2014 10:36:00 -0700 (PDT)
+	(envelope-from <msysgit+bncBCZPH74Q5YNRB27Y2ONQKGQEVEVRW5I@googlegroups.com>)
+	id 1WkzfP-0008FV-QX
+	for gcvm-msysgit@m.gmane.org; Thu, 15 May 2014 19:42:03 +0200
+Received: by mail-we0-f185.google.com with SMTP id w61sf136275wes.2
+        for <gcvm-msysgit@m.gmane.org>; Thu, 15 May 2014 10:42:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=f9oFg4KqNZMzZw9pRHRxN9fDlmHiQLp7o+H88z5GrbE=;
-        b=Z7BklGEnb3rRJ0JyXepXalvmqTdIYGNm8zB8K9mHkBbXSRamZXLHBtiuuLBf4biSBv
-         bHqQEmVeeV4xnnQuQlVCI6GVi49+08s3xHVxTrOaUY/n+IfsIiciM9grPAtTTXas/sHK
-         Tl5VNPaFcmPPigcsyeYv2p4yfEnxMWHa62u6BZIqANC53oW16pvyyIKjtUCUqbnlv3u0
-         mpqJXgLRXxrIXSwKhmu9EJhSDPJJYBDnx+jNNKGKki8OuXGYne3dLz8qiZsrs5JrAIWR
-         Qwzn948QqEbUmY3n0w/UWshrBZpb1K/BcYOpctav48N9bnQi40ugAhIzj8Je2D4PqHso
-         K0Dw==
-X-Received: by 10.66.180.141 with SMTP id do13mr14155079pac.93.1400175360565;
-        Thu, 15 May 2014 10:36:00 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id au4sm10154507pbc.10.2014.05.15.10.35.59
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 15 May 2014 10:36:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1398976662-6962-15-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249167>
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=kAzxQQe0c3yc/AmxaaI29+DmPKEV4XlEQnOK/ZTxuzY=;
+        b=k9lxha1FYGP5fmrr+o6CAOLzduRkJP/8C12sJmQAhIChanDERBuflGjyVn3CdllVn0
+         FAjkVfTmr1nsMmHXJfjAWSt7vtlCtQRq7u93x4ejqsKngHBAOlJQRUgglaOKF7m8DiQz
+         TRWziRvqZ90mw4dBAFEf8G3hPonxPLVrt47ozcO75p1ktuUKKt7HQfRZX0ZRHxpXXDJi
+         n4/XsaHWzCuiNvdzWmdzrqaX5HC5gIaD5HWInj//7NjsuXwPsU/t04K3AcyP1PvO9tK2
+         FFzot3lhLGmfQYsoDpx5QfC4RZyOlyDjZPM1UCVCSym+kOXYDl3vofycwbDn3QNIXlxb
+         zsmg==
+X-Received: by 10.152.205.43 with SMTP id ld11mr38169lac.8.1400175723510;
+        Thu, 15 May 2014 10:42:03 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.27.5 with SMTP id p5ls67228lag.54.gmail; Thu, 15 May 2014
+ 10:42:02 -0700 (PDT)
+X-Received: by 10.152.43.101 with SMTP id v5mr8458lal.10.1400175722796;
+        Thu, 15 May 2014 10:42:02 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.19])
+        by gmr-mx.google.com with ESMTPS id u49si1905278eeo.1.2014.05.15.10.42.02
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 15 May 2014 10:42:02 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.19 as permitted sender) client-ip=212.227.15.19;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0LdYSM-1XBlxj1uaI-00ikwQ;
+ Thu, 15 May 2014 19:42:01 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20140514194128.GC2715@sigill.intra.peff.net>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:vrawI7dmb/VR+zvRPs91rXQOnXsxcJzyUDN64RIqQmO77Iz5lmT
+ V0fHSYx66XxuJV9DmYgU7cRQlUMBTCwv/AaxBA36MWCYOt35fX9E0+GJGBmHHWeqnL6rBcD
+ f2PLPoWSnYyU1+IJB1kWt+23pciPP5cPylOSNE3FZCU4FmNJdQCVCCpugRUJj6YGYHibIVE
+ YUQXh81h08DbrVyGjGTgg==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.19 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249168>
 
-Ronnie Sahlberg wrote:
+Hi Peff,
 
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -272,23 +272,31 @@ static int error_dirty_index(struct replay_opts *opts)
->  static int fast_forward_to(const unsigned char *to, const unsigned char *from,
->  			int unborn, struct replay_opts *opts)
->  {
-> -	struct ref_lock *ref_lock;
-> +	struct ref_transaction *transaction;
->  	struct strbuf sb = STRBUF_INIT;
-> -	int ret;
-> +	struct strbuf err = STRBUF_INIT;
->  
->  	read_cache();
->  	if (checkout_fast_forward(from, to, 1))
->  		exit(1); /* the callee should have complained already */
-> -	ref_lock = lock_any_ref_for_update("HEAD", unborn ? null_sha1 : from,
-> -					   0, NULL);
-> -	if (!ref_lock)
-> -		return error(_("Failed to lock HEAD during fast_forward_to"));
->  
->  	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
-> -	ret = write_ref_sha1(ref_lock, to, sb.buf);
-> +
-> +	transaction = ref_transaction_begin();
-> +	if ((!transaction ||
-> +	    ref_transaction_update(transaction, "HEAD", to, from,
-> +				   0, !unborn)) ||
+On Wed, 14 May 2014, Jeff King wrote:
 
-These parentheses make it harder to parse.  Other patches in this
-series do
+> On Wed, May 14, 2014 at 05:44:19PM +0200, Stepan Kasal wrote:
+> 
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > Date: Mon, 8 Nov 2010 16:10:43 +0100
+> > 
+> > Incidentally, this makes grep -I respect the "binary" attribute (actually,
+> > the "-text" attribute, but "binary" implies that).
+> 
+> Hrm. Is this patch still necessary? In the time since this patch was
+> written, we did 0826579 (grep: load file data after checking
+> binary-ness, 2012-02-02)
 
-	if (!transaction ||
-	    ref_transaction_update(...) ||
-	    ref_transaction_commit(...)) {
+I have no time to test this but I trust that you made sure that it works
+as advertised. In my case, there were about 500 gigabytes of image data
+intermixed with code, and waiting for 'git grep' was not funny at all (and
+I did not have time back then to go through a full code submission cycle
+on the Git mailing list, either).
 
-so this could do
+So I guess we can drop my patch.
 
-	if (!transaction ||
-	    ref_transaction_update(...) ||
-	    (ref_transaction_commit(...) && !(transaction = NULL))) {
+Ciao,
+Johannes
 
-> +	    (ref_transaction_commit(transaction, sb.buf, &err) &&
-> +	     !(transaction = NULL))) {
-> +		ref_transaction_rollback(transaction);
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Earlier patches in the series didn't bother rolling back.  Should they
-have?
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Thanks,
-Jonathan
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
