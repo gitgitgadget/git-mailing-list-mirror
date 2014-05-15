@@ -1,119 +1,121 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v8 04/44] refs.c: add an err argument to
- repack_without_refs
-Date: Thu, 15 May 2014 11:38:36 -0700
-Message-ID: <20140515183836.GD26471@google.com>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
- <1400174999-26786-5-git-send-email-sahlberg@google.com>
+From: Michael Wagner <accounts@mwagner.org>
+Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
+Date: Thu, 15 May 2014 20:48:09 +0200
+Message-ID: <20140515184808.GA7964@localhost.localdomain>
+References: <20140514184145.GA25699@localhost.localdomain>
+ <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
+ <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
+ <20140515050820.GA30785@localhost.localdomain>
+ <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu May 15 20:38:45 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu May 15 20:48:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wl0YF-0000Ni-Qe
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 20:38:44 +0200
+	id 1Wl0hX-0000ef-CK
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 20:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755715AbaEOSik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 14:38:40 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:48137 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755073AbaEOSij (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 14:38:39 -0400
-Received: by mail-pa0-f41.google.com with SMTP id lj1so1432108pab.0
-        for <git@vger.kernel.org>; Thu, 15 May 2014 11:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=xAvTRs4Ag4E9plG64ZUJ8TFGVWW3f9tZN63xo2JAd/g=;
-        b=lk/UOpvtoy8uLWUJAGtJIcXXxw9fwHOzvPJDOiSI+/VtW8kVHACOxM0VnYBCzqjt2i
-         ajQaMcQY7+NeTz7kiVO8RpbizoJZHai95nukvmgj/opyQLyt89AvnGTzrA6blz8CFjaJ
-         qsGGJ+ZWalGDKd5HoxFJpuroDz7Z9Isqkpl3/gtT06PDHSxwtvIPxNymjv/VeG2q3/C/
-         wtzTughhs/5p0DMOx94qsRn2/SrYk37iIPEBHkm80FqUgcrbaZUhu9GgAlhwywqfTpi2
-         /igeMwxG1YSLtCqVGhA9H/laZwgPFdLpZC285z7vNF07KT6ZuwX0eDPde3GNVkzPke07
-         huMw==
-X-Received: by 10.69.31.107 with SMTP id kl11mr14548625pbd.142.1400179119013;
-        Thu, 15 May 2014 11:38:39 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id vg1sm10339275pbc.44.2014.05.15.11.38.38
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 15 May 2014 11:38:38 -0700 (PDT)
+	id S1755611AbaEOSsP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 May 2014 14:48:15 -0400
+Received: from caelum.uberspace.de ([95.143.172.212]:38810 "EHLO
+	caelum.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754293AbaEOSsP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 14:48:15 -0400
+Received: (qmail 22191 invoked from network); 15 May 2014 18:48:10 -0000
+Received: from localhost (HELO localhost) (127.0.0.1)
+  by caelum.uberspace.de with SMTP; 15 May 2014 18:48:10 -0000
 Content-Disposition: inline
-In-Reply-To: <1400174999-26786-5-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249179>
 
-Ronnie Sahlberg wrote:
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2427,12 +2427,12 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
->  	return 0;
->  }
->  
-> -static int repack_without_refs(const char **refnames, int n)
-> +static int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+On Thu, May 15, 2014 at 10:04:24AM +0100, Peter Krefting wrote:
+> Michael Wagner:
+>=20
+> >Decoding the UTF-8 encoded file name (again with an additional print
+> >statement):
+> >
+> >$ REQUEST_METHOD=3DGET QUERY_STRING=3D'p=3Dnotes.git;a=3Dblob_plain;=
+f=3Dwork/G%C3%83%C2%BCtekriterien.txt;hb=3DHEAD' ./gitweb.cgi
+> >
+> >work/G=FCtekriterien.txt
+> >Content-disposition: inline; filename=3D"work/G=FCtekriterien.txt"
+>=20
+> You should fix the code path that created that URI, though, as it is =
+not
+> what you expected.
+>=20
+> %C3%83 decodes to U+00C3 Latin Capital Letter A With Tilde
+> %C2%BC decodes to U+00BC Vulgar Graction One Quarter
+>=20
+> The proper UTF-8 encoding for =FC (U+00FC) is, as you can probably gu=
+ess from
+> looking at which two characters the sequence above yielded, C3 BC, wh=
+ich in
+> a URI is represented as %C3%BC.
+>=20
+> Your QUERY_STRING should thus be
+>=20
+>   p=3Dnotes.git;a=3Dblob_plain;f=3Dwork/G%C3%BCtekriterien.txt;hb=3DH=
+EAD
+>=20
+> which probably works as expected.
 
-Should this also get an onerr flag to suppress the message to stderr,
-or unconditionally suppress the message to stderr when err != NULL?
+Obviously, you are right, thanks.
 
-[...]
-> @@ -2445,6 +2445,9 @@ static int repack_without_refs(const char **refnames, int n)
->  
->  	if (lock_packed_refs(0)) {
->  		unable_to_lock_error(git_path("packed-refs"), errno);
-> +		if (err)
-> +			strbuf_addf(err, "cannot delete '%s' from packed refs",
-> +				    refnames[i]);
+>=20
+> What is happening is that whatever is generating the URI us UTF-8-enc=
+oding
+> the string twice (i.e., it generates a string with the proper C3 BC i=
+n it,
+> and then interprets it as iso-8859-1 data and runs that through a UTF=
+-8
+> encoder again, yielding the C3 83 C2 BC sequence you see above).
+>=20
 
-unable_to_lock_error is able to come up with a message with more
-detail (path so the sysadmin can hunt down the problem even if this
-was run e.g. from a cronjob where the path is not obvious, errno
-hinting at the nature of the problem).
+The subroutine "git tree" generates the tree view. It stores the output
+of "git ls-tree -z ..." in an array named "@entries". Printing the cont=
+ent
+of this array yields the following result:
 
-[...]
-> @@ -2470,12 +2473,15 @@ static int repack_without_refs(const char **refnames, int n)
->  	}
->  
->  	/* Write what remains */
-> -	return commit_packed_refs();
-> +	ret = commit_packed_refs();
-> +	if (ret && err)
-> +		strbuf_addf(err, "unable to overwrite old ref-pack file");
+00644 blob 6419cd06a9461c38d4f94d9705d97eaaa887156a     520 G=C3=BCtekr=
+iterien.txt
 
-After commit_lock_file sets errno, amazingly no one clobbers it
-until we get to this point.  The only calls in between are to
-free().
+This leads to the "doubled" encoding. Declaring the encoding in the cal=
+l
+to open yields the following result:
 
-It would be nice to make that more explicit in commit_packed_refs:
+100644 blob 6419cd06a9461c38d4f94d9705d97eaaa887156a     520 G=FCtekrit=
+erien.txt
 
-	int save_errno;
+---
 
-	...
-	if (commit_lock_file(packed_ref_cache->lock)) {
-		save_errno = errno;
-		error = -1;
-	}
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a9f57d6..f1414e1 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -7138,7 +7138,7 @@ sub git_tree {
+        my @entries =3D ();
+        {
+                local $/ =3D "\0";
+-               open my $fd, "-|", git_cmd(), "ls-tree", '-z',
++               open my $fd, "-|encoding(UTF-8)", git_cmd(), "ls-tree",=
+ '-z',
+                        ($show_sizes ? '-l' : ()), @extra_options, $has=
+h
+                        or die_error(500, "Open git-ls-tree failed");
+                @entries =3D map { chomp; $_ } <$fd>;
 
-	packed_ref_cache->lock = NULL;
-	release_packed_ref_cache(packed_ref_cache);
-
-	errno = save_errno;
-	return error;
-
-Even without that, this message could include strerror(errno).
-
-> +	return ret;
->  }
-
-Thanks,
-Jonathan
+> --=20
+> \\// Peter - http://www.softwolves.pp.se/
