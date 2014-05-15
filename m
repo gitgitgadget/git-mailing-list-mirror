@@ -1,85 +1,107 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
-Date: Thu, 15 May 2014 10:04:24 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
-References: <20140514184145.GA25699@localhost.localdomain> <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com> <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com> <20140515050820.GA30785@localhost.localdomain>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH] transport-helper: add trailing --
+Date: Thu, 15 May 2014 11:16:43 +0200
+Organization: <)><
+Message-ID: <20140515091643.GA13165@camelia.ucw.cz>
+References: <20140515053214.GA12133@camelia.ucw.cz> <20140515090013.GB27033@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-2?Q?Jakub_Nar=EAbski?= <jnareb@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Michael Wagner <accounts@mwagner.org>
-X-From: git-owner@vger.kernel.org Thu May 15 11:04:55 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+        Sverre Rabbelier <srabbelier@gmail.com>,
+        msysGit <msysgit@googlegroups.com>
+To: Jeff King <peff@peff.net>
+X-From: msysgit+bncBCU63DXMWULRB74L2KNQKGQEC3IXNZQ@googlegroups.com Thu May 15 11:16:50 2014
+Return-path: <msysgit+bncBCU63DXMWULRB74L2KNQKGQEC3IXNZQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f57.google.com ([209.85.215.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkrap-0006fP-Pz
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 11:04:48 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751642AbaEOJEn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 May 2014 05:04:43 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:51358 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751000AbaEOJEl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 05:04:41 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s4F94R4X016725
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 15 May 2014 11:04:28 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s4F94Pw2016721;
-	Thu, 15 May 2014 11:04:25 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20140515050820.GA30785@localhost.localdomain>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 15 May 2014 11:04:29 +0200 (CEST)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249077>
+	(envelope-from <msysgit+bncBCU63DXMWULRB74L2KNQKGQEC3IXNZQ@googlegroups.com>)
+	id 1WkrmS-0004Kl-2q
+	for gcvm-msysgit@m.gmane.org; Thu, 15 May 2014 11:16:48 +0200
+Received: by mail-la0-f57.google.com with SMTP id hr17sf76725lab.22
+        for <gcvm-msysgit@m.gmane.org>; Thu, 15 May 2014 02:16:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=N1K6sksSS6RVN/Nut2EYZTSsahaieqqbfk3r0vwheBM=;
+        b=dNFhTytFZU+fN9qzdAOCO141Hut1m/QvAdEzTVtf9I0y/rqBqpli9AY3s7n/ENXKFg
+         s9HqRrAB2JlaU0rDreQNuIxI1w/wCCcwSkmBNT4UjFMA2aJZBMXfMFxo6JxVzwp16Ahd
+         dCKsmQ+jV+g/mF2nyrUYVhGxDxH8B/Em7mUmsdpsU0HTMeCQH48xNnHhHNIID/OjKGKk
+         KhSdNF1SfTjinbaOub58KG2BfM7gG28qFDjTUrDHtf7omRu5Dr9gnVZkdjTAFuCy7cM6
+         7qYWittfPE4j+P69NQipTltYJrOH/QvOam6VY10NrOCb0y6X553E8vEQaj4cJhcO8+hz
+         +zJw==
+X-Received: by 10.152.43.202 with SMTP id y10mr9750lal.33.1400145407697;
+        Thu, 15 May 2014 02:16:47 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.203.169 with SMTP id kr9ls27461lac.102.gmail; Thu, 15 May
+ 2014 02:16:46 -0700 (PDT)
+X-Received: by 10.112.13.36 with SMTP id e4mr166114lbc.11.1400145406552;
+        Thu, 15 May 2014 02:16:46 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id r49si1538184eep.0.2014.05.15.02.16.46
+        for <msysgit@googlegroups.com>;
+        Thu, 15 May 2014 02:16:46 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 4C3861C00EF;
+	Thu, 15 May 2014 11:16:46 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s4F9GjQ1013180;
+	Thu, 15 May 2014 11:16:46 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s4F9GhGF013179;
+	Thu, 15 May 2014 11:16:43 +0200
+In-Reply-To: <20140515090013.GB27033@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249078>
 
-Michael Wagner:
+Hi Peff,
 
-> Decoding the UTF-8 encoded file name (again with an additional print
-> statement):
->
-> $ REQUEST_METHOD=3DGET QUERY_STRING=3D'p=3Dnotes.git;a=3Dblob_plain;f=
-=3Dwork/G%C3%83%C2%BCtekriterien.txt;hb=3DHEAD' ./gitweb.cgi
->
-> work/G=FCtekriterien.txt
-> Content-disposition: inline; filename=3D"work/G=FCtekriterien.txt"
+On Thu, May 15, 2014 at 05:00:13AM -0400, Jeff King wrote:
+> I just posted a series that addresses those leaks and converts this
+> site. I do not want to hold your patch hostage to my series, [...]
 
-You should fix the code path that created that URI, though, as it is=20
-not what you expected.
+no problem, let's return to it later.
 
-%C3%83 decodes to U+00C3 Latin Capital Letter A With Tilde
-%C2%BC decodes to U+00BC Vulgar Graction One Quarter
+Stepan
 
-The proper UTF-8 encoding for =FC (U+00FC) is, as you can probably gues=
-s from=20
-looking at which two characters the sequence above yielded, C3 BC,=20
-which in a URI is represented as %C3%BC.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Your QUERY_STRING should thus be
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-   p=3Dnotes.git;a=3Dblob_plain;f=3Dwork/G%C3%BCtekriterien.txt;hb=3DHE=
-AD
-
-which probably works as expected.
-
-What is happening is that whatever is generating the URI us=20
-UTF-8-encoding the string twice (i.e., it generates a string with the=20
-proper C3 BC in it, and then interprets it as iso-8859-1 data and runs=20
-that through a UTF-8 encoder again, yielding the C3 83 C2 BC sequence=20
-you see above).
-
---=20
-\\// Peter - http://www.softwolves.pp.se/
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
