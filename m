@@ -1,130 +1,137 @@
-From: Michael Wagner <accounts@mwagner.org>
-Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
-Date: Thu, 15 May 2014 07:08:20 +0200
-Message-ID: <20140515050820.GA30785@localhost.localdomain>
-References: <20140514184145.GA25699@localhost.localdomain>
- <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
- <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: [PATCH] transport-helper: add trailing --
+Date: Thu, 15 May 2014 07:32:14 +0200
+Organization: <)><
+Message-ID: <20140515053214.GA12133@camelia.ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 15 07:08:30 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+        msysGit <msysgit@googlegroups.com>
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: msysgit+bncBCU63DXMWULRBY5C2GNQKGQEEN4FL5Y@googlegroups.com Thu May 15 07:32:20 2014
+Return-path: <msysgit+bncBCU63DXMWULRBY5C2GNQKGQEEN4FL5Y@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-we0-f188.google.com ([74.125.82.188])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wknu9-0008TG-BB
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 07:08:29 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751276AbaEOFIZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 May 2014 01:08:25 -0400
-Received: from caelum.uberspace.de ([95.143.172.212]:46533 "EHLO
-	caelum.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751059AbaEOFIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 01:08:24 -0400
-Received: (qmail 1538 invoked from network); 15 May 2014 05:08:22 -0000
-Received: from localhost (HELO localhost) (127.0.0.1)
-  by caelum.uberspace.de with SMTP; 15 May 2014 05:08:22 -0000
+	(envelope-from <msysgit+bncBCU63DXMWULRBY5C2GNQKGQEEN4FL5Y@googlegroups.com>)
+	id 1WkoHE-0008FL-3L
+	for gcvm-msysgit@m.gmane.org; Thu, 15 May 2014 07:32:20 +0200
+Received: by mail-we0-f188.google.com with SMTP id t61sf31630wes.25
+        for <gcvm-msysgit@m.gmane.org>; Wed, 14 May 2014 22:32:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:mime-version:organization
+         :user-agent:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition;
+        bh=OeA2H5gBONkKLxFyRi9n98N80X9bWiagn2SxmNPEOWc=;
+        b=p2air+Qnwoa18c+W31PV9dGYasvTenhxDJEcdcPFmJPnAfKTrfWIcFeDnBEN8Ed4Mv
+         q58LQ6wQf1kVPmeTEJopiQ6aupQ22+OGD/kq6YH0/K1jJUBJyNv93bG5QLLW7Y8Yc40F
+         45IhAOcvPbizIi0h8g4ORSwoY7cWsP846vN6naSmP0nQQIqC3AMBrpNgko48D3raZpO1
+         ZczqPmEj6xoFnA5aZi0xMkHXYC7tp7GOlV3sddwpEh8lZXcssCSLfgRs4t08KcSDqUVC
+         pp1yIVymBVys4FofMARjxynFRF6wyf9IwX/+pym1SWa7gCjjrJALEH3b4+qWzoG8B6dh
+         PKhw==
+X-Received: by 10.152.197.4 with SMTP id iq4mr1112lac.21.1400131939731;
+        Wed, 14 May 2014 22:32:19 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.30.2 with SMTP id o2ls6979lah.40.gmail; Wed, 14 May 2014
+ 22:32:18 -0700 (PDT)
+X-Received: by 10.112.14.5 with SMTP id l5mr735019lbc.6.1400131938487;
+        Wed, 14 May 2014 22:32:18 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id u49si1298808eeo.1.2014.05.14.22.32.18
+        for <msysgit@googlegroups.com>;
+        Wed, 14 May 2014 22:32:18 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 2E83A1C00B0;
+	Thu, 15 May 2014 07:32:18 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s4F5WHA8012276;
+	Thu, 15 May 2014 07:32:17 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s4F5WEZ4012275;
+	Thu, 15 May 2014 07:32:14 +0200
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-In-Reply-To: <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249059>
 
-On Thu, May 15, 2014 at 12:25:45AM +0200, Jakub Nar=C4=99bski wrote:
-> On Wed, May 14, 2014 at 11:57 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
-> > Michael Wagner <accounts@mwagner.org> writes:
-> >
-> >> Perl has an internal encoding used to store text strings. Currentl=
-y, trying to
-> >> view files with UTF-8 encoded names results in an error (either "4=
-04 - Cannot
-> >> find file" [blob_plain] or "XML Parsing Error" [blob]). Converting=
- these UTF-8
-> >> encoded file names into Perl's internal format resolves these erro=
-rs.
->=20
-> Could you give us an example?  What is important is whether filename
-> is passed via path_info or via query string.
->=20
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Date: Sat, 28 Aug 2010 20:49:01 -0500
 
-There is a file named "G=C3=BCtekriterien.txt" in my repository. Trying=
- to
-view this file as "blob_plain" produces an 404 error (displaying the
-file name with an additional print statement):
+[PT: ensure we add an additional element to the argv array]
 
-$ REQUEST_METHOD=3DGET QUERY_STRING=3D'p=3Dnotes.git;a=3Dblob_plain;f=3D=
-work/G%C3%83%C2%BCtekriterien.txt;hb=3DHEAD' ./gitweb.cgi
+Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+---
 
-work/G=C3=83=C2=BCtekriterien.txt
-Status: 404 Not Found
+Hi,
+  this patch was present in msysgit from Mar 2012.
+Do you like it?
+I'm sorry, there is no author signoff; is the patch small enough?
 
-Decoding the UTF-8 encoded file name (again with an additional print
-statement):
+Stepan
 
-$ REQUEST_METHOD=3DGET QUERY_STRING=3D'p=3Dnotes.git;a=3Dblob_plain;f=3D=
-work/G%C3%83%C2%BCtekriterien.txt;hb=3DHEAD' ./gitweb.cgi
+ transport-helper.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-work/G=C3=BCtekriterien.txt
-Content-disposition: inline; filename=3D"work/G=C3=BCtekriterien.txt"
+diff --git a/transport-helper.c b/transport-helper.c
+index 0e7c330..a01ea47 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -429,7 +429,7 @@ static int get_exporter(struct transport *transport,
+ 	/* we need to duplicate helper->in because we want to use it after
+ 	 * fastexport is done with it. */
+ 	fastexport->out = dup(helper->in);
+-	fastexport->argv = xcalloc(6 + revlist_args->nr, sizeof(*fastexport->argv));
++	fastexport->argv = xcalloc(7 + revlist_args->nr, sizeof(*fastexport->argv));
+ 	fastexport->argv[argc++] = "fast-export";
+ 	fastexport->argv[argc++] = "--use-done-feature";
+ 	fastexport->argv[argc++] = data->signed_tags ?
+@@ -446,6 +446,8 @@ static int get_exporter(struct transport *transport,
+ 	for (i = 0; i < revlist_args->nr; i++)
+ 		fastexport->argv[argc++] = revlist_args->items[i].string;
+ 
++	fastexport->argv[argc++] = "--";
++
+ 	fastexport->git_cmd = 1;
+ 	return start_command(fastexport);
+ }
+-- 
+1.9.2.msysgit.0.335.gd2a461f
 
-> Because in evaluate_uri() there is
->=20
->      our $path_info =3D decode_utf8($ENV{"PATH_INFO"});
->=20
-> and in evaluate_query_params() there is
->=20
->     $input_params{$name} =3D decode_utf8($cgi->param($symbol));
->=20
-> >> Signed-off-by: Michael Wagner <accounts@mwagner.org>
-> >> ---
-> >
-> > Cc'ing Jakub, who have been the area maintainer, for comments.
-> >
-> > One thing I wonder is that, if there are some additional calls to
-> > encode() necessary before we embed $file_name (which are now decode=
-d
-> > to the internal string form, not a byte-sequence that happens to be
-> > in utf-8) in the generated pages, if we were to do this change.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-The generated pages show the correct file names.=20
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
->=20
-> There should be no problem with output encoding.  esc_path(), which
-> should be used for filenames, includes to_utf8, which in turn uses
-> decode($fallback_encoding, $str, Encode::FB_DEFAULT);
->=20
-> >>  gitweb/gitweb.perl | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> >> index a9f57d6..6046977 100755
-> >> --- a/gitweb/gitweb.perl
-> >> +++ b/gitweb/gitweb.perl
-> >> @@ -1056,7 +1056,7 @@ sub evaluate_and_validate_params {
-> >>               }
-> >>       }
-> >>
-> >> -     our $file_name =3D $input_params{'file_name'};
-> >> +     our $file_name =3D decode("utf-8", $input_params{'file_name'=
-});
-> >>       if (defined $file_name) {
-> >>               if (!is_valid_pathname($file_name)) {
-> >>                       die_error(400, "Invalid file parameter");
->=20
-> Hmm... all %input_params should have been properly decoded
-> already, how it was missed?
->=20
-> Also, branchname (hash_base etc.), search query, filename in file_par=
-ent,
-> project name can be UTF-8 too, so it is at best partial fix.
->=20
-> --=20
-> Jakub Nar=C4=99bski
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
