@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 08/10] git-mergetool.sh: don't use the -a or -o option with the test command
-Date: Thu, 15 May 2014 07:21:48 -0700
-Message-ID: <1400163710-28333-8-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 10/10] git-submodule.sh: don't use the -a or -o option with the test command
+Date: Thu, 15 May 2014 07:21:50 -0700
+Message-ID: <1400163710-28333-10-git-send-email-gitter.spiros@gmail.com>
 References: <1400163710-28333-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 15 16:22:24 2014
+X-From: git-owner@vger.kernel.org Thu May 15 16:22:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkwY7-0008Oe-3h
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 16:22:19 +0200
+	id 1WkwYC-00007i-Rz
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 16:22:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754800AbaEOOWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 10:22:11 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:46518 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754491AbaEOOWC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 10:22:02 -0400
-Received: by mail-pb0-f51.google.com with SMTP id ma3so1163493pbc.38
-        for <git@vger.kernel.org>; Thu, 15 May 2014 07:22:01 -0700 (PDT)
+	id S1754741AbaEOOWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 10:22:09 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:47939 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754617AbaEOOWD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 10:22:03 -0400
+Received: by mail-pb0-f44.google.com with SMTP id rq2so1163750pbb.17
+        for <git@vger.kernel.org>; Thu, 15 May 2014 07:22:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=vYbV5zJqnDlBECGYeMI6tMtDlyPhDDLzKL48WJRKDu0=;
-        b=YRSZZ5ZO4rz2f6xtSofpmdF/iNwagAB/iXAzMzUo7tou1wIPh53ZTmsSnwpx/0/B/x
-         Ixrl6jd88LP0wmRffj5e2SISm43NhzXBhfYTTa17Xsy1ojf+eHCHFzirdpoxo4dYxLZU
-         rzvqBcH2+9/xoNhZsJWrEHTDqe+U6Svu671RG6YHc7cwM44QduO2DRL6PI2i0t5WFhFl
-         H7DdL3RSS7uu9nFy2rchkfIeK3hPcO9QUKgRWPFaScH0RpSteXI80n9HjcxXppw15VSB
-         WiiqUj9vt1sSHmoteJc59An3PO9ewQuGZSFzsfuaQA5U5rHXg1Mz8QXn/jAoLd+2smlS
-         Is7g==
-X-Received: by 10.66.236.163 with SMTP id uv3mr12918419pac.18.1400163721486;
-        Thu, 15 May 2014 07:22:01 -0700 (PDT)
+        bh=j+Km1lBc66nsN0GKOkNbigIUvq/HWViCFGcIedyMIB4=;
+        b=gumqd1He0xrQpYnCXsHvtZsff5HzlPMLI6v3BTcdiRPimDAB9AsRu5ss4+lXuZm61d
+         +5n/0qsAfKyOJIvjf8eFejbyyMDqndbDXFoPsLsaVOUamBjau0hpIMKtFPdrxv4qtgge
+         ogoMIWhk7hhhbE7qQNQ/wlTvNkdK7msb5aZWCkZ3SsqBKuk0w6VxLT8y3OgkPCujmCvj
+         cDWf+KCeUJ5VhEsfxn96QdLIq9J/iGDZVE675+O4rltWlVYTeAHObMciAUL6+GJw7Ukc
+         SWzbmKvULY6cbgeXJFxZBoV7VMAy7+iEsryQCtg3SN0tSiqBDS8EBphyqJqI/c9vR4/0
+         +HZQ==
+X-Received: by 10.68.201.97 with SMTP id jz1mr12800654pbc.26.1400163723230;
+        Thu, 15 May 2014 07:22:03 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id sy2sm9397666pbc.28.2014.05.15.07.22.00
+        by mx.google.com with ESMTPSA id sy2sm9397666pbc.28.2014.05.15.07.22.02
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 15 May 2014 07:22:00 -0700 (PDT)
+        Thu, 15 May 2014 07:22:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1400163710-28333-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249098>
 
 Even though POSIX.1 lists -a/-o as options to "test", they are
 marked "Obsolescent XSI". Scripts using these expressions
@@ -98,30 +98,73 @@ Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
 Inspired from this discussion http://permalink.gmane.org/gmane.comp.version-control.git/137056
 
- git-mergetool.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ git-submodule.sh |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 332528f..88e853f 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -205,7 +205,7 @@ checkout_staged_file () {
- 		"$(git checkout-index --temp --stage="$1" "$2" 2>/dev/null)" \
- 		: '\([^	]*\)	')
+diff --git a/git-submodule.sh b/git-submodule.sh
+index b55d83a..d89e1d0 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -864,7 +864,7 @@ Maybe you want to use 'update --init'?")"
+ 		then
+ 			subforce=$force
+ 			# If we don't already have a -f flag and the submodule has never been checked out
+-			if test -z "$subsha1" -a -z "$force"
++			if test -z "$subsha1" || test -z "$force"
+ 			then
+ 				subforce="-f"
+ 			fi
+@@ -1059,13 +1059,13 @@ cmd_summary() {
+ 		while read mod_src mod_dst sha1_src sha1_dst status sm_path
+ 		do
+ 			# Always show modules deleted or type-changed (blob<->module)
+-			test $status = D -o $status = T && echo "$sm_path" && continue
++                        ( test $status = D || test $status = T ) && echo "$sm_path" && continue
+ 			# Respect the ignore setting for --for-status.
+ 			if test -n "$for_status"
+ 			then
+ 				name=$(module_name "$sm_path")
+ 				ignore_config=$(get_submodule_config "$name" ignore none)
+-				test $status != A -a $ignore_config = all && continue
++				test $status != A && test $ignore_config = all && continue
+ 			fi
+ 			# Also show added or modified modules which are checked out
+ 			GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
+@@ -1125,7 +1125,7 @@ cmd_summary() {
+ 		*)
+ 			errmsg=
+ 			total_commits=$(
+-			if test $mod_src = 160000 -a $mod_dst = 160000
++			if test $mod_src = 160000 && test $mod_dst = 160000
+ 			then
+ 				range="$sha1_src...$sha1_dst"
+ 			elif test $mod_src = 160000
+@@ -1162,7 +1162,7 @@ cmd_summary() {
+ 			# i.e. deleted or changed to blob
+ 			test $mod_dst = 160000 && echo "$errmsg"
+ 		else
+-			if test $mod_src = 160000 -a $mod_dst = 160000
++			if test $mod_src = 160000 && test $mod_dst = 160000
+ 			then
+ 				limit=
+ 				test $summary_limit -gt 0 && limit="-$summary_limit"
+@@ -1233,7 +1233,7 @@ cmd_status()
+ 			say "U$sha1 $displaypath"
+ 			continue
+ 		fi
+-		if test -z "$url" || ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
++		if test -z "$url" || ! test -d "$sm_path"/.git || test -f "$sm_path"/.git
+ 		then
+ 			say "-$sha1 $displaypath"
+ 			continue;
+@@ -1402,7 +1402,7 @@ then
+ fi
  
--	if test $? -eq 0 -a -n "$tmpfile"
-+	if test $? -eq 0 && test -n "$tmpfile"
- 	then
- 		mv -- "$(git rev-parse --show-cdup)$tmpfile" "$3"
- 	else
-@@ -256,7 +256,7 @@ merge_file () {
- 	checkout_staged_file 2 "$MERGED" "$LOCAL"
- 	checkout_staged_file 3 "$MERGED" "$REMOTE"
- 
--	if test -z "$local_mode" -o -z "$remote_mode"
-+	if test -z "$local_mode" || test -z "$remote_mode"
- 	then
- 		echo "Deleted merge conflict for '$MERGED':"
- 		describe_file "$local_mode" "local" "$LOCAL"
+ # "--cached" is accepted only by "status" and "summary"
+-if test -n "$cached" && test "$command" != status -a "$command" != summary
++if test -n "$cached" && test "$command" != status && test "$command" != summary
+ then
+ 	usage
+ fi
 -- 
 1.7.10.4
