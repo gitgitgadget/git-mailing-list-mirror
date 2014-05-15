@@ -1,92 +1,116 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
-Date: Thu, 15 May 2014 14:32:33 +0200
-Message-ID: <CANQwDwes_G-aNMo=UfGJk+Dk2YaokQsG_VLaVQyPevEDchWTVA@mail.gmail.com>
-References: <20140514184145.GA25699@localhost.localdomain> <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
- <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com> <20140515050820.GA30785@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Michael Wagner <accounts@mwagner.org>
-X-From: git-owner@vger.kernel.org Thu May 15 14:33:26 2014
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 01/10] check_bindir: don't use the -a or -b option with the test command
+Date: Thu, 15 May 2014 07:17:28 -0700
+Message-ID: <1400163457-28285-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 15 16:17:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wkuqc-0007TP-B3
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 14:33:18 +0200
+	id 1WkwTk-00051F-DX
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 16:17:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752937AbaEOMdO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 May 2014 08:33:14 -0400
-Received: from mail-oa0-f41.google.com ([209.85.219.41]:55449 "EHLO
-	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751420AbaEOMdN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 May 2014 08:33:13 -0400
-Received: by mail-oa0-f41.google.com with SMTP id m1so1163480oag.28
-        for <git@vger.kernel.org>; Thu, 15 May 2014 05:33:13 -0700 (PDT)
+	id S1753687AbaEOORo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 10:17:44 -0400
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:51756 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752107AbaEOORn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 10:17:43 -0400
+Received: by mail-pb0-f53.google.com with SMTP id md12so1156432pbc.40
+        for <git@vger.kernel.org>; Thu, 15 May 2014 07:17:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=W0iJNnJgdsCnyvmqU6+JmZJ8pFu0CxM0nJxSDcicdvU=;
-        b=bI4mRms0wZNrpOIm8yinlFnwx0v3qTj498/0Pr+qfw6ixQNKnMd1WjnHL4zJJruKee
-         wh3RChVtKijEjDfm5JmrwVr4ursGILEzT6wr3FcuBsGIYVRNESFGSBy+qgibpA4MvzEL
-         pjCK4QzRXo7osYSufjPU9AD+Hlldw2r7N81sLQoygIFf1tqP20nNf727jEusNtT5HszK
-         zowBray1MVakS/6+qUMPxwq5GQNpfL4fdYrhJpbOX763He3HmsbEYKkh2vFkGxYHsIg9
-         9RYniYaVUsTr7ajTDuOTm1umLRzI8II0ya4CdcLWYaSc9me7jOlnWoNKyXkb1nLVR1EH
-         aIeQ==
-X-Received: by 10.60.37.99 with SMTP id x3mr9698594oej.65.1400157193226; Thu,
- 15 May 2014 05:33:13 -0700 (PDT)
-Received: by 10.76.132.4 with HTTP; Thu, 15 May 2014 05:32:33 -0700 (PDT)
-In-Reply-To: <20140515050820.GA30785@localhost.localdomain>
+        h=from:to:cc:subject:date:message-id;
+        bh=64iHjfGfCOKD7v3ImjyWjlhOOaavERHxennMRUYMw/M=;
+        b=TxzLuyZag04q7JIDvnwnvuYCVrNo5uBrJMivx+TEW2wvhe2M5hVkZfCgb3cjeckPD8
+         3NfDBVwtbVtAE2Ii5O+/N304/JJHnv3MryKoz+jxYFTEpiK+2rpNo+0Gb35jHu92pNLr
+         mePi+ZZ/I2zKjySocx/e0jD/s53uNwecInqGjd5nkd7zgzEZwKAP1pOLcUuOBE6zrtdD
+         uXrVwNmnjfeMwNgtUXLsp/qGLRK84Zyd9mjrl/szmzEWGK0EGnymaVrdnfCyn3HuN8/h
+         r8LRQOePDY+7fySb9POPtefb0itCQNlY2zIpgxkliS4YVeMYZAdi29dgDJye5sV1XHo7
+         lLOg==
+X-Received: by 10.68.178.194 with SMTP id da2mr12644704pbc.151.1400163462770;
+        Thu, 15 May 2014 07:17:42 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id as12sm21782704pac.43.2014.05.15.07.17.41
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 15 May 2014 07:17:41 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249080>
 
-On Thu, May 15, 2014 at 7:08 AM, Michael Wagner <accounts@mwagner.org> =
-wrote:
-> On Thu, May 15, 2014 at 12:25:45AM +0200, Jakub Nar=C4=99bski wrote:
->> On Wed, May 14, 2014 at 11:57 PM, Junio C Hamano <gitster@pobox.com>=
- wrote:
->>> Michael Wagner <accounts@mwagner.org> writes:
->>>
->>>> Perl has an internal encoding used to store text strings. Currentl=
-y, trying to
->>>> view files with UTF-8 encoded names results in an error (either "4=
-04 - Cannot
->>>> find file" [blob_plain] or "XML Parsing Error" [blob]). Converting=
- these UTF-8
->>>> encoded file names into Perl's internal format resolves these erro=
-rs.
->>
->> Could you give us an example?  What is important is whether filename
->> is passed via path_info or via query string.
->>
->
-> There is a file named "G=C3=BCtekriterien.txt" in my repository. Tryi=
-ng to
-> view this file as "blob_plain" produces an 404 error (displaying the
-> file name with an additional print statement):
->
-> $ REQUEST_METHOD=3DGET QUERY_STRING=3D'p=3Dnotes.git;a=3Dblob_plain;f=
-=3Dwork/G%C3%83%C2%BCtekriterien.txt;hb=3DHEAD' ./gitweb.cgi
->
-> work/G=C3=83=C2=BCtekriterien.txt
-> Status: 404 Not Found
+Even though POSIX.1 lists -a/-o as options to "test", they are
+marked "Obsolescent XSI". Scripts using these expressions
+should be converted  as follow:
 
-You have URI encoding of "=C3=BC" wrong! "=C3=BC" encodes as %C3%BC, no=
-t
-as %C3%83%C2%BC (4 bytes?)
+test "$1" -a "$2"
 
-  http://www.url-encode-decode.com/
+should be written as:
 
-You tested with wrong input.
+test "$1" && test "$2"
 
-BTW. there probably should be test for UTF-8 encoding, similar to
-the one for XSS in t9502-gitweb-standalone-parse-output
---=20
-Jakub Nar=C4=99bski
+Likewise
+
+test "$1" -o "$2"
+
+should be written as:
+
+test "$1"  test "$2"
+
+But note that, in test, -a has higher precedence than -o while
+"&&" and "||" have equal precedence in the shell.
+
+The reason for this is that the precedence rules were never well
+specified, and this made many sane-looking uses of "test -a/-o" problematic.
+
+For example, if $x is "=", these work according to POSIX (it's not
+portable, but in practice it's okay):
+
+   $ test -z "$x"
+   $ test -z "$x" && test a = b
+
+but this doesn't
+
+   $ test -z "$x" -a a = b
+   bash: test: too many arguments
+
+because it groups "test -n = -a" and is left with "a = b".
+
+Similarly, if $x is "-f", these
+
+   $ test "$x"
+   $ test "$x" || test c = d
+
+correctly adds an implicit "-n", but this fails:
+
+   $ test "$x" -o c = d
+   bash: test: too many arguments
+
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+Inspired from this discussion http://permalink.gmane.org/gmane.comp.version-control.git/137056
+
+ check_bindir |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/check_bindir b/check_bindir
+index a1c4c3e..623eadc 100755
+--- a/check_bindir
++++ b/check_bindir
+@@ -2,7 +2,7 @@
+ bindir="$1"
+ gitexecdir="$2"
+ gitcmd="$3"
+-if test "$bindir" != "$gitexecdir" -a -x "$gitcmd"
++if test "$bindir" != "$gitexecdir" && test -x "$gitcmd"
+ then
+ 	echo
+ 	echo "!! You have installed git-* commands to new gitexecdir."
+-- 
+1.7.10.4
