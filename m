@@ -1,120 +1,275 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git grep -O -i: if the pager is 'less', pass
- the '-i' option
-Date: Thu, 15 May 2014 10:56:14 -0700
-Message-ID: <20140515175614.GN9218@google.com>
-References: <20140514155010.GA4592@camelia.ucw.cz>
- <xmqq7g5okztp.fsf@gitster.dls.corp.google.com>
- <20140514182654.GA9218@google.com>
- <20140514190716.GA2715@sigill.intra.peff.net>
- <alpine.DEB.1.00.1405151944410.14982@s15462909.onlinehome-server.info>
+Subject: Re: [PATCH v8 00/44] Use ref transactions for all ref updates
+Date: Thu, 15 May 2014 11:06:18 -0700
+Message-ID: <20140515180618.GA26471@google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBD6LRKOE4AIRBQP72ONQKGQEIR4I5JY@googlegroups.com Thu May 15 19:56:24 2014
-Return-path: <msysgit+bncBD6LRKOE4AIRBQP72ONQKGQEIR4I5JY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pb0-f56.google.com ([209.85.160.56])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu May 15 20:08:05 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBD6LRKOE4AIRBQP72ONQKGQEIR4I5JY@googlegroups.com>)
-	id 1WkztD-0004eE-Ne
-	for gcvm-msysgit@m.gmane.org; Thu, 15 May 2014 19:56:20 +0200
-Received: by mail-pb0-f56.google.com with SMTP id ma3sf398850pbc.1
-        for <gcvm-msysgit@m.gmane.org>; Thu, 15 May 2014 10:56:18 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wl04a-0002OX-2r
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 20:08:04 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754739AbaEOSH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 14:07:59 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:35050 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753928AbaEOSH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 14:07:58 -0400
+Received: by mail-pb0-f44.google.com with SMTP id rq2so1421875pbb.3
+        for <git@vger.kernel.org>; Thu, 15 May 2014 11:07:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
+        d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=s+ZO+aoOz5nrqCBV4NyNiB/3bTbqpqsLDS2OO9amWEs=;
-        b=IvUYIUzAuIMHns+3Hat/GxOAEL2TJ9H5cGi/UGigSagAF12KfEcRjb8aEGy7xzQfF4
-         lyZVkLoS07qSBZX2yd/TW1JCxRZ4rFoFuXrLDTV/94v4QxL9jua7jwdT1mlDlZu5FqQF
-         hbyl78jhIy99oWeUpPSrN3ZAeR4+aVlm2zfEwek8hwgah6bpvT39CFZW9CZu4Dy+LbGx
-         CqQ8kfitqsrNV7jzk99CbbBK4Yy5yOuRXc4Mg28DkzzbkwfdpDzajz/64AE7HqzPxP7n
-         XwMz3SqfWeLLFwDiM5fiT9MOpkL54wn/TXk0dr4I3m2ftBV7EBTVl1huI3n5dCNulZB9
-         FTdg==
-X-Received: by 10.50.92.34 with SMTP id cj2mr769871igb.4.1400176578678;
-        Thu, 15 May 2014 10:56:18 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.79.199 with SMTP id l7ls568125igx.30.gmail; Thu, 15 May
- 2014 10:56:17 -0700 (PDT)
-X-Received: by 10.42.236.68 with SMTP id kj4mr4963594icb.6.1400176577824;
-        Thu, 15 May 2014 10:56:17 -0700 (PDT)
-Received: from mail-pb0-x234.google.com (mail-pb0-x234.google.com [2607:f8b0:400e:c01::234])
-        by gmr-mx.google.com with ESMTPS id zs4si1310669pbc.1.2014.05.15.10.56.17
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 15 May 2014 10:56:17 -0700 (PDT)
-Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:400e:c01::234 as permitted sender) client-ip=2607:f8b0:400e:c01::234;
-Received: by mail-pb0-f52.google.com with SMTP id rr13so1398669pbb.25
-        for <msysgit@googlegroups.com>; Thu, 15 May 2014 10:56:17 -0700 (PDT)
-X-Received: by 10.66.148.197 with SMTP id tu5mr14419410pab.108.1400176577708;
-        Thu, 15 May 2014 10:56:17 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=lZqP0yufzFNb6OV5JxT6tcNidceX/xcYd3SWuEISP8k=;
+        b=q55R67ILb5/ekflnSzpPhoO4fxhzBKx89NBrK05/YzX0YsPa8P1bZrO6JdtMHd4bWF
+         u6kUWp+Hueh/Z1+CYJRiF7LBf2cRrk6XUgM3Z1gtdLkY+a99YlWVMeR9WZncoNpJo+X1
+         C5VgyYP9Wbnyq9kTHTpF/JBmypCYQnLhNPr4Kt46mT5ex14kqUjq3qKqJGtqeJntmyzn
+         SDLZJFuxozL2ONYt2+6Lj4dI40w+k3jMGBTIZN2+xdOHl3zJohTbrNhpqwG8pnvlsaqx
+         WNNRj3sxywz0WtvN57Yd/1zTB0whdQYIUbFVpBfpoikRk/vJCU7gkmiU6hlpysJEXyDK
+         flGg==
+X-Received: by 10.66.242.204 with SMTP id ws12mr14593764pac.10.1400177278193;
+        Thu, 15 May 2014 11:07:58 -0700 (PDT)
 Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id gj9sm10222210pbc.7.2014.05.15.10.56.16
+        by mx.google.com with ESMTPSA id is5sm10254713pbb.8.2014.05.15.11.07.57
         for <multiple recipients>
         (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 15 May 2014 10:56:17 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1405151944410.14982@s15462909.onlinehome-server.info>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Original-Sender: jrnieder@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:400e:c01::234
- as permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+        Thu, 15 May 2014 11:07:57 -0700 (PDT)
 Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249172>
+In-Reply-To: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249173>
 
-Johannes Schindelin wrote:
-> On Wed, 14 May 2014, Jeff King wrote:
+Ronnie Sahlberg wrote:
 
->> We've already found the lines of interest to the user. It would be nice
->> if we could somehow point the pager at them by number, rather than
->> repeating the (slightly incompatible) search.
+> This patch series is based on next and expands on the transaction API.
+
+Thanks.  Will pick up in v8 where I left off with v6.
+
+Applies with just one minor conflict on top of a merge of
+mh/ref-transaction, rs/ref-update-check-errors-early, and
+rs/reflog-exists.  Here's an interdiff against version 6 for those
+following along.
+
+> Version 8:
+>  - Updates after review by JN
+>  - Improve commit messages
+>  - Add a patch that adds an err argument to repack_without_refs
+>  - Add a patch that adds an err argument to delete_loose_ref
+>  - Better document that a _update/_delete/_create failure means the whole
+>    transaction has failed and needs rollback.
 >
-> FWIW it is exactly that type of "I want your patch to do more than you do"
-> type of comments that makes it impossible for myself to contribute patches
-> anymore.
+> Version 7:
+>  - Updated commit messages per JNs review comments.
+>  - Changed REF_ISPRUNING and REF_ISPACKONLY to be private flags and not
+>    exposed through refs.h
 
-I think you're overreacting to Peff's "It would be nice".
-
-It is a way of talking about where this lies in a design space that
-also includes the git-jump tool that Peff worked on.  Maybe the tools
-can learn from each other.  It is not a reason not to apply the patch.
-
-Jonathan
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 0f4e1fc..07ccc97 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1684,7 +1684,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 				   0, !!current_head, sb.buf) ||
+ 	    ref_transaction_commit(transaction, &err)) {
+ 		rollback_index_files();
+-		die(_("HEAD: cannot update ref: %s"), err.buf);
++		die("%s", err.buf);
+ 	}
+ 	ref_transaction_free(transaction);
+ 
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 47c360c..952b589 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -163,7 +163,7 @@ static int replace_object(const char *object_ref, const char *replace_ref,
+ 	    ref_transaction_update(transaction, ref, repl, prev,
+ 				   0, !is_null_sha1(prev), NULL) ||
+ 	    ref_transaction_commit(transaction, &err))
+-		die(_("%s: failed to replace ref: %s"), ref, err.buf);
++		die("%s: failed to replace ref: %s", ref, err.buf);
+ 
+ 	ref_transaction_free(transaction);
+ 	return 0;
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index c5aff92..bd7e96f 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -228,7 +228,7 @@ static const char *parse_cmd_create(struct strbuf *input, const char *next)
+ 
+ 	if (ref_transaction_create(transaction, refname, new_sha1,
+ 				   update_flags, msg))
+-		die("failed transaction create for %s", refname);
++		die("cannot create ref '%s'", refname);
+ 
+ 	update_flags = 0;
+ 	free(refname);
+diff --git a/refs.c b/refs.c
+index 302a2b3..ed93b75 100644
+--- a/refs.c
++++ b/refs.c
+@@ -29,6 +29,15 @@ static inline int bad_ref_char(int ch)
+ 	return 0;
+ }
+ 
++/** Used as a flag to ref_transaction_delete when a loose ref is beeing
++ *  pruned.
++ */
++#define REF_ISPRUNING	0x0100
++/** Deletion of a ref that only exists as a packed ref in which case we do not
++ *  need to lock the loose ref during the transaction.
++ */
++#define REF_ISPACKONLY	0x0200
++
+ /*
+  * Try to read one refname component from the front of refname.  Return
+  * the length of the component found, or -1 if the component is not
+@@ -2447,12 +2456,12 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
+ 	return 0;
+ }
+ 
+-static int repack_without_refs(const char **refnames, int n)
++static int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ {
+ 	struct ref_dir *packed;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *ref_to_delete;
+-	int i, removed = 0;
++	int i, ret, removed = 0;
+ 
+ 	/* Look for a packed ref */
+ 	for (i = 0; i < n; i++)
+@@ -2465,6 +2474,9 @@ static int repack_without_refs(const char **refnames, int n)
+ 
+ 	if (lock_packed_refs(0)) {
+ 		unable_to_lock_error(git_path("packed-refs"), errno);
++		if (err)
++			strbuf_addf(err, "cannot delete '%s' from packed refs",
++				    refnames[i]);
+ 		return error("cannot delete '%s' from packed refs", refnames[i]);
+ 	}
+ 	packed = get_packed_refs(&ref_cache);
+@@ -2490,20 +2502,28 @@ static int repack_without_refs(const char **refnames, int n)
+ 	}
+ 
+ 	/* Write what remains */
+-	return commit_packed_refs();
++	ret = commit_packed_refs();
++	if (ret && err)
++		strbuf_addf(err, "unable to overwrite old ref-pack file");
++	return ret;
+ }
+ 
+-static int delete_ref_loose(struct ref_lock *lock, int flag)
++static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+ {
+ 	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+ 		/* loose */
+-		int err, i = strlen(lock->lk->filename) - 5; /* .lock */
++		int res, i = strlen(lock->lk->filename) - 5; /* .lock */
+ 
+ 		lock->lk->filename[i] = 0;
+-		err = unlink_or_warn(lock->lk->filename);
++		res = unlink_or_warn(lock->lk->filename);
+ 		lock->lk->filename[i] = '.';
+-		if (err && errno != ENOENT)
++		if (res && errno != ENOENT) {
++			if (err)
++				strbuf_addf(err,
++					    "failed to delete loose ref '%s'",
++					    lock->lk->filename);
+ 			return 1;
++		}
+ 	}
+ 	return 0;
+ }
+@@ -3483,7 +3503,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 						   delnames, delnum);
+ 		if (!update->lock) {
+ 			if (err)
+-				strbuf_addf(err ,"Cannot lock the ref '%s'.",
++				strbuf_addf(err, "Cannot lock the ref '%s'.",
+ 					    update->refname);
+ 			ret = 1;
+ 			goto cleanup;
+@@ -3516,13 +3536,14 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			continue;
+ 
+ 		if (update->lock) {
+-			ret |= delete_ref_loose(update->lock, update->type);
++			ret |= delete_ref_loose(update->lock, update->type,
++						err);
+ 			if (!(update->flags & REF_ISPRUNING))
+ 				delnames[delnum++] = update->lock->ref_name;
+ 		}
+ 	}
+ 
+-	ret |= repack_without_refs(delnames, delnum);
++	ret |= repack_without_refs(delnames, delnum, err);
+ 	for (i = 0; i < delnum; i++)
+ 		unlink_or_warn(git_path("logs/%s", delnames[i]));
+ 	clear_loose_ref_cache(&ref_cache);
+diff --git a/refs.h b/refs.h
+index 03b4a7e..0e6d416 100644
+--- a/refs.h
++++ b/refs.h
+@@ -134,10 +134,6 @@ extern int peel_ref(const char *refname, unsigned char *sha1);
+ 
+ /** Locks any ref (for 'HEAD' type refs). */
+ #define REF_NODEREF	0x01
+-/** Deleting a loose ref during prune */
+-#define REF_ISPRUNING	0x02
+-/** Deletion of a ref that only exists as a packed ref */
+-#define REF_ISPACKONLY	0x04
+ extern struct ref_lock *lock_any_ref_for_update(const char *refname,
+ 						const unsigned char *old_sha1,
+ 						int flags, int *type_p);
+@@ -240,6 +236,9 @@ void ref_transaction_rollback(struct ref_transaction *transaction);
+  * be deleted.  If have_old is true, then old_sha1 holds the value
+  * that the reference should have had before the update, or zeros if
+  * it must not have existed beforehand.
++ * Function returns 0 on success and non-zero on failure. A failure to update
++ * means that the transaction as a whole has failed and will need to be
++ * rolled back.
+  */
+ int ref_transaction_update(struct ref_transaction *transaction,
+ 			   const char *refname,
+@@ -252,6 +251,9 @@ int ref_transaction_update(struct ref_transaction *transaction,
+  * that the reference should have after the update; it must not be the
+  * null SHA-1.  It is verified that the reference does not exist
+  * already.
++ * Function returns 0 on success and non-zero on failure. A failure to create
++ * means that the transaction as a whole has failed and will need to be
++ * rolled back.
+  */
+ int ref_transaction_create(struct ref_transaction *transaction,
+ 			   const char *refname,
+@@ -262,6 +264,9 @@ int ref_transaction_create(struct ref_transaction *transaction,
+  * Add a reference deletion to transaction.  If have_old is true, then
+  * old_sha1 holds the value that the reference should have had before
+  * the update (which must not be the null SHA-1).
++ * Function returns 0 on success and non-zero on failure. A failure to delete
++ * means that the transaction as a whole has failed and will need to be
++ * rolled back.
+  */
+ int ref_transaction_delete(struct ref_transaction *transaction,
+ 			   const char *refname,
+@@ -272,7 +277,7 @@ int ref_transaction_delete(struct ref_transaction *transaction,
+  * Commit all of the changes that have been queued in transaction, as
+  * atomically as possible.  Return a nonzero value if there is a
+  * problem. If err is non-NULL we will add an error string to it to explain
+- * why the transaction failed.
++ * why the transaction failed. The string does not end in newline.
+  */
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   struct strbuf *err);
