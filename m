@@ -1,149 +1,188 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v9 41/44] refs.c: add a new flag for transaction delete for refs we know are packed only
-Date: Thu, 15 May 2014 16:15:38 -0700
-Message-ID: <1400195741-22996-42-git-send-email-sahlberg@google.com>
+Subject: [PATCH v9 24/44] fetch.c: use a single ref transaction for all ref updates
+Date: Thu, 15 May 2014 16:15:21 -0700
+Message-ID: <1400195741-22996-25-git-send-email-sahlberg@google.com>
 References: <1400195741-22996-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 16 01:17:01 2014
+X-From: git-owner@vger.kernel.org Fri May 16 01:17:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wl4tY-0006FX-Ao
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 01:17:00 +0200
+	id 1Wl4tb-0006Yi-Sm
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 01:17:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756213AbaEOXQQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 19:16:16 -0400
-Received: from mail-vc0-f201.google.com ([209.85.220.201]:37162 "EHLO
-	mail-vc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756127AbaEOXPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 19:15:47 -0400
-Received: by mail-vc0-f201.google.com with SMTP id ij19so720760vcb.4
-        for <git@vger.kernel.org>; Thu, 15 May 2014 16:15:46 -0700 (PDT)
+	id S1756259AbaEOXQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 19:16:59 -0400
+Received: from mail-qc0-f202.google.com ([209.85.216.202]:44164 "EHLO
+	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756037AbaEOXPq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 19:15:46 -0400
+Received: by mail-qc0-f202.google.com with SMTP id x3so325120qcv.1
+        for <git@vger.kernel.org>; Thu, 15 May 2014 16:15:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=MH/RAEOC9GMxpp8yORglEP0J7xCpV+AgyULKJ2ex540=;
-        b=Kh7SONAYsLWX9Z9QHZiGIBCj7HwKoZEx1pTJ9y/3pyxDJ3evmBijLxWlf4skkgRC64
-         gfjSujdJOyd7plvoqjTNCcZVAg4xksKW997RRabs6XVdLEDXX5isNLtrGkjyvO5XG+C9
-         6qB4MCQ75PLftXhDXgl103GMyYYPIauPhft8Xr82/xiXivQZb1uzLvbwaFz4yum6mznl
-         xFqtkZuExtY0/x7dfWilPoi6xeBhu1LH7uc2nef1I5F9LDs0IQaGg+biKztfB6RB8hn5
-         lHE7gzjHQOJ6tnBGnY9XGcc6bcRyJSjD6V2kse5+dfH5I3SPdej80slA3gVINSmMu8WR
-         mlFQ==
+        bh=DiQWuKx9EUeg03Qi29TuyyZL70aAeR6SBgdT5ExSAEE=;
+        b=iKRZUyBO45wGCSkKJmJ4exf1c+2JAjsVREppNhLps9K84lmGuqE2J9oC99Cmqh1Z+B
+         ILhETmtGrA6HCEv4mZ9pl2DGfVxu4xiJYyBV6k9TdkXccYa9nvaQJwfmbA9ucZYDuedo
+         kvX2gQoXvkV4Zg4EO8GqUPF2SQ1jsNq1gr0cTnKV9vkq4PpYFDCE+iDzm1R3pL04U68k
+         0ol8a+EByfmXOgjDYvtRM2mMZn+BGJGhlqVwidZWpI15+SrDSK+Hs19S63jKS6oJFYLj
+         n/xbIwasSby7kRM3ZA6kE1K1owTuTyGt+YcN3BkIJzhkYtyARbYtT4tP4g+MUA227oGM
+         Zs/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=MH/RAEOC9GMxpp8yORglEP0J7xCpV+AgyULKJ2ex540=;
-        b=OJf++ZdwuB7JzY8X1CL6iv3RhN1M2RdI/Pczl7d5xu6+TUwewJ5S0JCqcHkl6C1HsO
-         W5vVVUxJez32+IlJ6dVMhOwt+voZaU1ELlZETRevsDtKVBJfOyXqOKl5A401JOssDGcf
-         obMun6ZRIqhTIQ9R7vzNcKojtsaBBq/lbYj1VanHQPXNJ9foQljVdDA7f2aDkbAzc6M5
-         GLa4ycxgZUEypviiMTgwfQtPj/hwqGJk7CmsZsrHnFK9uhS54+r2D8v5EN51vjJtCmb3
-         MhEYOopMuG4pL9N10KLbGBDqKGmLjAfVwO1b2jnRN/w82BChWsKWqxG6jL/Uo3/SYn+4
-         f/NA==
-X-Gm-Message-State: ALoCoQl0Oq8r4u7pl4H8t+rsc65MMT3q+4/fSao7PU2mmIPSWW3j8yP6rUesdj+07uWqt+rPh2lB
-X-Received: by 10.52.12.33 with SMTP id v1mr2546138vdb.5.1400195746446;
-        Thu, 15 May 2014 16:15:46 -0700 (PDT)
+        bh=DiQWuKx9EUeg03Qi29TuyyZL70aAeR6SBgdT5ExSAEE=;
+        b=LsNCBgiQy17cgh9ndc+3yi9gEJd0LxfhKzdp9sR51/Q59i0FIXH5x79px0TruRM4mH
+         jTn3VG4u6G+YIds/6pPnzTVRBAAX0zdCeSNRGkWddW0hO2j15xRJi9oiAgLmfa9jE+Qy
+         Ie52YG7pEcoM1NFt9m3wA+4j9bvbIumRPEIgZ63DAq9KG9F8vonpJ7FiBbFaevQrSd8J
+         nrGCNi57qQxIsaoftoYxTrPgHx+t/3O4apF6XikruoRC9TzVxRBcd+CTJTHWS4q/qDYk
+         fRXzVLVin5WoIs2NyZp3eFFqxQQzb6joutfm0aGI5551GpFwQcgzNYvMQZRekSJUc34q
+         mYdA==
+X-Gm-Message-State: ALoCoQklI33OJG1PEI/KDT30lKivacIMgp/5TZmj+HrdsROse+RY4OlNuZGT8AcG6QqiibX2bLeS
+X-Received: by 10.236.77.194 with SMTP id d42mr5591814yhe.21.1400195745563;
+        Thu, 15 May 2014 16:15:45 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id n68si244844yhj.5.2014.05.15.16.15.46
+        by gmr-mx.google.com with ESMTPS id n68si244838yhj.5.2014.05.15.16.15.45
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 15 May 2014 16:15:46 -0700 (PDT)
+        Thu, 15 May 2014 16:15:45 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 43CF131C25B;
-	Thu, 15 May 2014 16:15:46 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 53F7B31C1CD;
+	Thu, 15 May 2014 16:15:45 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 2004FE0528; Thu, 15 May 2014 16:15:45 -0700 (PDT)
+	id 30523E115F; Thu, 15 May 2014 16:15:45 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.477.gffe78a2
 In-Reply-To: <1400195741-22996-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249244>
 
-Add a new flag REF_ISPACKONLY that we can use in ref_transaction_delete.
-This flag indicates that the ref does not exist as a loose ref andf only as
-a packed ref. If this is the case we then change the commit code so that
-we skip taking out a lock file and we skip calling delete_ref_loose.
-Check for this flag and die(BUG:...) if used with _update or _create.
+Change store_updated_refs to use a single ref transaction for all refs that
+are updated during the fetch. This makes the fetch more atomic when update
+failures occur.
 
-At the start of the transaction, before we even start locking any refs,
-we add all such REF_ISPACKONLY refs to delnames so that we have a list of
-all pack only refs that we will be deleting during this transaction.
+Since ref update failures will now no longer occur in the code path for
+updating a single ref in s_update_ref, we no longer have as detailed error
+message logging the exact reference and the ref log action as in the old cod
+Instead since we fail the entire transaction we log a much more generic
+message. But since we commit the transaction using MSG_ON_ERR we will log
+an error containing the ref name if either locking of writing the ref would
+so the regression in the log message is minor.
+
+This will also change the order in which errors are checked for and logged
+which may alter which error will be logged if there are multiple errors
+occuring during a fetch.
+
+For example, assume we have a fetch for two refs that both would fail.
+Where the first ref would fail with ENOTDIR due to a directory in the ref
+path not existing, and the second ref in the fetch would fail due to
+the check in update_logical_ref():
+        if (current_branch &&
+            !strcmp(ref->name, current_branch->name) &&
+            !(update_head_ok || is_bare_repository()) &&
+            !is_null_sha1(ref->old_sha1)) {
+                /*
+                 * If this is the head, and it's not okay to update
+                 * the head, and the old value of the head isn't empty...
+                 */
+
+In the old code since we would update the refs one ref at a time we would
+first fail the ENOTDIR and then fail the second update of HEAD as well.
+But since the first ref failed with ENOTDIR we would eventually fail the who
+fetch with STORE_REF_ERROR_DF_CONFLICT
+
+In the new code, since we defer committing the transaction until all refs
+have been processed, we would now detect that the second ref was bad and
+rollback the transaction before we would even try start writing the update t
+disk and thus we would not return STORE_REF_ERROR_DF_CONFLICT for this case.
+
+I think this new behaviour is more correct, since if there was a problem
+we would not even try to commit the transaction but need to highlight this
+change in how/what errors are reported.
+This change in what error is returned only occurs if there are multiple
+refs that fail to update and only some, but not all, of them fail due to
+ENOTDIR.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ builtin/fetch.c | 34 ++++++++++++++++------------------
+ 1 file changed, 16 insertions(+), 18 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 87113af..6299b3d 100644
---- a/refs.c
-+++ b/refs.c
-@@ -33,6 +33,10 @@ static inline int bad_ref_char(int ch)
-  *  pruned.
-  */
- #define REF_ISPRUNING	0x0100
-+/** Deletion of a ref that only exists as a packed ref in which case we do not
-+ *  need to lock the loose ref during the transaction.
-+ */
-+#define REF_ISPACKONLY	0x0200
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index c9b5954..5b0cc31 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -45,6 +45,7 @@ static struct transport *gsecondary;
+ static const char *submodule_prefix = "";
+ static const char *recurse_submodules_default;
+ static int shown_url;
++static struct ref_transaction *transaction;
  
- /*
-  * Try to read one refname component from the front of refname.  Return
-@@ -3376,6 +3380,9 @@ int ref_transaction_update(struct ref_transaction *transaction,
- 	if (transaction->status != REF_TRANSACTION_OPEN)
- 		die("BUG: update on transaction that is not open");
+ static int option_parse_recurse_submodules(const struct option *opt,
+ 				   const char *arg, int unset)
+@@ -373,27 +374,13 @@ static int s_update_ref(const char *action,
+ 			struct ref *ref,
+ 			int check_old)
+ {
+-	char msg[1024];
+-	char *rla = getenv("GIT_REFLOG_ACTION");
+-	struct ref_transaction *transaction;
+-
+ 	if (dry_run)
+ 		return 0;
+-	if (!rla)
+-		rla = default_rla.buf;
+-	snprintf(msg, sizeof(msg), "%s: %s", rla, action);
  
-+	if (flags & REF_ISPACKONLY)
-+		die("BUG: REF_ISPACKONLY can not be used with updates");
+-	errno = 0;
+-	transaction = ref_transaction_begin();
+-	if (!transaction ||
+-	    ref_transaction_update(transaction, ref->name, ref->new_sha1,
+-				   ref->old_sha1, 0, check_old, NULL) ||
+-	    ref_transaction_commit(transaction, msg, NULL)) {
+-		ref_transaction_rollback(transaction);
+-		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
+-					  STORE_REF_ERROR_OTHER;
+-	}
+-	ref_transaction_free(transaction);
++	if (ref_transaction_update(transaction, ref->name, ref->new_sha1,
++				   ref->old_sha1, 0, check_old, NULL))
++		return STORE_REF_ERROR_OTHER;
 +
- 	update = add_update(transaction, refname);
- 	hashcpy(update->new_sha1, new_sha1);
- 	update->flags = flags;
-@@ -3402,6 +3409,9 @@ int ref_transaction_create(struct ref_transaction *transaction,
- 	if (transaction->status != REF_TRANSACTION_OPEN)
- 		die("BUG: create on transaction that is not open");
+ 	return 0;
+ }
  
-+	if (flags & REF_ISPACKONLY)
-+		die("BUG: REF_ISPACKONLY can not be used with creates");
-+
- 	update = add_update(transaction, refname);
+@@ -565,6 +552,13 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 		goto abort;
+ 	}
  
- 	hashcpy(update->new_sha1, new_sha1);
-@@ -3517,10 +3527,20 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	if (ret)
- 		goto cleanup;
- 
-+	for (i = 0; i < n; i++) {
-+		struct ref_update *update = updates[i];
-+
-+		if (update->flags & REF_ISPACKONLY)
-+			delnames[delnum++] = update->refname;
++	errno = 0;
++	transaction = ref_transaction_begin();
++	if (!transaction) {
++		rc = error(_("cannot start ref transaction\n"));
++		goto abort;
 +	}
 +
- 	/* Acquire all locks while verifying old values */
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
+ 	/*
+ 	 * We do a pass for each fetch_head_status type in their enum order, so
+ 	 * merged entries are written before not-for-merge. That lets readers
+@@ -676,6 +670,10 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 			}
+ 		}
+ 	}
++	if (ref_transaction_commit(transaction, "fetch_ref transaction", NULL))
++		rc |= errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
++		  STORE_REF_ERROR_OTHER;
++	ref_transaction_free(transaction);
  
-+		if (update->flags & REF_ISPACKONLY)
-+			continue;
-+
- 		update->lock = lock_ref_sha1_basic(update->refname,
- 						   (update->have_old ?
- 						    update->old_sha1 :
-@@ -3558,6 +3578,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	for (i = 0; i < n; i++) {
- 		struct ref_update *update = updates[i];
- 
-+		if (update->flags & REF_ISPACKONLY)
-+			continue;
-+
- 		if (update->lock) {
- 			ret |= delete_ref_loose(update->lock, update->type,
- 						err);
+ 	if (rc & STORE_REF_ERROR_DF_CONFLICT)
+ 		error(_("some local refs could not be updated; try running\n"
 -- 
 2.0.0.rc3.477.gffe78a2
