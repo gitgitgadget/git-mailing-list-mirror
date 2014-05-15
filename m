@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 02/10] contrib/examples/git-clone.sh: don't use the -a or -o option with the test command
-Date: Thu, 15 May 2014 07:21:42 -0700
-Message-ID: <1400163710-28333-2-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 04/10] contrib/examples/git-merge.sh: don't use the -a or -o option with the test command
+Date: Thu, 15 May 2014 07:21:44 -0700
+Message-ID: <1400163710-28333-4-git-send-email-gitter.spiros@gmail.com>
 References: <1400163710-28333-1-git-send-email-gitter.spiros@gmail.com>
 Cc: Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 15 16:22:27 2014
+X-From: git-owner@vger.kernel.org Thu May 15 16:22:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WkwYD-00007i-G9
-	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 16:22:25 +0200
+	id 1WkwYJ-0000V4-No
+	for gcvg-git-2@plane.gmane.org; Thu, 15 May 2014 16:22:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753991AbaEOOV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 May 2014 10:21:57 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:43341 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751541AbaEOOV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 May 2014 10:21:56 -0400
-Received: by mail-pb0-f41.google.com with SMTP id uo5so1158292pbc.14
-        for <git@vger.kernel.org>; Thu, 15 May 2014 07:21:55 -0700 (PDT)
+	id S1753469AbaEOOWX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 May 2014 10:22:23 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:33240 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751541AbaEOOV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 May 2014 10:21:58 -0400
+Received: by mail-pa0-f41.google.com with SMTP id lj1so1152956pab.28
+        for <git@vger.kernel.org>; Thu, 15 May 2014 07:21:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=RvuP7BAnf/3SCVeMcEtmQNIzWzUpApJtD1SUKcNi088=;
-        b=S8bTfy5mcrRcjum+iEXzCmjf6HuVupfNyNzQFqni/5sGZDQbUlV1jEROH9EKcp5JUb
-         9E0sTr74y4fwwI5415DRhZRB1WWTvZzbKM3zgLw9jvyomD/WGdkAqKaH+DsC7qXr1qHF
-         JzHZJ2AFjD/uFxTmxtqjkTU1qHAZV0QRmVIWNO41vkmhOGrzhqTPiLegL0/+0qq94/Hc
-         Op6F5xd1wXApZmqyHRAa7M6ZOgCR4dCZqrvfcMv09/o6zhQmX2B5apvoFQ4CYjHr5YqP
-         08d7X+vLiqkTDPlKguAo6EHPZsLPv/PrpQNn0ndbXbdlDWc2xarBHMU3fxCVQ6bqiVaC
-         /pew==
-X-Received: by 10.68.196.202 with SMTP id io10mr12696625pbc.149.1400163715927;
-        Thu, 15 May 2014 07:21:55 -0700 (PDT)
+        bh=N4gcf/SU06gbq2QHs57k5SdUbU5yqweXqLhU0+yB/xY=;
+        b=Cs5/Fw1vDyvyJWXNDC9fepUeakuWEjeXowMbgH0QI5v0jDa3QSZbNkOkJ1WMLkR0Jj
+         ax2rduB5+LOF8DZOyvOsl7LGVuJ4qsLr0DlCrci7bhseo4IQzqh+/EmsLouAcEXTHzV5
+         awpPT+JtgPVcPyiYho/S3qmXjtfHCHtoTF7zZiHv3pdBF2zROc64eX/430QTpZFHVP0a
+         ZgBpa/SfLvKWIimX7GrMSs9aYAq3DgW+I21RTb2ObNvBedzFx8FJ5LAdJZwZ8qa74ZLk
+         KqnGIwxScAQCqZDfetRgkdEnQNwCuY2GjeYpPaa29gKdghcXqvruYq3aeVbzfpoIuLr/
+         vOkg==
+X-Received: by 10.66.241.66 with SMTP id wg2mr12736116pac.132.1400163717684;
+        Thu, 15 May 2014 07:21:57 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id sy2sm9397666pbc.28.2014.05.15.07.21.54
+        by mx.google.com with ESMTPSA id sy2sm9397666pbc.28.2014.05.15.07.21.56
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 15 May 2014 07:21:55 -0700 (PDT)
+        Thu, 15 May 2014 07:21:57 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1400163710-28333-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249100>
 
 Even though POSIX.1 lists -a/-o as options to "test", they are
 marked "Obsolescent XSI". Scripts using these expressions
@@ -98,21 +98,30 @@ Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
 Inspired from this discussion http://permalink.gmane.org/gmane.comp.version-control.git/137056
 
- contrib/examples/git-clone.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/examples/git-merge.sh |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/contrib/examples/git-clone.sh b/contrib/examples/git-clone.sh
-index b4c9376..08cf246 100755
---- a/contrib/examples/git-clone.sh
-+++ b/contrib/examples/git-clone.sh
-@@ -516,7 +516,7 @@ then
- 
- 	case "$no_checkout" in
- 	'')
--		test "z$quiet" = z -a "z$no_progress" = z && v=-v || v=
-+		test "z$quiet" = z && test "z$no_progress" = z && v=-v || v=
- 		git read-tree -m -u $v HEAD HEAD
- 	esac
- fi
+diff --git a/contrib/examples/git-merge.sh b/contrib/examples/git-merge.sh
+index 7e40f40..52f2aaf 100755
+--- a/contrib/examples/git-merge.sh
++++ b/contrib/examples/git-merge.sh
+@@ -161,7 +161,7 @@ merge_name () {
+ 			return
+ 		fi
+ 	fi
+-	if test "$remote" = "FETCH_HEAD" -a -r "$GIT_DIR/FETCH_HEAD"
++	if test "$remote" = "FETCH_HEAD" && test -r "$GIT_DIR/FETCH_HEAD"
+ 	then
+ 		sed -e 's/	not-for-merge	/		/' -e 1q \
+ 			"$GIT_DIR/FETCH_HEAD"
+@@ -527,7 +527,7 @@ do
+ 		git diff-files --name-only
+ 		git ls-files --unmerged
+ 	    } | wc -l`
+-	    if test $best_cnt -le 0 -o $cnt -le $best_cnt
++	    if test $best_cnt -le 0 || test $cnt -le $best_cnt
+ 	    then
+ 		best_strategy=$strategy
+ 		best_cnt=$cnt
 -- 
 1.7.10.4
