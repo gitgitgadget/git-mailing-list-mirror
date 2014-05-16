@@ -1,113 +1,105 @@
-From: Jeff Sipek <jeffpc@josefsipek.net>
-Subject: Re: [GUILT v3 09/31] Test suite: properly check the exit status of
- commands.
-Date: Fri, 16 May 2014 11:45:13 -0400
-Message-ID: <20140516154513.GI1770@meili.valhalla.31bits.net>
-References: <1400251578-17221-1-git-send-email-cederp@opera.com>
- <1400251578-17221-10-git-send-email-cederp@opera.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] config: be strict on core.commentChar
+Date: Fri, 16 May 2014 09:25:08 -0700
+Message-ID: <20140516162508.GA12314@google.com>
+References: <1400237982-5842-1-git-send-email-pclouds@gmail.com>
+ <1400248283-303-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Per Cederqvist <cederp@opera.com>
-X-From: git-owner@vger.kernel.org Fri May 16 17:45:14 2014
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 16 18:25:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlKJt-0003wB-Mt
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 17:45:14 +0200
+	id 1WlKwm-0003tQ-Hg
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 18:25:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753813AbaEPPpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 11:45:07 -0400
-Received: from josefsipek.net ([64.9.206.49]:1655 "EHLO josefsipek.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753373AbaEPPpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 11:45:06 -0400
-Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
-	by josefsipek.net (Postfix) with ESMTPSA id 8F9FC55654;
-	Fri, 16 May 2014 11:45:05 -0400 (EDT)
+	id S1757619AbaEPQZR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 12:25:17 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:38832 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752796AbaEPQZQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 12:25:16 -0400
+Received: by mail-pb0-f49.google.com with SMTP id jt11so2779998pbb.8
+        for <git@vger.kernel.org>; Fri, 16 May 2014 09:25:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=CQsLdBXbwccGrbqGL4Jdml8KAhwKjq9HuSKYOwzz4Xw=;
+        b=kLYOGgVE9RpJv3ftnMrHH8T9xtF4vOz6HQo3tJoN9a5wIaptWCH2ABtP9jTEcPHjs3
+         Cu0vFt8GJWCn05lEWfjkrXw1kHp3iczeWsk0SiR5pWKyBBXBfITSGlaQWBzKK+gWRSIa
+         JEy9EY0+XdqQ4wpqjZwh9NnHYSuqy2lwjUUhYqTq5WG4HypTiVoQcH8NopfZ9bM40XEa
+         O2DtGXA5RjJmS6svhQhtjUmTEOeUHIWIuEGElBqAysn/Lg3Svmy0kbwynqhWfj6/gZ/Z
+         fPOgKN+kyZKh8mlph7xem6BeIM/SBF+L9MKIKWdICpfh/KLyJoNQd1GU64mEeMNJZbhn
+         ZdiA==
+X-Received: by 10.68.94.133 with SMTP id dc5mr22468732pbb.114.1400257515235;
+        Fri, 16 May 2014 09:25:15 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id tb4sm36290615pac.45.2014.05.16.09.25.14
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 16 May 2014 09:25:14 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1400251578-17221-10-git-send-email-cederp@opera.com>
-User-Agent: Mutt/1.5.22 (2013-10-16)
+In-Reply-To: <1400248283-303-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249354>
 
-On Fri, May 16, 2014 at 04:45:56PM +0200, Per Cederqvist wrote:
-> The "cmd" and "shouldfail" functions checked the exit status of the
-> replace_path function instead of the actual command that was running.
-> (The $? construct checks the exit status of the last command in a
-> pipeline, not the first command.)
-> 
-> Updated t-032.sh, which used "shouldfail" instead of "cmd" in one
-> place.  (The comment in the script makes it clear that the command is
-> expected to succeed.)
-> 
-> Signed-off-by: Per Cederqvist <cederp@opera.com>
-> ---
->  regression/scaffold | 17 +++++++++++------
->  regression/t-032.sh |  2 +-
->  2 files changed, 12 insertions(+), 7 deletions(-)
-> 
-> diff --git a/regression/scaffold b/regression/scaffold
-> index 5c8b73e..e4d7487 100644
-> --- a/regression/scaffold
-> +++ b/regression/scaffold
-> @@ -51,18 +51,23 @@ function filter_dd
->  function cmd
->  {
->  	echo "% $@"
-> -	"$@" 2>&1 | replace_path && return 0
-> -	return 1
-> +	(
-> +		exec 3>&1
-> +		rv=`(("$@" 2>&1; echo $? >&4) | replace_path >&3 ) 4>&1`
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-Wow.  This took a while to decipher :)
+> --- a/config.c
+> +++ b/config.c
+> @@ -826,8 +826,12 @@ static int git_default_core_config(const char *v=
+ar, const char *value)
+>  	if (!strcmp(var, "core.commentchar")) {
+>  		const char *comment;
+>  		int ret =3D git_config_string(&comment, var, value);
+> -		if (!ret)
+> -			comment_line_char =3D comment[0];
+> +		if (!ret) {
+> +			if (comment[0] && !comment[1])
+> +				comment_line_char =3D comment[0];
+> +			else
+> +				return error("core.commentChar should only be one character");
+> +		}
 
-Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
+Perhaps, to decrease indentation a little:
 
+		if (ret)
+			return ret;
+		if (comment[0] && !comment[1])
+			comment_line_char =3D comment[0];
+		else
+			return error(...);
+		return 0;
 
-> +		exit $rv
-> +	)
-> +	return $?
->  }
->  
->  # usage: shouldfail <cmd>..
->  function shouldfail
->  {
->  	echo "% $@"
-> -	(
-> -		"$@" 2>&1 || return 0
-> -		return 1
-> -	) | replace_path
-> +	! (
-> +		exec 3>&1
-> +		rv=`(("$@" 2>&1; echo $? >&4) | replace_path >&3 ) 4>&1`
-> +		exit $rv
-> +	)
->  	return $?
->  }
->  
-> diff --git a/regression/t-032.sh b/regression/t-032.sh
-> index b1d5f19..bba401e 100755
-> --- a/regression/t-032.sh
-> +++ b/regression/t-032.sh
-> @@ -28,7 +28,7 @@ shouldfail guilt import -P foo3 foo
->  cmd guilt import -P foo2 foo
->  
->  # ok
-> -shouldfail guilt import foo
-> +cmd guilt import foo
->  
->  # duplicate patch name (implicit)
->  shouldfail guilt import foo
-> -- 
-> 1.8.3.1
-> 
+[...]
+> --- a/t/t7508-status.sh
+> +++ b/t/t7508-status.sh
+> @@ -1348,12 +1348,6 @@ test_expect_success "status (core.commentchar =
+with submodule summary)" '
+>  	test_i18ncmp expect output
+>  '
+> =20
+> -test_expect_success "status (core.commentchar with two chars with su=
+bmodule summary)" '
+> -	test_config core.commentchar ";;" &&
+> -	git -c status.displayCommentPrefix=3Dtrue status >output &&
+> -	test_i18ncmp expect output
 
--- 
-Fact: 28.1% of all statistics are generated randomly.
+Could keep the test to avoid regressions:
+
+	test_config core.commentchar ";;" &&
+	test_must_fail git -c status.displayCommentPrefix=3Dtrue status
+
+Thanks,
+Jonathan
