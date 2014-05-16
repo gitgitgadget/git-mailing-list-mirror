@@ -1,125 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 07/31] refs.c: add a flag to allow reflog updates to truncate the log
-Date: Fri, 16 May 2014 14:20:58 -0700
-Message-ID: <xmqqy4y18lol.fsf@gitster.dls.corp.google.com>
-References: <1400105610-21194-1-git-send-email-sahlberg@google.com>
-	<1400105610-21194-8-git-send-email-sahlberg@google.com>
+From: John Fisher <fishook2033-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+Subject: Re: worlds slowest git repo- what to do?
+Date: Fri, 16 May 2014 14:22:44 -0700
+Message-ID: <537681A4.2070601@gmail.com>
+References: <5374F7C6.5030205@gmail.com> <06A2490FC9BC4461A39B982D3C7C85F7@PhilipOakley> <CACsJy8CmiW88tNavRphZa_uMU=jVUCQE6cw5+t2AYnf5dDmcsQ@mail.gmail.com>
+Reply-To: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Fri May 16 23:21:14 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org, Git List <git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org>, 
+ Philip Oakley <philipoakley-7KbaBNvhQFM@public.gmane.org>
+To: Duy Nguyen <pclouds-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>, John Fisher <fishook2033-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+X-From: git-users+bncBDC6ZSUJSQEBBJ4D3KNQKGQERDH2K2Q-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org Fri May 16 23:22:50 2014
+Return-path: <git-users+bncBDC6ZSUJSQEBBJ4D3KNQKGQERDH2K2Q-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Envelope-to: gcggu-git-users@m.gmane.org
+Received: from mail-yh0-f64.google.com ([209.85.213.64])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlPYz-00070z-T6
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 23:21:10 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753964AbaEPVVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 17:21:05 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65260 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753822AbaEPVVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 17:21:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1455B14A2C;
-	Fri, 16 May 2014 17:21:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZM+FABKjg3f7nB2kaWMmYNLbt60=; b=dnw/Z/
-	fe0DWhH4YhJbfAKl5N31TGqcMWBrb+3EPUnIsESyBCPQHqwZIzznd5u30kveCreP
-	6xDTFPhENlpg+OLekxhxynKQla71mofeinVB2RfHtBN0Arxo/MmtRCufPJkMrLg8
-	gOzigZm80N2KM7y+yxHRVIuIjNX6BQvBcSJbc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YA1iskj/PKv7n/vR+/5NF/mE63Z7VCEx
-	o7rYhjoYT0/4a9js9HPFuqkFTDRBcSLk2eJIVhqc50P2Xchol1y9GDH9csWtzvLJ
-	yTT737sz5vCGdwCILNlArJpDRzhOwJpH6o1jhh0ai1cSHgaxBe/kzW7ENYqip5v+
-	paFrq105oAo=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 06E9614A2B;
-	Fri, 16 May 2014 17:21:03 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B6B0814A23;
-	Fri, 16 May 2014 17:20:59 -0400 (EDT)
-In-Reply-To: <1400105610-21194-8-git-send-email-sahlberg@google.com> (Ronnie
-	Sahlberg's message of "Wed, 14 May 2014 15:13:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F9F5F1C6-DD3F-11E3-895A-B784E8FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249418>
+	(envelope-from <git-users+bncBDC6ZSUJSQEBBJ4D3KNQKGQERDH2K2Q-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>)
+	id 1WlPab-0002Z1-Q6
+	for gcggu-git-users@m.gmane.org; Fri, 16 May 2014 23:22:50 +0200
+Received: by mail-yh0-f64.google.com with SMTP id b6sf1420450yha.19
+        for <gcggu-git-users@m.gmane.org>; Fri, 16 May 2014 14:22:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:reply-to:precedence:mailing-list
+         :list-id:list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=9wkQiRoDGW0GwxNC4V/xZPV0pNI3/M0gEdm06em5s1I=;
+        b=uE1vECM/Ls5ZjJC8094hnalMJuMFNG+bxhAy5w4Dyj7d2rmummRbaSvR542TdIBfLY
+         vyrFcCqtBVpPvXarmnudOjIkjKFnxDICi0TWQcAvtu4w45zaM4G5PCzk+ck0ofS/S9Lt
+         dbmFSFBTq7R3QTssNwmSjU5jpLppcc8+bBZtcgLHKULKtB+5QWXBWw8iNVPTV63yIJnh
+         X7K/ZY+U/qxqnf6CS36utko+Z87uWKqU37tr0K75ubHdRxjrnqIxOldzMk34mAVHnPI6
+         OVWu2/M/UhSExMcDlB5nWuuVR4emVzX/jn4osc1Ia6VF3/AkznblGZSvX6to8Sn49Rz/
+         sfYw==
+X-Received: by 10.140.97.166 with SMTP id m35mr48424qge.28.1400275368884;
+        Fri, 16 May 2014 14:22:48 -0700 (PDT)
+X-BeenThere: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+Received: by 10.140.101.247 with SMTP id u110ls901139qge.79.gmail; Fri, 16 May
+ 2014 14:22:47 -0700 (PDT)
+X-Received: by 10.58.95.98 with SMTP id dj2mr1745934veb.30.1400275367573;
+        Fri, 16 May 2014 14:22:47 -0700 (PDT)
+Received: from mail-pb0-x22f.google.com (mail-pb0-x22f.google.com [2607:f8b0:400e:c01::22f])
+        by gmr-mx.google.com with ESMTPS id zs4si2142031pbc.1.2014.05.16.14.22.47
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 16 May 2014 14:22:47 -0700 (PDT)
+Received-SPF: pass (google.com: domain of fishook2033-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2607:f8b0:400e:c01::22f as permitted sender) client-ip=2607:f8b0:400e:c01::22f;
+Received: by mail-pb0-x22f.google.com with SMTP id rp16so3112034pbb.34
+        for <git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>; Fri, 16 May 2014 14:22:47 -0700 (PDT)
+X-Received: by 10.66.190.167 with SMTP id gr7mr24154456pac.75.1400275367447;
+        Fri, 16 May 2014 14:22:47 -0700 (PDT)
+Received: from [10.2.6.1] (wsip-98-173-202-3.sb.sd.cox.net. [98.173.202.3])
+        by mx.google.com with ESMTPSA id xk1sm38843316pac.21.2014.05.16.14.22.45
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 16 May 2014 14:22:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.0
+In-Reply-To: <CACsJy8CmiW88tNavRphZa_uMU=jVUCQE6cw5+t2AYnf5dDmcsQ-JsoAwUIsXosN+BqQ9rBEUg@public.gmane.org>
+X-Original-Sender: fishook2033-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of fishook2033-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org designates 2607:f8b0:400e:c01::22f
+ as permitted sender) smtp.mail=fishook2033-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org; contact git-users+owners-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-ID: <git-users.googlegroups.com>
+X-Google-Group-Id: 934228491576
+List-Post: <http://groups.google.com/group/git-users/post>, <mailto:git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Help: <http://groups.google.com/support/>, <mailto:git-users+help-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Archive: <http://groups.google.com/group/git-users>
+Sender: git-users-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org
+List-Subscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:git-users+subscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+List-Unsubscribe: <http://groups.google.com/group/git-users/subscribe>, <mailto:googlegroups-manage+934228491576+unsubscribe-/JYPxA39Uh5TLH3MbocFFw@public.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249419>
 
-Ronnie Sahlberg <sahlberg@google.com> writes:
 
-> Add a flag that allows us to truncate the reflog before we write the update.
->
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> ---
+On 05/16/2014 03:13 AM, Duy Nguyen wrote:
+> On Fri, May 16, 2014 at 2:06 AM, Philip Oakley <philipoakley-7KbaBNvhQFM@public.gmane.org> wrote:
+>> From: "John Fisher" <fishook2033-Re5JQEeQqe8AvxtiuMwx3w@public.gmane.org>
+>>> I assert based on one piece of evidence ( a post from a facebook dev) that
+>>> I now have the worlds biggest and slowest git
+>>> repository, and I am not a happy guy. I used to have the worlds biggest
+>>> CVS repository, but CVS can't handle multi-G
+>>> sized files. So I moved the repo to git, because we are using that for our
+>>> new projects.
+>>>
+>>> goal:
+>>> keep 150 G of files (mostly binary) from tiny sized to over 8G in a
+>>> version-control system.
+> I think your best bet so far is git-annex 
 
-Until we read the callers it is hard to see how such a feature is
-useful, though.
+good, I am  looking at that
 
-(style) The two multi-line comments are formatted differently.
+> (or maybe bup) for dealing
+> with huge files. I plan on resurrecting Junio's split-blob series to
+> make core git handle huge files better, but there's no eta on that.
+> The problem here is about file size, not the number of files, or
+> history depth, right?
 
->  refs.c | 12 ++++++++++--
->  refs.h |  4 +++-
->  2 files changed, 13 insertions(+), 3 deletions(-)
->
-> diff --git a/refs.c b/refs.c
-> index d8a1568..a8b583a 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -3608,7 +3608,11 @@ int transaction_commit(struct ref_transaction *transaction,
->  		}
->  	}
->  
-> -	/* Update all reflog files */
-> +	/* Update all reflog files
-> +	   We have already done all ref updates and deletes.
-> +	   There is not much we can do here if there are any reflog
-> +	   update errors, other than complain.
-> +	*/
->  	for (i = 0; i < n; i++) {
->  		struct ref_update *update = updates[i];
->  
-> @@ -3616,7 +3620,11 @@ int transaction_commit(struct ref_transaction *transaction,
->  			continue;
->  		if (update->reflog_fd == -1)
->  			continue;
-> -
-> +		if (update->flags & REFLOG_TRUNCATE)
-> +			if (lseek(update->reflog_fd, 0, SEEK_SET) < 0 ||
-> +			    ftruncate(update->reflog_fd, 0)) {
-> +				error("Could not truncate reflog");
-> +			}
+When things here calm down, I could easily test the repo without the giant files, leaving 99% of files in the repo.
+There is hardly any history depth because these are releases, version controlled by directory name. As has been
+suggested I could be forced to abandon the version-control, even to the point of just using rsync.  But I've been doing
+this with CVS for 10 years now and I hate to change or in any way move away fron KISS. Moving it to Git may not have
+been one of my better ideas...
 
-The {} looks somewhat curious here.  If you seeked to the beginning,
-and failed to truncate, do you still want to go on without "return"
-in front of the error()?  Would that overwrite existing entries?
 
->  		if (log_ref_write_fd(update->reflog_fd, update->old_sha1,
->  				     update->new_sha1,
->  				     update->committer, update->msg)) {
-> diff --git a/refs.h b/refs.h
-> index 2e22a26..b1b97e7 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -269,8 +269,10 @@ int transaction_delete_sha1(struct ref_transaction *transaction,
->  			    const unsigned char *old_sha1,
->  			    int flags, int have_old, const char *msg);
->  
-> +#define REFLOG_TRUNCATE 0x01
->  /*
-> - * Append a reflog entry for refname.
-> + * Append a reflog entry for refname. If the REFLOG_TRUNCATE flag is set
-> + * this update will first truncate the reflog before writing the entry.
->   */
->  int transaction_update_reflog(struct ref_transaction *transaction,
->  			      const char *refname,
+> Probably known issues. But some elaboration would be nice (e.g. what operation is slow, how slow, some more detail
+> characteristics of the repo..) in case new problems pop up. 
+
+so far I have done add, commit, status, clone - commit and status are slow; add seems to depend on the files involved,
+clone seems to run at network speed.
+I can provide metrics later, see above. email me offline with what you want.
+
+John
+
+-- 
+You received this message because you are subscribed to the Google Groups "Git for human beings" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to git-users+unsubscribe-/JYPxA39Uh5TLH3MbocFF+G/Ez6ZCGd0@public.gmane.org
+For more options, visit https://groups.google.com/d/optout.
