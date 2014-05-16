@@ -1,220 +1,252 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 2/2] commit: allow core.commentChar=auto for character auto selection
-Date: Fri, 16 May 2014 20:51:23 +0700
-Message-ID: <1400248283-303-2-git-send-email-pclouds@gmail.com>
-References: <1400237982-5842-1-git-send-email-pclouds@gmail.com>
- <1400248283-303-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 16 15:51:50 2014
+From: Per Cederqvist <cederp@opera.com>
+Subject: [GUILT v3 00/31] Teach guilt import-commit how to create legal patch names, and more
+Date: Fri, 16 May 2014 16:45:47 +0200
+Message-ID: <1400251578-17221-1-git-send-email-cederp@opera.com>
+Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
+To: Jeff Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Fri May 16 16:47:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlIY2-0004d2-Af
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 15:51:42 +0200
+	id 1WlJPm-0005R1-LT
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 16:47:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757161AbaEPNvh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 09:51:37 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:64571 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757130AbaEPNvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 09:51:33 -0400
-Received: by mail-pa0-f54.google.com with SMTP id bj1so2596457pad.13
-        for <git@vger.kernel.org>; Fri, 16 May 2014 06:51:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=FC3lQFUo/ja86mIGVVT/7721EtZF+1wlEhDRQ+oO3DE=;
-        b=aZJZMdlTBHbYxdPS9zz4UmnMz01KDnqUQ9nTr7QgYedkEr+BcuFJMM2mp3Fr3WFhiC
-         21GOSbCWbBcD2l6+OBAKm07HnCGrn4Hsa26GXvfPssektVVi6rmp75Hs/UCagcPlbYGm
-         6Gi2O7iis/Vhck/OnmBlDAAlIy42GhRa2bO41RI7nR6jclReLJMAP1tz5IRfxdXdm1kH
-         MDIaRsCv/ukk0DjdpKQ3XFU6uSi+9b7wnOnD0Inde9F0reISOIQwE1J218BbDGzmerAm
-         CKOE9MU+YZDzHLjakQkRamGTk7jimtu8lZO99nrAob+51Ph1ILVQVJJkHHoO2/XWgTd0
-         ru3w==
-X-Received: by 10.66.66.225 with SMTP id i1mr21315287pat.0.1400248292702;
-        Fri, 16 May 2014 06:51:32 -0700 (PDT)
-Received: from lanh ([115.73.241.6])
-        by mx.google.com with ESMTPSA id au4sm14741034pbc.10.2014.05.16.06.51.30
+	id S1757269AbaEPOrL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2014 10:47:11 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:40993 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757244AbaEPOrJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 10:47:09 -0400
+Received: by mail-la0-f41.google.com with SMTP id e16so2044143lan.14
+        for <git@vger.kernel.org>; Fri, 16 May 2014 07:47:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=ltlr3HTK15a1r82adGBmWBrHDt9niRWk80PpLcKWv0I=;
+        b=SD2KQNWysx59Lu5J6pGArFFfeh8MZo/x8BNVsPEEh4GYL0QeuiC0zApgXk73tO2qY2
+         609fNAeLH4QMHRmFslIpXnoLJd0S7i4ZrEdInp/ke+k8IfJ40+Hotlc0QJ8XRN/56J7x
+         F0v9HYmOL0O+5JW8LrU8aHACk2hBB6pahhWjVelFBe1VVEnxb5VGdfTBTat0XGpH6mbF
+         WjMLDZPHJO2YY5I3MoBWpZfOM3r+tdoEGH1GxMAliXSlq14+L3Dm4xePpq5iRlsklX0u
+         rESppZI70CPGPyzd5Mn82ricuMSHNzZV1MivT6UpvqVCew46SCxUZigw79T18yT4dV0z
+         E8dg==
+X-Gm-Message-State: ALoCoQl9lYJKrKPGE6hlfgzWEYRXMIwy3F1y68U11/C+pk8t08/3SmQHv9gybvznR2pGa4Gd8i5h
+X-Received: by 10.152.42.234 with SMTP id r10mr1874388lal.66.1400251627311;
+        Fri, 16 May 2014 07:47:07 -0700 (PDT)
+Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
+        by mx.google.com with ESMTPSA id o1sm8684320lbw.27.2014.05.16.07.47.05
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 May 2014 06:51:32 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Fri, 16 May 2014 20:51:40 +0700
-X-Mailer: git-send-email 1.9.1.346.ga2b5940
-In-Reply-To: <1400248283-303-1-git-send-email-pclouds@gmail.com>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 16 May 2014 07:47:06 -0700 (PDT)
+X-Mailer: git-send-email 1.8.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249308>
 
-core.commentChar starts with '#' as in default but if it's already in
-the prepared message, find another one among a small subset. This
-should stop surprises because git strips some lines unexpectedly.
+This is version 3 of the patch series I sent back on 21 Mar 2014.  I
+have addressed all feedback to date, updated the coding style, and
+added signed-off-by lines from Jeff Sipek for those commits that I
+have received an explicit approval from him (but only if I have not
+made any other change to that particular commit).
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Documentation/config.txt |  3 +++
- builtin/commit.c         | 36 ++++++++++++++++++++++++++++++++++++
- cache.h                  |  1 +
- config.c                 |  2 ++
- environment.c            |  1 +
- t/t7502-commit.sh        | 25 +++++++++++++++++++++++++
- 6 files changed, 68 insertions(+)
+I have added two new patches:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1932e9b..d5bf4d0 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -544,6 +544,9 @@ core.commentchar::
- 	messages consider a line that begins with this character
- 	commented, and removes them after the editor returns
- 	(default '#').
-++
-+If set to "auto", `git-commit` would select a character that is not
-+the beginning character of any line of existing commit messages.
-=20
- sequence.editor::
- 	Text editor used by `git rebase -i` for editing the rebase instructio=
-n file.
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 9cfef6c..039b426 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -594,6 +594,40 @@ static char *cut_ident_timestamp_part(char *string=
-)
- 	return ket;
- }
-=20
-+static void adjust_comment_line_char(const struct strbuf *sb)
-+{
-+	char candidates[] =3D " @!#$%^&|:;~";
-+	char *candidate;
-+	const char *p;
-+
-+	if (!sb->len)
-+		return;
-+
-+	if (!strchr(candidates, comment_line_char))
-+		candidates[0] =3D comment_line_char;
-+	p =3D sb->buf;
-+	candidate =3D strchr(candidates, *p);
-+	if (candidate)
-+		*candidate =3D ' ';
-+	for (p =3D sb->buf; *p; p++) {
-+		if ((p[0] =3D=3D '\n' || p[0] =3D=3D '\r') && p[1]) {
-+			candidate =3D strchr(candidates, p[1]);
-+			if (candidate)
-+				*candidate =3D ' ';
-+		}
-+	}
-+
-+	if (candidates[0] =3D=3D comment_line_char)
-+		return;
-+	for (p =3D candidates; *p =3D=3D ' '; p++)
-+		;
-+	if (!*p)
-+		die(_("the comment character '%c' exists in the commit message\n"
-+		      "Please choose another character for core.commentChar"),
-+		    comment_line_char);
-+	comment_line_char =3D *p;
-+}
-+
- static int prepare_to_commit(const char *index_file, const char *prefi=
-x,
- 			     struct commit *current_head,
- 			     struct wt_status *s,
-@@ -748,6 +782,8 @@ static int prepare_to_commit(const char *index_file=
-, const char *prefix,
- 	if (fwrite(sb.buf, 1, sb.len, s->fp) < sb.len)
- 		die_errno(_("could not write commit template"));
-=20
-+	if (auto_comment_line_char)
-+		adjust_comment_line_char(&sb);
- 	strbuf_release(&sb);
-=20
- 	/* This checks if committer ident is explicitly given */
-diff --git a/cache.h b/cache.h
-index 107ac61..646fb81 100644
---- a/cache.h
-+++ b/cache.h
-@@ -602,6 +602,7 @@ extern int precomposed_unicode;
-  * that is subject to stripspace.
-  */
- extern char comment_line_char;
-+extern int auto_comment_line_char;
-=20
- enum branch_track {
- 	BRANCH_TRACK_UNSPECIFIED =3D -1,
-diff --git a/config.c b/config.c
-index 05d909b..5ec3520 100644
---- a/config.c
-+++ b/config.c
-@@ -829,6 +829,8 @@ static int git_default_core_config(const char *var,=
- const char *value)
- 		if (!ret) {
- 			if (comment[0] && !comment[1])
- 				comment_line_char =3D comment[0];
-+			else if (!strcasecmp(comment, "auto"))
-+				auto_comment_line_char =3D 1;
- 			else
- 				return error("core.commentChar should only be one character");
- 		}
-diff --git a/environment.c b/environment.c
-index 5c4815d..f2de1ee 100644
---- a/environment.c
-+++ b/environment.c
-@@ -69,6 +69,7 @@ unsigned long pack_size_limit_cfg;
-  * that is subject to stripspace.
-  */
- char comment_line_char =3D '#';
-+int auto_comment_line_char;
-=20
- /* Parallel index stat data preload? */
- int core_preload_index =3D 0;
-diff --git a/t/t7502-commit.sh b/t/t7502-commit.sh
-index 9a3f3a1..5cff300 100755
---- a/t/t7502-commit.sh
-+++ b/t/t7502-commit.sh
-@@ -563,4 +563,29 @@ test_expect_success 'commit --status with custom c=
-omment character' '
- 	test_i18ngrep "^; Changes to be committed:" .git/COMMIT_EDITMSG
- '
-=20
-+test_expect_success 'switch core.commentchar' '
-+	test_commit "#foo" foo &&
-+	GIT_EDITOR=3D.git/FAKE_EDITOR git -c core.commentChar=3Dauto commit -=
--amend &&
-+	test_i18ngrep "^@ Changes to be committed:" .git/COMMIT_EDITMSG
-+'
-+
-+test_expect_success 'switch core.commentchar but out of options' '
-+	cat >text <<\EOF &&
-+# 1
-+@ 2
-+! 3
-+$ 4
-+% 5
-+^ 6
-+& 7
-+| 8
-+: 9
-+; 10
-+~ 11
-+EOF
-+	git commit --amend -F text &&
-+	GIT_EDITOR=3D.git/FAKE_EDITOR test_must_fail \
-+		git -c core.commentChar=3Dauto commit --amend
-+'
-+
- test_done
---=20
-1.9.1.346.ga2b5940
+* Patch 28/31 fixes coding style issues in t-061.sh.  I inserted it
+before the new patch 29/31 since 29/31 copies t-061.sh as t-062.sh,
+and by fixing the style issues in the origin it is easier to track the
+changes.  This means that v2 patches 28 and 29 are now numbered 29 and
+30.  Sorry about that.
+
+* Patch 31/31 removes all use of "git log -p" in the test suite.
+
+To see how the patches have evolved, you might find
+http://www.lysator.liu.se/~ceder/guilt-oslo-2014-v3/ useful.  It
+displays diffs of all the patches between v2 and v3, in pdiffdiff
+output format.
+
+Here is the original blurb for the series, slightly edited:
+
+I recently found myself sitting on a train with a computer in front of
+me.  I tried to use "guilt import-commit", which seemed to work, but
+when I tried to "guilt push" the commits I had just imported I got
+some errors.  It turned out that "guilt import-commit" had generated
+invalid patch names.
+
+I decided to fix the issue, and write a test case that demonstrated
+the problem.
+
+One thing led to another, and here I am, a few late nights at a hotel
+and a return trip on the train later, submitting a patch series in 28
+parts.  Sorry about the number of patches, but this is what happens
+when you uncover a bug while writing a test case for the bug you
+uncovered while writing a test case for your original problem.
+
+The patch series consists of:
+
+ - A number of fixes to the test suite.
+
+ - A number of bug fixes which I hope are non-controversial.  Most of
+   the fixes have test cases.
+
+ - Changed behavior: "guilt push" when there is nothing more to push
+   now uses exit status 1.  This makes it possible to write shell
+   loops such as "while guilt push; do make test||break; done".  Also,
+   "guilt pop" when no patches are applied also uses exit status 1.
+   (This aligns "guilt push" and "guilt pop" with how "hg qpush" and
+   "hg qpop" has worked for several years.)
+
+ - Changed behavior: by default, guilt no longer changes branch when
+   you push a patch.  You need to do "git config guilt.reusebranch
+   false" to re-enable that.  This patch sets the default value of
+   guilt.reusebranch to true; it should in my opinion change to false
+   a year or two after the next release.
+
+ - The humble beginnings of a coding style guide.
+
+A more detailed overview of the patches:
+
+1. Some tests fail if "git config guilt.diffstat true" is in effect.
+
+2-4. Some commands fail if run from a directory with spaces in its
+     name.
+
+5. "guilt new" had an overly restrictive argument parser.
+
+6-8. guilt.diffstat could break "guilt fold" and "guilt new".
+
+9-10. The test suite did not test exit status properly.
+
+11. Remove pointless redirections in the test suite.
+
+12-13. "guilt header" tried to check if a patch existed, but the check
+        was broken.
+
+14-16. Various parts of guilt tried to ensure that patch names were
+       legal git branch names, but failed.
+
+17-20. "guilt graph" failed when no patch was applied, and when a
+       branch name contained a comma or a quote.
+
+21-23. "git config log.decorate short" caused "guilt import-commit",
+       "guilt patchbomb" and "guilt rebase" to fail in various ways.
+
+24. Patches may contain backslashes, but various informative messages
+    from guilt did backslash processing.
+
+25-26. "guilt push" and "guilt pop" should fail when there is nothing
+       to do.
+
+28. Fix coding style problems in a test case.
+
+27, 29. These two commits were things I intended to contribute a while
+       back, when contributing the "Change git branch when patches are
+       applied" change (commit 67d3af63f422).  These commits makes
+       that behavior optional, and it defaults to being disabled, so
+       that you can use both Guilt v0.35 (and earlier) and the current
+       Guilt code against the same repo.  These commits add some code
+       complexity, and you might want to skip them if you think the
+       current behavior is better.
+
+30. A coding style guide, with Emacs support.
+
+31. Avoid using "git log -p".
+
+This patch series is also available on
+http://repo.or.cz/w/guilt/ceder.git in the "oslo-2014-v3" branch.  If
+you already have a copy of guilt, you should be able to fetch that
+branch with something like:
+
+    git remote add ceder http://repo.or.cz/r/guilt/ceder.git
+    git fetch ceder refs/heads/oslo-2014-v3:refs/remotes/ceder/oslo-2014-v3
+
+A few of the regression/t-*.out files contain non-ASCII characters.  I
+hope they survive the mail transfer; if not, please use the repo above
+to fetch the commits.
+
+Per Cederqvist (31):
+  The tests should not fail if guilt.diffstat is set.
+  Allow "guilt delete -f" to run from a dir which contains spaces.
+  Added test case for "guilt delete -f".
+  Allow "guilt import-commit" to run from a dir which contains spaces.
+  "guilt new": Accept more than 4 arguments.
+  Fix the do_get_patch function.
+  Added test cases for "guilt fold".
+  Added more test cases for "guilt new": empty patches.
+  Test suite: properly check the exit status of commands.
+  Run test_failed if the exit status of a test script is bad.
+  test suite: remove pointless redirection.
+  "guilt header": more robust header selection.
+  Check that "guilt header '.*'" fails.
+  Use "git check-ref-format" to validate patch names.
+  Produce legal patch names in guilt-import-commit.
+  Fix backslash handling when creating names of imported patches.
+  "guilt graph" no longer loops when no patches are applied.
+  guilt-graph: Handle commas in branch names.
+  Check that "guilt graph" works when working on a branch with a comma.
+  "guilt graph": Handle patch names containing quotes.
+  The log.decorate setting should not influence import-commit.
+  The log.decorate setting should not influence patchbomb.
+  The log.decorate setting should not influence guilt rebase.
+  disp no longer processes backslashes.
+  "guilt push" now fails when there are no more patches to push.
+  "guilt pop" now fails when there are no more patches to pop.
+  Minor testsuite fix.
+  Fix coding style errors in t-061.sh.
+  Added guilt.reusebranch configuration option.
+  Added a short style guide, and Emacs settings.
+  Don't use "git log -p" in the test suite.
+
+ .dir-locals.el             |   3 +
+ Documentation/Contributing |  15 +
+ guilt                      |  64 +++-
+ guilt-delete               |   2 +-
+ guilt-fork                 |   2 +-
+ guilt-graph                |  13 +-
+ guilt-header               |  29 +-
+ guilt-import               |   2 +-
+ guilt-import-commit        |  30 +-
+ guilt-new                  |   9 +-
+ guilt-patchbomb            |   2 +-
+ guilt-pop                  |  17 +-
+ guilt-push                 |  19 +-
+ guilt-rebase               |   2 +-
+ regression/run-tests       |  10 +-
+ regression/scaffold        |  19 +-
+ regression/t-020.out       | 924 +++++++--------------------------------------
+ regression/t-020.sh        |  73 +++-
+ regression/t-021.out       | 901 +------------------------------------------
+ regression/t-021.sh        |  18 +-
+ regression/t-025.out       | 426 ++++++++++++++++++++-
+ regression/t-025.sh        |  14 +-
+ regression/t-026.out       |  15 +
+ regression/t-026.sh        |   5 +-
+ regression/t-028.out       |   7 +
+ regression/t-028.sh        |   6 +-
+ regression/t-032.out       |   4 +-
+ regression/t-032.sh        |   2 +-
+ regression/t-033.out       |  90 +++++
+ regression/t-033.sh        |  61 +++
+ regression/t-034.out       | 569 ++++++++++++++++++++++++++++
+ regression/t-034.sh        |  73 ++++
+ regression/t-035.out       | 467 +++++++++++++++++++++++
+ regression/t-035.sh        |  61 +++
+ regression/t-061.out       |   1 -
+ regression/t-061.sh        |  12 +-
+ regression/t-062.out       | 420 +++++++++++++++++++++
+ regression/t-062.sh        | 130 +++++++
+ 38 files changed, 2745 insertions(+), 1772 deletions(-)
+ create mode 100644 .dir-locals.el
+ create mode 100644 regression/t-033.out
+ create mode 100755 regression/t-033.sh
+ create mode 100644 regression/t-034.out
+ create mode 100755 regression/t-034.sh
+ create mode 100644 regression/t-035.out
+ create mode 100755 regression/t-035.sh
+ create mode 100644 regression/t-062.out
+ create mode 100755 regression/t-062.sh
+
+-- 
+1.8.3.1
