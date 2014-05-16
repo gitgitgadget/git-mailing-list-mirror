@@ -1,120 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] request-pull: resurrect for-linus -> tags/for-linus DWIM
-Date: Fri, 16 May 2014 10:57:50 -0700
-Message-ID: <1400263070-15312-1-git-send-email-gitster@pobox.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 16 20:25:55 2014
+Subject: Re: [PATCH 1/2] config: be strict on core.commentChar
+Date: Fri, 16 May 2014 10:36:15 -0700
+Message-ID: <xmqqsio9aank.fsf@gitster.dls.corp.google.com>
+References: <1400237982-5842-1-git-send-email-pclouds@gmail.com>
+	<1400248283-303-1-git-send-email-pclouds@gmail.com>
+	<20140516162508.GA12314@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 16 20:27:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlMpH-0002Nv-O9
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 20:25:48 +0200
+	id 1WlMrL-0007jw-2h
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 20:27:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757714AbaEPSZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 14:25:44 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51436 "EHLO smtp.pobox.com"
+	id S1757317AbaEPS1v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 14:27:51 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57085 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751592AbaEPSZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 14:25:43 -0400
+	id S1752716AbaEPS1u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2014 14:27:50 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 238D619CA1;
-	Fri, 16 May 2014 14:25:43 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9758F19E58;
+	Fri, 16 May 2014 14:27:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id; s=sasl; bh=XUSp8MHu7CLzILSjnO0NhkIBFe0
-	=; b=GsJHSWGPDxXw2rn/S38kjyfu3Bv8C8B9N1RJFOyKkzzGxfFYfTUCXAXT+aL
-	+Z3oi3y/OnJCuaZaPpaPYnrnCnz9AYZX/93DNK3BGNKFn1cs0Cpar+1ykZfcjI4a
-	x6MzMjXPl0IREagV/gufNsTFZQxzTN/0v0rt0OSN7nBNKBR0=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=1NPhfuW0QdPy
+	9kzM+U7KefjRBvY=; b=ZLLxQ7rJPRwBzU9SdnDBU5HglclkZpBR3m6cin84EPob
+	TwIEz669Qy5y865/IvbALZUBfjBYepCmAopfFeWxuET+Kg9/mwQj17Msqj/s6uJE
+	nrfYVguEDt+CYJKCTi1AYYAOCj8F9mNNeCJCp02NuwqHLi0VSZ+fhcaoUJjsYXM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id; q=dns; s=sasl; b=SIdW6zGzXRw3UtNipJn7R
-	5Qwm+DlAGRGXFmktWF5x/XSP+APzMXImSfXEPlIQNmFeqMADlUoN0dTw7jnf91LB
-	w7S8sUaUUEGTT0jJFzhdvXQcIbiHnXksyMyUZNyA2/2hjZkq43FnDdMWDwi4t09g
-	+Hg4yBozyBnjsziSilYd8c=
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iOCZT4
+	bBAY+H5QsWDlCSP9iPo1p9Tcd+UJOSa266QKdpjRWdERXvjmVew4vcV9YDqyodra
+	R8Bz6JrOmMPR5RwwFSSAHDQjsfFk2ikWkx2stG1ieGsKFtLgkNnBc99UUhcmL3bJ
+	n5/h8HWPXojgMd4JCsKtXAJFlLPrw4Z3+Thqc=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 19A9919CA0;
-	Fri, 16 May 2014 14:25:43 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8DD5019E57;
+	Fri, 16 May 2014 14:27:49 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0D033189F9;
-	Fri, 16 May 2014 13:57:51 -0400 (EDT)
-X-Mailer: git-send-email 2.0.0-rc3-434-g1ba2fe8
-X-Pobox-Relay-ID: 99878A5A-DD23-11E3-A0DB-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3B7611794C;
+	Fri, 16 May 2014 13:36:17 -0400 (EDT)
+In-Reply-To: <20140516162508.GA12314@google.com> (Jonathan Nieder's message of
+	"Fri, 16 May 2014 09:25:08 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 95C34D12-DD20-11E3-B017-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249405>
 
-Older versions of Git before v1.7.10 did not DWIM
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-    $ git pull $URL for-linus
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+>> --- a/config.c
+>> +++ b/config.c
+>> @@ -826,8 +826,12 @@ static int git_default_core_config(const char *=
+var, const char *value)
+>>  	if (!strcmp(var, "core.commentchar")) {
+>>  		const char *comment;
+>>  		int ret =3D git_config_string(&comment, var, value);
+>> -		if (!ret)
+>> -			comment_line_char =3D comment[0];
+>> +		if (!ret) {
+>> +			if (comment[0] && !comment[1])
+>> +				comment_line_char =3D comment[0];
+>> +			else
+>> +				return error("core.commentChar should only be one character");
+>> +		}
+>
+> Perhaps, to decrease indentation a little:
+>
+> 		if (ret)
+> 			return ret;
+> 		if (comment[0] && !comment[1])
+> 			comment_line_char =3D comment[0];
+> 		else
+> 			return error(...);
+> 		return 0;
+>
+> [...]
+>> --- a/t/t7508-status.sh
+>> +++ b/t/t7508-status.sh
+>> @@ -1348,12 +1348,6 @@ test_expect_success "status (core.commentchar=
+ with submodule summary)" '
+>>  	test_i18ncmp expect output
+>>  '
+>> =20
+>> -test_expect_success "status (core.commentchar with two chars with s=
+ubmodule summary)" '
+>> -	test_config core.commentchar ";;" &&
+>> -	git -c status.displayCommentPrefix=3Dtrue status >output &&
+>> -	test_i18ncmp expect output
+>
+> Could keep the test to avoid regressions:
+>
+> 	test_config core.commentchar ";;" &&
+> 	test_must_fail git -c status.displayCommentPrefix=3Dtrue status
 
-to the tag "tags/for-linus" and the users were required to say
-
-    $ git pull $URL tags/for-linus
-
-instead.  Because newer versions of Git works either way,
-request-pull used to show tags/for-linus when asked
-
-    $ git request-pull origin/master $URL for-linus
-
-The recent updates broke this and in the output we see "for-linus"
-without the "tags/" prefix.
-
-As v1.7.10 is more than 2 years old, this should matter very little
-in practice, but resurrecting it is very simple.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * I _think_ the fix, without breaking the spirit of Linus's "I do
-   not want the thing DWIM based on what the remote end has"
-   original, would be as simple as this patch.  We can queue it as a
-   regression fix and do another round of -rc4 if those who depend
-   on request-pull heavily feel strongly about it.
-
- git-request-pull.sh     | 6 ++++++
- t/t5150-request-pull.sh | 8 +++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/git-request-pull.sh b/git-request-pull.sh
-index b67513a..d6648b2 100755
---- a/git-request-pull.sh
-+++ b/git-request-pull.sh
-@@ -118,6 +118,12 @@ then
- 	status=1
- fi
- 
-+# Special case: turn "for_linus" to "tags/for_linus" when it is correct
-+if test "$ref" = "refs/tags/$pretty_remote"
-+then
-+	pretty_remote=tags/$pretty_remote
-+fi
-+
- url=$(git ls-remote --get-url "$url")
- 
- git show -s --format='The following changes since commit %H:
-diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
-index 75d6b38..93e2c65 100755
---- a/t/t5150-request-pull.sh
-+++ b/t/t5150-request-pull.sh
-@@ -223,7 +223,13 @@ test_expect_success 'pull request format' '
- 		git request-pull initial "$downstream_url" tags/full:refs/tags/full
- 	) >request &&
- 	sed -nf fuzz.sed <request >request.fuzzy &&
--	test_i18ncmp expect request.fuzzy
-+	test_i18ncmp expect request.fuzzy &&
-+
-+	(
-+		cd local &&
-+		git request-pull initial "$downstream_url" full
-+	) >request &&
-+	grep ' tags/full$'
- '
- 
- test_expect_success 'request-pull ignores OPTIONS_KEEPDASHDASH poison' '
--- 
-2.0.0-rc3-434-g1ba2fe8
+All good points, including your other review message.
