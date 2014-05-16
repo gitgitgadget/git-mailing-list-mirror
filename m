@@ -1,118 +1,128 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
-Date: Fri, 16 May 2014 09:54:58 +0200
-Message-ID: <CANQwDwe8Eb+ORiRyuq3+kKw72Jath_DGySmws1Rvt8bmuHoXVw@mail.gmail.com>
-References: <20140514184145.GA25699@localhost.localdomain> <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
- <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
- <20140515050820.GA30785@localhost.localdomain> <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
- <20140515184808.GA7964@localhost.localdomain> <CANQwDwe+GJ+yAYWdVfMaHq97zGXBoepCfUdLiaQD9LFoz3SiOA@mail.gmail.com>
- <xmqqmweiessl.fsf@gitster.dls.corp.google.com> <CANQwDwffdbqD96OadyECFs=6WY_t+_0b63L5yAZVQ8aXrMvHHA@mail.gmail.com>
- <xmqqmweibjjo.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] format-patch --signature-file <file>
+Date: Fri, 16 May 2014 04:14:45 -0400
+Message-ID: <20140516081445.GA21468@sigill.intra.peff.net>
+References: <1400203881-2794-1-git-send-email-jmmahler@gmail.com>
+ <1400203881-2794-2-git-send-email-jmmahler@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Wagner <accounts@mwagner.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 16 09:55:48 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Jeremiah Mahler <jmmahler@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 16 10:15:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlCzX-0001xO-HX
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 09:55:43 +0200
+	id 1WlDIX-0005D4-FG
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 10:15:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755645AbaEPHzj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 03:55:39 -0400
-Received: from mail-oa0-f47.google.com ([209.85.219.47]:49697 "EHLO
-	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754536AbaEPHzi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 May 2014 03:55:38 -0400
-Received: by mail-oa0-f47.google.com with SMTP id i7so2572831oag.20
-        for <git@vger.kernel.org>; Fri, 16 May 2014 00:55:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=fJT3XS+CywDA8Ob+jBGKAePDuF6fU1Z4yjuqNln6TqI=;
-        b=h2vFgbWzDqxNLPDNS6vl9YPAoW1FS19cwwqsslS6LhEx7riYZ3/K154pqmKjEWUIhQ
-         IRsdgu4SHJKNv6PpjINvK/8MVVC7PfOJwyC98OEpQugf/xMB6NkY87CrzTgzN743LiCB
-         0K7RX4eKOD3TXKbd7PJOQlizEQDZ8ZYyvMgXfdV8LpcXOmDEATt/JnC0ntCrSaL16CLl
-         4YUY+Zi8pvhUt3+7Dh6hBgRT0t1gZOuDpvq8m49sf9ghMDR9ne3fD504l6rzA/aPL4HX
-         SZbYBH8712ZDkoOJ8o96qSV/8qaJbDRjpnc1rGTNz6sXz8g6x1mO4pmlmi28jR4HUZwz
-         IbYA==
-X-Received: by 10.60.92.132 with SMTP id cm4mr15115265oeb.49.1400226938213;
- Fri, 16 May 2014 00:55:38 -0700 (PDT)
-Received: by 10.76.132.4 with HTTP; Fri, 16 May 2014 00:54:58 -0700 (PDT)
-In-Reply-To: <xmqqmweibjjo.fsf@gitster.dls.corp.google.com>
+	id S1756780AbaEPIPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2014 04:15:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:52859 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756469AbaEPIOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 04:14:48 -0400
+Received: (qmail 3574 invoked by uid 102); 16 May 2014 08:14:48 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 16 May 2014 03:14:48 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 May 2014 04:14:45 -0400
+Content-Disposition: inline
+In-Reply-To: <1400203881-2794-2-git-send-email-jmmahler@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249273>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249274>
 
-On Fri, May 16, 2014 at 3:26 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
->> On Thu, May 15, 2014 at 9:38 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->>> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
->>>
->>>> Writing test for this would not be easy, and require some HTML
->>>> parser (WWW::Mechanize, Web::Scraper, HTML::Query, pQuery,
->>>> ... or low level HTML::TreeBuilder, or other low level parser).
->>>
->>> Hmph.  Is it more than just looking for a specific run of %xx we
->>> would expect to see in the output of the tree view for a repository
->>> in which there is one tree with non-ASCII name?
->>
->> There is if we want to check (in non-fragile way) that said
->> specific run is in 'href' *attribute* of 'a' element (link target).
->
-> Correct, but is "where does it appear" the question we are
-> primarily interested in, wrt this breakage and its fix?
+On Thu, May 15, 2014 at 06:31:21PM -0700, Jeremiah Mahler wrote:
 
-That of course depends on how we want to test gitweb output.
-The simplest solution, comparing with known output with perhaps
-fragile / variable elements masked out could be done quickly...
-but changes in output (even if they don't change functionality,
-or don't change visible output) require regenerating test cases
-(expected output) to test against - which might be source of
-errors in test suite.
+> Added feature that allows a signature file to be used with format-patch.
+> 
+>   $ git format-patch --signature-file ~/.signature -1
+> 
+> Now signatures with newlines and other special characters can be
+> easily included.
 
-Another simple solution, grepping for expected strings, also
-easy to create, has the disadvantage of being only positive
-test - you cannot [easily] test that there are no *wrong* output,
-only that right string exists somewhere.
+I think this version looks nicer than the original.
 
-> If gitweb output has some volatile parts that do not depend on the
-> contents of the Git test repository (e.g. showing contents of
-> /etc/motd, date/time of when the test was run, or the full pathname
-> leading to the trash directory), then preparing a tree whose name is
-> =C3=A4=C3=A9=C3=AC=C3=B5=C3=BB and making sure that the properly enco=
-ded version of =C3=A4=C3=A9=C3=AC=C3=B5=C3=BB
-> appears anywhere in the output may not be sufficient to validate
-> that we got the encoding right, as that string may appear in the
-> parts that are totally unrelated to the contents being shown and not
-> under our control.  But is that really the case?
+A few questions/comments:
 
-Well, I guess that any test is better than no test (though OTOH
-Heartbleed and "goto fail" bugs shows the importance of negative
-tests).
+> +static int signature_file_callback(const struct option *opt, const char *arg,
+> +							int unset)
+> +{
+> +	const char **signature = opt->value;
+> +	static char buf[1024];
+> +	size_t sz;
+> +	FILE *fd;
+> +
+> +	fd = fopen(arg, "r");
+> +	if (fd) {
+> +		sz = sizeof(buf);
+> +		sz = fread(buf, 1, sz - 1, fd);
+> +		if (sz) {
+> +			buf[sz] = '\0';
+> +			*signature = buf;
+> +		}
+> +		fclose(fd);
+> +	}
+> +	return 0;
+> +}
 
-> Also we may introduce a bug and misspell the attr name and produce
-> an anchor element with hpef attribute with the properly encoded URL
-> in it, and your "parse HTML properly" approach would catch it, but
-> is that the kind of breakage under discussion?  You hinted at new
-> tests for UTF-8 encoding in the other message in the thread earlier,
-> and I've been assuming that we were talking about the encoding test,
-> not a test to catch s/href/hpef/ kind of breakage.
+We have routines for reading directly into a strbuf, which eliminates
+the need for this 1024-byte limit. We even have a wrapper that can make
+this much shorter:
 
-One of tests possible with HTML parser (e.g. WWW::Mechanize::CGI)
-is to check that all [internal] links leads to 200-OK pages, which
-accidentally would also be a test against this breakage.
+  struct strbuf buf = STRBUF_INIT;
 
---=20
-Jakub Narebski
+  strbuf_read_file(&buf, arg, 128);
+  *signature = strbuf_detach(&buf, NULL);
+
+I notice that you ignore any errors. Is that intentional (so that we
+silently ignore missing --signature files)? If so, should we actually
+treat it as an empty file (e.g., in my code above, we always set
+*signature, even if the file was missing)?
+
+Finally, I suspect that:
+
+  cd path/in/repo &&
+  git format-patch --signature-file=foo
+
+will not work, as we chdir() to the toplevel before evaluating the
+arguments. You can fix that either by using parse-option's OPT_FILENAME
+to save the filename, followed by opening the file after all arguments
+are processed; or by manually fixing up the filename.
+
+Since parse-options already knows how to do this fixup (it does it for
+OPT_FILENAME), it would be nice if it were a flag rather than a full
+type, so you could specify at as an option to your callback here:
+
+> +		{ OPTION_CALLBACK, 0, "signature-file", &signature, N_("signature-file"),
+> +				N_("add a signature from contents of a file"),
+> +			    PARSE_OPT_NONEG, signature_file_callback },
+
+Noticing your OPT_NONEG, though, I wonder if you should simply use an
+OPT_FILENAME. I would expect --no-signature-file to countermand any
+earlier --signature-file on the command-line (or if we eventually grow a
+config option, which seems sensible, it would tell git to ignore the
+option). The usual ordering for that is:
+
+  1. Read config and store format.signatureFile as a string
+     "signature_file".
+
+  2. Parse arguments. --signature-file=... sets signature_file, and
+     --no-signature-file sets it to NULL.
+
+  3. If signature_file is non-NULL, load it.
+
+And I believe OPT_FILENAME will implement (2) for you.
+
+One downside of doing it this way is that you need to specify what will
+happen when both "--signature" (or format.signature) and
+"--signature-file" are set. With your current code, I think
+"--signature=foo --signature-file=bar" will take the second one. I think
+it would be fine to prefer one to the other, or to just notice that both
+are set and complain.
+
+-Peff
