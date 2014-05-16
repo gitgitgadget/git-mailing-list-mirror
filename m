@@ -1,96 +1,2642 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT v3 30/31] Added a short style guide, and Emacs settings.
-Date: Fri, 16 May 2014 16:46:17 +0200
-Message-ID: <1400251578-17221-31-git-send-email-cederp@opera.com>
+Subject: [GUILT v3 31/31] Don't use "git log -p" in the test suite.
+Date: Fri, 16 May 2014 16:46:18 +0200
+Message-ID: <1400251578-17221-32-git-send-email-cederp@opera.com>
 References: <1400251578-17221-1-git-send-email-cederp@opera.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=latin-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Fri May 16 16:57:07 2014
+X-From: git-owner@vger.kernel.org Fri May 16 16:57:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlJZJ-0004dr-N9
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 16:57:06 +0200
+	id 1WlJZW-0005DQ-1Q
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 16:57:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932527AbaEPO5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 10:57:01 -0400
-Received: from mail-lb0-f180.google.com ([209.85.217.180]:62639 "EHLO
-	mail-lb0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756481AbaEPO5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 10:57:00 -0400
-Received: by mail-lb0-f180.google.com with SMTP id p9so1981557lbv.25
-        for <git@vger.kernel.org>; Fri, 16 May 2014 07:56:59 -0700 (PDT)
+	id S932424AbaEPO5N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 10:57:13 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:37941 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789AbaEPO5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 10:57:12 -0400
+Received: by mail-la0-f41.google.com with SMTP id e16so2054425lan.14
+        for <git@vger.kernel.org>; Fri, 16 May 2014 07:57:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=Gpm6oXTM+6RoBzM4dNyUxc8EyGKrlJQpAxMcXT1RFtE=;
-        b=RzpTj2fNCJR98dkVk3FD91QcIIcbGGPVTaJNMrE3Ha5dY4+awMwHaKRaURCXJEwjvf
-         8qhKqoozn6NhnUcevEbBEqCoRrdWqPvQQmReVqpXTEHX5hyyhorJ3jEYFqknDntgMRMM
-         SOhuum+rzCo9bReKHkwf9pOp0T6gbfuc4J8usahI9Qx0y6G3uW0g4fsbiRQhJymER6JA
-         AJgk2MeBm7/+mwK31I4a5A/TseS7YIEkrRjODywoabn7PHU0CDqQ/SuoEMFgJwntwbnH
-         6GoqDZ/FfZoIeQiCU++e4tBnkMCERKsgHlphrmTEk26aqJg9JVVcZHE6eocM5kWhpiRL
-         M4QQ==
-X-Gm-Message-State: ALoCoQmqCqX1mMRDb7Q3YsknB/qUbePu6kY7oLLbKezsJF6aqbk7b8YbPzREnAI0jmdHxSlAzGdy
-X-Received: by 10.152.203.129 with SMTP id kq1mr12467377lac.6.1400252218982;
-        Fri, 16 May 2014 07:56:58 -0700 (PDT)
+         :references:mime-version:content-type:content-transfer-encoding;
+        bh=bSFHN+9gEO/uDKi00Fk/fcxp5si8Xk+UaoBTo6bLBaY=;
+        b=dxRK4MT5W/tor6cREaZe5vbuaa+3mBkZ65JYaGD8dv2cafthZ8aB9GG2KrRoNf8g+0
+         eHDrPelk4xhLdTedM4acluWDFgmT45qhZLI0oVYJM9lke8TddpsjuBqMpSzlBaepPmSl
+         yZ2k54Cimau/tea4QchHkzt/Q9m70WYueHJvpFdbI38AjhtJOfn0oPCGSswrp+j/Y/h9
+         MGVkA8KWYGTLdobGKjCXA8ou7a3liXzuht2k1fxQSd6kM4IPfZImHf/CqJss1E95sl0B
+         OaAdXB/NN20b2dmyFCl3+BcdlneIEZVrC76VDLIKGLFAeWByBcjCebU4VZmkz0yk89fp
+         z0sw==
+X-Gm-Message-State: ALoCoQlnRWy8e/Dqq51B8K/adKmVCG7RD+KbiSMLwfUGA/WTWDh+kZ9nTU4ETmQBtK39Yr1mba4m
+X-Received: by 10.112.218.74 with SMTP id pe10mr11907729lbc.3.1400252229887;
+        Fri, 16 May 2014 07:57:09 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id o1sm8684320lbw.27.2014.05.16.07.56.57
+        by mx.google.com with ESMTPSA id o1sm8684320lbw.27.2014.05.16.07.57.08
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 16 May 2014 07:56:57 -0700 (PDT)
+        Fri, 16 May 2014 07:57:09 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1400251578-17221-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249340>
+
+The exact format of "git log -p" may change due to user configuration,
+and even if the test suite can try to set all configuration that
+influences the format explicitly it is hard to guard against future
+changes in git.  Since we already run "cmd list_files" immediately
+before all instances of running "git log -p", we are still assured
+that the history contains what we expect.
+
+There was one instance in t-021.sh where "cmd git log -p" were not
+preceded by "cmd list_files".
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
-Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 ---
- .dir-locals.el             |  3 +++
- Documentation/Contributing | 15 +++++++++++++++
- 2 files changed, 18 insertions(+)
- create mode 100644 .dir-locals.el
+ regression/t-020.out | 1000 ------------------------------------------=
+--------
+ regression/t-020.sh  |   16 -
+ regression/t-021.out |  899 +-----------------------------------------=
+---
+ regression/t-021.sh  |   10 +-
+ 4 files changed, 16 insertions(+), 1909 deletions(-)
 
-diff --git a/.dir-locals.el b/.dir-locals.el
-new file mode 100644
-index 0000000..50ef2b7
---- /dev/null
-+++ b/.dir-locals.el
-@@ -0,0 +1,3 @@
-+((nil . ((indent-tabs-mode . t)
-+	 (tab-width . 8)))
-+ (sh-mode . ((sh-basic-offset . 8))))
-diff --git a/Documentation/Contributing b/Documentation/Contributing
-index abf3480..0da49d6 100644
---- a/Documentation/Contributing
-+++ b/Documentation/Contributing
-@@ -4,6 +4,21 @@ Documentation/SubmittingPatches file. :)
- 
- 1) Hack on the code a bit
- 
-+Please follow this style guide:
-+
-+ - Use tabs for indentation.
-+
-+ - Put "then" on the same line as "if".
-+
-+ - Follow the style of the existing code, except if it breaks the
-+   above guidlines.
-+
-+ - If you change the code to conform to the style guide, please do so
-+   in a separate commit that does not change anything else.
-+
-+Please check that you change does not break "make test".  Please add
-+new testcases for any new functionality, and if you fix a bug.
-+
- 2) Make a patch:
- 
- Use "diff -up" or "diff -uprN" to create patches. Or simply use git to
--- 
+diff --git a/regression/t-020.out b/regression/t-020.out
+index bcb8797..5d7c918 100644
+--- a/regression/t-020.out
++++ b/regression/t-020.out
+@@ -14,36 +14,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/pat=
+ches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push
+ Applying patch..add
+ Patch applied.
+@@ -60,51 +30,6 @@ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/pat=
+ches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+-% git log -p
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push
+ Applying patch..remove
+ Patch applied.
+@@ -122,66 +47,6 @@ f f322f08d907e3737a4321b0ec90bc545f71af7cf  .git/pa=
+tches/master/status
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push
+ Applying patch..mode
+ Patch applied.
+@@ -200,76 +65,6 @@ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/re=
+fs/patches/master/modify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/m=
+ode
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch mode
+-
+-diff --git a/def b/def
+-old mode 100644
+-new mode 100755
+-
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push
+ File series fully applied, ends at patch mode
+ % guilt push -a
+@@ -289,76 +84,6 @@ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/re=
+fs/patches/master/modify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/m=
+ode
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch mode
+-
+-diff --git a/def b/def
+-old mode 100644
+-new mode 100755
+-
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % guilt push
+@@ -376,36 +101,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % guilt push
+@@ -423,36 +118,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % guilt push
+@@ -470,36 +135,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % guilt push
+@@ -517,36 +152,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % guilt push
+@@ -564,36 +169,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push
+ Applying patch..add
+ Patch applied.
+@@ -610,51 +185,6 @@ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/p=
+atches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+-% git log -p
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push
+ Applying patch..remove
+ Patch applied.
+@@ -672,66 +202,6 @@ f f322f08d907e3737a4321b0ec90bc545f71af7cf  .git/p=
+atches/master/status
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push
+ Applying patch..mode
+ Patch applied.
+@@ -750,76 +220,6 @@ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/r=
+efs/patches/master/modify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/m=
+ode
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch mode
+-
+-diff --git a/def b/def
+-old mode 100644
+-new mode 100755
+-
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % guilt push -n -2
+@@ -835,22 +235,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+-% git log -p
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ No patches applied.
+ % guilt push -n -1
+@@ -866,22 +250,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+-% git log -p
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ No patches applied.
+ % guilt push -n 0
+@@ -897,22 +265,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+-% git log -p
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ No patches applied.
+ % guilt push -n 1
+@@ -930,36 +282,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % guilt push -n 2
+@@ -980,51 +302,6 @@ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/p=
+atches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+-% git log -p
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % guilt push -n 3
+@@ -1048,66 +325,6 @@ f f322f08d907e3737a4321b0ec90bc545f71af7cf  .git/=
+patches/master/status
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % guilt push -n 4
+@@ -1134,76 +351,6 @@ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/=
+refs/patches/master/modify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/m=
+ode
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch mode
+-
+-diff --git a/def b/def
+-old mode 100644
+-new mode 100755
+-
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop --all
+ All patches popped.
+ % list_files
+@@ -1236,28 +383,6 @@ f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/=
+patches/master/series
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty.=
+patch
+ f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
+ r c7a139f532a43c3c8b0e068cac04f8f6af0f94e1  .git/refs/patches/master/e=
+mpty.patch
+-% git log -p
+-commit c7a139f532a43c3c8b0e068cac04f8f6af0f94e1
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch empty.patch
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % git config guilt.diffstat true
+ % guilt refresh
+ Patch empty.patch refreshed
+@@ -1280,28 +405,6 @@ f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/=
+patches/master/series
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty.=
+patch~
+ f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
+ r c7a139f532a43c3c8b0e068cac04f8f6af0f94e1  .git/refs/patches/master/e=
+mpty.patch
+-% git log -p
+-commit c7a139f532a43c3c8b0e068cac04f8f6af0f94e1
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch empty.patch
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % git config guilt.diffstat false
+ % guilt pop
+ All patches popped.
+@@ -1322,35 +425,6 @@ f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/=
+patches/master/series
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty.=
+patch~
+ f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
+ r 8ed27228b117c0c88abf3d586bcc43c68e975cea  .git/refs/patches/master/e=
+mpty.patch
+-% git log -p
+-commit 8ed27228b117c0c88abf3d586bcc43c68e975cea
+-Author: Per Cederqvist <ceder@lysator.liu.se>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    Fix a bug.
+-   =20
+-    This commit fixes a serious bug.
+-   =20
+-    FIXME:
+-        - add a test case
+-        - track down the bug
+-        - actually fix it
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % git config guilt.diffstat true
+ % guilt refresh
+ Patch empty.patch refreshed
+@@ -1373,35 +447,6 @@ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/=
+patches/master/modify
+ f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/patches/master/series
+ f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
+ r 8ed27228b117c0c88abf3d586bcc43c68e975cea  .git/refs/patches/master/e=
+mpty.patch
+-% git log -p
+-commit 8ed27228b117c0c88abf3d586bcc43c68e975cea
+-Author: Per Cederqvist <ceder@lysator.liu.se>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    Fix a bug.
+-   =20
+-    This commit fixes a serious bug.
+-   =20
+-    FIXME:
+-        - add a test case
+-        - track down the bug
+-        - actually fix it
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % git config guilt.diffstat false
+ % guilt refresh
+ Patch empty.patch refreshed
+@@ -1424,35 +469,6 @@ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/=
+patches/master/modify
+ f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/patches/master/series
+ f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
+ r 8ed27228b117c0c88abf3d586bcc43c68e975cea  .git/refs/patches/master/e=
+mpty.patch
+-% git log -p
+-commit 8ed27228b117c0c88abf3d586bcc43c68e975cea
+-Author: Per Cederqvist <ceder@lysator.liu.se>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    Fix a bug.
+-   =20
+-    This commit fixes a serious bug.
+-   =20
+-    FIXME:
+-        - add a test case
+-        - track down the bug
+-        - actually fix it
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt delete empty.patch
+ Cannot delete an applied patch
+ % guilt pop -a
+@@ -1470,19 +486,3 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/=
+patches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+-% git log -p
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+diff --git a/regression/t-020.sh b/regression/t-020.sh
+index 3f70c26..2f2aa10 100755
+--- a/regression/t-020.sh
++++ b/regression/t-020.sh
+@@ -21,8 +21,6 @@ guilt series | while read n ; do
+ 	cmd guilt push
+=20
+ 	cmd list_files
+-
+-	cmd git log -p
+ done
+=20
+ #
+@@ -34,8 +32,6 @@ cmd guilt push -a
+=20
+ cmd list_files
+=20
+-cmd git log -p
+-
+ #
+ # pop all
+ #
+@@ -49,8 +45,6 @@ guilt series | while read n ; do
+=20
+ 	cmd list_files
+=20
+-	cmd git log -p
+-
+ 	cmd guilt pop --all
+ done
+=20
+@@ -61,8 +55,6 @@ guilt series | while read n ; do
+ 	cmd guilt push $t
+=20
+ 	cmd list_files
+-
+-	cmd git log -p
+ done
+=20
+ #
+@@ -80,8 +72,6 @@ for n in `_seq -2 $npatches`; do
+=20
+ 	cmd list_files
+=20
+-	cmd git log -p
+-
+ 	cmd guilt pop --all
+ done
+=20
+@@ -91,14 +81,12 @@ cmd list_files
+ cmd guilt new empty.patch
+ fixup_time_info empty.patch
+ cmd list_files
+-cmd git log -p
+=20
+ # Ensure we can push the empty patch even when guilt.diffstat is true.
+ cmd git config guilt.diffstat true
+ cmd guilt refresh
+ fixup_time_info empty.patch
+ cmd list_files
+-cmd git log -p
+ cmd git config guilt.diffstat false
+=20
+ # Let the patch have a commit message, but no data.
+@@ -117,7 +105,6 @@ EOF
+=20
+ fixup_time_info empty.patch
+ cmd list_files
+-cmd git log -p
+=20
+ # And once more, with an empty diffstat.
+=20
+@@ -125,20 +112,17 @@ cmd git config guilt.diffstat true
+ cmd guilt refresh
+ fixup_time_info empty.patch
+ cmd list_files
+-cmd git log -p
+=20
+ # Restore the diffstat setting and remove the empty patch.
+ cmd git config guilt.diffstat false
+ cmd guilt refresh
+ fixup_time_info empty.patch
+ cmd list_files
+-cmd git log -p
+ # (Cannot delete an applied patch)
+ shouldfail guilt delete empty.patch
+ cmd guilt pop -a
+ cmd guilt delete -f empty.patch
+ cmd list_files
+-cmd git log -p
+=20
+ # FIXME:
+ #   --all
+diff --git a/regression/t-021.out b/regression/t-021.out
+index 58be12f..32dae17 100644
+--- a/regression/t-021.out
++++ b/regression/t-021.out
+@@ -8,76 +8,21 @@ Applying patch..remove
+ Patch applied.
+ Applying patch..mode
+ Patch applied.
+-% git log -p
+-commit ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch mode
+-
+-diff --git a/def b/def
+-old mode 100644
+-new mode 100755
+-
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
++% list_files
++d .git/patches
++d .git/patches/master
++d .git/refs/patches
++d .git/refs/patches/master
++f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
++f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
++f 71596bf71b72c2717e1aee378aabefbfa19ab7c8  .git/patches/master/status
++f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
++f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
++f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
++r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
++r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
++r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/m=
+ode
++r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+ % guilt pop
+ Now at remove.
+ % list_files
+@@ -94,66 +39,6 @@ f f322f08d907e3737a4321b0ec90bc545f71af7cf  .git/pat=
+ches/master/status
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop
+ Now at add.
+ % list_files
+@@ -169,51 +54,6 @@ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/pa=
+tches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+-% git log -p
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop
+ Now at modify.
+ % list_files
+@@ -228,36 +68,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/pa=
+tches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop
+ All patches popped.
+ % list_files
+@@ -271,22 +81,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/pa=
+tches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+-% git log -p
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop
+ No patches applied.
+ % guilt push --all
+@@ -314,66 +108,6 @@ f f322f08d907e3737a4321b0ec90bc545f71af7cf  .git/p=
+atches/master/status
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ Applying patch..mode
+ Patch applied.
+@@ -392,51 +126,6 @@ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/p=
+atches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+-% git log -p
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ Applying patch..remove
+ Patch applied.
+@@ -456,36 +145,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ Applying patch..add
+ Patch applied.
+@@ -506,22 +165,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+-% git log -p
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ Applying patch..modify
+ Patch applied.
+@@ -547,66 +190,6 @@ f f322f08d907e3737a4321b0ec90bc545f71af7cf  .git/p=
+atches/master/status
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop
+ Now at add.
+ % list_files
+@@ -622,51 +205,6 @@ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/p=
+atches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+-% git log -p
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop
+ Now at modify.
+ % list_files
+@@ -681,36 +219,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt pop
+ All patches popped.
+ % list_files
+@@ -724,22 +232,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/p=
+atches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+-% git log -p
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ Applying patch..modify
+ Patch applied.
+@@ -766,76 +258,6 @@ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/r=
+efs/patches/master/modify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/m=
+ode
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch mode
+-
+-diff --git a/def b/def
+-old mode 100644
+-new mode 100755
+-
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ File series fully applied, ends at patch mode
+ % guilt pop -n -1
+@@ -855,76 +277,6 @@ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/r=
+efs/patches/master/modify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/m=
+ode
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch mode
+-
+-diff --git a/def b/def
+-old mode 100644
+-new mode 100755
+-
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ File series fully applied, ends at patch mode
+ % guilt pop -n 0
+@@ -944,76 +296,6 @@ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/r=
+efs/patches/master/modify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba  .git/refs/patches/master/m=
+ode
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch mode
+-
+-diff --git a/def b/def
+-old mode 100644
+-new mode 100755
+-
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ File series fully applied, ends at patch mode
+ % guilt pop -n 1
+@@ -1032,66 +314,6 @@ f f322f08d907e3737a4321b0ec90bc545f71af7cf  .git/=
+patches/master/status
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+ r ffb7faa126a6d91bcdd44a494f76b96dd860b8b9  .git/refs/patches/master/r=
+emove
+-% git log -p
+-commit ffb7faa126a6d91bcdd44a494f76b96dd860b8b9
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch remove
+-
+-diff --git a/abd b/abd
+-deleted file mode 100644
+-index fd3896d..0000000
+---- a/abd
+-+++ /dev/null
+-@@ -1 +0,0 @@
+--=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ Applying patch..mode
+ Patch applied.
+@@ -1110,51 +332,6 @@ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/=
+patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+ r 37d588cc39848368810e88332bd03b083f2ce3ac  .git/refs/patches/master/a=
+dd
+-% git log -p
+-commit 37d588cc39848368810e88332bd03b083f2ce3ac
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch add
+-
+-diff --git a/abd b/abd
+-new file mode 100644
+-index 0000000..fd3896d
+---- /dev/null
+-+++ b/abd
+-@@ -0,0 +1 @@
+-+=89=F6u=1B=D8=14=BD=04=E1=1A=7FZ=E2=F1e=CF=C8E=84=A3=06=1FW=C0V=BC/=9B=
+=03U?=DA<|=13=12=A2@6=A48'H=B81G_=98=CD=A7*=B7=12=F0R=D2=99=A4
+=7F=AA=C2~=B7
+-\ No newline at end of file
+-
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ Applying patch..remove
+ Patch applied.
+@@ -1174,36 +351,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/=
+patches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ r 33633e7a1aa31972f125878baf7807be57b1672d  .git/refs/patches/master/m=
+odify
+-% git log -p
+-commit 33633e7a1aa31972f125878baf7807be57b1672d
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    patch modify
+-
+-diff --git a/def b/def
+-index 8baef1b..7d69c2f 100644
+---- a/def
+-+++ b/def
+-@@ -1 +1,2 @@
+- abc
+-+asjhfksad
+-
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ Applying patch..add
+ Patch applied.
+@@ -1224,22 +371,6 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/=
+patches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
+-% git log -p
+-commit d4850419ccc1146c7169f500725ce504b9774ed0
+-Author: Author Name <author@email>
+-Date:   Mon Jan 1 00:00:00 2007 +0000
+-
+-    initial
+-   =20
+-    Signed-off-by: Commiter Name <commiter@email>
+-
+-diff --git a/def b/def
+-new file mode 100644
+-index 0000000..8baef1b
+---- /dev/null
+-+++ b/def
+-@@ -0,0 +1 @@
+-+abc
+ % guilt push --all
+ Applying patch..modify
+ Patch applied.
+diff --git a/regression/t-021.sh b/regression/t-021.sh
+index e0d2dc1..2873234 100755
+--- a/regression/t-021.sh
++++ b/regression/t-021.sh
+@@ -9,7 +9,7 @@ cmd setup_repo
+=20
+ cmd guilt push --all
+=20
+-cmd git log -p
++cmd list_files
+=20
+ #
+ # incremental pop by 1
+@@ -18,8 +18,6 @@ guilt series | _tac | while read n ; do
+ 	cmd guilt pop
+=20
+ 	cmd list_files
+-
+-	cmd git log -p
+ done
+=20
+ #
+@@ -41,8 +39,6 @@ guilt series | _tac | while read n ; do
+=20
+ 	cmd list_files
+=20
+-	cmd git log -p
+-
+ 	cmd guilt push --all
+ done
+=20
+@@ -53,8 +49,6 @@ guilt series | _tac | while read n ; do
+ 	cmd guilt pop $t
+=20
+ 	cmd list_files
+-
+-	cmd git log -p
+ done
+=20
+ #
+@@ -72,8 +66,6 @@ for n in `_seq -2 $npatches`; do
+=20
+ 	cmd list_files
+=20
+-	cmd git log -p
+-
+ 	cmd guilt push --all
+ done
+=20
+--=20
 1.8.3.1
