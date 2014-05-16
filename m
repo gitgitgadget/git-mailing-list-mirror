@@ -1,75 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v10 00/44] Use ref transactions for all ref updates
-Date: Fri, 16 May 2014 11:39:17 -0700
-Message-ID: <20140516183917.GD12314@google.com>
-References: <1400261852-31303-1-git-send-email-sahlberg@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
+Date: Fri, 16 May 2014 10:05:26 -0700
+Message-ID: <xmqq4n0pbqnc.fsf@gitster.dls.corp.google.com>
+References: <20140514184145.GA25699@localhost.localdomain>
+	<xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
+	<CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
+	<20140515050820.GA30785@localhost.localdomain>
+	<alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
+	<20140515184808.GA7964@localhost.localdomain>
+	<CANQwDwe+GJ+yAYWdVfMaHq97zGXBoepCfUdLiaQD9LFoz3SiOA@mail.gmail.com>
+	<xmqqmweiessl.fsf@gitster.dls.corp.google.com>
+	<CANQwDwffdbqD96OadyECFs=6WY_t+_0b63L5yAZVQ8aXrMvHHA@mail.gmail.com>
+	<xmqqmweibjjo.fsf@gitster.dls.corp.google.com>
+	<CANQwDwe8Eb+ORiRyuq3+kKw72Jath_DGySmws1Rvt8bmuHoXVw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Fri May 16 20:39:28 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Wagner <accounts@mwagner.org>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	git <git@vger.kernel.org>
+To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 16 20:49:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlN2T-0004hr-MF
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 20:39:26 +0200
+	id 1WlNCR-0007sk-Mz
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 20:49:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757428AbaEPSjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 14:39:21 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:54295 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753817AbaEPSjU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 14:39:20 -0400
-Received: by mail-pb0-f53.google.com with SMTP id md12so2922764pbc.26
-        for <git@vger.kernel.org>; Fri, 16 May 2014 11:39:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=5THv6NnqWm/70sPfKRuNRMCiXqNcS/SK9nE3R0YBiZM=;
-        b=REl3Nz4teGebrdr9Qo7KbX78CgjuxlPpYDYZVVVZv6ITWeaTt9Cxpq38w3/JVgeZDi
-         zxy3FJYthKzkUMW83L2vEm0WHiCwp0al9CDxvyxI+xanFV+yKE1vBin7EoJgjLqCsAlI
-         NkvMc+1JNUM0OC4Hzd9pKA/eQ2MRfvTYH+zfEieXIiv9ErSW7ukIHO1J4zoCWCrIUYkv
-         dnDzoi0nnGqSnGlXDaT3bhBh/kKdnkjpB3ZJ3NnrgWqZJnueFpuvJEHyUmYFumbj0elY
-         W6SqvteLobCEptO3z50lW9I5GO4jnjiIB4g64+JWJyokuJjB6+uZ+pOHT8lSPiA5BcUo
-         hOzA==
-X-Received: by 10.68.178.131 with SMTP id cy3mr23243108pbc.146.1400265559883;
-        Fri, 16 May 2014 11:39:19 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id yj6sm37526467pab.19.2014.05.16.11.39.18
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 16 May 2014 11:39:19 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1400261852-31303-1-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757866AbaEPStj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 14:49:39 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52437 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757748AbaEPSti convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2014 14:49:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 27D4717CB6;
+	Fri, 16 May 2014 14:49:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=74TnnwMnxCNy
+	HF6QJkQfghDAGmY=; b=j3DaBoh3E8BLNAL4SO7Nq8rVqIzaknPRSKgfQhlBENfX
+	cD5OJUFKnhjSYzyUTf/i6msARsJ038M0JTbqHFJi2vqjfmP2EgqmCy/0ex9u+pbu
+	/P/apZmeI++fI9TxDTfnjnVXC+x40zPoYoTU+RVPDrWeGVlE0xuV6j7f3RxqNTI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ZuiOli
+	537caFMMMgrrWa5ekQcHpBnJjAgH7/NmMFbfNeV7L7Hd9GdooZ3sIqEqq1jeip4F
+	8UPJtuNuDGwyLXLIAekjxigZm3asNPkZhaG6SSGXXP1uoPH9UAeHt5DDlK5JzbAE
+	i5e6F5ZumapgDkqnkRZFAPCsMpjC9NpqJIvAE=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1E3B517CB4;
+	Fri, 16 May 2014 14:49:38 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 279321653E;
+	Fri, 16 May 2014 13:05:29 -0400 (EDT)
+In-Reply-To: <CANQwDwe8Eb+ORiRyuq3+kKw72Jath_DGySmws1Rvt8bmuHoXVw@mail.gmail.com>
+	("Jakub =?utf-8?Q?Nar=C4=99bski=22's?= message of "Fri, 16 May 2014
+ 09:54:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 483A9112-DD1C-11E3-BA1B-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249409>
 
-Ronnie Sahlberg wrote:
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
-> This patch series can also be found at
-> https://github.com/rsahlberg/git/tree/ref-transactions
+>> Correct, but is "where does it appear" the question we are
+>> primarily interested in, wrt this breakage and its fix?
+>
+> That of course depends on how we want to test gitweb output.
+> The simplest solution, comparing with known output with perhaps
+> fragile / variable elements masked out could be done quickly...
+> but changes in output (even if they don't change functionality,
+> or don't change visible output) require regenerating test cases
+> (expected output) to test against - which might be source of
+> errors in test suite.
 
-I think the rerolls are coming too fast.  I've been using your
-repository on github to check if I should not send any particular
-comment because you've already fixed it, so the extra mail is not
-needed for that purpose, at least.
+I agree with your "to test it fully, we need extra dependencies",
+but my point is that it does not have to be a full "HTML-validating,
+picking the expected attribute via XPATH matching" kind of test if
+what we want is only to add a new test to protect this particular
+fix from future breakages.
 
-In general, I think it's best to stick with one version of a series,
-gather review comments on it, comment inline to solicit feedback about
-approaches to particular problems, point reviewers to an up-to-date
-branch which is more in flux, etc, and then only resend when reviewers
-have had a chance to get through it to make it easier to keep track of
-the review without getting lost.
+=46or example, I think it is sufficient to grep for 'href=3D"...%xx%xx"=
+'
+in the output after preparing a sample tree with one entry to show.
+The expected substring either exists (in which case we got it
+right), or it doesn't (in which case we are showing garbage).  Of
+course that depends on the assumption that its output is not too
+heavily contaminated with volatile parts outside our control, as I
+already mentioned in the message you are responding to.
 
-Thanks for the quick work so far, by the way.  It's been fun watching
-the API evolve.
-
-My two cents,
-Jonathan
+But it all depends on "if" we wanted to add a new test ;-)
