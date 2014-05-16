@@ -1,122 +1,88 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: GIT, libcurl and GSS-Negotiate
-Date: Fri, 16 May 2014 22:34:10 +0000
-Message-ID: <20140516223410.GB180798@vauxhall.crustytoothpaste.net>
-References: <CAPc4eF__gWMy=E-8tdpMn_irA4m7mYF3=cwN6JeAqJsdPshNLw@mail.gmail.com>
- <20140426174718.GC238861@vauxhall.crustytoothpaste.net>
- <CAPc4eF-aT47aEPmmPPkPRfntTNdNp=c4+OK_CPdq_7YB6rxDug@mail.gmail.com>
- <20140510210132.GD45511@vauxhall.crustytoothpaste.net>
- <20140512202153.GB2329@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Delaying 2.0 final
+Date: Fri, 16 May 2014 15:45:10 -0700
+Message-ID: <xmqqd2fd8hs9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OwLcNYc0lM97+oe1"
-Cc: git@vger.kernel.org,
-	Ivo Bellin Salarin <ivo.bellinsalarin@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 17 00:34:22 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 17 00:45:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlQhn-0008GV-EL
-	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 00:34:19 +0200
+	id 1WlQsW-0003fm-9j
+	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 00:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755660AbaEPWeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 18:34:15 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:47788 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753687AbaEPWeP (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 May 2014 18:34:15 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:c1bd:3a45:42c8:45a6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	id S1753115AbaEPWpR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2014 18:45:17 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63617 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752143AbaEPWpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 18:45:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 799C315BFC;
+	Fri, 16 May 2014 18:45:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=a
+	IY/f6UHsXcysHK4jk0LU3Vq/jg=; b=m5P1OmetvOtX8fpe7yYrx2b2M5Y2pweEM
+	vgQ4Didk4+HJ8A2rrTqZhVG0WlS/sqsAw2iy+kQim78R9sjynzjh8wJkF6/hF7NX
+	wF6dNnAoTjll0PskivS7uY8sHsV9HyeudegBQ4BmL0ZbnebFT2JKq2thOHtI8KVb
+	98B818dpIM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=ydX
+	rF2dKzAr2NyB94tmEBUAxyerIPAZ5acjelV4eldYGCGbK6wbAU9nlvQ4HlYhV8Zi
+	5Dr4wdLTgJpZ6ff5GYOGk9+a82zCnH8nHjAx8kie6BAHs67KijLmmmdQf2xXzadh
+	GmnqSZIlOzsbGoHwPAnIBTnjum3/PE5NKMyIwFTQ=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 709FB15BFA;
+	Fri, 16 May 2014 18:45:15 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B16F428087;
-	Fri, 16 May 2014 22:34:13 +0000 (UTC)
-Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Ivo Bellin Salarin <ivo.bellinsalarin@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20140512202153.GB2329@sigill.intra.peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.14-trunk-rt-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C8B2C15BF8;
+	Fri, 16 May 2014 18:45:11 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BD3AFFB8-DD4B-11E3-B614-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249425>
 
+As we seem to have a few regressions we may want to fix, I will not
+be cutting the 2.0 final today (https://tinyurl.com/gitCal).
 
---OwLcNYc0lM97+oe1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I queued the following near the bottom of 'pu' (these are also
+merged to 'next' to keep pu^{/match.next} in sync with next), and
+plan to cut 2.0.0-rc4 early next week.
 
-On Mon, May 12, 2014 at 04:21:53PM -0400, Jeff King wrote:
-> On Sat, May 10, 2014 at 09:01:32PM +0000, brian m. carlson wrote:
-> > * Make git understand that it really needs to try again with different
-> >   credentials in this case (how to do that is unknown).
->=20
-> It should be pretty straightforward to loop again; http_request_reauth
-> just needs to turn into a for-loop on getting HTTP_REAUTH, rather than a
-> static two-tries (I even had a patch for this a while ago, but the
-> function has changed a bit in the interim).
->=20
-> The tricky part is figuring out when to return HTTP_NOAUTH ("do not try
-> again, we failed") versus HTTP_REAUTH ("get credentials and try again")
-> in handle_curl_result. Right now the decision is based on "did we have a
-> username and password for this request?" I'm not clear on what extra
-> bits would be needed to decide to continue in the case you guys are
-> discussing.
+ * git-gui has a show-stopper bug that wants to see if it is used
+   with a version of git that "vsatisfies" 1.7.0; because 2.x is
+   considered significantly different, it incorrectly decides to use
+   the codepath for ancient versions that compares older than 1.7.0
+   when working inside a submodule working tree.  A fix by Jens
+   Lehmann is queued as an emergency patch to use vcompare instead.
 
-I'm honestly not sure, either.  That's why I said, "how to do that is
-unknown".
+ * There was a vague admission of having broken git-remote-hg/bzr by
+   its author that hinted one topic branch is the culprit, without
+   much detail.  As a precautionary measure, the merge of the topic
+   has been reverted.
 
-However, if you base64-decode the two Negotiate replies in the
-successful attempt with WinHTTP and pass it through od -tc, you'll see
-that the second reply contains some form of user ID that the first one
-does not.  The curl binary sends an identical reply for the first pass,
-but then gives up and does not try a second pass.  I don't know if
-libcurl is able to provide the data required in the second pass.
+ * git-remote-hg/bzr are maintained outside our tree, our copy will
+   become stale and will eventually go away.  A warning message to
+   its standard error output has been added to each of them to tell
+   the users where to find the latest of these tools.
 
-All of this is way outside my knowledge, since my Kerberos/GSSAPI
-Negotiate requests look very different than the NTLM ones.
+ * git-request-pull has a minor regression and lost a useful DWIM
+   that was designed to be friendly to users of Git older than
+   1.7.10.  "git request-pull $base $URL for-linus" used to say
+   "Please pull tags/for-linus" if that is what the user meant, but
+   the version in 2.0.0-rc3 requires the command line to be "git
+   request-pull $base $URL tags/for-linus".  It is simple enough to
+   special case this use case, and a patch is included to fix it
+   with a band-aid.
 
-> > * Provide some way of forcing git to use a particular authentication
-> >   protocol.
->=20
-> Yeah, we just set CURLAUTH_ANY now, but it would be fairly trivial to
-> add "http.authtype" and "http.proxyauthtype" to map to CURLOPT_HTTPAUTH
-> and CURLOPT_PROXYAUTH.
-
-This might be the easiest option.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---OwLcNYc0lM97+oe1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJTdpJhAAoJEL9TXYEfUvaLyvAQAMg1GtsJ/oXS9Y/dNt2XWEka
-225uaT5WJKcHzue+PgLQuBZ5wFWrQ2jqXdjps2Ez3+3CDfvgsj+OqrIHipoePkR0
-+/F8g0WLXNhyU9KrRz0L6ZW+Rx0G6TRqOzrsCqL+EGFCSEAff95qC6MeRMW4PZ5L
-zEWVubTZrqKH9R7YBO3mu+vDU4Mb5QwHymFblYkVsOyBa71EEjYVP0mXvn0IsJPx
-K1W4wfnjOQjx/RIzrI/5McD1bEqnWhfy/uEYaPKvy1MWp37ahJ/9b1f/DoLpIfMK
-bnR+nhmzvfD7RMoHTTod/KjMEzDzECxWf110Gd8ptwaE7lsdTn6kA2TlnrvK79LF
-IAXo5Ea6uluh8jJ8PmodS8PNUxxLL7Kujaf5jh7ipPnXXvFBd+4kwwQb05m93q9G
-JvkiZ71ttU3GZ96wHSPyJf/FUsw2KcQLtiGNh4TqEHnDoAEmgEYtNcKwGQzz3xCI
-51nsNeJEAj8S/0D/9duNkme+mZk+LSYvWNHxkvUMxx41AeOD0OvugKIQdRUe9eVA
-gZnsH2Inj2FlNgbikWU7MOYnNNwsfooXwphM+dqkGBvki2KrXjJf95u9OOquktcs
-63Cj6RcuEqw/MRmhBRn2x7qJC+NMO+rDAxizQPsq8fd60oIeUmnso3BQegh3ZYtR
-C8lljKhhh+0DcNqtWvRq
-=gWED
------END PGP SIGNATURE-----
-
---OwLcNYc0lM97+oe1--
+If you fetch tonight's 'pu' branch, you will find all of the above
+at f608b83.  Hopefully 2.0.0-rc4 and 2.0.0-final will be the same
+tree as that commit, with updated release notes.
