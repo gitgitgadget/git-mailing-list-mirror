@@ -1,52 +1,60 @@
 From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Fri, 16 May 2014 11:07:51 -0700
-Message-ID: <CAPc5daWXdt5TMCxj_zSY6uwz5ndjism6HGbzQ8UxstO79z94OA@mail.gmail.com>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com> <20140516084126.GB21468@sigill.intra.peff.net>
+Date: Fri, 16 May 2014 09:52:15 -0700
+Message-ID: <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
+References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
+	<20140516084126.GB21468@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 16 20:08:19 2014
+X-From: git-owner@vger.kernel.org Fri May 16 20:15:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlMYL-0001p8-V2
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 20:08:18 +0200
+	id 1WlMf6-0001WW-QP
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 20:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757591AbaEPSIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 14:08:14 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:60726 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757536AbaEPSIN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 14:08:13 -0400
-Received: by mail-lb0-f174.google.com with SMTP id n15so2199052lbi.5
-        for <git@vger.kernel.org>; Fri, 16 May 2014 11:08:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=rm/ZIusYkDIHfkGc1c0yD0bVuBlhJ4+wrT9dq/hdrus=;
-        b=yCPjjwiX4QIr1aclpkyzgnOGiTRZ4YFvA/FVBv3bRzFwVIvjNqbr3Nh6gJ9PfZaDKy
-         tn8IkfH7ZvB7UY5lpcamH1VkKGsf+OkmVGKH7ASrR6SEW9w0gS5x9Zu4kt9UtG3aYYUA
-         M83plBSzWr7dQApWfKnsA56T/jMUZeohTRyGp4RSnuRYyqhP9vJZ3L7lOzdSXkRvFWok
-         vfkQabPT6o3hTeEhOmlvcJcCXXgTzMKNsQ1a7qrf3qsZDGSd4k9jG2os9QfsXB2cdvSN
-         OTy0o2ZrdcPVG2EjmGhj/eZz9pBcgHnczwg84NCympYCPizXwq63WgXAjTUK4YGfEWNK
-         Qf5g==
-X-Received: by 10.112.35.202 with SMTP id k10mr12456499lbj.14.1400263691710;
- Fri, 16 May 2014 11:08:11 -0700 (PDT)
-Received: by 10.112.17.98 with HTTP; Fri, 16 May 2014 11:07:51 -0700 (PDT)
-In-Reply-To: <20140516084126.GB21468@sigill.intra.peff.net>
-X-Google-Sender-Auth: iwrNU5szZy2YiPyfQXJFxKR05VU
+	id S1756738AbaEPSPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2014 14:15:10 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56196 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752716AbaEPSPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 14:15:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5F13D19603;
+	Fri, 16 May 2014 14:15:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=QFgR6T0LRlufbX8uYPyhRYC7vu0=; b=tbtBtG
+	ClYe6Izee1pZzyFSVsA1Tyf9Sf7jmmWyBDrWJqL6HE8tQjJQ/dLOsrC6/fewPRNK
+	sqtUmfxjuFvX0JoSavMbzSwfjj6Kgr+qWj2ceRYzJZiMwTWZV1BptQ10Qgrmd68Z
+	YHQWuSiTfJeprcmRIxOlTHEhiv9F94UMTCs7s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N8rphjf9ojqC5vP94Ta3NxhJI3qDzOZL
+	qZueut+uqfq535BgIEUXG40qqM8hxEO1pD8JLfAK8UCNEBC92cz0vsB7iGoxixDx
+	AWM7Kjdn36CCQ2khukxO6QBQnL3AK0nQPIssVVMTPflI/pAj/EcTQp+RF/SbV1wS
+	tT/WZtVqZxw=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5577B19602;
+	Fri, 16 May 2014 14:15:08 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7A31115D20;
+	Fri, 16 May 2014 12:52:18 -0400 (EDT)
+In-Reply-To: <20140516084126.GB21468@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 16 May 2014 04:41:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 71008BB2-DD1A-11E3-B393-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249401>
-
-(Sorry if you receive a dup; pobox.com seems to be constipated right now).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249402>
 
 Jeff King <peff@peff.net> writes:
 
