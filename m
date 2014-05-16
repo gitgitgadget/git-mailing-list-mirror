@@ -1,130 +1,118 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: RE: [PATCH] remote-helpers: point at their upstream repositories
-Date: Fri, 16 May 2014 02:37:03 -0500
-Message-ID: <5375c01f77285_7e7b772f8f0@nysa.notmuch>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
+Date: Fri, 16 May 2014 09:54:58 +0200
+Message-ID: <CANQwDwe8Eb+ORiRyuq3+kKw72Jath_DGySmws1Rvt8bmuHoXVw@mail.gmail.com>
+References: <20140514184145.GA25699@localhost.localdomain> <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
+ <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
+ <20140515050820.GA30785@localhost.localdomain> <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
+ <20140515184808.GA7964@localhost.localdomain> <CANQwDwe+GJ+yAYWdVfMaHq97zGXBoepCfUdLiaQD9LFoz3SiOA@mail.gmail.com>
+ <xmqqmweiessl.fsf@gitster.dls.corp.google.com> <CANQwDwffdbqD96OadyECFs=6WY_t+_0b63L5yAZVQ8aXrMvHHA@mail.gmail.com>
+ <xmqqmweibjjo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 16 09:48:17 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Wagner <accounts@mwagner.org>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 16 09:55:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlCsE-0006PM-NX
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 09:48:11 +0200
+	id 1WlCzX-0001xO-HX
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 09:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755195AbaEPHsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 03:48:06 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:34460 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753992AbaEPHsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 03:48:05 -0400
-Received: by mail-ob0-f180.google.com with SMTP id va2so2514526obc.25
-        for <git@vger.kernel.org>; Fri, 16 May 2014 00:48:04 -0700 (PDT)
+	id S1755645AbaEPHzj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 03:55:39 -0400
+Received: from mail-oa0-f47.google.com ([209.85.219.47]:49697 "EHLO
+	mail-oa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754536AbaEPHzi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2014 03:55:38 -0400
+Received: by mail-oa0-f47.google.com with SMTP id i7so2572831oag.20
+        for <git@vger.kernel.org>; Fri, 16 May 2014 00:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
-         :content-type:content-transfer-encoding;
-        bh=MKxLnumNjqwuhkrhi3MMgHeeD9Go88o9bZpPdovKPz0=;
-        b=uYol7ARSCXH35913mPEJupKwXaBZhDrpPxKy+n6dO1Z43KPinAy460rYBeOM4AzKLU
-         W7v5Nm7J9ikiI6UuUCIRJnh8igEXYpIpGXp6xYKWaTY+0bkhRJC9Pv1K0kgXmHq7R/Mc
-         N9Bui6mpYap7GraNtTdPNANtHO1VsjFr+gDrCOmijhEVK2wrxw8XBRVXD3/f/B9dJ3Rg
-         W4a0hUIz2g+jSrW+9wdcXb3moWP/bQ+9YmiVwlJ0A5ClZhhapZHOmc1sOeLOWsX9MbDd
-         ThCxSovo84bAyS7xXk/1eqPCaYAQfOZW22yluiRtbyiosp5DKwy0jEG/lgqSXkV2I0kX
-         eQgw==
-X-Received: by 10.60.179.80 with SMTP id de16mr15005903oec.69.1400226484657;
-        Fri, 16 May 2014 00:48:04 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id to6sm13579544obb.6.2014.05.16.00.48.03
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 May 2014 00:48:04 -0700 (PDT)
-In-Reply-To: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=fJT3XS+CywDA8Ob+jBGKAePDuF6fU1Z4yjuqNln6TqI=;
+        b=h2vFgbWzDqxNLPDNS6vl9YPAoW1FS19cwwqsslS6LhEx7riYZ3/K154pqmKjEWUIhQ
+         IRsdgu4SHJKNv6PpjINvK/8MVVC7PfOJwyC98OEpQugf/xMB6NkY87CrzTgzN743LiCB
+         0K7RX4eKOD3TXKbd7PJOQlizEQDZ8ZYyvMgXfdV8LpcXOmDEATt/JnC0ntCrSaL16CLl
+         4YUY+Zi8pvhUt3+7Dh6hBgRT0t1gZOuDpvq8m49sf9ghMDR9ne3fD504l6rzA/aPL4HX
+         SZbYBH8712ZDkoOJ8o96qSV/8qaJbDRjpnc1rGTNz6sXz8g6x1mO4pmlmi28jR4HUZwz
+         IbYA==
+X-Received: by 10.60.92.132 with SMTP id cm4mr15115265oeb.49.1400226938213;
+ Fri, 16 May 2014 00:55:38 -0700 (PDT)
+Received: by 10.76.132.4 with HTTP; Fri, 16 May 2014 00:54:58 -0700 (PDT)
+In-Reply-To: <xmqqmweibjjo.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249273>
 
-Junio C Hamano wrote:
-> Two announcements for their version 0.2 on the list archive are not
-> quite enough to advertise them to their users.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->  * I am inclined to queue this for 2.0, and we would also need an
->    update to the release notes as well.
-> 
->    I am undecided about the revert I sent earlier in $gmane/248937;
->    with or without it, that is just a contrib/ thing that is not
->    well maintained inside our tree anyway.
-> 
->  contrib/remote-helpers/README | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->  create mode 100644 contrib/remote-helpers/README
+On Fri, May 16, 2014 at 3:26 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+>> On Thu, May 15, 2014 at 9:38 PM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>>> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+>>>
+>>>> Writing test for this would not be easy, and require some HTML
+>>>> parser (WWW::Mechanize, Web::Scraper, HTML::Query, pQuery,
+>>>> ... or low level HTML::TreeBuilder, or other low level parser).
+>>>
+>>> Hmph.  Is it more than just looking for a specific run of %xx we
+>>> would expect to see in the output of the tree view for a repository
+>>> in which there is one tree with non-ASCII name?
+>>
+>> There is if we want to check (in non-fragile way) that said
+>> specific run is in 'href' *attribute* of 'a' element (link target).
+>
+> Correct, but is "where does it appear" the question we are
+> primarily interested in, wrt this breakage and its fix?
 
-NAK.
+That of course depends on how we want to test gitweb output.
+The simplest solution, comparing with known output with perhaps
+fragile / variable elements masked out could be done quickly...
+but changes in output (even if they don't change functionality,
+or don't change visible output) require regenerating test cases
+(expected output) to test against - which might be source of
+errors in test suite.
 
-> diff --git a/contrib/remote-helpers/README b/contrib/remote-helpers/README
-> new file mode 100644
-> index 0000000..72a2df4
-> --- /dev/null
-> +++ b/contrib/remote-helpers/README
-> @@ -0,0 +1,11 @@
-> +The remote-helper bridges to access data stored in Hg and bzr will be
+Another simple solution, grepping for expected strings, also
+easy to create, has the disadvantage of being only positive
+test - you cannot [easily] test that there are no *wrong* output,
+only that right string exists somewhere.
 
-They are called Mercurial and Bazaar.
+> If gitweb output has some volatile parts that do not depend on the
+> contents of the Git test repository (e.g. showing contents of
+> /etc/motd, date/time of when the test was run, or the full pathname
+> leading to the trash directory), then preparing a tree whose name is
+> =C3=A4=C3=A9=C3=AC=C3=B5=C3=BB and making sure that the properly enco=
+ded version of =C3=A4=C3=A9=C3=AC=C3=B5=C3=BB
+> appears anywhere in the output may not be sufficient to validate
+> that we got the encoding right, as that string may appear in the
+> parts that are totally unrelated to the contents being shown and not
+> under our control.  But is that really the case?
 
-> +maintained outside the git.git tree in the repositories of its
-> +primary author at:
-> +
-> +    https://github.com/felipec/git-remote-hg
-> +    https://github.com/felipec/git-remote-bzr
+Well, I guess that any test is better than no test (though OTOH
+Heartbleed and "goto fail" bugs shows the importance of negative
+tests).
 
-If this is formatted in asciidoc the links won't appear as links. Do it
-as I did:
+> Also we may introduce a bug and misspell the attr name and produce
+> an anchor element with hpef attribute with the properly encoded URL
+> in it, and your "parse HTML properly" approach would catch it, but
+> is that the kind of breakage under discussion?  You hinted at new
+> tests for UTF-8 encoding in the other message in the thread earlier,
+> and I've been assuming that we were talking about the encoding test,
+> not a test to catch s/href/hpef/ kind of breakage.
 
- * https://github.com/felipec/git-remote-hg
- * https://github.com/felipec/git-remote-bzr
+One of tests possible with HTML parser (e.g. WWW::Mechanize::CGI)
+is to check that all [internal] links leads to 200-OK pages, which
+accidentally would also be a test against this breakage.
 
-> +As a convenience, copies of the last-bundled version of these two
-> +remote-helper bridges are kept here, but they may left stale.  Users
-> +are encouraged to visit the above authoritative repositories for the
-> +latest versions to get involved in its further developments.
-
- 1) Most users will *never* see this README
- 2) Most packagers will never see this README
- 3) The people that do read this README will wonder *why* they are now
-    maintained separately.
-
-Thanks for wasting all my hard work and sabotaging these projects.
-
-Just as a heads-up. I *will* complain about this publicly and my blog is
-visited by thousands of people.
-
-I am requesting one last time:
-
- 1) Add warnings *directly* into the tools themselves ASAP
- 
-    You didn't have any problems adding warnings for pre-v2.0 behavior
-    that changed, nor did you have a problem adding the warning about
-    the new zsh completion that moved out of the bash one. Why would you
-    have a problem with this one?
-
- 2) Replace the tools with stubs that point to the right locations at
-    the earliest convenience
-
-I already sent patches for both, and they were ignored.
-
-A failure to do both will result in a lack of visibility of the new
-projects, and a decrease in the quality the users of git.git contrib
-area's remote-helpers receive. I will consider that a deliberate attempt
-to make the new projects experience unnecessary hardship.
-
--- 
-Felipe Contreras
+--=20
+Jakub Narebski
