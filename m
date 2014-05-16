@@ -1,145 +1,138 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Fri, 16 May 2014 04:23:15 -0500
-Message-ID: <5375d903dd6c_1a1b8d33081f@nysa.notmuch>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
- <20140516084126.GB21468@sigill.intra.peff.net>
+From: Per Cederqvist <cederp@opera.com>
+Subject: Re: [GUILT v2 12/29] "guilt header": more robust header selection.
+Date: Fri, 16 May 2014 11:51:37 +0200
+Message-ID: <CAP=KgsRmmmUOoasPGpJ12RRBXQxu07FbELHbQw38-=DM6MfW3w@mail.gmail.com>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+	<1400013065-27919-13-git-send-email-cederp@opera.com>
+	<20140515224658.GA1334@meili.valhalla.31bits.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 16 11:34:27 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Jeff Sipek <jeffpc@josefsipek.net>
+X-From: git-owner@vger.kernel.org Fri May 16 11:51:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlEX3-000354-BH
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 11:34:25 +0200
+	id 1WlEnn-0000cx-VI
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 11:51:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932190AbaEPJeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 05:34:20 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:52259 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751475AbaEPJeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 05:34:17 -0400
-Received: by mail-ob0-f175.google.com with SMTP id wo20so2657681obc.6
-        for <git@vger.kernel.org>; Fri, 16 May 2014 02:34:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=Cxedm6F7u13NF7ShLNyWgD42bHA/q+pBIPGhVehx2dY=;
-        b=xX81xFTzpvBANhRK6u6M+kD80qxkgGYQ5duWnCwYHqCTpGBTGva32F/Wd3xZUnb2+e
-         wXm+jkiR2HEopNjNh1YBcMkVJVe5nFynamnQricLTAmnlEFyDSYlpTuqc+d7clxiJh8G
-         a4HZ53XS52lJyf61jU0k1O6sDeZRBvX1qDTlCvgsKNPKK4Pg2Ro7LDeGKzU0AhEx4t4D
-         gu7SxAILwe9YQ5Qf1LbpzyO+o30yb5Rd3PBpjXGRc8Mqt2drFBIn0n2xvQ8EcUTQvO61
-         GepCiJOVNFZei6xzcX83w+UCy9whUMgb1hQaPD4NKlUJ+9VBNkYEs9zOvdh7V6lukRI4
-         +vBw==
-X-Received: by 10.60.54.38 with SMTP id g6mr1332416oep.79.1400232857589;
-        Fri, 16 May 2014 02:34:17 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id p1sm13943463obh.28.2014.05.16.02.34.15
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 May 2014 02:34:16 -0700 (PDT)
-In-Reply-To: <20140516084126.GB21468@sigill.intra.peff.net>
+	id S1756741AbaEPJvj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2014 05:51:39 -0400
+Received: from mail-ie0-f182.google.com ([209.85.223.182]:50967 "EHLO
+	mail-ie0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751475AbaEPJvi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 05:51:38 -0400
+Received: by mail-ie0-f182.google.com with SMTP id tp5so2280619ieb.13
+        for <git@vger.kernel.org>; Fri, 16 May 2014 02:51:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=q5wueQLn6BeYhoVJjl+3bLNmYZGC45bqnfWHDLX3iE4=;
+        b=NKD60ciUmmxpyjMlBY0y39ZSJLxw7lZ0q5p+T3gIW05zF3oG3OWnjxkTqZMKLHpAFg
+         WRHpIOd1Kgs49xEvCnXkuFd89JpCatYGw3CttLEYkdkmwzDTSnWusFUE5FTB5n8QvLz6
+         jTLB+7ILT7rK7zXxMFsC/fH/UYFTvU89Q0rEOLHO4WcZmo2cxXdf0H4rciGRJRv8vGAA
+         OUAYhRQtlNG9eJrLdmuPEp3a1HzcS2DQCQ5/W9cqwq5yo9Oo8g4Z56lw/vlz5/jfN1fv
+         HKFVQ8qDyZupINxqBIYm/wB/dntcCWzpPDXg09733ejXkXybA1469V80uz2+1P4vqtj7
+         wFiA==
+X-Gm-Message-State: ALoCoQkOW89klI55A0VClgQqj7Vcv8gf2ErLR5BNABFCnlBxEDXKOUlXCYagLo0qS5CySBex8fJ4
+X-Received: by 10.42.30.71 with SMTP id u7mr15664679icc.20.1400233897862; Fri,
+ 16 May 2014 02:51:37 -0700 (PDT)
+Received: by 10.43.89.66 with HTTP; Fri, 16 May 2014 02:51:37 -0700 (PDT)
+In-Reply-To: <20140515224658.GA1334@meili.valhalla.31bits.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249289>
 
-Jeff King wrote:
-> On Thu, May 15, 2014 at 03:56:29PM -0700, Junio C Hamano wrote:
-> 
-> > Two announcements for their version 0.2 on the list archive are not
-> > quite enough to advertise them to their users.
-> 
-> I do not think this README nor a mention in the release notes will get
-> their attention either, and many people (and packagers) will continue to
-> use the stale versions forever until those versions go away.
-> 
-> I would much rather _replace_ them with a README in the long run, and
-> people will notice that they are gone, and then use the README to update
-> their install procedure.
-> 
-> For 2.0, I am hesitant to do that, though I do not have a problem with a
-> README like this as a heads-up to prepare packagers for the future. I
-> say hesitant because people may have been test-packaging 2.0.0-rc3 in
-> preparation for release, and it will be annoying to them to suddenly
-> switch.
+On Fri, May 16, 2014 at 12:46 AM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> On Tue, May 13, 2014 at 10:30:48PM +0200, Per Cederqvist wrote:
+>> If you run something like "guilt header '.*'" the command would crash,
+>> because the grep comand that tries to ensure that the patch exist
+>> would detect a match, but the later code expected the match to be
+>> exact.
+>>
+>> Fixed by comparing exact strings.
+>>
+>> And as a creeping feature "guilt header" will now try to use the
+>> supplied patch name as an unachored regexp if no exact match was
+>> found.  If the regexp yields a unique match, it is used; if more than
+>> one patch matches, the names of all patches are listed and the command
+>> fails.  (Exercise left to the reader: generalized this so that "guilt
+>> push" also accepts a unique regular expression.)
+>>
+>> Signed-off-by: Per Cederqvist <cederp@opera.com>
+>> ---
+>>  guilt-header | 28 +++++++++++++++++++++++++---
+>>  1 file changed, 25 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/guilt-header b/guilt-header
+>> index 41e00cc..4701b31 100755
+>> --- a/guilt-header
+>> +++ b/guilt-header
+>> @@ -45,10 +45,32 @@ esac
+>>  [ -z "$patch" ] && die "No patches applied."
+>>
+>>  # check that patch exists in the series
+>> -ret=`get_full_series | grep -e "^$patch\$" | wc -l`
+>> -if [ $ret -eq 0 ]; then
+>> -     die "Patch $patch is not in the series"
+>> +full_series=`get_tmp_file series`
+>> +get_full_series > "$full_series"
+>> +found_patch=
+>> +while read x; do
+>> +     if [ "$x" = "$patch" ]; then
+>> +             found_patch="$patch"
+>> +             break
+>> +     fi
+>> +done < "$full_series"
+>
+> We have to use a temp file instead of a 'get_full_series | while read x; do ...'
+> because that'd create a subshell, correct?
 
-I agree, that's why I sent patches that:
+Yes. Also (and probably less importantly) we sometimes need to run grep on
+the same output (see the creation of TMP_MATCHES below) and it would
+be a bit wasteful to run get_full_series twice. (The assumption is that it is
+cheaper to create a temp file than to recompute the value. I have not measured
+this, though.)
 
- 1) Add a warning for v2.0 (which already has problems)
+>> +if [ -z "$found_patch" ]; then
+>> +     TMP_MATCHES=`get_tmp_file series`
+>> +     grep "$patch" < "$full_series" > "$TMP_MATCHES"
+>> +     nr=`wc -l < $TMP_MATCHES`
+>> +     if [ $nr -gt 1 ]; then
+>> +             echo "$patch does not uniquely identify a patch. Did you mean any of these?" >&2
+>> +             sed 's/^/  /' "$TMP_MATCHES" >&2
+>> +             rm -f "$TMP_MATCHES"
+>> +             exit 1
+>> +     elif [ $nr -eq 0 ]; then
+>> +             rm -f "$TMP_MATCHES"
+>> +             die "Patch $patch is not in the series"
+>> +     fi
+>> +     found_patch=`cat $TMP_MATCHES`
+>> +     rm -f "$TMP_MATCHES"
+>>  fi
+>> +patch="$found_patch"
+>
+> Do we not delete $full_series?
 
-    So everything keeps working as well as in the release candidates,
-    except a warning is introduced each time they do a fetch, push, or
-    clone operation (use the remote-helpers)
+Good catch. Will fix in the next version of the series.
 
- 2) Replace the tools with stubs
+I'll also rename the variable $TMP_FULL_SERIES to adhere
+to the apparent coding style. (But I will not fix guilt-patchbomb
+that uses $dir as a temporary variable.)
 
-    So when they try to fetch, push, or clone, they get an error, and
-    nothing else happens.
+    /ceder
 
-There's an additional README for the people that want to read more, but
-if you don't put stubs, users might try to do what worked before:
-
-  % git clone hg::http://selenic.com/repo/hello
-  fatal: Unable to find remote helper for 'hg'
-
-It's much better to report:
-
-  git-remote-hg is now maintained independently.
-  For more information visit https://github.com/felipec/git-remote-hg
-
-> But that being said, this is Felipe's code. While we have a legal right
-> to distribute it in v2.0, if he would really prefer it out for v2.0, I
-> would respect that.
-
-That's right, you have the legal right to distributed it.
-
-It is not my wish to disrupt v2.0, so I think adding a warning should be
-sufficient.
-
-Eventually I would prefer if they were not distributed, and replaced
-with stubs, not just because it would help the out-of-tree projects
-gather more visibility, but also because users would be better served by
-not having poorly maintained or unsynchronized code. Hopefully for v2.1.
-
-> I would prefer to instrument the code with warnings, as that is the sort
-> of thing a packager moving from -rc3 to -final might not notice, and
-> shipping the warnings to end users who did not package the software in
-> the first place will not help them. It is the attention of the packagers
-> (and source-builders) you want to get.
-> 
-> Of course that is all just my two cents, and is mostly predicated on
-> there _being_ packagers of the contrib/ tools. It looks like there is a
-> Debian package in RFP status, but I don't know if that is following the
-> new release closely. And I don't know about other systems.
-
-As far as I understand most distributions don't do anything special with
-contrib, they just put everything under /usr/share.
-
-It is unlikely packagers will notice any change in one of the dozens
-tools in contrib, so they'll make no changes to the packages.
-
-So if the user did:
-
- % ln -s /usr/share/git/remote-helpers/git-remote-hg ~/bin/git-remote-hg
-
-The expectation would be that this keeps working even if the package
-doesn't change (it just adds a warning). Eventually it will stop working
-with an error, but the package still won't change.
-
-The distributions that do something special about remote-helpers (AFAIK
-it's only debian's git-bzr) would need to change, and sooner or later
-they will if there's only stubs there.
-
-Cheers.
-
--- 
-Felipe Contreras
+>>
+>>  # FIXME: warn if we're editing an applied patch
+>>
+>> --
+>> 1.8.3.1
+>>
+>
+> --
+> OpenIndiana ibdm: 8 cores, 12 GB RAM
