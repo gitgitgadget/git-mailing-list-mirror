@@ -1,105 +1,127 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH v2 01/17] contrib: remove outdated README
-Date: Fri, 16 May 2014 07:20:44 -0500
-Message-ID: <5376029cc3c92_65ebfe530844@nysa.notmuch>
-References: <CACPiFCKpx9e-swWW4KEfY9YkG7s0uPTs_aftV-NbXGkvMqtf-A@mail.gmail.com>
- <53729ccf26bb0_34aa9e53047f@nysa.notmuch>
- <CAGK7Mr63X3+XXuRUEcBwwnwrOrbip8VUebtL-tM3R8PYBPEXuQ@mail.gmail.com>
- <5373c56c5c531_56d6e3b30449@nysa.notmuch>
- <xmqq38gcjcuw.fsf@gitster.dls.corp.google.com>
- <5373fc12bc5e4_7411589304eb@nysa.notmuch>
- <xmqq38gad51x.fsf@gitster.dls.corp.google.com>
- <5375c7934ccc6_7e7b772f8d5@nysa.notmuch>
- <20140516085929.GA546@wst420>
- <5375e6b0f45c_1a1b8d33080@nysa.notmuch>
- <20140516112517.GB546@wst420>
+From: Jeff Sipek <jeffpc@josefsipek.net>
+Subject: Re: [GUILT v2 12/29] "guilt header": more robust header selection.
+Date: Fri, 16 May 2014 08:55:01 -0400
+Message-ID: <20140516125501.GA1770@meili.valhalla.31bits.net>
+References: <1400013065-27919-1-git-send-email-cederp@opera.com>
+ <1400013065-27919-13-git-send-email-cederp@opera.com>
+ <20140515224658.GA1334@meili.valhalla.31bits.net>
+ <CAP=KgsRmmmUOoasPGpJ12RRBXQxu07FbELHbQw38-=DM6MfW3w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Philippe Vaucher <philippe.vaucher@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: William Giokas <1007380@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 16 14:31:54 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>
+To: Per Cederqvist <cederp@opera.com>
+X-From: git-owner@vger.kernel.org Fri May 16 14:55:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlHIm-0008MJ-NK
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 14:31:53 +0200
+	id 1WlHfH-0003wm-1K
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 14:55:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932356AbaEPMbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 08:31:48 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:60424 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932345AbaEPMbr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 08:31:47 -0400
-Received: by mail-ob0-f175.google.com with SMTP id wo20so2853955obc.6
-        for <git@vger.kernel.org>; Fri, 16 May 2014 05:31:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=IMFxUba/FzHoQx8yKKspex+l5C2PeSSNZX90ROlzgc0=;
-        b=FxzH4IMpZSgGqNxBZLfIHOHHBxTLVBzItSM2PBwmghF1+5bZmvdp6VhMFS9dQrFiE0
-         ATSufVLxc1n5sbgN2zfJ9OGouDRR9Zw6lKF5tLREAwEBiV/5iWf6FbFO5jfOVZd4ZG6o
-         QHJ4s09zNeXf76KMarVzv3M/m05GqWkZop9LBEqFBF3S1lZJO7MOCHCL9GcVoYcV3QeK
-         wGiFqwf65n1krne9IVaHd8jJDm0CoXMmNlw/mgY7MTDkiOenys5/RFKog7rnPRcfORqz
-         moLmdUok2SEX6aVb2MBLvu3u3xFIY288eD3fo6qe3Y5wffmpQp7t1jEXBnyiRPMi1gdd
-         8+hQ==
-X-Received: by 10.182.78.100 with SMTP id a4mr16892841obx.56.1400243507328;
-        Fri, 16 May 2014 05:31:47 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id b9sm4405501oel.4.2014.05.16.05.31.45
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 May 2014 05:31:46 -0700 (PDT)
-In-Reply-To: <20140516112517.GB546@wst420>
+	id S1754944AbaEPMy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2014 08:54:59 -0400
+Received: from josefsipek.net ([64.9.206.49]:1665 "EHLO josefsipek.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751789AbaEPMy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 08:54:57 -0400
+Received: from meili.valhalla.31bits.net (c-98-209-117-250.hsd1.mi.comcast.net [98.209.117.250])
+	by josefsipek.net (Postfix) with ESMTPSA id 4089A55654;
+	Fri, 16 May 2014 08:54:56 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CAP=KgsRmmmUOoasPGpJ12RRBXQxu07FbELHbQw38-=DM6MfW3w@mail.gmail.com>
+User-Agent: Mutt/1.5.22 (2013-10-16)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249299>
 
-William Giokas wrote:
-> On Fri, May 16, 2014 at 05:21:36AM -0500, Felipe Contreras wrote:
-> > How exactly would it be better?
-> > 
-> > If you concede that the Git release wouldn't be affected, then assuming
-> > a hypothetical future where git-remote-hg is bundled, and we have a
-> > Mercurial API breakage, we would have:
-> > 
-> >  Git < v2.5 fail, Git >= 2.5 get the fix
-> > 
-> > If we unbundle, we have:
-> > 
-> >  git-remote-hg < v0.5 fail, git-remote-hg >= v0.5 get the fix
-> > 
-> > What is the big difference?
+On Fri, May 16, 2014 at 11:51:37AM +0200, Per Cederqvist wrote:
+> On Fri, May 16, 2014 at 12:46 AM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> > On Tue, May 13, 2014 at 10:30:48PM +0200, Per Cederqvist wrote:
+> >> If you run something like "guilt header '.*'" the command would crash,
+> >> because the grep comand that tries to ensure that the patch exist
+> >> would detect a match, but the later code expected the match to be
+> >> exact.
+> >>
+> >> Fixed by comparing exact strings.
+> >>
+> >> And as a creeping feature "guilt header" will now try to use the
+> >> supplied patch name as an unachored regexp if no exact match was
+> >> found.  If the regexp yields a unique match, it is used; if more than
+> >> one patch matches, the names of all patches are listed and the command
+> >> fails.  (Exercise left to the reader: generalized this so that "guilt
+> >> push" also accepts a unique regular expression.)
+> >>
+> >> Signed-off-by: Per Cederqvist <cederp@opera.com>
+> >> ---
+> >>  guilt-header | 28 +++++++++++++++++++++++++---
+> >>  1 file changed, 25 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/guilt-header b/guilt-header
+> >> index 41e00cc..4701b31 100755
+> >> --- a/guilt-header
+> >> +++ b/guilt-header
+> >> @@ -45,10 +45,32 @@ esac
+> >>  [ -z "$patch" ] && die "No patches applied."
+> >>
+> >>  # check that patch exists in the series
+> >> -ret=`get_full_series | grep -e "^$patch\$" | wc -l`
+> >> -if [ $ret -eq 0 ]; then
+> >> -     die "Patch $patch is not in the series"
+> >> +full_series=`get_tmp_file series`
+> >> +get_full_series > "$full_series"
+> >> +found_patch=
+> >> +while read x; do
+> >> +     if [ "$x" = "$patch" ]; then
+> >> +             found_patch="$patch"
+> >> +             break
+> >> +     fi
+> >> +done < "$full_series"
+> >
+> > We have to use a temp file instead of a 'get_full_series | while read x; do ...'
+> > because that'd create a subshell, correct?
 > 
-> It's a matter of scope and where the releases happen, that is all.
+> Yes. Also (and probably less importantly) we sometimes need to run grep on
+> the same output (see the creation of TMP_MATCHES below) and it would
+> be a bit wasteful to run get_full_series twice. (The assumption is that it is
+> cheaper to create a temp file than to recompute the value. I have not measured
+> this, though.)
 
-Of course the core vs. out-of-tree question is a matter of where the
-releases happen. The question here was: in which way is out-of-tree a
-better place?
+I think this is a fair assumption.
 
-If it's a matter of scope, that is; should a foreign vcs interface tool
-be bundled in the Git core? Then that question applies not only to
-git-remote-hg/bzr, but also git-p4, git-cvs, git-svn, and others.
+> >> +if [ -z "$found_patch" ]; then
+> >> +     TMP_MATCHES=`get_tmp_file series`
+> >> +     grep "$patch" < "$full_series" > "$TMP_MATCHES"
+> >> +     nr=`wc -l < $TMP_MATCHES`
+> >> +     if [ $nr -gt 1 ]; then
+> >> +             echo "$patch does not uniquely identify a patch. Did you mean any of these?" >&2
+> >> +             sed 's/^/  /' "$TMP_MATCHES" >&2
+> >> +             rm -f "$TMP_MATCHES"
+> >> +             exit 1
+> >> +     elif [ $nr -eq 0 ]; then
+> >> +             rm -f "$TMP_MATCHES"
+> >> +             die "Patch $patch is not in the series"
+> >> +     fi
+> >> +     found_patch=`cat $TMP_MATCHES`
+> >> +     rm -f "$TMP_MATCHES"
+> >>  fi
+> >> +patch="$found_patch"
+> >
+> > Do we not delete $full_series?
+> 
+> Good catch. Will fix in the next version of the series.
+> 
+> I'll also rename the variable $TMP_FULL_SERIES to adhere
+> to the apparent coding style. (But I will not fix guilt-patchbomb
+> that uses $dir as a temporary variable.)
 
-The answer to the first question seems to be; it's not at all clear (in
-fact there doesn't seem to be any valid argument in favour of
-out-of-tree). The answer to the second question is; we are not asking
-that question right now (for the moment foreign vcs tools should remain
-part of the Git core).
+Ok.
 
-I started the graduation series by saying "there doesn't seem to be any
-good reason not to", and Junio agreed. Now Junio doesn't agree, but it's
-till the case there's no good reason not to.
+Thanks,
+
+Jeff.
 
 -- 
-Felipe Contreras
+*NOTE: This message is ROT-13 encrypted twice for extra protection*
