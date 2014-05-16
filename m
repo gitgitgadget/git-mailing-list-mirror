@@ -1,110 +1,137 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v10 05/44] refs.c: make ref_update_reject_duplicates take a strbuf argument for errors
-Date: Fri, 16 May 2014 10:36:53 -0700
-Message-ID: <1400261852-31303-6-git-send-email-sahlberg@google.com>
-References: <1400261852-31303-1-git-send-email-sahlberg@google.com>
-Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 16 19:40:34 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
+Date: Fri, 16 May 2014 11:07:51 -0700
+Message-ID: <CAPc5daWXdt5TMCxj_zSY6uwz5ndjism6HGbzQ8UxstO79z94OA@mail.gmail.com>
+References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com> <20140516084126.GB21468@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 16 20:08:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlM7U-0004gK-45
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 19:40:32 +0200
+	id 1WlMYL-0001p8-V2
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 20:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758153AbaEPRkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 13:40:19 -0400
-Received: from mail-pa0-f73.google.com ([209.85.220.73]:57645 "EHLO
-	mail-pa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756321AbaEPRhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 13:37:37 -0400
-Received: by mail-pa0-f73.google.com with SMTP id lj1so522342pab.4
-        for <git@vger.kernel.org>; Fri, 16 May 2014 10:37:37 -0700 (PDT)
+	id S1757591AbaEPSIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2014 14:08:14 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:60726 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757536AbaEPSIN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 14:08:13 -0400
+Received: by mail-lb0-f174.google.com with SMTP id n15so2199052lbi.5
+        for <git@vger.kernel.org>; Fri, 16 May 2014 11:08:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FtqjY58VsCT6K38XEvPQTfH/QlCJC8PYeBCU+o/ylLU=;
-        b=a7Bwf2hMHxMj+fTAQ1jMPIIisga05clCGWFp2VBrS3pmSvuTiY6xlJRKcLbO/AJqIw
-         57YEEmVz1niKVu2KLCdGpZJ1KzX7b+7M1G8e8r6dG89cgMZXj67cfRUZiUReERwJihFa
-         geLVdhHgNe+gh24+bjKj74vB69+QsvK0xDA4SVLiqz2y7IbEzeVbZS4e81CVwOfQ/aKs
-         hXPWJTSscd0hStzmfkGMK0BTvSq+LM4Pk0mJUk/hT0DF/3esL/lModi6Ru13Z8HxttRJ
-         9QmPbl6B3Atz9nekHWmkAnmft1kLveloyD+Tp97Doyx+CcSIWGT9tQWJ7fTVKnNwsr/T
-         LnIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=FtqjY58VsCT6K38XEvPQTfH/QlCJC8PYeBCU+o/ylLU=;
-        b=VSuocyylNDbfVDb0ti1vsLv0yuBZZUlAx27h5noY/UtOm9VJ86gkTII4LjzTrJmBj0
-         5VvQV6nUq9h/NUOOhI8T2t1EHn6SbDaFYVx0bPht2Vvi1iK9DSmsVrv8kxReQBx1dyAE
-         bhQa3yqQlzhcPyCol5+rC0OpPMoyAVJKKpwmqD0B7Fq8uVkeNlbdhYMfOdbmzWvGY3KB
-         98hxHEQOLVCC2Ow0lOxCouYkTpRxf2yTxeFhcnPqU8sUEXdVQXDdTkfQ3lrrdkn1Wy48
-         23hBqZ85sQhbgBxvgWYZBwawXoC/TFCMVI8uJJP2Zm1efQDwSh0pY74n+zgZi0iGOhf0
-         XsJA==
-X-Gm-Message-State: ALoCoQkTTIa2QE4nwZSyEgLqYJTVvAUhNqfAJ2BP6tx/Av0de365OHA9wygPA03LIUilaCMg3yzX
-X-Received: by 10.66.222.129 with SMTP id qm1mr8645089pac.6.1400261856999;
-        Fri, 16 May 2014 10:37:36 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id k43si442526yhq.3.2014.05.16.10.37.36
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 16 May 2014 10:37:36 -0700 (PDT)
-Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id CCB7E31C211;
-	Fri, 16 May 2014 10:37:36 -0700 (PDT)
-Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 8114BE0EC6; Fri, 16 May 2014 10:37:36 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.rc3.510.g20c254b
-In-Reply-To: <1400261852-31303-1-git-send-email-sahlberg@google.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=rm/ZIusYkDIHfkGc1c0yD0bVuBlhJ4+wrT9dq/hdrus=;
+        b=yCPjjwiX4QIr1aclpkyzgnOGiTRZ4YFvA/FVBv3bRzFwVIvjNqbr3Nh6gJ9PfZaDKy
+         tn8IkfH7ZvB7UY5lpcamH1VkKGsf+OkmVGKH7ASrR6SEW9w0gS5x9Zu4kt9UtG3aYYUA
+         M83plBSzWr7dQApWfKnsA56T/jMUZeohTRyGp4RSnuRYyqhP9vJZ3L7lOzdSXkRvFWok
+         vfkQabPT6o3hTeEhOmlvcJcCXXgTzMKNsQ1a7qrf3qsZDGSd4k9jG2os9QfsXB2cdvSN
+         OTy0o2ZrdcPVG2EjmGhj/eZz9pBcgHnczwg84NCympYCPizXwq63WgXAjTUK4YGfEWNK
+         Qf5g==
+X-Received: by 10.112.35.202 with SMTP id k10mr12456499lbj.14.1400263691710;
+ Fri, 16 May 2014 11:08:11 -0700 (PDT)
+Received: by 10.112.17.98 with HTTP; Fri, 16 May 2014 11:07:51 -0700 (PDT)
+In-Reply-To: <20140516084126.GB21468@sigill.intra.peff.net>
+X-Google-Sender-Auth: iwrNU5szZy2YiPyfQXJFxKR05VU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249401>
 
-Make ref_update_reject_duplicates return any error that occurs through a
-new strbuf argument. This means that when a transaction commit fails in
-this function we will now be able to pass a helpful error message back to the
-caller.
+(Sorry if you receive a dup; pobox.com seems to be constipated right now).
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- refs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Jeff King <peff@peff.net> writes:
 
-diff --git a/refs.c b/refs.c
-index a470e51..57ec72a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3410,6 +3410,7 @@ static int ref_update_compare(const void *r1, const void *r2)
- }
- 
- static int ref_update_reject_duplicates(struct ref_update **updates, int n,
-+					struct strbuf *err,
- 					enum action_on_err onerr)
- {
- 	int i;
-@@ -3417,6 +3418,9 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
- 		if (!strcmp(updates[i - 1]->refname, updates[i]->refname)) {
- 			const char *str =
- 				"Multiple updates for ref '%s' not allowed.";
-+			if (err)
-+				strbuf_addf(err, str, updates[i]->refname);
-+
- 			switch (onerr) {
- 			case UPDATE_REFS_MSG_ON_ERR:
- 				error(str, updates[i]->refname); break;
-@@ -3447,7 +3451,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 
- 	/* Copy, sort, and reject duplicate refs */
- 	qsort(updates, n, sizeof(*updates), ref_update_compare);
--	ret = ref_update_reject_duplicates(updates, n, onerr);
-+	ret = ref_update_reject_duplicates(updates, n, err, onerr);
- 	if (ret)
- 		goto cleanup;
- 
--- 
-2.0.0.rc3.510.g20c254b
+> On Thu, May 15, 2014 at 03:56:29PM -0700, Junio C Hamano wrote:
+>
+>> Two announcements for their version 0.2 on the list archive are not
+>> quite enough to advertise them to their users.
+>
+> I do not think this README nor a mention in the release notes will get
+> their attention either, and many people (and packagers) will continue to
+> use the stale versions forever until those versions go away.
+>
+> I would much rather _replace_ them with a README in the long run, and
+> people will notice that they are gone, and then use the README to update
+> their install procedure.
+>
+> For 2.0, I am hesitant to do that, though I do not have a problem with a
+> README like this as a heads-up to prepare packagers for the future. I
+> say hesitant because people may have been test-packaging 2.0.0-rc3 in
+> preparation for release, and it will be annoying to them to suddenly
+> switch.
+
+I share the latter two of the above three.  I was giving distro
+packagers a bit more credit for their diligence in knowing what they
+are packaging than you seem to be in your first point, but I admit
+that it is a blind faith.
+
+> But that being said, this is Felipe's code. While we have a legal right
+> to distribute it in v2.0, if he would really prefer it out for v2.0, I
+> would respect that.
+
+I am fine with that.
+
+> I would prefer to instrument the code with warnings, as that is the sort
+> of thing a packager moving from -rc3 to -final might not notice, and
+> shipping the warnings to end users who did not package the software in
+> the first place will not help them. It is the attention of the packagers
+> (and source-builders) you want to get.
+
+I do agree that a new warning every time it is run will be a more
+likely to grab users' attention.  The conclusion I draw from that
+shared observation is that the user will be annoyed all the time,
+without having a power to do anything about the annoyance, until the
+report s/he (or other users) Throw at the packager, even when the
+version that was packaged hasn't diverged that much yet, which does
+not help end users.
+
+I guess the ideal we want is to make sure their build break.  What
+if we do the README in addition to rename contrib/remote-helpers to
+contrib/obsolete-remote-helpers (or s/obsolete/graduated/)?  It will
+give the packagers three choices and I think it hurts people much
+less.
+
+ * The packagers that dump the entirety of contrib/ to somewhere
+   without doing anything to expose the scripts to user's PATH do
+   not have to do anything.  The users who chose to pick them up
+   from there notice the missing contrib/remote-helpers, notice
+   "obsolete" (or "graduated"), and read README.
+
+ * The packagers that pick up from contrib/remote-helpers and
+   arrange the scripts to be on user's PATH will find their build
+   broken, because they are no longer where they expect them to be.
+   They will notice "obsolete"(or "graduated"), and read README.
+
+   - They can choose to pick them up from "obsolete", perhaps for
+     expediency, perhaps for their change aversion, but that will
+     not last once we grabbed their attention, and they will switch
+     their upstream in some later release once such a choice makes
+     them feel dirty enough.
+
+   - They can choose to switch their upstream right now in response
+     to the breakage.
+
+I would say that the options I see are these three, and I would rank
+the "warn every time" as less helpful to end-users:
+
+ - rename contrib/remote-helpers to contrib/obsolete-remote-helpers
+   and add README to point at the upstream.
+
+ - remove contrib/remote-helpers scripts and add README.
+
+ - warn every time the user runs the scripts.
+
+Or am I reacting to a typo and you meant to say "I would prefer not
+to instrument"?  Your "shipping the warnings to end users who did
+not package the software will not help" was unclear if you meant the
+README that has warning or warning message they have to see every
+time from the instrumented code.
