@@ -1,122 +1,105 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] t4205, t6006: Add failing tests for the case when i18n.logOutputEncoding is set
-Date: Fri, 16 May 2014 11:49:40 -0700
-Message-ID: <xmqqfvk9a797.fsf@gitster.dls.corp.google.com>
-References: <cover.1400254654.git.Alex.Crezoff@gmail.com>
-	<c4c360c3e6760128ae1326b7463da7130b01a7e9.1400254654.git.Alex.Crezoff@gmail.com>
+Subject: Re: [PATCH] commit: switch core.commentChar if it's found in existing commit
+Date: Fri, 16 May 2014 11:53:54 -0700
+Message-ID: <xmqqbnuxa725.fsf@gitster.dls.corp.google.com>
+References: <CACsJy8DSqeAnCMCawsh-58=B1z93tBCVb+x8XAAUZ17Y1ZaJKA@mail.gmail.com>
+	<1400237982-5842-1-git-send-email-pclouds@gmail.com>
+	<xmqqzjihab2b.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Alexey Shumkin <alex.crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 16 21:02:46 2014
+Cc: git@vger.kernel.org, Michal Stasa <michal.stasa@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 16 21:04:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlNP2-0007Wg-L3
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 21:02:44 +0200
+	id 1WlNQS-0002g5-69
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 21:04:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932424AbaEPTCk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 15:02:40 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63991 "EHLO smtp.pobox.com"
+	id S932449AbaEPTEH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 15:04:07 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50768 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757760AbaEPTCk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 May 2014 15:02:40 -0400
+	id S932431AbaEPTEF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2014 15:04:05 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8688A13653;
-	Fri, 16 May 2014 15:02:39 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3B1D313745;
+	Fri, 16 May 2014 15:04:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=X5jTqj561qhS
-	12cO7Gt9zjUFD4U=; b=CdakHCJ1cAEeVCPlXLcJrwc6rt3XvA+zRBs5k5Vh71sG
-	gTeHqZUSebiLuMG66IMVxbJ0ENTiIsyfJLvW0lZ6hGKxbL9QuiPSrPBKJmoWOuBS
-	4pE5OuPK0u4AmQTMHjCWU5OeAVv05IJozrO6+kzqXEVpHn3mmmMPPVjw5Z1D7Oo=
+	:content-type:content-transfer-encoding; s=sasl; bh=9vIVhC7ooTtS
+	A66dtTCd/uU6lMs=; b=EfFmhK2PmGiZQ3jkjyX5qNwNTFSu3TjTS18dxJKj0O/e
+	jYKKKgbAtHAeHNp+SUJe8DlVt0YVo+6LedOGOrwgl5GusMt0EPAcsY/e8cNV7P+E
+	Vh6pThWGo37tAkbueP4/Un7WnsYuydJDZaL1b29qr80jFUIfrog9C+6Cmkdy6yQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jJCrMg
-	oFoISlpb8sFUaYZaSqIALhTW0m3D9u1XOtOmIC0GQRkQ7sfAR+WBhBdU8SU0sTl1
-	cZvbNIXCv4pJPxsxBr0XJpbNvUAUs6B50+4RheMqd1vimNOEbmmtm+jNf/PGIIcv
-	LlKAX1n0cEaPrcQ3HL4FPs5nn7vnJnHvEQntE=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EmVIgX
+	qg0t8aRXJGncSLfRR35j5aGi25G5hQq0e6nQXDUJWOzGxGfcVGfseuQ6fyn3JWpa
+	uOwLjUDZ7HzfQndt5Er9R6dRalJyfaxcJ4ifPPdxs8hPmpum6/Z2xqqec366QTHg
+	bg9SM3+WW3wgwlvr9dInnIwU95M5Roq5wxoKQ=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7962B13652;
-	Fri, 16 May 2014 15:02:39 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2EACB13744;
+	Fri, 16 May 2014 15:04:05 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AF0A417CC2;
-	Fri, 16 May 2014 14:49:41 -0400 (EDT)
-In-Reply-To: <c4c360c3e6760128ae1326b7463da7130b01a7e9.1400254654.git.Alex.Crezoff@gmail.com>
-	(Alexey Shumkin's message of "Fri, 16 May 2014 19:40:32 +0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EA17617FBF;
+	Fri, 16 May 2014 14:53:55 -0400 (EDT)
+In-Reply-To: <xmqqzjihab2b.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 16 May 2014 10:27:24 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D708B78A-DD2A-11E3-8CEB-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 6E9299EA-DD2B-11E3-9463-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249413>
 
-Alexey Shumkin <alex.crezoff@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Pretty format string %<(N,[ml]trunc)>%s truncates subject to a given
-> length with an appropriate padding. This works for non-ASCII texts wh=
-en
-> i18n.logOutputEncoding is UTF-8 only (independently of a printed comm=
-it
-> message encoding) but does not work when i18n.logOutputEncoding is NO=
-T
-> UTF-8.
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
-> There were no breakages as far as were no tests for the case
-> when both a commit message and logOutputEncoding are not UTF-8.
+>> If we need to use core.commentChar and it's already in the prepared
+>> message, find another char among a small subset. This should stop
+>> surprises because git strips some lines unexpectedly. Of course if
+>> candicate characters happen to be all out, this change does not help=
+=2E
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>>  On Fri, May 16, 2014 at 5:28 PM, Duy Nguyen <pclouds@gmail.com> wro=
+te:
+>>  > But maybe git should detect that the
+>>  > current commit message has leading '#' and automatically switch t=
+o
+>>  > another character..
+>>
+>>  Something like this. Lightly tested.. I know there's a small bug..
+>>
+>>  builtin/commit.c | 29 +++++++++++++++++++++++++++++
+>>  1 file changed, 29 insertions(+)
+>>
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index 6ab4605..70ceb61 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -593,6 +593,32 @@ static char *cut_ident_timestamp_part(char *str=
+ing)
+>>  	return ket;
+>>  }
+>> =20
+>> +static void adjust_comment_line_char(const struct strbuf *sb)
+>> +{
+>> +	char candidates[] =3D " !@#$%^&|:;~";
 >
-> Add failing tests for that which will be fixed in the next patch.
->
-> Signed-off-by: Alexey Shumkin <Alex.Crezoff@gmail.com>
-> Reviewed-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-> ---
->  t/t4205-log-pretty-formats.sh | 169 ++++++++++++++++++++++++++++++++=
-++++++++++
->  t/t6006-rev-list-format.sh    |  75 ++++++++++++++++++-
->  2 files changed, 242 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-forma=
-ts.sh
-> index 2a6278b..6791e0d 100755
-> --- a/t/t4205-log-pretty-formats.sh
-> +++ b/t/t4205-log-pretty-formats.sh
-> @@ -153,6 +153,19 @@ EOF
->  	test_cmp expected actual
->  '
-> =20
-> +test_expect_success 'left alignment formatting. i18n.logOutputEncodi=
-ng' '
-> +	git -c i18n.logOutputEncoding=3Diso8859-1 log --pretty=3D"format:%<=
-(40)%s" >actual &&
-> +	# complete the incomplete line at the end
-> +	echo >>actual &&
+> Did you really mean to add a SP to the candidates?
 
-Would it change the meaning of the test if you used tformat: instead
-of format: (or --format=3D"%<(40)%s")?  If it doesn't, it would make
-it unnecessary to append an extra LF and explain why you do so.
-
-> +	qz_to_tab_space <<EOF | iconv -f utf-8 -t iso8859-1 >expected &&
-
-It is minor but many existing uses of iconv in our tests spell these
-as UTF-8 and ISO8859-1 in uppercase.  I vaguely recall there was a
-portability concern to favor the ones that are used in existing
-tests, but probably it no longer matters (I see you added the
-lowercase one with de6029a2 mid last year), so I am fine if these
-stay lowercase.
-
-> +	git -c i18n.logOutputEncoding=3Diso8859-1 log --pretty=3D"format:%<=
-(1)%s" >actual &&
-> +	# complete the incomplete line at the end
-> +	echo >>actual &&
-
-Likewise for all the other "--pretty=3Dformat:" followed by an echo.
-
-Thanks.
+Please ignore this noise.  I realized that the SP is there only to
+be overwritten in the meantime, and this is an old message sent out
+before that realization, just emerging from my mail provider's
+outbox.
