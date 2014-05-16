@@ -1,76 +1,84 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [git-users] worlds slowest git repo- what to do?
-Date: Fri, 16 May 2014 17:13:11 +0700
-Message-ID: <CACsJy8CmiW88tNavRphZa_uMU=jVUCQE6cw5+t2AYnf5dDmcsQ@mail.gmail.com>
-References: <5374F7C6.5030205@gmail.com> <06A2490FC9BC4461A39B982D3C7C85F7@PhilipOakley>
+From: Michal Stasa <michal.stasa@gmail.com>
+Subject: Fwd: [Bug] - Processing commit message after amend
+Date: Fri, 16 May 2014 12:18:07 +0200
+Message-ID: <CALy3b+m7YkYB+mPEnAQnjKFAwUS_PqCUFtuxzN7hwhmNfMrw3Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git-users@googlegroups.com, Git List <git@vger.kernel.org>,
-	Philip Oakley <philipoakley@iee.org>
-To: John Fisher <fishook2033@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 16 12:13:48 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 16 12:18:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlF99-0001JS-7p
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 12:13:47 +0200
+	id 1WlFDS-0004wt-0I
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 12:18:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756824AbaEPKNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 06:13:43 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:43531 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756286AbaEPKNm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 06:13:42 -0400
-Received: by mail-qg0-f42.google.com with SMTP id q107so3887827qgd.1
-        for <git@vger.kernel.org>; Fri, 16 May 2014 03:13:42 -0700 (PDT)
+	id S1756890AbaEPKSJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 06:18:09 -0400
+Received: from mail-ve0-f178.google.com ([209.85.128.178]:44636 "EHLO
+	mail-ve0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756802AbaEPKSI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 16 May 2014 06:18:08 -0400
+Received: by mail-ve0-f178.google.com with SMTP id sa20so2791462veb.23
+        for <git@vger.kernel.org>; Fri, 16 May 2014 03:18:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=5ywFX942KsS+sPASNT97o4pZ2BKJ+Abe0mXo4Curr4U=;
-        b=s3S1U7tOMaOh3A4rQTu1JOBcdnmDvPxNEiSbIeEOZk9os9YCU/DLXW4aIRCh6FqQod
-         07YAUvHSKExHNwn1jbKy4zeXzLSXVFMqCbfAS1C32vpRi5GAk0wwQMQy3vG6MTU3t2yl
-         IcMOurAe8nccmjPcioPf5AhydH20TRcWRzltjZqgkCJAAhA2Q7kD8GL1+sQ6RJQsdYxC
-         4iW12acaaDX9EvydTluNy7aLROSx0/54pTrAtpzKw6gZeNaXKywhDiRJ6jcOrY5iYxW2
-         9QO9PV8QuWHFwLleMJ6+8/NammkMlC+RJj+5TI7+N4mPJSrq5gR5oGRW0DRLFd9GCbUT
-         lOOg==
-X-Received: by 10.140.107.198 with SMTP id h64mr22489349qgf.30.1400235222001;
- Fri, 16 May 2014 03:13:42 -0700 (PDT)
-Received: by 10.96.138.9 with HTTP; Fri, 16 May 2014 03:13:11 -0700 (PDT)
-In-Reply-To: <06A2490FC9BC4461A39B982D3C7C85F7@PhilipOakley>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=IBQCnqC4uKi+36mV6jw3kzw+nfd/i9gLyjs9CG0vf6A=;
+        b=hcfdmZHvOywv+r0OgS4iWjyPBpHwulY/+yixRXvRitAO+SISSOGyxW+OIJ8t0dfiCZ
+         96fsxZLvqQFVvsVd9bHyh6wm8Ix+undjfPF7acwWGdc9uRTDDVmKLB2mv2xDuBYBOmvz
+         YUmGTv6CZ72Kk+SCk+j+3HUsVgU4bEbj5ItHZP8giC7UVczZtWO0Axzt89sU7/lBluK5
+         bIvODR93SkmLg0ZlnepcKq3fhERdwkSVPIQIsys7MnMyISno5lJwsBBbAHJvbK8Zc0Ma
+         +tdBy3ozbWyX1L6rLkkK1ORaAoR8ZjexYVvHYAoMXCBsCy6n5jrwCcW21wSiCoQuoKt8
+         joFw==
+X-Received: by 10.221.20.199 with SMTP id qp7mr13402479vcb.24.1400235487807;
+ Fri, 16 May 2014 03:18:07 -0700 (PDT)
+Received: by 10.58.37.97 with HTTP; Fri, 16 May 2014 03:18:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249291>
 
-On Fri, May 16, 2014 at 2:06 AM, Philip Oakley <philipoakley@iee.org> wrote:
-> From: "John Fisher" <fishook2033@gmail.com>
->>
->> I assert based on one piece of evidence ( a post from a facebook dev) that
->> I now have the worlds biggest and slowest git
->> repository, and I am not a happy guy. I used to have the worlds biggest
->> CVS repository, but CVS can't handle multi-G
->> sized files. So I moved the repo to git, because we are using that for our
->> new projects.
->>
->> goal:
->> keep 150 G of files (mostly binary) from tiny sized to over 8G in a
->> version-control system.
+Hi,
 
-I think your best bet so far is git-annex (or maybe bup) for dealing
-with huge files. I plan on resurrecting Junio's split-blob series to
-make core git handle huge files better, but there's no eta on that.
-The problem here is about file size, not the number of files, or
-history depth, right?
+I have stumbled on a weird bug. At work, we use redmine as an issue
+tracker and its task are marked by a number starting with #. When I
+commit some work and write #1234 in the message, it works. However,
+later on when I remember that I forgot to add some files and amend the
+commit, vim appears and I cannot perform the commit because the
+message starts with # which is a comment in vim and thus I get an
+error that my commit message is empty.
 
->> problem:
->> git is absurdly slow, think hours, on fast hardware.
+Steps to reproduce:
+1) commit a file
+git commit File1.txt -m "#1234 documentation added"
 
-Probably known issues. But some elaboration would be nice (e.g. what
-operation is slow, how slow, some more detail characteristics of the
-repo..) in case new problems pop up.
--- 
-Duy
+2) amend previous commit
+git commit File2.txt -- amend
+
+3) go for :wq right away
+
+4) an error that the message is empty appears
+"Aborting commit due to empty commit message"
+
+However, if you use amend and no edit option, it works
+git commit --amend --no-edit
+
+We use git for Windows downloaded here:
+http://git-scm.com/downloads
+
+The problem appears in Windows command line. I have not tested it
+anywhere else. The OS is Windows Server 2008 R2 Datacenter.
+
+Cheers from cloudy Prague
+Michal Sta=C5=A1a
+
+Santhos.net
+www.santhos.net
+
++420 773 454 793
+michal.stasa@santhos.net
