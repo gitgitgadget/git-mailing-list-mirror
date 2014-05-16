@@ -1,98 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/10] git-submodule.sh: don't use the -a or -b option with the test command
-Date: Fri, 16 May 2014 12:09:29 -0700
-Message-ID: <xmqq7g5la6c6.fsf@gitster.dls.corp.google.com>
-References: <1400163457-28285-1-git-send-email-gitter.spiros@gmail.com>
-	<1400163457-28285-10-git-send-email-gitter.spiros@gmail.com>
-	<20140515155821.GA27279@google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v8 23/44] fetch.c: change s_update_ref to use a ref
+ transaction
+Date: Fri, 16 May 2014 12:12:31 -0700
+Message-ID: <20140516191231.GE12314@google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+ <1400174999-26786-24-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 16 21:09:43 2014
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
+	Jeff King <peff@peff.net>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Fri May 16 21:12:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlNVj-0008Fb-EC
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 21:09:39 +0200
+	id 1WlNYd-0007Oy-CM
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 21:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S2992466AbaEPTJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 May 2014 15:09:35 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53448 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S2992446AbaEPTJe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 May 2014 15:09:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B0DC13A5B;
-	Fri, 16 May 2014 15:09:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+3ZQhnivgpRInpS95Cw60z7+OLg=; b=yBjyjF
-	KLFX1zmanBH/xsVSLHJ8C96xSMmIv1pm0c4t4v9EhHj+QICGWmFEMNMIlM6Y83Dt
-	zP6kKdfmDrtSb4FjJe/WJn/Q4bsUfmyX6DJ/r/1ZO5p3JsMjXIoN7F1EqrKCF9wv
-	6tx5NLe/lUy5E2KgTq3ZFMeoS2BCBQRRBFl+E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nZlmyVUsFZDNFR1Zh66wmpAIoXQb695h
-	2B/RL2ynGyAgnY8OjQJ9aWlszu2bQLABnbgPc1zJw6gSmHtJTfvudJ5z0ff8GwB+
-	+KhdQWctpEZUHtK+mSNtrFtE2Y58WnjgphfKd7Ehj7ON87t/F4IoUrE3REbEhqLh
-	m1jjTz82c+Y=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4F02B13A5A;
-	Fri, 16 May 2014 15:09:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8C13513A58;
-	Fri, 16 May 2014 15:09:31 -0400 (EDT)
-In-Reply-To: <20140515155821.GA27279@google.com> (Jonathan Nieder's message of
-	"Thu, 15 May 2014 08:58:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9C3E1F98-DD2D-11E3-B212-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+	id S932420AbaEPTMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2014 15:12:35 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:53333 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932165AbaEPTMe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 15:12:34 -0400
+Received: by mail-pa0-f54.google.com with SMTP id bj1so2941632pad.13
+        for <git@vger.kernel.org>; Fri, 16 May 2014 12:12:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=csDqN0J0zhcT+r0nWqLMkumDb9bvZNihONtvUuvDyLk=;
+        b=Oxg0uMcXsWyGIJRDQO5fY/HLIPoFVAdNKcSeI7lnjjRxjmX1EUQnj9sysV0bxR4vN0
+         97q0aLs/uXFl/oSnubXKsSjIbWlUI3I4viza2YvOm/+tIRWvrhSR9cFpw/OcgC+u0SvM
+         HaP+CRhtqWZvBQht5ASZ9qJOxnVheQw3VisF7oypCLX6mp3QxVlwTNPUEDJtIkO2bqdM
+         obQkNNKUJG3CoOlzuf34NanT/o+SmYiBI2M/UTouEPoiEBt0OXjCgVU0Z+FCMSIexkyz
+         UJJ3tCgGgIpmt0M02ip0fScdZs4VgAHscOSQUb2z+87+KNRuGIEwGGy/ClA/OsPZXZVl
+         TxYQ==
+X-Received: by 10.68.231.35 with SMTP id td3mr22949447pbc.137.1400267554435;
+        Fri, 16 May 2014 12:12:34 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id av2sm15921389pbc.16.2014.05.16.12.12.33
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 16 May 2014 12:12:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1400174999-26786-24-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249415>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+(+cc: peff for STORE_REF_ERROR_DF_CONFLICT expertise)
+Ronnie Sahlberg wrote:
 
-> Perhaps something like the following would work?
->
-> 	tree-wide: convert test -a/-o to && and ||
->
-> 	The interaction with unary operators and operator precedence
-> 	for && and || are better known than -a and -o, and for that
-> 	reason we prefer them.  Replace all existing instances in git
-> 	of -a and -o to save readers from the burden of thinking
-> 	about such things.
->
-> 	Add a check-non-portable-shell.pl to avoid more instances of
-> 	test -a and -o arising in the future.
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -375,7 +375,7 @@ static int s_update_ref(const char *action,
+[...]
+> +	transaction = ref_transaction_begin();
+> +	if (!transaction ||
+> +	    ref_transaction_update(transaction, ref->name, ref->new_sha1,
+> +				   ref->old_sha1, 0, check_old) ||
+> +	    ref_transaction_commit(transaction, msg, NULL)) {
+> +		ref_transaction_rollback(transaction);
+>  		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
+>  					  STORE_REF_ERROR_OTHER;
+> +	}
 
-Yeah, the title is certainly better than "-a or -b option" I see
-above ;-) and a single tree-wide fix may be OK while the tree is
-quiescent.
+I'd rather not rely on errno here (see the previous patch for why).
+Is there some other way to distinguish the case where a ref couldn't
+be created because there was a prefix of that ref in the way?
 
-I however do think "better known" is much less of an issue than that
-"-a/-o" is more error prone e.g. 'test -n "$x" -a a = b' is buggy
-because it does not consider that $x could be "=".
+For example, maybe ref_transaction_commit could return a different
+negative integer in this case.
 
-
-
-> [...]
->> -			test $status = D -o $status = T && echo "$sm_path" && continue
->> +			 ( test $status = D || test $status = T ) && echo "$sm_path" && continue
->
-> There's no need for a subshell for this.  Better to use a block:
->
-> 			{
-> 				test "$status" = D ||
-> 				test "$status" = T
-> 			} &&
-> 			echo "$sm_path" &&
-> 			continue
-
-Yes.
+Thanks,
+Jonathan
