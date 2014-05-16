@@ -1,88 +1,120 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
-Date: Fri, 16 May 2014 11:17:18 -0700
-Message-ID: <CAPc5daUzcQvPCY8UQE4-OuNOswKxTMBNTddGV9YWXwONXoV3Qg@mail.gmail.com>
-References: <20140514184145.GA25699@localhost.localdomain> <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
- <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
- <20140515050820.GA30785@localhost.localdomain> <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
- <20140515184808.GA7964@localhost.localdomain> <CANQwDwe+GJ+yAYWdVfMaHq97zGXBoepCfUdLiaQD9LFoz3SiOA@mail.gmail.com>
- <xmqqmweiessl.fsf@gitster.dls.corp.google.com> <CANQwDwffdbqD96OadyECFs=6WY_t+_0b63L5yAZVQ8aXrMvHHA@mail.gmail.com>
- <xmqqmweibjjo.fsf@gitster.dls.corp.google.com> <CANQwDwe8Eb+ORiRyuq3+kKw72Jath_DGySmws1Rvt8bmuHoXVw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Wagner <accounts@mwagner.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	git <git@vger.kernel.org>
-To: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 16 20:17:45 2014
+Subject: [PATCH] request-pull: resurrect for-linus -> tags/for-linus DWIM
+Date: Fri, 16 May 2014 10:57:50 -0700
+Message-ID: <1400263070-15312-1-git-send-email-gitster@pobox.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 16 20:25:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlMhU-0007Iq-GX
-	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 20:17:44 +0200
+	id 1WlMpH-0002Nv-O9
+	for gcvg-git-2@plane.gmane.org; Fri, 16 May 2014 20:25:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757253AbaEPSRk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 May 2014 14:17:40 -0400
-Received: from mail-lb0-f170.google.com ([209.85.217.170]:61908 "EHLO
-	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755964AbaEPSRk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 May 2014 14:17:40 -0400
-Received: by mail-lb0-f170.google.com with SMTP id w7so2235549lbi.1
-        for <git@vger.kernel.org>; Fri, 16 May 2014 11:17:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=lzZ1GURs9Qob/eBLudc7xFVhpGjkuKXXBXMfmM8rVCE=;
-        b=qWXPqa57GU34r6Z6J27bzZs04/12rTGl5H5YppUmWSgevYhRCiS65pIIUC2J+HBa+X
-         IYFyHexe9mYT6/TxWpqmCuv4lnPOJ7VhIAsCNuIaBAetydYtLVLFfairg9S9F9Eg/Q2U
-         oISnPyk1jW1B1IQL71caJOSL8F0bHO9ga+7Fm22i3YFMRjsLOIsLFdrW/giyXuzP+3MB
-         Du1bTvDL+9nr4Va6oIIi0bV0vTNxvmLQAF1peO8lCWGGPI5aHjyjGPXGm3Gvl2s7moBL
-         JkS336KlQA8pjzD12HQ4y3y7nFG/PG8P9bhRlOIx/vhsBsnR9P1zU2SuZUbBNlpvd1Jk
-         D+Vw==
-X-Received: by 10.112.217.10 with SMTP id ou10mr12478297lbc.20.1400264258492;
- Fri, 16 May 2014 11:17:38 -0700 (PDT)
-Received: by 10.112.17.98 with HTTP; Fri, 16 May 2014 11:17:18 -0700 (PDT)
-In-Reply-To: <CANQwDwe8Eb+ORiRyuq3+kKw72Jath_DGySmws1Rvt8bmuHoXVw@mail.gmail.com>
-X-Google-Sender-Auth: Q_1bPlREeyeMUBwVPLEt-mziftE
+	id S1757714AbaEPSZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 May 2014 14:25:44 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51436 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751592AbaEPSZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 May 2014 14:25:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 238D619CA1;
+	Fri, 16 May 2014 14:25:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; s=sasl; bh=XUSp8MHu7CLzILSjnO0NhkIBFe0
+	=; b=GsJHSWGPDxXw2rn/S38kjyfu3Bv8C8B9N1RJFOyKkzzGxfFYfTUCXAXT+aL
+	+Z3oi3y/OnJCuaZaPpaPYnrnCnz9AYZX/93DNK3BGNKFn1cs0Cpar+1ykZfcjI4a
+	x6MzMjXPl0IREagV/gufNsTFZQxzTN/0v0rt0OSN7nBNKBR0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; q=dns; s=sasl; b=SIdW6zGzXRw3UtNipJn7R
+	5Qwm+DlAGRGXFmktWF5x/XSP+APzMXImSfXEPlIQNmFeqMADlUoN0dTw7jnf91LB
+	w7S8sUaUUEGTT0jJFzhdvXQcIbiHnXksyMyUZNyA2/2hjZkq43FnDdMWDwi4t09g
+	+Hg4yBozyBnjsziSilYd8c=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 19A9919CA0;
+	Fri, 16 May 2014 14:25:43 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0D033189F9;
+	Fri, 16 May 2014 13:57:51 -0400 (EDT)
+X-Mailer: git-send-email 2.0.0-rc3-434-g1ba2fe8
+X-Pobox-Relay-ID: 99878A5A-DD23-11E3-A0DB-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249404>
 
-(sorry if you receive a dup; pobox.com seems to be constipated right no=
-w)
+Older versions of Git before v1.7.10 did not DWIM
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+    $ git pull $URL for-linus
 
->> Correct, but is "where does it appear" the question we are
->> primarily interested in, wrt this breakage and its fix?
->
-> That of course depends on how we want to test gitweb output.
-> The simplest solution, comparing with known output with perhaps
-> fragile / variable elements masked out could be done quickly...
-> but changes in output (even if they don't change functionality,
-> or don't change visible output) require regenerating test cases
-> (expected output) to test against - which might be source of
-> errors in test suite.
+to the tag "tags/for-linus" and the users were required to say
 
-I agree with your "to test it fully, we need extra dependencies",
-but my point is that it does not have to be a full "HTML-validating,
-picking the expected attribute via XPATH matching" kind of test if
-what we want is only to add a new test to protect this particular
-fix from future breakages.
+    $ git pull $URL tags/for-linus
 
-=46or example, I think it is sufficient to grep for 'href=3D"...%xx%xx"=
-'
-in the output after preparing a sample tree with one entry to show.
-The expected substring either exists (in which case we got it
-right), or it doesn't (in which case we are showing garbage).  Of
-course that depends on the assumption that its output is not too
-heavily contaminated with volatile parts outside our control, as I
-already mentioned in the message you are responding to.
+instead.  Because newer versions of Git works either way,
+request-pull used to show tags/for-linus when asked
 
-But it all depends on "if" we wanted to add a new test ;-)
+    $ git request-pull origin/master $URL for-linus
+
+The recent updates broke this and in the output we see "for-linus"
+without the "tags/" prefix.
+
+As v1.7.10 is more than 2 years old, this should matter very little
+in practice, but resurrecting it is very simple.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ * I _think_ the fix, without breaking the spirit of Linus's "I do
+   not want the thing DWIM based on what the remote end has"
+   original, would be as simple as this patch.  We can queue it as a
+   regression fix and do another round of -rc4 if those who depend
+   on request-pull heavily feel strongly about it.
+
+ git-request-pull.sh     | 6 ++++++
+ t/t5150-request-pull.sh | 8 +++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index b67513a..d6648b2 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -118,6 +118,12 @@ then
+ 	status=1
+ fi
+ 
++# Special case: turn "for_linus" to "tags/for_linus" when it is correct
++if test "$ref" = "refs/tags/$pretty_remote"
++then
++	pretty_remote=tags/$pretty_remote
++fi
++
+ url=$(git ls-remote --get-url "$url")
+ 
+ git show -s --format='The following changes since commit %H:
+diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+index 75d6b38..93e2c65 100755
+--- a/t/t5150-request-pull.sh
++++ b/t/t5150-request-pull.sh
+@@ -223,7 +223,13 @@ test_expect_success 'pull request format' '
+ 		git request-pull initial "$downstream_url" tags/full:refs/tags/full
+ 	) >request &&
+ 	sed -nf fuzz.sed <request >request.fuzzy &&
+-	test_i18ncmp expect request.fuzzy
++	test_i18ncmp expect request.fuzzy &&
++
++	(
++		cd local &&
++		git request-pull initial "$downstream_url" full
++	) >request &&
++	grep ' tags/full$'
+ '
+ 
+ test_expect_success 'request-pull ignores OPTIONS_KEEPDASHDASH poison' '
+-- 
+2.0.0-rc3-434-g1ba2fe8
