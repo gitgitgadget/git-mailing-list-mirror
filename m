@@ -1,164 +1,100 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v3] format-patch --signature-file <file>
-Date: Sat, 17 May 2014 09:02:22 -0700
-Message-ID: <1400342542-11256-2-git-send-email-jmmahler@gmail.com>
-References: <1400342542-11256-1-git-send-email-jmmahler@gmail.com>
-Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 17 18:03:14 2014
+From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+Subject: Re: Problem: staging of an alternative repository
+Date: Sat, 17 May 2014 09:31:33 -0700
+Message-ID: <CAKpPgvdC3VEHoW4eqmjoPtr4Duh8hkaeHL-JehaVMVUAdGhLAw@mail.gmail.com>
+References: <CAKpPgveXqraM4bXb499mJm5Ls+EinihfEJ6VgOFikC0_Qp8iTA@mail.gmail.com>
+ <20140430213545.GV9218@google.com> <CACsJy8C4bO_ZB-DMOkbJc9cJd_LmR6z0RZ1UZB3wKPEX005xmA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 17 18:32:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wlh4r-0007nS-66
-	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 18:03:13 +0200
+	id 1WlhXE-0003yT-Kx
+	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 18:32:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964856AbaEQQDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2014 12:03:09 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:46207 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932223AbaEQQDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2014 12:03:07 -0400
-Received: by mail-pa0-f50.google.com with SMTP id fb1so3846916pad.37
-        for <git@vger.kernel.org>; Sat, 17 May 2014 09:03:06 -0700 (PDT)
+	id S964823AbaEQQbz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2014 12:31:55 -0400
+Received: from mail-oa0-f43.google.com ([209.85.219.43]:52383 "EHLO
+	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964773AbaEQQby (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2014 12:31:54 -0400
+Received: by mail-oa0-f43.google.com with SMTP id l6so4449995oag.2
+        for <git@vger.kernel.org>; Sat, 17 May 2014 09:31:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8p2q7EqP9OJ7yz/uqjJRaq+K41RLu6COLEpZ/DG1xf0=;
-        b=fNWG2nR3TyCfBDP6jwJjKz44TxiC5eTk3z3XssBffAAD9h4sp0Ub2hyVVcPBz9J+JC
-         d/L+1D1ovv+O1yDWrNG2LZdQszl3Kb9e1vXm8Ctn1oTfVqHlImW8aoTYSyjfxUtkSCiI
-         IPSNQNBItIEQ2dABXJCoc0F3a1/PZqOEhY1x4FSqh7zxsL9Yd3LNARzyGJXlZ9X1otSt
-         6/ZHrg7ygARgvigDrsZLWYgtQpa/dSEfzHvrjVAs8FLLWEUMgYO2wqD2/Do7qLV9FDQs
-         ibPmstFFtrAJOwdJx9uzddFHnZ97QpjYoBaF2SHkEEYFnhPZp/MqRo37DPHseqKUkey9
-         A9HA==
-X-Received: by 10.66.137.109 with SMTP id qh13mr29531854pab.39.1400342586827;
-        Sat, 17 May 2014 09:03:06 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id qv9sm20619947pbc.71.2014.05.17.09.03.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 17 May 2014 09:03:04 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Sat, 17 May 2014 09:03:01 -0700
-X-Mailer: git-send-email 2.0.0.rc2
-In-Reply-To: <1400342542-11256-1-git-send-email-jmmahler@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=TCm0HoCpNV2tASZ4JhFNHENGDyL39dGRTpC5t/RF/j0=;
+        b=bLvBgw/aXZSC1F14s/fTjUBV9Y2+iyriiaVDSc4ST3Hg59U+QpkgC6Nsk2+vE/mdwR
+         jHZOWxbu6scXc0GBD2wO/iAC8E4NrcCCNIDZWIlFsWUDmjKLxRG7INyKJbllqvMefl3W
+         TCEL7W7hqBwXpguBOy+l8UBn1XaJ4Tx55yUDj4P0Y5d/bzHwBEg5aZQYPoBq77VrqfBz
+         4u2n/qvaK/kjnk5SpbEFeQTCYdtLxLI1SXnU9aXUifPfbboyAdK/7Co24b3wTJzb3VfL
+         +514oVaUrQd7yGycm/TFDeKb32FeRFbP56rp3IOMrkPGSJ0u/aqszgcBTGKXlJxaMGhN
+         1fzA==
+X-Received: by 10.182.42.228 with SMTP id r4mr25037437obl.20.1400344313563;
+ Sat, 17 May 2014 09:31:53 -0700 (PDT)
+Received: by 10.60.16.8 with HTTP; Sat, 17 May 2014 09:31:33 -0700 (PDT)
+In-Reply-To: <CACsJy8C4bO_ZB-DMOkbJc9cJd_LmR6z0RZ1UZB3wKPEX005xmA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249488>
 
-Added feature that allows a signature file to be used with format-patch.
+        Hi again
 
-  $ git format-patch --signature-file ~/.signature -1
+    I've come up with a fix for this. It's just two and a half lines,
+and required more studying the code than typing.
+A lot of path-processing work has been implemented in "abspath.c" and
+"dir.c", including the symlinks and checking whether one path is a
+subdirectory of another. I just added an "exclude" for GITDIR without
+touching anything else.
 
-Now signatures with newlines and other special characters can be
-easily included.
+    Now the best place to add that exclude would probably be "git.c",
+right after the option "--git-dir" is processed. But this is not
+actually the place where excludes are initialized or used any how.
+Since initialization of excludes is done more or less individually by
+each command concerned about them, the most "centralized" place
+happens to be dir:setup_standard_excludes(), and that's where I did
+it. One of the (side?) effects is that the excludes work in such a way
+that any directory named ".metadata" in the directory tree will be
+ignored once "-git-dir=.metadata" has been given
 
-Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
----
- Documentation/git-format-patch.txt |  4 ++++
- builtin/log.c                      | 13 +++++++++++++
- t/t4014-format-patch.sh            | 28 ++++++++++++++++++++++++++++
- 3 files changed, 45 insertions(+)
+    Now if you guys don't see anything against this, I would shoot out a patch?
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 5c0a4ab..c0fd470 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 		   [(--attach|--inline)[=<boundary>] | --no-attach]
- 		   [-s | --signoff]
- 		   [--signature=<signature> | --no-signature]
-+		   [--signature-file=<file>]
- 		   [-n | --numbered | -N | --no-numbered]
- 		   [--start-number <n>] [--numbered-files]
- 		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
-@@ -233,6 +234,9 @@ configuration options in linkgit:git-notes[1] to use this workflow).
- 	signature option is omitted the signature defaults to the Git version
- 	number.
- 
-+--signature-file=<file>::
-+	Works just like --signature except the signature is read from a file.
-+
- --suffix=.<sfx>::
- 	Instead of using `.patch` as the suffix for generated
- 	filenames, use specified suffix.  A common alternative is
-diff --git a/builtin/log.c b/builtin/log.c
-index 39e8836..af7d610 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -673,6 +673,7 @@ static void add_header(const char *value)
- static int thread;
- static int do_signoff;
- static const char *signature = git_version_string;
-+static const char *signature_file;
- static int config_cover_letter;
- 
- enum {
-@@ -1230,6 +1231,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    PARSE_OPT_OPTARG, thread_callback },
- 		OPT_STRING(0, "signature", &signature, N_("signature"),
- 			    N_("add a signature")),
-+		OPT_FILENAME(0, "signature-file", &signature_file,
-+				N_("add a signature from a file")),
- 		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
- 		OPT_END()
- 	};
-@@ -1447,6 +1450,16 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			cover_letter = (config_cover_letter == COVER_ON);
- 	}
- 
-+	if (signature_file) {
-+		if (signature && signature != git_version_string)
-+			die(_("--signature and --signature-file are mutually exclusive"));
-+
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		strbuf_read_file(&buf, signature_file, 128);
-+		signature = strbuf_detach(&buf, NULL);
-+	}
-+
- 	if (in_reply_to || thread || cover_letter)
- 		rev.ref_message_ids = xcalloc(1, sizeof(struct string_list));
- 	if (in_reply_to) {
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 9c80633..fb3dc1b 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -762,6 +762,34 @@ test_expect_success 'format-patch --signature="" suppresses signatures' '
- 	! grep "^-- \$" output
- '
- 
-+cat > expect << EOF
-+Test User <test.email@kernel.org>
-+http://git.kernel.org/cgit/git/git.git
-+git.kernel.org/?p=git/git.git;a=summary
-+EOF
-+
-+test_expect_success 'format-patch --signature-file file' '
-+	git format-patch --stdout --signature-file expect -1 >output &&
-+	check_patch output &&
-+	fgrep -x -f output expect >output2 &&
-+	diff expect output2
-+'
-+
-+test_expect_success 'format-patch --signature-file=file' '
-+	git format-patch --stdout --signature-file=expect -1 >output &&
-+	check_patch output &&
-+	fgrep -x -f output expect >output2 &&
-+	diff expect output2
-+'
-+
-+test_expect_success 'format-patch --signature and --signature-file die' '
-+	! git format-patch --stdout --signature="foo" --signature-file=expect -1 >output
-+'
-+
-+test_expect_success 'format-patch --no-signature and --signature-file OK' '
-+	git format-patch --stdout --no-signature --signature-file=expect -1 >output
-+'
-+
- test_expect_success TTY 'format-patch --stdout paginates' '
- 	rm -f pager_used &&
- 	test_terminal env GIT_PAGER="wc >pager_used" git format-patch --stdout --all &&
+    regards
+Pasha
+
+
+On Thu, May 1, 2014 at 11:20 PM, Duy Nguyen <pclouds@gmail.com> wrote:
+> On Thu, May 1, 2014 at 4:35 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>>>     Now I know, the '--git-dir' option may usually be meant to use
+>>> when the repository is somewhere outside of the work tree, and such a
+>>> problem would not arise. And even if it is inside, sure enough, you
+>>> can add this '.git_new' to the ignores or excludes. But is this really
+>>> what you expect?
+>>
+>> I think it's more that it never came up.  Excluding the current
+>> $GIT_DIR from what "git add" can add (on top of the current rule of
+>> excluding all instances of ".git") seems like a sensible change,
+>> assuming it can be done without hurting the code too much. ;-)
+>
+> I think it came up before. Changes could be very messy (but I did not
+> check carefully) because right now we just compare $(basename $path)
+> with ".git", one path component, simple and easy. Checking against
+> $GIT_DIR means all path components. You also have to deal with
+> relative and absolute paths and symlinks in some path components. You
+> may also need to think if submodule detection code (checking ".git"
+> again) is impacted. On top of that, read_directory() code is already
+> messy (or at least scary to me) with all kinds of shortcuts we have
+> added over the years. A simpler solution may be ignoring all
+> directories whose last component is  "$GIT_DIR_NAME" (e.g.
+> GIT_DIR_NAME=.git_new).
+> --
+> Duy
