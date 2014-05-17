@@ -1,110 +1,101 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH v2] format-patch --signature-file <file>
-Date: Sat, 17 May 2014 08:39:43 -0700
-Message-ID: <20140517153943.GB31912@hudson.localdomain>
-References: <1400203881-2794-1-git-send-email-jmmahler@gmail.com>
- <1400203881-2794-2-git-send-email-jmmahler@gmail.com>
- <20140516081445.GA21468@sigill.intra.peff.net>
- <20140517072548.GA18239@hudson.localdomain>
- <20140517074224.GA16697@sigill.intra.peff.net>
- <20140517085911.GA18862@hudson.localdomain>
- <20140517100013.GA18087@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat May 17 17:39:53 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v3 01/10] replace: refactor command-mode determination
+Date: Sat, 17 May 2014 14:16:30 +0200
+Message-ID: <20140517121640.27582.69841.chriscool@tuxfamily.org>
+References: <20140517120649.27582.58609.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 17 17:57:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlgiG-00060f-LR
-	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 17:39:53 +0200
+	id 1Wlgzg-0001TK-JG
+	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 17:57:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757518AbaEQPjs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2014 11:39:48 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:64757 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757315AbaEQPjs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2014 11:39:48 -0400
-Received: by mail-pa0-f42.google.com with SMTP id rd3so3840455pab.15
-        for <git@vger.kernel.org>; Sat, 17 May 2014 08:39:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=DBM88SWXn+KQY9UWczKN4i+dFf8hqI8HhAnBrNLqEno=;
-        b=FJdtGJKNxA/35hN0cWSB/aCQJGgYhhHovRDOhYXBDMKlgSVS6ITQI+krxwB/+aFh5l
-         880pmbm7u8suDolC2Mz0P3dzDhCw01vxX3SE8GQUo2hTAJzQTg1ZhJS5GfAE5ZntL/7P
-         AoCQcPXCelcCDaXpKryOVPGNa5Rb37Ddhf+4zlBC7wgtmoi/zwf7wZNPj1FQNSrjFUQX
-         JB+D4uXrQlQ4//oHHyRKqUtwUkszMCduy2WHhyPUMN4xLbzbVg5o/lk3mZas+hVpu+uf
-         T+x6M38/lnjsprXGmKdmxs8ulRKXUqbruDxUL1QLK5ZTI5bSJmgtHHw1TYR+dDCAbMKc
-         7Xew==
-X-Received: by 10.66.141.109 with SMTP id rn13mr30008266pab.117.1400341187466;
-        Sat, 17 May 2014 08:39:47 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id xc1sm49343950pab.39.2014.05.17.08.39.44
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 17 May 2014 08:39:46 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Sat, 17 May 2014 08:39:43 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20140517100013.GA18087@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S932420AbaEQP5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2014 11:57:41 -0400
+Received: from mail-3y.bbox.fr ([194.158.98.45]:55854 "EHLO mail-3y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757377AbaEQP5j (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2014 11:57:39 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-3y.bbox.fr (Postfix) with ESMTP id A9C4A4F;
+	Sat, 17 May 2014 17:57:36 +0200 (CEST)
+X-git-sha1: c378ca90a4cdfd829cfaba9306b7f793be977997 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20140517120649.27582.58609.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249475>
 
-On Sat, May 17, 2014 at 06:00:14AM -0400, Jeff King wrote:
-> On Sat, May 17, 2014 at 01:59:11AM -0700, Jeremiah Mahler wrote:
-> 
-> > >   if (signature) {
-> > > 	if (signature_file)
-> > > 		die("you cannot specify both a signature and a signature-file");
-> > > 	/* otherwise, we already have the value */
-> > >   } else if (signature_file) {
-> > > 	struct strbuf buf = STRBUF_INIT;
-> > > 	strbuf_read(&buf, signature_file, 128);
-> > > 	signature = strbuf_detach(&buf);
-> > >   } else
-> > > 	signature = git_version_string;
-> > > 
-> > 
-> > Before, --no-signature would clear the &signature.
-> > With this code it sees it as not being set and assigns
-> > the default version string.
-> 
-> Ah, you're right. Thanks for catching it.
-> 
-> If you wanted to know whether it was set, I guess you'd have to compare
-> it to the default, like:
-> 
->   if (signature_file) {
-> 	if (signature && signature != git_version_string)
-> 		die("you cannot specify both a signature and a signature-file");
-> 	... read signature file ...
->   }
-> 
+From: Jeff King <peff@peff.net>
 
-That works until someone changes the default value.
-But if they did that then some tests should fail.
+The git-replace command has three modes: listing, deleting,
+and replacing. The first two are selected explicitly. If
+none is selected, we fallback to listing when there are no
+arguments, and replacing otherwise.
 
-I like the address comparision which avoids a string comparision.
+Let's figure out up front which operation we are going to
+do, before getting into the application logic. That lets us
+simplify our option checks (e.g., we currently have to check
+whether a useless "--force" is given both along with an
+explicit list, as well as with an implicit one).
 
-> though it's a bit ugly that this code has to know what the default is.
-> Having signature-file take precedence is OK with me, but it feels
-> somewhat arbitrary to me from the user's perspective.
-> 
-> -Peff
+This saves some lines, makes the logic easier to follow, and
+will facilitate further cleanups.
 
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/replace.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/replace.c b/builtin/replace.c
+index b62420a..28db96f 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -182,12 +182,16 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 
+ 	argc = parse_options(argc, argv, prefix, options, git_replace_usage, 0);
+ 
++	if (!list && !delete)
++		if (!argc)
++			list = 1;
++
+ 	if (list && delete)
+ 		usage_msg_opt("-l and -d cannot be used together",
+ 			      git_replace_usage, options);
+ 
+-	if (format && delete)
+-		usage_msg_opt("--format and -d cannot be used together",
++	if (format && !list)
++		usage_msg_opt("--format cannot be used when not listing",
+ 			      git_replace_usage, options);
+ 
+ 	if (force && (list || delete))
+@@ -207,9 +211,6 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		if (argc != 2)
+ 			usage_msg_opt("bad number of arguments",
+ 				      git_replace_usage, options);
+-		if (format)
+-			usage_msg_opt("--format cannot be used when not listing",
+-				      git_replace_usage, options);
+ 		return replace_object(argv[0], argv[1], force);
+ 	}
+ 
+@@ -217,9 +218,6 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 	if (argc > 1)
+ 		usage_msg_opt("only one pattern can be given with -l",
+ 			      git_replace_usage, options);
+-	if (force)
+-		usage_msg_opt("-f needs some arguments",
+-			      git_replace_usage, options);
+ 
+ 	return list_replace_refs(argv[0], format);
+ }
 -- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+1.9.rc0.17.g651113e
