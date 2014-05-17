@@ -1,128 +1,117 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Sat, 17 May 2014 12:15:59 -0500
-Message-ID: <5377994fe8dec_7a27d4b30438@nysa.notmuch>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
- <20140516084126.GB21468@sigill.intra.peff.net>
- <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
- <20140516225228.GA3988@sigill.intra.peff.net>
- <5376f2ca5c90d_65b915db2f877@nysa.notmuch>
- <20140517062413.GA13003@sigill.intra.peff.net>
+From: Arup Rakshit <aruprakshit@rocketmail.com>
+Subject: commit all the untracked files prior adding them to stage using "git add"
+Date: Sun, 18 May 2014 00:58:50 +0630
+Organization: CognitiveClouds
+Message-ID: <1878681.dTqGrk8buZ@linux-wzza.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 17 19:27:12 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 17 21:35:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WliO7-0003pJ-VT
-	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 19:27:12 +0200
+	id 1WlkOI-0004C9-FW
+	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 21:35:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964867AbaEQR1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2014 13:27:07 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:49216 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964823AbaEQR1G (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2014 13:27:06 -0400
-Received: by mail-oa0-f43.google.com with SMTP id l6so4485393oag.2
-        for <git@vger.kernel.org>; Sat, 17 May 2014 10:27:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=eb80fMSSZSjIB0P/tQaJntM1XiX3e549NDKB/AGthQI=;
-        b=kKm2NVO2KQpxPB8yuwvhYlz2lluwNhvnFs9wsISuQT6ZYm2BlpAMyEQVj46kuGQXPp
-         ZJitChrcf3kNFlnBuwrOVtRN09QS4JFKJAA+jnbKNLGm+9aiUWq9+DdI5gq3XYYnhpIE
-         FwwuwVpgtfcI3zFWmNPGn6kJWid0ZBfMz0MRCX+Q/X1YynYIDo1K2i4/g0MWapKu9S4A
-         BkjRdk8zBUXQNOjQ+Vw6FALB2S0CbPGhSPYFTlP92fJMx5DmRx624xxKeevFfsimRM/V
-         mKThzIJdJaBLD5Fttgk/OOUtrNKxPgyyk6IW1tR9mLMEZWE6SujYIH+PW1kI1FPyvK8l
-         D/Iw==
-X-Received: by 10.60.83.232 with SMTP id t8mr24886103oey.16.1400347625750;
-        Sat, 17 May 2014 10:27:05 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id zc8sm21554872obc.1.2014.05.17.10.27.02
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 May 2014 10:27:05 -0700 (PDT)
-In-Reply-To: <20140517062413.GA13003@sigill.intra.peff.net>
+	id S1751193AbaEQTf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2014 15:35:26 -0400
+Received: from nm18-vm10.bullet.mail.sg3.yahoo.com ([106.10.149.105]:20797
+	"EHLO nm18-vm10.bullet.mail.sg3.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751101AbaEQTfZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 May 2014 15:35:25 -0400
+X-Greylist: delayed 380 seconds by postgrey-1.27 at vger.kernel.org; Sat, 17 May 2014 15:35:25 EDT
+Received: from [106.10.166.116] by nm18.bullet.mail.sg3.yahoo.com with NNFMP; 17 May 2014 19:29:03 -0000
+Received: from [106.10.167.167] by tm5.bullet.mail.sg3.yahoo.com with NNFMP; 17 May 2014 19:29:03 -0000
+Received: from [127.0.0.1] by smtp140.mail.sg3.yahoo.com with NNFMP; 17 May 2014 19:29:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s1024; t=1400354943; bh=J7Oz1I6vbgAi7WEzjBkG3aow8vno+lDj9dSw1zw6PUs=; h=X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:X-Rocket-Received:From:To:Subject:Date:Message-ID:Organization:User-Agent:MIME-Version:Content-Transfer-Encoding:Content-Type; b=Av5iIW8+cj92t7KwO430luwlxEL8EHq8eOP3a3MGtE9UyE1vjecc0mP/FA7C3D4UW7q/BGyBolaCii09RQ9zUHD+rxDNhNa7G9oRQ+HgWzxL5VrwxQr++l1jSPRu6sfx7jEQHqFqpHRID3bGFhzac7Qw/azx6MUsgLeDE540UNw=
+X-Yahoo-Newman-Id: 258905.70938.bm@smtp140.mail.sg3.yahoo.com
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: X4x9jAIVM1nTzYnfa2ANwvv2zV5obPYUBzMp_vPxL.utcUe
+ GzDZNWawl9egYeX0f4cIK4qWuYN4C02ztEBc6GLZCz28aPTNH02p6Gh3H_KO
+ AcRRPBrtnPu1HTWty9JCKmsOHdh8PSqc8FDNnah7P9OuqhSOBJhai4VEkqrB
+ MCJpnM00RkFSMtO1_.NB3gBR6f17ByL9vjZXjbHXJmSz9lJBvpcmafngOIkA
+ GJNui4LUxC6LE6fqPBvOdTQA7RPzS0NwnIVNpR5xU7yRpJq1RMUaqjnxUqOz
+ kxpNwvJCzkB7LmLS.Hke4Dul94EHLr8_lVUxh6h5H7TEDY1KTzVPqe4zS.vh
+ 65jr_IUmw84IoMc5iOCapuE6He6m2TfR0XIlQTNSzOhmwx1dpGMo_zpRu.hO
+ .eKPA4e2LXTOIuCV.B7MQmBcDLosaN6FmjUSLn6jiwViyHJKomOPG7E3kycL
+ f8CCzkCwDZYm7_t.c8gFksfQ6YdnHMEp1hksJny8TBiqpyJToZkld.iHanQR
+ _2eVLp2WKZ7fdrSlTQdxQlh.rz3sdav0VqQfKvmKGx1yISUezRaEaegv4p46
+ 3ZudzhDuCL.Rs2tM-
+X-Yahoo-SMTP: _NAuC72swBDpdridK5c7mltfXc1K.nFhPY5jXEZ4Gfdya8Gn_0nN
+X-Rocket-Received: from linux-wzza.site (aruprakshit@117.254.105.190 with plain [106.10.150.171])
+        by smtp140.mail.sg3.yahoo.com with SMTP; 17 May 2014 12:29:03 -0700 PDT
+User-Agent: KMail/4.11.5 (Linux/3.11.10-7-default; KDE/4.11.5; i686; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249490>
 
-Jeff King wrote:
-> On Sat, May 17, 2014 at 12:25:30AM -0500, Felipe Contreras wrote:
-> 
-> > > I agree with the line of reasoning you laid out in your email,
-> > > especially:
-> > 
-> > What a shock.
-> 
-> Please stop with these unproductive and rude comments.
+Here is the currently added files in my repository :
 
-I am sorry, but the fact of the matter is that you *always* agree with
-Junio.
+arup@linux-wzza:~/Rails/test_app> git status
+# On branch master
+#
+# Initial commit
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       .gitignore
+#       Gemfile
+#       Gemfile.lock
+#       README.rdoc
+#       Rakefile
+#       app/
+#       bin/
+#       config.ru
+#       config/
+#       db/
+#       lib/
+#       log/
+#       public/
+#       test/
+#       vendor/
+nothing added to commit but untracked files present (use "git add" to track)
 
-> > > I hadn't thought of the rename idea, and it would address the concerns I
-> > > brought up. I do think "obsolete" is the wrong word, as it sends the
-> > > wrong message. The helpers are not obsolete; it is our _copy_ of them
-> > > that is.
-> > 
-> > Originally you said you would respect if I wanted the code out
-> > for v2.0, I said I would like it out at some point, not necessarily in
-> > v2.0. Junio said he was fine with that, but the proposals above don't do
-> > that.
-> > 
-> > Now it seems you are changing your mind and you are OK with the code
-> > remaining in.
-> 
-> My concerns were with people not noticing the README. Removing the code
-> entirely is the way I thought of to address that. Junio suggested
-> another way, which I would also be fine with. And it seems like a
-> friendlier way than removal to handle it for v2.0, if we are going to
-> remove the code entirely post-v2.0.
+Now I am looking for a way to add those in stage and commit also in a single 
+line. So I did below :-
 
-I don't see what is friendlier about this:
+arup@linux-wzza:~/Rails/test_app> git commit -m "chapter 19 of Agile Web 
+Development with Rails" -a
+# On branch master
+#
+# Initial commit
+#
+# Untracked files:
+#   (use "git add <file>..." to include in what will be committed)
+#
+#       .gitignore
+#       Gemfile
+#       Gemfile.lock
+#       README.rdoc
+#       Rakefile
+#       app/
+#       bin/
+#       config.ru
+#       config/
+#       db/
+#       lib/
+#       log/
+#       public/
+#       test/
+#       vendor/
+nothing added to commit but untracked files present (use "git add" to track)
 
- % sudo pacman -Syu
- % cd ~/dev/my-hg-repo
- % git fetch
- fatal: Unable to find remote helper for 'hg'
+It did not work. Then using `git commit -h` told me, *-a* will work, for 
+*tracked files*. Is there any way to add untracked files in stage, and commit in 
+a single line ? 
 
-The users will scratch their heads, wonder what's going on, investigate
-themselves, and eventually they'll have to decide how to fix the issue
-properly, and how to report it.
-
-On the other hand:
-
- % git fetch
- WARNING: git-remote-hg is now maintained independently.
- WARNING: For more information visit https://github.com/felipec/git-remote-hg
- searching for changes
- no changes found
-
-You think that's less friendly?
-
-If you think so, I think you are totally biased towards whatever happens
-to be the opinion of one person.
-
-> As before, if your desire is to have the code out for v2.0, then say so.
-> I think we should respect such a request.
-
-As I said before, I do not wish the code to be removed for v2.0, I would
-like to have only a warning. Either way, do whatever you want for v2.0,
-it's your users you are hurting.
-
-But if I do not hear *from Junio* that the code will be removed entirely
-post-v2.0, hopefully replaced with stubs (which is obviously the most
-user-friendly thing to do), I'll do what I said I'll do.
 
 -- 
-Felipe Contreras
+===============
+Regards,
+Arup Rakshit
