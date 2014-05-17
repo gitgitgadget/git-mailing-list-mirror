@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 08/10] replace: add tests for --edit
-Date: Sat, 17 May 2014 08:41:30 +0200
-Message-ID: <20140517064133.18932.74476.chriscool@tuxfamily.org>
+Subject: [PATCH v2 10/10] Documentation: replace: describe new --edit option
+Date: Sat, 17 May 2014 08:41:32 +0200
+Message-ID: <20140517064133.18932.96622.chriscool@tuxfamily.org>
 References: <20140517062418.18932.21200.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
@@ -11,71 +11,78 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlYLf-0006qT-QG
-	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 08:44:00 +0200
+	id 1WlYLg-0006qT-Sa
+	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 08:44:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757135AbaEQGny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2014 02:43:54 -0400
-Received: from [194.158.98.45] ([194.158.98.45]:61588 "EHLO mail-3y.bbox.fr"
+	id S1757129AbaEQGnx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2014 02:43:53 -0400
+Received: from [194.158.98.45] ([194.158.98.45]:61592 "EHLO mail-3y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756956AbaEQGnf (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756985AbaEQGnf (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 17 May 2014 02:43:35 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id E9CCA6E;
-	Sat, 17 May 2014 08:43:13 +0200 (CEST)
-X-git-sha1: eb9379001b1e8b48c58141e9d7f2c2bf0f843966 
+	by mail-3y.bbox.fr (Postfix) with ESMTP id ACDB86C;
+	Sat, 17 May 2014 08:43:14 +0200 (CEST)
+X-git-sha1: c8708e5afdfedc7c27601233f0c1022f7ecffec1 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140517062418.18932.21200.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249447>
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t6050-replace.sh | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ Documentation/git-replace.txt | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index 719a116..7609174 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -318,6 +318,35 @@ test_expect_success 'test --format long' '
- 	test_cmp expected actual
- '
+diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
+index 0a02f70..37d872d 100644
+--- a/Documentation/git-replace.txt
++++ b/Documentation/git-replace.txt
+@@ -9,6 +9,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git replace' [-f] <object> <replacement>
++'git replace' [-f] --edit <object>
+ 'git replace' -d <object>...
+ 'git replace' [--format=<format>] [-l [<pattern>]]
  
-+test_expect_success 'setup a fake editor' '
-+	cat >fakeeditor <<-\EOF &&
-+		#!/bin/sh
-+		sed -e "s/A U Thor/A fake Thor/" "$1" >"$1.new"
-+		mv "$1.new" "$1"
-+	EOF
-+	chmod +x fakeeditor
-+'
+@@ -63,6 +64,14 @@ OPTIONS
+ --delete::
+ 	Delete existing replace refs for the given objects.
+ 
++--edit <object>::
++	Launch an editor to let the user change the content of
++	<object>, then create a new object of the same type with the
++	changed content, and create a replace ref to replace <object>
++	with the new object. See linkgit:git-commit[1] and
++	linkgit:git-var[1] for details about how the editor will be
++	chosen.
 +
-+test_expect_success '--edit with and without already replaced object' '
-+	GIT_EDITOR=./fakeeditor test_must_fail git replace --edit "$PARA3" &&
-+	GIT_EDITOR=./fakeeditor git replace --force --edit "$PARA3" &&
-+	git replace -l | grep "$PARA3" &&
-+	git cat-file commit "$PARA3" | grep "A fake Thor" &&
-+	git replace -d "$PARA3" &&
-+	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
-+	git replace -l | grep "$PARA3" &&
-+	git cat-file commit "$PARA3" | grep "A fake Thor"
-+'
-+
-+test_expect_success '--edit and change nothing or command failed' '
-+	git replace -d "$PARA3" &&
-+	GIT_EDITOR=true test_must_fail git replace --edit "$PARA3" &&
-+	GIT_EDITOR="./fakeeditor;false" test_must_fail git replace --edit "$PARA3" &&
-+	GIT_EDITOR=./fakeeditor git replace --edit "$PARA3" &&
-+	git replace -l | grep "$PARA3" &&
-+	git cat-file commit "$PARA3" | grep "A fake Thor"
-+'
-+
- test_expect_success 'replace ref cleanup' '
- 	test -n "$(git replace)" &&
- 	git replace -d $(git replace) &&
+ -l <pattern>::
+ --list <pattern>::
+ 	List replace refs for objects that match the given pattern (or
+@@ -92,7 +101,9 @@ CREATING REPLACEMENT OBJECTS
+ 
+ linkgit:git-filter-branch[1], linkgit:git-hash-object[1] and
+ linkgit:git-rebase[1], among other git commands, can be used to create
+-replacement objects from existing objects.
++replacement objects from existing objects. The `--edit` option can
++also be used with 'git replace' to create a replacement object by
++editing an existing object.
+ 
+ If you want to replace many blobs, trees or commits that are part of a
+ string of commits, you may just want to create a replacement string of
+@@ -117,6 +128,8 @@ linkgit:git-filter-branch[1]
+ linkgit:git-rebase[1]
+ linkgit:git-tag[1]
+ linkgit:git-branch[1]
++linkgit:git-commit[1]
++linkgit:git-var[1]
+ linkgit:git[1]
+ 
+ GIT
 -- 
 1.9.rc0.17.g651113e
