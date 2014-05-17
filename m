@@ -1,109 +1,200 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v10 22/44] fetch.c: clear errno before calling functions
- that might set it
-Date: Sat, 17 May 2014 16:56:20 +0200
-Message-ID: <53777894.7020408@alum.mit.edu>
-References: <1400261852-31303-1-git-send-email-sahlberg@google.com> <1400261852-31303-23-git-send-email-sahlberg@google.com>
+Subject: Re: [PATCH v10 24/44] fetch.c: use a single ref transaction for all
+ ref updates
+Date: Sat, 17 May 2014 17:05:05 +0200
+Message-ID: <53777AA1.1020107@alum.mit.edu>
+References: <1400261852-31303-1-git-send-email-sahlberg@google.com> <1400261852-31303-25-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 17 16:56:35 2014
+X-From: git-owner@vger.kernel.org Sat May 17 17:05:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wlg2M-0007bs-6M
-	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 16:56:34 +0200
+	id 1WlgAm-00025Y-Ju
+	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 17:05:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932115AbaEQO4Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2014 10:56:24 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:53774 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757043AbaEQO4X (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 17 May 2014 10:56:23 -0400
-X-AuditID: 12074412-f79ba6d000000bc2-37-537778966db6
+	id S964781AbaEQPFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2014 11:05:09 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:45538 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S964773AbaEQPFI (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 May 2014 11:05:08 -0400
+X-AuditID: 1207440c-f79656d000000c83-4f-53777aa34f90
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 9F.A5.03010.69877735; Sat, 17 May 2014 10:56:22 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id EF.64.03203.3AA77735; Sat, 17 May 2014 11:05:07 -0400 (EDT)
 Received: from [192.168.69.130] (p5DDB3A76.dip0.t-ipconnect.de [93.219.58.118])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4HEuKt0028383
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4HF55MT028753
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 17 May 2014 10:56:21 -0400
+	Sat, 17 May 2014 11:05:06 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <1400261852-31303-23-git-send-email-sahlberg@google.com>
+In-Reply-To: <1400261852-31303-25-git-send-email-sahlberg@google.com>
 X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1J1WUR5s8GW5uEXXlW4mi38TahyY
-	PBZsKvX4vEkugCmK2yYpsaQsODM9T98ugTtj9dQlrAXNghXzlm5kb2Dcy9vFyMkhIWAicerQ
-	P1YIW0ziwr31bF2MXBxCApcZJTrXT2KCcM4zSSyeepYZpIpXQFtiVsdboA4ODhYBVYmbt/RA
-	wmwCuhKLepqZQMKiAkESf84qQlQLSpyc+YQFxBYRsJNYf2sh2BRhgQSJh4v+g8WFBGokFk9Y
-	ywRicwq4SqxcBXIDB9A94hI9jUEgYWYBHYl3fQ+YIWx5ie1v5zBPYBSYhWTDLCRls5CULWBk
-	XsUol5hTmqubm5iZU5yarFucnJiXl1qka6aXm1mil5pSuokREqBCOxjXn5Q7xCjAwajEw5tg
-	XxYsxJpYVlyZe4hRkoNJSZTXNrY8WIgvKT+lMiOxOCO+qDQntfgQowQHs5II7243oBxvSmJl
-	VWpRPkxKmoNFSZz352J1PyGB9MSS1OzU1ILUIpisDAeHkgRvejlQo2BRanpqRVpmTglCmomD
-	E2Q4l5RIcWpeSmpRYmlJRjwoSuOLgXEKkuIB2vu3DGRvcUFiLlAUovUUoy7HqTvH2piEWPLy
-	81KlxHkVQHYIgBRllObBrYClo1eM4kAfC0OM4gGmMrhJr4CWMAEtebO3FGRJSSJCSqqBMfaN
-	zZtKddUHHxjWBKncYSuVXfK890TDvi0WTnsmJzr4rlm3Rr7o+KnqtCNn5a/sct/jUp7p9qzm
-	kpL2p6qyxYv/csy5cvVusPgsIT/tjXvWCKnMkgzcEK+/IUA3VfTvwrxiBSaO9oe3 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1F1cVR5ssOY9u0XXlW4mi38TahyY
+	PBZsKvX4vEkugCmK2yYpsaQsODM9T98ugTvj4vcLTAV7tCp6by1lbGD8otDFyMkhIWAisf/b
+	MlYIW0ziwr31bF2MXBxCApcZJbZ8v8sC4Zxnkjh4fRWQw8HBK6AtMfFYJkgDi4CqROfRlUwg
+	NpuArsSinmYmkBJRgSCJP2cVQcK8AoISJ2c+YQGxRQTsJNbfWsgMYgsLRElceDWBDaRcSKBG
+	4uvLdBCTU8BVYtczQxBTQkBcoqcxCKSYWUBH4l3fA2YIW15i+9s5zBMYBWYhmT8LSdksJGUL
+	GJlXMcol5pTm6uYmZuYUpybrFicn5uWlFuka6uVmluilppRuYoQEJ88Oxm/rZA4xCnAwKvHw
+	ctiWBQuxJpYVV+YeYpTkYFIS5bWNLQ8W4kvKT6nMSCzOiC8qzUktPsQowcGsJMK72w0ox5uS
+	WFmVWpQPk5LmYFES51Vdou4nJJCeWJKanZpakFoEk5Xh4FCS4GUERqGQYFFqempFWmZOCUKa
+	iYMTZDiXlEhxal5KalFiaUlGPChC44uBMQqS4gHam1UBsre4IDEXKArReopRl+PUnWNtTEIs
+	efl5qVLivDogOwRAijJK8+BWwFLRK0ZxoI+FeflBqniAaQxu0iugJUxAS97sLQVZUpKIkJJq
+	YOzjP7DFs//0vNflx9dduKR/VEBN7s6uXyGPDpv+yD8jyJZxW+WE/7tTvz9Mtu+JnTDN4N88
+	nt8fjv/VcP+7xkfsEmMWa/fCYlPLph7nv00H382qShfuqZixy7hgukDPh0d+hokH 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249470>
 
 On 05/16/2014 07:37 PM, Ronnie Sahlberg wrote:
-> In s_update_ref there are two calls that when they fail we return an error
-> based on the errno value. In particular we want to return a specific error
-> if ENOTDIR happened. Both these functions do have failure modes where they
-> may return an error without updating errno, in which case a previous and
-> unrelated ENOTDIR may cause us to return the wrong error. Clear errno before
-> calling any functions if we check errno afterwards.
+> Change store_updated_refs to use a single ref transaction for all refs that
+> are updated during the fetch. This makes the fetch more atomic when update
+> failures occur.
+> 
+> Since ref update failures will now no longer occur in the code path for
+> updating a single ref in s_update_ref, we no longer have as detailed error
+> message logging the exact reference and the ref log action as in the old cod
 
-If I understand correctly, this is a workaround for some other broken
-functions that don't handle errno correctly.  Long-term, wouldn't it be
-better to fix the other functions?  In other words, they should change
-errno if an only if they return an error status, no?
+s/cod/code/ ?
 
-Of course you are under no obligation to fix the universe, so this
-change may be an expedient workaround anyway.  But if you go this route,
-then I think a comment would be helpful to explain the unusual clearing
-of errno.
+> Instead since we fail the entire transaction we log a much more generic
+> message. But since we commit the transaction using MSG_ON_ERR we will log
+> an error containing the ref name if either locking of writing the ref would
 
-Michael
+s/of/or/ ?
+s/would/would fail,/ ?
+
+> so the regression in the log message is minor.
+> 
+> This will also change the order in which errors are checked for and logged
+> which may alter which error will be logged if there are multiple errors
+> occuring during a fetch.
+
+s/occuring/occurring/
 
 > 
-> Also skip initializing a static variable to 0. Statics live in .bss and
-> are all automatically initialized to 0.
+> For example, assume we have a fetch for two refs that both would fail.
+> Where the first ref would fail with ENOTDIR due to a directory in the ref
+> path not existing, and the second ref in the fetch would fail due to
+> the check in update_logical_ref():
+>         if (current_branch &&
+>             !strcmp(ref->name, current_branch->name) &&
+>             !(update_head_ok || is_bare_repository()) &&
+>             !is_null_sha1(ref->old_sha1)) {
+>                 /*
+>                  * If this is the head, and it's not okay to update
+>                  * the head, and the old value of the head isn't empty...
+>                  */
+> 
+> In the old code since we would update the refs one ref at a time we would
+> first fail the ENOTDIR and then fail the second update of HEAD as well.
+> But since the first ref failed with ENOTDIR we would eventually fail the who
+
+s/who/whole/
+
+> fetch with STORE_REF_ERROR_DF_CONFLICT
+> 
+> In the new code, since we defer committing the transaction until all refs
+> have been processed, we would now detect that the second ref was bad and
+> rollback the transaction before we would even try start writing the update t
+
+s/try/try to/
+s/t$/to/
+
+> disk and thus we would not return STORE_REF_ERROR_DF_CONFLICT for this case.
+> 
+> I think this new behaviour is more correct, since if there was a problem
+> we would not even try to commit the transaction but need to highlight this
+> change in how/what errors are reported.
+> This change in what error is returned only occurs if there are multiple
+> refs that fail to update and only some, but not all, of them fail due to
+> ENOTDIR.
+
+Thanks for the detailed explanation.  The change in behavior seems
+reasonable to me.
+
 > 
 > Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > ---
->  builtin/fetch.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>  builtin/fetch.c | 34 ++++++++++++++++------------------
+>  1 file changed, 16 insertions(+), 18 deletions(-)
 > 
 > diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 55f457c..a93c893 100644
+> index 8cf70cd..5b0cc31 100644
 > --- a/builtin/fetch.c
 > +++ b/builtin/fetch.c
-> @@ -44,7 +44,7 @@ static struct transport *gtransport;
->  static struct transport *gsecondary;
+> @@ -45,6 +45,7 @@ static struct transport *gsecondary;
 >  static const char *submodule_prefix = "";
 >  static const char *recurse_submodules_default;
-> -static int shown_url = 0;
-> +static int shown_url;
+>  static int shown_url;
+> +static struct ref_transaction *transaction;
 >  
 >  static int option_parse_recurse_submodules(const struct option *opt,
 >  				   const char *arg, int unset)
-> @@ -382,6 +382,8 @@ static int s_update_ref(const char *action,
->  	if (!rla)
->  		rla = default_rla.buf;
->  	snprintf(msg, sizeof(msg), "%s: %s", rla, action);
+> @@ -373,27 +374,13 @@ static int s_update_ref(const char *action,
+>  			struct ref *ref,
+>  			int check_old)
+>  {
+> -	char msg[1024];
+> -	char *rla = getenv("GIT_REFLOG_ACTION");
+> -	struct ref_transaction *transaction;
+> -
+>  	if (dry_run)
+>  		return 0;
+> -	if (!rla)
+> -		rla = default_rla.buf;
+> -	snprintf(msg, sizeof(msg), "%s: %s", rla, action);
+>  
+> -	errno = 0;
+> -	transaction = ref_transaction_begin();
+> -	if (!transaction ||
+> -	    ref_transaction_update(transaction, ref->name, ref->new_sha1,
+> -				   ref->old_sha1, 0, check_old, NULL) ||
+> -	    ref_transaction_commit(transaction, msg, NULL)) {
+> -		ref_transaction_free(transaction);
+> -		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
+> -					  STORE_REF_ERROR_OTHER;
+> -	}
+> -	ref_transaction_free(transaction);
+> +	if (ref_transaction_update(transaction, ref->name, ref->new_sha1,
+> +				   ref->old_sha1, 0, check_old, NULL))
+> +		return STORE_REF_ERROR_OTHER;
 > +
+>  	return 0;
+>  }
+>  
+> @@ -565,6 +552,13 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+>  		goto abort;
+>  	}
+>  
 > +	errno = 0;
->  	lock = lock_any_ref_for_update(ref->name,
->  				       check_old ? ref->old_sha1 : NULL,
->  				       0, NULL);
+> +	transaction = ref_transaction_begin();
+> +	if (!transaction) {
+> +		rc = error(_("cannot start ref transaction\n"));
+> +		goto abort;
+> +	}
+> +
+>  	/*
+>  	 * We do a pass for each fetch_head_status type in their enum order, so
+>  	 * merged entries are written before not-for-merge. That lets readers
+> @@ -676,6 +670,10 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+>  			}
+>  		}
+>  	}
+> +	if (ref_transaction_commit(transaction, "fetch_ref transaction", NULL))
+> +		rc |= errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
+> +		  STORE_REF_ERROR_OTHER;
+> +	ref_transaction_free(transaction);
+>  
+>  	if (rc & STORE_REF_ERROR_DF_CONFLICT)
+>  		error(_("some local refs could not be updated; try running\n"
 > 
 
 
