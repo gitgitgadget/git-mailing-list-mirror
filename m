@@ -1,73 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Sat, 17 May 2014 02:24:13 -0400
-Message-ID: <20140517062413.GA13003@sigill.intra.peff.net>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
- <20140516084126.GB21468@sigill.intra.peff.net>
- <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
- <20140516225228.GA3988@sigill.intra.peff.net>
- <5376f2ca5c90d_65b915db2f877@nysa.notmuch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 17 08:24:23 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2 00/10] replace: add option to edit a Git object
+Date: Sat, 17 May 2014 08:41:22 +0200
+Message-ID: <20140517062418.18932.21200.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat May 17 08:43:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlY2d-0001eS-MG
-	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 08:24:20 +0200
+	id 1WlYLQ-0006FL-8o
+	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 08:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756561AbaEQGYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2014 02:24:16 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53635 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755136AbaEQGYP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2014 02:24:15 -0400
-Received: (qmail 8510 invoked by uid 102); 17 May 2014 06:24:15 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 17 May 2014 01:24:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 17 May 2014 02:24:13 -0400
-Content-Disposition: inline
-In-Reply-To: <5376f2ca5c90d_65b915db2f877@nysa.notmuch>
+	id S1756800AbaEQGnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2014 02:43:33 -0400
+Received: from [194.158.98.14] ([194.158.98.14]:58437 "EHLO mail-1y.bbox.fr"
+	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755848AbaEQGnc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2014 02:43:32 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 525D342;
+	Sat, 17 May 2014 08:43:10 +0200 (CEST)
+X-Mailer: git-mail-commits v0.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249441>
 
-On Sat, May 17, 2014 at 12:25:30AM -0500, Felipe Contreras wrote:
+This patch series comes from what Peff sent in the following thread:
 
-> > I agree with the line of reasoning you laid out in your email,
-> > especially:
-> 
-> What a shock.
+http://thread.gmane.org/gmane.comp.version-control.git/243361/focus=243528
 
-Please stop with these unproductive and rude comments.
+The first 4 patches (1/4, 2/4, 3/4 and 4/4) didn't change since v1.
+I added 6 more small patches to add tests, documentation and a few
+small improvements. 
 
-> > I hadn't thought of the rename idea, and it would address the concerns I
-> > brought up. I do think "obsolete" is the wrong word, as it sends the
-> > wrong message. The helpers are not obsolete; it is our _copy_ of them
-> > that is.
-> 
-> Originally you said you would respect if I wanted the code out
-> for v2.0, I said I would like it out at some point, not necessarily in
-> v2.0. Junio said he was fine with that, but the proposals above don't do
-> that.
-> 
-> Now it seems you are changing your mind and you are OK with the code
-> remaining in.
+Christian Couder (6):
+  replace: make sure --edit results in a different object
+  replace: refactor checking ref validity
+  replace: die early if replace ref already exists
+  replace: add tests for --edit
+  replace: add --edit to usage string
+  Documentation: replace: describe new --edit option
 
-My concerns were with people not noticing the README. Removing the code
-entirely is the way I thought of to address that. Junio suggested
-another way, which I would also be fine with. And it seems like a
-friendlier way than removal to handle it for v2.0, if we are going to
-remove the code entirely post-v2.0.
+Jeff King (4):
+  replace: refactor command-mode determination
+  replace: use OPT_CMDMODE to handle modes
+  replace: factor object resolution out of replace_object
+  replace: add --edit option
 
-As before, if your desire is to have the code out for v2.0, then say so.
-I think we should respect such a request.
+ Documentation/git-replace.txt |  15 ++-
+ builtin/replace.c             | 225 +++++++++++++++++++++++++++++++++---------
+ t/t6050-replace.sh            |  29 ++++++
+ 3 files changed, 223 insertions(+), 46 deletions(-)
 
--Peff
+-- 
+1.9.rc0.17.g651113e
