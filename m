@@ -1,138 +1,123 @@
-From: Alexey Shumkin <alex.crezoff@gmail.com>
-Subject: Re: [PATCH v2 1/2] t4205, t6006: Add failing tests for the case when
- i18n.logOutputEncoding is set
-Date: Sat, 17 May 2014 12:52:03 +0400
-Message-ID: <20140517085203.GA27165@dell-note>
-References: <cover.1400254654.git.Alex.Crezoff@gmail.com>
- <c4c360c3e6760128ae1326b7463da7130b01a7e9.1400254654.git.Alex.Crezoff@gmail.com>
- <xmqqfvk9a797.fsf@gitster.dls.corp.google.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v2] format-patch --signature-file <file>
+Date: Sat, 17 May 2014 01:59:11 -0700
+Message-ID: <20140517085911.GA18862@hudson.localdomain>
+References: <1400203881-2794-1-git-send-email-jmmahler@gmail.com>
+ <1400203881-2794-2-git-send-email-jmmahler@gmail.com>
+ <20140516081445.GA21468@sigill.intra.peff.net>
+ <20140517072548.GA18239@hudson.localdomain>
+ <20140517074224.GA16697@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 17 10:52:21 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 17 10:59:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlaLp-0006WX-Ab
-	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 10:52:17 +0200
+	id 1WlaSm-0002b4-LU
+	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 10:59:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932155AbaEQIwK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 May 2014 04:52:10 -0400
-Received: from mail-lb0-f176.google.com ([209.85.217.176]:61760 "EHLO
-	mail-lb0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932145AbaEQIwI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2014 04:52:08 -0400
-Received: by mail-lb0-f176.google.com with SMTP id p9so2654925lbv.35
-        for <git@vger.kernel.org>; Sat, 17 May 2014 01:52:06 -0700 (PDT)
+	id S1756910AbaEQI7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2014 04:59:18 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:43361 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756689AbaEQI7Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2014 04:59:16 -0400
+Received: by mail-pb0-f44.google.com with SMTP id rq2so3617589pbb.31
+        for <git@vger.kernel.org>; Sat, 17 May 2014 01:59:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=bwk5mgBdXsUVTz/Vw36Cuo4DGSuISge/oJtCbsKZG1Y=;
-        b=SXTlxQc95krFwgzgBKvHXYFbGTEzGEk3MFCEYpvJ+Hl7FkhIV10jEfHHvGoADq4bZj
-         l0cEA+KIwNljx45jgdgNVbhmCsdRF7Bi6yR9dzHc8QRptyLw8EeIl03TBmnkzJdjvI+h
-         HVaKZtDkxTkGo/KgXw8MMFQIsyT9g6BBpKnYxdndxFNi9CnPWjuQ1j8588vsHbu6F+wU
-         VX7PwuGRvN2T61wKRgjvDbGR2Cj69ZOU4NhCPf7pwjY2r0jaqib4MH/+gmUiuREv6zXr
-         kOD0IgBuyA/JVhPbqavmkBFgCbfmc3TMTE0v5pjmBmK0QqNFM1jKkH3MG479uD0W8+hS
-         x+uw==
-X-Received: by 10.112.149.36 with SMTP id tx4mr756256lbb.59.1400316726225;
-        Sat, 17 May 2014 01:52:06 -0700 (PDT)
-Received: from localhost (ppp91-77-211-246.pppoe.mtu-net.ru. [91.77.211.246])
-        by mx.google.com with ESMTPSA id bx3sm10895109lbd.20.2014.05.17.01.52.04
+        h=from:date:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=d4jLRBEmhG+gjTWQm2PZsQoSnEqCREpTj6K0wrCB+EI=;
+        b=jILrfnIZdKsb5vCP1/F1jPcZgzk+8nNjhEoke6QGqYOpIdIwI1LW1cpGPAlV7H5kfu
+         hBR7yzaS3PjDfZkRgMyaBPwwI5n0rVNTJ372IMOzTIUqauTqePuF8nSS1Lc+4hTCWpFm
+         LLchhJLWrhfm3sqvs5ZxhdgFCtLAcWdZgJV2IEpN3/QSPx/YjH4PTHlBWBno8YNDiaFY
+         h3qhL3+SWS+oGYsiLLhJbVfEBAt56jEJw0X3tcvOTegdSjV2ni+7gvnmhNh0RdiujfhE
+         tSa02fYitlC7BCmTiH/L8tkRnCjDJtOqxUxqb1xvk02VZEIKRaOIWoT8l1dIByt7Kr7n
+         ZD7A==
+X-Received: by 10.66.157.200 with SMTP id wo8mr27167467pab.92.1400317156251;
+        Sat, 17 May 2014 01:59:16 -0700 (PDT)
+Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id vf9sm18735448pbc.94.2014.05.17.01.59.12
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 May 2014 01:52:05 -0700 (PDT)
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 17 May 2014 01:59:14 -0700 (PDT)
+X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
+Received: by hudson (sSMTP sendmail emulation); Sat, 17 May 2014 01:59:11 -0700
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <xmqqfvk9a797.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20140517074224.GA16697@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249461>
 
-On Fri, May 16, 2014 at 11:49:40AM -0700, Junio C Hamano wrote:
-> Alexey Shumkin <alex.crezoff@gmail.com> writes:
->=20
-> > Pretty format string %<(N,[ml]trunc)>%s truncates subject to a give=
-n
-> > length with an appropriate padding. This works for non-ASCII texts =
-when
-> > i18n.logOutputEncoding is UTF-8 only (independently of a printed co=
-mmit
-> > message encoding) but does not work when i18n.logOutputEncoding is =
-NOT
-> > UTF-8.
-> >
-> > There were no breakages as far as were no tests for the case
-> > when both a commit message and logOutputEncoding are not UTF-8.
-> >
-> > Add failing tests for that which will be fixed in the next patch.
-> >
-> > Signed-off-by: Alexey Shumkin <Alex.Crezoff@gmail.com>
-> > Reviewed-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> > ---
-> >  t/t4205-log-pretty-formats.sh | 169 ++++++++++++++++++++++++++++++=
-++++++++++++
-> >  t/t6006-rev-list-format.sh    |  75 ++++++++++++++++++-
-> >  2 files changed, 242 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-for=
-mats.sh
-> > index 2a6278b..6791e0d 100755
-> > --- a/t/t4205-log-pretty-formats.sh
-> > +++ b/t/t4205-log-pretty-formats.sh
-> > @@ -153,6 +153,19 @@ EOF
-> >  	test_cmp expected actual
-> >  '
-> > =20
-> > +test_expect_success 'left alignment formatting. i18n.logOutputEnco=
-ding' '
-> > +	git -c i18n.logOutputEncoding=3Diso8859-1 log --pretty=3D"format:=
-%<(40)%s" >actual &&
-> > +	# complete the incomplete line at the end
-> > +	echo >>actual &&
->=20
-> Would it change the meaning of the test if you used tformat: instead
-> of format: (or --format=3D"%<(40)%s")?  If it doesn't, it would make
-> it unnecessary to append an extra LF and explain why you do so.
-Well, actually, I just copied previous tests and added
-i18n.logOutputEncoding.
+On Sat, May 17, 2014 at 03:42:24AM -0400, Jeff King wrote:
+> On Sat, May 17, 2014 at 12:25:48AM -0700, Jeremiah Mahler wrote:
+> 
+> > > We have routines for reading directly into a strbuf, which eliminates
+> > > the need for this 1024-byte limit. We even have a wrapper that can make
+> > > this much shorter:
+> > > 
+> > >   struct strbuf buf = STRBUF_INIT;
+> > > 
+> > >   strbuf_read_file(&buf, arg, 128);
+> > >   *signature = strbuf_detach(&buf, NULL);
+> > > 
+> > 
+> > Yes, that is much cleaner.
+> > The memory returned by strbuf_detach() will have to be freed as well.
+> 
+> In cases like this, we often let the memory leak. It's in a global that
+> stays valid through the whole program, so we just let the program's exit
+> clean it up.
+> 
 
-But as I can see in the code - no, tformat will not change the meaning.
-so, may be there is a reason to change that (initial) tests from format
-to tformat first? And then add mine new.
->=20
-> > +	qz_to_tab_space <<EOF | iconv -f utf-8 -t iso8859-1 >expected &&
->=20
-> It is minor but many existing uses of iconv in our tests spell these
-> as UTF-8 and ISO8859-1 in uppercase.  I vaguely recall there was a
-> portability concern to favor the ones that are used in existing
-> tests, but probably it no longer matters (I see you added the
-> lowercase one with de6029a2 mid last year), so I am fine if these
-> stay lowercase.
-I've grep'ed for lowercase iso8859-1 in test, and found almost all of
-them is code added by me.
-Grep for uppercase gives more results. I can refactor that first for
-uniformity.
->=20
-> > +	git -c i18n.logOutputEncoding=3Diso8859-1 log --pretty=3D"format:=
-%<(1)%s" >actual &&
-> > +	# complete the incomplete line at the end
-> > +	echo >>actual &&
->=20
-> Likewise for all the other "--pretty=3Dformat:" followed by an echo.
-the same copy-paste-modify.
+It bugs me but I see your point.
+It works just fine in this situation.
 
->=20
-> Thanks.
+> > Having --signature-file override --signature seems simpler to implement.
+> > The signature variable has a default value which complicates
+> > determining whether it was set or not.
+> 
+> Yeah, the default value complicates it. I think you can handle that just
+> by moving the default to the main logic, like:
+> 
+>   static const char *signature;
+>   static const char *signature_file;
+> 
+>   ...
+> 
+>   if (signature) {
+> 	if (signature_file)
+> 		die("you cannot specify both a signature and a signature-file");
+> 	/* otherwise, we already have the value */
+>   } else if (signature_file) {
+> 	struct strbuf buf = STRBUF_INIT;
+> 	strbuf_read(&buf, signature_file, 128);
+> 	signature = strbuf_detach(&buf);
+>   } else
+> 	signature = git_version_string;
+> 
 
---=20
-Alexey Shumkin
+Before, --no-signature would clear the &signature.
+With this code it sees it as not being set and assigns
+the default version string.
+
+> and as a bonus, that keeps all of the logic together in one (fairly
+> readable) chain.
+> 
+> -Peff
+
+-- 
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
