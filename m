@@ -1,124 +1,141 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] request-pull: resurrect for-linus -> tags/for-linus DWIM
-Date: Sun, 18 May 2014 11:33:05 +0300
-Message-ID: <20140518083305.GB28462@redhat.com>
-References: <1400263070-15312-1-git-send-email-gitster@pobox.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3] format-patch --signature-file <file>
+Date: Sun, 18 May 2014 07:20:20 -0400
+Message-ID: <20140518112020.GA2153@sigill.intra.peff.net>
+References: <1400342542-11256-1-git-send-email-jmmahler@gmail.com>
+ <1400342542-11256-2-git-send-email-jmmahler@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 18 10:34:32 2014
+To: Jeremiah Mahler <jmmahler@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 18 13:20:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlwYB-0001jU-PS
-	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 10:34:32 +0200
+	id 1Wlz8u-0007lb-B4
+	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 13:20:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752123AbaERIeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2014 04:34:22 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:60065 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751654AbaERIeO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 May 2014 04:34:14 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s4I8YCKU024646
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Sun, 18 May 2014 04:34:12 -0400
-Received: from redhat.com (ovpn-116-27.ams2.redhat.com [10.36.116.27])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id s4I8YA18002715;
-	Sun, 18 May 2014 04:34:11 -0400
+	id S1750926AbaERLU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2014 07:20:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54334 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750866AbaERLUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2014 07:20:25 -0400
+Received: (qmail 1183 invoked by uid 102); 18 May 2014 11:20:25 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 18 May 2014 06:20:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 May 2014 07:20:20 -0400
 Content-Disposition: inline
-In-Reply-To: <1400263070-15312-1-git-send-email-gitster@pobox.com>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+In-Reply-To: <1400342542-11256-2-git-send-email-jmmahler@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249501>
 
-On Fri, May 16, 2014 at 10:57:50AM -0700, Junio C Hamano wrote:
-> Older versions of Git before v1.7.10 did not DWIM
-> 
->     $ git pull $URL for-linus
-> 
-> to the tag "tags/for-linus" and the users were required to say
-> 
->     $ git pull $URL tags/for-linus
-> 
-> instead.  Because newer versions of Git works either way,
-> request-pull used to show tags/for-linus when asked
-> 
->     $ git request-pull origin/master $URL for-linus
-> 
-> The recent updates broke this and in the output we see "for-linus"
-> without the "tags/" prefix.
-> 
-> As v1.7.10 is more than 2 years old, this should matter very little
-> in practice, but resurrecting it is very simple.
+On Sat, May 17, 2014 at 09:02:22AM -0700, Jeremiah Mahler wrote:
 
-Well RHEL6 apparently comes with git 1.7.1, there are
-probably others.
-
-The problem isn't theorectical actually,
-the reason I noticed the change in behaviour is because one of
-my pull requests got bounced because of it:
-http://article.gmane.org/gmane.comp.emulators.qemu/273121
-
-
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-
-Tested-by: Michael S. Tsirkin <mst@redhat.com>
-
-> ---
+> Added feature that allows a signature file to be used with format-patch.
 > 
->  * I _think_ the fix, without breaking the spirit of Linus's "I do
->    not want the thing DWIM based on what the remote end has"
->    original, would be as simple as this patch.  We can queue it as a
->    regression fix and do another round of -rc4 if those who depend
->    on request-pull heavily feel strongly about it.
+>   $ git format-patch --signature-file ~/.signature -1
 > 
->  git-request-pull.sh     | 6 ++++++
->  t/t5150-request-pull.sh | 8 +++++++-
->  2 files changed, 13 insertions(+), 1 deletion(-)
+> Now signatures with newlines and other special characters can be
+> easily included.
 > 
-> diff --git a/git-request-pull.sh b/git-request-pull.sh
-> index b67513a..d6648b2 100755
-> --- a/git-request-pull.sh
-> +++ b/git-request-pull.sh
-> @@ -118,6 +118,12 @@ then
->  	status=1
->  fi
+> Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
+
+This is looking much better. I have a few comments still, inline below.
+
+By the way, did you want to add a format.signaturefile config, too? I do
+not care myself, but I would imagine most workflows would end up
+specifying it every time.
+
+> @@ -1447,6 +1450,16 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+>  			cover_letter = (config_cover_letter == COVER_ON);
+>  	}
 >  
-> +# Special case: turn "for_linus" to "tags/for_linus" when it is correct
-> +if test "$ref" = "refs/tags/$pretty_remote"
-> +then
-> +	pretty_remote=tags/$pretty_remote
-> +fi
+> +	if (signature_file) {
+> +		if (signature && signature != git_version_string)
+> +			die(_("--signature and --signature-file are mutually exclusive"));
+
+Technically "signature" might have come from config, not "--signature"
+on the command-line.  But I don't know if that's even worth worrying
+about; presumably the user can figure it out if they set the config.
+
+> +		struct strbuf buf = STRBUF_INIT;
 > +
->  url=$(git ls-remote --get-url "$url")
->  
->  git show -s --format='The following changes since commit %H:
-> diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
-> index 75d6b38..93e2c65 100755
-> --- a/t/t5150-request-pull.sh
-> +++ b/t/t5150-request-pull.sh
-> @@ -223,7 +223,13 @@ test_expect_success 'pull request format' '
->  		git request-pull initial "$downstream_url" tags/full:refs/tags/full
->  	) >request &&
->  	sed -nf fuzz.sed <request >request.fuzzy &&
-> -	test_i18ncmp expect request.fuzzy
-> +	test_i18ncmp expect request.fuzzy &&
-> +
-> +	(
-> +		cd local &&
-> +		git request-pull initial "$downstream_url" full
-> +	) >request &&
-> +	grep ' tags/full$'
+> +		strbuf_read_file(&buf, signature_file, 128);
+> +		signature = strbuf_detach(&buf, NULL);
+
+Your cover letter mentioned generating an error here. Did you want:
+
+  if (strbuf_read_file(&buf, signature_file, 128) < 0)
+	die_errno("unable to read signature file '%s'", signature_file);
+
+or similar?
+
+> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+> index 9c80633..fb3dc1b 100755
+> --- a/t/t4014-format-patch.sh
+> +++ b/t/t4014-format-patch.sh
+> @@ -762,6 +762,34 @@ test_expect_success 'format-patch --signature="" suppresses signatures' '
+>  	! grep "^-- \$" output
 >  '
 >  
->  test_expect_success 'request-pull ignores OPTIONS_KEEPDASHDASH poison' '
-> -- 
-> 2.0.0-rc3-434-g1ba2fe8
+> +cat > expect << EOF
+
+Minor style nits, but we usually omit the whitespace between redirection
+operations, and we always quote our here-doc endings unless they
+explicitly want to interpolate. So:
+
+  cat >expect <<\EOF
+
+(we also tend to use "<<-\EOF" to drop leading tabs, and then include
+them inside the test_expect_success properly indented, but as this
+expectation is used in multiple places, it's not unreasonable to keep it
+separate).
+
+> +test_expect_success 'format-patch --signature-file file' '
+> +	git format-patch --stdout --signature-file expect -1 >output &&
+> +	check_patch output &&
+> +	fgrep -x -f output expect >output2 &&
+
+Both of these fgrep options are in POSIX, but it looks like this will be
+the first use for either of them. I'm not sure if they will give us any
+portability problems.
+
+We could probably do something like:
+
+  sed -n '/^-- $/,$p'
+
+if we have to.
+
+> +	diff expect output2
+
+Please use test_cmp here, which adjusts automatically for less-abled
+systems where diff is not available.
+
+> +test_expect_success 'format-patch --signature-file=file' '
+> +	git format-patch --stdout --signature-file=expect -1 >output &&
+> +	check_patch output &&
+> +	fgrep -x -f output expect >output2 &&
+> +	diff expect output2
+> +'
+
+Same comments as above; I note that this is just checking "--foo=bar"
+rather than "--foo bar". I don't mind being thorough, but for the most
+part we just assume this is tested as part of the parse-options tests,
+and don't check it explicitly for each option.
+
+> +test_expect_success 'format-patch --signature and --signature-file die' '
+> +	! git format-patch --stdout --signature="foo" --signature-file=expect -1 >output
+> +'
+
+Please use test_must_fail instead of "!" here; it is more thorough in
+checking that we exited with a non-zero error code (and didn't die from
+signal death, for example).
+
+-Peff
