@@ -1,714 +1,142 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: Re: [GUILT v3 14/31] Use "git check-ref-format" to validate patch names.
-Date: Sun, 18 May 2014 20:59:36 +0200
-Message-ID: <CAP=KgsSu6R1EiS79+btBZp95YyhuLFAGhmheF_ktLvVrA+O=aA@mail.gmail.com>
+Subject: Re: [GUILT v3 09/31] Test suite: properly check the exit status of commands.
+Date: Sun, 18 May 2014 21:12:59 +0200
+Message-ID: <CAP=KgsSXL=rGb0PABSHQVBB1izZMKnxMVxegdu7NZAfSoRAHSQ@mail.gmail.com>
 References: <1400251578-17221-1-git-send-email-cederp@opera.com>
-	<1400251578-17221-15-git-send-email-cederp@opera.com>
-	<20140516152052.GD1770@meili.valhalla.31bits.net>
+	<1400251578-17221-10-git-send-email-cederp@opera.com>
+	<20140516154513.GI1770@meili.valhalla.31bits.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Sun May 18 20:59:44 2014
+X-From: git-owner@vger.kernel.org Sun May 18 21:13:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wm6JB-0004QB-T6
-	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 20:59:42 +0200
+	id 1Wm6W9-0000xY-KT
+	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 21:13:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751766AbaERS7i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2014 14:59:38 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:64856 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751622AbaERS7h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 May 2014 14:59:37 -0400
-Received: by mail-ig0-f181.google.com with SMTP id h3so2693997igd.2
-        for <git@vger.kernel.org>; Sun, 18 May 2014 11:59:36 -0700 (PDT)
+	id S1752021AbaERTNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2014 15:13:00 -0400
+Received: from mail-ig0-f173.google.com ([209.85.213.173]:34344 "EHLO
+	mail-ig0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751570AbaERTM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2014 15:12:59 -0400
+Received: by mail-ig0-f173.google.com with SMTP id hn18so2662593igb.6
+        for <git@vger.kernel.org>; Sun, 18 May 2014 12:12:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=dZHcjfVwakpeaUAnbMUKEn+0yx0EGF+pyDi+djyINi0=;
-        b=MEdqJTurgZ4NED7vyiKxbKJb1kdIhwnzveoJnQ2x1/AJGtOqpuvEaFLXkogDqZ2ms5
-         p4pvoRfjI60iSd726NU3XiJiJGDoIsvxQ+hRCtR+Qw3gl7l5wvnONfVrYHXr13wCM+P2
-         Bv+alwmOhUx3BzvemhLicDT5hs42D2RsD/Fy2XAg5PqAluE71oUv+L8Db38QgwelW1Ww
-         frSrZx6zL4P8rV88rRlPtPk5tjbHJGFIFK4PMf08EBs9uNQ6YuR01gS4IcJHeqeHAEMR
-         jIXd63XiF8EYAHFZ6b+CsbvpzI6BeoANtLuEHyTkKvTij5wgiEL1Atl7EffCt4kzQu2D
-         eB7A==
-X-Gm-Message-State: ALoCoQnDRSGmOklparEc97ZoPqWzRsMbXNbQwUbN93YUo9WHOzkKibFWKEcVn9+9YZKiitdkdZj+
-X-Received: by 10.43.141.81 with SMTP id jd17mr27243430icc.39.1400439576670;
- Sun, 18 May 2014 11:59:36 -0700 (PDT)
-Received: by 10.43.89.66 with HTTP; Sun, 18 May 2014 11:59:36 -0700 (PDT)
-In-Reply-To: <20140516152052.GD1770@meili.valhalla.31bits.net>
+        bh=iS9uE71J+sPSBK/QVAWwakYcl4R/S70aLsEILwjBZeU=;
+        b=Wfs30Pe1UCj+/Sjyokg7v+tAwbvT5+P/NwogMgVokoGrppwktciFpmF1MAoDY8XREI
+         ct2ut2XJzS4O7g85PEQrzfDiHxpBjn84KRaNpDZZ0rO2bUrQYlq6CK/4ZyWrqc9yJBBU
+         Y/Ucl+/uAunowLFw/IAYEM2OUAL6lIVkeQDlnc0Lj99vLc2ziMHsd53PdLiaRgi9MZ0e
+         WJugkdn2PE+eB4BejnyTvBUG4DRJ8VwK7mydx0fAPQdpy1Py8XaZzKygmT+wUWTotDvj
+         27y963s3Oa6hOxLEuKrKnqHRzby6Rx5g6E67V7Rp+tttrh8lySNCp1S5RsFhrKmsovqm
+         Uetw==
+X-Gm-Message-State: ALoCoQkLNCPiz78yyGrr1tTYINjhVDZ2roRXJrdEBkrd0UTN/cV18mwYlhMZyMu1yPX6Ct+elIvb
+X-Received: by 10.50.79.161 with SMTP id k1mr11976138igx.31.1400440379288;
+ Sun, 18 May 2014 12:12:59 -0700 (PDT)
+Received: by 10.43.89.66 with HTTP; Sun, 18 May 2014 12:12:59 -0700 (PDT)
+In-Reply-To: <20140516154513.GI1770@meili.valhalla.31bits.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249506>
 
-On Fri, May 16, 2014 at 5:20 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
-> On Fri, May 16, 2014 at 04:46:01PM +0200, Per Cederqvist wrote:
->> The valid_patchname now lets "git check-ref-format" do its job instead
->> of trying (and failing) to implement the same rules.  See
->> git-check-ref-format(1) for a list of the rules.
+On Fri, May 16, 2014 at 5:45 PM, Jeff Sipek <jeffpc@josefsipek.net> wrote:
+> On Fri, May 16, 2014 at 04:45:56PM +0200, Per Cederqvist wrote:
+>> The "cmd" and "shouldfail" functions checked the exit status of the
+>> replace_path function instead of the actual command that was running.
+>> (The $? construct checks the exit status of the last command in a
+>> pipeline, not the first command.)
 >>
->> Refer to the git-check-ref-format(1) man page in the error messages
->> produced when valid_patchname indicates that the name is bad.
->>
->> Added testcases that breaks most of the rules in that man-page.
->>
->> Git version 1.8.5 no longer allows the single character "@" as a
->> branch name.  Guilt always rejects that name, for increased
->> compatibility.
+>> Updated t-032.sh, which used "shouldfail" instead of "cmd" in one
+>> place.  (The comment in the script makes it clear that the command is
+>> expected to succeed.)
 >>
 >> Signed-off-by: Per Cederqvist <cederp@opera.com>
->> Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 >> ---
->>  guilt                |  21 ++-
->>  guilt-fork           |   2 +-
->>  guilt-import         |   2 +-
->>  guilt-new            |   2 +-
->>  regression/t-025.out | 426 +++++++++++++++++++++++++++++++++++++++++++++++++--
->>  regression/t-025.sh  |  12 +-
->>  regression/t-032.out |   4 +-
->>  7 files changed, 446 insertions(+), 23 deletions(-)
+>>  regression/scaffold | 17 +++++++++++------
+>>  regression/t-032.sh |  2 +-
+>>  2 files changed, 12 insertions(+), 7 deletions(-)
 >>
->> diff --git a/guilt b/guilt
->> index 3fc524e..23cc2da 100755
->> --- a/guilt
->> +++ b/guilt
->> @@ -132,14 +132,19 @@ fi
->>  # usage: valid_patchname <patchname>
->>  valid_patchname()
+>> diff --git a/regression/scaffold b/regression/scaffold
+>> index 5c8b73e..e4d7487 100644
+>> --- a/regression/scaffold
+>> +++ b/regression/scaffold
+>> @@ -51,18 +51,23 @@ function filter_dd
+>>  function cmd
 >>  {
->> -     case "$1" in
->> -             /*|./*|../*|*/./*|*/../*|*/.|*/..|*/|*\ *|*\    *)
->> -                     return 1;;
->> -             *:*)
->> -                     return 1;;
->> -             *)
->> -                     return 0;;
->> -     esac
->> +     if git check-ref-format --allow-onelevel "$1"; then
+>>       echo "% $@"
+>> -     "$@" 2>&1 | replace_path && return 0
+>> -     return 1
+>> +     (
+>> +             exec 3>&1
+>> +             rv=`(("$@" 2>&1; echo $? >&4) | replace_path >&3 ) 4>&1`
 >
-> I know I already signed off on this, but I just tried to run the regression
-> suite with your changes on 1.7.3.2.  It blows up because --allow-onelevel is
-> not recognized.  Yes, 1.7 is a bit on the old side but I think it's
-> reasonable to still support it.  Thoughts?
+> Wow.  This took a while to decipher :)
 
-Oh.  I was not aware that --allow-onelevel was so new (it was added in
-Git 1.7.8).
+Ancien wisdom from the "Csh Programming Considered Harmful"
+article: http://www.faqs.org/faqs/unix-faq/shell/csh-whynot/
 
-I'll rewrite this using "git check-ref-format a/"$1"" instead.
+These functions work only because of the "set -e" earlier in scaffold.
+The final return statements are not actually reached. I don't like that.
+So the next version of the patch series will print an explicit message
+like "% FAIL: The above command should succeed but failed." or
+"% FAIL: The above command should fail but succeeded." and do
+an explicit "exit 1" on failure. I think it makes it easier to debug issues.
+(I recently spent a few hours trying to figure our why the test just silently
+exited. Turns out the old git version I was running didn't like my .gitconfig,
+so it exited with a non-zero exit code...)
 
->> +             # Starting with Git version 1.8.5, a branch cannot be
->> +             # the single character "@".  Make sure guilt rejects
->> +             # that name even if we are currently using an older
->> +             # version of Git.  This ensures that the test suite
->> +             # runs fine using any version of Git.
->> +             if [ "$1" = "@" ]; then
->> +                     return 1
->> +             fi
->> +             return 0
+> Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 
-There were other changes in Git version 1.7.6.4 and 1.7.8. I'll
-add similar code for those as well in the upcoming v4 of the series.
-With those changes, the test suite works with Git 1.5.0 and newer
-(I've checked all versions made of three numbers, but not those
-made of four numbers.)
-
-Jeff, I'll remove your signed-off-by so that you can check the
-new code that I will post within a couple of days.
+I'll let you re-check the next version of the code.
 
     /ceder
 
->> +     else
->> +             return 1
->> +     fi
+>> +             exit $rv
+>> +     )
+>> +     return $?
 >>  }
 >>
->>  get_branch()
->> diff --git a/guilt-fork b/guilt-fork
->> index a85d391..6447e55 100755
->> --- a/guilt-fork
->> +++ b/guilt-fork
->> @@ -37,7 +37,7 @@ else
->>  fi
+>>  # usage: shouldfail <cmd>..
+>>  function shouldfail
+>>  {
+>>       echo "% $@"
+>> -     (
+>> -             "$@" 2>&1 || return 0
+>> -             return 1
+>> -     ) | replace_path
+>> +     ! (
+>> +             exec 3>&1
+>> +             rv=`(("$@" 2>&1; echo $? >&4) | replace_path >&3 ) 4>&1`
+>> +             exit $rv
+>> +     )
+>>       return $?
+>>  }
 >>
->>  if ! valid_patchname "$newpatch"; then
->> -     die "The specified patch name contains invalid characters (:)."
->> +     die "The specified patch name is invalid according to git-check-ref-format(1)."
->>  fi
+>> diff --git a/regression/t-032.sh b/regression/t-032.sh
+>> index b1d5f19..bba401e 100755
+>> --- a/regression/t-032.sh
+>> +++ b/regression/t-032.sh
+>> @@ -28,7 +28,7 @@ shouldfail guilt import -P foo3 foo
+>>  cmd guilt import -P foo2 foo
 >>
->>  if [ -e "$GUILT_DIR/$branch/$newpatch" ]; then
->> diff --git a/guilt-import b/guilt-import
->> index 3e9b3bb..928e325 100755
->> --- a/guilt-import
->> +++ b/guilt-import
->> @@ -40,7 +40,7 @@ if [ -e "$GUILT_DIR/$branch/$newname" ]; then
->>  fi
+>>  # ok
+>> -shouldfail guilt import foo
+>> +cmd guilt import foo
 >>
->>  if ! valid_patchname "$newname"; then
->> -     die "The specified patch name contains invalid characters (:)."
->> +     die "The specified patch name is invalid according to git-check-ref-format(1)."
->>  fi
->>
->>  # create any directories as needed
->> diff --git a/guilt-new b/guilt-new
->> index 9528438..9f7fa44 100755
->> --- a/guilt-new
->> +++ b/guilt-new
->> @@ -64,7 +64,7 @@ fi
->>
->>  if ! valid_patchname "$patch"; then
->>       disp "Patchname is invalid." >&2
->> -     die "it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace"
->> +     die "It must follow the rules in git-check-ref-format(1)."
->>  fi
->>
->>  # create any directories as needed
->> diff --git a/regression/t-025.out b/regression/t-025.out
->> index 7811ab1..01bc406 100644
->> --- a/regression/t-025.out
->> +++ b/regression/t-025.out
->> @@ -141,7 +141,7 @@ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->>  r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->>  % guilt new white space
->>  Patchname is invalid.
->> -it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace
->> +It must follow the rules in git-check-ref-format(1).
->>  % list_files
->>  d .git/patches
->>  d .git/patches/master
->> @@ -211,7 +211,7 @@ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->>  r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->>  % guilt new /abc
->>  Patchname is invalid.
->> -it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace
->> +It must follow the rules in git-check-ref-format(1).
->>  % list_files
->>  d .git/patches
->>  d .git/patches/master
->> @@ -235,7 +235,7 @@ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->>  r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->>  % guilt new ./blah
->>  Patchname is invalid.
->> -it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace
->> +It must follow the rules in git-check-ref-format(1).
->>  % list_files
->>  d .git/patches
->>  d .git/patches/master
->> @@ -259,7 +259,7 @@ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->>  r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->>  % guilt new ../blah
->>  Patchname is invalid.
->> -it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace
->> +It must follow the rules in git-check-ref-format(1).
->>  % list_files
->>  d .git/patches
->>  d .git/patches/master
->> @@ -283,7 +283,7 @@ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->>  r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->>  % guilt new abc/./blah
->>  Patchname is invalid.
->> -it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace
->> +It must follow the rules in git-check-ref-format(1).
->>  % list_files
->>  d .git/patches
->>  d .git/patches/master
->> @@ -307,7 +307,7 @@ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->>  r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->>  % guilt new abc/../blah
->>  Patchname is invalid.
->> -it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace
->> +It must follow the rules in git-check-ref-format(1).
->>  % list_files
->>  d .git/patches
->>  d .git/patches/master
->> @@ -331,7 +331,7 @@ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->>  r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->>  % guilt new abc/.
->>  Patchname is invalid.
->> -it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace
->> +It must follow the rules in git-check-ref-format(1).
->>  % list_files
->>  d .git/patches
->>  d .git/patches/master
->> @@ -355,7 +355,7 @@ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->>  r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->>  % guilt new abc/..
->>  Patchname is invalid.
->> -it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace
->> +It must follow the rules in git-check-ref-format(1).
->>  % list_files
->>  d .git/patches
->>  d .git/patches/master
->> @@ -379,7 +379,415 @@ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->>  r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->>  % guilt new abc/
->>  Patchname is invalid.
->> -it cannot begin with '/', './' or '../', or contain /./, /../, or whitespace
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new abc.lock
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new a/b.lock/c
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new cr
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new ctrl-a
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new formfeed
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new del
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new tilde~
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new caret^
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new colon:
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new questionmark?
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new asterisk*
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new open[bracket
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new consecutive//slashes
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new trailing-dot.
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new bad@{seq
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new @
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->> +% list_files
->> +d .git/patches
->> +d .git/patches/master
->> +d .git/patches/master/dir
->> +d .git/patches/master/dir/subdir
->> +d .git/refs/patches
->> +d .git/refs/patches/master
->> +d .git/refs/patches/master/dir
->> +d .git/refs/patches/master/dir/subdir
->> +f 1ef04b4f4149870b3f06b5f99b9d9fc260cebc67  .git/patches/master/series
->> +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
->> +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
->> +f 7ce0ecd062afe46bf743d0d63dbe79e18774fe03  .git/patches/master/status
->> +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
->> +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/append
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/dir/subdir/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/file
->> +f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/prepend
->> +r acdeef96ee30eb34bbbf65d11de5cf7da4b5fee8  .git/refs/patches/master/prepend
->> +% guilt new backslash\
->> +Patchname is invalid.
->> +It must follow the rules in git-check-ref-format(1).
->>  % list_files
->>  d .git/patches
->>  d .git/patches/master
->> diff --git a/regression/t-025.sh b/regression/t-025.sh
->> index 985fed4..8c439fc 100755
->> --- a/regression/t-025.sh
->> +++ b/regression/t-025.sh
->> @@ -43,7 +43,17 @@ shouldfail guilt new "white space"
->>
->>  cmd list_files
->>
->> -for pname in prepend mode /abc ./blah ../blah abc/./blah abc/../blah abc/. abc/.. abc/ ; do
->> +b()
->> +{
->> +    printf "%b" "$1"
->> +}
->> +
->> +for pname in prepend mode /abc ./blah ../blah abc/./blah abc/../blah abc/. \
->> +     abc/.. abc/ abc.lock a/b.lock/c `b 'cr\r'` `b 'ctrl-a\001'` \
->> +     `b 'formfeed\f'` `b 'del\177'` "tilde~" "caret^" "colon:" \
->> +     "questionmark?" "asterisk*" "open[bracket" "consecutive//slashes" \
->> +     "trailing-dot." "bad@{seq" "@" "backslash\\"
->> +do
->>       shouldfail guilt new "$pname"
->>
->>       cmd list_files
->> diff --git a/regression/t-032.out b/regression/t-032.out
->> index 53f0370..4e65db0 100644
->> --- a/regression/t-032.out
->> +++ b/regression/t-032.out
->> @@ -1,7 +1,7 @@
->>  % setup_repo
->>  % touch foo foo:baz
->>  % guilt import -P foo:bar foo
->> -The specified patch name contains invalid characters (:).
->> +The specified patch name is invalid according to git-check-ref-format(1).
->>  % guilt import -P foo:bar foo2
->>  Specified file does not exist.
->>  % guilt import -P foo foo2
->> @@ -15,4 +15,4 @@ Already tracking a patch under that name.
->>  Already tracking a patch under that name.
->>  % guilt import -P foo,bar foo
->>  % guilt import foo:baz
->> -The specified patch name contains invalid characters (:).
->> +The specified patch name is invalid according to git-check-ref-format(1).
+>>  # duplicate patch name (implicit)
+>>  shouldfail guilt import foo
 >> --
 >> 1.8.3.1
 >>
 >
 > --
-> Evolution, n.:
->   A hypothetical process whereby infinitely improbable events occur with
->   alarming frequency, order arises from chaos, and no one is given credit.
+> Fact: 28.1% of all statistics are generated randomly.
