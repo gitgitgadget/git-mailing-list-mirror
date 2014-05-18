@@ -1,148 +1,114 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT v4 16/33] Fix backslash handling when creating names of imported patches.
-Date: Sun, 18 May 2014 23:59:52 +0200
-Message-ID: <1400450409-30998-17-git-send-email-cederp@opera.com>
+Subject: [GUILT v4 17/33] "guilt graph" no longer loops when no patches are applied.
+Date: Sun, 18 May 2014 23:59:53 +0200
+Message-ID: <1400450409-30998-18-git-send-email-cederp@opera.com>
 References: <1400450409-30998-1-git-send-email-cederp@opera.com>
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Mon May 19 00:07:42 2014
+X-From: git-owner@vger.kernel.org Mon May 19 00:08:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wm9F6-0006Zg-CK
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 00:07:40 +0200
+	id 1Wm9FZ-0007if-1f
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 00:08:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752444AbaERWHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2014 18:07:37 -0400
-Received: from mail-lb0-f169.google.com ([209.85.217.169]:44886 "EHLO
-	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752221AbaERWHg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 May 2014 18:07:36 -0400
-Received: by mail-lb0-f169.google.com with SMTP id s7so3467899lbd.0
-        for <git@vger.kernel.org>; Sun, 18 May 2014 15:07:34 -0700 (PDT)
+	id S1752445AbaERWIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2014 18:08:04 -0400
+Received: from mail-lb0-f178.google.com ([209.85.217.178]:43868 "EHLO
+	mail-lb0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752334AbaERWID (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2014 18:08:03 -0400
+Received: by mail-lb0-f178.google.com with SMTP id w7so3393381lbi.37
+        for <git@vger.kernel.org>; Sun, 18 May 2014 15:08:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=W7WoatkBBmwA2qWgnw7Kb10MSg1Lnf+0/1stgYKW2QI=;
-        b=kOb5lfVCeTlnmTVHEec3954VSbUdFzuS03ZMcuP30F0P7+DoyuEyP4VCji5nxWZQT+
-         gSjdTWZQh49IP/WZxjQk4zHOKHmrGgLdRS/cbiftLSzHFFu5Vx5XSTvND2p7NcXzLKjj
-         WLanLd7DRQXcp9y+9drlURQBuyMR6a9yhlzAWkoh3AUSywJENSrSuV9qwUJmRdq+HIRm
-         srRTK3VRjS+y+U5d3Zz+Sz4R1141PiL0bF9hdJo7orMzQZNlFdR8SRqYWWN9mg6Pl/IY
-         lxW5HVkQ8B1yDKH2ecklGCMzI4BTPuOP9bcNzgkyqA71ljaBrHU1mlRtBYoykZkwk56Z
-         p8qA==
-X-Gm-Message-State: ALoCoQlHWGUizAtM2Q1DrGwlv2FUf8c4U+b28OyPFAMbnafTTlqT5s4ZBPIxt+Wzjc8Pwkuk5bRQ
-X-Received: by 10.112.146.234 with SMTP id tf10mr21984856lbb.1.1400450854870;
-        Sun, 18 May 2014 15:07:34 -0700 (PDT)
+        bh=BlfyXD9WIVKHA3C+23eox7Uj/akusMsY2tjE0CP0tuw=;
+        b=PHOP1QyfgjRiVjUG7sHkUQ2dS46S814gXlD2K7pLdLSuExcAIquZqXCk6/Fvs39KHL
+         NsV9/8cS1+6YlyOo8ioZ1+TiuDVE2ydyfb8b2rhh4ZzCcV9tkuu4y1EONpynKaX2Ho/+
+         W/3tjA6h6vRaokIvEXuK6A0KVWXy3L2x1frYfi1j6En5Is6Ixy6Obtkz+7DKvAgdfYTU
+         4+l4cSDVYLpmG6p27aHNxr1GKg8ar1cSePfHoIJvJK3azQ1K9tdsKIZLs6rAfeVQkCk2
+         91whip9hPWCiNl+BDo0lLJtxzLrmA+qqa7muxVB/zbR8NPvQWySyIjOOuQyXR27z+FlN
+         B/XA==
+X-Gm-Message-State: ALoCoQns2u16EMjZ5GJe26ByzD7UX9BCqkNDsP6idQAzn26iBiRuGSgOQ/cGM8uVl+vRSneeu8I7
+X-Received: by 10.152.6.228 with SMTP id e4mr3197370laa.57.1400450881907;
+        Sun, 18 May 2014 15:08:01 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id d8sm17593818lah.12.2014.05.18.15.07.33
+        by mx.google.com with ESMTPSA id d8sm17593818lah.12.2014.05.18.15.08.00
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 18 May 2014 15:07:33 -0700 (PDT)
+        Sun, 18 May 2014 15:08:00 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1400450409-30998-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249532>
 
-The 'echo $s' construct sometimes processes escape sequences.  (This
-happens, for instance, under Ubuntu 14.04 when /bin/sh is actually
-dash.)  We don't want that to happen when we are importing commits, so
-use 'printf %s "$s"' instead.
-
-(The -E option of bash that explicitly disables backslash expansion is
-not portable; it is not supported by dash.)
+Give an error message if no patches are applied.  Added a test case
+that never terminates unless this fix is applied.
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
 Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 ---
- guilt-import-commit  |  2 +-
- regression/t-034.out | 14 +++++++-------
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ guilt-graph          |  9 +++++++--
+ regression/t-033.out |  3 +++
+ regression/t-033.sh  | 13 +++++++++++++
+ 3 files changed, 23 insertions(+), 2 deletions(-)
+ create mode 100644 regression/t-033.out
+ create mode 100755 regression/t-033.sh
 
-diff --git a/guilt-import-commit b/guilt-import-commit
-index 6260c56..45f2404 100755
---- a/guilt-import-commit
-+++ b/guilt-import-commit
-@@ -30,7 +30,7 @@ for rev in `git rev-list $rhash`; do
+diff --git a/guilt-graph b/guilt-graph
+index b3469dc..56d0e77 100755
+--- a/guilt-graph
++++ b/guilt-graph
+@@ -17,8 +17,13 @@ fi
  
- 	# Try to convert the first line of the commit message to a
- 	# valid patch name.
--	fname=`echo $s | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
-+	fname=`printf %s "$s" | sed -e "s/&/and/g" -e "s/[ :]/_/g" -e "s,[/\\],-,g" \
- 			-e "s/['\\[{}]//g" -e 's/]//g' -e 's/\*/-/g' \
- 			-e 's/\?/-/g' -e 's/\.\.\.*/./g' -e 's/^\.//' \
- 			-e 's/\.patch$//' -e 's/\.$//' | tr A-Z a-z`
-diff --git a/regression/t-034.out b/regression/t-034.out
-index 7bc9459..bda4399 100644
---- a/regression/t-034.out
-+++ b/regression/t-034.out
-@@ -236,7 +236,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
- About to begin conversion...
- Current head: 2a8b1889aa5066193bac978e6bf5073ffcfa6541
- Converting 2a8b1889 as can-have-embedded-single-slashes
--Converting 0a46f8fa as backslash-isorbidden
-+Converting 0a46f8fa as backslash-is-forbidden
- Converting aedb74fd as x
- Converting 30187ed0 as cannot@have@the@sequence@at-brace
- Converting 106e8e5a as cannot_end_in_
-@@ -300,7 +300,7 @@ Applying patch..cannot@have@the@sequence@at-brace.patch
- Patch applied.
- Applying patch..x.patch
- Patch applied.
--Applying patch..backslash-isorbidden.patch
-+Applying patch..backslash-is-forbidden.patch
- Patch applied.
- Applying patch..can-have-embedded-single-slashes.patch
- Patch applied.
-@@ -311,7 +311,7 @@ Date:   Mon Jan 1 00:00:00 2007 +0000
+ patchname="$1"
  
-     Can/have/embedded/single/slashes
+-bottom=`git rev-parse refs/patches/$branch/$(head_n 1 < "$applied")`
+-base=`git rev-parse $bottom^`
++bottompatch=$(head_n 1 < "$applied")
++if [ -z "$bottompatch" ]; then
++	echo "No patch applied." >&2
++	exit 1
++fi
++
++base=`git rev-parse "refs/patches/${branch}/${bottompatch}^"`
  
--commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-isorbidden.patch)
-+commit 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141 (refs/patches/master/backslash-is-forbidden.patch)
- Author: Author Name <author@email>
- Date:   Mon Jan 1 00:00:00 2007 +0000
- 
-@@ -518,8 +518,6 @@ d .git/patches/master
- d .git/refs/patches
- d .git/refs/patches/master
- f 06beca7069b9e576bd431f65d13862ed5d3e2a0f  .git/patches/master/ctrlisforbidden.patch
--f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/series
--f 08267ec6783ea9d1adae55b275198f7594764ed0  .git/patches/master/status
- f 09b7e9be44ae5ec3a4bb30f5ee9d4ebc2c042f64  .git/patches/master/two_consecutive_dots_(.)_is_forbidden.patch
- f 0b971c9a17aeca2319c93d700ffd98acc2a93451  .git/patches/master/question-mark-is-forbidden.patch
- f 2b8392f63d61efc12add554555adae30883993cc  .git/patches/master/cannot-end-in-slash-.patch
-@@ -529,7 +527,7 @@ f 34e07c584032df137f19bdb66d93f316f00a5ac8  .git/patches/master/tildeisforbidden
- f 49bab499826b63deb2bd704629d60c7268c57aee  .git/patches/master/the_sequence_-._is_forbidden.patch
- f 5bcddb8ccb6e6e5e8a61e9e56cb2e0f70cbab2f5  .git/patches/master/cannot@have@the@sequence@at-brace.patch
- f 637b982fe14a240de181ae63226b27e0c406b3dc  .git/patches/master/asterisk-is-forbidden.patch
--f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-isorbidden.patch
-+f 698f8a7d41a64e3b6be1a3eba86574078b22a5f3  .git/patches/master/backslash-is-forbidden.patch
- f 7b103c3c7ae298cd2334f6f49da48bae1424f77b  .git/patches/master/crisalsoforbidden.patch
- f 9b810b8c63779c51d2e7f61ab59cd49835041563  .git/patches/master/x.patch
- f a22958d9ae9976fd7b2b5a9d0bcd44bf7ad9b08a  .git/patches/master/caretisforbidden.patch
-@@ -537,6 +535,8 @@ f ab325bf5a432937fc6f231d3e8a773a62d53952b  .git/patches/master/multiple-slashes
- f cb9cffbd4465bddee266c20ccebd14eb687eaa89  .git/patches/master/delisforbidden.patch
- f d0885a1a1fdee0fd1e4fedce3f7acd3100540bc4  .git/patches/master/openbracketisforbidden.patch
- f d2903523fb66a346596eabbdd1bda4e52b266440  .git/patches/master/check-multiple-.-dots-.-foo.patch
-+f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/series
-+f da90de1c84138194524994e0bc3bc4ca8189c999  .git/patches/master/status
- f dfc11f76394059909671af036598c5fbe33001ba  .git/patches/master/space_is_forbidden.patch
- f e47474c52d6c893f36d0457f885a6dd1267742bb  .git/patches/master/colon_is_forbidden.patch
- f e7a5f8912592d9891e6159f5827c8b4f372cc406  .git/patches/master/the_sequence_.lock-_is_forbidden.patch
-@@ -548,7 +548,7 @@ r 1626a11d979a1e9e775c766484172212277153df  .git/refs/patches/master/asterisk-is
- r 3a0d5ccef0359004fcaa9cee98fbd6a2c4432e74  .git/refs/patches/master/tildeisforbidden.patch
- r 434e07cacdd8e7eb4723e67cb2d100b3a4121a3a  .git/refs/patches/master/can-have-embedded-single-slashes.patch
- r 74df14ab3a0ec9a0382998fbf167ebb1b0a36c6a  .git/refs/patches/master/question-mark-is-forbidden.patch
--r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-isorbidden.patch
-+r 7c3ffa4f940c862e9f11f5d4a5ae421f7a8d3141  .git/refs/patches/master/backslash-is-forbidden.patch
- r 96a3e92c4df85f52362ce4f6d31983c462db9ae9  .git/refs/patches/master/a-component-may-not-end-in-foolock.patch
- r 9fc9677b61880f9159838e89f714893e0a2fcafb  .git/refs/patches/master/delisforbidden.patch
- r a275ed5d7f10ea88c986852ee95a7d5a61663b5f  .git/refs/patches/master/cannot@have@the@sequence@at-brace.patch
+ if [ -z "$patchname" ]; then
+ 	top=`git rev-parse HEAD`
+diff --git a/regression/t-033.out b/regression/t-033.out
+new file mode 100644
+index 0000000..76613f9
+--- /dev/null
++++ b/regression/t-033.out
+@@ -0,0 +1,3 @@
++% setup_repo
++% guilt graph
++No patch applied.
+diff --git a/regression/t-033.sh b/regression/t-033.sh
+new file mode 100755
+index 0000000..a3a8981
+--- /dev/null
++++ b/regression/t-033.sh
+@@ -0,0 +1,13 @@
++#!/bin/bash
++#
++# Test the graph code
++#
++
++source "$REG_DIR/scaffold"
++
++cmd setup_repo
++
++# Check that "guilt graph" gives a proper "No patch applied" error
++# message when no patches are applied.  (An older version of guilt
++# used to enter an endless loop in this situation.)
++shouldfail guilt graph
 -- 
 1.8.3.1
