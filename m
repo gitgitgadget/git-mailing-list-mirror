@@ -1,152 +1,87 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT v4 26/33] "guilt pop" now fails when there are no more patches to pop.
-Date: Mon, 19 May 2014 00:00:02 +0200
-Message-ID: <1400450409-30998-27-git-send-email-cederp@opera.com>
+Subject: [GUILT v4 27/33] Minor testsuite fix.
+Date: Mon, 19 May 2014 00:00:03 +0200
+Message-ID: <1400450409-30998-28-git-send-email-cederp@opera.com>
 References: <1400450409-30998-1-git-send-email-cederp@opera.com>
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Mon May 19 00:12:07 2014
+X-From: git-owner@vger.kernel.org Mon May 19 00:12:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wm9JN-0007ve-Oz
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 00:12:06 +0200
+	id 1Wm9Jl-0000H1-LD
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 00:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752378AbaERWMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2014 18:12:00 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:47254 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752262AbaERWL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 May 2014 18:11:59 -0400
-Received: by mail-la0-f44.google.com with SMTP id hr17so3489423lab.17
-        for <git@vger.kernel.org>; Sun, 18 May 2014 15:11:58 -0700 (PDT)
+	id S1752447AbaERWM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2014 18:12:26 -0400
+Received: from mail-lb0-f172.google.com ([209.85.217.172]:59706 "EHLO
+	mail-lb0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752345AbaERWMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2014 18:12:25 -0400
+Received: by mail-lb0-f172.google.com with SMTP id l4so3463680lbv.3
+        for <git@vger.kernel.org>; Sun, 18 May 2014 15:12:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=gUdEyRQJ8ZVQZnZaHlU5kTVtpwAgfPqsGDF/c5uyOpw=;
-        b=ko6Murvz2wYvP+sFrQHMc2fVPfpWy0AnnPDIBCd5vi6E4mxJ/NcstqLBo15mjC7F/3
-         ao9Ysc0D1s74q29jigwqvHWAfzE8RPVt5DmI60x3UHRquPFDjlwlAI59plyaS5ejqqEX
-         cgpaZtN09QxPZafBFs7nIqxZNHmnkhnkAN1Uxe5vbExisE2sEWYliRPhI+f1sdOvu+xw
-         RQXx5DYKroYQDIk27c1PtOvoRvKa/uBaMPXKHu0AUGcVH3Ghk1uYNXh/PUcaWFsiO5pO
-         D6APW/dJJN1CvDEzg/jl/BI+V3iazXezFsLUel2t1qPgKuGllFv4xMLqb/qIoOgb0N2B
-         qD2g==
-X-Gm-Message-State: ALoCoQmCYXolYd/dSW9vlG7Tr8SL4HCnw0YHZCL4JT89i4IR4fOq35LOjxwvB4tI7+XdcsSKx52R
-X-Received: by 10.152.43.135 with SMTP id w7mr23259744lal.32.1400451118567;
-        Sun, 18 May 2014 15:11:58 -0700 (PDT)
+        bh=6MKIm+UwqYET/6tJk5Y/Mid84RIh44VKh5L5h/Cl9ro=;
+        b=Mn4gh+ibZj8yG/o6SbgMJlfNWycOmA/5btTLLpZzHKAs71sq94Vs8CVadTCaSUoqrI
+         YsQOBQcDFYl2Js44EpMvoX/4DeZQcsT/GWXm0SDiicJSczrr3CwvHszSISHseZ1iAaqw
+         uxbWeP1kMCre4TorA207dw5uW3Ww8xraaz8/9vh55bGvS5RtsEbIU0gOi8aeuWeOGfvj
+         KsdPAAiXCkcx/kH3FNh7o34zu7aVKTCwKFlLpq4zaN3zlUxkNpAHoYu5Dex2SUUoKOwd
+         NGp5+SnM0dKF9/LsqV84PIxtTZ1NpCJAaKK8GcVkkhfpiR7+56rBdM9noQA0xSiV5HF/
+         IC7Q==
+X-Gm-Message-State: ALoCoQnt8FNSHzz6ufgg4X6nlTtaK6UQdpMc9NJp79BmLI36Y/kdQyK3YOCZJaHjnTEVvtLuo4b+
+X-Received: by 10.112.14.5 with SMTP id l5mr22194222lbc.12.1400451144311;
+        Sun, 18 May 2014 15:12:24 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id d8sm17593818lah.12.2014.05.18.15.11.57
+        by mx.google.com with ESMTPSA id d8sm17593818lah.12.2014.05.18.15.12.22
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 18 May 2014 15:11:57 -0700 (PDT)
+        Sun, 18 May 2014 15:12:23 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1400450409-30998-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249542>
 
-This is analogous to how "guilt push" now fails when there are no more
-patches to push.  Like push, the "--all" argument still succeeds even
-if there was no need to pop anything.
-
-Updated the test suite.
+Fix remove_topic() in t-061.sh so that it doesn't print a git hash.
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
 Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 ---
- guilt-pop            | 17 +++++++++++------
- regression/t-021.out |  2 ++
- regression/t-021.sh  |  6 ++++++
- regression/t-061.sh  |  6 +++++-
- 4 files changed, 24 insertions(+), 7 deletions(-)
+ regression/t-061.out | 1 -
+ regression/t-061.sh  | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/guilt-pop b/guilt-pop
-index f0e647f..191313e 100755
---- a/guilt-pop
-+++ b/guilt-pop
-@@ -49,9 +49,19 @@ fi
- patch="$1"
- [ ! -z "$all" ] && patch="-a"
- 
-+# Treat "guilt pop" as "guilt pop -n 1".
-+if [ -z "$patch" ]; then
-+	patch=1
-+	num=t
-+fi
-+
- if [ ! -s "$applied" ]; then
- 	disp "No patches applied."
--	exit 0
-+	if [ "$patch" = "-a" ]; then
-+		exit 0
-+	else
-+		exit 1
-+	fi
- elif [ "$patch" = "-a" ]; then
- 	# we are supposed to pop all patches
- 
-@@ -68,11 +78,6 @@ elif [ ! -z "$num" ]; then
- 	# catch underflow
- 	[ $eidx -lt 0 ] && eidx=0
- 	[ $eidx -eq $sidx ] && die "No patches requested to be removed."
--elif [ -z "$patch" ]; then
--	# we are supposed to pop only the current patch on the stack
--
--	sidx=`wc -l < "$applied"`
--	eidx=`expr $sidx - 1`
- else
- 	# we're supposed to pop only up to a patch, make sure the patch is
- 	# in the series
-diff --git a/regression/t-021.out b/regression/t-021.out
-index 9b42d9c..58be12f 100644
---- a/regression/t-021.out
-+++ b/regression/t-021.out
-@@ -287,6 +287,8 @@ index 0000000..8baef1b
- +++ b/def
- @@ -0,0 +1 @@
- +abc
-+% guilt pop
-+No patches applied.
- % guilt push --all
- Applying patch..modify
- Patch applied.
-diff --git a/regression/t-021.sh b/regression/t-021.sh
-index 614e870..e0d2dc1 100755
---- a/regression/t-021.sh
-+++ b/regression/t-021.sh
-@@ -23,6 +23,12 @@ guilt series | _tac | while read n ; do
- done
- 
- #
-+# pop when there is nothing to pop
-+#
-+
-+shouldfail guilt pop
-+
-+#
- # push all
- #
- cmd guilt push --all
+diff --git a/regression/t-061.out b/regression/t-061.out
+index ef0f335..60ad56d 100644
+--- a/regression/t-061.out
++++ b/regression/t-061.out
+@@ -381,7 +381,6 @@ ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba commit	refs/patches/master/mode
+ ffb7faa126a6d91bcdd44a494f76b96dd860b8b9 commit	refs/patches/master/remove
+ % guilt pop -a
+ No patches applied.
+-ccd56089d1b5305a9d35617cb7f6f4b06ffa68ba
+ % git checkout guilt/master
+ Switched to branch "guilt/master"
+ % guilt pop -a
 diff --git a/regression/t-061.sh b/regression/t-061.sh
-index 1411baa..6192f1b 100755
+index 6192f1b..db26e12 100755
 --- a/regression/t-061.sh
 +++ b/regression/t-061.sh
-@@ -48,7 +48,11 @@ cmd list_files
+@@ -15,7 +15,7 @@ old_style_branch() {
  
- for i in `seq 5`
- do
--	cmd guilt pop
-+	if [ $i -ge 5 ]; then
-+		shouldfail guilt pop
-+	else
-+		cmd guilt pop
-+	fi
- 	cmd git for-each-ref
- 	cmd guilt push
- 	cmd git for-each-ref
+ remove_topic() {
+ 	cmd guilt pop -a
+-	if git rev-parse --verify --quiet guilt/master
++	if git rev-parse --verify --quiet guilt/master >/dev/null
+ 	then
+ 		cmd git checkout guilt/master
+ 	else
 -- 
 1.8.3.1
