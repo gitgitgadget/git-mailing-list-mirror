@@ -1,80 +1,96 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: Re: Delaying 2.0 final
-Date: Sun, 18 May 2014 08:36:06 +0800
-Message-ID: <CANYiYbFrg3FeR+iBhY5gFR3G1u9WO2G0bRiqKoF90imfZJg8yA@mail.gmail.com>
-References: <xmqqd2fd8hs9.fsf@gitster.dls.corp.google.com>
-	<CANYiYbHYkCBmVfgpW8=1EZF4VkUuZM6kFuZP6fA2f7Wt9au5ig@mail.gmail.com>
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: Re: [PATCH] Documentation/technical/api-hashmap: Remove source
+ highlighting
+Date: Sat, 17 May 2014 20:50:35 -0400 (EDT)
+Message-ID: <alpine.DEB.2.02.1405172035160.44324@all-night-tool.MIT.EDU>
+References: <alpine.DEB.2.02.1405170707260.44324@all-night-tool.MIT.EDU> <20140517152219.GA31912@hudson.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jean-Noel Avila <jn.avila@free.fr>,
-	=?UTF-8?Q?Gr=C3=A9goire_Paris?= <postmaster@greg0ire.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 18 02:36:15 2014
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeremiah Mahler <jmmahler@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 18 02:50:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wlp5K-000235-4P
-	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 02:36:14 +0200
+	id 1WlpJR-0004mZ-SM
+	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 02:50:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751671AbaERAgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2014 20:36:09 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:56463 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751497AbaERAgI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2014 20:36:08 -0400
-Received: by mail-wg0-f47.google.com with SMTP id x12so6486885wgg.30
-        for <git@vger.kernel.org>; Sat, 17 May 2014 17:36:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=81eQEpbj8Dfnwr58KMQ6jL469/5k2Aiq0IVyumXiei4=;
-        b=NKsNmGsnoMYEY0Hdzx7fcXF863bkL0gLlQVRWUdeD6PehTGGIHStUnPMpGvD6tDdat
-         mkGJq2drNyaSwzimoNgyszRyLEAfTl0mKZ3+GVBwMNlEBYVT3iwqDTMwL6AqWz3oOtO2
-         wBrlSVEkjtEtaFWuP96AjborX9UvhkVPrVTUMyZkWFTJ5m8Kpaly8TbvT4+ggY40R85P
-         luoAe+cmhS0rW0oyH1f0SwEYFRP7FbocXwKW+kacmvmKVD0ae5cK/7PslQH1qJwrMw7S
-         AxETBTOuBzBYiSnsgkhWFgj+VGe6li/WNlszM2MbI/L4HLT4mB5ENzzPvsA185xPclQq
-         EiMg==
-X-Received: by 10.180.7.198 with SMTP id l6mr5365301wia.52.1400373366477; Sat,
- 17 May 2014 17:36:06 -0700 (PDT)
-Received: by 10.194.104.9 with HTTP; Sat, 17 May 2014 17:36:06 -0700 (PDT)
-In-Reply-To: <CANYiYbHYkCBmVfgpW8=1EZF4VkUuZM6kFuZP6fA2f7Wt9au5ig@mail.gmail.com>
+	id S1751826AbaERAuk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 May 2014 20:50:40 -0400
+Received: from dmz-mailsec-scanner-8.mit.edu ([18.7.68.37]:63934 "EHLO
+	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751620AbaERAuj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2014 20:50:39 -0400
+X-AuditID: 12074425-f79746d000000ecc-78-537803dea9e2
+Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
+	(using TLS with cipher AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	by dmz-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 15.D0.03788.ED308735; Sat, 17 May 2014 20:50:38 -0400 (EDT)
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id s4I0obfp001051;
+	Sat, 17 May 2014 20:50:37 -0400
+Received: from localhost (all-night-tool.mit.edu [18.9.64.12])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id s4I0oZmk005227
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sat, 17 May 2014 20:50:36 -0400
+In-Reply-To: <20140517152219.GA31912@hudson.localdomain>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOIsWRmVeSWpSXmKPExsUixG6nonuPuSLY4NAiPouuK91MFm8e5Tow
+	eeycdZfd4/MmuQCmKC6blNSczLLUIn27BK6MK3P/MRYc5K5YceY5UwPjUc4uRk4OCQETiSOn
+	tjNB2GISF+6tZ+ti5OIQEpjNJLF5/iFWCGcjo8S1D0uhMruZJH7efcYK0sIioC1x6O8+NhCb
+	TUBNYu6GyewgtoiAhsS9a1uZQWxmAXGJTcvfgK0QFgiTuPvoKlgvp4CFRN+B+4wgNq+Ah8TX
+	vbvB6oUESiS+zzoCNkdUQFdic/dSNogaQYmTM5+wQMxUlzjw6SIjhK0tcf9mG9sERsFZSMpm
+	ISmbhaRsASPzKkbZlNwq3dzEzJzi1GTd4uTEvLzUIl0LvdzMEr3UlNJNjODwdVHdwTjhkNIh
+	RgEORiUe3sZL5cFCrIllxZW5hxglOZiURHkbfgGF+JLyUyozEosz4otKc1KLDzFKcDArifD6
+	3wXK8aYkVlalFuXDpKQ5WJTEed9aWwULCaQnlqRmp6YWpBbBZGU4OJQkeJ2AcSokWJSanlqR
+	lplTgpBm4uAEGc4DNFwXpIa3uCAxtzgzHSJ/ilFRSpy3mwkoIQCSyCjNg+uFpZdXjOJArwjz
+	GoC08wBTE1z3K6DBTECD3+wtBRlckoiQkmpgPB9afDFm/d+tk6ebeVYoiopuPLv1XHJ/kyzX
+	Qk1p6Qamc3GnJivNy/nOH7pooaPlxjNxWzZWcjHGLV57f5PA0r4Xa8pmKG6U/NTC/EB9Y2G/
+	vWf17yCnG7+3ua1YXSP459881niV++fv/9q8+4wF16yjF5z0HZcKz5mS/zG+wtRk 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249495>
 
-2014-05-18 8:31 GMT+08:00 Jiang Xin <worldhello.net@gmail.com>:
-> 2014-05-17 6:45 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
->> As we seem to have a few regressions we may want to fix, I will not
->> be cutting the 2.0 final today (https://tinyurl.com/gitCal).
->>
->> I queued the following near the bottom of 'pu' (these are also
->> merged to 'next' to keep pu^{/match.next} in sync with next), and
->> plan to cut 2.0.0-rc4 early next week.
->>
->
-> So the update window is still open? Please pull this.
->
-> The following changes since commit 6308767f0bb58116cb405e1f4f77f5dfc1589920:
->
->   Merge branch 'fc/prompt-zsh-read-from-file' (2014-05-13 11:53:14 -0700)
->
-> are available in the git repository at:
->
->
->   git://github.com/git-l10n/git-po
+On Sat, 17 May 2014, Jeremiah Mahler wrote:
+> I agree that a broken document is an unacceptable failure mode.
+>=20
+> But I do not understand why 'source-highlight' is not an install
+> requirement for 'git-doc'.  If I install 'source-highlight' on
+> my Debian machine the code looks great.
+>=20
+>   apt-get install source-highlight
 
-It should be:
+Yes; when I noticed this failure, I asked Jonathan to add source-highli=
+ght=20
+as a build dependency in Debian (https://bugs.debian.org/745591).  But=20
+then Ubuntu forked the packaging to revert this change=20
+(https://bugs.launchpad.net/bugs/1316810), because source-highlight in =
+the=20
+community-supported universe repository is not allowed to be a build=20
+dependency of git in the Canonical-supported main repository.  So now t=
+he=20
+Ubuntu package still has broken documentation _and_ it=E2=80=99s lost t=
+he ability=20
+to automatically synchronize updates from Debian.
 
-    git://github.com/git-l10n/git-po master
+If we=E2=80=99re going to make Git depend on source-highlight, then we =
+would want=20
+to make sure it=E2=80=99s documented in INSTALL and that its absence is=
+ properly=20
+diagnosed.  Maybe then we could make the argument to Canonical that=20
+source-highlight should become officially supported in main=20
+(https://wiki.ubuntu.com/UbuntuMainInclusionRequirements).
 
-Next time I should run git request-pull like this:
+But I don=E2=80=99t that would be worth it just to make one page of the=
+ API=20
+documentation a little more colorful (and it sounds like you agree).
 
-    git request-pull kernel/master git-po HEAD:master
-
--- 
-Jiang Xin
+Anders
