@@ -1,159 +1,175 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Sat, 17 May 2014 21:31:41 -0500
-Message-ID: <53781b8df1b63_440ee792f80@nysa.notmuch>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
- <20140516084126.GB21468@sigill.intra.peff.net>
- <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
- <537693aee4fdd_3e4812032fcc@nysa.notmuch>
- <20140517021117.GA29866@debian>
- <5376f27b74d9f_66768eb3048f@nysa.notmuch>
- <20140518012423.GA31087@debian>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [GIT GUI PATCH v2] git-gui: tolerate major version changes when
+ comparing the git version
+Date: Sat, 17 May 2014 23:01:51 -0400
+Message-ID: <CAPig+cRf-XndVZeAp_6FXSqfoweBP8NTzROAm2Df3GsH4JZk8g@mail.gmail.com>
+References: <CAFOYHZBPLZhVuf=bO0hPcUH2_0WXFSqk=_CqoUWBRixQc0L==Q@mail.gmail.com>
+	<CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com>
+	<871tw7xg3o.fsf@fox.patthoyts.tk>
+	<5369E0A3.4040701@gmail.com>
+	<5369E58D.4030908@gmail.com>
+	<53728D70.4020506@web.de>
+	<5373200D.7020108@web.de>
+	<xmqqlhu4jhcb.fsf@gitster.dls.corp.google.com>
+	<xmqqk39ohvyp.fsf@gitster.dls.corp.google.com>
+	<87k39kbnmg.fsf@fox.patthoyts.tk>
+	<5377BD31.8040004@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: James Denholm <nod.helm@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 18 04:43:24 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: patthoyts@users.sourceforge.net,
+	Junio C Hamano <gitster@pobox.com>,
+	Chris Packham <judge.packham@gmail.com>,
+	GIT <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun May 18 05:02:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wlr4L-0008WC-K0
-	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 04:43:21 +0200
+	id 1WlrMQ-0003ZX-Be
+	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 05:02:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985AbaERCmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2014 22:42:46 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:33180 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751890AbaERCmp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2014 22:42:45 -0400
-Received: by mail-ob0-f171.google.com with SMTP id wn1so4708819obc.30
-        for <git@vger.kernel.org>; Sat, 17 May 2014 19:42:45 -0700 (PDT)
+	id S1751916AbaERDBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2014 23:01:53 -0400
+Received: from mail-yh0-f53.google.com ([209.85.213.53]:57875 "EHLO
+	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751890AbaERDBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2014 23:01:52 -0400
+Received: by mail-yh0-f53.google.com with SMTP id i57so5730064yha.12
+        for <git@vger.kernel.org>; Sat, 17 May 2014 20:01:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=QJvhVGmOn+0nm9feC6uEwXYx6v8u0UFOiGBhxVKJt5U=;
-        b=OJZrhlT/rmOUSqqZXNY1ncWGqKVLkfgXiN9bPbCIK+WC5RuXZpsv07IvhSClGutncw
-         UlPBBjbl+Rl/aoW0q8TW6AqdIU1AfGI9sbnPEdkzqigJZQ5763e9E6WKCxdBo6f0BzWY
-         5FzyvikqIRzjwMIQa0UJibBgzY9cINAqs4x5IgDOfz0skvADg8mqtq+8XpavubMLMzuu
-         GfNdjmmp0VfYrmtpy+6rZ3m6KwsSxVTXmW6kS7k6H4bAXMppR6z+iXxW2FypRvhvXjOG
-         Vux6ezAJ1bczve9GH6DAjImkdvpe2r3LMcM1UG0HW/WiU2vWzZJc4gDRHTCHnMTUOmbs
-         KufA==
-X-Received: by 10.60.74.163 with SMTP id u3mr27559427oev.2.1400380965238;
-        Sat, 17 May 2014 19:42:45 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id dg2sm23800478obb.17.2014.05.17.19.42.44
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 May 2014 19:42:44 -0700 (PDT)
-In-Reply-To: <20140518012423.GA31087@debian>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=OgEnDV9n6q2VfnenaVRofYUo5rGgZ6yV0pYtS8P53Fk=;
+        b=wmofdgs+/xaJv8rz+azRKg/mUeWJ/w5ftjyDLNKUehzwHAUQB1wtSfGuntL+GA8YCg
+         4cLz1ZFzR1JK6wWtvtemi67s5ar0fCDlRy+k3x29texVP/ziXuaLcgS/W9rltLxQdOJ6
+         Eoq0YOXB48A1CD5sOFYTzxPC6XIfHTUI3ZD1Z30tUOVGkqE38cbP6ppAH+XJhsMvCJy7
+         lkrp9z7oPDPi5iYO5N/nZ6DXerKiLS1TKtFGmJ/LcWtkwjL8GqvsA7dQx2rHgG48fcK3
+         RaUvIKfRxWC6SgBcGiigM9KJBck/R7mY5gBPPZk6fSfpM+83FI5LZ5eknUlp4a9pN6qr
+         GP5A==
+X-Received: by 10.236.83.17 with SMTP id p17mr408743yhe.122.1400382111321;
+ Sat, 17 May 2014 20:01:51 -0700 (PDT)
+Received: by 10.170.169.65 with HTTP; Sat, 17 May 2014 20:01:51 -0700 (PDT)
+In-Reply-To: <5377BD31.8040004@web.de>
+X-Google-Sender-Auth: jChYmxaPeU0o0Y6zbPZ8YNs-V2g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249498>
 
-James Denholm wrote:
-> Felipe Contreras wrote:
-> > James Denholm wrote:
-> > > On Fri, May 16, 2014 at 05:39:42PM -0500, Felipe Contreras wrote:
-> > > > (...) I would venture to say you have never made a package in your
-> > > > life.
-> > > 
-> > > And you have, Felipe? Let us see the years of experience you surely have
-> > > in the field.
-> > 
-> > As a matter of fact, yes I've written many packages, for Debian, Fedora,
-> > ArchLinux, and others. Even Windows installers.
-> 
-> I'd hardly say that a few PKGBUILDs count. I've written some myself, not
-> hard to do.
+On Sat, May 17, 2014 at 3:49 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
+> Since git 2.0.0 starting git gui in a submodule using a gitfile fails with
+> the following error:
+>
+>    No working directory ../../../<path>
+>
+>    couldn't change working directory
+>    to "../../../<path>": no such file or
+>    directory
+>
+> This is because "git rev-parse --show-toplevel" is only run when git gui
+> sees a git version of at least 1.7.0 (which is the version in which the
+> --show-toplevel option was introduced). But "package vsatisfies" returns
+> false when the major version changes, which is not what we want here.
+>
+> Fix that for both places where the git version is checked using vsatifies
 
-Not hard, but Junio clearly hasn't done so.
+s/vsatifies/vsatisfies/
 
-> That said, if I had realised you were going to discuss such a trivial
-> thing - _making_ packages rather than _maintaining_ them in a repo - I'd
-> have dismissed your statement as mere idiotic vitriol.
-
-Why would anybody write packages and not maintain them? Of course I'm
-talking about maintaining packages.
-
-> Do you honestly think that Junio has _never made a package?_ Never, on
-> any of the systems he's ever touched, run makepkg or debuild or
-> whathaveyou?
-
-I didn't say _build_ a package, I said _write_ a package. And of course
-I mean a significant package, that other people use, and as such needs
-to have some maintenance.
-
-> I could be wrong here, but I'm fairly sure that Junio is a *nix software
-> developer of some kind or another. You know, given that he's the
-> maintainer of git, kinda might be the case. And I really doubt that any
-> *nix dev, _anywhere_, could have _any_ sort of success without looking
-> sideways once or twice at a package builder, given that pre-release
-> homebrewing of expected packages is only an absolutely critical part of
-> testing.
-> 
-> Come on, man. Don't be silly.
-
-You are the one being silly, looking at a package builder doesn't give
-you any insight about the way packaging is done in distributions. If
-Junio has or hasn't done so is totally unimportant.
-
-You are just talking about completely irrelevant stuff, so I'm going to
-ignore your points about the matter.
-
-> > But that's a red herring. Even if was the worst packager in history,
-> > that doesn't make Junio's decision any more correct.
-> 
-> No, but it would render your bizarre, tantrum-like accusations as
-> generally baseless. I mean, I don't think anyone actually puts weight on
-> them anyway, but hey, never hurts to shine a spotlight on nonsense.
-> 
-> > > > The fact that you think packagers of git would simply package
-> > > > git-remote-hg/bzr as well is pretty appalling.
-> > > 
-> > > It's not an outlandish thought, in fact, I'd suggest it as probable -
-> > > provided that they find the projects to be stable and of high quality.
-> > 
-> > Do you want to bet?
-> 
-> Not a betting man. However, ignoring that for a moment, I doubt we'd be
-> able to agree on checks and balances for the case where
-> git-remote-hg/bzr were rejected due to the code being of poor quality or
-> unstable. So no, I won't bet, because you hold your own work and
-> opinions as sacrosanct and infallible.
-
-It is not poor quality or unstable, Junio said so himself when he
-graduated them to the core.
-
-I suppose you don't trust Junio's opinion either.
-
-> > > You, or someone else, might have to tap them on the shoulder and play
-> > > nice to _ensure_ they know about them (after all, we all know that
-> > > packagers _never_ read READMEs, do they), but you're capable of that,
-> > > I'm sure.
-> > 
-> > In my experience packagers scratch their own itches, and if
-> > git-remote-hg/bzr are not their itch, I don't see why any amount of
-> > nice poking would make them package them. Some other packager would have
-> > to do it, not the Git packagers.
-> 
-> If there's a demand, Felipe, and the build process is sane, I can't see
-> why they wouldn't.
-
-Your failure of foresight doesn't change what will actually happen in
-the future.
-
-Moreover, your argument that follows is a straw man, I argued that the
-original maintainer of the "git" package wouldn't do the "git-remote-hg"
-package, you didn't address that at all.
-
--- 
-Felipe Contreras
+> by appending a '-' to the version number. This tells vsatisfies that a
+> change of the major version is not considered to be a problem, as long as
+> the new major version is larger. This is done for both the place that
+> caused the reported bug and another spot where the git version is tested
+> for another feature.
+>
+> Reported-by: Chris Packham <judge.packham@gmail.com>
+> Reported-by: Yann Dirson <ydirson@free.fr>
+> Helped-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+> ---
+>
+> Am 17.05.2014 14:23, schrieb Pat Thoyts:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>>>>
+>>>>> Junio, I believe this issue needs to be fixed before 2.0 final. Otherwise
+>>>>> git gui will not work inside submodules anymore due to the major version
+>>>>> number change from 1 to 2. I'd like to hear Pat's opinion on this; even
+>>>>> though I think my patch is less risky (as it doesn't change behavior for
+>>>>> pre-2 versions), he might like Chris' proposal better.
+>>>>
+>>>> Thanks; I share the same feeling.
+>>>
+>>> So after checking git://repo.or.cz/git-gui.git/ and seeing that I am
+>>> not missing any commit from there, I tentatively created a fork of
+>>> it, applied your patch and merged it somewhere on 'pu' that is close
+>>> to 'next'.  We may want to fast-track it to 2.0 without waiting for
+>>> an Ack from Pat but let's give him one more day to respond.
+>>>
+>>
+>> The analysis about the major version number being significant is
+>> correct. By default vsatisfies assumes that a major version number
+>> change means all lesser versions are incompatible. However, you can
+>> prevent that assumption using an unlimited check by appending a - (minus
+>> sign) to the version to yield an open ended range. Or by giving another
+>> range. So the only change required is to append a minus.
+>>
+>>   package vsatisfies $::_git_version 1.7.0-
+>>
+>> will suffice.
+>>
+>>   package vsatisfies $::_git_version 1.7.0 2.0.0
+>>
+>> would work but would cause failures when we arrive at git 3.0
+>
+> Thanks for the review! In this version I added the '-' to the version
+> passed to vsatisfies and updated the commit message accordingly. I
+> tested the result and it fixes the regression.
+>
+> Junio, please replace my old version with this. In the first version
+> I forgot to add a ">= 0" after the vcompare, which results in all
+> versions that are /different/ than the one checked against pass the
+> test. While that fixes the 2.0.0 regression, it will fail for git
+> versions older than the version that is tested for. So my first
+> attempt wasn't /that/ different from Chris' proposal ... :-/
+>
+>
+>  git-gui/git-gui.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index cf2209b..6a8907e 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -1283,7 +1283,7 @@ load_config 0
+>  apply_config
+>
+>  # v1.7.0 introduced --show-toplevel to return the canonical work-tree
+> -if {[package vsatisfies $_git_version 1.7.0]} {
+> +if {[package vsatisfies $_git_version 1.7.0-]} {
+>         if { [is_Cygwin] } {
+>                 catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
+>         } else {
+> @@ -1539,7 +1539,7 @@ proc rescan_stage2 {fd after} {
+>                 close $fd
+>         }
+>
+> -       if {[package vsatisfies $::_git_version 1.6.3]} {
+> +       if {[package vsatisfies $::_git_version 1.6.3-]} {
+>                 set ls_others [list --exclude-standard]
+>         } else {
+>                 set ls_others [list --exclude-per-directory=.gitignore]
+> --
+> 1.8.3.1
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
