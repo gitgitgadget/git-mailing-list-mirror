@@ -1,95 +1,120 @@
 From: Per Cederqvist <cederp@opera.com>
-Subject: [GUILT v4 07/33] Added test cases for "guilt fold".
-Date: Sun, 18 May 2014 23:59:43 +0200
-Message-ID: <1400450409-30998-8-git-send-email-cederp@opera.com>
+Subject: [GUILT v4 08/33] Added more test cases for "guilt new": empty patches.
+Date: Sun, 18 May 2014 23:59:44 +0200
+Message-ID: <1400450409-30998-9-git-send-email-cederp@opera.com>
 References: <1400450409-30998-1-git-send-email-cederp@opera.com>
 Cc: git@vger.kernel.org, Per Cederqvist <cederp@opera.com>
 To: Jeff Sipek <jeffpc@josefsipek.net>
-X-From: git-owner@vger.kernel.org Mon May 19 00:05:01 2014
+X-From: git-owner@vger.kernel.org Mon May 19 00:05:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wm9CW-0000Rq-2U
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 00:05:00 +0200
+	id 1Wm9Cp-0001Jt-SX
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 00:05:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383AbaERWE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2014 18:04:56 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:33662 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752378AbaERWE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 May 2014 18:04:56 -0400
-Received: by mail-lb0-f173.google.com with SMTP id 10so3433705lbg.4
-        for <git@vger.kernel.org>; Sun, 18 May 2014 15:04:54 -0700 (PDT)
+	id S1752388AbaERWFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2014 18:05:13 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:56514 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752100AbaERWFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2014 18:05:12 -0400
+Received: by mail-la0-f44.google.com with SMTP id hr17so3510246lab.31
+        for <git@vger.kernel.org>; Sun, 18 May 2014 15:05:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=tSOwepvutkXtbx/oWAxoNL/R5vieo8MYC5U5ReETQa4=;
-        b=RZFlFaB2JUiaH10MXj7T9R8BK7V0jmGjGrYarEKyZAKmDzcW+CgunGm5rcOxsiQyvQ
-         yXG5502XiFJSl3zfYmBGGaugslV8JMjlmaKwJZsmuRdbpN32kZAR/1VtM+NaL61DpEy7
-         4WFuzq5rJbHXHVz0syuhBOzF6n1uCJmB1XSe620bRB+l7CvlKeSCByT4uy/TAbOWQM/r
-         dh8+92h6F5OuVWyLfh8+UEESbj7wXmh4na7OERg2S/MCyTai1SSk7qTw18ENmyHgrQag
-         gMbOCJ4IEtjqL7BsZ0j5PXHwLWp9SaEV4gYaMOmxRXAuHn2V76UynaJmmBZIileBODJu
-         eRDw==
-X-Gm-Message-State: ALoCoQmrxs8mtldJBKFDk4wZxQ9dM2J83e2SZ2cuIiN0xLGRk1AIi3Vca3HKZWt06k8U6Xrif5f1
-X-Received: by 10.112.12.8 with SMTP id u8mr22314189lbb.9.1400450694237;
-        Sun, 18 May 2014 15:04:54 -0700 (PDT)
+        bh=ucL0eIIAEwoKHpAuyzaryFitYdC1UW05YYWswllA4sI=;
+        b=UBW1aSb29uoiSZyS7t7tgl12DNjs8kH+sLU5dZiwU6KDd8hwaEjAw6TwTnWC0Ybmmn
+         URpMDM17wNA78zfxDc9uBGZ+4W4LtLRzxGGobuP1QPgkWyhxVC0ouUGWq14Fpxktduxi
+         nnxg0P0jNKjyaEAbeZlQcPViIA2Ea40LY+WMgx17smQWFJi2tKF7UAjKuIG28Vjcy3X+
+         ReB+1ri46WzSYfLD8eYUFhNLPkCKs7Is9brM87mtnRLPkVtKquZZAvDDtaV2u2Ewoo5e
+         FDq+ugckkUW6eRybe4XIj6IJzH//G4Bc5SA5hlyt96m2C4rP04s9qQfKqeTatlrUT57I
+         N45A==
+X-Gm-Message-State: ALoCoQkE+CC/TfxMd3fTrdbrAqzXHwyL02fmu+yxLoO22gpNM7PsLHPn16HV7Ubs5NcrOkfvVZ6R
+X-Received: by 10.152.87.176 with SMTP id az16mr13412894lab.43.1400450710509;
+        Sun, 18 May 2014 15:05:10 -0700 (PDT)
 Received: from dualla.linkoping.osa (ip-200.t2.se.opera.com. [212.247.211.200])
-        by mx.google.com with ESMTPSA id d8sm17593818lah.12.2014.05.18.15.04.52
+        by mx.google.com with ESMTPSA id d8sm17593818lah.12.2014.05.18.15.05.08
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sun, 18 May 2014 15:04:53 -0700 (PDT)
+        Sun, 18 May 2014 15:05:09 -0700 (PDT)
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1400450409-30998-1-git-send-email-cederp@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249522>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249523>
 
-Test that we can combine any combination of patches with empty and
-non-empty messages, both with and without guilt.diffstat.  (All
-patches are empty.)
+Test that empty patches are handled correctly, both with and without
+the guilt.diffstat configuration option.
 
 Signed-off-by: Per Cederqvist <cederp@opera.com>
 Signed-off-by: Josef 'Jeff' Sipek <jeffpc@josefsipek.net>
 ---
- regression/t-035.out | 467 +++++++++++++++++++++++++++++++++++++++++++++++++++
- regression/t-035.sh  |  61 +++++++
- 2 files changed, 528 insertions(+)
- create mode 100644 regression/t-035.out
- create mode 100755 regression/t-035.sh
+ regression/t-020.out | 269 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ regression/t-020.sh  |  60 ++++++++++++
+ 2 files changed, 329 insertions(+)
 
-diff --git a/regression/t-035.out b/regression/t-035.out
-new file mode 100644
-index 0000000..cc16fb4
---- /dev/null
-+++ b/regression/t-035.out
-@@ -0,0 +1,467 @@
-+% setup_repo
+diff --git a/regression/t-020.out b/regression/t-020.out
+index af45734..42433dc 100644
+--- a/regression/t-020.out
++++ b/regression/t-020.out
+@@ -1128,3 +1128,272 @@ f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
+ f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
+ f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
+ f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
++% guilt new empty.patch
++% guilt pop
++All patches popped.
++% guilt push
++Applying patch..empty.patch
++Patch applied.
++% list_files
++d .git/patches
++d .git/patches/master
++d .git/refs/patches
++d .git/refs/patches/master
++f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
++f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
++f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
++f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
++f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/patches/master/series
++f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty.patch
++f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
++r c7a139f532a43c3c8b0e068cac04f8f6af0f94e1  .git/refs/patches/master/empty.patch
++% git log -p
++commit c7a139f532a43c3c8b0e068cac04f8f6af0f94e1
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    patch empty.patch
++
++commit d4850419ccc1146c7169f500725ce504b9774ed0
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    initial
++    
++    Signed-off-by: Commiter Name <commiter@email>
++
++diff --git a/def b/def
++new file mode 100644
++index 0000000..8baef1b
++--- /dev/null
+++++ b/def
++@@ -0,0 +1 @@
+++abc
 +% git config guilt.diffstat true
-+%% empty + empty (diffstat=true)
-+% guilt new empty-1
++% guilt refresh
++Patch empty.patch refreshed
 +% guilt pop
 +All patches popped.
 +% guilt push
-+Applying patch..empty-1
-+Patch applied.
-+% guilt new empty-2
-+% guilt pop
-+Now at empty-1.
-+% guilt push
-+Applying patch..empty-2
-+Patch applied.
-+% guilt pop
-+Now at empty-1.
-+% guilt fold empty-2
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..empty-1
++Applying patch..empty.patch
 +Patch applied.
 +% list_files
 +d .git/patches
@@ -98,223 +123,40 @@ index 0000000..cc16fb4
 +d .git/refs/patches/master
 +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
 +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 4ea806e306f0228a8ef41f186035e7b04097f1f2  .git/patches/master/status
-+f 7d261b8caad0f161c21daf5de65eeb521ff8c067  .git/patches/master/empty-1
++f 7d261b8caad0f161c21daf5de65eeb521ff8c067  .git/patches/master/empty.patch
 +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
 +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f d28d87b88c1e24d637e390dc3603cfa7c1715711  .git/patches/master/series
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+r bde3d337af70f36836ad606c800d194006f883b3  .git/refs/patches/master/empty-1
-+% guilt pop
-+All patches popped.
-+% guilt delete -f empty-1
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+%% empty + nonempty (diffstat=true)
-+% guilt new empty
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..empty
-+Patch applied.
-+% guilt new -f -s -m A commit message. nonempty
-+% guilt pop
-+Now at empty.
-+% guilt push
-+Applying patch..nonempty
-+Patch applied.
-+% guilt pop
-+Now at empty.
-+% guilt fold nonempty
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..empty
-+Patch applied.
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 15aab0fd8b937eb3bb01841693f35dcb75da2faf  .git/patches/master/status
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/empty~
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 683678040eef9334d6329e00d5b9babda3e65b57  .git/patches/master/empty
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f a26a22287b500a2a372e42c2bab03599bbe37cdf  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+r 4eedaa32894fc07af3298d8c1178052942a3ca6a  .git/refs/patches/master/empty
-+% guilt pop
-+All patches popped.
-+% guilt delete -f empty
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/empty~
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+%% nonempty + empty (diffstat=true)
-+% guilt new -f -s -m A commit message. nonempty
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..nonempty
-+Patch applied.
-+% guilt new empty
-+% guilt pop
-+Now at nonempty.
-+% guilt push
-+Applying patch..empty
-+Patch applied.
-+% guilt pop
-+Now at nonempty.
-+% guilt fold empty
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..nonempty
-+Patch applied.
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 683678040eef9334d6329e00d5b9babda3e65b57  .git/patches/master/nonempty
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f c47ddc01337e3bb67a9968a8823a5ba12be67f77  .git/patches/master/series
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+f f7f068d44bf796d0f7cd14d27d1f48d6e659816a  .git/patches/master/status
-+r 4eedaa32894fc07af3298d8c1178052942a3ca6a  .git/refs/patches/master/nonempty
-+% guilt pop
-+All patches popped.
-+% guilt delete -f nonempty
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+%% nonempty + nonempty (diffstat=true)
-+% guilt new -f -s -m A commit message. nonempty-1
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..nonempty-1
-+Patch applied.
-+% guilt new -f -s -m Another commit message. nonempty-2
-+% guilt pop
-+Now at nonempty-1.
-+% guilt push
-+Applying patch..nonempty-2
-+Patch applied.
-+% guilt pop
-+Now at nonempty-1.
-+% guilt fold nonempty-2
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..nonempty-1
-+Patch applied.
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 3b526c794741fb2d6b463f3245ab2f260fa74b7b  .git/patches/master/status
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 669c9685ce791098bb3573f80af6d720a3689f80  .git/patches/master/nonempty-1
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f a88f2625f128cfa307a52c8c2e84ed6c32a78d2b  .git/patches/master/series
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+r 895dfbc21bde85fcc666a353a6bd32eaec939082  .git/refs/patches/master/nonempty-1
-+% guilt pop
-+All patches popped.
-+% guilt delete -f nonempty-1
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
++f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/patches/master/series
++f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty.patch~
++f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
++r c7a139f532a43c3c8b0e068cac04f8f6af0f94e1  .git/refs/patches/master/empty.patch
++% git log -p
++commit c7a139f532a43c3c8b0e068cac04f8f6af0f94e1
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    patch empty.patch
++
++commit d4850419ccc1146c7169f500725ce504b9774ed0
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    initial
++    
++    Signed-off-by: Commiter Name <commiter@email>
++
++diff --git a/def b/def
++new file mode 100644
++index 0000000..8baef1b
++--- /dev/null
+++++ b/def
++@@ -0,0 +1 @@
+++abc
 +% git config guilt.diffstat false
-+%% empty + empty (diffstat=false)
-+% guilt new empty-1
 +% guilt pop
 +All patches popped.
 +% guilt push
-+Applying patch..empty-1
-+Patch applied.
-+% guilt new empty-2
-+% guilt pop
-+Now at empty-1.
-+% guilt push
-+Applying patch..empty-2
-+Patch applied.
-+% guilt pop
-+Now at empty-1.
-+% guilt fold empty-2
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..empty-1
++Applying patch..empty.patch
 +Patch applied.
 +% list_files
 +d .git/patches
@@ -323,233 +165,185 @@ index 0000000..cc16fb4
 +d .git/refs/patches/master
 +f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
 +f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 4ea806e306f0228a8ef41f186035e7b04097f1f2  .git/patches/master/status
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
++f 7ad87a0bdb8cf0a57cfc384633edabbb9c2bfa1b  .git/patches/master/empty.patch
 +f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
 +f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f d28d87b88c1e24d637e390dc3603cfa7c1715711  .git/patches/master/series
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+r bde3d337af70f36836ad606c800d194006f883b3  .git/refs/patches/master/empty-1
-+% guilt pop
-+All patches popped.
-+% guilt delete -f empty-1
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+%% empty + nonempty (diffstat=false)
-+% guilt new empty
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..empty
-+Patch applied.
-+% guilt new -f -s -m A commit message. nonempty
-+% guilt pop
-+Now at empty.
-+% guilt push
-+Applying patch..nonempty
-+Patch applied.
-+% guilt pop
-+Now at empty.
-+% guilt fold nonempty
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..empty
-+Patch applied.
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 15aab0fd8b937eb3bb01841693f35dcb75da2faf  .git/patches/master/status
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/empty
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/empty~
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f a26a22287b500a2a372e42c2bab03599bbe37cdf  .git/patches/master/series
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+r 4eedaa32894fc07af3298d8c1178052942a3ca6a  .git/refs/patches/master/empty
-+% guilt pop
-+All patches popped.
-+% guilt delete -f empty
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/empty~
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+%% nonempty + empty (diffstat=false)
-+% guilt new -f -s -m A commit message. nonempty
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..nonempty
-+Patch applied.
-+% guilt new empty
-+% guilt pop
-+Now at nonempty.
-+% guilt push
-+Applying patch..empty
-+Patch applied.
-+% guilt pop
-+Now at nonempty.
-+% guilt fold empty
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..nonempty
-+Patch applied.
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f c47ddc01337e3bb67a9968a8823a5ba12be67f77  .git/patches/master/series
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+f f7f068d44bf796d0f7cd14d27d1f48d6e659816a  .git/patches/master/status
-+r 4eedaa32894fc07af3298d8c1178052942a3ca6a  .git/refs/patches/master/nonempty
-+% guilt pop
-+All patches popped.
-+% guilt delete -f nonempty
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-+%% nonempty + nonempty (diffstat=false)
-+% guilt new -f -s -m A commit message. nonempty-1
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..nonempty-1
-+Patch applied.
-+% guilt new -f -s -m Another commit message. nonempty-2
-+% guilt pop
-+Now at nonempty-1.
-+% guilt push
-+Applying patch..nonempty-2
-+Patch applied.
-+% guilt pop
-+Now at nonempty-1.
-+% guilt fold nonempty-2
-+% guilt pop
-+All patches popped.
-+% guilt push
-+Applying patch..nonempty-1
-+Patch applied.
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 3b526c794741fb2d6b463f3245ab2f260fa74b7b  .git/patches/master/status
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f a88f2625f128cfa307a52c8c2e84ed6c32a78d2b  .git/patches/master/series
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+r 895dfbc21bde85fcc666a353a6bd32eaec939082  .git/refs/patches/master/nonempty-1
-+% guilt pop
-+All patches popped.
-+% guilt delete -f nonempty-1
-+% list_files
-+d .git/patches
-+d .git/patches/master
-+d .git/refs/patches
-+d .git/refs/patches/master
-+f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
-+f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
-+f 51fcfcf16db2903f19ab4a4a3caacd297ea9f6cd  .git/patches/master/nonempty~
-+f 75c672c7dbec8e8275d26d720f499899d04912a4  .git/patches/master/nonempty-1~
-+f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
-+f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
-+f bbdc17918ad7ba268ea90ebf0fb71e32e0f09a02  .git/patches/master/nonempty-2~
-+f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-1~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty-2~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty~
-+f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
-diff --git a/regression/t-035.sh b/regression/t-035.sh
-new file mode 100755
-index 0000000..c347e47
---- /dev/null
-+++ b/regression/t-035.sh
-@@ -0,0 +1,61 @@
-+#!/bin/bash
-+#
-+# Test the fold code
-+#
++f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/patches/master/series
++f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/empty.patch~
++f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
++r 8ed27228b117c0c88abf3d586bcc43c68e975cea  .git/refs/patches/master/empty.patch
++% git log -p
++commit 8ed27228b117c0c88abf3d586bcc43c68e975cea
++Author: Per Cederqvist <ceder@lysator.liu.se>
++Date:   Mon Jan 1 00:00:00 2007 +0000
 +
-+source "$REG_DIR/scaffold"
++    Fix a bug.
++    
++    This commit fixes a serious bug.
++    
++    FIXME:
++        - add a test case
++        - track down the bug
++        - actually fix it
 +
-+cmd setup_repo
++commit d4850419ccc1146c7169f500725ce504b9774ed0
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
 +
++    initial
++    
++    Signed-off-by: Commiter Name <commiter@email>
++
++diff --git a/def b/def
++new file mode 100644
++index 0000000..8baef1b
++--- /dev/null
+++++ b/def
++@@ -0,0 +1 @@
+++abc
++% git config guilt.diffstat true
++% guilt refresh
++Patch empty.patch refreshed
++% guilt pop
++All patches popped.
++% guilt push
++Applying patch..empty.patch
++Patch applied.
++% list_files
++d .git/patches
++d .git/patches/master
++d .git/refs/patches
++d .git/refs/patches/master
++f 0803c721968056410df61400bb239380d033b9d5  .git/patches/master/empty.patch
++f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
++f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
++f 7ad87a0bdb8cf0a57cfc384633edabbb9c2bfa1b  .git/patches/master/empty.patch~
++f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
++f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
++f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/patches/master/series
++f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
++r 8ed27228b117c0c88abf3d586bcc43c68e975cea  .git/refs/patches/master/empty.patch
++% git log -p
++commit 8ed27228b117c0c88abf3d586bcc43c68e975cea
++Author: Per Cederqvist <ceder@lysator.liu.se>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Fix a bug.
++    
++    This commit fixes a serious bug.
++    
++    FIXME:
++        - add a test case
++        - track down the bug
++        - actually fix it
++
++commit d4850419ccc1146c7169f500725ce504b9774ed0
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    initial
++    
++    Signed-off-by: Commiter Name <commiter@email>
++
++diff --git a/def b/def
++new file mode 100644
++index 0000000..8baef1b
++--- /dev/null
+++++ b/def
++@@ -0,0 +1 @@
+++abc
++% git config guilt.diffstat false
++% guilt refresh
++Patch empty.patch refreshed
++% guilt pop
++All patches popped.
++% guilt push
++Applying patch..empty.patch
++Patch applied.
++% list_files
++d .git/patches
++d .git/patches/master
++d .git/refs/patches
++d .git/refs/patches/master
++f 0803c721968056410df61400bb239380d033b9d5  .git/patches/master/empty.patch~
++f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
++f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
++f 7ad87a0bdb8cf0a57cfc384633edabbb9c2bfa1b  .git/patches/master/empty.patch
++f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
++f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
++f d15a1d2d34493f790c78ddacb8815b0b9536ee2b  .git/patches/master/series
++f e90b964f01cbef60bbe00c38c55d9ea86618a66a  .git/patches/master/status
++r 8ed27228b117c0c88abf3d586bcc43c68e975cea  .git/refs/patches/master/empty.patch
++% git log -p
++commit 8ed27228b117c0c88abf3d586bcc43c68e975cea
++Author: Per Cederqvist <ceder@lysator.liu.se>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    Fix a bug.
++    
++    This commit fixes a serious bug.
++    
++    FIXME:
++        - add a test case
++        - track down the bug
++        - actually fix it
++
++commit d4850419ccc1146c7169f500725ce504b9774ed0
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    initial
++    
++    Signed-off-by: Commiter Name <commiter@email>
++
++diff --git a/def b/def
++new file mode 100644
++index 0000000..8baef1b
++--- /dev/null
+++++ b/def
++@@ -0,0 +1 @@
+++abc
++% guilt delete empty.patch
++Cannot delete an applied patch
++% guilt pop -a
++All patches popped.
++% guilt delete -f empty.patch
++% list_files
++d .git/patches
++d .git/patches/master
++d .git/refs/patches
++d .git/refs/patches/master
++f 0803c721968056410df61400bb239380d033b9d5  .git/patches/master/empty.patch~
++f 22930c6d1f1938f298a4fca51c57e4b47171db21  .git/patches/master/mode
++f 413390f3906f16f30b054a4fb86c1e014b964504  .git/patches/master/remove
++f 9c18cc7abe6b87f18503714a80a677b4094eb457  .git/patches/master/add
++f bacb4aad8a55fe4e7aa58a9ae169990bb764069f  .git/patches/master/series
++f bc9ab2e0f5db99d483961e956e814d963f0309f8  .git/patches/master/modify
++f da39a3ee5e6b4b0d3255bfef95601890afd80709  .git/patches/master/status
++% git log -p
++commit d4850419ccc1146c7169f500725ce504b9774ed0
++Author: Author Name <author@email>
++Date:   Mon Jan 1 00:00:00 2007 +0000
++
++    initial
++    
++    Signed-off-by: Commiter Name <commiter@email>
++
++diff --git a/def b/def
++new file mode 100644
++index 0000000..8baef1b
++--- /dev/null
+++++ b/def
++@@ -0,0 +1 @@
+++abc
+diff --git a/regression/t-020.sh b/regression/t-020.sh
+index cdd08ba..c165884 100755
+--- a/regression/t-020.sh
++++ b/regression/t-020.sh
+@@ -5,6 +5,13 @@
+ 
+ source "$REG_DIR/scaffold"
+ 
 +function fixup_time_info
 +{
 +	cmd guilt pop
@@ -557,50 +351,68 @@ index 0000000..c347e47
 +	cmd guilt push
 +}
 +
-+function empty_patch
-+{
-+	cmd guilt new "empty$1"
-+	fixup_time_info "empty$1"
-+}
+ cmd setup_repo
+ 
+ #
+@@ -69,6 +76,59 @@ done
+ 
+ cmd list_files
+ 
++# push an empty patch with no commit message
++cmd guilt new empty.patch
++fixup_time_info empty.patch
++cmd list_files
++cmd git log -p
 +
-+function nonempty_patch
-+{
-+	if [ "$1" = -2 ]; then
-+		msg="Another commit message."
-+	else
-+		msg="A commit message."
-+	fi
++# Ensure we can push the empty patch even when guilt.diffstat is true.
++cmd git config guilt.diffstat true
++cmd guilt refresh
++fixup_time_info empty.patch
++cmd list_files
++cmd git log -p
++cmd git config guilt.diffstat false
 +
-+	cmd guilt new -f -s -m "$msg" "nonempty$1"
-+	fixup_time_info "nonempty$1"
-+}
++# Let the patch have a commit message, but no data.
++cat > .git/patches/master/empty.patch <<EOF
++Fix a bug.
 +
-+for using_diffstat in true false; do
-+	cmd git config guilt.diffstat $using_diffstat
-+	for patcha in empty nonempty; do
-+		for patchb in empty nonempty; do
++From: Per Cederqvist <ceder@lysator.liu.se>
 +
-+			if [ $patcha = $patchb ]; then
-+				suffixa=-1
-+				suffixb=-2
-+			else
-+				suffixa=
-+				suffixb=
-+			fi
++This commit fixes a serious bug.
 +
-+			echo "%% $patcha + $patchb (diffstat=$using_diffstat)"
-+			${patcha}_patch $suffixa
-+			${patchb}_patch $suffixb
-+			cmd guilt pop
-+			cmd guilt fold $patchb$suffixb
-+			fixup_time_info $patcha$suffixa
-+			cmd list_files
-+			cmd guilt pop
-+			cmd guilt delete -f $patcha$suffixa
-+			cmd list_files
++FIXME:
++    - add a test case
++    - track down the bug
++    - actually fix it
++EOF
 +
-+		done
-+	done
-+done
++fixup_time_info empty.patch
++cmd list_files
++cmd git log -p
++
++# And once more, with an empty diffstat.
++
++cmd git config guilt.diffstat true
++cmd guilt refresh
++fixup_time_info empty.patch
++cmd list_files
++cmd git log -p
++
++# Restore the diffstat setting and remove the empty patch.
++cmd git config guilt.diffstat false
++cmd guilt refresh
++fixup_time_info empty.patch
++cmd list_files
++cmd git log -p
++# (Cannot delete an applied patch)
++shouldfail guilt delete empty.patch
++cmd guilt pop -a
++cmd guilt delete -f empty.patch
++cmd list_files
++cmd git log -p
++
+ # FIXME:
+ #   --all
+ #   -a
 -- 
 1.8.3.1
