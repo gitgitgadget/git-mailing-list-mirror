@@ -1,97 +1,124 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: commit all the untracked files prior adding them to stage using "git add"
-Date: Sun, 18 May 2014 04:17:10 +0000 (UTC)
-Message-ID: <loom.20140518T060536-509@post.gmane.org>
-References: <1878681.dTqGrk8buZ@linux-wzza.site>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] request-pull: resurrect for-linus -> tags/for-linus DWIM
+Date: Sun, 18 May 2014 11:33:05 +0300
+Message-ID: <20140518083305.GB28462@redhat.com>
+References: <1400263070-15312-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 18 06:17:28 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 18 10:34:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlsXP-0006X3-UB
-	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 06:17:28 +0200
+	id 1WlwYB-0001jU-PS
+	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 10:34:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271AbaERERY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2014 00:17:24 -0400
-Received: from plane.gmane.org ([80.91.229.3]:33591 "EHLO plane.gmane.org"
+	id S1752123AbaERIeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2014 04:34:22 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:60065 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750711AbaERERX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 May 2014 00:17:23 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WlsXJ-0006Bf-A1
-	for git@vger.kernel.org; Sun, 18 May 2014 06:17:21 +0200
-Received: from 117.254.221.43 ([117.254.221.43])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 May 2014 06:17:21 +0200
-Received: from tanayabh by 117.254.221.43 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 18 May 2014 06:17:21 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 117.254.221.43 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Firefox/24.0)
+	id S1751654AbaERIeO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2014 04:34:14 -0400
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s4I8YCKU024646
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sun, 18 May 2014 04:34:12 -0400
+Received: from redhat.com (ovpn-116-27.ams2.redhat.com [10.36.116.27])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id s4I8YA18002715;
+	Sun, 18 May 2014 04:34:11 -0400
+Content-Disposition: inline
+In-Reply-To: <1400263070-15312-1-git-send-email-gitster@pobox.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249500>
 
-Arup Rakshit <aruprakshit <at> rocketmail.com> writes:
-
-
-> Now I am looking for a way to add those in stage and commit also in a single 
-> line. So I did below :-
+On Fri, May 16, 2014 at 10:57:50AM -0700, Junio C Hamano wrote:
+> Older versions of Git before v1.7.10 did not DWIM
 > 
-> arup <at> linux-wzza:~/Rails/test_app> git commit -m "chapter 19 of Agile Web 
-> Development with Rails" -a
-> # On branch master
-> #
-> # Initial commit
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #       .gitignore
-> #       Gemfile
-> #       Gemfile.lock
-> #       README.rdoc
-> #       Rakefile
-> #       app/
-> #       bin/
-> #       config.ru
-> #       config/
-> #       db/
-> #       lib/
-> #       log/
-> #       public/
-> #       test/
-> #       vendor/
-> nothing added to commit but untracked files present (use "git add" to track)
+>     $ git pull $URL for-linus
 > 
-> It did not work. Then using `git commit -h` told me, *-a* will work, for 
-> *tracked files*. Is there any way to add untracked files in stage, and
-commit in 
-> a single line ? 
+> to the tag "tags/for-linus" and the users were required to say
 > 
+>     $ git pull $URL tags/for-linus
+> 
+> instead.  Because newer versions of Git works either way,
+> request-pull used to show tags/for-linus when asked
+> 
+>     $ git request-pull origin/master $URL for-linus
+> 
+> The recent updates broke this and in the output we see "for-linus"
+> without the "tags/" prefix.
+> 
+> As v1.7.10 is more than 2 years old, this should matter very little
+> in practice, but resurrecting it is very simple.
 
-Hi,
+Well RHEL6 apparently comes with git 1.7.1, there are
+probably others.
 
-git commit -a works for only modified or deleted files, but new files that
-you haven't told git about are not affected. What you want is,
+The problem isn't theorectical actually,
+the reason I noticed the change in behaviour is because one of
+my pull requests got bounced because of it:
+http://article.gmane.org/gmane.comp.emulators.qemu/273121
 
-$ git add -A && git commit -m "your message"
 
-where git add -A adds all new files to the staging area to track.
-A piece of advice, you seem to be new to git, try try.github.com/ for
-an interactive tutorial.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-Cheers,
-Tanay Abhra.
+
+Tested-by: Michael S. Tsirkin <mst@redhat.com>
+
+> ---
+> 
+>  * I _think_ the fix, without breaking the spirit of Linus's "I do
+>    not want the thing DWIM based on what the remote end has"
+>    original, would be as simple as this patch.  We can queue it as a
+>    regression fix and do another round of -rc4 if those who depend
+>    on request-pull heavily feel strongly about it.
+> 
+>  git-request-pull.sh     | 6 ++++++
+>  t/t5150-request-pull.sh | 8 +++++++-
+>  2 files changed, 13 insertions(+), 1 deletion(-)
+> 
+> diff --git a/git-request-pull.sh b/git-request-pull.sh
+> index b67513a..d6648b2 100755
+> --- a/git-request-pull.sh
+> +++ b/git-request-pull.sh
+> @@ -118,6 +118,12 @@ then
+>  	status=1
+>  fi
+>  
+> +# Special case: turn "for_linus" to "tags/for_linus" when it is correct
+> +if test "$ref" = "refs/tags/$pretty_remote"
+> +then
+> +	pretty_remote=tags/$pretty_remote
+> +fi
+> +
+>  url=$(git ls-remote --get-url "$url")
+>  
+>  git show -s --format='The following changes since commit %H:
+> diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+> index 75d6b38..93e2c65 100755
+> --- a/t/t5150-request-pull.sh
+> +++ b/t/t5150-request-pull.sh
+> @@ -223,7 +223,13 @@ test_expect_success 'pull request format' '
+>  		git request-pull initial "$downstream_url" tags/full:refs/tags/full
+>  	) >request &&
+>  	sed -nf fuzz.sed <request >request.fuzzy &&
+> -	test_i18ncmp expect request.fuzzy
+> +	test_i18ncmp expect request.fuzzy &&
+> +
+> +	(
+> +		cd local &&
+> +		git request-pull initial "$downstream_url" full
+> +	) >request &&
+> +	grep ' tags/full$'
+>  '
+>  
+>  test_expect_success 'request-pull ignores OPTIONS_KEEPDASHDASH poison' '
+> -- 
+> 2.0.0-rc3-434-g1ba2fe8
