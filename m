@@ -1,96 +1,129 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] Documentation/technical/api-hashmap: Remove source
- highlighting
-Date: Sat, 17 May 2014 20:50:35 -0400 (EDT)
-Message-ID: <alpine.DEB.2.02.1405172035160.44324@all-night-tool.MIT.EDU>
-References: <alpine.DEB.2.02.1405170707260.44324@all-night-tool.MIT.EDU> <20140517152219.GA31912@hudson.localdomain>
+From: James Denholm <nod.helm@gmail.com>
+Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
+Date: Sun, 18 May 2014 01:24:23 +0000
+Message-ID: <20140518012423.GA31087@debian>
+References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
+ <20140516084126.GB21468@sigill.intra.peff.net>
+ <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
+ <537693aee4fdd_3e4812032fcc@nysa.notmuch>
+ <20140517021117.GA29866@debian>
+ <5376f27b74d9f_66768eb3048f@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeremiah Mahler <jmmahler@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 18 02:50:51 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sun May 18 03:24:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WlpJR-0004mZ-SM
-	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 02:50:50 +0200
+	id 1Wlpq9-0004dS-MK
+	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 03:24:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826AbaERAuk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 May 2014 20:50:40 -0400
-Received: from dmz-mailsec-scanner-8.mit.edu ([18.7.68.37]:63934 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751620AbaERAuj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2014 20:50:39 -0400
-X-AuditID: 12074425-f79746d000000ecc-78-537803dea9e2
-Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
-	(using TLS with cipher AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by dmz-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 15.D0.03788.ED308735; Sat, 17 May 2014 20:50:38 -0400 (EDT)
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id s4I0obfp001051;
-	Sat, 17 May 2014 20:50:37 -0400
-Received: from localhost (all-night-tool.mit.edu [18.9.64.12])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id s4I0oZmk005227
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Sat, 17 May 2014 20:50:36 -0400
-In-Reply-To: <20140517152219.GA31912@hudson.localdomain>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrOIsWRmVeSWpSXmKPExsUixG6nonuPuSLY4NAiPouuK91MFm8e5Tow
-	eeycdZfd4/MmuQCmKC6blNSczLLUIn27BK6MK3P/MRYc5K5YceY5UwPjUc4uRk4OCQETiSOn
-	tjNB2GISF+6tZ+ti5OIQEpjNJLF5/iFWCGcjo8S1D0uhMruZJH7efcYK0sIioC1x6O8+NhCb
-	TUBNYu6GyewgtoiAhsS9a1uZQWxmAXGJTcvfgK0QFgiTuPvoKlgvp4CFRN+B+4wgNq+Ah8TX
-	vbvB6oUESiS+zzoCNkdUQFdic/dSNogaQYmTM5+wQMxUlzjw6SIjhK0tcf9mG9sERsFZSMpm
-	ISmbhaRsASPzKkbZlNwq3dzEzJzi1GTd4uTEvLzUIl0LvdzMEr3UlNJNjODwdVHdwTjhkNIh
-	RgEORiUe3sZL5cFCrIllxZW5hxglOZiURHkbfgGF+JLyUyozEosz4otKc1KLDzFKcDArifD6
-	3wXK8aYkVlalFuXDpKQ5WJTEed9aWwULCaQnlqRmp6YWpBbBZGU4OJQkeJ2AcSokWJSanlqR
-	lplTgpBm4uAEGc4DNFwXpIa3uCAxtzgzHSJ/ilFRSpy3mwkoIQCSyCjNg+uFpZdXjOJArwjz
-	GoC08wBTE1z3K6DBTECD3+wtBRlckoiQkmpgPB9afDFm/d+tk6ebeVYoiopuPLv1XHJ/kyzX
-	Qk1p6Qamc3GnJivNy/nOH7pooaPlxjNxWzZWcjHGLV57f5PA0r4Xa8pmKG6U/NTC/EB9Y2G/
-	vWf17yCnG7+3ua1YXSP459881niV++fv/9q8+4wF16yjF5z0HZcKz5mS/zG+wtRk 
+	id S1751877AbaERBY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 May 2014 21:24:28 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:52265 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751843AbaERBY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 May 2014 21:24:27 -0400
+Received: by mail-wg0-f47.google.com with SMTP id x12so6506432wgg.30
+        for <git@vger.kernel.org>; Sat, 17 May 2014 18:24:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=oX0sAcyIBDiBOpyF21XAhUsKCngXUxHVD7clUv4lNhM=;
+        b=fQJcYp0fS5L/Yzu1E7O+W8PBsD1zsHrmORaubuImzSYKAHxzwwNa8zqToLuQpBxDEp
+         CjDcCy5HlBoqi3kq7zFpmuvkW8LmkkIwRn+cnN9y3K9wgLdswTYXX2ssreT23wtxBi1j
+         wNPe/UzxlHJEvi4/RPKrCT4XhOH1s0617FFwzgBkaRrulUnrJtRJCgnIDot+g4c/EtxP
+         jxYLGP1YbaN2EaFF7mHsE/ovsO16SGxYa2PWIYF+zDMF4tZvBPUVTd/4doW4+uQJqEab
+         XffU4SNrrAd1XLe30Z+bWYI/Tv+ed4L45gWrhZmI0DkUr764OPQKKFT4bgpPpmEuyzni
+         aO1w==
+X-Received: by 10.194.246.234 with SMTP id xz10mr553866wjc.77.1400376266008;
+        Sat, 17 May 2014 18:24:26 -0700 (PDT)
+Received: from debian ([2a04:1980:3100:1aac:21b:21ff:feda:4cbe])
+        by mx.google.com with ESMTPSA id em5sm6556336wic.23.2014.05.17.18.24.24
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 17 May 2014 18:24:25 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <5376f27b74d9f_66768eb3048f@nysa.notmuch>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249496>
 
-On Sat, 17 May 2014, Jeremiah Mahler wrote:
-> I agree that a broken document is an unacceptable failure mode.
->=20
-> But I do not understand why 'source-highlight' is not an install
-> requirement for 'git-doc'.  If I install 'source-highlight' on
-> my Debian machine the code looks great.
->=20
->   apt-get install source-highlight
+Felipe Contreras wrote:
+> James Denholm wrote:
+> > On Fri, May 16, 2014 at 05:39:42PM -0500, Felipe Contreras wrote:
+> > > (...) I would venture to say you have never made a package in your
+> > > life.
+> > 
+> > And you have, Felipe? Let us see the years of experience you surely have
+> > in the field.
+> 
+> As a matter of fact, yes I've written many packages, for Debian, Fedora,
+> ArchLinux, and others. Even Windows installers.
 
-Yes; when I noticed this failure, I asked Jonathan to add source-highli=
-ght=20
-as a build dependency in Debian (https://bugs.debian.org/745591).  But=20
-then Ubuntu forked the packaging to revert this change=20
-(https://bugs.launchpad.net/bugs/1316810), because source-highlight in =
-the=20
-community-supported universe repository is not allowed to be a build=20
-dependency of git in the Canonical-supported main repository.  So now t=
-he=20
-Ubuntu package still has broken documentation _and_ it=E2=80=99s lost t=
-he ability=20
-to automatically synchronize updates from Debian.
+I'd hardly say that a few PKGBUILDs count. I've written some myself, not
+hard to do.
 
-If we=E2=80=99re going to make Git depend on source-highlight, then we =
-would want=20
-to make sure it=E2=80=99s documented in INSTALL and that its absence is=
- properly=20
-diagnosed.  Maybe then we could make the argument to Canonical that=20
-source-highlight should become officially supported in main=20
-(https://wiki.ubuntu.com/UbuntuMainInclusionRequirements).
+That said, if I had realised you were going to discuss such a trivial
+thing - _making_ packages rather than _maintaining_ them in a repo - I'd
+have dismissed your statement as mere idiotic vitriol.
 
-But I don=E2=80=99t that would be worth it just to make one page of the=
- API=20
-documentation a little more colorful (and it sounds like you agree).
+Do you honestly think that Junio has _never made a package?_ Never, on
+any of the systems he's ever touched, run makepkg or debuild or
+whathaveyou?
 
-Anders
+I could be wrong here, but I'm fairly sure that Junio is a *nix software
+developer of some kind or another. You know, given that he's the
+maintainer of git, kinda might be the case. And I really doubt that any
+*nix dev, _anywhere_, could have _any_ sort of success without looking
+sideways once or twice at a package builder, given that pre-release
+homebrewing of expected packages is only an absolutely critical part of
+testing.
+
+Come on, man. Don't be silly.
+
+> But that's a red herring. Even if was the worst packager in history,
+> that doesn't make Junio's decision any more correct.
+
+No, but it would render your bizarre, tantrum-like accusations as
+generally baseless. I mean, I don't think anyone actually puts weight on
+them anyway, but hey, never hurts to shine a spotlight on nonsense.
+
+> > > The fact that you think packagers of git would simply package
+> > > git-remote-hg/bzr as well is pretty appalling.
+> > 
+> > It's not an outlandish thought, in fact, I'd suggest it as probable -
+> > provided that they find the projects to be stable and of high quality.
+> 
+> Do you want to bet?
+
+Not a betting man. However, ignoring that for a moment, I doubt we'd be
+able to agree on checks and balances for the case where
+git-remote-hg/bzr were rejected due to the code being of poor quality or
+unstable. So no, I won't bet, because you hold your own work and
+opinions as sacrosanct and infallible.
+
+> > You, or someone else, might have to tap them on the shoulder and play
+> > nice to _ensure_ they know about them (after all, we all know that
+> > packagers _never_ read READMEs, do they), but you're capable of that,
+> > I'm sure.
+> 
+> In my experience packagers scratch their own itches, and if
+> git-remote-hg/bzr are not their itch, I don't see why any amount of
+> nice poking would make them package them. Some other packager would have
+> to do it, not the Git packagers.
+
+If there's a demand, Felipe, and the build process is sane, I can't see
+why they wouldn't. Package maintainers are aware they provide a service
+to their distributions. If you really want, poke them _with_ the
+majority of the necessary work done, hand them the
+PKGBUILDs/whathaveyou yourself. Pre-scratch the itch if you really feel
+they won't care.
