@@ -1,145 +1,86 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [GIT GUI PATCH v2] git-gui: tolerate major version changes when comparing
- the git version
-Date: Sat, 17 May 2014 21:49:05 +0200
-Message-ID: <5377BD31.8040004@web.de>
-References: <CAFOYHZBPLZhVuf=bO0hPcUH2_0WXFSqk=_CqoUWBRixQc0L==Q@mail.gmail.com>	<CAFOYHZD=wxwm0nLhtZwvXDAhQ23j0C5maArQunc0CVe_-SF_mQ@mail.gmail.com>	<871tw7xg3o.fsf@fox.patthoyts.tk> <5369E0A3.4040701@gmail.com>	<5369E58D.4030908@gmail.com> <53728D70.4020506@web.de>	<5373200D.7020108@web.de>	<xmqqlhu4jhcb.fsf@gitster.dls.corp.google.com>	<xmqqk39ohvyp.fsf@gitster.dls.corp.google.com> <87k39kbnmg.fsf@fox.patthoyts.tk>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: Delaying 2.0 final
+Date: Sun, 18 May 2014 08:31:05 +0800
+Message-ID: <CANYiYbHYkCBmVfgpW8=1EZF4VkUuZM6kFuZP6fA2f7Wt9au5ig@mail.gmail.com>
+References: <xmqqd2fd8hs9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Chris Packham <judge.packham@gmail.com>, GIT <git@vger.kernel.org>
-To: patthoyts@users.sourceforge.net, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 17 21:49:31 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Jean-Noel Avila <jn.avila@free.fr>,
+	=?UTF-8?Q?Gr=C3=A9goire_Paris?= <postmaster@greg0ire.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 18 02:31:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wlkbq-0003Zl-PO
-	for gcvg-git-2@plane.gmane.org; Sat, 17 May 2014 21:49:31 +0200
+	id 1Wlp0T-0005hm-R0
+	for gcvg-git-2@plane.gmane.org; Sun, 18 May 2014 02:31:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751165AbaEQTtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 May 2014 15:49:14 -0400
-Received: from mout.web.de ([212.227.15.14]:62651 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750871AbaEQTtO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 May 2014 15:49:14 -0400
-Received: from [192.168.2.105] ([87.179.85.170]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MBTTa-1WbGTK49wM-00ATdJ; Sat, 17 May 2014 21:49:09
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <87k39kbnmg.fsf@fox.patthoyts.tk>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:ZO6xUJtO9w3nkOfCwObZgtGqHYrVuPIgnsNNHcOcRcLZMgHMMLv
- 2S73jN/xVfOueYTcZWB4GPyZzyv/S/lrg2QMT+rFttxh2uhUuIbgAhZV9+cA7zIlBcKUtjj
- gkIOpvUeQx1eMAHg/8238JSvnGcGYSdfcsEQ2rtia35bDaYXvgWVEdidh/iUhL5fqCqu3vg
- kuTlaNcuoL6HSsFWzGL7g==
+	id S1751635AbaERAbI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 May 2014 20:31:08 -0400
+Received: from mail-we0-f172.google.com ([74.125.82.172]:49676 "EHLO
+	mail-we0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751497AbaERAbH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 May 2014 20:31:07 -0400
+Received: by mail-we0-f172.google.com with SMTP id k48so4111920wev.31
+        for <git@vger.kernel.org>; Sat, 17 May 2014 17:31:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=RkiqdkD/3UvdYjEs8wv5P2QD9Nyl/0aYOeLzJ/ErdDs=;
+        b=InzwnwP08CwDIkJ1/YY5usDfYjGqd79PTSfhSdwE64mNIwwJb2FQEfuOkBCquA6RXI
+         gaIY/5oiiKTfdZe36QJOeOXElDNZoS57tV70zBEdWZK8F1sGfsTI9vorbWKsakTtLor3
+         St/pRVvzdheY6+xTV431Q5mMsIEgTzKelfW9oCC3KmuaQ6MRnzaSBmy5bv9w/Wn2iin7
+         bvSLBkU8Iqsi9YHB0l0hTaUO1HcRyMu0Uo9iTVNzYErTCwlImS63fH7+gUVo3cEXV36j
+         JR2TNvzkML6aoFtto42vBQAnMzlhQWo6ov25WfuD2lXIoJY+1JSoGSBv1E2NDYYtyZpG
+         +Xcg==
+X-Received: by 10.180.12.135 with SMTP id y7mr5198515wib.39.1400373065167;
+ Sat, 17 May 2014 17:31:05 -0700 (PDT)
+Received: by 10.194.104.9 with HTTP; Sat, 17 May 2014 17:31:05 -0700 (PDT)
+In-Reply-To: <xmqqd2fd8hs9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249492>
 
-Since git 2.0.0 starting git gui in a submodule using a gitfile fails with
-the following error:
+2014-05-17 6:45 GMT+08:00 Junio C Hamano <gitster@pobox.com>:
+> As we seem to have a few regressions we may want to fix, I will not
+> be cutting the 2.0 final today (https://tinyurl.com/gitCal).
+>
+> I queued the following near the bottom of 'pu' (these are also
+> merged to 'next' to keep pu^{/match.next} in sync with next), and
+> plan to cut 2.0.0-rc4 early next week.
+>
 
-   No working directory ../../../<path>
+So the update window is still open? Please pull this.
 
-   couldn't change working directory
-   to "../../../<path>": no such file or
-   directory
+The following changes since commit 6308767f0bb58116cb405e1f4f77f5dfc158=
+9920:
 
-This is because "git rev-parse --show-toplevel" is only run when git gui
-sees a git version of at least 1.7.0 (which is the version in which the
---show-toplevel option was introduced). But "package vsatisfies" returns
-false when the major version changes, which is not what we want here.
+  Merge branch 'fc/prompt-zsh-read-from-file' (2014-05-13 11:53:14 -070=
+0)
 
-Fix that for both places where the git version is checked using vsatifies
-by appending a '-' to the version number. This tells vsatisfies that a
-change of the major version is not considered to be a problem, as long as
-the new major version is larger. This is done for both the place that
-caused the reported bug and another spot where the git version is tested
-for another feature.
-
-Reported-by: Chris Packham <judge.packham@gmail.com>
-Reported-by: Yann Dirson <ydirson@free.fr>
-Helped-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
-
-Am 17.05.2014 14:23, schrieb Pat Thoyts:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Jens Lehmann <Jens.Lehmann@web.de> writes:
->>>
->>>> Junio, I believe this issue needs to be fixed before 2.0 final. Otherwise
->>>> git gui will not work inside submodules anymore due to the major version
->>>> number change from 1 to 2. I'd like to hear Pat's opinion on this; even
->>>> though I think my patch is less risky (as it doesn't change behavior for
->>>> pre-2 versions), he might like Chris' proposal better.
->>>
->>> Thanks; I share the same feeling.
->>
->> So after checking git://repo.or.cz/git-gui.git/ and seeing that I am
->> not missing any commit from there, I tentatively created a fork of
->> it, applied your patch and merged it somewhere on 'pu' that is close
->> to 'next'.  We may want to fast-track it to 2.0 without waiting for
->> an Ack from Pat but let's give him one more day to respond.
->>
-> 
-> The analysis about the major version number being significant is
-> correct. By default vsatisfies assumes that a major version number
-> change means all lesser versions are incompatible. However, you can
-> prevent that assumption using an unlimited check by appending a - (minus
-> sign) to the version to yield an open ended range. Or by giving another
-> range. So the only change required is to append a minus.
-> 
->   package vsatisfies $::_git_version 1.7.0-
-> 
-> will suffice.
-> 
->   package vsatisfies $::_git_version 1.7.0 2.0.0
-> 
-> would work but would cause failures when we arrive at git 3.0
-
-Thanks for the review! In this version I added the '-' to the version
-passed to vsatisfies and updated the commit message accordingly. I
-tested the result and it fixes the regression.
-
-Junio, please replace my old version with this. In the first version
-I forgot to add a ">= 0" after the vcompare, which results in all
-versions that are /different/ than the one checked against pass the
-test. While that fixes the 2.0.0 regression, it will fail for git
-versions older than the version that is tested for. So my first
-attempt wasn't /that/ different from Chris' proposal ... :-/
+are available in the git repository at:
 
 
- git-gui/git-gui.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+  git://github.com/git-l10n/git-po
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index cf2209b..6a8907e 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -1283,7 +1283,7 @@ load_config 0
- apply_config
+for you to fetch changes up to a6e888397ce46f9252ca89af46f3f6aaf18baf9b=
+:
 
- # v1.7.0 introduced --show-toplevel to return the canonical work-tree
--if {[package vsatisfies $_git_version 1.7.0]} {
-+if {[package vsatisfies $_git_version 1.7.0-]} {
- 	if { [is_Cygwin] } {
- 		catch {set _gitworktree [exec cygpath --windows [git rev-parse --show-toplevel]]}
- 	} else {
-@@ -1539,7 +1539,7 @@ proc rescan_stage2 {fd after} {
- 		close $fd
- 	}
+  fr: a lot of good fixups (2014-05-17 19:08:59 +0200)
 
--	if {[package vsatisfies $::_git_version 1.6.3]} {
-+	if {[package vsatisfies $::_git_version 1.6.3-]} {
- 		set ls_others [list --exclude-standard]
- 	} else {
- 		set ls_others [list --exclude-per-directory=.gitignore]
--- 
-1.8.3.1
+----------------------------------------------------------------
+Gr=C3=A9goire Paris (1):
+      fr: a lot of good fixups
+
+ po/fr.po | 42 +++++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
+
+
+--=20
+Jiang Xin
