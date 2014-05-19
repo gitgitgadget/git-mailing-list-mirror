@@ -1,102 +1,178 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 08/31] refs.c: only write reflog update if msg is non-NULL
-Date: Mon, 19 May 2014 15:55:52 -0700
-Message-ID: <CAL=YDWm3N28jMmdWwWLrseK9bG0kwAmYDZ6+yRoa8cfA3S_kxQ@mail.gmail.com>
-References: <1400105610-21194-1-git-send-email-sahlberg@google.com>
-	<1400105610-21194-9-git-send-email-sahlberg@google.com>
-	<xmqqtx8p8lj2.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 20 00:55:58 2014
+From: Richard Hansen <rhansen@bbn.com>
+Subject: [PATCH] git-prompt.sh: don't assume the shell expands the value of PS1
+Date: Mon, 19 May 2014 18:55:37 -0400
+Message-ID: <1400540137-29994-1-git-send-email-rhansen@bbn.com>
+Cc: caleb@calebthompson.io
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 20 00:56:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmWTN-0002k9-8a
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 00:55:57 +0200
+	id 1WmWTS-0002rC-1T
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 00:56:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751259AbaESWzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2014 18:55:53 -0400
-Received: from mail-ve0-f179.google.com ([209.85.128.179]:35466 "EHLO
-	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750924AbaESWzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 18:55:52 -0400
-Received: by mail-ve0-f179.google.com with SMTP id oy12so7349715veb.10
-        for <git@vger.kernel.org>; Mon, 19 May 2014 15:55:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=rHx8VUm18XiNNGUePUHoz99fPqq8cpkAd/hlh7h89/4=;
-        b=FP1SXJDL7yAgwIbqEx2qomZkfLjYKhJ1SWnXLgUIAN4RCpcUFgfrM9P33G9OvMxZQM
-         XYMvTou5t6ZipIUoJ1PxoGhp7zlj78bVDhSXvyhz5a3yiry/Bf233cEXKXNdi9gmQhrR
-         gQYZOU1O08cXnB5xoXYFyAtMbwZNZg7tghrJmGmkdlX7HLceUpwJTVZUp6H5D7b12T6x
-         n4x1L7CbP0dXji6qLYQoozPM6r6Gp5SoT+qEmp+G+dBq6auZ2RL6voDaONtbYzXz4V4k
-         3Iup5eElb4K+Otrg/jjELshrS4UOuW5B+XaY53eGyNinRujB5RWAqsnnFI1umlEuaglk
-         pCuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=rHx8VUm18XiNNGUePUHoz99fPqq8cpkAd/hlh7h89/4=;
-        b=YRwccyN7b7bLgVKe3ZQ1Stv3Ev+5Q0hardG9lDUTZvyt8U57uZhzb/yrz/mTpbr12J
-         aOVBBm4VzIVRkHbnolze/zq1xw+S3HZIjmmZXmep2Z8GgB5qSKu6T7g/kHkFvn5d1Uq2
-         IoKoGccjVt6U9xPaGmaELM2NDNE6jQW6V5XRjfriKVZekavnBayR2FD42lLbDsq7dKgO
-         MiJrIQRdNNEIbHxBlwlKcOx2adas9XtJUCHGyN6JdK6yBgxOpjtJJIOVch0N4wAVSIH+
-         gDgFk5z9vpYj8+4AgrHFyB/iZeo1jT0fRj4Y2XiW9c6djJaBMyqUS1IBO5P6ZtSJHLbZ
-         cbzA==
-X-Gm-Message-State: ALoCoQmCCYR+U/y/7uK5jPVDa+RRT1KR6z/DVG4pIGgefk9F4dHh3ujSV1p59gUoxr9NPE95BABq
-X-Received: by 10.58.127.101 with SMTP id nf5mr77114veb.50.1400540152201; Mon,
- 19 May 2014 15:55:52 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Mon, 19 May 2014 15:55:52 -0700 (PDT)
-In-Reply-To: <xmqqtx8p8lj2.fsf@gitster.dls.corp.google.com>
+	id S1751282AbaESWz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2014 18:55:57 -0400
+Received: from smtp.bbn.com ([128.33.0.80]:47616 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750924AbaESWz5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2014 18:55:57 -0400
+Received: from socket.bbn.com ([192.1.120.102]:50323)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1WmWTL-0005Yg-DP; Mon, 19 May 2014 18:55:55 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 1FB36401F7
+X-Mailer: git-send-email 1.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249632>
 
-On Fri, May 16, 2014 at 2:24 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
->
->> When performing a reflog transaction update, only write to the reflog iff
->> msg is non-NULL. This can then be combined with REFLOG_TRUNCATE to perform
->> an update that only truncates but does not write.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  refs.c | 8 +++++---
->>  refs.h | 1 +
->>  2 files changed, 6 insertions(+), 3 deletions(-)
->>
->> diff --git a/refs.c b/refs.c
->> index a8b583a..a3f60ad 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -3625,9 +3625,11 @@ int transaction_commit(struct ref_transaction *transaction,
->>                           ftruncate(update->reflog_fd, 0)) {
->>                               error("Could not truncate reflog");
->>                       }
->> -             if (log_ref_write_fd(update->reflog_fd, update->old_sha1,
->> -                                  update->new_sha1,
->> -                                  update->committer, update->msg)) {
->> +             if (update->msg && log_ref_write_fd(update->reflog_fd,
->> +                                                 update->old_sha1,
->> +                                                 update->new_sha1,
->> +                                                 update->committer,
->> +                                                 update->msg)) {
->
-> Wouldn't it make it easier to read if you chopped immediately after
-> the &&, i.e. chopping at a gap at a higher-level in the parse tree?
+Not all shells subject the prompt string to parameter expansion.  Test
+whether the shell will expand the value of PS1, and use the result to
+control whether raw ref names are included directly in PS1.
 
-Yepp it does.
-Changed. Thanks.
->
->         if (update->msg &&
->             log_ref_write_fd(update->reflog_fd,
->                              update->old_sha1, update->old_sha1,
->                              update->committer, update->msg)) {
+This fixes a regression introduced in commit 8976500 ("git-prompt.sh:
+don't put unsanitized branch names in $PS1"):  zsh does not expand PS1
+by default, but that commit assumed it did.  The bug resulted in
+prompts containing the literal string '${__git_ps1_branch_name}'
+instead of the actual branch name.
+
+Reported-by: Caleb Thompson <caleb@calebthompson.io>
+Signed-off-by: Richard Hansen <rhansen@bbn.com>
+---
+
+To prevent a regression like this from happening again, I plan on
+adding new zsh test cases and expanding the bash test cases (to test
+the behavior with 'shopt -u promptvars').  I'd like the zsh tests to
+cover the same stuff as the bash tests.  These are the steps I am
+considering:
+
+  1. delete the last test case in t9903 ("prompt - zsh color pc mode")
+  2. add two new functions to t/lib-bash.sh:
+         ps1_expansion_enable () { shopt -s promptvars; }
+         ps1_expansion_disable () { shopt -u promptvars; }
+  3. loop over the relevant test cases twice:  once after calling
+     ps1_expansion_enable and once after calling ps1_expansion_disable
+     (with appropriate adjustments to the expected output)
+  4. move the test cases in t9903 to a separate library file and
+     source it from t9903-bash-prompt.sh
+  5. create two new files:
+       * t/lib-zsh.sh (same as t/lib-bash.sh but tweaked for zsh)
+       * t/t9904-zsh-prompt.sh (same as t/t9903-bash-prompt.sh but
+         tweaked for zsh)
+
+Does this approach sound reasonable?
+
+ contrib/completion/git-prompt.sh | 56 ++++++++++++++++++++++++++++------------
+ t/t9903-bash-prompt.sh           |  6 ++---
+ 2 files changed, 42 insertions(+), 20 deletions(-)
+
+diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
+index 853425d..9d684b1 100644
+--- a/contrib/completion/git-prompt.sh
++++ b/contrib/completion/git-prompt.sh
+@@ -209,9 +209,7 @@ __git_ps1_show_upstream ()
+ 		if [[ -n "$count" && -n "$name" ]]; then
+ 			__git_ps1_upstream_name=$(git rev-parse \
+ 				--abbrev-ref "$upstream" 2>/dev/null)
+-			if [ $pcmode = yes ]; then
+-				# see the comments around the
+-				# __git_ps1_branch_name variable below
++			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
+ 				p="$p \${__git_ps1_upstream_name}"
+ 			else
+ 				p="$p ${__git_ps1_upstream_name}"
+@@ -308,6 +306,43 @@ __git_ps1 ()
+ 		;;
+ 	esac
+ 
++	# ps1_expanded:  This variable is set to 'yes' if the shell
++	# subjects the value of PS1 to parameter expansion:
++	#
++	#   * bash does unless the promptvars option is disabled
++	#   * zsh does not unless the PROMPT_SUBST option is set
++	#   * POSIX shells always do
++	#
++	# If the shell would expand the contents of PS1 when drawing
++	# the prompt, a raw ref name must not be included in PS1.
++	# This protects the user from arbitrary code execution via
++	# specially crafted ref names.  For example, a ref named
++	# 'refs/heads/$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)' might cause the
++	# shell to execute 'sudo rm -rf /' when the prompt is drawn.
++	#
++	# Instead, the ref name should be placed in a separate global
++	# variable (in the __git_ps1_* namespace to avoid colliding
++	# with the user's environment) and that variable should be
++	# referenced from PS1.  For example:
++	#
++	#     __git_ps1_foo=$(do_something_to_get_ref_name)
++	#     PS1="...stuff...\${__git_ps1_foo}...stuff..."
++	#
++	# If the shell does not expand the contents of PS1, the raw
++	# ref name must be included in PS1.
++	#
++	# The value of this variable is only relevant when in pcmode.
++	#
++	# Assume that the shell follows the POSIX specification and
++	# expands PS1 unless determined otherwise.  (This is more
++	# likely to be correct if the user has a non-bash, non-zsh
++	# shell and safer than the alternative if the assumption is
++	# incorrect.)
++	#
++	local ps1_expanded=yes
++	[ -z "$ZSH_VERSION" ] || [[ -o PROMPT_SUBST ]] || ps1_expanded=no
++	[ -z "$BASH_VERSION" ] || shopt -q promptvars || ps1_expanded=no
++
+ 	local repo_info rev_parse_exit_code
+ 	repo_info="$(git rev-parse --git-dir --is-inside-git-dir \
+ 		--is-bare-repository --is-inside-work-tree \
+@@ -457,21 +492,8 @@ __git_ps1 ()
+ 	fi
+ 
+ 	b=${b##refs/heads/}
+-	if [ $pcmode = yes ]; then
+-		# In pcmode (and only pcmode) the contents of
+-		# $gitstring are subject to expansion by the shell.
+-		# Avoid putting the raw ref name in the prompt to
+-		# protect the user from arbitrary code execution via
+-		# specially crafted ref names (e.g., a ref named
+-		# '$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)' would execute
+-		# 'sudo rm -rf /' when the prompt is drawn).  Instead,
+-		# put the ref name in a new global variable (in the
+-		# __git_ps1_* namespace to avoid colliding with the
+-		# user's environment) and reference that variable from
+-		# PS1.
++	if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
+ 		__git_ps1_branch_name=$b
+-		# note that the $ is escaped -- the variable will be
+-		# expanded later (when it's time to draw the prompt)
+ 		b="\${__git_ps1_branch_name}"
+ 	fi
+ 
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index 6efd0d9..9150984 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -578,12 +578,12 @@ test_expect_success 'prompt - bash color pc mode - untracked files status indica
+ '
+ 
+ test_expect_success 'prompt - zsh color pc mode' '
+-	printf "BEFORE: (%%F{green}\${__git_ps1_branch_name}%%f):AFTER\\nmaster" >expected &&
++	printf "BEFORE: (%%F{green}master%%f):AFTER" >expected &&
+ 	(
+ 		ZSH_VERSION=5.0.0 &&
+ 		GIT_PS1_SHOWCOLORHINTS=y &&
+-		__git_ps1 "BEFORE:" ":AFTER" >"$actual"
+-		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
++		__git_ps1 "BEFORE:" ":AFTER" &&
++		printf "%s" "$PS1" >"$actual"
+ 	) &&
+ 	test_cmp expected "$actual"
+ '
+-- 
+1.9.3
