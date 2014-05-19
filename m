@@ -1,178 +1,173 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH] git-prompt.sh: don't assume the shell expands the value of PS1
-Date: Mon, 19 May 2014 18:55:37 -0400
-Message-ID: <1400540137-29994-1-git-send-email-rhansen@bbn.com>
-Cc: caleb@calebthompson.io
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 20 00:56:05 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH 09/31] refs.c: allow multiple reflog updates during a
+ single transaction
+Date: Mon, 19 May 2014 15:58:11 -0700
+Message-ID: <CAL=YDWmuOy=1ghkW6CZcywGGiFJZbptF-EycYsLomcr9m2=Xyw@mail.gmail.com>
+References: <1400105610-21194-1-git-send-email-sahlberg@google.com>
+	<1400105610-21194-10-git-send-email-sahlberg@google.com>
+	<xmqqppjd8l13.fsf@gitster.dls.corp.google.com>
+	<CAPig+cSXt3FDS1XtHBq2y5NLQxKrVM4sp=YbRa2skJX=RrOyTw@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue May 20 00:58:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmWTS-0002rC-1T
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 00:56:02 +0200
+	id 1WmWVd-0007I8-4K
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 00:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751282AbaESWz5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2014 18:55:57 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:47616 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750924AbaESWz5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 18:55:57 -0400
-Received: from socket.bbn.com ([192.1.120.102]:50323)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1WmWTL-0005Yg-DP; Mon, 19 May 2014 18:55:55 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 1FB36401F7
-X-Mailer: git-send-email 1.9.3
+	id S1751074AbaESW6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2014 18:58:13 -0400
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:57815 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750852AbaESW6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2014 18:58:12 -0400
+Received: by mail-vc0-f176.google.com with SMTP id lg15so10337421vcb.21
+        for <git@vger.kernel.org>; Mon, 19 May 2014 15:58:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=wBpX7fus1znfVuabVL0NY98xScMlwaFFl3ASYZAYV4E=;
+        b=HoncEplZw/22/KzNgSw3RBMQrTxG9WiboexHgMuBzJOQK1R84GpHHUFOIASKHi7GmG
+         rr30bvYhlGYiF6UwSWrTavjGyNLo5VAXo+bC+onbXW0yum7ML9jXctbMnGT3AzTrlder
+         NwjDQjYa6nLM1YTXBtelePAOQfsT8mPtEDf+iZI2rI6tq0/yRA8S/W3XFuce/Kren0hk
+         ROU82DjSQSB0WkHhuAk+2OwBa1PARpgWv36UI7tKNGmDIHTsB4v+XiGuJs8Dh+gL6qNB
+         yMf9JbVBac0lT/Q0Pi6e/3XFbsXLtR8CWa/yV8eyXoNsCiz7J4MVpTVrUr2IImH3U6Np
+         Vpgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=wBpX7fus1znfVuabVL0NY98xScMlwaFFl3ASYZAYV4E=;
+        b=PoF/NKhf1RKiclAr3ohU81RciJdiKlXXDCZocvdh/4CxMkm9JsWhhvXQ0++wqiADBo
+         uqHUcY/G8rY9IIyu+tzyIH9TqFXGUeOq+UQJcGNjsiR5ML+zg7zqH3edlbXsdcBxdCGz
+         zI3U16b14S4d/uvQKoDq3BlBfUVyj4LiVpx9lOVdqQLLCKJrqB0x+U2PdE8MoRnOt+Hq
+         b2QKjylK11DZaoK8t4I7yDbi57XDqGHxg3vdrl4PdK9MNG8lnROAMy7b7bGmnxvieZJs
+         yHznqRMo6BFYUpnc2Jqw1I07kdZn/qTidbzlEqjiMXsfNI7Jn625slHbp9JJjo15V2CG
+         CmEA==
+X-Gm-Message-State: ALoCoQnoJ/T60hITnt4mhImoZn6JvH6jWD8wsdLX0aZR98m9M1yiewrKgLyzWyBbVVoL7lpzxaFt
+X-Received: by 10.220.105.4 with SMTP id r4mr564576vco.27.1400540292016; Mon,
+ 19 May 2014 15:58:12 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Mon, 19 May 2014 15:58:11 -0700 (PDT)
+In-Reply-To: <CAPig+cSXt3FDS1XtHBq2y5NLQxKrVM4sp=YbRa2skJX=RrOyTw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249633>
 
-Not all shells subject the prompt string to parameter expansion.  Test
-whether the shell will expand the value of PS1, and use the result to
-control whether raw ref names are included directly in PS1.
+On Fri, May 16, 2014 at 3:01 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, May 16, 2014 at 5:35 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Ronnie Sahlberg <sahlberg@google.com> writes:
+>>
+>>> Allow to make multiple reflog updates to the same ref during a transaction.
+>>> This means we only need to lock the reflog once, during the first update that
+>>> touches the reflog, and that all further updates can just write the reflog
+>>> entry since the reflog is already locked.
+>>>
+>>> This allows us to write code such as:
+>>>
+>>> t = transaction_begin()
+>>> transaction_reflog_update(t, "foo", REFLOG_TRUNCATE, NULL);
+>>> loop-over-somehting...
+>>>    transaction_reflog_update(t, "foo", 0, <message>);
+>>> transaction_commit(t)
+>>
+>> OK, so you are now doing not just "refs" but also "reflogs", you
+>> felt that "ref_transaction()" does not cover the latter.  Is that
+>> the reason for the rename in the earlier step?
+>>
+>> I am sort-of on the fence.
+>>
+>> Calling the begin "ref_transaction_begin" and then calling the new
+>> function "ref_transaction_log_update" would still allow us to
+>> differentiate transactions on refs and reflogs, while allowing other
+>> kinds of transactions that are not related to refs at all to employ
+>> a mechanism that is different from the one that is used to implement
+>> the transactions on refs and reflogs you are building here.
+>>
+>> But I think I am OK with the generic "transaction-begin" now.
+>> Having one mechanism for refs and reflogs, and then having another
+>> completely different mechanism for other things, will not let us
+>> coordinate between the two easily, so "allow transactions that are
+>> not related to refs at all to be built on a different mechanism" may
+>> not be a worthwhile goal to pursue in the first place.  Please
+>> consider the question on the naming in the earlier one dropped.
+>>
+>>>
+>>> where we first truncate the reflog and then build the new content one line at a
+>>> time.
+>>>
+>>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>>> ---
+>>>  refs.c | 58 +++++++++++++++++++++++++++++++++++++++++++++++++---------
+>>>  1 file changed, 49 insertions(+), 9 deletions(-)
+>>>
+>>> diff --git a/refs.c b/refs.c
+>>> index a3f60ad..e7ede03 100644
+>>> --- a/refs.c
+>>> +++ b/refs.c
+>>> @@ -37,6 +37,10 @@ static inline int bad_ref_char(int ch)
+>>>   *  need to lock the loose ref during the transaction.
+>>>   */
+>>>  #define REF_ISPACKONLY       0x0200
+>>> +/** Only the first reflog update needs to lock the reflog file. Further updates
+>>> + *  just use the lock taken by the first update.
+>>> + */
+>>
+>> Style.
+>>
+>>> @@ -3349,8 +3355,23 @@ int transaction_update_reflog(struct ref_transaction *transaction,
+>>>                             int flags)
+>>>  {
+>>>       struct ref_update *update;
+>>> +     int i;
+>>>
+>>>       update = add_update(transaction, refname, UPDATE_LOG);
+>>> +     update->flags = flags;
+>>> +     for (i = 0; i < transaction->nr - 1; i++) {
+>>> +             if (transaction->updates[i]->update_type != UPDATE_LOG)
+>>> +                     continue;
+>>> +             if (!strcmp(transaction->updates[i]->refname,
+>>> +                         update->refname)) {
+>>> +                     update->flags |= UPDATE_REFLOG_NOLOCK;
+>>> +                     update->orig_update = transaction->updates[i];
+>>> +                     break;
+>>> +             }
+>>> +     }
+>>> +     if (!(update->flags & UPDATE_REFLOG_NOLOCK))
+>>> +       update->reflog_lock = xcalloc(1, sizeof(struct lock_file));
+>>
+>> So with two calls to transaction-update-reflog, we make two calls to
+>> add-update, and each holds a separate lock?  If we write two entries
+>> to record two updates of the same ref, would we still want to do so?
+>
+> Also, indent with tabs rather than spaces (the line following the 'if').
 
-This fixes a regression introduced in commit 8976500 ("git-prompt.sh:
-don't put unsanitized branch names in $PS1"):  zsh does not expand PS1
-by default, but that commit assumed it did.  The bug resulted in
-prompts containing the literal string '${__git_ps1_branch_name}'
-instead of the actual branch name.
+Done.
 
-Reported-by: Caleb Thompson <caleb@calebthompson.io>
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
----
+>
+>>> +     /* Rollback any reflog files that are still open */
+>>> +     for (i = 0; i < n; i++) {
+>>> +             struct ref_update *update = updates[i];
+>>> +
+>>> +             if (update->update_type != UPDATE_LOG)
+>>> +                     continue;
+>>> +             if (update->flags & UPDATE_REFLOG_NOLOCK)
+>>> +                     continue;
+>>> +             if (update->reflog_fd == -1)
+>>> +                     continue;
+>>> +             rollback_lock_file(update->reflog_lock);
+>>> +     }
+>>>       transaction->status = ret ? REF_TRANSACTION_ERROR
+>>>         : REF_TRANSACTION_CLOSED;
+>
+> Indent with tabs.
 
-To prevent a regression like this from happening again, I plan on
-adding new zsh test cases and expanding the bash test cases (to test
-the behavior with 'shopt -u promptvars').  I'd like the zsh tests to
-cover the same stuff as the bash tests.  These are the steps I am
-considering:
-
-  1. delete the last test case in t9903 ("prompt - zsh color pc mode")
-  2. add two new functions to t/lib-bash.sh:
-         ps1_expansion_enable () { shopt -s promptvars; }
-         ps1_expansion_disable () { shopt -u promptvars; }
-  3. loop over the relevant test cases twice:  once after calling
-     ps1_expansion_enable and once after calling ps1_expansion_disable
-     (with appropriate adjustments to the expected output)
-  4. move the test cases in t9903 to a separate library file and
-     source it from t9903-bash-prompt.sh
-  5. create two new files:
-       * t/lib-zsh.sh (same as t/lib-bash.sh but tweaked for zsh)
-       * t/t9904-zsh-prompt.sh (same as t/t9903-bash-prompt.sh but
-         tweaked for zsh)
-
-Does this approach sound reasonable?
-
- contrib/completion/git-prompt.sh | 56 ++++++++++++++++++++++++++++------------
- t/t9903-bash-prompt.sh           |  6 ++---
- 2 files changed, 42 insertions(+), 20 deletions(-)
-
-diff --git a/contrib/completion/git-prompt.sh b/contrib/completion/git-prompt.sh
-index 853425d..9d684b1 100644
---- a/contrib/completion/git-prompt.sh
-+++ b/contrib/completion/git-prompt.sh
-@@ -209,9 +209,7 @@ __git_ps1_show_upstream ()
- 		if [[ -n "$count" && -n "$name" ]]; then
- 			__git_ps1_upstream_name=$(git rev-parse \
- 				--abbrev-ref "$upstream" 2>/dev/null)
--			if [ $pcmode = yes ]; then
--				# see the comments around the
--				# __git_ps1_branch_name variable below
-+			if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
- 				p="$p \${__git_ps1_upstream_name}"
- 			else
- 				p="$p ${__git_ps1_upstream_name}"
-@@ -308,6 +306,43 @@ __git_ps1 ()
- 		;;
- 	esac
- 
-+	# ps1_expanded:  This variable is set to 'yes' if the shell
-+	# subjects the value of PS1 to parameter expansion:
-+	#
-+	#   * bash does unless the promptvars option is disabled
-+	#   * zsh does not unless the PROMPT_SUBST option is set
-+	#   * POSIX shells always do
-+	#
-+	# If the shell would expand the contents of PS1 when drawing
-+	# the prompt, a raw ref name must not be included in PS1.
-+	# This protects the user from arbitrary code execution via
-+	# specially crafted ref names.  For example, a ref named
-+	# 'refs/heads/$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)' might cause the
-+	# shell to execute 'sudo rm -rf /' when the prompt is drawn.
-+	#
-+	# Instead, the ref name should be placed in a separate global
-+	# variable (in the __git_ps1_* namespace to avoid colliding
-+	# with the user's environment) and that variable should be
-+	# referenced from PS1.  For example:
-+	#
-+	#     __git_ps1_foo=$(do_something_to_get_ref_name)
-+	#     PS1="...stuff...\${__git_ps1_foo}...stuff..."
-+	#
-+	# If the shell does not expand the contents of PS1, the raw
-+	# ref name must be included in PS1.
-+	#
-+	# The value of this variable is only relevant when in pcmode.
-+	#
-+	# Assume that the shell follows the POSIX specification and
-+	# expands PS1 unless determined otherwise.  (This is more
-+	# likely to be correct if the user has a non-bash, non-zsh
-+	# shell and safer than the alternative if the assumption is
-+	# incorrect.)
-+	#
-+	local ps1_expanded=yes
-+	[ -z "$ZSH_VERSION" ] || [[ -o PROMPT_SUBST ]] || ps1_expanded=no
-+	[ -z "$BASH_VERSION" ] || shopt -q promptvars || ps1_expanded=no
-+
- 	local repo_info rev_parse_exit_code
- 	repo_info="$(git rev-parse --git-dir --is-inside-git-dir \
- 		--is-bare-repository --is-inside-work-tree \
-@@ -457,21 +492,8 @@ __git_ps1 ()
- 	fi
- 
- 	b=${b##refs/heads/}
--	if [ $pcmode = yes ]; then
--		# In pcmode (and only pcmode) the contents of
--		# $gitstring are subject to expansion by the shell.
--		# Avoid putting the raw ref name in the prompt to
--		# protect the user from arbitrary code execution via
--		# specially crafted ref names (e.g., a ref named
--		# '$(IFS=_;cmd=sudo_rm_-rf_/;$cmd)' would execute
--		# 'sudo rm -rf /' when the prompt is drawn).  Instead,
--		# put the ref name in a new global variable (in the
--		# __git_ps1_* namespace to avoid colliding with the
--		# user's environment) and reference that variable from
--		# PS1.
-+	if [ $pcmode = yes ] && [ $ps1_expanded = yes ]; then
- 		__git_ps1_branch_name=$b
--		# note that the $ is escaped -- the variable will be
--		# expanded later (when it's time to draw the prompt)
- 		b="\${__git_ps1_branch_name}"
- 	fi
- 
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index 6efd0d9..9150984 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -578,12 +578,12 @@ test_expect_success 'prompt - bash color pc mode - untracked files status indica
- '
- 
- test_expect_success 'prompt - zsh color pc mode' '
--	printf "BEFORE: (%%F{green}\${__git_ps1_branch_name}%%f):AFTER\\nmaster" >expected &&
-+	printf "BEFORE: (%%F{green}master%%f):AFTER" >expected &&
- 	(
- 		ZSH_VERSION=5.0.0 &&
- 		GIT_PS1_SHOWCOLORHINTS=y &&
--		__git_ps1 "BEFORE:" ":AFTER" >"$actual"
--		printf "%s\\n%s" "$PS1" "${__git_ps1_branch_name}" >"$actual"
-+		__git_ps1 "BEFORE:" ":AFTER" &&
-+		printf "%s" "$PS1" >"$actual"
- 	) &&
- 	test_cmp expected "$actual"
- '
--- 
-1.9.3
+Done. Thanks.
