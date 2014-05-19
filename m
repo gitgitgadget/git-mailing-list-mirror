@@ -1,161 +1,164 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Sun, 18 May 2014 23:11:17 -0700
-Message-ID: <xmqqppja2t8a.fsf@gitster.dls.corp.google.com>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
-	<20140516084126.GB21468@sigill.intra.peff.net>
-	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
-	<20140516225228.GA3988@sigill.intra.peff.net>
-	<5376f2ca5c90d_65b915db2f877@nysa.notmuch>
-	<20140517062413.GA13003@sigill.intra.peff.net>
-	<xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
-	<53795ef8e4023_10da88d30825@nysa.notmuch>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] config: preserve config file permissions on edits
+Date: Mon, 19 May 2014 09:13:45 +0200
+Message-ID: <5379AF29.4000508@viscovery.net>
+References: <20140505215853.GA23299@dcvr.yhbt.net> <20140506001714.GA29049@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 19 08:11:30 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+ msysGit <msysgit@googlegroups.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: msysgit+bncBCJYV6HBKQILFXXGTMCRUBHOMUOQO@googlegroups.com Mon May 19 09:13:58 2014
+Return-path: <msysgit+bncBCJYV6HBKQILFXXGTMCRUBHOMUOQO@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f191.google.com ([209.85.212.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmGnJ-0003aZ-86
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 08:11:29 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752624AbaESGLY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2014 02:11:24 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58682 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750758AbaESGLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 02:11:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 844D211767;
-	Mon, 19 May 2014 02:11:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fUS23YEaeB6M+Dswbpb90PPc68s=; b=UDYmLN
-	8nWIXQgeItTuRF6GboJDp+DqMrKKu3ysW1NkJMZHDk+R7OtUToEC+5cAATgh8s0N
-	Jz645Zj+DMsCbxwzRFyuFvmyaPT0kaGPGA6XGXaA1KhcIWfByYY3VkPWBCDZkUND
-	aDgPtib4GQooEzSf3cladUHL5MZ5EPUobpQrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bJVhc3AbsmFCnfylPPOYJyi3I78TfqwN
-	vHnt+h29UaLmPmf68gSzJHYhgDDN+9fxSRjRacLCxQ3ejMtgnsL+Y/SiHN5IUWuD
-	2+3wocez6grFdQuhUrvQTuoGr2jiOVUEACeU5G7Xqqn+Eop6UInJyZ9NqNUaI1dh
-	2Bhlz0FKArs=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7B0AA11764;
-	Mon, 19 May 2014 02:11:21 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9F73611761;
-	Mon, 19 May 2014 02:11:18 -0400 (EDT)
-In-Reply-To: <53795ef8e4023_10da88d30825@nysa.notmuch> (Felipe Contreras's
-	message of "Sun, 18 May 2014 20:31:36 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6455197E-DF1C-11E3-8D25-B784E8FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249561>
+	(envelope-from <msysgit+bncBCJYV6HBKQILFXXGTMCRUBHOMUOQO@googlegroups.com>)
+	id 1WmHlj-0001Iy-Vq
+	for gcvm-msysgit@m.gmane.org; Mon, 19 May 2014 09:13:56 +0200
+Received: by mail-wi0-f191.google.com with SMTP id r20sf279801wiv.28
+        for <gcvm-msysgit@m.gmane.org>; Mon, 19 May 2014 00:13:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=Q2iG0/35+m4S0ellUPnRh9bIAs0ZrH3iVe5CkZFExzk=;
+        b=ACOBLuCE4IpAFlDDa01z5tOURH9oVQqN93s/5C5Z2z755f/OEE6F9LzOzbJ+898AVH
+         4Ct07g8/gTzSeXiW0C18FcoLimjqzMS7//ApNIhg1kp+o0T+gGwKCDOuYTeD6tk/HVVh
+         1t0BrOvMBEvOd4QNlOGSCJIzE3oCYeK19bU1x82eGyt5ndXsMXpA4SQ2lNyl/tgfm/Bp
+         h3y35GSCioGQPieWO+NnT1NMMy0wLNqKgYpD77ZBt8fg5UcoqKpVoit5oW1HH2Eai7NN
+         7SqZzL7wcDPO870A2i1qHhoBgrvOtJD9nVjnFvauhlZLz8UBE32D7EGC/P37RSOCsqqw
+         duiQ==
+X-Received: by 10.152.8.193 with SMTP id t1mr2846laa.11.1400483635667;
+        Mon, 19 May 2014 00:13:55 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.30.2 with SMTP id o2ls246136lah.40.gmail; Mon, 19 May 2014
+ 00:13:54 -0700 (PDT)
+X-Received: by 10.112.156.138 with SMTP id we10mr94904lbb.12.1400483634557;
+        Mon, 19 May 2014 00:13:54 -0700 (PDT)
+Received: from so.liwest.at (so.liwest.at. [212.33.55.23])
+        by gmr-mx.google.com with ESMTPS id r49si18598eep.0.2014.05.19.00.13.54
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 19 May 2014 00:13:54 -0700 (PDT)
+Received-SPF: none (google.com: j.sixt@viscovery.net does not designate permitted sender hosts) client-ip=212.33.55.23;
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WmHla-0002ia-Jn; Mon, 19 May 2014 09:13:49 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 3402216613;
+	Mon, 19 May 2014 09:13:46 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <20140506001714.GA29049@dcvr.yhbt.net>
+X-Spam-Score: -1.0 (-)
+X-Original-Sender: j.sixt@viscovery.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: j.sixt@viscovery.net does not designate permitted sender hosts) smtp.mail=j.sixt@viscovery.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249562>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Am 5/6/2014 2:17, schrieb Eric Wong:
+> Users may already store sensitive data such as imap.pass in
+> ..git/config; making the file world-readable when "git config"
+> is called to edit means their password would be compromised
+> on a shared system.
+> 
+> [v2: updated for section renames, as noted by Junio]
+> 
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+>  config.c               | 16 ++++++++++++++++
+>  t/t1300-repo-config.sh | 10 ++++++++++
+>  2 files changed, 26 insertions(+)
+> 
+> diff --git a/config.c b/config.c
+> index a30cb5c..c227aa8 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1636,6 +1636,13 @@ int git_config_set_multivar_in_file(const char *config_filename,
+>  			MAP_PRIVATE, in_fd, 0);
+>  		close(in_fd);
+>  
+> +		if (fchmod(fd, st.st_mode & 07777) < 0) {
+> +			error("fchmod on %s failed: %s",
+> +				lock->filename, strerror(errno));
+> +			ret = CONFIG_NO_WRITE;
+> +			goto out_free;
+> +		}
 
-> Junio C Hamano wrote:
->
->>  - The "always warn" does not force update at the point of use, but
->>    it still does not help them to notice well before they try to use
->>    it for the first time after update;
->
-> I don't understand this sentence. They will see a big fat warning every
-> time they run the tool, of course they'll notice.
+This introduces a severe failure in the Windows port because we do not
+implement fchmod. Existing fchmod invocations do not check the return
+value, and they are only interested in removing the write bits, and we
+generally don't care a lot if files remain writable.
 
-Let me ask one question first, in order to avoid miscommunication,
-as I really want to get the first step for v2.0-rc4 in a concrete
-shape tomorrow.  Do you think gradual transition worth pursuing or
-do you think it is a waste of time?
+I'm not proficient enough to add any ACL fiddling to fchmod that would be
+required by the above change, whose purpose is to be strict about
+permissions. Nor am I interested (who the heck is sharing a Windows box
+anyway? ;-)
 
-I do not think it matters that much, but since you said you do not
-understand...
+Therefore, here's just a work-around patch to keep things going on
+Windows. Any opinions from the Windows corner?
 
-What I meant was that when they update their Git (perhaps at the
-beginning of the week), the won't know they will now be running
-stale code.  The warning comes only when they first run it (perhaps
-at the end of the week) to do some real work with a remote hg
-repository, which may not be a convenient time to do their sysadmin
-task.  And the next time when they update their Git, they may have
-already forgotten about the warning.  The ideal transition would be
-to somehow let them notice when they are in sysadmin mode.
+--- >8 ---
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] mingw: turn the always-failing fchmod stub into always-succeeding
 
->>  - "Break the build" attempts to help them notice when they try to
->>    update, not when they need to use the updated one right at this
->>    moment.
->
-> This cannot be done.
+A recent change introduced new call sites of fchmod, but these new call
+sites check the return value. The test suite can't get past t0001
+without a dozen or so failures.
 
-Renaming the directory will not "break at the build time" for those
-who have already did "ln -s" these scripts, of course, but it will
-"break at the build time" for others (i.e. those who "cp"), no?
-Again, not very important, as I too consider it optional.  If you
-are shooting for an expedited transition, it is perfectly fine to
-drop it.
+Just fake that the call was successful even though it did nothing.
 
-> They click that URL, and the are immediately greated with this:
->
->   To enable this, simply add the git-remote-hg script anywhere in your $PATH:
->
->     wget https://raw.github.com/felipec/git-remote-hg/master/git-remote-hg -O ~/bin/git-remote-hg
->     chmod +x ~/bin/git-remote-hg
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ compat/mingw.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Perfect.  I did check the page when double-checking the URL while
-writing the README thing, and I did skim the page, but I must have
-missed it.
+diff --git a/compat/mingw.h b/compat/mingw.h
+index c3859cc..7b2455c 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -89,7 +89,7 @@ static inline int readlink(const char *path, char *buf, size_t bufsiz)
+ static inline int symlink(const char *oldpath, const char *newpath)
+ { errno = ENOSYS; return -1; }
+ static inline int fchmod(int fildes, mode_t mode)
+-{ errno = ENOSYS; return -1; }
++{ /* do nothing */ return 0; }
+ static inline pid_t fork(void)
+ { errno = ENOSYS; return -1; }
+ static inline unsigned int alarm(unsigned int seconds)
+-- 
+2.0.0.rc3.1741.g0520b9e
 
-We could add these two to the warning, then, to discourage people
-who see "please visit this URL" and say "Yuck, I have no time for
-that" without actually visiting.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
->> So to summarize, the following timeline is a full possibility:
->> ...
->>   2. add warning that is given every time the scripts are run and
->>      give the same instruction as in README.
->> 
->>   3. (optional) cripple the script to make them always fail after
->>      showing the same warning as above.
->
-> This is what I want, and I already sent the patches for; the scripts
-> will be stubs. At this point you would have effectively removed the
-> code, which what I want.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-I think explained why the step 3 would not help very much compared
-to the "there is no script, only README remains" endgame (and that
-is why it is marked as "optional").  Actually, you reminded me that
-a very short and easy-to-follow instruction is on the page referred
-to from README and the warnings, which means that this step would
-make even less difference compared to the endgame.
-
-I don't think I saw you explain why that is not the case and why we
-do want this step (and I cannot quite tell if you are aiming for
-more gradual transition that wants this step, or an expedited one
-that does not).  I am fine with either way.
-
-In any case, I'd ask another question to avoid wasting time on
-miscommunication.  By "This is what I want", do you mean you want
-this step 3 also in v2.0, or do you mean you want 2 alone in v2.0
-then step 3 some time later?
-
-Unless you want 2 and 3 together at v2.0, we do not have to decide
-the merit of step 3 before v2.0-rc4; if you do want 2 and 3 together
-for v2.0, then your prompt answer matters a lot.
-
-You said your "wish" wasn't "respected" in another message, when I
-explained that I thought you did not want to disrupt v2.0 by
-insisting on removing these scripts and that was why I listed
-options that did not involve removal of the scripts.  Are you saying
-that you wish you want to see them removed or crippled at v2.0?
-Changing your mind after discussion is perfectly fine, by the way.
-
-Thanks.
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
