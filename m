@@ -1,103 +1,144 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] git reintegrate v0.3; manager of integration branches
-Date: Mon, 19 May 2014 14:08:42 -0700
-Message-ID: <xmqqha4lxyqt.fsf@gitster.dls.corp.google.com>
-References: <53795175664d5_10da88d308ce@nysa.notmuch>
+From: Thomas Braun <thomas.braun@byte-physics.de>
+Subject: Re: [PATCH/RFC] send-pack.c: Allow to disable side-band-64k
+Date: Mon, 19 May 2014 23:15:00 +0200
+Message-ID: <537A7454.6030001@byte-physics.de>
+References: <1400526434-3132-1-git-send-email-thomas.braun@byte-physics.de> <20140519193340.GP12314@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 19 23:08:58 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, kusmabite@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: msysgit+bncBD57FPGWUYHBBVXI5GNQKGQENNPEDFQ@googlegroups.com Mon May 19 23:15:04 2014
+Return-path: <msysgit+bncBD57FPGWUYHBBVXI5GNQKGQENNPEDFQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f190.google.com ([209.85.212.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmUnk-00081T-H0
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 23:08:52 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751077AbaESVIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2014 17:08:48 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59994 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750852AbaESVIs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 17:08:48 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 872B3195C7;
-	Mon, 19 May 2014 17:08:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TqanrOIJDm9GBDng/pBmPvItaD0=; b=fGNky8
-	/TxXRzGqOoN56gbElqai8VVt0V/ObwR7iDVt+HouLW0bbVNRvgFHtpisoUmWRN4q
-	i8tHWCOVLBB+/hLMyIxb3wlJ3wcw4aSyHbp9WmxhekJg4mYjs2+eCrV9NlPuC+rT
-	hEvBYUVcdfAOA83SZIyz408URx1KmteIA5pBQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dC443BFq+jar+5O566a2tKlFyGZafV8N
-	2jHCWePW6KAFGiT77CVATFpdpVRd2o0F/5hmY1kvGNKTrn3XsmaiFNrFz3E/ItY8
-	MyLdECnV/7tz2Q567XCuVyt4q4MFRLXsoYLZHzgPgg2ae/4dCbdW8mWYeoUYFbrN
-	SfuSkx/XjQc=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7855E195C6;
-	Mon, 19 May 2014 17:08:47 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 568E7195C2;
-	Mon, 19 May 2014 17:08:44 -0400 (EDT)
-In-Reply-To: <53795175664d5_10da88d308ce@nysa.notmuch> (Felipe Contreras's
-	message of "Sun, 18 May 2014 19:33:57 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C2DF02C0-DF99-11E3-B8B5-B784E8FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249621>
+	(envelope-from <msysgit+bncBD57FPGWUYHBBVXI5GNQKGQENNPEDFQ@googlegroups.com>)
+	id 1WmUtj-0002LH-4i
+	for gcvm-msysgit@m.gmane.org; Mon, 19 May 2014 23:15:03 +0200
+Received: by mail-wi0-f190.google.com with SMTP id q5sf397690wiv.27
+        for <gcvm-msysgit@m.gmane.org>; Mon, 19 May 2014 14:15:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=oiqW7mMkEh/j95dnbjlhOxGLb+UpTO1lgARp2KYT1w4=;
+        b=sbf3IG6rkkBeQ7pi+a0oxMCtWnkkDW36Bds3G9TPzbDMCNJfcM9W5ygTa44o00/1S/
+         adGTvRqnAEWDd1YZrVRCKsYpyIcYEjdJTqB6d8caMAxVZqIToUZ2qpy6fyCPNNQXcVik
+         oXaZD1QMFHfbDHUr00CAYEOxJJHaplGszBcA9OqSy5H2bn7ntG4+LjjZ3hl4WZEDiKO5
+         6pff1Ai5twUI19kFg4KXBnCW8YycpGgQfdTw1hc/cAx+n9R86kg83JgZNpb6BNPzqBbz
+         ElMtdweCbnI5sLNrtQ1rwqqqBb70/v1oQxww7ohNsUYwFGGiG1WcPf/nIKoAABB/6f7o
+         z4vg==
+X-Received: by 10.152.37.200 with SMTP id a8mr39577lak.19.1400534102892;
+        Mon, 19 May 2014 14:15:02 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.170.133 with SMTP id am5ls1952lac.36.gmail; Mon, 19 May
+ 2014 14:15:01 -0700 (PDT)
+X-Received: by 10.152.203.226 with SMTP id kt2mr3078283lac.2.1400534101816;
+        Mon, 19 May 2014 14:15:01 -0700 (PDT)
+Received: from wp380.webpack.hosteurope.de (wp380.webpack.hosteurope.de. [2a01:488:42::50ed:8595])
+        by gmr-mx.google.com with ESMTPS id g42si891571eev.1.2014.05.19.14.15.01
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 19 May 2014 14:15:01 -0700 (PDT)
+Received-SPF: none (google.com: thomas.braun@byte-physics.de does not designate permitted sender hosts) client-ip=2a01:488:42::50ed:8595;
+Received: from p5ddc1dd3.dip0.t-ipconnect.de ([93.220.29.211] helo=[192.168.100.43]); authenticated
+	by wp380.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1WmUtg-0002tl-GV; Mon, 19 May 2014 23:15:00 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <20140519193340.GP12314@google.com>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@byte-physics.de;1400534101;0d198d0d;
+X-Original-Sender: thomas.braun@byte-physics.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: thomas.braun@byte-physics.de does not designate permitted sender
+ hosts) smtp.mail=thomas.braun@byte-physics.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249622>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> ...
-> Which will generate the integration instructions for you:
+Am 19.05.2014 21:33, schrieb Jonathan Nieder:
+> Hi,
 >
->   % git reintegrate --cat
->   base master
->   merge jl/submodule-mv
+> Thomas Braun wrote:
 >
->     Moving a regular file in a repository with a .gitmodules file was
->     producing a warning 'Could not find section in .gitmodules where
->     path=<filename>'.
+>> pushing over the dump git protocol with a windows git client.
 >
->   merge ap/remote-hg-unquote-cquote
+> I've never heard of the dump git protocol.  Do you mean the git
+> protocol that's used with git:// URLs?
+
+You are right I mean the protocol involving git:// URLs. But 
+unfortunately I got it wrong as according to [1] the git:// is one of 
+the so-called smart protocols. That was also the source where I read 
+that there are smart and dump protocols.
+
+[1]: http://git-scm.com/book/en/Git-Internals-Transfer-Protocols
+
+> [...]
+>> Alternative approaches considered but deemed too invasive:
+>> - Rewrite read/write wrappers in mingw.c in order to distinguish between
+>>    a file descriptor which has a socket behind and a file descriptor
+>>    which has a file behind.
 >
-> It also has support for "evil merges", so it should be perfectly
-> usable for git.git maintenance.
+> I assume here "too invasive" means "too much engineering effort"?
+>
+> It sounds like a clean fix, not too invasive at all.  But I can
+> understand wanting a stopgap in the meantime.
 
-Yeah, it sounds like it is almost there.
+No actually I meant too invasive in the sense of "requiring large 
+rewrites which only benefit git on windows and hurt all others".
 
-I think the infrastructure to maintain "What's cooking" could be
-updated to use these comments after "merge" instructions if I wanted
-to.
+The two fixes I can think of either involve:
+- In a read *and* write wrapper the need to check if the fd is a socket, 
+if yes use send/recv if no use read/write. According to Erik's comments 
+this should be possible. But I would deem the expected performance 
+penalty quite large as that will be done in every call.
+- Rewriting read/write to accept windows handles instead of file 
+descriptors. Only a theoretical option IMHO.
 
-I build two branches on top of 'master', one is called 'jch' and has
-a marker line somewhere that says '### match next' that is turned
-into an empty commit, and 'pu' that is built on top of the tip of
-'jch'.  The marker line is used to apply only an earlier part of the
-instruction stream to build 'jch' on top of 'master' on top of
-'next' (i.e. "base master" in the above example will not be applied
-to hard-reset 'next' to match master) and stop there, and is meant
-to be a way to sanity check 'next' (which is made by repeated
-incremental merges on top of 'master' without rewinding) by
-comparing the "### match next" commit between 'master' and 'jch'
-(which is made afresh from 'master' by taking only the necessary
-topics).  They must match or I caught a possible mismerge on 'next'.
+For me the goal is also to minimise the diff between git and msysgit/git.
 
-I presume that the workflow can be mimicked by having another branch
-'match-next' and building it on top of 'master', and then building
-'jch' on top of it, and then building 'pu' on top of it.  Then you
-should be able to play 'match-next' instruction on top of 'next'
-(provided that there is a way to tell it to replay on HEAD and
-ignore "base" and have "merge" instruction become a no-op when the
-branch has already been merged).
+>
+>> - Turning the capability side-band-64k off completely. This would remove a useful
+>>    feature for users of non-affected transport protocols.
+>
+> Would it make sense to turn off sideband unconditionally on Windows
+> when using the relevant protocols?
+>
 
-Fun.
+Yes, if this would be also acceptable for git.git.
+
+I can check at the call site of send_pack in transport.c what protocol 
+is in use, and then pass a new parameter use_sideband to it.
+Or maybe "adapt" server_capabilities in connect.c to not include 
+side-band-64k if using git:// ?
+
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
