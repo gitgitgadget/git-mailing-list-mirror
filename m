@@ -1,227 +1,194 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v10 25/44] receive-pack.c: use a reference transaction for
- updating the refs
-Date: Mon, 19 May 2014 12:02:56 -0700
-Message-ID: <CAL=YDWmLgW0b28q5Yqw7R4nobKF5=pcbSpnazC8+EA=QKhkpow@mail.gmail.com>
-References: <1400261852-31303-1-git-send-email-sahlberg@google.com>
-	<1400261852-31303-26-git-send-email-sahlberg@google.com>
-	<537781CA.1010208@alum.mit.edu>
+From: Thomas Braun <thomas.braun@byte-physics.de>
+Subject: [PATCH/RFC] send-pack.c: Allow to disable side-band-64k
+Date: Mon, 19 May 2014 21:07:14 +0200
+Message-ID: <1400526434-3132-1-git-send-email-thomas.braun@byte-physics.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon May 19 21:03:06 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysgit@googlegroups.com
+To: git@vger.kernel.org
+X-From: msysgit+bncBD57FPGWUYHBBPFP5GNQKGQETZAWN5Y@googlegroups.com Mon May 19 21:13:07 2014
+Return-path: <msysgit+bncBD57FPGWUYHBBPFP5GNQKGQETZAWN5Y@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-we0-f185.google.com ([74.125.82.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmSpz-0004Kz-DT
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 21:03:03 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932522AbaESTC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2014 15:02:59 -0400
-Received: from mail-vc0-f172.google.com ([209.85.220.172]:62830 "EHLO
-	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751254AbaESTC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 15:02:58 -0400
-Received: by mail-vc0-f172.google.com with SMTP id hr9so10097810vcb.17
-        for <git@vger.kernel.org>; Mon, 19 May 2014 12:02:57 -0700 (PDT)
+	(envelope-from <msysgit+bncBD57FPGWUYHBBPFP5GNQKGQETZAWN5Y@googlegroups.com>)
+	id 1WmSzd-00060d-2L
+	for gcvm-msysgit@m.gmane.org; Mon, 19 May 2014 21:13:01 +0200
+Received: by mail-we0-f185.google.com with SMTP id w61sf521553wes.12
+        for <gcvm-msysgit@m.gmane.org>; Mon, 19 May 2014 12:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=qHmpxThdwVxDkBAKhxH+zsoiLCDGg6HW3jiNRLxJXLk=;
-        b=OdI8td9VewKve0O6JWSr9vFY4nTtpjoD4HoKizvw+ND4wtstiaUGHBDS4ssdSKIlxr
-         mTiv9Eb2dkPoDGndNwrz+yMV0SwxOrAymDUzaJsbIJpWd550J1g5gt87ooOpsj82l+4Q
-         XILAKXArqPAOBfJxC/O0rSf1oM6aucOH/j63yCRCQTgsOV0DuK6Gc3QXSc3cOk+f287K
-         jx5uoAM69KEh3sW08fV/eQeWg3sbfNUal9qkZqtLvTcOhAIf7eF+rd2NYmUAn8UDXvld
-         c4//toO2RcgQ5s+rAEVNGXFMy+ZMSt6LwKWdqtjkS6clkL3bSor39zZNekBZUEvUFiJW
-         aEVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=qHmpxThdwVxDkBAKhxH+zsoiLCDGg6HW3jiNRLxJXLk=;
-        b=Yl6VDrXaAjQOXjuTdwZJjUr33FmbXeZKSy/6xFYMSg+uAgz+q2K2iJ0HAY/+z8qyQy
-         5vMljgVotCPpdJv9iGKKEsTmIP6oBsy8lKJYe7jB5ApASXb+ARv3FRyrfY0TPasodDS6
-         xaaMMk1Ij2UAbfvLKjOAvQ+FYUz/1iFFm8mG3Hn3T6MsGI4svLIaKdxc6T53dxW4M9ww
-         7WwrU71nZYuKN8QWC/b8c1CGWPbtnVUX3X+EfDFLWpiXCi/6sLkozoVBI0vb4lUneMzP
-         o73c5H46DBpu6kTM1XDyhu3bGH1sh57sHqOQXV4vXqPUo7uqJzvoRILwMo7xydyjKXz5
-         k/AA==
-X-Gm-Message-State: ALoCoQnNuiaIchNKWhV1HegJ4O9xwKmiGhVeO5783X7Hi1ViVc+74gabMRnts7UU7zZ1sP/8ZXLc
-X-Received: by 10.220.205.3 with SMTP id fo3mr1881566vcb.57.1400526176993;
- Mon, 19 May 2014 12:02:56 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Mon, 19 May 2014 12:02:56 -0700 (PDT)
-In-Reply-To: <537781CA.1010208@alum.mit.edu>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249612>
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=vGAM4NLfBrwzbRG+jhHSNwwl+h7y0tnoT2xzIiLbWvE=;
+        b=LijZNm6Ab9+WJD0hREP5fuFy5WYlcrUV1hcAjC+FM89+tu6qgzMcZmxYI7wzNlw508
+         U+tsCdrNXl2zgQsh3+O6YKdFmQQCT4R4g4C4GrvIt0Rn3ikE7N8k8uTGy8ZBKF73oJX/
+         inrg3IgL930vTrAG3NVpBFnh65u/gEHY2/CxFzt0GTCjOiPitJZdw7KADypc6788++OK
+         Of1hcjNq79+ECbQKq79aNapHe6UiEhx3wixDRfKRdUJKwHMsr0fXnOkSm1eyP8wTYYzD
+         tM7/tvdY5JyMjWkp+qLMJn8BzWoaXfC2k+/0sEQNKiQmeR4R6dOc3sJbP89dRP/EXSFf
+         swyA==
+X-Received: by 10.152.18.134 with SMTP id w6mr417168lad.1.1400526780810;
+        Mon, 19 May 2014 12:13:00 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.197.1 with SMTP id iq1ls257972lac.18.gmail; Mon, 19 May
+ 2014 12:13:00 -0700 (PDT)
+X-Received: by 10.112.168.198 with SMTP id zy6mr525216lbb.15.1400526780152;
+        Mon, 19 May 2014 12:13:00 -0700 (PDT)
+Received: by 10.194.100.38 with SMTP id ev6mswjb;
+        Mon, 19 May 2014 12:08:16 -0700 (PDT)
+X-Received: by 10.152.115.195 with SMTP id jq3mr1640677lab.4.1400526495937;
+        Mon, 19 May 2014 12:08:15 -0700 (PDT)
+Received: from wp380.webpack.hosteurope.de (wp380.webpack.hosteurope.de. [2a01:488:42::50ed:8595])
+        by gmr-mx.google.com with ESMTPS id r49si201974eep.0.2014.05.19.12.08.15
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 19 May 2014 12:08:15 -0700 (PDT)
+Received-SPF: none (google.com: thomas.braun@byte-physics.de does not designate permitted sender hosts) client-ip=2a01:488:42::50ed:8595;
+Received: from p5ddc1dd3.dip0.t-ipconnect.de ([93.220.29.211] helo=localhost.localdomain); authenticated
+	by wp380.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	id 1WmSv0-0005nF-Gj; Mon, 19 May 2014 21:08:14 +0200
+X-Mailer: git-send-email 1.9.1
+X-bounce-key: webpack.hosteurope.de;thomas.braun@byte-physics.de;1400526495;738fa282;
+X-Original-Sender: thomas.braun@byte-physics.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: thomas.braun@byte-physics.de does not designate permitted sender
+ hosts) smtp.mail=thomas.braun@byte-physics.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249613>
 
-On Sat, May 17, 2014 at 8:35 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 05/16/2014 07:37 PM, Ronnie Sahlberg wrote:
->> Wrap all the ref updates inside a transaction to make the update atomic.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  builtin/receive-pack.c | 20 ++++++++++----------
->>  1 file changed, 10 insertions(+), 10 deletions(-)
->>
->> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->> index c323081..5534138 100644
->> --- a/builtin/receive-pack.c
->> +++ b/builtin/receive-pack.c
->> @@ -46,6 +46,8 @@ static void *head_name_to_free;
->>  static int sent_capabilities;
->>  static int shallow_update;
->>  static const char *alt_shallow_file;
->> +static struct strbuf err = STRBUF_INIT;
->> +static struct ref_transaction *transaction;
->>
->>  static enum deny_action parse_deny_action(const char *var, const char *value)
->>  {
->> @@ -475,7 +477,6 @@ static const char *update(struct command *cmd, struct shallow_info *si)
->>       const char *namespaced_name;
->>       unsigned char *old_sha1 = cmd->old_sha1;
->>       unsigned char *new_sha1 = cmd->new_sha1;
->> -     struct ref_lock *lock;
->>
->>       /* only refs/... are allowed */
->>       if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
->> @@ -580,15 +581,9 @@ static const char *update(struct command *cmd, struct shallow_info *si)
->>                   update_shallow_ref(cmd, si))
->>                       return "shallow error";
->>
->> -             lock = lock_any_ref_for_update(namespaced_name, old_sha1,
->> -                                            0, NULL);
->> -             if (!lock) {
->> -                     rp_error("failed to lock %s", name);
->> -                     return "failed to lock";
->> -             }
->> -             if (write_ref_sha1(lock, new_sha1, "push")) {
->> -                     return "failed to write"; /* error() already called */
->> -             }
->> +             if (ref_transaction_update(transaction, namespaced_name,
->> +                                        new_sha1, old_sha1, 0, 1, &err))
->> +                     return "failed to update";
->>               return NULL; /* good */
->>       }
->>  }
->> @@ -812,6 +807,7 @@ static void execute_commands(struct command *commands,
->>       head_name = head_name_to_free = resolve_refdup("HEAD", sha1, 0, NULL);
->>
->>       checked_connectivity = 1;
->> +     transaction = ref_transaction_begin();
->>       for (cmd = commands; cmd; cmd = cmd->next) {
->>               if (cmd->error_string)
->>                       continue;
->> @@ -827,6 +823,10 @@ static void execute_commands(struct command *commands,
->>                       checked_connectivity = 0;
->>               }
->>       }
->> +     if (ref_transaction_commit(transaction, "push", &err))
->> +             error("%s", err.buf);
->> +     ref_transaction_free(transaction);
->> +     strbuf_release(&err);
->>
->>       if (shallow_update && !checked_connectivity)
->>               error("BUG: run 'git fsck' for safety.\n"
->>
->
-> This patch is strange, because even if one ref_transaction_update() call
-> fails, subsequent updates are nevertheless also attempted, and the
-> ref_transaction_commit() is also attempted.  Is this an officially
-> sanctioned use of the ref_transactions API?  Should it be?
+Since commit 0c499ea60f the send-pack builtin uses the side-band-64k
+capability if advertised by the server. Unfortunately this breaks
+pushing over the dump git protocol with a windows git client.
 
-I think it should be supported. Because otherwise, unless you have the
-entire transaction localized in a single block you would end up having
-to check and recheck the return value everywhere.
+The detailed reasons for this breakage are (by courtesy of Jeff
+Preshing, quoted from
+https://groups.google.com/d/msg/msysgit/at8D7J-h7mw/eaLujILGUWoJ):
+----------------------------------------------------------------------------
+MinGW wraps Windows sockets in CRT file descriptors in order to mimic
+the functionality of POSIX sockets. This causes msvcrt.dll to treat
+sockets as Installable File System (IFS) handles, calling ReadFile,
+WriteFile, DuplicateHandle and CloseHandle on them. This approach works
+well in simple cases on recent versions of Windows, but does not support
+all usage patterns.  In particular, using this approach, any attempt to
+read & write concurrently on the same socket (from one or more
+processes) will deadlock in a scenario where the read waits for a
+response from the server which is only invoked after the write. This is
+what send_pack currently attempts to do in the use_sideband codepath.
+----------------------------------------------------------------------------
 
-It makes the API much easier to use if you can continue calling
-transaction functions even after the transaction has failed. If the
-transaction has already failed then _update/_create/_delete will do
-nothing except return an error.
+The new config option "sendpack.sideband" allows to override the
+side-band-64k capability of the server.
 
-If _commit is called on a failed transaction then the commit will fail
-with an error
-and do nothing.
+Other transportation methods like ssh and http/https still benefit from
+the sideband channel, therefore the default value of "sendpack.sideband"
+is still true.
 
+Alternative approaches considered but deemed too invasive:
+- Rewrite read/write wrappers in mingw.c in order to distinguish between
+  a file descriptor which has a socket behind and a file descriptor
+  which has a file behind.
+- Turning the capability side-band-64k off completely. This would remove a useful
+  feature for users of non-affected transport protocols.
 
-I think it is convenient, and it allows things like :
+Signed-off-by: Thomas Braun <thomas.braun@byte-physics.de>
+---
 
-struct ref_transaction *transaction;
-void foo()
-{
-   ...
-   ref_transaction_update(transaction, ... , &err);
-   ...
-}
+This patch, with a slightly less polished commit message, is already part of
+msysgit/git see b68e386. 
 
+A lengthy discussion can be found here [1].
 
-transaction = ref_transaction_begin(&err);
-... doing stuff and call things that eventually ends up calling foo,
-possible multiple times ...
-ret = ref_transaction_commit(transaction, &err);
+What do you think, is this also for you as upstream interesting?
 
+[1]: https://github.com/msysgit/git/issues/101
 
-In foo() we ignore checking the return value so we will not see/care
-if it failed. IF it fails however it will mark the transaction as
-failed and update &err. (Note that this can not yet happen since
-_update can not really fail, ever, but the next series will introduce
-_update failures when we move locking there.)
+ Documentation/config.txt |  6 ++++++
+ send-pack.c              | 14 +++++++++++++-
+ 2 files changed, 19 insertions(+), 1 deletion(-)
 
-Instead we can depend on that IF _update failed, then the call to
-_commit will fail too and &err is already updated so we can defer any
-checking for errors until _commit time.
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1932e9b..13ff657 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2435,3 +2435,9 @@ web.browser::
+ 	Specify a web browser that may be used by some commands.
+ 	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
+ 	may use it.
++
++sendpack.sideband::
++  Allows to disable the side-band-64k capability for send-pack even
++  when it is advertised by the server. Makes it possible to work
++  around a limitation in the git for windows implementation together
++  with the dump git protocol. Defaults to true.
+diff --git a/send-pack.c b/send-pack.c
+index 6129b0f..aace1fc 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -12,6 +12,16 @@
+ #include "version.h"
+ #include "sha1-array.h"
+ 
++static int config_use_sideband = 1;
++
++static int send_pack_config(const char *var, const char *value, void *unused)
++{
++	if (!strcmp("sendpack.sideband", var))
++		config_use_sideband = git_config_bool(var, value);
++
++	return 0;
++}
++
+ static int feed_object(const unsigned char *sha1, int fd, int negative)
+ {
+ 	char buf[42];
+@@ -209,6 +219,8 @@ int send_pack(struct send_pack_args *args,
+ 	int ret;
+ 	struct async demux;
+ 
++	git_config(send_pack_config, NULL);
++
+ 	/* Does the other end support the reporting? */
+ 	if (server_supports("report-status"))
+ 		status_report = 1;
+@@ -216,7 +228,7 @@ int send_pack(struct send_pack_args *args,
+ 		allow_deleting_refs = 1;
+ 	if (server_supports("ofs-delta"))
+ 		args->use_ofs_delta = 1;
+-	if (server_supports("side-band-64k"))
++	if (config_use_sideband && server_supports("side-band-64k"))
+ 		use_sideband = 1;
+ 	if (server_supports("quiet"))
+ 		quiet_supported = 1;
+-- 
+1.9.1
 
-This will make the API much more convenient for use cases where you
-begin/commit the transaction in one function but the calls to
-_update/_delete/_create are somewhere else, possible many function
-calls away.
-It does not mean that a caller must ignore the return value from
-ref_transaction_update, just that the caller can do so and defer
-checking for errors until later when it would be more convenient.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-Please see current:
-https://github.com/rsahlberg/git/tree/ref-transactions
-and patch:
-refs.c: add transaction.status and track OPEN/CLOSED/ERROR
-
-
-  It might be
-> a way to give feedback to the user on multiple attempted reference
-> updates at once (i.e., address my comment about the last patch).
->
-> If this is sanctioned, then it might be appropriate for the transaction
-> to keep track of the fact that one or more reference updates failed, and
-> when *_commit() is called to fail the whole transaction.
-
-Yes. I updated refs.h to indicate that you can continue using
-_update/_create/_delete even if a previous call has failed but that
-these calls will now just return an error.
-
-This does mean that on the first update that fails for a ref we fail
-the transaction and abort any further _update calls to fail
-immediately so if there would be additional refs that would fail we
-would not log this. I think this is what we want to do since once we
-have had a ref update fail it would be really hard to determine if the
-next failure was just a side effect of the first failure or not.
-
-
->
-> In any case, I think it is important to document, as part of the API
-> docs, whether this is sanctioned or not, and if so, what exactly are its
-> semantics.
->
-> I've run out of time for today so I'm going to have to stop here.  FWIW
-> patches 01-23 looked OK aside from the comments that I have made.
->
-> Michael
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
