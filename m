@@ -1,126 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC] send-pack.c: Allow to disable side-band-64k
-Date: Mon, 19 May 2014 12:33:40 -0700
-Message-ID: <20140519193340.GP12314@google.com>
-References: <1400526434-3132-1-git-send-email-thomas.braun@byte-physics.de>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: format-patch crashes with a huge patchset
+Date: Mon, 19 May 2014 22:35:56 +0300
+Message-ID: <20140519193556.GA987@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Thomas Braun <thomas.braun@byte-physics.de>
-X-From: msysgit+bncBD6LRKOE4AIRBF5Z5GNQKGQEN5PSYOQ@googlegroups.com Mon May 19 21:33:47 2014
-Return-path: <msysgit+bncBD6LRKOE4AIRBF5Z5GNQKGQEN5PSYOQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ob0-f192.google.com ([209.85.214.192])
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 19 21:37:23 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBD6LRKOE4AIRBF5Z5GNQKGQEN5PSYOQ@googlegroups.com>)
-	id 1WmTJg-00036T-Nu
-	for gcvm-msysgit@m.gmane.org; Mon, 19 May 2014 21:33:45 +0200
-Received: by mail-ob0-f192.google.com with SMTP id va2sf1849343obc.9
-        for <gcvm-msysgit@m.gmane.org>; Mon, 19 May 2014 12:33:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=kTTuZbBPl8hi3DRmnocRya67ibXgW6r6LifGzmCmMkI=;
-        b=uvSYu0v9zptpwYgFrinwK0sMdMOq6eAy21EvBlCnkA2a6HkUlEih8NAKchwo8gXRXM
-         9RJDP9ihjpDMtrtRDuS1GLy7unGPEuUJ9qnwJn85rxj1FJFuRiv4UnaHexdWrSBUtd7h
-         vadWlkEHFoNrJ5krhJ6ivh3TwGEbfq4U6ArHl7g7oYNvT+ohd75yHk+kRCsG1JxmP2at
-         quZQ/cNfH8HAkErqjCFuHPJR8WkZz1oNrASKMn7ML+n9XGzdcOhaaH+q6VooyfFBUEmj
-         VTqRKRa5wzd/vHiPIzGgD1w/c2bG8Cv/yppGxBErcUlHuvI5BIaaV1Nsgk3nkmg/jvVx
-         ZtIw==
-X-Received: by 10.50.114.161 with SMTP id jh1mr12481igb.3.1400528023869;
-        Mon, 19 May 2014 12:33:43 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.73.132 with SMTP id l4ls1230122igv.9.gmail; Mon, 19 May
- 2014 12:33:43 -0700 (PDT)
-X-Received: by 10.42.29.138 with SMTP id r10mr15619723icc.11.1400528023420;
-        Mon, 19 May 2014 12:33:43 -0700 (PDT)
-Received: from mail-pa0-x22d.google.com (mail-pa0-x22d.google.com [2607:f8b0:400e:c03::22d])
-        by gmr-mx.google.com with ESMTPS id vc6si4084496pab.2.2014.05.19.12.33.43
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 19 May 2014 12:33:43 -0700 (PDT)
-Received-SPF: pass (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:400e:c03::22d as permitted sender) client-ip=2607:f8b0:400e:c03::22d;
-Received: by mail-pa0-f45.google.com with SMTP id ey11so6180982pad.4
-        for <msysgit@googlegroups.com>; Mon, 19 May 2014 12:33:43 -0700 (PDT)
-X-Received: by 10.66.150.169 with SMTP id uj9mr44943740pab.148.1400528023324;
-        Mon, 19 May 2014 12:33:43 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id tu3sm79381716pab.1.2014.05.19.12.33.42
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Mon, 19 May 2014 12:33:42 -0700 (PDT)
-In-Reply-To: <1400526434-3132-1-git-send-email-thomas.braun@byte-physics.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Original-Sender: jrnieder@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of jrnieder@gmail.com designates 2607:f8b0:400e:c03::22d
- as permitted sender) smtp.mail=jrnieder@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WmTN9-0001TF-8e
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 21:37:19 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932665AbaESThD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2014 15:37:03 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:16990 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751796AbaESThC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2014 15:37:02 -0400
+Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s4JJb2FI017753
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
+	for <git@vger.kernel.org>; Mon, 19 May 2014 15:37:02 -0400
+Received: from redhat.com (ovpn-116-32.ams2.redhat.com [10.36.116.32])
+	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id s4JJb0Fs023366
+	for <git@vger.kernel.org>; Mon, 19 May 2014 15:37:01 -0400
 Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249616>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249617>
 
-Hi,
+I tried to fump the whole history of qemu with format-patch.
+It crashes both with v2.0.0-rc2-21-g6087111
+and with git 1.8.3.1:
 
-Thomas Braun wrote:
+~/opt/libexec/git-core/git-format-patch --follow -o patches/all
+e63c3dc74bfb90e4522d075d0d5a7600c5145745..
 
-> pushing over the dump git protocol with a windows git client.
+Backtrace:
 
-I've never heard of the dump git protocol.  Do you mean the git
-protocol that's used with git:// URLs?
 
-[...]
-> Alternative approaches considered but deemed too invasive:
-> - Rewrite read/write wrappers in mingw.c in order to distinguish between
->   a file descriptor which has a socket behind and a file descriptor
->   which has a file behind.
+Program received signal SIGSEGV, Segmentation fault.
+0x0814d9d5 in try_to_follow_renames (opt=0xffffc8e4,
+base=base@entry=0x816e4fe "", t2=0xffffbdf0, t1=0xffffbddc) at
+tree-diff.c:227
+227             diff_opts.single_follow = opt->pathspec.items[0].match;
+Missing separate debuginfos, use: debuginfo-install
+openssl-libs-1.0.1e-37.fc19.1.i686
+(gdb) p opt
+$1 = (struct diff_options *) 0xffffc8e4
+(gdb) where
+#0  0x0814d9d5 in try_to_follow_renames (opt=0xffffc8e4,
+base=base@entry=0x816e4fe "", t2=0xffffbdf0, t1=0xffffbddc) at
+tree-diff.c:227
+#1  diff_tree_sha1 (old=0x97469b4
+"\372\022\366\336k\345\236\362\062K\021\236\300\227\036\302\217\251\202f", 
+    new=new@entry=0x9746994 "$\305H\250)\237\203\266ya\311W\n\274
+\n\027^*\221", base=base@entry=0x816e4fe "", opt=opt@entry=0xffffc8e4)
+    at tree-diff.c:305
+#2  0x080fb83d in log_tree_diff (log=0xffffbf28, commit=0x9734730,
+opt=0xffffc618) at log-tree.c:780
+#3  log_tree_commit (opt=opt@entry=0xffffc618,
+commit=commit@entry=0x9734730) at log-tree.c:810
+#4  0x08088406 in cmd_format_patch (argc=<optimized out>,
+argv=0xffffccc4, prefix=0x0) at builtin/log.c:1510
+#5  0x0804c666 in run_builtin (argv=0xffffccc4, argc=5, p=0x81cb524
+<commands+420>) at git.c:314
+#6  handle_builtin (argc=5, argv=0xffffccc4) at git.c:487
+#7  0x0804bc22 in main (argc=5, av=0xffffccc4) at git.c:584
+(gdb) p opt->pathspec.items
+$2 = (struct pathspec_item *) 0x0
 
-I assume here "too invasive" means "too much engineering effort"?
 
-It sounds like a clean fix, not too invasive at all.  But I can
-understand wanting a stopgap in the meantime.
+Did not debug further: could be related to the fact
+swap is disabled on my box, so attempts to allocate
+huge amounts of RAM might fail.
 
-> - Turning the capability side-band-64k off completely. This would remove a useful
->   feature for users of non-affected transport protocols.
-
-Would it make sense to turn off sideband unconditionally on Windows
-when using the relevant protocols?
-
-I assume someone on the list wouldn't mind writing such a patch, so I
-don't think the engineering effort would be a problem for that.
-
-Thanks,
-Jonathan
+Still should not segv I think ...
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+MST
