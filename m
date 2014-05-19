@@ -1,60 +1,64 @@
-From: Thomas Braun <thomas.braun@byte-physics.de>
-Subject: [PATCH/RFC] send-pack.c: Allow to disable side-band-64k
-Date: Mon, 19 May 2014 21:07:14 +0200
-Message-ID: <1400526434-3132-1-git-send-email-thomas.braun@byte-physics.de>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: Re: [PATCH v2] config: preserve config file permissions
+ on edits
+Date: Mon, 19 May 2014 21:17:58 +0200
+Message-ID: <1400527078.32635.5.camel@thomas-debian-x64>
+References: <20140505215853.GA23299@dcvr.yhbt.net>
+	 <20140506001714.GA29049@dcvr.yhbt.net> <5379AF29.4000508@viscovery.net>
+	 <CABPQNSZMExeXXMEUNE9HneK1rfXeLoK=vHZkm38xKt_2VctjXQ@mail.gmail.com>
+	 <CABPQNSbja2x1boJDGbJHGGxq6OiVe_gG56ROFhWyfAf4sNQkRQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysgit@googlegroups.com
-To: git@vger.kernel.org
-X-From: msysgit+bncBD57FPGWUYHBBPFP5GNQKGQETZAWN5Y@googlegroups.com Mon May 19 21:13:07 2014
-Return-path: <msysgit+bncBD57FPGWUYHBBPFP5GNQKGQETZAWN5Y@googlegroups.com>
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>, Eric Wong <normalperson@yhbt.net>,
+  Junio C Hamano <gitster@pobox.com>, GIT Mailing-list
+ <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: kusmabite@gmail.com
+X-From: msysgit+bncBCL7JHHTPAIOVMPJTMCRUBH6KVGL4@googlegroups.com Mon May 19 21:18:03 2014
+Return-path: <msysgit+bncBCL7JHHTPAIOVMPJTMCRUBH6KVGL4@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f185.google.com ([74.125.82.185])
+Received: from mail-wi0-f192.google.com ([209.85.212.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBD57FPGWUYHBBPFP5GNQKGQETZAWN5Y@googlegroups.com>)
-	id 1WmSzd-00060d-2L
-	for gcvm-msysgit@m.gmane.org; Mon, 19 May 2014 21:13:01 +0200
-Received: by mail-we0-f185.google.com with SMTP id w61sf521553wes.12
-        for <gcvm-msysgit@m.gmane.org>; Mon, 19 May 2014 12:13:00 -0700 (PDT)
+	(envelope-from <msysgit+bncBCL7JHHTPAIOVMPJTMCRUBH6KVGL4@googlegroups.com>)
+	id 1WmT4V-00075D-1Q
+	for gcvm-msysgit@m.gmane.org; Mon, 19 May 2014 21:18:03 +0200
+Received: by mail-wi0-f192.google.com with SMTP id z2sf360756wiv.29
+        for <gcvm-msysgit@m.gmane.org>; Mon, 19 May 2014 12:18:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=vGAM4NLfBrwzbRG+jhHSNwwl+h7y0tnoT2xzIiLbWvE=;
-        b=LijZNm6Ab9+WJD0hREP5fuFy5WYlcrUV1hcAjC+FM89+tu6qgzMcZmxYI7wzNlw508
-         U+tsCdrNXl2zgQsh3+O6YKdFmQQCT4R4g4C4GrvIt0Rn3ikE7N8k8uTGy8ZBKF73oJX/
-         inrg3IgL930vTrAG3NVpBFnh65u/gEHY2/CxFzt0GTCjOiPitJZdw7KADypc6788++OK
-         Of1hcjNq79+ECbQKq79aNapHe6UiEhx3wixDRfKRdUJKwHMsr0fXnOkSm1eyP8wTYYzD
-         tM7/tvdY5JyMjWkp+qLMJn8BzWoaXfC2k+/0sEQNKiQmeR4R6dOc3sJbP89dRP/EXSFf
-         swyA==
-X-Received: by 10.152.18.134 with SMTP id w6mr417168lad.1.1400526780810;
-        Mon, 19 May 2014 12:13:00 -0700 (PDT)
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=wcteOAtdMtCK6cSj4zwEL5gpooU11USzAKEC7QVeYck=;
+        b=wWvo7w82B6KYZ22mlDYTK/UIOMRWwwIoVmohJ5m1czhmjkrj9xKXPOowbEuZG3cSDV
+         dF1FXZAA2yew7zcre/9A5ysjk2/EqcCFpd5rtdnOUj5R8uXV77HLnSDdxVX8h4i7M/1Q
+         y+3yiA9cDsaxDvXbEA6G3szGjfkNX9lP7BpH2imsoMe1GwSlCiIGIvso1J3drmc3RlV7
+         DhtUd5AYy1RP99knf48J9yqNSe2gJ070FZwo22T5Ma6adwXlfhqF/LOcDlZE6DIM0TiI
+         YXNVYYu/hYCYPVgxQegepwtPXHbpNHscrR7gHzLSViUWype1kcIUMI1ZdTYUHkzed+95
+         yNtg==
+X-Received: by 10.152.28.101 with SMTP id a5mr411110lah.4.1400527082730;
+        Mon, 19 May 2014 12:18:02 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.197.1 with SMTP id iq1ls257972lac.18.gmail; Mon, 19 May
- 2014 12:13:00 -0700 (PDT)
-X-Received: by 10.112.168.198 with SMTP id zy6mr525216lbb.15.1400526780152;
-        Mon, 19 May 2014 12:13:00 -0700 (PDT)
-Received: by 10.194.100.38 with SMTP id ev6mswjb;
-        Mon, 19 May 2014 12:08:16 -0700 (PDT)
-X-Received: by 10.152.115.195 with SMTP id jq3mr1640677lab.4.1400526495937;
-        Mon, 19 May 2014 12:08:15 -0700 (PDT)
-Received: from wp380.webpack.hosteurope.de (wp380.webpack.hosteurope.de. [2a01:488:42::50ed:8595])
-        by gmr-mx.google.com with ESMTPS id r49si201974eep.0.2014.05.19.12.08.15
+Received: by 10.152.2.170 with SMTP id 10ls309660lav.108.gmail; Mon, 19 May
+ 2014 12:18:01 -0700 (PDT)
+X-Received: by 10.112.140.170 with SMTP id rh10mr3057762lbb.7.1400527081967;
+        Mon, 19 May 2014 12:18:01 -0700 (PDT)
+Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [2a01:488:42::50ed:84a3])
+        by gmr-mx.google.com with ESMTPS id r49si209804eep.0.2014.05.19.12.18.01
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 19 May 2014 12:08:15 -0700 (PDT)
-Received-SPF: none (google.com: thomas.braun@byte-physics.de does not designate permitted sender hosts) client-ip=2a01:488:42::50ed:8595;
-Received: from p5ddc1dd3.dip0.t-ipconnect.de ([93.220.29.211] helo=localhost.localdomain); authenticated
-	by wp380.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	id 1WmSv0-0005nF-Gj; Mon, 19 May 2014 21:08:14 +0200
-X-Mailer: git-send-email 1.9.1
-X-bounce-key: webpack.hosteurope.de;thomas.braun@byte-physics.de;1400526495;738fa282;
-X-Original-Sender: thomas.braun@byte-physics.de
+        Mon, 19 May 2014 12:18:01 -0700 (PDT)
+Received-SPF: none (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted sender hosts) client-ip=2a01:488:42::50ed:84a3;
+Received: from p5ddc1dd3.dip0.t-ipconnect.de ([93.220.29.211] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	id 1WmT4Q-000126-PB; Mon, 19 May 2014 21:17:58 +0200
+In-Reply-To: <CABPQNSbja2x1boJDGbJHGGxq6OiVe_gG56ROFhWyfAf4sNQkRQ@mail.gmail.com>
+X-Mailer: Evolution 3.4.4-3
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1400527081;ccc274a0;
+X-Original-Sender: thomas.braun@virtuell-zuhause.de
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: thomas.braun@byte-physics.de does not designate permitted sender
- hosts) smtp.mail=thomas.braun@byte-physics.de
+ (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted
+ sender hosts) smtp.mail=thomas.braun@virtuell-zuhause.de
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -65,113 +69,74 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249614>
 
-Since commit 0c499ea60f the send-pack builtin uses the side-band-64k
-capability if advertised by the server. Unfortunately this breaks
-pushing over the dump git protocol with a windows git client.
+Am Montag, den 19.05.2014, 11:59 +0200 schrieb Erik Faye-Lund:
+> On Mon, May 19, 2014 at 9:44 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> > On Mon, May 19, 2014 at 9:13 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> >> Am 5/6/2014 2:17, schrieb Eric Wong:
+> >>> Users may already store sensitive data such as imap.pass in
+> >>> ..git/config; making the file world-readable when "git config"
+> >>> is called to edit means their password would be compromised
+> >>> on a shared system.
+> >>>
+> >>> [v2: updated for section renames, as noted by Junio]
+> >>>
+> >>> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> >>> ---
+> >>>  config.c               | 16 ++++++++++++++++
+> >>>  t/t1300-repo-config.sh | 10 ++++++++++
+> >>>  2 files changed, 26 insertions(+)
+> >>>
+> >>> diff --git a/config.c b/config.c
+> >>> index a30cb5c..c227aa8 100644
+> >>> --- a/config.c
+> >>> +++ b/config.c
+> >>> @@ -1636,6 +1636,13 @@ int git_config_set_multivar_in_file(const char *config_filename,
+> >>>                       MAP_PRIVATE, in_fd, 0);
+> >>>               close(in_fd);
+> >>>
+> >>> +             if (fchmod(fd, st.st_mode & 07777) < 0) {
+> >>> +                     error("fchmod on %s failed: %s",
+> >>> +                             lock->filename, strerror(errno));
+> >>> +                     ret = CONFIG_NO_WRITE;
+> >>> +                     goto out_free;
+> >>> +             }
+> >>
+> >> This introduces a severe failure in the Windows port because we do not
+> >> implement fchmod. Existing fchmod invocations do not check the return
+> >> value, and they are only interested in removing the write bits, and we
+> >> generally don't care a lot if files remain writable.
+> >>
+> >> I'm not proficient enough to add any ACL fiddling to fchmod that would be
+> >> required by the above change, whose purpose is to be strict about
+> >> permissions. Nor am I interested (who the heck is sharing a Windows box
+> >> anyway? ;-)
+> >>
+> >> Therefore, here's just a work-around patch to keep things going on
+> >> Windows. Any opinions from the Windows corner?
+> >>
+> >
+> > Since we use MSVCRT's chmod implementation directly which only checks
+> > for S_IWRITE,and Get/SetFileAttributes to simply set or clear the
+> > FILE_ATTRIBUTE_READONLY-flag, perhaps we could do the same except
+> > using Get/SetFileInformationByHandle instead? That takes us in a
+> > better direction, IMO. Adding full ACL support seems like a bigger
+> > project.
+> >
+> > If there's no objection, I'll sketch up a patch for that...
+> 
+> OK, this turned out a bit more yucky than I assumed, because
+> SetFileInformationByHandle is only available on Windows Vista and up.
+> There's a static library (FileExtd.lib) that ships with MSVC that
+> emulates it for legacy support, I guess I should have a look at what
+> that does.
 
-The detailed reasons for this breakage are (by courtesy of Jeff
-Preshing, quoted from
-https://groups.google.com/d/msg/msysgit/at8D7J-h7mw/eaLujILGUWoJ):
-----------------------------------------------------------------------------
-MinGW wraps Windows sockets in CRT file descriptors in order to mimic
-the functionality of POSIX sockets. This causes msvcrt.dll to treat
-sockets as Installable File System (IFS) handles, calling ReadFile,
-WriteFile, DuplicateHandle and CloseHandle on them. This approach works
-well in simple cases on recent versions of Windows, but does not support
-all usage patterns.  In particular, using this approach, any attempt to
-read & write concurrently on the same socket (from one or more
-processes) will deadlock in a scenario where the read waits for a
-response from the server which is only invoked after the write. This is
-what send_pack currently attempts to do in the use_sideband codepath.
-----------------------------------------------------------------------------
+Do we still want to fully support Windows XP?
+Adding a work around here for a EOL operating system sounds like a lot
+of effort.
 
-The new config option "sendpack.sideband" allows to override the
-side-band-64k capability of the server.
 
-Other transportation methods like ssh and http/https still benefit from
-the sideband channel, therefore the default value of "sendpack.sideband"
-is still true.
-
-Alternative approaches considered but deemed too invasive:
-- Rewrite read/write wrappers in mingw.c in order to distinguish between
-  a file descriptor which has a socket behind and a file descriptor
-  which has a file behind.
-- Turning the capability side-band-64k off completely. This would remove a useful
-  feature for users of non-affected transport protocols.
-
-Signed-off-by: Thomas Braun <thomas.braun@byte-physics.de>
----
-
-This patch, with a slightly less polished commit message, is already part of
-msysgit/git see b68e386. 
-
-A lengthy discussion can be found here [1].
-
-What do you think, is this also for you as upstream interesting?
-
-[1]: https://github.com/msysgit/git/issues/101
-
- Documentation/config.txt |  6 ++++++
- send-pack.c              | 14 +++++++++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1932e9b..13ff657 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2435,3 +2435,9 @@ web.browser::
- 	Specify a web browser that may be used by some commands.
- 	Currently only linkgit:git-instaweb[1] and linkgit:git-help[1]
- 	may use it.
-+
-+sendpack.sideband::
-+  Allows to disable the side-band-64k capability for send-pack even
-+  when it is advertised by the server. Makes it possible to work
-+  around a limitation in the git for windows implementation together
-+  with the dump git protocol. Defaults to true.
-diff --git a/send-pack.c b/send-pack.c
-index 6129b0f..aace1fc 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -12,6 +12,16 @@
- #include "version.h"
- #include "sha1-array.h"
- 
-+static int config_use_sideband = 1;
-+
-+static int send_pack_config(const char *var, const char *value, void *unused)
-+{
-+	if (!strcmp("sendpack.sideband", var))
-+		config_use_sideband = git_config_bool(var, value);
-+
-+	return 0;
-+}
-+
- static int feed_object(const unsigned char *sha1, int fd, int negative)
- {
- 	char buf[42];
-@@ -209,6 +219,8 @@ int send_pack(struct send_pack_args *args,
- 	int ret;
- 	struct async demux;
- 
-+	git_config(send_pack_config, NULL);
-+
- 	/* Does the other end support the reporting? */
- 	if (server_supports("report-status"))
- 		status_report = 1;
-@@ -216,7 +228,7 @@ int send_pack(struct send_pack_args *args,
- 		allow_deleting_refs = 1;
- 	if (server_supports("ofs-delta"))
- 		args->use_ofs_delta = 1;
--	if (server_supports("side-band-64k"))
-+	if (config_use_sideband && server_supports("side-band-64k"))
- 		use_sideband = 1;
- 	if (server_supports("quiet"))
- 		quiet_supported = 1;
--- 
-1.9.1
 
 -- 
 -- 
