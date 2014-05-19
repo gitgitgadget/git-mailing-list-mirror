@@ -1,186 +1,124 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v10 13/44] tag.c: use ref transactions when doing updates
-Date: Mon, 19 May 2014 11:03:33 -0700
-Message-ID: <CAL=YDW=pTNmFtHYtmUs-nSYwafGsC4xSA4pmb=h4EN7q4m_adw@mail.gmail.com>
+Subject: Re: [PATCH v10 14/44] replace.c: use the ref transaction functions
+ for updates
+Date: Mon, 19 May 2014 11:04:56 -0700
+Message-ID: <CAL=YDWmfudx0qVh_pV_14FE2EyHsHF1HHemCQ9h5f=5V8rVY7A@mail.gmail.com>
 References: <1400261852-31303-1-git-send-email-sahlberg@google.com>
-	<1400261852-31303-14-git-send-email-sahlberg@google.com>
-	<53775F77.2070004@alum.mit.edu>
-	<CAL=YDWmZEQMWV1wF_ztBMszznUX-a1Q4YTo_w+ui7c_xuNPDWw@mail.gmail.com>
+	<1400261852-31303-15-git-send-email-sahlberg@google.com>
+	<537760B4.4010904@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon May 19 20:03:41 2014
+X-From: git-owner@vger.kernel.org Mon May 19 20:05:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmRuV-0003Lc-8z
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 20:03:39 +0200
+	id 1WmRvq-00063F-UJ
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 20:05:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932339AbaESSDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2014 14:03:35 -0400
-Received: from mail-vc0-f181.google.com ([209.85.220.181]:40955 "EHLO
-	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932277AbaESSDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 14:03:34 -0400
-Received: by mail-vc0-f181.google.com with SMTP id ld13so9822994vcb.26
-        for <git@vger.kernel.org>; Mon, 19 May 2014 11:03:33 -0700 (PDT)
+	id S1751476AbaESSE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2014 14:04:58 -0400
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:38807 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751042AbaESSE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2014 14:04:57 -0400
+Received: by mail-vc0-f170.google.com with SMTP id lf12so10136447vcb.1
+        for <git@vger.kernel.org>; Mon, 19 May 2014 11:04:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=yx0tWe3N2Wm8injDa7I1QwtlXum7MRKs8XVjqT52/H8=;
-        b=POzwPTpMI22gss00+6Zpe86QmWDWF0wbKTcKPQO74VuDs6FHhXPwLh/hJd9DxRB2E9
-         JZgH/9i9+ZoIC37kAsKmg9121Q5vJuZZnEAGFIJrDqeEa0ruc9CXWfYYXQNYL2rIqPyD
-         hhBq82lE3qMjaKR5QVgB41mJgbsddMyoUsTjRAMzD3JJlPO+Y7fdoxulXEDgLXlLKoHP
-         R8Lq9csbTfYuYuTJX5nFfbUBNa94Ml0l05Y2NEhnbYOS42jepi0vuG1ktiDOxrHwVMQk
-         sspeu1piIWE6+A0QIsNkOf0/NQSByhi22YjlpqbyKbGX0or+eGub4ghbXDJmpW3QMGlx
-         5nUA==
+        bh=gfdqmU1ilAEkR/Kk+PMd5qVIaNa8cGqTeQDNx38nWec=;
+        b=RHY6fPXbPMjkygpl/quKKIeumcu1SyzX1lqtACbOkU2eMQ4sCyT7FEqXM0QRFTGTV0
+         eyNOzXX+0+CVSDXfMrNcD/0Wolw2mG2qXXSzekr5knBdo+QQUF4tTgXFoClFeS8QLr01
+         4MbC6ZX8YZl70Og1Jvtnbjvz7fs+0O6w9XLXnRnAjc3/kpWYN5jSYDuvO5tMQ+4HjZDN
+         M797xJO6tjw1jmTvvoPUxIG4fpV0dlJdGrdWnAyLh5dmFGy2r7nU6OazbrtVZ8rKkN2d
+         +EsQN+gA0GgXs7RACTzhDkYe8iSpHFgNdID1dI1a8PS/s29Qa8Md10A4el3ZAvpbVPHt
+         f/3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=yx0tWe3N2Wm8injDa7I1QwtlXum7MRKs8XVjqT52/H8=;
-        b=gdedeA0WW7GfS3LL426GyExj32e4ByW9m9w/HCGmz6NSDK5qe6bjI4ypUZZqB5RPrF
-         joBK0pc3vKxuVSiliVh1bOfuM87B8MskbKfPC/htVAeOWZuHJGpsflyptazMhHUpHyjd
-         R9GWCLf9HuACEjzgT7/MHnCa3x2eXLl8t6RAL/mjEYdvL1P9I+Yt2iSZehZwLJvj7JK7
-         YA5tBTKIPZWoZ9juSFcCONWElNySqxmT8sVvrORvI+ASkYoDI1bMmNn0viD0owf5qUUD
-         ufuaHHjEKyTFHmNFS5Uwi8RLI8P3xwzUg8rI0LMXncxz2Fi/3HysrZS7PgNUu0Jl/acr
-         enew==
-X-Gm-Message-State: ALoCoQmTDPrQCEqDg6FMikz6+2SHBPCnpKIcUshZjzZTKaDDndOBi8QQumo8rQeNEUe738+/kH+u
-X-Received: by 10.220.106.7 with SMTP id v7mr1667578vco.46.1400522613505; Mon,
- 19 May 2014 11:03:33 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Mon, 19 May 2014 11:03:33 -0700 (PDT)
-In-Reply-To: <CAL=YDWmZEQMWV1wF_ztBMszznUX-a1Q4YTo_w+ui7c_xuNPDWw@mail.gmail.com>
+        bh=gfdqmU1ilAEkR/Kk+PMd5qVIaNa8cGqTeQDNx38nWec=;
+        b=HBeenPz7/Mg22cbk27XdXleGmrxXu5a9edUt/KPRlsi2HQmOki67L25R0W4izue+3D
+         DQXpivlJzN+zpmiRIzsAFD6URxLD8UIaFLWddkx22h5wS1FpKtfp8wQVe7VozZH9iUse
+         uKAR7hQDjKox2VB//iNHVbhsupECLfCFRlGBxPrCSUolSlV5qY8FXN4Tek24BuA3eTkK
+         WG2zNuTRwX0Y6tsBic8lsFWthHxHXsWl9yh0H5NvDpqBapO7IWeVdccNUkqZT4kFBEb7
+         sk/AA0Q2S/UzmVj9pfimDabyktEnvkf1z3+lpK7iNKoHtDQwcyOq/nsAQoc6Q9ZLVjnG
+         +yYA==
+X-Gm-Message-State: ALoCoQlr6oO0kylXHBPF2gY0SBMK1Ye6yC9Oobt67xmRwttAZE8rvDD/0p/VxaY70UCckvslOiIf
+X-Received: by 10.58.48.201 with SMTP id o9mr32430029ven.5.1400522696311; Mon,
+ 19 May 2014 11:04:56 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Mon, 19 May 2014 11:04:56 -0700 (PDT)
+In-Reply-To: <537760B4.4010904@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249609>
 
-I have moved the patch to add &err to ref_transaction_begin to the
-current patch series.
+I have moved the patch to add an err argument to this branch and
+update all patches that adds
+calls to ref_Transaction_begin to the new signature.
 
 Please see
 https://github.com/rsahlberg/git/tree/ref-transactions
 
-On Mon, May 19, 2014 at 10:16 AM, Ronnie Sahlberg <sahlberg@google.com> wrote:
-> On Sat, May 17, 2014 at 6:09 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->> On 05/16/2014 07:37 PM, Ronnie Sahlberg wrote:
->>> Change tag.c to use ref transactions for all ref updates.
->>>
->>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->>> ---
->>>  builtin/tag.c | 14 ++++++++------
->>>  1 file changed, 8 insertions(+), 6 deletions(-)
->>>
->>> diff --git a/builtin/tag.c b/builtin/tag.c
->>> index c6e8a71..b05f9a5 100644
->>> --- a/builtin/tag.c
->>> +++ b/builtin/tag.c
->>> @@ -548,7 +548,6 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->>>       struct strbuf ref = STRBUF_INIT;
->>>       unsigned char object[20], prev[20];
->>>       const char *object_ref, *tag;
->>> -     struct ref_lock *lock;
->>>       struct create_tag_options opt;
->>>       char *cleanup_arg = NULL;
->>>       int annotate = 0, force = 0, lines = -1;
->>> @@ -556,6 +555,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->>>       const char *msgfile = NULL, *keyid = NULL;
->>>       struct msg_arg msg = { 0, STRBUF_INIT };
->>>       struct commit_list *with_commit = NULL;
->>> +     struct ref_transaction *transaction;
->>> +     struct strbuf err = STRBUF_INIT;
->>>       struct option options[] = {
->>>               OPT_CMDMODE('l', "list", &cmdmode, N_("list tag names"), 'l'),
->>>               { OPTION_INTEGER, 'n', NULL, &lines, N_("n"),
->>> @@ -701,11 +702,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->>>       if (annotate)
->>>               create_tag(object, tag, &buf, &opt, prev, object);
->>>
->>> -     lock = lock_any_ref_for_update(ref.buf, prev, 0, NULL);
->>> -     if (!lock)
->>> -             die(_("%s: cannot lock the ref"), ref.buf);
->>> -     if (write_ref_sha1(lock, object, NULL) < 0)
->>> -             die(_("%s: cannot update the ref"), ref.buf);
->>> +     transaction = ref_transaction_begin();
->>> +     if (!transaction ||
->>> +         ref_transaction_update(transaction, ref.buf, object, prev,
->>> +                                0, !is_null_sha1(prev), &err) ||
->>> +         ref_transaction_commit(transaction, NULL, &err))
->>> +             die("%s", err.buf);
+Thanks!
+
+
+On Sat, May 17, 2014 at 6:14 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 05/16/2014 07:37 PM, Ronnie Sahlberg wrote:
+>> Update replace.c to use ref transactions for updates.
 >>
->> If ref_transaction_begin() fails, then won't err still be empty?  (I
->> know it can't happen, and you know it can't happen, but should the
->> caller have to know that?)  It almost seems like ref_transaction_begin()
->> should have an err parameter, too.
+>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>> ---
+>>  builtin/replace.c | 14 ++++++++------
+>>  1 file changed, 8 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/builtin/replace.c b/builtin/replace.c
+>> index 3da1bae..e8932cd 100644
+>> --- a/builtin/replace.c
+>> +++ b/builtin/replace.c
+>> @@ -133,7 +133,8 @@ static int replace_object_sha1(const char *object_ref,
+>>       unsigned char prev[20];
+>>       enum object_type obj_type, repl_type;
+>>       char ref[PATH_MAX];
+>> -     struct ref_lock *lock;
+>> +     struct ref_transaction *transaction;
+>> +     struct strbuf err = STRBUF_INIT;
+>>
+>>       if (snprintf(ref, sizeof(ref),
+>>                    "refs/replace/%s",
+>> @@ -156,11 +157,12 @@ static int replace_object_sha1(const char *object_ref,
+>>       else if (!force)
+>>               die("replace ref '%s' already exists", ref);
+>>
+>> -     lock = lock_any_ref_for_update(ref, prev, 0, NULL);
+>> -     if (!lock)
+>> -             die("%s: cannot lock the ref", ref);
+>> -     if (write_ref_sha1(lock, repl, NULL) < 0)
+>> -             die("%s: cannot update the ref", ref);
+>> +     transaction = ref_transaction_begin();
+>> +     if (!transaction ||
+>> +         ref_transaction_update(transaction, ref, repl, prev,
+>> +                                0, !is_null_sha1(prev), &err) ||
+>> +         ref_transaction_commit(transaction, NULL, &err))
+>> +             die("%s", err.buf);
 >
-> I add an err argument in the next series. I would prefer we let that
-> patch remain in the next series to
-> avoid unbounded growth of the current one.
->
-> Ok ?
->
->
+> Same here: err can be empty if ref_transaction_begin() fails.  Please
+> check later patches for the same error.
 >
 >>
->> It's kindof late for this question to pop into my head, but: have you
->> thought about embedding the err strbuf in the transaction object?  I
->> admit it would make the problem with ref_transaction_begin() even worse,
->> but maybe it would be a net win in terms of boilerplate?
->
-> I think it is more flexible to allow the caller to manage the lifetime
-> of the error buffer independently of the transaction.
-> It would allow a caller to free the transaction early but delay
-> printing the error message until later.
->
-> Or it could be used for a multi transaction caller to use a single err
-> buffer for all transactions and finally print
-> all errors in a single error() call at the end.
->
-> struct strbuf err = STRBUF_INIT;
-> ... first transaction (... &err)...
-> ... second transaction (... &err)...
-> ... third transaction (... &err)...
-> error("%s", err.buf);
->
->
->
-> Similar to how rsync handles errors:
-> sahlberg@sahlberg1:~$ mkdir foo
-> sahlberg@sahlberg1:~$ touch foo/foo.1
-> sahlberg@sahlberg1:~$ touch foo/foo.2
-> sahlberg@sahlberg1:~$ mkdir bar
-> sahlberg@sahlberg1:~$ chmod 0500 bar
-> sahlberg@sahlberg1:~$ rsync -Pav foo/* bar
-> sending incremental file list
-> foo.1
->            0 100%    0.00kB/s    0:00:00 (xfer#1, to-check=1/2)
-> foo.2
->            0 100%    0.00kB/s    0:00:00 (xfer#2, to-check=0/2)
-> rsync: mkstemp "/usr/local/google/home/sahlberg/bar/.foo.1.K7dFIP"
-> failed: Permission denied (13)
-> rsync: mkstemp "/usr/local/google/home/sahlberg/bar/.foo.2.4WdRsW"
-> failed: Permission denied (13)
->
-> sent 136 bytes  received 50 bytes  372.00 bytes/sec
-> total size is 0  speedup is 0.00
-> rsync error: some files/attrs were not transferred (see previous
-> errors) (code 23) at main.c(1070) [sender=3.0.9]
->
->
->
+>>       return 0;
+>>  }
 >>
->>>       if (force && !is_null_sha1(prev) && hashcmp(prev, object))
->>>               printf(_("Updated tag '%s' (was %s)\n"), tag, find_unique_abbrev(prev, DEFAULT_ABBREV));
->>>
->>>
->>
->>
->> --
->> Michael Haggerty
->> mhagger@alum.mit.edu
->> http://softwareswirl.blogspot.com/
+>
+>
+> --
+> Michael Haggerty
+> mhagger@alum.mit.edu
+> http://softwareswirl.blogspot.com/
