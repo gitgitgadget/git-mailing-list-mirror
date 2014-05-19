@@ -1,135 +1,178 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
 Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Mon, 19 May 2014 14:31:00 -0700
-Message-ID: <xmqqha4lwj57.fsf@gitster.dls.corp.google.com>
+Date: Mon, 19 May 2014 16:21:36 -0500
+Message-ID: <537a75e0a53b7_afee5d300f3@nysa.notmuch>
 References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
-	<20140516084126.GB21468@sigill.intra.peff.net>
-	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
-	<537693aee4fdd_3e4812032fcc@nysa.notmuch>
-	<xmqq7g5i4r48.fsf@gitster.dls.corp.google.com>
-	<53795c3e58f73_10da88d30829@nysa.notmuch>
+ <20140516084126.GB21468@sigill.intra.peff.net>
+ <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
+ <20140516225228.GA3988@sigill.intra.peff.net>
+ <5376f2ca5c90d_65b915db2f877@nysa.notmuch>
+ <20140517062413.GA13003@sigill.intra.peff.net>
+ <xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
+ <53795ef8e4023_10da88d30825@nysa.notmuch>
+ <xmqqppja2t8a.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
 Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon May 19 23:31:14 2014
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon May 19 23:32:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmV9M-0005rV-Hy
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 23:31:12 +0200
+	id 1WmVAy-0000Ug-Ds
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 23:32:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbaESVbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2014 17:31:08 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53156 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750712AbaESVbG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 17:31:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 202F719E4C;
-	Mon, 19 May 2014 17:31:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=LO+NJ3VqYZZ/CwTKGq5iHe3pCh8=; b=eWheL4INc5SOdBXPlNLx
-	71H+IlDmz4NjE42Q2Kxq9cy0RQNhUKRIX7pzmk0GlesxXM6Qs7hs1W7/WBCEah3Z
-	bYm6lCNknUt3hzmxTuwtHushBBLgF9tskTgrDbJNCYdMUjS9pUa+OPiGtkqO34Pm
-	cE/ghNqfxO60Z/ZzyIM2GPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=Hqd8YacCtoQ/7oxLaWiSzDdEon5+zJET/RrehavvBcPgZl
-	c+fKzJufmySqYIlHfb0tETEKtG9GtUiAFK3MGaoEyRHtAMAKzKhkS3yc4jBQ3Tkm
-	1+Czf+h73Zr1tWW/tmP7aFgWKtwjwtlQnp3CyGU/B2+gYcIXIGDuiXPwVFFoY=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 169B419E4B;
-	Mon, 19 May 2014 17:31:06 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D455D19E47;
-	Mon, 19 May 2014 17:31:01 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E017DB3E-DF9C-11E3-98E9-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750789AbaESVct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2014 17:32:49 -0400
+Received: from mail-ob0-f172.google.com ([209.85.214.172]:49507 "EHLO
+	mail-ob0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbaESVcr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2014 17:32:47 -0400
+Received: by mail-ob0-f172.google.com with SMTP id wp18so6858630obc.17
+        for <git@vger.kernel.org>; Mon, 19 May 2014 14:32:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=R8bOdVkY840ygVMRBYTyTUKzi43ZLKzsBsGd9upprEo=;
+        b=pE8o06hj0Op//JhZHJa+nxNl/rGTRltYSKfypVNfosYQUmF3EZvvN2+y2DpwOHvIP+
+         C2i9oAd8wKKIJHFTJt6GJutLvMPygjW/KDmPaifPh3xpFi6NjKVDVD2++vBOFlfRMTZG
+         msRIS16+9mHgR3ia1Ug0vgoBXDwBS6LObvIHod6KksT9e2EmyMwWZbneiiiTgoTod3cG
+         S2oRLor0toGQONaAu2CAA1iSLhYC9vNOx2OE3ZicMCgVB+/kwmkWrrnqbpOmMu7p4IRe
+         J7T02arZAWdLlsavJ+9HfzTRIklvN9o/f2qjuzs5KZt8p8mxtibi4z7/US2pdpBuB8/p
+         LH+w==
+X-Received: by 10.60.47.111 with SMTP id c15mr6038300oen.80.1400535166887;
+        Mon, 19 May 2014 14:32:46 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id fm8sm41263222oeb.10.2014.05.19.14.32.45
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 May 2014 14:32:46 -0700 (PDT)
+In-Reply-To: <xmqqppja2t8a.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249625>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Junio C Hamano wrote:
+> >
+> >>  - The "always warn" does not force update at the point of use, but
+> >>    it still does not help them to notice well before they try to use
+> >>    it for the first time after update;
+> >
+> > I don't understand this sentence. They will see a big fat warning every
+> > time they run the tool, of course they'll notice.
+> 
+> Let me ask one question first, in order to avoid miscommunication,
+> as I really want to get the first step for v2.0-rc4 in a concrete
+> shape tomorrow.  Do you think gradual transition worth pursuing or
+> do you think it is a waste of time?
 
-> Junio C Hamano wrote:
->> 
->> After looking at the reverse-depends list of packages, my faith is
->> strengthened in that the Git ecosystem is truly maturing and useful
->> third-party plug-ins will be picked up by distro packagers.
->
-> Where is git-imerge packaged?
+If by "gradual transition" you mean place the contrib/remote-helpers in
+another directory before removing the code, I do think it's a waste of
+time, but I don't really care, as long as eventually stubs are put in
+place.
 
-I didn't see it on the archive the said Ubuntu box slurps from, but
-I did not check all the other distros.
+> I do not think it matters that much, but since you said you do not
+> understand...
+> 
+> What I meant was that when they update their Git (perhaps at the
+> beginning of the week), the won't know they will now be running
+> stale code.  The warning comes only when they first run it (perhaps
+> at the end of the week) to do some real work with a remote hg
+> repository, which may not be a convenient time to do their sysadmin
+> task.  And the next time when they update their Git, they may have
+> already forgotten about the warning.  The ideal transition would be
+> to somehow let them notice when they are in sysadmin mode.
 
-Michael, do you know what distro folks are doing with imerge?  For
-the purpose of this thread, "I do not follow distros, and I do not
-know" is a perfectly acceptable answer, but it would be very
-relevant if your answer is "I suggested these distros to include it,
-but so far they have been uncooperative and I haven't had much
-success".
+You can add such change in the release notes. Other than that I don't
+see what we could do.
 
-> Do you want to bet? Nah, you don't *ever* want to accept you were wrong,
-> even you clearly where.
-> ...
-> This is what's going to happen: there won't be an official git-hg
-> package for *years*, if there is ever one. That is my prediction based
-> on all the available evidence, I am willing to stand by it and accept I
-> was wrong if it proves otherwise.
->
-> Are you willing to stand by your own decisions?
+> >>  - "Break the build" attempts to help them notice when they try to
+> >>    update, not when they need to use the updated one right at this
+> >>    moment.
+> >
+> > This cannot be done.
+> 
+> Renaming the directory will not "break at the build time" for those
+> who have already did "ln -s" these scripts, of course, but it will
+> "break at the build time" for others (i.e. those who "cp"), no?
 
-If I understand correctly, you have made and you do maintain some
-packages and as an insider, you do not have to wait for "an
-outsider" to step up to make remote-{hg,bzr} packages yourself.  You
-may already have done so for your own use and told other people
-about them, and others may have chosen to wait for you to push them
-to distros instead of championing these tools by packaging them
-themselves.
+How many people copy the scripts every time they update Git? Not many
+I'd gather.
 
-When you have such an influence on the outcome either way of your
-choice, I do not see much value in such a bet.
+> > They click that URL, and the are immediately greated with this:
+> >
+> >   To enable this, simply add the git-remote-hg script anywhere in your $PATH:
+> >
+> >     wget https://raw.github.com/felipec/git-remote-hg/master/git-remote-hg -O ~/bin/git-remote-hg
+> >     chmod +x ~/bin/git-remote-hg
+> 
+> Perfect.  I did check the page when double-checking the URL while
+> writing the README thing, and I did skim the page, but I must have
+> missed it.
+> 
+> We could add these two to the warning, then, to discourage people
+> who see "please visit this URL" and say "Yuck, I have no time for
+> that" without actually visiting.
 
-I do know enough to agree with you that there may be no committee,
-packagers may scratch their own itches, and a program that is not
-very useful for the packagers, especially the ones useful only for
-non-technical niche audiences, may fall through the cracks.
+We could. Personally I don't see the point of making the warning any
+more annoying. The instructiosn are just one click away, and if they
+have no time for that, they can just ignore the warning.
 
-But I actually think that "we package what we want to use" is a good
-thing for programs whose primary audience is the software developer
-types.  The packagers are part of their audiences [*1*].  Because of
-that, even if remote-{hg,bzr} do not get packaged for a long time, I
-doubt that it tells us what you are stipulating.  The only thing we
-can infer would be that these programs did not interest the software
-developer types to motivate them enough, and we wouldn't know why
-they found the programs uninteresting.  It may be because those who
-have history in Hg prefer to interact with remote Git repositories
-by pushing into and fetching from them using Hg tools than using Git
-tools.  It would not indicate "useful tools fall through the cracks"
-if it were the case, would it?
+> >> So to summarize, the following timeline is a full possibility:
+> >> ...
+> >>   2. add warning that is given every time the scripts are run and
+> >>      give the same instruction as in README.
+> >> 
+> >>   3. (optional) cripple the script to make them always fail after
+> >>      showing the same warning as above.
+> >
+> > This is what I want, and I already sent the patches for; the scripts
+> > will be stubs. At this point you would have effectively removed the
+> > code, which what I want.
+> 
+> I think explained why the step 3 would not help very much compared
+> to the "there is no script, only README remains" endgame (and that
+> is why it is marked as "optional").  Actually, you reminded me that
+> a very short and easy-to-follow instruction is on the page referred
+> to from README and the warnings, which means that this step would
+> make even less difference compared to the endgame.
+> 
+> I don't think I saw you explain why that is not the case and why we
+> do want this step (and I cannot quite tell if you are aiming for
+> more gradual transition that wants this step, or an expedited one
+> that does not).  I am fine with either way.
 
-Indeed I saw bzr-git that came from the Bazaar land packaged on the
-box I mentioned, and its description sounded like it is meant to
-work in such a way that allows Bazaar commits to be pushed to Git
-repositories using a bzr tool.
+To me the endgame is that the code is removed, and only stubs remain.
+What you do after that is up to you.
 
-By the way, I also saw git-mediawiki packaged from contrib/ in our
-tree.  I found it not very credible to say "contrib/ is treated as a
-single ball of wax without much value by packagers, and we need to
-move the helpers up to core in order for them to be used more
-widely" after seeing that.
+> In any case, I'd ask another question to avoid wasting time on
+> miscommunication.  By "This is what I want", do you mean you want
+> this step 3 also in v2.0, or do you mean you want 2 alone in v2.0
+> then step 3 some time later?
 
+I meant I want 3. eventually, hopefully for v2.1.
 
-[Footnotes]
+> You said your "wish" wasn't "respected" in another message, when I
+> explained that I thought you did not want to disrupt v2.0 by
+> insisting on removing these scripts and that was why I listed
+> options that did not involve removal of the scripts.  Are you saying
+> that you wish you want to see them removed or crippled at v2.0?
+> Changing your mind after discussion is perfectly fine, by the way.
 
-*1* I saw you called them "wolves" at least twice recently---where
-    does such a distrust come from?
+You did not specify those were only for v2.0.
+
+No, I don't want them crippled for v2.0. A warning should suffice.
+
+-- 
+Felipe Contreras
