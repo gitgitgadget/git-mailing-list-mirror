@@ -1,112 +1,227 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Mon, 19 May 2014 12:01:08 -0700
-Message-ID: <xmqqegzp1tl7.fsf@gitster.dls.corp.google.com>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
-	<20140516084126.GB21468@sigill.intra.peff.net>
-	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
-	<20140516225228.GA3988@sigill.intra.peff.net>
-	<5376f2ca5c90d_65b915db2f877@nysa.notmuch>
-	<20140517062413.GA13003@sigill.intra.peff.net>
-	<xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
-	<53795ef8e4023_10da88d30825@nysa.notmuch>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v10 25/44] receive-pack.c: use a reference transaction for
+ updating the refs
+Date: Mon, 19 May 2014 12:02:56 -0700
+Message-ID: <CAL=YDWmLgW0b28q5Yqw7R4nobKF5=pcbSpnazC8+EA=QKhkpow@mail.gmail.com>
+References: <1400261852-31303-1-git-send-email-sahlberg@google.com>
+	<1400261852-31303-26-git-send-email-sahlberg@google.com>
+	<537781CA.1010208@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon May 19 21:01:25 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon May 19 21:03:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmSoN-0001LE-Po
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 21:01:24 +0200
+	id 1WmSpz-0004Kz-DT
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 21:03:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932521AbaESTBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2014 15:01:18 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54344 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932455AbaESTBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 15:01:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C2E63175BD;
-	Mon, 19 May 2014 15:01:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=DkRWqWVs57ocaiqM1e3RWHK7Sxo=; b=Of9Yg1
-	n51Jmop51AopqMWL6HqSxkThZGfg56Blv2R2h7v9RITJSEYWFcH2GIh7HihU+i9E
-	7dBXiobyI0jrXRdXPqvYesFD9TIQt50jXM3KMjeu3Dqbm04XZqK3uIBxyCya6k2M
-	2HgTqbGX4YoXW1Nk+Xupsr1pSDSyc80FHhHOA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QZGQCKEk9I2PbyadM5z+wpK1ynlFp0Fj
-	tp5NzM8JuhQo0gHx3LPTTBE/dl5EJPrfQi0Y0XeW+sskqZX+DA2rekzBJwnaj9mm
-	BnV1Fv0prICjpTKu0OJEl4KK8TRV/W7A7ihFNzo6LIhh7QvW+qk4Dp28FH+KYFkq
-	S8AyaqXGcPA=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AAEB3175BC;
-	Mon, 19 May 2014 15:01:14 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 32F46175AD;
-	Mon, 19 May 2014 15:01:10 -0400 (EDT)
-In-Reply-To: <53795ef8e4023_10da88d30825@nysa.notmuch> (Felipe Contreras's
-	message of "Sun, 18 May 2014 20:31:36 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F0A56E4A-DF87-11E3-B059-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+	id S932522AbaESTC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2014 15:02:59 -0400
+Received: from mail-vc0-f172.google.com ([209.85.220.172]:62830 "EHLO
+	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751254AbaESTC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2014 15:02:58 -0400
+Received: by mail-vc0-f172.google.com with SMTP id hr9so10097810vcb.17
+        for <git@vger.kernel.org>; Mon, 19 May 2014 12:02:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=qHmpxThdwVxDkBAKhxH+zsoiLCDGg6HW3jiNRLxJXLk=;
+        b=OdI8td9VewKve0O6JWSr9vFY4nTtpjoD4HoKizvw+ND4wtstiaUGHBDS4ssdSKIlxr
+         mTiv9Eb2dkPoDGndNwrz+yMV0SwxOrAymDUzaJsbIJpWd550J1g5gt87ooOpsj82l+4Q
+         XILAKXArqPAOBfJxC/O0rSf1oM6aucOH/j63yCRCQTgsOV0DuK6Gc3QXSc3cOk+f287K
+         jx5uoAM69KEh3sW08fV/eQeWg3sbfNUal9qkZqtLvTcOhAIf7eF+rd2NYmUAn8UDXvld
+         c4//toO2RcgQ5s+rAEVNGXFMy+ZMSt6LwKWdqtjkS6clkL3bSor39zZNekBZUEvUFiJW
+         aEVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=qHmpxThdwVxDkBAKhxH+zsoiLCDGg6HW3jiNRLxJXLk=;
+        b=Yl6VDrXaAjQOXjuTdwZJjUr33FmbXeZKSy/6xFYMSg+uAgz+q2K2iJ0HAY/+z8qyQy
+         5vMljgVotCPpdJv9iGKKEsTmIP6oBsy8lKJYe7jB5ApASXb+ARv3FRyrfY0TPasodDS6
+         xaaMMk1Ij2UAbfvLKjOAvQ+FYUz/1iFFm8mG3Hn3T6MsGI4svLIaKdxc6T53dxW4M9ww
+         7WwrU71nZYuKN8QWC/b8c1CGWPbtnVUX3X+EfDFLWpiXCi/6sLkozoVBI0vb4lUneMzP
+         o73c5H46DBpu6kTM1XDyhu3bGH1sh57sHqOQXV4vXqPUo7uqJzvoRILwMo7xydyjKXz5
+         k/AA==
+X-Gm-Message-State: ALoCoQnNuiaIchNKWhV1HegJ4O9xwKmiGhVeO5783X7Hi1ViVc+74gabMRnts7UU7zZ1sP/8ZXLc
+X-Received: by 10.220.205.3 with SMTP id fo3mr1881566vcb.57.1400526176993;
+ Mon, 19 May 2014 12:02:56 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Mon, 19 May 2014 12:02:56 -0700 (PDT)
+In-Reply-To: <537781CA.1010208@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249612>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> Junio C Hamano wrote:
+On Sat, May 17, 2014 at 8:35 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 05/16/2014 07:37 PM, Ronnie Sahlberg wrote:
+>> Wrap all the ref updates inside a transaction to make the update atomic.
+>>
+>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>> ---
+>>  builtin/receive-pack.c | 20 ++++++++++----------
+>>  1 file changed, 10 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+>> index c323081..5534138 100644
+>> --- a/builtin/receive-pack.c
+>> +++ b/builtin/receive-pack.c
+>> @@ -46,6 +46,8 @@ static void *head_name_to_free;
+>>  static int sent_capabilities;
+>>  static int shallow_update;
+>>  static const char *alt_shallow_file;
+>> +static struct strbuf err = STRBUF_INIT;
+>> +static struct ref_transaction *transaction;
+>>
+>>  static enum deny_action parse_deny_action(const char *var, const char *value)
+>>  {
+>> @@ -475,7 +477,6 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+>>       const char *namespaced_name;
+>>       unsigned char *old_sha1 = cmd->old_sha1;
+>>       unsigned char *new_sha1 = cmd->new_sha1;
+>> -     struct ref_lock *lock;
+>>
+>>       /* only refs/... are allowed */
+>>       if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
+>> @@ -580,15 +581,9 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+>>                   update_shallow_ref(cmd, si))
+>>                       return "shallow error";
+>>
+>> -             lock = lock_any_ref_for_update(namespaced_name, old_sha1,
+>> -                                            0, NULL);
+>> -             if (!lock) {
+>> -                     rp_error("failed to lock %s", name);
+>> -                     return "failed to lock";
+>> -             }
+>> -             if (write_ref_sha1(lock, new_sha1, "push")) {
+>> -                     return "failed to write"; /* error() already called */
+>> -             }
+>> +             if (ref_transaction_update(transaction, namespaced_name,
+>> +                                        new_sha1, old_sha1, 0, 1, &err))
+>> +                     return "failed to update";
+>>               return NULL; /* good */
+>>       }
+>>  }
+>> @@ -812,6 +807,7 @@ static void execute_commands(struct command *commands,
+>>       head_name = head_name_to_free = resolve_refdup("HEAD", sha1, 0, NULL);
+>>
+>>       checked_connectivity = 1;
+>> +     transaction = ref_transaction_begin();
+>>       for (cmd = commands; cmd; cmd = cmd->next) {
+>>               if (cmd->error_string)
+>>                       continue;
+>> @@ -827,6 +823,10 @@ static void execute_commands(struct command *commands,
+>>                       checked_connectivity = 0;
+>>               }
+>>       }
+>> +     if (ref_transaction_commit(transaction, "push", &err))
+>> +             error("%s", err.buf);
+>> +     ref_transaction_free(transaction);
+>> +     strbuf_release(&err);
+>>
+>>       if (shallow_update && !checked_connectivity)
+>>               error("BUG: run 'git fsck' for safety.\n"
+>>
 >
->>   2. add warning that is given every time the scripts are run and
->>      give the same instruction as in README.
->> 
->>   3. (optional) cripple the script to make them always fail after
->>      showing the same warning as above.
+> This patch is strange, because even if one ref_transaction_update() call
+> fails, subsequent updates are nevertheless also attempted, and the
+> ref_transaction_commit() is also attempted.  Is this an officially
+> sanctioned use of the ref_transactions API?  Should it be?
+
+I think it should be supported. Because otherwise, unless you have the
+entire transaction localized in a single block you would end up having
+to check and recheck the return value everywhere.
+
+It makes the API much easier to use if you can continue calling
+transaction functions even after the transaction has failed. If the
+transaction has already failed then _update/_create/_delete will do
+nothing except return an error.
+
+If _commit is called on a failed transaction then the commit will fail
+with an error
+and do nothing.
+
+
+I think it is convenient, and it allows things like :
+
+struct ref_transaction *transaction;
+void foo()
+{
+   ...
+   ref_transaction_update(transaction, ... , &err);
+   ...
+}
+
+
+transaction = ref_transaction_begin(&err);
+... doing stuff and call things that eventually ends up calling foo,
+possible multiple times ...
+ret = ref_transaction_commit(transaction, &err);
+
+
+In foo() we ignore checking the return value so we will not see/care
+if it failed. IF it fails however it will mark the transaction as
+failed and update &err. (Note that this can not yet happen since
+_update can not really fail, ever, but the next series will introduce
+_update failures when we move locking there.)
+
+Instead we can depend on that IF _update failed, then the call to
+_commit will fail too and &err is already updated so we can defer any
+checking for errors until _commit time.
+
+This will make the API much more convenient for use cases where you
+begin/commit the transaction in one function but the calls to
+_update/_delete/_create are somewhere else, possible many function
+calls away.
+It does not mean that a caller must ignore the return value from
+ref_transaction_update, just that the caller can do so and defer
+checking for errors until later when it would be more convenient.
+
+
+Please see current:
+https://github.com/rsahlberg/git/tree/ref-transactions
+and patch:
+refs.c: add transaction.status and track OPEN/CLOSED/ERROR
+
+
+  It might be
+> a way to give feedback to the user on multiple attempted reference
+> updates at once (i.e., address my comment about the last patch).
 >
-> This is what I want, and I already sent the patches for; the scripts
-> will be stubs. At this point you would have effectively removed the
-> code, which what I want.
->  
->>   4. Keep README and retire everything else.
+> If this is sanctioned, then it might be appropriate for the transaction
+> to keep track of the fact that one or more reference updates failed, and
+> when *_commit() is called to fail the whole transaction.
+
+Yes. I updated refs.h to indicate that you can continue using
+_update/_create/_delete even if a previous call has failed but that
+these calls will now just return an error.
+
+This does mean that on the first update that fails for a ref we fail
+the transaction and abort any further _update calls to fail
+immediately so if there would be additional refs that would fail we
+would not log this. I think this is what we want to do since once we
+have had a ref update fail it would be really hard to determine if the
+next failure was just a side effect of the first failure or not.
+
+
 >
-> After you've removed the code, I don't care what you do, but I'd say you
-> should remove the stubs after a long period of time.
-
-Let's try this in a different way, as I sense there is a
-misunderstanding somewhere about your "wish".
-
->> "that" does not refer to "remove them at v2.0 (unconditional)".  It
->> refers to "If Felipe really wants for the removal for v2.0, I would
->> respect that".  And I saw you said you did not want to disrupt v2.0.
->> 
->> If the options I listed all meant removal at v2.0, then I would
->> understand your complaints, but that is not the case, so I am not
->> sure what to make of that.
+> In any case, I think it is important to document, as part of the API
+> docs, whether this is sanctioned or not, and if so, what exactly are its
+> semantics.
 >
-> It is a weird choice of semantics then. You said you would "respect" my
-> wish, but your proposals did not "follow" my wish.
-
-I understand you do not want to disrupt v2.0.  My assumption of that
-"not disrupting v2.0" has been "there still are git-remote-{hg,bzr}
-that work just like what they had in v1.9.x, perhaps with some
-enhancements and regressions you added in the meantime", and I
-understood Peff's comment "If Felipe wants the removal" to mean that
-kind of "disruption", i.e. "there is no git-remote-{hg,bzr} that
-work.", which would be either step 3 or 4.
-
-But your "After you've removed the code" comment above makes me
-wonder that perhaps your definition of "not disrupting" was
-different from ours (which is not good or bad, just different) and
-you consider that step 3. is "removal but not distupting v2.0"?
-
-If that is what you want in v2.0, then please say so, and I already
-said I am fine with that.
+> I've run out of time for today so I'm going to have to stop here.  FWIW
+> patches 01-23 looked OK aside from the comments that I have made.
+>
+> Michael
+>
+> --
+> Michael Haggerty
+> mhagger@alum.mit.edu
+> http://softwareswirl.blogspot.com/
