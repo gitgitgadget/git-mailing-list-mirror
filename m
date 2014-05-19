@@ -1,144 +1,166 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Re: [PATCH v2] config: preserve config file permissions
- on edits
-Date: Mon, 19 May 2014 09:44:38 +0200
-Message-ID: <CABPQNSZMExeXXMEUNE9HneK1rfXeLoK=vHZkm38xKt_2VctjXQ@mail.gmail.com>
-References: <20140505215853.GA23299@dcvr.yhbt.net> <20140506001714.GA29049@dcvr.yhbt.net>
- <5379AF29.4000508@viscovery.net>
-Reply-To: kusmabite@gmail.com
+From: Bryan Turner <bturner@atlassian.com>
+Subject: Re: Returning error message from custom smart http server
+Date: Mon, 19 May 2014 18:12:10 +1000
+Message-ID: <CAGyf7-EoSgTxZzReFArOgcrBaARv7fRiZTMPZX+Loy9dec23aQ@mail.gmail.com>
+References: <5371CC4F.80602@intland.com>
+	<20140516230116.GC180798@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Eric Wong <normalperson@yhbt.net>, Junio C Hamano <gitster@pobox.com>, 
-	GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: msysgit+bncBDR53PPJ7YHRBDXN42NQKGQEEHEE5BA@googlegroups.com Mon May 19 09:45:21 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRBDXN42NQKGQEEHEE5BA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pa0-f56.google.com ([209.85.220.56])
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?w4Frb3MsIFRhanRp?= <akos.tajti@intland.com>,
+	Git Users <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon May 19 10:12:48 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRBDXN42NQKGQEEHEE5BA@googlegroups.com>)
-	id 1WmIG8-0005kO-Fu
-	for gcvm-msysgit@m.gmane.org; Mon, 19 May 2014 09:45:20 +0200
-Received: by mail-pa0-f56.google.com with SMTP id fb1sf1531538pad.1
-        for <gcvm-msysgit@m.gmane.org>; Mon, 19 May 2014 00:45:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=Api0Nr3vM5fumLWakrxoQEk2jxxpJ0yCsbLn20MHXwg=;
-        b=ErJJ9BTvuVWYef+h16S/dXkieBM7g0GtxGQBxsMokZvsZUosG1BcH8WbYLSJuupl1w
-         iZhqcLNMgKTLHfmep9oy0NKdqozddGKHnG/2aCsNPlKUNNeafrParY5dktxiK9Tzuwo/
-         S2mNm4/aRpnca2qosIOs/Se4iQN/W8iOEyYMTitrykvx8BEdsjMzGwvEC49a2KQAX1iO
-         Zj50z8dAKm/S9QOHiBasXBR0NiiYyqfvWm3fMeLrWwlypVzjxDdYUCDgwM7T3ZjrXnnp
-         x+9sWdZ068eX8EZvAzEowiFlMvwI2SeaFnJYWPIdAbas0MBp1gTz+WBnAHXYsQjpG4fe
-         Vw4A==
-X-Received: by 10.50.137.67 with SMTP id qg3mr32433igb.2.1400485519148;
-        Mon, 19 May 2014 00:45:19 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.36.65 with SMTP id o1ls1632741igj.33.gmail; Mon, 19 May
- 2014 00:45:18 -0700 (PDT)
-X-Received: by 10.42.187.198 with SMTP id cx6mr13274537icb.8.1400485518314;
-        Mon, 19 May 2014 00:45:18 -0700 (PDT)
-Received: from mail-ig0-x229.google.com (mail-ig0-x229.google.com [2607:f8b0:4001:c05::229])
-        by gmr-mx.google.com with ESMTPS id 6si559793igs.1.2014.05.19.00.45.18
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 19 May 2014 00:45:18 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::229 as permitted sender) client-ip=2607:f8b0:4001:c05::229;
-Received: by mail-ig0-f169.google.com with SMTP id hl10so3915830igb.0
-        for <msysgit@googlegroups.com>; Mon, 19 May 2014 00:45:18 -0700 (PDT)
-X-Received: by 10.42.204.197 with SMTP id fn5mr51026icb.95.1400485518195; Mon,
- 19 May 2014 00:45:18 -0700 (PDT)
-Received: by 10.64.166.135 with HTTP; Mon, 19 May 2014 00:44:38 -0700 (PDT)
-In-Reply-To: <5379AF29.4000508@viscovery.net>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c05::229
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249564>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WmIge-0008Pd-Gx
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 10:12:45 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753102AbaESIMj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 May 2014 04:12:39 -0400
+Received: from na3sys009aog111.obsmtp.com ([74.125.149.205]:40999 "HELO
+	na3sys009aog111.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752757AbaESIML convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2014 04:12:11 -0400
+Received: from mail-ob0-f182.google.com ([209.85.214.182]) (using TLSv1) by na3sys009aob111.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKU3m82vVYACGPnSIP+Ugkfm3DbpixBq1q@postini.com; Mon, 19 May 2014 01:12:11 PDT
+Received: by mail-ob0-f182.google.com with SMTP id wn1so5831823obc.27
+        for <git@vger.kernel.org>; Mon, 19 May 2014 01:12:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type:content-transfer-encoding;
+        bh=ptPjaCj37OPCrndu7Zn2a/f826HuVoHXtbWCUwOonBQ=;
+        b=hugI9sHBbpHSTSPPPuRPfTZgiyHtqK64zf3TFO+3MMvvXvERd54jOZ+p8fn5MGKi9g
+         rlJDH6hdB3j6QJwM7Y3TkZXcIOHMsHuoNunaH3pN+/w3xazqcawzQHPKuvJ34qO0zzbX
+         WfDjL7Au7CbjUPjJ92sjh8OwfoKN3oPbAKdrNSQMMGXZCo0Jt6gYGtBXQ23VKFvlFkne
+         5AsLWRQQaLI647LYfCUuQcwVYYDnGJlgFkNionVQd9eX8kznkLn0mkmW92wZFeQ4H7aB
+         EmzPkoTFN4SvLc4/ZQ8u7+A7eHVXPZgXHzLBHe86foebqcS1A9vkdGYC/U1eKe6x3FIy
+         TtSQ==
+X-Gm-Message-State: ALoCoQm4AoYoU5tEgPUGP2jFJqOyRPrlTI0Qjp2ahd07wtz2fdlDJYor/Awe43Hpth2WPjTDK/lZUzZd0txDIIvGDgWfYq+uX6mXO5voNwWWQ+ETMtt0SExzD9zLb08y/I29BInnRrZ0
+X-Received: by 10.60.118.4 with SMTP id ki4mr4183460oeb.10.1400487130651;
+        Mon, 19 May 2014 01:12:10 -0700 (PDT)
+X-Received: by 10.60.118.4 with SMTP id ki4mr4183451oeb.10.1400487130520; Mon,
+ 19 May 2014 01:12:10 -0700 (PDT)
+Received: by 10.182.114.196 with HTTP; Mon, 19 May 2014 01:12:10 -0700 (PDT)
+In-Reply-To: <20140516230116.GC180798@vauxhall.crustytoothpaste.net>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249565>
 
-On Mon, May 19, 2014 at 9:13 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 5/6/2014 2:17, schrieb Eric Wong:
->> Users may already store sensitive data such as imap.pass in
->> ..git/config; making the file world-readable when "git config"
->> is called to edit means their password would be compromised
->> on a shared system.
+On Sat, May 17, 2014 at 9:01 AM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Tue, May 13, 2014 at 09:39:59AM +0200, "=C3=81kos, Tajti" wrote:
+>> Dear List,
 >>
->> [v2: updated for section renames, as noted by Junio]
+>> we implemented our own git smart http server to be able to check per=
+missions
+>> and other thing before pushes. It works fine, however, the error mes=
+sages we
+>> generate on the server side are not displayed by the command line cl=
+ient. On
+>> the server we generate error messages like this:
 >>
->> Signed-off-by: Eric Wong <normalperson@yhbt.net>
->> ---
->>  config.c               | 16 ++++++++++++++++
->>  t/t1300-repo-config.sh | 10 ++++++++++
->>  2 files changed, 26 insertions(+)
+>>         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+>>         response.getWriter().write(msg);
 >>
->> diff --git a/config.c b/config.c
->> index a30cb5c..c227aa8 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -1636,6 +1636,13 @@ int git_config_set_multivar_in_file(const char *config_filename,
->>                       MAP_PRIVATE, in_fd, 0);
->>               close(in_fd);
+>> On the command line we get this:
 >>
->> +             if (fchmod(fd, st.st_mode & 07777) < 0) {
->> +                     error("fchmod on %s failed: %s",
->> +                             lock->filename, strerror(errno));
->> +                     ret = CONFIG_NO_WRITE;
->> +                     goto out_free;
->> +             }
+>> Total 0 (delta 0), reused 0 (delta 0)
+>> POST git-receive-pack (290 bytes)
+>> efrror: RPC failed; result=3D22, HTTP code =3D 401
+>> atal: The remote end hung up unexpectedly
+>> fatal: The remote end hung up unexpectedly
+>>
+>> The server message is completely missing. Is there a solution for th=
+is?
+
+You should not need a patched git; the wire protocol itself has a
+mechanism for sending "smart" error messages. It's not particularly
+_obvious_, but it's there.
+
+=46or starters, to return an error message, your status must be 200 OK.
+You can't return any other status code or Git will interpret your
+error as some form of _HTTP_ error rather than a _git_ error.
+
+In the smart protocol the client sends a service to the server as a
+query parameter, like "?service=3Dgit-receive-pack". For such a request=
+,
+you need to:
+- Set the content type to "application/x-<service>-advertisement"
+(e.g. "application/x-git-receive-pack-advertisement") (Not all command
+line Git versions require this, but JGit does)
+- Set the status code as 200 OK
+- Write back a payload where the first 4 bytes are the hex-encoded
+length of the text (where "FFFF" is max length for a single packet).
+Note that the 4 bytes for the size are _part_ of that length, so if
+you're writing "Test" the length is 8, not 4
+- After the size, you write "# service=3D<service>" (e.g. "#
+service=3Dgit-receive-pack"; note the space after the #) This is the
+metadata. For an error, you don't really have much to say.
+- After that, an empty packet, which is "0000" (four zeros) This
+separates the metadata from the ref advertisement
+- After that you can write your message, beginning with "ERR " (note
+the trailing space there). The "ERR " tells Git what you're writing
+isn't a ref, it's an error. I'd recommend appending a newline (and add
+1 more to your length for it), because when Git echoes your error
+message it doesn't seem to do that
+
+I'm not sure whether there's a document that describes all of this; I
+found it by digging into the Git source code (you can find the "ERR"
+handling in connect.c, get_remote_heads). This may be exploiting the
+protocol, I'll leave that to someone more knowledgeable on how they
+_intended_ this all to be used, but it works for us.
+
+A full example looks something like this: "0036#
+service=3Dgit-receive-pack0000ERR This is a test\n"
+
+Hope this helps,
+Bryan Turner
+
 >
-> This introduces a severe failure in the Windows port because we do not
-> implement fchmod. Existing fchmod invocations do not check the return
-> value, and they are only interested in removing the write bits, and we
-> generally don't care a lot if files remain writable.
+> It does look that way.  Does the following patch work for you?
 >
-> I'm not proficient enough to add any ACL fiddling to fchmod that would be
-> required by the above change, whose purpose is to be strict about
-> permissions. Nor am I interested (who the heck is sharing a Windows box
-> anyway? ;-)
+> -- >8 --
+> Subject: [PATCH] http: provide server's error message on RPC failure
 >
-> Therefore, here's just a work-around patch to keep things going on
-> Windows. Any opinions from the Windows corner?
+> The server might provide a custom error message that is useful to the=
+ user.
+> Provide this message to the user if HTTP RPC fails.
 >
-
-Since we use MSVCRT's chmod implementation directly which only checks
-for S_IWRITE,and Get/SetFileAttributes to simply set or clear the
-FILE_ATTRIBUTE_READONLY-flag, perhaps we could do the same except
-using Get/SetFileInformationByHandle instead? That takes us in a
-better direction, IMO. Adding full ACL support seems like a bigger
-project.
-
-If there's no objection, I'll sketch up a patch for that...
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  remote-curl.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 52c2d96..5984d35 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -426,8 +426,8 @@ static int run_slot(struct active_request_slot *s=
+lot,
+>         err =3D run_one_slot(slot, results);
+>
+>         if (err !=3D HTTP_OK && err !=3D HTTP_REAUTH) {
+> -               error("RPC failed; result=3D%d, HTTP code =3D %ld",
+> -                     results->curl_result, results->http_code);
+> +               error("RPC failed; result=3D%d, HTTP code =3D %ld (%s=
+)",
+> +                     results->curl_result, results->http_code, curl_=
+errorstr);
+>         }
+>
+>         return err;
+> -- >8 --
+>
+> --
+> brian m. carlson / brian with sandals: Houston, Texas, US
+> +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion o=
+nly
+> OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B=
+187
