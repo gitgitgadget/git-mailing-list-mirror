@@ -1,95 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Mon, 19 May 2014 15:27:47 -0700
-Message-ID: <xmqqzjidv1y4.fsf@gitster.dls.corp.google.com>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
-	<20140516084126.GB21468@sigill.intra.peff.net>
-	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
-	<20140516225228.GA3988@sigill.intra.peff.net>
-	<5376f2ca5c90d_65b915db2f877@nysa.notmuch>
-	<20140517062413.GA13003@sigill.intra.peff.net>
-	<xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
-	<53795ef8e4023_10da88d30825@nysa.notmuch>
-	<xmqqppja2t8a.fsf@gitster.dls.corp.google.com>
-	<537a75e0a53b7_afee5d300f3@nysa.notmuch>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH 3/4] rebase: test ack
+Date: Tue, 20 May 2014 01:40:54 +0300
+Message-ID: <20140519224054.GB29605@redhat.com>
+References: <1400447743-18513-1-git-send-email-mst@redhat.com>
+ <1400447743-18513-4-git-send-email-mst@redhat.com>
+ <xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 00:27:58 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 20 00:42:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmW2H-000069-5q
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 00:27:57 +0200
+	id 1WmWG1-0001n3-4F
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 00:42:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751336AbaESW1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 May 2014 18:27:53 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65418 "EHLO smtp.pobox.com"
+	id S1751991AbaESWmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2014 18:42:04 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:14515 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750937AbaESW1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 18:27:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 140961964E;
-	Mon, 19 May 2014 18:27:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eraeG7z0IUwHMwAtUhd/triQtJ8=; b=B78p4h
-	3CjkL/wypQOtw3n9QQqyg3TJsurw8LczWYmeCT6vtEOr+Xw7xajYnSWJkwg/nvQa
-	D48DseSgYNiIqicpxUEFxXI+VvfEFMjcQwqNsgYTL03qZwp48tClR0Jk9FmQwyTV
-	1SvPnaeWeM7Nf2d1NxzlcBDLi5RLf8rbo2Eio=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kCoa0fIyp6bkuf+gwtRMTyH9Vf/aNOzX
-	GRdrYTFWBBgli0XDP8Im2BrMubDgHwVdQQb9D68BDsIkpcpjK1L69qEXthXjbr85
-	jdds25dEEIB3bN9UAiZEjyy0ZpDwndef36rx4z9qhJjaBL0PVut+8KCLFSR29WM0
-	7I1lCQ1Dh7U=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0A51A1964D;
-	Mon, 19 May 2014 18:27:52 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 20A4719648;
-	Mon, 19 May 2014 18:27:49 -0400 (EDT)
-In-Reply-To: <537a75e0a53b7_afee5d300f3@nysa.notmuch> (Felipe Contreras's
-	message of "Mon, 19 May 2014 16:21:36 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CEFB6822-DFA4-11E3-853B-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750868AbaESWmD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2014 18:42:03 -0400
+Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s4JMg0eX000815
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Mon, 19 May 2014 18:42:00 -0400
+Received: from redhat.com (ovpn-116-32.ams2.redhat.com [10.36.116.32])
+	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with SMTP id s4JMfxoP012221;
+	Mon, 19 May 2014 18:41:59 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249630>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On Mon, May 19, 2014 at 02:34:26PM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > test ack! handling
+> >
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> 
+> Will queue with this squashed in.
 
->> We could add these two to the warning, then, to discourage people
->> who see "please visit this URL" and say "Yuck, I have no time for
->> that" without actually visiting.
->
-> We could. Personally I don't see the point of making the warning any
-> more annoying. The instructiosn are just one click away, and if they
-> have no time for that, they can just ignore the warning.
+Thanks! And sorry about the style issues.
 
-Yes, if they know a short-and-sweet instruction is at the top of the
-page, "just one click away" is a good justification, but the reason
-I suggested to add the instruction to the warning is because the URL
-alone does not tell them that there is a short and easy-to-follow
-instruction is behind it, not giving them enough clue to judge if
-they have time for that or not.
+> 4/4 seems to have some style issues as well, but I didn't look very
+> closely.
 
-> To me the endgame is that the code is removed, and only stubs remain.
-> ...
-> I meant I want 3. eventually, hopefully for v2.1.
-> ...
-> No, I don't want them crippled for v2.0. A warning should suffice.
+I'll try to clean it for the next submission.
+I'll be glad to hear about them as well.
+Thanks!
 
-OK, I think I understand what you want, and I am fine with that
-timeline.
-
-I can start preparing -rc4 now, but it may slip into tomorrow.
-
-Thanks.
+> Thanks.
+> 
+>  t/t3415-rebase-autosquash.sh | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+> index 9d7db13..dcdba6f 100755
+> --- a/t/t3415-rebase-autosquash.sh
+> +++ b/t/t3415-rebase-autosquash.sh
+> @@ -75,18 +75,18 @@ test_expect_success 'auto squash (option)' '
+>  '
+>  
+>  test_expect_success 'auto ack' '
+> -	ack="Acked-by: xyz"
+> -	msg=$(test_write_lines "ack! first commit" "" "$ack")
+> +	ack="Acked-by: xyz" &&
+> +	msg=$(test_write_lines "ack! first commit" "" "$ack") &&
+>  	git reset --hard base &&
+>  	git commit --allow-empty -m "$msg" -- &&
+>  	git tag ack &&
+>  	test_tick &&
+>  	git rebase --autosquash -i HEAD^^^ &&
+>  	git log --oneline >actual &&
+> -	git show -s first-commit | grep -v ^commit > expected-msg &&
+> -	echo "    $ack" >> expected-msg &&
+> -	git show -s HEAD^ | grep -v ^commit > actual-msg &&
+> -	diff actual-msg expected-msg
+> +	git show -s first-commit | grep -v ^commit >expected-msg &&
+> +	echo "    $ack" >>expected-msg &&
+> +	git show -s HEAD^ | grep -v ^commit >actual-msg &&
+> +	test_cmp actual-msg expected-msg
+>  '
+>  
+>  test_expect_success 'auto squash (config)' '
