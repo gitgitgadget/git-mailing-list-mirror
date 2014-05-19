@@ -1,136 +1,153 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/4] git-rebase: document ack
-Date: Sun, 18 May 2014 19:43:45 -0400
-Message-ID: <CAPig+cT0evq73-O9Ns5YXjp7Yg-FdX7FehDzW9fOz_Wqp2chUQ@mail.gmail.com>
-References: <1400447743-18513-1-git-send-email-mst@redhat.com>
-	<1400447743-18513-3-git-send-email-mst@redhat.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: [ANNOUNCE] git reintegrate v0.3; manager of integration branches
+Date: Sun, 18 May 2014 19:33:57 -0500
+Message-ID: <53795175664d5_10da88d308ce@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Mon May 19 01:43:51 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 19 02:45:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmAkB-0003KK-D9
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 01:43:51 +0200
+	id 1WmBhY-0007bJ-02
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 02:45:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752195AbaERXnq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2014 19:43:46 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:37481 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752150AbaERXnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 May 2014 19:43:46 -0400
-Received: by mail-yk0-f170.google.com with SMTP id 10so3975542ykt.29
-        for <git@vger.kernel.org>; Sun, 18 May 2014 16:43:45 -0700 (PDT)
+	id S1752269AbaESApF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2014 20:45:05 -0400
+Received: from mail-oa0-f53.google.com ([209.85.219.53]:38518 "EHLO
+	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752152AbaESApD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2014 20:45:03 -0400
+Received: by mail-oa0-f53.google.com with SMTP id m1so5510386oag.12
+        for <git@vger.kernel.org>; Sun, 18 May 2014 17:45:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=zSfJyMWo3QYsztmD1Um8JNY+zFfZMWNaUbyy4crA3hE=;
-        b=yQNOsihleITm9B1vPpC38bChpFrzR8mDYpwwnWLMPT6ZuND8x3f5MVeKCAAYSiD4tY
-         O7F3IAh86A8dbVTRvcaClVH+5LxlnrTfqdK/Im/5CEKHsufuaWRCGMxw83G7oe0+FOWp
-         bPKQbTD6Eid+P74uhz04skx1o/LdfXk4ynd9gBiOMHKh5YUL3r3LEc4t00v/NPx+ou4N
-         zxLxK4EFjp4emcrMuin1VS2n51Fj5hJb3YC564015816xsjbalEceWhzNuRp22sc78mX
-         YhSYGkIU1EV3OIxw3++2z8RC+Ac0m1TjpHVYCFgIF1eQkOi5wWLLengNbNXWqbhHjO+w
-         vpmg==
-X-Received: by 10.236.178.39 with SMTP id e27mr38663010yhm.98.1400456625466;
- Sun, 18 May 2014 16:43:45 -0700 (PDT)
-Received: by 10.170.169.65 with HTTP; Sun, 18 May 2014 16:43:45 -0700 (PDT)
-In-Reply-To: <1400447743-18513-3-git-send-email-mst@redhat.com>
-X-Google-Sender-Auth: Tex9G75hXRk8-FQ6IwMo7cy39rE
+        h=date:from:to:message-id:subject:mime-version:content-type
+         :content-transfer-encoding;
+        bh=elZEW5C/9C4XCl9Kk65GVYAce2s0QZN1YeTVpFkTE6I=;
+        b=ltEfo6im7LG3pgp/+Y/9S9zi/xRF1vqcEMosoy3U1xJ9Iw5u/oBbyoep9pIXedix2N
+         J1AX6XRbWsaWX3uOZHA+r5Q6+DePhc3NKwmjhS5PDSormm2eeuembRhHXyFEyRK8iOs3
+         TiKH2+VKEpbatp/BBk8jxfoybsGYYC6cvw1/dmVzn8fQ6GW3/GfXUvV+DVBHYFx9vjvP
+         I7XSSYF9yRCpR11SxlSpzQ3xzFb+FfI/NT+Mo1JEs3bpa+D8/Z3IklSwsPh2e9hAtVyS
+         dZ6ft1+yV/VWKkray4ZgzPsJt6shLj5Gl5q3BCv/JWzffRT4l9wnRjWB4ES5pHK8Hlru
+         VnXA==
+X-Received: by 10.182.104.101 with SMTP id gd5mr31808500obb.54.1400460302675;
+        Sun, 18 May 2014 17:45:02 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ml5sm22068529oeb.2.2014.05.18.17.45.01
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 May 2014 17:45:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249554>
 
-On Sun, May 18, 2014 at 5:17 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
-> document ack! behaviour and use
->
-> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> ---
->  Documentation/git-rebase.txt | 45 +++++++++++++++++++++++++++++++++++++++-----
->  1 file changed, 40 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 2a93c64..c27aef4 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -384,7 +384,7 @@ or by giving more than one `--exec`:
->  +
->  If `--autosquash` is used, "exec" lines will not be appended for
->  the intermediate commits, and will only appear at the end of each
-> -squash/fixup series.
-> +squash/fixup/ack series.
->
->  --root::
->         Rebase all commits reachable from <branch>, instead of
-> @@ -398,13 +398,13 @@ squash/fixup series.
->
->  --autosquash::
->  --no-autosquash::
-> -       When the commit log message begins with "squash! ..." (or
-> -       "fixup! ..."), and there is a commit whose title begins with
-> +       When the commit log message begins with "squash! ..." ("fixup! ..."
-> +       or "ack! ..."), and there is a commit whose title begins with
->         the same ..., automatically modify the todo list of rebase -i
->         so that the commit marked for squashing comes right after the
->         commit to be modified, and change the action of the moved
-> -       commit from `pick` to `squash` (or `fixup`).  Ignores subsequent
-> -       "fixup! " or "squash! " after the first, in case you referred to an
-> +       commit from `pick` to `squash` (`fixup` or `ack`).  Ignores subsequent
-> +       "ack! ", "fixup! " or "squash! " after the first, in case you referred to an
->         earlier fixup/squash with `git commit --fixup/--squash`.
->  +
->  This option is only valid when the '--interactive' option is used.
-> @@ -624,6 +624,41 @@ consistent (they compile, pass the testsuite, etc.) you should use
->  'git stash' to stash away the not-yet-committed changes
->  after each commit, test, and amend the commit if fixes are necessary.
->
-> +----------------
-> +RECORDING ACKS
-> +----------------
-> +
-> +Interactive mode with --autosquash can be used to concatenate
-> +commit log for several commits, which is useful to record
-> +extra information about the commit, such as ack signatures.
-> +This allows, for example, the following workflow:
-> +
-> +1. receive patches by mail and commit
-> +2. receive by mail ack signatures for the patches
-> +3. prepare a series for submission
-> +4. submit
-> +
-> +where point 2. consists of several instances of
-> +       i) create a (possibly empty) commit with signature
-> +         in the commit message
-> +
-> +Sometimes the ack signature added in i. cannot be amended to the
-> +commit it acks, because that commit is buried deeply in a
-> +patch series.  That is exactly what rebase --autosquash
-> +option is for: use it
-> +after plenty of "i"s, to automaticlly rearrange
-> +commits, and squashing multiple sign-off commits into
-> +the commit that is signed.
-> +
-> +Start it with the last commit you want to retain as-is:
-> +
-> +       git rebase --autosquash -i <after-this-commit>
-> +
-> +An editor will be fired up with all the commits in your current branch
-> +which come after the given commit. Ack commits will be
-> +re-arranged to come after the commit that is acked,
-> +and the action will be utomticlly changed from `pick` to `ack`
+Hi,
 
-s/utomticlly/automatically/
+git reintegrate is a helper tool to manage integration branches, it
+has all the options of other known tools.
 
-> +to cause them to be squashed into the acked commit.
->
->  RECOVERING FROM UPSTREAM REBASE
->  -------------------------------
-> --
-> MST
->
+This is a rewrite of John Keeping's git-integration in Ruby, it has
+essentially the same features and passes all the git-integration
+tests, but it has more features.
+
+One feature that is missing from git-integration is the ability to
+parse existing integration branches.
+
+To give a try you can do:
+
+  git clone https://github.com/gitster/git/
+  cd git
+  git fetch -u origin 'refs/tags/*:refs/tags/*' 'refs/heads/*:refs/heads/*'
+  git checkout pu
+  git reintegrate --generate pu master
+
+Which will generate the integration instructions for you:
+
+  % git reintegrate --cat
+  base master
+  merge jl/submodule-mv
+
+    Moving a regular file in a repository with a .gitmodules file was
+    producing a warning 'Could not find section in .gitmodules where
+    path=<filename>'.
+
+  merge ap/remote-hg-unquote-cquote
+
+    A fast-import stream expresses a pathname with funny characters by
+    quoting them in C style; remote-hg remote helper forgot to unquote
+    such a path.
+
+  merge jk/for-each-ref-skip-parsing
+  merge jk/pack-corruption-post-mortem
+  merge jk/reset-p-current-head-fix
+
+    "git reset -p HEAD" has codepath to special case it from resetting
+    to contents of other commits, but recent change broke it.
+
+  ...
+
+It also has support for "evil merges", so it should be perfectly
+usable for git.git maintenance.
+
+You can edit the instructions with `git reintegrate --edit`.
+
+The simplest way to begin an integration branch is with:
+
+  git reintegrate --create pu master
+  git reintegrate --add=branch1 --add=branch2 --add=branch3
+
+To generate the integration branch run `git reintegrate --rebuild`, if
+there are merge conflicts, solve them and continue with `git
+reintegrate --continue`.
+
+Despite having more features, the code is actually smaller thanks to
+Ruby awesomeness.
+
+Enjoy.
+
+https://github.com/felipec/git-reintegrate
+
+Changes since v0.1:
+
+ * Add support for empty commits
+ * Add support for pause command
+ * Update manpage
+ * Add bash completion
+
+Felipe Contreras (26):
+      Add copyright and license notices
+      Fix EDITOR support with arguments
+      Trivial style cleanup
+      Improve command regex
+      Add support for empty commits
+      test: improve check_int()
+      Add support for 'pause' command
+      doc: rename manpage file
+      doc: update options
+      doc: add description
+      doc: add missing instruction commands
+      doc: cleanup . command
+      Verify branches after parsing
+      test: fix test names
+      Remove unused statements
+      Update README
+      test: cleanup instruction sheets
+      Update copyright notices
+      Add bash completion
+      build: add installation stuff
+      readme: add installation instructions
+      Add gitignore for documentation
+      trvis: initial configuration
+      travis: add verbosity
+      test: add test-lib helper
+      travis: remove Ruby 1.8
+
+-- 
+Felipe Contreras
