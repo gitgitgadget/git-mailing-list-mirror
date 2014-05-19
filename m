@@ -1,153 +1,139 @@
 From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [ANNOUNCE] git reintegrate v0.3; manager of integration branches
-Date: Sun, 18 May 2014 19:33:57 -0500
-Message-ID: <53795175664d5_10da88d308ce@nysa.notmuch>
+Subject: [ANNOUNCE] git related v0.3
+Date: Sun, 18 May 2014 19:36:51 -0500
+Message-ID: <537952234b691_10da88d308d8@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 19 02:45:14 2014
+X-From: git-owner@vger.kernel.org Mon May 19 02:48:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmBhY-0007bJ-02
-	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 02:45:12 +0200
+	id 1WmBkH-0005yI-C9
+	for gcvg-git-2@plane.gmane.org; Mon, 19 May 2014 02:48:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752269AbaESApF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 May 2014 20:45:05 -0400
-Received: from mail-oa0-f53.google.com ([209.85.219.53]:38518 "EHLO
-	mail-oa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752152AbaESApD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 May 2014 20:45:03 -0400
-Received: by mail-oa0-f53.google.com with SMTP id m1so5510386oag.12
-        for <git@vger.kernel.org>; Sun, 18 May 2014 17:45:02 -0700 (PDT)
+	id S1752335AbaESAr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 May 2014 20:47:58 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178]:41729 "EHLO
+	mail-ob0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752221AbaESAr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 May 2014 20:47:57 -0400
+Received: by mail-ob0-f178.google.com with SMTP id va2so5382305obc.23
+        for <git@vger.kernel.org>; Sun, 18 May 2014 17:47:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:message-id:subject:mime-version:content-type
          :content-transfer-encoding;
-        bh=elZEW5C/9C4XCl9Kk65GVYAce2s0QZN1YeTVpFkTE6I=;
-        b=ltEfo6im7LG3pgp/+Y/9S9zi/xRF1vqcEMosoy3U1xJ9Iw5u/oBbyoep9pIXedix2N
-         J1AX6XRbWsaWX3uOZHA+r5Q6+DePhc3NKwmjhS5PDSormm2eeuembRhHXyFEyRK8iOs3
-         TiKH2+VKEpbatp/BBk8jxfoybsGYYC6cvw1/dmVzn8fQ6GW3/GfXUvV+DVBHYFx9vjvP
-         I7XSSYF9yRCpR11SxlSpzQ3xzFb+FfI/NT+Mo1JEs3bpa+D8/Z3IklSwsPh2e9hAtVyS
-         dZ6ft1+yV/VWKkray4ZgzPsJt6shLj5Gl5q3BCv/JWzffRT4l9wnRjWB4ES5pHK8Hlru
-         VnXA==
-X-Received: by 10.182.104.101 with SMTP id gd5mr31808500obb.54.1400460302675;
-        Sun, 18 May 2014 17:45:02 -0700 (PDT)
+        bh=2YHUPNBdo+oBo37/0sOmB4ZsBp21FOQof+DhwywahF0=;
+        b=TMxJbIPbmleCQGM78MVVuncyoLsJceg7sjq7Pzk7Nsd6GDw6f7R5rzWCFplCI3KGCz
+         YCk2PcqNb6LiyqdvMxbqx4AVT9JvVNgZzc2fH45VRfo7ew7Omb9RGEYuLR9dmnB9tJXJ
+         odIYrfu6tIua4SCePICiNMGSRw/jjeR2DnUOJhuIUt1X4ZIvUl1gxxkfD4m0jMF6ZQH5
+         qlsi7+zleI5ZSUkMa5WmBJo+OC5/rb/Ih2pVLUbr8qjHbVqK1yKUlNnC1cWACoN8hMt6
+         /T39SJ/qC9LWisySAa4+0IIRLsGEoxCd3fNdgBpiD6G0BQWoeNT3AuaRtRqT5sTtzPkn
+         GF8w==
+X-Received: by 10.60.15.38 with SMTP id u6mr32226308oec.26.1400460477002;
+        Sun, 18 May 2014 17:47:57 -0700 (PDT)
 Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id ml5sm22068529oeb.2.2014.05.18.17.45.01
+        by mx.google.com with ESMTPSA id r3sm29015904obi.23.2014.05.18.17.47.55
         for <git@vger.kernel.org>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 May 2014 17:45:02 -0700 (PDT)
+        Sun, 18 May 2014 17:47:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249555>
 
 Hi,
 
-git reintegrate is a helper tool to manage integration branches, it
-has all the options of other known tools.
+This tool finds people that might be interested in a patch, by going
+back through the history for each single hunk modified, and finding
+people that reviewed, acknowledged, signed, or authored the code the
+patch is modifying.
 
-This is a rewrite of John Keeping's git-integration in Ruby, it has
-essentially the same features and passes all the git-integration
-tests, but it has more features.
+It does this by running `git blame` incrementally on each hunk, and
+finding the relevant commit message. After gathering all the relevant
+people, it groups them to show what exactly was their role when the
+participated in the development of the relevant commit, and on how many
+relevant commits they participated. They are only displayed if they pass
+a minimum threshold of participation.
 
-One feature that is missing from git-integration is the ability to
-parse existing integration branches.
+It is similar the the `git contacts` tool in the contrib area, which is a
+rewrite of this tool, except that `git contacts` does the absolute minimum;
+`git related` is way superior in every way.
 
-To give a try you can do:
+For example:
 
-  git clone https://github.com/gitster/git/
-  cd git
-  git fetch -u origin 'refs/tags/*:refs/tags/*' 'refs/heads/*:refs/heads/*'
-  git checkout pu
-  git reintegrate --generate pu master
+------------
+% git related master..fc/transport/improv
+  Junio C Hamano <gitster@pobox.com> (signer: 90%, author: 5%)
+  Felipe Contreras <felipe.contreras@gmail.com> (author: 25%, reviewer: 2%)
+  Sverre Rabbelier <srabbelier@gmail.com> (author: 17%, acker: 2%, signer: 7%)
+  Jeff King <peff@peff.net> (acker: 17%, author: 10%)
+  Shawn O. Pearce <spearce@spearce.org> (author: 5%, signer: 2%, cced: 2%)
+  Elijah Newren <newren@gmail.com> (author: 10%)
+------------
 
-Which will generate the integration instructions for you:
+In addition, it has an option to output the list of commits, instead of the
+contributors, which allows you to easily find out the previous changes to the
+lines your patches modify.
 
-  % git reintegrate --cat
-  base master
-  merge jl/submodule-mv
-
-    Moving a regular file in a repository with a .gitmodules file was
-    producing a warning 'Could not find section in .gitmodules where
-    path=<filename>'.
-
-  merge ap/remote-hg-unquote-cquote
-
-    A fast-import stream expresses a pathname with funny characters by
-    quoting them in C style; remote-hg remote helper forgot to unquote
-    such a path.
-
-  merge jk/for-each-ref-skip-parsing
-  merge jk/pack-corruption-post-mortem
-  merge jk/reset-p-current-head-fix
-
-    "git reset -p HEAD" has codepath to special case it from resetting
-    to contents of other commits, but recent change broke it.
-
+------------
+% git related -c master..fc/transport/improv
+  99d9ec0 Merge branch 'fc/transport-helper-no-refspec'
+  67c9c78 transport-helper: barf when user tries old:new
+  0460ed2 documentation: trivial style cleanups
+  126aac5 transport-helper: fix remote helper namespace regression
+  21610d8 transport-helper: clarify pushing without refspecs
+  a93b4a0 transport-helper: warn when refspec is not used
+  664059f transport-helper: update remote helper namespace
+  c4458ec fast-export: Allow pruned-references in mark file
   ...
+------------
 
-It also has support for "evil merges", so it should be perfectly
-usable for git.git maintenance.
+Moreover, when sending patches for review, you can configure `git send-email`
+to use `git related` to find relevant people that should be Cc'ed:
 
-You can edit the instructions with `git reintegrate --edit`.
+------------
+% git send-email --cc-cmd='git related' *.patch
+------------
 
-The simplest way to begin an integration branch is with:
+Compared to `git related`, `git contacts` has the following limitations:
 
-  git reintegrate --create pu master
-  git reintegrate --add=branch1 --add=branch2 --add=branch3
+ 1) Doesn't show the amount of involvement
+ 2) Doesn't show the kind of involvement (reviewer, author) nor
+    does it group people by their email address
+ 3) Doesn't have the option to show the commit themselves
+ 4) Doesn't have any options at all (--since, --min-percent)
 
-To generate the integration branch run `git reintegrate --rebuild`, if
-there are merge conflicts, solve them and continue with `git
-reintegrate --continue`.
+Cheers.
 
-Despite having more features, the code is actually smaller thanks to
-Ruby awesomeness.
-
-Enjoy.
-
-https://github.com/felipec/git-reintegrate
+https://github.com/felipec/git-related
 
 Changes since v0.1:
 
- * Add support for empty commits
- * Add support for pause command
- * Update manpage
- * Add bash completion
+ * Fix compatibility with older versions
+ * Add -clong option
+ * Add manpage
+ * Improve performance by grouping line ranges
 
-Felipe Contreras (26):
-      Add copyright and license notices
-      Fix EDITOR support with arguments
-      Trivial style cleanup
-      Improve command regex
-      Add support for empty commits
-      test: improve check_int()
-      Add support for 'pause' command
-      doc: rename manpage file
-      doc: update options
-      doc: add description
-      doc: add missing instruction commands
-      doc: cleanup . command
-      Verify branches after parsing
-      test: fix test names
-      Remove unused statements
-      Update README
-      test: cleanup instruction sheets
-      Update copyright notices
-      Add bash completion
+Felipe Contreras (12):
+      Fix compatibility with Ruby 1.9
+      Add support for Ruby 1.8
+      Fix popen workaround
+      Refactor blame parsing
+      Pass multiple ranges to `git blame`
+      test: add gitingnore file
+      Add -clong option
+      Add manpage
       build: add installation stuff
-      readme: add installation instructions
-      Add gitignore for documentation
-      trvis: initial configuration
-      travis: add verbosity
+      readme: trivial updates
       test: add test-lib helper
-      travis: remove Ruby 1.8
+      travis: initial configuration
 
 -- 
 Felipe Contreras
