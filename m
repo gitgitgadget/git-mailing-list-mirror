@@ -1,114 +1,97 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: [PATCH] Windows: Allow using UNC path for git repository
-Date: Tue, 20 May 2014 21:21:32 +0200
-Organization: <)><
-Message-ID: <20140520192132.GA7355@camelia.ucw.cz>
-References: <20140519132334.GA1435@camelia.ucw.cz> <xmqqy4xwxop7.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] remote: defer repacking packed-refs when deleting refs
+Date: Tue, 20 May 2014 12:30:12 -0700
+Message-ID: <xmqqtx8kxn7f.fsf@gitster.dls.corp.google.com>
+References: <537B2FA4.7020001@opera.com> <537B30E7.5020505@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-        Erik Faye-Lund <kusmabite@gmail.com>,
-        msysGit <msysgit@googlegroups.com>,
-        Cezary Zawadka <czawadka@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCU63DXMWULRBPWW52NQKGQEWIYT64Y@googlegroups.com Tue May 20 21:21:35 2014
-Return-path: <msysgit+bncBCU63DXMWULRBPWW52NQKGQEWIYT64Y@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f60.google.com ([74.125.82.60])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jens =?utf-8?Q?Lindstr=C3=B6m?= <jl@opera.com>
+X-From: git-owner@vger.kernel.org Tue May 20 21:30:31 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBPWW52NQKGQEWIYT64Y@googlegroups.com>)
-	id 1WmpbT-0001Sd-4y
-	for gcvm-msysgit@m.gmane.org; Tue, 20 May 2014 21:21:35 +0200
-Received: by mail-wg0-f60.google.com with SMTP id b13sf107407wgh.5
-        for <gcvm-msysgit@m.gmane.org>; Tue, 20 May 2014 12:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:organization:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=hYAnRFAVFf3OrSdCX9gIbdAb20PG26DDUOzy9B/zFmQ=;
-        b=h2afZHJ3lPwz6iTiaMZw+XMpdmWIJlwkUWQLABbv6ki+Cvb13kichrLf5iRR4vIUJj
-         RL96MgVes5VoOhEWjHN/6F1gx2S8Hfsz/C/b9lN6LNQMpqC1jh6VMke8A5R1JfB2mqx9
-         DwMlF2saCslcR7c3ayTDGGEmL1s4P/nj5fmN/odcT2exuVz03SnSNcNuIOj4Bhm7kbzd
-         n69q6BPh9F8Oo5bEt8Tcq9aFe5iWQRBYGf3Ocs+RAqLZxzXczoZExK8TJevZ325ZzuC8
-         OzfpSrWFfJNa3Xja9N8g7WjTu/j9Jx0M9FMmh6CcnGHNQeSanfCj5XSfXSyByHOWAbPa
-         RNsw==
-X-Received: by 10.180.87.68 with SMTP id v4mr26632wiz.1.1400613694789;
-        Tue, 20 May 2014 12:21:34 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.86.135 with SMTP id p7ls171290wiz.4.gmail; Tue, 20 May
- 2014 12:21:33 -0700 (PDT)
-X-Received: by 10.180.211.114 with SMTP id nb18mr597029wic.4.1400613693862;
-        Tue, 20 May 2014 12:21:33 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id r49si1006971eep.0.2014.05.20.12.21.33
-        for <msysgit@googlegroups.com>;
-        Tue, 20 May 2014 12:21:33 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 8F0321C0116;
-	Tue, 20 May 2014 21:21:33 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s4KJLXEH007445;
-	Tue, 20 May 2014 21:21:33 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s4KJLWNY007444;
-	Tue, 20 May 2014 21:21:32 +0200
-In-Reply-To: <xmqqy4xwxop7.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249734>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wmpk6-0000yk-9k
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 21:30:30 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754172AbaETTaX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 May 2014 15:30:23 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63465 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751420AbaETTaU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 May 2014 15:30:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7299018FC6;
+	Tue, 20 May 2014 15:30:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=xTbgGaMSGwE3
+	fttSECAXWftzJpg=; b=syL1mAUmz0on5Fqtv7wf776i3V9ygAlywMlLoPF4d+hS
+	FqGcviXyXhri0WQp1s2phT+YOkdo9zpbjSFCYBau/IDBOX10AmBr5PVvRM7NHfMU
+	Xbs0h1IEeKgQp2eeASEf1Nj64cXMC/FllgtZY3MpfZozzQT58jgmuaKRoNdPKQE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=K74ldr
+	N6FSEblw/mhKpmIdxDMtzGZAkI+IKfe9TO41CKmAp2RmEx4FU/Gk2rTqR+XS2gao
+	MywFiGKCCLOS2Y2lVAQkikbSjUZGHECAHOpZGxIv7Kd3PilnAQCH63OID05H6uhl
+	Odg9pQTpZIdB26BfSdPWO+7HVrcvskcYeGrkE=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 677A918FC5;
+	Tue, 20 May 2014 15:30:19 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 61E2118FBD;
+	Tue, 20 May 2014 15:30:15 -0400 (EDT)
+In-Reply-To: <537B30E7.5020505@opera.com> ("Jens =?utf-8?Q?Lindstr=C3=B6m?=
+ =?utf-8?Q?=22's?= message of "Tue,
+	20 May 2014 12:39:35 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 2B45F542-E055-11E3-B24E-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249735>
 
-Hello,
+Jens Lindstr=C3=B6m <jl@opera.com> writes:
 
-On Tue, May 20, 2014 at 11:57:56AM -0700, Junio C Hamano wrote:
-> It would be nice if somebody in the S-o-b chain can double-check
-> that the "combined" version is sane.  [...]
+> When 'git remote rm' or 'git remote prune' were used in a repository
+> with many refs, and needed to delete many refs, a lot of time was spe=
+nt
+> deleting those refs since for each deleted ref, repack_without_refs()
+> was called to rewrite packed-refs without just that deleted ref.
+>
+> To avoid this, defer the repacking until after all refs have been
+> deleted (by delete_ref()), and then call repack_without_refs() once t=
+o
+> repack without all the deleted refs.
+>
+> Signed-off-by: Jens Lindstr=C3=B6m <jl@opera.com>
+> ---
+> This patch changes behavior when the operation is aborted in the
+> middle, so that loose refs and ref logs might have been deleted, but
+> not the corresponding entries in packed-refs, since packed-refs is no=
+w
+> only updated at the end.
 
-"Combined" was an unfortunate word.  There was a pair of successive
-commits in msysgit all the time.  I just decided to submit them
-squashed together.  I haven't changed the code, just created a new
-commit message.
+Also this makes it a bit more dangerous for processes accessing the
+repository while pruning is in progress by exposing stale refs that
+may be pointing at objects that are no longer present in the object
+store in the packed-refs file for a longer period ("git fsck" may
+fail, for example).
 
-That said, reviewing the function is always useful, of course.
+As long as we accept that removing a remote or pruning one are kinds
+of "maintenance" operations and nobody else should be peeking into
+the repository during maintenance period, it may be alright, but
+aborting the operation in the middle will essentially leave the
+repository in a corrupted state---the "abort corrupts" is a downside
+with or without this change and is not a new problem.
 
-Stepan
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+A bit safer way to organize might be to first create a list of the
+refs to be removed in-core, update packed-refs without these refs to
+be removed, and then finally remove the loose ones, but I haven't
+thought things through.
