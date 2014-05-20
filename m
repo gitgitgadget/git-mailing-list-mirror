@@ -1,91 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 00/19]  convert test -a/-o to && and || patch series
-Date: Tue, 20 May 2014 11:22:36 -0700
-Message-ID: <20140520182236.GQ12314@google.com>
-References: <1400593832-6510-1-git-send-email-gitter.spiros@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: untracked file deleted from the master branch, when checked out to it from a local branch
+Date: Tue, 20 May 2014 11:24:11 -0700
+Message-ID: <xmqqk39gz4tw.fsf@gitster.dls.corp.google.com>
+References: <2525467.KRXv8a3gWS@linux-wzza.site>
+	<1949847.AaDQEtxZHd@linux-wzza.site>
+	<537B8BA9.7060207@storm-olsen.com>
+	<2726779.MFtIaLB4b4@linux-wzza.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 20:22:46 2014
+To: Arup Rakshit <aruprakshit@rocketmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 20:24:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmogX-0003gM-Iu
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:22:45 +0200
+	id 1Wmoi4-0006mw-JF
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751374AbaETSWk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 14:22:40 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:54924 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750807AbaETSWj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 14:22:39 -0400
-Received: by mail-pd0-f182.google.com with SMTP id r10so556307pdi.13
-        for <git@vger.kernel.org>; Tue, 20 May 2014 11:22:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=cbncqsBSKuyIrrJLZW4ENiaLZIk5NziMkMW1aLytRxI=;
-        b=TV6hr95sfEUOWcXsxRR4139xMqZC6xyBP3uJ9aMgjrLmWq5vKPD4FBihRrRClpctF4
-         OlVbNJkobJDtFxd0fMpXa46NI5f0lumTPfvoWpvE7EUM3MqWgILBGUjQsPjndDaOTI97
-         LuBQzs/vVdwRI850dnPRMt3OzwjiuDCAYF95vND348Flv1YWKWRZKSjpCz1zEnlbPVFi
-         NFv6Ecyo94D6ZtGu93Hi5+c38WIGMrVn6R5mAWmIF3EzvLkjpycDbo5Un6jz8jOFHQC2
-         T+NCOTjH7gHzs3xBDUfo9HCLc2etn8VLApb4MKqDvf4m8HxzUiNL6wz09Qzc05hAS1nV
-         t+vw==
-X-Received: by 10.68.249.100 with SMTP id yt4mr52366560pbc.20.1400610159279;
-        Tue, 20 May 2014 11:22:39 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id op3sm4265962pbc.40.2014.05.20.11.22.38
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 20 May 2014 11:22:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1400593832-6510-1-git-send-email-gitter.spiros@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750957AbaETSYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 14:24:17 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50446 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750745AbaETSYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 14:24:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CEACB18CDD;
+	Tue, 20 May 2014 14:24:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=DKskjxhbRsq/xgHauV41Y3MYr08=; b=FnvXg8
+	KXxWBYNWMBNnSlfXRCJxvJK4hzrfkMuGmD1Bq2WkvGsgTWxoqOrkO0Tu5u73rEy3
+	bNzKQifI5WaZsczxxPQvd6eHExdQ/abP+aV7ksm92zu8KKArFC133nlKi/SXfykI
+	pYust/jDzSkFFLsoo1ksC7BifDU+e/n3aZQic=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ThSPf8aE5aHTSGZXux0jPe7ZNWLRgyfZ
+	/7scatBv3pEFSfWnWjRSSOOQj/1NpiFFd/ofXH3wqq5JMCSEgT+vX7xPWSZ+t2PI
+	NVsKECLNolB8YiEAZF+3M8KnFYJ08HN4AEtcTXDh1TZ9PsOPHaEP5ZhmNk/ZzagV
+	QyYYQFmt4dU=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C517418CDA;
+	Tue, 20 May 2014 14:24:15 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C431518CD2;
+	Tue, 20 May 2014 14:24:12 -0400 (EDT)
+In-Reply-To: <2726779.MFtIaLB4b4@linux-wzza.site> (Arup Rakshit's message of
+	"Tue, 20 May 2014 23:50:17 +0630")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F1619934-E04B-11E3-BF7E-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249718>
 
-Hi,
+Arup Rakshit <aruprakshit@rocketmail.com> writes:
 
-Elia Pinto wrote:
+> On Tuesday, May 20, 2014 12:06:49 PM you wrote:
+>
+>> 
+>> It never "came to the new branch", as it was never version controlled,
+>> it was an untracked file left behind when you switched branches.
+>> 
+>> Once you added it to the new branch, change_class, it became a version
+>> controlled file, 
+>
+> This is still  didn't get it. If an untracked file didn't come in the new 
+> branch, how would I able to add it to stage ? I am not getting this part. You 
+> are right, but I am not able to understand this one, my bad! :(
 
-> These patch series  convert test -a/-o to && and ||.
-
-Should this come with a new check in t/check-non-portable-shell.pl so
-we don't regress in the future?
-
-> Elia Pinto (19):
-[...]
->  check_bindir                    |    2 +-
->  contrib/examples/git-clone.sh   |    2 +-
->  contrib/examples/git-commit.sh  |    4 ++--
->  contrib/examples/git-merge.sh   |    4 ++--
->  contrib/examples/git-repack.sh  |    4 ++--
->  contrib/examples/git-resolve.sh |    2 +-
->  git-bisect.sh                   |    2 +-
->  git-mergetool.sh                |    4 ++--
->  git-rebase--interactive.sh      |    2 +-
->  git-submodule.sh                |   29 +++++++++++++++++------------
->  t/t0025-crlf-auto.sh            |    6 +++---
->  t/t0026-eol-config.sh           |    8 ++++----
->  t/t4102-apply-rename.sh         |    2 +-
->  t/t5000-tar-tree.sh             |    2 +-
->  t/t5403-post-checkout-hook.sh   |    8 ++++----
->  t/t5537-fetch-shallow.sh        |    2 +-
->  t/t5538-push-shallow.sh         |    2 +-
->  t/t9814-git-p4-rename.sh        |    4 ++--
->  t/test-lib-functions.sh         |    4 ++--
->  19 files changed, 49 insertions(+), 44 deletions(-)
-
-I still think one patch per file is too many patches for this.  It would
-be easier to read with, e.g., whichever ones were most complex as
-separate patches and the rest (the "easy" ones) as a single patch.
-
-Thanks,
-Jonathan
+Untracked files and modifications to files in your working directory
+do not belong to your current branch.  This is to allow you, after
+starting to work on one branch then realizing that the changes and
+additions you are making do not belong there, to switch to a more
+appropriate branch at that point without losing your work so far,
+taking these changes and additions with you to the branch you want
+to commit your changes to.
