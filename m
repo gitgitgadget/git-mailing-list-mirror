@@ -1,98 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Tue, 20 May 2014 14:11:35 -0700
-Message-ID: <xmqqy4xwrw8o.fsf@gitster.dls.corp.google.com>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
-	<20140516084126.GB21468@sigill.intra.peff.net>
-	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
-	<20140516225228.GA3988@sigill.intra.peff.net>
-	<5376f2ca5c90d_65b915db2f877@nysa.notmuch>
-	<20140517062413.GA13003@sigill.intra.peff.net>
-	<xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
-	<53795ef8e4023_10da88d30825@nysa.notmuch>
-	<xmqqegzp1tl7.fsf@gitster.dls.corp.google.com>
-	<537bbd6c1daf_a6f166b308b0@nysa.notmuch>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [ANNOUNCE] git reintegrate v0.3; manager of integration branches
+Date: Tue, 20 May 2014 16:06:41 -0500
+Message-ID: <537bc3e1c605c_a6f166b3088f@nysa.notmuch>
+References: <53795175664d5_10da88d308ce@nysa.notmuch>
+ <xmqqha4lxyqt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 23:11:46 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 23:17:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmrK4-0001QW-Pa
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:11:45 +0200
+	id 1WmrQ6-000557-VF
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:17:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751079AbaETVLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 17:11:41 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51344 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750834AbaETVLk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 17:11:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D82D3196AA;
-	Tue, 20 May 2014 17:11:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vhae/dFPMKG8mYwysW5OFPIRYVI=; b=tCn7HN
-	JKuIzXcNbBtAy4EwqYmoj42F/N2CnlUEDLAY8tMhA5XxAiDZLNQX0VC8hGf1xz49
-	xXhy/lqWpEd6ewTnaDBtM/RW6esoSVG0AeG/Wdpr3FJXoz4xs8z5+giU99bKlFid
-	jXCzTSPPUO2h90G6WRZ17EQ+1cB8ORAlqgudA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qnuq4n1zDuLqioAA+EnFJ7Hgr2TL1ABR
-	TbS0W1Sm7agXySlX0BHH86QdUJsI6/SdujRWCSOrlqDLGiC36w/6vpIvT0x7p5QT
-	YUCUkFE9MbmwRYkJeThM933mTUUXnBc+nB6WqvWPHIf52Kbl2XfgT2ooJJ5lEAsR
-	cxNN/UAqeAA=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CF099196A8;
-	Tue, 20 May 2014 17:11:39 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CAA5D196A2;
-	Tue, 20 May 2014 17:11:36 -0400 (EDT)
-In-Reply-To: <537bbd6c1daf_a6f166b308b0@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 20 May 2014 15:39:08 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 54170F02-E063-11E3-B5B0-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750737AbaETVRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 17:17:54 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:56254 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750699AbaETVRx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 17:17:53 -0400
+Received: by mail-ob0-f170.google.com with SMTP id uy5so1165609obc.15
+        for <git@vger.kernel.org>; Tue, 20 May 2014 14:17:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=ZoQgGdtcjYwtaYgGPz7KGWnnE/dDCYVIhFglj0ZzQBA=;
+        b=iLxlOBHpi5ec/QILixA0kaeDTnd1D5oIWYvscyyVstRt8Bza8D8nocDLiGyjx2XJYQ
+         4vxsR87OwtAdGj9FhjQcXRiksYq4ErfB7zFGgUSo/47yFpeiL4oKxBOaDC79Px0TLvyT
+         ANbr7ZAKWjPGDkuuPxmmAYGSJAOoCgBubvM23viMVuquHki20AOpcie8xK9vHhz5XDIl
+         +VGlaYzPNidJX1kwkUFE7cdhVbkb1Lv7sQDboglECN8ngeh1uZmR6900yM7WiFmU0rmy
+         GrOmZidpXaPi04XkVanXTyjAa0csDKk8CZpp5iAyyIv9kaeixRrXdBWqrqt7aSixCHI2
+         vEEw==
+X-Received: by 10.182.60.4 with SMTP id d4mr47082397obr.4.1400620673502;
+        Tue, 20 May 2014 14:17:53 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ko3sm52261265oeb.1.2014.05.20.14.17.52
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 May 2014 14:17:52 -0700 (PDT)
+In-Reply-To: <xmqqha4lxyqt.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249745>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > ...
+> > Which will generate the integration instructions for you:
+> >
+> >   % git reintegrate --cat
+> >   base master
+> >   merge jl/submodule-mv
+> >
+> >     Moving a regular file in a repository with a .gitmodules file was
+> >     producing a warning 'Could not find section in .gitmodules where
+> >     path=<filename>'.
+> >
+> >   merge ap/remote-hg-unquote-cquote
+> >
+> > It also has support for "evil merges", so it should be perfectly
+> > usable for git.git maintenance.
+> 
+> Yeah, it sounds like it is almost there.
+> 
+> I think the infrastructure to maintain "What's cooking" could be
+> updated to use these comments after "merge" instructions if I wanted
+> to.
+> 
+> I build two branches on top of 'master', one is called 'jch' and has
+> a marker line somewhere that says '### match next' that is turned
+> into an empty commit, and 'pu' that is built on top of the tip of
+> 'jch'.  The marker line is used to apply only an earlier part of the
+> instruction stream to build 'jch' on top of 'master' on top of
+> 'next' (i.e. "base master" in the above example will not be applied
+> to hard-reset 'next' to match master) and stop there, and is meant
+> to be a way to sanity check 'next' (which is made by repeated
+> incremental merges on top of 'master' without rewinding) by
+> comparing the "### match next" commit between 'master' and 'jch'
+> (which is made afresh from 'master' by taking only the necessary
+> topics).  They must match or I caught a possible mismerge on 'next'.
+> 
+> I presume that the workflow can be mimicked by having another branch
+> 'match-next' and building it on top of 'master', and then building
+> 'jch' on top of it, and then building 'pu' on top of it.  Then you
+> should be able to play 'match-next' instruction on top of 'next'
+> (provided that there is a way to tell it to replay on HEAD and
+> ignore "base" and have "merge" instruction become a no-op when the
+> branch has already been merged)
 
->> Let's try this in a different way, as I sense there is a
->> misunderstanding somewhere about your "wish".
->> ...
-> No, I already said I do not want the code removed from v2.0, that's why
-> I sent patches that simply added a warning, and I specifically said
-> those were for 2.0.
+Or have an option to specify a dynamic instruction sheet, so you can cat
+the instructions of 'match-next' and replace the base. However, I don't
+see the point of re-applying the branches for 'next' if you already know
+that 'next' and 'match-next' are the same.
 
-Yeah, I think there are mails crossing.  I sent that "different way"
-way before I read your "already said" happened.
+I would have two branches: 1) 'match-next' (or 'integration-next') that
+has the instructions to build 'next' on top of 'master', and 2) 'pu',
+which has the instructions to build 'pu' on top of 'next'.
 
-> So to make it clear, I now request that you do:
->
->  1) Remove all the code.
->
->     Since my patches were removed from the list, here's an updated patch
->     that applies on top of 'master'
->
->     https://github.com/felipec/git/commits/up/remote/remove
-
-I'll do that, but just one thing to make sure---do you want the
-helper to exit with status 0?
-
->  4) Re-add the following release note:
->
->     * "git push" via transport-helper interface (e.g. remote-hg) has
->       been updated to allow forced ref updates in a way similar to the
->       natively supported transports
-
-I am not sure if this one is consistent with 1), as remote-hg will
-no longer be with the release.
+-- 
+Felipe Contreras
