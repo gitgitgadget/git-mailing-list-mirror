@@ -1,106 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 01/19] check_bindir: convert test -a/-o to && and ||
-Date: Tue, 20 May 2014 11:12:02 -0700
-Message-ID: <xmqqsio4z5e5.fsf@gitster.dls.corp.google.com>
-References: <1400593832-6510-1-git-send-email-gitter.spiros@gmail.com>
-	<1400593832-6510-2-git-send-email-gitter.spiros@gmail.com>
+Subject: Re: EXT :Re: GIT and large files
+Date: Tue, 20 May 2014 11:14:39 -0700
+Message-ID: <xmqqoaysz59s.fsf@gitster.dls.corp.google.com>
+References: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD53E@XMBVAG73.northgrum.com>
+	<xmqqmwec1i9f.fsf@gitster.dls.corp.google.com>
+	<C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD631@XMBVAG73.northgrum.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jrnieder@gmail.com
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 20:12:18 2014
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Stewart\, Louis \(IS\)" <louis.stewart@ngc.com>
+X-From: git-owner@vger.kernel.org Tue May 20 20:14:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmoWN-0000S6-Em
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:12:15 +0200
+	id 1WmoYt-00053y-6n
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:14:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753485AbaETSMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 14:12:09 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65000 "EHLO smtp.pobox.com"
+	id S1753882AbaETSOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 14:14:46 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62055 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751238AbaETSMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 14:12:08 -0400
+	id S1753676AbaETSOo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 14:14:44 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 172531896A;
-	Tue, 20 May 2014 14:12:07 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5E577189F4;
+	Tue, 20 May 2014 14:14:44 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rWjh5JmIWKHrTbe2KBOpq6sJ3XM=; b=aV07I+
-	dcixWjQFl+FIu7R1lI/OG026VMoGBoTGWQbKiNSPDq9t52JvlZkw6bMl+2lkj4sP
-	/+7EAlLrzyETl9cz/GJsc34ZrAw4wT7/51uybctxSoointpYWC50kxMq5YkQOW8m
-	q8BJbsVvFN/sdR6DmF1OUDWdDHzrWHFfj6LxM=
+	:content-type; s=sasl; bh=XNxnr1uhz4S12+TLG6EHJhFuhpE=; b=B04Mwe
+	NbgSlaWMabtPVJEzOVCe8xcFZOz5qM5IFCjU9BRAURBCysW4+rEWOE3yoB+YKs9f
+	7xhttKNcrmxEKxb2fH1r90IP7y+KyosSovHgmCINRsvdg6RIaYIZyPxxnSq4ep5A
+	Km1PJnQvrz6tMjIr9CcWakSDvKAq0GQdrQm2c=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C2GPWibMjn9bDVzqt+ZYRbcO/ILznX2N
-	8zH7X++L0smoxOBKJwT3ayitHOniYlJe2e2JXCDdY2alvNGTd0NTsJJIwtJaECuV
-	1NiHgjyr+qL3PLhwuOMARqMqq1InfKLDGyI21nSlxs0/hNmBWHILJCn2HshjEUdN
-	j9VPxF7NV4M=
+	:content-type; q=dns; s=sasl; b=phP/99RsbbJPDFKgoj59uEZVPNGu62dd
+	IFAq3SFM9uQXpUqn3afNnfd5Tr3HN6bLxlW1XJt+nFWGb+rrs4/csEdSPGCjMdPM
+	Cy0wrUVey1V7asxqjdEeS3jCAF9Ci/qEvtrJ2tkkgcFh7bnF0+r0fL0/88DolYEY
+	muyEA6FIIjo=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0E07318968;
-	Tue, 20 May 2014 14:12:07 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5495F189F3;
+	Tue, 20 May 2014 14:14:44 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EE6B418966;
-	Tue, 20 May 2014 14:12:03 -0400 (EDT)
-In-Reply-To: <1400593832-6510-2-git-send-email-gitter.spiros@gmail.com> (Elia
-	Pinto's message of "Tue, 20 May 2014 06:50:14 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C218189F1;
+	Tue, 20 May 2014 14:14:40 -0400 (EDT)
+In-Reply-To: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD631@XMBVAG73.northgrum.com>
+	(Louis Stewart's message of "Tue, 20 May 2014 17:24:12 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3EF78AFC-E04A-11E3-8161-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 9C96D442-E04A-11E3-A63E-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249714>
 
-Elia Pinto <gitter.spiros@gmail.com> writes:
+"Stewart, Louis (IS)" <louis.stewart@ngc.com> writes:
 
-> The interaction with unary operators and operator precedence
-> for && and || are better known than -a and -o, and for that
-> reason we prefer them. Replace all existing instances
-> of -a and -o to save readers from the burden of thinking
-> about such things.
+> Thanks for the reply.  I just read the intro to GIT and I am
+> concerned about the part that it will copy the whole repository to
+> the developers work area.  They really just need the one directory
+> and files under that one directory. The history has TBs of data.
+
+Then you will spend time reading, processing and writing TBs of data
+when you clone, unless your developers do something to limit the
+history they fetch, e.g. by shallowly cloning.
+
 >
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
-
-Thanks.
-
-As I already said, I think "better known" is much less of an issue
-than that "-a/-o" is "more error prone", and that is the reason why
-we may want to do this rewrite.
-
-I do not know offhand how busy the tree would be when we can apply
-these patches post-release without them getting rebased, but the
-zero-th step before this series may want to be a patch like this.
-
- Documentation/CodingGuidelines | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index ef67b53..7864c5b 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -106,6 +106,19 @@ For shell scripts specifically (not exhaustive):
-    interface translatable. See "Marking strings for translation" in
-    po/README.
- 
-+ - We do not write our "test" command with "-a" and "-o" and use "&&"
-+   or "||" to concatenate multiple "test" commands instead, because
-+   the use of "-a/-o" is often error-prone.  E.g.
-+
-+     test -n "$x" -a "$a" = "$b"
-+
-+   is buggy and breaks when $x is "=", but
-+
-+     test -n "$x" && test "$a" = "$b"
-+
-+   does not have such a problem.
-+
-+
- For C programs:
- 
-  - We use tabs to indent, and interpret tabs as taking up to
+> Lou
+>
+> -----Original Message-----
+> From: Junio C Hamano [mailto:gitster@pobox.com] 
+> Sent: Tuesday, May 20, 2014 1:18 PM
+> To: Stewart, Louis (IS)
+> Cc: git@vger.kernel.org
+> Subject: EXT :Re: GIT and large files
+>
+> "Stewart, Louis (IS)" <louis.stewart@ngc.com> writes:
+>
+>> Can GIT handle versioning of large 20+ GB files in a directory?
+>
+> I think you can "git add" such files, push/fetch histories that contains such files over the wire, and "git checkout" such files, but naturally reading, processing and writing 20+GB would take some time.  In order to run operations that need to see the changes, e.g. "git log -p", a real content-level merge, etc., you would also need sufficient memory because we do things in-core.
