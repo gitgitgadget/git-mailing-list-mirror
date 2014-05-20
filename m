@@ -1,60 +1,63 @@
-From: Thomas Braun <thomas.braun@byte-physics.de>
+From: Erik Faye-Lund <kusmabite@gmail.com>
 Subject: Re: Re: [PATCH/RFC] send-pack.c: Allow to disable side-band-64k
-Date: Tue, 20 May 2014 10:46:07 +0200
-Message-ID: <537B164F.3080606@byte-physics.de>
-References: <1400526434-3132-1-git-send-email-thomas.braun@byte-physics.de> <20140519193340.GP12314@google.com> <CABPQNSbYVZP4CcatWLuv5m-RFWWgOuKOJJcceBkcEzyJQQ+BqA@mail.gmail.com> <CABPQNSb7B6D_XthOOCfadXA8agLUhoSYy5=20OL2fh598evR1g@mail.gmail.com>
+Date: Tue, 20 May 2014 11:01:31 +0200
+Message-ID: <CABPQNSaa3gRLY0A73-RLfwSy7K7gXHpS8QwFbxxYSCwVyi82Yg@mail.gmail.com>
+References: <1400526434-3132-1-git-send-email-thomas.braun@byte-physics.de>
+ <20140519193340.GP12314@google.com> <CABPQNSbYVZP4CcatWLuv5m-RFWWgOuKOJJcceBkcEzyJQQ+BqA@mail.gmail.com>
+ <CABPQNSb7B6D_XthOOCfadXA8agLUhoSYy5=20OL2fh598evR1g@mail.gmail.com> <537B164F.3080606@byte-physics.de>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>
-To: kusmabite@gmail.com, Jonathan Nieder <jrnieder@gmail.com>
-X-From: msysgit+bncBD57FPGWUYHBBUVM5SNQKGQEGQM5TEA@googlegroups.com Tue May 20 10:48:10 2014
-Return-path: <msysgit+bncBD57FPGWUYHBBUVM5SNQKGQEGQM5TEA@googlegroups.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>, GIT Mailing-list <git@vger.kernel.org>, 
+	msysGit <msysgit@googlegroups.com>
+To: Thomas Braun <thomas.braun@byte-physics.de>
+X-From: msysgit+bncBDR53PPJ7YHRBFFU5SNQKGQEOWTGUPA@googlegroups.com Tue May 20 11:02:14 2014
+Return-path: <msysgit+bncBDR53PPJ7YHRBFFU5SNQKGQEOWTGUPA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f62.google.com ([74.125.83.62])
+Received: from mail-vc0-f184.google.com ([209.85.220.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBD57FPGWUYHBBUVM5SNQKGQEGQM5TEA@googlegroups.com>)
-	id 1WmfgZ-0007SV-TX
-	for gcvm-msysgit@m.gmane.org; Tue, 20 May 2014 10:46:11 +0200
-Received: by mail-ee0-f62.google.com with SMTP id b57sf40472eek.17
-        for <gcvm-msysgit@m.gmane.org>; Tue, 20 May 2014 01:46:11 -0700 (PDT)
+	(envelope-from <msysgit+bncBDR53PPJ7YHRBFFU5SNQKGQEOWTGUPA@googlegroups.com>)
+	id 1Wmfw5-0008Up-BV
+	for gcvm-msysgit@m.gmane.org; Tue, 20 May 2014 11:02:13 +0200
+Received: by mail-vc0-f184.google.com with SMTP id hq16sf50071vcb.21
+        for <gcvm-msysgit@m.gmane.org>; Tue, 20 May 2014 02:02:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=gE+3tA7mA1QaiCz/DM1RSAWf4ta/8m8dMsnvry6L/AY=;
-        b=x/d54WNOYR6v52J09qPGj1sq/Keix3spm+k5Un2Dv/yyW3iCKHzCKt8w+7MPxiJoV4
-         VEmEaFrHSLs0GVWCI86BP3H7ErwkApjtskGeaIaGCQGbZdK4lkZHzqsTHILt1jgOvajE
-         yXp1u2mg4CJz5abnHAhg5tmoydetWYNPPqGHqoUVVj7rj/0xSVtBm5jqjTWskmHxpzI3
-         0U4FCK8ZfWvsTD5rck2vjdS7IcBUF+W/XW7gDCUiDYuoIei2VDzCfCnLIronvZhkI8gH
-         WBpiJQdS3AQMV8n/OltNaGenQkqXJGXFhNbh8hpz7Dhn/V+kaec4dj8D9bBmUzuZWdE/
-         18vQ==
-X-Received: by 10.180.19.131 with SMTP id f3mr7442wie.15.1400575571487;
-        Tue, 20 May 2014 01:46:11 -0700 (PDT)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=+XxgVkF1hlDOJJxzh3M43NeDwieFygyNpTuDiwuczE4=;
+        b=juwjqb3Mg4N/iZoP+yIa3oh4YsZOnvj5k8jz1ZRA8AewEMSwSdl4I/KkRa+DFHvRn0
+         7gMeHC5jO2xjZi3ivWX3S5jXgKSJjyCTOqpbJrZTxItaYCg4lKV9zmzORzATYen6q//J
+         6bgRsNwFW+eMeKVdzpRtQgonaEwtujN8pWtRIHe+I5v0iBu1A/VZoXDMhUVH4DMoIwMx
+         Tfs58BeGkfSCgHb9JSnh5477vhz6O/NAiKfnnuvx1sEtcNaZ3Z9snHQTbTlX/bwRYyx+
+         Ptyl7oU9nigGyzPU37nI77M/yP49Bv2QWru79jkHyAVxXwjZ2MaYK65VaE+ksJlpBXR/
+         X0vQ==
+X-Received: by 10.140.48.101 with SMTP id n92mr34702qga.15.1400576532573;
+        Tue, 20 May 2014 02:02:12 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.95.137 with SMTP id dk9ls213384wib.49.canary; Tue, 20 May
- 2014 01:46:10 -0700 (PDT)
-X-Received: by 10.14.218.9 with SMTP id j9mr3416852eep.2.1400575570312;
-        Tue, 20 May 2014 01:46:10 -0700 (PDT)
-Received: from wp380.webpack.hosteurope.de (wp380.webpack.hosteurope.de. [2a01:488:42::50ed:8595])
-        by gmr-mx.google.com with ESMTPS id g42si361424eev.1.2014.05.20.01.46.10
+Received: by 10.140.80.81 with SMTP id b75ls145668qgd.34.gmail; Tue, 20 May
+ 2014 02:02:12 -0700 (PDT)
+X-Received: by 10.58.198.3 with SMTP id iy3mr5650383vec.39.1400576532016;
+        Tue, 20 May 2014 02:02:12 -0700 (PDT)
+Received: from mail-ie0-x22c.google.com (mail-ie0-x22c.google.com [2607:f8b0:4001:c03::22c])
+        by gmr-mx.google.com with ESMTPS id gy6si880698igb.2.2014.05.20.02.02.11
         for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 20 May 2014 01:46:10 -0700 (PDT)
-Received-SPF: none (google.com: thomas.braun@byte-physics.de does not designate permitted sender hosts) client-ip=2a01:488:42::50ed:8595;
-Received: from p5ddc1dd3.dip0.t-ipconnect.de ([93.220.29.211] helo=[192.168.100.43]); authenticated
-	by wp380.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1WmfgW-0004Ya-Sn; Tue, 20 May 2014 10:46:08 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <CABPQNSb7B6D_XthOOCfadXA8agLUhoSYy5=20OL2fh598evR1g@mail.gmail.com>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@byte-physics.de;1400575570;c976383a;
-X-Original-Sender: thomas.braun@byte-physics.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: thomas.braun@byte-physics.de does not designate permitted sender
- hosts) smtp.mail=thomas.braun@byte-physics.de
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 20 May 2014 02:02:11 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::22c as permitted sender) client-ip=2607:f8b0:4001:c03::22c;
+Received: by mail-ie0-x22c.google.com with SMTP id tp5so142863ieb.31
+        for <msysgit@googlegroups.com>; Tue, 20 May 2014 02:02:11 -0700 (PDT)
+X-Received: by 10.42.162.71 with SMTP id w7mr14343926icx.50.1400576531907;
+ Tue, 20 May 2014 02:02:11 -0700 (PDT)
+Received: by 10.64.166.135 with HTTP; Tue, 20 May 2014 02:01:31 -0700 (PDT)
+In-Reply-To: <537B164F.3080606@byte-physics.de>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::22c
+ as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -65,217 +68,117 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249657>
 
-Am 19.05.2014 22:29, schrieb Erik Faye-Lund:
->>  [...]
->> Would we need to wrap both ends, shouldn't wrapping only reading be
->> good enough to prevent deadlocking?
+On Tue, May 20, 2014 at 10:46 AM, Thomas Braun
+<thomas.braun@byte-physics.de> wrote:
+> Am 19.05.2014 22:29, schrieb Erik Faye-Lund:
+>>>  [...]
+>>> Would we need to wrap both ends, shouldn't wrapping only reading be
+>>> good enough to prevent deadlocking?
+>>>
+>>> compat/poll/poll.c already contains a function called IsSocketHandle
+>>> that is able to tell if a HANDLE points to a socket or not.
 >>
->> compat/poll/poll.c already contains a function called IsSocketHandle
->> that is able to tell if a HANDLE points to a socket or not.
+>> This very quick attempt did not work out :(
+>>
+>> diff --git a/compat/mingw.c b/compat/mingw.c
+>> index 0335958..ec1d81f 100644
+>> --- a/compat/mingw.c
+>> +++ b/compat/mingw.c
+>> @@ -370,6 +370,65 @@ int mingw_open (const char *filename, int oflags, ...)
+>>       return fd;
+>>   }
+>>
+>> +#define is_console_handle(h) (((long) (h) & 3) == 3)
+>> +
+>> +static int is_socket_handle(HANDLE h)
+>> +{
+>> +    WSANETWORKEVENTS ev;
+>> +
+>> +    if (is_console_handle(h))
+>> +        return 0;
+>> +
+>> +    /*
+>> +     * Under Wine, it seems that getsockopt returns 0 for pipes too.
+>> +     * WSAEnumNetworkEvents instead distinguishes the two correctly.
+>> +     */
+>> +    ev.lNetworkEvents = 0xDEADBEEF;
+>> +    WSAEnumNetworkEvents((SOCKET) h, NULL, &ev);
+>> +    return ev.lNetworkEvents != 0xDEADBEEF;
+>> +}
+>> +
+>> +#undef read
+>> +ssize_t mingw_read(int fd, void *buf, size_t count)
+>> +{
+>> +    int ret;
+>> +    HANDLE fh = (HANDLE)_get_osfhandle(fd);
+>> +
+>> +    if (fh == INVALID_HANDLE_VALUE) {
+>> +        errno = EBADF;
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (!is_socket_handle(fh))
+>> +        return read(fd, buf, count);
+>> +
+>> +    ret = recv((SOCKET)fh, buf, count, 0);
+>> +    if (ret < 0)
+>> +        errno = WSAGetLastError();
+>> +    return ret;
+>> +}
+>> +
+>> +#undef write
+>> +ssize_t mingw_write(int fd, const void *buf, size_t count)
+>> +{
+>> +    int ret;
+>> +    HANDLE fh = (HANDLE)_get_osfhandle(fd);
+>> +
+>> +    if (fh == INVALID_HANDLE_VALUE) {
+>> +        errno = EBADF;
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (!is_socket_handle(fh))
+>> +        return write(fd, buf, count);
+>> +
+>> +    return send((SOCKET)fh, buf, count, 0);
+>> +    if (ret < 0)
+>> +        errno = WSAGetLastError();
+>> +    return ret;
+>> +}
+>> +
+>> +
+>>   static BOOL WINAPI ctrl_ignore(DWORD type)
+>>   {
+>>       return TRUE;
+>> diff --git a/compat/mingw.h b/compat/mingw.h
+>> index 08b83fe..1690098 100644
+>> --- a/compat/mingw.h
+>> +++ b/compat/mingw.h
+>> @@ -177,6 +177,12 @@ int mingw_rmdir(const char *path);
+>>   int mingw_open (const char *filename, int oflags, ...);
+>>   #define open mingw_open
+>>
+>> +ssize_t mingw_read(int fd, void *buf, size_t count);
+>> +#define read mingw_read
+>> +
+>> +ssize_t mingw_write(int fd, const void *buf, size_t count);
+>> +#define write mingw_write
+>> +
+>>   int mingw_fgetc(FILE *stream);
+>>   #define fgetc mingw_fgetc
 >
-> This very quick attempt did not work out :(
+> According to [1] you also have to pass WSA_FLAG_OVERLAPPED to avoid the deadlock.
 >
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 0335958..ec1d81f 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -370,6 +370,65 @@ int mingw_open (const char *filename, int oflags, ...)
->       return fd;
->   }
+> With that change I don't get a hang anymore but a read error with
+> errno 10054 aka WSAECONNRESET.
 >
-> +#define is_console_handle(h) (((long) (h) & 3) == 3)
-> +
-> +static int is_socket_handle(HANDLE h)
-> +{
-> +    WSANETWORKEVENTS ev;
-> +
-> +    if (is_console_handle(h))
-> +        return 0;
-> +
-> +    /*
-> +     * Under Wine, it seems that getsockopt returns 0 for pipes too.
-> +     * WSAEnumNetworkEvents instead distinguishes the two correctly.
-> +     */
-> +    ev.lNetworkEvents = 0xDEADBEEF;
-> +    WSAEnumNetworkEvents((SOCKET) h, NULL, &ev);
-> +    return ev.lNetworkEvents != 0xDEADBEEF;
-> +}
-> +
-> +#undef read
-> +ssize_t mingw_read(int fd, void *buf, size_t count)
-> +{
-> +    int ret;
-> +    HANDLE fh = (HANDLE)_get_osfhandle(fd);
-> +
-> +    if (fh == INVALID_HANDLE_VALUE) {
-> +        errno = EBADF;
-> +        return -1;
-> +    }
-> +
-> +    if (!is_socket_handle(fh))
-> +        return read(fd, buf, count);
-> +
-> +    ret = recv((SOCKET)fh, buf, count, 0);
-> +    if (ret < 0)
-> +        errno = WSAGetLastError();
-> +    return ret;
-> +}
-> +
-> +#undef write
-> +ssize_t mingw_write(int fd, const void *buf, size_t count)
-> +{
-> +    int ret;
-> +    HANDLE fh = (HANDLE)_get_osfhandle(fd);
-> +
-> +    if (fh == INVALID_HANDLE_VALUE) {
-> +        errno = EBADF;
-> +        return -1;
-> +    }
-> +
-> +    if (!is_socket_handle(fh))
-> +        return write(fd, buf, count);
-> +
-> +    return send((SOCKET)fh, buf, count, 0);
-> +    if (ret < 0)
-> +        errno = WSAGetLastError();
-> +    return ret;
-> +}
-> +
-> +
->   static BOOL WINAPI ctrl_ignore(DWORD type)
->   {
->       return TRUE;
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index 08b83fe..1690098 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -177,6 +177,12 @@ int mingw_rmdir(const char *path);
->   int mingw_open (const char *filename, int oflags, ...);
->   #define open mingw_open
+> [1]: https://groups.google.com/forum/#!msg/msysgit/at8D7J-h7mw/PM9w-d41cDYJ
 >
-> +ssize_t mingw_read(int fd, void *buf, size_t count);
-> +#define read mingw_read
-> +
-> +ssize_t mingw_write(int fd, const void *buf, size_t count);
-> +#define write mingw_write
-> +
->   int mingw_fgetc(FILE *stream);
->   #define fgetc mingw_fgetc
 
-According to [1] you also have to pass WSA_FLAG_OVERLAPPED to avoid the deadlock.
-
-With that change I don't get a hang anymore but a read error with 
-errno 10054 aka WSAECONNRESET.
-
-[1]: https://groups.google.com/forum/#!msg/msysgit/at8D7J-h7mw/PM9w-d41cDYJ
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 383cafe..4a58135 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -366,6 +366,71 @@ int mingw_open (const char *filename, int oflags, ...)
- 	return fd;
- }
- 
-+#define is_console_handle(h) (((long) (h) & 3) == 3)
-+
-+static int is_socket_handle(HANDLE h)
-+{
-+    WSANETWORKEVENTS ev;
-+
-+    if (is_console_handle(h))
-+        return 0;
-+
-+    /*
-+     * Under Wine, it seems that getsockopt returns 0 for pipes too.
-+     * WSAEnumNetworkEvents instead distinguishes the two correctly.
-+     */
-+    ev.lNetworkEvents = 0xDEADBEEF;
-+    WSAEnumNetworkEvents((SOCKET) h, NULL, &ev);
-+    return ev.lNetworkEvents != 0xDEADBEEF;
-+}
-+
-+#undef read
-+ssize_t mingw_read(int fd, void *buf, size_t count)
-+{
-+    int ret;
-+    HANDLE fh = (HANDLE)_get_osfhandle(fd);
-+
-+    if (fh == INVALID_HANDLE_VALUE) {
-+        errno = EBADF;
-+        return -1;
-+    }
-+
-+    if (!is_socket_handle(fh))
-+        return read(fd, buf, count);
-+
-+    ret = recv((SOCKET)fh, buf, count, 0);
-+    if (ret < 0)
-+    {
-+        errno = WSAGetLastError();
-+        warning("errno %d",errno);
-+    }
-+    return ret;
-+}
-+
-+#undef write
-+ssize_t mingw_write(int fd, const void *buf, size_t count)
-+{
-+    int ret;
-+    HANDLE fh = (HANDLE)_get_osfhandle(fd);
-+
-+    if (fh == INVALID_HANDLE_VALUE) {
-+        errno = EBADF;
-+        return -1;
-+    }
-+
-+    if (!is_socket_handle(fh))
-+        return write(fd, buf, count);
-+
-+    ret = send((SOCKET)fh, buf, count, 0);
-+    if (ret < 0)
-+    {
-+        errno = WSAGetLastError();
-+        warning("errno %d",errno);
-+    }
-+    return ret;
-+}
-+
-+
- static BOOL WINAPI ctrl_ignore(DWORD type)
- {
- 	return TRUE;
-@@ -1542,7 +1607,7 @@ int mingw_socket(int domain, int type, int protocol)
- 	SOCKET s;
- 
- 	ensure_socket_initialization();
--	s = WSASocket(domain, type, protocol, NULL, 0, 0);
-+	s = WSASocket(domain, type, protocol, NULL, 0, WSA_FLAG_OVERLAPPED);
- 	if (s == INVALID_SOCKET) {
- 		/*
- 		 * WSAGetLastError() values are regular BSD error codes
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 08b83fe..1690098 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -177,6 +177,12 @@ int mingw_rmdir(const char *path);
- int mingw_open (const char *filename, int oflags, ...);
- #define open mingw_open
- 
-+ssize_t mingw_read(int fd, void *buf, size_t count);
-+#define read mingw_read
-+
-+ssize_t mingw_write(int fd, const void *buf, size_t count);
-+#define write mingw_write
-+
- int mingw_fgetc(FILE *stream);
- #define fgetc mingw_fgetc
- 
-
-
-
+Yeah, sorry, I noticed this right after sending and tested with that
+as well. My results were the same :/
 
 -- 
 -- 
