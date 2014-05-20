@@ -1,96 +1,104 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [ANNOUNCE] git reintegrate v0.3; manager of integration branches
-Date: Tue, 20 May 2014 17:54:23 -0500
-Message-ID: <CAMP44s03--Y8FJigWFw3kniULmUGNA7+8U=fvHn0QoC2K_eO1A@mail.gmail.com>
-References: <53795175664d5_10da88d308ce@nysa.notmuch>
-	<xmqqha4lxyqt.fsf@gitster.dls.corp.google.com>
-	<537bc3e1c605c_a6f166b3088f@nysa.notmuch>
-	<xmqqtx8krvem.fsf@gitster.dls.corp.google.com>
-	<537bcbf7efd4_1d08f2d2f8a7@nysa.notmuch>
-	<xmqqa9acrrsv.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 21 00:54:30 2014
+From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+Subject: [PATCH] Add an explicit GIT_DIR to the list of excludes
+Date: Tue, 20 May 2014 16:26:27 -0700
+Message-ID: <1400628387-9557-1-git-send-email-pasha.bolokhov@gmail.com>
+Cc: jrnieder@gmail.com, git@vger.kernel.org,
+	Pasha Bolokhov <pasha.bolokhov@gmail.com>
+To: pclouds@gmail.com
+X-From: git-owner@vger.kernel.org Wed May 21 01:27:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmsvT-0005kN-VF
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 00:54:28 +0200
+	id 1WmtR3-0004ma-11
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 01:27:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750987AbaETWyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 18:54:24 -0400
-Received: from mail-qg0-f43.google.com ([209.85.192.43]:62723 "EHLO
-	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750737AbaETWyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 18:54:24 -0400
-Received: by mail-qg0-f43.google.com with SMTP id 63so1923596qgz.2
-        for <git@vger.kernel.org>; Tue, 20 May 2014 15:54:23 -0700 (PDT)
+	id S1751561AbaETX04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 19:26:56 -0400
+Received: from mail-pb0-f50.google.com ([209.85.160.50]:38555 "EHLO
+	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868AbaETX0z (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 19:26:55 -0400
+Received: by mail-pb0-f50.google.com with SMTP id ma3so774802pbc.23
+        for <git@vger.kernel.org>; Tue, 20 May 2014 16:26:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=vCV001cZ/A6fHSnt9/s4usZs0dPLg8uUuPS8p4cWFCE=;
-        b=KXpG4NbaZa6LJs7nY6FyhiT7Dus3oIUSIR7XpcdM/THDrtQhr9ltQL63Qi6ZULXorl
-         DqMg929fqShzXb0B1oos0UsTGAvD+wbf22X344LLzLph/i1if7H9qjVmX47EBwuIte3b
-         Hlhr2nLuUtSiJNO3owUCsQqut/nIyPlukcNhNQ4oV9k+PihV8kIqVN/xelcCt33ADCoe
-         6eO2rlpoRC2pf94krNCPWvfJXvqxatr/W3+xGD67l/kX4oyuD/Wo7iPDBmDoOVlyrs3E
-         Qtl1xdnzasT8h+3biX5JRZffFxnY8kY2uOBGY95wxIpBnVg5LTPXUoF2eIggLb7000oR
-         FbZA==
-X-Received: by 10.140.36.149 with SMTP id p21mr61340916qgp.54.1400626463464;
- Tue, 20 May 2014 15:54:23 -0700 (PDT)
-Received: by 10.140.19.242 with HTTP; Tue, 20 May 2014 15:54:23 -0700 (PDT)
-In-Reply-To: <xmqqa9acrrsv.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=SMDzcBjmJ2b7/Sof70dyZEucK7dInWSAh0sZhO14b2A=;
+        b=JcuSUAZqcbzRZ2SWMd6SBwKaylVN9f378YGqJipi85frVrydT+atRdYuC/hgBVjVQk
+         32ntcfvZL4JdULjPVuHX/1vf1lt/IoDgZNiAf8qWxlISdmcF7B2lyLiEaBhbc78gEzTA
+         v3RqwpyBhM+yEdUie45N1vdOZZTb3Nn7MzsWlxWBhAGiUoO9Y/8JvPp/xlo9NShLGwDB
+         j17Mu0VA6qdnkt2Uo/n92GVaa7MTei+Oin8J/0C1EVTFqQ+mn2pB0c41dw+nlCJj5UM8
+         b6mRlCbFICRjWjFGR9obBBdVnGEMHh5Irt3dh0eiR3a2YvbU6RMVthhy70R/2A2CaV/k
+         2ezg==
+X-Received: by 10.68.132.42 with SMTP id or10mr54086488pbb.80.1400628414819;
+        Tue, 20 May 2014 16:26:54 -0700 (PDT)
+Received: from ani.gv.shawcable.net (S0106586d8f8ca92a.gv.shawcable.net. [96.54.196.148])
+        by mx.google.com with ESMTPSA id pz10sm588233pbb.33.2014.05.20.16.26.53
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 20 May 2014 16:26:54 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249760>
 
-On Tue, May 20, 2014 at 5:47 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
->
->> I'm not sure what would be the usefulness of using things like
->> 'xx/topic~4'.
->
-> As a notation it is not very pretty ;-).
->
-> Imagine that xx/topic is about a multistep introduction of a
-> backward incompatible feature.  The beginning part of the series up
-> to xx/topic~4 are the step to start warning (i.e. "will change---do
-> this to keep the old one or do that to live in the future"),
-> xx/topic~3..xx/topic~1 are the next step to flip the default and
-> still keep warning (i.e. "have changed---do this to keep the old one
-> or do that to live in the present"), and the final xx/topic is the
-> endgame where everybody lives with the new default with no warning,
-> without having to know what the old default was.
->
-> While the topic is being prepared for the next release, the insn
-> sheet for 'jch' would have xx/topic~4 before "match next" marker,
-> and then an entry for xx/topic~1 somewhere after it, and finally an
-> entry for xx/topic (i.e. the tip, final commit).  When the first
-> step cooked well enough in 'next', selected entries of 'jch' insn
-> sheet before "match next" ones are used to merge them to 'master'
-> and the part up to xx/topic~4 (but not later patches on the topic
-> branch) will be part of the upcoming release.
->
-> You could simulate that with multiple branches stacked on top of
-> each other, but there are times when keeping things together in a
-> single branch is more handy.
->
-> In restrospect, if I found xx/topic~4 too ugly, I might have instead
-> made "branches stacked on top of each other" easier to manage, but
-> having Reintegrate support "in the middle of a branch" was simpler.
-> They are both OK solutions to the same problem, and I didn't have to
-> solve it both ways ;-)
+When an explicit '--git-dir' option points to a directory inside
+the work tree, git treats it as if it were any other directory.
+In particular, 'git status' lists it as untracked, while 'git add -A'
+stages the metadata directory entirely
 
-Yes, I see how xx/topic~4 would be useful in the instruction sheet, I
-just didn't see it would be useful to generate that from an existing
-integration branch. After the explanation above I see how it could be
-useful to some people (though not all). I'll implement that.
+Add GIT_DIR to the list of excludes in setup_standard_excludes(),
+while checking that GIT_DIR is not just '.git', in which case it
+would be ignored by default, and that GIT_DIR is inside GIT_WORK_TREE
 
+Although an analogous comparison of any given path against '.git'
+is done in treat_path(), this does not seem to be the right place
+to compare against GIT_DIR. Instead, the excludes provide an
+effective mechanism of ignoring a file/directory, and adding GIT_DIR
+as an exclude is equivalent of putting it into '.gitignore'. Function
+setup_standard_excludes() was chosen because that is the place where
+the excludes are initialized by the commands that are concerned about
+excludes
+
+Signed-off-by: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+---
+ dir.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/dir.c b/dir.c
+index 98bb50f..07e36f3 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1588,6 +1588,26 @@ void setup_standard_excludes(struct dir_struct *dir)
+ {
+ 	const char *path;
+ 	char *xdg_path;
++	const char *gitdir = get_git_dir();
++
++	/* Add git directory to the ignores first */
++	if (strcmp(gitdir, ".git") != 0) { /* "--git-dir" has been given */
++		char ngit[PATH_MAX + 1];
++
++		/*
++		 * See if GIT_DIR is inside the work tree; need to normalize
++		 * 'gitdir' but 'get_git_work_tree()' always appears absolute
++		 * and normalized
++		 */
++		normalize_path_copy(ngit, real_path(absolute_path(gitdir)));
++
++		if (dir_inside_of(ngit, get_git_work_tree()) >= 0) {
++			struct exclude_list *el = add_exclude_list(dir, EXC_CMDL,
++							"--git-dir option");
++
++			add_exclude(gitdir, "", 0, el, 0);
++		}
++	}
+ 
+ 	dir->exclude_per_dir = ".gitignore";
+ 	path = git_path("info/exclude");
 -- 
-Felipe Contreras
+1.9.1
