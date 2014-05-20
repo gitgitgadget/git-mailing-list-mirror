@@ -1,83 +1,110 @@
-From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-Subject: Re: EXT :Re: GIT and large files
-Date: Tue, 20 May 2014 23:01:34 +0400
-Message-ID: <20140520230134.25cbbffe1b0ce95de60024a5@domain007.com>
-References: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD53E@XMBVAG73.northgrum.com>
-	<xmqqmwec1i9f.fsf@gitster.dls.corp.google.com>
-	<C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD631@XMBVAG73.northgrum.com>
-	<xmqqoaysz59s.fsf@gitster.dls.corp.google.com>
-	<C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD670@XMBVAG73.northgrum.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: [RFC/PATCH v4 0/3] add performance tracing facility
+Date: Tue, 20 May 2014 21:11:06 +0200
+Message-ID: <537BA8CA.6070800@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Stewart, Louis (IS)" <louis.stewart@ngc.com>
-X-From: git-owner@vger.kernel.org Tue May 20 21:10:00 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBSWR52NQKGQEKNIBMCA@googlegroups.com Tue May 20 21:11:09 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBSWR52NQKGQEKNIBMCA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f59.google.com ([209.85.215.59])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmpQF-0005rV-D5
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 21:09:59 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751864AbaETTJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 15:09:55 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:36571 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808AbaETTJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 15:09:55 -0400
-X-Greylist: delayed 492 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 May 2014 15:09:54 EDT
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id s4KJ1XNp006669;
-	Tue, 20 May 2014 23:01:34 +0400
-In-Reply-To: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD670@XMBVAG73.northgrum.com>
-X-Mailer: Sylpheed 3.3.1 (GTK+ 2.10.14; i686-pc-mingw32)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249729>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBSWR52NQKGQEKNIBMCA@googlegroups.com>)
+	id 1WmpRL-0007pr-8A
+	for gcvm-msysgit@m.gmane.org; Tue, 20 May 2014 21:11:07 +0200
+Received: by mail-la0-f59.google.com with SMTP id ec20sf111439lab.14
+        for <gcvm-msysgit@m.gmane.org>; Tue, 20 May 2014 12:11:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=EBed5DXE5ZFJytQ273+XI5kQKP0bwePY3FyGlqLyHJQ=;
+        b=mu1ajp5a0IkMkpQ7osE+5q5dM0QbM1Z1pGJHKwO9enn62CHjMoupiOZDpvkqsvcfdm
+         /AAoEhD2DVmCM3+XjiPzw4f/2Z4KmsSB0LJMOOMTpws4j9bkj28A2jbRR1IV0t29WrTa
+         0cdXLNgYh7lSlYkOSm59OQDCb2b9i275HdwpLessEwICvoXO2Zg/Ddk0IbeejAaKEhq1
+         hZCN0Qr4kxrVaxERXnbC439E4mWFW6F71Y50FbQ9uVHV/1y9P0tooQHKNjyUw1PZcthw
+         w9YySwrQ6LZWQRyVOh45y51VLg4Jbuy6GeXWTnvUqGHYQwNp5MkGZ0mQspC/yJJ5xal/
+         yZaQ==
+X-Received: by 10.152.9.194 with SMTP id c2mr38623lab.20.1400613067063;
+        Tue, 20 May 2014 12:11:07 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.199.8 with SMTP id jg8ls79693lac.5.gmail; Tue, 20 May 2014
+ 12:11:05 -0700 (PDT)
+X-Received: by 10.152.203.226 with SMTP id kt2mr3693923lac.2.1400613065817;
+        Tue, 20 May 2014 12:11:05 -0700 (PDT)
+Received: from mail-ee0-x232.google.com (mail-ee0-x232.google.com [2a00:1450:4013:c00::232])
+        by gmr-mx.google.com with ESMTPS id g42si975066eev.1.2014.05.20.12.11.05
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 20 May 2014 12:11:05 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::232 as permitted sender) client-ip=2a00:1450:4013:c00::232;
+Received: by mail-ee0-f50.google.com with SMTP id e51so908716eek.9
+        for <msysgit@googlegroups.com>; Tue, 20 May 2014 12:11:05 -0700 (PDT)
+X-Received: by 10.14.184.68 with SMTP id r44mr6083457eem.116.1400613065736;
+        Tue, 20 May 2014 12:11:05 -0700 (PDT)
+Received: from [10.1.116.56] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id v47sm5926540eel.22.2014.05.20.12.11.04
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 20 May 2014 12:11:04 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::232
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249730>
 
-On Tue, 20 May 2014 18:18:08 +0000
-"Stewart, Louis (IS)" <louis.stewart@ngc.com> wrote:
+This is the POSIX port of the patches I typically use to track down msysgit
+performance issues (thus v4, the latest windows-only version is here [1]).
+Sebastian and Dscho thought this might be useful in core git, so here it is.
 
-> From you response then there is a method to only obtain the Project,
-> Directory and Files (which could hold 80 GBs of data) and not the
-> rest of the Repository that contained the full overall Projects?
+[1] https://github.com/msysgit/git/pull/46
 
-Please google the phrase "Git shallow cloning".
+Karsten Blees (3):
+  add high resolution timer function to debug performance issues
+  add trace_performance facility to debug performance issues
+  add command performance tracing to debug scripted commands
 
-I would also recommend to read up on git-annex [1].
+ Makefile         |   7 +++
+ cache.h          |  20 ++++++++
+ config.mak.uname |   1 +
+ git.c            |   2 +
+ trace.c          | 144 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 174 insertions(+)
 
-You might also consider using Subversion as it seems you do not need
-most benefits Git has over it and want certain benefits Subversion has
-over Git:
-* You don't need a distributed VCS (as you don't want each developer to
-  have a full clone).
-* You only need a single slice of the repository history at any given
-  revision on a developer's machine, and this is *almost* what
-  Subversion does: it will keep the so-called "base" (or "pristine")
-  versions of files comprising the revision you will check out, plus
-  the checked out files theirselves.  So, twice the space of the files
-  comprising a revision.
-* Subversion allows you to check out only a single folder out of the
-  entire revision.
-* IIRC, subversion supports locks, when a developer might tell the
-  server they're editing a file, and this will prevent other devs from
-  locking the same file.  This might be used to serialize editions of
-  huge and/or unmergeable files.  Git can't do that (without
-  non-standard tools deployed on the side or a centralized "meeting
-  point" repository).
+-- 
+1.9.2.msysgit.0.493.g47a82c3
 
-My point is that while Git is fantastic for managing source code
-projects and project of similar types with regard to their contents,
-it seems your requirements are mainly not suitable for the use case
-Git is best tailored for.  Your apparent lack of familiarity with Git
-might as well bite you later should you pick it right now.  At least
-please consider reading a book or some other introduction-level
-material on Git to get the feeling of typical workflows used with it.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-1. https://git-annex.branchable.com/
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
