@@ -1,113 +1,114 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] t6006-*.sh: Fix truncation tests
-Date: Tue, 20 May 2014 17:43:31 +0100
-Message-ID: <537B8633.602@ramsay1.demon.co.uk>
-References: <537B5E8C.3070803@ramsay1.demon.co.uk> <20140520141936.GA30187@ashu.dyn1.rarus.ru> <537B6E42.8040308@ramsay1.demon.co.uk> <20140520160213.GA2947@ashu.dyn1.rarus.ru>
+From: "Stewart, Louis (IS)" <louis.stewart@ngc.com>
+Subject: RE: EXT :Re: GIT and large files
+Date: Tue, 20 May 2014 16:53:15 +0000
+Message-ID: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD5D7@XMBVAG73.northgrum.com>
+References: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD53E@XMBVAG73.northgrum.com>
+ <CALygMcCifDd4LAddZJ4tNcqqwBSvb6BGzTODHBzshBOjCwSrHQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1251
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Alexey Shumkin <alex.crezoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 18:45:38 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Gary Fixler <gfixler@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 18:54:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmnAW-0003YE-Jy
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 18:45:36 +0200
+	id 1WmnJP-0003CS-N5
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 18:54:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753856AbaETQnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 12:43:37 -0400
-Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:45639 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750745AbaETQng (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 12:43:36 -0400
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id EFA18AC4093;
-	Tue, 20 May 2014 17:43:38 +0100 (BST)
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id B909AAC407F;
-	Tue, 20 May 2014 17:43:38 +0100 (BST)
-Received: from [192.168.254.1] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
-	Tue, 20 May 2014 17:43:38 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
-In-Reply-To: <20140520160213.GA2947@ashu.dyn1.rarus.ru>
-X-MDF-HostID: 17
+	id S1753667AbaETQyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 12:54:43 -0400
+Received: from xspv0103.northgrum.com ([134.223.120.78]:23907 "EHLO
+	xspv0103.northgrum.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751947AbaETQym (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 12:54:42 -0400
+Received: from XHTV0001.northgrum.com (unknown [134.223.80.10]) by xspv0103.northgrum.com with smtp
+	(TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+	 id 01d3_b15b_3bf753a6_c696_449e_a7de_b721f3259a98;
+	Tue, 20 May 2014 11:54:40 -0500
+Received: from XHTVAG07.northgrum.com (134.223.82.84) by
+ XHTV0001.northgrum.com (134.223.80.10) with Microsoft SMTP Server (TLS) id
+ 14.3.174.1; Tue, 20 May 2014 11:53:16 -0500
+Received: from XMBVAG73.northgrum.com ([169.254.4.90]) by
+ XHTVAG07.northgrum.com ([134.223.82.84]) with mapi id 14.03.0174.001; Tue, 20
+ May 2014 11:53:16 -0500
+Thread-Topic: EXT :Re: GIT and large files
+Thread-Index: AQHPdEXEW1c/IYcEWUG014woCyK2DJtJq1FwgAAD+7A=
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.223.82.117]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249699>
 
-On 20/05/14 17:02, Alexey Shumkin wrote:
-> On Tue, May 20, 2014 at 04:01:22PM +0100, Ramsay Jones wrote:
->> On 20/05/14 15:19, Alexey Shumkin wrote:
->>> On Tue, May 20, 2014 at 02:54:20PM +0100, Ramsay Jones wrote:
->>>>
->>>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
->>>> ---
->>>>
->>>> Hi Alexey,
->>>>
->>>> If you need to re-roll your 'as/pretty-truncate' branch, could
->>>> you please squash the relevant parts of this patch into the
->>>> corresponding patches of your patch series. (ie this is a patch
->>>> against the head of the current pu branch ...).
->>>>
->>>> Without this patch I get:
->>>>
->>>>   $ ./t6006-rev-list-format.sh
->>>>   ok 1 - setup
->>>>   ok 2 - format percent
->>>>   ok 3 - format hash
->>>>   ok 4 - format tree
->>>>   ok 5 - format parents
->>>>   ok 6 - format author
->>>>   ok 7 - format committer
->>>>   ok 8 - format encoding
->>>>   ok 9 - format subject
->>>>   ./t6006-rev-list-format.sh: 152: ./t6006-rev-list-format.sh: Syntax error: "(" unexpected
->>>>   FATAL: Unexpected exit with code 2
->>>>   $ 
->>> Ooops, my fault.
->>>>
->>>> (if you have bash as /bin/sh you get different but related errors).
->>>> The additional quoting suppresses the 'command redirection' errors, etc...
->>> It's strange but I do have Bash as /bin/sh and unfortunately I have no
->>> this error
->>
->> Hmm, I see this:
->>
->>   $ bash t6006-rev-list-format.sh -i
-> AFAIK, this is not "running Bash as /bin/sh" :)
-> Maybe I'm wrong but Bash as /bin/sh is:
->   $ ls -l /bin/sh
->   lrwxrwxrwx 1 root root 4 May 12 18:35 /bin/sh -> bash
-
-Ah yes, I keep forgetting that bash behaves differently when invoked as 'sh'.
-(i.e. it enters 'posix mode' in this case).
-
-Indeed, this is (roughly) equivalent to:
-
-  $ bash --posix t6006-rev-list-format.sh
-  ok 1 - setup
-  ok 2 - format percent
-  ok 3 - format hash
-  ...
-  ok 52 - oneline with empty message
-  ok 53 - single-character name is parsed correctly
-  # passed all 53 test(s)
-  1..53
-  $ 
-
-... which works.
-
-Thanks again.
-
-ATB
-Ramsay Jones
+VGhlIGZpbGVzIGluIHF1ZXN0aW9uIHdvdWxkIGJlIGluIGRpcmVjdG9yeSBjb250YWluaW5nIG1h
+bnkgZmlsZXMgc29tZSBzbWFsbCBvdGhlciBodWdlIChleGFtcGxlOiB0ZXh0IGZpbGVzLCBkb2Nz
+LGFuZCBqcGdzIGFyZSBNYnMsIGJ1dCBleGVjdXRhYmxlcyBhbmQgb3ZhIGltYWdlcyBhcmUgR0Jz
+LCBldGMpLg0KDQpMb3UNCg0KRnJvbTogR2FyeSBGaXhsZXIgW21haWx0bzpnZml4bGVyQGdtYWls
+LmNvbV0gDQpTZW50OiBUdWVzZGF5LCBNYXkgMjAsIDIwMTQgMTI6MDkgUE0NClRvOiBTdGV3YXJ0
+LCBMb3VpcyAoSVMpDQpDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDogRVhUIDpSZTog
+R0lUIGFuZCBsYXJnZSBmaWxlcw0KDQpUZWNobmljYWxseSB5ZXMsIGJ1dCBmcm9tIGEgcHJhY3Rp
+Y2FsIHN0YW5kcG9pbnQsIG5vdCByZWFsbHkuIEZhY2Vib29rIHJlY2VudGx5IHJldmVhbGVkIHRo
+YXQgdGhleSBoYXZlIGEgNTRHQiBnaXQgcmVwb1sxXSwgYnV0IEkgZG91YnQgaXQgaGFzIDIwK0dC
+IGZpbGVzIGluIGl0LiBJJ3ZlIHB1dCAxOEdCIG9mIHBob3RvcyBpbnRvIGEgZ2l0IHJlcG8sIGJ1
+dCBldmVyeXRoaW5nIGFib3V0IHRoZSBwcm9jZXNzIHdhcyBmYWlybHkgcGFpbmZ1bCwgYW5kIEkg
+ZG9uJ3QgcGxhbiB0byBkbyBpdCBhZ2Fpbi4NCkFyZSB5b3VyIGZpbGVzIG5vbi1tZXJnZWFibGUg
+YmluYXJpZXMgKGUuZy4gdmlkZW9zKT8gVGhlIGJpZ2dlc3QgcHJvYmxlbSBoZXJlIGlzIHdpdGgg
+YnJhbmNoaW5nIGFuZCBtZXJnaW5nLiBDb25mbGljdCByZXNvbHV0aW9uIHdpdGggbm9uLW1lcmdl
+YWJsZSBhc3NldHMgZW5kcyB1cCBhbiB1cy12cy10aGVtIGZpZ2h0LCBhbmQgSSBkb24ndCB1bmRl
+cnN0YW5kIGFsbCBvZiB0aGUgcGFydGljdWxhcnMgb2YgdGhhdC4gRnJvbSBnaXQncyBzdGFuZHBv
+aW50IGl0J3Mgc2ltcGxlIC0geW91IGp1c3QgaGF2ZSB0byBjaG9vc2Ugb25lIG9yIHRoZSBvdGhl
+ci4gRnJvbSBhIHdvcmtmbG93IHN0YW5kcG9pbnQsIHlvdSBlbmQgdXAgY2F1c2luZyB0cm91Ymxl
+IGlmIHR3byBwZW9wbGUgaGF2ZSBjaGFuZ2VkIGFuIGFzc2V0LCBhbmQgYm90aCBwZW9wbGUgY29u
+c2lkZXIgdGhlaXIgY2hhbmdlIGltcG9ydGFudC4gQ2VudHJhbGl6ZWQgc3lzdGVtcyBnZXQgYXJv
+dW5kIHRoaXMgcHJvYmxlbSB3aXRoIGxvY2tzLg0KR2l0IGNvdWxkIGRvIHRoaXMsIGFuZCBJJ3Zl
+IHRob3VnaHQgYWJvdXQgaXQgcXVpdGUgYSBiaXQuIEkgd29yayBpbiBnYW1lcyAtIHdlIGhhdmUg
+Y29kZSwgYnV0IGFsc28gYSBsb3Qgb2YgYmluYXJpZXMsIHRoYXQgSSdkIGxpa2UgdG8ga2VlcCBp
+biBzeW5jIHdpdGggdGhlIGNvZGUuIEZvciBhd2hpbGUgSSBjb25zaWRlcmVkIHN1Z2dlc3Rpbmcg
+c29tZSBpZGVhcyB0byB0aGlzIGdyb3VwLCBidXQgSSdtIHByZXR0eSBzdXJlIHRoZSBsb2NraW5n
+IGlzc3VlIG1ha2VzIGl0IGEgbm9uLXN0YXJ0ZXIuIFRoZSBiYXNpYyBpZGVhIC0gc2tpcHBpbmcg
+bG9ja2luZyBmb3IgdGhlIG1vbWVudCAtIHdvdWxkIGJlIHRvIGFsbG93IHNldHRpbmcgZ2l0IGF0
+dHJpYnV0ZXMgYnkgZmlsZSB0eXBlLCBmaWxlIHNpemUgdGhyZXNob2xkLCBmb2xkZXIsIGV0Yy4s
+IHRvIGFsbG93IGdpdCB0byBrbm93IHRoYXQgc29tZSBmaWxlcyBhcmUgY29uc2lkZXJlZCAiYmln
+ZmlsZXMuIiBUaGVzZSBjb3VsZCBiZSBwbGFjZWQgaW50byB0aGUgb2JqZWN0cyBmb2xkZXIsIGJ1
+dCBJJ2QgYWN0dWFsbHkgcHJlZmVyIHRoZXkgZ28gaW50byBhIC5naXQvYmlnZmlsZSBmb2xkZXIu
+IFRoZXknZCBzdGlsbCBiZSBzYXZlZCBhcyBjb250ZW50cyB1bmRlciB0aGVpciBoYXNoLCBidXQg
+YSBub3JtYWwgZ2l0IHRyYW5zZmVyIHdvdWxkbid0IHNlbmQgdGhlbS4gVGhleSdkIGJlIGluIHRo
+ZSB0cmVlIGFzICdiaWcnIG9yICdiaWdmaWxlJyAoaW5zdGVhZCBvZiAnYmxvYicsICd0cmVlJywg
+b3IgJ2NvbW1pdCcgKGZvciBzdWJtb2R1bGVzKSkuDQoNCkdpdCB3b3VsZCB3YXJuIHlvdSBvbiBw
+dXNoIHRoYXQgdGhlcmUgd2VyZSBiaWdmaWxlcyB0byBzZW5kLCBhbmQgeW91IGNvdWxkIGFkZCwg
+c2F5LCAtLXdpdGgtYmlnIHRvIGFsc28gc2VuZCB0aGVtLCBvciBzZW5kIHRoZW0gbGF0ZXIgd2l0
+aCwgc2F5LCBgZ2l0IHB1c2ggLS1iaWdgLiBUaGV5J2Qgc2ltcGx5IGJlIHppcHBlZCB1cCBhbmQg
+c2VudCBvdmVyLCB3aXRob3V0IGFueSBwYWNrZmlsZSBmYW5jaW5lc3MuIFdoZW4geW91IGNsb25l
+LCB5b3Ugd291bGRuJ3QgZ2V0IHRoZSBiaWdmaWxlcywgdW5sZXNzIHlvdSBzcGVjaWZpZWQgLS13
+aXRoLWJpZywgYW5kIGl0IHdvdWxkIHdhcm4geW91IHRoYXQgdGhlcmUgYXJlIGFsc28gYmlnZmls
+ZXMsIGFuZCB0ZWxsIHlvdSB3aGF0IGNvbW1hbmQgdG8gcnVuIHRvIGdldCBhbHNvIGdldCB0aGVt
+IChgZ2l0IGZldGNoIC0tYmlnYCwgcGVyaGFwcykuIEdpdCBzdGF0dXMgd291bGQgYWx3YXlzIGxl
+dCB5b3Uga25vdyBpZiB5b3Ugd2VyZSBtaXNzaW5nIGJpZ2ZpbGVzLiBJIHRoaW5rIGhvcHBpbmcg
+YXJvdW5kIGJldHdlZW4gY29tbWl0cyB3b3VsZCBmb2xsb3cgdGhlIHNhbWUgc3RyYXRlZ3ksIHlv
+dSdkIGFsd2F5cyBoYXZlIHRvLCBlLmcuIGBnaXQgY2hlY2tvdXQgZm9vIC0td2l0aC1iaWdgLCBv
+ciBgZ2l0IGNoZWNrb3V0IGZvb2AgYW5kIHRoZW4gYGdpdCB1cGRhdGUgYmlnYCAob3Igd2hhdGV2
+ZXIgLSBJJ20gbm90IG1hcnJpZWQgdG8gYW55IG9mIHRoZXNlIG5hbWVzKS4NCg0KUmVzb2x2aW5n
+IGNvbmZsaWN0cyBvbiBtZXJnZSB3b3VsZCBzaW1wbHkgaGF2ZSB0byBiZSB1cCB0byB5b3UuIEl0
+IHdvdWxkIGJlIGRvY3VtZW50ZWQgY2xlYXJseSB0aGF0IHlvdSdyZSBlbnRlcmluZyB3ZWlyZCB0
+ZXJyaXRvcnksIGFuZCB0aGF0IHlvdXIgdGVhbSBoYXMgdG8gZGVhbCB3aXRoIGJpZ2ZpbGVzIHNv
+bWVob3csIHBlcmhhcHMgd2l0aCBzb21lIHN1Z2dlc3RlZCBzdHJhdGVnaWVzICgiUGFzcyB0aGUg
+Y29uY2g/IikuIEkgY291bGQgaW1hZ2luZSBzb21lIHN0cmF0ZWdpZXMgZm9yIHRoaXMuIE1heWJl
+IGJpZ2ZpbGVzIHJlcXVpcmUgY29ubmVjdGluZyB0byBhIGJsZXNzZWQgcmVwbyB0byBncmFiIHRo
+ZSByaWdodCB0byBtYWtlIGEgY29tbWl0IG9uIGl0LiBUaGF0IGhhcyBtYW55IHByb2JsZW1zLCBv
+ZiBjb3Vyc2UsIGFuZCBub3cgSSBjYW4gZmVlbCBldmVyeW9uZSByZWFkaW5nIHRoaXMgc2hpZnRp
+bmcgdW5lYXNpbHkgaW4gdGhlaXIgc2VhdHMgOikNCi1nDQoNClsxXSBodHRwczovL3R3aXR0ZXIu
+Y29tL2Zlcm9zcy9zdGF0dXMvNDU5MjU5NTkzNjMwNDMzMjgwDQoNCk9uIFR1ZSwgTWF5IDIwLCAy
+MDE0IGF0IDg6MzcgQU0sIFN0ZXdhcnQsIExvdWlzIChJUykgPGxvdWlzLnN0ZXdhcnRAbmdjLmNv
+bT4gd3JvdGU6DQpDYW4gR0lUIGhhbmRsZSB2ZXJzaW9uaW5nIG9mIGxhcmdlIDIwKyBHQiBmaWxl
+cyBpbiBhIGRpcmVjdG9yeT8NCg0KTG91IFN0ZXdhcnQNCkFPQ1dTIFNvZnR3YXJlIENvbmZpZ3Vy
+YXRpb24gTWFuYWdlbWVudA0KNzU3LTI2OS0yMzg4DQoNCi0tDQpUbyB1bnN1YnNjcmliZSBmcm9t
+IHRoaXMgbGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZ2l0IiBpbg0KdGhlIGJvZHkg
+b2YgYSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcNCk1vcmUgbWFqb3Jkb21v
+IGluZm8gYXQgwqBodHRwOi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwNCg0K
