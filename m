@@ -1,155 +1,120 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v8 25/44] receive-pack.c: use a reference transaction for
- updating the refs
-Date: Tue, 20 May 2014 13:37:47 -0700
-Message-ID: <CAL=YDWnaAJ+Ck9Mt462T2zp9KOFaDAGeXKFFH2qJmjb1gj8SbQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v8 26/44] fast-import.c: use a ref transaction when
+ dumping tags
+Date: Tue, 20 May 2014 13:38:57 -0700
+Message-ID: <20140520203857.GS12314@google.com>
 References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
-	<1400174999-26786-26-git-send-email-sahlberg@google.com>
-	<20140520194246.GR12314@google.com>
+ <1400174999-26786-27-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 22:37:53 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Tue May 20 22:39:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmqnI-0005Cg-HC
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 22:37:53 +0200
+	id 1WmqoU-0007Ps-8T
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 22:39:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbaETUht (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 16:37:49 -0400
-Received: from mail-ve0-f176.google.com ([209.85.128.176]:38684 "EHLO
-	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750982AbaETUhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 16:37:48 -0400
-Received: by mail-ve0-f176.google.com with SMTP id jz11so1322462veb.35
-        for <git@vger.kernel.org>; Tue, 20 May 2014 13:37:47 -0700 (PDT)
+	id S1750850AbaETUjB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 16:39:01 -0400
+Received: from mail-pa0-f51.google.com ([209.85.220.51]:33575 "EHLO
+	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716AbaETUjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 16:39:00 -0400
+Received: by mail-pa0-f51.google.com with SMTP id kq14so666635pab.10
+        for <git@vger.kernel.org>; Tue, 20 May 2014 13:39:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=RafB14Ghlp6897RmVT51c1z2hD+ICyU3ueserq9IBkE=;
-        b=LwY31qvDGPTRRUQvPcvK+IZgxNRE19x4RuQHVQICqiHOkeaPVc5lBkOR8pjwHYT76j
-         goBUh6xO5TgjHcywZRe9rIgepyLhydoE96jC/1PCCJai+d/bFlkkOgbCxC3KmZfUMGLP
-         a4oZhTF8N7ekzlla1+7jqzc9i6ZO9FN4E/IDz9uz4k/a7DkLUv70HfoQF+kpp82wx/+V
-         j1u9l+KWEc1G7WsIO78NHeDUH/7tYXitRtpmedF2A/LEwPAt+xo4Ec1J1qTOX6MWIOwW
-         dpDST8rtOI0R7b6H2Sm6cdQ1VYwiw9oMjdkB+Lh6Y7T2J/pdfOGRrU1QF1pPnOdm9oW9
-         OhKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=RafB14Ghlp6897RmVT51c1z2hD+ICyU3ueserq9IBkE=;
-        b=jE0kUOJVmRAKHjoGbRE0wRYT+VOyUAkl/w/xqq1efK1wm9u6RiCuM/ajIRq+fnO0VV
-         rdlFRLPDdLAFANJXmOT/0zYYr5bz4onyWu3KT8NT9HR2CVDlt4qwogUEvyg9CfuGCDWW
-         mZuq0S59GI2bdS8u9hg8cbe9ZZ9o6AEPz8vOAYvK7T3KEyFV9GqZzMwW6M3wDeiQjmUZ
-         X2osf9gW1yXwlDHQR8mT6jzNrjf6kddD94ntcP7uKa6c4HfBQryJAZJmmB26ZCSOvyI9
-         9oL6sGCF1MQTSzkZQx7GHMxTs3V93aRZSNQ9VfpitGUle6FAZHQy9YbxD7gmeJoUBFuo
-         RDUA==
-X-Gm-Message-State: ALoCoQm6Gr5lzCI9fO3dhPPxJ4cw/sSfr9sq2mtUqA+6kj9EPmba/9UFyLgA7x0J6GoJzCnLVXeL
-X-Received: by 10.52.175.69 with SMTP id by5mr4963784vdc.16.1400618267363;
- Tue, 20 May 2014 13:37:47 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Tue, 20 May 2014 13:37:47 -0700 (PDT)
-In-Reply-To: <20140520194246.GR12314@google.com>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=MvMMjI3wZ24Q7e/aapATaclOg1l09n+TUOnIPTFxF1Y=;
+        b=DpNYO1EoIHUxVMwmCeoZ4iCi3Prm1vLzvJc4WH4YfcYUMFFmngCoGHrx0aEDaAfby3
+         ZfbcoWt3hV/orLMI7kYkBttyFnPEaeQ+h7C0xSgYBM/++a3Gd/YhsTG5VpT6USClUg/4
+         74CPpo48kpUDbBh/HQ/QPc//BDgCF9HPoCljhu0ZPxt+cBpoO0LTlKwDQ8XXoeTI/c9c
+         Kd/qktfESqMxhTwNLdOJxV5hgwTKVSAwh8uY8UY+aRTvUaQY5kl2vOlegDLb8jHdclDe
+         gNssNpzTTsPYa+Nm43bs/gKk5b9iHD2bhZCNlP18v60sozke4rdoeb+jU+ePaGtgjUWj
+         L2ww==
+X-Received: by 10.68.219.162 with SMTP id pp2mr53674279pbc.47.1400618340205;
+        Tue, 20 May 2014 13:39:00 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id bu1sm4584798pbb.54.2014.05.20.13.38.59
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 20 May 2014 13:38:59 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1400174999-26786-27-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249740>
 
-On Tue, May 20, 2014 at 12:42 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
->
->> Wrap all the ref updates inside a transaction to make the update atomic.
->
-> Interesting.
->
-> [...]
->> --- a/builtin/receive-pack.c
->> +++ b/builtin/receive-pack.c
->> @@ -46,6 +46,8 @@ static void *head_name_to_free;
->>  static int sent_capabilities;
->>  static int shallow_update;
->>  static const char *alt_shallow_file;
->> +static struct strbuf err = STRBUF_INIT;
->
-> I think it would be cleaner for err to be local.  It isn't used for
-> communication between functions.
+Ronnie Sahlberg wrote:
 
-Done.
+> [Subject: fast-import.c: use a ref transaction when dumping tags]
 
->
-> [...]
->> @@ -580,15 +581,9 @@ static const char *update(struct command *cmd, struct shallow_info *si)
->>                   update_shallow_ref(cmd, si))
->>                       return "shallow error";
->>
->> -             lock = lock_any_ref_for_update(namespaced_name, old_sha1,
->> -                                            0, NULL);
->> -             if (!lock) {
->> -                     rp_error("failed to lock %s", name);
->> -                     return "failed to lock";
->> -             }
->> -             if (write_ref_sha1(lock, new_sha1, "push")) {
->> -                     return "failed to write"; /* error() already called */
->> -             }
->> +             if (ref_transaction_update(transaction, namespaced_name,
->> +                                        new_sha1, old_sha1, 0, 1, &err))
->> +                     return "failed to update";
->
-> The original used rp_error to send an error message immediately via
-> sideband.  This drops that --- intended?
+This seems like an odd thing to do: either it would make sense to have
+a single transaction for all imported refs so all fail or succeed
+together, or there would be separate transactions for each ref.
 
-Oops. I misread it as a normal error()
+That said, I don't mind, particularly if it's a step on the way to
+using a single transaction for everything being dumped.
 
->
-> The old error string shown on the push status line was was "failed to
-> lock" or "failed to write" which makes it clear that the cause is
-> contention or database problems or filesystem problems, respectively.
-> After this change it would say "failed to update" which is about as
-> clear as "failed".
+[...]
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -1736,15 +1736,22 @@ static void dump_tags(void)
+>  {
+>  	static const char *msg = "fast-import";
+>  	struct tag *t;
+> -	struct ref_lock *lock;
+>  	char ref_name[PATH_MAX];
+> +	struct strbuf err = STRBUF_INIT;
+> +	struct ref_transaction *transaction;
+>  
+> +	transaction = ref_transaction_begin();
+>  	for (t = first_tag; t; t = t->next_tag) {
+> -		sprintf(ref_name, "tags/%s", t->name);
+> +		sprintf(ref_name, "refs/tags/%s", t->name);
 
-I changed it to return xstrdup(err.buf) which should be as detailed as
-we can get.
+Can this overflow the buffer?
 
->
-> Would it be safe to send err.buf as-is over the wire, or does it
-> contain information or formatting that wouldn't be suitable for the
-> client?  (I haven't thought this through completely yet.)  Is there
-> some easy way to distinguish between failure to lock and failure to
-> write?  Or is there some one-size-fits-all error for this case?
+> -		lock = lock_ref_sha1(ref_name, NULL);
+> -		if (!lock || write_ref_sha1(lock, t->sha1, msg) < 0)
+> -			failure |= error("Unable to update %s", ref_name);
+> +
+> +		if (ref_transaction_update(transaction, ref_name, t->sha1,
+> +					   NULL, 0, 0, &err)) {
+> +			failure |= 1;
+> +			break;
+> +		}
+>  	}
+> +	if (failure || ref_transaction_commit(transaction, msg, &err))
+> +		failure |= error("Unable to update %s", err.buf);
 
-I think err.buf is what we want.
+This 'if (failure || ...) failure |=' idiom seems strange.
+Is err.buf always set if failure is nonzero?
 
->
-> When the transaction fails, we need to make sure that all ref updates
-> emit 'ng' and not 'ok' in receive-pack.c::report (see the example at
-> the end of Documentation/technical/pack-protocol.txt for what this
-> means).  What error string should they use?  Is there some way to make
-> it clear to the user which ref was the culprit?
->
-> What should happen when checks outside the ref transaction system
-> cause a ref update to fail?  I'm thinking of
->
->  * per-ref 'update' hook (see githooks(5))
->  * fast-forward check
->  * ref creation/deletion checks
->  * attempt to push to the currently checked out branch
->
-> I think the natural thing to do would be to put each ref update in its
-> own transaction to start so the semantics do not change right away.
-> If there are obvious answers to all these questions, then a separate
-> patch could combine all these into a single transaction; or if there
-> are no obvious answers, we could make the single-transaction-per-push
-> semantics optional (using a configuration variable or protocol
-> capability or something) to make it possible to experiment.
+Elsewhere failure is 0 or -1 but this introduces the possibility for
+it to be temporarily 1.
 
-I changed it to use one transaction per ref for now.
+dump_branches could have caused failure to be -1 before dump_tags
+is called.  I think the intent is
 
-Please see the update ref-transactions branch.
+		if (ref_transaction_update(...)) {
+			failure |= error(...);
+			goto out;
+		}
+	}
+	if (ref_transaction_commit(...))
+		failure |= error(...);
+ out:
+	ref_transaction_free(transaction);
+	...
 
-Thanks!
+Thanks,
+Jonathan
