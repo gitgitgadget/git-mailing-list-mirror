@@ -1,73 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] rebase: test ack
-Date: Tue, 20 May 2014 08:13:27 -0700
-Message-ID: <xmqqvbt01o14.fsf@gitster.dls.corp.google.com>
-References: <1400447743-18513-1-git-send-email-mst@redhat.com>
-	<1400447743-18513-4-git-send-email-mst@redhat.com>
-	<xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
-	<20140520143850.GA13099@redhat.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
+Date: Tue, 20 May 2014 17:20:44 +0200
+Message-ID: <CALKQrgcdSgZ76hKR35SDxGHYQ_cE3toEXphDVSu99B-pbTsSNQ@mail.gmail.com>
+References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
+	<20140516084126.GB21468@sigill.intra.peff.net>
+	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
+	<537693aee4fdd_3e4812032fcc@nysa.notmuch>
+	<xmqq7g5i4r48.fsf@gitster.dls.corp.google.com>
+	<53795c3e58f73_10da88d30829@nysa.notmuch>
+	<xmqqha4lwj57.fsf@gitster.dls.corp.google.com>
+	<537B6CF5.4020808@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Tue May 20 17:13:39 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Git mailing list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue May 20 17:21:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmljV-0008LL-7N
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 17:13:37 +0200
+	id 1Wmlqd-0003lY-8B
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 17:20:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753035AbaETPNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 11:13:33 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63854 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751266AbaETPNd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 11:13:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7446517D5D;
-	Tue, 20 May 2014 11:13:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UTKmfvThKpBH+Lu/CO6khP1S9G0=; b=hidMEB
-	Ply7T7K93r1/WV2Vgt1CiDRyEocGj3WzKs+l+Kxs7Tl4qmpE3dqS1UpTZQayo5K8
-	gXB0vVHSQDAG7SQCQWY4npMfNV0Q6YH+UZgwArBblRQuk8bV4Tr7XjLj2RI6HpYz
-	nvDIuDk1oPzRmEozOwPla+3zfoKDTjwSi42Ok=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=JhcDyBrytz3k4gFI5Htidhz2ilS0iVZG
-	6msHn971IoMVDITuoZM6PdkIWQ2RB4C2VeGUsSVvRMNDEdBX9AKdmMDvreP03w+f
-	EVf2JSakdZIHHSCSCEYy7gMPT403uHv5Hn8d7feWxItd2Os8doxuf/Mr+Whnr5Sk
-	izIsSIsZ1KU=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6C08317D5C;
-	Tue, 20 May 2014 11:13:32 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5D75317D5A;
-	Tue, 20 May 2014 11:13:29 -0400 (EDT)
-In-Reply-To: <20140520143850.GA13099@redhat.com> (Michael S. Tsirkin's message
-	of "Tue, 20 May 2014 17:38:50 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4C926894-E031-11E3-BB70-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753741AbaETPUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 11:20:52 -0400
+Received: from mail12.copyleft.no ([188.94.218.224]:51769 "EHLO
+	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751062AbaETPUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 11:20:50 -0400
+Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
+	by mail12.copyleft.no with esmtp (Exim 4.76)
+	(envelope-from <johan@herland.net>)
+	id 1WmlqS-0001ZR-De
+	for git@vger.kernel.org; Tue, 20 May 2014 17:20:48 +0200
+Received: from mail-oa0-f47.google.com ([209.85.219.47])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1WmlqS-000MDi-6p
+	for git@vger.kernel.org; Tue, 20 May 2014 17:20:48 +0200
+Received: by mail-oa0-f47.google.com with SMTP id i7so689174oag.20
+        for <git@vger.kernel.org>; Tue, 20 May 2014 08:20:44 -0700 (PDT)
+X-Received: by 10.182.102.99 with SMTP id fn3mr43424768obb.57.1400599244480;
+ Tue, 20 May 2014 08:20:44 -0700 (PDT)
+Received: by 10.182.245.10 with HTTP; Tue, 20 May 2014 08:20:44 -0700 (PDT)
+In-Reply-To: <537B6CF5.4020808@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249694>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On Tue, May 20, 2014 at 4:55 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 05/19/2014 11:31 PM, Junio C Hamano wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>>> Where is git-imerge packaged?
+>>
+>> I didn't see it on the archive the said Ubuntu box slurps from, but
+>> I did not check all the other distros.
+>>
+>> Michael, do you know what distro folks are doing with imerge?  For
+>> the purpose of this thread, "I do not follow distros, and I do not
+>> know" is a perfectly acceptable answer, but it would be very
+>> relevant if your answer is "I suggested these distros to include it,
+>> but so far they have been uncooperative and I haven't had much
+>> success".
+>
+> I haven't heard of any Linux distros that have git-imerge packages.  I
+> just searched the package archives for Debian, Fedora, Gentoo, and Arch
+> without finding it.
 
-> Just to clarify I can post v2 of 4/4 without reposting 1-3 since they
-> are queued?
+FWIW; someone has made an AUR package (a user-contributed Arch package
+recipe) for git-imerge:
+https://aur.archlinux.org/packages/git-imerge-git/
 
-If you need to update anything queued only on 'pu' but not yet in
-'next', it is customary to resend the whole for everybody to see
-(what is already in 'next' should only be built upon incrementally
-and not updated with replacement patches), while noting which ones
-are the same as before.  Christian Couder has been doing it nicely
-in his recent rerolls (if the series were not in 'next', that is).
 
-Thanks.
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
