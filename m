@@ -1,119 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Windows: Allow using UNC path for git repository
-Date: Tue, 20 May 2014 12:33:19 -0700
-Message-ID: <xmqqppj8xn28.fsf@gitster.dls.corp.google.com>
-References: <20140519132334.GA1435@camelia.ucw.cz>
-	<xmqqy4xwxop7.fsf@gitster.dls.corp.google.com>
-	<20140520192132.GA7355@camelia.ucw.cz>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v8 25/44] receive-pack.c: use a reference transaction for
+ updating the refs
+Date: Tue, 20 May 2014 12:42:46 -0700
+Message-ID: <20140520194246.GR12314@google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+ <1400174999-26786-26-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>,  Erik Faye-Lund <kusmabite@gmail.com>,  msysGit <msysgit@googlegroups.com>,  Cezary Zawadka <czawadka@gmail.com>,  Eric Sunshine <sunshine@sunshineco.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBCG77UMM3EJRBBG452NQKGQEXXZ6T2Y@googlegroups.com Tue May 20 21:33:29 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBBG452NQKGQEXXZ6T2Y@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f186.google.com ([209.85.216.186])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Tue May 20 21:42:55 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBBG452NQKGQEXXZ6T2Y@googlegroups.com>)
-	id 1Wmpmw-0006Ye-8D
-	for gcvm-msysgit@m.gmane.org; Tue, 20 May 2014 21:33:26 +0200
-Received: by mail-qc0-f186.google.com with SMTP id x3sf229284qcv.13
-        for <gcvm-msysgit@m.gmane.org>; Tue, 20 May 2014 12:33:25 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wmpw6-0007Wg-QI
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 21:42:55 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751801AbaETTmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 15:42:50 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:57209 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766AbaETTmu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 15:42:50 -0400
+Received: by mail-pa0-f42.google.com with SMTP id rd3so626008pab.29
+        for <git@vger.kernel.org>; Tue, 20 May 2014 12:42:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=njoS7isxLVlmFBXSAJG84HYkoD5ZmArt+xLb5CotDRo=;
-        b=iQ8LbAYJypvN007+1jdlkYFTUFcrMGq5Mh4+k9CQFKS9se/ncpYZn+yEBnfrU+iC39
-         ZYsnIJIEQQYp5/JMGpdWc96NHavTkh3xVR2WG+6v371d4tE141fAdS1xy98W+dp+ZSaI
-         qySE0L2HPQXQMA1/l+KOI77uf2OEZi5sue7yPjulTA4NooGDx1ryh/20Og301v3k0vWc
-         hTtqeWGV0ElKWOmZd+x1pytKOPTaDbPJpbWEucvbXp+Lv064I9f9QSdoPKC2EwrqH2l/
-         3HJOc2DWvU5u31AH77d3SThGGOcB9Vme3B0kSH1t+ukvwQ39zWENiW27kJ6twWtKtX6b
-         woxA==
-X-Received: by 10.182.213.41 with SMTP id np9mr272816obc.3.1400614405498;
-        Tue, 20 May 2014 12:33:25 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.66.104 with SMTP id e8ls134447obt.44.gmail; Tue, 20 May
- 2014 12:33:24 -0700 (PDT)
-X-Received: by 10.183.11.102 with SMTP id eh6mr20675499obd.37.1400614404634;
-        Tue, 20 May 2014 12:33:24 -0700 (PDT)
-Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id k3si410792qcn.2.2014.05.20.12.33.24
-        for <msysgit@googlegroups.com>;
-        Tue, 20 May 2014 12:33:24 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 57D2F19077;
-	Tue, 20 May 2014 15:33:24 -0400 (EDT)
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4E05319076;
-	Tue, 20 May 2014 15:33:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F0EEB19071;
-	Tue, 20 May 2014 15:33:20 -0400 (EDT)
-In-Reply-To: <20140520192132.GA7355@camelia.ucw.cz> (Stepan Kasal's message of
-	"Tue, 20 May 2014 21:21:32 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 99E45E9E-E055-11E3-9EDF-B784E8FBB39C-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249736>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=mVCsbtHAoUJLHHzDhmbn74XWnVQD/QkPCfmbgSuAirg=;
+        b=ewdI9lSxkezODTkTNSImlKNNxj+qSDOT/Xn59z77noAgXmXWxjePNBGsStFKvlP7mY
+         bITRYE9Vs2jyG2OWzrd8cUcc+vAZyGWUreb87+emj55z1Svtfy/SUZ65mliX2v69kHSi
+         a428BSr82dpnjuh7oUw7+Xz1zPQsKQwxAQ8m5ey6Xz0Hg5geexqqT6yJ9cPCI0vk3JZe
+         hsR69S7Aya+iXwTndgpnpKbfPhiVZvkeiTY1SJEPzRN5Kn9zMVeMSF1MLk2AQBKloL/H
+         UsIYSHKGPfEfoDNl1und9+kHyTGQukqZdjcrSZrstdccQDLjUqOm2TENiM0nAVoTvOEK
+         M3Cw==
+X-Received: by 10.66.66.135 with SMTP id f7mr53524185pat.22.1400614969604;
+        Tue, 20 May 2014 12:42:49 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id iv2sm4477622pbc.19.2014.05.20.12.42.48
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 20 May 2014 12:42:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1400174999-26786-26-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249737>
 
-Stepan Kasal <kasal@ucw.cz> writes:
+Ronnie Sahlberg wrote:
 
-> Hello,
->
-> On Tue, May 20, 2014 at 11:57:56AM -0700, Junio C Hamano wrote:
->> It would be nice if somebody in the S-o-b chain can double-check
->> that the "combined" version is sane.  [...]
->
-> "Combined" was an unfortunate word.  There was a pair of successive
-> commits in msysgit all the time.  I just decided to submit them
-> squashed together.  I haven't changed the code, just created a new
-> commit message.
->
-> That said, reviewing the function is always useful, of course.
+> Wrap all the ref updates inside a transaction to make the update atomic.
 
-I did mis-read your message.  As the patch shows the current state
-that exists in msysgit that people are happy about, the function has
-already been reviewed by stakeholders, and I would be happy to apply
-it.
+Interesting.
 
-Thanks.
+[...]
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -46,6 +46,8 @@ static void *head_name_to_free;
+>  static int sent_capabilities;
+>  static int shallow_update;
+>  static const char *alt_shallow_file;
+> +static struct strbuf err = STRBUF_INIT;
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+I think it would be cleaner for err to be local.  It isn't used for
+communication between functions.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+[...]
+> @@ -580,15 +581,9 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+>  		    update_shallow_ref(cmd, si))
+>  			return "shallow error";
+>  
+> -		lock = lock_any_ref_for_update(namespaced_name, old_sha1,
+> -					       0, NULL);
+> -		if (!lock) {
+> -			rp_error("failed to lock %s", name);
+> -			return "failed to lock";
+> -		}
+> -		if (write_ref_sha1(lock, new_sha1, "push")) {
+> -			return "failed to write"; /* error() already called */
+> -		}
+> +		if (ref_transaction_update(transaction, namespaced_name,
+> +					   new_sha1, old_sha1, 0, 1, &err))
+> +			return "failed to update";
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+The original used rp_error to send an error message immediately via
+sideband.  This drops that --- intended?
+
+The old error string shown on the push status line was was "failed to
+lock" or "failed to write" which makes it clear that the cause is
+contention or database problems or filesystem problems, respectively.
+After this change it would say "failed to update" which is about as
+clear as "failed".
+
+Would it be safe to send err.buf as-is over the wire, or does it
+contain information or formatting that wouldn't be suitable for the
+client?  (I haven't thought this through completely yet.)  Is there
+some easy way to distinguish between failure to lock and failure to
+write?  Or is there some one-size-fits-all error for this case?
+
+When the transaction fails, we need to make sure that all ref updates
+emit 'ng' and not 'ok' in receive-pack.c::report (see the example at
+the end of Documentation/technical/pack-protocol.txt for what this
+means).  What error string should they use?  Is there some way to make
+it clear to the user which ref was the culprit?
+
+What should happen when checks outside the ref transaction system
+cause a ref update to fail?  I'm thinking of
+
+ * per-ref 'update' hook (see githooks(5))
+ * fast-forward check
+ * ref creation/deletion checks
+ * attempt to push to the currently checked out branch
+
+I think the natural thing to do would be to put each ref update in its
+own transaction to start so the semantics do not change right away.
+If there are obvious answers to all these questions, then a separate
+patch could combine all these into a single transaction; or if there
+are no obvious answers, we could make the single-transaction-per-push
+semantics optional (using a configuration variable or protocol
+capability or something) to make it possible to experiment.
+
+Hope that helps,
+Jonathan
