@@ -1,77 +1,87 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v5] format-patch --signature-file <file>
-Date: Tue, 20 May 2014 01:00:05 -0700
-Message-ID: <1400572806-21092-1-git-send-email-jmmahler@gmail.com>
-Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue May 20 10:14:50 2014
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] rebase -i: test "Nothing to do" case with autostash
+Date: Tue, 20 May 2014 08:55:13 +0200
+Message-ID: <1400568913-1340-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1400537120-9995-1-git-send-email-artagnon@gmail.com>
+Cc: ether@cpan.org, felipe.contreras@gmail.com,
+	philippe.vaucher@gmail.com, artagnon@gmail.com,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue May 20 10:16:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmeyG-0006ZX-0d
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 10:00:24 +0200
+	id 1WmdxW-0002MX-HX
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 08:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751779AbaETIAU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 04:00:20 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:36172 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751301AbaETIAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 04:00:20 -0400
-Received: by mail-ig0-f180.google.com with SMTP id c1so400405igq.13
-        for <git@vger.kernel.org>; Tue, 20 May 2014 01:00:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=EoAii/4wPLUib5+MNd2iXB6mERGD9qqVQJ4Pu+JqlLg=;
-        b=qUuaLjrFh2+mGSX2twn+kR6jQdH3oCFairGNiQR5lZLEFr7y4ppRCpKwaXiPsEhdxC
-         UhlXTf3E1DyxR3p4eW4oIwY5QmBzTWQIbN1W1zd/T5JlHCbOAT0lpB/JAJMw9Cm2FuSa
-         Q3W8iEiTy4/aWrKQ+TKv8E4noivduFHLyH9KN8EdIkQNCm5ShHntVNzDjDiRlGnryPpz
-         HECrp77V7ire1dgK2bueNDYYGHq2OlhGJSsXVaHuXS6OtS33wVfAv9Vl7Z+8T5rc2QXH
-         hWtnOoKW0nHy5bHuPQNAHDMyKfaJN61TNM+j7DMWhXV7t5Dt5Ls9D1xw/vRNo6vzvy+V
-         Be1g==
-X-Received: by 10.50.13.67 with SMTP id f3mr2550031igc.9.1400572819544;
-        Tue, 20 May 2014 01:00:19 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id lr6sm27183364igb.15.2014.05.20.01.00.16
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 20 May 2014 01:00:18 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Tue, 20 May 2014 01:00:14 -0700
-X-Mailer: git-send-email 2.0.0.rc3.4.g6308767.dirty
+	id S1751825AbaETGz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 02:55:28 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:37581 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751709AbaETGz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 02:55:27 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s4K6tI8F017012
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 20 May 2014 08:55:18 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s4K6tJgf031671;
+	Tue, 20 May 2014 08:55:19 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1WmdxH-0000MP-2p; Tue, 20 May 2014 08:55:19 +0200
+X-Mailer: git-send-email 2.0.0.rc3.499.gd6dc9ad
+In-Reply-To: <1400537120-9995-1-git-send-email-artagnon@gmail.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 20 May 2014 08:55:19 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s4K6tI8F017012
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1401173720.15521@G2JiBdxeYKIILUH6WFY0KA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249649>
 
-v5 of patch to add format-patch --signature-file <file> option.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Ram's patch lacks a test. Here it is. Fails without Ram's patch, and
+passes with it.
 
-This revision includes more suggestions from Jeff King and Junio C Hamano:
+Can be squashed into Ram's patch.
 
-  - Use git_config_pathname instead of git_config_string for ~ expansion.
+ t/t3420-rebase-autostash.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-  - Eliminated head/tail --lines which is not POSIX compliant.
-    Replaced with sed equivalents.
-
-  - Used test_config instead of git config which also handles unsetting.
-
-  - Use a DEFAULT_SIGNATURE variable to better describe its purpose
-    instead of git_version_string which could be confusing.
-
-
-Jeremiah Mahler (1):
-  format-patch --signature-file <file>
-
- Documentation/config.txt           |  4 ++++
- Documentation/git-format-patch.txt |  4 ++++
- builtin/log.c                      | 19 ++++++++++++++++++-
- t/t4014-format-patch.sh            | 32 ++++++++++++++++++++++++++++++++
- 4 files changed, 58 insertions(+), 1 deletion(-)
-
+diff --git a/t/t3420-rebase-autostash.sh b/t/t3420-rebase-autostash.sh
+index 90eb264..c2e9a4c 100755
+--- a/t/t3420-rebase-autostash.sh
++++ b/t/t3420-rebase-autostash.sh
+@@ -167,4 +167,21 @@ testrebase "" .git/rebase-apply
+ testrebase " --merge" .git/rebase-merge
+ testrebase " --interactive" .git/rebase-merge
+ 
++test_expect_success 'Abort rebase with --autostash' '
++	git log &&
++	echo new-content >file0 &&
++	(
++		write_script abort-editor.sh <<-\EOF &&
++			echo > "$1"
++		EOF
++		GIT_EDITOR=\"$(pwd)/abort-editor.sh\" &&
++		export GIT_EDITOR &&
++		test_must_fail git rebase -i --autostash HEAD^ &&
++		rm -f abort-editor.sh
++	) &&
++	git status &&
++	echo new-content >expected &&
++	test_cmp expected file0
++'
++
+ test_done
 -- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+2.0.0.rc3.499.gd6dc9ad
