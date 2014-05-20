@@ -1,93 +1,88 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH v2] format-patch --signature-file <file>
-Date: Mon, 19 May 2014 22:46:21 -0700
-Message-ID: <20140520054621.GA28317@hudson.localdomain>
-References: <1400203881-2794-1-git-send-email-jmmahler@gmail.com>
- <1400203881-2794-2-git-send-email-jmmahler@gmail.com>
- <20140516081445.GA21468@sigill.intra.peff.net>
- <20140517072548.GA18239@hudson.localdomain>
- <20140517074224.GA16697@sigill.intra.peff.net>
- <20140517085911.GA18862@hudson.localdomain>
- <20140517100013.GA18087@sigill.intra.peff.net>
- <20140517153943.GB31912@hudson.localdomain>
- <xmqqd2f93e0m.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
+Date: Mon, 19 May 2014 21:06:24 -0500
+Message-ID: <537ab8a0d1304_2edfa832fc53@nysa.notmuch>
+References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
+ <20140516084126.GB21468@sigill.intra.peff.net>
+ <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
+ <20140516225228.GA3988@sigill.intra.peff.net>
+ <5376f2ca5c90d_65b915db2f877@nysa.notmuch>
+ <20140517062413.GA13003@sigill.intra.peff.net>
+ <xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
+ <53795ef8e4023_10da88d30825@nysa.notmuch>
+ <xmqqppja2t8a.fsf@gitster.dls.corp.google.com>
+ <537a75e0a53b7_afee5d300f3@nysa.notmuch>
+ <xmqqzjidv1y4.fsf@gitster.dls.corp.google.com>
+ <xmqqvbt1uzo0.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 20 09:54:37 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 09:59:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wmcsh-0000bn-Ek
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 07:46:31 +0200
+	id 1WmZcr-00047d-4b
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 04:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751173AbaETFq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 01:46:27 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:39049 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750714AbaETFq0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 01:46:26 -0400
-Received: by mail-pa0-f54.google.com with SMTP id bj1so6734139pad.41
-        for <git@vger.kernel.org>; Mon, 19 May 2014 22:46:26 -0700 (PDT)
+	id S1753118AbaETCRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 May 2014 22:17:52 -0400
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:48499 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751660AbaETCRf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 May 2014 22:17:35 -0400
+Received: by mail-ob0-f181.google.com with SMTP id wm4so7186857obc.40
+        for <git@vger.kernel.org>; Mon, 19 May 2014 19:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=fKHp9vankrEFu0y5ygWQs4AJn10/5UMJCllXn1uyP6E=;
-        b=ZGXbL0LgF+jQ1rD6IGwrJoLFzEc1MNIXTrm+lAp/lXraUdad/brLmEDWmNYY9A5sxt
-         uTn5tJ4up0PTDE7AylDezGZ0Uq5p4rDwWW6MUwIMt/wGXay0IzveiLDQXwhXRBRmOjau
-         mfu9NtRk324o0Wb85yuuZZ/CGYC81vuQ9r8Rs9pG83zWw5cp1MQhC8TsqC1uHPJP3bjy
-         gXfHTM6MaJrL7zXBzUxmPWEV8mWNoTNCFdqeXkrRga2ndOHeW9QBDJ3MsHVsIBO9tLmW
-         yV8SVql/iXnL/cDh8UpO3RlIdr+hUDtWrSTVjU74LwpRDBalLATpwK/eT0Ayz46gu9Aa
-         Nz3g==
-X-Received: by 10.69.17.230 with SMTP id gh6mr48172274pbd.0.1400564786138;
-        Mon, 19 May 2014 22:46:26 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id qw8sm977301pbb.27.2014.05.19.22.46.22
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=JUfPIPaeRBFnPCzcUij4Mxefh8kIcqn1BMdED/wqoAY=;
+        b=Qf0N7cYc2aFnulfmtl8HJOtjowcHA59E8RR7OF2D+DKt5vII2WCnUB9ofN1gQezuQi
+         bQOIMkGw3RPIccviNS8pXK2BsC60GOfbYdI20uK4NS6R/MvuixAu3VdU6g5NVcF7VMQE
+         DyIUbI+c3D9JuzKc5SEvCiTYHxvlHj2qpbftlHRsWV9RaQAxnPJ32A8RXsE6m52AmP2z
+         zBsrHpD87s/DTI7eRFYEN5+ToXVReBei3/U90NVip8V6ee1WdiE4T+qawPFiGxJdfWlg
+         tpq97ePx12J/RAsVF3HQSz3SKYn9GlXEgPUYVDs72IrCMFjOK/Ih80D8cTIOjaeXFBER
+         w65A==
+X-Received: by 10.182.250.200 with SMTP id ze8mr7598950obc.72.1400552255123;
+        Mon, 19 May 2014 19:17:35 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id x14sm35229817obp.19.2014.05.19.19.17.33
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 19 May 2014 22:46:24 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Mon, 19 May 2014 22:46:21 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <xmqqd2f93e0m.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 May 2014 19:17:34 -0700 (PDT)
+In-Reply-To: <xmqqvbt1uzo0.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249640>
 
-
-On Mon, May 19, 2014 at 09:54:33AM -0700, Junio C Hamano wrote:
-> Jeremiah Mahler <jmmahler@gmail.com> writes:
+Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> > On Sat, May 17, 2014 at 06:00:14AM -0400, Jeff King wrote:
-> >> 
->
-> Avoiding that is easy with an indirection, no?  Something like this
-> at the top:
+> > Felipe Contreras <felipe.contreras@gmail.com> writes:
+> >
+> >> We could. Personally I don't see the point of making the warning any
+> >> more annoying....
 > 
->   static const char *the_default_signature = git_version_string;
->   static const char *signature = the_default_signature;
+> If we were giving the users a choice of "no thanks, I'll keep using
+> the obsolete one", then trying to be a low key and giving them a way
+> to squelch with an advice.* config might make sense, but if we plan
+> to remove/stub at as early as v2.1, I think annoyance is very much
+> what we want, actually, because it clearly is the case that we do
+> prefer users switching instead of waiting for v2.1.
 > 
-> and comparing to see if signature points at the same address as
-> the_default_signature would give you what you want, I think.
+> How does this sound?
 
-I like your suggestion for a default signature variable.
-Unfortunately, C doesn't like it as much.
-
-static const char *the_default_signature = git_version_string;
-static const char *signature = the_default_signature;  // ERROR
-// initializer element is not constant
+The patch below assumes the user has ~/bin in his PATH, which might not
+be the case. Personally I don't see the point of creating extra
+annoyance with instructions that might not work.
 
 -- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+Felipe Contreras
