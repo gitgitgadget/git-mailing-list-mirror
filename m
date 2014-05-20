@@ -1,91 +1,133 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH 3/4] rebase: test ack
-Date: Tue, 20 May 2014 17:38:50 +0300
-Message-ID: <20140520143850.GA13099@redhat.com>
-References: <1400447743-18513-1-git-send-email-mst@redhat.com>
- <1400447743-18513-4-git-send-email-mst@redhat.com>
- <xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 20 16:40:09 2014
+From: Alexey Shumkin <alex.crezoff@gmail.com>
+Subject: [PATCH] t6006 (rev-list-format): quote format strings to avoid error on some shells
+Date: Tue, 20 May 2014 18:48:43 +0400
+Message-ID: <7a4473fce2948c31f561c6002ab0b1d5ab0ee841.1400597264.git.Alex.Crezoff@gmail.com>
+References: <537B5E8C.3070803@ramsay1.demon.co.uk>
+Cc: Alexey Shumkin <Alex.Crezoff@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 20 16:49:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmlD4-0002t1-PK
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 16:40:07 +0200
+	id 1WmlLv-0000w5-Db
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 16:49:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753646AbaETOkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 10:40:00 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:39341 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753582AbaETOj6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 10:39:58 -0400
-Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s4KEdvV2014342
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 20 May 2014 10:39:57 -0400
-Received: from redhat.com ([10.3.113.7])
-	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s4KEdtE4032503;
-	Tue, 20 May 2014 10:39:56 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
+	id S1753731AbaETOtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 10:49:10 -0400
+Received: from mail-lb0-f173.google.com ([209.85.217.173]:36950 "EHLO
+	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753075AbaETOtJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 10:49:09 -0400
+Received: by mail-lb0-f173.google.com with SMTP id 10so494277lbg.32
+        for <git@vger.kernel.org>; Tue, 20 May 2014 07:49:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=rxI1HLSinRL4EqhK+6dxYc14V/SRHPoNErfDTd8Epq8=;
+        b=a6e9Gap0YBi21Ma3Q/szMGzMqxu1eZrmK9NlU8vlaae+IcVlqECP4aNlpoHh/zcZU9
+         na2+CqHMMuRt7f/sc2wTaEh8/SK4VUZIrVXTMyOHTIEK7uyLbsCcW2+IeYM/K2kUQbdk
+         VulpcRvuNcrYlIizkta/CMv6/mjS6mLLgfX6phrR9izH3sj0paPqki8C+k6JSgpgkcjC
+         UosUNfmFMGE/a4MTHAe1BZeorfvYsaQFTErFbDcLi1FbT2UajCD9xKy+JuRIwzvKWVbw
+         CjwW/nyyy4iz4JbFpI1988rgoSwkizT3AbwqAa/uk8wRgGOJxIeI889KCQP71rxEcsri
+         Kouw==
+X-Received: by 10.152.203.168 with SMTP id kr8mr32545052lac.17.1400597347631;
+        Tue, 20 May 2014 07:49:07 -0700 (PDT)
+Received: from localhost ([193.9.244.4])
+        by mx.google.com with ESMTPSA id sz5sm21019886lbb.33.2014.05.20.07.49.05
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 May 2014 07:49:06 -0700 (PDT)
+X-Google-Original-From: Alexey Shumkin <Alex.Crezoff@gmail.com>
+X-Mailer: git-send-email 1.9.2-17
+In-Reply-To: <537B5E8C.3070803@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249688>
 
-On Mon, May 19, 2014 at 02:34:26PM -0700, Junio C Hamano wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > test ack! handling
-> >
-> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> 
-> Will queue with this squashed in.
-> 
-> 4/4 seems to have some style issues as well, but I didn't look very
-> closely.
-> 
-> Thanks.
+Added in 0a144b3 (t4205, t6006: add failing tests for the case when
+i18n.logOutputEncoding is set, 2014-05-19) tests give no error
+(somehow) with Bash as /bin/sh but fail for some other shells.
 
-Just to clarify I can post v2 of 4/4 without reposting 1-3 since they
-are queued?
+Quote format strings to avoid errors.
 
->  t/t3415-rebase-autosquash.sh | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-> index 9d7db13..dcdba6f 100755
-> --- a/t/t3415-rebase-autosquash.sh
-> +++ b/t/t3415-rebase-autosquash.sh
-> @@ -75,18 +75,18 @@ test_expect_success 'auto squash (option)' '
->  '
->  
->  test_expect_success 'auto ack' '
-> -	ack="Acked-by: xyz"
-> -	msg=$(test_write_lines "ack! first commit" "" "$ack")
-> +	ack="Acked-by: xyz" &&
-> +	msg=$(test_write_lines "ack! first commit" "" "$ack") &&
->  	git reset --hard base &&
->  	git commit --allow-empty -m "$msg" -- &&
->  	git tag ack &&
->  	test_tick &&
->  	git rebase --autosquash -i HEAD^^^ &&
->  	git log --oneline >actual &&
-> -	git show -s first-commit | grep -v ^commit > expected-msg &&
-> -	echo "    $ack" >> expected-msg &&
-> -	git show -s HEAD^ | grep -v ^commit > actual-msg &&
-> -	diff actual-msg expected-msg
-> +	git show -s first-commit | grep -v ^commit >expected-msg &&
-> +	echo "    $ack" >>expected-msg &&
-> +	git show -s HEAD^ | grep -v ^commit >actual-msg &&
-> +	test_cmp actual-msg expected-msg
->  '
->  
->  test_expect_success 'auto squash (config)' '
+Signed-off-by: Alexey Shumkin <Alex.Crezoff@gmail.com>
+Suggested-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+ t/t6006-rev-list-format.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index c6e9a73..19434ad 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -149,7 +149,7 @@ commit $head1
+ $added
+ EOF
+ 
+-test_format subject-truncated %<($truncate_count,trunc)%s <<EOF
++test_format subject-truncated "%<($truncate_count,trunc)%s" <<EOF
+ commit $head2
+ changed (ge${changed_utf8_part}ndert)..
+ commit $head1
+@@ -259,7 +259,7 @@ commit $head1
+ $added_iso88591
+ EOF
+ 
+-test_format complex-subject-trunc %<($truncate_count,trunc)%s <<EOF
++test_format complex-subject-trunc "%<($truncate_count,trunc)%s" <<EOF
+ commit $head3
+ Test printing of c..
+ commit $head2
+@@ -268,7 +268,7 @@ commit $head1
+ added (hinzugef${added_utf8_part_iso88591}gt..
+ EOF
+ 
+-test_format complex-subject-mtrunc %<($truncate_count,mtrunc)%s <<EOF
++test_format complex-subject-mtrunc "%<($truncate_count,mtrunc)%s" <<EOF
+ commit $head3
+ Test prin..ex bodies
+ commit $head2
+@@ -277,7 +277,7 @@ commit $head1
+ added (hi..f${added_utf8_part_iso88591}gt) foo
+ EOF
+ 
+-test_format complex-subject-ltrunc %<($truncate_count,ltrunc)%s <<EOF
++test_format complex-subject-ltrunc "%<($truncate_count,ltrunc)%s" <<EOF
+ commit $head3
+ .. of complex bodies
+ commit $head2
+@@ -314,7 +314,7 @@ commit $head1
+ $added
+ EOF
+ 
+-test_format complex-subject-commitencoding-unset-trunc %<($truncate_count,trunc)%s <<EOF
++test_format complex-subject-commitencoding-unset-trunc "%<($truncate_count,trunc)%s" <<EOF
+ commit $head3
+ Test printing of c..
+ commit $head2
+@@ -323,7 +323,7 @@ commit $head1
+ added (hinzugef${added_utf8_part}gt..
+ EOF
+ 
+-test_format complex-subject-commitencoding-unset-mtrunc %<($truncate_count,mtrunc)%s <<EOF
++test_format complex-subject-commitencoding-unset-mtrunc "%<($truncate_count,mtrunc)%s" <<EOF
+ commit $head3
+ Test prin..ex bodies
+ commit $head2
+@@ -332,7 +332,7 @@ commit $head1
+ added (hi..f${added_utf8_part}gt) foo
+ EOF
+ 
+-test_format complex-subject-commitencoding-unset-ltrunc %<($truncate_count,ltrunc)%s <<EOF
++test_format complex-subject-commitencoding-unset-ltrunc "%<($truncate_count,ltrunc)%s" <<EOF
+ commit $head3
+ .. of complex bodies
+ commit $head2
+-- 
+1.9.2-17
