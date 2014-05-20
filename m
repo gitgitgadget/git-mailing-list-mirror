@@ -1,130 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v8 25/44] receive-pack.c: use a reference transaction for
- updating the refs
-Date: Tue, 20 May 2014 12:42:46 -0700
-Message-ID: <20140520194246.GR12314@google.com>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
- <1400174999-26786-26-git-send-email-sahlberg@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] remote: defer repacking packed-refs when deleting refs
+Date: Tue, 20 May 2014 13:29:42 -0700
+Message-ID: <xmqqlhtwxkg9.fsf@gitster.dls.corp.google.com>
+References: <537B2FA4.7020001@opera.com> <537B30E7.5020505@opera.com>
+	<xmqqtx8kxn7f.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Tue May 20 21:42:55 2014
+Cc: git@vger.kernel.org
+To: Jens =?utf-8?Q?Lindstr=C3=B6m?= <jl@opera.com>
+X-From: git-owner@vger.kernel.org Tue May 20 22:29:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wmpw6-0007Wg-QI
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 21:42:55 +0200
+	id 1WmqfZ-0006qV-KD
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 22:29:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751801AbaETTmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 15:42:50 -0400
-Received: from mail-pa0-f42.google.com ([209.85.220.42]:57209 "EHLO
-	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750766AbaETTmu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 15:42:50 -0400
-Received: by mail-pa0-f42.google.com with SMTP id rd3so626008pab.29
-        for <git@vger.kernel.org>; Tue, 20 May 2014 12:42:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=mVCsbtHAoUJLHHzDhmbn74XWnVQD/QkPCfmbgSuAirg=;
-        b=ewdI9lSxkezODTkTNSImlKNNxj+qSDOT/Xn59z77noAgXmXWxjePNBGsStFKvlP7mY
-         bITRYE9Vs2jyG2OWzrd8cUcc+vAZyGWUreb87+emj55z1Svtfy/SUZ65mliX2v69kHSi
-         a428BSr82dpnjuh7oUw7+Xz1zPQsKQwxAQ8m5ey6Xz0Hg5geexqqT6yJ9cPCI0vk3JZe
-         hsR69S7Aya+iXwTndgpnpKbfPhiVZvkeiTY1SJEPzRN5Kn9zMVeMSF1MLk2AQBKloL/H
-         UsIYSHKGPfEfoDNl1und9+kHyTGQukqZdjcrSZrstdccQDLjUqOm2TENiM0nAVoTvOEK
-         M3Cw==
-X-Received: by 10.66.66.135 with SMTP id f7mr53524185pat.22.1400614969604;
-        Tue, 20 May 2014 12:42:49 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id iv2sm4477622pbc.19.2014.05.20.12.42.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 20 May 2014 12:42:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1400174999-26786-26-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751474AbaETU3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 16:29:49 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61574 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751187AbaETU3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 16:29:47 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5E5C3185AA;
+	Tue, 20 May 2014 16:29:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pSptyDm/+aiDdm1vP/cLXyJOvDo=; b=dEO7r9
+	Nz2UhocXk4vrZBwTR5ROnIlc1u3cmCLfr4FIP19+OUF27Tnc1LptPFljrBtHcJlc
+	oWCU9j2nvge08ACEDTQbVtl+MjYIGtedZH6NkkvAK6IkhsWbUwG5PvrPxnu5Kxq9
+	lcjsDRh7RTW9nIqMvbcZNbsXLlgwFECDc++O8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s4YAjtA3mhDnX5FZFIpiMAQCNvUMnyZ+
+	IT5y/KbSpkwLkr6AJMYEIs9ouXJ2qqqntOZvlEYNbBA7MaYpBVQaFBwcs/ajEMUl
+	gRI2XA+1nV+TOTWxxyaAldPNnqm7lgJkSr/W0WCTcDMY8+p3LO6p++WVEdPmrNs2
+	CKO4Gm1cNAA=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 55EAE185A8;
+	Tue, 20 May 2014 16:29:47 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6815C185A6;
+	Tue, 20 May 2014 16:29:44 -0400 (EDT)
+In-Reply-To: <xmqqtx8kxn7f.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 20 May 2014 12:30:12 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7A93CFB8-E05D-11E3-95F1-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249738>
 
-Ronnie Sahlberg wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Wrap all the ref updates inside a transaction to make the update atomic.
+> A bit safer way to organize might be to first create a list of the
+> refs to be removed in-core, update packed-refs without these refs to
+> be removed, and then finally remove the loose ones, but I haven't
+> thought things through.
 
-Interesting.
+Perhaps a removal of remote can go in this order to be resistant
+against an abort-in-the-middle.
 
-[...]
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -46,6 +46,8 @@ static void *head_name_to_free;
->  static int sent_capabilities;
->  static int shallow_update;
->  static const char *alt_shallow_file;
-> +static struct strbuf err = STRBUF_INIT;
+ * update packed-refs without the refs that came from the remote.
 
-I think it would be cleaner for err to be local.  It isn't used for
-communication between functions.
+   - when interrupted before the new temporary file is renamed to
+     the final, it would be a no-op.
 
-[...]
-> @@ -580,15 +581,9 @@ static const char *update(struct command *cmd, struct shallow_info *si)
->  		    update_shallow_ref(cmd, si))
->  			return "shallow error";
->  
-> -		lock = lock_any_ref_for_update(namespaced_name, old_sha1,
-> -					       0, NULL);
-> -		if (!lock) {
-> -			rp_error("failed to lock %s", name);
-> -			return "failed to lock";
-> -		}
-> -		if (write_ref_sha1(lock, new_sha1, "push")) {
-> -			return "failed to write"; /* error() already called */
-> -		}
-> +		if (ref_transaction_update(transaction, namespaced_name,
-> +					   new_sha1, old_sha1, 0, 1, &err))
-> +			return "failed to update";
+   - when interrupted after the rename, only some refs that came
+     from the remote may disappear.
 
-The original used rp_error to send an error message immediately via
-sideband.  This drops that --- intended?
+ * remove the loose refs that came from the remote.
 
-The old error string shown on the push status line was was "failed to
-lock" or "failed to write" which makes it clear that the cause is
-contention or database problems or filesystem problems, respectively.
-After this change it would say "failed to update" which is about as
-clear as "failed".
+ * finally, remove the configuration related to the remote.
 
-Would it be safe to send err.buf as-is over the wire, or does it
-contain information or formatting that wouldn't be suitable for the
-client?  (I haven't thought this through completely yet.)  Is there
-some easy way to distinguish between failure to lock and failure to
-write?  Or is there some one-size-fits-all error for this case?
+This order would let you interrupt "remote rm" without leaving the
+repository in a broken state.  Before the final state, it may appear
+that you have some but not all remote-tracking refs from the remote
+in your repository, but you would not have any ref that point at an
+obsolete object.  Running "remote rm" again, once it finishes, will
+give you the desired result.
 
-When the transaction fails, we need to make sure that all ref updates
-emit 'ng' and not 'ok' in receive-pack.c::report (see the example at
-the end of Documentation/technical/pack-protocol.txt for what this
-means).  What error string should they use?  Is there some way to make
-it clear to the user which ref was the culprit?
-
-What should happen when checks outside the ref transaction system
-cause a ref update to fail?  I'm thinking of
-
- * per-ref 'update' hook (see githooks(5))
- * fast-forward check
- * ref creation/deletion checks
- * attempt to push to the currently checked out branch
-
-I think the natural thing to do would be to put each ref update in its
-own transaction to start so the semantics do not change right away.
-If there are obvious answers to all these questions, then a separate
-patch could combine all these into a single transaction; or if there
-are no obvious answers, we could make the single-transaction-per-push
-semantics optional (using a configuration variable or protocol
-capability or something) to make it possible to experiment.
-
-Hope that helps,
-Jonathan
+A longer-term goal might be to have ref-transaction infrastructure
+clever enough to coalesce the "repack-without-these-refs" requests
+into one automatically without forcing the callers you are fixing
+care about these things, though.  And such a transaction semantics
+may have to also cover the updating of configuration files.
