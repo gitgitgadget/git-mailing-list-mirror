@@ -1,124 +1,116 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] Documentation/technical/api-hashmap: Remove source
- highlighting
-Date: Mon, 19 May 2014 19:40:35 -0400 (EDT)
-Message-ID: <alpine.DEB.2.02.1405191839230.44324@all-night-tool.MIT.EDU>
-References: <alpine.DEB.2.02.1405170707260.44324@all-night-tool.MIT.EDU> <20140517152219.GA31912@hudson.localdomain> <alpine.DEB.2.02.1405172035160.44324@all-night-tool.MIT.EDU> <xmqq4n0l3dc7.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: format-patch crashes with a huge patchset
+Date: Tue, 20 May 2014 02:49:20 -0400
+Message-ID: <20140520064920.GB5222@sigill.intra.peff.net>
+References: <20140519193556.GA987@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 20 09:49:39 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Tue May 20 10:08:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmXAs-0000Rb-RV
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 01:40:55 +0200
+	id 1Wmdra-0002Bl-Lm
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 08:49:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751660AbaESXkl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 May 2014 19:40:41 -0400
-Received: from dmz-mailsec-scanner-8.mit.edu ([18.7.68.37]:57542 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750894AbaESXkj convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 May 2014 19:40:39 -0400
-X-AuditID: 12074425-f79746d000000ecc-bf-537a9676c500
-Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
-	(using TLS with cipher AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by dmz-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 0C.9F.03788.6769A735; Mon, 19 May 2014 19:40:38 -0400 (EDT)
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id s4JNeb8B009994;
-	Mon, 19 May 2014 19:40:38 -0400
-Received: from localhost (all-night-tool.mit.edu [18.9.64.12])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.8/8.12.4) with ESMTP id s4JNeZx2020276
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Mon, 19 May 2014 19:40:36 -0400
-In-Reply-To: <xmqq4n0l3dc7.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgleLIzCtJLcpLzFFi42IR4hTV1i2bVhVs0PRWw6LrSjeTRUPvFWaL
-	N49yHZg9ds66y+5x8ZKyx+dNcgHMUVw2Kak5mWWpRfp2CVwZnSc3MRccFqnYcGwGawPjL4Eu
-	Rk4OCQETiZ9fpzNC2GISF+6tZ+ti5OIQEpjNJDH31Sd2CGcjo0Rb4y4mCGc3k8SOo+fBWlgE
-	tCVWfvjBBGKzCahJzN0wmR3EFgGyJ7YdYgGxmQVsJaafvckKYgsLhEncfXQVzOYUsJaYcqgb
-	rJ5XwENi/8pmNhBbSOABo8S5LUEgtqiArsTm7qVsEDWCEidnPoGaqS5x4NNFRghbW+L+zTa2
-	CYyCs5CUzUJSNgtJ2QJG5lWMsim5Vbq5iZk5xanJusXJiXl5qUW6Fnq5mSV6qSmlmxhBAc3u
-	orqDccIhpUOMAhyMSjy8B8SrgoVYE8uKK3MPMUpyMCmJ8t6ZCBTiS8pPqcxILM6ILyrNSS0+
-	xCjBwawkwrszFSjHm5JYWZValA+TkuZgURLnfWttFSwkkJ5YkpqdmlqQWgSTleHgUJLgtZsK
-	1ChYlJqeWpGWmVOCkGbi4AQZzgM03Bukhre4IDG3ODMdIn+KUVFKnFdvClBCACSRUZoH1wtL
-	OK8YxYFeEea1BGnnASYruO5XQIOZgAb/XVwJMrgkESEl1cBYvTla04BV8/H7d8qHC80z3Bd2
-	L1Sz52U0XZ3gUZRtcflF6Rs7g50rP2119soxSEphsareqpJQ+CLyREQap8aFesHOl7EXqms2
-	O/e2l085mSjuvU2Dp3L/mtsbj0/xyFn1f0cB6w3WP5py5m/0i04ftShZ9WlySxbf 
+	id S1750945AbaETGtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 02:49:23 -0400
+Received: from cloud.peff.net ([50.56.180.127]:55542 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750699AbaETGtW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 02:49:22 -0400
+Received: (qmail 9516 invoked by uid 102); 20 May 2014 06:49:22 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 20 May 2014 01:49:22 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 May 2014 02:49:20 -0400
+Content-Disposition: inline
+In-Reply-To: <20140519193556.GA987@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249646>
 
-On Mon, 19 May 2014, Junio C Hamano wrote:
-> If Ubuntu does not want to use highlight, it can apply a change like =
-the=20
-> patch in question as part of their fork to make the end result=20
-> consistent and they are failing to do so.
+On Mon, May 19, 2014 at 10:35:56PM +0300, Michael S. Tsirkin wrote:
 
-Sure, Ubuntu can apply that patch, but the larger problem remains: if t=
-he=20
-Ubuntu packaging is even slightly different from Debian=E2=80=99s, it i=
-s no longer=20
-eligible for automatic synchronization from Debian.
+> I tried to fump the whole history of qemu with format-patch.
+> It crashes both with v2.0.0-rc2-21-g6087111
+> and with git 1.8.3.1:
+> 
+> ~/opt/libexec/git-core/git-format-patch --follow -o patches/all
+> e63c3dc74bfb90e4522d075d0d5a7600c5145745..
 
-When that has happened in the past, the result was that the Ubuntu vers=
-ion=20
-languished far behind the Debian version, because Canonical doesn=E2=80=
-=99t have=20
-the manpower to manually merge every Debian update.  Ubuntu 9.04 shippe=
-d=20
-with Git 1.6.0.4 instead of 1.6.2.4 because they had failed to update=20
-their packaging after patching out a dependency on cvsps.
+You can't use "--follow" without specifying a single pathspec. Running
+"git log --follow" notices and blocks this, but format-patch doesn't
+(and segfaults later when the follow code assumes there is a pathspec).
 
-If this Ubuntu nonsense were obstructing something important upstream,=20
-then of course I would be yelling at Ubuntu to get their act together; =
-in=20
-that case, I filed a main inclusion report to get Canonical to official=
-ly=20
-support cvsps (https://bugs.launchpad.net/bugs/369111) so Ubuntu could=20
-drop their patch.  But here we=E2=80=99re talking about syntax highligh=
-ting in one=20
-page of internal documentation that basically nobody is going to read, =
-and=20
-that argument wouldn=E2=80=99t carry any weight.
+I think we need:
 
-We could put the patch into Debian instead of Ubuntu to eliminate the=20
-Ubuntu delta; Jonathan has been friendly enough to Ubuntu that I think =
-he=20
-would grudgingly agree.  But I=E2=80=99m submitting it upstream because=
- other=20
-distros will eventually run into the same problem: there=E2=80=99s no o=
-bvious cue=20
-that source-highlight needs to be added as a new dependency besides a=20
-warning message buried in the middle of the build log.
+-- >8 --
+Subject: move "--follow needs one pathspec" rule to diff_setup_done
 
-> How bad does the documentation look with the patch applied (I know ho=
-w=20
-> bad it looks without source-highlight installed)?  If it is not too b=
-ad,=20
-> then it sounds like a sensible solution to drop the highlight markup=20
-> unconditionally like the patch that started this thread does, taking =
-the=20
-> "common denominator" approach.  You seem to agree, and I do not objec=
-t,=20
-> either.
+Because of the way "--follow" is implemented, we must have
+exactly one pathspec. "git log" enforces this restriction,
+but other users of the revision traversal code do not. For
+example, "git format-patch --follow" will segfault during
+try_to_follow_renames, as we have no pathspecs at all.
 
-Original version with syntax-highlight installed (pretty):
-http://web.mit.edu/andersk/Public/api-hashmap/old-highlight.html
+We can push this check down into diff_setup_done, which is
+probably a better place anyway. It is the diff code that
+introduces this restriction, so other parts of the code
+should not need to care themselves.
 
-Original version with syntax-highlight missing (corrupted):
-http://web.mit.edu/andersk/Public/api-hashmap/old-no-highlight.html
+Reported-by: "Michael S. Tsirkin" <mst@redhat.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I didn't include a test, as I don't think the current behavior is what
+we want in the long run. That is, it would be nice if eventually
+--follow learned to be more flexible. Any test for this would
+necessarily be looking for the opposite of that behavior. But maybe it's
+worth it to just have in the meantime, and anyone who works on --follow
+can rip out the test.
 
-Patched version (boring but readable):
-http://web.mit.edu/andersk/Public/api-hashmap/patched.html
+ builtin/log.c | 8 ++------
+ diff.c        | 3 +++
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
-Anders
+diff --git a/builtin/log.c b/builtin/log.c
+index 39e8836..3b6a6bb 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -158,13 +158,9 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+ 	if (rev->show_notes)
+ 		init_display_notes(&rev->notes_opt);
+ 
+-	if (rev->diffopt.pickaxe || rev->diffopt.filter)
++	if (rev->diffopt.pickaxe || rev->diffopt.filter ||
++	    DIFF_OPT_TST(&rev->diffopt, FOLLOW_RENAMES))
+ 		rev->always_show_header = 0;
+-	if (DIFF_OPT_TST(&rev->diffopt, FOLLOW_RENAMES)) {
+-		rev->always_show_header = 0;
+-		if (rev->diffopt.pathspec.nr != 1)
+-			usage("git logs can only follow renames on one pathname at a time");
+-	}
+ 
+ 	if (source)
+ 		rev->show_source = 1;
+diff --git a/diff.c b/diff.c
+index f72769a..68bb8c5 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3325,6 +3325,9 @@ void diff_setup_done(struct diff_options *options)
+ 	}
+ 
+ 	options->diff_path_counter = 0;
++
++	if (DIFF_OPT_TST(options, FOLLOW_RENAMES) && options->pathspec.nr != 1)
++		die(_("--follow requires exactly one pathspec"));
+ }
+ 
+ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *val)
+-- 
+2.0.0.rc1.436.g03cb729
