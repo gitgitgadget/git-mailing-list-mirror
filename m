@@ -1,172 +1,104 @@
-From: =?ISO-8859-1?Q?Jens_Lindstr=F6m?= <jl@opera.com>
-Subject: [PATCH 2/2] remote prune: optimize "dangling symref" check/warning
-Date: Tue, 20 May 2014 12:41:25 +0200
-Message-ID: <537B3155.1010309@opera.com>
-References: <537B2FA4.7020001@opera.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH 00/19]  convert test -a/-o to && and || patch series
+Date: Tue, 20 May 2014 06:50:13 -0700
+Message-ID: <1400593832-6510-1-git-send-email-gitter.spiros@gmail.com>
+Cc: jrnieder@gmail.com, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 20 12:41:57 2014
+X-From: git-owner@vger.kernel.org Tue May 20 15:50:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmhUW-00054c-Pq
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 12:41:53 +0200
+	id 1WmkRI-00088X-Hn
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 15:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbaETKlt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 May 2014 06:41:49 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:65166 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751217AbaETKls (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 06:41:48 -0400
-Received: by mail-la0-f48.google.com with SMTP id mc6so224753lab.7
-        for <git@vger.kernel.org>; Tue, 20 May 2014 03:41:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=wy9LG9wveSEPDs9PXKHx+4EoAocWFYxM7fl/QbA6Ih8=;
-        b=b8+9rTioeJrW/avPGpZFux2GkiKLDMTHnWOb5XhL5mcI35MAWQygmp46Z6t1m5b3f/
-         cj0ObINgUisgwkxbGGQsCIwR4mquuGXsfoir5NchfLP7hiHZuOhXELDTumqc4hQFV4Ym
-         deCdlRJOgxIvLeUsTSvwuZ4lrXrctvY4KyMRXEJtnBMm/qRvNeRJZuZ+d7SHqq+w0bKo
-         JsqdOGzxPQveRZJ7qZSghO+8ZMMDQTVCL9fxrUyFoRzjgkBxSjg+5Xs6T4sqnJTttvFw
-         bwPeOvZdwF42mts2ooYZbufuQte5BncyiYlOAZNF9QlIWtshebIBMOoGWESUDD5w69nJ
-         Xmxw==
-X-Gm-Message-State: ALoCoQkZ5jIlQ0ouB1S6Z6o6l0YEfLITuPMlVEBPltnocR85Si31xJHsps69axqb9gt9rcmcExy+
-X-Received: by 10.152.87.176 with SMTP id az16mr21504623lab.43.1400582506971;
-        Tue, 20 May 2014 03:41:46 -0700 (PDT)
-Received: from [10.34.0.102] (77.72.99.119.c.fiberdirekt.net. [77.72.99.119])
-        by mx.google.com with ESMTPSA id a2sm20436837lbz.25.2014.05.20.03.41.46
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 20 May 2014 03:41:46 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
-In-Reply-To: <537B2FA4.7020001@opera.com>
+	id S1753530AbaETNuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 09:50:39 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:37719 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753456AbaETNuj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 09:50:39 -0400
+Received: by mail-pd0-f176.google.com with SMTP id p10so338676pdj.21
+        for <git@vger.kernel.org>; Tue, 20 May 2014 06:50:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=N6UvRNWTXUi0f/GZdDCdHfbonoxVC8sdJNUXT1QH9o4=;
+        b=wCElPDSnGbm79iTT+QRbGMvdRLCU74BTrru9/4CVqrzzdVTmuQb86b1yKJdeW9T9Ei
+         Hofw4LTpVqdiFG99WO2EX4150QSdEAnWcNmnMvtZBBi4DgYqBm4zI2g2/lSp2EylvXp4
+         eBHsp2lj8MzET2WDMK1yzeL7A6mSAS0Mw6zm/tlSOrPCnJsjp2FFYP6/JnGyYN4781Lx
+         bXRIoUn0pV0YqrwHkxrEqMMEqZKfJmvXJl+cb31hojTATOJZYV2M093NvC5fKKE+Uykj
+         0F4skJ9fBFS8e8Q6d9pm7XNEclg3oTY6JL+3Qy+TaIqXORySaWoXfUYzj08hiGyx9Sa0
+         rAnA==
+X-Received: by 10.68.133.229 with SMTP id pf5mr51484038pbb.115.1400593838561;
+        Tue, 20 May 2014 06:50:38 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id oe4sm3317286pbb.33.2014.05.20.06.50.37
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 20 May 2014 06:50:37 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249661>
 
-When 'git remote prune' was used to delete many refs in a repository
-with many refs, a lot of time was spent checking for (now) dangling
-symbolic refs pointing to the deleted ref, since warn_dangling_symref()
-was once per deleted ref to check all other refs in the repository.
 
-Avoid this using the new warn_dangling_symrefs() function which
-makes one pass over all refs and checks for all the deleted refs in
-one go, after they have all been deleted.
+These patch series  convert test -a/-o to && and ||.
 
-Signed-off-by: Jens Lindstr=F6m <jl@opera.com>
----
- builtin/remote.c |  6 +++++-
- refs.c           | 19 ++++++++++++++++++-
- refs.h           |  1 +
- 3 files changed, 24 insertions(+), 2 deletions(-)
+This is the second version.
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index ce60a30..5e4a8dd 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1306,6 +1306,7 @@ static int prune_remote(const char *remote, int d=
-ry_run)
- {
- 	int result =3D 0, i;
- 	struct ref_states states;
-+	struct string_list delete_refs_list =3D STRING_LIST_INIT_NODUP;
- 	const char **delete_refs;
- 	const char *dangling_msg =3D dry_run
- 		? _(" %s will become dangling!")
-@@ -1327,6 +1328,7 @@ static int prune_remote(const char *remote, int d=
-ry_run)
- 		const char *refname =3D states.stale.items[i].util;
-=20
- 		delete_refs[i] =3D refname;
-+		string_list_insert(&delete_refs_list, refname);
-=20
- 		if (!dry_run)
- 			result |=3D delete_ref(refname, NULL, REF_DEFERREPACK);
-@@ -1337,9 +1339,11 @@ static int prune_remote(const char *remote, int =
-dry_run)
- 		else
- 			printf_ln(_(" * [pruned] %s"),
- 			       abbrev_ref(refname, "refs/remotes/"));
--		warn_dangling_symref(stdout, dangling_msg, refname);
- 	}
-=20
-+	warn_dangling_symrefs(stdout, dangling_msg, &delete_refs_list);
-+	string_list_clear(&delete_refs_list, 0);
-+
- 	if (states.stale.nr) {
- 		if (!dry_run)
- 			result |=3D repack_without_refs(delete_refs, states.stale.nr);
-diff --git a/refs.c b/refs.c
-index 3b62aca..fdd8b74 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1611,6 +1611,7 @@ int peel_ref(const char *refname, unsigned char *=
-sha1)
- struct warn_if_dangling_data {
- 	FILE *fp;
- 	const char *refname;
-+	const struct string_list *refnames;
- 	const char *msg_fmt;
- };
-=20
-@@ -1625,8 +1626,12 @@ static int warn_if_dangling_symref(const char *r=
-efname, const unsigned char *sha
- 		return 0;
-=20
- 	resolves_to =3D resolve_ref_unsafe(refname, junk, 0, NULL);
--	if (!resolves_to || strcmp(resolves_to, d->refname))
-+	if (!resolves_to
-+	    || (d->refname
-+		? strcmp(resolves_to, d->refname)
-+		: !string_list_has_string(d->refnames, resolves_to))) {
- 		return 0;
-+	}
-=20
- 	fprintf(d->fp, d->msg_fmt, refname);
- 	fputc('\n', d->fp);
-@@ -1639,6 +1644,18 @@ void warn_dangling_symref(FILE *fp, const char *=
-msg_fmt, const char *refname)
-=20
- 	data.fp =3D fp;
- 	data.refname =3D refname;
-+	data.refnames =3D NULL;
-+	data.msg_fmt =3D msg_fmt;
-+	for_each_rawref(warn_if_dangling_symref, &data);
-+}
-+
-+void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct=
- string_list *refnames)
-+{
-+	struct warn_if_dangling_data data;
-+
-+	data.fp =3D fp;
-+	data.refname =3D NULL;
-+	data.refnames =3D refnames;
- 	data.msg_fmt =3D msg_fmt;
- 	for_each_rawref(warn_if_dangling_symref, &data);
- }
-diff --git a/refs.h b/refs.h
-index 0db5584..cd4710d 100644
---- a/refs.h
-+++ b/refs.h
-@@ -89,7 +89,7 @@ static inline const char *has_glob_specials(const cha=
-r *pattern)
- extern int for_each_rawref(each_ref_fn, void *);
-=20
- extern void warn_dangling_symref(FILE *fp, const char *msg_fmt, const =
-char *refname);
-+extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const=
- struct string_list* refnames);
-=20
- /*
-  * Lock the packed-refs file for writing.  Flags is passed to
---
-1.9.1
+Changes:
+
+- Modified commit comment based on Jonathan Nieder suggestions
+(was "don't use the -a or -o option with the test command")
+
+- Modified patch on git-submodule.sh based on Jonathan Nieder suggestions
+
+
+Elia Pinto (19):
+  check_bindir: convert test -a/-o to && and ||
+  contrib/examples/git-clone.sh: convert test -a/-o to && and ||
+  contrib/examples/git-commit.sh: convert test -a/-o to && and ||
+  contrib/examples/git-merge.sh: convert test -a/-o to && and ||
+  contrib/examples/git-repack.sh: convert test -a/-o to && and ||
+  contrib/examples/git-resolve.sh: convert test -a/-o to && and ||
+  git-bisect.sh: convert test -a/-o to && and ||
+  git-mergetool.sh: convert test -a/-o to && and ||
+  git-rebase--interactive.sh: convert test -a/-o to && and ||
+  git-submodule.sh: convert test -a/-o to && and ||
+  t/t0025-crlf-auto.sh: convert test -a/-o to && and ||
+  t/t0026-eol-config.sh: convert test -a/-o to && and ||
+  t/t4102-apply-rename.sh: convert test -a/-o to && and ||
+  t/t5000-tar-tree.sh: convert test -a/-o to && and ||
+  t/t5403-post-checkout-hook.sh: convert test -a/-o to && and ||
+  t/t5537-fetch-shallow.sh: convert test -a/-o to && and ||
+  t/t5538-push-shallow.sh: convert test -a/-o to && and ||
+  t/t9814-git-p4-rename.sh: convert test -a/-o to && and ||
+  t/test-lib-functions.sh: convert test -a/-o to && and ||
+
+ check_bindir                    |    2 +-
+ contrib/examples/git-clone.sh   |    2 +-
+ contrib/examples/git-commit.sh  |    4 ++--
+ contrib/examples/git-merge.sh   |    4 ++--
+ contrib/examples/git-repack.sh  |    4 ++--
+ contrib/examples/git-resolve.sh |    2 +-
+ git-bisect.sh                   |    2 +-
+ git-mergetool.sh                |    4 ++--
+ git-rebase--interactive.sh      |    2 +-
+ git-submodule.sh                |   29 +++++++++++++++++------------
+ t/t0025-crlf-auto.sh            |    6 +++---
+ t/t0026-eol-config.sh           |    8 ++++----
+ t/t4102-apply-rename.sh         |    2 +-
+ t/t5000-tar-tree.sh             |    2 +-
+ t/t5403-post-checkout-hook.sh   |    8 ++++----
+ t/t5537-fetch-shallow.sh        |    2 +-
+ t/t5538-push-shallow.sh         |    2 +-
+ t/t9814-git-p4-rename.sh        |    4 ++--
+ t/test-lib-functions.sh         |    4 ++--
+ 19 files changed, 49 insertions(+), 44 deletions(-)
+
+-- 
+1.7.10.4
