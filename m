@@ -1,170 +1,154 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Tue, 20 May 2014 15:39:08 -0500
-Message-ID: <537bbd6c1daf_a6f166b308b0@nysa.notmuch>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
- <20140516084126.GB21468@sigill.intra.peff.net>
- <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
- <20140516225228.GA3988@sigill.intra.peff.net>
- <5376f2ca5c90d_65b915db2f877@nysa.notmuch>
- <20140517062413.GA13003@sigill.intra.peff.net>
- <xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
- <53795ef8e4023_10da88d30825@nysa.notmuch>
- <xmqqegzp1tl7.fsf@gitster.dls.corp.google.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v8 26/44] fast-import.c: use a ref transaction when
+ dumping tags
+Date: Tue, 20 May 2014 13:53:27 -0700
+Message-ID: <CAL=YDW=6jaTom5vUTU9YK3D93dGH8rB799Yt+X6bmSAR5-ZmUw@mail.gmail.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+	<1400174999-26786-27-git-send-email-sahlberg@google.com>
+	<20140520203857.GS12314@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 22:50:30 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 22:53:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmqzU-0003uJ-3F
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 22:50:28 +0200
+	id 1Wmr2T-0000Jx-PA
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 22:53:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750779AbaETUuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 16:50:21 -0400
-Received: from mail-oa0-f44.google.com ([209.85.219.44]:35575 "EHLO
-	mail-oa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750721AbaETUuV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 16:50:21 -0400
-Received: by mail-oa0-f44.google.com with SMTP id o6so1188378oag.17
-        for <git@vger.kernel.org>; Tue, 20 May 2014 13:50:20 -0700 (PDT)
+	id S1751218AbaETUxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 16:53:30 -0400
+Received: from mail-vc0-f175.google.com ([209.85.220.175]:42416 "EHLO
+	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751210AbaETUx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 16:53:29 -0400
+Received: by mail-vc0-f175.google.com with SMTP id hu19so1355247vcb.34
+        for <git@vger.kernel.org>; Tue, 20 May 2014 13:53:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=BLeSVFArM5OP6KXY1MIP3LP6L1aMEeMDdS0leAm6qVI=;
-        b=CaFvuNruwnOVbSlX0SYjR44ZAv12OoPwx30NTmnc6tezmO3z0Jb6L1MB8T9+3hdQiU
-         48DbR9x0uylBQ2s8LPNsKYlszI3Clt2yTqa57uD3EQhlv5KJ8pJpBhSYw/dZRmgiDLJp
-         xtXyLYsjrF/BK/ehlaxDWyDf8PAjtD88cpZ8h/9q1bFgSF5FMAkHzJBCv5wcjtX2bb/E
-         k4FaENiHoTYNM1+DwWdTRBVjy8u06r7xx37wDmuO0p8OsWdFvaPh5GrW71pEeYzFkFkw
-         4Doh4OfN1XUnBqGiR1qUWKJdmlox1RGhcZW8cxCzMtarT5uJRnbxxX18TcVv3F3g3Ov5
-         OsPw==
-X-Received: by 10.182.105.1 with SMTP id gi1mr46932491obb.9.1400619020414;
-        Tue, 20 May 2014 13:50:20 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id jr2sm39739900obb.8.2014.05.20.13.50.18
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 May 2014 13:50:19 -0700 (PDT)
-In-Reply-To: <xmqqegzp1tl7.fsf@gitster.dls.corp.google.com>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=HbAyvclKFS1nzJKcCCaJv2OSVSWS5KhfuMY3d5QajxE=;
+        b=HS9gYUa6/dizRSuxH3DEtZy1mnx1j+gVqCbtJKtL3IRpzdYWVmjDSQLRFfzhTW6gpN
+         exG7wOvlRI8Smb4Ic3oL1KG3wPYrM5K4NqL6ZXQNGv4JyFSlgOrZ/PukZ9yTuUBeBEQy
+         JZbcBvGsiGDCHYF3Qkiuo8f+YSWfSRTnZX74g+s1YAluJ3MoEwKJkuz81gZ124d41VQr
+         5KPjs5GM7VICvFLiE8gOpwL5LHQqJECcO51uSg86E0XdwHy6RBNUn9R8NTK8G9WVuAwR
+         Ib+GjydwG4WHfL1qdzKaYSasJz66tKpP9uk/XwTxc+62Km1slhbopZBnSFJDfomtSmhc
+         cO8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=HbAyvclKFS1nzJKcCCaJv2OSVSWS5KhfuMY3d5QajxE=;
+        b=CWsIFKKmtsRmKuMF4wcP0g3Me4mvY+cU38QTu4RIQEuHg4QvBbiz4qHJVe3hEICFQt
+         diynP6bKbieNLidhBtBBv5OkUzhdVKGT4SAYHgi+sm7Mhim2+tVZRnrfp/dPQAXyDTy7
+         bwjLpFrdhtUmCYVR5vI3TyFVtw/CXxFmNg2WzhtNRrlQVT0Iqp/z23N61giVgywzsSz2
+         gIcP+YoeNm49UbqZhYTQ6/WzY+fTJMlCIKRiGNv9MJNIc08YpppS2ME/WSDG7ZL3/e21
+         5AO3h1ckiQ5Kw4d58xRge61BWwkQtQmsSY9Xue2Gnxh1ko1iE75AX/UO9TQOVNQq16FC
+         h23A==
+X-Gm-Message-State: ALoCoQm1m9F9GUH1bnx1WcPy8t4pm5Kb0zVd4NqXItKENghiX4t/hIC70GzR0WL1a9TtXA8ckEUO
+X-Received: by 10.58.198.75 with SMTP id ja11mr182288vec.59.1400619207964;
+ Tue, 20 May 2014 13:53:27 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Tue, 20 May 2014 13:53:27 -0700 (PDT)
+In-Reply-To: <20140520203857.GS12314@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249742>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Junio C Hamano wrote:
-> >
-> >>   2. add warning that is given every time the scripts are run and
-> >>      give the same instruction as in README.
-> >> 
-> >>   3. (optional) cripple the script to make them always fail after
-> >>      showing the same warning as above.
-> >
-> > This is what I want, and I already sent the patches for; the scripts
-> > will be stubs. At this point you would have effectively removed the
-> > code, which what I want.
-> >  
-> >>   4. Keep README and retire everything else.
-> >
-> > After you've removed the code, I don't care what you do, but I'd say you
-> > should remove the stubs after a long period of time.
-> 
-> Let's try this in a different way, as I sense there is a
-> misunderstanding somewhere about your "wish".
-> 
-> >> "that" does not refer to "remove them at v2.0 (unconditional)".  It
-> >> refers to "If Felipe really wants for the removal for v2.0, I would
-> >> respect that".  And I saw you said you did not want to disrupt v2.0.
-> >> 
-> >> If the options I listed all meant removal at v2.0, then I would
-> >> understand your complaints, but that is not the case, so I am not
-> >> sure what to make of that.
-> >
-> > It is a weird choice of semantics then. You said you would "respect" my
-> > wish, but your proposals did not "follow" my wish.
-> 
-> I understand you do not want to disrupt v2.0.  My assumption of that
-> "not disrupting v2.0" has been "there still are git-remote-{hg,bzr}
-> that work just like what they had in v1.9.x, perhaps with some
-> enhancements and regressions you added in the meantime", and I
-> understood Peff's comment "If Felipe wants the removal" to mean that
-> kind of "disruption", i.e. "there is no git-remote-{hg,bzr} that
-> work.", which would be either step 3 or 4.
-> 
-> But your "After you've removed the code" comment above makes me
-> wonder that perhaps your definition of "not disrupting" was
-> different from ours (which is not good or bad, just different) and
-> you consider that step 3. is "removal but not distupting v2.0"?
-> 
-> If that is what you want in v2.0, then please say so, and I already
-> said I am fine with that.
+On Tue, May 20, 2014 at 1:38 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
+>
+>> [Subject: fast-import.c: use a ref transaction when dumping tags]
+>
+> This seems like an odd thing to do: either it would make sense to have
+> a single transaction for all imported refs so all fail or succeed
+> together, or there would be separate transactions for each ref.
+>
+> That said, I don't mind, particularly if it's a step on the way to
+> using a single transaction for everything being dumped.
 
-No, I already said I do not want the code removed from v2.0, that's why
-I sent patches that simply added a warning, and I specifically said
-those were for 2.0.
+For now they are two transactions but I will merge them into a single one later.
 
-However, after seeing this commit:
+>
+> [...]
+>> --- a/fast-import.c
+>> +++ b/fast-import.c
+>> @@ -1736,15 +1736,22 @@ static void dump_tags(void)
+>>  {
+>>       static const char *msg = "fast-import";
+>>       struct tag *t;
+>> -     struct ref_lock *lock;
+>>       char ref_name[PATH_MAX];
+>> +     struct strbuf err = STRBUF_INIT;
+>> +     struct ref_transaction *transaction;
+>>
+>> +     transaction = ref_transaction_begin();
+>>       for (t = first_tag; t; t = t->next_tag) {
+>> -             sprintf(ref_name, "tags/%s", t->name);
+>> +             sprintf(ref_name, "refs/tags/%s", t->name);
+>
+> Can this overflow the buffer?
 
-10e1fee (Revert "Merge branch 'fc/transport-helper-sync-error-fix'")
+Changed to snprint. (We probably should do this everywhere.)
 
-Which is:
+>
+>> -             lock = lock_ref_sha1(ref_name, NULL);
+>> -             if (!lock || write_ref_sha1(lock, t->sha1, msg) < 0)
+>> -                     failure |= error("Unable to update %s", ref_name);
+>> +
+>> +             if (ref_transaction_update(transaction, ref_name, t->sha1,
+>> +                                        NULL, 0, 0, &err)) {
+>> +                     failure |= 1;
+>> +                     break;
+>> +             }
+>>       }
+>> +     if (failure || ref_transaction_commit(transaction, msg, &err))
+>> +             failure |= error("Unable to update %s", err.buf);
+>
+> This 'if (failure || ...) failure |=' idiom seems strange.
+> Is err.buf always set if failure is nonzero?
+>
+> Elsewhere failure is 0 or -1 but this introduces the possibility for
+> it to be temporarily 1.
+>
+> dump_branches could have caused failure to be -1 before dump_tags
+> is called.  I think the intent is
+>
+>                 if (ref_transaction_update(...)) {
+>                         failure |= error(...);
+>                         goto out;
+>                 }
+>         }
+>         if (ref_transaction_commit(...))
+>                 failure |= error(...);
+>  out:
+>         ref_transaction_free(transaction);
+>         ...
+>
 
- 1) Inaccurate
- 2) A lie (*you* broke 2.0, not me)
- 3) A disservice to users
+Actually, since the recent change to make _commit fail if the
+transaction has an error, what we want is something like this :
 
-I therefore change my wish for you to remove all the remote helpers code
-and a replace them with stubs (the patches I originally sent for
-post-2.0).
+    ...
+        if (ref_transaction_update(transaction, ref_name, t->sha1,
+NULL, 0, 0, &err))
+            break;
+    }
+    if (ref_transaction_commit(transaction, msg, &err))
+        failure |= error("%s", err.buf);
+    ...
 
-It was a mistake from me to believe you would do the sensible thing for
-2.0.
 
-So to make it clear, I now request that you do:
+Please see updated ref-transactions branch.
 
- 1) Remove all the code.
 
-    Since my patches were removed from the list, here's an updated patch
-    that applies on top of 'master'
+Thanks.
 
-    https://github.com/felipec/git/commits/up/remote/remove
-
- 2) Reapply d508e4a (Merge branch 'fc/transport-helper-sync-error-fix')
-
-    Since the code in question is no longer part of v2.0, a "possible
-    regression" that you aren't even sure of cannot be the rationale to
-    revert this code.
-
-    Your commit 10e1fee (Revert "Merge branch
-    'fc/transport-helper-sync-error-fix'") actively hurts the
-    out-of-tree tools, so I'll consider a failure to re-revert a hostile
-    action.
-
- 3) Update the release notes to mention these tools have been removed
-
-  Additionally, you might want to:
-
- 4) Re-add the following release note:
-
-    * "git push" via transport-helper interface (e.g. remote-hg) has
-      been updated to allow forced ref updates in a way similar to the
-      natively supported transports
-
-    I don't know why you removed it in the first place. Clearly you pay
-    no attention at all to these interfaces.
-
-I expect you to do at the very least 1) and 2).
-
--- 
-Felipe Contreras
+> Thanks,
+> Jonathan
