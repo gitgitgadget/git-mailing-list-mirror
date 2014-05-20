@@ -1,106 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Tue, 20 May 2014 14:50:33 -0700
-Message-ID: <xmqqlhtwrufq.fsf@gitster.dls.corp.google.com>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
-	<20140516084126.GB21468@sigill.intra.peff.net>
-	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
-	<20140516225228.GA3988@sigill.intra.peff.net>
-	<5376f2ca5c90d_65b915db2f877@nysa.notmuch>
-	<20140517062413.GA13003@sigill.intra.peff.net>
-	<xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
-	<53795ef8e4023_10da88d30825@nysa.notmuch>
-	<xmqqegzp1tl7.fsf@gitster.dls.corp.google.com>
-	<537bbd6c1daf_a6f166b308b0@nysa.notmuch>
-	<xmqqy4xwrw8o.fsf@gitster.dls.corp.google.com>
-	<537bc8ea6ced9_1d08f2d2f8fd@nysa.notmuch>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [ANNOUNCE] git reintegrate v0.3; manager of integration branches
+Date: Tue, 20 May 2014 16:41:11 -0500
+Message-ID: <537bcbf7efd4_1d08f2d2f8a7@nysa.notmuch>
+References: <53795175664d5_10da88d308ce@nysa.notmuch>
+ <xmqqha4lxyqt.fsf@gitster.dls.corp.google.com>
+ <537bc3e1c605c_a6f166b3088f@nysa.notmuch>
+ <xmqqtx8krvem.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 23:50:44 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 23:52:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wmrvn-0000KO-F2
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:50:43 +0200
+	id 1WmrxT-0003mz-LM
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:52:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751254AbaETVuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 17:50:40 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55667 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751238AbaETVui (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 17:50:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 10BAC18555;
-	Tue, 20 May 2014 17:50:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=H9ZhIQfNv+UhVnFIMUcLGTh4l74=; b=evxU6C
-	+7j+mUuwtt6KHCsDk41tNf3HpiAryERNqrH984ZsLIdW6ZU+HzVu185MPbqyXpzo
-	xGjmol4ENghZEQLwOgrPZMzm05tGqEltIHS5QlvuXsH3jlfwipWa46GLLOvqggVk
-	ynqNM2QdydWMLiG/+u5HZyE2GhLwdS/rhyRSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yA5+vKghdJJk/Y+1/C3593Aay9rzUMbE
-	VAYhmw3Kh9FC1PVuJxYU0ElUTWydtaxH2T4bUjmk07DiN5+EO0HqLuz9FB/Fux8R
-	QrZqGH0PIiVYPBnnNfmvYnjiwy25cy52gZMB/pn6UzMXagBhVkKJdXsf3k+C27Da
-	kP5RDYHU40Y=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0796818554;
-	Tue, 20 May 2014 17:50:38 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0E79F1854D;
-	Tue, 20 May 2014 17:50:34 -0400 (EDT)
-In-Reply-To: <537bc8ea6ced9_1d08f2d2f8fd@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 20 May 2014 16:28:10 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C5C80B6A-E068-11E3-8F96-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750835AbaETVwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 17:52:23 -0400
+Received: from mail-ob0-f170.google.com ([209.85.214.170]:34921 "EHLO
+	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766AbaETVwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 17:52:23 -0400
+Received: by mail-ob0-f170.google.com with SMTP id uy5so1221569obc.29
+        for <git@vger.kernel.org>; Tue, 20 May 2014 14:52:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=p+U1FK0fi0zoQitFwoBI5a8+/tlSKxxjK3G4c9aqax8=;
+        b=fbQp+qMVXyijOoCbe5pIQC5Sg7GBTsU3+I5GDQM+LEG3HqKS41JsYbbGsmS5cTPwhD
+         TAoWpGf8vvDkzVQCwPcWcMMqKom2rSO/zPy231lW5T9sUhoV0m8a9FeZ345TnTDP+nhp
+         GUFZWgr01IMvLq0c8HfeU6gy8U0jQiLYiueeU3XctrPRXi/eH3VHeZaJVKlYk5psAPjS
+         Gv11+3JdwMFk2r9+lgtZVEruqunbkYKTeS2nUDH6jma+Ve9z5YpoMVlHffREWIk1o7NG
+         irbwVFdoQzYBPVK0sETeIknimYDFtOIajLJAa0LAomry851QEWxxzWB/d3OLgZ1KWdVU
+         EWzA==
+X-Received: by 10.182.204.73 with SMTP id kw9mr7278003obc.58.1400622742966;
+        Tue, 20 May 2014 14:52:22 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id to6sm40004572obb.6.2014.05.20.14.52.21
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 May 2014 14:52:22 -0700 (PDT)
+In-Reply-To: <xmqqtx8krvem.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249753>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Or have an option to specify a dynamic instruction sheet, so you can cat
+> > the instructions of 'match-next' and replace the base. However, I don't
+> > see the point of re-applying the branches for 'next' if you already know
+> > that 'next' and 'match-next' are the same.
+> 
+> The output from Reintegrate script (in 'todo') only lists the names
+> of topic branches (or something like "xx/topic~4" when the topic is
+> not fully merged yet), and a topic branch may acquire a follow-up
+> change (or two) on top (there is a machinery to see if xx/topic~4
+> is still valid in such a case and update the offset as needed).
+> 
+> Rebuilding 'jch' on top of 'master' with the same insn sheet will
+> then merge the updated topic branch in its entirety, and the new
+> commits on the topic branch somehow needs to go to 'next' for the
+> "match next" on 'jch' and 'next' to be in sync (in addition, updated
+> 'master' must be merged to 'next', but that goes without saying).
+> 
+> In other words, I already know that 'next' and "match next" are not
+> the same, that they must become the same, and there needs a way to
+> make them so.
+> 
+> And that is done by re-running the insn sheet for 'jch' up to the
+> "match next" mark, merging the topic that are not fully merged to
+> 'next' while ignoring the ones that already are fully in 'next'.
 
-> Junio C Hamano wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->> ...
->> > So to make it clear, I now request that you do:
->> >
->> >  1) Remove all the code.
->> ...
->> I'll do that, but just one thing to make sure---do you want the
->> helper to exit with status 0?
->
-> It doesn't matter; if the remote helper doesn't respond to the commands
-> transport-helper exits with 128.
+There could be a new --merge-missing option that takes the instruction
+sheet of an integration branch (e.g. 'match-next'), ignores the 'base'
+applies them in 'HEAD' but only when the topic branch isn't already in
+'HEAD'.
 
-You're right.
+I'm not sure what would be the usefulness of using things like
+'xx/topic~4'.
 
->> >  4) Re-add the following release note:
->> >
->> >     * "git push" via transport-helper interface (e.g. remote-hg) has
->> >       been updated to allow forced ref updates in a way similar to the
->> >       natively supported transports
->> 
->> I am not sure if this one is consistent with 1), as remote-hg will
->> no longer be with the release.
->
-> Remove '(e.g. remote-hg)', the rest still applies.
-
-True enough.
-
-I was already deep in today's -rc4 tagging before this exchange, so
-it may be a while until the result is pushed out, but as far as I
-know the helpers are now stubs, and README no longer says "a random
-version that will go stale is kept here merely for convenience".
-
-As additional topics that touch contrib/remote-helpers/ need to be
-reverted from 'next', the final pushout may take longer than usual.
-We'll see.
+-- 
+Felipe Contreras
