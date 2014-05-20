@@ -1,51 +1,51 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 18/19] t/t9814-git-p4-rename.sh: convert test -a/-o to && and ||
-Date: Tue, 20 May 2014 06:50:31 -0700
-Message-ID: <1400593832-6510-19-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 17/19] t/t5538-push-shallow.sh: convert test -a/-o to && and ||
+Date: Tue, 20 May 2014 06:50:30 -0700
+Message-ID: <1400593832-6510-18-git-send-email-gitter.spiros@gmail.com>
 References: <1400593832-6510-1-git-send-email-gitter.spiros@gmail.com>
 Cc: jrnieder@gmail.com, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 20 15:51:17 2014
+X-From: git-owner@vger.kernel.org Tue May 20 15:51:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmkRk-0000Bh-7p
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 15:51:12 +0200
+	id 1WmkRi-0000Bh-GZ
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 15:51:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753668AbaETNvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 09:51:08 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:38322 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753628AbaETNu4 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753646AbaETNu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 09:50:57 -0400
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:44867 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753610AbaETNu4 (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 20 May 2014 09:50:56 -0400
-Received: by mail-pa0-f50.google.com with SMTP id fb1so345822pad.9
-        for <git@vger.kernel.org>; Tue, 20 May 2014 06:50:56 -0700 (PDT)
+Received: by mail-pb0-f53.google.com with SMTP id md12so343300pbc.12
+        for <git@vger.kernel.org>; Tue, 20 May 2014 06:50:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=TzqtrNvbY+h4IFuvUf30WXJOyt3Vi8ihzg7Sv8LzOZ0=;
-        b=jz6Zw6uACYANQ4JRKJ54qLsc3xjL+ZtjylJovGkiWczszfK6xLjQlTw/KWNyNC9kX5
-         qEYK6txol7maghLOj2zTwpVNZflYlFujfh3KycoEFpVylIIxyTl0iq5dTk4Ied1LQsFv
-         Ma2BLbhodKoYfG3epSL5bWnFAD4qnRkKNFvjNbztYaLPClPdMVledIG8pAHPE+HYDZHk
-         3CD/z34z97O6iZMUcZ/etiySzEpH/6lqOq1wVXZvozo40RxqbwMr7WouikmbuJDwDHr8
-         4kzqE6GkN272SP1Kk/hqD/Cs/au/AOHpF0YaglCcziT7n/lhDU4xijtP1SXK8CbcRJLL
-         b2Fw==
-X-Received: by 10.67.4.138 with SMTP id ce10mr50747046pad.12.1400593856397;
-        Tue, 20 May 2014 06:50:56 -0700 (PDT)
+        bh=cAMHDUQXI44/0+yknu7zJ1hKEuuXeIFYmdvhYWPCGB4=;
+        b=C6wmzGbEeTgb4ZGQ12qcgc0gNI2mXKLy2bdf9m/aUJ70RDNECsjqiFcibedMjMxZc3
+         Ku6C1r1XOCiELOX2Fh69+a2IDNb2dV7CHs/txTR0vodQXfFrIY4qhFoY7NsW04JwVKO9
+         8daqt7gTbM+cagwp5RpIdn1uMBjd1RM7LwenKP09v9Tq/2cFPb/N54ouexR6iDuVZH3C
+         KpQTGD6SfpX5QBcZn5XvgO4cO2RCFKPp6E5VLyVk8tTT6T6CRMjlQTMbz1mJmB9gjoXO
+         Pw06ei8satFmiQXaIKhCSBRzXgu86/xfUvqD5u6oiNuEOX1gF5gK3UnpEHUMYZNDnZFO
+         3zRQ==
+X-Received: by 10.66.191.9 with SMTP id gu9mr50506845pac.27.1400593855497;
+        Tue, 20 May 2014 06:50:55 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id oe4sm3317286pbb.33.2014.05.20.06.50.55
+        by mx.google.com with ESMTPSA id oe4sm3317286pbb.33.2014.05.20.06.50.54
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 20 May 2014 06:50:55 -0700 (PDT)
+        Tue, 20 May 2014 06:50:54 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1400593832-6510-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249673>
 
 The interaction with unary operators and operator precedence
 for && and || are better known than -a and -o, and for that
@@ -55,30 +55,21 @@ about such things.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/t9814-git-p4-rename.sh |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t5538-push-shallow.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
-index be802e0..1fc1f5f 100755
---- a/t/t9814-git-p4-rename.sh
-+++ b/t/t9814-git-p4-rename.sh
-@@ -177,7 +177,7 @@ test_expect_success 'detect copies' '
- 		level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
- 		test -n "$level" && test "$level" -gt 0 && test "$level" -lt 98 &&
- 		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
--		test "$src" = file10 -o "$src" = file11 &&
-+		test "$src" = file10 || test "$src" = file11 &&
- 		git config git-p4.detectCopies $(($level + 2)) &&
- 		git p4 submit &&
- 		p4 filelog //depot/file12 &&
-@@ -191,7 +191,7 @@ test_expect_success 'detect copies' '
- 		level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
- 		test -n "$level" && test "$level" -gt 2 && test "$level" -lt 100 &&
- 		src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
--		test "$src" = file10 -o "$src" = file11 -o "$src" = file12 &&
-+		test "$src" = file10 || test "$src" = file11 || test "$src" = file12 &&
- 		git config git-p4.detectCopies $(($level - 2)) &&
- 		git p4 submit &&
- 		p4 filelog //depot/file13 &&
+diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
+index 8e54ac5..63d9ca9 100755
+--- a/t/t5538-push-shallow.sh
++++ b/t/t5538-push-shallow.sh
+@@ -121,7 +121,7 @@ EOF
+ 	)
+ '
+ 
+-if test -n "$NO_CURL" -o -z "$GIT_TEST_HTTPD"; then
++if test -n "$NO_CURL" || test -z "$GIT_TEST_HTTPD"; then
+ 	say 'skipping remaining tests, git built without http support'
+ 	test_done
+ fi
 -- 
 1.7.10.4
