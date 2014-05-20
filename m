@@ -1,154 +1,158 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v8 26/44] fast-import.c: use a ref transaction when
- dumping tags
-Date: Tue, 20 May 2014 13:53:27 -0700
-Message-ID: <CAL=YDW=6jaTom5vUTU9YK3D93dGH8rB799Yt+X6bmSAR5-ZmUw@mail.gmail.com>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
-	<1400174999-26786-27-git-send-email-sahlberg@google.com>
-	<20140520203857.GS12314@google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
+Date: Tue, 20 May 2014 15:52:56 -0500
+Message-ID: <537bc0a8eb91a_a6f166b308d@nysa.notmuch>
+References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
+ <20140516084126.GB21468@sigill.intra.peff.net>
+ <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
+ <537693aee4fdd_3e4812032fcc@nysa.notmuch>
+ <xmqq7g5i4r48.fsf@gitster.dls.corp.google.com>
+ <53795c3e58f73_10da88d30829@nysa.notmuch>
+ <xmqqha4lwj57.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 22:53:34 2014
+X-From: git-owner@vger.kernel.org Tue May 20 23:04:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wmr2T-0000Jx-PA
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 22:53:34 +0200
+	id 1WmrCs-00049q-9T
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:04:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751218AbaETUxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 16:53:30 -0400
-Received: from mail-vc0-f175.google.com ([209.85.220.175]:42416 "EHLO
-	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751210AbaETUx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 16:53:29 -0400
-Received: by mail-vc0-f175.google.com with SMTP id hu19so1355247vcb.34
-        for <git@vger.kernel.org>; Tue, 20 May 2014 13:53:28 -0700 (PDT)
+	id S1751187AbaETVEM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 17:04:12 -0400
+Received: from mail-ob0-f176.google.com ([209.85.214.176]:33405 "EHLO
+	mail-ob0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750737AbaETVEJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 17:04:09 -0400
+Received: by mail-ob0-f176.google.com with SMTP id wo20so1134455obc.7
+        for <git@vger.kernel.org>; Tue, 20 May 2014 14:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=HbAyvclKFS1nzJKcCCaJv2OSVSWS5KhfuMY3d5QajxE=;
-        b=HS9gYUa6/dizRSuxH3DEtZy1mnx1j+gVqCbtJKtL3IRpzdYWVmjDSQLRFfzhTW6gpN
-         exG7wOvlRI8Smb4Ic3oL1KG3wPYrM5K4NqL6ZXQNGv4JyFSlgOrZ/PukZ9yTuUBeBEQy
-         JZbcBvGsiGDCHYF3Qkiuo8f+YSWfSRTnZX74g+s1YAluJ3MoEwKJkuz81gZ124d41VQr
-         5KPjs5GM7VICvFLiE8gOpwL5LHQqJECcO51uSg86E0XdwHy6RBNUn9R8NTK8G9WVuAwR
-         Ib+GjydwG4WHfL1qdzKaYSasJz66tKpP9uk/XwTxc+62Km1slhbopZBnSFJDfomtSmhc
-         cO8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=HbAyvclKFS1nzJKcCCaJv2OSVSWS5KhfuMY3d5QajxE=;
-        b=CWsIFKKmtsRmKuMF4wcP0g3Me4mvY+cU38QTu4RIQEuHg4QvBbiz4qHJVe3hEICFQt
-         diynP6bKbieNLidhBtBBv5OkUzhdVKGT4SAYHgi+sm7Mhim2+tVZRnrfp/dPQAXyDTy7
-         bwjLpFrdhtUmCYVR5vI3TyFVtw/CXxFmNg2WzhtNRrlQVT0Iqp/z23N61giVgywzsSz2
-         gIcP+YoeNm49UbqZhYTQ6/WzY+fTJMlCIKRiGNv9MJNIc08YpppS2ME/WSDG7ZL3/e21
-         5AO3h1ckiQ5Kw4d58xRge61BWwkQtQmsSY9Xue2Gnxh1ko1iE75AX/UO9TQOVNQq16FC
-         h23A==
-X-Gm-Message-State: ALoCoQm1m9F9GUH1bnx1WcPy8t4pm5Kb0zVd4NqXItKENghiX4t/hIC70GzR0WL1a9TtXA8ckEUO
-X-Received: by 10.58.198.75 with SMTP id ja11mr182288vec.59.1400619207964;
- Tue, 20 May 2014 13:53:27 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Tue, 20 May 2014 13:53:27 -0700 (PDT)
-In-Reply-To: <20140520203857.GS12314@google.com>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=yOyUwme9W/ltkkHLIpXN46BX8Dl4LamlQ9TnhPTF/nI=;
+        b=USzCOo6Mhtw4bPMqGNgzjGzlz0miYYtxZMFaHaH63dah+NIfvkxNejtx3sbUabbTsO
+         oc3eiSXfmQj8uGei8h+FqpiUDGhraQn+ijGDpzl/n7YPHYVbEkdKu96oshCSsoZLu7YU
+         OZSAm9O4nRdhJJ5v5pdxsKii2NiezmQwEf3/ChH63awSDQlzT1KtQtb7g4l+qjncbdpi
+         Wx2oiEZEEX2CMAMFBGhShK5RrrKSJenS2Aqrwk81DcngVJ4ND+k7Cpik22ABgHX6AgSU
+         NhyTqFJM9607X6zEV2agAk+hIZFdcI8lwBYUgQQzadQQklynvEV/NSEyK6ymv3o/SzrI
+         cqQg==
+X-Received: by 10.60.145.144 with SMTP id su16mr19151624oeb.64.1400619849221;
+        Tue, 20 May 2014 14:04:09 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ux1sm5297042obc.28.2014.05.20.14.04.07
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 May 2014 14:04:08 -0700 (PDT)
+In-Reply-To: <xmqqha4lwj57.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249743>
 
-On Tue, May 20, 2014 at 1:38 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
->
->> [Subject: fast-import.c: use a ref transaction when dumping tags]
->
-> This seems like an odd thing to do: either it would make sense to have
-> a single transaction for all imported refs so all fail or succeed
-> together, or there would be separate transactions for each ref.
->
-> That said, I don't mind, particularly if it's a step on the way to
-> using a single transaction for everything being dumped.
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Junio C Hamano wrote:
+> >> 
+> >> After looking at the reverse-depends list of packages, my faith is
+> >> strengthened in that the Git ecosystem is truly maturing and useful
+> >> third-party plug-ins will be picked up by distro packagers.
+> >
+> > Where is git-imerge packaged?
+> 
+> I didn't see it on the archive the said Ubuntu box slurps from, but
+> I did not check all the other distros.
 
-For now they are two transactions but I will merge them into a single one later.
+I will help you: it's not packaged anywhere.
 
->
-> [...]
->> --- a/fast-import.c
->> +++ b/fast-import.c
->> @@ -1736,15 +1736,22 @@ static void dump_tags(void)
->>  {
->>       static const char *msg = "fast-import";
->>       struct tag *t;
->> -     struct ref_lock *lock;
->>       char ref_name[PATH_MAX];
->> +     struct strbuf err = STRBUF_INIT;
->> +     struct ref_transaction *transaction;
->>
->> +     transaction = ref_transaction_begin();
->>       for (t = first_tag; t; t = t->next_tag) {
->> -             sprintf(ref_name, "tags/%s", t->name);
->> +             sprintf(ref_name, "refs/tags/%s", t->name);
->
-> Can this overflow the buffer?
+> > Do you want to bet? Nah, you don't *ever* want to accept you were wrong,
+> > even you clearly where.
+> > ...
+> > This is what's going to happen: there won't be an official git-hg
+> > package for *years*, if there is ever one. That is my prediction based
+> > on all the available evidence, I am willing to stand by it and accept I
+> > was wrong if it proves otherwise.
+> >
+> > Are you willing to stand by your own decisions?
+> 
+> If I understand correctly, you have made and you do maintain some
+> packages and as an insider, you do not have to wait for "an
+> outsider" to step up to make remote-{hg,bzr} packages yourself.
 
-Changed to snprint. (We probably should do this everywhere.)
+No, you do not understand how packaging works. ArchLinux's AUR[1] is a
+community-driven repository, anybody can package anything and put it
+there. That doesn't mean people can simply do `pacman -S git-remote-hg`,
+far from it.
 
->
->> -             lock = lock_ref_sha1(ref_name, NULL);
->> -             if (!lock || write_ref_sha1(lock, t->sha1, msg) < 0)
->> -                     failure |= error("Unable to update %s", ref_name);
->> +
->> +             if (ref_transaction_update(transaction, ref_name, t->sha1,
->> +                                        NULL, 0, 0, &err)) {
->> +                     failure |= 1;
->> +                     break;
->> +             }
->>       }
->> +     if (failure || ref_transaction_commit(transaction, msg, &err))
->> +             failure |= error("Unable to update %s", err.buf);
->
-> This 'if (failure || ...) failure |=' idiom seems strange.
-> Is err.buf always set if failure is nonzero?
->
-> Elsewhere failure is 0 or -1 but this introduces the possibility for
-> it to be temporarily 1.
->
-> dump_branches could have caused failure to be -1 before dump_tags
-> is called.  I think the intent is
->
->                 if (ref_transaction_update(...)) {
->                         failure |= error(...);
->                         goto out;
->                 }
->         }
->         if (ref_transaction_commit(...))
->                 failure |= error(...);
->  out:
->         ref_transaction_free(transaction);
->         ...
->
+It's a placeholder for *outsiders*, not official package maintainers.
 
-Actually, since the recent change to make _commit fail if the
-transaction has an error, what we want is something like this :
+I am an outsider in ArchLinux.
 
-    ...
-        if (ref_transaction_update(transaction, ref_name, t->sha1,
-NULL, 0, 0, &err))
-            break;
-    }
-    if (ref_transaction_commit(transaction, msg, &err))
-        failure |= error("%s", err.buf);
-    ...
+> You may already have done so for your own use and told other people
+> about them, and others may have chosen to wait for you to push them to
+> distros instead of championing these tools by packaging them
+> themselves.
 
+You clearly haven't tried to package anything for any distro. You can't
+just champion packages for a distribution. You have to go through an
+arduous process before becoming an official packager.
 
-Please see updated ref-transactions branch.
+> When you have such an influence on the outcome either way of your
+> choice, I do not see much value in such a bet.
 
+If I champion these packages I would be making you win the bet. Why
+would I do that?
 
-Thanks.
+> But I actually think that "we package what we want to use" is a good
+> thing for programs whose primary audience is the software developer
+> types.  The packagers are part of their audiences [*1*].  Because of
+> that, even if remote-{hg,bzr} do not get packaged for a long time, I
+> doubt that it tells us what you are stipulating.  The only thing we
+> can infer would be that these programs did not interest the software
+> developer types to motivate them enough, and we wouldn't know why
+> they found the programs uninteresting.  It may be because those who
+> have history in Hg prefer to interact with remote Git repositories
+> by pushing into and fetching from them using Hg tools than using Git
+> tools.  It would not indicate "useful tools fall through the cracks"
+> if it were the case, would it?
 
-> Thanks,
-> Jonathan
+Or it might mean that the people that would otherwise do that packaging
+instead simply copy the single file needed manually.
+
+> Indeed I saw bzr-git that came from the Bazaar land packaged on the
+> box I mentioned, and its description sounded like it is meant to
+> work in such a way that allows Bazaar commits to be pushed to Git
+> repositories using a bzr tool.
+> 
+> By the way, I also saw git-mediawiki packaged from contrib/ in our
+> tree.  I found it not very credible to say "contrib/ is treated as a
+> single ball of wax without much value by packagers, and we need to
+> move the helpers up to core in order for them to be used more
+> widely" after seeing that.
+
+You are misconstruing what I said. I said *most* distributions treat
+contrib as a ball of wax. And I said there were a few *exceptions* on
+this ball of wax, like completions. remote-helpers are not part of these
+exceptions (with the exception of git-bzr).
+
+> *1* I saw you called them "wolves" at least twice recently---where
+>     does such a distrust come from?
+
+It's a jungle out there, and it's every out-of-tree tool by itself. Most
+of the tools on the contrib/ area would not survive if you throw them to
+those "wolves", and you know it.
+
+[1] https://wiki.archlinux.org/index.php/Arch_User_Repository
+
+-- 
+Felipe Contreras
