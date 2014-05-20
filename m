@@ -1,95 +1,90 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [ANNOUNCE] git reintegrate v0.3; manager of integration branches
-Date: Tue, 20 May 2014 16:41:11 -0500
-Message-ID: <537bcbf7efd4_1d08f2d2f8a7@nysa.notmuch>
-References: <53795175664d5_10da88d308ce@nysa.notmuch>
- <xmqqha4lxyqt.fsf@gitster.dls.corp.google.com>
- <537bc3e1c605c_a6f166b3088f@nysa.notmuch>
- <xmqqtx8krvem.fsf@gitster.dls.corp.google.com>
+From: Mitchel Humpherys <mitch.special@gmail.com>
+Subject: Why is --graph --max-count=n so much slower than --graph HEAD~n..?
+Date: Tue, 20 May 2014 15:17:01 -0700
+Message-ID: <vnkwd2f8ayea.fsf@mitchelh-linux.qualcomm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 23:52:28 2014
+Content-Type: text/plain
+Cc: jonas@bernoul.li
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 21 00:17:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmrxT-0003mz-LM
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:52:27 +0200
+	id 1WmsLL-0000rY-Ew
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 00:17:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbaETVwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 17:52:23 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:34921 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750766AbaETVwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 17:52:23 -0400
-Received: by mail-ob0-f170.google.com with SMTP id uy5so1221569obc.29
-        for <git@vger.kernel.org>; Tue, 20 May 2014 14:52:23 -0700 (PDT)
+	id S1751399AbaETWRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 18:17:00 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:45945 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751254AbaETWQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 18:16:58 -0400
+Received: by mail-pa0-f54.google.com with SMTP id bj1so732448pad.13
+        for <git@vger.kernel.org>; Tue, 20 May 2014 15:16:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=p+U1FK0fi0zoQitFwoBI5a8+/tlSKxxjK3G4c9aqax8=;
-        b=fbQp+qMVXyijOoCbe5pIQC5Sg7GBTsU3+I5GDQM+LEG3HqKS41JsYbbGsmS5cTPwhD
-         TAoWpGf8vvDkzVQCwPcWcMMqKom2rSO/zPy231lW5T9sUhoV0m8a9FeZ345TnTDP+nhp
-         GUFZWgr01IMvLq0c8HfeU6gy8U0jQiLYiueeU3XctrPRXi/eH3VHeZaJVKlYk5psAPjS
-         Gv11+3JdwMFk2r9+lgtZVEruqunbkYKTeS2nUDH6jma+Ve9z5YpoMVlHffREWIk1o7NG
-         irbwVFdoQzYBPVK0sETeIknimYDFtOIajLJAa0LAomry851QEWxxzWB/d3OLgZ1KWdVU
-         EWzA==
-X-Received: by 10.182.204.73 with SMTP id kw9mr7278003obc.58.1400622742966;
-        Tue, 20 May 2014 14:52:22 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id to6sm40004572obb.6.2014.05.20.14.52.21
+        h=from:to:cc:subject:date:message-id:user-agent:mime-version
+         :content-type;
+        bh=eiB0NyY2GjK9iE4l/byYGnpalNSV5nyxOkreyd4j/SI=;
+        b=NHnhhhtYZxA0t4PirjQHkPvSe3iQzvsQFWXZ5VhL8g+vWjkmEEmq/YO09Uh6Hiz4MQ
+         GEx4uljxL3S5qP4/POnWHOuBa97m35C6T9iPFXocTU6pW8RPD/vAz+Fz2NtO8obc5LT5
+         IraInWnjohd3C8Cny9Lp2GwqYU3KEsizCO6Tq3aKw4x12YxnxD7fyopgQrgz4v/5r6MX
+         EhZl5QZhx1qxdEkJ6N4+JAuFmCw+dUqZDuTEzGMDsouMcxEsj6Ns5/a8pUplHKlv8gXo
+         d1BRAVJ8C8+sc41RTpWpzYhN6Ggbu6gcGE9UpHsL8hSvZx+UqgDdTUesVp5RZ3qmyNTh
+         +jsg==
+X-Received: by 10.66.161.33 with SMTP id xp1mr4275430pab.74.1400624218123;
+        Tue, 20 May 2014 15:16:58 -0700 (PDT)
+Received: from mitchelh-linux.qualcomm.com (i-global254.qualcomm.com. [199.106.103.254])
+        by mx.google.com with ESMTPSA id xk3sm4783802pbb.65.2014.05.20.15.16.53
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 May 2014 14:52:22 -0700 (PDT)
-In-Reply-To: <xmqqtx8krvem.fsf@gitster.dls.corp.google.com>
+        Tue, 20 May 2014 15:16:54 -0700 (PDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249754>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> > Or have an option to specify a dynamic instruction sheet, so you can cat
-> > the instructions of 'match-next' and replace the base. However, I don't
-> > see the point of re-applying the branches for 'next' if you already know
-> > that 'next' and 'match-next' are the same.
-> 
-> The output from Reintegrate script (in 'todo') only lists the names
-> of topic branches (or something like "xx/topic~4" when the topic is
-> not fully merged yet), and a topic branch may acquire a follow-up
-> change (or two) on top (there is a machinery to see if xx/topic~4
-> is still valid in such a case and update the offset as needed).
-> 
-> Rebuilding 'jch' on top of 'master' with the same insn sheet will
-> then merge the updated topic branch in its entirety, and the new
-> commits on the topic branch somehow needs to go to 'next' for the
-> "match next" on 'jch' and 'next' to be in sync (in addition, updated
-> 'master' must be merged to 'next', but that goes without saying).
-> 
-> In other words, I already know that 'next' and "match next" are not
-> the same, that they must become the same, and there needs a way to
-> make them so.
-> 
-> And that is done by re-running the insn sheet for 'jch' up to the
-> "match next" mark, merging the topic that are not fully merged to
-> 'next' while ignoring the ones that already are fully in 'next'.
+I've noticed that --max-count doesn't seem to speed up `git log --graph'
+computation time. Here are some numbers using the linux kernel
+repository:
 
-There could be a new --merge-missing option that takes the instruction
-sheet of an integration branch (e.g. 'match-next'), ignores the 'base'
-applies them in 'HEAD' but only when the topic branch isn't already in
-'HEAD'.
+    | command                          | time* |
+    |----------------------------------+-------|
+    | git log --graph --max-count=5000 | 4.11s |
+    | git log --graph --max-count=1000 | 4.05s |
+    | git log --graph --max-count=500  | 3.95s |
+    | git log --graph --max-count=50   | 3.95s |
+    | git log --graph --max-count=10   | 3.97s |
+    | git log --graph --max-count=1    | 3.96s |
 
-I'm not sure what would be the usefulness of using things like
-'xx/topic~4'.
+However, specifying a manual revision range results in a much more
+dramatic speedup as `n' decreases:
+
+    | command                          | time* |
+    |----------------------------------+-------|
+    | git log --graph HEAD~5000..      | 6.69s |
+    | git log --graph HEAD~1000..      | 1.89s |
+    | git log --graph HEAD~500..       | 0.03s |
+    | git log --graph HEAD~50..        | 0.02s |
+    | git log --graph HEAD~10..        | 0.02s |
+    | git log --graph HEAD~1..         | 0.00s |
+
+* All times are "steady state" measurements after warming up the disk
+  cache by running the command a few times.
+
+I see that the manual revision range doesn't seem to go back as far in
+history when I diff the output of the two commands. However, if I add
+`--max-count=50' to the `HEAD~50..' command I get the exact same commits
+but with fewer "dangling" lines at the bottom of the graph in the
+`HEAD~50..' approach.
+
+Anyone care to provide any insight about what's going on here? Is this
+expected behavior? Is there any low-hanging fruit for optimizing
+--max-count --graph?
 
 -- 
-Felipe Contreras
+Mitch
