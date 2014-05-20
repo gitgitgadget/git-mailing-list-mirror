@@ -1,85 +1,70 @@
-From: "Stewart, Louis (IS)" <louis.stewart@ngc.com>
-Subject: RE: EXT :Re: GIT and large files
-Date: Tue, 20 May 2014 18:18:08 +0000
-Message-ID: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD670@XMBVAG73.northgrum.com>
-References: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD53E@XMBVAG73.northgrum.com>
-	<xmqqmwec1i9f.fsf@gitster.dls.corp.google.com>
-	<C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD631@XMBVAG73.northgrum.com>
- <xmqqoaysz59s.fsf@gitster.dls.corp.google.com>
+From: Arup Rakshit <aruprakshit@rocketmail.com>
+Subject: Re: untracked file deleted from the master branch, when checked out to it from a local branch
+Date: Tue, 20 May 2014 23:50:17 +0630
+Organization: CognitiveClouds
+Message-ID: <2726779.MFtIaLB4b4@linux-wzza.site>
+References: <2525467.KRXv8a3gWS@linux-wzza.site> <1949847.AaDQEtxZHd@linux-wzza.site> <537B8BA9.7060207@storm-olsen.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 20 20:19:32 2014
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 20 20:20:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmodO-0005zA-UM
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:19:31 +0200
+	id 1Wmodt-0006zW-I6
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752950AbaETST1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 14:19:27 -0400
-Received: from xspv0103.northgrum.com ([134.223.120.78]:37983 "EHLO
-	xspv0103.northgrum.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751459AbaETST0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 May 2014 14:19:26 -0400
-Received: from XHTV0002.northgrum.com (unknown [134.223.80.11]) by xspv0103.northgrum.com with smtp
-	(TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-	 id 4d95_3910_d760aeae_587e_43c9_92e8_2790f0fa69be;
-	Tue, 20 May 2014 13:19:24 -0500
-Received: from XHTVAG08.northgrum.com (134.223.82.85) by
- XHTV0002.northgrum.com (134.223.80.11) with Microsoft SMTP Server (TLS) id
- 14.3.174.1; Tue, 20 May 2014 13:18:08 -0500
-Received: from XMBVAG73.northgrum.com ([169.254.4.90]) by
- XHTVAG08.northgrum.com ([134.223.82.85]) with mapi id 14.03.0174.001; Tue, 20
- May 2014 13:18:08 -0500
-Thread-Topic: EXT :Re: GIT and large files
-Thread-Index: AQHPdFddIRG4rEeQYkKWeW5LUnT0UZtJxlJQ
-In-Reply-To: <xmqqoaysz59s.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.223.82.117]
+	id S1751755AbaETST6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 14:19:58 -0400
+Received: from nm31-vm7.bullet.mail.sg3.yahoo.com ([106.10.151.198]:31153 "EHLO
+	nm31-vm7.bullet.mail.sg3.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750766AbaETST5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 May 2014 14:19:57 -0400
+Received: from [106.10.166.116] by nm31.bullet.mail.sg3.yahoo.com with NNFMP; 20 May 2014 18:19:55 -0000
+Received: from [106.10.167.135] by tm5.bullet.mail.sg3.yahoo.com with NNFMP; 20 May 2014 18:19:55 -0000
+Received: from [127.0.0.1] by smtp108.mail.sg3.yahoo.com with NNFMP; 20 May 2014 18:19:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s1024; t=1400609995; bh=YVvViLo9IVF9IY8nx8kzGLrd8sxcSkySoGntYshtEhU=; h=X-Yahoo-Newman-Id:X-Yahoo-Newman-Property:X-YMail-OSG:X-Yahoo-SMTP:X-Rocket-Received:From:To:Subject:Date:Message-ID:Organization:User-Agent:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Content-Type; b=YN5vgEGFrPi7vZKN87zwSzWbGCYcH/3+/9j02nQ+YwkxA4PILuZDj0/RrWO6yVu+2sAvHrthm/sxuY5rY7LupfRtxckYce0+nB/EhX+mHigicGjSjLRi4D9B/RN+26h06m5KubMIyQmS4/JloMkdUEhkAQcz8ufDragyEvqjJpY=
+X-Yahoo-Newman-Id: 274329.61949.bm@smtp108.mail.sg3.yahoo.com
+X-Yahoo-Newman-Property: ymail-3
+X-YMail-OSG: NmlA7nYVM1mnNd5lPTuwOupsAR2wawmvCHhOGL3.IqdFnI2
+ EulpChVFUpO90.X_I8jmRwSXXoJ4BBXCwbw8.q7_6.Px6N0uzAb5K2IXB4c_
+ b_FE_B9jKKisR7mA4xtVKgobosfc0IKUdTXHBocX3eC0JuW8mkXQKLrPxBNd
+ RS0fVVKofvsFqj6iao8LlhtwgpBhk7rr.4gbMPQXmbSLCxCzb6284wmcspWx
+ dos5YgE7LAnaF8t4rof1ar0WeVM37yhr5rHJLJ96KE5tEFuesECRhxluFITQ
+ 4CpZ.tSuiSIk_bvA9HdRukAyIgIagWlncZjukofo6W.BnTeZfz_80jZkWMgp
+ xKDXCLNeke5jDB8oUzYlVRiIFqTQ94567kuroqFnJuZ44WZoirsqbTplWyTF
+ Z7c7TfRa47vOPDiKuR4tfP_6ruD1lDcKSJj3NWgHdqyBuRq7WdCkjxZSd0sO
+ Dfko7oTZib4L8bn8pqrE0.2MAJ0h7vWd3jV9PIDpnQOKPk4PoxQ6Ascz0g4B
+ Ixuj5v3mW_yhES0.mkCJOKzgzLdh7F5xEJk55CsaOyXRKrmzABx_JvQp3IOP
+ uZryQOQylPOjRAQ--
+X-Yahoo-SMTP: _NAuC72swBDpdridK5c7mltfXc1K.nFhPY5jXEZ4Gfdya8Gn_0nN
+X-Rocket-Received: from linux-wzza.site (aruprakshit@101.222.245.191 with plain [106.10.150.171])
+        by smtp108.mail.sg3.yahoo.com with SMTP; 20 May 2014 11:19:55 -0700 PDT
+User-Agent: KMail/4.11.5 (Linux/3.11.10-7-default; KDE/4.11.5; i686; ; )
+In-Reply-To: <537B8BA9.7060207@storm-olsen.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249716>
 
->From you response then there is a method to only obtain the Project, Directory and Files (which could hold 80 GBs of data) and not the rest of the Repository that contained the full overall Projects?
+On Tuesday, May 20, 2014 12:06:49 PM you wrote:
 
------Original Message-----
-From: Junio C Hamano [mailto:gitster@pobox.com] 
-Sent: Tuesday, May 20, 2014 2:15 PM
-To: Stewart, Louis (IS)
-Cc: git@vger.kernel.org
-Subject: Re: EXT :Re: GIT and large files
+> 
+> It never "came to the new branch", as it was never version controlled,
+> it was an untracked file left behind when you switched branches.
+> 
+> Once you added it to the new branch, change_class, it became a version
+> controlled file, 
 
-"Stewart, Louis (IS)" <louis.stewart@ngc.com> writes:
+This is still  didn't get it. If an untracked file didn't come in the new 
+branch, how would I able to add it to stage ? I am not getting this part. You 
+are right, but I am not able to understand this one, my bad! :(
 
-> Thanks for the reply.  I just read the intro to GIT and I am concerned 
-> about the part that it will copy the whole repository to the 
-> developers work area.  They really just need the one directory and 
-> files under that one directory. The history has TBs of data.
-
-Then you will spend time reading, processing and writing TBs of data when you clone, unless your developers do something to limit the history they fetch, e.g. by shallowly cloning.
-
->
-> Lou
->
-> -----Original Message-----
-> From: Junio C Hamano [mailto:gitster@pobox.com]
-> Sent: Tuesday, May 20, 2014 1:18 PM
-> To: Stewart, Louis (IS)
-> Cc: git@vger.kernel.org
-> Subject: EXT :Re: GIT and large files
->
-> "Stewart, Louis (IS)" <louis.stewart@ngc.com> writes:
->
->> Can GIT handle versioning of large 20+ GB files in a directory?
->
-> I think you can "git add" such files, push/fetch histories that contains such files over the wire, and "git checkout" such files, but naturally reading, processing and writing 20+GB would take some time.  In order to run operations that need to see the changes, e.g. "git log -p", a real content-level merge, etc., you would also need sufficient memory because we do things in-core.
+-- 
+===============
+Regards,
+Arup Rakshit
