@@ -1,94 +1,106 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Tue, 20 May 2014 16:31:35 -0500
-Message-ID: <537bc9b733534_1d08f2d2f83b@nysa.notmuch>
+Date: Tue, 20 May 2014 14:50:33 -0700
+Message-ID: <xmqqlhtwrufq.fsf@gitster.dls.corp.google.com>
 References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
- <20140516084126.GB21468@sigill.intra.peff.net>
- <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
- <537693aee4fdd_3e4812032fcc@nysa.notmuch>
- <xmqq7g5i4r48.fsf@gitster.dls.corp.google.com>
- <53795c3e58f73_10da88d30829@nysa.notmuch>
- <xmqqha4lwj57.fsf@gitster.dls.corp.google.com>
- <537B6CF5.4020808@alum.mit.edu>
- <CALKQrgcdSgZ76hKR35SDxGHYQ_cE3toEXphDVSu99B-pbTsSNQ@mail.gmail.com>
+	<20140516084126.GB21468@sigill.intra.peff.net>
+	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
+	<20140516225228.GA3988@sigill.intra.peff.net>
+	<5376f2ca5c90d_65b915db2f877@nysa.notmuch>
+	<20140517062413.GA13003@sigill.intra.peff.net>
+	<xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
+	<53795ef8e4023_10da88d30825@nysa.notmuch>
+	<xmqqegzp1tl7.fsf@gitster.dls.corp.google.com>
+	<537bbd6c1daf_a6f166b308b0@nysa.notmuch>
+	<xmqqy4xwrw8o.fsf@gitster.dls.corp.google.com>
+	<537bc8ea6ced9_1d08f2d2f8fd@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Git mailing list <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 20 23:42:52 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 23:50:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmroB-0001bq-Hp
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:42:51 +0200
+	id 1Wmrvn-0000KO-F2
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:50:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750766AbaETVms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 17:42:48 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:52416 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750735AbaETVmr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 17:42:47 -0400
-Received: by mail-ob0-f175.google.com with SMTP id wo20so1188913obc.34
-        for <git@vger.kernel.org>; Tue, 20 May 2014 14:42:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=A6NpybhSZGXtz//3Mabg2ROe+m+jAfM5RgPd+gYcxgE=;
-        b=sAgQR2IIz5ZTyPx85xbSRlV+D5u+hdYt9hp9T9kj9iBQxKHrK8EFN+ZIzyEZq3F3nz
-         edix69QYjIW2J43fCSWbrXEcDOTRAT3QH1XzbLiAhjybZrQglmXLXFySIMz/PwFvj+pZ
-         kos5iAEzklqSmHSLJOsE6PM8gJLTU8+HqRfhr2LAUe5tIIqF5Oa60TRzwNcOhfdLbFWg
-         AtTk64o20XB+KrjtO90ZzX+HKBWTLVnOoq8HWEJTvc5zB0tmXjbUhm4Fq4dn0ExsrtZo
-         4Th8VqAdte3uFFnBFxtbZV6nSq++zyIKi3LMg+ZGTWt1qd7Z8k9FQVq5tBnmBgoUQ4N7
-         jSmA==
-X-Received: by 10.60.133.107 with SMTP id pb11mr47014730oeb.48.1400622166944;
-        Tue, 20 May 2014 14:42:46 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id jr2sm39963282obb.8.2014.05.20.14.42.45
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 May 2014 14:42:46 -0700 (PDT)
-In-Reply-To: <CALKQrgcdSgZ76hKR35SDxGHYQ_cE3toEXphDVSu99B-pbTsSNQ@mail.gmail.com>
+	id S1751254AbaETVuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 17:50:40 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55667 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751238AbaETVui (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 17:50:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 10BAC18555;
+	Tue, 20 May 2014 17:50:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H9ZhIQfNv+UhVnFIMUcLGTh4l74=; b=evxU6C
+	+7j+mUuwtt6KHCsDk41tNf3HpiAryERNqrH984ZsLIdW6ZU+HzVu185MPbqyXpzo
+	xGjmol4ENghZEQLwOgrPZMzm05tGqEltIHS5QlvuXsH3jlfwipWa46GLLOvqggVk
+	ynqNM2QdydWMLiG/+u5HZyE2GhLwdS/rhyRSo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yA5+vKghdJJk/Y+1/C3593Aay9rzUMbE
+	VAYhmw3Kh9FC1PVuJxYU0ElUTWydtaxH2T4bUjmk07DiN5+EO0HqLuz9FB/Fux8R
+	QrZqGH0PIiVYPBnnNfmvYnjiwy25cy52gZMB/pn6UzMXagBhVkKJdXsf3k+C27Da
+	kP5RDYHU40Y=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0796818554;
+	Tue, 20 May 2014 17:50:38 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0E79F1854D;
+	Tue, 20 May 2014 17:50:34 -0400 (EDT)
+In-Reply-To: <537bc8ea6ced9_1d08f2d2f8fd@nysa.notmuch> (Felipe Contreras's
+	message of "Tue, 20 May 2014 16:28:10 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C5C80B6A-E068-11E3-8F96-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249752>
 
-Johan Herland wrote:
-> On Tue, May 20, 2014 at 4:55 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> > On 05/19/2014 11:31 PM, Junio C Hamano wrote:
-> >> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> >>> Where is git-imerge packaged?
-> >>
-> >> I didn't see it on the archive the said Ubuntu box slurps from, but
-> >> I did not check all the other distros.
-> >>
-> >> Michael, do you know what distro folks are doing with imerge?  For
-> >> the purpose of this thread, "I do not follow distros, and I do not
-> >> know" is a perfectly acceptable answer, but it would be very
-> >> relevant if your answer is "I suggested these distros to include it,
-> >> but so far they have been uncooperative and I haven't had much
-> >> success".
-> >
-> > I haven't heard of any Linux distros that have git-imerge packages.  I
-> > just searched the package archives for Debian, Fedora, Gentoo, and Arch
-> > without finding it.
-> 
-> FWIW; someone has made an AUR package (a user-contributed Arch package
-> recipe) for git-imerge:
-> https://aur.archlinux.org/packages/git-imerge-git/
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-That doesn't say much. Anybody can put packages there, and it has a
-single vote, which suggests not many people use it (if any).
+> Junio C Hamano wrote:
+>> Felipe Contreras <felipe.contreras@gmail.com> writes:
+>> ...
+>> > So to make it clear, I now request that you do:
+>> >
+>> >  1) Remove all the code.
+>> ...
+>> I'll do that, but just one thing to make sure---do you want the
+>> helper to exit with status 0?
+>
+> It doesn't matter; if the remote helper doesn't respond to the commands
+> transport-helper exits with 128.
 
--- 
-Felipe Contreras
+You're right.
+
+>> >  4) Re-add the following release note:
+>> >
+>> >     * "git push" via transport-helper interface (e.g. remote-hg) has
+>> >       been updated to allow forced ref updates in a way similar to the
+>> >       natively supported transports
+>> 
+>> I am not sure if this one is consistent with 1), as remote-hg will
+>> no longer be with the release.
+>
+> Remove '(e.g. remote-hg)', the rest still applies.
+
+True enough.
+
+I was already deep in today's -rc4 tagging before this exchange, so
+it may be a while until the result is pushed out, but as far as I
+know the helpers are now stubs, and README no longer says "a random
+version that will go stale is kept here merely for convenience".
+
+As additional topics that touch contrib/remote-helpers/ need to be
+reverted from 'next', the final pushout may take longer than usual.
+We'll see.
