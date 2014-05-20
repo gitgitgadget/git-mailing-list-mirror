@@ -1,91 +1,91 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 10/19] git-submodule.sh: convert test -a/-o to && and
- ||
-Date: Tue, 20 May 2014 16:39:50 +0200
-Message-ID: <537B6936.2080101@viscovery.net>
-References: <1400593832-6510-1-git-send-email-gitter.spiros@gmail.com> <1400593832-6510-11-git-send-email-gitter.spiros@gmail.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH 3/4] rebase: test ack
+Date: Tue, 20 May 2014 17:38:50 +0300
+Message-ID: <20140520143850.GA13099@redhat.com>
+References: <1400447743-18513-1-git-send-email-mst@redhat.com>
+ <1400447743-18513-4-git-send-email-mst@redhat.com>
+ <xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: jrnieder@gmail.com
-To: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 20 16:40:02 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 20 16:40:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmlCy-0002ie-Da
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 16:40:00 +0200
+	id 1WmlD4-0002t1-PK
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 16:40:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574AbaETOj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 10:39:56 -0400
-Received: from so.liwest.at ([212.33.55.23]:34112 "EHLO so.liwest.at"
+	id S1753646AbaETOkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 10:40:00 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:39341 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753491AbaETOjz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 10:39:55 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WmlCo-00068V-R2; Tue, 20 May 2014 16:39:51 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 5B28816613;
-	Tue, 20 May 2014 16:39:50 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <1400593832-6510-11-git-send-email-gitter.spiros@gmail.com>
-X-Spam-Score: -1.0 (-)
+	id S1753582AbaETOj6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 10:39:58 -0400
+Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s4KEdvV2014342
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 20 May 2014 10:39:57 -0400
+Received: from redhat.com ([10.3.113.7])
+	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s4KEdtE4032503;
+	Tue, 20 May 2014 10:39:56 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249687>
 
-Am 5/20/2014 15:50, schrieb Elia Pinto:
->  			# If we don't already have a -f flag and the submodule has never been checked out
-> -			if test -z "$subsha1" -a -z "$force"
-> +			if test -z "$subsha1" || test -z "$force"
+On Mon, May 19, 2014 at 02:34:26PM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > test ack! handling
+> >
+> > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> 
+> Will queue with this squashed in.
+> 
+> 4/4 seems to have some style issues as well, but I didn't look very
+> closely.
+> 
+> Thanks.
 
-Should not be ||, but &&!
+Just to clarify I can post v2 of 4/4 without reposting 1-3 since they
+are queued?
 
->  		while read mod_src mod_dst sha1_src sha1_dst status sm_path
->  		do
->  			# Always show modules deleted or type-changed (blob<->module)
-> -			test $status = D -o $status = T && echo "$sm_path" && continue
-> +			{
-> +			test "$status" = D ||
-> +			test "$status" = T
-> +			} &&
-> +			echo "$sm_path"
-> +			&& continue
-
-As Matthieu noted, this is incorrect. It's not just a style violation,
-it's a syntax error. Why did your test runs not hickup on that?
-
-In this case you could even leave the original code structure without
-changing the meaning:
-
-			test $status = D || test $status = T && echo "$sm_path" && continue
-
-But a better idiom is
-			case "$status" in
-			[DT])
-				printf '%s\n' "$sm_path" &&
-				continue
-			esac
-
-> @@ -1233,7 +1238,7 @@ cmd_status()
->  			say "U$sha1 $displaypath"
->  			continue
->  		fi
-> -		if test -z "$url" || ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
-> +		if test -z "$url" || ! test -d "$sm_path"/.git || test -f "$sm_path"/.git
-
-Wrong grouping. This could be more correct (I didn't test):
-
-		if test -z "$url" ||
-			{
-				! test -d "$sm_path"/.git &&
-				! test -f "$sm_path"/.git
-			}
-
--- Hannes
+>  t/t3415-rebase-autosquash.sh | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+> index 9d7db13..dcdba6f 100755
+> --- a/t/t3415-rebase-autosquash.sh
+> +++ b/t/t3415-rebase-autosquash.sh
+> @@ -75,18 +75,18 @@ test_expect_success 'auto squash (option)' '
+>  '
+>  
+>  test_expect_success 'auto ack' '
+> -	ack="Acked-by: xyz"
+> -	msg=$(test_write_lines "ack! first commit" "" "$ack")
+> +	ack="Acked-by: xyz" &&
+> +	msg=$(test_write_lines "ack! first commit" "" "$ack") &&
+>  	git reset --hard base &&
+>  	git commit --allow-empty -m "$msg" -- &&
+>  	git tag ack &&
+>  	test_tick &&
+>  	git rebase --autosquash -i HEAD^^^ &&
+>  	git log --oneline >actual &&
+> -	git show -s first-commit | grep -v ^commit > expected-msg &&
+> -	echo "    $ack" >> expected-msg &&
+> -	git show -s HEAD^ | grep -v ^commit > actual-msg &&
+> -	diff actual-msg expected-msg
+> +	git show -s first-commit | grep -v ^commit >expected-msg &&
+> +	echo "    $ack" >>expected-msg &&
+> +	git show -s HEAD^ | grep -v ^commit >actual-msg &&
+> +	test_cmp actual-msg expected-msg
+>  '
+>  
+>  test_expect_success 'auto squash (config)' '
