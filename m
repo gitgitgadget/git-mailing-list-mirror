@@ -1,129 +1,130 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: EXT :Re: GIT and large files
-Date: Tue, 20 May 2014 20:27:20 +0200
-Message-ID: <1400610440.14137.18.camel@thomas-debian-x64>
-References: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD53E@XMBVAG73.northgrum.com>
-	 <xmqqmwec1i9f.fsf@gitster.dls.corp.google.com>
-	 <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD631@XMBVAG73.northgrum.com>
+From: Marius Storm-Olsen <mstormo@gmail.com>
+Subject: Re: untracked file deleted from the master branch, when checked out
+ to it from a local branch
+Date: Tue, 20 May 2014 13:29:40 -0500
+Message-ID: <537B9F14.3030403@gmail.com>
+References: <2525467.KRXv8a3gWS@linux-wzza.site> <1949847.AaDQEtxZHd@linux-wzza.site> <537B8BA9.7060207@storm-olsen.com> <2726779.MFtIaLB4b4@linux-wzza.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Stewart, Louis (IS)" <louis.stewart@ngc.com>
-X-From: git-owner@vger.kernel.org Tue May 20 20:27:30 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Arup Rakshit <aruprakshit@rocketmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 20 20:29:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wmol8-0004Kw-1m
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:27:30 +0200
+	id 1WmonJ-0000Ce-Jh
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:29:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751610AbaETS10 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 May 2014 14:27:26 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:60606 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750851AbaETS1Z (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 May 2014 14:27:25 -0400
-Received: from p5ddc1dd3.dip0.t-ipconnect.de ([93.220.29.211] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	id 1Wmokz-00012m-EE; Tue, 20 May 2014 20:27:21 +0200
-In-Reply-To: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD631@XMBVAG73.northgrum.com>
-X-Mailer: Evolution 3.4.4-3 
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1400610445;69b632cb;
+	id S1751439AbaETS3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 14:29:42 -0400
+Received: from mail-ob0-f171.google.com ([209.85.214.171]:39303 "EHLO
+	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbaETS3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 14:29:41 -0400
+Received: by mail-ob0-f171.google.com with SMTP id wn1so952215obc.16
+        for <git@vger.kernel.org>; Tue, 20 May 2014 11:29:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=GfDFKD7dtN23x25KOzF/sa0px1vE+B80CrW6SzJZbwc=;
+        b=cyyDAfMs14fhR1SxSvPn0YGhpJFubuP4znLmuZT7DE3OEwyF2Z4Des+C6rklox1n59
+         mNl3s206i9538i7neTogdpjrw4wwlWLSeNTKQqYt6YxZSCBJQ06wk6WnQCq9GogDwUap
+         I8SqZ9+u9iqf6aBFPN7/odCA/gG9sejJMJ/RcHdRSrZBo2dPrTEdadwriSHt3XEzvgiN
+         +ItB6AVX28gTpkZxorgcuzOvo+Xk19uuTT8Bo8HXsSRGJQS2lKmglYydG9Q1yQVygH2M
+         TPTDhu5H+LR/k3vndHpxfI2qp0E4agohPA4W8YRVHJ4dcONo1Yu+LfbF5502LLU7GTx6
+         3keA==
+X-Received: by 10.60.102.238 with SMTP id fr14mr22842347oeb.28.1400610581069;
+        Tue, 20 May 2014 11:29:41 -0700 (PDT)
+Received: from [10.3.3.221] ([199.227.34.94])
+        by mx.google.com with ESMTPSA id z8sm50919811oey.5.2014.05.20.11.29.39
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 20 May 2014 11:29:40 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <2726779.MFtIaLB4b4@linux-wzza.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249721>
 
-Am Dienstag, den 20.05.2014, 17:24 +0000 schrieb Stewart, Louis (IS):
-> Thanks for the reply.  I just read the intro to GIT and I am concerne=
-d
-> about the part that it will copy the whole repository to the develope=
-rs
-> work area.  They really just need the one directory and files under
-> that one directory. The history has TBs of data.
->=20
-> Lou
->=20
-> -----Original Message-----
-> From: Junio C Hamano [mailto:gitster@pobox.com]=20
-> Sent: Tuesday, May 20, 2014 1:18 PM
-> To: Stewart, Louis (IS)
-> Cc: git@vger.kernel.org
-> Subject: EXT :Re: GIT and large files
->=20
-> "Stewart, Louis (IS)" <louis.stewart@ngc.com> writes:
->=20
-> > Can GIT handle versioning of large 20+ GB files in a directory?
->=20
-> I think you can "git add" such files, push/fetch histories that
-> contains such files over the wire, and "git checkout" such files, but
-> naturally reading, processing and writing 20+GB would take some time.=
-=20
-> In order to run operations that need to see the changes, e.g. "git lo=
-g
-> -p", a real content-level merge, etc., you would also need sufficient
-> memory because we do things in-core.
+On 5/20/2014 12:20 PM, Arup Rakshit wrote:
+> On Tuesday, May 20, 2014 12:06:49 PM you wrote:
+>
+>>
+>> It never "came to the new branch", as it was never version controlled,
+>> it was an untracked file left behind when you switched branches.
+>>
+>> Once you added it to the new branch, change_class, it became a version
+>> controlled file,
+>
+> This is still  didn't get it. If an untracked file didn't come in the new
+> branch, how would I able to add it to stage ? I am not getting this part. You
+> are right, but I am not able to understand this one, my bad! :(
 
-Preventing that a clone fetches the whole history can be done with the
---depth option of git clone.
+Ok, step by step:
 
-The question is what do you want to do with these 20G files?
-Just store them in the repo and *very* occasionally change them?
-=46or that you need a 64bit compiled version of git with enough ram. 32=
-G
-does the trick here. Everything with git 1.9.1.
+You've created test.rd, that was never added to the git repo. (You never 
+committed it to the master branch.)
 
-Doing some tests on my machine with a normal harddisc gives (sorry for
-LC_ALL !=3D C):
-$time git add file.dat; time git commit -m "add file"; time git status
+ > ***********HERE I switched to a NEW Branch****************
+ > Arup-iMac:arup_git shreyas$ git checkout -b change_class
+ > Switched to a new branch 'change_class'
+ > Arup-iMac:arup_git shreyas$ ls
+ > git_1.txt test.rb
 
-real    16m17.913s
-user    13m3.965s
-sys     0m22.461s
-[master 15fa953] add file
- 1 file changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 file.dat
+test.rd is untracked, so still there. Git doesn't touch untracked files.
 
-real    15m36.666s
-user    13m26.962s
-sys     0m16.185s
-# Auf Branch master
-nichts zu committen, Arbeitsverzeichnis unver=C3=A4ndert
 
-real    11m58.936s
-user    11m50.300s
-sys     0m5.468s
+ > Arup-iMac:arup_git shreyas$ vi test.rb
+ > Arup-iMac:arup_git shreyas$ head -1 test.rb
+ > class Fooo
+ > Arup-iMac:arup_git shreyas$ head -2 test.rb
+ > class Fooo
+ >    def self.bar
 
-$ls -lh
--rw-r--r-- 1 thomas thomas 20G Mai 20 19:01 file.dat
+You modified it
 
-So this works but aint fast.
 
-Playing some tricks with --assume-unchanged helps here:
-$git update-index --assume-unchanged file.dat
-$time git status
-# Auf Branch master
-nichts zu committen, Arbeitsverzeichnis unver=C3=A4ndert
+ > Arup-iMac:arup_git shreyas$ git commit -am 'changed the class name'
+ > # On branch change_class
+ > # Untracked files:
+ > #   (use "git add <file>..." to include in what will be committed)
+ > #
+ > #test.rb
+ > nothing added to commit but untracked files present (use "git add" to 
+track)
 
-real    0m0.003s
-user    0m0.000s
-sys     0m0.000s
+You did nothing here..
 
-This trick is only save if you *know* that file.dat does not change.
 
-And btw I also set=20
-$cat .gitattributes=20
-*.dat -delta
-as delta compresssion should be skipped in any case.
+ > Arup-iMac:arup_git shreyas$ git add test.rb
+ > Arup-iMac:arup_git shreyas$ git commit -am 'changed the class name'
+ > [change_class 2d40033] changed the class name
+ >   1 file changed, 7 insertions(+)
+ >   create mode 100644 test.rb
 
-Pushing and pulling these files to and from a server needs some tweakin=
-g
-on the server side, otherwise the occasional git gc might kill the box.
-=20
-Btw. I happily have files with 1.5GB in my git repositories and also
-change them. And also work with git for windows. So in this region of
-file sizes things work quite well.
+Your previously untracked file has now been checked in. It's no longer 
+untracked, so now Git cares.
+
+
+ > Arup-iMac:arup_git shreyas$ cat test.rb
+ > class Fooo
+ >    def self.bar
+ >      12
+ >    end
+ > end
+ >
+ > Fooo.bar
+ > Arup-iMac:arup_git shreyas$ git checkout master
+ > Switched to branch 'master'
+
+You switched back to master branch, which contains no test.rb (as it's 
+clean and has never been committed to), so therefore Git removes the 
+file, since the now tracked test.rb shouldn't be on the master branch.
+
+-- 
+.marius
