@@ -1,119 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] t0000-*.sh: Fix the GIT_SKIP_TESTS sub-tests
-Date: Tue, 20 May 2014 14:33:33 -0700
-Message-ID: <xmqqppj8rv82.fsf@gitster.dls.corp.google.com>
-References: <537BC8A2.9060009@ramsay1.demon.co.uk>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
+Date: Tue, 20 May 2014 16:28:10 -0500
+Message-ID: <537bc8ea6ced9_1d08f2d2f8fd@nysa.notmuch>
+References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
+ <20140516084126.GB21468@sigill.intra.peff.net>
+ <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
+ <20140516225228.GA3988@sigill.intra.peff.net>
+ <5376f2ca5c90d_65b915db2f877@nysa.notmuch>
+ <20140517062413.GA13003@sigill.intra.peff.net>
+ <xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
+ <53795ef8e4023_10da88d30825@nysa.notmuch>
+ <xmqqegzp1tl7.fsf@gitster.dls.corp.google.com>
+ <537bbd6c1daf_a6f166b308b0@nysa.notmuch>
+ <xmqqy4xwrw8o.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	Ilya Bobyr <ilya.bobyr@gmail.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue May 20 23:33:48 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 23:39:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmrfO-0000xo-JO
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:33:46 +0200
+	id 1Wmrkx-0003bN-UR
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:39:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751448AbaETVdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 17:33:40 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61234 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751429AbaETVdi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 17:33:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 49EC919F65;
-	Tue, 20 May 2014 17:33:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D+qG/xf0dXmtRWiWJS+S5RFJfMo=; b=wdyYUb
-	pV1Kb0q9adZ1EbKHGfhZPnQV1+/ly/r51NS5jBBmprjlEAQhjyEORCsU5mf8QzUr
-	2Fu/G6IF/MJ8ZVT6RbkLii4D59Sd8MHgW9kBOu96UCCWlgbNAcU9Idwh9Mwr/oqr
-	ircsJzr7+XrdghsTRVPBhd0XwZQ9ZJEtSLNoA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qsgoVxfG1tJzg4HFE0uPgBpdX2O3y2jz
-	TlpG3BfhNQQpfOH9Cv4WRwInu06nlvTVWka8QwCDSRmPgZIVXxRYDtLlLjxYKYvR
-	MZKmqqSS2Ka+j3bxkcPx6Z9OvzXxWYDhafOFiYt73ZzSpTDhxj4qDwPRXUmBcxoc
-	2A7Uft/cIfk=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3E33D19F64;
-	Tue, 20 May 2014 17:33:38 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1C55D19F60;
-	Tue, 20 May 2014 17:33:35 -0400 (EDT)
-In-Reply-To: <537BC8A2.9060009@ramsay1.demon.co.uk> (Ramsay Jones's message of
-	"Tue, 20 May 2014 22:26:58 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 65D96430-E066-11E3-BA26-B784E8FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751242AbaETVj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 17:39:28 -0400
+Received: from mail-oa0-f45.google.com ([209.85.219.45]:58878 "EHLO
+	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750735AbaETVj0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 17:39:26 -0400
+Received: by mail-oa0-f45.google.com with SMTP id l6so1259877oag.32
+        for <git@vger.kernel.org>; Tue, 20 May 2014 14:39:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=wmJzfln27J22mRZJ54Jvst4L5xFTWy5YK12LQwhhPIs=;
+        b=jXj31fSpLq21DVqly5FQ5ZJ0Od346OlfdtP1jqtedQiekxORN846TJPlRyjA7C/lkg
+         BTK8TvFqgx+QeTsJV5Dkqtfb2lV/fspNeY+V1qI/PDA1qN1LGuiHXlMexkgU5umt0Fyz
+         8zc/6fTZ5OLjI9hUNT0nEO8oW/SkYvdyW+gTBf8qnaEkpTUWehfyyNIHFXrf5vHJcRl6
+         8ixSYCylwYpMP1h2tpXsopFWaNAsAHwja0jHG5cUo0cv9GryCodWMc686T6furDH8lIq
+         y2Q5HyTxYuTOl9PjKuFJ8p6vfkjxTGkKh++D0tZNqe8PDcMYLj9atHpV7bW3cAXkz+Ru
+         w/Xw==
+X-Received: by 10.182.60.4 with SMTP id d4mr47186446obr.4.1400621965722;
+        Tue, 20 May 2014 14:39:25 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id ld8sm39947133obb.9.2014.05.20.14.39.21
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 May 2014 14:39:22 -0700 (PDT)
+In-Reply-To: <xmqqy4xwrw8o.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249749>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> >> Let's try this in a different way, as I sense there is a
+> >> misunderstanding somewhere about your "wish".
+> >> ...
+> > No, I already said I do not want the code removed from v2.0, that's why
+> > I sent patches that simply added a warning, and I specifically said
+> > those were for 2.0.
+> 
+> Yeah, I think there are mails crossing.  I sent that "different way"
+> way before I read your "already said" happened.
+> 
+> > So to make it clear, I now request that you do:
+> >
+> >  1) Remove all the code.
+> >
+> >     Since my patches were removed from the list, here's an updated patch
+> >     that applies on top of 'master'
+> >
+> >     https://github.com/felipec/git/commits/up/remote/remove
+> 
+> I'll do that, but just one thing to make sure---do you want the
+> helper to exit with status 0?
 
-> This patch is an RFC, because I take a different approach to the
-> above solution, only because the diff is much smaller and easier
-> to read! Is it a better solution?
->
-> ATB,
-> Ramsay Jones
->
->  t/t0000-basic.sh | 15 +++++++++------
->  1 file changed, 9 insertions(+), 6 deletions(-)
->
-> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-> index 8345c8a..373ad8f 100755
-> --- a/t/t0000-basic.sh
-> +++ b/t/t0000-basic.sh
-> @@ -296,8 +296,9 @@ test_expect_success 'test --verbose-only' '
->  '
->  
->  test_expect_success 'GIT_SKIP_TESTS' "
-> -	GIT_SKIP_TESTS='git.2' \
-> -		run_sub_test_lib_test git-skip-tests-basic \
-> +	GIT_SKIP_TESTS='git.2' && export GIT_SKIP_TESTS &&
-> +	test_when_finished sane_unset GIT_SKIP_TESTS &&
-> +	run_sub_test_lib_test git-skip-tests-basic \
->  		'GIT_SKIP_TESTS' <<-\\EOF &&
+It doesn't matter; if the remote helper doesn't respond to the commands
+transport-helper exits with 128.
 
-The original is clearly wrong if run_sub_test_lib_test is a shell
-function.  I thought we hunted those down and killed them already,
-but apparently we didn't.
+> >  4) Re-add the following release note:
+> >
+> >     * "git push" via transport-helper interface (e.g. remote-hg) has
+> >       been updated to allow forced ref updates in a way similar to the
+> >       natively supported transports
+> 
+> I am not sure if this one is consistent with 1), as remote-hg will
+> no longer be with the release.
 
-I think exporting the variable and then clearing it in
-test-when-finished is fine, and doing the export and run in a
-subshell so that you do not have to clear is also fine.
+Remove '(e.g. remote-hg)', the rest still applies.
 
->  	for i in 1 2 3
->  	do
-> @@ -315,8 +316,9 @@ test_expect_success 'GIT_SKIP_TESTS' "
->  "
->  
->  test_expect_success 'GIT_SKIP_TESTS several tests' "
-> -	GIT_SKIP_TESTS='git.2 git.5' \
-> -		run_sub_test_lib_test git-skip-tests-several \
-> +	GIT_SKIP_TESTS='git.2 git.5' && export GIT_SKIP_TESTS &&
-> +	test_when_finished sane_unset GIT_SKIP_TESTS &&
-> +	run_sub_test_lib_test git-skip-tests-several \
->  		'GIT_SKIP_TESTS several tests' <<-\\EOF &&
->  	for i in 1 2 3 4 5 6
->  	do
-> @@ -337,8 +339,9 @@ test_expect_success 'GIT_SKIP_TESTS several tests' "
->  "
->  
->  test_expect_success 'GIT_SKIP_TESTS sh pattern' "
-> -	GIT_SKIP_TESTS='git.[2-5]' \
-> -		run_sub_test_lib_test git-skip-tests-sh-pattern \
-> +	GIT_SKIP_TESTS='git.[2-5]' && export GIT_SKIP_TESTS &&
-> +	test_when_finished sane_unset GIT_SKIP_TESTS &&
-> +	run_sub_test_lib_test git-skip-tests-sh-pattern \
->  		'GIT_SKIP_TESTS sh pattern' <<-\\EOF &&
->  	for i in 1 2 3 4 5 6
->  	do
+-- 
+Felipe Contreras
