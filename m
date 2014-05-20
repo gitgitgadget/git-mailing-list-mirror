@@ -1,95 +1,105 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Tue, 20 May 2014 16:55:49 +0200
-Message-ID: <537B6CF5.4020808@alum.mit.edu>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>	<20140516084126.GB21468@sigill.intra.peff.net>	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>	<537693aee4fdd_3e4812032fcc@nysa.notmuch>	<xmqq7g5i4r48.fsf@gitster.dls.corp.google.com>	<53795c3e58f73_10da88d30829@nysa.notmuch> <xmqqha4lwj57.fsf@gitster.dls.corp.google.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH] t6006-*.sh: Fix truncation tests
+Date: Tue, 20 May 2014 16:01:22 +0100
+Message-ID: <537B6E42.8040308@ramsay1.demon.co.uk>
+References: <537B5E8C.3070803@ramsay1.demon.co.uk> <20140520141936.GA30187@ashu.dyn1.rarus.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=windows-1251
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 16:55:57 2014
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Alexey Shumkin <alex.crezoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 17:01:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmlSP-0002ig-6n
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 16:55:57 +0200
+	id 1WmlXr-00040v-7s
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 17:01:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754202AbaETOzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 10:55:53 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:61050 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753319AbaETOzw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 May 2014 10:55:52 -0400
-X-AuditID: 1207440d-f79c26d000000b51-40-537b6cf7074f
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id 3F.0D.02897.7FC6B735; Tue, 20 May 2014 10:55:51 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB0D15.dip0.t-ipconnect.de [93.219.13.21])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4KEtnHW012966
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 20 May 2014 10:55:50 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <xmqqha4lwj57.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrHKsWRmVeSWpSXmKPExsUixO6iqPs9pzrY4MJkWYuDj/Msuq50M1k0
-	9F5htvjR0sPswOKxc9Zddo9nvXsYPS5eUvb4vEkugCWK2yYpsaQsODM9T98ugTvjzaNF7AVL
-	uCvmL7rP0sDYw9nFyMkhIWAi0fxgEhOELSZx4d56NhBbSOAyo8SlPiCbC8g+xySxYvNzZpAE
-	r4C2xOXl/8AaWARUJS58nQxmswnoSizqaQayOThEBYIk/pxVhCgXlDg58wkLiC0iECex9MhZ
-	VpASZgEjiXmn60FMYQFPifa2SIhNp5gkJl46zw5SzilgLTHv7ldGkBoJAXGJnsYgkDCzgI7E
-	u74HzBC2vMT2t3OYJzAKzkKybBaSsllIyhYwMq9ilEvMKc3VzU3MzClOTdYtTk7My0st0jXS
-	y80s0UtNKd3ECAlv3h2M/9fJHGIU4GBU4uGVkKoKFmJNLCuuzD3EKMnBpCTK25dYHSzEl5Sf
-	UpmRWJwRX1Sak1p8iFGCg1lJhNc+GCjHm5JYWZValA+TkuZgURLnVVui7ickkJ5YkpqdmlqQ
-	WgSTleHgUJLgfZMN1ChYlJqeWpGWmVOCkGbi4AQZziUlUpyal5JalFhakhEPit34YmD0gqR4
-	gPZuAWnnLS5IzAWKQrSeYtTlOHXnWBuTEEtefl6qlDjvNJAiAZCijNI8uBWwZPaKURzoY2He
-	PyBVPMBECDfpFdASJqAlfxdXgiwpSURISTUwOgSsFMnxrLrTHv5kv2ZEWgbvTKvX3PJv9oWH
-	paa9+/lO6aqNyJ4Onamxrt8qdp2flbsoYI+Xke2aikv57oFzP7RMyuVZ+ij03GrB 
+	id S1753430AbaETPBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 11:01:31 -0400
+Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:47598 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751947AbaETPBa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 11:01:30 -0400
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 4CD52AC408F;
+	Tue, 20 May 2014 16:01:33 +0100 (BST)
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 16528AC4071;
+	Tue, 20 May 2014 16:01:33 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
+	Tue, 20 May 2014 16:01:28 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.2.0
+In-Reply-To: <20140520141936.GA30187@ashu.dyn1.rarus.ru>
+X-MDF-HostID: 17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249690>
 
-On 05/19/2014 11:31 PM, Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
->> Junio C Hamano wrote:
->>>
->>> After looking at the reverse-depends list of packages, my faith is
->>> strengthened in that the Git ecosystem is truly maturing and useful
->>> third-party plug-ins will be picked up by distro packagers.
+On 20/05/14 15:19, Alexey Shumkin wrote:
+> On Tue, May 20, 2014 at 02:54:20PM +0100, Ramsay Jones wrote:
 >>
->> Where is git-imerge packaged?
-> 
-> I didn't see it on the archive the said Ubuntu box slurps from, but
-> I did not check all the other distros.
-> 
-> Michael, do you know what distro folks are doing with imerge?  For
-> the purpose of this thread, "I do not follow distros, and I do not
-> know" is a perfectly acceptable answer, but it would be very
-> relevant if your answer is "I suggested these distros to include it,
-> but so far they have been uncooperative and I haven't had much
-> success".
+>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>> ---
+>>
+>> Hi Alexey,
+>>
+>> If you need to re-roll your 'as/pretty-truncate' branch, could
+>> you please squash the relevant parts of this patch into the
+>> corresponding patches of your patch series. (ie this is a patch
+>> against the head of the current pu branch ...).
+>>
+>> Without this patch I get:
+>>
+>>   $ ./t6006-rev-list-format.sh
+>>   ok 1 - setup
+>>   ok 2 - format percent
+>>   ok 3 - format hash
+>>   ok 4 - format tree
+>>   ok 5 - format parents
+>>   ok 6 - format author
+>>   ok 7 - format committer
+>>   ok 8 - format encoding
+>>   ok 9 - format subject
+>>   ./t6006-rev-list-format.sh: 152: ./t6006-rev-list-format.sh: Syntax error: "(" unexpected
+>>   FATAL: Unexpected exit with code 2
+>>   $ 
+> Ooops, my fault.
+>>
+>> (if you have bash as /bin/sh you get different but related errors).
+>> The additional quoting suppresses the 'command redirection' errors, etc...
+> It's strange but I do have Bash as /bin/sh and unfortunately I have no
+> this error
 
-I haven't heard of any Linux distros that have git-imerge packages.  I
-just searched the package archives for Debian, Fedora, Gentoo, and Arch
-without finding it.
+Hmm, I see this:
 
-OTOH I haven't suggested it to any package maintainers nor done much to
-promote it after the initial flurry of publicity after GitMerge 2013
-(blog posts, talk, and interview on GitMinutes).
+  $ bash t6006-rev-list-format.sh -i
+  ok 1 - setup
+  ok 2 - format percent
+  ok 3 - format hash
+  ok 4 - format tree
+  ok 5 - format parents
+  ok 6 - format author
+  ok 7 - format committer
+  ok 8 - format encoding
+  ok 9 - format subject
+  t6006-rev-list-format.sh: line 152: 20,trunc: command not found
+  not ok 10 - format subject-truncated
+  #	
+  #			git rev-list --pretty=format:'%/dev/fd/63%s' master >output.subject-truncated &&
+  #			test_cmp expect.subject-truncated output.subject-truncated
+  #		
+  $ 
 
-Oh yeah, there's also this animated GIF here [1] :-)
+(Since I'm on Linux Mint, my /bin/sh is dash, which produces the output in my previous mail).
 
-Michael
-
-[1] https://github.com/blog/1691-michael-haggerty-is-a-githubber
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+ATB,
+Ramsay Jones
