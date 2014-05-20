@@ -1,62 +1,85 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: Re: GIT and large files
-Date: Tue, 20 May 2014 12:08:34 -0500
-Message-ID: <537B8C12.9020002@gmail.com>
-References: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD53E@XMBVAG73.northgrum.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t6006-*.sh: Fix truncation tests
+Date: Tue, 20 May 2014 10:10:46 -0700
+Message-ID: <xmqqr43o1ill.fsf@gitster.dls.corp.google.com>
+References: <537B5E8C.3070803@ramsay1.demon.co.uk>
+	<20140520141936.GA30187@ashu.dyn1.rarus.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "Stewart, Louis (IS)" <louis.stewart@ngc.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue May 20 19:08:39 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Alexey Shumkin <alex.crezoff@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 20 19:11:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmnWp-0001Mf-63
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 19:08:39 +0200
+	id 1WmnZ4-0005ID-5n
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 19:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753612AbaETRIf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 13:08:35 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:41566 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753300AbaETRIe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 13:08:34 -0400
-Received: by mail-oa0-f50.google.com with SMTP id i7so873964oag.9
-        for <git@vger.kernel.org>; Tue, 20 May 2014 10:08:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=1C8wKsbYUPk+VU03AVfNIqvFoUNYIxpbGNoSoKF9474=;
-        b=Lz0huMw2KrJohQdEy+9wtRjPijhw6tMSWa9MX17in5Vxy4zFoYYhkBVuev+0ExFJex
-         KWq+TyTPe+Ov1xK+hg3WCzC+Xcu2yOeTqvhAaoNTB7rsUg9AGleOymqCy6SDw4+gkI2m
-         LssocWpkHvRPFXSbBWI8vQsb3ciSWECyNaUKQNkO8InHD60E3REEPtgJpRzdPfhKUSIP
-         5+4mIIejlGN5sLGSzjiGYDiTcbBJ04FgqBVc5GQD0OIknnv6yRQIavrE4BF5UXxJBOH/
-         WCyIOR/pCHOgWd3fDPk7QmOo3GbkNT1wRr7rR5hc72zXjrTcmEjW8rBaNnNzl4G0+bmw
-         Ypfg==
-X-Received: by 10.60.159.232 with SMTP id xf8mr31286020oeb.22.1400605714217;
-        Tue, 20 May 2014 10:08:34 -0700 (PDT)
-Received: from [10.3.3.221] ([199.227.34.94])
-        by mx.google.com with ESMTPSA id rt4sm38793058obb.12.2014.05.20.10.08.33
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 20 May 2014 10:08:33 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD53E@XMBVAG73.northgrum.com>
+	id S1753586AbaETRKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 13:10:54 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59734 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750808AbaETRKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 13:10:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C1FD017B29;
+	Tue, 20 May 2014 13:10:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AiqLrjpWUYyjt3mMCI6/NYsW+1Y=; b=Ihw/xM
+	djPUrVe5tksufIiGuqo2WpKR09dbCqbPtOiyslZXv+rp7llTNNz4m2NRnG+J7Gsm
+	cavMqImbo6Ca8koZlE+5lKeOLP2544m3YDUAjPh/FuH4OG1XwA+0Ns+uN3wqsJQz
+	Cljd7O7V2PM68XzYx17h26bCqVkx3oQQyEGZQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vKiGmXx3bvuP5wa2Uja2nVdJUE/slsB1
+	Z8l4LOz+ELcP6hc1BpLAJU+MHgQdTdszA8XFQlEQuEyZxwYBVCjshDAjQ7y98eJp
+	W4Re4oxTw1eCUSas1Lc1m1Ch0AmcyXZLYnxrKXenNRTD/eaeFQ9Yj8npG4OaLs+G
+	czJ/A5IfiAY=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B629A17B28;
+	Tue, 20 May 2014 13:10:52 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3966117B1F;
+	Tue, 20 May 2014 13:10:48 -0400 (EDT)
+In-Reply-To: <20140520141936.GA30187@ashu.dyn1.rarus.ru> (Alexey Shumkin's
+	message of "Tue, 20 May 2014 18:19:36 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B00DF068-E041-11E3-97EA-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249705>
 
-On 5/20/2014 10:37 AM, Stewart, Louis (IS) wrote:
-> Can GIT handle versioning of large 20+ GB files in a directory?
+Alexey Shumkin <alex.crezoff@gmail.com> writes:
 
-Maybe you're looking for git-annex?
+> AFAIU, Junio already applied my patches (existance of a branch
+> as/pretty-truncate tells us that). So, we can only send other patches that
+> fix errors brought with former patches.
 
-https://git-annex.branchable.com/
+No, NO, NOOOOO....
 
--- 
-.marius
+The existence of a branch merely means that I saw the patches, and
+that I thought that the series was not completely useless.  In other
+words, it indicates that I wanted to make sure that I won't forget
+about the topic, and it was worth my time to create the branch and
+apply there for that purpose.
+
+Please do not read anything more than that.  Presense of a topic
+branch by itself does not say that I _read_ the patches or I thought
+they did not need reroll.
+
+When such a branch is merged to 'next', that means I read the
+patches myself, or I saw somebody whose judgement I and others in
+the community trust read them and gave a positive response or an
+Ack, and that I decided that the topic is in a good enough shape to
+be worked on further with incremental updates.
+
+You are talking about the latter state, but as/pretty-truncate is in
+the former state.
