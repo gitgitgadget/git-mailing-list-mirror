@@ -1,105 +1,75 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Tue, 20 May 2014 16:28:10 -0500
-Message-ID: <537bc8ea6ced9_1d08f2d2f8fd@nysa.notmuch>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
- <20140516084126.GB21468@sigill.intra.peff.net>
- <xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
- <20140516225228.GA3988@sigill.intra.peff.net>
- <5376f2ca5c90d_65b915db2f877@nysa.notmuch>
- <20140517062413.GA13003@sigill.intra.peff.net>
- <xmqq1tvq4r43.fsf@gitster.dls.corp.google.com>
- <53795ef8e4023_10da88d30825@nysa.notmuch>
- <xmqqegzp1tl7.fsf@gitster.dls.corp.google.com>
- <537bbd6c1daf_a6f166b308b0@nysa.notmuch>
- <xmqqy4xwrw8o.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC] t0000-*.sh: Fix the GIT_SKIP_TESTS sub-tests
+Date: Tue, 20 May 2014 14:40:06 -0700
+Message-ID: <20140520214006.GT12314@google.com>
+References: <537BC8A2.9060009@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 20 23:39:32 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Ilya Bobyr <ilya.bobyr@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue May 20 23:40:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wmrkx-0003bN-UR
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:39:32 +0200
+	id 1Wmrlh-000590-9P
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 23:40:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751242AbaETVj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 17:39:28 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:58878 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750735AbaETVj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 17:39:26 -0400
-Received: by mail-oa0-f45.google.com with SMTP id l6so1259877oag.32
-        for <git@vger.kernel.org>; Tue, 20 May 2014 14:39:25 -0700 (PDT)
+	id S1750801AbaETVkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 17:40:10 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:61593 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750735AbaETVkJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 17:40:09 -0400
+Received: by mail-pd0-f178.google.com with SMTP id v10so700135pde.9
+        for <git@vger.kernel.org>; Tue, 20 May 2014 14:40:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=wmJzfln27J22mRZJ54Jvst4L5xFTWy5YK12LQwhhPIs=;
-        b=jXj31fSpLq21DVqly5FQ5ZJ0Od346OlfdtP1jqtedQiekxORN846TJPlRyjA7C/lkg
-         BTK8TvFqgx+QeTsJV5Dkqtfb2lV/fspNeY+V1qI/PDA1qN1LGuiHXlMexkgU5umt0Fyz
-         8zc/6fTZ5OLjI9hUNT0nEO8oW/SkYvdyW+gTBf8qnaEkpTUWehfyyNIHFXrf5vHJcRl6
-         8ixSYCylwYpMP1h2tpXsopFWaNAsAHwja0jHG5cUo0cv9GryCodWMc686T6furDH8lIq
-         y2Q5HyTxYuTOl9PjKuFJ8p6vfkjxTGkKh++D0tZNqe8PDcMYLj9atHpV7bW3cAXkz+Ru
-         w/Xw==
-X-Received: by 10.182.60.4 with SMTP id d4mr47186446obr.4.1400621965722;
-        Tue, 20 May 2014 14:39:25 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id ld8sm39947133obb.9.2014.05.20.14.39.21
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=X7qAanT+Vxg6tYbsT1A99jG5BruMWXrHsL3+2vrMm5A=;
+        b=k7D84pYnfxZQyvMt0ndx/Kx6kQfiOJGlZPDBAlDhDT6AfKcJobMKJMdkxa09iid7RI
+         SC75X6SVbWJ/RzcdOi8+GubyfVIoi9zc0jCpn6nUdjO5YfxcbsuIbhTGnlKeUJQt2Kg6
+         aA9YVrEsn7o3ZRbr17GZGOJlSVeHyNVuCuwiwwrd//CW6ITeQJx1Dm6yymB/Q9PhMT1H
+         4vaYwerlunM+cavz0FqiIC1KKmgpf173GkF+9dz1FbcL9TeCpk01ZVDRCepKvuk97CJS
+         ZTmBksKVNyA7NFgcnIZsD384FKeRB/qPsxLLZSA8+eysncgv1BRHhFV4IPW3qolLYeVX
+         tA1A==
+X-Received: by 10.69.1.69 with SMTP id be5mr53811032pbd.126.1400622009065;
+        Tue, 20 May 2014 14:40:09 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id tg9sm4724104pbc.29.2014.05.20.14.40.07
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 May 2014 14:39:22 -0700 (PDT)
-In-Reply-To: <xmqqy4xwrw8o.fsf@gitster.dls.corp.google.com>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 20 May 2014 14:40:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <537BC8A2.9060009@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249750>
 
-Junio C Hamano wrote:
-> Felipe Contreras <felipe.contreras@gmail.com> writes:
-> 
-> >> Let's try this in a different way, as I sense there is a
-> >> misunderstanding somewhere about your "wish".
-> >> ...
-> > No, I already said I do not want the code removed from v2.0, that's why
-> > I sent patches that simply added a warning, and I specifically said
-> > those were for 2.0.
-> 
-> Yeah, I think there are mails crossing.  I sent that "different way"
-> way before I read your "already said" happened.
-> 
-> > So to make it clear, I now request that you do:
-> >
-> >  1) Remove all the code.
-> >
-> >     Since my patches were removed from the list, here's an updated patch
-> >     that applies on top of 'master'
-> >
-> >     https://github.com/felipec/git/commits/up/remote/remove
-> 
-> I'll do that, but just one thing to make sure---do you want the
-> helper to exit with status 0?
+Ramsay Jones wrote:
 
-It doesn't matter; if the remote helper doesn't respond to the commands
-transport-helper exits with 128.
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -296,8 +296,9 @@ test_expect_success 'test --verbose-only' '
+>  '
+>  
+>  test_expect_success 'GIT_SKIP_TESTS' "
+> -	GIT_SKIP_TESTS='git.2' \
+> -		run_sub_test_lib_test git-skip-tests-basic \
+> +	GIT_SKIP_TESTS='git.2' && export GIT_SKIP_TESTS &&
+> +	test_when_finished sane_unset GIT_SKIP_TESTS &&
 
-> >  4) Re-add the following release note:
-> >
-> >     * "git push" via transport-helper interface (e.g. remote-hg) has
-> >       been updated to allow forced ref updates in a way similar to the
-> >       natively supported transports
-> 
-> I am not sure if this one is consistent with 1), as remote-hg will
-> no longer be with the release.
+Oof.  Good catch.
 
-Remove '(e.g. remote-hg)', the rest still applies.
+What should happen if I have set GIT_SKIP_TESTS explicitly to run
+only some of the tests in t0000-basic?
 
--- 
-Felipe Contreras
+Thanks,
+Jonathan
