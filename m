@@ -1,89 +1,73 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: Re: untracked file deleted from the master branch, when checked out
- to it from a local branch
-Date: Tue, 20 May 2014 13:44:57 -0500
-Message-ID: <537BA2A9.3020708@gmail.com>
-References: <2525467.KRXv8a3gWS@linux-wzza.site> <2726779.MFtIaLB4b4@linux-wzza.site> <xmqqk39gz4tw.fsf@gitster.dls.corp.google.com> <2654529.8c5AhJCJsq@linux-wzza.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5] format-patch --signature-file <file>
+Date: Tue, 20 May 2014 11:46:51 -0700
+Message-ID: <xmqq7g5gz3s4.fsf@gitster.dls.corp.google.com>
+References: <1400572806-21092-1-git-send-email-jmmahler@gmail.com>
+	<1400572806-21092-2-git-send-email-jmmahler@gmail.com>
+	<20140520082740.GB27590@sigill.intra.peff.net>
+	<xmqq61l01gmw.fsf@gitster.dls.corp.google.com>
+	<20140520182443.GA30533@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Arup Rakshit <aruprakshit@rocketmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 20 20:45:05 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue May 20 20:47:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wmp27-0002iR-Ec
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:45:03 +0200
+	id 1Wmp41-00069X-1c
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459AbaETSo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 14:44:59 -0400
-Received: from mail-oa0-f43.google.com ([209.85.219.43]:39196 "EHLO
-	mail-oa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826AbaETSo6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 14:44:58 -0400
-Received: by mail-oa0-f43.google.com with SMTP id l6so1007575oag.30
-        for <git@vger.kernel.org>; Tue, 20 May 2014 11:44:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=8fCR54UUwdgtHzHuLzF88DOA9ZXaUsFQSOpiMW6cvF0=;
-        b=tSlWQhu/K28wGG3KDKm234Hs2y0FN43V/XZ6FOBMqTAxiNRNKl5jL7dqCWSglVmi0R
-         fqRop8A5LhFsnxfYinMeBViNHkPVJsptvgFUOZZH3KAleWLUAK6UmcXZx6O83ulaj9qi
-         kRYIf7VabulLGhG94Iyp/Wa8tvaT+DQRI/gzfzIlDKN6wbvwFXLas3uf+4G6TlyFY3Pb
-         b7esepj5xiowUs1PdrGpdpMPZtcSI8pKzbHDLKjOIIjSLodZ9z+o4q0QGI17oTN/6GXF
-         zDHYhq2QgryGfnKGeFTHAlwZH38EMSLD+UI7+HfVjwZz2KJ7tPEYdKKko5Iy7yaioMVE
-         TGkA==
-X-Received: by 10.182.94.209 with SMTP id de17mr44689369obb.60.1400611497899;
-        Tue, 20 May 2014 11:44:57 -0700 (PDT)
-Received: from [10.3.3.221] ([199.227.34.94])
-        by mx.google.com with ESMTPSA id ci10sm51065876oec.0.2014.05.20.11.44.57
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 20 May 2014 11:44:57 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <2654529.8c5AhJCJsq@linux-wzza.site>
+	id S1750872AbaETSq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 14:46:57 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50469 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750758AbaETSq5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 14:46:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6640D182D1;
+	Tue, 20 May 2014 14:46:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9n/sBRCMUrmg9eNBvhTGxoEnCvU=; b=PBg2K+
+	0Bx6bftOPPNAHymsZ3b/pe59XJW5SpcRBRTRCRLhXa6ep7Mk3LUUvDJ5ua4R3Wsf
+	6USaMFkG0yeGwpjmXjmRV52XUfZm0u7STe5+gnbFKwJ32BbhXe9UeaxKVyW0vuuf
+	xkIPGKB/qXP1zkoKiNGCwxi6foUD1qkPApMOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YiJ+Q3jVPDdYB0+gBwvCkGhT+fnSLl5S
+	wbYAlkLCGUYrdQgEIfAV8xYMtizo4AaRAQdO0FPDLRWy8nbq7W++6RnK+Ol4BIRY
+	Su/B7mDpEhzS+BK3x+rGdxVaJGU4Hb6hPg4dD835ER7CRH8VlJ71h++6ZwBVcnE6
+	KylPlT17d7o=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5D372182D0;
+	Tue, 20 May 2014 14:46:56 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 141ED182CA;
+	Tue, 20 May 2014 14:46:53 -0400 (EDT)
+In-Reply-To: <20140520182443.GA30533@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 20 May 2014 14:24:43 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1C2C0494-E04F-11E3-9CD8-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249726>
 
-On 5/20/2014 12:40 PM, Arup Rakshit wrote:
-> On Tuesday, May 20, 2014 11:24:11 AM you wrote:
->> Arup Rakshit <aruprakshit@rocketmail.com> writes:
->>
->> Untracked files and modifications to files in your working directory
->> do not belong to your current branch.  This is to allow you, after
->> starting to work on one branch then realizing that the changes and
->> additions you are making do not belong there, to switch to a more
->> appropriate branch at that point without losing your work so far,
->> taking these changes and additions with you to the branch you want
->> to commit your changes to.
->>
-> Now, It makes sense. I gave it another try and this time I walk from back to
-> front.
->
-> Now you can see, that I have created, a new file called *file.txt*, in the
-> *master branch*.
+Jeff King <peff@peff.net> writes:
 
-NO, you didn't.
+> If it were just "--signature", I'd agree. After all, nobody is even
+> complaining. But this is also in preparation for --signature-file.
+> Should the user create a file without a trailing newline?
 
- > arup@linux-wzza:~/Git_tutorial> git status
- > # On branch master
- > # Untracked files:
- > #   (use "git add <file>..." to include in what will be committed)
- > #
- > #       file.txt
+Ahh, I missed that part.
 
-See that file.txt is listed under "Untracked files"?
-Git sees the file, but since you haven't added it with "git add", it's 
-untracked and Git doesn't care about it.
+I am fine with processing it with stripspace().
 
-It lists it with the status command, so you will see that it's not yet 
-tracked.
-
--- 
-.marius
+By the way, at some point we may want to move that helper function
+to strbuf.c, but that is a separate issue.
