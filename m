@@ -1,86 +1,51 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH] remote-helpers: point at their upstream repositories
-Date: Tue, 20 May 2014 17:20:44 +0200
-Message-ID: <CALKQrgcdSgZ76hKR35SDxGHYQ_cE3toEXphDVSu99B-pbTsSNQ@mail.gmail.com>
-References: <xmqqa9aid52a.fsf@gitster.dls.corp.google.com>
-	<20140516084126.GB21468@sigill.intra.peff.net>
-	<xmqq8uq1br9c.fsf@gitster.dls.corp.google.com>
-	<537693aee4fdd_3e4812032fcc@nysa.notmuch>
-	<xmqq7g5i4r48.fsf@gitster.dls.corp.google.com>
-	<53795c3e58f73_10da88d30829@nysa.notmuch>
-	<xmqqha4lwj57.fsf@gitster.dls.corp.google.com>
-	<537B6CF5.4020808@alum.mit.edu>
+From: "Stewart, Louis (IS)" <louis.stewart@ngc.com>
+Subject: GIT and large files
+Date: Tue, 20 May 2014 15:37:41 +0000
+Message-ID: <C755E6FBF6DC4447BEF161CE48BDE0BD2F0CD53E@XMBVAG73.northgrum.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Git mailing list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 20 17:21:05 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue May 20 17:39:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wmlqd-0003lY-8B
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 17:20:59 +0200
+	id 1Wmm8K-0006WQ-CS
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 17:39:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753741AbaETPUw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 11:20:52 -0400
-Received: from mail12.copyleft.no ([188.94.218.224]:51769 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751062AbaETPUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 11:20:50 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1WmlqS-0001ZR-De
-	for git@vger.kernel.org; Tue, 20 May 2014 17:20:48 +0200
-Received: from mail-oa0-f47.google.com ([209.85.219.47])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1WmlqS-000MDi-6p
-	for git@vger.kernel.org; Tue, 20 May 2014 17:20:48 +0200
-Received: by mail-oa0-f47.google.com with SMTP id i7so689174oag.20
-        for <git@vger.kernel.org>; Tue, 20 May 2014 08:20:44 -0700 (PDT)
-X-Received: by 10.182.102.99 with SMTP id fn3mr43424768obb.57.1400599244480;
- Tue, 20 May 2014 08:20:44 -0700 (PDT)
-Received: by 10.182.245.10 with HTTP; Tue, 20 May 2014 08:20:44 -0700 (PDT)
-In-Reply-To: <537B6CF5.4020808@alum.mit.edu>
+	id S1753258AbaETPjM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 11:39:12 -0400
+Received: from xspv0103.northgrum.com ([134.223.120.78]:10705 "EHLO
+	xspv0103.northgrum.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752704AbaETPjM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 May 2014 11:39:12 -0400
+Received: from XHTV0002.northgrum.com (unknown [134.223.80.11]) by xspv0103.northgrum.com with smtp
+	(TLS: TLSv1/SSLv3,128bits,AES128-SHA)
+	 id 33dd_069a_9be7b01c_6162_41b2_91f5_75e47dc20055;
+	Tue, 20 May 2014 10:39:10 -0500
+Received: from XHTVAG06.northgrum.com (134.223.82.83) by
+ XHTV0002.northgrum.com (134.223.80.11) with Microsoft SMTP Server (TLS) id
+ 14.3.174.1; Tue, 20 May 2014 10:37:41 -0500
+Received: from XMBVAG73.northgrum.com ([169.254.4.90]) by
+ XHTVAG06.northgrum.com ([134.223.82.83]) with mapi id 14.03.0174.001; Tue, 20
+ May 2014 10:37:41 -0500
+Thread-Topic: GIT and large files
+Thread-Index: Ac90P2xEaMppYEtOT9uXMBUN72rp1QAAdwMQ
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.223.82.117]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249695>
 
-On Tue, May 20, 2014 at 4:55 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 05/19/2014 11:31 PM, Junio C Hamano wrote:
->> Felipe Contreras <felipe.contreras@gmail.com> writes:
->>> Where is git-imerge packaged?
->>
->> I didn't see it on the archive the said Ubuntu box slurps from, but
->> I did not check all the other distros.
->>
->> Michael, do you know what distro folks are doing with imerge?  For
->> the purpose of this thread, "I do not follow distros, and I do not
->> know" is a perfectly acceptable answer, but it would be very
->> relevant if your answer is "I suggested these distros to include it,
->> but so far they have been uncooperative and I haven't had much
->> success".
->
-> I haven't heard of any Linux distros that have git-imerge packages.  I
-> just searched the package archives for Debian, Fedora, Gentoo, and Arch
-> without finding it.
+Can GIT handle versioning of large 20+ GB files in a directory?
 
-FWIW; someone has made an AUR package (a user-contributed Arch package
-recipe) for git-imerge:
-https://aur.archlinux.org/packages/git-imerge-git/
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Lou Stewart
+AOCWS Software Configuration Management
+757-269-2388
