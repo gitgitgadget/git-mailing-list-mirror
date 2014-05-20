@@ -1,64 +1,70 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [RFC/PATCH v4 3/3] add command performance tracing to debug
- scripted commands
-Date: Tue, 20 May 2014 21:11:24 +0200
-Message-ID: <537BA8DC.9070104@gmail.com>
-References: <537BA806.50600@gmail.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH] Windows: Allow using UNC path for git repository
+Date: Tue, 20 May 2014 21:21:32 +0200
+Organization: <)><
+Message-ID: <20140520192132.GA7355@camelia.ucw.cz>
+References: <20140519132334.GA1435@camelia.ucw.cz> <xmqqy4xwxop7.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBBW6R52NQKGQEAHP76OQ@googlegroups.com Tue May 20 21:11:25 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBW6R52NQKGQEAHP76OQ@googlegroups.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+        Erik Faye-Lund <kusmabite@gmail.com>,
+        msysGit <msysgit@googlegroups.com>,
+        Cezary Zawadka <czawadka@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCU63DXMWULRBPWW52NQKGQEWIYT64Y@googlegroups.com Tue May 20 21:21:35 2014
+Return-path: <msysgit+bncBCU63DXMWULRBPWW52NQKGQEWIYT64Y@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f186.google.com ([209.85.212.186])
+Received: from mail-wg0-f60.google.com ([74.125.82.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBW6R52NQKGQEAHP76OQ@googlegroups.com>)
-	id 1WmpRc-0008Ga-NU
-	for gcvm-msysgit@m.gmane.org; Tue, 20 May 2014 21:11:24 +0200
-Received: by mail-wi0-f186.google.com with SMTP id hi2sf132810wib.13
-        for <gcvm-msysgit@m.gmane.org>; Tue, 20 May 2014 12:11:24 -0700 (PDT)
+	(envelope-from <msysgit+bncBCU63DXMWULRBPWW52NQKGQEWIYT64Y@googlegroups.com>)
+	id 1WmpbT-0001Sd-4y
+	for gcvm-msysgit@m.gmane.org; Tue, 20 May 2014 21:21:35 +0200
+Received: by mail-wg0-f60.google.com with SMTP id b13sf107407wgh.5
+        for <gcvm-msysgit@m.gmane.org>; Tue, 20 May 2014 12:21:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=wpeAQEflXUbL04uFAVu3BicpjXdm+ts7jst4vor+iAo=;
-        b=UdrNdF6qqh1RYjsZxCO1QcwjQLlyMD4d2Oud2MDSiUZAieZhNpo1+xxP3+5ISVjVP9
-         YBM7BGBWt3TNM6ll5B8Q9iFOgDndhaRlXs+/E18mrUSJqxUV6Col0dthH1rQCSpXL2Od
-         byN3r13dHtGJJp+or3g+FdwuhLdnf3nhexcdtM3e4ulAI6LER/CALYO/y9x1RONwarXp
-         E1R3UG3j5Ojb3t+lc/ULg7/EZXJDXoHD0u4A22n4U6Pkv0E5lwxevomKMiYXXNJLgIF/
-         M5xBcsp66q5bpWNJiunsCgzkujDSJ7lmV3BjoTFQZTIPZKcQuGQ+nu390tZGXy6w9lDB
-         d8uQ==
-X-Received: by 10.180.90.7 with SMTP id bs7mr30537wib.7.1400613084474;
-        Tue, 20 May 2014 12:11:24 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=hYAnRFAVFf3OrSdCX9gIbdAb20PG26DDUOzy9B/zFmQ=;
+        b=h2afZHJ3lPwz6iTiaMZw+XMpdmWIJlwkUWQLABbv6ki+Cvb13kichrLf5iRR4vIUJj
+         RL96MgVes5VoOhEWjHN/6F1gx2S8Hfsz/C/b9lN6LNQMpqC1jh6VMke8A5R1JfB2mqx9
+         DwMlF2saCslcR7c3ayTDGGEmL1s4P/nj5fmN/odcT2exuVz03SnSNcNuIOj4Bhm7kbzd
+         n69q6BPh9F8Oo5bEt8Tcq9aFe5iWQRBYGf3Ocs+RAqLZxzXczoZExK8TJevZ325ZzuC8
+         OzfpSrWFfJNa3Xja9N8g7WjTu/j9Jx0M9FMmh6CcnGHNQeSanfCj5XSfXSyByHOWAbPa
+         RNsw==
+X-Received: by 10.180.87.68 with SMTP id v4mr26632wiz.1.1400613694789;
+        Tue, 20 May 2014 12:21:34 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.181.13.50 with SMTP id ev18ls172527wid.48.gmail; Tue, 20 May
- 2014 12:11:23 -0700 (PDT)
-X-Received: by 10.180.206.33 with SMTP id ll1mr588108wic.5.1400613083480;
-        Tue, 20 May 2014 12:11:23 -0700 (PDT)
-Received: from mail-ee0-x233.google.com (mail-ee0-x233.google.com [2a00:1450:4013:c00::233])
-        by gmr-mx.google.com with ESMTPS id r49si995286eep.0.2014.05.20.12.11.23
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 20 May 2014 12:11:23 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::233 as permitted sender) client-ip=2a00:1450:4013:c00::233;
-Received: by mail-ee0-f51.google.com with SMTP id e51so854022eek.24
-        for <msysgit@googlegroups.com>; Tue, 20 May 2014 12:11:23 -0700 (PDT)
-X-Received: by 10.14.219.9 with SMTP id l9mr6112926eep.115.1400613083408;
-        Tue, 20 May 2014 12:11:23 -0700 (PDT)
-Received: from [10.1.116.56] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id g8sm5945884eep.0.2014.05.20.12.11.22
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 20 May 2014 12:11:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <537BA806.50600@gmail.com>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::233
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Received: by 10.180.86.135 with SMTP id p7ls171290wiz.4.gmail; Tue, 20 May
+ 2014 12:21:33 -0700 (PDT)
+X-Received: by 10.180.211.114 with SMTP id nb18mr597029wic.4.1400613693862;
+        Tue, 20 May 2014 12:21:33 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id r49si1006971eep.0.2014.05.20.12.21.33
+        for <msysgit@googlegroups.com>;
+        Tue, 20 May 2014 12:21:33 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 8F0321C0116;
+	Tue, 20 May 2014 21:21:33 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s4KJLXEH007445;
+	Tue, 20 May 2014 21:21:33 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s4KJLWNY007444;
+	Tue, 20 May 2014 21:21:32 +0200
+In-Reply-To: <xmqqy4xwxop7.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -69,88 +75,23 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249733>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249734>
 
-Add performance tracing to identify which git commands are called and how
-long they execute. This is particularly useful to debug performance issues
-of scripted commands.
+Hello,
 
-Usage example: > GIT_TRACE_PERFORMANCE=~/git-trace.log git stash list
+On Tue, May 20, 2014 at 11:57:56AM -0700, Junio C Hamano wrote:
+> It would be nice if somebody in the S-o-b chain can double-check
+> that the "combined" version is sane.  [...]
 
-Creates a log file like this:
-performance: at trace.c:319, time: 0.000303280 s: git command: 'git' 'rev-parse' '--git-dir'
-performance: at trace.c:319, time: 0.000334409 s: git command: 'git' 'rev-parse' '--is-inside-work-tree'
-performance: at trace.c:319, time: 0.000215243 s: git command: 'git' 'rev-parse' '--show-toplevel'
-performance: at trace.c:319, time: 0.000410639 s: git command: 'git' 'config' '--get-colorbool' 'color.interactive'
-performance: at trace.c:319, time: 0.000394077 s: git command: 'git' 'config' '--get-color' 'color.interactive.help' 'red bold'
-performance: at trace.c:319, time: 0.000280701 s: git command: 'git' 'config' '--get-color' '' 'reset'
-performance: at trace.c:319, time: 0.000908185 s: git command: 'git' 'rev-parse' '--verify' 'refs/stash'
-performance: at trace.c:319, time: 0.028827774 s: git command: 'git' 'stash' 'list'
+"Combined" was an unfortunate word.  There was a pair of successive
+commits in msysgit all the time.  I just decided to submit them
+squashed together.  I haven't changed the code, just created a new
+commit message.
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
- cache.h |  1 +
- git.c   |  2 ++
- trace.c | 22 ++++++++++++++++++++++
- 3 files changed, 25 insertions(+)
+That said, reviewing the function is always useful, of course.
 
-diff --git a/cache.h b/cache.h
-index cb856d9..289e8fd 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1366,6 +1366,7 @@ extern uint64_t getnanotime(void);
- __attribute__((format (printf, 4, 5)))
- extern uint64_t trace_performance_file_line(const char *file, int lineno,
- 	uint64_t nanos, const char *fmt, ...);
-+extern void trace_command_performance(const char **argv);
- 
- /*
-  * Prints specified time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
-diff --git a/git.c b/git.c
-index 9efd1a3..2ea65b1 100644
---- a/git.c
-+++ b/git.c
-@@ -568,6 +568,8 @@ int main(int argc, char **av)
- 
- 	git_setup_gettext();
- 
-+	trace_command_performance(argv);
-+
- 	/*
- 	 * "git-xxxx" is the same as "git xxxx", but we obviously:
- 	 *
-diff --git a/trace.c b/trace.c
-index 1b1903b..9edcb59 100644
---- a/trace.c
-+++ b/trace.c
-@@ -309,3 +309,25 @@ uint64_t trace_performance_file_line(const char *file, int lineno,
- 	strbuf_release(&buf);
- 	return getnanotime();
- }
-+
-+static uint64_t command_start_time;
-+static struct strbuf command_line = STRBUF_INIT;
-+
-+static void print_command_performance_atexit(void)
-+{
-+	trace_performance_since(command_start_time, "git command:%s",
-+				command_line.buf);
-+}
-+
-+void trace_command_performance(const char **argv)
-+{
-+	if (!trace_want_performance())
-+		return;
-+
-+	if (!command_start_time)
-+		atexit(print_command_performance_atexit);
-+
-+	strbuf_reset(&command_line);
-+	sq_quote_argv(&command_line, argv, 0);
-+	command_start_time = getnanotime();
-+}
--- 
-1.9.2.msysgit.0.493.g47a82c3
+Stepan
 
 -- 
 -- 
