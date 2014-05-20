@@ -1,130 +1,76 @@
-From: Marius Storm-Olsen <mstormo@gmail.com>
-Subject: Re: untracked file deleted from the master branch, when checked out
- to it from a local branch
-Date: Tue, 20 May 2014 13:29:40 -0500
-Message-ID: <537B9F14.3030403@gmail.com>
-References: <2525467.KRXv8a3gWS@linux-wzza.site> <1949847.AaDQEtxZHd@linux-wzza.site> <537B8BA9.7060207@storm-olsen.com> <2726779.MFtIaLB4b4@linux-wzza.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] rebase -i: test "Nothing to do" case with autostash
+Date: Tue, 20 May 2014 11:34:17 -0700
+Message-ID: <xmqqfvk4z4d2.fsf@gitster.dls.corp.google.com>
+References: <CAPig+cSWrc-W+9CZQ9vF-E3xcLY3OFoRMpHLb3K8Vsx3iz1Mjw@mail.gmail.com>
+	<1400572171-28372-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Arup Rakshit <aruprakshit@rocketmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 20 20:29:46 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, ether@cpan.org, felipe.contreras@gmail.com,
+	philippe.vaucher@gmail.com, artagnon@gmail.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue May 20 20:34:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WmonJ-0000Ce-Jh
-	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:29:45 +0200
+	id 1Wmors-0000Wn-3U
+	for gcvg-git-2@plane.gmane.org; Tue, 20 May 2014 20:34:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbaETS3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 May 2014 14:29:42 -0400
-Received: from mail-ob0-f171.google.com ([209.85.214.171]:39303 "EHLO
-	mail-ob0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750741AbaETS3l (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 May 2014 14:29:41 -0400
-Received: by mail-ob0-f171.google.com with SMTP id wn1so952215obc.16
-        for <git@vger.kernel.org>; Tue, 20 May 2014 11:29:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=GfDFKD7dtN23x25KOzF/sa0px1vE+B80CrW6SzJZbwc=;
-        b=cyyDAfMs14fhR1SxSvPn0YGhpJFubuP4znLmuZT7DE3OEwyF2Z4Des+C6rklox1n59
-         mNl3s206i9538i7neTogdpjrw4wwlWLSeNTKQqYt6YxZSCBJQ06wk6WnQCq9GogDwUap
-         I8SqZ9+u9iqf6aBFPN7/odCA/gG9sejJMJ/RcHdRSrZBo2dPrTEdadwriSHt3XEzvgiN
-         +ItB6AVX28gTpkZxorgcuzOvo+Xk19uuTT8Bo8HXsSRGJQS2lKmglYydG9Q1yQVygH2M
-         TPTDhu5H+LR/k3vndHpxfI2qp0E4agohPA4W8YRVHJ4dcONo1Yu+LfbF5502LLU7GTx6
-         3keA==
-X-Received: by 10.60.102.238 with SMTP id fr14mr22842347oeb.28.1400610581069;
-        Tue, 20 May 2014 11:29:41 -0700 (PDT)
-Received: from [10.3.3.221] ([199.227.34.94])
-        by mx.google.com with ESMTPSA id z8sm50919811oey.5.2014.05.20.11.29.39
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 20 May 2014 11:29:40 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <2726779.MFtIaLB4b4@linux-wzza.site>
+	id S1751103AbaETSeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 May 2014 14:34:23 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50518 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750766AbaETSeX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 May 2014 14:34:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A2EBF18F5B;
+	Tue, 20 May 2014 14:34:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yl7IEiGO9FZGbe/P7BfZYsnnDY0=; b=aN5v+I
+	7pSIPEbqWnLsAmYpFEfh50jXOgFY9sAtIC189gElNNmmM3c6PkXTvrDiE+SOPTTk
+	kTcicxgVHWynSYao2A1tEAn7xNugTlYH4OCT+qQgW4ZWYUOY7i663qWpLKFgjslC
+	ynNP3MivCK+ndfTu3xKinbDRNhXebatvHNlxU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=THwI4NvAQ+I0CGZ9JDNBvJRpHm48kXae
+	0bZpw9VKLBJXJgWG0wlQHmlO3d5k6tVM7BeLlLM3Hq6RFixwRx/rytnLYtTCfHid
+	NqH5zKWqEITRMTKqbchAzl7dSoDRNFglKco3J6wEcNMY6VUAi0N8mvkpA4ZMARS+
+	oDwWe8VCZ0A=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9893418F5A;
+	Tue, 20 May 2014 14:34:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 39AF218F59;
+	Tue, 20 May 2014 14:34:19 -0400 (EDT)
+In-Reply-To: <1400572171-28372-1-git-send-email-Matthieu.Moy@imag.fr>
+	(Matthieu Moy's message of "Tue, 20 May 2014 09:49:31 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5AD8655E-E04D-11E3-9204-B784E8FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249722>
 
-On 5/20/2014 12:20 PM, Arup Rakshit wrote:
-> On Tuesday, May 20, 2014 12:06:49 PM you wrote:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 >
+>> Simpler (replace above two lines):
 >>
->> It never "came to the new branch", as it was never version controlled,
->> it was an untracked file left behind when you switched branches.
->>
->> Once you added it to the new branch, change_class, it became a version
->> controlled file,
+>>     test_set_editor "$(pwd)/abort-editor.sh" &&
 >
-> This is still  didn't get it. If an untracked file didn't come in the new
-> branch, how would I able to add it to stage ? I am not getting this part. You
-> are right, but I am not able to understand this one, my bad! :(
+> Indeed.
+>
+> And I had debug statements left.
+>
+> Hopefully, this after-coffee-v2 will be clear enough and correct ;-).
 
-Ok, step by step:
-
-You've created test.rd, that was never added to the git repo. (You never 
-committed it to the master branch.)
-
- > ***********HERE I switched to a NEW Branch****************
- > Arup-iMac:arup_git shreyas$ git checkout -b change_class
- > Switched to a new branch 'change_class'
- > Arup-iMac:arup_git shreyas$ ls
- > git_1.txt test.rb
-
-test.rd is untracked, so still there. Git doesn't touch untracked files.
-
-
- > Arup-iMac:arup_git shreyas$ vi test.rb
- > Arup-iMac:arup_git shreyas$ head -1 test.rb
- > class Fooo
- > Arup-iMac:arup_git shreyas$ head -2 test.rb
- > class Fooo
- >    def self.bar
-
-You modified it
-
-
- > Arup-iMac:arup_git shreyas$ git commit -am 'changed the class name'
- > # On branch change_class
- > # Untracked files:
- > #   (use "git add <file>..." to include in what will be committed)
- > #
- > #test.rb
- > nothing added to commit but untracked files present (use "git add" to 
-track)
-
-You did nothing here..
-
-
- > Arup-iMac:arup_git shreyas$ git add test.rb
- > Arup-iMac:arup_git shreyas$ git commit -am 'changed the class name'
- > [change_class 2d40033] changed the class name
- >   1 file changed, 7 insertions(+)
- >   create mode 100644 test.rb
-
-Your previously untracked file has now been checked in. It's no longer 
-untracked, so now Git cares.
-
-
- > Arup-iMac:arup_git shreyas$ cat test.rb
- > class Fooo
- >    def self.bar
- >      12
- >    end
- > end
- >
- > Fooo.bar
- > Arup-iMac:arup_git shreyas$ git checkout master
- > Switched to branch 'master'
-
-You switched back to master branch, which contains no test.rb (as it's 
-clean and has never been committed to), so therefore Git removes the 
-file, since the now tracked test.rb shouldn't be on the master branch.
-
--- 
-.marius
+Thanks, will queue on top of Ram's fix.
