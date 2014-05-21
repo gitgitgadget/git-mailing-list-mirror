@@ -1,101 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] rebase: test ack
-Date: Wed, 21 May 2014 09:54:47 -0700
-Message-ID: <xmqqioozqdgo.fsf@gitster.dls.corp.google.com>
-References: <1400447743-18513-1-git-send-email-mst@redhat.com>
-	<1400447743-18513-4-git-send-email-mst@redhat.com>
-	<xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
-	<20140520143850.GA13099@redhat.com>
-	<xmqqvbt01o14.fsf@gitster.dls.corp.google.com>
-	<20140521125246.GA21476@redhat.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH v4 3/3] add command performance tracing to
+ debug scripted commands
+Date: Wed, 21 May 2014 12:55:08 -0400
+Message-ID: <20140521165508.GC2040@sigill.intra.peff.net>
+References: <537BA806.50600@gmail.com>
+ <537BA8DC.9070104@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Wed May 21 18:54:58 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBDO2DJFKTEFBB35U6ONQKGQEFHBGAEQ@googlegroups.com Wed May 21 18:55:14 2014
+Return-path: <msysgit+bncBDO2DJFKTEFBB35U6ONQKGQEFHBGAEQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pa0-f57.google.com ([209.85.220.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wn9n7-0001Ke-MZ
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 18:54:58 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245AbaEUQyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 12:54:54 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64714 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751801AbaEUQyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 12:54:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 086E51879D;
-	Wed, 21 May 2014 12:54:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1JVs73jyyl0Jqgr9q/mW/VuRDzI=; b=fNPnAp
-	Zxf4WEn4BLf1KEMI/vFdxFQpdpIXQZKwkoIgQdDf+jyQ/aGBGhCP+BFqRX8TfSiv
-	pfC5o1bH5j9f5+iqXJG4mDmIGbNwVMLxLr/mBpjlexRZ8QDarAZdwUks5HWimvCg
-	/l3vwZVQZENl/FJCrGV115p6ZTk/ncq0zdQAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=piXQg7+jtURVq4P9HGjZCgEPM+zTi7vp
-	YPA7DRYev+MV0UtYROplEs7/NG8us9SkGtB1eQzyT7oBw0xeVP2xAPdSZndCyE5h
-	bC8fl07NuKkZsnmpyyXDTZF9umrjz0rEbYUIK5is3OdRd10Fvez3fHyctOKGUMtJ
-	6+Y0sttHbVw=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EFE4C1879C;
-	Wed, 21 May 2014 12:54:51 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BD4C71879A;
-	Wed, 21 May 2014 12:54:48 -0400 (EDT)
-In-Reply-To: <20140521125246.GA21476@redhat.com> (Michael S. Tsirkin's message
-	of "Wed, 21 May 2014 15:52:46 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9E95F598-E108-11E3-AA56-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249806>
+	(envelope-from <msysgit+bncBDO2DJFKTEFBB35U6ONQKGQEFHBGAEQ@googlegroups.com>)
+	id 1Wn9nN-0001hE-7M
+	for gcvm-msysgit@m.gmane.org; Wed, 21 May 2014 18:55:13 +0200
+Received: by mail-pa0-f57.google.com with SMTP id rd3sf564726pab.12
+        for <gcvm-msysgit@m.gmane.org>; Wed, 21 May 2014 09:55:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition;
+        bh=ArmFT3Y+YEns/QlWPIY3D8jdMnqqoepvyGPuLO1WwVA=;
+        b=RGkIPNZUjkI1IZjVWl40m8/Kk0xKroJ9ZRqXJxHPY1HrEQEvPrsaHjPlBQCuiND6oQ
+         C4r5HxjfGVk/973D3q1EijpCBbrtfarpxRd1EsiUT4R0zyKLX9cIyGtWTpIv8LdaMwly
+         kSWAvAWjjGdN7hPnxZUT7o/Pgh1+3RGxjld7GtjqMXrabCea58HwGcfHN+7H/7O5xLD4
+         vT06TX02iw2LR1MG9FTAgQcdUwI2mc0p4ZR25Oma2t/ogPd6uptw9FG81rYwMlucoELH
+         1QivZx6j6mTFA6toajJdBlj977sSsdBOvEglMS4qvxTNchcp5bAxbrBFpi7IqSTuq/dj
+         dU7A==
+X-Received: by 10.50.103.104 with SMTP id fv8mr327016igb.2.1400691312121;
+        Wed, 21 May 2014 09:55:12 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.8.105 with SMTP id q9ls1222875iga.28.gmail; Wed, 21 May
+ 2014 09:55:11 -0700 (PDT)
+X-Received: by 10.50.130.102 with SMTP id od6mr5100908igb.0.1400691311268;
+        Wed, 21 May 2014 09:55:11 -0700 (PDT)
+Received: from peff.net (cloud.peff.net. [50.56.180.127])
+        by gmr-mx.google.com with SMTP id la2si247697igb.1.2014.05.21.09.55.10
+        for <msysgit@googlegroups.com>;
+        Wed, 21 May 2014 09:55:10 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
+Received: (qmail 20903 invoked by uid 102); 21 May 2014 16:55:10 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 21 May 2014 11:55:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 May 2014 12:55:08 -0400
+In-Reply-To: <537BA8DC.9070104@gmail.com>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
+ sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249807>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+On Tue, May 20, 2014 at 09:11:24PM +0200, Karsten Blees wrote:
 
-> On Tue, May 20, 2014 at 08:13:27AM -0700, Junio C Hamano wrote:
->> "Michael S. Tsirkin" <mst@redhat.com> writes:
->> 
->> > Just to clarify I can post v2 of 4/4 without reposting 1-3 since they
->> > are queued?
->> 
->> If you need to update anything queued only on 'pu' but not yet in
->> 'next', it is customary to resend the whole for everybody to see
->> (what is already in 'next' should only be built upon incrementally
->> and not updated with replacement patches), while noting which ones
->> are the same as before.  Christian Couder has been doing it nicely
->> in his recent rerolls (if the series were not in 'next', that is).
->> 
->> Thanks.
->
-> Actually I don't see anything like it in pu.
+> Add performance tracing to identify which git commands are called and how
+> long they execute. This is particularly useful to debug performance issues
+> of scripted commands.
+> 
+> Usage example: > GIT_TRACE_PERFORMANCE=~/git-trace.log git stash list
+> 
+> Creates a log file like this:
+> performance: at trace.c:319, time: 0.000303280 s: git command: 'git' 'rev-parse' '--git-dir'
+> performance: at trace.c:319, time: 0.000334409 s: git command: 'git' 'rev-parse' '--is-inside-work-tree'
+> performance: at trace.c:319, time: 0.000215243 s: git command: 'git' 'rev-parse' '--show-toplevel'
+> performance: at trace.c:319, time: 0.000410639 s: git command: 'git' 'config' '--get-colorbool' 'color.interactive'
+> performance: at trace.c:319, time: 0.000394077 s: git command: 'git' 'config' '--get-color' 'color.interactive.help' 'red bold'
+> performance: at trace.c:319, time: 0.000280701 s: git command: 'git' 'config' '--get-color' '' 'reset'
+> performance: at trace.c:319, time: 0.000908185 s: git command: 'git' 'rev-parse' '--verify' 'refs/stash'
+> performance: at trace.c:319, time: 0.028827774 s: git command: 'git' 'stash' 'list'
 
-The way I usually work is to apply a non-fix (i.e. enhancement)
-series on a topic branch forked from 'master' (or the last tagged
-version contained in its tip) and see if it makes sense, and then
-try-merge the result to 'next' to see if it is free of potential
-funny interactions with other topics that are already in flight.
-After that happens, the topic branch is merged to somewhere in 'pu'.
+Neat. I actually wanted something like this just yesterday. It looks
+like you are mainly tracing the execution of programs. Would it make
+sense to just tie this to regular trace_* calls, and if
+GIT_TRACE_PERFORMANCE is set, add a timestamp to each line?
 
-It is possible that I did not have time to go through all the steps
-above (after all, I had to make another -rc release and there was an
-unexpected last-minute change of plans in the morning that blew a
-few hours of work).  Or there may have been some merge conflicts
-that I didn't feel like resolving for various reasons (e.g. if I
-knew the series would be rerolled anyway, it can wait; if the other
-topic that interacts with your series has been cooking sufficiently
-long in 'next' and if it is very close to the final release of this
-cycle, it may be easier to wait for the other topic to graduate to
-'master', which would happen soon after this cycle finishes, and ask
-you to rebase your series).
+Then we would not need to add separate trace_command_performance calls,
+and other parts of the code that are already instrumented with GIT_TRACE
+would get the feature for free.
 
-I don't remember which ;-)
+-Peff
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
