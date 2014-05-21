@@ -1,116 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH v4 2/3] add trace_performance facility to
- debug performance issues
-Date: Wed, 21 May 2014 16:55:24 -0400
-Message-ID: <20140521205524.GB8381@sigill.intra.peff.net>
-References: <537BA806.50600@gmail.com>
- <537BA8D7.4000007@gmail.com>
- <20140521165806.GD2040@sigill.intra.peff.net>
- <537CF1C7.6030408@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBDO2DJFKTEFBBPVF6SNQKGQEO6VCX6Y@googlegroups.com Wed May 21 22:55:28 2014
-Return-path: <msysgit+bncBDO2DJFKTEFBBPVF6SNQKGQEO6VCX6Y@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f190.google.com ([209.85.220.190])
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: [PATCH v7 0/2] format-patch --signature-file <file>
+Date: Wed, 21 May 2014 14:07:50 -0700
+Message-ID: <1400706472-13471-1-git-send-email-jmmahler@gmail.com>
+Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 21 23:08:09 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBBPVF6SNQKGQEO6VCX6Y@googlegroups.com>)
-	id 1WnDXr-0001gF-O2
-	for gcvm-msysgit@m.gmane.org; Wed, 21 May 2014 22:55:27 +0200
-Received: by mail-vc0-f190.google.com with SMTP id lg15sf629101vcb.7
-        for <gcvm-msysgit@m.gmane.org>; Wed, 21 May 2014 13:55:26 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WnDk6-0002Ua-CN
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 23:08:06 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753263AbaEUVIC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 17:08:02 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:53328 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753072AbaEUVIB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 17:08:01 -0400
+Received: by mail-pb0-f41.google.com with SMTP id uo5so1774020pbc.14
+        for <git@vger.kernel.org>; Wed, 21 May 2014 14:08:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=+ePCPeO/4rC5ccv6nXnCLabHAGfF6KybX4o7Oa0MPWU=;
-        b=uQTfN4PL+jRZPDuzy3XPwYEsDsqGM3atr9HUJONFyD9eA+CCO7hFzxH8rxKb8UJFOB
-         gblVhcpLSvwTWWbOWoUOxb+An2U6RjsSvhkDAtIj37Mjf/bbdcika75dPJp8TFn0VZwG
-         LndhBK18gOU29DAOdkUrYGA5eRsN6HB3HtIoi5RfzbMtGG5wBsiaZR3FAH7TCMzw6npc
-         OjEncLMZv5vEqZ4umxkwpE0D8AFqVqQpgSBixeb8IMDwrXf8cRGP4sVbMEKAZp2m4/c9
-         uamefEeifVMlVRQL9wU1CfO9gwhJQVNmbRaad595of6mSUWEAo4YPUcZZXnaRk90s8Ed
-         Fh1g==
-X-Received: by 10.182.158.167 with SMTP id wv7mr132509obb.29.1400705726954;
-        Wed, 21 May 2014 13:55:26 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.73.165 with SMTP id m5ls291105obv.52.gmail; Wed, 21 May
- 2014 13:55:26 -0700 (PDT)
-X-Received: by 10.182.252.166 with SMTP id zt6mr23406496obc.17.1400705726264;
-        Wed, 21 May 2014 13:55:26 -0700 (PDT)
-Received: from peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id la2si310730igb.1.2014.05.21.13.55.25
-        for <msysgit@googlegroups.com>;
-        Wed, 21 May 2014 13:55:26 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 2631 invoked by uid 102); 21 May 2014 20:55:25 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 21 May 2014 15:55:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 May 2014 16:55:24 -0400
-In-Reply-To: <537CF1C7.6030408@gmail.com>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249828>
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=9G6a6I4t9tkQe+YPcbkKDzQbqCWYnTWeLP9YluCryFY=;
+        b=wRh55pcVqsuihAKKsQTeYRXkvpwyEILlxYl4lL5FxIHptFtdKtd7aGWNzH0p9gATZH
+         z0ehRvWUfx2w+5hLVNtUUk4ypjAhnXJWjc9Q9WzJoHZKHK8n+MvJtc11W1zb8NowrU1I
+         qN6uJuB0j63WhMsvtWtyiiYNz3dT+ibJztiqM4pxSgEnzjSpV8oXcpfEh4CF1U/pd/Q9
+         7G6vZ1F2Lch6x4WpvpL6JLYcMe+WBAOYKkVwervKp/QrSr8qJRUY0Kcwz3VXzj6q+Rtw
+         TbrOSV/+OMSt4ErdbgVFpbFNGi5t8OU0R1Ud3kQn3Hd+kPB1pa5D9cmUjAuxBzmshyJ4
+         fWOQ==
+X-Received: by 10.66.164.104 with SMTP id yp8mr40796393pab.89.1400706480571;
+        Wed, 21 May 2014 14:08:00 -0700 (PDT)
+Received: from hudson (o247-linksys-rtr.CSUChico.EDU. [132.241.18.53])
+        by mx.google.com with ESMTPSA id fk4sm109826924pab.23.2014.05.21.14.07.57
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 21 May 2014 14:07:59 -0700 (PDT)
+X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
+Received: by hudson (sSMTP sendmail emulation); Wed, 21 May 2014 14:07:56 -0700
+X-Mailer: git-send-email 2.0.0.rc3.19.gd74db96.dirty
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249829>
 
-On Wed, May 21, 2014 at 08:34:47PM +0200, Karsten Blees wrote:
+v7 of patch to add format-patch --signature-file <file> option.
 
-> Macros are mainly used to supply __FILE__ and __LINE__, so that lazy
-> people don't need to think of a unique message for each use of
-> trace_performance_*. Without __FILE__, __LINE__ and message, the
-> output would be pretty useless (i.e. just the time without any
-> additional info).
-> 
-> If there's platforms that don't support variadic macros, I'd suggest
-> to drop the __FILE__ __LINE__ feature completely and make message
-> mandatory (with the added benefit that manually provided messages
-> don't change if the code is moved, i.e. trace logs would become
-> somewhat comparable across versions).
+This revision includes a patch from Jeff King to fix the odd number
+spaces produced by print_signature().
 
-I do think __FILE__ and __LINE__ can be useful, and it would not be the
-end of the world to simply omit them on platforms that can't do the
-variadic macros (there shouldn't be many these days, and I think they
-are used to living with reduced functionality in some cases).
+Jeff King (1):
+  format-patch: make newline after signature conditional
 
-But if this were attached to trace_printf, we would always have a
-message anyway, no?
+Jeremiah Mahler (1):
+  format-patch --signature-file <file>
 
--Peff
+ Documentation/config.txt           |  4 ++++
+ Documentation/git-format-patch.txt |  4 ++++
+ builtin/log.c                      | 25 +++++++++++++++++++++++--
+ t/t4014-format-patch.sh            | 32 ++++++++++++++++++++++++++++++++
+ 4 files changed, 63 insertions(+), 2 deletions(-)
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
