@@ -1,118 +1,114 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH v4 3/3] add command performance tracing to
- debug scripted commands
-Date: Wed, 21 May 2014 12:55:08 -0400
-Message-ID: <20140521165508.GC2040@sigill.intra.peff.net>
-References: <537BA806.50600@gmail.com>
- <537BA8DC.9070104@gmail.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v5] format-patch --signature-file <file>
+Date: Wed, 21 May 2014 09:55:43 -0700
+Message-ID: <20140521165543.GA3743@hudson.localdomain>
+References: <1400572806-21092-1-git-send-email-jmmahler@gmail.com>
+ <1400572806-21092-2-git-send-email-jmmahler@gmail.com>
+ <20140520082740.GB27590@sigill.intra.peff.net>
+ <xmqq61l01gmw.fsf@gitster.dls.corp.google.com>
+ <20140520182443.GA30533@sigill.intra.peff.net>
+ <xmqq7g5gz3s4.fsf@gitster.dls.corp.google.com>
+ <20140521164255.GA2040@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBDO2DJFKTEFBB35U6ONQKGQEFHBGAEQ@googlegroups.com Wed May 21 18:55:14 2014
-Return-path: <msysgit+bncBDO2DJFKTEFBB35U6ONQKGQEFHBGAEQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pa0-f57.google.com ([209.85.220.57])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed May 21 18:55:53 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBB35U6ONQKGQEFHBGAEQ@googlegroups.com>)
-	id 1Wn9nN-0001hE-7M
-	for gcvm-msysgit@m.gmane.org; Wed, 21 May 2014 18:55:13 +0200
-Received: by mail-pa0-f57.google.com with SMTP id rd3sf564726pab.12
-        for <gcvm-msysgit@m.gmane.org>; Wed, 21 May 2014 09:55:12 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wn9o1-0002a2-0U
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 18:55:53 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752719AbaEUQzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 12:55:49 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:59886 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752254AbaEUQzs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 12:55:48 -0400
+Received: by mail-pa0-f43.google.com with SMTP id hz1so1575993pad.30
+        for <git@vger.kernel.org>; Wed, 21 May 2014 09:55:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=ArmFT3Y+YEns/QlWPIY3D8jdMnqqoepvyGPuLO1WwVA=;
-        b=RGkIPNZUjkI1IZjVWl40m8/Kk0xKroJ9ZRqXJxHPY1HrEQEvPrsaHjPlBQCuiND6oQ
-         C4r5HxjfGVk/973D3q1EijpCBbrtfarpxRd1EsiUT4R0zyKLX9cIyGtWTpIv8LdaMwly
-         kSWAvAWjjGdN7hPnxZUT7o/Pgh1+3RGxjld7GtjqMXrabCea58HwGcfHN+7H/7O5xLD4
-         vT06TX02iw2LR1MG9FTAgQcdUwI2mc0p4ZR25Oma2t/ogPd6uptw9FG81rYwMlucoELH
-         1QivZx6j6mTFA6toajJdBlj977sSsdBOvEglMS4qvxTNchcp5bAxbrBFpi7IqSTuq/dj
-         dU7A==
-X-Received: by 10.50.103.104 with SMTP id fv8mr327016igb.2.1400691312121;
-        Wed, 21 May 2014 09:55:12 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.8.105 with SMTP id q9ls1222875iga.28.gmail; Wed, 21 May
- 2014 09:55:11 -0700 (PDT)
-X-Received: by 10.50.130.102 with SMTP id od6mr5100908igb.0.1400691311268;
-        Wed, 21 May 2014 09:55:11 -0700 (PDT)
-Received: from peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id la2si247697igb.1.2014.05.21.09.55.10
-        for <msysgit@googlegroups.com>;
-        Wed, 21 May 2014 09:55:10 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 20903 invoked by uid 102); 21 May 2014 16:55:10 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 21 May 2014 11:55:10 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 May 2014 12:55:08 -0400
-In-Reply-To: <537BA8DC.9070104@gmail.com>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+        d=gmail.com; s=20120113;
+        h=from:date:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=J7TxhHENDulE49CNsxaR2malggqvL85T23b3SpZDNok=;
+        b=Vqk4QFqnlHe7dg95P82Ij96Y9pliBwUrKq9rAGISpAmSJC1wY2827ax/t2zEvsjVu3
+         F9XosfV3hMG5J8NReD5ia1evyt4Yf+hX+fova1XmoPYJAmnUXPdFa0in0sXu5Fohmu1U
+         LqluhBsntKHzEFh8qmP0LP9mc+WLEWfbomltI6evgHEHiL+X1oo3NOfqQhCU0484CpU5
+         LvWiZd1OAr9YEZQjfLOpJv1f+QryKy8uPXcLqErRI3jmZG7LVGmvRMEXruC7ngpZQhnn
+         BfdE1cHNkvEJknRGlV5y+9ZmOALTozZrGruyta51DD1Ak9WpEu5A3mVxK5swIVMVPQGH
+         j8fQ==
+X-Received: by 10.68.134.136 with SMTP id pk8mr59734421pbb.103.1400691347974;
+        Wed, 21 May 2014 09:55:47 -0700 (PDT)
+Received: from hudson (o247-linksys-rtr.CSUChico.EDU. [132.241.18.53])
+        by mx.google.com with ESMTPSA id gu11sm8967047pbd.38.2014.05.21.09.55.44
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 21 May 2014 09:55:46 -0700 (PDT)
+X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
+Received: by hudson (sSMTP sendmail emulation); Wed, 21 May 2014 09:55:43 -0700
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
 Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249807>
+In-Reply-To: <20140521164255.GA2040@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249808>
 
-On Tue, May 20, 2014 at 09:11:24PM +0200, Karsten Blees wrote:
-
-> Add performance tracing to identify which git commands are called and how
-> long they execute. This is particularly useful to debug performance issues
-> of scripted commands.
+On Wed, May 21, 2014 at 12:42:55PM -0400, Jeff King wrote:
+> On Tue, May 20, 2014 at 11:46:51AM -0700, Junio C Hamano wrote:
 > 
-> Usage example: > GIT_TRACE_PERFORMANCE=~/git-trace.log git stash list
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > If it were just "--signature", I'd agree. After all, nobody is even
+> > > complaining. But this is also in preparation for --signature-file.
+> > > Should the user create a file without a trailing newline?
+> > 
+> > Ahh, I missed that part.
+> > 
+> > I am fine with processing it with stripspace().
 > 
-> Creates a log file like this:
-> performance: at trace.c:319, time: 0.000303280 s: git command: 'git' 'rev-parse' '--git-dir'
-> performance: at trace.c:319, time: 0.000334409 s: git command: 'git' 'rev-parse' '--is-inside-work-tree'
-> performance: at trace.c:319, time: 0.000215243 s: git command: 'git' 'rev-parse' '--show-toplevel'
-> performance: at trace.c:319, time: 0.000410639 s: git command: 'git' 'config' '--get-colorbool' 'color.interactive'
-> performance: at trace.c:319, time: 0.000394077 s: git command: 'git' 'config' '--get-color' 'color.interactive.help' 'red bold'
-> performance: at trace.c:319, time: 0.000280701 s: git command: 'git' 'config' '--get-color' '' 'reset'
-> performance: at trace.c:319, time: 0.000908185 s: git command: 'git' 'rev-parse' '--verify' 'refs/stash'
-> performance: at trace.c:319, time: 0.028827774 s: git command: 'git' 'stash' 'list'
+> I wasn't planning on anything as drastic as stripspace. I really just
+> wanted to suppress the one newline, which is almost certainly the right
+> thing to include for "--signature", but the wrong thing for
+> "--signature-file" (i.e., the patch I posted earlier).
+> 
+> Stripspace() would drop all extra whitespace, and I wondered if people
+> would _want_ it in their sigs (e.g., a blank line after the "-- " but
+> before their .sig content).
+> 
+> I dunno. Maybe it is not worth caring too much about. I don't want to
+> hold up Jeremiah's patch for something that I suspect neither of us
+> cares _that_ much about (I know I am not planning on using
+> --signature-file myself). I just don't want to deal with a patch later
+> that says "oh, this spacing is wrong" and have to respond "yes, but we
+> have to retain it so as not to break existing users".
+> 
+> > By the way, at some point we may want to move that helper function
+> > to strbuf.c, but that is a separate issue.
+> 
+> Agreed. I was touching some string functions earlier today and noticed
+> that strbuf.c actually contains a lot of non-strbuf functions for
+> dealing with C strings. That's fine, I guess, but I also wondered if we
+> should have a separate file for C-string functions. I suppose it doesn't
+> matter that much either way, as long as it's in a libgit.a file (and
+> stripspace currently is _not_, which I assume is what you were
+> indicating above).
+> 
+> -Peff
 
-Neat. I actually wanted something like this just yesterday. It looks
-like you are mainly tracing the execution of programs. Would it make
-sense to just tie this to regular trace_* calls, and if
-GIT_TRACE_PERFORMANCE is set, add a timestamp to each line?
+I am fine with including your previous patch.
 
-Then we would not need to add separate trace_command_performance calls,
-and other parts of the code that are already instrumented with GIT_TRACE
-would get the feature for free.
-
--Peff
+Would like me to test it out and create another patch set?
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
