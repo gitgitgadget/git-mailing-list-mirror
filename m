@@ -1,98 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6] format-patch --signature-file <file>
-Date: Wed, 21 May 2014 18:02:50 -0400
-Message-ID: <20140521220250.GA11970@sigill.intra.peff.net>
-References: <1400634170-18266-1-git-send-email-jmmahler@gmail.com>
- <1400634170-18266-2-git-send-email-jmmahler@gmail.com>
- <xmqq61kyq1i5.fsf@gitster.dls.corp.google.com>
- <20140521215059.GB13956@hudson.localdomain>
- <xmqqoayqoktp.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v8 32/44] refs.c: remove the update_ref_write function
+Date: Wed, 21 May 2014 15:07:10 -0700
+Message-ID: <20140521220710.GG12314@google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+ <1400174999-26786-33-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 22 00:02:58 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu May 22 00:07:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnEbA-00087J-Gs
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 00:02:56 +0200
+	id 1WnEfR-0006Rj-FX
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 00:07:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753247AbaEUWCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 18:02:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56837 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753183AbaEUWCw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 18:02:52 -0400
-Received: (qmail 8356 invoked by uid 102); 21 May 2014 22:02:52 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 21 May 2014 17:02:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 May 2014 18:02:50 -0400
+	id S1753467AbaEUWHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 18:07:15 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:38032 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753453AbaEUWHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 18:07:13 -0400
+Received: by mail-pa0-f42.google.com with SMTP id rd3so1811503pab.15
+        for <git@vger.kernel.org>; Wed, 21 May 2014 15:07:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=kpB/rtJBBX9y+el1Jf7DVXGUowZzHGNzBRAFSIBAHSI=;
+        b=0RfamTyRInAMLvy/+KYhSyCYroMOs1yZuG+C6UIH73EQHOiTOMrSfO9HdoH8BfzBVK
+         uCZIZvlFRvznbDbC/+A7iUKyG9eQ4Nd4APw/ZLZzkRDxzborXN4BnE/CgAxtCehOgMKC
+         0KoeN5SsElBQsaLxx8wSy/3CGCO8Y1kJVz+okcXJQ8gUsSwmgccrc+OakhPXOMVEJYXk
+         r9yIHZH3v/jA5l4wZIfEZ+MfRpMEMDSOHNwMYfwDXk3D9PKCoGZGNFU6IoW71BMCJzyu
+         Tbwaa9WsQpRo2oH91pv3rIJJ+f/LuqICyImxaWLIAn6uS/VfroyXNOh10p9tYpmfl0QM
+         bLXA==
+X-Received: by 10.66.192.73 with SMTP id he9mr62307603pac.88.1400710032793;
+        Wed, 21 May 2014 15:07:12 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id pv4sm36809653pac.14.2014.05.21.15.07.11
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 21 May 2014 15:07:12 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <xmqqoayqoktp.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <1400174999-26786-33-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249846>
 
-On Wed, May 21, 2014 at 02:58:42PM -0700, Junio C Hamano wrote:
+Ronnie Sahlberg wrote:
 
-> >> >  	! grep "^-- \$" output
-> > ...
-> >> 
-> >> We have been trying not to do the above in recent test updates.  It
-> >> would be nice if this set-up did not have to be outside of the usual
-> >> test_expect_success structure.
-> >> 
-> >
-> > Jeff caught those "! grep" instances in my patch.
-> 
-> Hmm, I didn't mean that one, and I do not offhand what is wrong
-> about "! grep" that says "output should not contain this string".
+> +++ b/refs.c
+[...]
+> @@ -3518,14 +3499,16 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+>  		struct ref_update *update = updates[i];
+>  
+>  		if (!is_null_sha1(update->new_sha1)) {
+> -			ret = update_ref_write(msg,
+> -					       update->refname,
+> -					       update->new_sha1,
+> -					       update->lock, err,
+> -					       UPDATE_REFS_QUIET_ON_ERR);
+> +			ret = write_ref_sha1(update->lock, update->new_sha1,
+> +					     msg);
 
-I think he is responding to my earlier request to use test_must_fail
-instead of "!".  But there is a subtlety there he does not know, which
-is that we typically only use the former for git programs, and rely on
-"!" for normal Unix commands.
-
-> The problem is a "cat" you added outside test_expect_*; the recent
-> push is to have as little executable outside them, especially the
-> "set-up" code to prepare for the real tests.
-> 
-> i.e. we have been trying to write new tests (and convert old ones)
-> like this:
-> 
->         test_expect_success 'I test such and such ' '
->                 cat >input-for-test <<-\EOF &&
->                 here comes input
->                 EOF
->                 git command-to-be-tested <input-for-test >actual &&
->                 cat >expected <<-\EOF &&
->                 here comes expected output
->                 EOF
->                 test_cmp expected actual
->         '
-> 
-> not like this:
-> 
->         cat >input-for-test <<-\EOF &&
->         here comes input
->         EOF
->         test_expect_success 'I test such and such ' '
->                 git command-to-be-tested <input-for-test >actual &&
->                 cat >expected <<-\EOF &&
->                 here comes expected output
->                 EOF
->                 test_cmp expected actual
->         '
-
-Yeah, I noticed and gave a pass on this in earlier review, because the
-file is used across many tests. So burying it in the first test that
-uses it is probably a bad thing. However, it could go in its own setup
-test.
-
--Peff
+This changes the return value on error from 1 to -1.  That seems like a
+good change.  It's probably worth mentioning in the commit message.
