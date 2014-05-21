@@ -1,178 +1,105 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCHv2 10/19] git-submodule.sh: convert test -a/-o to && and ||
-Date: Wed, 21 May 2014 07:24:15 -0700
-Message-ID: <1400682255-17616-1-git-send-email-gitter.spiros@gmail.com>
-Cc: Matthieu.Moy@grenoble-inp.fr, j.sixt@viscovery.net,
-	Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 21 16:24:29 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v8 28/44] refs.c: make write_ref_sha1 static
+Date: Wed, 21 May 2014 07:46:39 -0700
+Message-ID: <CAL=YDWnyrL7L6gQKg87tj25Gh6NDp867HfJX_4j85f5wDRGh6w@mail.gmail.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+	<1400174999-26786-29-git-send-email-sahlberg@google.com>
+	<20140521005134.GY12314@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 21 16:46:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wn7RT-00067e-CI
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 16:24:27 +0200
+	id 1Wn7n2-0003Az-S5
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 16:46:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751962AbaEUOYX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 10:24:23 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:41258 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751145AbaEUOYW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 10:24:22 -0400
-Received: by mail-pa0-f41.google.com with SMTP id lj1so1463499pab.28
-        for <git@vger.kernel.org>; Wed, 21 May 2014 07:24:22 -0700 (PDT)
+	id S1752606AbaEUOql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 10:46:41 -0400
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:43923 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751033AbaEUOqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 10:46:40 -0400
+Received: by mail-vc0-f169.google.com with SMTP id ij19so2675819vcb.0
+        for <git@vger.kernel.org>; Wed, 21 May 2014 07:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=SDSlV/NeU7Lj2Ubz70sGt2prEhRUBiMFvSu8eSgTfUA=;
-        b=UUgaIsA/sOBh3JEkQMnK5eTA1kAKYb79N+B5FvvJMU7iySBDz71QhkYr4JqlEv5lWA
-         RXY13kzkpVT0zRszvZbRnkfddVewFYgqP7tp0Yu04aGhP0J9fROz1F1arSx2BUAMF1Lv
-         VnEa9qY9Os4ay+jatlj1gHOXJ+Q9ipbbAKnIFri4e4kL2YpIeBsdOg7A5Q9KvSG5ssz0
-         lDvg3G/OTm9jgaQWxFyMAAJfYjMmdMJDmDcDh1uvs4lfvcaV2hpf3Nd3LZ0jpY5u/xe/
-         HZMVLYI3fIHHrBaEPVcU1y9HdhtBZKQHLecnYGnHkL3d/2e8wwBF7wco3FjnmRAq6X5M
-         nMtQ==
-X-Received: by 10.66.66.72 with SMTP id d8mr60157993pat.8.1400682262111;
-        Wed, 21 May 2014 07:24:22 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id oa3sm8443653pbb.15.2014.05.21.07.24.21
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 21 May 2014 07:24:21 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=vRb1RLbt1jgTG2epM5FiXFrHVhtx0VEe5I9lMs+SQX0=;
+        b=Qo+Cmr9he+pGPfwWZfXhS08YbdiGuCFuJv9pLBhSYbZl8ZY3a2mSArL4YMzqSxaHhT
+         AtbXbR+UgCsgSJUMICnOzpFzDOgGCYBEDT33B8pJ/jXgrk0oHMxP5BSDazX4lxyphwGP
+         1BzJCbC8NpMhgpWlkb5VSAS4mvIcrLYO9XccqaxsFjhwjK6yId1LpvjvCg4o9JIAiC7x
+         zeLoRgaRPLlvZmzSO0hyKV6hLLDKBHipg/bweQxsmdwys8wGRtnMwtwLN6H/j6OuvrW1
+         9HvBGI/Qlgs3jhCaYiHGPPGIf58aM6IgKpkT1sdo8tiEw+xU7LiS+D+HZTrz5l8mcRdB
+         RuYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=vRb1RLbt1jgTG2epM5FiXFrHVhtx0VEe5I9lMs+SQX0=;
+        b=CkhZxpZ1pevfRFm5rZQ5hXBb4wpeBUuIovflLTNq5JvHEcf/QGDISyjwtFevzoMhCF
+         FqCuKkUtLCalUBCaLSJTuVt0bp5BjOmeBjo1MaFl4ptDmRqkgwTLJnxJtar6vM4I2Zcz
+         obuz/4wV+tb5pNsc/+Gw1rS0MCjAYOEZIqGdrZHE675FSKiV4ja7guzqnzfGuFARCPTa
+         6qryut92p3kiHHH335RYXoOrb6GbO4MckEE+3znv6C3GgAA5bYy7WO1C4dpFnozIx/xc
+         OvpTj87mEGHTt81cGDrpfNcKhAnEoHVY5kh904qGGG7O1x3oCQQLf6m0gUOsF6LHbMO8
+         TyEg==
+X-Gm-Message-State: ALoCoQmVDjWDtBbcj+kvFH5/ojkQ1qcAXqEZVogZU1cQhhBI+N+ssnBk1SH7CYcWTDiJLqGRgwcU
+X-Received: by 10.52.171.80 with SMTP id as16mr680835vdc.68.1400683599449;
+ Wed, 21 May 2014 07:46:39 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Wed, 21 May 2014 07:46:39 -0700 (PDT)
+In-Reply-To: <20140521005134.GY12314@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249801>
 
-The interaction with unary operators and operator precedence
-for && and || are better known than -a and -o, and for that
-reason we prefer them. Replace all existing instances
-of -a and -o to save readers from the burden of thinking
-about such things.
----
-This is version 2 of the patch to git-submodule of the 
-patch series "convert  test -a/-o to && and ||". 
-It contains the fixes identified by Johannes and
-Matthieu. 
+Thanks!
 
- git-submodule.sh |   32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+On Tue, May 20, 2014 at 5:51 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
+>
+>> No external users call write_ref_sha1 any more so lets declare it static.
+>
+> Yay!
+>
+> [...]
+>> +++ b/refs.c
+>> @@ -251,6 +251,8 @@ struct ref_entry {
+> [...]
+>>  static void read_loose_refs(const char *dirname, struct ref_dir *dir);
+>> +static int write_ref_sha1(struct ref_lock *lock,
+>> +                       const unsigned char *sha1, const char *logmsg);
+>
+> Is this forward declaration needed?
+>
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index b55d83a..1e3a5a6 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -396,7 +396,7 @@ cmd_add()
- 			sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
- 	fi
- 
--	if test -z "$repo" -o -z "$sm_path"; then
-+	if test -z "$repo" || test -z "$sm_path"; then
- 		usage
- 	fi
- 
-@@ -453,7 +453,7 @@ Use -f if you really want to add it." >&2
- 	# perhaps the path exists and is already a git repo, else clone it
- 	if test -e "$sm_path"
- 	then
--		if test -d "$sm_path"/.git -o -f "$sm_path"/.git
-+		if test -d "$sm_path"/.git || test -f "$sm_path"/.git
- 		then
- 			eval_gettextln "Adding existing repo at '\$sm_path' to the index"
- 		else
-@@ -835,7 +835,7 @@ Maybe you want to use 'update --init'?")"
- 			continue
- 		fi
- 
--		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
-+		if ! test -d "$sm_path"/.git || test -f "$sm_path"/.git
- 		then
- 			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
- 			cloned_modules="$cloned_modules;$name"
-@@ -860,11 +860,11 @@ Maybe you want to use 'update --init'?")"
- 			die "$(eval_gettext "Unable to find current ${remote_name}/${branch} revision in submodule path '\$sm_path'")"
- 		fi
- 
--		if test "$subsha1" != "$sha1" -o -n "$force"
-+		if test "$subsha1" != "$sha1" || test -n "$force"
- 		then
- 			subforce=$force
- 			# If we don't already have a -f flag and the submodule has never been checked out
--			if test -z "$subsha1" -a -z "$force"
-+			if test -z "$subsha1" && test -z "$force"
- 			then
- 				subforce="-f"
- 			fi
-@@ -1034,7 +1034,7 @@ cmd_summary() {
- 	then
- 		head=$rev
- 		test $# = 0 || shift
--	elif test -z "$1" -o "$1" = "HEAD"
-+	elif test -z "$1" || test "$1" = "HEAD"
- 	then
- 		# before the first commit: compare with an empty tree
- 		head=$(git hash-object -w -t tree --stdin </dev/null)
-@@ -1059,13 +1059,17 @@ cmd_summary() {
- 		while read mod_src mod_dst sha1_src sha1_dst status sm_path
- 		do
- 			# Always show modules deleted or type-changed (blob<->module)
--			test $status = D -o $status = T && echo "$sm_path" && continue
-+			case "$status" in
-+			[DT])
-+				printf '%s\n' "$sm_path" &&
-+				continue
-+			esac
- 			# Respect the ignore setting for --for-status.
- 			if test -n "$for_status"
- 			then
- 				name=$(module_name "$sm_path")
- 				ignore_config=$(get_submodule_config "$name" ignore none)
--				test $status != A -a $ignore_config = all && continue
-+				test $status != A && test $ignore_config = all && continue
- 			fi
- 			# Also show added or modified modules which are checked out
- 			GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
-@@ -1125,7 +1129,7 @@ cmd_summary() {
- 		*)
- 			errmsg=
- 			total_commits=$(
--			if test $mod_src = 160000 -a $mod_dst = 160000
-+			if test $mod_src = 160000 && test $mod_dst = 160000
- 			then
- 				range="$sha1_src...$sha1_dst"
- 			elif test $mod_src = 160000
-@@ -1162,7 +1166,7 @@ cmd_summary() {
- 			# i.e. deleted or changed to blob
- 			test $mod_dst = 160000 && echo "$errmsg"
- 		else
--			if test $mod_src = 160000 -a $mod_dst = 160000
-+			if test $mod_src = 160000 && test $mod_dst = 160000
- 			then
- 				limit=
- 				test $summary_limit -gt 0 && limit="-$summary_limit"
-@@ -1233,7 +1237,11 @@ cmd_status()
- 			say "U$sha1 $displaypath"
- 			continue
- 		fi
--		if test -z "$url" || ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
-+		if test -z "$url" ||
-+		{
-+			! test -d "$sm_path"/.git &&
-+			! test -f "$sm_path"/.git
-+		}
- 		then
- 			say "-$sha1 $displaypath"
- 			continue;
-@@ -1402,7 +1410,7 @@ then
- fi
- 
- # "--cached" is accepted only by "status" and "summary"
--if test -n "$cached" && test "$command" != status -a "$command" != summary
-+if test -n "$cached" && test "$command" != status && test "$command" != summary
- then
- 	usage
- fi
--- 
-1.7.10.4
+No. Removed.
+(I could have sworn I had a patch to remove this forward declaration.)
+
+> [...]
+>> --- a/refs.h
+>> +++ b/refs.h
+>> @@ -150,9 +150,6 @@ extern int commit_ref(struct ref_lock *lock);
+>>  /** Release any lock taken but not written. **/
+>>  extern void unlock_ref(struct ref_lock *lock);
+>>
+>> -/** Writes sha1 into the ref specified by the lock. **/
+>> -extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, const char *msg);
+>
+> (nit) Would be nice to keep the documentation comment.
+
+Moved this comment to refs.c
+
+Please see ref-transactions branch
+Thanks!
+
+>
+> Thanks,
+> Jonathan
