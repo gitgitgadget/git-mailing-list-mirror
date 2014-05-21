@@ -1,74 +1,63 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ANNOUNCE] Git v2.0.0-rc4
-Date: Wed, 21 May 2014 06:25:24 +0200
-Message-ID: <87tx8jahcb.fsf@fencepost.gnu.org>
-References: <xmqqr43oq8q5.fsf@gitster.dls.corp.google.com>
-	<537bf50f27417_353e13c330846@nysa.notmuch>
+From: Noel Grandin <noel@peralex.com>
+Subject: Re: [RFC/PATCH v4 1/3] add high resolution timer function to debug
+ performance issues
+Date: Wed, 21 May 2014 09:31:00 +0200
+Message-ID: <537C5634.3050807@peralex.com>
+References: <537BA806.50600@gmail.com> <537BA8D1.1090503@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Linux Kernel <linux-kernel@vger.kernel.org>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: linux-kernel-owner@vger.kernel.org Wed May 21 06:25:37 2014
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Karsten Blees <karsten.blees@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+X-From: git-owner@vger.kernel.org Wed May 21 09:41:42 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Wmy5x-0000fe-Dm
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 21 May 2014 06:25:37 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wn19i-0007kn-19
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 09:41:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632AbaEUEZ2 (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 21 May 2014 00:25:28 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:44748 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751245AbaEUEZ0 (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 21 May 2014 00:25:26 -0400
-Received: from localhost ([127.0.0.1]:43789 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wmy5k-0002WO-Lh; Wed, 21 May 2014 00:25:24 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 4E286E054B; Wed, 21 May 2014 06:25:24 +0200 (CEST)
-In-Reply-To: <537bf50f27417_353e13c330846@nysa.notmuch> (Felipe Contreras's
-	message of "Tue, 20 May 2014 19:36:31 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751716AbaEUHli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 03:41:38 -0400
+Received: from mail.peralex.com ([41.164.8.44]:27769 "EHLO mail.peralex.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751254AbaEUHlh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 03:41:37 -0400
+X-Greylist: delayed 639 seconds by postgrey-1.27 at vger.kernel.org; Wed, 21 May 2014 03:41:36 EDT
+Received: from [192.168.1.77] (noel1.ct [192.168.1.77])
+	by mail.peralex.com (Postfix) with ESMTPSA id 31D5A336F30;
+	Wed, 21 May 2014 09:30:54 +0200 (SAST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=peralex.com;
+	s=default; t=1400657454;
+	bh=KkRV9dgI010VW/nQFItUG8rqZ5NOq2GYbUXP+Jf9KQ8=;
+	h=Date:From:To:Subject:References:In-Reply-To;
+	b=bhIL9+0c9Nb4VF2lP6gvK4XNumS72lxlrHqEFF7O07SCIYYHlIkVA3eKvIG7cY26K
+	 1gprVbLDAq/8S5jE9Whg7FQoZfXItDIyytOuABgWW9SYxnwheHyjjVQWYbrawp/Qcu
+	 vaU92yMNz9truApRXdpT5WCc2SOQ8ROPOLIyfJfs=
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <537BA8D1.1090503@gmail.com>
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.4.3 (mail.peralex.com); Wed, 21 May 2014 09:30:54 +0200 (SAST)
+X-Scanned-By: MIMEDefang 2.74 on 41.164.8.44
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249775>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249776>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
-
-> Junio C Hamano wrote:
+On 2014-05-20 21:11, Karsten Blees wrote:
+>   * implement Mac OSX version using mach_absolute_time
 >
->>  * The remote-helper interface to fast-import/fast-export via the
->>    transport-helper has been tightened to avoid leaving the import
->>    marks file from a failed/crashed run, as such a file that is out-of-
->>    sync with reality confuses a later invocation of itself.
 >
-> Really? Where are the patches for that?
-
-The following seems related:
-
-commit 10e1feebb454d99eb6644cc53b94255f40e6fe9c
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Wed May 14 12:06:35 2014 -0700
-
-    Revert "Merge branch 'fc/transport-helper-sync-error-fix'"
-    
-    This reverts commit d508e4a8e2391ae2596403b6478d01cf3d5f928f,
-    reversing changes made to e42552135a2a396f37053a89f44952ea907870b2.
-    
-    The author of the original topic says he broke the upcoming 2.0
-    release with something that relates to "synchronization crash
-    regression" while refusing to give further specifics, so this would
-    unfortunately be the safest option for the upcoming release.
-    
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
 
--- 
-David Kastrup
+Note that unlike the Windows and Linux APIs, mach_absolute_time does not do correction for frequency-scaling and 
+cross-CPU synchronization with the TSC.
+
+I'm not aware of anything else that you could use on MacOS, so your best bet is probably just to use mach_absolute_time 
+and document it's shortcomings.
+
+Regards, Noel.
+
+Disclaimer: http://www.peralex.com/disclaimer.html
