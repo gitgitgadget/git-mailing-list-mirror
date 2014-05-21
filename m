@@ -1,139 +1,165 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [RFC/PATCH v4 2/3] add trace_performance facility to
- debug performance issues
-Date: Wed, 21 May 2014 20:34:47 +0200
-Message-ID: <537CF1C7.6030408@gmail.com>
-References: <537BA806.50600@gmail.com> <537BA8D7.4000007@gmail.com> <20140521165806.GD2040@sigill.intra.peff.net>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v8 25/44] receive-pack.c: use a reference transaction for
+ updating the refs
+Date: Wed, 21 May 2014 11:50:01 -0700
+Message-ID: <CAL=YDWnftEnmmKFj=6vyG9bhfEL-dO5gpRPNCD0+X38LKdi7Gg@mail.gmail.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+	<1400174999-26786-26-git-send-email-sahlberg@google.com>
+	<20140520194246.GR12314@google.com>
+	<CAL=YDWnaAJ+Ck9Mt462T2zp9KOFaDAGeXKFFH2qJmjb1gj8SbQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>
-X-From: msysgit+bncBCH3XYXLXQDBBR7D6ONQKGQEO4XPMSI@googlegroups.com Wed May 21 20:34:49 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBR7D6ONQKGQEO4XPMSI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f55.google.com ([74.125.83.55])
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 21 20:50:32 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBR7D6ONQKGQEO4XPMSI@googlegroups.com>)
-	id 1WnBLk-0003DT-P1
-	for gcvm-msysgit@m.gmane.org; Wed, 21 May 2014 20:34:48 +0200
-Received: by mail-ee0-f55.google.com with SMTP id t10sf264822eei.0
-        for <gcvm-msysgit@m.gmane.org>; Wed, 21 May 2014 11:34:48 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WnBav-0001p0-Jm
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 20:50:30 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752978AbaEUSuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 14:50:03 -0400
+Received: from mail-ve0-f179.google.com ([209.85.128.179]:53367 "EHLO
+	mail-ve0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752941AbaEUSuC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 14:50:02 -0400
+Received: by mail-ve0-f179.google.com with SMTP id oy12so3067321veb.10
+        for <git@vger.kernel.org>; Wed, 21 May 2014 11:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=xNwBeOV31zSWnXYJ1hYCPJdG1dl+g6vJitQCL67qGDE=;
-        b=rGLp4BJQmk0M+/vvtXKLcfFwCHMjiPADvmmW3SPUSgacA6YXG4WCfocUCeXZduwPu7
-         W87dmMz9fmaCIUSDQAgXiy11X3Q2gS5a4M+UVPgHADmUDoNCRD7E9KtSIboASqMyJ1tM
-         loLdLPRpWLhIeII7WbMlSo76gImQSZwsIckCHnphJgCdjxg3DyIr5L/8VxMoZfhXpyzN
-         l/8dyrHtv8gGuueECeRllIfFuUgl6NoZfYESeS4dDNaTFyYxpT8Zfu0bdoqcPxfo+NGu
-         0y8kV/cqgl8uQtGyDHUH23hN9z5SWbsuRNi48X/E91B9K4SP/g2VGwwP+SFqiC+r/lM5
-         Rcaw==
-X-Received: by 10.180.208.50 with SMTP id mb18mr65440wic.9.1400697288368;
-        Wed, 21 May 2014 11:34:48 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.14.42 with SMTP id m10ls146445wic.21.gmail; Wed, 21 May
- 2014 11:34:46 -0700 (PDT)
-X-Received: by 10.180.14.130 with SMTP id p2mr1210697wic.0.1400697286874;
-        Wed, 21 May 2014 11:34:46 -0700 (PDT)
-Received: from mail-ee0-x232.google.com (mail-ee0-x232.google.com [2a00:1450:4013:c00::232])
-        by gmr-mx.google.com with ESMTPS id g42si2176270eev.1.2014.05.21.11.34.46
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 21 May 2014 11:34:46 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::232 as permitted sender) client-ip=2a00:1450:4013:c00::232;
-Received: by mail-ee0-x232.google.com with SMTP id e51so1918137eek.9
-        for <msysgit@googlegroups.com>; Wed, 21 May 2014 11:34:46 -0700 (PDT)
-X-Received: by 10.14.127.9 with SMTP id c9mr5989577eei.93.1400697286801;
-        Wed, 21 May 2014 11:34:46 -0700 (PDT)
-Received: from [10.1.116.56] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id h49sm13788327eeg.21.2014.05.21.11.34.45
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 21 May 2014 11:34:46 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140521165806.GD2040@sigill.intra.peff.net>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::232
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249821>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=N2JKoiROFsg+mYcGSF8sEPi8nRF5KvIBgAxh3BdYAcw=;
+        b=MQ2j7w/DqMafyJmf0uT1LriuMRRx8sYkqtpKcLwzKcpV+4XoQZ0dYpUAHPmnd5i1/H
+         y/zhy5wb30ULnqSZiXf1UKj5qrikL8vZq/pCEtrpjcaES5XQNXgmb2kConUFIKhUdQR6
+         fRDI/b7f5C9ZaWOo0X0zw/uupaLyH/caalktPjVCaWiGd0sbFQhOlrUN9iMVtWrW6xeC
+         7mzcXTogueMvUDIB2Z2bEr0DziAFkikRnNjrUITGlVlYkPHlLc0tM435+JgDL+3ckrhy
+         ra/C3wnFP4iWak1/IwraMN7EG9HgVJvp8wn4cytoVtsU+PfcnBTrT3u50UmZ+eLcG08D
+         +w/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=N2JKoiROFsg+mYcGSF8sEPi8nRF5KvIBgAxh3BdYAcw=;
+        b=mskOpff8he9RpXoVNedSeqznpw2FgmLFmLxN8nhQLwEQXD4Nwh79Q3a+crLXXQwc9N
+         fDB/d4r+GYZ+55GGQscCQk9p1HBy5Lds8dUjs5pKJ5GVqhWiEMVNuOny/Y38NKbXEm1C
+         BAAaERgkJGRM9wUHjF+hLRMGhoeZpKXc5bcqyM7u+R09VWZ//Z7AeAHNGu4hwUtqmz60
+         FAVAJ19azGJUa2M+xgjmd8kUkbGf8K6NeekCe/I++aM1j1iY1EwC1pGeChrISjHmdfVo
+         g8X+IcNqo/EqatWHZ7KtI8JQ8CCvyDI3pkX1r40TyRovQlTmBD1q/UCMNSfiaqVX7Dzq
+         UaVA==
+X-Gm-Message-State: ALoCoQkxiZC96Qf7VT7YvYxQCEg90qV+mQ/VUS/abvm7cqfnWQREXgPneVZPJ6EWgcaOCrIh7Lrw
+X-Received: by 10.52.37.48 with SMTP id v16mr9577724vdj.4.1400698201137; Wed,
+ 21 May 2014 11:50:01 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Wed, 21 May 2014 11:50:01 -0700 (PDT)
+In-Reply-To: <CAL=YDWnaAJ+Ck9Mt462T2zp9KOFaDAGeXKFFH2qJmjb1gj8SbQ@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249822>
 
-Am 21.05.2014 18:58, schrieb Jeff King:
-> On Tue, May 20, 2014 at 09:11:19PM +0200, Karsten Blees wrote:
->=20
->> Add trace_performance and trace_performance_since macros that print file
->> name, line number, time and an optional printf-formatted text to the fil=
-e
->> specified in environment variable GIT_TRACE_PERFORMANCE.
+On Tue, May 20, 2014 at 1:37 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+> On Tue, May 20, 2014 at 12:42 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Ronnie Sahlberg wrote:
 >>
->> Unless enabled via GIT_TRACE_PERFORMANCE, these macros have no noticeabl=
-e
->> impact on performance, so that test code may be shipped in release build=
-s.
+>>> Wrap all the ref updates inside a transaction to make the update atomic.
 >>
->> MSVC: variadic macros (__VA_ARGS__) require VC++ 2005 or newer.
->=20
-> I think we still have some Unix compilers that do not do variadic
-> macros, either. For a while, people were compiling with antique stuff
-> like SUNWspro and MIPSpro. I don't know if they still do, if they use
-> gcc on such systems now, or if those systems have finally been
-> decomissioned.
->=20
-> But either we need to change our stance on variadic macros, or this
-> feature needs to be able to be compiled conditionally.
->=20
-> -Peff
->=20
+>> Interesting.
+>>
+>> [...]
+>>> --- a/builtin/receive-pack.c
+>>> +++ b/builtin/receive-pack.c
+>>> @@ -46,6 +46,8 @@ static void *head_name_to_free;
+>>>  static int sent_capabilities;
+>>>  static int shallow_update;
+>>>  static const char *alt_shallow_file;
+>>> +static struct strbuf err = STRBUF_INIT;
+>>
+>> I think it would be cleaner for err to be local.  It isn't used for
+>> communication between functions.
+>
+> Done.
+>
+>>
+>> [...]
+>>> @@ -580,15 +581,9 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+>>>                   update_shallow_ref(cmd, si))
+>>>                       return "shallow error";
+>>>
+>>> -             lock = lock_any_ref_for_update(namespaced_name, old_sha1,
+>>> -                                            0, NULL);
+>>> -             if (!lock) {
+>>> -                     rp_error("failed to lock %s", name);
+>>> -                     return "failed to lock";
+>>> -             }
+>>> -             if (write_ref_sha1(lock, new_sha1, "push")) {
+>>> -                     return "failed to write"; /* error() already called */
+>>> -             }
+>>> +             if (ref_transaction_update(transaction, namespaced_name,
+>>> +                                        new_sha1, old_sha1, 0, 1, &err))
+>>> +                     return "failed to update";
+>>
+>> The original used rp_error to send an error message immediately via
+>> sideband.  This drops that --- intended?
+>
+> Oops. I misread it as a normal error()
+>
+>>
+>> The old error string shown on the push status line was was "failed to
+>> lock" or "failed to write" which makes it clear that the cause is
+>> contention or database problems or filesystem problems, respectively.
+>> After this change it would say "failed to update" which is about as
+>> clear as "failed".
+>
+> I changed it to return xstrdup(err.buf) which should be as detailed as
+> we can get.
+>
+>>
+>> Would it be safe to send err.buf as-is over the wire, or does it
+>> contain information or formatting that wouldn't be suitable for the
+>> client?  (I haven't thought this through completely yet.)  Is there
+>> some easy way to distinguish between failure to lock and failure to
+>> write?  Or is there some one-size-fits-all error for this case?
+>
+> I think err.buf is what we want.
+>
+>>
+>> When the transaction fails, we need to make sure that all ref updates
+>> emit 'ng' and not 'ok' in receive-pack.c::report (see the example at
+>> the end of Documentation/technical/pack-protocol.txt for what this
+>> means).  What error string should they use?  Is there some way to make
+>> it clear to the user which ref was the culprit?
+>>
+>> What should happen when checks outside the ref transaction system
+>> cause a ref update to fail?  I'm thinking of
+>>
+>>  * per-ref 'update' hook (see githooks(5))
+>>  * fast-forward check
+>>  * ref creation/deletion checks
+>>  * attempt to push to the currently checked out branch
+>>
+>> I think the natural thing to do would be to put each ref update in its
+>> own transaction to start so the semantics do not change right away.
+>> If there are obvious answers to all these questions, then a separate
+>> patch could combine all these into a single transaction; or if there
+>> are no obvious answers, we could make the single-transaction-per-push
+>> semantics optional (using a configuration variable or protocol
+>> capability or something) to make it possible to experiment.
+>
+> I changed it to use one transaction per ref for now.
+>
+> Please see the update ref-transactions branch.
 
-Macros are mainly used to supply __FILE__ and __LINE__, so that lazy people=
- don't need to think of a unique message for each use of trace_performance_=
-*. Without __FILE__, __LINE__ and message, the output would be pretty usele=
-ss (i.e. just the time without any additional info).
+I have added support for atomic pushes towards the end of the -next series.
+https://github.com/rsahlberg/git/tree/ref-transactions-next
 
-If there's platforms that don't support variadic macros, I'd suggest to dro=
-p the __FILE__ __LINE__ feature completely and make message mandatory (with=
- the added benefit that manually provided messages don't change if the code=
- is moved, i.e. trace logs would become somewhat comparable across versions=
-).
+It is activated by a new --atomic-push argument to send-pack and is
+then negotiated by a new option in the wire protocol.
 
-(adding cc: Dscho as IIRC the __FILE__ __LINE__ idea was originally his).
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+>
+> Thanks!
