@@ -1,86 +1,126 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v6] format-patch --signature-file <file>
-Date: Wed, 21 May 2014 15:27:01 -0700
-Message-ID: <20140521222701.GA24537@hudson.localdomain>
+Date: Wed, 21 May 2014 15:37:11 -0700
+Message-ID: <xmqqbnuqoj1k.fsf@gitster.dls.corp.google.com>
 References: <1400634170-18266-1-git-send-email-jmmahler@gmail.com>
- <1400634170-18266-2-git-send-email-jmmahler@gmail.com>
- <xmqq61kyq1i5.fsf@gitster.dls.corp.google.com>
- <20140521215059.GB13956@hudson.localdomain>
- <xmqqoayqoktp.fsf@gitster.dls.corp.google.com>
- <20140521220250.GA11970@sigill.intra.peff.net>
- <xmqqfvk2ok10.fsf@gitster.dls.corp.google.com>
+	<1400634170-18266-2-git-send-email-jmmahler@gmail.com>
+	<xmqq61kyq1i5.fsf@gitster.dls.corp.google.com>
+	<20140521215059.GB13956@hudson.localdomain>
+	<xmqqoayqoktp.fsf@gitster.dls.corp.google.com>
+	<20140521221221.GC13956@hudson.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 22 00:27:15 2014
+Cc: git@vger.kernel.org
+To: Jeremiah Mahler <jmmahler@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 22 00:37:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnEye-0003Kw-RT
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 00:27:13 +0200
+	id 1WnF8a-0002H2-Kd
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 00:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753475AbaEUW1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 18:27:08 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:45926 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753435AbaEUW1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 18:27:07 -0400
-Received: by mail-pd0-f182.google.com with SMTP id r10so1808656pdi.13
-        for <git@vger.kernel.org>; Wed, 21 May 2014 15:27:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=iTqa02UUlYAGeQxqduw8DTWpWlfE7wfFoyOfD9TCuAc=;
-        b=UWIX+GOn5Hpm0W3HXC1rTERiboU4rlqQxRrg9Z1npc5F9edGO+EFxhoMDoIiUXVbip
-         qJ8XhPlequHd4YQsV+5NwXxHLyNIZi6R2Zu2rIn4yxxRciUatGR7qKcXHfNldRhmOxHV
-         VQvyuzyJyt8kmaCYyYHeX9qJrZyxlw3DK+U+gUMKcNkloqA/9LK7MJFWQKQBT34hJHGk
-         cjBJjAxL1ON/CQV/7iRHqkIQf0mPhUlT6uXVThNqr5XRahHt3l2RdgNMPNGByvhIN58N
-         3/+0ydWJQGxSQjGqkWm0KZs3I7cePcVNj011iS36h1Tv4XlLCu0zDdUPspOU1jcZ2Vfa
-         s86Q==
-X-Received: by 10.68.171.4 with SMTP id aq4mr62847167pbc.150.1400711226043;
-        Wed, 21 May 2014 15:27:06 -0700 (PDT)
-Received: from hudson (o247-linksys-rtr.CSUChico.EDU. [132.241.18.53])
-        by mx.google.com with ESMTPSA id ox3sm9727225pbb.88.2014.05.21.15.27.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 21 May 2014 15:27:04 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Wed, 21 May 2014 15:27:01 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-Content-Disposition: inline
-In-Reply-To: <xmqqfvk2ok10.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1753460AbaEUWhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 18:37:21 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63913 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753361AbaEUWhR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 18:37:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4AE5B19C56;
+	Wed, 21 May 2014 18:37:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7Hrg5ym+pr5HXhZuVIeLWJU1Nek=; b=e8BSWZ
+	7DP1+CafG57QkmT/SwBjz19jOECQS9S4ER7hw6pzAs1zFum3TrCs4v4dKDOduxYz
+	ZUTMLmoiDCMN8KAI+JJ1zXZwQguUL6mV4Im5L1rLn65/PBCf0Mmlmoo+WGpW2lzz
+	niTDQX0TeslCj24GewJRYgx1U+CDMuE52kZxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tVI8JDGcqG4qKnSUdeaTnZ/dIFyiP+b3
+	ieoi2vVIhG2fIrEzWua74nZIjbhNn2pA531STmgKA2o4ZMO9POZvdTiAq8lCA+9W
+	IvAMyrbBJ1IHZ4RRra7LW4t4zG6Z4nduQ2uKepbgOUIxZ0WmG6fEHCriy8OlxApb
+	Ogl8h/0gK30=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 41C2219C55;
+	Wed, 21 May 2014 18:37:16 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8BBF519C51;
+	Wed, 21 May 2014 18:37:12 -0400 (EDT)
+In-Reply-To: <20140521221221.GC13956@hudson.localdomain> (Jeremiah Mahler's
+	message of "Wed, 21 May 2014 15:12:21 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 73A47F1E-E138-11E3-B648-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249855>
 
-On Wed, May 21, 2014 at 03:15:55PM -0700, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
-> 
-> Yeah, placing it in its own setup may be the best.  There are quite
-> a many set-ups outside the tests in this script from the olden days,
-> so I am OK if left it as-is and have a separate clean-up patch after
-> this topic settles.  I am also OK to add a new one "the new right way"
-> so that a later clean-up patch does not have to change what is added
-> in this step.
+Jeremiah Mahler <jmmahler@gmail.com> writes:
 
-I like the idea of limiting the scope of this data so it couldn't
-inadvertently impact later tests.
+> Below is one of the updated test cases.
+>
+> test_expect_success 'format-patch --signature-file=mail-signature' '
+> 	cat >mail-signature <<-\EOF
+>
+> 	Test User <test.email@kernel.org>
+> 	http://git.kernel.org/cgit/git/git.git
+>
+> 	git.kernel.org/?p=git/git.git;a=summary
+>
+> 	EOF
+> 	git format-patch --stdout --signature-file=mail-signature -1 >output &&
+> 	check_patch output &&
+> 	sed -n -e "/^-- $/,\$p" <output | sed -e "1d" | sed -e "\$d" >output2 &&
+> 	test_cmp mail-signature output2
+> '
 
-But placing the same data inside multiple test cases creates duplication.
+Hmph, there are still few things I do not understand in the above.
 
-Is there a way to define data once for a limited set of tests?
+ * Why does mail-signature file have a leading blank line?  Is it
+   typical users would want to have one there?
 
--- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+ * Similarly, why does mail-signature file need a trailing blank
+   line?  Is it usual users would want to have one there?
+
+ * Why three sed in the pipeline?  Wouldn't
+
+    sed -e "1,/^-- \$/d" <output | ...
+
+   be more direct way to start the pipeline without having to strip
+   the "-- \n" line with the extra one?
+
+ * Given a mail-signature file that does not end with an incomplete
+   line (i.e. we did not have to add the newline to make it
+   complete), what are the expected lines in the output after the
+   "-- \n" separator?
+
+   Whatever it is, I think it is easier to read the tests if done
+   like so:
+
+     sed -e "1,/^-- \$/d" <output >actual &&
+     {
+         do something to turn mail-signature to what we expect
+     } >expect &&
+     test_cmp expect actual
+
+   If that "do something" is "to append an extra newline", then it
+   would make it a lot clear to do
+
+     {
+         cat mail-signature && echo
+     } >expect
+
+   than a 'sed -e "\$d"' tucked at the end of the pipeline that only
+   tells us we are removing one line that has _something_ without
+   explicitly saying what we are removing, no?
+
+Thanks.
+
+
+
+   
