@@ -1,71 +1,80 @@
-From: Majid Al Futtaim <salam.tmfood@gmail.com>
-Subject: As-salam..............
-Date: Wed, 21 May 2014 17:28:23 +0800
-Message-ID: <537c71cf.28d4440a.2835.3994@mx.google.com>
-Reply-To: majid_al.futtaim@myself.com
+From: Martin Erik Werner <martinerikwerner@gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.0.0-rc4
+Date: Wed, 21 May 2014 12:02:45 +0200
+Message-ID: <20140521100245.GB2201@mule>
+References: <xmqqr43oq8q5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Recipients <Majid@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed May 21 11:28:54 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 21 12:02:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wn2pR-0006K4-SL
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 11:28:54 +0200
+	id 1Wn3MQ-0006SF-5l
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 12:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524AbaEUJ2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 05:28:49 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:48899 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751073AbaEUJ2s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 May 2014 05:28:48 -0400
-Received: by mail-pd0-f182.google.com with SMTP id r10so1227968pdi.13
-        for <git@vger.kernel.org>; Wed, 21 May 2014 02:28:48 -0700 (PDT)
+	id S1752244AbaEUKCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 06:02:54 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:39736 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750796AbaEUKCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 06:02:51 -0400
+Received: by mail-pb0-f43.google.com with SMTP id up15so1264279pbc.16
+        for <git@vger.kernel.org>; Wed, 21 May 2014 03:02:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:content-type:mime-version:content-transfer-encoding
-         :content-description:subject:to:from:date:reply-to;
-        bh=HOyPgt3j/S4ZBkQf2BlefSo62wfz1gzXOTznaiEZxiA=;
-        b=HxauYhcGHspvQ61FAtg+T+6aBiqFbZRMwVdfhhfV/tWJxF/KfnpfIlvBwkSoy2e35l
-         Hl42SCI75hJfLis6/cov5GIcv1CKprirEdgIc29D2j9dZ3SC9aMJuKjvZnAHp7PzVNrI
-         9a/MIMIPrpb80zxkxGoYLLOSPxjBVW77IA3CdsD8jzAM7egS3gKTXex7ziIMaMS80PM/
-         ZGsaFXq4PhD55StSqIs/IbG/ozQQFhFLZR9MSOFYWaNZTLjJ+qbUrZF/hfeCDRKwC9ZX
-         PpX2s65F4TNzbZRKkkuvHGX5axvdXSJnDULCur+m8l7/mnM1qmYrsdaH0taHIUPIA+/5
-         SXbw==
-X-Received: by 10.66.102.39 with SMTP id fl7mr56703718pab.43.1400664528506;
-        Wed, 21 May 2014 02:28:48 -0700 (PDT)
-Received: from [10.1.1.1] ([120.141.116.253])
-        by mx.google.com with ESMTPSA id nh8sm7174098pbc.25.2014.05.21.02.28.39
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=c0s7J3xXPzG9rnDNdHWObhaY1HIpF55TU/eIKd6yb4s=;
+        b=wEJFmQD7FJIzLZdfe84gh9/bnmo5r++AfpvGLcJKJRTrhyhr6mmW9DdtufP2DTpnFy
+         9WSreRMF2iFM8FXSweMZktRZ4JWF/Iq7LbBhsf1/mY1VBe2npmiXfLguCI0yBH6jwOSu
+         jcMpLVizPrQw4Y/ZOcUBexe+KZVDHeLKjQs1FSuLGAefw1+VHXPG5/OOuhEVbJsom2jR
+         PBJvkwrZ/q1YXPqak4Js/MpuO8Uvj8StYL/LmlxkeWK1F6Gd+lIuvN+4QMaabkTjhv27
+         3rXVfL8LSZ2RErNqwZpT6yTixSDYDN5YpkRkY4rL6lS5QAzcCSIYEso/TOnml3ZWB5zX
+         efMQ==
+X-Received: by 10.68.162.34 with SMTP id xx2mr56978246pbb.120.1400666571070;
+        Wed, 21 May 2014 03:02:51 -0700 (PDT)
+Received: from mule (mail.aacmicrotec.com. [194.150.18.17])
+        by mx.google.com with ESMTPSA id cj1sm102886050pac.40.2014.05.21.03.02.48
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 21 May 2014 02:28:47 -0700 (PDT)
-X-Google-Original-From: Majid Al Futtaim
-Content-Description: Mail message body
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 21 May 2014 03:02:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqr43oq8q5.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249779>
 
-As-salam Sir, 
- 
-Regarding to possible investment, I wish to bring to your notice my interest to partner with you on any great business investment opportunity. 
- 
-Please kindly furnish me with any business details and a proposal for a Joint venture partnership with you. Looking forward to going into good business relationship with you. 
+On Tue, May 20, 2014 at 05:24:50PM -0700, Junio C Hamano wrote:
+(...)
+>  * "git reset" learned the "-N" option, which does not reset the index
+>    fully for paths the index knows about but the tree-ish the command
+>    resets to does not (these paths are kept as intend-to-add entries).
 
-Please provide this detail for me to know you better and proceed. 
-My direct email is :   majid_al.futtaim@myself.com  or majidalfuttaim@hotmail.com
+I find it quite hard to parse this sentance. Maybe something like:
 
- 1. Your full names:
- 2. Your contact address:
- 3. Your profession:
- 4. Your telephone mobile and fax number:
- 5.Age
+    which keeps paths as intent-to-add entries if they are currently
+    staged, but not present in the tree-ish being reset to.
 
-6 The Type of business you will like me to invest on and also tell me little about yourself, I hope to hear from you soon.
-May the peace of Almighty Allah be with you.
-Regards,
-Majid Al Futtaim..
+would be clearer (I hope I've actually managed to understand it..)?
+
+(...)
+>  * Commands that take pathspecs on the command line misbehaved when
+>    the pathspec is given as an absolute pathname (which is a
+>    practice not particularly encouraged) that points at a symbolic
+>    link in the working tree.
+>    (merge later 655ee9e mw/symlinks to maint.)
+
+In order to include the latest cleanup to this patchset:
+"setup: fix windows path buffer over-stepping"
+this should be 6127ff6 instead. Sorry if it's unneeded to note, but just
+wanted to make sure :)
+
+--
+Martin Erik Werner <martinerikwerner@gmail.com>
