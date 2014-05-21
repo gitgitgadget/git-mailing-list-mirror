@@ -1,98 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4] rebase: test ack
-Date: Wed, 21 May 2014 11:30:26 -0700
-Message-ID: <xmqqoayrougt.fsf@gitster.dls.corp.google.com>
-References: <1400447743-18513-1-git-send-email-mst@redhat.com>
-	<1400447743-18513-4-git-send-email-mst@redhat.com>
-	<xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
-	<20140520143850.GA13099@redhat.com>
-	<xmqqvbt01o14.fsf@gitster.dls.corp.google.com>
-	<20140521125246.GA21476@redhat.com>
-	<xmqqioozqdgo.fsf@gitster.dls.corp.google.com>
-	<20140521173950.GA24564@redhat.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [RFC/PATCH v4 2/3] add trace_performance facility to
+ debug performance issues
+Date: Wed, 21 May 2014 20:34:47 +0200
+Message-ID: <537CF1C7.6030408@gmail.com>
+References: <537BA806.50600@gmail.com> <537BA8D7.4000007@gmail.com> <20140521165806.GD2040@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Wed May 21 20:30:37 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: msysgit+bncBCH3XYXLXQDBBR7D6ONQKGQEO4XPMSI@googlegroups.com Wed May 21 20:34:49 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBR7D6ONQKGQEO4XPMSI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ee0-f55.google.com ([74.125.83.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnBHh-0005Hu-3I
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 20:30:37 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbaEUSac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 14:30:32 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61806 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751857AbaEUSac (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 14:30:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9C1FF18194;
-	Wed, 21 May 2014 14:30:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=khCxYJElucMviiHP5CyBYInIzFc=; b=ERfRsB
-	4Bk7MzKy5WXDGZc1xxadRgN/9w/jmZ4WfaJcXTf9aaZhF5HJ4NqD34H95kGME3FA
-	KMdZy9nseI/C9Xro7Sda9dBPcZIjilkWVoUIxOyxsOqA6w2BTa355k6jz/jNL4VN
-	172H5z4mrEdkDYmy7ithMSQS8n0PTNwg+CPqM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=E/q6XeGalaNGcSZuFNljdNOfpSrHEGCy
-	JEC5zRDHhnbwzWZekNzBY1CDdrWyaZrez5yNqHKUgh+XYfqsG9KyrdsqRnYmv2s5
-	YQALQ/wAw4DdZUCIMpB32gYPniS2klAyPgnBQeqpLLcM6vZ8W6pg0gHmgkUcBWNl
-	8nLq68+9LWo=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9436C18193;
-	Wed, 21 May 2014 14:30:31 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 412541818E;
-	Wed, 21 May 2014 14:30:28 -0400 (EDT)
-In-Reply-To: <20140521173950.GA24564@redhat.com> (Michael S. Tsirkin's message
-	of "Wed, 21 May 2014 20:39:50 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FB96A924-E115-11E3-AA44-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249820>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBR7D6ONQKGQEO4XPMSI@googlegroups.com>)
+	id 1WnBLk-0003DT-P1
+	for gcvm-msysgit@m.gmane.org; Wed, 21 May 2014 20:34:48 +0200
+Received: by mail-ee0-f55.google.com with SMTP id t10sf264822eei.0
+        for <gcvm-msysgit@m.gmane.org>; Wed, 21 May 2014 11:34:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-transfer-encoding;
+        bh=xNwBeOV31zSWnXYJ1hYCPJdG1dl+g6vJitQCL67qGDE=;
+        b=rGLp4BJQmk0M+/vvtXKLcfFwCHMjiPADvmmW3SPUSgacA6YXG4WCfocUCeXZduwPu7
+         W87dmMz9fmaCIUSDQAgXiy11X3Q2gS5a4M+UVPgHADmUDoNCRD7E9KtSIboASqMyJ1tM
+         loLdLPRpWLhIeII7WbMlSo76gImQSZwsIckCHnphJgCdjxg3DyIr5L/8VxMoZfhXpyzN
+         l/8dyrHtv8gGuueECeRllIfFuUgl6NoZfYESeS4dDNaTFyYxpT8Zfu0bdoqcPxfo+NGu
+         0y8kV/cqgl8uQtGyDHUH23hN9z5SWbsuRNi48X/E91B9K4SP/g2VGwwP+SFqiC+r/lM5
+         Rcaw==
+X-Received: by 10.180.208.50 with SMTP id mb18mr65440wic.9.1400697288368;
+        Wed, 21 May 2014 11:34:48 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.14.42 with SMTP id m10ls146445wic.21.gmail; Wed, 21 May
+ 2014 11:34:46 -0700 (PDT)
+X-Received: by 10.180.14.130 with SMTP id p2mr1210697wic.0.1400697286874;
+        Wed, 21 May 2014 11:34:46 -0700 (PDT)
+Received: from mail-ee0-x232.google.com (mail-ee0-x232.google.com [2a00:1450:4013:c00::232])
+        by gmr-mx.google.com with ESMTPS id g42si2176270eev.1.2014.05.21.11.34.46
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 21 May 2014 11:34:46 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::232 as permitted sender) client-ip=2a00:1450:4013:c00::232;
+Received: by mail-ee0-x232.google.com with SMTP id e51so1918137eek.9
+        for <msysgit@googlegroups.com>; Wed, 21 May 2014 11:34:46 -0700 (PDT)
+X-Received: by 10.14.127.9 with SMTP id c9mr5989577eei.93.1400697286801;
+        Wed, 21 May 2014 11:34:46 -0700 (PDT)
+Received: from [10.1.116.56] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id h49sm13788327eeg.21.2014.05.21.11.34.45
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 21 May 2014 11:34:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <20140521165806.GD2040@sigill.intra.peff.net>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::232
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249821>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Am 21.05.2014 18:58, schrieb Jeff King:
+> On Tue, May 20, 2014 at 09:11:19PM +0200, Karsten Blees wrote:
+>=20
+>> Add trace_performance and trace_performance_since macros that print file
+>> name, line number, time and an optional printf-formatted text to the fil=
+e
+>> specified in environment variable GIT_TRACE_PERFORMANCE.
+>>
+>> Unless enabled via GIT_TRACE_PERFORMANCE, these macros have no noticeabl=
+e
+>> impact on performance, so that test code may be shipped in release build=
+s.
+>>
+>> MSVC: variadic macros (__VA_ARGS__) require VC++ 2005 or newer.
+>=20
+> I think we still have some Unix compilers that do not do variadic
+> macros, either. For a while, people were compiling with antique stuff
+> like SUNWspro and MIPSpro. I don't know if they still do, if they use
+> gcc on such systems now, or if those systems have finally been
+> decomissioned.
+>=20
+> But either we need to change our stance on variadic macros, or this
+> feature needs to be able to be compiled conditionally.
+>=20
+> -Peff
+>=20
 
-> On Wed, May 21, 2014 at 09:54:47AM -0700, Junio C Hamano wrote:
->> "Michael S. Tsirkin" <mst@redhat.com> writes:
->> 
->> > On Tue, May 20, 2014 at 08:13:27AM -0700, Junio C Hamano wrote:
->> >> "Michael S. Tsirkin" <mst@redhat.com> writes:
->> >> 
->> >> > Just to clarify I can post v2 of 4/4 without reposting 1-3 since they
->> >> > are queued?
->> >> 
->> >> If you need to update anything queued only on 'pu' but not yet in
->> >> 'next', it is customary to ...
->> >
->> > Actually I don't see anything like it in pu.
->> ... 
-> Oh sorry, didn't mean to try to pressure you. I was just surprised
-> not to see it there. I know this applies cleanly to next so I'll just
-> wait for 2.0 to be out.
+Macros are mainly used to supply __FILE__ and __LINE__, so that lazy people=
+ don't need to think of a unique message for each use of trace_performance_=
+*. Without __FILE__, __LINE__ and message, the output would be pretty usele=
+ss (i.e. just the time without any additional info).
 
-Oh, no.  No pressure felt and no need to be sorry about anything.
+If there's platforms that don't support variadic macros, I'd suggest to dro=
+p the __FILE__ __LINE__ feature completely and make message mandatory (with=
+ the added benefit that manually provided messages don't change if the code=
+ is moved, i.e. trace logs would become somewhat comparable across versions=
+).
 
-I described a preferred procedure when the topic appeared in 'pu',
-and I didn't answer your question for topics that are not even in
-'pu' yet.
+(adding cc: Dscho as IIRC the __FILE__ __LINE__ idea was originally his).
 
-Being in 'pu' and not in 'next' is not much different from not being
-in 'pu', so the preferred procedure is to send out the entire series
-(unless it is a large 47-patch series ;-) to give everybody another
-chance to comment, and it would be extra nice if you indicated which
-ones are unchanged since the previous round to help those who did
-already saw them.
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
 
-Thanks.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+
+---=20
+You received this message because you are subscribed to the Google Groups "=
+msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
