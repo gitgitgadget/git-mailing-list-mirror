@@ -1,64 +1,64 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Slight inconsistency between ref delete commands.
-Date: Wed, 21 May 2014 14:35:46 +0400
-Message-ID: <871tvn5shp.fsf@osv.gnss.ru>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH 3/4] rebase: test ack
+Date: Wed, 21 May 2014 15:52:46 +0300
+Message-ID: <20140521125246.GA21476@redhat.com>
+References: <1400447743-18513-1-git-send-email-mst@redhat.com>
+ <1400447743-18513-4-git-send-email-mst@redhat.com>
+ <xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
+ <20140520143850.GA13099@redhat.com>
+ <xmqqvbt01o14.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed May 21 12:35:54 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 21 14:53:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wn3sH-0002Xa-Jh
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 12:35:53 +0200
+	id 1Wn61u-00070H-96
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 14:53:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbaEUKfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 06:35:50 -0400
-Received: from mail.javad.com ([54.86.164.124]:58960 "EHLO mail.javad.com"
+	id S1752443AbaEUMxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 08:53:54 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:58744 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751670AbaEUKft (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 06:35:49 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id 38BF860C03
-	for <git@vger.kernel.org>; Wed, 21 May 2014 10:35:48 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <s.organov@javad.com>)
-	id 1Wn3sA-0003Yv-B2
-	for git@vger.kernel.org; Wed, 21 May 2014 14:35:46 +0400
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1751896AbaEUMxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 08:53:53 -0400
+Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s4LCrpSi002935
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 21 May 2014 08:53:51 -0400
+Received: from redhat.com (ovpn-116-106.ams2.redhat.com [10.36.116.106])
+	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s4LCrnsU024173;
+	Wed, 21 May 2014 08:53:50 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqvbt01o14.fsf@gitster.dls.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249792>
 
-Hello,
+On Tue, May 20, 2014 at 08:13:27AM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > Just to clarify I can post v2 of 4/4 without reposting 1-3 since they
+> > are queued?
+> 
+> If you need to update anything queued only on 'pu' but not yet in
+> 'next', it is customary to resend the whole for everybody to see
+> (what is already in 'next' should only be built upon incrementally
+> and not updated with replacement patches), while noting which ones
+> are the same as before.  Christian Couder has been doing it nicely
+> in his recent rerolls (if the series were not in 'next', that is).
+> 
+> Thanks.
 
-Was writing conversion script from CVS to git for my repo and noticed
-slight inconsistency in git-tag, git-branch, and git-update-ref behavior:
-
-$ git --version
-git version 1.9.3
-$ git tag -d && echo success
-success
-$ git branch -d && echo success
-fatal: branch name required
-$ git update-ref -d && echo success
-usage: git update-ref [options] -d <refname> [<oldval>]
-   or: git update-ref [options]    <refname> <newval> [<oldval>]
-   or: git update-ref [options] --stdin [-z]
-
-    -m <reason>           reason of the update
-    -d                    delete the reference
-    --no-deref            update <refname> not the one it points to
-    -z                    stdin has NUL-terminated arguments
-    --stdin               read updates from stdin
-
-
-Noticed when used xargs without -r switch, like this:
-
-git for-each-ref --format="%(refname)" "refs/tags/*-merge" | xargs -n 1 git update-ref -d
-
--- Sergey.
+Actually I don't see anything like it in pu.
+What I would like is for 1-3 to be in pu,
+4/4 was for illustrative purposes it's not yet
+ready for that, and 1-3 are useful by themselves.
+I could then iterate on 4/4 without reposting 1-3.
