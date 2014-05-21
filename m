@@ -1,115 +1,116 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5] format-patch --signature-file <file>
-Date: Wed, 21 May 2014 16:47:39 -0400
-Message-ID: <20140521204739.GA8381@sigill.intra.peff.net>
-References: <1400572806-21092-1-git-send-email-jmmahler@gmail.com>
- <1400572806-21092-2-git-send-email-jmmahler@gmail.com>
- <20140520082740.GB27590@sigill.intra.peff.net>
- <xmqq61l01gmw.fsf@gitster.dls.corp.google.com>
- <20140520182443.GA30533@sigill.intra.peff.net>
- <xmqq7g5gz3s4.fsf@gitster.dls.corp.google.com>
- <20140521164255.GA2040@sigill.intra.peff.net>
- <xmqq61kzqbi6.fsf@gitster.dls.corp.google.com>
- <20140521175930.GA4588@sigill.intra.peff.net>
- <xmqqsio3ounp.fsf@gitster.dls.corp.google.com>
+Subject: Re: [RFC/PATCH v4 2/3] add trace_performance facility to
+ debug performance issues
+Date: Wed, 21 May 2014 16:55:24 -0400
+Message-ID: <20140521205524.GB8381@sigill.intra.peff.net>
+References: <537BA806.50600@gmail.com>
+ <537BA8D7.4000007@gmail.com>
+ <20140521165806.GD2040@sigill.intra.peff.net>
+ <537CF1C7.6030408@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 21 22:47:47 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBDO2DJFKTEFBBPVF6SNQKGQEO6VCX6Y@googlegroups.com Wed May 21 22:55:28 2014
+Return-path: <msysgit+bncBDO2DJFKTEFBBPVF6SNQKGQEO6VCX6Y@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-vc0-f190.google.com ([209.85.220.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnDQP-0007J9-OG
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 22:47:46 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294AbaEUUrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 16:47:42 -0400
-Received: from cloud.peff.net ([50.56.180.127]:56766 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751786AbaEUUrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 16:47:41 -0400
-Received: (qmail 2203 invoked by uid 102); 21 May 2014 20:47:41 -0000
+	(envelope-from <msysgit+bncBDO2DJFKTEFBBPVF6SNQKGQEO6VCX6Y@googlegroups.com>)
+	id 1WnDXr-0001gF-O2
+	for gcvm-msysgit@m.gmane.org; Wed, 21 May 2014 22:55:27 +0200
+Received: by mail-vc0-f190.google.com with SMTP id lg15sf629101vcb.7
+        for <gcvm-msysgit@m.gmane.org>; Wed, 21 May 2014 13:55:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition;
+        bh=+ePCPeO/4rC5ccv6nXnCLabHAGfF6KybX4o7Oa0MPWU=;
+        b=uQTfN4PL+jRZPDuzy3XPwYEsDsqGM3atr9HUJONFyD9eA+CCO7hFzxH8rxKb8UJFOB
+         gblVhcpLSvwTWWbOWoUOxb+An2U6RjsSvhkDAtIj37Mjf/bbdcika75dPJp8TFn0VZwG
+         LndhBK18gOU29DAOdkUrYGA5eRsN6HB3HtIoi5RfzbMtGG5wBsiaZR3FAH7TCMzw6npc
+         OjEncLMZv5vEqZ4umxkwpE0D8AFqVqQpgSBixeb8IMDwrXf8cRGP4sVbMEKAZp2m4/c9
+         uamefEeifVMlVRQL9wU1CfO9gwhJQVNmbRaad595of6mSUWEAo4YPUcZZXnaRk90s8Ed
+         Fh1g==
+X-Received: by 10.182.158.167 with SMTP id wv7mr132509obb.29.1400705726954;
+        Wed, 21 May 2014 13:55:26 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.182.73.165 with SMTP id m5ls291105obv.52.gmail; Wed, 21 May
+ 2014 13:55:26 -0700 (PDT)
+X-Received: by 10.182.252.166 with SMTP id zt6mr23406496obc.17.1400705726264;
+        Wed, 21 May 2014 13:55:26 -0700 (PDT)
+Received: from peff.net (cloud.peff.net. [50.56.180.127])
+        by gmr-mx.google.com with SMTP id la2si310730igb.1.2014.05.21.13.55.25
+        for <msysgit@googlegroups.com>;
+        Wed, 21 May 2014 13:55:26 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
+Received: (qmail 2631 invoked by uid 102); 21 May 2014 20:55:25 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 21 May 2014 15:47:41 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 May 2014 16:47:39 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 21 May 2014 15:55:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 May 2014 16:55:24 -0400
+In-Reply-To: <537CF1C7.6030408@gmail.com>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
+ sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-In-Reply-To: <xmqqsio3ounp.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249828>
 
-On Wed, May 21, 2014 at 11:26:18AM -0700, Junio C Hamano wrote:
+On Wed, May 21, 2014 at 08:34:47PM +0200, Karsten Blees wrote:
 
-> Yeah, I agree with the last sentence.  My mention of "cleansing"
-> took into account your "do we want to omit the leading blank as
-> well?" as well.  In any case, wouldn't reusing stripspace() make the
-> fix-up shorter?
+> Macros are mainly used to supply __FILE__ and __LINE__, so that lazy
+> people don't need to think of a unique message for each use of
+> trace_performance_*. Without __FILE__, __LINE__ and message, the
+> output would be pretty useless (i.e. just the time without any
+> additional info).
+> 
+> If there's platforms that don't support variadic macros, I'd suggest
+> to drop the __FILE__ __LINE__ feature completely and make message
+> mandatory (with the added benefit that manually provided messages
+> don't change if the code is moved, i.e. trace logs would become
+> somewhat comparable across versions).
 
-Not really. Doing stripspace() on the file we read would be a one-liner,
-but it doesn't address the extra line. We _already_ have
-stripspace-compatible output in the file, with a trailing newline. It's
-the one we add for the cmdline arg or default (which lack a newline
-generally) that causes the doubling.
+I do think __FILE__ and __LINE__ can be useful, and it would not be the
+end of the world to simply omit them on platforms that can't do the
+variadic macros (there shouldn't be many these days, and I think they
+are used to living with reduced functionality in some cases).
 
-So I think it would be something like:
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 39e8836..0312402 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -844,8 +844,13 @@ static void gen_message_id(struct rev_info *info, char *base)
- 
- static void print_signature(void)
- {
--	if (signature && *signature)
--		printf("-- \n%s\n\n", signature);
-+	if (signature && *signature) {
-+		struct strbuf buf = STRBUF_INIT;
-+		strbuf_addstr(&buf, signature);
-+		stripspace(&buf, 0);
-+		printf("-- \n%s\n", buf.buf);
-+		strbuf_release(&buf);
-+	}
- }
- 
- static void add_branch_description(struct strbuf *buf, const char *branch_name)
-
-I.e., make sure we have consistent stripspace output, and then stop
-adding the extra newline in the printf (notice we still include the
-"extra" blank at the end, though we can obviously easily drop it here).
-Compare to the previous patch I sent, or to the shortest possible:
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 39e8836..16b8771 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -845,7 +845,8 @@ static void gen_message_id(struct rev_info *info, char *base)
- static void print_signature(void)
- {
- 	if (signature && *signature)
--		printf("-- \n%s\n\n", signature);
-+		printf("-- \n%s%s\n", signature,
-+		       ends_with(signature, "\n") ? "" : "\n");
- }
- 
- static void add_branch_description(struct strbuf *buf, const char *branch_name)
-
-But I'm not sure "length of code" is the right metric. They're all
-pretty easy to do, if we can decide on which.
-
-I think the ratio of usefulness to number of words in this sub-thread is
-getting off. I'd be OK with any of:
-
-  1. Leave it as-is. Files get two blank lines.
-
-  2. Conditional newline
-
-  3. Stripspace.
+But if this were attached to trace_printf, we would always have a
+message anyway, no?
 
 -Peff
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
