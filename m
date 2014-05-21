@@ -1,95 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH v4 3/3] add command performance tracing to debug scripted commands
-Date: Wed, 21 May 2014 10:38:13 -0700
-Message-ID: <xmqq1tvnqbga.fsf@gitster.dls.corp.google.com>
-References: <537BA806.50600@gmail.com> <537BA8DC.9070104@gmail.com>
-	<20140521165508.GC2040@sigill.intra.peff.net>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH 3/4] rebase: test ack
+Date: Wed, 21 May 2014 20:39:50 +0300
+Message-ID: <20140521173950.GA24564@redhat.com>
+References: <1400447743-18513-1-git-send-email-mst@redhat.com>
+ <1400447743-18513-4-git-send-email-mst@redhat.com>
+ <xmqq4n0lwizh.fsf@gitster.dls.corp.google.com>
+ <20140520143850.GA13099@redhat.com>
+ <xmqqvbt01o14.fsf@gitster.dls.corp.google.com>
+ <20140521125246.GA21476@redhat.com>
+ <xmqqioozqdgo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed May 21 19:38:25 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 21 19:41:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnAT9-0003qU-69
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 19:38:23 +0200
+	id 1WnAVj-0007Zx-DX
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 19:41:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098AbaEURiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 13:38:19 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54481 "EHLO smtp.pobox.com"
+	id S1752697AbaEURk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 13:40:58 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:21535 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751786AbaEURiS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 13:38:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 472E717340;
-	Wed, 21 May 2014 13:38:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E/d1ODDPTuexm9iqrYTFoXeQVaQ=; b=ZVt9+5
-	GuwPtEXmP0dKPOcBdAVU/RZMauy5X3IvJNt/x26+zLKj6VYYyM6+QHISYF2axtNY
-	QAue1fdGiiy0uoKcQd6qjacyA6KInzVAkXppryJvAAP/egfTDB5MZFO2gO0l2Cgg
-	LHmCMqXNIW0QhvDtypb9b7fzvpFCF6is5aEXs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=laXadmiTQm/A2oaGial9kc1slhv5/bYh
-	wWTYxK7GESsSJzc5ulyPo+IHOHDIXU1l14GyVGRAFg//yzgNUZgoxaiRIYGc0njz
-	FqcXI1XXcXh2sRvZgenIzkxYAlravWU4UbulxXYMgt8eKzY00HMpWLgBKW2HMKWM
-	TpzAq4rNIL8=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3D3EB1733F;
-	Wed, 21 May 2014 13:38:18 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 150B017339;
-	Wed, 21 May 2014 13:38:15 -0400 (EDT)
-In-Reply-To: <20140521165508.GC2040@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 21 May 2014 12:55:08 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B01126AC-E10E-11E3-8055-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751944AbaEURk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 13:40:57 -0400
+Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s4LHetI9004780
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 21 May 2014 13:40:55 -0400
+Received: from redhat.com (ovpn-116-37.ams2.redhat.com [10.36.116.37])
+	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s4LHeqQq012870;
+	Wed, 21 May 2014 13:40:53 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqioozqdgo.fsf@gitster.dls.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249816>
 
-Jeff King <peff@peff.net> writes:
+On Wed, May 21, 2014 at 09:54:47AM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > On Tue, May 20, 2014 at 08:13:27AM -0700, Junio C Hamano wrote:
+> >> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> >> 
+> >> > Just to clarify I can post v2 of 4/4 without reposting 1-3 since they
+> >> > are queued?
+> >> 
+> >> If you need to update anything queued only on 'pu' but not yet in
+> >> 'next', it is customary to resend the whole for everybody to see
+> >> (what is already in 'next' should only be built upon incrementally
+> >> and not updated with replacement patches), while noting which ones
+> >> are the same as before.  Christian Couder has been doing it nicely
+> >> in his recent rerolls (if the series were not in 'next', that is).
+> >> 
+> >> Thanks.
+> >
+> > Actually I don't see anything like it in pu.
+> 
+> The way I usually work is to apply a non-fix (i.e. enhancement)
+> series on a topic branch forked from 'master' (or the last tagged
+> version contained in its tip) and see if it makes sense, and then
+> try-merge the result to 'next' to see if it is free of potential
+> funny interactions with other topics that are already in flight.
+> After that happens, the topic branch is merged to somewhere in 'pu'.
+> 
+> It is possible that I did not have time to go through all the steps
+> above (after all, I had to make another -rc release and there was an
+> unexpected last-minute change of plans in the morning that blew a
+> few hours of work).  Or there may have been some merge conflicts
+> that I didn't feel like resolving for various reasons (e.g. if I
+> knew the series would be rerolled anyway, it can wait; if the other
+> topic that interacts with your series has been cooking sufficiently
+> long in 'next' and if it is very close to the final release of this
+> cycle, it may be easier to wait for the other topic to graduate to
+> 'master', which would happen soon after this cycle finishes, and ask
+> you to rebase your series).
+> 
+> I don't remember which ;-)
+> 
 
-> On Tue, May 20, 2014 at 09:11:24PM +0200, Karsten Blees wrote:
->
->> Add performance tracing to identify which git commands are called and how
->> long they execute. This is particularly useful to debug performance issues
->> of scripted commands.
->> 
->> Usage example: > GIT_TRACE_PERFORMANCE=~/git-trace.log git stash list
->> 
->> Creates a log file like this:
->> performance: at trace.c:319, time: 0.000303280 s: git command: 'git' 'rev-parse' '--git-dir'
->> performance: at trace.c:319, time: 0.000334409 s: git command: 'git' 'rev-parse' '--is-inside-work-tree'
->> performance: at trace.c:319, time: 0.000215243 s: git command: 'git' 'rev-parse' '--show-toplevel'
->> performance: at trace.c:319, time: 0.000410639 s: git command: 'git' 'config' '--get-colorbool' 'color.interactive'
->> performance: at trace.c:319, time: 0.000394077 s: git command: 'git' 'config' '--get-color' 'color.interactive.help' 'red bold'
->> performance: at trace.c:319, time: 0.000280701 s: git command: 'git' 'config' '--get-color' '' 'reset'
->> performance: at trace.c:319, time: 0.000908185 s: git command: 'git' 'rev-parse' '--verify' 'refs/stash'
->> performance: at trace.c:319, time: 0.028827774 s: git command: 'git' 'stash' 'list'
->
-> Neat. I actually wanted something like this just yesterday. It looks
-> like you are mainly tracing the execution of programs. Would it make
-> sense to just tie this to regular trace_* calls, and if
-> GIT_TRACE_PERFORMANCE is set, add a timestamp to each line?
+Oh sorry, didn't mean to try to pressure you. I was just surprised
+not to see it there. I know this applies cleanly to next so I'll just
+wait for 2.0 to be out.
 
-Yeah, I very much like both, the output and your suggestion to hook
-it into the existing infrastructure.
-
-> Then we would not need to add separate trace_command_performance calls,
-> and other parts of the code that are already instrumented with GIT_TRACE
-> would get the feature for free.
->
-> -Peff
->
-> -- 
+-- 
+MST
