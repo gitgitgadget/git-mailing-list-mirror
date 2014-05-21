@@ -1,80 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] Git v2.0.0-rc4
-Date: Wed, 21 May 2014 14:48:38 -0700
-Message-ID: <xmqqsio2olah.fsf@gitster.dls.corp.google.com>
-References: <xmqqr43oq8q5.fsf@gitster.dls.corp.google.com>
-	<537D1B05.6030209@bbn.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v6] format-patch --signature-file <file>
+Date: Wed, 21 May 2014 14:50:59 -0700
+Message-ID: <20140521215059.GB13956@hudson.localdomain>
+References: <1400634170-18266-1-git-send-email-jmmahler@gmail.com>
+ <1400634170-18266-2-git-send-email-jmmahler@gmail.com>
+ <xmqq61kyq1i5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Wed May 21 23:48:55 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 21 23:51:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnENW-0003CF-Qp
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 23:48:51 +0200
+	id 1WnEQX-0007t4-8K
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 23:51:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753396AbaEUVsr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 17:48:47 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50172 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753239AbaEUVso (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 17:48:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2CCB018510;
-	Wed, 21 May 2014 17:48:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5Ir2vlcINxWk9VUH+r023dKZAys=; b=hrwq79
-	9BsC2m562ZrpCLgFeMYmds9Z/11LWgjf6wNmOq3uOjyDP46QQlWeQB3dXlZsZGpF
-	J8IlZ4x/D+ZPEd2uEE8bhWxkB2G69OBDgqa6pIWWjjsDYgyzc5xC8nqueutVzlgm
-	jmtozDNSrl6/u1pNJhiucG9e1/QHKBw8R1+40=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dhbaEghc56An+33/ADguT79suAXvSj0v
-	LLc/wjQJ2p15rodKih2NeruLfOZ6DdXBMuF1r6wNfSFSLeVApTczFxHK7R3dPl1Z
-	c8pEHwCHYt9lg9uZnZTNHgy1QMRIFqq1RHj2D3A3CG54xA9SCa8sR14BVsA6Psx0
-	H1MuyHqb87I=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 244B21850D;
-	Wed, 21 May 2014 17:48:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8567A18503;
-	Wed, 21 May 2014 17:48:40 -0400 (EDT)
-In-Reply-To: <537D1B05.6030209@bbn.com> (Richard Hansen's message of "Wed, 21
-	May 2014 17:30:45 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: ABF0B9C0-E131-11E3-9157-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753402AbaEUVvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 17:51:53 -0400
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:50941 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753395AbaEUVvD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 17:51:03 -0400
+Received: by mail-pb0-f45.google.com with SMTP id um1so1807930pbc.4
+        for <git@vger.kernel.org>; Wed, 21 May 2014 14:51:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:date:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=QFkih6HXfICNikYB8MvI3ZGpNvePYZWriZypXkcpymA=;
+        b=aBFdYapGGAZjWgCeToemXqUXTZ8ligY6+cLQaN1eBvrQCcthznnjMDrNIEk5VZXlq3
+         x+RzunwhpQ12a6mGbmkOkgv8APl7vSQxX4Vg12H7JGx+aF0bCOizN867uREB1eQPqDV/
+         AGtVGDeGxpaYj258P2Zn49K5ONfPJNmEIqsAL2Q0aZ4AX11fWttgg4LO4/SEoyLd+8Ol
+         5g0FDzSmDzDSiUlVSrUgAAGceUxO9MPqwrGQ6V+sMneA2YU44ytf7v/9E+6/5NQNynJH
+         Xhbkkz31jLQ2IbG0m/zzcwvRm1i5Ax4k9K0hFMl3ek3EyW9qYl9Sz7TkTRqPUs4wz5U1
+         gn9w==
+X-Received: by 10.68.201.10 with SMTP id jw10mr61828851pbc.25.1400709063371;
+        Wed, 21 May 2014 14:51:03 -0700 (PDT)
+Received: from hudson (o247-linksys-rtr.CSUChico.EDU. [132.241.18.53])
+        by mx.google.com with ESMTPSA id jq6sm9660745pbb.76.2014.05.21.14.50.59
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 21 May 2014 14:51:01 -0700 (PDT)
+X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
+Received: by hudson (sSMTP sendmail emulation); Wed, 21 May 2014 14:50:59 -0700
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <xmqq61kyq1i5.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249840>
 
-Richard Hansen <rhansen@bbn.com> writes:
+On Wed, May 21, 2014 at 02:13:06PM -0700, Junio C Hamano wrote:
+> Jeremiah Mahler <jmmahler@gmail.com> writes:
+> 
+...
+> >  	! grep "^-- \$" output
+...
+> 
+> We have been trying not to do the above in recent test updates.  It
+> would be nice if this set-up did not have to be outside of the usual
+> test_expect_success structure.
+> 
 
->>  * The shell prompt script (in contrib/), when using the PROMPT_COMMAND
->>    interface, used an unsafe construct when showing the branch name in
->>    $PS1.
->>    (merge 8976500 rh/prompt-pcmode-avoid-eval-on-refname later to maint).
->
-> That commit has been merged to maint and is in v1.9.3.
->
-> Also, 1e4119c (git-prompt.sh: don't assume the shell expands the value
-> of PS1) is a fix that is in v2.0.0-rc4 but not v1.9.x.  Maybe add
-> something like:
->
->  * The shell prompt script (in contrib/), when using Zsh and the
->    precmd() interface, printed ${__git_ps1_branch_name} in the prompt
->    instead of the branch name (regression in v1.9.3).
->    (merge 1e4119c rh/prompt-pcmode-avoid-eval-on-refname later to
->    maint).
+Jeff caught those "! grep" instances in my patch.
 
-Yes, already done this morning but not yet ready to be pushed out.
+I can submit a separate patch to fix instances like those in test cases
+unrelated to this signature-file patch.
 
-Thanks.
+-- 
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
