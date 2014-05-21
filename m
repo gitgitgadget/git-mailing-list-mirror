@@ -1,79 +1,73 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH v6] format-patch --signature-file <file>
-Date: Wed, 21 May 2014 14:32:06 -0700
-Message-ID: <20140521213206.GA13956@hudson.localdomain>
-References: <1400634170-18266-1-git-send-email-jmmahler@gmail.com>
- <1400634170-18266-2-git-send-email-jmmahler@gmail.com>
- <xmqq61kyq1i5.fsf@gitster.dls.corp.google.com>
- <xmqqwqdeomes.fsf@gitster.dls.corp.google.com>
+From: Thomas Ferris Nicolaisen <tfnico@gmail.com>
+Subject: Re: git push rejected due being behind after git svn dcommit without
+ any changes local/remote
+Date: Wed, 21 May 2014 23:33:21 +0200
+Message-ID: <CAEcj5uURgU0NfocwSxYDJiQvwdyvDgS3Gvo2kFEroz-dg=U5Tg@mail.gmail.com>
+References: <CAB10+LtnAiCCiMdrULvioxc-UBQufKD4AzOphvE8bAdq7en04g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed May 21 23:32:18 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Henning Sprang <henning.sprang@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 21 23:33:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnE7T-0003px-VI
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 23:32:16 +0200
+	id 1WnE8b-0005R2-N3
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 23:33:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866AbaEUVcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 17:32:12 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:63089 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801AbaEUVcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 17:32:12 -0400
-Received: by mail-pd0-f172.google.com with SMTP id x10so1757264pdj.31
-        for <git@vger.kernel.org>; Wed, 21 May 2014 14:32:11 -0700 (PDT)
+	id S1752988AbaEUVdW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 17:33:22 -0400
+Received: from mail-qg0-f49.google.com ([209.85.192.49]:52055 "EHLO
+	mail-qg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751801AbaEUVdV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 17:33:21 -0400
+Received: by mail-qg0-f49.google.com with SMTP id a108so4203352qge.36
+        for <git@vger.kernel.org>; Wed, 21 May 2014 14:33:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=kVv4lX03lTz+tGn7OvMasXQDd8Q7uMmNTQMSbYl1HR0=;
-        b=Jn201F8N1iyDPByafOsc1ExHi+ZL4hEpPOtC+6eOx3KcqprkxjdUShACC8sTmQ2Rwx
-         o0xcmAWYf5RFvVvWCwMxSjoJW1qr1Fvqs4ukge/P4jIZe9tYV9hw7DEvGucyW3BcOQmR
-         xwbrSpHSiDvC/26U3Uz9bbPrA3qMbNEEOkICA6hAf5FlN+zJJfkNeCzNDRZHVgBplHY/
-         n/EHuVl6O8SusLgRnlvZW/MGysZWZoxMOQi5E4d+/IL3tGOOn38B28y2R6tnCcGOZr6/
-         lU9WwTPK4BNGXt+ylmxbpD3bVyAsgkUob3aUwPJr1SFY9oNX3hcl7nDm6PKvKWTlEsAZ
-         8SLQ==
-X-Received: by 10.68.78.66 with SMTP id z2mr14473087pbw.71.1400707931392;
-        Wed, 21 May 2014 14:32:11 -0700 (PDT)
-Received: from hudson (o247-linksys-rtr.CSUChico.EDU. [132.241.18.53])
-        by mx.google.com with ESMTPSA id bq4sm9629765pbb.60.2014.05.21.14.32.07
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 21 May 2014 14:32:09 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Wed, 21 May 2014 14:32:06 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <xmqqwqdeomes.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=fgFBnta9LqrHd8OaYT2jMMijTu9vvC5th2714FWmyLo=;
+        b=dhxpCg5Y94EfbbNI58ZXzbxc4U8/hiksXt4Ge5w0TOWJSgMM38WOa8k0wGwDAqLlaj
+         +QESzPp7NKRLqBWowrBzhDLb/Gsl5LKxs1odhy/MbhBrE9aDPOROm9ulXZd05tlyJjpx
+         JdjA7NkQvvhTB+FdnhvPC5G1o9Rt7Ty+c7Byq0PJVccej7ZpmKmgLTgeKI1RT6iSrx2C
+         xza9o6TCkdgaGdj9Vo3D4YdDRLeKi7fWRE/Z8bEs18p2dMfC50ihcWsbyZDAAj+yYdCn
+         9SyMYOLI+0VvaXohP6isCqSeBge1RKtOLyrSRBk2QdPO5bY5CGBsSnAE9B+8CLF9Wq7Z
+         UCdQ==
+X-Received: by 10.140.21.101 with SMTP id 92mr71195599qgk.57.1400708001172;
+ Wed, 21 May 2014 14:33:21 -0700 (PDT)
+Received: by 10.140.27.19 with HTTP; Wed, 21 May 2014 14:33:21 -0700 (PDT)
+In-Reply-To: <CAB10+LtnAiCCiMdrULvioxc-UBQufKD4AzOphvE8bAdq7en04g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249838>
 
-On Wed, May 21, 2014 at 02:24:27PM -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-...
-> 
-> It seems you sent v7 before I had a chance to comment on this one.
-> The above was merely "it would be nicer..." and I am OK as-is.  The
-> comments on the rest are a bit more serious, though.
-> 
-> Thanks.
-> 
+On Wed, May 21, 2014 at 6:13 PM, Henning Sprang
+<henning.sprang@gmail.com> wrote:
+>
+> You'd say, can happen, when some developers work against the remote
+> git repo, others with svn. But I'm the only developer on the project,
+> and no one ever commits to the remote svn nor the remote git repo. So,
+> I'm clueless.
+>
+> How can I find out what happens and how to prevent that?
+>
 
-It is not a problem.  Thanks again for all your feedback.
+This is normal. Every time you update or sync against the SVN server,
+your local history is rewritten if you have local commits: All your
+local commits are rebased on top of the latest changes coming from
+SVN.
 
--- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+If you want to avoid this, only push to your Git mirror when your
+git-svn clone and the SVN repo are in sync. Doing so ruins the whole
+point of your Git mirror, I assume.
+
+So, I'm afraid you have to get used to just force-pushing to your Git
+mirror. Even though this is not considered good practice, it should be
+fine as long as you are the only one using this mirror.
+
+Alternatively, you could consider some other mechanism for backup (rsync, etc).
