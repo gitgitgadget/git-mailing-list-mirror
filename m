@@ -1,136 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6] format-patch --signature-file <file>
-Date: Wed, 21 May 2014 14:24:27 -0700
-Message-ID: <xmqqwqdeomes.fsf@gitster.dls.corp.google.com>
-References: <1400634170-18266-1-git-send-email-jmmahler@gmail.com>
-	<1400634170-18266-2-git-send-email-jmmahler@gmail.com>
-	<xmqq61kyq1i5.fsf@gitster.dls.corp.google.com>
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [ANNOUNCE] Git v2.0.0-rc4
+Date: Wed, 21 May 2014 17:30:45 -0400
+Message-ID: <537D1B05.6030209@bbn.com>
+References: <xmqqr43oq8q5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Jeremiah Mahler <jmmahler@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 21 23:24:37 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 21 23:30:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnE04-0001Cv-Gs
-	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 23:24:36 +0200
+	id 1WnE68-0001w7-De
+	for gcvg-git-2@plane.gmane.org; Wed, 21 May 2014 23:30:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866AbaEUVYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 17:24:33 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51201 "EHLO smtp.pobox.com"
+	id S1752687AbaEUVat (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 17:30:49 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:10114 "EHLO smtp.bbn.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752837AbaEUVYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 17:24:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D449B198BD;
-	Wed, 21 May 2014 17:24:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p/lAJWlhkxK/QiJ93bezkTxXmw4=; b=UYR4Zx
-	sc+/JQpfZaVB/klZlJSXStt7iVfgu/wNSLVyGm/eaUnR60BAV+VI+jHWz07we0xJ
-	aFLAIAqnPWVOvdMM2SShTVL4o2ZFT5ZUotAwC8jkM6IP4LMaTd0mHCLnZnSdExoA
-	EOKwsNAJtxkuiLob77ExUmxmL3nyvMSYA2q7A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RfXVxDWGCrosVQRP0eFC4mDJsssydavl
-	B1y8MS8/2L4W3iB2TZyvVghB9S/pD2VfEmIS4XUTh7V1MBHMRd40ZGqqOoRNZY/i
-	C4gZsZlTEXkY8MSsVuxxe9DWH0wjFMsx2LIl1PgnakDsdSNsGeerdraHJioCu2Gn
-	ozLHIaJ1e9s=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CB823198BB;
-	Wed, 21 May 2014 17:24:31 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BC3BA198B3;
-	Wed, 21 May 2014 17:24:28 -0400 (EDT)
-In-Reply-To: <xmqq61kyq1i5.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 21 May 2014 14:13:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4A9D9C86-E12E-11E3-81A5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751801AbaEUVas (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 17:30:48 -0400
+Received: from socket.bbn.com ([192.1.120.102]:57766)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1WnE6E-0005h2-0M; Wed, 21 May 2014 17:30:58 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 8349340320
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqqr43oq8q5.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249836>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 2014-05-20 20:24, Junio C Hamano wrote:
+> Fixes since v1.9 series
+> -----------------------
+> 
+> Unless otherwise noted, all the fixes since v1.9 in the maintenance
+> track are contained in this release (see the maintenance releases'
+> notes for details).
+[...]
+>
+>  * The shell prompt script (in contrib/), when using the PROMPT_COMMAND
+>    interface, used an unsafe construct when showing the branch name in
+>    $PS1.
+>    (merge 8976500 rh/prompt-pcmode-avoid-eval-on-refname later to maint).
 
-> Jeremiah Mahler <jmmahler@gmail.com> writes:
->
->> diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
->> index 9c80633..049493d 100755
->> --- a/t/t4014-format-patch.sh
->> +++ b/t/t4014-format-patch.sh
->> @@ -762,6 +762,38 @@ test_expect_success 'format-patch --signature="" suppresses signatures' '
->>  	! grep "^-- \$" output
->>  '
->>  
->> +cat >expect <<-\EOF
->> +
->> +Test User <test.email@kernel.org>
->> +http://git.kernel.org/cgit/git/git.git
->> +
->> +git.kernel.org/?p=git/git.git;a=summary
->> +
->> +EOF
->
-> We have been trying not to do the above in recent test updates.  It
-> would be nice if this set-up did not have to be outside of the usual
-> test_expect_success structure.
+That commit has been merged to maint and is in v1.9.3.
 
-It seems you sent v7 before I had a chance to comment on this one.
-The above was merely "it would be nicer..." and I am OK as-is.  The
-comments on the rest are a bit more serious, though.
+Also, 1e4119c (git-prompt.sh: don't assume the shell expands the value
+of PS1) is a fix that is in v2.0.0-rc4 but not v1.9.x.  Maybe add
+something like:
 
-Thanks.
+ * The shell prompt script (in contrib/), when using Zsh and the
+   precmd() interface, printed ${__git_ps1_branch_name} in the prompt
+   instead of the branch name (regression in v1.9.3).
+   (merge 1e4119c rh/prompt-pcmode-avoid-eval-on-refname later to
+   maint).
 
->
->> +test_expect_success 'format-patch --signature-file=file' '
->> +	git format-patch --stdout --signature-file=expect -1 >output &&
->> +	check_patch output &&
->> +	sed -n -e "/^-- $/,\$p" <output | sed -e "1 d" | sed -e "\$d" | sed -e "\$d" >output2 &&
->
-> Overlong line.  If we can't make this pipeline shorter, at least
-> fold it to a reasonable length, e.g.
->
-> 	sed -n -e ... <output |
->         sed -e '1d' -e "\$d" |
->         sed -e "\$d" >output2 &&
->
-> or something.
->
-> The SP between the address "1" and insn "d" looks somewhat funny and
-> ugly, especially given that you write the other one "$d" without
-> such a SP.  Was there a specific reason why it was needed?
->
-> I would further think that renaming a few files and updating the way
-> the check is done may make the whole thing easier to understand.
->
->  * rename the input for --signature-file to "mail-signature".
->
->  * keep the name "output" to hold the format-patch output, i.e.
->
->      git format-patch -1 --stdout --signature-file=mail-signature >output
->
->  * Instead of munging the "mail signature" part of the output too
->    excessively to match the input, formulate the expected output
->    using "mail-signature" as an input, i.e.
->
->      sed -e '1,/^-- $/d' <output >actual &&
->      {
-> 	cat mail-signature && echo && echo
->      } >expect &&
->      test_cmp expect actual
->
-> Alternatively, the third-bullet point above may want to be further
-> future-proofed by using stripspace, e.g.
->
->     sed -e '1/^-- $/d' <output | git stripspace >actual &&
->     git stripspace <mail-signature >expect &&
->     test_cmp expect actual
->
-> Thanks.
+-Richard
