@@ -1,214 +1,83 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v8 2/2] format-patch --signature-file <file>
-Date: Wed, 21 May 2014 18:53:09 -0700
-Message-ID: <1400723589-8975-3-git-send-email-jmmahler@gmail.com>
-References: <1400723589-8975-1-git-send-email-jmmahler@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeremiah Mahler <jmmahler@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 22 03:54:22 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.0.0-rc4
+Date: Wed, 21 May 2014 22:45:53 -0500
+Message-ID: <537d72f16f11f_1bf76cb308f3@nysa.notmuch>
+References: <xmqqr43oq8q5.fsf@gitster.dls.corp.google.com>
+ <537bf50f27417_353e13c330846@nysa.notmuch>
+ <xmqqa9abqczg.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+X-From: linux-kernel-owner@vger.kernel.org Thu May 22 05:57:29 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnID7-0000Fv-0B
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 03:54:21 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1WnK8G-0007mj-OR
+	for glk-linux-kernel-3@plane.gmane.org; Thu, 22 May 2014 05:57:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752312AbaEVByR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 21:54:17 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:52128 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752203AbaEVByQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 21:54:16 -0400
-Received: by mail-pa0-f46.google.com with SMTP id kq14so1947365pab.5
-        for <git@vger.kernel.org>; Wed, 21 May 2014 18:54:16 -0700 (PDT)
+	id S1752221AbaEVD5M (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Wed, 21 May 2014 23:57:12 -0400
+Received: from mail-oa0-f41.google.com ([209.85.219.41]:57785 "EHLO
+	mail-oa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750911AbaEVD5K (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Wed, 21 May 2014 23:57:10 -0400
+Received: by mail-oa0-f41.google.com with SMTP id m1so3361163oag.28
+        for <multiple recipients>; Wed, 21 May 2014 20:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nsLzBizfghq5GxAsDT8pyw51VMj6O4NBRJLDdns3pyM=;
-        b=RWgKmpPIRC7n/SciFe6TSLZHCWD6dVJKj+g26J+31bvDxH7mT6mMfgp3B6iuuhyb48
-         qKhUWt3wbZybHr7DMRvv/S4XBuchs5gfZDSCfKGAAABaJaQ4lB+KwRL0kN37DoujxIkT
-         /b/jP/6+htJC5OAOr2SSuQrNyr6+UH6nt1+5vvp5lC8dIM78l9AGB3MHTo6urpK38xBQ
-         tzr0zgp4zDSFBLd1DiHPM318OEsiwhCl5kHypK7+YnKAzQjmS+0valfVWhOLpctkMNBC
-         mGNNdw4bCr+5eXDbFq56uXJS0p4taUAdvbT41nq9kDqTQcPKwjFtuuyOh9geV/K6xwWa
-         nyAQ==
-X-Received: by 10.68.245.100 with SMTP id xn4mr62936351pbc.152.1400723656099;
-        Wed, 21 May 2014 18:54:16 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id ec2sm10187335pbc.63.2014.05.21.18.54.13
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:content-type:content-transfer-encoding;
+        bh=yEmvh/Kc9WnmQcfF6dgkpTFPp75nS5de7DpR7bUiYIY=;
+        b=hV2vo6+vL/gpA0tm7tiHIgRAePdkLqtk3Gvk33z4OqUMUrsx5laRettcf0uG9e7pDG
+         slcGj4RPtDAkPUWAn8423F70jkceSeV4kRN10FZutZ4emWItrQNlpcRPm7eQfRbPt+AH
+         iwhlUvHI+oF/W6ElSBhNBgbeDeEBeiC1svLTu2Lh6C9YmJFmTs80zRiZN7EndP2rdX36
+         KDotqPFH1VgrBFbzcLFdHx7wPcSaiHfFo2mMAIQ7xTb8fa2D6Z+L0mld88qW+J9JDtzl
+         nmxCccDfeKZEV3xUrRzc14sJJ5iUohUkoVoOstSviQdoLTNUWVeSpi29CGVXGqUxFMRL
+         eTQQ==
+X-Received: by 10.60.149.233 with SMTP id ud9mr28545237oeb.66.1400731029662;
+        Wed, 21 May 2014 20:57:09 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id c7sm3649052obq.25.2014.05.21.20.57.07
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 21 May 2014 18:54:14 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Wed, 21 May 2014 18:54:11 -0700
-X-Mailer: git-send-email 2.0.0.rc3.19.gd74db96.dirty
-In-Reply-To: <1400723589-8975-1-git-send-email-jmmahler@gmail.com>
-Sender: git-owner@vger.kernel.org
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 21 May 2014 20:57:08 -0700 (PDT)
+In-Reply-To: <xmqqa9abqczg.fsf@gitster.dls.corp.google.com>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249871>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249872>
 
-Added option that allows a signature file to be used with format-patch
-so that signatures with newlines and other special characters can be
-easily included.
+Junio C Hamano wrote:
+> Felipe Contreras <felipe.contreras@gmail.com> writes:
+> 
+> > Junio C Hamano wrote:
+> >
+> >>  * The remote-helper interface to fast-import/fast-export via the
+> >>    transport-helper has been tightened to avoid leaving the import
+> >>    marks file from a failed/crashed run, as such a file that is out-of-
+> >>    sync with reality confuses a later invocation of itself.
+> >
+> > Really? Where are the patches for that?
+> >
+> > I think it's fair to say the way the remote-helpers and transport-helper
+> > has been handled for v2.0 has been a total disaster.
+> 
+> Thanks for noticing.  The last-minute change of plans in the morning
+> on the -rc release day did not help.  Will remove.
 
-  $ git format-patch --signature-file ~/.signature -1
+But this changed before that.
 
-The config variable format.signaturefile is also provided so that it
-can be added by default.
+> Anything else I missed?
 
-  $ git config format.signaturefile ~/.signature
+Not as far as I can see.
 
-  $ git format-patch -1
-
-Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
----
- Documentation/config.txt           |  4 ++++
- Documentation/git-format-patch.txt |  4 ++++
- builtin/log.c                      | 16 +++++++++++++++
- t/t4014-format-patch.sh            | 41 ++++++++++++++++++++++++++++++++++++++
- 4 files changed, 65 insertions(+)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1932e9b..140ed77 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1114,6 +1114,10 @@ format.signature::
- 	Set this variable to the empty string ("") to suppress
- 	signature generation.
- 
-+format.signaturefile::
-+	Works just like format.signature except the contents of the
-+	file specified by this variable will be used as the signature.
-+
- format.suffix::
- 	The default for format-patch is to output files with the suffix
- 	`.patch`. Use this variable to change that suffix (make sure to
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index 5c0a4ab..c0fd470 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -14,6 +14,7 @@ SYNOPSIS
- 		   [(--attach|--inline)[=<boundary>] | --no-attach]
- 		   [-s | --signoff]
- 		   [--signature=<signature> | --no-signature]
-+		   [--signature-file=<file>]
- 		   [-n | --numbered | -N | --no-numbered]
- 		   [--start-number <n>] [--numbered-files]
- 		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
-@@ -233,6 +234,9 @@ configuration options in linkgit:git-notes[1] to use this workflow).
- 	signature option is omitted the signature defaults to the Git version
- 	number.
- 
-+--signature-file=<file>::
-+	Works just like --signature except the signature is read from a file.
-+
- --suffix=.<sfx>::
- 	Instead of using `.patch` as the suffix for generated
- 	filenames, use specified suffix.  A common alternative is
-diff --git a/builtin/log.c b/builtin/log.c
-index 5acc048..5e3cc29 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -673,6 +673,7 @@ static void add_header(const char *value)
- static int thread;
- static int do_signoff;
- static const char *signature = git_version_string;
-+static const char *signature_file;
- static int config_cover_letter;
- 
- enum {
-@@ -742,6 +743,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
- 	}
- 	if (!strcmp(var, "format.signature"))
- 		return git_config_string(&signature, var, value);
-+	if (!strcmp(var, "format.signaturefile"))
-+		return git_config_pathname(&signature_file, var, value);
- 	if (!strcmp(var, "format.coverletter")) {
- 		if (value && !strcasecmp(value, "auto")) {
- 			config_cover_letter = COVER_AUTO;
-@@ -1235,6 +1238,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			    PARSE_OPT_OPTARG, thread_callback },
- 		OPT_STRING(0, "signature", &signature, N_("signature"),
- 			    N_("add a signature")),
-+		OPT_FILENAME(0, "signature-file", &signature_file,
-+				N_("add a signature from a file")),
- 		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
- 		OPT_END()
- 	};
-@@ -1452,6 +1457,17 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 			cover_letter = (config_cover_letter == COVER_ON);
- 	}
- 
-+	if (signature_file) {
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		if (signature && signature != git_version_string)
-+			die(_("cannot specify both signature and signature-file"));
-+
-+		if (strbuf_read_file(&buf, signature_file, 128) < 0)
-+			die_errno(_("unable to read signature file '%s'"), signature_file);
-+		signature = strbuf_detach(&buf, NULL);
-+	}
-+
- 	if (in_reply_to || thread || cover_letter)
- 		rev.ref_message_ids = xcalloc(1, sizeof(struct string_list));
- 	if (in_reply_to) {
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 9c80633..37d25c4 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -762,6 +762,47 @@ test_expect_success 'format-patch --signature="" suppresses signatures' '
- 	! grep "^-- \$" output
- '
- 
-+test_expect_success 'prepare mail-signature input' '
-+	cat >mail-signature <<-\EOF
-+
-+	Test User <test.email@kernel.org>
-+	http://git.kernel.org/cgit/git/git.git
-+
-+	git.kernel.org/?p=git/git.git;a=summary
-+
-+	EOF
-+'
-+
-+test_expect_success 'format-patch --signature-file=mail-signature' '
-+	git format-patch --stdout --signature-file=mail-signature -1 >output &&
-+	check_patch output &&
-+	sed -e "1,/^-- \$/d" <output >actual &&
-+	{
-+		cat mail-signature && echo
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format-patch with format.signaturefile config' '
-+	test_config format.signaturefile mail-signature &&
-+	git format-patch --stdout -1 >output &&
-+	check_patch output &&
-+	sed -e "1,/^-- \$/d" <output >actual &&
-+	{
-+		cat mail-signature && echo
-+	} >expect &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'format-patch --signature and --signature-file die' '
-+	test_must_fail git format-patch --stdout --signature="foo" \
-+		--signature-file=mail-signature -1 >output
-+'
-+
-+test_expect_success 'format-patch --no-signature and --signature-file OK' '
-+	git format-patch --stdout --no-signature --signature-file=mail-signature -1
-+'
-+
- test_expect_success TTY 'format-patch --stdout paginates' '
- 	rm -f pager_used &&
- 	test_terminal env GIT_PAGER="wc >pager_used" git format-patch --stdout --all &&
 -- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+Felipe Contreras
