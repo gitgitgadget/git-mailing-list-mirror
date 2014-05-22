@@ -1,100 +1,213 @@
 From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v8 1/2] format-patch: make newline after signature conditional
-Date: Wed, 21 May 2014 18:53:08 -0700
-Message-ID: <1400723589-8975-2-git-send-email-jmmahler@gmail.com>
+Subject: [PATCH v8 2/2] format-patch --signature-file <file>
+Date: Wed, 21 May 2014 18:53:09 -0700
+Message-ID: <1400723589-8975-3-git-send-email-jmmahler@gmail.com>
 References: <1400723589-8975-1-git-send-email-jmmahler@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jeremiah Mahler <jmmahler@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 22 03:54:15 2014
+X-From: git-owner@vger.kernel.org Thu May 22 03:54:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnICz-0008W2-Hd
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 03:54:13 +0200
+	id 1WnID7-0000Fv-0B
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 03:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752245AbaEVByI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 May 2014 21:54:08 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:36012 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751850AbaEVByI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 May 2014 21:54:08 -0400
-Received: by mail-pb0-f52.google.com with SMTP id rr13so1992016pbb.11
-        for <git@vger.kernel.org>; Wed, 21 May 2014 18:54:07 -0700 (PDT)
+	id S1752312AbaEVByR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 21:54:17 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:52128 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752203AbaEVByQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 21:54:16 -0400
+Received: by mail-pa0-f46.google.com with SMTP id kq14so1947365pab.5
+        for <git@vger.kernel.org>; Wed, 21 May 2014 18:54:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3lOJg/FWjkgsJuMAPNxlGzUHglZcKqw3IhBbVQYSmow=;
-        b=njfhB4dpJP8hspn2e7So6Eil3OTft9B9oIxG9Uv7DybmE5vCEENDug+iyXVMp8hB3z
-         C0OoE+FjlGczmPDkAOLD5EUgy4LdU0wmNO9vvidwGeEj4OWZr/aVhPIyey7bqme29+IE
-         MbONv0C7tYs5lpyjNGRO5xXchDIuqTBAV0rnwWW2VgCuPifKprp/lAyjneK68F1MPM95
-         hO19ueFE5cW+HvqRRVC3lzIxrbt8j6aHufiBYJI0JB3RseLgeAkFnpS7Tcbvd1o97Gxv
-         xVMF+TWPw5Iya+n4Lke2c4hE3z7GyPVfSk2BA4lJ0u/1HVPZkx4uiLQEjPyn3y+Rinvm
-         Ae3A==
-X-Received: by 10.68.105.4 with SMTP id gi4mr63734410pbb.73.1400723647497;
-        Wed, 21 May 2014 18:54:07 -0700 (PDT)
+        bh=nsLzBizfghq5GxAsDT8pyw51VMj6O4NBRJLDdns3pyM=;
+        b=RWgKmpPIRC7n/SciFe6TSLZHCWD6dVJKj+g26J+31bvDxH7mT6mMfgp3B6iuuhyb48
+         qKhUWt3wbZybHr7DMRvv/S4XBuchs5gfZDSCfKGAAABaJaQ4lB+KwRL0kN37DoujxIkT
+         /b/jP/6+htJC5OAOr2SSuQrNyr6+UH6nt1+5vvp5lC8dIM78l9AGB3MHTo6urpK38xBQ
+         tzr0zgp4zDSFBLd1DiHPM318OEsiwhCl5kHypK7+YnKAzQjmS+0valfVWhOLpctkMNBC
+         mGNNdw4bCr+5eXDbFq56uXJS0p4taUAdvbT41nq9kDqTQcPKwjFtuuyOh9geV/K6xwWa
+         nyAQ==
+X-Received: by 10.68.245.100 with SMTP id xn4mr62936351pbc.152.1400723656099;
+        Wed, 21 May 2014 18:54:16 -0700 (PDT)
 Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id gu11sm10201009pbd.38.2014.05.21.18.54.04
+        by mx.google.com with ESMTPSA id ec2sm10187335pbc.63.2014.05.21.18.54.13
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 21 May 2014 18:54:06 -0700 (PDT)
+        Wed, 21 May 2014 18:54:14 -0700 (PDT)
 X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Wed, 21 May 2014 18:54:03 -0700
+Received: by hudson (sSMTP sendmail emulation); Wed, 21 May 2014 18:54:11 -0700
 X-Mailer: git-send-email 2.0.0.rc3.19.gd74db96.dirty
 In-Reply-To: <1400723589-8975-1-git-send-email-jmmahler@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249871>
 
-From: Jeff King <peff@peff.net>
+Added option that allows a signature file to be used with format-patch
+so that signatures with newlines and other special characters can be
+easily included.
 
-When we print an email signature, we print the divider "--
-\n", then the signature string, then two newlines.
-Traditionally the signature is a one-liner (and the default
-is just the git version), so the extra newline makes sense.
+  $ git format-patch --signature-file ~/.signature -1
 
-But one could easily specify a longer, multi-line signature,
-like:
+The config variable format.signaturefile is also provided so that it
+can be added by default.
 
-  git format-patch --signature='
-  this is my long signature
+  $ git config format.signaturefile ~/.signature
 
-  it has multiple lines
-  ' ...
+  $ git format-patch -1
 
-We should notice that it already has its own trailing
-newline, and suppress one of ours.
-
-Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
 ---
- builtin/log.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ Documentation/config.txt           |  4 ++++
+ Documentation/git-format-patch.txt |  4 ++++
+ builtin/log.c                      | 16 +++++++++++++++
+ t/t4014-format-patch.sh            | 41 ++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 65 insertions(+)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1932e9b..140ed77 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1114,6 +1114,10 @@ format.signature::
+ 	Set this variable to the empty string ("") to suppress
+ 	signature generation.
+ 
++format.signaturefile::
++	Works just like format.signature except the contents of the
++	file specified by this variable will be used as the signature.
++
+ format.suffix::
+ 	The default for format-patch is to output files with the suffix
+ 	`.patch`. Use this variable to change that suffix (make sure to
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 5c0a4ab..c0fd470 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -14,6 +14,7 @@ SYNOPSIS
+ 		   [(--attach|--inline)[=<boundary>] | --no-attach]
+ 		   [-s | --signoff]
+ 		   [--signature=<signature> | --no-signature]
++		   [--signature-file=<file>]
+ 		   [-n | --numbered | -N | --no-numbered]
+ 		   [--start-number <n>] [--numbered-files]
+ 		   [--in-reply-to=Message-Id] [--suffix=.<sfx>]
+@@ -233,6 +234,9 @@ configuration options in linkgit:git-notes[1] to use this workflow).
+ 	signature option is omitted the signature defaults to the Git version
+ 	number.
+ 
++--signature-file=<file>::
++	Works just like --signature except the signature is read from a file.
++
+ --suffix=.<sfx>::
+ 	Instead of using `.patch` as the suffix for generated
+ 	filenames, use specified suffix.  A common alternative is
 diff --git a/builtin/log.c b/builtin/log.c
-index 39e8836..5acc048 100644
+index 5acc048..5e3cc29 100644
 --- a/builtin/log.c
 +++ b/builtin/log.c
-@@ -844,8 +844,13 @@ static void gen_message_id(struct rev_info *info, char *base)
+@@ -673,6 +673,7 @@ static void add_header(const char *value)
+ static int thread;
+ static int do_signoff;
+ static const char *signature = git_version_string;
++static const char *signature_file;
+ static int config_cover_letter;
  
- static void print_signature(void)
- {
--	if (signature && *signature)
--		printf("-- \n%s\n\n", signature);
-+	if (!signature || !*signature)
-+		return;
+ enum {
+@@ -742,6 +743,8 @@ static int git_format_config(const char *var, const char *value, void *cb)
+ 	}
+ 	if (!strcmp(var, "format.signature"))
+ 		return git_config_string(&signature, var, value);
++	if (!strcmp(var, "format.signaturefile"))
++		return git_config_pathname(&signature_file, var, value);
+ 	if (!strcmp(var, "format.coverletter")) {
+ 		if (value && !strcasecmp(value, "auto")) {
+ 			config_cover_letter = COVER_AUTO;
+@@ -1235,6 +1238,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			    PARSE_OPT_OPTARG, thread_callback },
+ 		OPT_STRING(0, "signature", &signature, N_("signature"),
+ 			    N_("add a signature")),
++		OPT_FILENAME(0, "signature-file", &signature_file,
++				N_("add a signature from a file")),
+ 		OPT__QUIET(&quiet, N_("don't print the patch filenames")),
+ 		OPT_END()
+ 	};
+@@ -1452,6 +1457,17 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 			cover_letter = (config_cover_letter == COVER_ON);
+ 	}
+ 
++	if (signature_file) {
++		struct strbuf buf = STRBUF_INIT;
 +
-+	printf("-- \n%s", signature);
-+	if (signature[strlen(signature)-1] != '\n')
-+		putchar('\n');
-+	putchar('\n');
- }
++		if (signature && signature != git_version_string)
++			die(_("cannot specify both signature and signature-file"));
++
++		if (strbuf_read_file(&buf, signature_file, 128) < 0)
++			die_errno(_("unable to read signature file '%s'"), signature_file);
++		signature = strbuf_detach(&buf, NULL);
++	}
++
+ 	if (in_reply_to || thread || cover_letter)
+ 		rev.ref_message_ids = xcalloc(1, sizeof(struct string_list));
+ 	if (in_reply_to) {
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index 9c80633..37d25c4 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -762,6 +762,47 @@ test_expect_success 'format-patch --signature="" suppresses signatures' '
+ 	! grep "^-- \$" output
+ '
  
- static void add_branch_description(struct strbuf *buf, const char *branch_name)
++test_expect_success 'prepare mail-signature input' '
++	cat >mail-signature <<-\EOF
++
++	Test User <test.email@kernel.org>
++	http://git.kernel.org/cgit/git/git.git
++
++	git.kernel.org/?p=git/git.git;a=summary
++
++	EOF
++'
++
++test_expect_success 'format-patch --signature-file=mail-signature' '
++	git format-patch --stdout --signature-file=mail-signature -1 >output &&
++	check_patch output &&
++	sed -e "1,/^-- \$/d" <output >actual &&
++	{
++		cat mail-signature && echo
++	} >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'format-patch with format.signaturefile config' '
++	test_config format.signaturefile mail-signature &&
++	git format-patch --stdout -1 >output &&
++	check_patch output &&
++	sed -e "1,/^-- \$/d" <output >actual &&
++	{
++		cat mail-signature && echo
++	} >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'format-patch --signature and --signature-file die' '
++	test_must_fail git format-patch --stdout --signature="foo" \
++		--signature-file=mail-signature -1 >output
++'
++
++test_expect_success 'format-patch --no-signature and --signature-file OK' '
++	git format-patch --stdout --no-signature --signature-file=mail-signature -1
++'
++
+ test_expect_success TTY 'format-patch --stdout paginates' '
+ 	rm -f pager_used &&
+ 	test_terminal env GIT_PAGER="wc >pager_used" git format-patch --stdout --all &&
 -- 
 Jeremiah Mahler
 jmmahler@gmail.com
