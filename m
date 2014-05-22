@@ -1,93 +1,106 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH 7/9] remote-curl: recognize text/plain with a charset parameter
-Date: Thu, 22 May 2014 00:27:38 -0700
-Message-ID: <21F11C1A-4C69-4633-9DC7-E9134D38856E@gmail.com>
-References: <20140521102524.GA30301@sigill.intra.peff.net> <20140521103301.GG30464@sigill.intra.peff.net> <90CE006F-EE74-40D2-8847-507E37021D84@gmail.com> <20140522060516.GB16587@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 22 09:27:46 2014
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: Re: [PATCHv2 10/19] git-submodule.sh: convert test -a/-o to && and ||
+Date: Thu, 22 May 2014 10:38:06 +0200
+Message-ID: <CA+EOSB=wqBUb_QB6XtK0v4Lsux1mG7wCvXP3XVeDe7o=ofsYFA@mail.gmail.com>
+References: <1400682255-17616-1-git-send-email-gitter.spiros@gmail.com>
+	<vpqha4is3yd.fsf@anie.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"j.sixt" <j.sixt@viscovery.net>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu May 22 10:38:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnNPl-000860-Jo
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 09:27:45 +0200
+	id 1WnOVy-0003A9-F3
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 10:38:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753868AbaEVH1l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 03:27:41 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:52125 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751940AbaEVH1l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 03:27:41 -0400
-Received: by mail-pd0-f176.google.com with SMTP id p10so2203294pdj.21
-        for <git@vger.kernel.org>; Thu, 22 May 2014 00:27:40 -0700 (PDT)
+	id S1752718AbaEVIiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 04:38:09 -0400
+Received: from mail-vc0-f177.google.com ([209.85.220.177]:64464 "EHLO
+	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751285AbaEVIiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 04:38:07 -0400
+Received: by mail-vc0-f177.google.com with SMTP id if11so630518vcb.36
+        for <git@vger.kernel.org>; Thu, 22 May 2014 01:38:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=clL4UoS+SiMdjIjWqpipcXMXy4W32e0Amo8LcU028Yw=;
-        b=YxZ0kwn8976bjQt5+WTowQv9J2VyUA6/+tuNAZm0G8g8f5SQkiM8J06g3Elgw8fDJB
-         ictS9um6r4Pysj7q1xJdzO0MsttEvs5lveI/PQ/TpEa3tbVkHrup1b58Z8H295m2WRka
-         BHNVreEM6AnkWyLs6gRNLBSitM0RB8qj7B1PUMC+5scfs7uTjQcLL6IjoZjbgnoRXLgB
-         lH2NxNMDDu12/TtGk7w83+4PoDd22FjkZHT7nKW6hsU1PyctfjDySiMWF2WJGxcdQzmC
-         +Zk28skROS2y8f+4V6Gdz9L8x+/Ta03yh8aXnCD2lkDEJvC0Oc6PqJf1ET6Vk1Apa4ul
-         v4aQ==
-X-Received: by 10.68.222.196 with SMTP id qo4mr64611281pbc.14.1400743660578;
-        Thu, 22 May 2014 00:27:40 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id bu1sm11506854pbb.54.2014.05.22.00.27.39
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 22 May 2014 00:27:40 -0700 (PDT)
-In-Reply-To: <20140522060516.GB16587@sigill.intra.peff.net>
-X-Mauler: Craptastic (2.936)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SdxWOwc6bTK+Ff9tcaJMwzHweFTQESPmtmZWYtrlMUU=;
+        b=KEKes7mpml+MH8jbFVo64zQzJDzrJYF32GcYg7B3T57zoOWVFsh8tBFZBe/3KXLmCa
+         IOCxYqeQd9hGtEn9RrIMzcT/L7HxvfwzdOVIwA5WOKP7gdTASK4eXfBSnfyAgILWaJj1
+         VtImf6dIC6k2t7/H6BWOvrHT+/Zf/sQE6XJsJJr+i/3Td1oXDpSo00mXslPe2cTbOt2D
+         5fsWAwN6a2vBLx4QIFFRB36oV/pfIKso7Dkk+/UXfW/JN+mVKQdA0J/fkAOeQI3i/iV/
+         HiIKupMxG1Owa19pTKBcqm2GmMpsePOF1+cozniEcXcQbXUXVucqibz49dgHb8DHI44a
+         1URQ==
+X-Received: by 10.52.183.228 with SMTP id ep4mr12197096vdc.30.1400747886449;
+ Thu, 22 May 2014 01:38:06 -0700 (PDT)
+Received: by 10.52.163.207 with HTTP; Thu, 22 May 2014 01:38:06 -0700 (PDT)
+In-Reply-To: <vpqha4is3yd.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249881>
 
-On May 21, 2014, at 23:05, Jeff King wrote:
+2014-05-22 8:49 GMT+02:00 Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>:
+> Elia Pinto <gitter.spiros@gmail.com> writes:
+>
+>> This is version 2 of the patch to git-submodule of the
+>> patch series "convert  test -a/-o to && and ||".
+>> It contains the fixes identified by Johannes and
+>> Matthieu.
+>
+> This version of the patch (not the whole series) is
+>
+> Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>
+> Some comments for next time:
+>
+> * I agree with Johannes that splitting the series with one patch per
+>   file is not the right way to split. As a reviewer, I want to
+>
+>   - check that -a trivially translates to &&
+>   - check that -o trivially translates to ||
+>   - check non-trivial cases
+>
+>   Interleaving these cases (especially the trivial and non-trivial
+>   cases) makes the review much harder. For this kind of series, the
+>   change is trivial, but the review is not (Johannes caught a || Vs &&
+>   inversion that I didn't find for example, which is quite serious), so
+>   the "optimize your patches for review" is even more important than
+>   usual.
+>
+> * Again, to avoid mixing trivial and non-trivial changes, ...
 
-> On Wed, May 21, 2014 at 05:07:38PM -0700, Kyle J. McKay wrote:
->
->>> +	p = skip_prefix(type->buf, "text/plain");
->>> +	if (!p || (*p && *p != ';'))
->>> +		return 0;
->>> +
->>> +	return 1;
->>> +}
->>> +
->>
->> I think that a strict reading of RFC 2616 allows "text/plain ;
->> charset=utf-8" as well as "text/plain;charset=utf-8" and "text/plain;
->> charset=utf-8".  So perhaps this if line instead:
->>
->> +	if (!p || (*p && *p != ';' && *p != ' ' && *p != '\t'))
->>
->> See RFC 2616 section 2.2 for the definition of linear white space  
->> (LWS) and
->> the end of section 2.1 for the "implied *LWS" rule that allows it.
->
-> You're right. There are a few exceptions in 3.7:
->
->  Linear white space (LWS) MUST NOT be used between the type and
->  subtype, nor between an attribute and its value.
->
-> but it does not include between the subtype and parameter. So the
-> "find_parameter" also needs to accept the collapsed whitespace, too, I
-> guess.
+First of all, thank you. I will take note of your valuable suggestions
+for the future.
 
-Yeah I think so too.  It's probably enough though just to just strip  
-all " " and "\t" characters at the same time the content type is  
-lowercased.  While that would cause invalid content types such as  
-"text / plain" to be recognized it would keep the rest of the code  
-simpler.  Since a producer of an invalid content type shouldn't really  
-be depending on any particular behavior by a receiver of an invalid  
-content type it's probably not an issue.
+>
+>> @@ -1059,13 +1059,17 @@ cmd_summary() {
+>>               while read mod_src mod_dst sha1_src sha1_dst status sm_path
+>>               do
+>>                       # Always show modules deleted or type-changed (blob<->module)
+>> -                     test $status = D -o $status = T && echo "$sm_path" && continue
+>> +                     case "$status" in
+>> +                     [DT])
+>> +                             printf '%s\n' "$sm_path" &&
+>> +                             continue
+>> +                     esac
+>
+> turning a echo into a printf is good, but would be better done
+> separately.
 
---Kyle
+I had thought, but the change was in the fix of Johannes, and it did
+not think was right to change this, especially that it was right
+anyway. But I understand very well the observation.
+
+Best Regards
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
