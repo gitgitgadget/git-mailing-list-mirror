@@ -1,90 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git reset for index restoration?
-Date: Thu, 22 May 2014 16:14:34 -0700
-Message-ID: <xmqqsio1l82t.fsf@gitster.dls.corp.google.com>
-References: <1400775763.1933.5.camel@stross>
-	<CABPp-BHtYnput7SiAbnqUjpDibTi5o_2MAXfSj17fCdKSC7Hjg@mail.gmail.com>
-	<1400782642.18134.8.camel@stross>
-	<20140522183930.GB1167@sigill.intra.peff.net>
-	<1400785669.18134.21.camel@stross>
-	<20140522190959.GA18785@sigill.intra.peff.net>
-	<20140522193030.GA22383@sigill.intra.peff.net>
-	<xmqqha4hmr9d.fsf@gitster.dls.corp.google.com>
-	<1400795586.18134.40.camel@stross>
-	<xmqqd2f5mq5h.fsf@gitster.dls.corp.google.com>
-	<1400796077.18134.41.camel@stross>
-	<xmqq61kxmphw.fsf@gitster.dls.corp.google.com>
-	<xmqqwqddla63.fsf@gitster.dls.corp.google.com>
-	<1400799746.18134.48.camel@stross>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Fri May 23 01:14:51 2014
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: [PATCH 2/2] strbuf: add strbuf_tolower function
+Date: Thu, 22 May 2014 16:17:59 -0700
+Message-ID: <4831E838-1373-42F6-B490-2D2943E319C9@gmail.com>
+References: <20140522094251.GA14994@sigill.intra.peff.net> <20140522094424.GB15255@sigill.intra.peff.net> <CAP8UFD0PkA_VokFpRkdaKE2UW1AtL6mCY2bOSxOCqX_C9wB=OQ@mail.gmail.com> <20140522134253.GA16408@sigill.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 23 01:18:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WncCI-0004TN-KD
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:14:50 +0200
+	id 1WncFU-000176-Pu
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:18:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753286AbaEVXOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 19:14:45 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65078 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753201AbaEVXOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 19:14:40 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7DA841AC83;
-	Thu, 22 May 2014 19:14:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Rtwh03oT0Jp0TNAPOmxsDJmKJq8=; b=ovhkEn
-	vIlaCZ7/+RP/oZ7lNMGrpAyAl99bFhxUh5Sut5XhdGPbXa1VwjlRBSAZxohH5rHE
-	WRmU3u0e1zbdZIxmkD3TlDgnbLV6nQrfHLlDvbJswW5UnNgRzhLVtdHutoGEQCpg
-	i+3WYEk97jgF1sVbkiiUsIbOWvJ4AQQA6DROQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aWPorFZcHCmqZzmeXCOlDm1ow99L7nRx
-	fRqE19ALeAA5Lbr1bsMCTkNI5Yd0+j9hDSddMRd/E41L3bUaUXYcp++L/7IzJgom
-	GvHgYwyyEPUBIz7scGZ9XmvjoepmmK3URwVcbIf82s3xIclOlJUSLcxjdPOzYDX5
-	Ssv0aHugnwQ=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 742341AC82;
-	Thu, 22 May 2014 19:14:39 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3B9551AC7F;
-	Thu, 22 May 2014 19:14:36 -0400 (EDT)
-In-Reply-To: <1400799746.18134.48.camel@stross> (David Turner's message of
-	"Thu, 22 May 2014 19:02:26 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D76382E2-E206-11E3-BBAC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752873AbaEVXSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 19:18:04 -0400
+Received: from mail-pb0-f41.google.com ([209.85.160.41]:64665 "EHLO
+	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751423AbaEVXSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 19:18:03 -0400
+Received: by mail-pb0-f41.google.com with SMTP id uo5so3209477pbc.0
+        for <git@vger.kernel.org>; Thu, 22 May 2014 16:18:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:in-reply-to:subject:references:message-id:content-type
+         :content-transfer-encoding:mime-version:date:cc;
+        bh=uHH0JIIRwueuJ+TMs8iQHkCKoGd4iNFa5bVM2qXX8ww=;
+        b=ld765XxkbK2Bl6/jQDBdjSQiiXJU88YTMypZEaLQLPUxJYONj5mkC9jSpYJnwvanYP
+         kOajMUgSgNvdflmueMLiABSIgsZuTjiaREEGqVwn3YL8gr7vtwLvHCLWCB23Bl4pfcUs
+         0aAmqnWP+lA61MI0cr2KrNCTyiVz0Co6Q3wxSY1JWNApJGALhPG4e5U1069kJ4RxXeV5
+         eMuCv0evv2cOVatqkJBRtRkiv2LyKsJI66IgRIXQhaQYjBqMOVDqI4e9agqVfSJfJ89b
+         rgx6VDTK09wGacottPR29D78k/WiDysIIyDw55RfrnhKlivoH5/Q19fKunyZf0hTEa+x
+         ZaIA==
+X-Received: by 10.68.231.229 with SMTP id tj5mr891906pbc.101.1400800682483;
+        Thu, 22 May 2014 16:18:02 -0700 (PDT)
+Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id vx10sm5127458pac.17.2014.05.22.16.18.00
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 22 May 2014 16:18:01 -0700 (PDT)
+In-Reply-To: <20140522134253.GA16408@sigill.intra.peff.net>
+X-Mauler: Craptastic (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249961>
 
-David Turner <dturner@twopensource.com> writes:
+On May 22, 2014, at 06:42, Jeff King wrote:
 
-> ... I still believe that the cache-tree behavior would be
-> suboptimal, ...
+> [re-adding list cc]
+>
+> On Thu, May 22, 2014 at 03:16:45PM +0200, Christian Couder wrote:
+>
+>>> +void strbuf_tolower(struct strbuf *sb)
+>>> +{
+>>> +       char *p;
+>>> +       for (p = sb->buf; *p; p++)
+>>> +               *p = tolower(*p);
+>>> +}
+>>
+>> Last time I tried a change like the above, I was told that strbufs  
+>> are
+>> buffers that can contain NUL bytes. So maybe it should be:
+>>
+>>       for (p = sb->buf; p < sb->buf + sb->len; p++)
+>>              *p = tolower(*p);
+>
+> Hah. I wrote it like that originally, and in review was asked to  
+> switch
+> it. I agree that it might be worth keeping strbuf functions 8bit- 
+> clean.
+> The original intent of the strbuf code was to make C strings easier to
+> use, but I think we sometimes use them as general buffers, too.
 
-I do not think anybody doubts that "suboptimal"-ness in this thread.
-As you saw the "incremental" thing from Peff and my responses to it,
-there may be more things we could be doing.  It just has not been at
-a ultra high priority, and if we can choose only one change from
-possibilities, losing the entire cache-tree upon switching branches,
-like in my two-way read-tree example, would be the thing that would
-give us the most benefit if we somehow change it.
 
-That however is unfortunately not a low-hanging fruit.  The two-way
-merge machinery we use for switching branches wants to populate the
-index one entry at a time, without having any point where you can
-say "OK the result in this subdirectory will exactly match this
-subtree" which would allow us to say "prime the cache tree for that
-subdirectory with this tree object".
+I didn't see this patch before I sent the other email, but this is the  
+relevant part:
+
+On May 22, 2014, at 15:52, Kyle J. McKay wrote:
+> The only reason I brought up the code difference in the first place  
+> was that the comment was "This makes config's lowercase() function  
+> public" which made me expect to see basically the equivalent of  
+> replacing a "static" with an "extern", but actually the function  
+> being made public was a different implementation than config's  
+> lowercase() function.  So it looks like the original PATCH 2/9  
+> version of the code is best, but perhaps the comment can be tweaked  
+> a bit to not convey the same impression I got.  Maybe something like  
+> "Replace config's lowercase() function with a public one".
+
+
+Or even just delete the "This makes config's lowercase() function  
+public" line after switching the implementation back.
+
+--Kyle
