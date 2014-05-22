@@ -1,137 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git reset for index restoration?
-Date: Thu, 22 May 2014 14:23:03 -0400
-Message-ID: <20140522182303.GA1167@sigill.intra.peff.net>
-References: <1400775763.1933.5.camel@stross>
- <20140522164634.GB30419@sigill.intra.peff.net>
- <1400782096.18134.1.camel@stross>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/9] strbuf: add strbuf_tolower function
+Date: Thu, 22 May 2014 11:36:37 -0700
+Message-ID: <xmqq38g1oe2y.fsf@gitster.dls.corp.google.com>
+References: <20140521102524.GA30301@sigill.intra.peff.net>
+	<20140521102742.GB30464@sigill.intra.peff.net>
+	<AD42BA87-3C73-4EB2-AF88-96C4F7E6FA0C@gmail.com>
+	<20140522055852.GA16587@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Thu May 22 20:23:15 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 22 20:37:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnXe3-0005fY-JO
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 20:23:11 +0200
+	id 1WnXrP-00078n-BD
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 20:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751061AbaEVSXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 14:23:07 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57551 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750835AbaEVSXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 14:23:06 -0400
-Received: (qmail 14014 invoked by uid 102); 22 May 2014 18:23:05 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 May 2014 13:23:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 May 2014 14:23:03 -0400
-Content-Disposition: inline
-In-Reply-To: <1400782096.18134.1.camel@stross>
+	id S1751523AbaEVSgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 14:36:50 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59175 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751430AbaEVSgs (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 14:36:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9947A19191;
+	Thu, 22 May 2014 14:36:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OtogDhzxE4tH5G8pE8BNvwDu4Eg=; b=OMXU51
+	ZRM2r/PsLov921aW+aYwnbDATG1T6E3ai0cKVCMMV+yrF2cb5qGXRE6XfNO/9+id
+	vg/BMYU/fC59RiaK1i3UdAGdIyFXG7GbMEzXkdKDJZoC4/ooXrNfDsPunlpP8Won
+	Fq3ku2oB1vAQ+DxIm4XOp3Aoc5BjhF4NwUb+Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C4lngSBu8BX+0VSFDpepDqY6PQBLEB+9
+	KT3KQT91puUzn0NlDuXTfucDNY8ZfVw6VzaAAbAdX75O3XNVq7juufCA3tv3kYqE
+	oYdCX8Cu7DXIID/OepCgsPCaXtVveySNaTbwsZHsJiJ/yIXAsYf8qzptTIebMs1I
+	HL6zDIUNSTI=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8DE7219190;
+	Thu, 22 May 2014 14:36:42 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 37E921918F;
+	Thu, 22 May 2014 14:36:39 -0400 (EDT)
+In-Reply-To: <20140522055852.GA16587@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 22 May 2014 01:58:53 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 031D0B96-E1E0-11E3-9698-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249930>
 
-On Thu, May 22, 2014 at 02:08:16PM -0400, David Turner wrote:
+Jeff King <peff@peff.net> writes:
 
-> On Thu, 2014-05-22 at 12:46 -0400, Jeff King wrote:
-> > On Thu, May 22, 2014 at 12:22:43PM -0400, David Turner wrote:
-> >
-> > > If I have a git repository with a clean working tree, and I delete the
-> > > index, then I can use git reset (with no arguments) to recreate it.
-> > > However, when I do recreate it, it doesn't come back the same.  I have
-> > > not analyzed this in detail, but the effect is that commands like git
-> > > status take much longer because they must read objects out of a pack
-> > > file.  In other words, the index seems to not realize that the index (or
-> > > at least most of it) represents the same state as HEAD.  If I do git
-> > > reset --hard, the index is restored to the original state (it's
-> > > byte-for-byte identical), and the pack file is no longer read.
-> >
-> > Are you sure it's reading a packfile?
+> On Wed, May 21, 2014 at 05:07:36PM -0700, Kyle J. McKay wrote:
 >
-> Well, it's calling inflate(), and strace says it is reading
-> e.g. .git/objects/pack/pack-....{idx,pack}.
+>> >+void strbuf_tolower(struct strbuf *sb)
+>> >+{
+>> >+	size_t i;
+>> >+	for (i = 0; i < sb->len; i++)
+>> >+		sb->buf[i] = tolower(sb->buf[i]);
+>> >+}
+>> >+
+>> 
+>> Wouldn't a direct transfer of the lowercase function be something more like:
+>> 
+>> 
+>> void strbuf_tolower(struct strbuf *sb)
+>> {
+>> 	char *p = sb->buf;
+>> 	for (; *p; p++)
+>> 		*p = tolower(*p);
+>> }
+>> 
+>> That seems to me to be a bit more efficient.  According to the comments in
+>> strbuf.c, "people can always assume buf is non NULL and ->buf is NUL
+>> terminated even for a freshly initialized strbuf."
 >
-> So, I would say so.
+> Yes, and that would be fine with me (I actually wrote strbuf_tolower for
+> my own use, and _then_ realized that we already had such a thing that
+> could be replaced).
 
-That seems odd that we would be spending extra time there. We do
-inflate() the trees in order to diff the index against HEAD, but we
-shouldn't need to inflate any blobs.
-
-Here it is for me (on linux.git):
-
-  [before, warm cache]
-  $ time perf record -q git status >/dev/null
-  real    0m0.192s
-  user    0m0.080s
-  sys     0m0.108s
-
-  $ perf report | grep -v '#' | head -5
-     7.46%      git  [kernel.kallsyms]   [k] __d_lookup_rcu
-     4.55%      git  libz.so.1.2.8       [.] inflate
-     3.53%      git  libc-2.18.so        [.] __memcmp_sse4_1
-     3.46%      git  [kernel.kallsyms]   [k] security_inode_getattr
-     3.29%      git  git                 [.] memihash
-
-  $ time git reset
-  real    0m0.080s
-  user    0m0.036s
-  sys     0m0.040s
-
-So status is pretty quick, and the time is going to lstat in the kernel,
-and some tree inflation. Reset is fast, because it has nothing much to
-do. Now let's kill off the index's stat cache:
-
-  $ rm .git/index
-  $ time perf record -q git reset
-  real    0m0.967s
-  user    0m0.780s
-  sys     0m0.180s
-
-That took a while. What was it doing?
-
-  $ perf report | grep -v '#' | head -5
-     3.23%      git  [kernel.kallsyms]   [k] copy_user_enhanced_fast_string
-     1.74%      git  libcrypto.so.1.0.0  [.] 0x000000000007e010            
-     1.60%      git  [kernel.kallsyms]   [k] __d_lookup_rcu                
-     1.51%      git  [kernel.kallsyms]   [k] page_fault                    
-     1.44%      git  libc-2.18.so        [.] __memcmp_sse4_1               
-
-Reading files and sha1. We hash the working-tree files here (reset
-doesn't technically need to refresh the index from the working tree to
-copy entries from HEAD into the index, but it does it so it can do fancy
-things like tell you about which files are now out-of-date).
-
-Now how does stat fare after this?
-
-  $ time perf record -q git status >/dev/null
-  real    0m0.189s
-  user    0m0.088s
-  sys     0m0.096s
-
-Looks about the same as before to me.
-
-Note that if you use "read-tree" instead of "reset", it _just_ loads the
-index, and doesn't touch the working tree. If you then run "git status",
-then _that_ command has to refresh the index, and it will pay the
-hashing cost. Like:
-
-  $ rm .git/index
-  $ time git read-tree HEAD
-  real    0m0.084s
-  user    0m0.064s
-  sys     0m0.016s
-  $ time git status >/dev/null
-  real    0m0.833s
-  user    0m0.712s
-  sys     0m0.112s
-
-All of this is behaving as I would expect. Can you show us a set of
-commands that deviate from this?
-
--Peff
+Do we forbid that sb->buf[x] for some x < sb->len to be NUL, and if
+there is such a byte we stop running tolower() on the remainder?
