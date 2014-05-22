@@ -1,93 +1,66 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH v8 0/2] format-patch --signature-file <file>
-Date: Thu, 22 May 2014 12:41:19 -0700
-Message-ID: <20140522194119.GA20201@hudson.localdomain>
-References: <1400723589-8975-1-git-send-email-jmmahler@gmail.com>
- <20140522142332.GA15095@hudson.localdomain>
- <xmqqy4xtmyeg.fsf@gitster.dls.corp.google.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v8 00/44] Use ref transactions for all ref updates
+Date: Thu, 22 May 2014 12:51:52 -0700
+Message-ID: <20140522195152.GW12314@google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 22 21:41:29 2014
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu May 22 21:52:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnYrp-0002Bt-Ae
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 21:41:29 +0200
+	id 1WnZ1z-0000E6-LR
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 21:52:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752599AbaEVTlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 15:41:25 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:43563 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752560AbaEVTlY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 15:41:24 -0400
-Received: by mail-pb0-f52.google.com with SMTP id rr13so2956316pbb.39
-        for <git@vger.kernel.org>; Thu, 22 May 2014 12:41:24 -0700 (PDT)
+	id S1752650AbaEVTv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 15:51:57 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:55376 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752642AbaEVTv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 15:51:56 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq2so2960154pbb.19
+        for <git@vger.kernel.org>; Thu, 22 May 2014 12:51:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=VDMCBV0wlKnEAZDDHB7RW5VTNNpzi40UBFGt5R9w89g=;
-        b=0yFSWWs263D1qtS6JXG3e0iT0WMpKmCnXcbJEwvY9YO3JwDJwkzN7yJvowh+RujEr0
-         wL9sTg/ZiVoTTEGOsF7Aq4w4raTI8xJ+yGJ4VZvgAl8v4c7yKUDC7OBUjfw2gSY0wsEW
-         EyLoQf8KpeOZoLsOqS4XpWC4Ow/UVuKvb/8BSQa+Vgya3ncuXOCfoAPmeFqFG8F3F2QC
-         ii0harVTnDdNsEMXflyYhT3hpUd7icmVV7h4HqwcQ7y0AOFYtuuo76tqmi3Wu96EvRqx
-         XH4HQ32OFcBcyH7a2ateISpw4+Gp/Jx9SHgdrvRjH0NlJcebYi88JncZ4ybcyuzOX4F0
-         5D6g==
-X-Received: by 10.68.203.132 with SMTP id kq4mr31972883pbc.12.1400787684129;
-        Thu, 22 May 2014 12:41:24 -0700 (PDT)
-Received: from hudson (o247-linksys-rtr.CSUChico.EDU. [132.241.18.53])
-        by mx.google.com with ESMTPSA id py7sm916247pbb.78.2014.05.22.12.41.21
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=64qjitsQ2nXVGS7ygHTDqv+NwL05JwcLYcrCI83+dPI=;
+        b=KuONjFaXGPTfJUWVErZlhPsFYO0025gQphtZCp+cOlPkGwFlgQdfNbH8t6SM/E6Ekl
+         LxfLYt3xp5eVVC6kL5xKllomvmq5CM0Qx+r3H2BiSmI9VD9o/D1+kl/SHbaHxKXkcI9K
+         75icDz2FR9N3fRuihcREw/bMVY0NnE9Bayf1r0Gt7RnInfHDmP3WJFgHJ0nyjduCEJ+c
+         am9WIQFt/a5NlOmgmFSUUiQrCWYqmqmRULtjqjy1zuadkhwkMFmIr4dnzTHXxpKlyqa+
+         K7yBw6SarMcOOhY6Zz+zK3S+QhSp9SnB1cU+75G7AtmytWoAyQ7gAK1n/VDZ9NsMWFpv
+         4LaA==
+X-Received: by 10.68.194.202 with SMTP id hy10mr70719054pbc.94.1400788315499;
+        Thu, 22 May 2014 12:51:55 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xz7sm3268921pac.3.2014.05.22.12.51.54
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 22 May 2014 12:41:22 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Thu, 22 May 2014 12:41:19 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 22 May 2014 12:51:54 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <xmqqy4xtmyeg.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+In-Reply-To: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249941>
 
-Junio,
+Ronnie Sahlberg wrote:
 
-On Thu, May 22, 2014 at 12:00:39PM -0700, Junio C Hamano wrote:
-> Jeremiah Mahler <jmmahler@gmail.com> writes:
-> 
-> > I just notice that my patch is in 'pu'.
-> > But it is version 7 instead of the improved version 8.
-> 
-> Yeah, I know.  In a distributed environment, multiple people work
-> independently and a sequence of event can go like this:
-> 
->  - I read v7, comment, and queue it only so that I won't forget;
->  - I attend to other topics;
->  - I start the day's integration cycle, merging topics to the
->    integration branches, maint, master, next and pu;
->  - You reroll v8 and post it;
->  - I may not notice v8, or I may notice v8 but think it is not
->    worth to discard the integration work so far only to replace
->    v7 with v8.
->  - The integration result is pushed out.
-> 
-> A reminder is very much appreciated, but on the other hand it is not
-> something unusual.  It happens all the time, and I usually am aware
-> of it ;-)
-> 
-> Thanks.
+> This version completes the work to convert all ref updates to use transactions.
 
-Thanks for explaining how this process works.
+Finally got through this.  It had thorny bits but generally goes in a
+very good direction.  Thanks for a pleasant read.
 
--- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+Feel free to send another iteration if you'd like review for the newer
+code.  I expect except for the part about renames that most of what's
+left is just nits so it should go faster.
+
+Thanks,
+Jonathan
