@@ -1,83 +1,122 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v8 41/44] refs.c: add a new flag for transaction delete
- for refs we know are packed only
-Date: Thu, 22 May 2014 16:53:51 -0700
-Message-ID: <20140522235351.GB12314@google.com>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
- <1400174999-26786-42-git-send-email-sahlberg@google.com>
- <20140522181722.GT12314@google.com>
- <CAL=YDWkUa2Ut=1iaMXgnjgte6g5jvXR49LBiEUNEkwv4Z-wO_w@mail.gmail.com>
- <CAL=YDW=hytDiz5qzAMyBgXUgza+AcDhk_y3m3kAUmOdBG=F=vA@mail.gmail.com>
- <20140522234440.GA12314@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] completion: add missing options for git-merge
+Date: Thu, 22 May 2014 16:59:11 -0700
+Message-ID: <xmqqiooxl60g.fsf@gitster.dls.corp.google.com>
+References: <CANu1nikzk-rGjzKv6R-OR6Et-fB-JYnt245+P6NY-RQiihzXyA@mail.gmail.com>
+	<e4a536d29a59d7dc89cc2f42fa8339506b4829f1.1400767118.git.john@keeping.me.uk>
+	<5cfeac0e9b7fb0ff4a2468f30476152fc93f4c16.1400767118.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Fri May 23 01:54:01 2014
+Cc: git@vger.kernel.org, Haralan Dobrev <hkdobrev@gmail.com>
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Fri May 23 01:59:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WncoA-0004A4-GF
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:53:58 +0200
+	id 1WnctN-0003qU-Io
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:59:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288AbaEVXxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 19:53:55 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:60442 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751243AbaEVXxy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 19:53:54 -0400
-Received: by mail-pb0-f42.google.com with SMTP id md12so3239409pbc.29
-        for <git@vger.kernel.org>; Thu, 22 May 2014 16:53:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=ZDbPz/H7AGPB17Iv4gac+hiOdd3BYqhCSTu8gzZnpxg=;
-        b=NB1G2oIuh8giuZm83necDG1DPAkj9B1XyDFojRsK6zhji3BIdGm0c5jkMjCpz3Y3+r
-         Acm5D28la6sZoOoNtLStnm/RB6MOeGsexNKOtpNCj5AAakSuGBuxWHyUWCv90bTaKuHJ
-         L98NepXWWwvfn426Tj3AEQ8UTvMnIYjvYAYKE3L3glEeLw81hN0L+8+0O+XdF4Dejegr
-         rcienB/iU7UjzOw8paG6CZC0ZtYKvVUaYPCcJBK9MFIgfvKIyQX+xfMB1ohHLo5WqYAe
-         5XnRHv/V6T0mYbO8ETHnnDiUp00AwIUdJ70f/u5ttKSolfShhfG048zZcA0odm9MCFxJ
-         oNBw==
-X-Received: by 10.68.241.68 with SMTP id wg4mr1300736pbc.66.1400802833764;
-        Thu, 22 May 2014 16:53:53 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id xc1sm5401850pab.39.2014.05.22.16.53.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 22 May 2014 16:53:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20140522234440.GA12314@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752714AbaEVX7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 19:59:18 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60393 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752696AbaEVX7R (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 19:59:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B34B01974F;
+	Thu, 22 May 2014 19:59:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7xxdUnqTV+q7M09O21uJYSCZu+s=; b=GdESGJ
+	5TgzytatrE5jlzteYxcs/kc6Qm0JpL0G6qIvi/WyFIplNCbixV6gP0zZ6C1soFjm
+	yRiIN9LmWYWWR7NmExaKTBt48tgeooytBfxDeLhKR1RQQJwEwhhXICIRNYuO92MT
+	ve817/v0sekebL7St8MyiK3rI0ztR2p0cHfuc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EquvV1eyDlrlTTWmnC0wqRTZezcZ4OU8
+	xrWzFWSRbHpgqP8JCmR+ZDB1SB1x40jpJCZsffspD9dMPJDWH9lw8TDyjfGllkyj
+	Ckd4Vryo90kYEPaijGfWTOnGUrT61dy6IZofdnbl+0XcyDshUjEu2AUlDtjytnwV
+	3KD3P/5H1SY=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A84341974E;
+	Thu, 22 May 2014 19:59:16 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6404019748;
+	Thu, 22 May 2014 19:59:13 -0400 (EDT)
+In-Reply-To: <5cfeac0e9b7fb0ff4a2468f30476152fc93f4c16.1400767118.git.john@keeping.me.uk>
+	(John Keeping's message of "Thu, 22 May 2014 14:58:38 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 131AA3AA-E20D-11E3-99E7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249967>
 
-Jonathan Nieder wrote:
-> Ronnie Sahlberg wrote:
+John Keeping <john@keeping.me.uk> writes:
 
->> I hate rename_ref :-)
->>
->> I have reworked the transaction code to special case the deletion of
->> the old ref for n/n -> n  and n -> n/n renames
->> so that we can carefully avoid n/n.lock files to exist or prevent the
->> directory <-> file transition for n during these renames.
-[...]
-> 	Unlink the corresponding loose refs so packed-refs
-> 		becomes authoritative for them.
-> 	Lock packed-refs.
-> 	Perform updates and removals in the packed-refs cache.
-> 	Commit packed-refs.
+> The options added to __git_merge_options are those that git-pull also
+> understands, since that variable is used by both commands.  Those added
+> directly in _git_merge() are specific to git-merge and are not
+> supported by git-pull.
 
-... or is the problem that the reflogs conflict?
+Interesting.
 
-How does rename_ref handle propagating the reflog from the old
-name to the new name, by the way?
+Technically, "are not passed through" would be more accurate than
+"are not supported", as there may be a very good reason not to call
+"git merge --frotz" from "git pull --frotz=nitfol".  In such a case,
+"git pull" would _support_ the "--frotz" option, but in a different
+way and possibly with semantics different from "git merge --frotz"
+(i.e. option with value vs boolean), and completion of the
+"--frotz=<value>" option may need to be supported for "git pull"
+separately without using $__git_merge_options.
 
-Thanks,
-Jonathan
+The patch makes us think if "--[no-]rerere-autoupdate" should be a
+pass-thru option.  You are unlikely to have seen the same conflict
+that will arise from a pull from another person for autoupdate to
+matter, but on the other hand, if you do have seen one and resolved
+it already, you may want the autoupdate to kick in, so accepting and
+passing it through may not be an unreasonable thing to do.
+
+As long as we declare that "git pull --abort" does not make any
+sense (which I think is a sane declaration), the distinction you
+made in [PATCH 1/2] will always be with us, whether we make
+"--rerere-autoupdate" pass-thru or not, so in that sense, both
+patches make sense to me.
+
+Thanks.
+
+>
+> Reported-by: Haralan Dobrev <hkdobrev@gmail.com>
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  contrib/completion/git-completion.bash | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index ff97c20..019026e 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1476,6 +1476,8 @@ _git_log ()
+>  __git_merge_options="
+>  	--no-commit --no-stat --log --no-log --squash --strategy
+>  	--commit --stat --no-squash --ff --no-ff --ff-only --edit --no-edit
+> +	--verify-signatures --no-verify-signatures --gpg-sign
+> +	--quiet --verbose --progress --no-progress
+>  "
+>  
+>  _git_merge ()
+> @@ -1484,7 +1486,8 @@ _git_merge ()
+>  
+>  	case "$cur" in
+>  	--*)
+> -		__gitcomp "$__git_merge_options"
+> +		__gitcomp "$__git_merge_options
+> +			--rerere-autoupdate --no-rerere-autoupdate --abort"
+>  		return
+>  	esac
+>  	__gitcomp_nl "$(__git_refs)"
