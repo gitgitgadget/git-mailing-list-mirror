@@ -1,124 +1,113 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] strbuf: add strbuf_tolower function
-Date: Thu, 22 May 2014 05:44:24 -0400
-Message-ID: <20140522094424.GB15255@sigill.intra.peff.net>
-References: <20140522094251.GA14994@sigill.intra.peff.net>
+Subject: Re: [RFC/PATCH v4 3/3] add command performance tracing to
+ debug scripted commands
+Date: Thu, 22 May 2014 05:59:20 -0400
+Message-ID: <20140522095920.GA15461@sigill.intra.peff.net>
+References: <537BA806.50600@gmail.com>
+ <537BA8DC.9070104@gmail.com>
+ <20140521165508.GC2040@sigill.intra.peff.net>
+ <537D4790.6030106@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 22 11:44:36 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBDO2DJFKTEFBB7EU66NQKGQEEB33OMQ@googlegroups.com Thu May 22 11:59:26 2014
+Return-path: <msysgit+bncBDO2DJFKTEFBB7EU66NQKGQEEB33OMQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yh0-f57.google.com ([209.85.213.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnPY8-00009e-D8
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 11:44:32 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754198AbaEVJo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 05:44:29 -0400
-Received: from cloud.peff.net ([50.56.180.127]:57271 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753720AbaEVJo2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 05:44:28 -0400
-Received: (qmail 13142 invoked by uid 102); 22 May 2014 09:44:28 -0000
+	(envelope-from <msysgit+bncBDO2DJFKTEFBB7EU66NQKGQEEB33OMQ@googlegroups.com>)
+	id 1WnPmY-0006Iw-1m
+	for gcvm-msysgit@m.gmane.org; Thu, 22 May 2014 11:59:26 +0200
+Received: by mail-yh0-f57.google.com with SMTP id c41sf817475yho.22
+        for <gcvm-msysgit@m.gmane.org>; Thu, 22 May 2014 02:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition;
+        bh=KDRNFIdKFp+Yh4puR6ZfigX+N8spUnzoqFAgVQLsR38=;
+        b=ZIf1+EXljbY/SVSmeQBn3MCL8a+drpPA5HcLGnrdW1AaGqsnPcEmkX4oIsge/TCr81
+         vHXRb+P6+hiBUS/v+XmUvQ9ys/9OVFo6jske1IwRojTP+VeGnubxiruEZPxc1929l2P3
+         k3Hjpg8CXcg3vv6IH0ygobCDZisn6Ee03y+gLhocvlkJkOPUPcUTNpKRNu6zxMAKyRUI
+         N5FceI1Ru7uDMCRrAYEFjPtbEfCw4L3osbko8Wy41qJSIIiEJUKohmdBB8PC93Yfhyks
+         FXzQz4JTd1qAZlS/xDe2y3WYcC+a/p4WZWBJ+2pko2idKDkCGFotNXJqeOlX1tipOskG
+         1VTw==
+X-Received: by 10.50.8.1 with SMTP id n1mr446431iga.5.1400752765107;
+        Thu, 22 May 2014 02:59:25 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.122.98 with SMTP id lr2ls3557330igb.7.canary; Thu, 22 May
+ 2014 02:59:24 -0700 (PDT)
+X-Received: by 10.68.253.66 with SMTP id zy2mr25494928pbc.1.1400752764317;
+        Thu, 22 May 2014 02:59:24 -0700 (PDT)
+Received: from peff.net (cloud.peff.net. [50.56.180.127])
+        by gmr-mx.google.com with SMTP id b5si440398igl.0.2014.05.22.02.59.23
+        for <msysgit@googlegroups.com>;
+        Thu, 22 May 2014 02:59:24 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
+Received: (qmail 14159 invoked by uid 102); 22 May 2014 09:59:24 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 May 2014 04:44:27 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 May 2014 05:44:24 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 May 2014 04:59:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 May 2014 05:59:20 -0400
+In-Reply-To: <537D4790.6030106@gmail.com>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
+ sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-In-Reply-To: <20140522094251.GA14994@sigill.intra.peff.net>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249897>
 
-This makes config's lowercase() function public.
+On Thu, May 22, 2014 at 02:40:48AM +0200, Karsten Blees wrote:
 
-Note that we could continue to offer a pure-string
-lowercase, but there would be no callers (in most
-pure-string cases, we actually duplicate and lowercase the
-duplicate).
+> E.g. if I'm interested in a particular code section, I throw in 2
+> lines of code (before and after the code section). This gives very
+> accurate results, without significantly affecting overall performance.
+> I can then push the changes to my Linux/Windows box and get comparable
+> results there. No need to disable optimization. No worries that the
+> profiling tool isn't available on the other platform. No analyzing
+> megabytes of mostly irrelevant profiling data.
+> 
+> Does that make sense?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- Documentation/technical/api-strbuf.txt | 4 ++++
- config.c                               | 8 +-------
- strbuf.c                               | 7 +++++++
- strbuf.h                               | 1 +
- 4 files changed, 13 insertions(+), 7 deletions(-)
+Ah, I see. I misunderstood from your example above.
 
-diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-index 3350d97..8480f89 100644
---- a/Documentation/technical/api-strbuf.txt
-+++ b/Documentation/technical/api-strbuf.txt
-@@ -125,6 +125,10 @@ Functions
- 
- 	Strip whitespace from the end of a string.
- 
-+`strbuf_tolower`::
-+
-+	Lowercase each character in the buffer using `tolower`.
-+
- `strbuf_cmp`::
- 
- 	Compare two buffers. Returns an integer less than, equal to, or greater
-diff --git a/config.c b/config.c
-index a30cb5c..03ce5c6 100644
---- a/config.c
-+++ b/config.c
-@@ -147,12 +147,6 @@ int git_config_include(const char *var, const char *value, void *data)
- 	return ret;
- }
- 
--static void lowercase(char *p)
--{
--	for (; *p; p++)
--		*p = tolower(*p);
--}
--
- void git_config_push_parameter(const char *text)
- {
- 	struct strbuf env = STRBUF_INIT;
-@@ -180,7 +174,7 @@ int git_config_parse_parameter(const char *text,
- 		strbuf_list_free(pair);
- 		return error("bogus config parameter: %s", text);
- 	}
--	lowercase(pair[0]->buf);
-+	strbuf_tolower(pair[0]);
- 	if (fn(pair[0]->buf, pair[1] ? pair[1]->buf : NULL, data) < 0) {
- 		strbuf_list_free(pair);
- 		return -1;
-diff --git a/strbuf.c b/strbuf.c
-index 854c725..3da4f3e 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -106,6 +106,13 @@ void strbuf_ltrim(struct strbuf *sb)
- 	sb->buf[sb->len] = '\0';
- }
- 
-+void strbuf_tolower(struct strbuf *sb)
-+{
-+	char *p;
-+	for (p = sb->buf; *p; p++)
-+		*p = tolower(*p);
-+}
-+
- struct strbuf **strbuf_split_buf(const char *str, size_t slen,
- 				 int terminator, int max)
- {
-diff --git a/strbuf.h b/strbuf.h
-index 4de7531..25328b9 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -45,6 +45,7 @@ static inline void strbuf_setlen(struct strbuf *sb, size_t len)
- extern void strbuf_trim(struct strbuf *);
- extern void strbuf_rtrim(struct strbuf *);
- extern void strbuf_ltrim(struct strbuf *);
-+extern void strbuf_tolower(struct strbuf *sb);
- extern int strbuf_cmp(const struct strbuf *, const struct strbuf *);
- 
- /*
+I do agree that automatically stamping with __FILE__ and __LINE__ is
+very helpful there. Could we maybe restrict that use of the variadic
+macros to a few known-good compilers (maybe #ifdef __GNUC__, which also
+hits clang, and something to catch MSVC)? On other systems it would
+become a compile-time noop, and they could live without the feature.
+
+-Peff
+
 -- 
-2.0.0.rc1.436.g03cb729
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
