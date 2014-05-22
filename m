@@ -1,113 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH v4 3/3] add command performance tracing to
- debug scripted commands
-Date: Thu, 22 May 2014 05:59:20 -0400
-Message-ID: <20140522095920.GA15461@sigill.intra.peff.net>
-References: <537BA806.50600@gmail.com>
- <537BA8DC.9070104@gmail.com>
- <20140521165508.GC2040@sigill.intra.peff.net>
- <537D4790.6030106@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH 7/9] remote-curl: recognize text/plain with a charset
+ parameter
+Date: Thu, 22 May 2014 11:19:57 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1405221118150.10958@ds9.cixit.se>
+References: <20140521102524.GA30301@sigill.intra.peff.net> <20140521103301.GG30464@sigill.intra.peff.net> <90CE006F-EE74-40D2-8847-507E37021D84@gmail.com> <alpine.DEB.2.00.1405220809370.10958@ds9.cixit.se> <20140522090557.GB29669@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBDO2DJFKTEFBB7EU66NQKGQEEB33OMQ@googlegroups.com Thu May 22 11:59:26 2014
-Return-path: <msysgit+bncBDO2DJFKTEFBB7EU66NQKGQEEB33OMQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yh0-f57.google.com ([209.85.213.57])
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu May 22 12:20:20 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDO2DJFKTEFBB7EU66NQKGQEEB33OMQ@googlegroups.com>)
-	id 1WnPmY-0006Iw-1m
-	for gcvm-msysgit@m.gmane.org; Thu, 22 May 2014 11:59:26 +0200
-Received: by mail-yh0-f57.google.com with SMTP id c41sf817475yho.22
-        for <gcvm-msysgit@m.gmane.org>; Thu, 22 May 2014 02:59:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=KDRNFIdKFp+Yh4puR6ZfigX+N8spUnzoqFAgVQLsR38=;
-        b=ZIf1+EXljbY/SVSmeQBn3MCL8a+drpPA5HcLGnrdW1AaGqsnPcEmkX4oIsge/TCr81
-         vHXRb+P6+hiBUS/v+XmUvQ9ys/9OVFo6jske1IwRojTP+VeGnubxiruEZPxc1929l2P3
-         k3Hjpg8CXcg3vv6IH0ygobCDZisn6Ee03y+gLhocvlkJkOPUPcUTNpKRNu6zxMAKyRUI
-         N5FceI1Ru7uDMCRrAYEFjPtbEfCw4L3osbko8Wy41qJSIIiEJUKohmdBB8PC93Yfhyks
-         FXzQz4JTd1qAZlS/xDe2y3WYcC+a/p4WZWBJ+2pko2idKDkCGFotNXJqeOlX1tipOskG
-         1VTw==
-X-Received: by 10.50.8.1 with SMTP id n1mr446431iga.5.1400752765107;
-        Thu, 22 May 2014 02:59:25 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.122.98 with SMTP id lr2ls3557330igb.7.canary; Thu, 22 May
- 2014 02:59:24 -0700 (PDT)
-X-Received: by 10.68.253.66 with SMTP id zy2mr25494928pbc.1.1400752764317;
-        Thu, 22 May 2014 02:59:24 -0700 (PDT)
-Received: from peff.net (cloud.peff.net. [50.56.180.127])
-        by gmr-mx.google.com with SMTP id b5si440398igl.0.2014.05.22.02.59.23
-        for <msysgit@googlegroups.com>;
-        Thu, 22 May 2014 02:59:24 -0700 (PDT)
-Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
-Received: (qmail 14159 invoked by uid 102); 22 May 2014 09:59:24 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 22 May 2014 04:59:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 May 2014 05:59:20 -0400
-In-Reply-To: <537D4790.6030106@gmail.com>
-X-Original-Sender: peff@peff.net
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
- sender) smtp.mail=peff@peff.net
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249897>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WnQ6k-0004Sv-RL
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 12:20:19 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752509AbaEVKUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 06:20:12 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:56842 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752056AbaEVKUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 06:20:11 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s4MAJwA1019813
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 22 May 2014 12:19:58 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s4MAJvCq019810;
+	Thu, 22 May 2014 12:19:57 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <20140522090557.GB29669@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 22 May 2014 12:19:58 +0200 (CEST)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249898>
 
-On Thu, May 22, 2014 at 02:40:48AM +0200, Karsten Blees wrote:
+Jeff King:
 
-> E.g. if I'm interested in a particular code section, I throw in 2
-> lines of code (before and after the code section). This gives very
-> accurate results, without significantly affecting overall performance.
-> I can then push the changes to my Linux/Windows box and get comparable
-> results there. No need to disable optimization. No worries that the
-> profiling tool isn't available on the other platform. No analyzing
-> megabytes of mostly irrelevant profiling data.
-> 
-> Does that make sense?
+> I was really hoping to avoid getting into all of the real-world
+> messiness that a real http client needs to deal with (as opposed to just
+> following the standards).
 
-Ah, I see. I misunderstood from your example above.
-
-I do agree that automatically stamping with __FILE__ and __LINE__ is
-very helpful there. Could we maybe restrict that use of the variadic
-macros to a few known-good compilers (maybe #ifdef __GNUC__, which also
-hits clang, and something to catch MSVC)? On other systems it would
-become a compile-time noop, and they could live without the feature.
-
--Peff
+Yeah, I agree, you're probably fine without all this detail in over 
+99% of the cases where this code would ever be exposed. I'm a bit 
+damaged after 10+ years as a web browser developer, responsible for 
+exactly this kind of stuff... :-)
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+\\// Peter - http://www.softwolves.pp.se/
