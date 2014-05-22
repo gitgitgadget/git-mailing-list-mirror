@@ -1,100 +1,76 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH 2/2] strbuf: add strbuf_tolower function
-Date: Thu, 22 May 2014 16:17:59 -0700
-Message-ID: <4831E838-1373-42F6-B490-2D2943E319C9@gmail.com>
-References: <20140522094251.GA14994@sigill.intra.peff.net> <20140522094424.GB15255@sigill.intra.peff.net> <CAP8UFD0PkA_VokFpRkdaKE2UW1AtL6mCY2bOSxOCqX_C9wB=OQ@mail.gmail.com> <20140522134253.GA16408@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 23 01:18:10 2014
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: git reset for index restoration?
+Date: Fri, 23 May 2014 06:33:47 +0700
+Message-ID: <CACsJy8Bh+igRNsV0nCQ84EvvOh_ye3pqoTi3g_5ix_1LgX-EvQ@mail.gmail.com>
+References: <1400775763.1933.5.camel@stross> <CABPp-BHtYnput7SiAbnqUjpDibTi5o_2MAXfSj17fCdKSC7Hjg@mail.gmail.com>
+ <1400782642.18134.8.camel@stross> <20140522183930.GB1167@sigill.intra.peff.net>
+ <1400785669.18134.21.camel@stross> <20140522190959.GA18785@sigill.intra.peff.net>
+ <20140522193030.GA22383@sigill.intra.peff.net> <xmqqha4hmr9d.fsf@gitster.dls.corp.google.com>
+ <1400795586.18134.40.camel@stross> <xmqqd2f5mq5h.fsf@gitster.dls.corp.google.com>
+ <1400796077.18134.41.camel@stross> <xmqq61kxmphw.fsf@gitster.dls.corp.google.com>
+ <xmqq1tvlmp8w.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: David Turner <dturner@twopensource.com>, Jeff King <peff@peff.net>,
+	Elijah Newren <newren@gmail.com>,
+	git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 23 01:34:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WncFU-000176-Pu
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:18:09 +0200
+	id 1WncVC-0000WP-6w
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:34:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752873AbaEVXSE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 19:18:04 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:64665 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751423AbaEVXSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 19:18:03 -0400
-Received: by mail-pb0-f41.google.com with SMTP id uo5so3209477pbc.0
-        for <git@vger.kernel.org>; Thu, 22 May 2014 16:18:02 -0700 (PDT)
+	id S1752626AbaEVXeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 19:34:18 -0400
+Received: from mail-qg0-f44.google.com ([209.85.192.44]:34768 "EHLO
+	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752177AbaEVXeS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 19:34:18 -0400
+Received: by mail-qg0-f44.google.com with SMTP id i50so7026600qgf.31
+        for <git@vger.kernel.org>; Thu, 22 May 2014 16:34:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=uHH0JIIRwueuJ+TMs8iQHkCKoGd4iNFa5bVM2qXX8ww=;
-        b=ld765XxkbK2Bl6/jQDBdjSQiiXJU88YTMypZEaLQLPUxJYONj5mkC9jSpYJnwvanYP
-         kOajMUgSgNvdflmueMLiABSIgsZuTjiaREEGqVwn3YL8gr7vtwLvHCLWCB23Bl4pfcUs
-         0aAmqnWP+lA61MI0cr2KrNCTyiVz0Co6Q3wxSY1JWNApJGALhPG4e5U1069kJ4RxXeV5
-         eMuCv0evv2cOVatqkJBRtRkiv2LyKsJI66IgRIXQhaQYjBqMOVDqI4e9agqVfSJfJ89b
-         rgx6VDTK09wGacottPR29D78k/WiDysIIyDw55RfrnhKlivoH5/Q19fKunyZf0hTEa+x
-         ZaIA==
-X-Received: by 10.68.231.229 with SMTP id tj5mr891906pbc.101.1400800682483;
-        Thu, 22 May 2014 16:18:02 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id vx10sm5127458pac.17.2014.05.22.16.18.00
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 22 May 2014 16:18:01 -0700 (PDT)
-In-Reply-To: <20140522134253.GA16408@sigill.intra.peff.net>
-X-Mauler: Craptastic (2.936)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=A3gnE5svAbiwRUemho29l8mR0T0Cr+sFtxF6JAa40a4=;
+        b=VRUIhRYIR1qPp3RwxkUK7YiX2iV+iaLdcZAqVMkeK4KFV0FX/5drsqAwFi3CD0YQ2G
+         bpG+WmDHEQkT2+qio7Iz3/3xPaE5SUdaI7Xs/l6Zb7NesfbCyIwjojwN+S/YlzZlyY+Z
+         WhLf9N0QOWwJVU+0NONbxvp+MzJZ1whN3sq4B0ogNRosvZRn4MIdArFty/IsB6VK2EWC
+         KBp0Zaz+uc8MMOZdvq+xgiIFn0g7m96kfEQD05F9FqyxLpxCNlrBbagLazLTTBm8iLKd
+         WxAV1Zr881nG7gmtx/IVYtOIm5y+cBOTTsXW8lpEeNYCZ3klGbF4BzbTfDJPrECCdaNi
+         CVng==
+X-Received: by 10.224.138.3 with SMTP id y3mr1417548qat.78.1400801657367; Thu,
+ 22 May 2014 16:34:17 -0700 (PDT)
+Received: by 10.96.138.9 with HTTP; Thu, 22 May 2014 16:33:47 -0700 (PDT)
+In-Reply-To: <xmqq1tvlmp8w.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249962>
 
-On May 22, 2014, at 06:42, Jeff King wrote:
+On Fri, May 23, 2014 at 5:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> ... and the "incrementally repair" Peff talks about would be to
+> cover more cases where we may know (either because we have already
+> computed it to write out a subtree, or we have just read from a
+> known tree to populate a part of the index and we know the paths in
+> the index that correspond to that subtree are exactly the same ones
+> as found in the tree we read from) parts of the cache-tree can be
+> updated with tree object names for subtrees, but we don't do
+> anything right now.
 
-> [re-adding list cc]
->
-> On Thu, May 22, 2014 at 03:16:45PM +0200, Christian Couder wrote:
->
->>> +void strbuf_tolower(struct strbuf *sb)
->>> +{
->>> +       char *p;
->>> +       for (p = sb->buf; *p; p++)
->>> +               *p = tolower(*p);
->>> +}
->>
->> Last time I tried a change like the above, I was told that strbufs  
->> are
->> buffers that can contain NUL bytes. So maybe it should be:
->>
->>       for (p = sb->buf; p < sb->buf + sb->len; p++)
->>              *p = tolower(*p);
->
-> Hah. I wrote it like that originally, and in review was asked to  
-> switch
-> it. I agree that it might be worth keeping strbuf functions 8bit- 
-> clean.
-> The original intent of the strbuf code was to make C strings easier to
-> use, but I think we sometimes use them as general buffers, too.
-
-
-I didn't see this patch before I sent the other email, but this is the  
-relevant part:
-
-On May 22, 2014, at 15:52, Kyle J. McKay wrote:
-> The only reason I brought up the code difference in the first place  
-> was that the comment was "This makes config's lowercase() function  
-> public" which made me expect to see basically the equivalent of  
-> replacing a "static" with an "extern", but actually the function  
-> being made public was a different implementation than config's  
-> lowercase() function.  So it looks like the original PATCH 2/9  
-> version of the code is best, but perhaps the comment can be tweaked  
-> a bit to not convey the same impression I got.  Maybe something like  
-> "Replace config's lowercase() function with a public one".
-
-
-Or even just delete the "This makes config's lowercase() function  
-public" line after switching the implementation back.
-
---Kyle
+I wanted to do this but it's hard. For "diff --cached" (which should
+be where we find out and repair cache-tree), we flatten the trees in
+traverse_trees() and let unpack-trees figure out the differences
+against the index. The's no direct connection between a change and a
+tree. Maybe I missed something. David if you are interested in "git
+status" performance, this repairing thing could be important when the
+worktree is large because the diff cost increases accordingly if
+cache-tree is not fully populated. Empty cache-tree could cost us
+nearly the same time we save with avoiding opendir/readdir..
+-- 
+Duy
