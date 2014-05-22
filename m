@@ -1,94 +1,165 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: git reset for index restoration?
-Date: Thu, 22 May 2014 19:37:41 -0400
-Organization: Twitter
-Message-ID: <1400801861.18134.49.camel@stross>
-References: <1400775763.1933.5.camel@stross>
-	 <CABPp-BHtYnput7SiAbnqUjpDibTi5o_2MAXfSj17fCdKSC7Hjg@mail.gmail.com>
-	 <1400782642.18134.8.camel@stross>
-	 <20140522183930.GB1167@sigill.intra.peff.net>
-	 <1400785669.18134.21.camel@stross>
-	 <20140522190959.GA18785@sigill.intra.peff.net>
-	 <20140522193030.GA22383@sigill.intra.peff.net>
-	 <xmqqha4hmr9d.fsf@gitster.dls.corp.google.com>
-	 <1400795586.18134.40.camel@stross>
-	 <xmqqd2f5mq5h.fsf@gitster.dls.corp.google.com>
-	 <1400796077.18134.41.camel@stross>
-	 <xmqq61kxmphw.fsf@gitster.dls.corp.google.com>
-	 <xmqq1tvlmp8w.fsf@gitster.dls.corp.google.com>
-	 <CACsJy8Bh+igRNsV0nCQ84EvvOh_ye3pqoTi3g_5ix_1LgX-EvQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Get rid of the non portable shell export VAR=VALUE costruct
+Date: Thu, 22 May 2014 16:42:49 -0700
+Message-ID: <xmqqmwe9l6rq.fsf@gitster.dls.corp.google.com>
+References: <1400762896-24324-1-git-send-email-gitter.spiros@gmail.com>
+	<537DF7F2.8000401@web.de>
+	<CA+EOSBkmZRd7FiTNUfDPrUX4NivHR7HUL-+UqDzcpE+X7BQcOA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	git mailing list <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 23 01:37:52 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>, dak@gnu.org,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 23 01:42:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WncYW-0005xJ-Df
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:37:48 +0200
+	id 1WncdX-0005VX-3Z
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:42:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752900AbaEVXho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 19:37:44 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:40671 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899AbaEVXhn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 19:37:43 -0400
-Received: by mail-qg0-f48.google.com with SMTP id i50so6901248qgf.7
-        for <git@vger.kernel.org>; Thu, 22 May 2014 16:37:43 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=iqcLeGo5J7BMJRG3L0EbMkwdWTb3vK00EwxgEwVuc+A=;
-        b=geEHpRk3FlYO/mdmVNPj5an9X1neJLsHIr6bUIf+DOJ3AGMJ7hDuHBj6wMExiHQxRz
-         MtO9OXfMJeRl2P4xoVRMtZ5DbviApg8nCH16/qwBKvtvQrjunx+oyuStqmTcO46Ya5aI
-         H0I4DAgCd2pEWjijKSxGIgWTgprohJWa0yG8jdN//RE5fWRgbrfytmqRmg78UF9ka0G6
-         /O3quZTHJfhL/Rf9BX4RuQVu/LDbvYtTbqY6NuRVpRbOLEV+rkus+Rg7Z2tP3PEhshLW
-         nH3xciQ8P/gSOTw0CdKBswU38jDIPtvmbKrUJAzMj1soACU1YGVqaplifH6P9h2nP2IC
-         Wmwg==
-X-Gm-Message-State: ALoCoQl6wWrT14TQiFfAqnPavEx0rzhdw4cFY5FmRm5KzWfq/s7dTnH0qsRNFZ1/ws1rBXoO/4cN
-X-Received: by 10.229.125.130 with SMTP id y2mr1534673qcr.22.1400801863179;
-        Thu, 22 May 2014 16:37:43 -0700 (PDT)
-Received: from [172.17.3.46] ([38.104.173.198])
-        by mx.google.com with ESMTPSA id 6sm2003555qam.44.2014.05.22.16.37.41
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 22 May 2014 16:37:42 -0700 (PDT)
-In-Reply-To: <CACsJy8Bh+igRNsV0nCQ84EvvOh_ye3pqoTi3g_5ix_1LgX-EvQ@mail.gmail.com>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+	id S1752649AbaEVXmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 19:42:55 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54623 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751546AbaEVXmy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 19:42:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 53BFC19343;
+	Thu, 22 May 2014 19:42:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=y9F/CHtMJxVBIkACEmQon5CQm9A=; b=FHeXL7
+	HfOgroA8TXR8g4Ia1pli2MVYnoBE7HMnw3Y2RlBqnGDGFxn3T7lLSieNJ3zeaKGh
+	OiE1OzkELFaVDgAjLWNi2fAd2cZ+bZueHXx6P96d9/eU6WuW/q5h3SoRXKbNyQc8
+	CFsIlNLnuwbUpxwfrMyo8Y8vnEbfjSSgvn44w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MGOo8L/5nL4ty7bC8ruj4sL7hoZBj/aU
+	kPYLrSL2AD5AOp9/TnGaQh1sdlFLcWf8YhhSnURo/1wSPLilH6iFqvI6YSoaRxSb
+	xFVxD9xCv/+3se9IGKhiftE87HOAThzBc6Ou0iXuj202L5hQXHWSCfDy29E6fXw6
+	bXq6E/RKfbc=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4998519340;
+	Thu, 22 May 2014 19:42:54 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 135B21932A;
+	Thu, 22 May 2014 19:42:51 -0400 (EDT)
+In-Reply-To: <CA+EOSBkmZRd7FiTNUfDPrUX4NivHR7HUL-+UqDzcpE+X7BQcOA@mail.gmail.com>
+	(Elia Pinto's message of "Thu, 22 May 2014 15:57:40 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C996EBBE-E20A-11E3-8F93-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249964>
 
-On Fri, 2014-05-23 at 06:33 +0700, Duy Nguyen wrote:
-> On Fri, May 23, 2014 at 5:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> > ... and the "incrementally repair" Peff talks about would be to
-> > cover more cases where we may know (either because we have already
-> > computed it to write out a subtree, or we have just read from a
-> > known tree to populate a part of the index and we know the paths in
-> > the index that correspond to that subtree are exactly the same ones
-> > as found in the tree we read from) parts of the cache-tree can be
-> > updated with tree object names for subtrees, but we don't do
-> > anything right now.
-> 
-> I wanted to do this but it's hard. For "diff --cached" (which should
-> be where we find out and repair cache-tree), we flatten the trees in
-> traverse_trees() and let unpack-trees figure out the differences
-> against the index. The's no direct connection between a change and a
-> tree. Maybe I missed something. David if you are interested in "git
-> status" performance, this repairing thing could be important when the
-> worktree is large because the diff cost increases accordingly if
-> cache-tree is not fully populated. Empty cache-tree could cost us
-> nearly the same time we save with avoiding opendir/readdir..
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-I am interested, and I believe I might be able to start looking into it
-in a week or two.
+> I have no problems rerolling  this simple patch, but i need to know
+> what is the (git) right style in this case.
+
+If I were doing this...
+
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 66ce4b0..c1d0b23 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -8,7 +8,7 @@ This test verifies the basic operation of the merge, pull, add
+ and split subcommands of git subtree.
+ '
+ 
+-export TEST_DIRECTORY=$(pwd)/../../../t
++TEST_DIRECTORY=$(pwd)/../../../t && export TEST_DIRECTORY
+
+... I'd say I would make this two lines without &&, i.e.
+
+	TEST_DIRECTORY=$(pwd)/../../../t
+        export TEST_DIRECTORY
+
+because we are not doing anything about a failure of $(pwd), other
+than skipping the export.  If we were failing the entire thing, it
+would be a different story, but at this point of the test, it is
+unreasonable to do something like:
+
+	TEST_DIRECTORY=$(pwd)/../../../t &&
+        export TEST_DIRECTORY || exit $?
+
+anyway.
+ 
+diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
+index 1c006a0..9d1ce76 100755
+--- a/git-remote-testgit.sh
++++ b/git-remote-testgit.sh
+@@ -13,7 +13,7 @@ refspec="${GIT_REMOTE_TESTGIT_REFSPEC-$default_refspec}"
+ 
+ test -z "$refspec" && prefix="refs"
+ 
+-export GIT_DIR="$url/.git"
++GIT_DIR="$url/.git" && export GIT_DIR
+ 
+ force=
+
+Similarly, as we do not do anything if the assignment to GIT_DIR
+fails here, just like we ignore any failure from assignment to
+force,
+
+    GIT_DIR="$url/.git"
+    export GIT_DIR
+
+would be sufficient.
+
+The logic before the "mkdir -p" of this script may want to be
+cleaned up (can you tell how "if $refspec is empty, set prefix=refs"
+makes any sense, and what its implications are, without thinking for
+more than 10 seconds?), but that is clearly a separate topic [*1*].
+
+
+diff --git a/git-stash.sh b/git-stash.sh
+index 4798bcf..0bb1af8 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -94,7 +94,7 @@ create_stash () {
+ 		# ease of unpacking later.
+ 		u_commit=$(
+ 			untracked_files | (
+-				export GIT_INDEX_FILE="$TMPindex"
++				GIT_INDEX_FILE="$TMPindex" && export GIT_INDEX_FILE &&
+ 				rm -f "$TMPindex" &&
+ 				git update-index -z --add --remove --stdin &&
+ 				u_tree=$(git write-tree) &&
+
+This one does care about failures.  I'd rather have these on
+separate lines, i.e.
+
+                                GIT_INDEX_FILE="$TMPindex" &&
+                                export GIT_INDEX_FILE &&
+                                rm -f "$TMPindex" &&
+                                ...
+
+
+[Footnote]
+
+*1* Perhaps something along these lines with the exact placements of
+    blank lines to group similar things together:
+
+	alias=$1 url=$2
+
+        if test -z "${GIT_REMOTE_TESTGIT_REFSPEC-notEmpty}"
+        then
+        	# only if it is explicitly set to an empty string...
+		prefix=refs
+	else
+		prefix="refs/testgit/$alias"
+	fi
+        dir="$GIT_DIR/testgit/$alias"
+	default_refspec="refs/heads/*:${prefix}/heads/*"
+	refspec="${GIT_REMOTE_TESTGIT_REFSPEC-$default_refspec}"
+	force=
+
+	GIT_DIR="$url/.git"
+	export GIT_DIR
