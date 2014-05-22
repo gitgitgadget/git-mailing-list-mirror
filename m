@@ -1,90 +1,73 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 2/2] completion: add missing options for git-merge
-Date: Thu, 22 May 2014 14:58:38 +0100
-Message-ID: <5cfeac0e9b7fb0ff4a2468f30476152fc93f4c16.1400767118.git.john@keeping.me.uk>
-References: <CANu1nikzk-rGjzKv6R-OR6Et-fB-JYnt245+P6NY-RQiihzXyA@mail.gmail.com>
- <e4a536d29a59d7dc89cc2f42fa8339506b4829f1.1400767118.git.john@keeping.me.uk>
-Cc: Haralan Dobrev <hkdobrev@gmail.com>,
-	John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu May 22 16:05:39 2014
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v8 0/2] format-patch --signature-file <file>
+Date: Thu, 22 May 2014 07:23:32 -0700
+Message-ID: <20140522142332.GA15095@hudson.localdomain>
+References: <1400723589-8975-1-git-send-email-jmmahler@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 22 16:23:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnTcn-0001HH-8Q
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 16:05:37 +0200
+	id 1WnTuH-0007ey-Sm
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 16:23:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752318AbaEVOFc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 10:05:32 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:49509 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751626AbaEVOFb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 10:05:31 -0400
-X-Greylist: delayed 395 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 May 2014 10:05:31 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id 60F45606582;
-	Thu, 22 May 2014 14:59:01 +0100 (BST)
-X-Quarantine-ID: <KMkEQoPXYyte>
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id KMkEQoPXYyte; Thu, 22 May 2014 14:59:00 +0100 (BST)
-Received: from river.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 61A04606534;
-	Thu, 22 May 2014 14:58:54 +0100 (BST)
-X-Mailer: git-send-email 2.0.0.rc2.4.g1dc51c6
-In-Reply-To: <e4a536d29a59d7dc89cc2f42fa8339506b4829f1.1400767118.git.john@keeping.me.uk>
-In-Reply-To: <e4a536d29a59d7dc89cc2f42fa8339506b4829f1.1400767118.git.john@keeping.me.uk>
-References: <e4a536d29a59d7dc89cc2f42fa8339506b4829f1.1400767118.git.john@keeping.me.uk>
+	id S1752039AbaEVOXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 10:23:38 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:48769 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751879AbaEVOXh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 10:23:37 -0400
+Received: by mail-pa0-f53.google.com with SMTP id kp14so2527020pab.26
+        for <git@vger.kernel.org>; Thu, 22 May 2014 07:23:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:date:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=RIOb34OgXlSupWLh4vJrWB/qEatJ04dQvSQIytpD9eA=;
+        b=bEcozK+q7AmBmpgyatFykYgwiZCucuevFby6Wr95+WZPL5SrToFy+M4PGsYmCUnfmg
+         m2hkbO4r+a24MELjQ7tTXt0EKhJc72xNXNGTDeGGqVQbbmgCXez+SLDf0CaMA2MZbHaj
+         CwS0kGs/zw44ifFcWlUK/yYyQV40HSuZB9vBiNH9bQXM6cnch3YT7/GL6bpMf8FS0qp/
+         pEH3UMLRkRufmNoX0KXY8jL/4Qte+FSGXjGp2ARGViNst3LBnHwkw7dEWARlvtWcNtXP
+         43MzNrlV3kSvC93SQ7Q4+Nq76OS3mvLShXGds6H5etaJCyv7A6FXkLJd9HlnYkEDw00r
+         sH4A==
+X-Received: by 10.66.142.132 with SMTP id rw4mr69035634pab.6.1400768617095;
+        Thu, 22 May 2014 07:23:37 -0700 (PDT)
+Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id pe3sm13354110pbc.23.2014.05.22.07.23.33
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 22 May 2014 07:23:35 -0700 (PDT)
+X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
+Received: by hudson (sSMTP sendmail emulation); Thu, 22 May 2014 07:23:32 -0700
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1400723589-8975-1-git-send-email-jmmahler@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249906>
 
-The options added to __git_merge_options are those that git-pull also
-understands, since that variable is used by both commands.  Those added
-directly in _git_merge() are specific to git-merge and are not
-supported by git-pull.
+Junio,
 
-Reported-by: Haralan Dobrev <hkdobrev@gmail.com>
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- contrib/completion/git-completion.bash | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+On Wed, May 21, 2014 at 06:53:07PM -0700, Jeremiah Mahler wrote:
+> v8 of patch to add format-patch --signature-file <file> option.
+> 
+...
+> 
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ff97c20..019026e 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1476,6 +1476,8 @@ _git_log ()
- __git_merge_options="
- 	--no-commit --no-stat --log --no-log --squash --strategy
- 	--commit --stat --no-squash --ff --no-ff --ff-only --edit --no-edit
-+	--verify-signatures --no-verify-signatures --gpg-sign
-+	--quiet --verbose --progress --no-progress
- "
- 
- _git_merge ()
-@@ -1484,7 +1486,8 @@ _git_merge ()
- 
- 	case "$cur" in
- 	--*)
--		__gitcomp "$__git_merge_options"
-+		__gitcomp "$__git_merge_options
-+			--rerere-autoupdate --no-rerere-autoupdate --abort"
- 		return
- 	esac
- 	__gitcomp_nl "$(__git_refs)"
+I just notice that my patch is in 'pu'.
+But it is version 7 instead of the improved version 8.
+
 -- 
-2.0.0.rc2.4.g1dc51c6
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
