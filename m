@@ -1,120 +1,55 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: git reset for index restoration?
-Date: Thu, 22 May 2014 19:02:26 -0400
-Organization: Twitter
-Message-ID: <1400799746.18134.48.camel@stross>
-References: <1400775763.1933.5.camel@stross>
-	 <CABPp-BHtYnput7SiAbnqUjpDibTi5o_2MAXfSj17fCdKSC7Hjg@mail.gmail.com>
-	 <1400782642.18134.8.camel@stross>
-	 <20140522183930.GB1167@sigill.intra.peff.net>
-	 <1400785669.18134.21.camel@stross>
-	 <20140522190959.GA18785@sigill.intra.peff.net>
-	 <20140522193030.GA22383@sigill.intra.peff.net>
-	 <xmqqha4hmr9d.fsf@gitster.dls.corp.google.com>
-	 <1400795586.18134.40.camel@stross>
-	 <xmqqd2f5mq5h.fsf@gitster.dls.corp.google.com>
-	 <1400796077.18134.41.camel@stross>
-	 <xmqq61kxmphw.fsf@gitster.dls.corp.google.com>
-	 <xmqqwqddla63.fsf@gitster.dls.corp.google.com>
+From: Peter <wong1@pewong350.onmicrosoft.com>
+Subject: PORTFOLIO
+Date: Fri, 23 May 2014 00:53:52 +0200
+Message-ID: <3685ed68-232f-4e99-9a9f-e882d9f1becf@AM3PR06MB324.eurprd06.prod.outlook.com>
+Reply-To: <ppwong12@aol.jp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 23 01:02:36 2014
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Recipients <wong1@pewong350.onmicrosoft.com>
+X-From: git-owner@vger.kernel.org Fri May 23 01:09:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wnc0R-0002ys-Gb
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:02:35 +0200
+	id 1Wnc7I-00056C-M3
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 01:09:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751363AbaEVXC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 19:02:29 -0400
-Received: from mail-qg0-f44.google.com ([209.85.192.44]:45561 "EHLO
-	mail-qg0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751196AbaEVXC2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 19:02:28 -0400
-Received: by mail-qg0-f44.google.com with SMTP id i50so6982469qgf.31
-        for <git@vger.kernel.org>; Thu, 22 May 2014 16:02:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=AeTSqTBUrh4Rad3PoQjVpUU4ZbbJtOnl3vowzRvKzPc=;
-        b=Vp7trD18+WKRUXKpo+ixKcklTNJ3XL7X09NRei90c5rdEtt8ysLTKAtY2N1F5zXvJr
-         aapwvQEq8B5Ok4j/M8P5vDGoVVYHd4IScxaAwpxK9Ahzgy5p2iJaLgTjAAiqzsYKvcHz
-         idH0G6SZGU6fVsAj6jRw0oLiYNgObfVd5wmJ8YD/RNZZkqYPKUqeZUX3QJhFR5ORKJ24
-         xBZY9E9XBpRSVg9sWanAytx7+7eLIdjPDoPVmbDNJGU4LgFkwcxtoBgoxWwQI/gwKq8Q
-         RjQQitMDm6K//hQQyT0juEBNRJk2jYOtID9I6ZV9D3bFI67LZjJ/TLFSrixwrRGpm+6H
-         ymZA==
-X-Gm-Message-State: ALoCoQkFF9x0rQIxjzVjwOGDeu53twOZUA2A6K8biAcNFu4RfYSjLW0pYwjnP88uJsPdGkHUcZf0
-X-Received: by 10.224.68.2 with SMTP id t2mr1005202qai.71.1400799747932;
-        Thu, 22 May 2014 16:02:27 -0700 (PDT)
-Received: from [172.17.3.46] ([38.104.173.198])
-        by mx.google.com with ESMTPSA id i9sm1893920qaq.14.2014.05.22.16.02.26
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 22 May 2014 16:02:27 -0700 (PDT)
-In-Reply-To: <xmqqwqddla63.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+	id S1753510AbaEVXJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 19:09:22 -0400
+Received: from mail-db3hn0251.outbound.protection.outlook.com ([157.55.234.251]:14592
+	"EHLO emea01-db3-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753509AbaEVXJU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 22 May 2014 19:09:20 -0400
+Received: from [192.168.1.15] (212.117.160.107) by
+ AM3PR06MB324.eurprd06.prod.outlook.com (10.242.108.20) with Microsoft SMTP
+ Server (TLS) id 15.0.944.11; Thu, 22 May 2014 22:54:12 +0000
+Content-Description: Mail message body
+X-Originating-IP: [212.117.160.107]
+X-ClientProxiedBy: BN1PR07CA0068.namprd07.prod.outlook.com (10.255.193.43)
+ To AM3PR06MB324.eurprd06.prod.outlook.com (10.242.108.20)
+X-Forefront-PRVS: 021975AE46
+X-Forefront-Antispam-Report: SFV:SPM;SFS:(6039001)(6009001)(6049001)(428001)(189002)(199002)(86362001)(86372001)(86902001)(54356999)(19580395003)(53806999)(86442001)(50466002)(79102001)(77982001)(92726001)(50986999)(87976001)(551934003)(83072002)(74502001)(83322001)(19580405001)(4396001)(66066001)(74662001)(76576001)(53256004)(85852003)(80022001)(20776003)(81542001)(99396002)(46102001)(325944007)(81342001)(31696002)(47776003)(43066003)(76482001)(42186004)(102836001)(64706001)(64872006)(74316001)(33646001)(221733001)(86632001)(23756003)(21056001)(89136004)(101416001)(62346011);DIR:OUT;SFP:1501;SCL:5;SRVR:AM3PR06MB324;H:[192.168.1.15];FPR:;MLV:spm;PTR:InfoNoRecords;MX:1;A:0;LANG:en;
+Received-SPF: None (: pewong350.onmicrosoft.com does not designate permitted
+ sender hosts)
+Authentication-Results: spf=none (sender IP is )
+ smtp.mailfrom=wong1@pewong350.onmicrosoft.com; 
+X-OriginatorOrg: pewong350.onmicrosoft.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249958>
 
-On Thu, 2014-05-22 at 15:29 -0700, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > But at least my understanding has been that "git commit" (no partial
-> > commit, write the whole index as a commit) which uses the "git
-> > write-tree" machinery knows which subtree has what tree object name
-> > and populates the cache-tree fully.
-> 
-> Here is what I tried just now.
-> 
->     $ rm .git/index
->     $ git read-tree HEAD HEAD
-> 
-> Note that a single-tree read-tree will populate the cache-tree and
-> that is why I am forcing "switch branches" 2-way read-tree here,
-> which I know will discard the cache-tree fully.
-> 
->     $ ls -l .git/index
->     -rw-r----- 1 jch eng 249440 May 22 15:20 .git/index
->     $ git checkout HEAD^0
->     $ ls -l .git/index
->     -rw-r----- 1 jch eng 249440 May 22 15:21 .git/index
-> 
-> Still the same size, without cache-tree.
-> 
->     $ git write-tree
->     57361c4add61b638dad1c1c2542edf877f515c48
->     $ ls -l .git/index
->     -rw-r----- 1 jch eng 254383 May 22 15:21 .git/index
-> 
-> The size differences come from the recomputation of the cache tree.
-> The result is the same if we replace "git write-tree" with a
-> whole-index commit, e.g.
-> 
->     $ git commit --allow-empty -m foo
-> 
-> and test-dump-cache-tree seem to see a fully populated cache-tree
-> after these steps.
+Hello
 
-I get the same results as you with git write-tree.  But I do not get the
-same results from a whole-index git commit (I tried your exact
-command-line).  That is, when I do git commit with no cache-tree in
-place, it does not create one. 
+I have an investment portfolio that involves money deposited in my bank in China which I can easily transfer to you as beneficiary. The transaction is risk free because it has been strategically planned to complete successfully.
 
-To expand: even if git commit did work for me the way it seems to work
-for you, I still believe that the cache-tree behavior would be
-suboptimal, because every time a user switches branches, they lose their
-cache-tree, and thus all of their git status commands are slow until
-their first commit. But I am willing to believe that my workflow is
-atypical, and that most people commit enough soon after switching
-branches.
+Contact me on my email address below for more details.
+
+Best regards,
+
+Peter Wong
+Email: ppwong12@aol.jp
