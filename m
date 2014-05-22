@@ -1,123 +1,97 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [RFC/PATCH v4 1/3] add high resolution timer function
- to debug performance issues
-Date: Thu, 22 May 2014 03:33:25 +0200
-Message-ID: <537D53E5.2070605@gmail.com>
-References: <537BA806.50600@gmail.com> <537BA8D1.1090503@gmail.com> <537D2528.3090806@bbn.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v8 39/44] refs.c: move the check for valid refname to
+ lock_ref_sha1_basic
+Date: Wed, 21 May 2014 18:42:42 -0700
+Message-ID: <20140522014242.GO12314@google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+ <1400174999-26786-40-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-To: Richard Hansen <rhansen@bbn.com>, Git List <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBBZFH6WNQKGQEFGRK3FA@googlegroups.com Thu May 22 03:33:26 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBZFH6WNQKGQEFGRK3FA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ee0-f57.google.com ([74.125.83.57])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu May 22 03:42:51 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBZFH6WNQKGQEFGRK3FA@googlegroups.com>)
-	id 1WnHsr-0000QF-R4
-	for gcvm-msysgit@m.gmane.org; Thu, 22 May 2014 03:33:25 +0200
-Received: by mail-ee0-f57.google.com with SMTP id e53sf286370eek.22
-        for <gcvm-msysgit@m.gmane.org>; Wed, 21 May 2014 18:33:25 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WnI1x-00074x-Ho
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 03:42:49 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751760AbaEVBmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 May 2014 21:42:46 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:38951 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750982AbaEVBmp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 May 2014 21:42:45 -0400
+Received: by mail-pb0-f43.google.com with SMTP id up15so1960457pbc.16
+        for <git@vger.kernel.org>; Wed, 21 May 2014 18:42:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=pU4ZF+ZDlAZnh5MQqyTC9J4+0u3Hi6Hf3VUWioGM86M=;
-        b=HKTIIabQ5NDNIiuzyOJIuMxbxEyquoyk0xwJKaC8Jp9vLNRhPnYw8jMkH1wyTP/q4z
-         zTjcuKY+nUd/IrCf0IjIzCfxblXROXlfUvRjnpsYiErY0qTwtqwBG7SOsl/JhgLPlO2Q
-         H/C3ajtSF9SMlb8AUzlBARFd7V8gd/2vlGoCvOkZQAHaiUTm3CSklPr/ioY3ZiDcIAot
-         CmVHyIzvZXUGlizapezNP1Ct9cQdS5JCcX6htYy/uA187VFHLOPxOfrStfpyTYlNKKUR
-         yeeYzX5kDgUdpKNHJt0urHiImibiQXzm0czHlIHsyGlvsDf2/k6ZGznL25LZlgKm+eQs
-         0YcQ==
-X-Received: by 10.152.23.165 with SMTP id n5mr251336laf.5.1400722405537;
-        Wed, 21 May 2014 18:33:25 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.4.67 with SMTP id i3ls184742lai.81.gmail; Wed, 21 May 2014
- 18:33:24 -0700 (PDT)
-X-Received: by 10.112.140.170 with SMTP id rh10mr4494059lbb.7.1400722404245;
-        Wed, 21 May 2014 18:33:24 -0700 (PDT)
-Received: from mail-ee0-x22c.google.com (mail-ee0-x22c.google.com [2a00:1450:4013:c00::22c])
-        by gmr-mx.google.com with ESMTPS id r49si2463914eep.0.2014.05.21.18.33.24
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 21 May 2014 18:33:24 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::22c as permitted sender) client-ip=2a00:1450:4013:c00::22c;
-Received: by mail-ee0-f44.google.com with SMTP id c41so2153289eek.3
-        for <msysgit@googlegroups.com>; Wed, 21 May 2014 18:33:24 -0700 (PDT)
-X-Received: by 10.14.215.5 with SMTP id d5mr8662781eep.62.1400722404142;
-        Wed, 21 May 2014 18:33:24 -0700 (PDT)
-Received: from [10.1.116.56] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id g8sm15906933eep.0.2014.05.21.18.33.22
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=4PpmEUcPPOXZKVFBqbcP8+4SAt7vGh4ADvFC2J/m6to=;
+        b=IS8sSa2Kwd/4kkgAGD52NmjlxMvRx6CJ4fRRw6nAq3sFdMLcNOyvNuROcflZCexRdz
+         p7oRw437IdGIFl56v+Bsm6mPxds2hpi8pbyLbPSRGhW0sPUlLdynK0Z3osJhJrvP8yJ6
+         RxcdCxXEjQn+2uOm89nCKOxXcEwKsLogqYCzLccMgq6otTZSTxNvwt5s2TdAl0O5jkgU
+         GkJY+gHhfYlvh6s2506otl7jAv/oGEqzfbj899F1ZdYMmxyDbBio3RxcOHmbFcP+1/d0
+         9YvcN3BDa9mL8pkxbUgVCiBHhyAEOIfa0HqhKuXvcl80S2n+88jUDeRJjg6Rkb3YfEeR
+         LSYg==
+X-Received: by 10.68.173.65 with SMTP id bi1mr63285222pbc.130.1400722964996;
+        Wed, 21 May 2014 18:42:44 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id pr4sm10165408pbb.53.2014.05.21.18.42.44
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 21 May 2014 18:33:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <537D2528.3090806@bbn.com>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:4013:c00::22c
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249867>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 21 May 2014 18:42:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1400174999-26786-40-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249868>
 
-Am 22.05.2014 00:14, schrieb Richard Hansen:
-> On 2014-05-20 15:11, Karsten Blees wrote:
->> Add a getnanotime() function that returns nanoseconds since 01/01/1970 a=
-s
->> unsigned 64-bit integer (i.e. overflows in july 2554).
->=20
-> Must it be relative to epoch?  If it was relative to system boot (like
-> the NetBSD kernel's nanouptime() function), then you wouldn't have to
-> worry about clock adjustments messing with performance stats and you
-> might have more options for implementing getnanotime() on various platfor=
-ms.
->=20
-> -Richard
->=20
+Ronnie Sahlberg wrote:
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2044,6 +2044,9 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>  	int missing = 0;
+>  	int attempts_remaining = 3;
+>  
+> +	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
+> +		return NULL;
 
-Normalizing to the epoch adds the ability to use the same timestamps (div 1=
-0e9) in other time-related functions (e.g. gmtime, ctime etc.), with very l=
-ittle overhead (one 64-bit integer addition per call).
+Are we sure that no callers are locking a poorly named ref
+as preparation for repairing it?
 
-The getnanotime() implementation is actually platform independent and can b=
-e backed by any time source that returns nanoseconds relative to anything. =
-Getnanotime() is synced to the system clock only once on startup, so if you=
-r time source is monotonic (which I think NetBSD's nanouptime() is), you do=
-n't have to worry about clock adjustments.
+To see what works already in that vein, I tried:
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
+	$ git rev-parse HEAD >.git/refs/heads/foo..bar
+	$ git branch -m foo..bar something-saner
+	fatal: Invalid branch name: 'foo..bar'
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+"git branch -m" has an explicit codepath ("recovery = 1;") to handle
+this case, but it looks like it was not well tested and regressed in
+v1.7.8-rc0~19^2~7 (resolve_ref(): verify that the input refname has
+the right format, 2011-09-15).
 
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Is what the recovery codepath of branch -m does misguided?  One
+school of thought would be that people with malformed refs are
+responsible for recovering using low-level tools like "mv" and "vi"
+instead of normal git commands since normal git commands should never
+have created such a bad situation.  Another school of thought would
+assert that
+
+ * git commands can have bugs
+ * the format checked by check_refname_format() keeps getting stricter
+   over time
+
+which means it's nice when people can recover with 'update-ref -d'
+or 'branch -m'.  It's not obvious to me what the right thing to do
+here is (maybe a special flag to be attached to a ref update during
+recovery?).
+
+Hope that helps,
+Jonathan
