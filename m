@@ -1,130 +1,149 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: Re: [PATCH v2 4/8] http: extract type/subtype portion of content-type
-Date: Thu, 22 May 2014 15:52:21 -0700
-Message-ID: <567F86A0-98E4-49AF-81C8-8D9E1AEC3C5E@gmail.com>
-References: <20140522092824.GA14530@sigill.intra.peff.net> <20140522092947.GD15032@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Peter Krefting <peter@softwolves.pp.se>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 23 00:52:29 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v8 41/44] refs.c: add a new flag for transaction delete
+ for refs we know are packed only
+Date: Thu, 22 May 2014 15:53:25 -0700
+Message-ID: <CAL=YDW=hytDiz5qzAMyBgXUgza+AcDhk_y3m3kAUmOdBG=F=vA@mail.gmail.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+	<1400174999-26786-42-git-send-email-sahlberg@google.com>
+	<20140522181722.GT12314@google.com>
+	<CAL=YDWkUa2Ut=1iaMXgnjgte6g5jvXR49LBiEUNEkwv4Z-wO_w@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 23 00:53:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wnbqe-00046e-37
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 00:52:28 +0200
+	id 1Wnbre-0005gl-O5
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 00:53:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751420AbaEVWwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 18:52:24 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:43243 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751145AbaEVWwX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 18:52:23 -0400
-Received: by mail-pb0-f52.google.com with SMTP id rr13so3166715pbb.39
-        for <git@vger.kernel.org>; Thu, 22 May 2014 15:52:22 -0700 (PDT)
+	id S1751430AbaEVWx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 18:53:27 -0400
+Received: from mail-vc0-f172.google.com ([209.85.220.172]:58758 "EHLO
+	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751145AbaEVWx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 18:53:26 -0400
+Received: by mail-vc0-f172.google.com with SMTP id ik5so1936549vcb.17
+        for <git@vger.kernel.org>; Thu, 22 May 2014 15:53:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:in-reply-to:subject:references:message-id:content-type
-         :content-transfer-encoding:mime-version:date:cc;
-        bh=XHxIbu+WBX7mPvjM4m02wxOd4JhbMhbJ9jaMNpg7b+A=;
-        b=gl0QBMQ94gMy1g1Jd6gbaj1t/IAbJzzGRPyu86q0yx5EO1Vu3c/IVP+0RsdYx1qsmP
-         UswLJs66iHxRpeZM6LE1vr00uwtwwsAYw03vz98MIvp5ia3But5mGjgvva4AT+5cX63C
-         3De/yXzHSTZ3Y33kLy7zTQr6qcOVNhfAbpbisrdZ2lNH3HKyvJ50/XPlXhkQtfYKA+jl
-         tBTu9vFwmtmCOKIdVIHf4IGFOC1g9h/8M9B6UWI2Q/awAxEK5zjTfQOnfB4iCHLC6grt
-         AIyoNymUlV3TVzlSwXxDt5BTKChfCS1qJzWj3Kgb++8R4DI9WGNIueiaLe/ITjVeMJfQ
-         +Azw==
-X-Received: by 10.66.186.238 with SMTP id fn14mr737769pac.135.1400799142780;
-        Thu, 22 May 2014 15:52:22 -0700 (PDT)
-Received: from [172.16.16.105] (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id tu3sm4928482pab.1.2014.05.22.15.52.21
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 22 May 2014 15:52:22 -0700 (PDT)
-In-Reply-To: <20140522092947.GD15032@sigill.intra.peff.net>
-X-Mauler: Craptastic (2.936)
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=1UJ3TUDd5iMHD4IhVcMsVJoswGXgZ1GBcEN9eHMjZTA=;
+        b=CT5MGUz1oTkF7NWp5BfolIGyM9mAvMW8So0cJi7tIyGcFNk65fikxiQ9odlNGKOiZC
+         LoFMt6NlspeFHShV7CTVvr2YjQl8y9DIu4lIZfjY9zvIem+Oo3Rfb/T0KWKKbaWyYDvg
+         46V5auayf7S5jwloVLIcQaNRPNINwa3HKFqm/yIKPPp9iwhZek60JoAbSWD7W+mJy2Z+
+         rHLHD5b/euEltv7i4tn1saX6vMSpkv65buhaWPY1hek5VEFdIfktmrUr4/tsb0r7hG9e
+         hwIkTtGR+SLtkquOn/E6iw9PYYbIaYHsClOfSKB8WAD1bs+WVI2cZmeSzrKo37s/dFvU
+         H3gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=1UJ3TUDd5iMHD4IhVcMsVJoswGXgZ1GBcEN9eHMjZTA=;
+        b=SrTjANRKml5d6Vv7qaMxvS3H3zGeW/+C4twdY8AwYHWyhR/0eo7oy86BEhlCSOfv59
+         QWCUkuj2ivNOupqjBSOPdPO5QI+ynpUXt7m66/Vgu2qtAq1WOWuhejgVqxz68rqv5RRD
+         SsYwktK/9Rm3p2sh4gY7W9dzN1t6RsqH0I0U3r6zUbRqStlDQQfmupRqA8ovoTA2Uetq
+         rmoYvJdt3/KpiTTLm43txRW0rREfMvd/MS5C3bh7AxHGbuuzR206n3GUJ7AM0TjKwbAX
+         ocYx8jiwh69A/TnButHHFhGZ8dFVzfmHEAovClvL/veIb+0jJoekLcu8zZKQeUUnbZGL
+         NUGA==
+X-Gm-Message-State: ALoCoQmx1FaTJJO5JJkddpqqos40PgyB+EEnRNctExkA1yRlNYo0+5TalK6HNmZoV/1Gr/logfL7
+X-Received: by 10.58.186.207 with SMTP id fm15mr647948vec.4.1400799205669;
+ Thu, 22 May 2014 15:53:25 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Thu, 22 May 2014 15:53:25 -0700 (PDT)
+In-Reply-To: <CAL=YDWkUa2Ut=1iaMXgnjgte6g5jvXR49LBiEUNEkwv4Z-wO_w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249956>
+
+I hate rename_ref :-)
 
 
-On May 22, 2014, at 02:29, Jeff King wrote:
+I have reworked the transaction code to special case the deletion of
+the old ref for n/n -> n  and n -> n/n renames
+so that we can carefully avoid n/n.lock files to exist or prevent the
+directory <-> file transition for n during these renames.
 
-> When we get a content-type from curl, we get the whole
-> header line, including any parameters, and without any
-> normalization (like downcasing or whitespace) applied.
-> If we later try to match it with strcmp() or even
-> strcasecmp(), we may get false negatives.
->
-> This could cause two visible behaviors:
->
->  1. We might fail to recognize a smart-http server by its
->     content-type.
->
->  2. We might fail to relay text/plain error messages to
->     users (especially if they contain a charset parameter).
->
-> This patch teaches the http code to extract and normalize
-> just the type/subtype portion of the string. This is
-> technically passing out less information to the callers, who
-> can no longer see the parameters. But none of the current
-> callers cares, and a future patch will add back an
-> easier-to-use method for accessing those parameters.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> http.c                     | 32 +++++++++++++++++++++++++++++---
-> remote-curl.c              |  2 +-
-> t/lib-httpd/error.sh       |  8 +++++++-
-> t/t5550-http-fetch-dumb.sh |  5 +++++
-> 4 files changed, 42 insertions(+), 5 deletions(-)
->
-> diff --git a/http.c b/http.c
-> index 94e1afd..4edf5b9 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -906,6 +906,29 @@ static CURLcode curlinfo_strbuf(CURL *curl,  
-> CURLINFO info, struct strbuf *buf)
-> 	return ret;
-> }
->
-> +/*
-> + * Extract a normalized version of the content type, with any
-> + * spaces suppressed, all letters lowercased, and no trailing ";"
-> + * or parameters.
-> + *
-> + * Example:
-> + *   "TEXT/PLAIN; charset=utf-8" -> "text/plain"
-> + */
-> +static void extract_content_type(struct strbuf *raw, struct strbuf  
-> *type)
-> +{
-> +	const char *p;
-> +
-> +	strbuf_reset(type);
-> +	strbuf_grow(type, raw->len);
-> +	for (p = raw->buf; *p; p++) {
-> +		if (isspace(*p))
-> +			continue;
-> +		if (*p == ';')
-> +			break;
-> +		strbuf_addch(type, tolower(*p));
-> +	}
-> +}
-> +
+This should allow us to have rename_ref becoming reasonably
+implementation agnostic, aside for that it wants to lstat the ref to
+see if it is a soft link, and re-use the code for other refs backends.
 
-This will parse invalid content types as valid.  Probably not  
-important since the producer of an invalid content type shouldn't be  
-depending on any particular behavior by the consumer of such a type,  
-but I think it warrants a note in the comment block, perhaps something  
-like:
 
-   * Note that an invalid content-type may be converted to a valid one
+Please see the ref-transaction branch.
 
-or some such.
 
---Kyle
+On Thu, May 22, 2014 at 12:12 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+> On Thu, May 22, 2014 at 11:17 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Hi,
+>>
+>> Ronnie Sahlberg wrote:
+>>
+>>> Add a new flag REF_ISPACKONLY that we can use in ref_transaction_delete.
+>>> This flag indicates that the ref does not exist as a loose ref andf only as
+>>> a packed ref. If this is the case we then change the commit code so that
+>>> we skip taking out a lock file and we skip calling delete_ref_loose.
+>>
+>> This seems wrong.  Can't someone else create a loose ref which will
+>> shadow the packed ref and break the serializability of updates to this
+>> ref?
+>>
+>> The above doesn't explain why we want to avoid locking the loose ref,
+>> but I assume it's for the sake of the "git branch -m foo/bar foo"
+>> case.  For that case, wouldn't the following sequence of filesystem
+>> operations work?
+>>
+>>         - create $GIT_DIR/refs/heads/foo/bar.lock
+>>         - create $GIT_DIR/refs/heads/foo.lock
+>>         - if $GIT_DIR/refs/heads/foo/bar exists, add the ref to
+>>           packed-refs (using the usual lockfile-update mechanism)
+>>           and unlink $GIT_DIR/refs/heads/foo/bar
+>>         - verify that current foo and foo/bar state are okay.  If
+>>           not, roll back.
+>>         - unlink $GIT_DIR/refs/heads/foo/bar.lock
+>>         - rmdir $GIT_DIR/refs/heads/foo
+>>         - rename $GIT_DIR/refs/heads/foo.lock into place
+>>
+>> Or:
+>>
+>>         - create $GIT_DIR/refs/heads/foo/bar.lock
+>>         - create $GIT_DIR/refs/heads/foo.lock
+>>         - verify state of all relevant refs
+>>
+>>         - update packed-refs to remove refs/heads/foo/bar and
+>>           add refs/heads/foo
+>>
+>>         - unlink $GIT_DIR/refs/heads/foo/bar
+>>         - unlink $GIT_DIR/refs/heads/foo
+>>         - unlink $GIT_DIR/refs/heads/foo/bar.lock
+>>         - unlink $GIT_DIR/refs/heads/foo.lock
+>>
+>
+>
+> I removed all the rename_ref related patches for now. rename_ref is
+> probably best implemented specifically for each backend anyway.
+>
+> I will still produce a separate patch that will do something like this
+> you suggested
+> (since rename_ref is still racy and fragile)
+>
+>>         - create $GIT_DIR/refs/heads/foo/bar.lock
+>>         - create $GIT_DIR/refs/heads/foo.lock
+>>         - verify state of all relevant refs
+>>
+>>         - update packed-refs to remove refs/heads/foo/bar and
+>>           add refs/heads/foo
+>>
+>>         - unlink $GIT_DIR/refs/heads/foo/bar
+>>         - unlink $GIT_DIR/refs/heads/foo
+>>         - unlink $GIT_DIR/refs/heads/foo/bar.lock
+>>         - unlink $GIT_DIR/refs/heads/foo.lock
+>>
+>
+> Thanks
+> ronnie sahlberg
