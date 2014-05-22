@@ -1,59 +1,97 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH 7/9] remote-curl: recognize text/plain with a charset
- parameter
-Date: Thu, 22 May 2014 11:19:57 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1405221118150.10958@ds9.cixit.se>
-References: <20140521102524.GA30301@sigill.intra.peff.net> <20140521103301.GG30464@sigill.intra.peff.net> <90CE006F-EE74-40D2-8847-507E37021D84@gmail.com> <alpine.DEB.2.00.1405220809370.10958@ds9.cixit.se> <20140522090557.GB29669@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: "Kyle J. McKay" <mackyle@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 22 12:20:20 2014
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] Get rid of the non portable shell export VAR=VALUE costruct
+Date: Thu, 22 May 2014 05:48:16 -0700
+Message-ID: <1400762896-24324-1-git-send-email-gitter.spiros@gmail.com>
+Cc: Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 22 14:48:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnQ6k-0004Sv-RL
-	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 12:20:19 +0200
+	id 1WnSQB-00015g-AW
+	for gcvg-git-2@plane.gmane.org; Thu, 22 May 2014 14:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509AbaEVKUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 06:20:12 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:56842 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752056AbaEVKUL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 22 May 2014 06:20:11 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s4MAJwA1019813
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 22 May 2014 12:19:58 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s4MAJvCq019810;
-	Thu, 22 May 2014 12:19:57 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20140522090557.GB29669@sigill.intra.peff.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 22 May 2014 12:19:58 +0200 (CEST)
+	id S1753918AbaEVMsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 22 May 2014 08:48:22 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:51251 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750842AbaEVMsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 22 May 2014 08:48:20 -0400
+Received: by mail-pa0-f50.google.com with SMTP id fb1so2488664pad.9
+        for <git@vger.kernel.org>; Thu, 22 May 2014 05:48:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=EYZAKEGvtnHB6O0+gx4XED2JD6yyYPyrt2V5r7W+Cl4=;
+        b=kjOwfiygLC06GRbC2yoWn0MPL6gVCa8tAxGfwCyUYcRU2xeeeSK5/NiA6WdcnsenUR
+         aVQTpGTb9PSdlD4tHkU8c7N9WZ6RzoPUVwIqpILt8Wq7kDFHQxnIKSsYCONVtsuf0OU5
+         45ewRw2R4/23lu9Te6Ty7cdCHslGgTMcR7DSfnMBI4dOd8GB+x/2PrF5klgzVyxl7Adg
+         iySlnwRa5tuuOdfa2w0jJfd78k+6XaABQq2qij7f4mO5+dvBC/zJoMJcsWoln8Ss3arQ
+         RNiGRyUlGVQVStt+B10IEuFCqQSxJ+UaUJYLDKnCMP4vWm1Q3qjZH2FFTLcgTEu5xFeN
+         Po/Q==
+X-Received: by 10.68.213.97 with SMTP id nr1mr66411946pbc.52.1400762899863;
+        Thu, 22 May 2014 05:48:19 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id wl5sm3049025pbc.13.2014.05.22.05.48.18
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 22 May 2014 05:48:19 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249899>
 
-Jeff King:
+Found by check-non-portable-shell.pl
 
-> I was really hoping to avoid getting into all of the real-world
-> messiness that a real http client needs to deal with (as opposed to just
-> following the standards).
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+ contrib/subtree/t/t7900-subtree.sh |    2 +-
+ git-remote-testgit.sh              |    2 +-
+ git-stash.sh                       |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-Yeah, I agree, you're probably fine without all this detail in over 
-99% of the cases where this code would ever be exposed. I'm a bit 
-damaged after 10+ years as a web browser developer, responsible for 
-exactly this kind of stuff... :-)
-
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 66ce4b0..c1d0b23 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -8,7 +8,7 @@ This test verifies the basic operation of the merge, pull, add
+ and split subcommands of git subtree.
+ '
+ 
+-export TEST_DIRECTORY=$(pwd)/../../../t
++TEST_DIRECTORY=$(pwd)/../../../t && export TEST_DIRECTORY
+ 
+ . ../../../t/test-lib.sh
+ 
+diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
+index 1c006a0..9d1ce76 100755
+--- a/git-remote-testgit.sh
++++ b/git-remote-testgit.sh
+@@ -13,7 +13,7 @@ refspec="${GIT_REMOTE_TESTGIT_REFSPEC-$default_refspec}"
+ 
+ test -z "$refspec" && prefix="refs"
+ 
+-export GIT_DIR="$url/.git"
++GIT_DIR="$url/.git" && export GIT_DIR
+ 
+ force=
+ 
+diff --git a/git-stash.sh b/git-stash.sh
+index 4798bcf..0bb1af8 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -94,7 +94,7 @@ create_stash () {
+ 		# ease of unpacking later.
+ 		u_commit=$(
+ 			untracked_files | (
+-				export GIT_INDEX_FILE="$TMPindex"
++				GIT_INDEX_FILE="$TMPindex" && export GIT_INDEX_FILE &&
+ 				rm -f "$TMPindex" &&
+ 				git update-index -z --add --remove --stdin &&
+ 				u_tree=$(git write-tree) &&
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+1.7.10.4
