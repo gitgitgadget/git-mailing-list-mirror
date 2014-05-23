@@ -1,161 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Add an explicit GIT_DIR to the list of excludes
-Date: Fri, 23 May 2014 13:42:43 -0700
-Message-ID: <xmqqha4gi5vg.fsf@gitster.dls.corp.google.com>
-References: <1400866411-14584-1-git-send-email-pasha.bolokhov@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v10 25/44] receive-pack.c: use a reference transaction
+ for updating the refs
+Date: Fri, 23 May 2014 23:02:24 +0200
+Message-ID: <537FB760.1080800@alum.mit.edu>
+References: <1400261852-31303-1-git-send-email-sahlberg@google.com>	<1400261852-31303-26-git-send-email-sahlberg@google.com>	<537781CA.1010208@alum.mit.edu>	<CAL=YDWmLgW0b28q5Yqw7R4nobKF5=pcbSpnazC8+EA=QKhkpow@mail.gmail.com>	<537F51F9.5070600@alum.mit.edu> <CAL=YDWkDSF1WWhZAt-nW8RUAjm+iBmg+=p8hq6GJAzF-3-WxGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pclouds@gmail.com, jrnieder@gmail.com, git@vger.kernel.org
-To: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 23 22:42:54 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Fri May 23 23:02:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnwIn-0000sw-1E
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 22:42:53 +0200
+	id 1Wnwbo-0002iH-TB
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 23:02:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039AbaEWUmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 16:42:49 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58379 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750936AbaEWUmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 16:42:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2AC461A529;
-	Fri, 23 May 2014 16:42:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4eZ7PjzWyxpnO+vW9roHQtLhjtY=; b=SprVKk
-	BVAaVpwcyT8KKFVfZKaR2YE53GzihOWUeXxV4aLkYIJpu4lF/xHkpy9YEy191IXL
-	jyeSGT2ZwH2q7J0AYicw4twUx3q4UYBpOihEnOKKdNjxZR6cwx01hvXrPUaNVwmc
-	b7B2BVidtW24PhW0e1TAzgCYEG+Cb9EkF/Wn8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AzEIFf6sP8mGID3XibQQuTOyMtVsLvG7
-	TPvZELVx9arPdfAUI3FO595ggvvnYPGIVFpPW7PRbN8Bg6+BS1P2UT7J+j66OqMT
-	pIkboC8be6cCi8E5ZFReLy0wGLf48mewkxIsvaWu+H7PzJrCg1UPVa5Zz1v7Q49G
-	G82EklKjJ+0=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1E6681A528;
-	Fri, 23 May 2014 16:42:48 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E3EA51A524;
-	Fri, 23 May 2014 16:42:44 -0400 (EDT)
-In-Reply-To: <1400866411-14584-1-git-send-email-pasha.bolokhov@gmail.com>
-	(Pasha Bolokhov's message of "Fri, 23 May 2014 10:33:31 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CB09A22E-E2BA-11E3-B251-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751011AbaEWVC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 17:02:28 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:60305 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750923AbaEWVC1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 May 2014 17:02:27 -0400
+X-AuditID: 1207440f-f79536d000000bcf-41-537fb7628844
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id A7.EB.03023.267BF735; Fri, 23 May 2014 17:02:26 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB0E41.dip0.t-ipconnect.de [93.219.14.65])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4NL2P1q029343
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 23 May 2014 17:02:26 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <CAL=YDWkDSF1WWhZAt-nW8RUAjm+iBmg+=p8hq6GJAzF-3-WxGg@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqJu0vT7YYMoPA4uuK91MFv8m1Dgw
+	eSzYVOrxeZNcAFMUt01SYklZcGZ6nr5dAnfGpr8H2QreSVRcmbOBrYHxhHAXIyeHhICJRFPH
+	HyYIW0ziwr31bF2MXBxCApcZJc5NP8QO4Zxjklj3bT0zSBWvgLbEs/4+dhCbRUBV4vuKQ2Dd
+	bAK6Eot6moFsDg5RgSCJP2cVIcoFJU7OfMICYosIaErc7D8NVs4soC/x6c8BMFtYIEmi7T/E
+	SCGBY0wSO64YgNicAoESrz5MYQQZKSEgLtHTGARiMguoS6yfJwQxRV5i+9s5zBMYBWchWTYL
+	oWoWkqoFjMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3RN9HIzS/RSU0o3MULCln8HY9d6mUOM
+	AhyMSjy8P/rqg4VYE8uKK3MPMUpyMCmJ8lpvAwrxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4eVd
+	DJTjTUmsrEotyodJSXOwKInzqi9R9xMSSE8sSc1OTS1ILYLJynBwKEnwngIZKliUmp5akZaZ
+	U4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K3fhiYPSCpHiA9n4GaectLkjMBYpCtJ5i1OU4dedY
+	G5MQS15+XqqUOK8fSJEASFFGaR7cCliSesUoDvSxMO9lkCoeYIKDm/QKaAkT0JIXC2tBlpQk
+	IqSkGhjFdmfuVfctO/wndKHg7fnrMllOHQ17qz/15ze7OS56G1SWNQkvUci6LSwouvI2U/ze
+	5/byJfdrFH+atq6eo25ulzYpUeV33o0XSi6tz8Pz85/ybnq6poVjpcJV24klR34p 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250032>
 
-Pasha Bolokhov <pasha.bolokhov@gmail.com> writes:
+On 05/23/2014 06:14 PM, Ronnie Sahlberg wrote:
+> On Fri, May 23, 2014 at 6:49 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+>> [...]
+>> When I combine these two lines of thought, it suggests to me that we
+>> could do a better job of supporting *both* use cases.  What if the
+>> transaction object contained not an err strbuf but a string_list?  If an
+>> error occurs while building up the transaction, a message would be added
+>> to the string list and the function would return an error status.  The
+>> caller can monitor errors while it is building up the transaction and
+>> abort immediately if it wants, or it can ignore the return values and
+>> let the error messages accumulate in the string list.  When the caller
+>> attempts the commit, it would notice that the transaction failed, and at
+>> that time the caller could emit *all* of the accumulated error messages
+>> by reading them out of the string list; e.g.,
+>>
+>>     Error fetching from $REMOTE:   <- this is generated by caller
+>>         $ERR[0]    <- these come from the error string list,
+>>         $ERR[1]       printed with indentation by caller
+>>         $ERR[2]
+>>         $ERR[3]
+>>
+>> This style would have another advantage: we might have some back ends
+>> for which transactions have a high overhead.  Such a back end would
+>> probably choose not to do any checks while the transaction is being
+>> built up, e.g., to avoid a round-trip to a database.  When commit() is
+>> called, it would learn about all of the errors at once.  (1) It would
+>> need a way to return all of the errors to the caller.  (2) It would be
+>> nice for the caller to be able to treat such a back end the same as it
+>> treats a back end that is able to report errors immediately.  It seems
+>> to me that having a way to report multiple errors at the same time would
+>> solve both problems nicely.
+> 
+> Inretesting.
+> That would mean changing all functions to take a string_list provided
+> by the caller instead of a strbuf.
+> And then have _update/_create/_delete do actual work instead of
+> bailing out after the first error.
+> 
+> Users that want to check for error and log after each call to
+> _update/_create/_delete could do so and
+> just use the last entry added to the string list or otherwise they
+> could just wait until _commit time and if it fails log
+> all the strings.
 
-> diff --git a/dir.c b/dir.c
-> index 98bb50f..76969a7 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -1588,6 +1588,26 @@ void setup_standard_excludes(struct dir_struct *dir)
->  {
->  	const char *path;
->  	char *xdg_path;
-> +	const char *gitdir = get_git_dir();
-> +
-> +	/* Add git directory to the ignores first */
-> +	if (strcmp(gitdir, ".git") != 0) {
+I still think we should consider storing the err string_list within the
+transaction object; otherwise it's annoying to have to pass that
+parameter around everywhere.  And if there were also a policy that any
+caller that checks and reports any error should report *all* of the
+accumulated errors and abort the transaction, then we don't have to
+worry about error messages being output multiple times or zero times.
 
-It is more idiomatic and common to say
+It might be nice to have a printf-style helper function like
 
-	if (strcmp(gitdir, ".git")) {
+    ref_transaction_perror(transaction, fmt, ...)
 
-around here, I think.
+(or maybe ref_transaction_die()) that outputs the accumulated errors
+with msg as a header (like my example output above), to make error
+handling easy and uniform.
 
->     /* "--git-dir" has been given */
+Michael
 
-... or it could have come from GIT_DIR environment, no?
-
-Does this "additional exclude" need to kick in if GIT_DIR is set to
-"/home/pasha/w/.git"?  That is, when gitdir is ".git" or ends with
-"/.git"?
-
-> +		char ngit[PATH_MAX + 1];
-
-Hmmm.  As I recall that recently we had flurry of changes to
-eradicate PATH_MAX from our codebase, I am not happy to see an
-introduction of a new buffer that is fixed-size.
-
-> +		/*
-> +		 * See if GIT_DIR is inside the work tree; need to normalize
-> +		 * 'gitdir', whereas 'get_git_work_tree()' always appears
-> +		 * absolute and normalized
-> +		 */
-> +		normalize_path_copy(ngit, real_path(absolute_path(gitdir)));
-> +
-> +		if (dir_inside_of(ngit, get_git_work_tree()) >= 0) {
-> +			struct exclude_list *el = add_exclude_list(dir, EXC_CMDL,
-> +							"--git-dir option");
-> +
-> +			add_exclude(gitdir, "", 0, el, 0);
-> +		}
-> +	}
->  
->  	dir->exclude_per_dir = ".gitignore";
->  	path = git_path("info/exclude");
-> diff --git a/t/t2205-add-gitdir.sh b/t/t2205-add-gitdir.sh
-> new file mode 100755
-> index 0000000..0c99508
-> --- /dev/null
-> +++ b/t/t2205-add-gitdir.sh
-> @@ -0,0 +1,84 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2014 Pasha Bolokhov
-> +#
-> +
-> +test_description='alternative repository path specified by --git-dir is ignored by add and status'
-> +
-> +. ./test-lib.sh
-> +
-> +#
-> +# Create a tree:
-> +#
-> +# 	a  b  c  d  subdir/
-> +#
-> +# subdir:
-> +# 	e  f  g  h  meta/  ssubdir/
-> +#
-> +# subdir/meta:
-> +# 	aa
-> +#
-> +# subdir/ssubdir:
-> +# 	meta/
-> +#
-> +# subdir/ssubdir/meta:
-> +# 	aaa
-> +#
-> +# Name the repository "meta" and see whether or not "git status" includes
-> +# or ignores directories named "meta". The slightly deeper hierarchy is
-> +# needed in order to be able to put the repository into "../meta", that is,
-> +# outside the work tree and still have files called "meta" within the tree
-> +#
-
-It is not quite clear with this large blob of comment what are
-noises and what exactly are being tested.  I think you have two
-directories called "meta", but which one is the repository?  Or do
-you have yet another one next to {a,b,c,d,subdir} called "meta" that
-is not listed above?
-
-Given that the reason why people use --git-dir is so that they can
-put it completely outside the working tree (in which case, the usual
-"start from cwd and go upwards while trying to see if there is .git/
-that governs the working tree" logic would not work), readers would
-not expect to find the directory to be used as GIT_DIR in the
-hierarchy you are creating in the first place.  Because of that, it
-is even more important to clearify which "meta" you mean to use as
-your GIT_DIR if you want to be understood by readers.
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
