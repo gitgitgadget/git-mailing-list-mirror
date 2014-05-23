@@ -1,76 +1,113 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC/PATCH] replace: add --graft option
-Date: Fri, 23 May 2014 08:39:54 +0200 (CEST)
-Message-ID: <20140523.083954.56876133762506067.chriscool@tuxfamily.org>
-References: <20140518182939.5260.91202.chriscool@tuxfamily.org>
-	<5379D1EF.8040203@alum.mit.edu>
+From: =?UTF-8?Q?Jens_Lindstr=C3=B6m?= <jl@opera.com>
+Subject: Re: [PATCH 1/2] remote: defer repacking packed-refs when deleting refs
+Date: Fri, 23 May 2014 12:03:06 +0200
+Message-ID: <CAEef6WyXGXAdm_DkzNsuLgeFFpQsxvTiuJbK3ypc8-Cz2qD_KQ@mail.gmail.com>
+References: <537B2FA4.7020001@opera.com>
+	<537B30E7.5020505@opera.com>
+	<xmqqtx8kxn7f.fsf@gitster.dls.corp.google.com>
+	<xmqqlhtwxkg9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, git@vger.kernel.org, peff@peff.net
-To: mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri May 23 08:40:24 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 23 12:03:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wnj9T-0004FV-AJ
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 08:40:23 +0200
+	id 1WnmJm-0003KT-Ep
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 12:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752092AbaEWGkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 02:40:17 -0400
-Received: from [194.158.98.15] ([194.158.98.15]:44029 "EHLO mail-2y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751904AbaEWGkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 02:40:16 -0400
-Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id 97F3834;
-	Fri, 23 May 2014 08:39:54 +0200 (CEST)
-In-Reply-To: <5379D1EF.8040203@alum.mit.edu>
-X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
+	id S1751515AbaEWKDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 06:03:09 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:59249 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751236AbaEWKDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 06:03:08 -0400
+Received: by mail-la0-f51.google.com with SMTP id gf5so3971929lab.10
+        for <git@vger.kernel.org>; Fri, 23 May 2014 03:03:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=urYXcsM88tMhmzZhY2w0dGkshp1xKt0UAraLQrXWxz4=;
+        b=b44bwevsvDPlTu9uGjVAaJ2+t1aaB3dJgkWFxQCaMGYuxTupNIF93ZDtiePijQ3+Yg
+         gYKpxj06KXcy0VAc/AzchE/8Q8bwSYZ0vM3iiy+MYJoQYeCvjG8/Aqc5XPXI+EyzmC6r
+         8GJstThM7FXquynIyp8KkJ7ZoDjBA7wFOWEOAZShg/vbbCK5TQPSaG16vtplbvFOARyY
+         AufmL+py//BLLLbt6/SfSDgeVPWitPzzvPB29gBuR04UtVp0zTvC3lbZY+TH41kOBb5u
+         0/3FAlzFp82DX+4B6dKPZimIoYohgAhwa1iYx0tgcWA9DO78zA6uD6xfiIqyhRL+oy/g
+         S+6g==
+X-Gm-Message-State: ALoCoQknYSwji2eZz/xqvVbKNXNb6g4NlLFDp8W3yE0bJU1Umdkqc7TVfyBa4Ab2uMX3/TwiAlpZ
+X-Received: by 10.112.218.74 with SMTP id pe10mr2547095lbc.3.1400839386351;
+ Fri, 23 May 2014 03:03:06 -0700 (PDT)
+Received: by 10.112.106.102 with HTTP; Fri, 23 May 2014 03:03:06 -0700 (PDT)
+In-Reply-To: <xmqqlhtwxkg9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249977>
 
-From: Michael Haggerty <mhagger@alum.mit.edu>
+On Tue, May 20, 2014 at 10:29 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> A bit safer way to organize might be to first create a list of the
+>> refs to be removed in-core, update packed-refs without these refs to
+>> be removed, and then finally remove the loose ones, but I haven't
+>> thought things through.
+>
+> Perhaps a removal of remote can go in this order to be resistant
+> against an abort-in-the-middle.
+>
+>  * update packed-refs without the refs that came from the remote.
+>
+>    - when interrupted before the new temporary file is renamed to
+>      the final, it would be a no-op.
+>
+>    - when interrupted after the rename, only some refs that came
+>      from the remote may disappear.
+>
+>  * remove the loose refs that came from the remote.
+>
+>  * finally, remove the configuration related to the remote.
+>
+> This order would let you interrupt "remote rm" without leaving the
+> repository in a broken state.  Before the final state, it may appear
+> that you have some but not all remote-tracking refs from the remote
+> in your repository, but you would not have any ref that point at an
+> obsolete object.  Running "remote rm" again, once it finishes, will
+> give you the desired result.
 
-> On 05/18/2014 08:29 PM, Christian Couder wrote:
->> The usage string for this option is:
->> 
->> git replace [-f] --graft <commit> [<parent>...]
->> 
->> First we create a new commit that is the same as <commit>
->> except that its parents are [<parents>...]
->> 
->> Then we create a replace ref that replace <commit> with
->> the commit we just created.
->> 
->> With this new option, it should be straightforward to
->> convert grafts to replace refs, with something like:
->> 
->> cat .git/info/grafts | while read line
->> do git replace --graft $line; done
-> 
-> I love the functionality; I think it's a great step towards making
-> grafts obsolete.
-> 
-> I haven't worked with Git's object reading/writing code much, but it
-> surprised me that you are editing the commit object basically as a
-> string, using hard-coded length constants and stuff.  It seems
-> error-prone, and we already have a commit parser.
-> 
-> Would it be possible to program this at a higher layer of abstraction
-> based on the commit object produced by the existing commit parser?
-> E.g., edit the object it produces, and write the result?  Or create a
-> new commit object out of the parsed commit object and write that?
+Removing the remote configuration (I assume you mean the
+"remote.<name>" section from .git/config) last in 'remote rm' would be
+a bit better I think.  Especially with the very slow removal of
+branches an impatient user would likely abort the command if there
+were many remote-tracking branches, after which rerunning would fail
+since the remote configuration was already gone, and then there would
+be no obvious way to get rid of the remaining remote-tracking
+branches.
 
-I tried to program this at a higher layer of abstraction first, but it
-was not easy to properly write the new commit.
+Doing the repacking first and then run through and delete loose refs
+and ref logs leads to a smaller and nicer patch as well; no need to
+tell delete_ref() to not repack then, since repack_without_refs() will
+just find that the ref isn't in packed-refs already and do nothing.
 
-> It's great that you're working on this!
+One additional change was required in
+builtin/remote.c:remove_branches().  It used to pass in the expected
+SHA-1 of the ref to delete_ref(), which only works if the ref exists.
+If repack_without_refs() is called first, most refs won't exist, and
+delete_ref() would fail.  Branch removal from 'remote prune' didn't
+have this problem, since it called delete_ref() with a NULL SHA-1.
 
-Thanks,
-Christian.
+
+> A longer-term goal might be to have ref-transaction infrastructure
+> clever enough to coalesce the "repack-without-these-refs" requests
+> into one automatically without forcing the callers you are fixing
+> care about these things, though.  And such a transaction semantics
+> may have to also cover the updating of configuration files.
+
+Yes, some kind of more advanced transaction mechanism would be great,
+and would likely solve this type of performance issue by design.
+
+/ Jens
