@@ -1,97 +1,105 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 8/8] http: default text charset to iso-8859-1
-Date: Fri, 23 May 2014 02:02:24 +0000
-Message-ID: <20140523020224.GB284865@vauxhall.crustytoothpaste.net>
-References: <20140522092824.GA14530@sigill.intra.peff.net>
- <20140522093612.GH15032@sigill.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2] Add an explicit GIT_DIR to the list of excludes
+Date: Fri, 23 May 2014 00:39:35 -0400
+Message-ID: <CAPig+cTZuxd7vFdoLDb=_CUuoaKbHLKRftvBJd6XQDD_5R5+tA@mail.gmail.com>
+References: <1400789477-27906-1-git-send-email-pasha.bolokhov@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xgyAXRrhYN0wYx8y"
-Cc: git@vger.kernel.org, "Kyle J. McKay" <mackyle@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 23 04:02:39 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 23 06:39:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wneoh-0001ZV-CY
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 04:02:39 +0200
+	id 1WnhGe-0002sb-Md
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 06:39:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751822AbaEWCCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 22 May 2014 22:02:35 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:47915 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751805AbaEWCCe (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 22 May 2014 22:02:34 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:9d23:25b3:8261:f09a])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 412F028087;
-	Fri, 23 May 2014 02:02:32 +0000 (UTC)
-Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	"Kyle J. McKay" <mackyle@gmail.com>,
-	Peter Krefting <peter@softwolves.pp.se>
-Content-Disposition: inline
-In-Reply-To: <20140522093612.GH15032@sigill.intra.peff.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.14-trunk-rt-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S1752198AbaEWEjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 00:39:36 -0400
+Received: from mail-yk0-f178.google.com ([209.85.160.178]:57432 "EHLO
+	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752191AbaEWEjg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 00:39:36 -0400
+Received: by mail-yk0-f178.google.com with SMTP id 20so3582719yks.23
+        for <git@vger.kernel.org>; Thu, 22 May 2014 21:39:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=0z2wagHK0varO1zuN80ajSVndkxUSbN3JOp3vZrqxD4=;
+        b=F/Zh7xUXy5QQ36rGdnd2QCv5HrLTm58CDLau265v8Aog4mleJCw0rAE1fEHOtFc/qA
+         3uzIo7esK6bILddfVRbH/eXsHG0u/BHUwDZ65hk8mcukZ1zHq61f/WdmaDsSwvHnOXiQ
+         hZf6q9u64QkXMhV+l/5NqmhwgPcS0ekzrvHLAVUdNJSC0Ag7qDh8dTEREUBPptYZypI3
+         lGAYwk7bIx3w9o8bambkI1/xJoIngpCxQbDCQGWnKwjsa8ub4Si/ANfySbY2wxNdVd9m
+         nZbKSku5oTbCJaSh5IaHrIdTERNfUCwzjsMu5q6FctvfqDyMMu8EP8XkJ2aGfZOUYyJI
+         eF9w==
+X-Received: by 10.236.84.202 with SMTP id s50mr3232657yhe.77.1400819975373;
+ Thu, 22 May 2014 21:39:35 -0700 (PDT)
+Received: by 10.170.169.65 with HTTP; Thu, 22 May 2014 21:39:35 -0700 (PDT)
+In-Reply-To: <1400789477-27906-1-git-send-email-pasha.bolokhov@gmail.com>
+X-Google-Sender-Auth: -PGdq8DHF3u1W5_JF8xTL2vUwTQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249970>
 
+On Thu, May 22, 2014 at 4:11 PM, Pasha Bolokhov
+<pasha.bolokhov@gmail.com> wrote:
+> diff --git a/t/t2205-add-gitdir.sh b/t/t2205-add-gitdir.sh
+> new file mode 100755
+> index 0000000..3c6b853
+> --- /dev/null
+> +++ b/t/t2205-add-gitdir.sh
+> @@ -0,0 +1,61 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2014 Pasha Bolokhov
+> +#
+> +
+> +test_description='alternative repository path specified by --git-dir is ignored by add and status'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success "setup" '
+> +       git --git-dir=meta init &&
+> +       for f in a b c d
+> +       do
+> +               echo "DATA" > "$f" || exit 1
 
---xgyAXRrhYN0wYx8y
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On this project, it's customary to say 'foo >bar' (no whitespace after
+'>'). Ditto for the rest of the file.
 
-On Thu, May 22, 2014 at 05:36:12AM -0400, Jeff King wrote:
-> If we do want to do magic like "latin1 is really iso-8859-1", that seems
-> like the domain of iconv to me. If iconv doesn't handle it itself, I'd
-> rather have a wrapper there. Putting it at that layer keeps the code
-> cleaner, and it means the wrapper would benefit the regular commit-log
-> reencoding code.
+> +       done &&
+> +       mkdir subdir1 &&
+> +       for f in e f g h
+> +       do
+> +               echo "MORE DATA" > "subdir1/$f" || exit 1
+> +       done &&
+> +       mkdir subdir1/meta &&
+> +       echo "EVEN more Data" > subdir1/meta/aa &&
+> +       mkdir subdir1/ssubdir subdir1/ssubdir/meta &&
+> +       echo "So much more data" > subdir1/ssubdir/meta/aaa
+> +'
+> +
+> +test_expect_success "'git status' acknowledges files 'meta' if repository is not within work tree" '
+> +       test_might_fail rm -rf meta/ &&
+> +       (
+> +               cd subdir1 &&
+> +               git --git-dir=../meta init
 
-I think being a little stricter in our character encoding actually
-benefits users.  If someone claims that all their commit messages are in
-US-ASCII or ISO-8859-1, and then stuffs Windows-1252 in there, that's
-going to break a lot of stuff, especially if someone assumes US-ASCII
-means it's okay to use it where UTF-8 is required.
+Broken &&-chain.
 
-It's much better to let people not insert broken stuff in the first
-place rather than deal with it afterwards.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---xgyAXRrhYN0wYx8y
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJTfqwwAAoJEL9TXYEfUvaLeS8QAJyofmf0tF9QVcfhYGPgsHWV
-bHgYccNsAobfDVReZMwuaxgp96E9n1jL+BcIxWNTLVfBGA/H9CIPxrPQKzKpiD2U
-7oUEn9/u10/pqJ6Ubzo2lV1k7jP6Z44aIELd2gMslghV4Zrt6H8Huf6A+g8VuaRE
-PUIgy+eoHtSDvXI40jSe96A9JwsWieOqo2YuWwGiG1gYxJQ5INr1mIYJNXqvl7sa
-VgeKxgsrpI0W3Oil0scye4oEnAkxoTgPvamA6ovtYGqRuJQYkr5KU8PgRA0zaA75
-Ci3gcK3VN6mLv2br+zJpxhofcKbniWe8LDKL4ZiaumuIWrN05+KKDxrWrrYX3Wsz
-qp9n90sJ0cxDrXOFASGo/32X+c604oI6azAy551DfCj6K4G9GY9DFrQKj+OwuJ8s
-7/83NR0Mluw37rBQ1N8vMpOGS4x4KWVkK/V9iEToJa1RIKJkfTjxRx9J6zIR6hiv
-AAR4RviLXdYr9Nqn1jzygkg2xIOCPkYjRM1ofQIeSBskGHjus5fkc1fuot4lf0OH
-0axwUjhX+koPk5un/WLQwaQJQOPJpFc3DW5DJoM45yyTZ13igN6cWFHYZM4dBSvb
-w51bFAUfaeHakkiXN7RLVnupGy3bUPC9Ph8tcMRCZJ3p3LU3dWdG+ZFhjHnw28MW
-6fu+T4qDMpdx8JwYOF7s
-=fjuu
------END PGP SIGNATURE-----
-
---xgyAXRrhYN0wYx8y--
+> +               git --git-dir=../meta --work-tree=. status --porcelain > status2.out &&
+> +               test_might_fail grep meta status2.out > out2 &&
+> +               test -s out2
+> +       )
+> +'
+> +
+> +test_done
+> --
+> 1.9.1
