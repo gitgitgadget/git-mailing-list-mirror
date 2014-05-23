@@ -1,59 +1,70 @@
-From: Sergei Organov <osv@javad.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Plumbing to rename a ref?
-Date: Fri, 23 May 2014 15:35:54 +0400
-Message-ID: <87k39ck9r9.fsf@osv.gnss.ru>
-References: <87ha4golck.fsf@osv.gnss.ru> <20140523105047.GA2249@serenity.lan>
+Date: Fri, 23 May 2014 08:35:03 -0400
+Message-ID: <20140523123503.GB726@sigill.intra.peff.net>
+References: <87ha4golck.fsf@osv.gnss.ru>
+ <20140523105047.GA2249@serenity.lan>
+ <87k39ck9r9.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Fri May 23 13:36:07 2014
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Fri May 23 14:35:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wnnla-0008Lo-5i
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 13:36:02 +0200
+	id 1Wnogu-0003E1-5R
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 14:35:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752302AbaEWLf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 07:35:58 -0400
-Received: from mail.javad.com ([54.86.164.124]:55700 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752073AbaEWLf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 07:35:57 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id 3F899617FB;
-	Fri, 23 May 2014 11:35:56 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <s.organov@javad.com>)
-	id 1WnnlS-0007PK-J6; Fri, 23 May 2014 15:35:54 +0400
-In-Reply-To: <20140523105047.GA2249@serenity.lan> (John Keeping's message of
-	"Fri, 23 May 2014 11:50:47 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1751535AbaEWMfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 08:35:07 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58038 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750981AbaEWMfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 08:35:06 -0400
+Received: (qmail 6970 invoked by uid 102); 23 May 2014 12:35:05 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 May 2014 07:35:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 May 2014 08:35:03 -0400
+Content-Disposition: inline
+In-Reply-To: <87k39ck9r9.fsf@osv.gnss.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249987>
 
-John Keeping <john@keeping.me.uk> writes:
-> On Fri, May 23, 2014 at 02:11:55PM +0400, Sergei Organov wrote:
->> Hello,
->> 
->> After convertion of a project from CVS to git, I'd like to rename some
->> references in the created git repository (before it's published, so no
->> problems here). Is there a plumbing that would do:
->> 
->> git rename-ref <old_name> <new_name>
->> 
->> for me?
->
-> I think the best you can get is two invocations of `git update-ref`:
->
-> 	git update-ref <new_name> <old_name> &&
-> 	git update-ref -d <old_name>
+On Fri, May 23, 2014 at 03:35:54PM +0400, Sergei Organov wrote:
 
-This should be good enough. Thanks a lot!
+> John Keeping <john@keeping.me.uk> writes:
+> > On Fri, May 23, 2014 at 02:11:55PM +0400, Sergei Organov wrote:
+> >> Hello,
+> >> 
+> >> After convertion of a project from CVS to git, I'd like to rename some
+> >> references in the created git repository (before it's published, so no
+> >> problems here). Is there a plumbing that would do:
+> >> 
+> >> git rename-ref <old_name> <new_name>
+> >> 
+> >> for me?
+> >
+> > I think the best you can get is two invocations of `git update-ref`:
+> >
+> > 	git update-ref <new_name> <old_name> &&
+> > 	git update-ref -d <old_name>
+> 
+> This should be good enough. Thanks a lot!
 
--- Sergey.
+One thing that this misses (as does your original script) is the
+reflogs. Doing "branch -m" to rename a branch will actually move the
+reflogs, too, but there is otherwise no way to access that
+functionality.
+
+It does not seem unreasonable to teach "git update-ref" to do renames to
+take advantage of this (it would be fairly simple; the logic is already
+encapsulated internally in a rename_ref function).
+
+-Peff
