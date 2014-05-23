@@ -1,73 +1,103 @@
-From: Adam Borowski <kilobyte@angband.pl>
-Subject: Re: [BUG] auto-repack exits prematurely, locking other processing out
-Date: Sat, 24 May 2014 00:34:37 +0200
-Message-ID: <20140523223437.GA4230@angband.pl>
-References: <20140523195121.GA923@angband.pl>
- <xmqqy4xsgome.fsf@gitster.dls.corp.google.com>
+From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+Subject: Re: [PATCH v3] Add an explicit GIT_DIR to the list of excludes
+Date: Fri, 23 May 2014 15:40:59 -0700
+Message-ID: <CAKpPgvdR5vwSMk0w_uMH8oDKAgH+v1v5JnQOSbaiZt4aNxO0qA@mail.gmail.com>
+References: <1400866411-14584-1-git-send-email-pasha.bolokhov@gmail.com> <xmqqha4gi5vg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 24 00:34:50 2014
+X-From: git-owner@vger.kernel.org Sat May 24 00:41:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wny36-00009a-6c
-	for gcvg-git-2@plane.gmane.org; Sat, 24 May 2014 00:34:48 +0200
+	id 1Wny9V-00040B-KO
+	for gcvg-git-2@plane.gmane.org; Sat, 24 May 2014 00:41:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751186AbaEWWeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 18:34:44 -0400
-Received: from tartarus.angband.pl ([89.206.35.136]:38368 "EHLO
-	tartarus.angband.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751039AbaEWWeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 18:34:44 -0400
-Received: from kilobyte by tartarus.angband.pl with local (Exim 4.80)
-	(envelope-from <kilobyte@tartarus.angband.pl>)
-	id 1Wny2v-0001F7-Af; Sat, 24 May 2014 00:34:37 +0200
-Content-Disposition: inline
-In-Reply-To: <xmqqy4xsgome.fsf@gitster.dls.corp.google.com>
-X-Junkbait: adolf@angband.pl, zareba@angband.pl
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: kilobyte@tartarus.angband.pl
-X-SA-Exim-Scanned: No (on tartarus.angband.pl); SAEximRunCond expanded to false
+	id S1751392AbaEWWlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 18:41:21 -0400
+Received: from mail-ob0-f179.google.com ([209.85.214.179]:43243 "EHLO
+	mail-ob0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751303AbaEWWlU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 18:41:20 -0400
+Received: by mail-ob0-f179.google.com with SMTP id vb8so6106858obc.10
+        for <git@vger.kernel.org>; Fri, 23 May 2014 15:41:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=EK9qK+a+LDvUNWVfAuCy5H0iS6sapUjyEFvMkpTdR3I=;
+        b=GTe7oDKhQvl2rCoYFrfNZYBjoB/IiXsxvGuFrTYpRcquJ0LNl+yumyDd+9O6I0lnIr
+         jyOl/WhLbMlq8sHkPjqEp1tlLMhLV3bqAn2iLUbiAGq/gpemIPXM4dHHXAvNX4S0NOrg
+         GhOWkS+ptLqWDENXZsA0VT7ygSWWxFpk6faX621lGf2wNWk3PKMDTl9JmIrpEahf/nQs
+         kYnDOlFwv9WVBYk0xCIyJh+B6MJSOyZwkFfRmKmAxrQei+9zAqb3aK/eC8On/kDt6pI3
+         L4gCZSBSc6bg83S453KGbui+wR4bE6PrKbuP0+Hn8/MGdB0YUF7figy+hlFt/hj/hBrB
+         svww==
+X-Received: by 10.182.104.101 with SMTP id gd5mr8283687obb.54.1400884879663;
+ Fri, 23 May 2014 15:41:19 -0700 (PDT)
+Received: by 10.60.16.8 with HTTP; Fri, 23 May 2014 15:40:59 -0700 (PDT)
+In-Reply-To: <xmqqha4gi5vg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250043>
 
-On Fri, May 23, 2014 at 02:40:41PM -0700, Junio C Hamano wrote:
-> Adam Borowski <kilobyte@angband.pl> writes:
-> > It looks like the periodic auto-repack backgrounds itself when it shouldn't
-> > do so.  This causes the command it has triggered as a part of to fail:
-> 
-> Duy, 9f673f94 (gc: config option for running --auto in background,
-> 2014-02-08) turns to be not such a hot idea.  Sure, if we kick it
-> off background after doing something heavy, immediately before
-> giving control back to the end-user, and expect that the user will
-> stay thinking without making new changes (i.e. read-only stuff like
-> "git show" would be OK), then daemonize might be a great thing, but
-> we forgot, while doing that commit, that long-running operations
-> trigger the auto gc in the middle *and* they want it finish before
-> they continue, as the purpose of gc is to help the performance
-> during their further operation.
+       Hi,
 
-Just add a lock that's triggered by daemonize, and have things block on this
-lock.  This handles all cases:
-* --auto in the middle of a command: the block will kick in immediately,
-  effectively reverting to non-daemonized version
-* --auto at the end, the user does nothing: gc will finish its work in the
-  background, just as you wanted
-* --auto at the end, the user starts a new write two seconds later: gc works
-  in the foreground with those 2 seconds headstart
+>
+>>     /* "--git-dir" has been given */
+>
+> ... or it could have come from GIT_DIR environment, no?
+    Yes, it does not matter where it came from, but I'll correct the comment
 
-The only loss is the lack of a progress indicator, and even that can be
-done.
+>
+> Does this "additional exclude" need to kick in if GIT_DIR is set to
+> "/home/pasha/w/.git"?  That is, when gitdir is ".git" or ends with
+> "/.git"?
+    I don't think it needs to kick in in either of these cases, as
+".git" is already handled by "treat_path()". Now, here ".git" is
+excluded by "if (strcmp()) {", while the first case needs to be
+addressed too. Agree.
 
--- 
-Gnome 3, Windows 8, Slashdot Beta, now Firefox Ribbon^WAustralis.  WTF is going
-on with replacing usable interfaces with tabletized ones?
+>> +#
+>> +# Create a tree:
+>> +#
+>> +#    a  b  c  d  subdir/
+>> +#
+>> +# subdir:
+>> +#    e  f  g  h  meta/  ssubdir/
+>> +#
+>> +# subdir/meta:
+>> +#    aa
+>> +#
+>> +# subdir/ssubdir:
+>> +#    meta/
+>> +#
+>> +# subdir/ssubdir/meta:
+>> +#    aaa
+>> +#
+> It is not quite clear with this large blob of comment what are
+> noises and what exactly are being tested.  I think you have two
+> directories called "meta", but which one is the repository?  Or do
+> you have yet another one next to {a,b,c,d,subdir} called "meta" that
+> is not listed above?
+>
+> Given that the reason why people use --git-dir is so that they can
+> put it completely outside the working tree (in which case, the usual
+> "start from cwd and go upwards while trying to see if there is .git/
+> that governs the working tree" logic would not work), readers would
+> not expect to find the directory to be used as GIT_DIR in the
+> hierarchy you are creating in the first place.  Because of that, it
+> is even more important to clearify which "meta" you mean to use as
+> your GIT_DIR if you want to be understood by readers.
+
+I guess I was too simplistic, need to clarify a bit. And indeed,
+perhaps two distinct subtrees are needed to test the repository that
+is outside the work-tree, that would just do a slightly cleaner job
+
+Pasha
