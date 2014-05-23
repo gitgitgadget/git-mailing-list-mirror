@@ -1,81 +1,113 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-Subject: Re: more concerns about '--git-dir'
-Date: Fri, 23 May 2014 16:02:15 -0700
-Message-ID: <CAKpPgvcwVuvOqAE-SvECsCfPHMJr0qBaqz9DCOXQSAZj1903jQ@mail.gmail.com>
-References: <CAKpPgvf_UfgtOkotPz+aF4=UqQTOmk0O8tXg4Cm3zjzFimUoHw@mail.gmail.com>
- <xmqq1tvkjo4c.fsf@gitster.dls.corp.google.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: RE: What's cooking in git.git (May 2014, #05; Fri, 23)
+Date: Fri, 23 May 2014 18:17:16 -0500
+Message-ID: <537fd6fc10cfd_707c65304ef@nysa.notmuch>
+References: <xmqqppj4gm96.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 24 01:02:41 2014
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat May 24 01:28:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnyU4-0000Fh-Ky
-	for gcvg-git-2@plane.gmane.org; Sat, 24 May 2014 01:02:40 +0200
+	id 1WnytE-0000vx-Jy
+	for gcvg-git-2@plane.gmane.org; Sat, 24 May 2014 01:28:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbaEWXCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 19:02:37 -0400
-Received: from mail-ob0-f180.google.com ([209.85.214.180]:58116 "EHLO
-	mail-ob0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751010AbaEWXCg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 19:02:36 -0400
-Received: by mail-ob0-f180.google.com with SMTP id va2so5964694obc.25
-        for <git@vger.kernel.org>; Fri, 23 May 2014 16:02:36 -0700 (PDT)
+	id S1751154AbaEWX2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 19:28:37 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:56224 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751010AbaEWX2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 19:28:36 -0400
+Received: by mail-oa0-f52.google.com with SMTP id eb12so6210720oac.25
+        for <git@vger.kernel.org>; Fri, 23 May 2014 16:28:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=vlyEM763/ekWPPPkELeRLY7s0RhZnX6u7aC59e74MTM=;
-        b=csxNslY2jOufrM2xbn3L3Fcz0hqxyKR6ePKr4Tuc5NPCVGbXBZc4WbU0DskE7WO2kN
-         PS8+JrUSnJFLqZyFlhT3fj4+B/HvkB51B+LWlAXVG1KCqjf/Pps5+fqSbFPxHsUCUNJ+
-         j4CpvnY5m3x70/dXW6vSEXg8GuhcUE5YX0ipUBTvGtwhfa+nsJ16rcNms2FeGSGoNQkB
-         /ZfqffayqfFSQuhbz+WOdp9IkleobQQq4lJWfUe6ryTQve2IlY00x4twA/h8VDlVUiKh
-         GZ4N0Ke5okjPo9IzorlSLqOmfENM/GUwAF+sLYfATauomab6mXTcssOXTdXv7vJyeTV/
-         l5hQ==
-X-Received: by 10.60.146.167 with SMTP id td7mr7613349oeb.6.1400886155998;
- Fri, 23 May 2014 16:02:35 -0700 (PDT)
-Received: by 10.60.16.8 with HTTP; Fri, 23 May 2014 16:02:15 -0700 (PDT)
-In-Reply-To: <xmqq1tvkjo4c.fsf@gitster.dls.corp.google.com>
+        h=date:from:to:message-id:in-reply-to:references:subject:mime-version
+         :content-type:content-transfer-encoding;
+        bh=Hpdl6VI3koAcNsAH1CScJPHSfJhomSEzxU1iJfEwvbI=;
+        b=J0lXVog/E23/SpeqScQBbFsD8249x0wGGhQ30kf+xjA08KSrdf0EqiCTaYvyrHebIY
+         8ibLoikEJg1MGYkJ0M+h5YSQPiiYw8aMwExvu0meHKjZG0C3+Gs5xnEF5pV9dSFwos7t
+         Cfq+DeQVnbdHjhaCoBiVMhXhiYd+oZ63QjZYgfMklzz2V+PzcK0x3xRi3j1+4CeCrpBo
+         wpKsKDxV4ZSTvyNoIPhbHM8986cnKK04/pO5L6+FBTC1+HOMkrueAAqyDUWZ6yv7JqVu
+         8biu5nx1a9U7hpUNViTDhhUP+mOWvRAnnPIusuzcawRmlnV9tZhsj+BhLqUWBp731A1r
+         cDgw==
+X-Received: by 10.182.24.230 with SMTP id x6mr6766079obf.75.1400887716134;
+        Fri, 23 May 2014 16:28:36 -0700 (PDT)
+Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
+        by mx.google.com with ESMTPSA id js4sm15173061oeb.3.2014.05.23.16.28.34
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 May 2014 16:28:35 -0700 (PDT)
+In-Reply-To: <xmqqppj4gm96.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250047>
 
->> You won't notice anything different in the output of course, but the
->> environment will be odd:
->>     GIT_DIR=../tmp/./././.git
->>     GIT_WORK_TREE=$HOME/tmp
->> Notice how the work-tree has been normalized and git-dir hasn't. It's
->> kinda hard to imagine when this can lead to an error, but never know.
->
-> I think this one is in the "if it hurts, don't do it then"
-> territory.
-I just find it inconsistent: one variable is always straightened
-("normalized"), while the other one is or is not, depending on
-circumstances
+Junio C Hamano wrote:
+> * fc/publish-vs-upstream (2014-04-21) 8 commits
+>  . sha1_name: add support for @{publish} marks
+>  . sha1_name: simplify track finding
+>  . sha1_name: cleanup interpret_branch_name()
+>  . branch: display publish branch
+>  . push: add --set-publish option
+>  . branch: add --set-publish-to option
+>  . Add concept of 'publish' branch
+>  . t5516 (fetch-push): fix test restoration
+> 
+>  Add branch@{publish}; it seems that this is somewhat different from
+>  Ram and Peff started working on.  At least the tip needs to be
+>  rerolled not to squat on @{p} which @{push} and possibly @{pull}
+>  may want to share.
+> 
+>  Ejected from 'pu' to unclutter.
 
->> 2) "git --git-dir=meta status" complains:
->>
->> $ git --git-dir=meta init
->> $ git --git-dir=meta status
->>
->> yells that work-tree isn't setup and denies to run.
->
-> Is that because meta/config does not say where the worktree is?
->
-> Again, this smells like "if it hurts, don't do it then", even more
-> so than the previous one.  Does it help if you add --git-work-tree
-> to the command line, too?
-I agree this one is on the edge, so wasn't sure. I don't specify
-worktree at all, anywhere. And expect Git to guess it to be the
-current directory. It does so only if GIT_DIR, whatever it is, ends
-with "/.git". What's the logic? When the reader skims through the "man
-git-config" page, they'll think that work-tree defaults to "." if no
-value was provided. But it's only true if "core.bare" is set to false
+Sure, to "unclutter".
+
+Either way I'm not going to pursue this anymore. I've made changes since
+I sent those patches, for those who want this feature, you can find the
+latest patches here:
+
+https://github.com/felipec/git/commits/fc/publish
+
+Or just use git-fc.
+
+> * fc/remote-hg-fixes-for-hg-3.0 (2014-05-08) 5 commits
+>  . [DONTMERGE-not signed-off] remote-hg: work with older versions of mercurial
+>  . remote-hg: add support for hg v3.0
+>  . t: remote-hg: trivial cleanups and fixes
+>  . t: remote-hg: add file operation tests
+>  . remote-hg: add more tests
+> 
+>  No longer relevant, as 'master' unbundles contrib/remote-helpers/.
+
+And for the record, the branch was never properly named, as those
+patches are *not* "for hg 3.0".
+
+> * fc/remote-helpers-hg-bzr-graduation (2014-04-29) 11 commits
+>  . remote-hg: trivial cleanups
+>  . remote-hg: make sure we omit multiple heads
+>  . git-remote-hg: use internal clone's hgrc
+>  . t: remote-hg: split into setup test
+>  . remote-hg: properly detect missing contexts
+>  . remote-{hg,bzr}: store marks only on success
+>  . remote-hg: update to 'public' phase when pushing
+>  . remote-hg: fix parsing of custom committer
+>   (merged to 'next' on 2014-04-22 at fed170a)
+>  + remote-helpers: move tests out of contrib
+>  + remote-helpers: move out of contrib
+>  + remote-helpers: squelch python import exceptions
+> 
+>  No longer relevant, as 'master' unbundles contrib/remote-helpers/.
+
+Again a badly named branch; those changes are independent of the
+"graduation".
+
+-- 
+Felipe Contreras
