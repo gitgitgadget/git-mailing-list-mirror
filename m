@@ -1,93 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v8 41/44] refs.c: add a new flag for transaction delete
- for refs we know are packed only
-Date: Fri, 23 May 2014 11:24:29 -0700
-Message-ID: <20140523182429.GD12314@google.com>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
- <1400174999-26786-42-git-send-email-sahlberg@google.com>
- <20140522181722.GT12314@google.com>
- <CAL=YDWkUa2Ut=1iaMXgnjgte6g5jvXR49LBiEUNEkwv4Z-wO_w@mail.gmail.com>
- <CAL=YDW=hytDiz5qzAMyBgXUgza+AcDhk_y3m3kAUmOdBG=F=vA@mail.gmail.com>
- <20140522234440.GA12314@google.com>
- <20140522235351.GB12314@google.com>
- <CAL=YDWnRkwX3dCv9dyZmBdh2ZV7aSUCS=F6w67gJuBmCzGGBwQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v1 3/3] Documentation: replace: add --graft option
+Date: Fri, 23 May 2014 11:26:43 -0700
+Message-ID: <xmqqioowjqqk.fsf@gitster.dls.corp.google.com>
+References: <20140522211836.27162.80311.chriscool@tuxfamily.org>
+	<20140522213307.27162.3251.chriscool@tuxfamily.org>
+	<537F8021.8080304@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Fri May 23 20:24:38 2014
+To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 23 20:26:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wnu8z-00007i-Lj
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 20:24:38 +0200
+	id 1WnuBB-00048a-C7
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 20:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751042AbaEWSYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 14:24:33 -0400
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:53881 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750971AbaEWSYc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 14:24:32 -0400
-Received: by mail-pb0-f47.google.com with SMTP id rp16so4509000pbb.34
-        for <git@vger.kernel.org>; Fri, 23 May 2014 11:24:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=myDAPNR+HXUmwFnkr9dgEyRekQL+l8d4Vf0mFG+hkQc=;
-        b=zsjjM7G+cSiYrpCxkh6sCFyWpbbvTwU6B5tCxErD+LUBZaCxswmD83tVS9tbQJLH3N
-         EfLeOlRK80UMn91aXzB1OikWpuzszZ2KoxoOmUtitVO7aplfwB6lVMmiBR+2c6wkkWQF
-         OYm8qvLClSeSJFTYIlgo5ZIvW0ZKwRELe3j4H6rg8NdYJnKOkaVgzSu+mHAsE/3ke4LO
-         Gp9IqKDgX8zJcmeqlbPVOk2um/zBixNc6WI94DWYuEXUZ7S45/btesP+SVgR6cGqcqfq
-         XFTI006EkQa7KV/OJlM2Z8b828aohbrfFlcQ9GIt6zvlZHO1GkYMr6lAAEvei0zD+/oh
-         d1xA==
-X-Received: by 10.68.192.106 with SMTP id hf10mr8286219pbc.30.1400869472270;
-        Fri, 23 May 2014 11:24:32 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id cz3sm5752899pbc.9.2014.05.23.11.24.31
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 23 May 2014 11:24:31 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAL=YDWnRkwX3dCv9dyZmBdh2ZV7aSUCS=F6w67gJuBmCzGGBwQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751257AbaEWS0t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 May 2014 14:26:49 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56991 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751153AbaEWS0s convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 May 2014 14:26:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3CAC8180D4;
+	Fri, 23 May 2014 14:26:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=MBW0qGY7mEPq
+	2WnkliAT2RQUbvU=; b=vGsB0dahCDTYxz+o5WoKJM2HdenlEiq1yYz5kWqcZiJ0
+	Mo1l54gLsHqCYX+xBVGxlWAUin9Jny0yxo7a8YZbu7sdp94LGAENAXIC235W/Ynm
+	lBUIh0Y3JlTWsWN3aD/euAhDdxsB/YL/A4OC/FyZPjbJNER7ZWWjZg/ZFI19tII=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=DOtEzL
+	hQ+D6m6klOieD+UfAw3G0zMiJR27Dj9+sg9mqnYQ+Nb/LnziVCkH2DxGSRozIj4C
+	gq9t2d9hMeiKZI9FBbKScczDVu1KqisZkgoKs1Tj42zKvZ20oNeIypwiaU6ugdLk
+	QlNg85OQ2xi1FGkltbxLnhueGDwXD9iLB3Ebc=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 330F3180D3;
+	Fri, 23 May 2014 14:26:48 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B9B85180CF;
+	Fri, 23 May 2014 14:26:44 -0400 (EDT)
+In-Reply-To: <537F8021.8080304@gmail.com> ("Jakub =?utf-8?Q?Nar=C4=99bski?=
+ =?utf-8?Q?=22's?= message of "Fri,
+	23 May 2014 19:06:41 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CB3267E4-E2A7-11E3-B518-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250009>
 
-Ronnie Sahlberg wrote:
-> On Thu, May 22, 2014 at 4:53 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
->> ... or is the problem that the reflogs conflict?
->>
->> How does rename_ref handle propagating the reflog from the old
->> name to the new name, by the way?
+> W dniu 2014-05-22 23:33, Christian Couder pisze:
 >
-> I haven't touched that yet, but we can fix it after the next series
-> when we have transaction support for reflogs.
+>> +--graft <commit> [<parent>...]::
+>> +	Create a graft commit. A new commit is created with the same
+>> +	content as <commit> except that its parents will be
+>> +	[<parent>...] instead of <commit>'s parents. A replacement ref
+>> +	is then created to replace <commit> with the newly created
+>> +	commit.
+>> +
+>>   -l <pattern>::
+>>   --list <pattern>::
+>>   	List replace refs for objects that match the given pattern (or
 >
-> It still renames the reflog via the magic name
-> #define TMP_RENAMED_LOG  "logs/refs/.tmp-renamed-log"
+> Here I think you can add the graft replacing example:
+>
+>   cat .git/info/grafts | while read line
+>   do git replace --graft $line; done
 
-Okay, after looking at what "git branch -m" currently does (deletes
-the old ref and creates the new one in separate transactions), I'm
-convinced that this take-locks-for-a-shorter-period-than-is-necessary
-trick is an improvement relative to the status quo.  It gets rid of
-the window with objects unreferenced between the ref deletion and ref
-creation, which is a nice improvement.
+Do not cat a single file into a pipeline.
 
-I still haven't looked closely at the details of the code change but
-the idea looks sane as a first step.
+    while read definition
+    do
+    	git replace --graft $definition
+    done <"${GIT_DIR:-.git}/info/grafts"
 
-Later we can try to get the semantics right for this kind of
-delete/create pair in general transactions, if someone is interested.
-:)  No need for the perfect to be the enemy of the good in the
-meantime.
-
-Thanks,
-Jonathan
+or something.  You might also have to be careful to use "read -r"
+and/or avoid feeding a comment line (if info/grafts supports it) to
+the command inside do ... done, but I didn't check what the graft
+reading code does myself ;-)
