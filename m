@@ -1,70 +1,109 @@
-From: Adam Borowski <kilobyte@angband.pl>
-Subject: [BUG] auto-repack exits prematurely, locking other processing out
-Date: Fri, 23 May 2014 21:51:21 +0200
-Message-ID: <20140523195121.GA923@angband.pl>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH v4 3/3] add command performance tracing to
+ debug scripted commands
+Date: Fri, 23 May 2014 16:21:27 -0400
+Message-ID: <20140523202127.GF19088@sigill.intra.peff.net>
+References: <537BA806.50600@gmail.com>
+ <537BA8DC.9070104@gmail.com>
+ <20140521165508.GC2040@sigill.intra.peff.net>
+ <537D4790.6030106@gmail.com>
+ <20140522095920.GA15461@sigill.intra.peff.net>
+ <537F5E9A.1030901@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 23 22:18:03 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBDO2DJFKTEFBBSW372NQKGQE2AQPF6A@googlegroups.com Fri May 23 22:21:31 2014
+Return-path: <msysgit+bncBDO2DJFKTEFBBSW372NQKGQE2AQPF6A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yh0-f58.google.com ([209.85.213.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wnvuk-0006Z4-FI
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 22:18:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbaEWUR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 16:17:59 -0400
-Received: from tartarus.angband.pl ([89.206.35.136]:37330 "EHLO
-	tartarus.angband.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751039AbaEWUR6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 16:17:58 -0400
-X-Greylist: delayed 1594 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 May 2014 16:17:58 EDT
-Received: from kilobyte by tartarus.angband.pl with local (Exim 4.80)
-	(envelope-from <kilobyte@tartarus.angband.pl>)
-	id 1WnvUv-0000gV-B0
-	for git@vger.kernel.org; Fri, 23 May 2014 21:51:21 +0200
+	(envelope-from <msysgit+bncBDO2DJFKTEFBBSW372NQKGQE2AQPF6A@googlegroups.com>)
+	id 1Wnvy7-0004cx-Di
+	for gcvm-msysgit@m.gmane.org; Fri, 23 May 2014 22:21:31 +0200
+Received: by mail-yh0-f58.google.com with SMTP id a41sf1387666yho.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 23 May 2014 13:21:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type
+         :content-disposition;
+        bh=BeuqEW1eQP03iAyCd3WBeb9SAneSYjZ9rO2lL3ZCD+I=;
+        b=KqEX6naFtyMyFUhZSHW5EX9JOqbD72YYiMNoFxN0hzJWtTHLXk38wES6cCt68Tz3Es
+         JlzoPE3DwKLj5zJYTukYkeqJZW27o+F9aVu/EAmFtw3tpHkC1q+Ad5tZ/ahidq4s1vcQ
+         fjGX3ADYsQLsfSQYXpWZgzRrrBMBS0dEGmRqj/zDdCctBbsfUAikhQ6NEDwQyddR+Mkt
+         EGKod8lEZufVb7z+QmWdkvMREQtd4U2Edbh1ERjP83N95w5axWim9eLqytqfM78N8UsX
+         oITcZP6nKTF2u+yMTKDJ6sM6t+CjY8Aew/PgwTPCHHIJRGsfKKD1naknOEQ7ga4JaDuW
+         79xQ==
+X-Received: by 10.140.95.141 with SMTP id i13mr132177qge.3.1400876490507;
+        Fri, 23 May 2014 13:21:30 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.82.231 with SMTP id h94ls1936393qgd.49.gmail; Fri, 23 May
+ 2014 13:21:30 -0700 (PDT)
+X-Received: by 10.52.113.226 with SMTP id jb2mr2737779vdb.6.1400876490081;
+        Fri, 23 May 2014 13:21:30 -0700 (PDT)
+Received: from peff.net (cloud.peff.net. [50.56.180.127])
+        by gmr-mx.google.com with SMTP id h3si226760igq.3.2014.05.23.13.21.29
+        for <msysgit@googlegroups.com>;
+        Fri, 23 May 2014 13:21:29 -0700 (PDT)
+Received-SPF: pass (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted sender) client-ip=50.56.180.127;
+Received: (qmail 3342 invoked by uid 102); 23 May 2014 20:21:29 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 May 2014 15:21:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 May 2014 16:21:27 -0400
+In-Reply-To: <537F5E9A.1030901@gmail.com>
+X-Original-Sender: peff@peff.net
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of peff@peff.net designates 50.56.180.127 as permitted
+ sender) smtp.mail=peff@peff.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-X-Junkbait: adolf@angband.pl, zareba@angband.pl
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: kilobyte@tartarus.angband.pl
-X-SA-Exim-Scanned: No (on tartarus.angband.pl); SAEximRunCond expanded to false
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250026>
 
-Hi guys!
+On Fri, May 23, 2014 at 04:43:38PM +0200, Karsten Blees wrote:
 
-It looks like the periodic auto-repack backgrounds itself when it shouldn't
-do so.  This causes the command it has triggered as a part of to fail:
+> Alright then. I've queued vor v5:
+> * add __FILE__ __LINE__ for all trace output, if the compiler supports variadic macros
+> * add timestamp for all trace output
+> * perhaps move trace declarations to new trace.h
+> * improve commit messages of existing patches to clarify the issues discussed so far
 
-==========================================================================
-[~/linux](master)$ git pull --rebase
-remote: Counting objects: 455, done.
-remote: Compressing objects: 100% (64/64), done.
-remote: Total 267 (delta 208), reused 262 (delta 203)
-Receiving objects: 100% (267/267), 44.43 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (208/208), completed with 80 local objects.
-From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux
-   4b660a7..f02f79d  master     -> linus/master
-Auto packing the repository in background for optimum performance.
-See "git help gc" for manual housekeeping.
-First, rewinding head to replay your work on top of it...
-Applying: perf: tools: fix missing casts for printf arguments.
-Applying: vt: emulate 8- and 24-bit colour codes.
-fatal: Unable to create '/home/kilobyte/linux/.git/refs/heads/master.lock': File exists.
+Thanks, that all sounds reasonable.
 
-If no other git process is currently running, this probably means a
-git process crashed in this repository earlier. Make sure no other git
-process is running and remove the file manually to continue.
-Could not move back to refs/heads/master
-[~/linux]((no branch, rebasing (null)))$
-==========================================================================
+> I'm on holiday next week , so please be patient...
+
+No hurry. :)
+
+-Peff
 
 -- 
-Gnome 3, Windows 8, Slashdot Beta, now Firefox Ribbon^WAustralis.  WTF is going
-on with replacing usable interfaces with tabletized ones?
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
