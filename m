@@ -1,94 +1,92 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 3/3] Documentation: replace: add --graft option
-Date: Fri, 23 May 2014 11:26:43 -0700
-Message-ID: <xmqqioowjqqk.fsf@gitster.dls.corp.google.com>
-References: <20140522211836.27162.80311.chriscool@tuxfamily.org>
-	<20140522213307.27162.3251.chriscool@tuxfamily.org>
-	<537F8021.8080304@gmail.com>
+Subject: Re: [PATCH v2] Get rid of the non portable shell export VAR=VALUE costruct
+Date: Fri, 23 May 2014 11:39:25 -0700
+Message-ID: <xmqqegzkjq5e.fsf@gitster.dls.corp.google.com>
+References: <1400840131-966-1-git-send-email-gitter.spiros@gmail.com>
+	<xmqqmwe8jr44.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 23 20:26:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, tboegi@web.de, dak@gnu.org
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 23 20:39:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnuBB-00048a-C7
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 20:26:53 +0200
+	id 1WnuNb-0000rW-VD
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 20:39:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751257AbaEWS0t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 May 2014 14:26:49 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56991 "EHLO smtp.pobox.com"
+	id S1751687AbaEWSji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 14:39:38 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62950 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751153AbaEWS0s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 May 2014 14:26:48 -0400
+	id S1751138AbaEWSjg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 14:39:36 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3CAC8180D4;
-	Fri, 23 May 2014 14:26:48 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 409301863C;
+	Fri, 23 May 2014 14:39:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=MBW0qGY7mEPq
-	2WnkliAT2RQUbvU=; b=vGsB0dahCDTYxz+o5WoKJM2HdenlEiq1yYz5kWqcZiJ0
-	Mo1l54gLsHqCYX+xBVGxlWAUin9Jny0yxo7a8YZbu7sdp94LGAENAXIC235W/Ynm
-	lBUIh0Y3JlTWsWN3aD/euAhDdxsB/YL/A4OC/FyZPjbJNER7ZWWjZg/ZFI19tII=
+	:content-type; s=sasl; bh=TLyNFm3YH1XPnHPcS3lvdMehYjs=; b=K3LUdo
+	b23Z2YCcW3W6xnwA/QTk2vDyWuLLktXnMbR2iTU+S7XAc/yxSQbvM+WmGkEZYYwU
+	z8TZtSPygkfV4VslK1K/VUMvJ57BOa3KdFMmN5Kgcynqfw+9iKyzEl7YVwI7W0xP
+	OtSJmhlR2NOyJHkueNsUhHxKMJnnGNKD0B3lg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=DOtEzL
-	hQ+D6m6klOieD+UfAw3G0zMiJR27Dj9+sg9mqnYQ+Nb/LnziVCkH2DxGSRozIj4C
-	gq9t2d9hMeiKZI9FBbKScczDVu1KqisZkgoKs1Tj42zKvZ20oNeIypwiaU6ugdLk
-	QlNg85OQ2xi1FGkltbxLnhueGDwXD9iLB3Ebc=
+	:content-type; q=dns; s=sasl; b=Z9ol7ZSGNVVncU2wzyZNnFwZffhgQxAd
+	qXxrbbKkZnCsx69WyFR19tOb0db+jV/LJKJlSXnNd5cv8faUJWe2pYO3VMg3uijM
+	edwJFn5fcCx4y3bcxtP8sr7Vsal+wburEAPie4CBi8uL5gPFibFXWop6PP0q2BQv
+	OBrgnWDGZlI=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 330F3180D3;
-	Fri, 23 May 2014 14:26:48 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 356AD1863B;
+	Fri, 23 May 2014 14:39:31 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B9B85180CF;
-	Fri, 23 May 2014 14:26:44 -0400 (EDT)
-In-Reply-To: <537F8021.8080304@gmail.com> ("Jakub =?utf-8?Q?Nar=C4=99bski?=
- =?utf-8?Q?=22's?= message of "Fri,
-	23 May 2014 19:06:41 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5E2C018637;
+	Fri, 23 May 2014 14:39:27 -0400 (EDT)
+In-Reply-To: <xmqqmwe8jr44.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 23 May 2014 11:18:35 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CB3267E4-E2A7-11E3-B518-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 91C15C52-E2A9-11E3-AD97-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250010>
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> W dniu 2014-05-22 23:33, Christian Couder pisze:
+> Elia Pinto <gitter.spiros@gmail.com> writes:
 >
->> +--graft <commit> [<parent>...]::
->> +	Create a graft commit. A new commit is created with the same
->> +	content as <commit> except that its parents will be
->> +	[<parent>...] instead of <commit>'s parents. A replacement ref
->> +	is then created to replace <commit> with the newly created
->> +	commit.
->> +
->>   -l <pattern>::
->>   --list <pattern>::
->>   	List replace refs for objects that match the given pattern (or
+>> Found by check-non-portable-shell.pl
 >
-> Here I think you can add the graft replacing example:
+> Thanks.
 >
->   cat .git/info/grafts | while read line
->   do git replace --graft $line; done
+> Makes me wonder why these two were missed, though.
 
-Do not cat a single file into a pipeline.
+Perhaps something like this?
 
-    while read definition
-    do
-    	git replace --graft $definition
-    done <"${GIT_DIR:-.git}/info/grafts"
+I didn't check other rules, though, because I still have a feeling
+that this "pretend to understand the shell syntax and point out
+issues, without really parsing the script" is fundamentally an
+error-prone approach and am hesitant to loosen the patterns too
+much.
 
-or something.  You might also have to be careful to use "read -r"
-and/or avoid feeding a comment line (if info/grafts supports it) to
-the command inside do ... done, but I didn't check what the graft
-reading code does myself ;-)
+ t/check-non-portable-shell.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
+index 45971f4..24d7555 100755
+--- a/t/check-non-portable-shell.pl
++++ b/t/check-non-portable-shell.pl
+@@ -21,7 +21,7 @@ while (<>) {
+ 	/^\s*declare\s+/ and err 'arrays/declare not portable';
+ 	/^\s*[^#]\s*which\s/ and err 'which is not portable (please use type)';
+ 	/test\s+[^=]*==/ and err '"test a == b" is not portable (please use =)';
+-	/^\s*export\s+[^=]*=/ and err '"export FOO=bar" is not portable (please use FOO=bar && export FOO)';
++	/(?:^|[^-a-zA-Z0-9_])export\s+[^=]*=/ and err '"export FOO=bar" is not portable (please use FOO=bar && export FOO)';
+ 	# this resets our $. for each file
+ 	close ARGV if eof;
+ }
