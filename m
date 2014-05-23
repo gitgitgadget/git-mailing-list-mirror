@@ -1,80 +1,114 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] Get rid of the non portable shell export VAR=VALUE
- costruct
-Date: Fri, 23 May 2014 11:48:59 -0700
-Message-ID: <20140523184858.GF12314@google.com>
-References: <1400840131-966-1-git-send-email-gitter.spiros@gmail.com>
- <xmqqmwe8jr44.fsf@gitster.dls.corp.google.com>
- <xmqqegzkjq5e.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/3] remote rm: delete remote configuration as the last
+Date: Fri, 23 May 2014 11:55:53 -0700
+Message-ID: <xmqqa9a8jpdy.fsf@gitster.dls.corp.google.com>
+References: <537B2FA4.7020001@opera.com> <537F2252.3010101@opera.com>
+	<537F22DB.7070102@opera.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
-	tboegi@web.de, dak@gnu.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 23 20:49:13 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jens =?utf-8?Q?Lindstr=C3=B6m?= <jl@opera.com>
+X-From: git-owner@vger.kernel.org Fri May 23 20:56:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnuWh-0000AU-Rb
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 20:49:08 +0200
+	id 1WnudQ-00041D-B4
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 20:56:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbaEWStD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 14:49:03 -0400
-Received: from mail-pb0-f41.google.com ([209.85.160.41]:53936 "EHLO
-	mail-pb0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751167AbaEWStB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 14:49:01 -0400
-Received: by mail-pb0-f41.google.com with SMTP id uo5so4566328pbc.28
-        for <git@vger.kernel.org>; Fri, 23 May 2014 11:49:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=B1tR9hJaEcFlKJh15CRMFTp6w7+GS7oKiCakrVhKfh8=;
-        b=QHM5Wqdhu5uDLJIWGlTt0hkqyjf+8BkjoyNoDn0dmVwFQ6S2jLb2ZkkHdX4V4GIFCf
-         SD6edDIOqWHCocpffRiG3+uvUD6wtmL3R33gTcL0oVAYnUnKchSKA0xJSnn5Rd6oUqLy
-         TL9Kw1kprO1dKbnKZ17giCh3ury/ZfXF3t/T1bAwSp1q3CM+HxMyUv8IkoomuflRcDC1
-         kTwkYQwXOF4MKm34jSaVUbfFgOZP8kwcghMQhbk7IOC17apCdyOVt1b3+aHTrOrvk+Rz
-         miFUCIyZMyh34B0X1LW+jTZDlvJ061lMSvWF6sITUERv9/ZtrUoDYFiCoAXMYUoUE9a1
-         uZ9w==
-X-Received: by 10.66.119.239 with SMTP id kx15mr8395649pab.51.1400870941543;
-        Fri, 23 May 2014 11:49:01 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id au4sm5817245pbc.10.2014.05.23.11.49.00
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 23 May 2014 11:49:01 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqegzkjq5e.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751304AbaEWS4A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 23 May 2014 14:56:00 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61993 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751042AbaEWSz7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 May 2014 14:55:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AA1BA18D49;
+	Fri, 23 May 2014 14:55:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=U953/1XXICfl
+	VQfQAWc18g6KkeM=; b=lVKRvDx6aImQXeglEz7IG7eLnFc3VANsfaFFk4YKCC5L
+	FQNl3I40jBSObIGzeBVUE7ebTgqVpIJbuoBTe/gR3iw1o/PyNUMAa00oDV4IAbqg
+	xeY8vHjkUa+LF2RvpHLFE7oU0VhrYhPfXe7TNQ46mhrOsvCiXHZz4oY643Myw54=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=H3zvVW
+	oCJ/UeUWR9hvHflHD3ygr2BrZ6g/oWTVewqZ/uP+WajIrLhHPIzoFvfJ5uPHQh17
+	fOFI9rGOFYDVLP6gZNB7E9cD8g6EVwpC0agg2MqsyEs9fdZdTbhj7Ugdaw/G7hL/
+	egyOQ0DxJqvDe38aLy5YwHFm76wCLwPXJjdfI=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A119818D48;
+	Fri, 23 May 2014 14:55:58 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7437B18D43;
+	Fri, 23 May 2014 14:55:55 -0400 (EDT)
+In-Reply-To: <537F22DB.7070102@opera.com> ("Jens =?utf-8?Q?Lindstr=C3=B6m?=
+ =?utf-8?Q?=22's?= message of "Fri,
+	23 May 2014 12:28:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DEB3AB94-E2AB-11E3-A60E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250014>
 
-Hi,
+Jens Lindstr=C3=B6m <jl@opera.com> writes:
 
-Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-
->> Makes me wonder why these two were missed, though.
+> When removing a remote, delete the remote-tracking branches before
+> deleting the remote configuration.  This way, if the operation fails =
+or
+> is aborted while deleting the remote-tracking branches, the command c=
+an
+> be rerun to complete the operation.
 >
-> Perhaps something like this?
-[...]
-> -	/^\s*export\s+[^=]*=/ and err '"export FOO=bar" is not portable (please use FOO=bar && export FOO)';
-> +	/(?:^|[^-a-zA-Z0-9_])export\s+[^=]*=/ and err '"export FOO=bar" is not portable (please use FOO=bar && export FOO)';
+> Signed-off-by: Jens Lindstr=C3=B6m <jl@opera.com>
 
-Messages crossed.
+I think this is a good change, regardless of the "calling delete-ref
+millions of times, each time rewriting the whole packed-ref file, is
+inefficient" issue.
 
-I think I like "\b" better for this, while I also share your lack of
-enthusiasm for parsing shell with something that is not a shell.
+I wonder if the new "if (!result)" block wants to have its own else
+clause to let the users know that the definition of the remote was
+still left intact under such an unusual condition where ref deletion
+somehow fails, but it would be OK as the users have presumably seen
+error messages and understand that removal did not happen.
 
-Maybe it's worth filing bugs against "posh -n" to make it
-(optionally?) notice things we want to detect with a goal of
-eventually moving to that.
+Will queue.  Thanks.
 
-Thanks,
-Jonathan
+> ---
+>  builtin/remote.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index b3ab4cf..84802cd 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -789,10 +789,6 @@ static int rm(int argc, const char **argv)
+>  	known_remotes.to_delete =3D remote;
+>  	for_each_remote(add_known_remote, &known_remotes);
+> =20
+> -	strbuf_addf(&buf, "remote.%s", remote->name);
+> -	if (git_config_rename_section(buf.buf, NULL) < 1)
+> -		return error(_("Could not remove config section '%s'"), buf.buf);
+> -
+>  	read_branches();
+>  	for (i =3D 0; i < branch_list.nr; i++) {
+>  		struct string_list_item *item =3D branch_list.items + i;
+> @@ -837,6 +833,12 @@ static int rm(int argc, const char **argv)
+>  	}
+>  	string_list_clear(&skipped, 0);
+> =20
+> +	if (!result) {
+> +		strbuf_addf(&buf, "remote.%s", remote->name);
+> +		if (git_config_rename_section(buf.buf, NULL) < 1)
+> +			return error(_("Could not remove config section '%s'"), buf.buf);
+> +	}
+> +
+>  	return result;
+>  }
