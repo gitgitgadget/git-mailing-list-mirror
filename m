@@ -1,103 +1,159 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: [PATCH v8 41/44] refs.c: add a new flag for transaction delete
  for refs we know are packed only
-Date: Fri, 23 May 2014 07:59:21 -0700
-Message-ID: <CAL=YDWnRkwX3dCv9dyZmBdh2ZV7aSUCS=F6w67gJuBmCzGGBwQ@mail.gmail.com>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
-	<1400174999-26786-42-git-send-email-sahlberg@google.com>
-	<20140522181722.GT12314@google.com>
-	<CAL=YDWkUa2Ut=1iaMXgnjgte6g5jvXR49LBiEUNEkwv4Z-wO_w@mail.gmail.com>
-	<CAL=YDW=hytDiz5qzAMyBgXUgza+AcDhk_y3m3kAUmOdBG=F=vA@mail.gmail.com>
-	<20140522234440.GA12314@google.com>
-	<20140522235351.GB12314@google.com>
+Date: Fri, 23 May 2014 17:23:09 +0200
+Message-ID: <537F67DD.5010101@alum.mit.edu>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com> <1400174999-26786-42-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 23 16:59:28 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>
+To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 23 17:23:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnqwQ-0007M8-Je
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 16:59:26 +0200
+	id 1WnrJW-00024w-5R
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 17:23:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278AbaEWO7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 10:59:22 -0400
-Received: from mail-ve0-f177.google.com ([209.85.128.177]:60668 "EHLO
-	mail-ve0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752126AbaEWO7W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 10:59:22 -0400
-Received: by mail-ve0-f177.google.com with SMTP id db11so6374508veb.36
-        for <git@vger.kernel.org>; Fri, 23 May 2014 07:59:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=wTC1NhbPXDBUHTCaXht5Ngq21GvtnO1UCW165ErmAwk=;
-        b=pAfaLgr3r1124NeQJh4uvaLPWOc5YW9Xvm7fdlKILMCIIj6NyiQw1px5JyqM9qFOvz
-         myIhmlwjEpheUf3GkL5R5F5nZNVWqycaChrQ9v3eA4OYQE20bA/gmnUh7QEyMd4Folnm
-         wzJMF4M3NeR0S091imZco+RgwlEKetUxRcXItr/umgjyGS9Lme4wKr7c1oPA5OCO+8y4
-         IKon1/kqnqE+zFWoUxm9TZWf1ZeNJf+ADrXUGgUB3CuNYEeOC5CA2bT1yPmTP830RPVw
-         bd555QUsR7H9jGcZUOXXdRNkVfUase4FueU38OZiZTOIiMhb8u6RJk9DfgOT2b0VZCjJ
-         /cyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=wTC1NhbPXDBUHTCaXht5Ngq21GvtnO1UCW165ErmAwk=;
-        b=VPNyhmI/w4Dh3jGALOfNTWe9HfiGVSwrbysvENQX8G7wNcECpLqAoC8FFxHZtV/3lE
-         C6mdtt/bKfHccdIANUmjJ/beh67TZnDGEpq+sNMS14wOh140F4zsc+tO/IQe5xrEWodr
-         VjLFXfwM6BkLonkvcrrrrtFGlbkdG8jU6lj5G1ROBVBIDvlv+VDs+5wf394M8OFbYhZc
-         KWlUIgvl1q0hx9em0wqOZj3kcIWt0aXxmM4HI91pUA9IQlT4c2+UDptG3mOOF6twytA4
-         0qhHM63YWaLHcm7HtoZLtdOoJ6rF6f3YcPRquFrraQr6UbwHLmoN0WL1Hse43QUZHh6g
-         JQLQ==
-X-Gm-Message-State: ALoCoQlctg857iXTF7Xb9eFrdjydKd4aiUciyL6Lp7Xy8ySdv4rTbCqh4RUSGg/lYVl4buUUCQmr
-X-Received: by 10.58.66.195 with SMTP id h3mr963639vet.57.1400857161389; Fri,
- 23 May 2014 07:59:21 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Fri, 23 May 2014 07:59:21 -0700 (PDT)
-In-Reply-To: <20140522235351.GB12314@google.com>
+	id S1752638AbaEWPXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 11:23:13 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:64354 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751637AbaEWPXM (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 23 May 2014 11:23:12 -0400
+X-AuditID: 1207440c-f79656d000000c83-96-537f67df202f
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 34.FD.03203.FD76F735; Fri, 23 May 2014 11:23:11 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB0E41.dip0.t-ipconnect.de [93.219.14.65])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4NFN93A008220
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 23 May 2014 11:23:10 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <1400174999-26786-42-git-send-email-sahlberg@google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqHs/vT7Y4N4LaYuuK91MFm9vLmG0
+	+DehxoHZY+esu+weCzaVenzeJBfAHMVtk5RYUhacmZ6nb5fAndG/5AJTwTaFig3zu1kaGP+L
+	dzFyckgImEic79/JDGGLSVy4t56ti5GLQ0jgMqPE9Z3N7BDOOSaJ//92M4FU8QpoS3T1HQHr
+	YBFQlXhz7DMLiM0moCuxqKcZqIaDQ1QgSOLPWUWIckGJkzOfgJWICNhJrL+1EKyVWUBDYt2x
+	X2AjhQXyJDo/dLGB2EICNRI/t88Eq+EUcJWY8foBO8hICQFxiZ7GIIhWHYl3fQ+gxshLbH87
+	h3kCo+AsJNtmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdQ73czBK91JTSTYyQ
+	cObZwfhtncwhRgEORiUe3gdMdcFCrIllxZW5hxglOZiURHkTbeuDhfiS8lMqMxKLM+KLSnNS
+	iw8xSnAwK4nwFvsB5XhTEiurUovyYVLSHCxK4ryqS9T9hATSE0tSs1NTC1KLYLIaHBwCVw4e
+	mc0oxZKXn5eqJME7Mw1oiGBRanpqRVpmTglCKRMHJ8giLimR4tS8lNSixNKSjHhQXMcXAyMb
+	JMUDdMPGVJAbigsSc4GiEK2nGHU5Tt051sYkBLZDSpyXDWSHAEhRRmke3ApYUnvFKA70vTBv
+	GkgVDzAhwk16BbSECWjJi4W1IEtKEhFSUg2MLH1t9ntnNv+r3/jEk+3qjquskgd3bfnyI/5z
+	a/l5i615PN/+Xvqw8XBzcKSJW5vtBY9PYTsDJz386fznaWNeZsW3pfJpqVb2gicF 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249991>
 
-On Thu, May 22, 2014 at 4:53 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Jonathan Nieder wrote:
->> Ronnie Sahlberg wrote:
->
->>> I hate rename_ref :-)
->>>
->>> I have reworked the transaction code to special case the deletion of
->>> the old ref for n/n -> n  and n -> n/n renames
->>> so that we can carefully avoid n/n.lock files to exist or prevent the
->>> directory <-> file transition for n during these renames.
-> [...]
->>       Unlink the corresponding loose refs so packed-refs
->>               becomes authoritative for them.
->>       Lock packed-refs.
->>       Perform updates and removals in the packed-refs cache.
->>       Commit packed-refs.
->
-> ... or is the problem that the reflogs conflict?
->
-> How does rename_ref handle propagating the reflog from the old
-> name to the new name, by the way?
+On 05/15/2014 07:29 PM, Ronnie Sahlberg wrote:
+> Add a new flag REF_ISPACKONLY that we can use in ref_transaction_delete.
+> This flag indicates that the ref does not exist as a loose ref andf only as
+> a packed ref. If this is the case we then change the commit code so that
+> we skip taking out a lock file and we skip calling delete_ref_loose.
+> Check for this flag and die(BUG:...) if used with _update or _create.
+> 
+> At the start of the transaction, before we even start locking any refs,
+> we add all such REF_ISPACKONLY refs to delnames so that we have a list of
+> all pack only refs that we will be deleting during this transaction.
 
-I haven't touched that yet, but we can fix it after the next series
-when we have transaction support for reflogs.
+Let me make a few comments about how I think ref packing fits into the
+scheme for pluggable reference back ends.  The comments may or may not
+be relevant to this particular commit.
 
-It still renames the reflog via the magic name
-#define TMP_RENAMED_LOG  "logs/refs/.tmp-renamed-log"
+We want to have a reference API that can be implemented by various back
+ends.  Obviously we need operations to read a reference, enumerate
+existing references, update references within a transaction, and
+probably do similar things with symbolic references.
 
-and thus, if you run two renames at the same time there is a race that
-might make you end up with the wrong reflog after the rename.
+The status quo is that we have a single reference back end consisting of
+loose references sitting on top of packed references.
 
+But really, loose references and packed references are two relatively
+independent reference back ends [1].  We just happen to use them layered
+on top of each other.
 
+This suggests to me that our current structure is best modeled as two
+independent reference back ends, with a third implementation of the same
+reference API whose job it is to compose the first two.  In pseudocode,
 
->
-> Thanks,
-> Jonathan
+    interface ReferenceBackend:
+        read_ref(refname)
+        __iter__(...)
+        begin_transaction(...)
+        update_reference(...)
+        ...
+        commit_transaction(...)
+
+    class LooseReferenceBackend(ReferenceBackend):
+        ...
+
+    class PackedReferenceBackend(ReferenceBackend):
+        ...
+
+    class StackedReferenceBackend(ReferenceBackend):
+        def __init__(self, backend1, backend2):
+            self.backend1 = backend1
+            self.backend2 = backend2
+
+        def read_ref(refname):
+            try:
+                return backend1.read_ref(refname)
+            except ReferenceNotFound:
+                return backend2.read_ref(refname)
+
+        def __iter__(...):
+            i1 = self.backend1.iterate()
+            i2 = self.backend2.iterate()
+            while i1.has_next() and i2.has_next():
+                if i1.peek_next() < i2.peek_next():
+                    yield i1.next()
+                elif i1.peek_next() == i2.peek_next():
+                    yield i1.next()
+                    i2.next() # discard
+                else
+                    yield i2.next()
+            while i1.has_next():
+                yield i1.next()
+            while i2.has_next():
+                yield i2.next()
+
+        def pack_refs(...):
+            ...
+
+et cetera.
+
+>From this point of view it is clear that packing refs is not an
+operation that belongs in the ReferenceBackend API, but rather in the
+StackedReferenceBackend interface.  The reason is that it doesn't affect
+how references appear to the outside world, but rather just reorganizes
+them between the two backends to which StackedReferenceBackend
+delegates.  The *implementation* of pack_refs() involves adding
+references to backend2 and deleting them from backend1.  But since
+adding and deleting references *are* part of the ReferenceBackend API,
+StackedReferenceBackend can compose *any arbitrary two* reference
+backends (including other StackedReferenceBackends).  Pruning references
+that have been packed is also not part of the ReferenceBackend API.
+Rather it is a plain old deletion of a reference from backend1 of a
+StackedReferenceBackend.
+
+I haven't thought through all of the ramifications of this design, but
+I'm pretty sure it's where we want to be headed.
+
+Michael
+
+[1] Forget for the sake of this discussion that we can't store symbolic
+references as packed refs.
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
