@@ -1,92 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Get rid of the non portable shell export VAR=VALUE costruct
-Date: Fri, 23 May 2014 11:39:25 -0700
-Message-ID: <xmqqegzkjq5e.fsf@gitster.dls.corp.google.com>
-References: <1400840131-966-1-git-send-email-gitter.spiros@gmail.com>
-	<xmqqmwe8jr44.fsf@gitster.dls.corp.google.com>
+From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+Subject: more concerns about '--git-dir'
+Date: Fri, 23 May 2014 11:41:15 -0700
+Message-ID: <CAKpPgvf_UfgtOkotPz+aF4=UqQTOmk0O8tXg4Cm3zjzFimUoHw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, tboegi@web.de, dak@gnu.org
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 23 20:39:44 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri May 23 20:41:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnuNb-0000rW-VD
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 20:39:44 +0200
+	id 1WnuPU-0003xd-Pr
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 20:41:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751687AbaEWSji (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 14:39:38 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62950 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751138AbaEWSjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 14:39:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 409301863C;
-	Fri, 23 May 2014 14:39:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TLyNFm3YH1XPnHPcS3lvdMehYjs=; b=K3LUdo
-	b23Z2YCcW3W6xnwA/QTk2vDyWuLLktXnMbR2iTU+S7XAc/yxSQbvM+WmGkEZYYwU
-	z8TZtSPygkfV4VslK1K/VUMvJ57BOa3KdFMmN5Kgcynqfw+9iKyzEl7YVwI7W0xP
-	OtSJmhlR2NOyJHkueNsUhHxKMJnnGNKD0B3lg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z9ol7ZSGNVVncU2wzyZNnFwZffhgQxAd
-	qXxrbbKkZnCsx69WyFR19tOb0db+jV/LJKJlSXnNd5cv8faUJWe2pYO3VMg3uijM
-	edwJFn5fcCx4y3bcxtP8sr7Vsal+wburEAPie4CBi8uL5gPFibFXWop6PP0q2BQv
-	OBrgnWDGZlI=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 356AD1863B;
-	Fri, 23 May 2014 14:39:31 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5E2C018637;
-	Fri, 23 May 2014 14:39:27 -0400 (EDT)
-In-Reply-To: <xmqqmwe8jr44.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 23 May 2014 11:18:35 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 91C15C52-E2A9-11E3-AD97-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751533AbaEWSlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 14:41:37 -0400
+Received: from mail-oa0-f54.google.com ([209.85.219.54]:33143 "EHLO
+	mail-oa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751200AbaEWSlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 14:41:36 -0400
+Received: by mail-oa0-f54.google.com with SMTP id j17so5986927oag.13
+        for <git@vger.kernel.org>; Fri, 23 May 2014 11:41:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        bh=O7TM00W3z+8YIQ0PrdTRb5d0c6An2CA8uQ4v9hx9qz0=;
+        b=m0GxbtMLzC76IpvPR4Pd/rfws9SW72L1plUJ7aZ/eLCI4vAg83/o71KSJggYJ+O3aX
+         yEa0fcY93Hxs89A625loKEbVG7AhPtHB5sdrDkkwnsmu6qv5NhkdZshzPEE1SBKE1vdI
+         fF2FC6b8m532JeiPcbcmgwmvmZ4HCqU8eZB3omelR9MK3MQrzanFwkogA0NNLQfFPTOg
+         VIN946iW7mqlqvPw6YoWXG1hFb3kwuy3mzMM3X7+GeU9AY9NluP5Vp0hYMdDJ4n50xjh
+         QM8zeH0yJz9djcqNCXtchIvNkvriM8OyJztauk7IUDqRR4c6T8PY+Erk0/meG31mF/SG
+         BpAA==
+X-Received: by 10.182.104.101 with SMTP id gd5mr7058424obb.54.1400870496100;
+ Fri, 23 May 2014 11:41:36 -0700 (PDT)
+Received: by 10.60.16.8 with HTTP; Fri, 23 May 2014 11:41:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250011>
 
-Junio C Hamano <gitster@pobox.com> writes:
+        Hi,
 
-> Elia Pinto <gitter.spiros@gmail.com> writes:
->
->> Found by check-non-portable-shell.pl
->
-> Thanks.
->
-> Makes me wonder why these two were missed, though.
+        Since at it, I have discovered a couple more minor things with
+this rarely-used option. I'm however a bit wary of stepping on
+somebody's nerve with this sort of picking things.. :)
 
-Perhaps something like this?
+        Nevertheless,
 
-I didn't check other rules, though, because I still have a feeling
-that this "pretend to understand the shell syntax and point out
-issues, without really parsing the script" is fundamentally an
-error-prone approach and am hesitant to loosen the patterns too
-much.
+1) an apparent missing "normalize_path(git_dir)", when GIT_DIR is an
+absolute path:
 
- t/check-non-portable-shell.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+don't even need to name the repository anything different, but run this command:
 
-diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
-index 45971f4..24d7555 100755
---- a/t/check-non-portable-shell.pl
-+++ b/t/check-non-portable-shell.pl
-@@ -21,7 +21,7 @@ while (<>) {
- 	/^\s*declare\s+/ and err 'arrays/declare not portable';
- 	/^\s*[^#]\s*which\s/ and err 'which is not portable (please use type)';
- 	/test\s+[^=]*==/ and err '"test a == b" is not portable (please use =)';
--	/^\s*export\s+[^=]*=/ and err '"export FOO=bar" is not portable (please use FOO=bar && export FOO)';
-+	/(?:^|[^-a-zA-Z0-9_])export\s+[^=]*=/ and err '"export FOO=bar" is not portable (please use FOO=bar && export FOO)';
- 	# this resets our $. for each file
- 	close ARGV if eof;
- }
+$ cd ~/tmp/
+$ git init
+$ git --git-dir=$HOME/tmp/../tmp/./././.git --work-tree=$HOME/tmp/../tmp/ status
+
+You won't notice anything different in the output of course, but the
+environment will be odd:
+    GIT_DIR=../tmp/./././.git
+    GIT_WORK_TREE=$HOME/tmp
+Notice how the work-tree has been normalized and git-dir hasn't. It's
+kinda hard to imagine when this can lead to an error, but never know.
+Would there be objections to fixing this?
+
+
+2) "git --git-dir=meta status" complains:
+
+$ git --git-dir=meta init
+$ git --git-dir=meta status
+
+yells that work-tree isn't setup and denies to run. I'm sure most
+people are aware of this. Yet, the "git-config" man page says that if
+--git-dir or GIT_DIR is given then work-tree is assumed to be the
+current directory. The difference with the actual behaviour is
+explained by the fact that when the repository is not named anything
+that ends with ".git" then it is considered a bare repository (if no
+--work-tree is given), and the work-tree doesn't get setup and thus
+the complaint. It maybe a safety precaution, so that Git doesn't
+assume that it's at the top of work-tree while it may be actually
+somewhere in the middle. But how is it different if the user runs "git
+--git-dir=/opt/sparc/src/.git add sccs.c" while still sitting in the
+middle of the tree? I can't judge myself which behaviour would be
+right here, and ask for an opinion
+
+
+    thanks
+Pasha
