@@ -1,104 +1,76 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH v2] Get rid of the non portable shell export VAR=VALUE costruct
-Date: Fri, 23 May 2014 03:15:31 -0700
-Message-ID: <1400840131-966-1-git-send-email-gitter.spiros@gmail.com>
-Cc: gitster@pobox.com, tboegi@web.de, dak@gnu.org,
-	Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 23 12:15:43 2014
+From: =?ISO-8859-1?Q?Jens_Lindstr=F6m?= <jl@opera.com>
+Subject: [PATCH v2 0/3] remote: optimize rm/prune ref deletion
+Date: Fri, 23 May 2014 12:26:26 +0200
+Message-ID: <537F2252.3010101@opera.com>
+References: <537B2FA4.7020001@opera.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 23 12:27:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnmVp-00063g-5X
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 12:15:41 +0200
+	id 1Wnmgj-0006qo-FZ
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 12:26:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181AbaEWKPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 06:15:37 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:54704 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751053AbaEWKPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 06:15:36 -0400
-Received: by mail-pa0-f46.google.com with SMTP id kq14so3884447pab.5
-        for <git@vger.kernel.org>; Fri, 23 May 2014 03:15:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=VwlYVETKjE1Wmyy2c4CfvreRPpWyzEw4Q1pk90MuMtM=;
-        b=n8B2L8bSypsvgXf2R4Tc7OCxQbCSmSIPqkVJxhnRx8WOJb2aWE/NzAywQv320hxVNn
-         GIpl7dWMYyNWaaxd5YeAYlQv1Re4YzRotmEHI3XRtoiQKr6D2QdDZBQyKoUPEddQzbQ8
-         ffXg/kZbvxiVMIkTezRacUY05oVCBOUO6M7Qjnd9sRWA+upFjIEmhhWdVceNZ9dhp8cb
-         2qWtJHADwebCop05ygKW+so2msFJ4U2qKz8a2IaCQNxJCB3+NfPQCn4xt17i9GLxjAgx
-         GWrzgZQuEyVkYNMiTy41pCPqfdY7UTpeEMB9g6kz7NglsMwzGvu5qt4svasY8aeMY6Rl
-         G+Pw==
-X-Received: by 10.68.186.130 with SMTP id fk2mr4640698pbc.60.1400840135801;
-        Fri, 23 May 2014 03:15:35 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id ix7sm3896197pbd.36.2014.05.23.03.15.34
+	id S1752477AbaEWK0y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 06:26:54 -0400
+Received: from mail-la0-f49.google.com ([209.85.215.49]:36412 "EHLO
+	mail-la0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751275AbaEWK0x (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 06:26:53 -0400
+Received: by mail-la0-f49.google.com with SMTP id pv20so3878571lab.22
+        for <git@vger.kernel.org>; Fri, 23 May 2014 03:26:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=b/04ppHzvQFyDdbAdxWX15RImsFE12PS/GyItCBDM1k=;
+        b=KWR5yb/4CKAPB65Lg+xm9v1JFBnquikeBBe9hueOfxPGiJimUTMJt2m07VM6Sp82MM
+         OFM4jdaTS42HSHKnJ+D1k1SoR3F2qUQR6VrzISMwLF/TiloYb8QKiJ0nOIZ5pBfkY522
+         t4S07UdJbHKIJO9Pk5fe54cteSez4+EVwYPuVfEE5NZJOjTN5tatGZBzqKrXg9tz5aKe
+         nwucd32Sc//RtNsp502LUrQQtToX/IIxqTvvpzVqFKq4yD2AVeyB+X2LeT54CQ/4lXVp
+         EXTk/5uS9s56qZqcUwq6UqrVnSyfy10xlYrnOdX3G4m4ni8DG/O2FodMECeV9g8gldOc
+         6GHw==
+X-Gm-Message-State: ALoCoQlbI8/Uu5tKf/xXkS3cBMVPG78weqL3LT7n1bIqElXodWO7L2vGkzsJRJUa8KtF/2Jkt2+V
+X-Received: by 10.113.4.70 with SMTP id cc6mr2605063lbd.21.1400840811557;
+        Fri, 23 May 2014 03:26:51 -0700 (PDT)
+Received: from [10.34.0.102] (77.72.99.119.c.fiberdirekt.net. [77.72.99.119])
+        by mx.google.com with ESMTPSA id bj7sm2528116lbc.22.2014.05.23.03.26.50
         for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 23 May 2014 03:15:35 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 23 May 2014 03:26:50 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.4.0
+In-Reply-To: <537B2FA4.7020001@opera.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249981>
 
-Found by check-non-portable-shell.pl
+Changes since previous version:
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
-This is the second version of the patch that includes 
-Junio suggestions.
+ * Additionally change the order that 'remote rm' does things so that it
+   removes the remote configuration as the last step and only if the
+   other steps succeeded.
 
- contrib/subtree/t/t7900-subtree.sh |    3 ++-
- git-remote-testgit.sh              |    3 ++-
- git-stash.sh                       |    3 ++-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ * Change the packed-refs repacking patch to repack before deleting refs
+   instead of after.  This makes the patch simpler, since delete_ref()
+   no longer needs to be told not to repack.
 
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 66ce4b0..8dc6840 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -8,7 +8,8 @@ This test verifies the basic operation of the merge, pull, add
- and split subcommands of git subtree.
- '
- 
--export TEST_DIRECTORY=$(pwd)/../../../t
-+TEST_DIRECTORY=$(pwd)/../../../t
-+export TEST_DIRECTORY
- 
- . ../../../t/test-lib.sh
- 
-diff --git a/git-remote-testgit.sh b/git-remote-testgit.sh
-index 1c006a0..a9c75a2 100755
---- a/git-remote-testgit.sh
-+++ b/git-remote-testgit.sh
-@@ -13,7 +13,8 @@ refspec="${GIT_REMOTE_TESTGIT_REFSPEC-$default_refspec}"
- 
- test -z "$refspec" && prefix="refs"
- 
--export GIT_DIR="$url/.git"
-+GIT_DIR="$url/.git"
-+export GIT_DIR
- 
- force=
- 
-diff --git a/git-stash.sh b/git-stash.sh
-index 4798bcf..4621d81 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -94,7 +94,8 @@ create_stash () {
- 		# ease of unpacking later.
- 		u_commit=$(
- 			untracked_files | (
--				export GIT_INDEX_FILE="$TMPindex"
-+				GIT_INDEX_FILE="$TMPindex" &&
-+				export GIT_INDEX_FILE &&
- 				rm -f "$TMPindex" &&
- 				git update-index -z --add --remove --stdin &&
- 				u_tree=$(git write-tree) &&
--- 
-1.7.10.4
+Jens Lindstrom (3):
+  remote rm: delete remote configuration as the last step
+  remote: repack packed-refs once when deleting multiple refs
+  remote prune: optimize "dangling symref" check/warning
+
+ builtin/remote.c | 37 ++++++++++++++++++++++++++++++-------
+ refs.c           | 21 +++++++++++++++++++--
+ refs.h           |  3 +++
+ 3 files changed, 52 insertions(+), 9 deletions(-)
+
+--
+1.9.1
