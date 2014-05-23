@@ -1,159 +1,112 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH v8 41/44] refs.c: add a new flag for transaction delete
  for refs we know are packed only
-Date: Fri, 23 May 2014 17:23:09 +0200
-Message-ID: <537F67DD.5010101@alum.mit.edu>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com> <1400174999-26786-42-git-send-email-sahlberg@google.com>
+Date: Fri, 23 May 2014 08:53:53 -0700
+Message-ID: <20140523155353.GA4065@google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+ <1400174999-26786-42-git-send-email-sahlberg@google.com>
+ <537F67DD.5010101@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>
-To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 23 17:23:19 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri May 23 17:54:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WnrJW-00024w-5R
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 17:23:18 +0200
+	id 1WnrnI-0006hI-UX
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 17:54:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752638AbaEWPXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 11:23:13 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:64354 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751637AbaEWPXM (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 23 May 2014 11:23:12 -0400
-X-AuditID: 1207440c-f79656d000000c83-96-537f67df202f
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 34.FD.03203.FD76F735; Fri, 23 May 2014 11:23:11 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB0E41.dip0.t-ipconnect.de [93.219.14.65])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4NFN93A008220
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 23 May 2014 11:23:10 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <1400174999-26786-42-git-send-email-sahlberg@google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrEKsWRmVeSWpSXmKPExsUixO6iqHs/vT7Y4N4LaYuuK91MFm9vLmG0
-	+DehxoHZY+esu+weCzaVenzeJBfAHMVtk5RYUhacmZ6nb5fAndG/5AJTwTaFig3zu1kaGP+L
-	dzFyckgImEic79/JDGGLSVy4t56ti5GLQ0jgMqPE9Z3N7BDOOSaJ//92M4FU8QpoS3T1HQHr
-	YBFQlXhz7DMLiM0moCuxqKcZqIaDQ1QgSOLPWUWIckGJkzOfgJWICNhJrL+1EKyVWUBDYt2x
-	X2AjhQXyJDo/dLGB2EICNRI/t88Eq+EUcJWY8foBO8hICQFxiZ7GIIhWHYl3fQ+gxshLbH87
-	h3kCo+AsJNtmISmbhaRsASPzKka5xJzSXN3cxMyc4tRk3eLkxLy81CJdQ73czBK91JTSTYyQ
-	cObZwfhtncwhRgEORiUe3gdMdcFCrIllxZW5hxglOZiURHkTbeuDhfiS8lMqMxKLM+KLSnNS
-	iw8xSnAwK4nwFvsB5XhTEiurUovyYVLSHCxK4ryqS9T9hATSE0tSs1NTC1KLYLIaHBwCVw4e
-	mc0oxZKXn5eqJME7Mw1oiGBRanpqRVpmTglCKRMHJ8giLimR4tS8lNSixNKSjHhQXMcXAyMb
-	JMUDdMPGVJAbigsSc4GiEK2nGHU5Tt051sYkBLZDSpyXDWSHAEhRRmke3ApYUnvFKA70vTBv
-	GkgVDzAhwk16BbSECWjJi4W1IEtKEhFSUg2MLH1t9ntnNv+r3/jEk+3qjquskgd3bfnyI/5z
-	a/l5i615PN/+Xvqw8XBzcKSJW5vtBY9PYTsDJz386fznaWNeZsW3pfJpqVb2gicF 
+	id S1752240AbaEWPyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 11:54:00 -0400
+Received: from mail-pb0-f54.google.com ([209.85.160.54]:42172 "EHLO
+	mail-pb0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751605AbaEWPx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 11:53:59 -0400
+Received: by mail-pb0-f54.google.com with SMTP id jt11so4349282pbb.27
+        for <git@vger.kernel.org>; Fri, 23 May 2014 08:53:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=/tZJSjiJD1o2fQsBVuC4PScTPB7Br4re21F+guuTBiI=;
+        b=zAlRBSZYZy5xu5VtGo0U09CNCMmGEaFlNxU6tRUh3p6f8V5P2FbROefW0nNWIj4ye5
+         Pv+LdYSAIKMBgU73mkB5RnboomNrJxayEYtTe0DVNadUBB3lVtK8xRMus5wl5VPgbdjB
+         D44IMRTRHVnKJNNfsxV23el5rNCzQCH+4u7IAT9O8bXzlC8BJPNqZD41CDM2EYgDT6ok
+         dIqtbTM/rl+BwC1h2/+ADd+0poS1YKR51XFvo3RD5haOC6jy75nJKHfSsqVGKgvxOdki
+         i0Kg0aETzMxkYZvJySBIXZUZz0IEOJ/c3Kj9mZDQkXlIJTbz2zjNkVLtR7qNqblYSIud
+         VL0g==
+X-Received: by 10.66.141.165 with SMTP id rp5mr7246447pab.90.1400860439426;
+        Fri, 23 May 2014 08:53:59 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ec2sm5243394pbc.63.2014.05.23.08.53.58
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 23 May 2014 08:53:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <537F67DD.5010101@alum.mit.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/249992>
 
-On 05/15/2014 07:29 PM, Ronnie Sahlberg wrote:
-> Add a new flag REF_ISPACKONLY that we can use in ref_transaction_delete.
-> This flag indicates that the ref does not exist as a loose ref andf only as
-> a packed ref. If this is the case we then change the commit code so that
-> we skip taking out a lock file and we skip calling delete_ref_loose.
-> Check for this flag and die(BUG:...) if used with _update or _create.
-> 
-> At the start of the transaction, before we even start locking any refs,
-> we add all such REF_ISPACKONLY refs to delnames so that we have a list of
-> all pack only refs that we will be deleting during this transaction.
+Hi,
 
-Let me make a few comments about how I think ref packing fits into the
-scheme for pluggable reference back ends.  The comments may or may not
-be relevant to this particular commit.
+Michael Haggerty wrote:
 
-We want to have a reference API that can be implemented by various back
-ends.  Obviously we need operations to read a reference, enumerate
-existing references, update references within a transaction, and
-probably do similar things with symbolic references.
+> The status quo is that we have a single reference back end consisting of
+> loose references sitting on top of packed references.
+>
+> But really, loose references and packed references are two relatively
+> independent reference back ends [1].  We just happen to use them layered
+> on top of each other.
+>
+> This suggests to me that our current structure is best modeled as two
+> independent reference back ends, with a third implementation of the same
+> reference API whose job it is to compose the first two.
+[...]
+> [1] Forget for the sake of this discussion that we can't store symbolic
+> references as packed refs.
 
-The status quo is that we have a single reference back end consisting of
-loose references sitting on top of packed references.
+I find it hard to forget that. ;-)  More to the point, the trouble
+with loose refs and packed refs as independent reference backends is
+that neither has very good performance characteristics.  Enumerating
+many loose refs is slow.  Adding a new packed ref to a large list is
+also slow.  Git currently uses both loose and packed refs in a way
+that allows each to overcome the limitations of the other, and the
+fact that it involves two on-disk data structures seems to me like an
+implementation detail of how it achieves that.
 
-But really, loose references and packed references are two relatively
-independent reference back ends [1].  We just happen to use them layered
-on top of each other.
+So I believe most git code should not have to know about the
+difference between loose and packed refs (or the upper and lower
+layer) to allow the details of the layering can be tuned in low-level
+ref handling code.
 
-This suggests to me that our current structure is best modeled as two
-independent reference back ends, with a third implementation of the same
-reference API whose job it is to compose the first two.  In pseudocode,
+On the other hand, from a code structure perspective I can easily
+believe that implementing some subset (or maybe even all) of the
+reference backend API for loose refs and packed refs separately and
+providing a separate file describing how to compose them might be the
+cleanest way to write this code.  It's more general layering that
+seems to lie in the direction of madness.
 
-    interface ReferenceBackend:
-        read_ref(refname)
-        __iter__(...)
-        begin_transaction(...)
-        update_reference(...)
-        ...
-        commit_transaction(...)
+Maybe I'm wrong and people will find lots of use for combinations like
+ * loose refs shadowing an sqlite database
+ * tdb shadowing mysql
+ * etc
+It's easy to prove a naysayer wrong with code and I don't want to
+discourage that.
 
-    class LooseReferenceBackend(ReferenceBackend):
-        ...
+For the topic at hand it's relevant because packed-refs have
+properties that make some operations (certain deletion/ref creation
+combinations) much less fussy than loose refs, and it would be nice to
+be able to take advantage of that.  In the long term I would like to
+see git taking advantage of that when someone tries to fetch refs with
+names that would conflict on the filesystem (e.g., topic, topic/a,
+topic/b).
 
-    class PackedReferenceBackend(ReferenceBackend):
-        ...
-
-    class StackedReferenceBackend(ReferenceBackend):
-        def __init__(self, backend1, backend2):
-            self.backend1 = backend1
-            self.backend2 = backend2
-
-        def read_ref(refname):
-            try:
-                return backend1.read_ref(refname)
-            except ReferenceNotFound:
-                return backend2.read_ref(refname)
-
-        def __iter__(...):
-            i1 = self.backend1.iterate()
-            i2 = self.backend2.iterate()
-            while i1.has_next() and i2.has_next():
-                if i1.peek_next() < i2.peek_next():
-                    yield i1.next()
-                elif i1.peek_next() == i2.peek_next():
-                    yield i1.next()
-                    i2.next() # discard
-                else
-                    yield i2.next()
-            while i1.has_next():
-                yield i1.next()
-            while i2.has_next():
-                yield i2.next()
-
-        def pack_refs(...):
-            ...
-
-et cetera.
-
->From this point of view it is clear that packing refs is not an
-operation that belongs in the ReferenceBackend API, but rather in the
-StackedReferenceBackend interface.  The reason is that it doesn't affect
-how references appear to the outside world, but rather just reorganizes
-them between the two backends to which StackedReferenceBackend
-delegates.  The *implementation* of pack_refs() involves adding
-references to backend2 and deleting them from backend1.  But since
-adding and deleting references *are* part of the ReferenceBackend API,
-StackedReferenceBackend can compose *any arbitrary two* reference
-backends (including other StackedReferenceBackends).  Pruning references
-that have been packed is also not part of the ReferenceBackend API.
-Rather it is a plain old deletion of a reference from backend1 of a
-StackedReferenceBackend.
-
-I haven't thought through all of the ramifications of this design, but
-I'm pretty sure it's where we want to be headed.
-
-Michael
-
-[1] Forget for the sake of this discussion that we can't store symbolic
-references as packed refs.
-
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Thanks,
+Jonathan
