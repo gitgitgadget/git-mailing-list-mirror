@@ -1,91 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 4/8] http: extract type/subtype portion of content-type
-Date: Fri, 23 May 2014 16:12:45 -0400
-Message-ID: <20140523201245.GE19088@sigill.intra.peff.net>
-References: <20140522092824.GA14530@sigill.intra.peff.net>
- <20140522092947.GD15032@sigill.intra.peff.net>
- <567F86A0-98E4-49AF-81C8-8D9E1AEC3C5E@gmail.com>
+From: Adam Borowski <kilobyte@angband.pl>
+Subject: [BUG] auto-repack exits prematurely, locking other processing out
+Date: Fri, 23 May 2014 21:51:21 +0200
+Message-ID: <20140523195121.GA923@angband.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Peter Krefting <peter@softwolves.pp.se>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 23 22:12:52 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 23 22:18:03 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wnvpj-0005LJ-Bi
-	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 22:12:51 +0200
+	id 1Wnvuk-0006Z4-FI
+	for gcvg-git-2@plane.gmane.org; Fri, 23 May 2014 22:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751039AbaEWUMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 16:12:47 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58332 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750872AbaEWUMr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 16:12:47 -0400
-Received: (qmail 2748 invoked by uid 102); 23 May 2014 20:12:47 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 23 May 2014 15:12:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 23 May 2014 16:12:45 -0400
+	id S1751130AbaEWUR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 16:17:59 -0400
+Received: from tartarus.angband.pl ([89.206.35.136]:37330 "EHLO
+	tartarus.angband.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751039AbaEWUR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 16:17:58 -0400
+X-Greylist: delayed 1594 seconds by postgrey-1.27 at vger.kernel.org; Fri, 23 May 2014 16:17:58 EDT
+Received: from kilobyte by tartarus.angband.pl with local (Exim 4.80)
+	(envelope-from <kilobyte@tartarus.angband.pl>)
+	id 1WnvUv-0000gV-B0
+	for git@vger.kernel.org; Fri, 23 May 2014 21:51:21 +0200
 Content-Disposition: inline
-In-Reply-To: <567F86A0-98E4-49AF-81C8-8D9E1AEC3C5E@gmail.com>
+X-Junkbait: adolf@angband.pl, zareba@angband.pl
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: kilobyte@tartarus.angband.pl
+X-SA-Exim-Scanned: No (on tartarus.angband.pl); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250025>
 
-On Thu, May 22, 2014 at 03:52:21PM -0700, Kyle J. McKay wrote:
+Hi guys!
 
-> >+static void extract_content_type(struct strbuf *raw, struct strbuf *type)
-> >+{
-> >+	const char *p;
-> >+
-> >+	strbuf_reset(type);
-> >+	strbuf_grow(type, raw->len);
-> >+	for (p = raw->buf; *p; p++) {
-> >+		if (isspace(*p))
-> >+			continue;
-> >+		if (*p == ';')
-> >+			break;
-> >+		strbuf_addch(type, tolower(*p));
-> >+	}
-> >+}
-> >+
-> 
-> This will parse invalid content types as valid.  Probably not important
-> since the producer of an invalid content type shouldn't be depending on any
-> particular behavior by the consumer of such a type, but I think it warrants
-> a note in the comment block, perhaps something like:
-> 
->   * Note that an invalid content-type may be converted to a valid one
-> 
-> or some such.
+It looks like the periodic auto-repack backgrounds itself when it shouldn't
+do so.  This causes the command it has triggered as a part of to fail:
 
-Yeah, that is intentional based on our earlier discussion (this function
-started as "normalize_content_type" :) ). I think it's not a big deal,
-but agree it's worth a comment. Like:
+==========================================================================
+[~/linux](master)$ git pull --rebase
+remote: Counting objects: 455, done.
+remote: Compressing objects: 100% (64/64), done.
+remote: Total 267 (delta 208), reused 262 (delta 203)
+Receiving objects: 100% (267/267), 44.43 KiB | 0 bytes/s, done.
+Resolving deltas: 100% (208/208), completed with 80 local objects.
+From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux
+   4b660a7..f02f79d  master     -> linus/master
+Auto packing the repository in background for optimum performance.
+See "git help gc" for manual housekeeping.
+First, rewinding head to replay your work on top of it...
+Applying: perf: tools: fix missing casts for printf arguments.
+Applying: vt: emulate 8- and 24-bit colour codes.
+fatal: Unable to create '/home/kilobyte/linux/.git/refs/heads/master.lock': File exists.
 
-diff --git a/http.c b/http.c
-index 4edf5b9..6bfd093 100644
---- a/http.c
-+++ b/http.c
-@@ -911,8 +911,14 @@ static CURLcode curlinfo_strbuf(CURL *curl, CURLINFO info, struct strbuf *buf)
-  * spaces suppressed, all letters lowercased, and no trailing ";"
-  * or parameters.
-  *
-+ * Note that we will silently remove even invalid whitespace. For
-+ * example, "text / plain" is specifically forbidden by RFC 2616,
-+ * but "text/plain" is the only reasonable output, and this keeps
-+ * our code simple.
-+ *
-  * Example:
-  *   "TEXT/PLAIN; charset=utf-8" -> "text/plain"
-+ *   "text / plain" -> "text/plain"
-  */
- static void extract_content_type(struct strbuf *raw, struct strbuf *type)
- {
+If no other git process is currently running, this probably means a
+git process crashed in this repository earlier. Make sure no other git
+process is running and remove the file manually to continue.
+Could not move back to refs/heads/master
+[~/linux]((no branch, rebasing (null)))$
+==========================================================================
 
--Peff
+-- 
+Gnome 3, Windows 8, Slashdot Beta, now Firefox Ribbon^WAustralis.  WTF is going
+on with replacing usable interfaces with tabletized ones?
