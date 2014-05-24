@@ -1,69 +1,79 @@
-From: Maxime Coste <frrrwww@gmail.com>
-Subject: Re: [PATCH] git-p4: Do not include diff in spec file when just
- preparing p4
-Date: Sat, 24 May 2014 02:44:41 +0100
-Message-ID: <20140524014441.GB29751@nekage>
-References: <20140110181807.GA29164@nekage>
- <20140112222946.GA13519@padd.com>
- <20140113121011.GA9711@nekage>
- <20140114000613.GA11594@padd.com>
- <20140524013942.GA29751@nekage>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3] Add an explicit GIT_DIR to the list of excludes
+Date: Sat, 24 May 2014 08:41:02 +0700
+Message-ID: <CACsJy8CDeTn8h8uUn_=6ek7BJueN_1i01TB_AeH03RKnf6tNSw@mail.gmail.com>
+References: <1400866411-14584-1-git-send-email-pasha.bolokhov@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Sat May 24 03:40:35 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 24 03:41:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wo0wq-0006Id-LC
-	for gcvg-git-2@plane.gmane.org; Sat, 24 May 2014 03:40:32 +0200
+	id 1Wo0xt-0008RK-Gk
+	for gcvg-git-2@plane.gmane.org; Sat, 24 May 2014 03:41:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751146AbaEXBk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 23 May 2014 21:40:29 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:56258 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbaEXBk2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 23 May 2014 21:40:28 -0400
-Received: by mail-wi0-f170.google.com with SMTP id bs8so1821227wib.5
-        for <git@vger.kernel.org>; Fri, 23 May 2014 18:40:27 -0700 (PDT)
+	id S1751151AbaEXBle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 23 May 2014 21:41:34 -0400
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:36240 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750959AbaEXBld (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 23 May 2014 21:41:33 -0400
+Received: by mail-qc0-f172.google.com with SMTP id l6so9416916qcy.31
+        for <git@vger.kernel.org>; Fri, 23 May 2014 18:41:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=nsiROI71FsIpxEjWMiADmCBG1ADPG4Tesx2H9BsZEuU=;
-        b=nAoHiRmCoX6epAJ9d2IJRtLchHORPD06h9DKC8duU+hVhFtp9O66jJVQdWVxwbSgIp
-         A13ZARRnfaYG4fPsrpRHICuLONxt654ya0eUzWbJHtufN9lmv4ZCIRSiSVTTHqFLwyhx
-         zZhZqMzzLDwoFWuy+LxDvJoiyvukHMMcHa4Aa5rmxDk8KYRdeBkbD0rWw3GFdWUzRiZ5
-         ++vEnY8kbO3YKQnEQFlc3JWf71pZJLyr9tkZnTTdLMa7A3KyiMLxpN91LV5llZJTJt7E
-         xMZYbdWWsqZk7+3OKDo6ivY0WkK4CP9E+5EXQYq1Bv05ZoUd2SgEzu6Iaem1b2/QTBet
-         gNWg==
-X-Received: by 10.195.12.34 with SMTP id en2mr2937746wjd.13.1400895627310;
-        Fri, 23 May 2014 18:40:27 -0700 (PDT)
-Received: from localhost ([109.255.47.65])
-        by mx.google.com with ESMTPSA id l4sm6748783wjf.14.2014.05.23.18.40.26
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 May 2014 18:40:26 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20140524013942.GA29751@nekage>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=4+KKVLUTvOaApPfxfIEtw/bQC03rZcxgVnpyDU1dJO0=;
+        b=svXFaOYdBkAb5Bm5M9YFS02hfFLF+QZzT3EZHClIvqiqIm5sg9vstifdn9qAc+goqE
+         X3Az/URhz/nCG3khaHEUcD7q6UGWa4WLagWsv3wzfgK0LuUf82EgAudPvDMOUu0nNQ+h
+         IcapbErCVVAkWkeO1RzFsdPZVLp/k+zILm0U0we9Gmft1/H6FMBYUoaUF6cNb0eI2rFT
+         XPrntAb98jHMrVnbZPqMaXNBp5KW/Mdx85q74LQKWitlcnzq5YkqHIxkZRSCkAiGor+J
+         dYGoOUbvcf3Y7K7xBVKZqIouWemVhX/PQpCGalGSgk4/y2PISpGXijL7etE47WzwQDzU
+         gBzQ==
+X-Received: by 10.224.138.3 with SMTP id y3mr12261264qat.78.1400895693074;
+ Fri, 23 May 2014 18:41:33 -0700 (PDT)
+Received: by 10.96.138.9 with HTTP; Fri, 23 May 2014 18:41:02 -0700 (PDT)
+In-Reply-To: <1400866411-14584-1-git-send-email-pasha.bolokhov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250051>
 
-Hello
+On Sat, May 24, 2014 at 12:33 AM, Pasha Bolokhov
+<pasha.bolokhov@gmail.com> wrote:
+> When an explicit '--git-dir' option points to a directory inside
+> the work tree, git treats it as if it were any other directory.
+> In particular, 'git status' lists it as untracked, while 'git add -A'
+> stages the metadata directory entirely
+>
+> Add GIT_DIR to the list of excludes in setup_standard_excludes(),
+> while checking that GIT_DIR is not just '.git', in which case it
+> would be ignored by default, and that GIT_DIR is inside GIT_WORK_TREE
+>
+> Although an analogous comparison of any given path against '.git'
+> is done in treat_path(), this does not seem to be the right place
+> to compare against GIT_DIR. Instead, the excludes provide an
+> effective mechanism of ignoring a file/directory, and adding GIT_DIR
+> as an exclude is equivalent of putting it into '.gitignore'. Function
+> setup_standard_excludes() was chosen because that is the place where
+> the excludes are initialized by the commands that are concerned about
+> excludes
 
-Sorry for the delay, I hope that version is more acceptable.
+I like this approach. A search of "exclude-standard" in Documentation/
+gives git-grep.txt and git-ls-files.txt. I don't know if we need to
+add something about this extra exclude rule to those .txt. If it's so
+obvious that this should be the expected behavior, then probably not.
 
-I updated the test case as well, but did not manage to get the actual p4
-tests to work here (I have p4 and p4d installed, they start but all the
-other tests seems to fail). Still the change is straightforward.
-
-Cheers,
-
-Maxime Coste.
+The case of "git grep --exclude-standard" is interesting because it's
+intended to work without a repository. First reaction was would
+get_git_dir() return NULL in that case. But it should return ".git" so
+we're good.
+-- 
+Duy
