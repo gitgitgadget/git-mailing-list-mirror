@@ -1,105 +1,219 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH] wording fixes in the user manual and glossary
-Date: Sat, 24 May 2014 20:50:41 -0700
-Message-ID: <1400989841-2845-1-git-send-email-jmmahler@gmail.com>
-Cc: Jeremiah Mahler <jmmahler@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun May 25 05:51:58 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v12 03/11] trailer: read and process config information
+Date: Sun, 25 May 2014 07:32:14 +0200
+Message-ID: <20140525053223.5329.63949.chriscool@tuxfamily.org>
+References: <20140525051254.5329.66539.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun May 25 07:46:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WoPTZ-0004D3-KE
-	for gcvg-git-2@plane.gmane.org; Sun, 25 May 2014 05:51:57 +0200
+	id 1WoRGH-0004q9-L3
+	for gcvg-git-2@plane.gmane.org; Sun, 25 May 2014 07:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751336AbaEYDvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 May 2014 23:51:50 -0400
-Received: from mail-pb0-f52.google.com ([209.85.160.52]:59545 "EHLO
-	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751262AbaEYDvt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 May 2014 23:51:49 -0400
-Received: by mail-pb0-f52.google.com with SMTP id rr13so5995047pbb.25
-        for <git@vger.kernel.org>; Sat, 24 May 2014 20:51:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=kE9Bku0oWMBvZpEhGxv7a5sogpjaIbRS5kyVDpI8X9Q=;
-        b=ClfMGed1TF8DcoUUPYqXqdwg+dUilMjTvsLBsKFWZibxLzv3WXPdqVRpm+l2FHor4Z
-         xC31RqGIFHcpq6Gub9pBuDBWS1Uorg1dVtpU7k/M6GDC67EZ7aRkzv1vCQAyBx0ltz6M
-         cnbMU5o8ojUyHGbJo7DulOMrFRJr6rPaZVNA9uE2jpiQi2/E49du5hL1JAUQkdz4e8Eo
-         QANXZ9x9eUkmvDXYLpmjpmYGcIQJWPv/YXuIux7uD0k7jUxetZxttwVb/M25VtnVynts
-         74MCPFX3R0g1tagpeYxPVJns7RUZnYALniUG9hGmxg1iN2ppERjmO4C9610E9ipq5tQz
-         TZUg==
-X-Received: by 10.68.226.105 with SMTP id rr9mr877326pbc.161.1400989909440;
-        Sat, 24 May 2014 20:51:49 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id mq10sm1019544pbc.62.2014.05.24.20.51.46
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sat, 24 May 2014 20:51:48 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Sat, 24 May 2014 20:51:45 -0700
-X-Mailer: git-send-email 2.0.0.rc4.479.gd6c9c28
+	id S1751396AbaEYFqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 25 May 2014 01:46:13 -0400
+Received: from mail-1y.bbox.fr ([194.158.98.14]:55738 "EHLO mail-1y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750787AbaEYFqK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2014 01:46:10 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 51FC240;
+	Sun, 25 May 2014 07:46:08 +0200 (CEST)
+X-git-sha1: 171998f0229f1736ad8a97fd0007e6be67112db6 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20140525051254.5329.66539.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250067>
 
-Some minor wording fixes in the user manual and glossary.
+Read the configuration to get trailer information, and then process
+it and store it in a doubly linked list.
 
-Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
+The config information is stored in the list whose first item is
+pointed to by:
+
+static struct trailer_item *first_conf_item;
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/glossary-content.txt | 2 +-
- Documentation/user-manual.txt      | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ trailer.c | 146 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 146 insertions(+)
 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index be0858c..4e0b971 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -1,7 +1,7 @@
- [[def_alternate_object_database]]alternate object database::
- 	Via the alternates mechanism, a <<def_repository,repository>>
- 	can inherit part of its <<def_object_database,object database>>
--	from another object database, which is called "alternate".
-+	from another object database, which is called an "alternate".
+diff --git a/trailer.c b/trailer.c
+index 52108c2..f376be5 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -25,6 +25,8 @@ struct trailer_item {
+ 	struct conf_info conf;
+ };
  
- [[def_bare_repository]]bare repository::
- 	A bare repository is normally an appropriately
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index d33f884..efb3c97 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -416,7 +416,7 @@ REVISIONS" section of linkgit:gitrevisions[7].
- Updating a repository with git fetch
- ------------------------------------
- 
--Eventually the developer cloned from will do additional work in her
-+Eventually the developer will do additional work in her cloned
- repository, creating new commits and advancing the branches to point
- at the new commits.
- 
-@@ -1811,8 +1811,8 @@ manner.
- You can then import these into your mail client and send them by
- hand.  However, if you have a lot to send at once, you may prefer to
- use the linkgit:git-send-email[1] script to automate the process.
--Consult the mailing list for your project first to determine how they
--prefer such patches be handled.
-+Consult the mailing list for your project first to determine
-+their requirements for submitting patches.
- 
- [[importing-patches]]
- Importing patches to a project
-@@ -2255,7 +2255,7 @@ $ git checkout test && git merge speed-up-spinlocks
- It is unlikely that you would have any conflicts here ... but you might if you
- spent a while on this step and had also pulled new versions from upstream.
- 
--Some time later when enough time has passed and testing done, you can pull the
-+Sometime later when enough time has passed and testing done, you can pull the
- same branch into the `release` tree ready to go upstream.  This is where you
- see the value of keeping each patch (or patch series) in its own branch.  It
- means that the patches can be moved into the `release` tree in any order.
++static struct trailer_item *first_conf_item;
++
+ static int same_token(struct trailer_item *a, struct trailer_item *b, int alnum_len)
+ {
+ 	return !strncasecmp(a->token, b->token, alnum_len);
+@@ -245,3 +247,147 @@ static void process_trailers_lists(struct trailer_item **in_tok_first,
+ 		apply_arg_if_missing(in_tok_first, in_tok_last, arg_tok);
+ 	}
+ }
++
++static int set_where(struct conf_info *item, const char *value)
++{
++	if (!strcasecmp("after", value))
++		item->where = WHERE_AFTER;
++	else if (!strcasecmp("before", value))
++		item->where = WHERE_BEFORE;
++	else
++		return -1;
++	return 0;
++}
++
++static int set_if_exists(struct conf_info *item, const char *value)
++{
++	if (!strcasecmp("addIfDifferent", value))
++		item->if_exists = EXISTS_ADD_IF_DIFFERENT;
++	else if (!strcasecmp("addIfDifferentNeighbor", value))
++		item->if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
++	else if (!strcasecmp("add", value))
++		item->if_exists = EXISTS_ADD;
++	else if (!strcasecmp("overwrite", value))
++		item->if_exists = EXISTS_OVERWRITE;
++	else if (!strcasecmp("doNothing", value))
++		item->if_exists = EXISTS_DO_NOTHING;
++	else
++		return -1;
++	return 0;
++}
++
++static int set_if_missing(struct conf_info *item, const char *value)
++{
++	if (!strcasecmp("doNothing", value))
++		item->if_missing = MISSING_DO_NOTHING;
++	else if (!strcasecmp("add", value))
++		item->if_missing = MISSING_ADD;
++	else
++		return -1;
++	return 0;
++}
++
++static struct trailer_item *get_conf_item(const char *name)
++{
++	struct trailer_item *item;
++	struct trailer_item *previous;
++
++	/* Look up item with same name */
++	for (previous = NULL, item = first_conf_item;
++	     item;
++	     previous = item, item = item->next) {
++		if (!strcasecmp(item->conf.name, name))
++			return item;
++	}
++
++	/* Item does not already exists, create it */
++	item = xcalloc(sizeof(struct trailer_item), 1);
++	item->conf.name = xstrdup(name);
++
++	if (!previous)
++		first_conf_item = item;
++	else {
++		previous->next = item;
++		item->previous = previous;
++	}
++
++	return item;
++}
++
++enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_WHERE,
++			 TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
++
++static struct {
++	const char *name;
++	enum trailer_info_type type;
++} trailer_config_items[] = {
++	{ "key", TRAILER_KEY },
++	{ "command", TRAILER_COMMAND },
++	{ "where", TRAILER_WHERE },
++	{ "ifexists", TRAILER_IF_EXISTS },
++	{ "ifmissing", TRAILER_IF_MISSING }
++};
++
++static int git_trailer_config(const char *conf_key, const char *value, void *cb)
++{
++	const char *trailer_item, *variable_name;
++	struct trailer_item *item;
++	struct conf_info *conf;
++	char *name = NULL;
++	enum trailer_info_type type;
++	int i;
++
++	trailer_item = skip_prefix(conf_key, "trailer.");
++	if (!trailer_item)
++		return 0;
++
++	variable_name = strrchr(trailer_item, '.');
++	if (!variable_name) {
++		warning(_("two level trailer config variable %s"), conf_key);
++		return 0;
++	}
++
++	variable_name++;
++	for (i = 0; i < ARRAY_SIZE(trailer_config_items); i++) {
++		if (strcmp(trailer_config_items[i].name, variable_name))
++			continue;
++		name = xstrndup(trailer_item,  variable_name - trailer_item - 1);
++		type = trailer_config_items[i].type;
++		break;
++	}
++
++	if (!name)
++		return 0;
++
++	item = get_conf_item(name);
++	conf = &item->conf;
++	free(name);
++
++	switch (type) {
++	case TRAILER_KEY:
++		if (conf->key)
++			warning(_("more than one %s"), conf_key);
++		conf->key = xstrdup(value);
++		break;
++	case TRAILER_COMMAND:
++		if (conf->command)
++			warning(_("more than one %s"), conf_key);
++		conf->command = xstrdup(value);
++		break;
++	case TRAILER_WHERE:
++		if (set_where(conf, value))
++			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
++		break;
++	case TRAILER_IF_EXISTS:
++		if (set_if_exists(conf, value))
++			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
++		break;
++	case TRAILER_IF_MISSING:
++		if (set_if_missing(conf, value))
++			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
++		break;
++	default:
++		die("internal bug in trailer.c");
++	}
++	return 0;
++}
 -- 
-2.0.0.rc4.479.gd6c9c28
+1.9.rc0.17.g651113e
