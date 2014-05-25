@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v12 06/11] trailer: put all the processing together and print
-Date: Sun, 25 May 2014 07:32:17 +0200
-Message-ID: <20140525053223.5329.76257.chriscool@tuxfamily.org>
-References: <20140525051254.5329.66539.chriscool@tuxfamily.org>
+Subject: [PATCH v12 00/11] Add interpret-trailers builtin
+Date: Sun, 25 May 2014 07:32:11 +0200
+Message-ID: <20140525051254.5329.66539.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
 	Thomas Rast <tr@thomasrast.ch>,
@@ -13,133 +12,148 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun May 25 07:46:45 2014
+X-From: git-owner@vger.kernel.org Sun May 25 07:46:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WoRGd-0005Qh-7h
-	for gcvg-git-2@plane.gmane.org; Sun, 25 May 2014 07:46:43 +0200
+	id 1WoRGd-0005Qh-O5
+	for gcvg-git-2@plane.gmane.org; Sun, 25 May 2014 07:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751434AbaEYFqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2014 01:46:36 -0400
-Received: from mail-1y.bbox.fr ([194.158.98.14]:55756 "EHLO mail-1y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751372AbaEYFqL (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751051AbaEYFqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sun, 25 May 2014 01:46:11 -0400
+Received: from mail-2y.bbox.fr ([194.158.98.15]:63889 "EHLO mail-2y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750946AbaEYFqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 25 May 2014 01:46:09 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 6566754;
-	Sun, 25 May 2014 07:46:10 +0200 (CEST)
-X-git-sha1: 774bff7c45bce0a3e433feb6bb866345a96fb5d0 
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 2081859;
+	Sun, 25 May 2014 07:46:05 +0200 (CEST)
 X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20140525051254.5329.66539.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250075>
 
-This patch adds the process_trailers() function that
-calls all the previously added processing functions
-and then prints the results on the standard output.
+This patch series implements a new command:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- trailer.c | 56 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- trailer.h |  6 ++++++
- 2 files changed, 62 insertions(+)
+        git interpret-trailers
+
+and an infrastructure to process trailers that can be reused,
+for example in "commit.c".
+
+1) Rationale:
+
+This command should help with RFC 822 style headers, called
+"trailers", that are found at the end of commit messages.
+
+(Note that these headers do not follow and are not intended to
+follow many rules that are in RFC 822. For example they do not
+follow the line breaking rules, the encoding rules and probably
+many other rules.)
+
+For a long time, these trailers have become a de facto standard
+way to add helpful information into commit messages.
+
+Until now git commit has only supported the well known
+"Signed-off-by: " trailer, that is used by many projects like
+the Linux kernel and Git.
+
+It is better to keep builtin/commit.c uncontaminated by any more
+hard-wired logic, like what we have for the signed-off-by line.  Any
+new things can and should be doable in hooks, and this filter would
+help writing these hooks.
+
+And that is why the design goal of the filter is to make it at least
+as powerful as the built-in logic we have for signed-off-by lines;
+that would allow us to later eject the hard-wired logic for
+signed-off-by line from the main codepath, if/when we wanted to.
+
+Alternatively, we could build a library-ish API around this filter
+code and replace the hard-wired logic for signed-off-by line with a
+call into that API, if/when we wanted to, but that requires (in
+addition to the "at least as powerful as the built-in logic") that
+the implementation of this stand-alone filter can be cleanly made
+into a reusable library, so that is a bit higher bar to cross than
+"everything can be doable with hooks" alternative.
+
+2) Current state:
+
+Currently the usage string of this command is:
+
+git interpret-trailers [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
+
+The following features are implemented:
+
+        - the result is printed on stdout
+        - the --trailer arguments are interpreted
+        - messages read from <file>... or stdin are interpreted
+        - the "trailer.<token>.key" options in the config are interpreted
+        - the "trailer.<token>.where" options are interpreted
+        - the "trailer.<token>.ifExist" options are interpreted
+        - the "trailer.<token>.ifMissing" options are interpreted
+        - the "trailer.<token>.command" config works
+        - $ARG can be used in commands
+        - messages can contain a patch
+        - lines in messages starting with a comment char are ignored (new)
+        - there are 35 tests
+        - there is some documentation
+        - there are examples in the documentation (new)
+
+Possible improvements:
+        - integration with "git commit"
+        - support GIT_COMMIT_PROTO env variable in commands
+
+3) Changes since version 11, thanks to Michael, Jonathan and Junio:
+
+* the patch to ignore comments in messages has been squashed into
+  the original series (5/11 and 8/11)
+* the comment char config variable is used to ignore comments in
+  messages (as suggested by Michael) (5/11)
+* the patch that add examples in the documentation has been
+  squashed into the original (11/11)
+* one of the examples has been split into 2 examples (as suggested
+  by Junio) (11/11)
+* there is no special case for # when printing the trailers, (as
+  suggested by Junio); so we always use ': ' as separator, except
+  when trailer.<token>.key ends with a non alphanumeric character;
+  in that case we add no separator as we suppose that the key
+  already contains a separator (6/11, 8/11 and 10/11)
+* documentation has been improved to be clearer, and more
+  explicit, especially about how the key config variable is
+  used (11/11)
+
+Christian Couder (11):
+  trailer: add data structures and basic functions
+  trailer: process trailers from input message and arguments
+  trailer: read and process config information
+  trailer: process command line trailer arguments
+  trailer: parse trailers from file or stdin
+  trailer: put all the processing together and print
+  trailer: add interpret-trailers command
+  trailer: add tests for "git interpret-trailers"
+  trailer: execute command from 'trailer.<name>.command'
+  trailer: add tests for commands in config file
+  Documentation: add documentation for 'git interpret-trailers'
+
+ .gitignore                               |   1 +
+ Documentation/git-interpret-trailers.txt | 264 +++++++++++
+ Makefile                                 |   2 +
+ builtin.h                                |   1 +
+ builtin/interpret-trailers.c             |  44 ++
+ command-list.txt                         |   1 +
+ git.c                                    |   1 +
+ t/t7513-interpret-trailers.sh            | 568 +++++++++++++++++++++++
+ trailer.c                                | 755 +++++++++++++++++++++++++++++++
+ trailer.h                                |   6 +
+ 10 files changed, 1643 insertions(+)
+ create mode 100644 Documentation/git-interpret-trailers.txt
+ create mode 100644 builtin/interpret-trailers.c
+ create mode 100755 t/t7513-interpret-trailers.sh
+ create mode 100644 trailer.c
  create mode 100644 trailer.h
 
-diff --git a/trailer.c b/trailer.c
-index 40ad1a1..d648939 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "string-list.h"
-+#include "trailer.h"
- /*
-  * Copyright (c) 2013, 2014 Christian Couder <chriscool@tuxfamily.org>
-  */
-@@ -69,6 +70,24 @@ static void free_trailer_item(struct trailer_item *item)
- 	free(item);
- }
- 
-+static void print_tok_val(const char *tok, const char *val)
-+{
-+	char c = tok[strlen(tok) - 1];
-+	if (isalnum(c))
-+		printf("%s: %s\n", tok, val);
-+	else
-+		printf("%s%s\n", tok, val);
-+}
-+
-+static void print_all(struct trailer_item *first, int trim_empty)
-+{
-+	struct trailer_item *item;
-+	for (item = first; item; item = item->next) {
-+		if (!trim_empty || strlen(item->value) > 0)
-+			print_tok_val(item->token, item->value);
-+	}
-+}
-+
- static void add_arg_to_input_list(struct trailer_item *in_tok,
- 				  struct trailer_item *arg_tok)
- {
-@@ -632,3 +651,40 @@ static int process_input_file(struct strbuf **lines,
- 
- 	return patch_start;
- }
-+
-+static void free_all(struct trailer_item **first)
-+{
-+	while (*first) {
-+		struct trailer_item *item = remove_first(first);
-+		free_trailer_item(item);
-+	}
-+}
-+
-+void process_trailers(const char *file, int trim_empty, struct string_list *trailers)
-+{
-+	struct trailer_item *in_tok_first = NULL;
-+	struct trailer_item *in_tok_last = NULL;
-+	struct trailer_item *arg_tok_first;
-+	struct strbuf **lines;
-+	int patch_start;
-+
-+	git_config(git_trailer_config, NULL);
-+
-+	lines = read_input_file(file);
-+
-+	/* Print the lines before the trailers */
-+	patch_start = process_input_file(lines, &in_tok_first, &in_tok_last);
-+
-+	arg_tok_first = process_command_line_args(trailers);
-+
-+	process_trailers_lists(&in_tok_first, &in_tok_last, &arg_tok_first);
-+
-+	print_all(in_tok_first, trim_empty);
-+
-+	free_all(&in_tok_first);
-+
-+	/* Print the lines after the trailers as is */
-+	print_lines(lines, patch_start, INT_MAX);
-+
-+	strbuf_list_free(lines);
-+}
-diff --git a/trailer.h b/trailer.h
-new file mode 100644
-index 0000000..8eb25d5
---- /dev/null
-+++ b/trailer.h
-@@ -0,0 +1,6 @@
-+#ifndef TRAILER_H
-+#define TRAILER_H
-+
-+void process_trailers(const char *file, int trim_empty, struct string_list *trailers);
-+
-+#endif /* TRAILER_H */
 -- 
 1.9.rc0.17.g651113e
