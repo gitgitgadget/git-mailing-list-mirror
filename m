@@ -1,166 +1,146 @@
-From: Maxime Coste <frrrwww@gmail.com>
-Subject: [PATCH] git-p4: Do not include diff in spec file when just preparing
- p4
-Date: Sat, 24 May 2014 18:40:35 +0100
-Message-ID: <20140524174034.GA7560@nekage>
-References: <20140110181807.GA29164@nekage>
- <20140112222946.GA13519@padd.com>
- <20140113121011.GA9711@nekage>
- <20140114000613.GA11594@padd.com>
- <20140524013942.GA29751@nekage>
- <20140524135215.GA9386@padd.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] gc --auto: do not lock refs in the background
+Date: Sun, 25 May 2014 07:38:29 +0700
+Message-ID: <1400978309-25235-1-git-send-email-pclouds@gmail.com>
+References: <CACsJy8BfziZ7ciyKL0+X3rT9EfH_0E8nKNu9mTb_WSeTYWix_Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pete Wyckoff <pw@padd.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat May 24 19:37:24 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kilobyte@angband.pl, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun May 25 02:31:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WoFsq-0005Z0-1b
-	for gcvg-git-2@plane.gmane.org; Sat, 24 May 2014 19:37:24 +0200
+	id 1WoMLN-00025S-4t
+	for gcvg-git-2@plane.gmane.org; Sun, 25 May 2014 02:31:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751231AbaEXRhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 24 May 2014 13:37:11 -0400
-Received: from mail-we0-f181.google.com ([74.125.82.181]:47004 "EHLO
-	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751133AbaEXRhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 24 May 2014 13:37:10 -0400
-Received: by mail-we0-f181.google.com with SMTP id w61so6341578wes.12
-        for <git@vger.kernel.org>; Sat, 24 May 2014 10:37:08 -0700 (PDT)
+	id S1751331AbaEYAbK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 24 May 2014 20:31:10 -0400
+Received: from mail-we0-f169.google.com ([74.125.82.169]:53960 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311AbaEYAbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 24 May 2014 20:31:08 -0400
+Received: by mail-we0-f169.google.com with SMTP id u56so6551698wes.0
+        for <git@vger.kernel.org>; Sat, 24 May 2014 17:31:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=m/J2QoTPSuaZWQcyGXgUl7LJHgdVHW+j6bkhLBf9f2U=;
-        b=KRbb01Z7qkCZeGvyv0LpGSeq8V88QSI6CkSo2EL+QNrtsP2Cx0OKfxIyPLV/yNS2Zw
-         HhsfkECRQIxI9b3qG6OQ01Lr/vxC7/EQCuk2GO+KFsSPjI2PY2jVwgqhX0k1WUoK0IGK
-         5trfB+0M4tazdLrZa8nbnfgNzyf6qplvFAsE44aIFjb8olfMDlLw7ca+UNo8SLs2Eznt
-         MDY5VYjRPevcLV46Si27ozHhUTqCrU3rFTlzOcqMvNxO3O60c0fCY0jLP0ZZuahRzTBs
-         8ZZALqNGf0YxXKUXJ+Pk/HHV/ik79LuQzThRqMP00cVYBF74KFUVkT/3E4JAvcRFBeHr
-         MoRQ==
-X-Received: by 10.180.19.201 with SMTP id h9mr12845361wie.17.1400953028777;
-        Sat, 24 May 2014 10:37:08 -0700 (PDT)
-Received: from localhost ([109.255.47.65])
-        by mx.google.com with ESMTPSA id v15sm12023779wjq.17.2014.05.24.10.37.07
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=3T/GY42L7C5VHJcRtKrV8HAOeppHROtjyr/G+7HqLbc=;
+        b=jNlKu/w5Rl0nZoxuDGTnvdqJZJdUNGPyBva3gLG1XW/g7CAEBbG0MUg466ghfFM6ST
+         LPeIXkFvl+tDLTC98X42g66igFxu+dTwBFyX18sQXXaARso4KeYQMrP94OI7vy+UrpoO
+         CuueWnUaukFQdrFjCngWO8y33rAp4GCTMxkE00QPQ/bt0/kZCdcxnOCKM/OmtyGp5t34
+         9U9wrjg0/dFuzuj2YyD9Zr4sIvBaJEShBdek+5hQCdbpLX3D3B9IBWFAfdgrrzQ8fYF6
+         RfN/DvlfND8WyWvBe67W3lkTmosSQs2bkDHu0VA9485A4EE+g6KzHI6eEb3KOQZXx/I2
+         MS8A==
+X-Received: by 10.180.91.114 with SMTP id cd18mr14823009wib.28.1400977866906;
+        Sat, 24 May 2014 17:31:06 -0700 (PDT)
+Received: from lanh ([115.73.238.36])
+        by mx.google.com with ESMTPSA id ej7sm13929900wib.9.2014.05.24.17.31.02
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 May 2014 10:37:08 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20140524135215.GA9386@padd.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        Sat, 24 May 2014 17:31:05 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 25 May 2014 07:38:43 +0700
+X-Mailer: git-send-email 1.9.1.346.ga2b5940
+In-Reply-To: <CACsJy8BfziZ7ciyKL0+X3rT9EfH_0E8nKNu9mTb_WSeTYWix_Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250064>
 
-The diff information render the spec file unusable as is by p4,
-do not include it when run with --prepare-p4-only so that the
-given file can be directly passed to p4.
+9f673f9 (gc: config option for running --auto in background -
+2014-02-08) puts "gc --auto" in background to reduce user's wait
+time. Part of the garbage collecting is pack-refs and pruning
+reflogs. These require locking some refs and may abort other processes
+trying to lock the same ref. If gc --auto is fired in the middle of a
+script, gc's holding locks in the background could fail the script,
+which could never happen before 9f673f9.
 
-With --prepare-p4-only, git-p4 already tells the user it can use
-p4 submit with the generated spec file. This fails because of the
-diff being present in the file. Not including the diff fixes that.
+Keep running pack-refs and "reflog --prune" in foreground to stop
+parallel ref updates. The remaining background operations (repack,
+prune and rerere) should impact running git processes.
 
-Without --prepare-p4-only, keeping the diff makes sense for a
-quick review of the patch before submitting it. And does not cause
-problems with p4 as we remove it programmatically.
-
-Signed-off-by: Maxime Coste <frrrwww@gmail.com>
-Acked-by: Pete Wyckoff <pw@padd.com>
+Reported-by: Adam Borowski <kilobyte@angband.pl>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- git-p4.py                | 49 +++++++++++++++++++++++++-----------------------
- t/t9807-git-p4-submit.sh |  3 ++-
- 2 files changed, 28 insertions(+), 24 deletions(-)
+ builtin/gc.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/git-p4.py b/git-p4.py
-index 773cafc..7bb0f73 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1238,6 +1238,28 @@ class P4Submit(Command, P4UserMap):
-             if response == 'n':
-                 return False
- 
-+    def get_diff_description(self, editedFiles):
-+        # diff
-+        if os.environ.has_key("P4DIFF"):
-+            del(os.environ["P4DIFF"])
-+        diff = ""
-+        for editedFile in editedFiles:
-+            diff += p4_read_pipe(['diff', '-du',
-+                                  wildcard_encode(editedFile)])
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 85f5c2b..8d219d8 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -26,6 +26,7 @@ static const char * const builtin_gc_usage[] =3D {
+ };
+=20
+ static int pack_refs =3D 1;
++static int prune_reflogs =3D 1;
+ static int aggressive_depth =3D 250;
+ static int aggressive_window =3D 250;
+ static int gc_auto_threshold =3D 6700;
+@@ -258,6 +259,19 @@ static const char *lock_repo_for_gc(int force, pid=
+_t* ret_pid)
+ 	return NULL;
+ }
+=20
++static int gc_before_repack(void)
++{
++	if (pack_refs && run_command_v_opt(pack_refs_cmd.argv, RUN_GIT_CMD))
++		return error(FAILED_RUN, pack_refs_cmd.argv[0]);
 +
-+        # new file diff
-+        newdiff = ""
-+        for newFile in filesToAdd:
-+            newdiff += "==== new file ====\n"
-+            newdiff += "--- /dev/null\n"
-+            newdiff += "+++ %s\n" % newFile
-+            f = open(newFile, "r")
-+            for line in f.readlines():
-+                newdiff += "+" + line
-+            f.close()
++	if (prune_reflogs && run_command_v_opt(reflog.argv, RUN_GIT_CMD))
++		return error(FAILED_RUN, reflog.argv[0]);
 +
-+        return diff + newdiff
++	pack_refs =3D 0;
++	prune_reflogs =3D 0;
++	return 0;
++}
 +
-     def applyCommit(self, id):
-         """Apply one commit, return True if it succeeded."""
- 
-@@ -1398,34 +1420,15 @@ class P4Submit(Command, P4UserMap):
-             submitTemplate += "######## Variable git-p4.skipUserNameCheck hides this message.\n"
- 
-         separatorLine = "######## everything below this line is just the diff #######\n"
-+        if not self.prepare_p4_only:
-+            submitTemplate += separatorLine
-+            submitTemplate += self.get_diff_description(editedFiles)
- 
--        # diff
--        if os.environ.has_key("P4DIFF"):
--            del(os.environ["P4DIFF"])
--        diff = ""
--        for editedFile in editedFiles:
--            diff += p4_read_pipe(['diff', '-du',
--                                  wildcard_encode(editedFile)])
+ int cmd_gc(int argc, const char **argv, const char *prefix)
+ {
+ 	int aggressive =3D 0;
+@@ -320,12 +334,15 @@ int cmd_gc(int argc, const char **argv, const cha=
+r *prefix)
+ 				fprintf(stderr, _("Auto packing the repository for optimum perform=
+ance.\n"));
+ 			fprintf(stderr, _("See \"git help gc\" for manual housekeeping.\n")=
+);
+ 		}
+-		if (detach_auto)
++		if (detach_auto) {
++			if (gc_before_repack())
++				return -1;
+ 			/*
+ 			 * failure to daemonize is ok, we'll continue
+ 			 * in foreground
+ 			 */
+ 			daemonize();
++		}
+ 	} else
+ 		add_repack_all_option();
+=20
+@@ -337,11 +354,8 @@ int cmd_gc(int argc, const char **argv, const char=
+ *prefix)
+ 		    name, (uintmax_t)pid);
+ 	}
+=20
+-	if (pack_refs && run_command_v_opt(pack_refs_cmd.argv, RUN_GIT_CMD))
+-		return error(FAILED_RUN, pack_refs_cmd.argv[0]);
 -
--        # new file diff
--        newdiff = ""
--        for newFile in filesToAdd:
--            newdiff += "==== new file ====\n"
--            newdiff += "--- /dev/null\n"
--            newdiff += "+++ %s\n" % newFile
--            f = open(newFile, "r")
--            for line in f.readlines():
--                newdiff += "+" + line
--            f.close()
--
--        # change description file: submitTemplate, separatorLine, diff, newdiff
-         (handle, fileName) = tempfile.mkstemp()
-         tmpFile = os.fdopen(handle, "w+")
-         if self.isWindows:
-             submitTemplate = submitTemplate.replace("\n", "\r\n")
--            separatorLine = separatorLine.replace("\n", "\r\n")
--            newdiff = newdiff.replace("\n", "\r\n")
--        tmpFile.write(submitTemplate + separatorLine + diff + newdiff)
-+        tmpFile.write(submitTemplate)
-         tmpFile.close()
- 
-         if self.prepare_p4_only:
-diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
-index 4caf36e..7fab2ed 100755
---- a/t/t9807-git-p4-submit.sh
-+++ b/t/t9807-git-p4-submit.sh
-@@ -403,7 +403,8 @@ test_expect_success 'submit --prepare-p4-only' '
- 		git commit -m "prep only add" &&
- 		git p4 submit --prepare-p4-only >out &&
- 		test_i18ngrep "prepared for submission" out &&
--		test_i18ngrep "must be deleted" out
-+		test_i18ngrep "must be deleted" out &&
-+		! test_i18ngrep "everything below this line is just the diff" out
- 	) &&
- 	(
- 		cd "$cli" &&
--- 
-1.9.3
+-	if (run_command_v_opt(reflog.argv, RUN_GIT_CMD))
+-		return error(FAILED_RUN, reflog.argv[0]);
++	if (gc_before_repack())
++		return -1;
+=20
+ 	if (run_command_v_opt(repack.argv, RUN_GIT_CMD))
+ 		return error(FAILED_RUN, repack.argv[0]);
+--=20
+1.9.1.346.ga2b5940
