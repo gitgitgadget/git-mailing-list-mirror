@@ -1,119 +1,70 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [RFC/PATCH 1/2] config: Add cache for config value querying
-Date: Mon, 26 May 2014 22:02:54 +0200
-Message-ID: <53839DEE.9090504@web.de>
-References: <1401125601-18249-1-git-send-email-tanayabh@gmail.com> <1401125601-18249-2-git-send-email-tanayabh@gmail.com>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: Can we stage all files using "git add" command, except some
+ specific files ?
+Date: Mon, 26 May 2014 22:23:22 +0200
+Message-ID: <1401135802.25483.1.camel@spirit>
+References: <8392138.j8Dle5WGbS@linux-wzza.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon May 26 22:03:17 2014
+Cc: git@vger.kernel.org
+To: Arup Rakshit <aruprakshit@rocketmail.com>
+X-From: git-owner@vger.kernel.org Mon May 26 22:23:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wp172-0000XK-9I
-	for gcvg-git-2@plane.gmane.org; Mon, 26 May 2014 22:03:12 +0200
+	id 1Wp1Qh-00055L-CU
+	for gcvg-git-2@plane.gmane.org; Mon, 26 May 2014 22:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751879AbaEZUDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2014 16:03:07 -0400
-Received: from mout.web.de ([212.227.15.14]:60018 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751704AbaEZUDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2014 16:03:06 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MQedF-1XIWqZ1aiz-00U6bz; Mon, 26 May 2014 22:03:02
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <1401125601-18249-2-git-send-email-tanayabh@gmail.com>
-X-Provags-ID: V03:K0:PRzZnlJbGNJ0YtS7TKXtdKXyJwlUKT8g7BfRXgaH7pKwTwwIZlI
- hlz5icNIoEmepGS2aBtCwuQz/BveRuYdHaAkGPpChgeC4gXU8EtLXziJxVw/caSZS6hAFbj
- cflQkm5dZTJ4j9JjILl34FAXOiS1YuBfvE+YKNAwn7T35W8n7EjnxygjPCLD8+ESY93AzwO
- ybOOudlgtpqtc5SVP3dbQ==
+	id S1752636AbaEZUX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2014 16:23:27 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:64839 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752635AbaEZUX0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2014 16:23:26 -0400
+Received: by mail-wi0-f177.google.com with SMTP id f8so544075wiw.4
+        for <git@vger.kernel.org>; Mon, 26 May 2014 13:23:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=GOsGGvuAmHI2JZjV9dqvS6bv9QCdmHK0uwzQ26zllhY=;
+        b=Hvs9JdNRk4FRNLNXT2EuF1NlS6JE/NlubDshDep00laGj52ijoi8N+kc0EUN9R4Slm
+         Uo0sNMOf9GnltCcKfK9WZGJ547/C2g6EM1RyVPiYIYG+Of8f0HLAwnMkqY9OzWLa5l8Q
+         xdVr+FoWVmdBtHOjOsJUSPqz1hKavJDlorCl0Rr0mPq4o9YkEpcyPwKHqL1mSTsJBwjs
+         DqK2X8Lk0rG9YbCcXGdYCZpZYnqNfN4qRcKzgd7KA5+oLKiAl+ryU5g/bijOM6B7LIfu
+         rjSGq7DNgAuKh6IV18bcawy6C+NczIDPet6Ia+p2EX4df7iqGFm2/Dv4y++qnMCJzCZu
+         Hu0w==
+X-Gm-Message-State: ALoCoQmaeFuyYhD+7ogLKBYot+YvnPYRmIQ57CiP6rPMR1k5AgJWK0RhjlNZokvH5Wj3WlgIlsx5
+X-Received: by 10.180.90.145 with SMTP id bw17mr31329411wib.43.1401135805320;
+        Mon, 26 May 2014 13:23:25 -0700 (PDT)
+Received: from [10.42.1.3] (195-240-45-142.ip.telfort.nl. [195.240.45.142])
+        by mx.google.com with ESMTPSA id l2sm2489399wix.13.2014.05.26.13.23.23
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 26 May 2014 13:23:24 -0700 (PDT)
+In-Reply-To: <8392138.j8Dle5WGbS@linux-wzza.site>
+X-Mailer: Evolution 3.10.4-0ubuntu1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250119>
 
-On 2014-05-26 19.33, Tanay Abhra wrote:
-I like the idea.
-Please allow some minor comments (and read them as questions rather then answers)
-> Add an internal cache with the all variable value pairs read from the usual
-"cache": The word "cache" is in Git often used for "index" 
-"variable value" can be written as "key value"
-"usual": I don't think we handle "unusual" config files,
-(so can we drop the word usual ?)
-I think the (important) first line can be written like this:
+On di, 2014-05-27 at 00:33 +0630, Arup Rakshit wrote:
+> 
+> Now, you can see, I have staged all the files first using *git add
+> -A*, then _unstaging_ those I don't want to _stage_ right now. Now can
+> this be done, in the *staging* time ? I mean any way to tell `git add`
+> command, that add all the files from the current directory, except
+> some specific files.
 
->Add a hash table with the all key-value pairs read from the
-or
->Add a hash table to cache all key-value pairs read from the
+No, there is no such option to do that, but you could use git add
+--interactive and use its interface to quickly pick the files you want
+to add.
 
-> config files(repo specific .git/config, user wide ~/.gitconfig and the global
-> /etc/gitconfig). Also, add two external functions `git_config_get_string` and
-Can we drop "Also" ?
-> @@ -37,6 +39,102 @@ static struct config_source *cf;
->  
->  static int zlib_compression_seen;
->  
-> +struct hashmap config_cache;
-> +
-> +struct config_cache_node {
-> +	struct hashmap_entry ent;
-> +	struct strbuf key;
-Do we need a whole strbuf for the key?
-Or could a "char *key" work as well? 
-(and/or could it be "const char *key" ?
-> +	struct string_list *value_list ;
-
-
-
-> +static struct string_list *config_cache_get_value(const char *key)
-> +{
-> +	struct config_cache_node *e = config_cache_find_entry(key);
-why "e" ? Will "node" be easier to read ? Or entry ? 
-
-
-> +static void config_cache_set_value(const char *key, const char *value)
-> +{
-> +	struct config_cache_node *e;
-> +
-> +	if (!value)
-> +		return;
-Hm, either NULL could mean "unset==remove" the value, (but we don't do that, do we?
-
-Or it could mean a programming or runtime error?, Should there be a warning ?
-
-> +
-> +	e = config_cache_find_entry(key);
-> +	if (!e) {
-> +		e = malloc(sizeof(*e));
-> +		hashmap_entry_init(e, strihash(key));
-> +		strbuf_init(&(e->key), 1024);
-> +		strbuf_addstr(&(e->key),key);
-> +		e->value_list = malloc(sizeof(struct string_list));
-> +		e->value_list->strdup_strings = 1;
-> +		e->value_list->nr = 0;
-> +		e->value_list->alloc = 0;
-> +		e->value_list->items = NULL;
-> +		e->value_list->cmp = NULL;
-When malloc() is replaced by xcalloc()  the x = NULL and y = 0 can go away,
-and the code is shorter and easier to read.
-
-
-> +extern const char *git_config_get_string(const char *name)
-> +{
-> +	struct string_list *values;
-> +	int num_values;
-> +	char *result;
-> +	values = config_cache_get_value(name);
-> +	if (!values)
-> +		return NULL;
-> +	num_values = values->nr;
-> +	result = values->items[num_values-1].string ;
-We could get rid of the variable  "int num_values" by simply writing
-result = values->items[values->nr-1].string;
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
