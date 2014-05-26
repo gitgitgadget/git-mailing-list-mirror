@@ -1,144 +1,88 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH] t9138-git-svn-authors-prog.sh fixups
-Date: Sun, 25 May 2014 12:24:54 -0700
-Message-ID: <1401045894-22711-1-git-send-email-jmmahler@gmail.com>
-Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Sun May 25 21:26:06 2014
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH] wording fixes in the user manual and glossary
+Date: Mon, 26 May 2014 19:50:15 +1200
+Message-ID: <5382F237.8070909@gmail.com>
+References: <1400989841-2845-1-git-send-email-jmmahler@gmail.com> <5381A239.2060809@gmail.com> <20140525083720.GA28739@hudson.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon May 26 09:50:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Woe3X-0004b2-45
-	for gcvg-git-2@plane.gmane.org; Sun, 25 May 2014 21:26:03 +0200
+	id 1Wopfy-0003TI-7O
+	for gcvg-git-2@plane.gmane.org; Mon, 26 May 2014 09:50:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751295AbaEYTZ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 25 May 2014 15:25:57 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:61396 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751069AbaEYTZ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 25 May 2014 15:25:56 -0400
-Received: by mail-pa0-f41.google.com with SMTP id lj1so6573729pab.28
-        for <git@vger.kernel.org>; Sun, 25 May 2014 12:25:56 -0700 (PDT)
+	id S1751680AbaEZHuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2014 03:50:23 -0400
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:47729 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751538AbaEZHuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2014 03:50:19 -0400
+Received: by mail-pb0-f51.google.com with SMTP id ma3so7390437pbc.10
+        for <git@vger.kernel.org>; Mon, 26 May 2014 00:50:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=9OXqu04kIWw8nXEM1GkgKhWg8pWNG2Yn0FaOBcI01IQ=;
-        b=nxqv+AnAIl2OvDDcj1gDpp4MesiowqMR8AUy/ivUo8+aEQyvPk2tiwk+ZB7NcBPrXz
-         nzMjY6nBDya9JeXndAFOCVreQbq4M8TbUqI0FnuBc7dGywtrKn2s5GowJE09zG1IYjNy
-         F3pAoHrUHpGZ1aKYbMy4TgE+1Y9sBpkwnvbc+FcC7Un/UXPn8Nfx/e/gD7M1e1dlpYOa
-         5WyYh3WhgUB4Z9RzJM1U5IUNW06gOY4FMhxkVMNSXf3iBU8H74v6w6vwDvXCpnDph3fX
-         82pZcKx++QOrBYOlp5JlNDQ6+O34MbdCL4MM45qKydFhmVCsz1NsSr7eqGW+dZaZtn9a
-         G9XQ==
-X-Received: by 10.68.233.37 with SMTP id tt5mr22576566pbc.154.1401045956013;
-        Sun, 25 May 2014 12:25:56 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id wq10sm47052927pac.24.2014.05.25.12.25.52
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=Z8gU0prUFOLp0PbiUtjN9uwHUTY0q3Izd7CzdI9Nqng=;
+        b=Zgih6GtoFWJycYrlZImgxSwSnAmX0PvfKrHrH0N8MFejhyJPKYCWs1MhSMpTzECG5+
+         p/Y66SYbWMyfR0Xi91lFPtmUK2ju+mjSyl3AYSQCN2ydJ4zE0fTn4roNE6xJeXOU0tuS
+         NfXvjoS7XCGf0fdNQJX2ilwVNSyUOkoS1LQj+yo3YC/fAc4qPFGTZ5t1TqvofpQV+mCi
+         XhceFqHNaR8YDGMFtSSynifo/NnWCqFXa7ZaRFbjZb8DylycwhRIXqFq1etWCdwhiHN0
+         xF9BsDwrtyavHj5SvMccJtjorYlEwcPnutzEd/rZWK2GYO/SVpGpyw7AYrRiB+VlMPqN
+         zy1Q==
+X-Received: by 10.66.142.73 with SMTP id ru9mr25500076pab.41.1401090619255;
+        Mon, 26 May 2014 00:50:19 -0700 (PDT)
+Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPSA id pl10sm16796055pbb.56.2014.05.26.00.50.17
         for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 25 May 2014 12:25:54 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Sun, 25 May 2014 12:25:50 -0700
-X-Mailer: git-send-email 2.0.0.rc4.1.g4a28f16.dirty
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 26 May 2014 00:50:18 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <20140525083720.GA28739@hudson.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250089>
 
-Several fixups of the t9138-git-svn-authors-prog.sh test script to
-follow current recommendations in t/README.
+On 25/05/14 20:37, Jeremiah Mahler wrote:
+> On Sun, May 25, 2014 at 07:56:41PM +1200, Chris Packham wrote:
+>> On 25/05/14 15:50, Jeremiah Mahler wrote:
+>>> Some minor wording fixes in the user manual and glossary.
+> ...
+>>>  
+>>> -Eventually the developer cloned from will do additional work in her
+>>> +Eventually the developer will do additional work in her cloned
+>>>  repository, creating new commits and advancing the branches to point
+>>>  at the new commits.
+>>
+>> I agree that the original wording isn't clear but I'm not sure the new
+>> wording is any clearer. The paragraph is trying to explain how to fetch
+>> upstream changes when they happen. My initial thought was to say
+>> "Eventually the developer will do additional work in the upstream
+>> repository" but perhaps it is to early to start throwing around terms
+>> like upstream. Perhaps just saying "her repository" would be clearest.
+>>
+> 
+> The "developer cloned from will do" didn't sound right to me.
+> But it sounds like my interpretation is not what you were trying to
+> convey.  I do like the "upstream" term, it helps describe the
+> local/remote aspect.
+> 
+> How about this:
+> 
+>   Eventually the upstream developer will do additional work in their
+>   repository.  Creating new commits and advancing the branches to point
+>   at the new commits.
 
-  - Fixed a Perl script with a full "#!/usr/bin/perl" shebang
-    to use write_script() and $PERL_PATH as per t/README.
+Sounds good to me.
 
-  - Placed svn-authors data setup inside a test_expect_success.
-
-  - Fixed trailing quotes to use the same indentation throughout.
-
-Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
----
- t/t9138-git-svn-authors-prog.sh | 35 +++++++++++++++++------------------
- 1 file changed, 17 insertions(+), 18 deletions(-)
-
-diff --git a/t/t9138-git-svn-authors-prog.sh b/t/t9138-git-svn-authors-prog.sh
-index 83cc5fc..d54c37a 100755
---- a/t/t9138-git-svn-authors-prog.sh
-+++ b/t/t9138-git-svn-authors-prog.sh
-@@ -7,40 +7,39 @@ test_description='git svn authors prog tests'
- 
- . ./lib-git-svn.sh
- 
--cat > svn-authors-prog <<'EOF'
--#!/usr/bin/perl
--$_ = shift;
--if (s/-sub$//)  {
--	print "$_ <$_\@sub.example.com>\n";
--}
--else {
--	print "$_ <$_\@example.com>\n";
--}
-+write_script svn-authors-prog $PERL_PATH <<-\EOF
-+	$_ = shift;
-+	if (s/-sub$//)  {
-+		print "$_ <$_\@sub.example.com>\n";
-+	} else {
-+		print "$_ <$_\@example.com>\n";
-+	}
- EOF
--chmod +x svn-authors-prog
- 
--cat > svn-authors <<'EOF'
--ff = FFFFFFF FFFFFFF <fFf@other.example.com>
--EOF
-+test_expect_success 'svn-authors setup' '
-+	cat >svn-authors <<-\EOF
-+	ff = FFFFFFF FFFFFFF <fFf@other.example.com>
-+	EOF
-+'
- 
- test_expect_success 'setup svnrepo' '
- 	for i in aa bb cc-sub dd-sub ee-foo ff
- 	do
- 		svn mkdir -m $i --username $i "$svnrepo"/$i
- 	done
--	'
-+'
- 
- test_expect_success 'import authors with prog and file' '
- 	git svn clone --authors-prog=./svn-authors-prog \
- 	    --authors-file=svn-authors "$svnrepo" x
--	'
-+'
- 
- test_expect_success 'imported 6 revisions successfully' '
- 	(
- 		cd x
- 		test "`git rev-list refs/remotes/git-svn | wc -l`" -eq 6
- 	)
--	'
-+'
- 
- test_expect_success 'authors-prog ran correctly' '
- 	(
-@@ -56,7 +55,7 @@ test_expect_success 'authors-prog ran correctly' '
- 		git rev-list -1 --pretty=raw refs/remotes/git-svn~5 | \
- 		  grep "^author aa <aa@example\.com> "
- 	)
--	'
-+'
- 
- test_expect_success 'authors-file overrode authors-prog' '
- 	(
-@@ -64,7 +63,7 @@ test_expect_success 'authors-file overrode authors-prog' '
- 		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
- 		  grep "^author FFFFFFF FFFFFFF <fFf@other\.example\.com> "
- 	)
--	'
-+'
- 
- git --git-dir=x/.git config --unset svn.authorsfile
- git --git-dir=x/.git config --unset svn.authorsprog
--- 
-2.0.0.rc4.1.g4a28f16.dirty
+> 
+> Then in the next paragraph it will discuss how to use `git fetch`
+> to get these remote changes in to the local repository.
+> 
