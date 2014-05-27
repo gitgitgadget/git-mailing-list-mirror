@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v11 36/41] refs.c: move the check for valid refname to lock_ref_sha1_basic
-Date: Tue, 27 May 2014 13:25:55 -0700
-Message-ID: <1401222360-21175-37-git-send-email-sahlberg@google.com>
+Subject: [PATCH v11 25/41] fast-import.c: use a ref transaction when dumping tags
+Date: Tue, 27 May 2014 13:25:44 -0700
+Message-ID: <1401222360-21175-26-git-send-email-sahlberg@google.com>
 References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,95 +11,95 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpNxU-0002p8-44
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 22:26:52 +0200
+	id 1WpNxV-0002p8-KU
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 22:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753262AbaE0U0d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 16:26:33 -0400
-Received: from mail-yh0-f74.google.com ([209.85.213.74]:48402 "EHLO
-	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753009AbaE0U0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 16:26:06 -0400
-Received: by mail-yh0-f74.google.com with SMTP id 29so1647054yhl.1
+	id S1753304AbaE0U0i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 16:26:38 -0400
+Received: from mail-ve0-f201.google.com ([209.85.128.201]:53170 "EHLO
+	mail-ve0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752988AbaE0U0F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 16:26:05 -0400
+Received: by mail-ve0-f201.google.com with SMTP id db11so1646267veb.4
         for <git@vger.kernel.org>; Tue, 27 May 2014 13:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=z/YGR1EjuQKk0ohWejc9+ZPM9g8I1gA/CVQ0qH8Hry8=;
-        b=RuMCNL5uIZ5PaS34IPymMcH/MKEbwopVOnNCZQTIqvFkCJPAe0gCrtkZVcfSGuwnQc
-         SLy3vXxXsakRTk65e3zdjTcSDfkxhjQWZC7r4NAUr76ggmaUk5SFwN0GxRaVkOzz9X+w
-         SyUtAqHyVqd0f1T196K2Ga+KthNgsqDRNXdaVxSFhGNVDyxenheECARJqOCU3gj0c7Dw
-         VBPXzm0QCZ1oweft2hdhDnXulLAyBf4S4ll8Dc5GWw2OklTtRe9/WVTv295uiN5EPj3o
-         MDi8KZpxcsvlNv0SPOmDTzCYObdW4MGs8SYMLcXEnGvRx+14ZIPE9o9e1tFkXb3syKNQ
-         Kklw==
+        bh=8im+sdzXMw3xAQ+3LRGnPI+Y6g4CANUNF4elrkLLmcM=;
+        b=l72hz6GsMqiZcQpqw/TWENfPuQK7YJb+2+4cuFZNT/1LyROAgeSa1Pt0Ja15AZXy46
+         zskA4asv0MXaVpeIRDlqOfk6xvdRIVb+CefH/XB2RB2LU76DXvCpMfQZYbowGAG54IDD
+         STyJ+syYjEEDkecymxzXnxQfCe5vJG8NACjQkyeiesV3r1jsuuYbbNqxn2N5cKjNnwv5
+         XYcjaPEhVTMvGfY/l68AfzcqKjo2Ob8RPpO3BYFhuu9eeNd6rg6PfTsAxrZ5L+B0QDik
+         JTS/qJQRJ09JPcvZlpYoDbipXj3STETMN7gsFj75/5frljPdiVoHsI0gPjKjxqntr2D9
+         d/Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=z/YGR1EjuQKk0ohWejc9+ZPM9g8I1gA/CVQ0qH8Hry8=;
-        b=GIuw9ScMBbM9rlpatDRU5UkS3iZwYiiQ7ITqvzS+anAaD52p7RUFYSCb8JJoP6WGkA
-         oiK1YWQqB9h8cRhhsU3AC5VtHdQKKxy3YCwHakEDTNKn64dMOM3A953cEFSmVoKdkwGJ
-         /LWbUASt6iozbmIENIpvp8etcIguVuJL8KUmHK4YV34jmTTRFx2N8OwmgkAjtya7V28n
-         BnRts55kYuC3BeK4rV+i1W6OSHLUKKL2hUppVGn+gerkLECa6l2nSuk8irOIy5R+7qU1
-         yT2TQ9RWxLpwAPTk5Lg9DAXGVwTQcZibQEdgN/ixuwYOequPs8FRTESiO+U22dgmrhIo
-         CofA==
-X-Gm-Message-State: ALoCoQkQtpQy4WEBCLgdFatTmDN0z0AoMtRCC0yCAxuh648Vmmb0RUbU6VOtSg1UXOetlg3yxtPj
-X-Received: by 10.236.128.195 with SMTP id f43mr12355929yhi.45.1401222365368;
+        bh=8im+sdzXMw3xAQ+3LRGnPI+Y6g4CANUNF4elrkLLmcM=;
+        b=Ht3kv3Bf7IsisywDjigezA7gQNEJYggx+0FZhAoqJIoaVz1JPwiW+YU/mumM6KGqqu
+         Yve2FZsb1ELL32aUouXSRR2JhF5JMZARQJmU0ISyU4YlX8/KKgdS6f/an5XvJCxqJeih
+         64rgruqaiqGPTcxhIKmGtG0bTrtlruRPS1sg/jObcy1xHAB9u+/psdoB/++igBero6pJ
+         paEyynjfEJKQ8Eqo+Wr6UTG91jnyzZBPXYfZMPsaYzlAx7ByTS7m8LK7GEtSaT4LsD5V
+         tqnxKoQ/XWZ6BQfgmYBR6qxIz1HZxnMyJVjZCT/XIWjX1IZLbL20Kz1blng6t0Ln2jy7
+         q27A==
+X-Gm-Message-State: ALoCoQkUZ9wnNgZm08YCVzbF/qaar65uCjOAqqd2u63F07dG4ENtKAxpHr56YecFWbIWflpAviJB
+X-Received: by 10.58.165.33 with SMTP id yv1mr14009654veb.30.1401222365013;
         Tue, 27 May 2014 13:26:05 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id h13si137573yhj.0.2014.05.27.13.26.05
+        by gmr-mx.google.com with ESMTPS id n68si1574647yhj.5.2014.05.27.13.26.05
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 27 May 2014 13:26:05 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 3D15F2F4ACE;
-	Tue, 27 May 2014 13:26:05 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id D88AC2F4AD1;
+	Tue, 27 May 2014 13:26:04 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 194E4E1081; Tue, 27 May 2014 13:26:04 -0700 (PDT)
+	id A9E50E1958; Tue, 27 May 2014 13:26:04 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.474.g0203784
 In-Reply-To: <1401222360-21175-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250208>
-
-Move the check for check_refname_format from lock_any_ref_for_update
-to lock_ref_sha1_basic. At some later stage we will get rid of
-lock_any_ref_for_update completely.
-
-This leaves lock_any_ref_for_updates as a no-op wrapper which could be removed.
-But this wrapper is also called from an external caller and we will soon
-make changes to the signature to lock_ref_sha1_basic that we do not want to
-expose to that caller.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250209>
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fast-import.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 08dde5b..2952871 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2043,6 +2043,9 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	int missing = 0;
- 	int attempts_remaining = 3;
- 
-+	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
-+		return NULL;
-+
- 	lock = xcalloc(1, sizeof(struct ref_lock));
- 	lock->lock_fd = -1;
- 
-@@ -2134,8 +2137,6 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
- 					 const unsigned char *old_sha1,
- 					 int flags, int *type_p)
+diff --git a/fast-import.c b/fast-import.c
+index 4a7b196..3db5b3d 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1735,15 +1735,22 @@ static void dump_tags(void)
  {
--	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
--		return NULL;
- 	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p);
+ 	static const char *msg = "fast-import";
+ 	struct tag *t;
+-	struct ref_lock *lock;
+ 	char ref_name[PATH_MAX];
++	struct strbuf err = STRBUF_INIT;
++	struct ref_transaction *transaction;
+ 
++	transaction = ref_transaction_begin(&err);
+ 	for (t = first_tag; t; t = t->next_tag) {
+-		sprintf(ref_name, "tags/%s", t->name);
+-		lock = lock_ref_sha1(ref_name, NULL);
+-		if (!lock || write_ref_sha1(lock, t->sha1, msg) < 0)
+-			failure |= error("Unable to update %s", ref_name);
++		snprintf(ref_name, PATH_MAX, "refs/tags/%s", t->name);
++
++		if (ref_transaction_update(transaction, ref_name, t->sha1,
++					   NULL, 0, 0, &err))
++			break;
+ 	}
++	if (ref_transaction_commit(transaction, msg, &err))
++		failure |= error("%s", err.buf);
++	ref_transaction_free(transaction);
++	strbuf_release(&err);
  }
  
+ static void dump_marks_helper(FILE *f,
 -- 
 2.0.0.rc3.474.g0203784
