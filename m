@@ -1,154 +1,106 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC] clean: add a flag to back up cleaned files
-Date: Tue, 27 May 2014 12:37:01 -0400
-Message-ID: <20140527163700.GB29693@sigill.intra.peff.net>
-References: <1401200254-4592-1-git-send-email-kusmabite@gmail.com>
+Subject: Re: [PATCH] sideband.c: Get rid of ANSI sequence for non-terminal
+ shell
+Date: Tue, 27 May 2014 12:47:25 -0400
+Message-ID: <20140527164725.GC29693@sigill.intra.peff.net>
+References: <CABHRWd2-FHL+ZUf7Fp8WnC4Vj4_5=k__huFr1EYSazThyKv=5g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 27 18:37:09 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	spearce@spearce.org, j6t@kdbg.org, nico@cam.org, junkio@cox.net,
+	kusmabite@gmail.com
+To: Michael Naumov <mnaoumov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 27 18:47:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpKN9-0006Du-Sc
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 18:37:08 +0200
+	id 1WpKXD-0006nu-BJ
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 18:47:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752120AbaE0QhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 12:37:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60305 "HELO peff.net"
+	id S1752177AbaE0Qr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 12:47:28 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60318 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751778AbaE0QhD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 12:37:03 -0400
-Received: (qmail 17531 invoked by uid 102); 27 May 2014 16:37:02 -0000
+	id S1751594AbaE0Qr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 12:47:27 -0400
+Received: (qmail 18620 invoked by uid 102); 27 May 2014 16:47:27 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 May 2014 11:37:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 May 2014 12:37:01 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 27 May 2014 11:47:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 27 May 2014 12:47:25 -0400
 Content-Disposition: inline
-In-Reply-To: <1401200254-4592-1-git-send-email-kusmabite@gmail.com>
+In-Reply-To: <CABHRWd2-FHL+ZUf7Fp8WnC4Vj4_5=k__huFr1EYSazThyKv=5g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250174>
 
-On Tue, May 27, 2014 at 04:17:34PM +0200, Erik Faye-Lund wrote:
+On Tue, May 27, 2014 at 01:27:12PM +1000, Michael Naumov wrote:
 
-> The combination of "git clean" and fat fingers can some times cause
-> data-loss, which can be frustrating.
+> From ae8d04fdbd71cf322e67903826544d5431f2866d Mon Sep 17 00:00:00 2001
+> From: Michael Naumov <mnaoumov@gmail.com>
+> Date: Tue, 27 May 2014 12:45:06 +1000
+> Subject: [PATCH] sideband.c: Get rid of ANSI sequence for non-terminal shell
+
+You can drop these lines; they are redundant with your email's headers
+(but see below for more email tips).
+
+> Some git tools such as GitExtensions for Windows use environment variable
+> TERM=msys which causes the weird ANSI sequence shown for the messages
+> returned from server-side hooks
 > 
-> So let's add a flag that imports the files to be deleted into the
-> object-database, in a way similar to what git-stash does. Maintain
-> a reflog of the previously backed up clean-runs.
+> See https://github.com/gitextensions/gitextensions/issues/1313 for more
+> details
+
+It's nice to give a pointer to more discussion, but it's also a good
+idea to give a one- or two-sentence summary. Something like (after your
+first paragraph):
+
+  We add those ANSI sequences to help format sideband data on the user's
+  terminal. However, these extensions are not using a terminal, and the
+  sequences just confuse them. We can recognize this use by checking
+  isatty().
+
+> NOTE: I considered to cover the case that a pager has already been started.
+> But decided that is probably not worth worrying about here, though, as we
+> shouldn't be using a pager for commands that do network communications (and
+> if we do, omitting the magic line-clearing signal is probably a sane thing
+> to do).
+
+I was nodding my head in agreement at this, and then went back and
+realized that it is paraphrasing me. So I definitely agree with it. :)
+
+> Signed-off-by: Michael Naumov <mnaoumov@gmail.com>
 > 
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> ---
-> I've had a similar patch laying around for quite a while, but since
-> f538a91 ("git-clean: Display more accurate delete messages"), this
-> patch is a lot less nasty than before. So here you go, perhaps
-> someone else has fat fingers and hate to lose work?
+> Thanks-to: Erik Faye-Lund <kusmabite@gmail.com>
+> Thanks-to: Jeff King <peff@peff.net>
 
-I've definitely considered doing something like this before (and for
-"git reset --hard"). My biggest concern would be poor performance in
-some cases. But since it's optional, and one can presumably override it
-with --no-backup for a specific large cleanup, it would not hurt anybody
-who does not want to play with it.
+A minor nit, but please keep these "trailers" together in a single
+paragraph. Elsewhere on the list people are developing tools to write
+and parse them, and I believe that they only look backwards up to the
+last empty line.
 
-> +	/* load HEAD into the index */
-> +
-> +	tree = parse_tree_indirect(sha1);
-> +	if (!tree)
-> +		die(_("Failed to unpack tree object %s"), sha1);
-> +
-> +	parse_tree(tree);
-> +	init_tree_desc(&t, tree->buffer, tree->size);
-> +
-> +	memset(&opts, 0, sizeof(opts));
-> +	opts.head_idx = -1;
-> +	opts.src_index = &the_index;
-> +	opts.dst_index = &the_index;
-> +	opts.index_only = 1;
-> +
-> +	if (unpack_trees(1, &t, &opts)) {
-> +		/* We've already reported the error, finish dying */
-> +		exit(128);
-> +	}
+> diff --git a/sideband.c b/sideband.c
+> index d1125f5..7f9dc22 100644
+> --- a/sideband.c
+> +++ b/sideband.c
+> @@ -30,7 +30,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+> 
+>   memcpy(buf, PREFIX, pf);
+>   term = getenv("TERM");
+> - if (term && strcmp(term, "dumb"))
+> + if (isatty(2) && term && strcmp(term, "dumb"))
+>   suffix = ANSI_SUFFIX;
+>   else
+>   suffix = DUMB_SUFFIX;
 
-This bit of the code surprised me. I guess you are trying to re-create
-the index state of the HEAD so that the commit you build on top of it
-contains _only_ the untracked files as changes, and not whatever
-intermediate index state you had.  That makes some sense to me, as clean
-is never touching the index state.
-
-Though taking a step back for a moment, I'd like to think about doing
-something similar for "reset --hard", which is the other "destructive"
-operation in git[1]. In that case, I think saving the index state is also
-useful, because it is being reset, too (and while those blobs are
-recoverable, the exact state is sometimes useful).
-
-If we were to do that, should it be a separate ref? Or should there be a
-single backup ref for such "oops, undo that" operations? If the latter,
-what should that ref look like? I think it would look something like
-refs/stash, with the index and the working tree state stored as separate
-commits (even though in the "clean" case, the index state is not likely
-to be that interesting, it is cheap to store and makes the recovery
-tools uniform to use).
-
-And if we are going to store it like that, should we just be using "git
-stash save --keep-index --include-untracked"? I think we would just need
-to teach it a "--no-reset" option to leave the tracked files as-is.
-
-I realize that I went a few steps down the "if..." chain there to get to
-"should we just be using stash?". But it would also make the code here
-dirt-simple.
-
-[1] Actually, "reset --hard" may be more of an education issue, as
-    simply running "git stash" has the same effect, but keeps a backup.
-    It's just that "reset --hard" is advertised as the solution to many
-    problems.
-
-> +	if (!active_cache_tree)
-> +		active_cache_tree = cache_tree();
-> +
-> +	if (!cache_tree_fully_valid(active_cache_tree)) {
-> +		if (cache_tree_update(active_cache_tree,
-> +		    (const struct cache_entry * const *)active_cache,
-> +		    active_nr, 0) < 0)
-> +			die("failed to update cache");
-> +	}
-
-I'd have thought you could use write_cache_as_tree, which backs "git
-write-tree", but there is currently no way to convince it not to write
-out the new cache. This is little enough code that it may not be worth
-refactoring write_cache_as_tree to handle it.
-
-> +	/* create a reflog, if there isn't one */
-> +	git_snpath(logfile, sizeof(logfile), "logs/%s", ref);
-> +	if (stat(logfile, &st)) {
-> +		FILE *fp = fopen(logfile, "w");
-> +		if (!fp)
-> +			warning(_("Can not do reflog for '%s'\n"), ref);
-> +		else
-> +			fclose(fp);
-> +	}
-
-Kind of gross that we have to do this ourselves (and somewhat contrary
-to efforts elsewhere to make the ref code more abstract), but I see that
-"git stash" does the same thing.
-
-Should you fopen with "a" here, to avoid a race condition where another
-process creates it between the stat() and the fopen(), in which case we
-would truncate what they wrote? You could even just get rid of the
-stat(), then, like:
-
-  if ((fp = fopen(logfile, "a")))
-	fclose(fp);
-  else
-	warning(_("Can not do reflog for '%s'"), ref);
-
-Also note that your warning has an extra "\n" in it.
+Your patch looks whitespace damaged. It was also sent as a
+multipart/alternative with html, which I suspect means it did not make
+it to the list. It looks like you're using gmail. The simplest thing is
+to just use git-send-email to send it; there are tips for configuring
+send-email with gmail in "git help send-email".
 
 -Peff
