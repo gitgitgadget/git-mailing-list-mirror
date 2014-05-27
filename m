@@ -1,87 +1,80 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH 00/15] Rearrange xcalloc arguments
-Date: Mon, 26 May 2014 16:37:41 -0700
-Message-ID: <20140526233741.GB8570@hudson.localdomain>
-References: <1401118436-66090-1-git-send-email-modocache@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 27 01:37:51 2014
+From: Jonathan McCrohan <jmccrohan@gmail.com>
+Subject: [PATCH] git-instaweb: add support for Apache 2.4
+Date: Tue, 27 May 2014 02:18:10 +0100
+Message-ID: <1401153490-6567-1-git-send-email-jmccrohan@gmail.com>
+Cc: Jonathan McCrohan <jmccrohan@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue May 27 03:35:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wp4Sk-0008Gz-NU
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 01:37:51 +0200
+	id 1Wp6IK-0003vM-26
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 03:35:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751566AbaEZXhr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2014 19:37:47 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:42888 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487AbaEZXhq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2014 19:37:46 -0400
-Received: by mail-pb0-f44.google.com with SMTP id rq2so8242763pbb.31
-        for <git@vger.kernel.org>; Mon, 26 May 2014 16:37:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=7LkGtVrTEjpzA0jHjNXB8L+282WkIUxmmLKQicTw0tY=;
-        b=VE730e8pBXCP1Sg8i8aOmHzd+uYs1im3TO0odED2QUQrL8rtGaK0h6AhURS+91+a1P
-         cCbDZ1rRDJVyRKt8jjdq2Y7ht1kBRBpk2EoGo7/frhtRKTQSfrxN+lxTXtvvRQUDTzfK
-         HSv//tqGy2mOw8rJuWRv7Zkz9HjcNMs2ts0Ka9n01suns7LtHn/dTZApXfpseSGdCTrW
-         wjlTwpmDK79Ls/gL5TZX1w0x7OrFpWOjludigXU5/YjvbBmQblHb1a2tnE5MZ98ifNl0
-         auIaiRoU5+iIi4Uo/hqisV092z+Wuf1b9JWX+1StHHviep9LEFDB3BZXhhvZPb34x/Eu
-         chhg==
-X-Received: by 10.68.254.5 with SMTP id ae5mr31250402pbd.83.1401147466154;
-        Mon, 26 May 2014 16:37:46 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id ky8sm20047853pbc.64.2014.05.26.16.37.43
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 26 May 2014 16:37:45 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Mon, 26 May 2014 16:37:41 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Brian Gesiak <modocache@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1401118436-66090-1-git-send-email-modocache@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751950AbaE0BfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2014 21:35:07 -0400
+Received: from fep20.mx.upcmail.net ([62.179.121.40]:49438 "EHLO
+	fep20.mx.upcmail.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751487AbaE0BfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2014 21:35:06 -0400
+X-Greylist: delayed 1004 seconds by postgrey-1.27 at vger.kernel.org; Mon, 26 May 2014 21:35:06 EDT
+Received: from edge02.upcmail.net ([192.168.13.237])
+          by viefep13-int.chello.at
+          (InterMail vM.8.01.05.05 201-2260-151-110-20120111) with ESMTP
+          id <20140527011820.GTEY1329.viefep13-int.chello.at@edge02.upcmail.net>;
+          Tue, 27 May 2014 03:18:20 +0200
+Received: from lambda.dereenigne.org ([188.141.43.74])
+	by edge02.upcmail.net with edge
+	id 6pJJ1o00d1c0xrw02pJJev; Tue, 27 May 2014 03:18:20 +0200
+X-SourceIP: 188.141.43.74
+Received: from localhost.dereenigne.org ([127.0.0.1] helo=lambda.dereenigne.org)
+	by lambda.dereenigne.org with esmtp (Exim 4.82)
+	(envelope-from <jmccrohan@gmail.com>)
+	id 1Wp61y-0001jA-LM; Tue, 27 May 2014 02:18:18 +0100
+X-Mailer: git-send-email 2.0.0.rc2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250135>
 
-Brian,
+Detect available Apache MPMs and use first available according to
+following order of precedence:
+mpm_event
+mpm_prefork
+mpm_worker
 
-On Tue, May 27, 2014 at 12:33:41AM +0900, Brian Gesiak wrote:
-> xcalloc takes two arguments: the number of elements and their size.
-> The vast majority of the Git codebase passes these arguments in the
-> correct order, but there are some exceptions. This patch series
-> corrects those exceptions.
-> 
+Add authz_core module if available to avoid HTTP Error 500 errors.
 
-Let me see if I understand the issue underlying this patch set.
+Signed-off-by: Jonathan McCrohan <jmccrohan@gmail.com>
+---
+ git-instaweb.sh | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-xcalloc works like calloc and takes two arguments, the number of
-elements and the size of each element.  However, many calls specified
-these arguments in the reverse order.  It didn't produce a compile
-error because both arguments are the same type.  And it didn't produce
-a run time error because A*B is the same as B*A.
-
-If this behaved like dd, performance would be different depending on the
-order.
-
-  dd if=in of=out bs=1    count=1024
-  dd if=in of=out bs=1024 count=1
-
-Nonetheless, it appears to be a good fix.  Nice job!
-
+diff --git a/git-instaweb.sh b/git-instaweb.sh
+index 4aa3eb8..513efa6 100755
+--- a/git-instaweb.sh
++++ b/git-instaweb.sh
+@@ -345,7 +345,17 @@ PidFile "$fqgitdir/pid"
+ Listen $bind$port
+ EOF
+ 
+-	for mod in mime dir env log_config
++	for mod in mpm_event mpm_prefork mpm_worker
++	do
++		if test -e $module_path/mod_${mod}.so
++		then
++			echo "LoadModule ${mod}_module " \
++			     "$module_path/mod_${mod}.so" >> "$conf"
++			# only one mpm module permitted
++			break
++		fi
++	done
++	for mod in mime dir env log_config authz_core
+ 	do
+ 		if test -e $module_path/mod_${mod}.so
+ 		then
 -- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+2.0.0.rc2
