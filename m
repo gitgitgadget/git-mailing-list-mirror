@@ -1,117 +1,86 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH v10 11/12] Documentation: add documentation for 'git interpret-trailers'
-Date: Tue, 27 May 2014 11:17:52 +0200
-Message-ID: <CALKQrgdMxCP8e+6wJugnJUhLfHvf-t9MDPqdiZvc+HQc+GcBiQ@mail.gmail.com>
-References: <534414FB.6040604@alum.mit.edu>
-	<20140425.230710.1024850359228182788.chriscool@tuxfamily.org>
-	<535E2A69.30600@alum.mit.edu>
-	<20140525.103721.1806399553055631284.chriscool@tuxfamily.org>
-	<53844AEF.1080502@alum.mit.edu>
+From: Brian Gesiak <modocache@gmail.com>
+Subject: Re: [PATCH 01/15] builtin/add.c: rearrange xcalloc arguments
+Date: Tue, 27 May 2014 20:32:54 +0900
+Message-ID: <CAN7MxmXVDTiQv5J9cU2E8iS=BNROw3q9NVaBuG7aQP-7=Qo_ZQ@mail.gmail.com>
+References: <1401118436-66090-1-git-send-email-modocache@gmail.com>
+	<1401118436-66090-2-git-send-email-modocache@gmail.com>
+	<CAPig+cRE0LUaNLTJARBCmoDn7cR1bbgi8At0ChgSDWBjDPaNjg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	ramsay@ramsay1.demon.co.uk, Jonathan Nieder <jrnieder@gmail.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 27 11:18:06 2014
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue May 27 13:33:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpDWH-0000rK-VC
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 11:18:06 +0200
+	id 1WpFcp-0003JT-Gf
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 13:32:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751885AbaE0JSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 05:18:01 -0400
-Received: from mail12.copyleft.no ([188.94.218.224]:59015 "EHLO
-	mail12.copyleft.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751250AbaE0JSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 05:18:00 -0400
-Received: from locusts.copyleft.no ([188.94.218.116] helo=mail.mailgateway.no)
-	by mail12.copyleft.no with esmtp (Exim 4.76)
-	(envelope-from <johan@herland.net>)
-	id 1WpDWA-0004VM-0i
-	for git@vger.kernel.org; Tue, 27 May 2014 11:17:58 +0200
-Received: from mail-oa0-f42.google.com ([209.85.219.42])
-	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
-	(Exim 4.72 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1WpDW7-0008pw-SD
-	for git@vger.kernel.org; Tue, 27 May 2014 11:17:56 +0200
-Received: by mail-oa0-f42.google.com with SMTP id j17so9324925oag.29
-        for <git@vger.kernel.org>; Tue, 27 May 2014 02:17:52 -0700 (PDT)
-X-Received: by 10.60.56.8 with SMTP id w8mr9067097oep.74.1401182272486; Tue,
- 27 May 2014 02:17:52 -0700 (PDT)
-Received: by 10.182.245.10 with HTTP; Tue, 27 May 2014 02:17:52 -0700 (PDT)
-In-Reply-To: <53844AEF.1080502@alum.mit.edu>
+	id S1751747AbaE0Lc4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 07:32:56 -0400
+Received: from mail-ie0-f174.google.com ([209.85.223.174]:57671 "EHLO
+	mail-ie0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750904AbaE0Lcz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 07:32:55 -0400
+Received: by mail-ie0-f174.google.com with SMTP id lx4so8370341iec.5
+        for <git@vger.kernel.org>; Tue, 27 May 2014 04:32:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=UEcMJW62WiQVJIkdWpxzWtFegfpCT+Yc8e9GhLa24Yw=;
+        b=sscGLRJTNWBbx/dP94pRnZYIw1dQjdj8YkIDVMxUMaN1kkR2K4jBvuD0KtmcOaXW6M
+         lH41vFr+AP/sGaKvk9bpHeO4dktkTqeCjUt2snJwBMmO33s6Wsl2YzSSMD+Zimh/qk9h
+         QPi3IhsAamRmRsUk41L2NPi8nCqc8aG11+M8jOrsJU1lsZhLZYx4yF/zx6ojjZntZuJR
+         5YTt5atkDFaAmGweTYSUamGqU4N6lR223iWOvskvF61T1odksniYkmFjU4KjoANyerQ0
+         9sDokWhWT+ALcvL9K62ln8mTnQz4S3xTkGXZ5/eOrLTLA0KDyn9EU3WWo7tFBxaTnOJy
+         sJUg==
+X-Received: by 10.42.233.12 with SMTP id jw12mr3323838icb.12.1401190374774;
+ Tue, 27 May 2014 04:32:54 -0700 (PDT)
+Received: by 10.64.55.165 with HTTP; Tue, 27 May 2014 04:32:54 -0700 (PDT)
+In-Reply-To: <CAPig+cRE0LUaNLTJARBCmoDn7cR1bbgi8At0ChgSDWBjDPaNjg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250161>
 
-On Tue, May 27, 2014 at 10:21 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> tl;dr: This patch series wants to introduce a permanent new Git data
-> format.  The current version can write trailers in formats that it is
-> incapable of reading, which I consider broken.  I advocate a stricter
-> specification of the format of trailers, at least until we get feedback
-> from users that they need more flexibility.
+Oomph, how embarrassing. Thanks for pointing that out!
+
+Would it be better if I rerolled the patches?
+
+- Brian Gesiak
+
+On Tue, May 27, 2014 at 12:25 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Mon, May 26, 2014 at 11:33 AM, Brian Gesiak <modocache@gmail.com> wrote:
+>> xcalloc takes two arguments: the number of elements and their size.
+>> run_add_interactive passes the arguments in reverse order, passing the
+>> size of a char*, followed by the number of char* to be allocated.
+>> Rearrgange them so they are in the correct order.
 >
-> On 05/25/2014 10:37 AM, Christian Couder wrote:
-
-[...]
-
->> My opinion is that many Git developers have been engaged and you can
->> see that in the Cc.
+> s/Rearrgange/Rearrange/
+>
+> Same misspelling afflicts the entire patch series.
+>
+>> Signed-off-by: Brian Gesiak <modocache@gmail.com>
+>> ---
+>>  builtin/add.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> I cannot tell if they are all very happy or not but I suppose that if
->> they were very unhappy they would tell it.
->> [...]
->
-> It was unfair of me to try to characterize the opinions of other
-> developers.  On the other hand, even though many people have commented
-> on this proposal over its long lifetime, I didn't get the feeling that
-> it has won a consensus of +1s in its current form.
->
-> I'd love to hear the opinion of others because maybe I'm totally out in
-> left field.
-
-FWIW, after a quick read, I find myself agreeing very much with
-Michael's arguments for a stricter format (at least in its initial
-version).
-
-We are formalizing and applying tools/automation to a part of the
-commit message that has so far been ad hoc and very informal. There is
-no expectation that _every_ _single_ existing use of (informal)
-trailers (except the somewhat-formalized support for --signoff) must
-be supported by git-interpret-trailers.
-
-However, there _is_ an expectation that git-interpret-trailers is
-self-consistent and does not stumble over its own trailers. Therefore,
-it makes perfect sense to make v1 very strict in what formats it
-produce (i.e. a strict "key: value" format is enough for now).
-
-> And I want to reiterate that the reason I'm so emphatic about this
-> proposal is because I think it will be such a great new feature.  I just
-> think that some tweaks would make it a more solid foundation for
-> building even more functionality onto.
-
-Fully agreed. git-interpret-trailers have come up in several other
-discussion, both on the git mailing list and elsewhere, and I have no
-doubt that this will be a very useful feature that will be put to good
-use in many projects.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+>> diff --git a/builtin/add.c b/builtin/add.c
+>> index 672adc0..488acf4 100644
+>> --- a/builtin/add.c
+>> +++ b/builtin/add.c
+>> @@ -248,7 +248,7 @@ int run_add_interactive(const char *revision, const char *patch_mode,
+>>         int status, ac, i;
+>>         const char **args;
+>>
+>> -       args = xcalloc(sizeof(const char *), (pathspec->nr + 6));
+>> +       args = xcalloc((pathspec->nr + 6), sizeof(const char *));
+>>         ac = 0;
+>>         args[ac++] = "add--interactive";
+>>         if (patch_mode)
+>> --
+>> 2.0.0.rc1.543.gc8042da
