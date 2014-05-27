@@ -1,196 +1,99 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v8 42/44] refs.c: pass a skip list to name_conflict_fn
-Date: Tue, 27 May 2014 11:37:43 -0700
-Message-ID: <CAL=YDWn2HrTUnjKOCa4h6S0M9fxz6hfEgrLGCkvdaUvAD2fAcQ@mail.gmail.com>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
-	<1400174999-26786-43-git-send-email-sahlberg@google.com>
-	<20140522192717.GU12314@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC 1/3] sequencer: Signal failed ff as an aborted, not a conflicted merge
+Date: Tue, 27 May 2014 11:42:22 -0700
+Message-ID: <xmqqvbsrf4hd.fsf@gitster.dls.corp.google.com>
+References: <533C913C.20106@cisco.com> <5383BDE4.9000704@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 27 20:37:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Phil Hord <hordp@cisco.com>
+To: Fabian Ruch <bafain@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 27 20:42:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpMFy-0001hz-Ez
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 20:37:50 +0200
+	id 1WpMKV-0002HL-O1
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 20:42:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752930AbaE0Shq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 14:37:46 -0400
-Received: from mail-vc0-f175.google.com ([209.85.220.175]:50345 "EHLO
-	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751941AbaE0Sho (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 14:37:44 -0400
-Received: by mail-vc0-f175.google.com with SMTP id id10so7642134vcb.6
-        for <git@vger.kernel.org>; Tue, 27 May 2014 11:37:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=GP780NB6tTE2IUmlLT8COvb98mPrNvNEmQLhoPCLN0c=;
-        b=RWQ+VpduTEV/wWvBU/RyWZljHWe4V9rukWEBfE5q4WZXKMbhm60ro71AX4OtDsvMkL
-         WW9X2UpHoL7MmqbPErSEtupY2dY0hL09vSMHXY8ir9wyj+TC4sMvZJDtRvKk4zGQ6Gkj
-         8VUbyO1xx/xE2uKbcN0AjpqR3DpOs1ujq62ul3TOh92v7ymtggnavLgUeHHVP9UcN3SC
-         B8hI0/Mb2MrPNmkUycIhK42dSqZXWG1BU84QCSQZ93bcntTD4zdS/dRGeIsWiPrgPTGT
-         TdejGFcIYFuB4gEHM/8RBYUe3CARF1bwLy+zKWS8aM0SL/bqE41OgzpwBsmv5q9MpFxB
-         iTfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=GP780NB6tTE2IUmlLT8COvb98mPrNvNEmQLhoPCLN0c=;
-        b=GmJfy3lknI/AunnJfB3B1yH6I5oTrvZMct5AZfdM4iuHvvq6pVbC9GbIUhehiAW16b
-         WF5kW3V3o3pzx9wIqJ7X89T9dQdMULz2NYlBsA8P4vfqYzSg+7d0O6h26XhNvxeWmmyg
-         XQQPXyKxj8w5GUMQt5+iljzmVNnnnLtz/ZjC7eEzEP++bR7i/FV4T3ApZtrDmD8xaHAZ
-         Sn/BP9o6D5H9SXOMgwHcpHcB5pcAWKD0xOooDBOhYIYGAF6ZonMWwSNCj8Jff4bKVYK8
-         Rh03Pf2z8hecX5IkihbE5VCdpy5x7abq0/Nk/gWWb+AVIVbR4L+Kp2dphKDc7D3H8bz2
-         wM6A==
-X-Gm-Message-State: ALoCoQkSN9pCwJLi8iPnD99VtcCpQZQzoCHC/W7WCNv2wjPCuZ5ITzFSpiIhr+1tuZBxwZZo0gGE
-X-Received: by 10.220.160.67 with SMTP id m3mr2875473vcx.56.1401215863598;
- Tue, 27 May 2014 11:37:43 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Tue, 27 May 2014 11:37:43 -0700 (PDT)
-In-Reply-To: <20140522192717.GU12314@google.com>
+	id S1753193AbaE0Sm2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 14:42:28 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55659 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752094AbaE0Sm1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 14:42:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BBA531A498;
+	Tue, 27 May 2014 14:42:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=dw1niPLNlFte+Aa5qUieU4q7u+U=; b=aUncYy
+	R+LmRdIMVnP1Dw84Wcuf5tyOdZjH+UiWg7NHBaJuShaV7fZRKqoOqn8P+ATdBwqF
+	pIaxW1NFxRxoN0e8aYXavl3z32ZQ54yVq9WmZmRMD0y/jESukf3+VJEynUqn7MQO
+	fmGJbg2KuwgvW+slbwrzqrPUBpiuykJi33umM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LSQYdeIkh1wgqtjxHcfTr88hVUJUV7y6
+	lKBvjnkXMcy7pKoIBmaCBShEGwmkwBn/LBUfNHl80ZnTHwIC4hjuneXpkwZaymBK
+	ldtvW8TLORnvvn1bLdtYmso6alKbRCZ4JueBomAHxIL+/whzkc2OkedL6prF8/Yw
+	aEBsJ30/ltU=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B1FB41A497;
+	Tue, 27 May 2014 14:42:26 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 72C771A493;
+	Tue, 27 May 2014 14:42:23 -0400 (EDT)
+In-Reply-To: <5383BDE4.9000704@gmail.com> (Fabian Ruch's message of "Tue, 27
+	May 2014 00:19:16 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A45CE73C-E5CE-11E3-8DB1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250185>
 
-On Thu, May 22, 2014 at 12:27 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
+Fabian Ruch <bafain@gmail.com> writes:
+
+> `do_pick_commit` handles three situations if it is not fast-forwarding.
+> In order for `do_pick_commit` to identify the situation, it examines the
+> return value of the selected merge command.
 >
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -798,11 +798,19 @@ struct name_conflict_cb {
->>       const char *refname;
->>       const char *oldrefname;
->>       const char *conflicting_refname;
->> +     const char **skip;
->> +     int skipnum;
+> 1. return value 0 stands for a clean merge
+> 2. 1 is passed in case of a failed merge due to conflict
+> 3. any other return value means that the merge did not even start
 >
-> Would a struct string_list make sense here?  (See
-> Documentation/technical/api-string-list.txt.)
+> So far, the sequencer returns 1 in case of a failed fast-forward, which
+> would mean "failed merge due to conflict". However, a fast-forward
+> either starts and succeeds or does not start at all. In particular, it
+> cannot fail in between like a merge with a dirty index due to conflicts.
+>
+> In order to signal the three possible situations (not only success and
+> failure to complete) after a pick through porcelain commands such as
+> `cherry-pick`, exit with a return value that is neither 0 nor 1. -1 was
+> chosen in line with the other situations in which the sequencer
+> encounters an error.
 
-It would. But it is better to do that change later.
-Currently we have both repack_without_ref and repack_without_refs that
-take the same char ** argument.
-After next series we will have removed one of these functions and have
-an easier API to modify (once we start tracking the skiplist as part
-of the transaction instead).
-
-Instead of doing this change and then redoing it once we move a lot of
-the actual work from _commit  to _update
-I will do this change towards the end of the next series.
+Hmph... do we still pass negative to exit() anywhere in our codebase?
 
 >
-> [...]
->>  };
->>
->>  static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
->>  {
->>       struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
->> +     int i;
->> +     for(i = 0; i < data->skipnum; i++) {
+> Signed-off-by: Fabian Ruch <bafain@gmail.com>
+> ---
+>  sequencer.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-
-Fixed.
-
-> (style nit) missing space after 'for'.
->
->> +             if (!strcmp(entry->name, data->skip[i])) {
->> +                     return 0;
->> +             }
->
-> Style: git tends to avoid braces around a single-line if/for/etc body.
->
-
-Fixed.
-
-> [...]
->> @@ -817,15 +825,21 @@ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
->>   * conflicting with the name of an existing reference in dir.  If
->>   * oldrefname is non-NULL, ignore potential conflicts with oldrefname
->>   * (e.g., because oldrefname is scheduled for deletion in the same
->> - * operation).
->> + * operation). skip contains a list of refs we want to skip checking for
->> + * conflicts with. Refs may be skipped due to us knowing that it will
->> + * be deleted later during a transaction that deletes one reference and then
->> + * creates a new conflicting reference. For example a rename from m to m/m.
->
-> This example of "Refs may be skipped due to" seems overly complicated.
-> Isn't the idea just that skip contains a list of refs scheduled for
-> deletion in this transaction, since they shouldn't be treated as
-> conflicts at all (for example when renamining m to m/m)?
->
-> I wonder if there's some way to make use of the result of the naive
-> refname_available check to decide what to do when creating a ref.
->
-> E.g.: if a refname would be available except there's a ref being
-> deleted in the way, we could do one of the following:
->
->  a. delete all relevant loose refs and perform the transaction in
->     packed-refs, or
->
->  b. order operations to avoid the D/F conflict, even with loose refs
->     (the hardest case is if the ref being deleted uses a directory
->     and we want to create a file with the same name.  But that's
->     still doable if we're willing to rmdir when needed as part of
->     the loop to commit changes)
->
-> The packed-refs trick (a) seems much simpler, but either should work.
->
-> This could be done e.g. by checking is_refname_available with an empty
-> list first before doing the real thing with a list of exclusions.
->
-> [...]
->> @@ -2592,6 +2609,9 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
->>       int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
->>       const char *symref = NULL;
->>
->> +     if (!strcmp(oldrefname, newrefname))
->> +             return 0;
->
-> What is the intended result if I try to rename a nonexistent ref or an
-> existent symref to its own name?
-
-Yeah, I should get rid of that.
-
-I have renoved the rename_ref patch and moved it to the next series.
-I think we can solve this easier/better once we have the other patches in first.
-
->
-> Sorry to be so fussy about this part.  It's not that I think that this
-> change is trying to do something bad --- in fact, it's more the
-> opposite, that I'm excited to see git learning to have a better
-> understanding and handling of refname D/F conflicts.
->
-> That would allow:
->
->  * "git fetch --prune" working as a single transaction even if
->    the repository being fetched from removed a refs/heads/topic
->    branch and created refs/heads/topic/1 and refs/heads/topic/2
->
->  * "git fast-import" and "git fetch --mirror" learning the same trick
->
->  * fewer code paths having to be touched to be able to (optionally)
->    let git actually tolerate D/F conflicts, for people who want to
->    have 'topic', 'topic/1', and 'topic/2' branches at the same time.
->    This could be turned on by default for remote-tracking refs.  It
->    would be especially nice for people on Windows and Mac OS where
->    there can be D/F conflicts that people on Linux didn't notice due
->    to case-sensitivity.
->
->    Longer term, through a configuration that starts turned off by
->    default and has the default flipped as more people have upgraded
->    git, this could make D/F conflicts in refnames stop being an error
->    altogether.
->
-> So it's kind of exciting to see, even though it's fussy to get it
-> right.
->
-> Thanks,
-> Jonathan
+> diff --git a/sequencer.c b/sequencer.c
+> index 90cac7b..97cecca 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -278,7 +278,7 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
+>  
+>  	read_cache();
+>  	if (checkout_fast_forward(from, to, 1))
+> -		exit(1); /* the callee should have complained already */
+> +		exit(-1); /* the callee should have complained already */
+>  	ref_lock = lock_any_ref_for_update("HEAD", unborn ? null_sha1 : from,
+>  					   0, NULL);
+>  	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
