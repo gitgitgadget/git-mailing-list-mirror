@@ -1,138 +1,97 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v10 25/44] receive-pack.c: use a reference transaction for
- updating the refs
-Date: Tue, 27 May 2014 12:30:31 -0700
-Message-ID: <CAL=YDWn8d=JUxvScVP2+2_BL0KBM0uQVVfGjHgNynDH5z3M7Sw@mail.gmail.com>
-References: <1400261852-31303-1-git-send-email-sahlberg@google.com>
-	<1400261852-31303-26-git-send-email-sahlberg@google.com>
-	<537781CA.1010208@alum.mit.edu>
-	<CAL=YDWmLgW0b28q5Yqw7R4nobKF5=pcbSpnazC8+EA=QKhkpow@mail.gmail.com>
-	<537F51F9.5070600@alum.mit.edu>
-	<CAL=YDWkDSF1WWhZAt-nW8RUAjm+iBmg+=p8hq6GJAzF-3-WxGg@mail.gmail.com>
-	<537FB760.1080800@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t9138-git-svn-authors-prog.sh fixups
+Date: Tue, 27 May 2014 12:43:06 -0700
+Message-ID: <xmqq8upnf1o5.fsf@gitster.dls.corp.google.com>
+References: <1401045894-22711-1-git-send-email-jmmahler@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 27 21:30:38 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
+To: Jeremiah Mahler <jmmahler@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 27 21:43:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpN53-0007yt-5l
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 21:30:37 +0200
+	id 1WpNHI-0006tU-9G
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 21:43:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753313AbaE0Tad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 15:30:33 -0400
-Received: from mail-ve0-f174.google.com ([209.85.128.174]:34093 "EHLO
-	mail-ve0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752654AbaE0Tac (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 15:30:32 -0400
-Received: by mail-ve0-f174.google.com with SMTP id jw12so11285277veb.19
-        for <git@vger.kernel.org>; Tue, 27 May 2014 12:30:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=vFNyorFZlHv+8lQLk+K7cVF4WX9ZiCDRlzupvAyZimc=;
-        b=Smpqr1F69xg6sA/pcoIZ6Rgu1SY7UhPR3wYK5yFv7V1nXy+vltbTDeQ07f91sHgO3O
-         hyyytMjF7pEk9YwZ0E3QjjX/Ys9TRwmZDqIp5hUD6M/S2uyZYLaU/W35b+5EogDIPejd
-         4rv/Cy++RQI19a5OgpIAdWSw0FUoTZ+bxA1xIzzRBen4KCKsZZg30gxwf141Jtl3QjNw
-         LvXx78SlwtljmQP5IUd51478WnqF7mE4FVj7gQTWYXgGpzjWaihlSNBaLxdNk+nW8s49
-         ZJkX0gKip/JCF8q5pS6CTl8F+dqQxQCEOWzT+TlOpQORqgvcT0xXtTger1dPv4v13e/o
-         umug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=vFNyorFZlHv+8lQLk+K7cVF4WX9ZiCDRlzupvAyZimc=;
-        b=i0oJ4joZY8CRe1kw0CoYGAfuIf6KSnwM7YvojhDXQ/5+iUBkWZLgVEXr11AWbc8LMU
-         vrV/UqgRpJpgGhr4xESeO4Cv5Nc1xQkpFVWj4/OmtCbkj6TUEYxE12n7LOJX5JvRPgV8
-         oc2DRd1Qm7gLVMMY6llQFEpszL1G690h92e2TLTUoEjCcrEgcqXlUKIAuRidH3OLM68O
-         n1OrdDRnDddqZkyoU0qRHNpopX5qOCsXAWHTX3ut3AvavmtQSWn4OFLL7LU2meYkCzzi
-         +ujcM0LLTdAr5TSPuLYtG+zIKRZSqR0ghsySShmvTL5TuO/aRPXHAan2OhYMHn/+K+WA
-         zMYQ==
-X-Gm-Message-State: ALoCoQn74IVof9ongiT+sh0OlkOFMQVXuw4D99SJI2VG4eav0F1FpkppmNZG0Ma1aiJI/RthPeyS
-X-Received: by 10.52.185.72 with SMTP id fa8mr24846230vdc.12.1401219031846;
- Tue, 27 May 2014 12:30:31 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Tue, 27 May 2014 12:30:31 -0700 (PDT)
-In-Reply-To: <537FB760.1080800@alum.mit.edu>
+	id S1753399AbaE0TnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 15:43:12 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52437 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752603AbaE0TnL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 15:43:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EF5591B844;
+	Tue, 27 May 2014 15:43:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=21LNukFuhgHdq/FE8PJzw5HkmV0=; b=ZcTIJY
+	32VEasgI922FH38CTba6W4JXOeCYSDIqWJ9U49g+3+7U3qyr5nFysBqpx9paTG/c
+	m494qDX4jJOjqGqcHY4n3iXy9hZ5QHcStSUT7g2P3paCD8DOXt/bIjRgzYQ+nx4J
+	lwoPNDfcPdlr9UX4TlX+Zxk2XMMUhe4l0mviQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Yquu+xRNvHqWoB+1uEjtMK6zgvMkJuPa
+	Gx+N02WOFO1PYMjBV3r1xzlmzwP55TJ3S9ntp0hiuaFVLmc0YEi43/LWcQKw3hAA
+	BfZTtGr/zC8g6t59+ViIfl3BDSfv6agBkFrmACXSb0G6doZQxtkhq63cJ3fiXliX
+	yLloW2GvzyE=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E39661B843;
+	Tue, 27 May 2014 15:43:10 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 78AFA1B83C;
+	Tue, 27 May 2014 15:43:07 -0400 (EDT)
+In-Reply-To: <1401045894-22711-1-git-send-email-jmmahler@gmail.com> (Jeremiah
+	Mahler's message of "Sun, 25 May 2014 12:24:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 205F1938-E5D7-11E3-81F6-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250194>
 
-On Fri, May 23, 2014 at 2:02 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 05/23/2014 06:14 PM, Ronnie Sahlberg wrote:
->> On Fri, May 23, 2014 at 6:49 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
->>> [...]
->>> When I combine these two lines of thought, it suggests to me that we
->>> could do a better job of supporting *both* use cases.  What if the
->>> transaction object contained not an err strbuf but a string_list?  If an
->>> error occurs while building up the transaction, a message would be added
->>> to the string list and the function would return an error status.  The
->>> caller can monitor errors while it is building up the transaction and
->>> abort immediately if it wants, or it can ignore the return values and
->>> let the error messages accumulate in the string list.  When the caller
->>> attempts the commit, it would notice that the transaction failed, and at
->>> that time the caller could emit *all* of the accumulated error messages
->>> by reading them out of the string list; e.g.,
->>>
->>>     Error fetching from $REMOTE:   <- this is generated by caller
->>>         $ERR[0]    <- these come from the error string list,
->>>         $ERR[1]       printed with indentation by caller
->>>         $ERR[2]
->>>         $ERR[3]
->>>
->>> This style would have another advantage: we might have some back ends
->>> for which transactions have a high overhead.  Such a back end would
->>> probably choose not to do any checks while the transaction is being
->>> built up, e.g., to avoid a round-trip to a database.  When commit() is
->>> called, it would learn about all of the errors at once.  (1) It would
->>> need a way to return all of the errors to the caller.  (2) It would be
->>> nice for the caller to be able to treat such a back end the same as it
->>> treats a back end that is able to report errors immediately.  It seems
->>> to me that having a way to report multiple errors at the same time would
->>> solve both problems nicely.
->>
->> Inretesting.
->> That would mean changing all functions to take a string_list provided
->> by the caller instead of a strbuf.
->> And then have _update/_create/_delete do actual work instead of
->> bailing out after the first error.
->>
->> Users that want to check for error and log after each call to
->> _update/_create/_delete could do so and
->> just use the last entry added to the string list or otherwise they
->> could just wait until _commit time and if it fails log
->> all the strings.
->
-> I still think we should consider storing the err string_list within the
-> transaction object; otherwise it's annoying to have to pass that
-> parameter around everywhere.  And if there were also a policy that any
-> caller that checks and reports any error should report *all* of the
-> accumulated errors and abort the transaction, then we don't have to
-> worry about error messages being output multiple times or zero times.
->
-> It might be nice to have a printf-style helper function like
->
->     ref_transaction_perror(transaction, fmt, ...)
->
-> (or maybe ref_transaction_die()) that outputs the accumulated errors
-> with msg as a header (like my example output above), to make error
-> handling easy and uniform.
+Jeremiah Mahler <jmmahler@gmail.com> writes:
 
-We can add this later once we get the basic transaction stuff in.
-It will make it easier to experiment with different types of error
-reporting then.
-
-
+> Several fixups of the t9138-git-svn-authors-prog.sh test script to
+> follow current recommendations in t/README.
 >
-> Michael
+>   - Fixed a Perl script with a full "#!/usr/bin/perl" shebang
+>     to use write_script() and $PERL_PATH as per t/README.
 >
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+>   - Placed svn-authors data setup inside a test_expect_success.
+>
+>   - Fixed trailing quotes to use the same indentation throughout.
+>
+> Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
+> ---
+>  t/t9138-git-svn-authors-prog.sh | 35 +++++++++++++++++------------------
+>  1 file changed, 17 insertions(+), 18 deletions(-)
+>
+> diff --git a/t/t9138-git-svn-authors-prog.sh b/t/t9138-git-svn-authors-prog.sh
+> index 83cc5fc..d54c37a 100755
+> --- a/t/t9138-git-svn-authors-prog.sh
+> +++ b/t/t9138-git-svn-authors-prog.sh
+> @@ -7,40 +7,39 @@ test_description='git svn authors prog tests'
+>  
+>  . ./lib-git-svn.sh
+>  
+> -cat > svn-authors-prog <<'EOF'
+> -#!/usr/bin/perl
+> -$_ = shift;
+> -if (s/-sub$//)  {
+> -	print "$_ <$_\@sub.example.com>\n";
+> -}
+> -else {
+> -	print "$_ <$_\@example.com>\n";
+> -}
+> +write_script svn-authors-prog $PERL_PATH <<-\EOF
+
+I think you meant to dq "$PERL_PATH" here.  Other than that, looks
+OK to me.
+
+Thanks.
