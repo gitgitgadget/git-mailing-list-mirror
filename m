@@ -1,192 +1,131 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v11 26/41] walker.c: use ref transaction for ref updates
-Date: Tue, 27 May 2014 13:25:45 -0700
-Message-ID: <1401222360-21175-27-git-send-email-sahlberg@google.com>
+Subject: [PATCH v11 32/41] refs.c: make delete_ref use a transaction
+Date: Tue, 27 May 2014 13:25:51 -0700
+Message-ID: <1401222360-21175-33-git-send-email-sahlberg@google.com>
 References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 27 22:26:44 2014
+X-From: git-owner@vger.kernel.org Tue May 27 22:26:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpNxJ-0002RS-Du
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 22:26:41 +0200
+	id 1WpNxV-0002p8-4M
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 22:26:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753299AbaE0U0h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 16:26:37 -0400
-Received: from mail-yh0-f74.google.com ([209.85.213.74]:55739 "EHLO
-	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752981AbaE0U0F (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753163AbaE0U0g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 16:26:36 -0400
+Received: from mail-ob0-f202.google.com ([209.85.214.202]:32944 "EHLO
+	mail-ob0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752996AbaE0U0F (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 27 May 2014 16:26:05 -0400
-Received: by mail-yh0-f74.google.com with SMTP id 29so1645979yhl.5
+Received: by mail-ob0-f202.google.com with SMTP id wm4so1919180obc.1
         for <git@vger.kernel.org>; Tue, 27 May 2014 13:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dF9KQcOJPCzlK/MZYZCcn2gVzP+APxWpJhet6//hC/w=;
-        b=TZnyjrNKCh0TW8T8UKz04O3I+wopjlHYGqPl5uwVSHSxv5jl8kfQAASZla/2cjrWo6
-         gtKT8EZfXRxulQWz7f4JH14VgFDR6l+FFRkRYib5kPSs6X0cBjSx853F9zFwwhoruMtN
-         sA++xMJnHbGp3t6bfsDzEAxmGx4ipT/IZiRA8gAGrjs0N4BxSIF0erSOrnSuwn074bNh
-         P4URX0hUzRAFdUflMTImxYL2qErzcxRiW25l25EILWOCSCYa9gL4avEKARJTxQzBOykH
-         2nm0qwRxreWk3+uUiqaVasmXuCJFq91mU1G5o3ftfSBqccWzyXkd2BV60eB0NAZEkgGg
-         eF7w==
+        bh=03a3qjQalLqJCYvnHdpopPY7kiizlGkeahDuB5FB/Uo=;
+        b=WAPsfI65s842hIkdLoH2TgU9o4JFJUdutrmANrCX68hAU53HtXqWgfAx6RrqRobY7A
+         nEFfsTJiq5VuiedjAGTAgmFOa6UCjFtqSBoPnpWTmV8cMF4guPkWHrJNt3BLRdqeyZI/
+         guERbYWn5urQYrh3h+qT1o4DNwXjan/WsVqoft1jVtcVILJzLbLMWonnwG9xb1pVD/bV
+         GL2O1NlxKALLxyqh0bj0SrnmHYiOvANvSxShVDbUWtW2b8qxlayvD45xZqNXKHkcJNN1
+         v91j1vxWkdmIXAKjKjYooHRLfqCKZkboeXay//b31Y11bXM6ETnnCrem9MYZoqRdMoxC
+         8JMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dF9KQcOJPCzlK/MZYZCcn2gVzP+APxWpJhet6//hC/w=;
-        b=iOaI3dlOM6cV2FpO9+7/V4yxk7br46KWYmtztMcB3VnpcPR5tT48/VfkASKT8SpZjx
-         AX7gj8flOINssQWj3wPL1HedXVSYq9E2o8eqEdNREroPlF1fncP3zwo4IGtY99sU1LmS
-         /uQZrNS7RE4F5/94g2fTW0mMhi70orxxHZxeMoHYJ9vNfwgx+/OSp0W4L/BVbEQ2tct7
-         srFzVV/xyf4uzGTlLyT5j5bbhk0jY9MJI4co/NZTd7xMJtNd5gLw42VEjdBiAMUCoXnn
-         eexJQqV9047XLcq+vmxCVE0I8ZMU1RPBsCWINYJT0WS8gNCIzfCTzWYVCP2vcAVKLPKT
-         khfg==
-X-Gm-Message-State: ALoCoQkGaRhbNRfP6jboVN8PMTmk06Khi6ks7rmmRcjZQSLDVmNmUQGYgk/vd/M1xzR54kNAo2bl
-X-Received: by 10.52.142.72 with SMTP id ru8mr12483971vdb.0.1401222365062;
+        bh=03a3qjQalLqJCYvnHdpopPY7kiizlGkeahDuB5FB/Uo=;
+        b=SRXBUPOMSyxxCmps9pXn5d7khh2CCno4y1LxB1qIX7suaO5dbkbpSqS3GT8nPLNOGF
+         RxwyKqwhPRm7JfnFjHEXA1CHfgGGt5PV+eKwZzkYYmaH7HXE17V/GC3kW0OXB5SEeb0W
+         LmqkbgaVWw1l1ZG21+eiIqTuDQ+bjbjTzw7YY8Surd0RYDfG8Y9FnS6chWTMLM0tSNap
+         zNw5STQcEexFEP0kOpQT7Pr5fviQIbKicGlwm+025aROkWG/i3XbvuHCSyqb1IJOUj/b
+         jIw3eSJONhF1GkRfSQw2vs5kZ/gS0AyKwLGV5Jdj1oG+tSGA/505L68mSj9L/1aj8xHX
+         Wq0Q==
+X-Gm-Message-State: ALoCoQkKryKQTGG1UlMkO+FWSWWk9ND9VnblaaGsLKBFt5zpL97AxJ6zaJYPuOVB92jssKMq8tLo
+X-Received: by 10.42.19.73 with SMTP id a9mr12052720icb.31.1401222365142;
         Tue, 27 May 2014 13:26:05 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id i65si1283653yhg.2.2014.05.27.13.26.05
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id c50si1573754yhl.7.2014.05.27.13.26.05
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 27 May 2014 13:26:05 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id C15222F4AB9;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id F3504370577;
 	Tue, 27 May 2014 13:26:04 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 9F6B7E0DE4; Tue, 27 May 2014 13:26:04 -0700 (PDT)
+	id CF6C8E1565; Tue, 27 May 2014 13:26:04 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.474.g0203784
 In-Reply-To: <1401222360-21175-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250205>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250206>
 
-Switch to using ref transactions in walker_fetch(). As part of the refactoring
-to use ref transactions we also fix a potential memory leak where in the
-original code if write_ref_sha1() would fail we would end up returning from
-the function without free()ing the msg string.
-
-This changes the locking slightly for walker_fetch. Previously the code would
-lock all refs before writing them but now we do not lock the refs until the
-commit stage. There is thus a very short window where changes could be done
-locally during the fetch which would be overwritten when the fetch completes
-and commits its transaction. But this window should be reasonably short.
-Even if this race does trigger, since both the old code and the new code
-just overwrites the refs to the new values without checking or comparing
-them with the previous value, this is not too dissimilar to a similar scenario
-where you first do a ref change locally and then later do a fetch that
-overwrites the local change. With this in mind I do not see the change in
-locking semantics to be critical.
-
-Note that this function is only called when fetching from a remote HTTP
-repository onto the local (most of the time single-user) repository which
-likely means that the type of collissions that the previous locking would
-protect against and cause the fetch to fail for to be even more rare.
+Change delete_ref to use a ref transaction for the deletion. At the same time
+since we no longer have any callers of repack_without_ref we can now delete
+this function.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- walker.c | 56 +++++++++++++++++++++++++++++++++-----------------------
- 1 file changed, 33 insertions(+), 23 deletions(-)
+ refs.c | 34 +++++++++++++---------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
-diff --git a/walker.c b/walker.c
-index 1dd86b8..51ce1c6 100644
---- a/walker.c
-+++ b/walker.c
-@@ -251,39 +251,37 @@ void walker_targets_free(int targets, char **target, const char **write_ref)
- int walker_fetch(struct walker *walker, int targets, char **target,
- 		 const char **write_ref, const char *write_ref_log_details)
- {
--	struct ref_lock **lock = xcalloc(targets, sizeof(struct ref_lock *));
-+	struct strbuf ref_name = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_transaction *transaction;
- 	unsigned char *sha1 = xmalloc(targets * 20);
- 	char *msg;
--	int ret;
- 	int i;
- 
- 	save_commit_buffer = 0;
- 
--	for (i = 0; i < targets; i++) {
--		if (!write_ref || !write_ref[i])
--			continue;
--
--		lock[i] = lock_ref_sha1(write_ref[i], NULL);
--		if (!lock[i]) {
--			error("Can't lock ref %s", write_ref[i]);
--			goto unlock_and_fail;
-+	if (write_ref) {
-+		transaction = ref_transaction_begin(&err);
-+		if (!transaction) {
-+			error("%s", err.buf);
-+			strbuf_release(&err);
-+			return -1;
- 		}
- 	}
--
- 	if (!walker->get_recover)
- 		for_each_ref(mark_complete, NULL);
- 
- 	for (i = 0; i < targets; i++) {
- 		if (interpret_target(walker, target[i], &sha1[20 * i])) {
- 			error("Could not interpret response from server '%s' as something to pull", target[i]);
--			goto unlock_and_fail;
-+			goto rollback_and_fail;
- 		}
- 		if (process(walker, lookup_unknown_object(&sha1[20 * i])))
--			goto unlock_and_fail;
-+			goto rollback_and_fail;
- 	}
- 
- 	if (loop(walker))
--		goto unlock_and_fail;
-+		goto rollback_and_fail;
- 
- 	if (write_ref_log_details) {
- 		msg = xmalloc(strlen(write_ref_log_details) + 12);
-@@ -294,19 +292,31 @@ int walker_fetch(struct walker *walker, int targets, char **target,
- 	for (i = 0; i < targets; i++) {
- 		if (!write_ref || !write_ref[i])
- 			continue;
--		ret = write_ref_sha1(lock[i], &sha1[20 * i], msg ? msg : "fetch (unknown)");
--		lock[i] = NULL;
--		if (ret)
--			goto unlock_and_fail;
-+		strbuf_reset(&ref_name);
-+		strbuf_addf(&ref_name, "refs/%s", write_ref[i]);
-+		if (ref_transaction_update(transaction, ref_name.buf,
-+					   &sha1[20 * i], NULL, 0, 0,
-+					   &err))
-+			break;
-+	}
-+	if (write_ref) {
-+		if (ref_transaction_commit(transaction,
-+					   msg ? msg : "fetch (unknown)",
-+					   &err)) {
-+			error("%s", err.buf);
-+			ref_transaction_free(transaction);
-+			goto rollback_and_fail;
-+		}
-+		ref_transaction_free(transaction);
- 	}
--	free(msg);
- 
-+	free(msg);
- 	return 0;
- 
--unlock_and_fail:
--	for (i = 0; i < targets; i++)
--		if (lock[i])
--			unlock_ref(lock[i]);
-+rollback_and_fail:
-+	free(msg);
-+	strbuf_release(&err);
-+	strbuf_release(&ref_name);
- 
- 	return -1;
+diff --git a/refs.c b/refs.c
+index 1819434..88e7bb6 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2494,11 +2494,6 @@ static int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ 	return ret;
  }
+ 
+-static int repack_without_ref(const char *refname)
+-{
+-	return repack_without_refs(&refname, 1, NULL);
+-}
+-
+ static int add_err_if_unremovable(const char *op, const char *file,
+ 				  struct strbuf *e, int rc)
+ {
+@@ -2542,24 +2537,21 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
+ 
+ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+ {
+-	struct ref_lock *lock;
+-	int ret = 0, flag = 0;
++	struct ref_transaction *transaction;
++	struct strbuf err = STRBUF_INIT;
+ 
+-	lock = lock_ref_sha1_basic(refname, sha1, delopt, &flag);
+-	if (!lock)
++	transaction = ref_transaction_begin(&err);
++	if (!transaction ||
++	    ref_transaction_delete(transaction, refname, sha1, delopt,
++				   sha1 && !is_null_sha1(sha1), &err) ||
++	    ref_transaction_commit(transaction, NULL, &err)) {
++		error("%s", err.buf);
++		ref_transaction_free(transaction);
++		strbuf_release(&err);
+ 		return 1;
+-	ret |= delete_ref_loose(lock, flag, NULL);
+-
+-	/* removing the loose one could have resurrected an earlier
+-	 * packed one.  Also, if it was not loose we need to repack
+-	 * without it.
+-	 */
+-	ret |= repack_without_ref(lock->ref_name);
+-
+-	unlink_or_warn(git_path("logs/%s", lock->ref_name));
+-	clear_loose_ref_cache(&ref_cache);
+-	unlock_ref(lock);
+-	return ret;
++	}
++	ref_transaction_free(transaction);
++	return 0;
+ }
+ 
+ /*
 -- 
 2.0.0.rc3.474.g0203784
