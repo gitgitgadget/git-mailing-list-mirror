@@ -1,70 +1,94 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v3] Add an explicit GIT_DIR to the list of excludes
-Date: Tue, 27 May 2014 10:16:04 -0700
-Message-ID: <CAKpPgvfqTBxFXOaStEyyS7wAdR5aUsEOX_M2gPvGz4_dJYvTOA@mail.gmail.com>
-References: <1400866411-14584-1-git-send-email-pasha.bolokhov@gmail.com> <CACsJy8CDeTn8h8uUn_=6ek7BJueN_1i01TB_AeH03RKnf6tNSw@mail.gmail.com>
+Date: Tue, 27 May 2014 11:04:23 -0700
+Message-ID: <xmqqd2ezgkt4.fsf@gitster.dls.corp.google.com>
+References: <1400866411-14584-1-git-send-email-pasha.bolokhov@gmail.com>
+	<CACsJy8CDeTn8h8uUn_=6ek7BJueN_1i01TB_AeH03RKnf6tNSw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Pasha Bolokhov <pasha.bolokhov@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 27 19:16:31 2014
+X-From: git-owner@vger.kernel.org Tue May 27 20:04:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpKzG-0005ZS-Hh
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 19:16:30 +0200
+	id 1WpLjn-0000hU-6z
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 20:04:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752289AbaE0RQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 13:16:25 -0400
-Received: from mail-ve0-f181.google.com ([209.85.128.181]:62506 "EHLO
-	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751615AbaE0RQZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 13:16:25 -0400
-Received: by mail-ve0-f181.google.com with SMTP id pa12so10924779veb.26
-        for <git@vger.kernel.org>; Tue, 27 May 2014 10:16:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=P0hpmxrt+qZlTqmgcEjFzYmqxepAlz3AicK/sw9Q1Aw=;
-        b=UqDQfRJUiI0l2s8SGgEsyovE1kEl2PbX0+lTaXHIvdA0VnT5PDA8NgyQePYE2RQkxp
-         4ShUxm5cvnJ3c1PEQGXh1sXWNjhBDBjzEs7kO6Sit4Wjv7+2uemJWMh3jwGspFJYThKm
-         snv0pKONs9AnC2drjgyMhfBICFoxdXv95N8dG4WIqvS6gNd7hMcRCyZXKjiCibYYz844
-         cpqFI/MiBrKDh9Qi9y8uqs+CWDA02X9x7yY35XhCYCC6aT6bBvIn7AAygaTu15ek8WAO
-         nScE5xn7/U4Omy04no2n9/cQ4k43an4MRU6u5cDqS2z6llOW/97bU1pIe7XwpJib563/
-         c5ag==
-X-Received: by 10.220.64.138 with SMTP id e10mr2194138vci.63.1401210984229;
- Tue, 27 May 2014 10:16:24 -0700 (PDT)
-Received: by 10.58.234.129 with HTTP; Tue, 27 May 2014 10:16:04 -0700 (PDT)
+	id S1752829AbaE0SEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 14:04:31 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56120 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751477AbaE0SE3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 14:04:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 07F6D19AF1;
+	Tue, 27 May 2014 14:04:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5Q4OsBcA9+m/GltYJ/FzDa45Eqs=; b=oi321D
+	Jry6aABJzTcBg+bOaDKu3rS2vjwourNtxmAtEuohrMhm3mBvCyxBgPxoYoMwGRk4
+	81d8p7JpwwMdTk0SfACVs/xZwlhsa7hGV2APmn9UMTOOG/8Lu3IEPQvzfVsXE+kz
+	ol06wL/uhwn4pkYPZohivRwgVLCu1vE1wmRcI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WyBBo9kdTq/tGCG9ReQ/eMMhHym8XkKF
+	u1nKPR/1X0YylKDk2WZ/OtbdoF+Bcm272WC8R6cimetXwqZGdfWm3ND/+xf/67xT
+	vlgvoKviRvJu05Gi5gTbhiS8WT2N//lArp//zJz/pKrplXag1nN08rOVis1tC4MQ
+	d2Np+I8gmwI=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F27DA19AF0;
+	Tue, 27 May 2014 14:04:28 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A066919AEC;
+	Tue, 27 May 2014 14:04:25 -0400 (EDT)
 In-Reply-To: <CACsJy8CDeTn8h8uUn_=6ek7BJueN_1i01TB_AeH03RKnf6tNSw@mail.gmail.com>
+	(Duy Nguyen's message of "Sat, 24 May 2014 08:41:02 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 56AE279E-E5C9-11E3-92EA-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250178>
 
+Duy Nguyen <pclouds@gmail.com> writes:
+
+> On Sat, May 24, 2014 at 12:33 AM, Pasha Bolokhov
+> <pasha.bolokhov@gmail.com> wrote:
+>> When an explicit '--git-dir' option points to a directory inside
+>> the work tree, git treats it as if it were any other directory.
+>> In particular, 'git status' lists it as untracked, while 'git add -A'
+>> stages the metadata directory entirely
+>>
 >> Add GIT_DIR to the list of excludes in setup_standard_excludes(),
 >> while checking that GIT_DIR is not just '.git', in which case it
 >> would be ignored by default, and that GIT_DIR is inside GIT_WORK_TREE
 >>
+>> Although an analogous comparison of any given path against '.git'
+>> is done in treat_path(), this does not seem to be the right place
+>> to compare against GIT_DIR. Instead, the excludes provide an
+>> effective mechanism of ignoring a file/directory, and adding GIT_DIR
+>> as an exclude is equivalent of putting it into '.gitignore'. Function
+>> setup_standard_excludes() was chosen because that is the place where
+>> the excludes are initialized by the commands that are concerned about
+>> excludes
+>
+> I like this approach. A search of "exclude-standard" in Documentation/
 > gives git-grep.txt and git-ls-files.txt. I don't know if we need to
 > add something about this extra exclude rule to those .txt. If it's so
 > obvious that this should be the expected behavior, then probably not.
 
-    I suggest this. There appears to be a notion of "standard
-excludes" both in the code (dir.c) and in the man pages (git-grep,
-git-ls-files). However, it doesn't actually appear to be defined
-strictly speaking. So my suggestion is to define those "standard
-excludes" in one place (say "gitignore(5)"), and make other man pages
-(git-config, git-grip, git-ls-files) have references to that place
-instead of explaining every time in detail what is being excluded.
-Now, gitignore(5) actually does have this list of ignored items, we
-only need to call it "standard excludes".
-    If done this way, then all that needs to be done regarding GIT_DIR
-is to insert it into that list in gitignore(5). Please let me know if
-that'd work
+OK, so is that an Acked/Reviewed-by?
 
-Pasha
+>
+> The case of "git grep --exclude-standard" is interesting because it's
+> intended to work without a repository. First reaction was would
+> get_git_dir() return NULL in that case. But it should return ".git" so
+> we're good.
