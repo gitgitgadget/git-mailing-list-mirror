@@ -1,89 +1,70 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-Subject: Re: [PATCH v3] Add an explicit GIT_DIR to the list of excludes
-Date: Tue, 27 May 2014 14:46:55 -0700
-Message-ID: <CAKpPgvc8Ju0dWiuwk=0=_72SLcK57wAXwiRkjs_us3EW+L_jjw@mail.gmail.com>
-References: <1400866411-14584-1-git-send-email-pasha.bolokhov@gmail.com>
- <CACsJy8CDeTn8h8uUn_=6ek7BJueN_1i01TB_AeH03RKnf6tNSw@mail.gmail.com> <xmqqd2ezgkt4.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] contrib: add convert-grafts-to-replace-refs.sh
+Date: Tue, 27 May 2014 15:00:10 -0700
+Message-ID: <xmqqwqd6evbp.fsf@gitster.dls.corp.google.com>
+References: <20140527182719.14437.62235.chriscool@tuxfamily.org>
+	<CAPig+cR4G916TwqGDRMr9fAH=SZkUB8kqGy3Hy5YBHZLgUw8ig@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue May 27 23:47:23 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>,
+	Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed May 28 00:00:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpPDN-0008IM-W9
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 23:47:22 +0200
+	id 1WpPQ9-0008P0-5m
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 00:00:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224AbaE0VrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 17:47:18 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:47874 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752083AbaE0VrR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 17:47:17 -0400
-Received: by mail-ob0-f170.google.com with SMTP id uy5so10017580obc.29
-        for <git@vger.kernel.org>; Tue, 27 May 2014 14:47:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=E5Z/nqIHRi/pyd3VA46nlnqtjpyA1+G3dOlvFC/GWd0=;
-        b=xVE3ennLmiEs0+aZut45KpKO74qcN4kyK/tYoMcDELcg7ZupjJAzgFKtr9KA4Tno6d
-         n4qGA80UWqex1E1fhtfuqSI3wv7XAltdg7Q9xlelL8zdWF8hwS3WWfoPp+tzH5iTTpW2
-         l8lwiCg6olde94VM2ECO/i5KcvL+aeBDJV4DsYvvrdFPyKWQsLiYhojtxRcJGGH17k0y
-         mZo+wQ7PvXektIMZUkxqCsKOrCbexJ4kftw4zIDpyqquwAhtT+TIPD3yfRPr7dO+TEjJ
-         tnpcSmMlPng7YS8xa+XxOsL2gF0gZb2rA0wngyw4Hl9vsRODozECis6KpL2r70SSnw8k
-         4Pvw==
-X-Received: by 10.182.3.36 with SMTP id 4mr36900136obz.56.1401227236906; Tue,
- 27 May 2014 14:47:16 -0700 (PDT)
-Received: by 10.60.16.8 with HTTP; Tue, 27 May 2014 14:46:55 -0700 (PDT)
-In-Reply-To: <xmqqd2ezgkt4.fsf@gitster.dls.corp.google.com>
+	id S1753443AbaE0WAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 18:00:23 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52550 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753363AbaE0WAU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 18:00:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4F1F91A94F;
+	Tue, 27 May 2014 18:00:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8n4j5uG0SdknE43iLcqTq2x4AKw=; b=MiqvqN
+	V2/jzSvWtbHlvdT0rfHRT9Cb0Rx6+r/qENO0ryKn4ZoG4jjL/my7IeedC+PTJCl6
+	MlBBisC7xnMmHOUn0e7z+PNSF4U/0wgkgXIoeZuWGMTiYWFgvecd85RRcQeKaK8+
+	127W0WsCBz0bh4FCShBJgGJbdXUkzH2S+ehSQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mA7kdtEMefcC1IYKlr8Efgiq4JAWI0gm
+	wOGg/h9xTfxw1dJTaZylsvsPiQ32uRe6kemQBF/x36gHL8sS3+Hqh3IrR15/Wama
+	Su7LIj/FXPYBA1nne+Nez/CR1eG0q8n45/42a89mWoC2/dbfB8v5BngQ1Hqo/rj0
+	ryNDyOrzJxo=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DE4101A94D;
+	Tue, 27 May 2014 18:00:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 688D01A934;
+	Tue, 27 May 2014 18:00:12 -0400 (EDT)
+In-Reply-To: <CAPig+cR4G916TwqGDRMr9fAH=SZkUB8kqGy3Hy5YBHZLgUw8ig@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 27 May 2014 17:19:47 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 46D08328-E5EA-11E3-A554-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250242>
 
-I've sent out version [PATCH v4] with most of the things addressed.
-That one hasn't been reviewed by anyone yet
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
+>> +echo "Success! All the grafts in '$GRAFTS_FILE' have been converted to replace refs!"
+>> +echo "You should now move away or delete the grafts file: '$GRAFTS_FILE'"
+>
+> Rather than merely giving advice, would it make sees for the script
+> rename the file (adding .bak or some such) and report that it did so?
 
-On Tue, May 27, 2014 at 11:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Duy Nguyen <pclouds@gmail.com> writes:
->
->> On Sat, May 24, 2014 at 12:33 AM, Pasha Bolokhov
->> <pasha.bolokhov@gmail.com> wrote:
->>> When an explicit '--git-dir' option points to a directory inside
->>> the work tree, git treats it as if it were any other directory.
->>> In particular, 'git status' lists it as untracked, while 'git add -A'
->>> stages the metadata directory entirely
->>>
->>> Add GIT_DIR to the list of excludes in setup_standard_excludes(),
->>> while checking that GIT_DIR is not just '.git', in which case it
->>> would be ignored by default, and that GIT_DIR is inside GIT_WORK_TREE
->>>
->>> Although an analogous comparison of any given path against '.git'
->>> is done in treat_path(), this does not seem to be the right place
->>> to compare against GIT_DIR. Instead, the excludes provide an
->>> effective mechanism of ignoring a file/directory, and adding GIT_DIR
->>> as an exclude is equivalent of putting it into '.gitignore'. Function
->>> setup_standard_excludes() was chosen because that is the place where
->>> the excludes are initialized by the commands that are concerned about
->>> excludes
->>
->> I like this approach. A search of "exclude-standard" in Documentation/
->> gives git-grep.txt and git-ls-files.txt. I don't know if we need to
->> add something about this extra exclude rule to those .txt. If it's so
->> obvious that this should be the expected behavior, then probably not.
->
-> OK, so is that an Acked/Reviewed-by?
->
->>
->> The case of "git grep --exclude-standard" is interesting because it's
->> intended to work without a repository. First reaction was would
->> get_git_dir() return NULL in that case. But it should return ".git" so
->> we're good.
+Yeah, I would say so.
