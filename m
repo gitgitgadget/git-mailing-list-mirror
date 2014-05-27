@@ -1,83 +1,79 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
 Subject: Re: [PATCH 01/15] builtin/add.c: rearrange xcalloc arguments
-Date: Mon, 26 May 2014 19:38:38 -0700
-Message-ID: <20140527023838.GA16507@hudson.localdomain>
+Date: Mon, 26 May 2014 23:25:47 -0400
+Message-ID: <CAPig+cRE0LUaNLTJARBCmoDn7cR1bbgi8At0ChgSDWBjDPaNjg@mail.gmail.com>
 References: <1401118436-66090-1-git-send-email-modocache@gmail.com>
- <1401118436-66090-2-git-send-email-modocache@gmail.com>
- <20140526231156.GA8570@hudson.localdomain>
- <CAN7MxmUPH5-qgZQ-Wm0GeenNmqHvtwtx5WkXynNX9zRP3Yr1tQ@mail.gmail.com>
+	<1401118436-66090-2-git-send-email-modocache@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT Mailing-list <git@vger.kernel.org>
 To: Brian Gesiak <modocache@gmail.com>
-X-From: git-owner@vger.kernel.org Tue May 27 04:38:51 2014
+X-From: git-owner@vger.kernel.org Tue May 27 05:25:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wp7Hs-0000q5-Uy
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 04:38:49 +0200
+	id 1Wp81Q-0008Pg-Ld
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 05:25:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752441AbaE0Cip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 26 May 2014 22:38:45 -0400
-Received: from mail-pa0-f44.google.com ([209.85.220.44]:51563 "EHLO
-	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751359AbaE0Cio (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 26 May 2014 22:38:44 -0400
-Received: by mail-pa0-f44.google.com with SMTP id ld10so8341648pab.17
-        for <git@vger.kernel.org>; Mon, 26 May 2014 19:38:44 -0700 (PDT)
+	id S1752046AbaE0DZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 26 May 2014 23:25:48 -0400
+Received: from mail-yh0-f45.google.com ([209.85.213.45]:53586 "EHLO
+	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751359AbaE0DZs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 26 May 2014 23:25:48 -0400
+Received: by mail-yh0-f45.google.com with SMTP id b6so7009682yha.32
+        for <git@vger.kernel.org>; Mon, 26 May 2014 20:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=Qb3hMP2NHswkaD/XzKfruPGEKdLZCKAmTvSrp4U5DJs=;
-        b=Epmy8ivq3ERdbuSG/LlOZb/PKHvfJ2bYptCGhB9MC8B2UVh/R5lXqkuI/EhSNYQZSE
-         hhI5G3b/wt575QTdY4C8+khL8vR2P9n+JHnmnIzuO+ZfoUDBW1nB5VWbttwJJOJhxQuq
-         /75JDQn038rJbxb4lycIp3K+SybwPBGPsEOYGJECuPBvfRhi4WL9CPdknft5ANAt/88n
-         kWi3OMg6ioC9bgrz9/Z08HFoImduA/HIATxmvbUALmwq8s5TXR6WxpVZIoMPTnPtL45F
-         OUVmeC5lwwddWjxyAQNJKIFzalx02/ulUNXmqvfRT0qjOCcCVkiLrkO0xq2J+V4w1NBC
-         x91g==
-X-Received: by 10.69.19.225 with SMTP id gx1mr32418669pbd.34.1401158324097;
-        Mon, 26 May 2014 19:38:44 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id wq10sm66142899pac.24.2014.05.26.19.38.40
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 26 May 2014 19:38:42 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Mon, 26 May 2014 19:38:38 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Brian Gesiak <modocache@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <CAN7MxmUPH5-qgZQ-Wm0GeenNmqHvtwtx5WkXynNX9zRP3Yr1tQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=HwZQXEKolCibODMeHkqvPXH45B+21eOi9/zL+1OVmxs=;
+        b=0iorkvSCCsB5SCrWu8lRPbr0pN+IVyAeg33CxvRBD4aBmQMr6T9hDVL0FPVzOuwT3h
+         wi+wNjNdRpmQWa6goydT469G0a5f4vwTWcAL+0N7xf9EszoBqJvqLLv3ZWfvQO1bVYjs
+         zdjomFJq1KRwhuVwOKADNu4t19fxAIW+zfUbVm68Yl9/gCMbm66xdJeeDM1j0spGRmFH
+         g1leuQm18ICDSwZC2DhfdG9nFu+7vMiXPIxhHOZT9ObFjrpOiYRyuxhdzEbJMCEv+5vh
+         nrjnAeUMoWxO1pN3hCAZ3UVhkZKRC41uT5qXN6uSu4HtSHoxKcXt4hLa66i/ipYlTMbn
+         jaeA==
+X-Received: by 10.236.127.109 with SMTP id c73mr42552973yhi.1.1401161147720;
+ Mon, 26 May 2014 20:25:47 -0700 (PDT)
+Received: by 10.170.169.65 with HTTP; Mon, 26 May 2014 20:25:47 -0700 (PDT)
+In-Reply-To: <1401118436-66090-2-git-send-email-modocache@gmail.com>
+X-Google-Sender-Auth: DkyIk2dDHoBel8svvEVuZohw0Wg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250138>
 
-On Tue, May 27, 2014 at 11:22:00AM +0900, Brian Gesiak wrote:
-> My apologies! I based my work off of maint, branching off of eea591.
-> 
-> My reasoning was that Documentation/SubmittingPatches states that "a
-> bugfix should be based on 'maint'". [1] Now that I think about it,
-> this is probably not the kind of "bug" that statement had in mind.
-> 
-> Should I reroll the patch based on master?
-> 
-> - Brian Gesiak
-> 
-> [1] https://github.com/git/git/blob/4a28f169ad29ba452e0e7bea2583914c10c58322/Documentation/SubmittingPatches#L9
-> 
+On Mon, May 26, 2014 at 11:33 AM, Brian Gesiak <modocache@gmail.com> wrote:
+> xcalloc takes two arguments: the number of elements and their size.
+> run_add_interactive passes the arguments in reverse order, passing the
+> size of a char*, followed by the number of char* to be allocated.
+> Rearrgange them so they are in the correct order.
 
-OK, got it.  I should have read Documentation/SubmittingPatches more
-closely like you did :-)  No need to reroll I can just use the maint
-branch to test it out.  Thanks!
+s/Rearrgange/Rearrange/
 
--- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+Same misspelling afflicts the entire patch series.
+
+> Signed-off-by: Brian Gesiak <modocache@gmail.com>
+> ---
+>  builtin/add.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 672adc0..488acf4 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -248,7 +248,7 @@ int run_add_interactive(const char *revision, const char *patch_mode,
+>         int status, ac, i;
+>         const char **args;
+>
+> -       args = xcalloc(sizeof(const char *), (pathspec->nr + 6));
+> +       args = xcalloc((pathspec->nr + 6), sizeof(const char *));
+>         ac = 0;
+>         args[ac++] = "add--interactive";
+>         if (patch_mode)
+> --
+> 2.0.0.rc1.543.gc8042da
