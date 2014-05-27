@@ -1,291 +1,179 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH/RFC] clean: add a flag to back up cleaned files
-Date: Tue, 27 May 2014 16:17:34 +0200
-Message-ID: <1401200254-4592-1-git-send-email-kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue May 27 16:17:47 2014
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH/RFC] Gitweb: Convert UTF-8 encoded file names
+Date: Tue, 27 May 2014 16:18:49 +0200
+Message-ID: <53849EC9.1010304@gmail.com>
+References: <20140514184145.GA25699@localhost.localdomain>	<xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>	<CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>	<20140515050820.GA30785@localhost.localdomain>	<alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>	<20140515184808.GA7964@localhost.localdomain>	<CANQwDwe+GJ+yAYWdVfMaHq97zGXBoepCfUdLiaQD9LFoz3SiOA@mail.gmail.com>	<xmqqmweiessl.fsf@gitster.dls.corp.google.com>	<CANQwDwffdbqD96OadyECFs=6WY_t+_0b63L5yAZVQ8aXrMvHHA@mail.gmail.com>	<xmqqmweibjjo.fsf@gitster.dls.corp.google.com>	<CANQwDwe8Eb+ORiRyuq3+kKw72Jath_DGySmws1Rvt8bmuHoXVw@mail.gmail.com> <xmqq4n0pbqnc.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Wagner <accounts@mwagner.org>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue May 27 16:19:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpICB-0005Xw-2e
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 16:17:39 +0200
+	id 1WpIDW-0007vc-Pi
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 16:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752175AbaE0ORf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 10:17:35 -0400
-Received: from mail-we0-f175.google.com ([74.125.82.175]:63671 "EHLO
-	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751981AbaE0ORd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 10:17:33 -0400
-Received: by mail-we0-f175.google.com with SMTP id p10so798258wes.20
-        for <git@vger.kernel.org>; Tue, 27 May 2014 07:17:32 -0700 (PDT)
+	id S1752275AbaE0OS7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 27 May 2014 10:18:59 -0400
+Received: from mail-we0-f181.google.com ([74.125.82.181]:56488 "EHLO
+	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752154AbaE0OS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 10:18:58 -0400
+Received: by mail-we0-f181.google.com with SMTP id w61so9456704wes.26
+        for <git@vger.kernel.org>; Tue, 27 May 2014 07:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:date:message-id;
-        bh=egTx0B247ZuFvYKxvRBG/JpFmrMXtY0i6DNZUwVIyf4=;
-        b=PKUxOMkc780RO+yIvh9U+8nOvxoCERo17k4CxZHfiqiUcAwklPS4ThgUePeYEpFxQ/
-         B1Qu1JJ/JBoFBkim5kf6Q5ft8ydKM60fWynqYJjuKhxwbr/QMdWJAcgftd6GiVUA8KLS
-         wpT9OCl0bUbmoCXb3TBBZHZ2a0mXRgpp/plQa5FpYiDaCLOQ/Obr4LfLz0puPrKdIUYp
-         jGrAueYm+H2tH7BRHQDXCFmPox8DRaalhhwb9l9RsdzJcMXFQC9kbaFQ22hTSKrHqn+G
-         Nhyvz6/9r2MLdPtRWuLrOvsRRMTJXLd8KJasc2j/nkUZaEZ4zbuhwmi+cUx3Iwz6EeRT
-         0FnQ==
-X-Received: by 10.180.210.174 with SMTP id mv14mr38725337wic.47.1401200251467;
-        Tue, 27 May 2014 07:17:31 -0700 (PDT)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPSA id l4sm35355762wjf.14.2014.05.27.07.17.29
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 27 May 2014 07:17:30 -0700 (PDT)
-X-Mailer: git-send-email 1.9.2.msysgit.0.161.g83227c1
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=9zY93pPd7JKYAKLLyCfAq01ut6s5nh6lSb2LIMKdg4o=;
+        b=wF1CYo12mZrUtbAsEAd1oIVLww7HKJhEDBoU0qO3bukY1aiTUJ2ywHMwIo0BC0PkXN
+         j3Itc9ZFmI0uW6Chq5rnR/dtM0pH3fS3lvY+6tHCTip4vSvb3Z7LfcYBfsC7j4UnmjJs
+         V6Lb5lzV/wGGpLwKtSbJx8X/jHxEn5UsulafNLW6g7j2o31bWkWpcV2N2z6pY4gHVXmF
+         Ls0MLvJNonUWpmzgsf/t5+a3SWdqKAzoPJcHh1S+BXj0FZPBhiLbpIyv1iuLsVAsojlP
+         ap6vmoSKgy6mRpTwoDyKvwHxQLy/O5G3d3NCD0ce5rJu3b1SGnNDbi+SmKNkfBdYyzF5
+         dJMg==
+X-Received: by 10.194.236.169 with SMTP id uv9mr40406249wjc.46.1401200336355;
+        Tue, 27 May 2014 07:18:56 -0700 (PDT)
+Received: from [192.168.130.241] ([158.75.2.130])
+        by mx.google.com with ESMTPSA id wo9sm35360022wjb.48.2014.05.27.07.18.54
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 27 May 2014 07:18:55 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <xmqq4n0pbqnc.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250170>
 
-The combination of "git clean" and fat fingers can some times cause
-data-loss, which can be frustrating.
+W dniu 2014-05-16 19:05, Junio C Hamano pisze:
+> Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+>=20
+>>> Correct, but is "where does it appear" the question we are
+>>> primarily interested in, wrt this breakage and its fix?
+>>
+>> That of course depends on how we want to test gitweb output.
+>> The simplest solution, comparing with known output with perhaps
+>> fragile / variable elements masked out could be done quickly...
+>> but changes in output (even if they don't change functionality,
+>> or don't change visible output) require regenerating test cases
+>> (expected output) to test against - which might be source of
+>> errors in test suite.
+>=20
+> I agree with your "to test it fully, we need extra dependencies",
+> but my point is that it does not have to be a full "HTML-validating,
+> picking the expected attribute via XPATH matching" kind of test if
+> what we want is only to add a new test to protect this particular
+> fix from future breakages.
+>=20
+> For example, I think it is sufficient to grep for 'href=3D"...%xx%xx"=
+'
+> in the output after preparing a sample tree with one entry to show.
+> The expected substring either exists (in which case we got it
+> right), or it doesn't (in which case we are showing garbage).  Of
+> course that depends on the assumption that its output is not too
+> heavily contaminated with volatile parts outside our control, as I
+> already mentioned in the message you are responding to.
+>=20
+> But it all depends on "if" we wanted to add a new test ;-)
 
-So let's add a flag that imports the files to be deleted into the
-object-database, in a way similar to what git-stash does. Maintain
-a reflog of the previously backed up clean-runs.
+I tried to add such simple test to t9502, but instead of tests
+failing with current version, the test setup fails but succeeds
+(i.e. test library says that it failed, but manual examination
+shows that everything is O.K.).
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+-- >8 --
+=46rom: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC] gitweb test: Test proper encoding of non US-ASCII =
+filenames in output (WIP)
+
+This t9502 test is intended to test for proper encoding of non
+US-ASCII filenames (i.e. UTF-8 filenames) in generated links (which
+need some form of URI encoding) and in generated HTML (which needs
+HTML encoding / escaping).
+
+=46or now it tests only 'tree' view (though incidentally it also tests
+UTF-8 in commit subject), as this was the action where reportedly
+there was bug in link encoding: $t{'name'} coming from the
+"git ls-tree -z ..." command via @ntries array was not marked as
+UTF-8, making Perl assume that it is in internal Perl format
+i.e. iso-8859-1 encoding and URI-escaping it as if it was in
+iso-8859-1 encoding (e.g. "G=C3=BCtekriterien.txt" in UTF-8 is
+"G=C3=83=C2=BCtekriterien.txt" if treated as iso-8859-1, and it then
+encodes to "G%C3%83%C2%BCtekriterien.txt" instead of correct
+"G%C3%BCtekriterien.txt").
+
+UNFORTUNATELY test does not fail as it should, even though the issue
+was not fixed... OTOH it fails in setup though it is successful.
+
+Reported-by: Michael Wagner <accounts@mwagner.org>
+Signed-off-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
 ---
-I've had a similar patch laying around for quite a while, but since
-f538a91 ("git-clean: Display more accurate delete messages"), this
-patch is a lot less nasty than before. So here you go, perhaps
-someone else has fat fingers and hate to lose work?
+ t/t9502-gitweb-standalone-parse-output.sh |   34 +++++++++++++++++++++=
+++++++++
+ 1 files changed, 34 insertions(+), 0 deletions(-)
 
- Documentation/config.txt    |   4 ++
- Documentation/git-clean.txt |   4 ++
- builtin/clean.c             | 111 +++++++++++++++++++++++++++++++++++++++++++-
- t/t7300-clean.sh            |  12 +++++
- 4 files changed, 130 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1932e9b..d58fe31 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -797,6 +797,10 @@ clean.requireForce::
- 	A boolean to make git-clean do nothing unless given -f,
- 	-i or -n.   Defaults to true.
- 
-+clean.backup::
-+	A boolean to make git-clean back up files before they are
-+	deleted. Defaults to false.
-+
- color.branch::
- 	A boolean to enable/disable color in the output of
- 	linkgit:git-branch[1]. May be set to `always`,
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index 8997922..bc9d703 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -41,6 +41,10 @@ OPTIONS
- --interactive::
- 	Show what would be done and clean files interactively. See
- 	``Interactive mode'' for details.
-+-b::
-+--backup::
-+	Back up files to a reflog before deleting them. The tree of
-+	backed up files are stored in the reflog for refs/clean-backup.
- 
- -n::
- --dry-run::
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 9a91515..96fb4b2 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -16,9 +16,12 @@
- #include "column.h"
- #include "color.h"
- #include "pathspec.h"
-+#include "tree-walk.h"
-+#include "unpack-trees.h"
-+#include "cache-tree.h"
- 
- static int force = -1; /* unset */
--static int interactive;
-+static int interactive, backup;
- static struct string_list del_list = STRING_LIST_INIT_DUP;
- static unsigned int colopts;
- 
-@@ -120,6 +123,11 @@ static int git_clean_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "clean.backup")) {
-+		backup = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "clean.requireforce")) {
- 		force = !git_config_bool(var, value);
- 		return 0;
-@@ -148,6 +156,93 @@ static int exclude_cb(const struct option *opt, const char *arg, int unset)
- 	return 0;
- }
- 
-+static int backed_up_anything;
-+
-+static void backup_file(const char *path, struct stat *st)
-+{
-+	if (add_to_cache(path, st, 0))
-+		die(_("backing up '%s' failed"), path);
-+	backed_up_anything = 1;
-+}
-+
-+static struct commit_list *parents;
-+
-+static void prepare_backup(void)
-+{
-+	struct unpack_trees_options opts;
-+	unsigned char sha1[20];
-+	struct tree *tree;
-+	struct commit *parent;
-+	struct tree_desc t;
-+
-+	if (get_sha1("HEAD", sha1))
-+		die(_("You do not have the initial commit yet"));
-+
-+	/* prepare parent-list */
-+	parent = lookup_commit_or_die(sha1, "HEAD");
-+	commit_list_insert(parent, &parents);
-+
-+	/* load HEAD into the index */
-+
-+	tree = parse_tree_indirect(sha1);
-+	if (!tree)
-+		die(_("Failed to unpack tree object %s"), sha1);
-+
-+	parse_tree(tree);
-+	init_tree_desc(&t, tree->buffer, tree->size);
-+
-+	memset(&opts, 0, sizeof(opts));
-+	opts.head_idx = -1;
-+	opts.src_index = &the_index;
-+	opts.dst_index = &the_index;
-+	opts.index_only = 1;
-+
-+	if (unpack_trees(1, &t, &opts)) {
-+		/* We've already reported the error, finish dying */
-+		exit(128);
-+	}
-+}
-+
-+static void finish_backup(void)
-+{
-+	const char *ref = "refs/clean-backup";
-+	unsigned char commit_sha1[20];
-+	struct strbuf msg = STRBUF_INIT;
-+	char logfile[PATH_MAX];
-+	struct stat st;
-+
-+	if (!backed_up_anything)
-+		return;
-+
-+	if (!active_cache_tree)
-+		active_cache_tree = cache_tree();
-+
-+	if (!cache_tree_fully_valid(active_cache_tree)) {
-+		if (cache_tree_update(active_cache_tree,
-+		    (const struct cache_entry * const *)active_cache,
-+		    active_nr, 0) < 0)
-+			die("failed to update cache");
-+	}
-+
-+	strbuf_addstr(&msg, "Automatically committed by git-clean");
-+
-+	/* create a reflog, if there isn't one */
-+	git_snpath(logfile, sizeof(logfile), "logs/%s", ref);
-+	if (stat(logfile, &st)) {
-+		FILE *fp = fopen(logfile, "w");
-+		if (!fp)
-+			warning(_("Can not do reflog for '%s'\n"), ref);
-+		else
-+			fclose(fp);
-+	}
-+
-+	if (commit_tree(&msg, active_cache_tree->sha1, parents, commit_sha1,
-+	    NULL, NULL))
-+		die("failed to commit :(");
-+
-+	update_ref(msg.buf, ref, commit_sha1, NULL, 0, DIE_ON_ERR);
-+}
-+
- static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 		int dry_run, int quiet, int *dir_gone)
- {
-@@ -207,6 +302,8 @@ static int remove_dirs(struct strbuf *path, const char *prefix, int force_flag,
- 				*dir_gone = 0;
- 			continue;
- 		} else {
-+			if (backup && !dry_run)
-+				backup_file(path->buf, &st);
- 			res = dry_run ? 0 : unlink(path->buf);
- 			if (!res) {
- 				quote_path_relative(path->buf, prefix, &quoted);
-@@ -878,6 +975,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('i', "interactive", &interactive, N_("interactive cleaning")),
- 		OPT_BOOL('d', NULL, &remove_directories,
- 				N_("remove whole directories")),
-+		OPT_BOOL('b', "backup", &backup,
-+				N_("back up files to a reflog before deleting them")),
- 		{ OPTION_CALLBACK, 'e', "exclude", &exclude_list, N_("pattern"),
- 		  N_("add <pattern> to ignore rules"), PARSE_OPT_NONEG, exclude_cb },
- 		OPT_BOOL('x', NULL, &ignored, N_("remove ignored files, too")),
-@@ -922,6 +1021,9 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	if (!ignored)
- 		setup_standard_excludes(&dir);
- 
-+	if (backup && !dry_run)
-+		prepare_backup();
-+
- 	el = add_exclude_list(&dir, EXC_CMDL, "--exclude option");
- 	for (i = 0; i < exclude_list.nr; i++)
- 		add_exclude(exclude_list.items[i].string, "", 0, el, -(i+1));
-@@ -985,6 +1087,9 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
- 			}
- 		} else {
-+			if (backup && !dry_run)
-+				backup_file(abs_path.buf, &st);
-+
- 			res = dry_run ? 0 : unlink(abs_path.buf);
- 			if (res) {
- 				qname = quote_path_relative(item->string, NULL, &buf);
-@@ -1002,5 +1107,9 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	strbuf_release(&buf);
- 	string_list_clear(&del_list, 0);
- 	string_list_clear(&exclude_list, 0);
-+
-+	if (backup && !dry_run)
-+		finish_backup();
-+
- 	return (errors != 0);
- }
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 74de814..27d1d74 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -527,4 +527,16 @@ test_expect_success 'git clean -d respects pathspecs (pathspec is prefix of dir)
- 	test_path_is_dir foobar
+diff --git a/t/t9502-gitweb-standalone-parse-output.sh b/t/t9502-gitweb=
+-standalone-parse-output.sh
+index 86dfee2..37246a3 100755
+--- a/t/t9502-gitweb-standalone-parse-output.sh
++++ b/t/t9502-gitweb-standalone-parse-output.sh
+@@ -201,4 +201,38 @@ test_expect_success 'xss checks' '
+ 	xss "a=3Drss&p=3Dfoo.git&f=3D$TAG"
  '
- 
-+test_expect_success 'git clean -b' '
-+	git reset --hard HEAD &&
-+	git clean -dfx &&
-+	mkdir -p foobar &&
-+	echo "bar" > bar &&
-+	echo "baz" > foobar/baz &&
-+	git clean -d -f -b &&
-+	git diff --name-only refs/clean-backup@{0}^ refs/clean-backup@{0} >actual &&
-+	grep bar actual &&
-+	grep foobar/baz actual
+=20
++link_check () {
++	grep -F   "%3C__%C2%A3%C3%A5%C3%AB%C3%AE%C3%B1%C3%B2%C3%BB%C3%BD%C2%B=
+6" \
++		gitweb.body &&
++	! grep -F "%3C__%A3%E5%EB%EE%F1%F2%FB%FD%B6" \
++		gitweb.body
++}
++
++test_expect_success 'prepare UTF-8 output tests' '
++	FILENAME=3D"<__=C2=A3=C3=A5=C3=AB=C3=AE=C3=B1=C3=B2=C3=BB=C3=BD=C2=B6=
+  +;?&__>" &&
++	test_commit "Adding $FILENAME" "$FILENAME" "$FILENAME contents"
++'
++
++test_expect_success 'check URI-escaped UTF-8 filename in query-params =
+link' '
++	cat >>gitweb_config.perl <<-\EOF &&
++	$feature{"pathinfo"}{"default"} =3D [0];
++	EOF
++	gitweb_run "p=3D.git;a=3Dtree" &&
++	link_check
++'
++
++test_expect_success 'check URI-escaped UTF-8 filename in path_info lin=
+k' '
++	cat >>gitweb_config.perl <<-\EOF &&
++	$feature{"pathinfo"}{"default"} =3D [1];
++	EOF
++	gitweb_run "" "/.git/tree" &&
++	link_check
++'
++
++test_expect_success 'check HTML-escaped UTF-8 filename in body' '
++	gitweb_run "p=3D.git;a=3Dtree" &&
++	grep -F "&lt;__=C2=A3=C3=A5=C3=AB=C3=AE=C3=B1=C3=B2=C3=BB=C3=BD=C2=B6=
+  +;?&amp;__&gt;" gitweb.body &&
++	! grep -F  "<__=C2=A3=C3=A5=C3=AB=C3=AE=C3=B1=C3=B2=C3=BB=C3=BD=C2=B6=
+  +;?&__>" gitweb.body
 +'
 +
  test_done
--- 
-1.9.2.msysgit.0.161.g83227c1
+--=20
+1.7.1
+
+
+=20
