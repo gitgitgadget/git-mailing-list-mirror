@@ -1,70 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib: add convert-grafts-to-replace-refs.sh
-Date: Tue, 27 May 2014 15:00:10 -0700
-Message-ID: <xmqqwqd6evbp.fsf@gitster.dls.corp.google.com>
-References: <20140527182719.14437.62235.chriscool@tuxfamily.org>
-	<CAPig+cR4G916TwqGDRMr9fAH=SZkUB8kqGy3Hy5YBHZLgUw8ig@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 3/5] commit test: Use write_script
+Date: Tue, 27 May 2014 18:30:42 -0400
+Message-ID: <CAPig+cQt0mfBTChw8y=2Jg3rNsSr+neDCresptBafPDQixseXA@mail.gmail.com>
+References: <20140525062427.GA94219@sirius.att.net>
+	<1401130586-93105-1-git-send-email-caleb@calebthompson.io>
+	<1401130586-93105-4-git-send-email-caleb@calebthompson.io>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>,
-	Jakub =?utf-8?Q?Nar?= =?utf-8?Q?=C4=99bski?= <jnareb@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Wed May 28 00:00:36 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jeremiah Mahler <jmmahler@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Caleb Thompson <cjaysson@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 28 00:30:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpPQ9-0008P0-5m
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 00:00:33 +0200
+	id 1WpPtQ-0006Ol-6y
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 00:30:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753443AbaE0WAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 18:00:23 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52550 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753363AbaE0WAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 18:00:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4F1F91A94F;
-	Tue, 27 May 2014 18:00:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8n4j5uG0SdknE43iLcqTq2x4AKw=; b=MiqvqN
-	V2/jzSvWtbHlvdT0rfHRT9Cb0Rx6+r/qENO0ryKn4ZoG4jjL/my7IeedC+PTJCl6
-	MlBBisC7xnMmHOUn0e7z+PNSF4U/0wgkgXIoeZuWGMTiYWFgvecd85RRcQeKaK8+
-	127W0WsCBz0bh4FCShBJgGJbdXUkzH2S+ehSQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mA7kdtEMefcC1IYKlr8Efgiq4JAWI0gm
-	wOGg/h9xTfxw1dJTaZylsvsPiQ32uRe6kemQBF/x36gHL8sS3+Hqh3IrR15/Wama
-	Su7LIj/FXPYBA1nne+Nez/CR1eG0q8n45/42a89mWoC2/dbfB8v5BngQ1Hqo/rj0
-	ryNDyOrzJxo=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DE4101A94D;
-	Tue, 27 May 2014 18:00:18 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 688D01A934;
-	Tue, 27 May 2014 18:00:12 -0400 (EDT)
-In-Reply-To: <CAPig+cR4G916TwqGDRMr9fAH=SZkUB8kqGy3Hy5YBHZLgUw8ig@mail.gmail.com>
-	(Eric Sunshine's message of "Tue, 27 May 2014 17:19:47 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 46D08328-E5EA-11E3-A554-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751997AbaE0Wao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 18:30:44 -0400
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:57824 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751344AbaE0Wan (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 18:30:43 -0400
+Received: by mail-yk0-f172.google.com with SMTP id 79so7700612ykr.17
+        for <git@vger.kernel.org>; Tue, 27 May 2014 15:30:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=1WGl7H67cWiREPleIQcQWjnvkRLk2vAG8g0kJNdjkk0=;
+        b=UkDcl7JlBPAqA2mhFvm2yFCnJjYoXYvMv2N5jofFNvGxIgPYou28T28zIdj2S4jI8n
+         SM2zLPbgzFqPxP/t6wSr2qeNdsBHmafa9YZJGzOepk+WbRnqpSL1tyk18Rsdw6gsXUPY
+         n35G0NlwvmuL5WBf3OdWQbrZ1kqLIcdobhfzdbrNE82TUgbE6rtss8FQ6bGCiu2Fd6Mr
+         TvmN56vOYJu+HK7e2+NVf5ZXGK5MKfXuNN297e/XvjBCCGygJMBD0SnEvZXaVWHEVbfj
+         xCGU9aEkqmw27bprRCTLIzo0mlzsISvAcDO04omMnORXHklVC6dLP5wdwSQqLr/gjYlA
+         fQpA==
+X-Received: by 10.236.134.169 with SMTP id s29mr6802727yhi.4.1401229842749;
+ Tue, 27 May 2014 15:30:42 -0700 (PDT)
+Received: by 10.170.169.65 with HTTP; Tue, 27 May 2014 15:30:42 -0700 (PDT)
+In-Reply-To: <1401130586-93105-4-git-send-email-caleb@calebthompson.io>
+X-Google-Sender-Auth: 6rXpySpV0NezpjoZbDEqhQ4V6Ss
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250243>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
->> +echo "Success! All the grafts in '$GRAFTS_FILE' have been converted to replace refs!"
->> +echo "You should now move away or delete the grafts file: '$GRAFTS_FILE'"
+On Mon, May 26, 2014 at 2:56 PM, Caleb Thompson <cjaysson@gmail.com> wrote:
+> Use write_script from t/test-lib-functions instead of cat, shebang, and
+> chmod.
 >
-> Rather than merely giving advice, would it make sees for the script
-> rename the file (adding .bak or some such) and report that it did so?
+> Signed-off-by: Caleb Thompson <caleb@calebthompson.io>
+> ---
+>  t/t7507-commit-verbose.sh | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+> index 3b06d73..e62d921 100755
+> --- a/t/t7507-commit-verbose.sh
+> +++ b/t/t7507-commit-verbose.sh
+> @@ -3,11 +3,9 @@
+>  test_description='verbose commit template'
+>  . ./test-lib.sh
+>
+> -cat >check-for-diff <<EOF
+> -#!$SHELL_PATH
+> -exec grep '^diff --git' "\$1"
+> +write_script check-for-diff <<-EOF
+> +       exec grep '^diff --git' "\$1"
 
-Yeah, I would say so.
+Food for thought:
+
+The original code used <<EOF since it needed $SHELL_PATH to be
+evaluated at script creation time, and took special care to escape $1
+in the 'grep' invocation since $1 should be evaluated only at script
+execution time.
+
+With the change to write_script(), nothing within the here-doc
+requires evaluation, yet you are still using the evaluating <<-EOF
+form (and manually escaping $1). The intent might be clearer if you
+switch to <<-\EOF which suppresses evaluation (and drop the manual
+escaping of $1).
+
+The same observation applies to the new write_script() invocation to
+create check-for-no-diff in patch 5.
+
+>  EOF
+> -chmod +x check-for-diff
+>  test_set_editor "$(pwd)/check-for-diff"
+>
+>  cat >message <<'EOF'
+> --
+> 1.9.3
