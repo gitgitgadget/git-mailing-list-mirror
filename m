@@ -1,145 +1,196 @@
-From: Phil Hord <hordp@cisco.com>
-Subject: Re: [RFC 2/3] rebase -i: Reschedule tasks that failed before the
- index was touched
-Date: Tue, 27 May 2014 14:26:34 -0400
-Message-ID: <5384D8DA.40005@cisco.com>
-References: <533C913C.20106@cisco.com> <5383BDEA.9070908@gmail.com> <53847D7D.5050000@alum.mit.edu>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v8 42/44] refs.c: pass a skip list to name_conflict_fn
+Date: Tue, 27 May 2014 11:37:43 -0700
+Message-ID: <CAL=YDWn2HrTUnjKOCa4h6S0M9fxz6hfEgrLGCkvdaUvAD2fAcQ@mail.gmail.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+	<1400174999-26786-43-git-send-email-sahlberg@google.com>
+	<20140522192717.GU12314@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Fabian Ruch <bafain@gmail.com>, git@vger.kernel.org,
-	phil.hord@gmail.com
-X-From: git-owner@vger.kernel.org Tue May 27 20:36:08 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue May 27 20:37:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpMEI-0006xv-Sf
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 20:36:07 +0200
+	id 1WpMFy-0001hz-Ez
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 20:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752339AbaE0SgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 14:36:00 -0400
-Received: from alln-iport-5.cisco.com ([173.37.142.92]:56044 "EHLO
-	alln-iport-5.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751911AbaE0Sf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 14:35:59 -0400
-X-Greylist: delayed 563 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 May 2014 14:35:59 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=cisco.com; i=@cisco.com; l=2978; q=dns/txt; s=iport;
-  t=1401215759; x=1402425359;
-  h=message-id:date:from:mime-version:to:subject:references:
-   in-reply-to:content-transfer-encoding;
-  bh=HDBYwBe86YxQwG/haHmD35q/c2Fh9ZQpupJ08DkCCSE=;
-  b=YlfBxwzQjWGNovqVh6iPUFl1FPkeN7/yn/LmUQ41sZjnCwc6o+czB4Vb
-   Syei2kvD2zHLfAQwO7rNjrYro8Ln6jmeix7z9Jhop9jZe4O47BJanUq/D
-   alnA2QRvQSjrZDByLVeFf6vTTZ3YPw09k4kFY9icrmBm6MpX2Ys2favWV
-   0=;
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgsFAFTYhFOtJA2E/2dsb2JhbABZDoJ5UsJ0AYEOFnSCJQEBAQSBCQsOCgklDwJGBgEMCAEBiD4N1TAXjh86hEABA5lzhmuMPIF4gQBc
-X-IronPort-AV: E=Sophos;i="4.98,921,1392163200"; 
-   d="scan'208";a="47642376"
-Received: from alln-core-10.cisco.com ([173.36.13.132])
-  by alln-iport-5.cisco.com with ESMTP; 27 May 2014 18:26:35 +0000
-Received: from [64.100.104.110] (dhcp-64-100-104-110.cisco.com [64.100.104.110])
-	by alln-core-10.cisco.com (8.14.5/8.14.5) with ESMTP id s4RIQZ72007287;
-	Tue, 27 May 2014 18:26:35 GMT
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <53847D7D.5050000@alum.mit.edu>
+	id S1752930AbaE0Shq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 14:37:46 -0400
+Received: from mail-vc0-f175.google.com ([209.85.220.175]:50345 "EHLO
+	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751941AbaE0Sho (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 14:37:44 -0400
+Received: by mail-vc0-f175.google.com with SMTP id id10so7642134vcb.6
+        for <git@vger.kernel.org>; Tue, 27 May 2014 11:37:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=GP780NB6tTE2IUmlLT8COvb98mPrNvNEmQLhoPCLN0c=;
+        b=RWQ+VpduTEV/wWvBU/RyWZljHWe4V9rukWEBfE5q4WZXKMbhm60ro71AX4OtDsvMkL
+         WW9X2UpHoL7MmqbPErSEtupY2dY0hL09vSMHXY8ir9wyj+TC4sMvZJDtRvKk4zGQ6Gkj
+         8VUbyO1xx/xE2uKbcN0AjpqR3DpOs1ujq62ul3TOh92v7ymtggnavLgUeHHVP9UcN3SC
+         B8hI0/Mb2MrPNmkUycIhK42dSqZXWG1BU84QCSQZ93bcntTD4zdS/dRGeIsWiPrgPTGT
+         TdejGFcIYFuB4gEHM/8RBYUe3CARF1bwLy+zKWS8aM0SL/bqE41OgzpwBsmv5q9MpFxB
+         iTfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=GP780NB6tTE2IUmlLT8COvb98mPrNvNEmQLhoPCLN0c=;
+        b=GmJfy3lknI/AunnJfB3B1yH6I5oTrvZMct5AZfdM4iuHvvq6pVbC9GbIUhehiAW16b
+         WF5kW3V3o3pzx9wIqJ7X89T9dQdMULz2NYlBsA8P4vfqYzSg+7d0O6h26XhNvxeWmmyg
+         XQQPXyKxj8w5GUMQt5+iljzmVNnnnLtz/ZjC7eEzEP++bR7i/FV4T3ApZtrDmD8xaHAZ
+         Sn/BP9o6D5H9SXOMgwHcpHcB5pcAWKD0xOooDBOhYIYGAF6ZonMWwSNCj8Jff4bKVYK8
+         Rh03Pf2z8hecX5IkihbE5VCdpy5x7abq0/Nk/gWWb+AVIVbR4L+Kp2dphKDc7D3H8bz2
+         wM6A==
+X-Gm-Message-State: ALoCoQkSN9pCwJLi8iPnD99VtcCpQZQzoCHC/W7WCNv2wjPCuZ5ITzFSpiIhr+1tuZBxwZZo0gGE
+X-Received: by 10.220.160.67 with SMTP id m3mr2875473vcx.56.1401215863598;
+ Tue, 27 May 2014 11:37:43 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Tue, 27 May 2014 11:37:43 -0700 (PDT)
+In-Reply-To: <20140522192717.GU12314@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250184>
 
-Hi Fabian,
+On Thu, May 22, 2014 at 12:27 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
+>
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -798,11 +798,19 @@ struct name_conflict_cb {
+>>       const char *refname;
+>>       const char *oldrefname;
+>>       const char *conflicting_refname;
+>> +     const char **skip;
+>> +     int skipnum;
+>
+> Would a struct string_list make sense here?  (See
+> Documentation/technical/api-string-list.txt.)
 
-Thanks for looking into this.
+It would. But it is better to do that change later.
+Currently we have both repack_without_ref and repack_without_refs that
+take the same char ** argument.
+After next series we will have removed one of these functions and have
+an easier API to modify (once we start tracking the skiplist as part
+of the transaction instead).
 
-On 05/27/2014 07:56 AM, Michael Haggerty wrote:
->> +reschedule_last_action () {
->> +	tail -n 1 "$done" | cat - "$todo" >"$todo".new
->> +	sed -e \$d <"$done" >"$done".new
->> +	mv -f "$todo".new "$todo"
->> +	mv -f "$done".new "$done"
->> +}
->> +
->>  append_todo_help () {
->>  	git stripspace --comment-lines >>"$todo" <<\EOF
->>  
->> @@ -470,11 +480,15 @@ do_pick () {
->>  			   --no-post-rewrite -n -q -C $1 &&
->>  			pick_one -n $1 &&
->>  			git commit --allow-empty --allow-empty-message \
->> -				   --amend --no-post-rewrite -n -q -C $1 ||
->> -			die_with_patch $1 "Could not apply $1... $2"
->> +				   --amend --no-post-rewrite -n -q -C $1
-> "git cherry-pick" indicates its error status specifically as 1 or some
-> other value.  But here it could be that pick_one succeeds but "git
-> commit" fails; in that case ret is set to the return code of "git
-> commit".  So, if "git commit" fails with a retcode different than 1,
-> then reschedule_last_action will be called a few lines later.  This
-> seems incorrect to me.
+Instead of doing this change and then redoing it once we move a lot of
+the actual work from _commit  to _update
+I will do this change towards the end of the next series.
 
-I agree.  I was thinking that pick_one should get this new behavior
-instead of do_pick, but some callers may not appreciate the new behavior
-(i.e. squash/fixup), though I expect those callers have similar problems
-as this commit is trying to fix.
+>
+> [...]
+>>  };
+>>
+>>  static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
+>>  {
+>>       struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
+>> +     int i;
+>> +     for(i = 0; i < data->skipnum; i++) {
+>
 
-I think adding a pick_one_with_reschedule function (to be called in both
-places from do_pick) could solve the issue Michael mentioned without
-breaking other pick_one callers.
+Fixed.
 
-I have not tested doing so, but I think it would look like this:
+> (style nit) missing space after 'for'.
+>
+>> +             if (!strcmp(entry->name, data->skip[i])) {
+>> +                     return 0;
+>> +             }
+>
+> Style: git tends to avoid braces around a single-line if/for/etc body.
+>
 
-===================
+Fixed.
 
-diff --git i/git-rebase--interactive.sh w/git-rebase--interactive.sh
-index fe813ba..ae5603a 100644
---- i/git-rebase--interactive.sh
-+++ w/git-rebase--interactive.sh
-@@ -235,6 +235,17 @@ git_sequence_editor () {
-     eval "$GIT_SEQUENCE_EDITOR" '"$@"'
- }
- 
-+pick_one_with_reschedule () {
-+    pick_one $1
-+    ret=$?
-+    case "$ret" in
-+        0) ;;
-+        1) ;;
-+        *) reschedule_last_action ;;
-+    esac
-+    return $ret
-+}
-+
- pick_one () {
-     ff=--ff
- 
-@@ -474,13 +485,13 @@ do_pick () {
-         # rebase --continue.
-         git commit --allow-empty --allow-empty-message --amend \
-                --no-post-rewrite -n -q -C $1 &&
--            pick_one -n $1 &&
-+            pick_one_with_reschedule -n $1 &&
-             git commit --allow-empty --allow-empty-message \
-                    --amend --no-post-rewrite -n -q -C $1 \
-                    ${gpg_sign_opt:+"$gpg_sign_opt"} ||
-             die_with_patch $1 "Could not apply $1... $2"
-     else
--        pick_one $1 ||
-+        pick_one_with_reschedule $1 ||
-             die_with_patch $1 "Could not apply $1... $2"
-     fi
- }
+> [...]
+>> @@ -817,15 +825,21 @@ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
+>>   * conflicting with the name of an existing reference in dir.  If
+>>   * oldrefname is non-NULL, ignore potential conflicts with oldrefname
+>>   * (e.g., because oldrefname is scheduled for deletion in the same
+>> - * operation).
+>> + * operation). skip contains a list of refs we want to skip checking for
+>> + * conflicts with. Refs may be skipped due to us knowing that it will
+>> + * be deleted later during a transaction that deletes one reference and then
+>> + * creates a new conflicting reference. For example a rename from m to m/m.
+>
+> This example of "Refs may be skipped due to" seems overly complicated.
+> Isn't the idea just that skip contains a list of refs scheduled for
+> deletion in this transaction, since they shouldn't be treated as
+> conflicts at all (for example when renamining m to m/m)?
+>
+> I wonder if there's some way to make use of the result of the naive
+> refname_available check to decide what to do when creating a ref.
+>
+> E.g.: if a refname would be available except there's a ref being
+> deleted in the way, we could do one of the following:
+>
+>  a. delete all relevant loose refs and perform the transaction in
+>     packed-refs, or
+>
+>  b. order operations to avoid the D/F conflict, even with loose refs
+>     (the hardest case is if the ref being deleted uses a directory
+>     and we want to create a file with the same name.  But that's
+>     still doable if we're willing to rmdir when needed as part of
+>     the loop to commit changes)
+>
+> The packed-refs trick (a) seems much simpler, but either should work.
+>
+> This could be done e.g. by checking is_refname_available with an empty
+> list first before doing the real thing with a list of exclusions.
+>
+> [...]
+>> @@ -2592,6 +2609,9 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+>>       int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
+>>       const char *symref = NULL;
+>>
+>> +     if (!strcmp(oldrefname, newrefname))
+>> +             return 0;
+>
+> What is the intended result if I try to rename a nonexistent ref or an
+> existent symref to its own name?
 
-===================
+Yeah, I should get rid of that.
 
-I don't much like the name 'pick_one_with_reschedule', but I didn't like
-my other choices, either.
+I have renoved the rename_ref patch and moved it to the next series.
+I think we can solve this easier/better once we have the other patches in first.
 
-I'll try to look at this and your patches more closely when I have a bit
-more time.
-
-Phil
+>
+> Sorry to be so fussy about this part.  It's not that I think that this
+> change is trying to do something bad --- in fact, it's more the
+> opposite, that I'm excited to see git learning to have a better
+> understanding and handling of refname D/F conflicts.
+>
+> That would allow:
+>
+>  * "git fetch --prune" working as a single transaction even if
+>    the repository being fetched from removed a refs/heads/topic
+>    branch and created refs/heads/topic/1 and refs/heads/topic/2
+>
+>  * "git fast-import" and "git fetch --mirror" learning the same trick
+>
+>  * fewer code paths having to be touched to be able to (optionally)
+>    let git actually tolerate D/F conflicts, for people who want to
+>    have 'topic', 'topic/1', and 'topic/2' branches at the same time.
+>    This could be turned on by default for remote-tracking refs.  It
+>    would be especially nice for people on Windows and Mac OS where
+>    there can be D/F conflicts that people on Linux didn't notice due
+>    to case-sensitivity.
+>
+>    Longer term, through a configuration that starts turned off by
+>    default and has the default flipped as more people have upgraded
+>    git, this could make D/F conflicts in refnames stop being an error
+>    altogether.
+>
+> So it's kind of exciting to see, even though it's fussy to get it
+> right.
+>
+> Thanks,
+> Jonathan
