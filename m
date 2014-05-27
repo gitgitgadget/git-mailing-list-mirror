@@ -1,128 +1,110 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v10 22/44] fetch.c: clear errno before calling functions
- that might set it
-Date: Tue, 27 May 2014 12:14:48 -0700
-Message-ID: <CAL=YDWmoNgJHjUir3_Sh5oT5zmRH3jfi8Cbij8DGD0CuXnmXTw@mail.gmail.com>
-References: <1400261852-31303-1-git-send-email-sahlberg@google.com>
-	<1400261852-31303-23-git-send-email-sahlberg@google.com>
-	<53777894.7020408@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v10 11/12] Documentation: add documentation for 'git interpret-trailers'
+Date: Tue, 27 May 2014 12:18:20 -0700
+Message-ID: <xmqqd2ezf2tf.fsf@gitster.dls.corp.google.com>
+References: <534414FB.6040604@alum.mit.edu>
+	<20140425.230710.1024850359228182788.chriscool@tuxfamily.org>
+	<535E2A69.30600@alum.mit.edu>
+	<20140525.103721.1806399553055631284.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue May 27 21:14:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: mhagger@alum.mit.edu, christian.couder@gmail.com,
+	git@vger.kernel.org, johan@herland.net, josh@joshtriplett.org,
+	tr@thomasrast.ch, dan.carpenter@oracle.com, greg@kroah.com,
+	peff@peff.net, sunshine@sunshineco.com, ramsay@ramsay1.demon.co.uk,
+	jrnieder@gmail.com
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue May 27 21:18:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpMpp-0003fX-VJ
-	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 21:14:54 +0200
+	id 1WpMtK-0001oo-7Z
+	for gcvg-git-2@plane.gmane.org; Tue, 27 May 2014 21:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752482AbaE0TOu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 27 May 2014 15:14:50 -0400
-Received: from mail-ve0-f182.google.com ([209.85.128.182]:60883 "EHLO
-	mail-ve0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752142AbaE0TOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 27 May 2014 15:14:49 -0400
-Received: by mail-ve0-f182.google.com with SMTP id sa20so11197551veb.41
-        for <git@vger.kernel.org>; Tue, 27 May 2014 12:14:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=nPXWmF8W5MWb3hCLLY1ZOEWcwFyHlI8pONvvQp5q1hg=;
-        b=e6QaFcwRauV0AqEc170c7XI8q8mjsNLqEGfhBOvyCOxgQWsGfwGmR4JXxwi7D9ihCJ
-         tTMNQo0qr2AaO0LLQU2NgP2MbErMnUlE4RswWHm9weBt2hu73EiN/51UgxDtG6O4fotq
-         9ylIeDHGzvkjxVc03zU8iKaxg00eCVcahr78kZy8jjbdqwc+jhGP6PdM+xRDTnsNQsT5
-         XaXoIp+GrKOoHvk8al0Z/ZEtSrzDpPtbTwZZxvG13WI8nkp7NY+kER7c7LjLFR5aRDwK
-         ZtuWUv7Yy76rEqXYwCL47cm3T6qYRVPaxYtl90YzXmbiZhCUh++cmjK6S5a1gkPRj+oQ
-         Bojw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=nPXWmF8W5MWb3hCLLY1ZOEWcwFyHlI8pONvvQp5q1hg=;
-        b=AE4Z7i9Q03XPDeIh4l+a4UsAiKDM3I3XAsDJo2FWvz/Yi5zv/Mpvmzv+i/X3nR+ir6
-         rd/8K63CRpxOVIVwhORLcT4n7fuX5nvwR0n5mb6lJ3qDv2QPwxK2IqlKBPTMOsY5SLih
-         +oDGKMzOsvimcZAMnn5b7GOgUmELiZqA0ZxAqBn3man0YftysJlLQVYDySRFvQ8Xjm7f
-         OU/PGLreVSqArbf86BFtHtNZNN4Wg1/L1B6JXR6XNHl48qL57OK3fjv0/xvDe4PNaBNq
-         QHDz1Z1dAnaJci9U31EKDEcH7PonpAMgSZuQf8h7umqBzEhtponwmgPywyXtPLuSG58b
-         ldSg==
-X-Gm-Message-State: ALoCoQlBNBFV3gj/K5blDNFGIeWJdQTO+Ee+hKUa//WFt66ox/09shjevSFf1zfusWTWokN0PGPk
-X-Received: by 10.58.46.83 with SMTP id t19mr3150637vem.60.1401218088836; Tue,
- 27 May 2014 12:14:48 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Tue, 27 May 2014 12:14:48 -0700 (PDT)
-In-Reply-To: <53777894.7020408@alum.mit.edu>
+	id S1752390AbaE0TS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 27 May 2014 15:18:26 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64681 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752078AbaE0TSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 27 May 2014 15:18:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1B1F21B045;
+	Tue, 27 May 2014 15:18:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=HrGDhUVMBNATREUtD+eSCfTXtFo=; b=L82HFVdLT3baet+H7xYD
+	GKIsrLe5cudWD2/M/mCzodluYuwdMIZH5KoEt7WRlz1b38wFJnu14RWh0cEiD8rL
+	wmR+vtcg2df4JLT7RBWrA3wOrrG9SjW5CppuyMhyk/EFKtNvBfBDyR7OWNelhRXf
+	TyiduIocAMc+RKdQNUAeBLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=oaBk3Ukne3ZRmoJx8vqXFnFiaPbQEYG0RiUo0QzwF2RBgT
+	JII/xn9JgBsh2PhNa9r294+zhGpTWl3sB/aTsX5fb1Zsvy4ED4tH+e5s5WAJPfmT
+	Oj/50Qj83W3mGyVTobMqjZZeqF942E+1nwAKvkNGE55ltBXOruxz2SEikyElc=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 10E7C1B044;
+	Tue, 27 May 2014 15:18:25 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B2AF21B03B;
+	Tue, 27 May 2014 15:18:21 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: AAD4767A-E5D3-11E3-B50D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250191>
 
-On Sat, May 17, 2014 at 7:56 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 05/16/2014 07:37 PM, Ronnie Sahlberg wrote:
->> In s_update_ref there are two calls that when they fail we return an error
->> based on the errno value. In particular we want to return a specific error
->> if ENOTDIR happened. Both these functions do have failure modes where they
->> may return an error without updating errno, in which case a previous and
->> unrelated ENOTDIR may cause us to return the wrong error. Clear errno before
->> calling any functions if we check errno afterwards.
->
-> If I understand correctly, this is a workaround for some other broken
-> functions that don't handle errno correctly.  Long-term, wouldn't it be
-> better to fix the other functions?  In other words, they should change
-> errno if an only if they return an error status, no?
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Yeah,  but this patch is gone now.
-Longer term I think we should get rid of passing errno around.
-errno is best to only be checked immediately after a failed system
-call and never else.
-(otherwise you end up with a hairy forest of save_errno variables.)
+> From: Michael Haggerty <mhagger@alum.mit.edu>
+> ...
+> An option like --input-separator might be enough to support this.
+>
+>> For me this means:
+>> 
+>> * Enumerating a list of allowed separators (e.g., [:=#])
+>
+> Junio suggested in a message that users might use different separators
+> like '%'.
 
->
-> Of course you are under no obligation to fix the universe, so this
-> change may be an expedient workaround anyway.  But if you go this route,
-> then I think a comment would be helpful to explain the unusual clearing
-> of errno.
->
-> Michael
->
->>
->> Also skip initializing a static variable to 0. Statics live in .bss and
->> are all automatically initialized to 0.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  builtin/fetch.c | 4 +++-
->>  1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/builtin/fetch.c b/builtin/fetch.c
->> index 55f457c..a93c893 100644
->> --- a/builtin/fetch.c
->> +++ b/builtin/fetch.c
->> @@ -44,7 +44,7 @@ static struct transport *gtransport;
->>  static struct transport *gsecondary;
->>  static const char *submodule_prefix = "";
->>  static const char *recurse_submodules_default;
->> -static int shown_url = 0;
->> +static int shown_url;
->>
->>  static int option_parse_recurse_submodules(const struct option *opt,
->>                                  const char *arg, int unset)
->> @@ -382,6 +382,8 @@ static int s_update_ref(const char *action,
->>       if (!rla)
->>               rla = default_rla.buf;
->>       snprintf(msg, sizeof(msg), "%s: %s", rla, action);
->> +
->> +     errno = 0;
->>       lock = lock_any_ref_for_update(ref->name,
->>                                      check_old ? ref->old_sha1 : NULL,
->>                                      0, NULL);
->>
->
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+I actually think we shouldn't go any fancier than ":" and nothing
+else, not even "#".
+
+I was hoping that you would eventually realize that there are only
+two viable extremes when I suggested "the users may want to use
+other random characters like '%'" and also "the users can specify
+the 'key' with colon and trailing SP" (in $gmane/245960).
+
+ - If you want to give the projects greater control of the format,
+   then you cannot rely on "separators" anyway.  Your users can list
+   all possible footer "keys" the particular project would use, so
+   that they are recognized by Git, be that "Fixes: 4a28f16", "Bug
+   #12354", without hard-coding what "separator" Git must pay
+   attention to.  You can easily find a run of lines that begin with
+   any of the "key" (e.g. "Fixes: ", "Signed-off-by: ", "Bug #",
+   ...) starting from the tail-end of the log message and that is
+   your footer block.  No need for "separators" at all.
+
+ - If you want to give the projects freedom to come up with random
+   new kinds of footers without pre-arrangement, then you need to
+   have a reliable way to say if any line you have never seen could
+   be a footer material.  A colon has been used everywhere, and used
+   even in the "Fixes: 4a28f16" example you took from the kernel
+   circle.  I think you presented it with '#' but I do not think
+   they even want that, looking at:
+
+   http://lists.linuxfoundation.org/pipermail/ksummit-discuss/2014-May/000618.html
+
+I also think that bug tracking system using "Bug #12345" is an
+unrelated issue, as log viewers would want to highlight and make
+links out of them anywhere in the log message text, not limited
+to the log footer part.
+
+As to which one of these two we should take, I tend to think that we
+should start small and limited; loosening the syntax later is much
+easier than going the other way, i.e. ":" and nothing else.
