@@ -1,96 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: RFC: optionally reject case-clone branch names
-Date: Wed, 28 May 2014 14:58:12 -0700
-Message-ID: <xmqqy4xlbm6j.fsf@gitster.dls.corp.google.com>
-References: <1401231368.18134.63.camel@stross>
-	<xmqq7g55esg5.fsf@gitster.dls.corp.google.com>
-	<1401299791.18134.74.camel@stross>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v11 25/41] fast-import.c: use a ref transaction when
+ dumping tags
+Date: Wed, 28 May 2014 15:06:26 -0700
+Message-ID: <CAL=YDWkUhdoJkdg_zaq+p=XRu7H9fqNXDz89uPhbr4equTyVLQ@mail.gmail.com>
+References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
+	<1401222360-21175-26-git-send-email-sahlberg@google.com>
+	<20140528194746.GX12314@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git mailing list <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed May 28 23:58:24 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 29 00:06:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wplrb-0008Qi-PO
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 23:58:24 +0200
+	id 1Wplza-0004qg-Hh
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 00:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755058AbaE1V6T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 17:58:19 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50471 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753882AbaE1V6S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 17:58:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB7151A4B3;
-	Wed, 28 May 2014 17:58:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6L2r6w6ZF1kx86szLWN5Q7UpvDg=; b=cREsAZ
-	IxpRvCImHRiferXMmWcx+MX+nCQqUt8cttNvp/2jc2nSRu7fgIlOaJzKfVWVREnn
-	P6xqvinlRPu6IOf5CNvn7giDut1t6qlfP600taAg2qwWHLSqFr4brisgvO5e6559
-	Pf7kxERR37XhtDR4gs+PfoAMGv4eJ7k26AePA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FUe+/BaAKFJNZezvDGYw7t+hJ3+YVhAo
-	semIbb+V3GrMH8XIDIJfXrizhzaJ5LTGVPIIoev/C80HLLBkWQlWws5XDRd3LoqF
-	IhLrfiGnqzdlN+CHx+287tDWj8kDv6nnfTa6LRMkIsmLiBeKg0aXbQD/JI4eEWW3
-	8uVP1des9qg=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A21151A4B2;
-	Wed, 28 May 2014 17:58:17 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 59EE11A4AD;
-	Wed, 28 May 2014 17:58:14 -0400 (EDT)
-In-Reply-To: <1401299791.18134.74.camel@stross> (David Turner's message of
-	"Wed, 28 May 2014 13:56:31 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2ADAD104-E6B3-11E3-B9C3-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1755685AbaE1WGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 18:06:33 -0400
+Received: from mail-ve0-f178.google.com ([209.85.128.178]:45445 "EHLO
+	mail-ve0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755563AbaE1WG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 18:06:27 -0400
+Received: by mail-ve0-f178.google.com with SMTP id sa20so13173968veb.23
+        for <git@vger.kernel.org>; Wed, 28 May 2014 15:06:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=z09ROVDQeXmejsPnpIhGL06FRvRWhsF4DAkdeclPrOc=;
+        b=E6L9geM9swxIgpKNvwvFocdCGDo2onwsX5iS3Yycj5M7R9lfQ/TJnsnl+FRlOWZxdr
+         OPj/Pv+AmMLY8C9c+0+Tzp+Bhsp5LzmIkcN8FgCQEmVKPLCCEqdVj8TNT5rXLvkbOPbW
+         xeN/3nIPo0CM83o7lr+ASSi37K5bJ22xPK5vA1n6J/y8ePbkY06vgpjA39bOCQx6t1B1
+         pFKCDH1Jz4gmL1V35lHRHTfK8wqaZHDCeUzJ8pKSV1kYkG7+9SP/9vY+klSGvzq2xTiq
+         HHdD9R/wXEtiHq4H6ZhUSAXO/Q+G2ydhT8KSTH7EPDjMsSPRmemUv1JBPSKFzU9QXmb7
+         SpLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=z09ROVDQeXmejsPnpIhGL06FRvRWhsF4DAkdeclPrOc=;
+        b=QCmnz/2+fp3wKJJ+VU6q1rl5jiCqoz0dNOxP1cJQYJWM0APliIvnnLXOR/9xdyHMcZ
+         v40ax3zs4WFIqAKaDGuN1CBjfht7bsmJfjYD++36b+TjtV8uZTN4oFwfl0PkAKk8XFyx
+         KbfwOMEC1Vu6P1tzj1zeCnQAdh1HdWXqYCbwbT1a72v8AG5uiNE+IeiZPT2WH2uyGimB
+         g1f7eywZXJ4JfuOWz/8GmcOg/5Lc8vEfqb/AmLjvcilwjyffiXtnpWXwQaLZgwxUDC8u
+         minRhcYohS5Q8/B61seh+ZeCw+tybZstkI4/m61Z8Wxqsd77rhZUN1gsEwMEVtttr+JP
+         l9JA==
+X-Gm-Message-State: ALoCoQmbBMk0IonrGorqImh4OrZhHlh4bkHc68kHCrknGkYIzO5T+PXg5Irb/mAzM184uwHSoRme
+X-Received: by 10.52.164.70 with SMTP id yo6mr2170929vdb.67.1401314786723;
+ Wed, 28 May 2014 15:06:26 -0700 (PDT)
+Received: by 10.52.6.163 with HTTP; Wed, 28 May 2014 15:06:26 -0700 (PDT)
+In-Reply-To: <20140528194746.GX12314@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250337>
 
-David Turner <dturner@twopensource.com> writes:
+On Wed, May 28, 2014 at 12:47 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
+>
+>> --- a/fast-import.c
+>> +++ b/fast-import.c
+>> @@ -1735,15 +1735,22 @@ static void dump_tags(void)
+>>  {
+>>       static const char *msg = "fast-import";
+>>       struct tag *t;
+>> -     struct ref_lock *lock;
+>>       char ref_name[PATH_MAX];
+>> +     struct strbuf err = STRBUF_INIT;
+>> +     struct ref_transaction *transaction;
+>>
+>> +     transaction = ref_transaction_begin(&err);
+>>       for (t = first_tag; t; t = t->next_tag) {
+>> -             sprintf(ref_name, "tags/%s", t->name);
+>> +             snprintf(ref_name, PATH_MAX, "refs/tags/%s", t->name);
+>
+> That ignores the error if the refname happens to go longer than
+> PATH_MAX.
+>
+> This is the part of fast-import that doesn't need to be super
+> fast ;-).  (The objects have been written to the pack, and now
+> we just need to write some refs.)  Could this use a strbuf?  By that,
+> I mean something like
+>
+> diff --git i/fast-import.c w/fast-import.c
+> index 3db5b3d..d5f6e63 100644
+> --- i/fast-import.c
+> +++ w/fast-import.c
+> @@ -1735,21 +1735,28 @@ static void dump_tags(void)
+>  {
+>         static const char *msg = "fast-import";
+>         struct tag *t;
+> -       char ref_name[PATH_MAX];
+> +       struct strbuf ref_name = STRBUF_INIT;
+>         struct strbuf err = STRBUF_INIT;
+>         struct ref_transaction *transaction;
+>
+> +       strbuf_addstr(&ref_name, "refs/tags/");
+> +
+>         transaction = ref_transaction_begin(&err);
+>         for (t = first_tag; t; t = t->next_tag) {
+> -               snprintf(ref_name, PATH_MAX, "refs/tags/%s", t->name);
+> +               strbuf_setlen(&ref_name, strlen("refs/tags/"));
+> +               strbuf_addstr(&ref_name, t->name);
+>
+> -               if (ref_transaction_update(transaction, ref_name, t->sha1,
+> -                                          NULL, 0, 0, &err))
+> -                       break;
+> +               if (ref_transaction_update(transaction, ref_name.buf, t->sha1,
+> +                                          NULL, 0, 0, &err)) {
+> +                       failure |= error("%s", err.buf);
+> +                       goto done;
+> +               }
+>         }
+>         if (ref_transaction_commit(transaction, msg, &err))
+>                 failure |= error("%s", err.buf);
+> +done:
+>         ref_transaction_free(transaction);
+> +       strbuf_release(&ref_name);
+>         strbuf_release(&err);
+>  }
 
-> On Wed, 2014-05-28 at 10:14 -0700, Junio C Hamano wrote:
->> David Turner <dturner@twopensource.com> writes:
->> 
->> > RFC follows:
->> >
->> > 1. On a case-insensitive server, git receive-pack ought to always reject
->> > branches which are same-but-for-case of existing branches.
->> > 2. On a case-sensitive server, the same rule by default, with an option
->> > to allow the old behavior.
->> >
->> > Let me know if, should I write these patches, they would be likely to be
->> > accepted.
->> 
->> There is another a lot simpler possiblity, no?
->> 
->> 3. On any server whose administrator chooses to enforce "one case
->>    variant only" rule, install a pre-receive hook that enforces the
->>    rule.
->
-> The reason I discovered this issue is that a user came to me to complain
-> that suddenly their pulls were failing.  Then I had to track down what
-> the actual problem was (a colleague actually pointed it out to me).
->
-> We could add some hooks, but we have a lot of repos, some of which
-> already have unique hooks that we would have to edit.  And this approach
-> wouldn't help the next person who gets into this situation, who would
-> have to again figure out what went wrong, and add the appropriate hook.
->
-> Basically, I'm trying to take a poka-yoke approach. Does this seem
-> reasonable?
+Changed to strbuf.  Thanks.
 
-Sort of.  I think #1 is uncontroversial; there is nothing else that
-can be done that is more sensible.  As to #2, as your Subject line
-says, I think it should be "optionally reject", that is, "the old
-behaviour by default, with an option to allow the same ruleas #1".
+>
