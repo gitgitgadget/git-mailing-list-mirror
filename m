@@ -1,90 +1,98 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 1/5] progress.c: replace signal() with sigaction()
-Date: Wed, 28 May 2014 10:19:21 +0200
-Message-ID: <87sinuiad2.fsf@fencepost.gnu.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 0/5] replace signal() with sigaction()
+Date: Wed, 28 May 2014 10:23:19 +0200
+Message-ID: <CABPQNSZqazRLj3iOT1zei6ym6rcv5rzGrhK=O1vCPCh6p-Ad2A@mail.gmail.com>
 References: <1401257655-6043-1-git-send-email-jmmahler@gmail.com>
-	<1401257655-6043-2-git-send-email-jmmahler@gmail.com>
-	<5385994A.5040507@gmail.com>
+ <53859307.8080506@viscovery.net> <53859A44.7040806@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Jeremiah Mahler <jmmahler@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>
 To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 10:19:41 2014
+X-From: git-owner@vger.kernel.org Wed May 28 10:24:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpZ5I-0005Pb-LF
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 10:19:40 +0200
+	id 1WpZ9b-0003ZR-68
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 10:24:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932142AbaE1ITg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2014 04:19:36 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:38898 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932100AbaE1ITd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 May 2014 04:19:33 -0400
-Received: from localhost ([127.0.0.1]:37940 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WpZ5A-0001jC-Sm; Wed, 28 May 2014 04:19:33 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 234EDE084B; Wed, 28 May 2014 10:19:22 +0200 (CEST)
-In-Reply-To: <5385994A.5040507@gmail.com> (Chris Packham's message of "Wed, 28
-	May 2014 20:07:38 +1200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1754320AbaE1IYB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2014 04:24:01 -0400
+Received: from mail-ie0-f169.google.com ([209.85.223.169]:64956 "EHLO
+	mail-ie0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752281AbaE1IX7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 May 2014 04:23:59 -0400
+Received: by mail-ie0-f169.google.com with SMTP id at1so10054400iec.0
+        for <git@vger.kernel.org>; Wed, 28 May 2014 01:23:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=KiMzBB12fsOWykLjdkLBuCywX30dYHDVG7EFoWjv/FI=;
+        b=QSz0mmsaYRRRgbvwO58RHnfV+cRTtcu7208MJ/HjSMf+mXcr8RlTxpQPyUNAci3DHD
+         dWHuBjbo3Xbd+IygkRZxNPzAOXsVRoue05APo7tn1FsCCJ+6LxQnwa9G5S3Mk3V60HH+
+         VWYAQxxv6DEWMkg5rjgzt9gMQSgjmtgmT4/mlxcTBMrPImDBumWcQjLIjKYoHuQYMGRO
+         dsy5mySR7FyWcZl0K/GGDyrgZSuF4M7dGZ4AuuvxVvBEbo6KMIXEJ+jl5y9a11pVGmOM
+         1E/oSjtyXiSrxmv8qNS/YqhA+MwlcJQ516JpKS8qv82tqk9QFtP0nmLPpajWArSJMcBp
+         /ugg==
+X-Received: by 10.50.225.103 with SMTP id rj7mr40114929igc.42.1401265439181;
+ Wed, 28 May 2014 01:23:59 -0700 (PDT)
+Received: by 10.64.166.135 with HTTP; Wed, 28 May 2014 01:23:19 -0700 (PDT)
+In-Reply-To: <53859A44.7040806@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250273>
 
-Chris Packham <judge.packham@gmail.com> writes:
-
-> On 28/05/14 18:14, Jeremiah Mahler wrote:
->> From signal(2)
->>=20
->>   The behavior of signal() varies across UNIX versions, and has also=
- var=E2=80=90
->>   ied historically across different versions of Linux.   Avoid  its =
- use:
->>   use sigaction(2) instead.  See Portability below.
+On Wed, May 28, 2014 at 10:11 AM, Chris Packham <judge.packham@gmail.co=
+m> wrote:
+> On 28/05/14 19:40, Johannes Sixt wrote:
+>> Am 5/28/2014 8:14, schrieb Jeremiah Mahler:
+>>> From signal(2)
+>>>
+>>>   The behavior of signal() varies across UNIX versions, and has als=
+o var=E2=80=90
+>>>   ied historically across different versions of Linux.   Avoid  its=
+  use:
+>>>   use sigaction(2) instead.  See Portability below.
+>>>
+>>> This patch set replaces calls to signal() with sigaction() in all f=
+iles
+>>> except sigchain.c.  sigchain.c is a bit more complicated than the o=
+thers
+>>> and will be done in a separate patch.
+>>
+>> In compat/mingw.c we have:
+>>
+>> int sigaction(int sig, struct sigaction *in, struct sigaction *out)
+>> {
+>>       if (sig !=3D SIGALRM)
+>>               return errno =3D EINVAL,
+>>                       error("sigaction only implemented for SIGALRM"=
+);
+>>       if (out !=3D NULL)
+>>               return errno =3D EINVAL,
+>>                       error("sigaction: param 3 !=3D NULL not implem=
+ented");
+>>
+>>       timer_fn =3D in->sa_handler;
+>>       return 0;
+>> }
+>>
+>> Notice "only implemented for SIGALRM". Are adding the missing signal=
+s
+>> somewhere (here or in a later patch)?
+>>
 >
-> Minor nit. The last sentence applies to the man page you're quoting a=
-nd
-> doesn't really make sense when viewed in the context of this commit
-> message. Same applies to other patches in this series.
+> * note: not a windows/mingw programmer *
 >
->>=20
->> Replaced signal() with sigaction() in progress.c
->>=20
->> Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
->> ---
->>  progress.c | 6 +++++-
->>  1 file changed, 5 insertions(+), 1 deletion(-)
->>=20
->> diff --git a/progress.c b/progress.c
->> index 261314e..24df263 100644
->> --- a/progress.c
->> +++ b/progress.c
->> @@ -66,8 +66,12 @@ static void set_progress_signal(void)
->>  static void clear_progress_signal(void)
->>  {
->>  	struct itimerval v =3D {{0,},};
->> +	struct sigaction sa;
->> +
->> +	memset(&sa, 0, sizeof(sa));
->> +	sa.sa_handler =3D SIG_IGN;
->
-> A C99 initialiser here would save the call to memset. Unfortunately
-> Documentation/CodingGuidelines is fairly clear on not using C99
-> initialisers, given the fact we're now at git 2.0 maybe it's time to
-> revisit this policy?
+> Will the ones setting SIG_IGN be OK? Presumably we won't get these
+> signals on windows anyway so we're already getting what we want.
 
-If I look at the initialization of v in the context immediately above
-the new code, it would appear that somebody already revisited this
-policy.
-
---=20
-David Kastrup
+We'll still emit an useless error unless someone cooks up a fix.
