@@ -1,101 +1,99 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v11 25/41] fast-import.c: use a ref transaction when
- dumping tags
-Date: Wed, 28 May 2014 16:39:40 -0700
-Message-ID: <20140528233940.GC12314@google.com>
-References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
- <1401222360-21175-26-git-send-email-sahlberg@google.com>
- <20140528194746.GX12314@google.com>
- <CAL=YDWkUhdoJkdg_zaq+p=XRu7H9fqNXDz89uPhbr4equTyVLQ@mail.gmail.com>
- <20140528221720.GB12314@google.com>
- <CAL=YDW=ruMzd=twadncjgFTh3yv=796cN72amJ4ep8a41tgmrA@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu May 29 01:39:49 2014
+From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+Subject: [PATCH] Improve function dir.c:trim_trailing_spaces()
+Date: Wed, 28 May 2014 16:45:57 -0700
+Message-ID: <1401320757-9360-1-git-send-email-pasha.bolokhov@gmail.com>
+Cc: pclouds@gmail.com, Pasha Bolokhov <pasha.bolokhov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 29 01:46:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpnRk-0002pd-6t
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 01:39:48 +0200
+	id 1WpnXz-0004St-93
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 01:46:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752427AbaE1Xjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 19:39:44 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:47946 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751633AbaE1Xjn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 19:39:43 -0400
-Received: by mail-pb0-f44.google.com with SMTP id rq2so11977492pbb.17
-        for <git@vger.kernel.org>; Wed, 28 May 2014 16:39:43 -0700 (PDT)
+	id S1752043AbaE1XqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 19:46:11 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:46722 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750932AbaE1XqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 19:46:11 -0400
+Received: by mail-pa0-f47.google.com with SMTP id lf10so11845898pab.20
+        for <git@vger.kernel.org>; Wed, 28 May 2014 16:46:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=9R0A9cWGF0nupwxnSArGHb1SLEzRWQvhbrwyf0uDnJg=;
-        b=0jlXidJ/87Dar3LfQJUBJGqLssIc7FhXOtwGevgvEdr9dNV3w3rjje14zhgU6Ymh7I
-         wptJoAD2A1o2OqtFHarRdOBSzkUkh6If2PhoglHRO1gqFe7zYVvcR8GOSPM8jiLWRFvd
-         i0onWQW5CQ6s84qpf8SeJoh0s5x5f0nTGyygVRAz/jD1ujtDfQuOAqoXtMIS9A5mvc20
-         ApfKT24f2QE6LOfoutXL/753cn31nWS6PQPrmqCOUJDQ5x2s9fklRyXwIWbW98C3WUzU
-         +mSSk+tp9uePnApy/44c40dAYHout7LK5xtGOiyGAti3vplzKYTWgxny8GZR9+hroqd/
-         hcMA==
-X-Received: by 10.68.225.105 with SMTP id rj9mr3833854pbc.108.1401320383383;
-        Wed, 28 May 2014 16:39:43 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id sm8sm30197746pbc.92.2014.05.28.16.39.42
+        h=from:to:cc:subject:date:message-id;
+        bh=gYHdCPnXxgKaYhmqoPExpvOCNnA+jucuDEiTXOdapX8=;
+        b=r6DoJktyos4myNnp+EuN1id8zzTXo63yJdwc+BJAu2A6sBm8al+i88m+w75wFyfT47
+         07Sqi8hEK1pKTvN9YIyFW5TglIyex4K4DFeYNqBmFC4PJYsswT1NmAuJq5eBO2YUYE4f
+         SfuXaIe3Yj5pTlqB2U1A/RTfq/5/rYAz87hP0ijkf04byLq6+T9DUa7784+CBYzh11N7
+         CjmFUCteGwsabQwpR9cbxgBaAlsbzSnDqyDsq2hyLXuHznOZj1cgSjD1LTY1x7kWpRD1
+         dhHPHI0XHmKPU86uaIUMCshpY2E4I03qYAaPScbPb1/Mgo/ev3keWDZ9cNsYWJ8Cakzq
+         QC5A==
+X-Received: by 10.68.132.9 with SMTP id oq9mr3531405pbb.103.1401320770346;
+        Wed, 28 May 2014 16:46:10 -0700 (PDT)
+Received: from ani.gv.shawcable.net (S0106586d8f8ca92a.gv.shawcable.net. [96.54.196.148])
+        by mx.google.com with ESMTPSA id se3sm30218009pbb.80.2014.05.28.16.46.09
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 28 May 2014 16:39:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAL=YDW=ruMzd=twadncjgFTh3yv=796cN72amJ4ep8a41tgmrA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 28 May 2014 16:46:09 -0700 (PDT)
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250346>
 
-Ronnie Sahlberg wrote:
+Move backwards from the end of the string (more efficient for
+lines which do not have trailing spaces or have just a couple).
+Slightly more rare occurrences of 'text  \    ' with a backslash
+in between spaces are handled correctly.
+Namely, the code in 8ba87adad6 does not reset 'last_space' when
+a backslash is encountered and the above line stays intact as
+a result
+---
+How about trailing tabs?
 
-> I rely on the fact that if the transaction has failed then it is safe
-> to call ref_transaction_commit since it is guaranteed to return an
-> error too.
+ dir.c | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-Yes, I am saying that behavior for ref_transaction_commit is weird.
-
-Usually when ref_transaction_commit is called I can do
-
-	struct strbuf err = STRBUF_INIT;
-	if (ref_transaction_commit(..., &err))
-		die("%s", err.buf);
-
-and I know that since ref_transaction_commit has returned a nonzero
-result, err.buf is populated with a sensible message that will
-describe what went wrong.
-
-That's true even if there's a bug elsewhere in code I didn't write
-(e.g., someone forgot to check the return value from
-ref_transaction_update).
-
-But the guarantee you are describing removes that property.  It
-creates a case where ref_transaction_commit can return nonzero without
-updating err.  So I get the following message:
-
-	fatal:
-
-I don't think that's a good outcome.
-
-Sure, if I am well acquainted with the API, I can make sure to use the
-same strbuf for all transaction API calls.  But that would result in
-strange behavior, too: if multiple _update calls fail, then I get
-concatenated messages.
-
-Okay, I can make sure to do at most one failing _update, before
-calling _commit and printing the error.  But at that point, what is
-the advantage over normal exception handling, where the error gets
-handled at the _update call site?
-
-Jonathan
+diff --git a/dir.c b/dir.c
+index eb6f581..3315eea 100644
+--- a/dir.c
++++ b/dir.c
+@@ -508,21 +508,18 @@ void clear_exclude_list(struct exclude_list *el)
+ 
+ static void trim_trailing_spaces(char *buf)
+ {
+-	int i, last_space = -1, nr_spaces, len = strlen(buf);
+-	for (i = 0; i < len; i++)
+-		if (buf[i] == '\\')
+-			i++;
+-		else if (buf[i] == ' ') {
+-			if (last_space == -1) {
+-				last_space = i;
+-				nr_spaces = 1;
+-			} else
+-				nr_spaces++;
+-		} else
+-			last_space = -1;
+-
+-	if (last_space != -1 && last_space + nr_spaces == len)
++	int i, last_space, bslash = 0, len = strlen(buf);
++
++	if (len == 0 || buf[len - 1] != ' ')
++		return;
++	for (i = len - 2; i >= 0 && buf[i] == ' '; i--) ;
++	last_space = i + 1;
++	for ( ; i >=0 && buf[i] == '\\'; i--) bslash ^= 1;
++
++	if (!bslash)
+ 		buf[last_space] = '\0';
++	else if (bslash && last_space < len - 1)
++		buf[last_space + 1] = '\0';
+ }
+ 
+ int add_excludes_from_file_to_list(const char *fname,
+-- 
+1.9.1
