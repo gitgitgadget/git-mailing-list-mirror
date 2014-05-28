@@ -1,179 +1,446 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v8 41/44] refs.c: add a new flag for transaction delete
- for refs we know are packed only
-Date: Thu, 29 May 2014 00:23:53 +0200
-Message-ID: <538661F9.50205@alum.mit.edu>
-References: <1400174999-26786-1-git-send-email-sahlberg@google.com>	<1400174999-26786-42-git-send-email-sahlberg@google.com>	<537F67DD.5010101@alum.mit.edu>	<xmqqzji3f55i.fsf@gitster.dls.corp.google.com>	<5385F0E5.4010306@alum.mit.edu> <xmqqk395et7l.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git v2.0.0
+Date: Wed, 28 May 2014 15:31:13 -0700
+Message-ID: <xmqqr43dbkni.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu May 29 00:24:02 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Linux Kernel <linux-kernel@vger.kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 29 00:31:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpmGP-00073U-8l
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 00:24:01 +0200
+	id 1WpmNj-0001lR-98
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 00:31:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932332AbaE1WX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 18:23:57 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:47819 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753426AbaE1WX4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 May 2014 18:23:56 -0400
-X-AuditID: 1207440e-f79026d000000c25-83-538661fbe32b
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id BB.AC.03109.BF166835; Wed, 28 May 2014 18:23:56 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC97A4D.dip0.t-ipconnect.de [79.201.122.77])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4SMNrjx001763
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 28 May 2014 18:23:54 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
-In-Reply-To: <xmqqk395et7l.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRmVeSWpSXmKPExsUixO6iqPsnsS3YoHEio0XXlW4mi4beK8wW
-	b28uYbT4N6HGgcVj56y77B4LNpV6XLyk7PF5k1wASxS3TVJiSVlwZnqevl0Cd0bPoia2gsWa
-	FduWNTE3MLYrdDFyckgImEh0Tm1khrDFJC7cW8/WxcjFISRwmVHi8PvLTBDOeSaJxf2r2UCq
-	eAU0Jb5sfANkc3CwCKhKfH0cAxJmE9CVWNTTzAQSFhUIkvhzVhGiWlDi5MwnLCC2iICaxMS2
-	Q2A2s0CuROfnDewgtrBAnkTnhy6ovbOYJC50Twc7iFPAWuLY5d1gqyQExCV6GoMgenUk3vU9
-	YIaw5SW2v53DPIFRcBaSdbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6xXm5m
-	iV5qSukmRkiA8+1gbF8vc4hRgINRiYdXQrYtWIg1say4MvcQoyQHk5Io76w4oBBfUn5KZUZi
-	cUZ8UWlOavEhRgkOZiURXo1woBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxW
-	g4ND4MrBI7MZpVjy8vNSlSR4nYARLiRYlJqeWpGWmVOCUMrEwQmyiEtKpDg1LyW1KLG0JCMe
-	FNfxxcDIBknxAN3AB9LOW1yQmAsUhWg9xagoJc4rDpIQAElklObBjYWls1eM4kAfC/P6glTx
-	AFMhXPcroMFMQIOfdLaCDC5JREhJNTDacLOuZ/mR9fLIhWq3VzONTNcWqlayms0R3KTwIqqL
-	J8ylUPyW1Fy+R0EKattZb5YJv4pvdbZq2rz2y/Hiq3t/TJ58RUB9Kbuz3NXbP+e6 
+	id S1755901AbaE1WbV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 18:31:21 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57791 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755453AbaE1WbT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 18:31:19 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id EE4501ACA6;
+	Wed, 28 May 2014 18:31:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=j
+	ZKWuzD1aj9lSs6ZMF3BhOSiNlY=; b=UNhB4LI7O/CXtEgarZEE83epbiRbMj0eb
+	0E3JP7kMHm4qQxw/iz2w24Oo32BrafkqefJjHuq88pIRQIn+7lRbBOAo6qFqsU7V
+	WJev9IVjfVzOqbioRBTENePaZi+azyqbeGzxGb1NmmxZpwCQTCsTdti1FCIs+nlU
+	JcCDGOhPJQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=HKqjhNkDyjix1BRVY9yKXnuXYHxf+tkohpCLROCF2vUHBl4X4E8fYxrO
+	qlpZJvv+EVLOQxZ4BeGfC02CBbHhubIcInxS7XGjLZNjZuMftYEfMwXBDJ3J4I1F
+	RKd+PapnSfnFFlY3DBI15gERIUuG4N3ztmsBBfXzt2hBeGYImmc=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E3E7A1ACA5;
+	Wed, 28 May 2014 18:31:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 22FCA1ACA1;
+	Wed, 28 May 2014 18:31:15 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C77DC60C-E6B7-11E3-8C1F-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250341>
 
-On 05/28/2014 06:58 PM, Junio C Hamano wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
-> 
->> I think for any two backends that are stacked, you would need to break
->> down a transaction as follows (here generalized to include not only
->> deletions):
->>
->>     packed->begin_transaction()
->>     loose->begin_transaction()
->>
->>     # And this part is done within stacked->commit_transaction():
->>     for entry in many_ref_updates():
->>         if have_old:
->>             stacked->verify_reference(ref, old_sha1)
->>
->>         if entry is a delete:
->>             packed->delete_reference(entry)
->>         loose->update_reference(entry)
->>
->>     if (!packed->commit_transaction())
->>         loose->commit_transaction()
-> 
-> Ugggly.
+The latest feature release Git v2.0.0 is now available at the
+usual places.
 
-The ugliness would be encapsulated in the stacked reference backend.  It
-wouldn't have to appear in client code.
+We had to delay the final release by a week or so because we found a
+few problems in earlier release candidates (request-pull had a
+regression that stopped it from showing the "tags/" prefix in
+"Please pull tags/frotz" when the user asked to compose a request
+for 'frotz' to be pulled; a code path in git-gui to support ancient
+versions of Git incorrectly triggered for Git 2.0), which we had to
+fix in an extra unplanned release candidate.
 
-> In general you would need to worry about the case where the
-> first commit succeeds and then the second commit fails, wouldn't
-> you?
-> 
-> The above happens not to break horribly wrong for the "Loose on top
-> of Packed" layering, in that the refs you wanted to delete are only
-> gone from Packed but still are in Loose, and the end result would be
-> some of them are really gone (because they weren't in Loose) and
-> some others remain (because they were in Loose), and at least you
-> did not lose any ref you did not want to discard.  But it still is
-> not what should happen in a proper "transaction".
+Hopefully the next cycle will become shorter, as topics that have
+been cooking on the 'next' branch had extra time to mature, so it
+all evens out in the end ;-).
 
-True, but we don't have proper transactions anyway.  If anything goes
-wrong when renaming one of the loose reference lockfiles, we have no way
-of reliably rolling back the loose references that have already been
-changed.  The word "transaction" as we use it really only suggests that
-we are doing our best to change the references all-or-nothing even in
-the face of concurrent modifications by other processes.  It certainly
-doesn't protect against power failures and stuff like that.
+The tarballs are found at:
 
-I suppose if you wanted to make reference deletions a little bit more
-transaction-like, you could split them into two steps to "loosen" any
-packed references and a deletion step that deletes the loose references.
- The advantage of this scheme is that each step requires a transaction
-on only a single back end at a time, though it requires part or all of
-the other back end to be locked simultaneously.
+    https://www.kernel.org/pub/software/scm/git/testing/
 
-    # The first two iterations "loosen" any packed references
-    # corresponding to references that are to be deleted.  It is purely
-    # an internal reorganization that doesn't change the externally-
-    # visible values of any references and can be done within a
-    # separate transaction:
-    for each reference to delete:
-        if reference exists packed but not loose:
-            create a loose ref with the value from the packed ref
-    for each reference to delete:
-        if reference exists packed:
-            delete packed version of reference
+The following public repositories all have a copy of the 'v2.0.0'
+tag and the 'master' branch that the tag points at:
 
-    # Now we only have to delete the loose version of the references.
-    # This should be done after activating the packed reference file
-    # but while continuing to hold the packed-refs lock:
-    for each reference to delete:
-        delete loose version of reference
+  url = https://kernel.googlesource.com/pub/scm/git/git
+  url = git://repo.or.cz/alt-git.git
+  url = https://code.google.com/p/git-core/
+  url = git://git.sourceforge.jp/gitroot/git-core/git.git
+  url = git://git-core.git.sourceforge.net/gitroot/git-core/git-core
+  url = https://github.com/gitster/git
 
-I'd have to think more about whether this all really works generically
-without requiring lots of extra round-trips to a possibly-remote
-backend.  But I'm not sure we really need this composability in its full
-generality.  For example, maybe it is impossible to stack a low-latency
-and a high-latency backend together while minimizing round-trips to the
-latter.
+Git v2.0 Release Notes
+======================
 
->>> But the above would not quite work, as somebody needs to remove logs
->>> for refs that were only in the Packed backend, and "repack without
->>> these refs" API supported by the Packed backend cannot be that
->>> somebody---"repack packed-refs without A B C" cannot unconditionally
->>> remove logs for A B C without checking if A B C exists as Loose.
->>
->> Correct.  That's another reason that logging has to be the
->> responsibility of something at the "stacked" level of abstraction or higher.
->>
->> I think the logging should be done by yet another outer layer of
->> wrapper that only does the logging, while also passing all updates
->> down 1:1 to the backend that it wraps (which in our case would be
->> a stacked backend). ... Then the loose and packed backends could
->> remain completely ignorant of the fact that reference updates can
->> be logged.
-> 
-> That would mean that Loose (or Packed) class cannot be used as-is
-> and always needs to be wrapped with the layer that does the logging,
-> no?
+Backward compatibility notes
+----------------------------
 
-Correct.
+When "git push [$there]" does not say what to push, we have used the
+traditional "matching" semantics so far (all your branches were sent
+to the remote as long as there already are branches of the same name
+over there).  In Git 2.0, the default is now the "simple" semantics,
+which pushes:
 
-> In a system with "only packed-refs, no loose", you would want
-> Packed.deleteRefs() to remove the named refs ref and their reflogs,
-> but that would mean that the Layered wrapper that uses Loose
-> overlayed on Packed cannot call that method, because it does not
-> want reflogs of the refs in Packed covered by the ones in Loose.
+ - only the current branch to the branch with the same name, and only
+   when the current branch is set to integrate with that remote
+   branch, if you are pushing to the same remote as you fetch from; or
 
-The two scenarios would be roughly
+ - only the current branch to the branch with the same name, if you
+   are pushing to a remote that is not where you usually fetch from.
 
-    refhandler = new LoggingWrapper(new PackedRefs())
+You can use the configuration variable "push.default" to change
+this.  If you are an old-timer who wants to keep using the
+"matching" semantics, you can set the variable to "matching", for
+example.  Read the documentation for other possibilities.
 
-and
+When "git add -u" and "git add -A" are run inside a subdirectory
+without specifying which paths to add on the command line, they
+operate on the entire tree for consistency with "git commit -a" and
+other commands (these commands used to operate only on the current
+subdirectory).  Say "git add -u ." or "git add -A ." if you want to
+limit the operation to the current directory.
 
-    refhandler = new LoggingWrapper(
-        new StackedRefs(new LooseRefs(), new PackedRefs())
-        )
+"git add <path>" is the same as "git add -A <path>" now, so that
+"git add dir/" will notice paths you removed from the directory and
+record the removal.  In older versions of Git, "git add <path>" used
+to ignore removals.  You can say "git add --ignore-removal <path>" to
+add only added or modified paths in <path>, if you really want to.
 
-Michael
+The "-q" option to "git diff-files", which does *NOT* mean "quiet",
+has been removed (it told Git to ignore deletion, which you can do
+with "git diff-files --diff-filter=d").
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+"git request-pull" lost a few "heuristics" that often led to mistakes.
+
+The default prefix for "git svn" has changed in Git 2.0.  For a long
+time, "git svn" created its remote-tracking branches directly under
+refs/remotes, but it now places them under refs/remotes/origin/ unless
+it is told otherwise with its "--prefix" option.
+
+
+Updates since v1.9 series
+-------------------------
+
+UI, Workflows & Features
+
+ * The "multi-mail" post-receive hook (in contrib/) has been updated
+   to a more recent version from upstream.
+
+ * The "remote-hg/bzr" remote-helper interfaces (used to be in
+   contrib/) are no more.  They are now maintained separately as
+   third-party plug-ins in their own repositories.
+
+ * "git gc --aggressive" learned "--depth" option and
+   "gc.aggressiveDepth" configuration variable to allow use of a less
+   insane depth than the built-in default value of 250.
+
+ * "git log" learned the "--show-linear-break" option to show where a
+   single strand-of-pearls is broken in its output.
+
+ * The "rev-parse --parseopt" mechanism used by scripted Porcelains to
+   parse command-line options and to give help text learned to take
+   the argv-help (the placeholder string for an option parameter,
+   e.g. "key-id" in "--gpg-sign=<key-id>").
+
+ * The pattern to find where the function begins in C/C++ used in
+   "diff" and "grep -p" has been updated to improve viewing C++
+   sources.
+
+ * "git rebase" learned to interpret a lone "-" as "@{-1}", the
+   branch that we were previously on.
+
+ * "git commit --cleanup=<mode>" learned a new mode, scissors.
+
+ * "git tag --list" output can be sorted using "version sort" with
+   "--sort=version:refname".
+
+ * Discard the accumulated "heuristics" to guess from which branch the
+   result wants to be pulled from and make sure that what the end user
+   specified is not second-guessed by "git request-pull", to avoid
+   mistakes.  When you pushed out your 'master' branch to your public
+   repository as 'for-linus', use the new "master:for-linus" syntax to
+   denote the branch to be pulled.
+
+ * "git grep" learned to behave in a way similar to native grep when
+   "-h" (no header) and "-c" (count) options are given.
+
+ * "git push" via transport-helper interface has been updated to
+   allow forced ref updates in a way similar to the natively
+   supported transports.
+
+ * The "simple" mode is the default for "git push".
+
+ * "git add -u" and "git add -A", when run without any pathspec, is a
+   tree-wide operation even when run inside a subdirectory of a
+   working tree.
+
+ * "git add <path>" is the same as "git add -A <path>" now.
+
+ * "core.statinfo" configuration variable, which is a
+   never-advertised synonym to "core.checkstat", has been removed.
+
+ * The "-q" option to "git diff-files", which does *NOT* mean
+   "quiet", has been removed (it told Git to ignore deletion, which
+   you can do with "git diff-files --diff-filter=d").
+
+ * Server operators can loosen the "tips of refs only" restriction for
+   the remote archive service with the uploadarchive.allowUnreachable
+   configuration option.
+
+ * The progress indicators from various time-consuming commands have
+   been marked for i18n/l10n.
+
+ * "git notes -C <blob>" diagnoses as an error an attempt to use an
+   object that is not a blob.
+
+ * "git config" learned to read from the standard input when "-" is
+   given as the value to its "--file" parameter (attempting an
+   operation to update the configuration in the standard input is
+   rejected, of course).
+
+ * Trailing whitespaces in .gitignore files, unless they are quoted
+   for fnmatch(3), e.g. "path\ ", are warned and ignored.  Strictly
+   speaking, this is a backward-incompatible change, but very unlikely
+   to bite any sane user and adjusting should be obvious and easy.
+
+ * Many commands that create commits, e.g. "pull" and "rebase",
+   learned to take the "--gpg-sign" option on the command line.
+
+ * "git commit" can be told to always GPG sign the resulting commit
+   by setting the "commit.gpgsign" configuration variable to "true"
+   (the command-line option "--no-gpg-sign" should override it).
+
+ * "git pull" can be told to only accept fast-forward by setting the
+   new "pull.ff" configuration variable.
+
+ * "git reset" learned the "-N" option, which does not reset the index
+   fully for paths the index knows about but the tree-ish the command
+   resets to does not (these paths are kept as intend-to-add entries).
+
+
+Performance, Internal Implementation, etc.
+
+ * The compilation options to port to AIX and to MSVC have been
+   updated.
+
+ * We started using wildmatch() in place of fnmatch(3) a few releases
+   ago; complete the process and stop using fnmatch(3).
+
+ * Uses of curl's "multi" interface and "easy" interface do not mix
+   well when we attempt to reuse outgoing connections.  Teach the RPC
+   over HTTP code, used in the smart HTTP transport, not to use the
+   "easy" interface.
+
+ * The bitmap-index feature from JGit has been ported, which should
+   significantly improve performance when serving objects from a
+   repository that uses it.
+
+ * The way "git log --cc" shows a combined diff against multiple
+   parents has been optimized.
+
+ * The prefixcmp() and suffixcmp() functions are gone.  Use
+   starts_with() and ends_with(), and also consider if skip_prefix()
+   suits your needs better when using the former.
+
+
+Also contains various documentation updates and code clean-ups.  Many
+of them came from flurry of activities as GSoC candidate microproject
+exercises.
+
+
+Fixes since v1.9 series
+-----------------------
+
+Unless otherwise noted, all the fixes since v1.9 in the maintenance
+track are contained in this release (see the maintenance releases'
+notes for details).
+
+ * "git p4" was broken in 1.9 release to deal with changes in binary
+   files.
+   (merge 749b668 cl/p4-use-diff-tree later to maint).
+
+ * The shell prompt script (in contrib/), when using the PROMPT_COMMAND
+   interface, used an unsafe construct when showing the branch name in
+   $PS1.
+   (merge 1e4119c8 rh/prompt-pcmode-avoid-eval-on-refname later to maint).
+
+ * "git rebase" used a POSIX shell construct FreeBSD's /bin/sh does not
+   work well with.
+   (merge 8cd6596 km/avoid-non-function-return-in-rebase later to maint).
+
+ * zsh prompt (in contrib/) leaked unnecessary error messages.
+
+ * Bash completion (in contrib/) did not complete the refs and remotes
+   correctly given "git pu<TAB>" when "pu" is aliased to "push".
+
+ * Some more Unicode code points, defined in Unicode 6.3 as having zero
+   width, have been taught to our display column counting logic.
+   (merge d813ab9 tb/unicode-6.3-zero-width later to maint).
+
+ * Some tests used shell constructs that did not work well on FreeBSD
+   (merge ff7a1c6 km/avoid-bs-in-shell-glob later to maint).
+   (merge 00764ca km/avoid-cp-a later to maint).
+
+ * "git update-ref --stdin" did not fail a request to create a ref
+   when the ref already existed.
+   (merge b9d56b5 mh/update-ref-batch-create-fix later to maint).
+
+ * "git diff --no-index -Mq a b" fell into an infinite loop.
+   (merge ad1c3fb jc/fix-diff-no-index-diff-opt-parse later to maint).
+
+ * "git fetch --prune", when the right-hand side of multiple fetch
+   refspecs overlap (e.g. storing "refs/heads/*" to
+   "refs/remotes/origin/*", while storing "refs/frotz/*" to
+   "refs/remotes/origin/fr/*"), aggressively thought that lack of
+   "refs/heads/fr/otz" on the origin site meant we should remove
+   "refs/remotes/origin/fr/otz" from us, without checking their
+   "refs/frotz/otz" first.
+
+   Note that such a configuration is inherently unsafe (think what
+   should happen when "refs/heads/fr/otz" does appear on the origin
+   site), but that is not a reason not to be extra careful.
+   (merge e6f6371 cn/fetch-prune-overlapping-destination later to maint).
+
+ * "git status --porcelain --branch" showed its output with labels
+   "ahead/behind/gone" translated to the user's locale.
+   (merge 7a76c28 mm/status-porcelain-format-i18n-fix later to maint).
+
+ * A stray environment variable $prefix could have leaked into and
+   affected the behaviour of the "subtree" script (in contrib/).
+
+ * When it is not necessary to edit a commit log message (e.g. "git
+   commit -m" is given a message without specifying "-e"), we used to
+   disable the spawning of the editor by overriding GIT_EDITOR, but
+   this means all the uses of the editor, other than to edit the
+   commit log message, are also affected.
+   (merge b549be0 bp/commit-p-editor later to maint).
+
+ * "git mv" that moves a submodule forgot to adjust the array that
+   uses to keep track of which submodules were to be moved to update
+   its configuration.
+   (merge fb8a4e8 jk/mv-submodules-fix later to maint).
+
+ * Length limit for the pathname used when removing a path in a deep
+   subdirectory has been removed to avoid buffer overflows.
+   (merge 2f29e0c mh/remove-subtree-long-pathname-fix later to maint).
+
+ * The test helper lib-terminal always run an actual test_expect_*
+   when included, which screwed up with the use of skil-all that may
+   have to be done later.
+   (merge 7e27173 jk/lib-terminal-lazy later to maint).
+
+ * "git index-pack" used a wrong variable to name the keep-file in an
+   error message when the file cannot be written or closed.
+   (merge de983a0 nd/index-pack-error-message later to maint).
+
+ * "rebase -i" produced a broken insn sheet when the title of a commit
+   happened to contain '\n' (or ended with '\c') due to a careless use
+   of 'echo'.
+   (merge cb1aefd us/printf-not-echo later to maint).
+
+ * There were a few instances of 'git-foo' remaining in the
+   documentation that should have been spelled 'git foo'.
+   (merge 3c3e6f5 rr/doc-merge-strategies later to maint).
+
+ * Serving objects from a shallow repository needs to write a
+   new file to hold the temporary shallow boundaries, but it was not
+   cleaned when we exit due to die() or a signal.
+   (merge 7839632 jk/shallow-update-fix later to maint).
+
+ * When "git stash pop" stops after failing to apply the stash
+   (e.g. due to conflicting changes), the stash is not dropped. State
+   that explicitly in the output to let the users know.
+   (merge 2d4c993 jc/stash-pop-not-popped later to maint).
+
+ * The labels in "git status" output that describe the nature of
+   conflicts (e.g. "both deleted") were limited to 20 bytes, which was
+   too short for some l10n (e.g. fr).
+   (merge c7cb333 jn/wt-status later to maint).
+
+ * "git clean -d pathspec" did not use the given pathspec correctly
+   and ended up cleaning too much.
+   (merge 1f2e108 jk/clean-d-pathspec later to maint).
+
+ * "git difftool" misbehaved when the repository is bound to the
+   working tree with the ".git file" mechanism, where a textual file
+   ".git" tells us where it is.
+   (merge fcfec8b da/difftool-git-files later to maint).
+
+ * "git push" did not pay attention to "branch.*.pushremote" if it is
+   defined earlier than "remote.pushdefault"; the order of these two
+   variables in the configuration file should not matter, but it did
+   by mistake.
+   (merge 98b406f jk/remote-pushremote-config-reading later to maint).
+
+ * Code paths that parse timestamps in commit objects have been
+   tightened.
+   (merge f80d1f9 jk/commit-dates-parsing-fix later to maint).
+
+ * "git diff --external-diff" incorrectly fed the submodule directory
+   in the working tree to the external diff driver when it knew that it
+   is the same as one of the versions being compared.
+   (merge aba4727 tr/diff-submodule-no-reuse-worktree later to maint).
+
+ * "git reset" needs to refresh the index when working in a working
+   tree (it can also be used to match the index to the HEAD in an
+   otherwise bare repository), but it failed to set up the working
+   tree properly, causing GIT_WORK_TREE to be ignored.
+   (merge b7756d4 nd/reset-setup-worktree later to maint).
+
+ * "git check-attr" when working on a repository with a working tree
+   did not work well when the working tree was specified via the
+   "--work-tree" (and obviously with "--git-dir") option.
+   (merge cdbf623 jc/check-attr-honor-working-tree later to maint).
+
+ * "merge-recursive" was broken in 1.7.7 era and stopped working in
+   an empty (temporary) working tree, when there are renames
+   involved.  This has been corrected.
+   (merge 6e2068a bk/refresh-missing-ok-in-merge-recursive later to maint.)
+
+ * "git rev-parse" was loose in rejecting command-line arguments
+   that do not make sense, e.g. "--default" without the required
+   value for that option.
+   (merge a43219f ds/rev-parse-required-args later to maint.)
+
+ * "include.path" variable (or any variable that expects a path that
+   can use ~username expansion) in the configuration file is not a
+   boolean, but the code failed to check it.
+   (merge 67beb60 jk/config-path-include-fix later to maint.)
+
+ * Commands that take pathspecs on the command line misbehaved when
+   the pathspec is given as an absolute pathname (which is a
+   practice not particularly encouraged) that points at a symbolic
+   link in the working tree.
+   (merge 6127ff6 mw/symlinks later to maint.)
+
+ * "git diff --quiet -- pathspec1 pathspec2" sometimes did not return
+   the correct status value.
+   (merge f34b205 nd/diff-quiet-stat-dirty later to maint.)
+
+ * Attempting to deepen a shallow repository by fetching over smart
+   HTTP transport failed in the protocol exchange, when the no-done
+   extension was used.  The fetching side waited for the list of
+   shallow boundary commits after the sending side stopped talking to
+   it.
+   (merge 0232852 nd/http-fetch-shallow-fix later to maint.)
+
+ * Allow "git cmd path/", when the 'path' is where a submodule is
+   bound to the top-level working tree, to match 'path', despite the
+   extra and unnecessary trailing slash (such a slash is often
+   given by command-line completion).
+   (merge 2e70c01 nd/submodule-pathspec-ending-with-slash later to maint.)
+
+ * Documentation and in-code comments had many instances of mistaken
+   use of "nor", which have been corrected.
+   (merge 235e8d5 jl/nor-or-nand-and later to maint).
