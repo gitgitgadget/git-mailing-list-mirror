@@ -1,112 +1,104 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-Subject: Re: [PATCH v4] Add an explicit GIT_DIR to the list of excludes
-Date: Wed, 28 May 2014 15:11:05 -0700
-Message-ID: <CAKpPgvfvrdBr7oxyKg2G1XDHwS=Dzs9=K9MmQLtLzUx-Zi+1dA@mail.gmail.com>
-References: <1401163007-5808-1-git-send-email-pasha.bolokhov@gmail.com> <CACsJy8By-58wBoV8BydWbpDkpUG6jJhM16aO+Ed8J2ucq66VcQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v11 25/41] fast-import.c: use a ref transaction when
+ dumping tags
+Date: Wed, 28 May 2014 15:17:20 -0700
+Message-ID: <20140528221720.GB12314@google.com>
+References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
+ <1401222360-21175-26-git-send-email-sahlberg@google.com>
+ <20140528194746.GX12314@google.com>
+ <CAL=YDWkUhdoJkdg_zaq+p=XRu7H9fqNXDz89uPhbr4equTyVLQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 29 00:11:36 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu May 29 00:17:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wpm4M-00048v-67
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 00:11:34 +0200
+	id 1WpmA4-00059M-0S
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 00:17:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755566AbaE1WL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 18:11:27 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:60466 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755823AbaE1WLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 18:11:25 -0400
-Received: by mail-oa0-f51.google.com with SMTP id n16so11806717oag.38
-        for <git@vger.kernel.org>; Wed, 28 May 2014 15:11:25 -0700 (PDT)
+	id S1755495AbaE1WRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 18:17:24 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:58072 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753940AbaE1WRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 18:17:23 -0400
+Received: by mail-pa0-f46.google.com with SMTP id kq14so11705583pab.19
+        for <git@vger.kernel.org>; Wed, 28 May 2014 15:17:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=+HUcMoNe3nRU9Dj6ywE7v4R7CTbtmnbUTb50huCaPMU=;
-        b=0zUqMnYTtmq5qzgwB6/KphGjRXKF89Pngnf1PmiIOSjOQqc9CpHvyty7CjE5s7U9PZ
-         7Eh51JssOVYbSVm4J7E0+TIfWMlxfFWmWE3y6wRW7GQSeFU3wpJ9dwedceQC5d7fNKre
-         zRswik7Efm2svTM54552i6SSRzrd/SANGsT11ufW69Kx5HzJIjBodMbf2QbXDnqck0j7
-         8uFja5TYt+4ue+SBKk4Zqrp/FIRIh7oVcQtH9xN5N21kM1kCMv2+RdkxktI4xwbZVJio
-         dzayodwaItrzvuGbLo4wOg8OffDSuaHuQ/hz0/Ierip1ECaxKX6afZrGSuE0bwFgqsZT
-         4fCw==
-X-Received: by 10.60.162.68 with SMTP id xy4mr3443175oeb.68.1401315085093;
- Wed, 28 May 2014 15:11:25 -0700 (PDT)
-Received: by 10.60.16.8 with HTTP; Wed, 28 May 2014 15:11:05 -0700 (PDT)
-In-Reply-To: <CACsJy8By-58wBoV8BydWbpDkpUG6jJhM16aO+Ed8J2ucq66VcQ@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=F+AgeWRRYnIHyiy7yUslKzk06nAkAm4DmLfEaauKG24=;
+        b=LlM+BDEebWtGlsNIm0LbxG1E30YtbkfFNBbGOcLD6zJOzN8K0lydnAyF1LAWdk9uKt
+         qr2vaZhEDEgFG5S90s6oKs8K7AduDnFQAB4397w5OTjHtGo9qGbVhekFCVmqcyJVrlU3
+         qPiPdbzNRng+4kJSVqg7m19Ec7Oj8UKVWt5dIfTWZZ4ZvGcBHlj0lGYtoaMxjAJxXmh8
+         szTrKiq53m/iV0RuInS/efjJ20xtrzBMIlKcMcb5NNru/j9S0gdIpJw6Xk1667H513ki
+         3ztuhQMj0GzPsKPUficSRraN7x/tEN/h49z4RwGrsUSRqwCMVZHma0KZVuVFI1iS9g5F
+         ImVA==
+X-Received: by 10.68.173.65 with SMTP id bi1mr3364192pbc.130.1401315443315;
+        Wed, 28 May 2014 15:17:23 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id om6sm30055116pbc.43.2014.05.28.15.17.22
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 28 May 2014 15:17:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAL=YDWkUhdoJkdg_zaq+p=XRu7H9fqNXDz89uPhbr4equTyVLQ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250339>
 
-On Wed, May 28, 2014 at 5:36 AM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Tue, May 27, 2014 at 10:56 AM, Pasha Bolokhov
-> <pasha.bolokhov@gmail.com> wrote:
->> @@ -1588,6 +1588,38 @@ void setup_standard_excludes(struct dir_struct *dir)
+Ronnie Sahlberg wrote:
+> On Wed, May 28, 2014 at 12:47 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+>> --- i/fast-import.c
+>> +++ w/fast-import.c
+>> @@ -1735,21 +1735,28 @@ static void dump_tags(void)
 >>  {
->>         const char *path;
->>         char *xdg_path;
->> +       const char *r_git, *gitdir = get_git_dir();
->> +       char *n_git, *basename;
->> +       int len, i;
+>>         static const char *msg = "fast-import";
+>>         struct tag *t;
+>> -       char ref_name[PATH_MAX];
+>> +       struct strbuf ref_name = STRBUF_INIT;
+>>         struct strbuf err = STRBUF_INIT;
+>>         struct ref_transaction *transaction;
+>>
+>> +       strbuf_addstr(&ref_name, "refs/tags/");
 >> +
->> +       /*
->> +        * Add git directory to the ignores; do this only if
->> +        * GIT_DIR does not end with "/.git"
->> +        */
->> +       r_git = real_path(absolute_path(gitdir));
->> +       n_git = xmalloc(strlen(r_git) + 1 + 1);
->> +       normalize_path_copy(n_git, r_git);
->> +
->> +       len = strlen(n_git); /* real_path() has stripped trailing slash */
->> +       for (i = len - 1; i > 0 && !is_dir_sep(n_git[i]); i--) ;
->> +       basename = n_git + i;
->> +       if (is_dir_sep(*basename))
->> +               basename++;
->> +       if (strcmp(basename, ".git")) {
->
-> I think normalize_path_copy makes sure that dir sep is '/', so this
-> code may be simplified to "if (strcmp(n_git, .git") && (len == 4 ||
-> strcmp(n_git + len - 5, "/.git")))"?
-
-Then if "n_git" is "/ab"  =>  coredump. But I agree there is logic to
-this (if we check len >= 4 first). However, we still need the
-basename. So I've just shortened it a bit, what do you think: (notice
-the condition "i >= 0" btw)
-
-        for (i = len - 1; i >= 0 && n_git[i] != '/'; i--) ;
-        basename = n_git + i + 1;
-        if (strcmp(basename, ".git)) {
-
->
->> +               const char *worktree = get_git_work_tree();
->> +
->> +               if (worktree == NULL ||
->> +                   dir_inside_of(n_git, get_git_work_tree()) >= 0) {
->> +                       struct exclude_list *el = add_exclude_list(dir, EXC_CMDL,
->> +                                                       "GIT_DIR setup");
->> +
->> +                       /* append a trailing slash to exclude directories */
->> +                       n_git[len] = '/';
->> +                       n_git[len + 1] = '\0';
->> +                       add_exclude(basename, "", 0, el, 0);
+>>         transaction = ref_transaction_begin(&err);
+>>         for (t = first_tag; t; t = t->next_tag) {
+>> -               snprintf(ref_name, PATH_MAX, "refs/tags/%s", t->name);
+>> +               strbuf_setlen(&ref_name, strlen("refs/tags/"));
+>> +               strbuf_addstr(&ref_name, t->name);
+>>
+>> -               if (ref_transaction_update(transaction, ref_name, t->sha1,
+>> -                                          NULL, 0, 0, &err))
+>> -                       break;
+>> +               if (ref_transaction_update(transaction, ref_name.buf, t->sha1,
+>> +                                          NULL, 0, 0, &err)) {
+>> +                       failure |= error("%s", err.buf);
+>> +                       goto done;
 >> +               }
->> +       }
->> +       free(n_git);
+>>         }
+>>         if (ref_transaction_commit(transaction, msg, &err))
+>>                 failure |= error("%s", err.buf);
+>> +done:
+>>         ref_transaction_free(transaction);
+>> +       strbuf_release(&ref_name);
+>>         strbuf_release(&err);
+>>  }
 >
-> All this add-only code makes me think it may be nice to make it a
-> separate function. A good function name could replace the comment near
-> the beginning of the block.
+> Changed to strbuf.  Thanks.
 
-Reasonable
-I'll send the all-updated patch including doc when ready
-
-> --
-> Duy
+Thanks.  The semantics when ref_transaction_update() fail seem weird ---
+see above.  (refs.h tells me "A failure to update means that the
+transaction as a whole has failed and will need to be rolled back", so I
+assume that the function should be rolling back instead of calling
+_commit at that point.)
