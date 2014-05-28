@@ -1,136 +1,111 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v11 06/41] refs.c: add an err argument to repack_without_refs
-Date: Wed, 28 May 2014 08:31:49 -0700
-Message-ID: <CAL=YDWnSL2vb2NcpPJnfMaR=p4iQhihyhiowwKXuuA-OiUpmfA@mail.gmail.com>
-References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
-	<1401222360-21175-7-git-send-email-sahlberg@google.com>
-	<20140528001117.GH12314@google.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH 1/5] progress.c: replace signal() with sigaction()
+Date: Wed, 28 May 2014 08:45:09 -0700
+Message-ID: <20140528154509.GA7076@hudson.localdomain>
+References: <1401257655-6043-1-git-send-email-jmmahler@gmail.com>
+ <1401257655-6043-2-git-send-email-jmmahler@gmail.com>
+ <5385994A.5040507@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 17:32:01 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 28 17:45:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wpfpb-0001QC-1o
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 17:31:55 +0200
+	id 1Wpg2b-0004Zj-Aa
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 17:45:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752358AbaE1Pbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 11:31:51 -0400
-Received: from mail-vc0-f170.google.com ([209.85.220.170]:40185 "EHLO
-	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752044AbaE1Pbu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 11:31:50 -0400
-Received: by mail-vc0-f170.google.com with SMTP id lf12so12612808vcb.29
-        for <git@vger.kernel.org>; Wed, 28 May 2014 08:31:49 -0700 (PDT)
+	id S1754570AbaE1PpP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2014 11:45:15 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:49257 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753754AbaE1PpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 11:45:13 -0400
+Received: by mail-pa0-f43.google.com with SMTP id hz1so11181649pad.16
+        for <git@vger.kernel.org>; Wed, 28 May 2014 08:45:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=7bmgqGzL/drZB/QPRO7ZpCBGAQL/p/j54g+0wfer/As=;
-        b=atOHwCFF1YwWX1po5XT2l0ZGk3CUsP8mdFJjnUQz4zTC9ZBCjjvI6kNCLKiog/6MAg
-         vi2X+C/Tgqx29d58ALH//xAACmJNapUUpPR+aWrm9aQCoL+iHWy/OLIK3ySDADCaYejh
-         MtEvVmal4/Rv5Dc4C4ktNVzwpKP0+1QA9bmog6xQ8OAxe7vBP0XOa6e/RVR2UE/o/cAW
-         JCDGj90mJ4+GLnLHCLyFPCyb5iRyIGbLYM7Ez2ndWKg8uL/UyEJTobV5YgdEV9wn4u2t
-         YgrbNDvqRdqnSu2AGUNWx54eAl2uwF/HBmjjtLl1lM3+dzji0Vmmrmwyh1DLl6Zk64E4
-         NmPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=7bmgqGzL/drZB/QPRO7ZpCBGAQL/p/j54g+0wfer/As=;
-        b=NUy+kFPi/RhACPudcmQo3kcOt8UEhcj0dICqaMqwZyB3d/BCAD0QC7qgKhZP621+xQ
-         gb89eM9HOCrsB6P7ntih0HKXjzkSLjE14htZk9LdCZxoW2zNOgV6jNxUyv8HxbmxBLAl
-         Vgphfxn6zyXeKOS8+OPJfDvwvYyW/Xf1izqsfneYMTZ5F0p0UXAFZmr89IV/de0q6Eqw
-         s0ykFvn8DG3E1brg6oE8PBKVL1ypeGP0Rm4fPAbLZgq1R6L27s6YdOBW0bxQBMhCNIVe
-         IckHIKsbEoTJC7NA/9A0tHEcw4UYWEzf96mtbmowWViqpi21s2WVKxU9J6kKXnYfbpIt
-         xlTQ==
-X-Gm-Message-State: ALoCoQmYie0yBCeLMLt5wbzpACRIDYt+7POYTOjn+k5tjDZJmm55xw2tsewMg9nMMNAdbDNBNYRk
-X-Received: by 10.58.46.83 with SMTP id t19mr439386vem.60.1401291109239; Wed,
- 28 May 2014 08:31:49 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Wed, 28 May 2014 08:31:49 -0700 (PDT)
-In-Reply-To: <20140528001117.GH12314@google.com>
+        d=gmail.com; s=20120113;
+        h=from:date:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=r5NfeNwyFIVmCHZ2jrAtz0mFnmXzuqhA87W5Q6vE6c0=;
+        b=piZ96cedVNkPxhOfpXxvfqCwB/7/7DcQKBaLuGNH3wdsxdQakDsDrQkkGvJ4QzKIy3
+         0oI6K8I6izfTEHok8uaEZ/yJ8/xPmeKD/rihl2xKVoMbw5Tzh64VsZhTU8Kw7taH1yuH
+         inlheXXuL0vFLZMXXT0FzrBobFXWCqS9Fi+9U5VkQkaVesJYiaAa+W6TbM6jiVvIvnh6
+         UHpGXmEnikB2JBdfJcrRWOfMDxQcFK/s1Mt3i8tKEOvjeALtroLPGBCjiGxrJB6rtmAf
+         7KzxOLB3aPw1MXT5NITpR3PFq5vHuI6huS04F7a6Gf7o6ZDssOv5TTluiDbfzK8OJ1JU
+         9OjA==
+X-Received: by 10.66.244.176 with SMTP id xh16mr706355pac.20.1401291913254;
+        Wed, 28 May 2014 08:45:13 -0700 (PDT)
+Received: from hudson (o247-linksys-rtr.CSUChico.EDU. [132.241.18.53])
+        by mx.google.com with ESMTPSA id z3sm90476523pas.15.2014.05.28.08.45.09
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 28 May 2014 08:45:11 -0700 (PDT)
+X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
+Received: by hudson (sSMTP sendmail emulation); Wed, 28 May 2014 08:45:09 -0700
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <5385994A.5040507@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250290>
 
-On Tue, May 27, 2014 at 5:11 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi,
->
-> Comments from http://marc.info/?l=git&m=140079653930751&w=2:
->
-> Ronnie Sahlberg wrote:
->
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -559,6 +559,8 @@ struct lock_file {
->>  #define LOCK_DIE_ON_ERROR 1
->>  #define LOCK_NODEREF 2
->>  extern int unable_to_lock_error(const char *path, int err);
->> +extern void unable_to_lock_strbuf(const char *path, int err,
->> +                               struct strbuf *buf);
->
-> "unable_to_lock_strbuf" could be called "unable_to_lock_message" (which
-> would make its behavior more obvious IMHO).
+On Wed, May 28, 2014 at 08:07:38PM +1200, Chris Packham wrote:
+> On 28/05/14 18:14, Jeremiah Mahler wrote:
+> > From signal(2)
+> >=20
+> >   The behavior of signal() varies across UNIX versions, and has als=
+o var=E2=80=90
+> >   ied historically across different versions of Linux.   Avoid  its=
+  use:
+> >   use sigaction(2) instead.  See Portability below.
+>=20
+> Minor nit. The last sentence applies to the man page you're quoting a=
+nd
+> doesn't really make sense when viewed in the context of this commit
+> message. Same applies to other patches in this series.
+>=20
+Yes, that is confusing.
 
-Renamed.  Thanks.
+=2E..
+> > @@ -66,8 +66,12 @@ static void set_progress_signal(void)
+> >  static void clear_progress_signal(void)
+> >  {
+> >  	struct itimerval v =3D {{0,},};
+> > +	struct sigaction sa;
+> > +
+> > +	memset(&sa, 0, sizeof(sa));
+> > +	sa.sa_handler =3D SIG_IGN;
+>=20
+> A C99 initialiser here would save the call to memset. Unfortunately
+> Documentation/CodingGuidelines is fairly clear on not using C99
+> initialisers, given the fact we're now at git 2.0 maybe it's time to
+> revisit this policy?
+>=20
 
->
-> [...]
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -2208,6 +2208,7 @@ int commit_packed_refs(void)
->>       struct packed_ref_cache *packed_ref_cache =
->>               get_packed_ref_cache(&ref_cache);
->>       int error = 0;
->> +     int save_errno = 0;
->
-> This is about making errno meaningful when commit_packed_refs returns
-> an error.  Probably its API documentation should say so to make it
-> obvious when people modify it in the future that they should preserve
-> that property or audit callers.
->
-> [...]
->> @@ -2444,6 +2448,11 @@ static int repack_without_refs(const char **refnames, int n)
->>               return 0; /* no refname exists in packed refs */
->>
->>       if (lock_packed_refs(0)) {
->> +             if (err) {
->> +                     unable_to_lock_strbuf(git_path("packed-refs"), errno,
->> +                                           err);
->> +                     return -1;
->> +             }
->>               unable_to_lock_error(git_path("packed-refs"), errno);
->
-> Via the new call to unable_to_lock_..., repack_without_refs cares
-> about errno after a failed call to lock_packed_refs.  lock_packed_refs
-> can only fail in hold_lock_file_for_update.  hold_lock_file_for_update
-> is a thin wrapper around lockfile.c::lock_file.  lock_file can error
-> out because
->
->         strlen(path) >= max_path_len
->         adjust_shared_perm failed [calls error(), clobbers errno]
->         open failed
->
-> So lock_file needs a similar kind of fix, and it's probably worth
-> updating API documentation for these calls to make it clear that their
-> errno is used (though that's not a new problem since
-> repack_without_refs already called unable_to_lock_error).  Could be a
-> separate, earlier patch (or a TODO comment in this patch to be
-> addressed with a later patch) since it's fixing an existing bug.
+struct sigaction sa =3D { .sa_handler =3D SIG_IGN };
 
-I will add it to my todo list.
-I think passing of errno around is too fragile and that we should
-avoid ad-hoc save_errno hacks and implement dedicated return codes to
-replace errno.
-We should only inspect errno immediately after a syscall has failed.
+I do like that.
 
->
-> Hope that helps,
-> Jonathan
+This brings up another issue.  memset(&sa, 0, sizeof(sa)); The sigactio=
+n
+examples I have seen always use memset.  The manpage for sigaction(2)
+doesn't mention it.  Other code it Git uses memset with sigaction (see
+fast-import.c line 530).
+
+Is this struct guaranteed to be initialized to zero so I don't have to
+use memset?
+
+--=20
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
