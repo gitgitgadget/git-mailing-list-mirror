@@ -1,98 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v12 11/11] Documentation: add documentation for 'git interpret-trailers'
-Date: Wed, 28 May 2014 12:44:36 -0700
-Message-ID: <xmqqa9a1d6xn.fsf@gitster.dls.corp.google.com>
-References: <20140525051254.5329.66539.chriscool@tuxfamily.org>
-	<20140525053223.5329.28002.chriscool@tuxfamily.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v11 25/41] fast-import.c: use a ref transaction when
+ dumping tags
+Date: Wed, 28 May 2014 12:47:46 -0700
+Message-ID: <20140528194746.GX12314@google.com>
+References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
+ <1401222360-21175-26-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Wed May 28 21:44:53 2014
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed May 28 21:47:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpjmL-0002wL-6d
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 21:44:49 +0200
+	id 1WpjpJ-0007pp-Tz
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 21:47:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755261AbaE1Ton (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 15:44:43 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63316 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751902AbaE1Tol (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 15:44:41 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C1A1C1BDD2;
-	Wed, 28 May 2014 15:44:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cQpMpxHrJFJk5+ZR7r26ArvcYKk=; b=hSg8Oa
-	KZuX1jPgR4cYAQUih0N5o4L4+K57mo+4XdqNmL2+Tn8AXX0VtHyHF+L/8VEzdYKy
-	93uq5o3Bi8V1OtFAvtNwnKfskYvLzvcV3WkOQoIx3HvtHN36ECzPt1BZ9npiFvgD
-	lz6fpgnjIqT6ra0FFur3LxrvX/4kSSsN9zJME=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WFColJMPtAUZu1NdWv6jX5IE88AIefVi
-	Km16YopC2nDrnWkm+iBgYaEvoXxbNUKlnw6RBm5TmgBi9m/7uLpufLjroXnmRtqd
-	wFhkb3dBb4f0rSU//BnCCTnukKB/JnWtc+S5vh9aZlZ8AlkhcsCuhJDZfpFBfVLH
-	0ttDkhvOSLs=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B56991BDD1;
-	Wed, 28 May 2014 15:44:40 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 520491BDCD;
-	Wed, 28 May 2014 15:44:37 -0400 (EDT)
-In-Reply-To: <20140525053223.5329.28002.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Sun, 25 May 2014 07:32:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 805F6C4C-E6A0-11E3-8DF7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751756AbaE1Tru (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 15:47:50 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:60990 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751353AbaE1Trt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 15:47:49 -0400
+Received: by mail-pa0-f41.google.com with SMTP id kx10so1709099pab.0
+        for <git@vger.kernel.org>; Wed, 28 May 2014 12:47:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=v8jXGQyXhFHOZyPuQ2+1hUlzheerOgnOUERBG1jH1zE=;
+        b=i28mAZHGeK6+kiJHGvlgETwn6FPQW+dP3R5nklhJ688O7bNkxOw8hnob/RIFmZ/55u
+         E7YJrvA0fBa1raQp8CYxmmpFCQYzNydONiuWPoSQX8eBvJzfMZSwz2dNCXCXsf3YrI8F
+         JVAXe4Wh/YKY/pGiDR0bYgNvrmHrnn4ZH0xb4vMJCfJRN3BDevkNE+C4r49vAZISJk/B
+         qP+Qy/Vpb+ytlReDtJshz3mkHWUdCdCULoXEqix6wJAFm37LsPfZvjUNra4+ZtGda2LQ
+         unqNc8YCR//fq9OxG2raJXPpzfzyi/UPwFxhXqdVOpZzoALswRU/DhgGp/Bo5DVy5jds
+         KF7Q==
+X-Received: by 10.67.29.204 with SMTP id jy12mr1819244pad.37.1401306469388;
+        Wed, 28 May 2014 12:47:49 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id bu1sm29724574pbb.54.2014.05.28.12.47.48
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 28 May 2014 12:47:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1401222360-21175-26-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250323>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+Ronnie Sahlberg wrote:
 
-> +trailer.<token>.key::
-> +	This `key` will be used instead of <token> in the
-> +	trailer. After the last alphanumeric character, this variable
-> +	can contain some non alphanumeric characters, like for example
-> +	`'%'` (one percent sign), `' = '` (one space followed by one
-> +	equal sign and then one space), `' #'` (one space followed by
-> +	one number sign) or even just `' '` (one space), that will be
-> +	used to separate the <token> from the <value> in the
-> +	trailer. The default separator, `': '` (one colon followed by
-> +	one space), which is the usual standard, is added only if the
-> +	last character in `key` is alphanumeric, so watch out for
-> +	unwanted trailing spaces in this variable.
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -1735,15 +1735,22 @@ static void dump_tags(void)
+>  {
+>  	static const char *msg = "fast-import";
+>  	struct tag *t;
+> -	struct ref_lock *lock;
+>  	char ref_name[PATH_MAX];
+> +	struct strbuf err = STRBUF_INIT;
+> +	struct ref_transaction *transaction;
+>  
+> +	transaction = ref_transaction_begin(&err);
+>  	for (t = first_tag; t; t = t->next_tag) {
+> -		sprintf(ref_name, "tags/%s", t->name);
+> +		snprintf(ref_name, PATH_MAX, "refs/tags/%s", t->name);
 
-Perhaps corollary to the other review comment to this patch, I think
-this is overly complex without giving more value to the users than
-it causes confusion.
+That ignores the error if the refname happens to go longer than
+PATH_MAX.
 
-If the goal is to allow random syntax on the output side, why do you
-even need to list percent, pound, etc., when you can just say "The
-key is emitted and then your value" and the user will get exactly
-what they specified to be emitted?
+This is the part of fast-import that doesn't need to be super
+fast ;-).  (The objects have been written to the pack, and now
+we just need to write some refs.)  Could this use a strbuf?  By that,
+I mean something like
 
-Any magic applied on top (namely, we would add ": " only in certain
-circumstances) only makes things unnecessarily complex; I think your
-having to say "so watch out for..." is a clear indication of that.
-
-If we use the "separator", so that we can recognise a line with an
-unseen key as a trailer we do not know about, we should stick to
-just a single standard one ':' and I think it is OK to add a missing
-": " by magic if that is the direction we are going to take, though.
+diff --git i/fast-import.c w/fast-import.c
+index 3db5b3d..d5f6e63 100644
+--- i/fast-import.c
++++ w/fast-import.c
+@@ -1735,21 +1735,28 @@ static void dump_tags(void)
+ {
+ 	static const char *msg = "fast-import";
+ 	struct tag *t;
+-	char ref_name[PATH_MAX];
++	struct strbuf ref_name = STRBUF_INIT;
+ 	struct strbuf err = STRBUF_INIT;
+ 	struct ref_transaction *transaction;
+ 
++	strbuf_addstr(&ref_name, "refs/tags/");
++
+ 	transaction = ref_transaction_begin(&err);
+ 	for (t = first_tag; t; t = t->next_tag) {
+-		snprintf(ref_name, PATH_MAX, "refs/tags/%s", t->name);
++		strbuf_setlen(&ref_name, strlen("refs/tags/"));
++		strbuf_addstr(&ref_name, t->name);
+ 
+-		if (ref_transaction_update(transaction, ref_name, t->sha1,
+-					   NULL, 0, 0, &err))
+-			break;
++		if (ref_transaction_update(transaction, ref_name.buf, t->sha1,
++					   NULL, 0, 0, &err)) {
++			failure |= error("%s", err.buf);
++			goto done;
++		}
+ 	}
+ 	if (ref_transaction_commit(transaction, msg, &err))
+ 		failure |= error("%s", err.buf);
++done:
+ 	ref_transaction_free(transaction);
++	strbuf_release(&ref_name);
+ 	strbuf_release(&err);
+ }
+ 
