@@ -1,73 +1,66 @@
 From: worley@alum.mit.edu (Dale R. Worley)
 Subject: Re: Git chokes on large file
-Date: Wed, 28 May 2014 14:15:05 -0400
-Message-ID: <201405281815.s4SIF5hF025886@hobgoblin.ariadne.com>
-References: <201405271647.s4RGlDJc024596@hobgoblin.ariadne.com> <CACsJy8BM1f1pJPzGPf--a-kUim6wyX+Mr1AfMupY3mpREY+8DA@mail.gmail.com>
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 20:15:19 2014
+Date: Wed, 28 May 2014 14:18:31 -0400
+Message-ID: <201405281818.s4SIIV5n026003@hobgoblin.ariadne.com>
+References: <201405271647.s4RGlDJc024596@hobgoblin.ariadne.com>
+	<CACsJy8BM1f1pJPzGPf--a-kUim6wyX+Mr1AfMupY3mpREY+8DA@mail.gmail.com> <xmqqbnuhesm5.fsf@gitster.dls.corp.google.com>
+Cc: pclouds@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed May 28 20:18:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpiNg-0002sw-Mc
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 20:15:17 +0200
+	id 1WpiQw-0007mU-Hx
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 20:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751413AbaE1SPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 14:15:10 -0400
-Received: from qmta02.westchester.pa.mail.comcast.net ([76.96.62.24]:42245
-	"EHLO qmta02.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751020AbaE1SPI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 28 May 2014 14:15:08 -0400
-Received: from omta01.westchester.pa.mail.comcast.net ([76.96.62.11])
-	by qmta02.westchester.pa.mail.comcast.net with comcast
-	id 7Uop1o0050EZKEL51WF6G8; Wed, 28 May 2014 18:15:06 +0000
+	id S1751487AbaE1SSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 14:18:34 -0400
+Received: from qmta05.westchester.pa.mail.comcast.net ([76.96.62.48]:33508
+	"EHLO qmta05.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751020AbaE1SSd (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 May 2014 14:18:33 -0400
+Received: from omta03.westchester.pa.mail.comcast.net ([76.96.62.27])
+	by qmta05.westchester.pa.mail.comcast.net with comcast
+	id 7W8z1o0050bG4ec55WJYGq; Wed, 28 May 2014 18:18:32 +0000
 Received: from hobgoblin.ariadne.com ([24.34.72.61])
-	by omta01.westchester.pa.mail.comcast.net with comcast
-	id 7WF61o00H1KKtkw3MWF6Si; Wed, 28 May 2014 18:15:06 +0000
+	by omta03.westchester.pa.mail.comcast.net with comcast
+	id 7WJY1o00V1KKtkw3PWJYr2; Wed, 28 May 2014 18:18:32 +0000
 Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
-	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s4SIF6ap025887;
-	Wed, 28 May 2014 14:15:06 -0400
+	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s4SIIW2j026004;
+	Wed, 28 May 2014 14:18:32 -0400
 Received: (from worley@localhost)
-	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s4SIF5hF025886;
-	Wed, 28 May 2014 14:15:05 -0400
-In-reply-to: <CACsJy8BM1f1pJPzGPf--a-kUim6wyX+Mr1AfMupY3mpREY+8DA@mail.gmail.com>
-	(pclouds@gmail.com)
+	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s4SIIV5n026003;
+	Wed, 28 May 2014 14:18:31 -0400
+In-reply-to: <xmqqbnuhesm5.fsf@gitster.dls.corp.google.com>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1401300906;
-	bh=6yyCnC6PMl1UOa4W48I70zIqwvD19AKgkMCnHg3jgzw=;
+	s=q20140121; t=1401301112;
+	bh=AxTR2frbO/jKGdUNdmBQmXutY9aRCyJYgTcQ57RAldI=;
 	h=Received:Received:Received:Received:Date:Message-Id:From:To:
 	 Subject;
-	b=BDZJ/fERxZN4Lap62C82+ER/xFAdBxeeDLsdwARx5cBNxjNkNsO2vmtICL9m1AWBG
-	 12cB0oHc5EZxG7zC4tOjvxkXLlAvdxuAIb4RfW7n72h3ADRwVmXlbp7fxrG9X0b0mt
-	 r6+ID920wuUyLllj7CZ0P4uQnkdKnW9fuq15eBgSQPR6W0iJmZ5x2GQuFcL8XX88d9
-	 2HSnlCFwesBci/DUHc7sdDxRbLckXurm6Zz4sOgydPlvvShCfYwymIQWYbe7MLEQA6
-	 Qd3hsXUuCUTYmZ/HwcSR8JQgWAPLSMs/qK66JDHATKuRsJu+6JquUMM0EOSkWSGM07
-	 ceTk+Cp/KsacA==
+	b=X2q/nf2G1jujHD12zYmCIkrs0qKdP7R8dpbobrIV+/6x8eQJKMR5xlGkA0BRM/tPX
+	 dzpeCrinKaj5kHafIClAHaE3lJDovys2apYqjHtIZB/M80m3aUX68bn18eRszaC1Cx
+	 tfpUq0EEzm5yxlm12xbpGR1ZTtulIBLCwzmZe0t/59PD7zHdxGig089rlh24kDr6dJ
+	 Ddwnci1zOdYDSki+R2bBa6ZnBZPOGzdwdJfmF7pe1eahvbjSLWXK7yzLboeP6mUqTR
+	 Qe6MjvcYb7KXdtL4Up5RoCtAavzFt07N+N4GASNEzeOGH8ByTWF8nAe4dbpj/oR5Ol
+	 jzCmBS8ur+zyw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250306>
 
-> From: Duy Nguyen <pclouds@gmail.com>
+> From: Junio C Hamano <gitster@pobox.com>
 
-> I don't know how many commands are hit by this. If you have time and
-> gdb, please put a break point in die_builtin() function and send
-> backtraces for those that fail. You could speed up the process by
-> creating a smaller file and set the environment variable
-> GIT_ALLOC_LIMIT (in kilobytes) to a number lower than that size. If
-> git attempts to allocate a block larger than that limit it'll die.
+> You need to have enough memory (virtual is fine if you have enough
+> time) to do fsck.  Some part of index-pack could be refactored into
+> a common helper function that could be called from fsck, but I think
+> it would be a lot of work.
 
-I don't use Git enough to exercise it well.  And there are dozens of
-commands with hundreds of options.
-
-As someone else has noted, if I run 'git commit -q --no-status', it
-doesn't crash.
-
-It seems that much of Git was coded under the assumption that any file
-could always be held entirely in RAM.  Who made that mistake?  Are
-people so out of touch with reality?
+How much memory is "enough"?  And how is it that fsck is coded so that
+the available RAM is a limit on which repositories can be checked?
+Did someone forget that RAM may be considerably smaller than the
+amount of data a program may have to deal with?
 
 Dale
