@@ -1,104 +1,179 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v11 25/41] fast-import.c: use a ref transaction when
- dumping tags
-Date: Wed, 28 May 2014 15:17:20 -0700
-Message-ID: <20140528221720.GB12314@google.com>
-References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
- <1401222360-21175-26-git-send-email-sahlberg@google.com>
- <20140528194746.GX12314@google.com>
- <CAL=YDWkUhdoJkdg_zaq+p=XRu7H9fqNXDz89uPhbr4equTyVLQ@mail.gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v8 41/44] refs.c: add a new flag for transaction delete
+ for refs we know are packed only
+Date: Thu, 29 May 2014 00:23:53 +0200
+Message-ID: <538661F9.50205@alum.mit.edu>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>	<1400174999-26786-42-git-send-email-sahlberg@google.com>	<537F67DD.5010101@alum.mit.edu>	<xmqqzji3f55i.fsf@gitster.dls.corp.google.com>	<5385F0E5.4010306@alum.mit.edu> <xmqqk395et7l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu May 29 00:17:32 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu May 29 00:24:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpmA4-00059M-0S
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 00:17:28 +0200
+	id 1WpmGP-00073U-8l
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 00:24:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755495AbaE1WRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 18:17:24 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:58072 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753940AbaE1WRX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 18:17:23 -0400
-Received: by mail-pa0-f46.google.com with SMTP id kq14so11705583pab.19
-        for <git@vger.kernel.org>; Wed, 28 May 2014 15:17:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=F+AgeWRRYnIHyiy7yUslKzk06nAkAm4DmLfEaauKG24=;
-        b=LlM+BDEebWtGlsNIm0LbxG1E30YtbkfFNBbGOcLD6zJOzN8K0lydnAyF1LAWdk9uKt
-         qr2vaZhEDEgFG5S90s6oKs8K7AduDnFQAB4397w5OTjHtGo9qGbVhekFCVmqcyJVrlU3
-         qPiPdbzNRng+4kJSVqg7m19Ec7Oj8UKVWt5dIfTWZZ4ZvGcBHlj0lGYtoaMxjAJxXmh8
-         szTrKiq53m/iV0RuInS/efjJ20xtrzBMIlKcMcb5NNru/j9S0gdIpJw6Xk1667H513ki
-         3ztuhQMj0GzPsKPUficSRraN7x/tEN/h49z4RwGrsUSRqwCMVZHma0KZVuVFI1iS9g5F
-         ImVA==
-X-Received: by 10.68.173.65 with SMTP id bi1mr3364192pbc.130.1401315443315;
-        Wed, 28 May 2014 15:17:23 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id om6sm30055116pbc.43.2014.05.28.15.17.22
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 28 May 2014 15:17:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAL=YDWkUhdoJkdg_zaq+p=XRu7H9fqNXDz89uPhbr4equTyVLQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932332AbaE1WX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 18:23:57 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:47819 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753426AbaE1WX4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 May 2014 18:23:56 -0400
+X-AuditID: 1207440e-f79026d000000c25-83-538661fbe32b
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id BB.AC.03109.BF166835; Wed, 28 May 2014 18:23:56 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC97A4D.dip0.t-ipconnect.de [79.201.122.77])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4SMNrjx001763
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 28 May 2014 18:23:54 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <xmqqk395et7l.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrPKsWRmVeSWpSXmKPExsUixO6iqPsnsS3YoHEio0XXlW4mi4beK8wW
+	b28uYbT4N6HGgcVj56y77B4LNpV6XLyk7PF5k1wASxS3TVJiSVlwZnqevl0Cd0bPoia2gsWa
+	FduWNTE3MLYrdDFyckgImEh0Tm1khrDFJC7cW8/WxcjFISRwmVHi8PvLTBDOeSaJxf2r2UCq
+	eAU0Jb5sfANkc3CwCKhKfH0cAxJmE9CVWNTTzAQSFhUIkvhzVhGiWlDi5MwnLCC2iICaxMS2
+	Q2A2s0CuROfnDewgtrBAnkTnhy6ovbOYJC50Twc7iFPAWuLY5d1gqyQExCV6GoMgenUk3vU9
+	YIaw5SW2v53DPIFRcBaSdbOQlM1CUraAkXkVo1xiTmmubm5iZk5xarJucXJiXl5qka6xXm5m
+	iV5qSukmRkiA8+1gbF8vc4hRgINRiYdXQrYtWIg1say4MvcQoyQHk5Io76w4oBBfUn5KZUZi
+	cUZ8UWlOavEhRgkOZiURXo1woBxvSmJlVWpRPkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxW
+	g4ND4MrBI7MZpVjy8vNSlSR4nYARLiRYlJqeWpGWmVOCUMrEwQmyiEtKpDg1LyW1KLG0JCMe
+	FNfxxcDIBknxAN3AB9LOW1yQmAsUhWg9xagoJc4rDpIQAElklObBjYWls1eM4kAfC/P6glTx
+	AFMhXPcroMFMQIOfdLaCDC5JREhJNTDacLOuZ/mR9fLIhWq3VzONTNcWqlayms0R3KTwIqqL
+	J8ylUPyW1Fy+R0EKattZb5YJv4pvdbZq2rz2y/Hiq3t/TJ58RUB9Kbuz3NXbP+e6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250340>
 
-Ronnie Sahlberg wrote:
-> On Wed, May 28, 2014 at 12:47 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-
->> --- i/fast-import.c
->> +++ w/fast-import.c
->> @@ -1735,21 +1735,28 @@ static void dump_tags(void)
->>  {
->>         static const char *msg = "fast-import";
->>         struct tag *t;
->> -       char ref_name[PATH_MAX];
->> +       struct strbuf ref_name = STRBUF_INIT;
->>         struct strbuf err = STRBUF_INIT;
->>         struct ref_transaction *transaction;
+On 05/28/2014 06:58 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+> 
+>> I think for any two backends that are stacked, you would need to break
+>> down a transaction as follows (here generalized to include not only
+>> deletions):
 >>
->> +       strbuf_addstr(&ref_name, "refs/tags/");
->> +
->>         transaction = ref_transaction_begin(&err);
->>         for (t = first_tag; t; t = t->next_tag) {
->> -               snprintf(ref_name, PATH_MAX, "refs/tags/%s", t->name);
->> +               strbuf_setlen(&ref_name, strlen("refs/tags/"));
->> +               strbuf_addstr(&ref_name, t->name);
+>>     packed->begin_transaction()
+>>     loose->begin_transaction()
 >>
->> -               if (ref_transaction_update(transaction, ref_name, t->sha1,
->> -                                          NULL, 0, 0, &err))
->> -                       break;
->> +               if (ref_transaction_update(transaction, ref_name.buf, t->sha1,
->> +                                          NULL, 0, 0, &err)) {
->> +                       failure |= error("%s", err.buf);
->> +                       goto done;
->> +               }
->>         }
->>         if (ref_transaction_commit(transaction, msg, &err))
->>                 failure |= error("%s", err.buf);
->> +done:
->>         ref_transaction_free(transaction);
->> +       strbuf_release(&ref_name);
->>         strbuf_release(&err);
->>  }
->
-> Changed to strbuf.  Thanks.
+>>     # And this part is done within stacked->commit_transaction():
+>>     for entry in many_ref_updates():
+>>         if have_old:
+>>             stacked->verify_reference(ref, old_sha1)
+>>
+>>         if entry is a delete:
+>>             packed->delete_reference(entry)
+>>         loose->update_reference(entry)
+>>
+>>     if (!packed->commit_transaction())
+>>         loose->commit_transaction()
+> 
+> Ugggly.
 
-Thanks.  The semantics when ref_transaction_update() fail seem weird ---
-see above.  (refs.h tells me "A failure to update means that the
-transaction as a whole has failed and will need to be rolled back", so I
-assume that the function should be rolling back instead of calling
-_commit at that point.)
+The ugliness would be encapsulated in the stacked reference backend.  It
+wouldn't have to appear in client code.
+
+> In general you would need to worry about the case where the
+> first commit succeeds and then the second commit fails, wouldn't
+> you?
+> 
+> The above happens not to break horribly wrong for the "Loose on top
+> of Packed" layering, in that the refs you wanted to delete are only
+> gone from Packed but still are in Loose, and the end result would be
+> some of them are really gone (because they weren't in Loose) and
+> some others remain (because they were in Loose), and at least you
+> did not lose any ref you did not want to discard.  But it still is
+> not what should happen in a proper "transaction".
+
+True, but we don't have proper transactions anyway.  If anything goes
+wrong when renaming one of the loose reference lockfiles, we have no way
+of reliably rolling back the loose references that have already been
+changed.  The word "transaction" as we use it really only suggests that
+we are doing our best to change the references all-or-nothing even in
+the face of concurrent modifications by other processes.  It certainly
+doesn't protect against power failures and stuff like that.
+
+I suppose if you wanted to make reference deletions a little bit more
+transaction-like, you could split them into two steps to "loosen" any
+packed references and a deletion step that deletes the loose references.
+ The advantage of this scheme is that each step requires a transaction
+on only a single back end at a time, though it requires part or all of
+the other back end to be locked simultaneously.
+
+    # The first two iterations "loosen" any packed references
+    # corresponding to references that are to be deleted.  It is purely
+    # an internal reorganization that doesn't change the externally-
+    # visible values of any references and can be done within a
+    # separate transaction:
+    for each reference to delete:
+        if reference exists packed but not loose:
+            create a loose ref with the value from the packed ref
+    for each reference to delete:
+        if reference exists packed:
+            delete packed version of reference
+
+    # Now we only have to delete the loose version of the references.
+    # This should be done after activating the packed reference file
+    # but while continuing to hold the packed-refs lock:
+    for each reference to delete:
+        delete loose version of reference
+
+I'd have to think more about whether this all really works generically
+without requiring lots of extra round-trips to a possibly-remote
+backend.  But I'm not sure we really need this composability in its full
+generality.  For example, maybe it is impossible to stack a low-latency
+and a high-latency backend together while minimizing round-trips to the
+latter.
+
+>>> But the above would not quite work, as somebody needs to remove logs
+>>> for refs that were only in the Packed backend, and "repack without
+>>> these refs" API supported by the Packed backend cannot be that
+>>> somebody---"repack packed-refs without A B C" cannot unconditionally
+>>> remove logs for A B C without checking if A B C exists as Loose.
+>>
+>> Correct.  That's another reason that logging has to be the
+>> responsibility of something at the "stacked" level of abstraction or higher.
+>>
+>> I think the logging should be done by yet another outer layer of
+>> wrapper that only does the logging, while also passing all updates
+>> down 1:1 to the backend that it wraps (which in our case would be
+>> a stacked backend). ... Then the loose and packed backends could
+>> remain completely ignorant of the fact that reference updates can
+>> be logged.
+> 
+> That would mean that Loose (or Packed) class cannot be used as-is
+> and always needs to be wrapped with the layer that does the logging,
+> no?
+
+Correct.
+
+> In a system with "only packed-refs, no loose", you would want
+> Packed.deleteRefs() to remove the named refs ref and their reflogs,
+> but that would mean that the Layered wrapper that uses Loose
+> overlayed on Packed cannot call that method, because it does not
+> want reflogs of the refs in Packed covered by the ones in Loose.
+
+The two scenarios would be roughly
+
+    refhandler = new LoggingWrapper(new PackedRefs())
+
+and
+
+    refhandler = new LoggingWrapper(
+        new StackedRefs(new LooseRefs(), new PackedRefs())
+        )
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
