@@ -1,93 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v11 13/41] refs.c: change ref_transaction_create to do
- error checking and return status
-Date: Wed, 28 May 2014 11:09:45 -0700
-Message-ID: <20140528180945.GQ12314@google.com>
-References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
- <1401222360-21175-14-git-send-email-sahlberg@google.com>
- <20140528004200.GK12314@google.com>
- <CAL=YDWkQhq2oCkyBG0-ojUDwgApYj1qZt1vXa2gnYsJOEbnvxQ@mail.gmail.com>
- <20140528170700.GM12314@google.com>
- <CAL=YDWnZQajozAcjLi85xKgkRazScv0Q_5XoVvV47u7AumL2gg@mail.gmail.com>
- <20140528172507.GO12314@google.com>
- <CAL=YDW=-FFB=8u7TxMJf_bxeDF2L_AiqS6ST293ZGc6MO=Az_A@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed May 28 20:09:54 2014
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: Re: Git chokes on large file
+Date: Wed, 28 May 2014 14:15:05 -0400
+Message-ID: <201405281815.s4SIF5hF025886@hobgoblin.ariadne.com>
+References: <201405271647.s4RGlDJc024596@hobgoblin.ariadne.com> <CACsJy8BM1f1pJPzGPf--a-kUim6wyX+Mr1AfMupY3mpREY+8DA@mail.gmail.com>
+Cc: git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed May 28 20:15:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpiIT-0002rp-Ne
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 20:09:54 +0200
+	id 1WpiNg-0002sw-Mc
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 20:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751353AbaE1SJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 14:09:49 -0400
-Received: from mail-pa0-f45.google.com ([209.85.220.45]:47474 "EHLO
-	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751037AbaE1SJs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 14:09:48 -0400
-Received: by mail-pa0-f45.google.com with SMTP id ey11so11413576pad.18
-        for <git@vger.kernel.org>; Wed, 28 May 2014 11:09:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=S+VKVt6mHM6/cNnOFd//FQQfm2xCDL09qAfdvSrDGB0=;
-        b=PV4SQgGmjrhaen0kL9YIx+3uq5dpZsStJAaAGWYwgJmex+gIO3V98eC8Aw9QyUZntK
-         lSnoyHhBFm6kVV5pcTBtJ8hSRUfr9evPp2kzde3nlXkGSiKAmzzltiYVu2s4DZwl99CH
-         UpsVaJsNW2RxgEn0h1eljaLDoeh+H8jaztrkloAEP0Mvgz6Ri1cy1qMlUb522/Of753O
-         F+g39+e32YNVTjkgWEWPLTo3SrHatyE9xLMiX5R1UqqsfkanGPrVubCl0N06qniPrZbd
-         i//rnAsfF9CM9t3ZC2yoD2V6dx6UAanBwR7rPWy9swBajlH5749Wdn5shPoF6XUunMHz
-         UBEA==
-X-Received: by 10.68.194.134 with SMTP id hw6mr1548443pbc.49.1401300588115;
-        Wed, 28 May 2014 11:09:48 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id ry10sm91933203pab.38.2014.05.28.11.09.47
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 28 May 2014 11:09:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAL=YDW=-FFB=8u7TxMJf_bxeDF2L_AiqS6ST293ZGc6MO=Az_A@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751413AbaE1SPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 14:15:10 -0400
+Received: from qmta02.westchester.pa.mail.comcast.net ([76.96.62.24]:42245
+	"EHLO qmta02.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751020AbaE1SPI (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 May 2014 14:15:08 -0400
+Received: from omta01.westchester.pa.mail.comcast.net ([76.96.62.11])
+	by qmta02.westchester.pa.mail.comcast.net with comcast
+	id 7Uop1o0050EZKEL51WF6G8; Wed, 28 May 2014 18:15:06 +0000
+Received: from hobgoblin.ariadne.com ([24.34.72.61])
+	by omta01.westchester.pa.mail.comcast.net with comcast
+	id 7WF61o00H1KKtkw3MWF6Si; Wed, 28 May 2014 18:15:06 +0000
+Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
+	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s4SIF6ap025887;
+	Wed, 28 May 2014 14:15:06 -0400
+Received: (from worley@localhost)
+	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s4SIF5hF025886;
+	Wed, 28 May 2014 14:15:05 -0400
+In-reply-to: <CACsJy8BM1f1pJPzGPf--a-kUim6wyX+Mr1AfMupY3mpREY+8DA@mail.gmail.com>
+	(pclouds@gmail.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1401300906;
+	bh=6yyCnC6PMl1UOa4W48I70zIqwvD19AKgkMCnHg3jgzw=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=BDZJ/fERxZN4Lap62C82+ER/xFAdBxeeDLsdwARx5cBNxjNkNsO2vmtICL9m1AWBG
+	 12cB0oHc5EZxG7zC4tOjvxkXLlAvdxuAIb4RfW7n72h3ADRwVmXlbp7fxrG9X0b0mt
+	 r6+ID920wuUyLllj7CZ0P4uQnkdKnW9fuq15eBgSQPR6W0iJmZ5x2GQuFcL8XX88d9
+	 2HSnlCFwesBci/DUHc7sdDxRbLckXurm6Zz4sOgydPlvvShCfYwymIQWYbe7MLEQA6
+	 Qd3hsXUuCUTYmZ/HwcSR8JQgWAPLSMs/qK66JDHATKuRsJu+6JquUMM0EOSkWSGM07
+	 ceTk+Cp/KsacA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250305>
 
-Ronnie Sahlberg wrote:
+> From: Duy Nguyen <pclouds@gmail.com>
 
-> Can you re-review these patches for me :
->
-> please review
->
-> 67b8fce refs.c: add an err argument to repack_without_refs
-> 738ac43 refs.c: add an err argument to delete_ref_loose
-> b78b0e0 refs.c: update ref_transaction_delete to check for error and
-> return status
-> e558f96 refs.c: add transaction.status and track OPEN/CLOSED/ERROR
-> 5a7d9bf sequencer.c: use ref transactions for all ref updates
-> 0ea69df fast-import.c: change update_branch to use ref transactions
-> 57c92fb refs.c: change update_ref to use a transaction
+> I don't know how many commands are hit by this. If you have time and
+> gdb, please put a break point in die_builtin() function and send
+> backtraces for those that fail. You could speed up the process by
+> creating a smaller file and set the environment variable
+> GIT_ALLOC_LIMIT (in kilobytes) to a number lower than that size. If
+> git attempts to allocate a block larger than that limit it'll die.
 
-The easiest way for me is if you send them to the list so I can
-comment inline (and others can chime in with other comments, etc).
-This works like a reroll of an entire series (using format-patch -v if
-you use format-patch, etc) except that instead of sending as a new
-thread the updated patch is just sent in response to some review
-comments or the earlier version of that patch.
+I don't use Git enough to exercise it well.  And there are dozens of
+commands with hundreds of options.
 
-git send-email has an --in-reply-to option for this.  That involves
-getting the Message-Id, which can be a little fussy.
+As someone else has noted, if I run 'git commit -q --no-status', it
+doesn't crash.
 
-Others who use send-email might know better tricks for this.  I never
-ended up learning how to use git send-email (and I'm a little scared
-of it) so I just hit "reply" in mutt and put the patch there.
+It seems that much of Git was coded under the assumption that any file
+could always be held entirely in RAM.  Who made that mistake?  Are
+people so out of touch with reality?
 
-Thanks and sorry for the fuss,
-Jonathan
+Dale
