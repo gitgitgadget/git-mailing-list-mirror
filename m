@@ -1,126 +1,126 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v11 16/41] refs.c: add transaction.status and track OPEN/CLOSED/ERROR
-Date: Wed, 28 May 2014 14:50:34 -0700
-Message-ID: <CAL=YDWnq=MPF3EYZLJJxR8TJLF=QSk5v=OpZC7S97GqL3=3Zbw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v11 31/41] refs.c: make prune_ref use a transaction to
+ delete the ref
+Date: Wed, 28 May 2014 14:51:18 -0700
+Message-ID: <20140528215118.GA12314@google.com>
 References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
-	<1401222360-21175-17-git-send-email-sahlberg@google.com>
-	<20140528185123.GT12314@google.com>
+ <1401222360-21175-32-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 23:50:45 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed May 28 23:51:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wplk7-0005BO-8b
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 23:50:39 +0200
+	id 1Wplkt-0006MA-S3
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 23:51:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752878AbaE1Vuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 17:50:35 -0400
-Received: from mail-vc0-f178.google.com ([209.85.220.178]:60983 "EHLO
-	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752180AbaE1Vue (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 17:50:34 -0400
-Received: by mail-vc0-f178.google.com with SMTP id ij19so9664373vcb.23
-        for <git@vger.kernel.org>; Wed, 28 May 2014 14:50:34 -0700 (PDT)
+	id S1754057AbaE1VvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 17:51:22 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:61617 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752546AbaE1VvV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 17:51:21 -0400
+Received: by mail-pa0-f50.google.com with SMTP id fb1so11690081pad.37
+        for <git@vger.kernel.org>; Wed, 28 May 2014 14:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=lr6cWfUVyXjpJpZHOyyrpSPXLjAKOx12GN7Y/liFrQE=;
-        b=ikIF/5MyzPWVoR2//npy4iV+AJBH3RPZR75M5CSVVoDJkKNFzXIOK0vMn+wjCGbeDz
-         JnhMcwdpsntRna3wq2f4clzFy1nlakowqb7Fm/HSci/ZLXkUcGcIb/ACRmlxN6K/c55P
-         QSlEA3FFus5tJwOp9ZAc9YNnBGCDjE30F245p/SupEpvkbRUeRVAJYSKFQJmbk7hjshy
-         egji+xaSkqnW+jVspT1su/zt4VI21E4S8U50lp3TA3SQrbbub8SNu/+9hQtZ5h+wiLG2
-         Q5cEdx56YuuKxouDG+A4cuCJx4+r84S2LDhQxqwrB1PKllAP02pnHZtjCvYAb8OQlEJM
-         /nDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=lr6cWfUVyXjpJpZHOyyrpSPXLjAKOx12GN7Y/liFrQE=;
-        b=Rf5Jz+lQuywmdmYNuXJ9EOW/fhPk0tNi7Vc05gZeAYFm+tqDYGnNAxcMp6c4rdTRQ3
-         kClSXE7nrd1ytJGvtmCWgk7oVp/0f/wRATDzX68N8W3mPew7edcJZc1mmAR3h1/fGIJi
-         xBkDqJSPsMStSSje8Fs14jSOM8pJ4ZSvBJ9HLkNn6E47Bnl+lJ90tXHAwpOFJpjaAR+R
-         s7x4c0bbY/tVG8Erkh43ZG91D5et2fkBcxcz9aY0iMIWsBL5wo5cccLvEEm2zajN3DX6
-         zUauSW3W/w09X6CzQpeDSAUm9K2fLe3lqoK9uB2e6BxJDdptwg7RG6vWzBAYyBWx7kvz
-         Shiw==
-X-Gm-Message-State: ALoCoQk5xUciTsTK1g2PpiZiW4Qs+S69GbsggoEQ69U1bdeIpwlsjavL9esosUpZcBXTaBYtx4hs
-X-Received: by 10.52.137.83 with SMTP id qg19mr2353019vdb.60.1401313834108;
- Wed, 28 May 2014 14:50:34 -0700 (PDT)
-Received: by 10.52.6.163 with HTTP; Wed, 28 May 2014 14:50:34 -0700 (PDT)
-In-Reply-To: <20140528185123.GT12314@google.com>
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=+54LdRROFaP1B8OlV9QxGlvMTg65vrN2cpniTq1LuCE=;
+        b=kAf0PbjoU2qHWMk2fGtLCF//2di5S61aZRQ3ZzvDWNN+6/R51DRJTUmuKMV1uIKrZb
+         nDgsx4k0FSD+iJy+yc/nAfFv948onD8G5NziYvvulgpshSLU95I1echws0C/OyH0l8ip
+         nnIL6TmOXWz/3vjlN+KxVyQWJYQTWC9kUISW2yugVasdhT65UbWrkR63brKmHs85Evmf
+         FRr52fp2kghiTDZnRI0u/Nd3a70hzPGxlrN3n37gN5vZBQTKJwBUuMAzkwCVMVMb82tV
+         iQZ1ITDyhKX/Ra997iCbqXVy3ZWCOYqns1NT8vXhGdUE0EMMPeZBLZk/XB8xX+eMxmay
+         8HYA==
+X-Received: by 10.66.153.80 with SMTP id ve16mr2895913pab.143.1401313881417;
+        Wed, 28 May 2014 14:51:21 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id xs2sm8085848pab.0.2014.05.28.14.51.20
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 28 May 2014 14:51:20 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1401222360-21175-32-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250334>
 
-On Wed, May 28, 2014 at 11:51 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
->
->> --- a/refs.c
->> +++ b/refs.c
-> [...]
->> @@ -3385,6 +3408,9 @@ int ref_transaction_update(struct ref_transaction *transaction,
->>  {
->>       struct ref_update *update;
->>
->> +     if (transaction->state != REF_TRANSACTION_OPEN)
->> +             return -1;
->
-> I still think this is a step in the wrong direction.  It means that
-> instead of being able to do
->
->         if (ref_transaction_update(..., &err))
->                 die("%s", err.buf);
->
-> and be certain that err.buf has a meaningful message, now I have to
-> worry that if the state were not REF_TRANSACTION_OPEN (e.g., due to
-> someone else's code forgetting to handle an error) then the result
-> would be a plain
->
->         fatal:
->
-> The behavior would be much easier to debug if the code were
->
->         if (transaction->state != REF_TRANSACTION_OPEN)
->                 die("BUG: update on transaction that is not open");
->
-> since then the symptom would be
->
->         fatal: BUG: update on transaction that is not open
->
-> which is easier to work with.
->
-> If a non-OPEN state were a normal, recoverable error, then it could
-> append a message to the *err argument.  But there's no message that
-> could be put there that would be meaningful to the end-user.  So I
-> suspect it's not a normal, recoverable error.
->
-> If we want to collect errors to make _commit() later fail with a
-> message like '38 refs failed to update' or something (or a
-> string_list, if the API is to change that way in the future), then
-> _update() should not fail.
+Ronnie Sahlberg wrote:
 
-Agreed.
-I have removed the if (transaction->state != REF_TRANSACTION_OPEN)
-check from _update/_delete/_create and documented this usecase.
+> Change prune_ref to delete the ref using a ref transaction. To do this we also
+> need to add a new flag REF_ISPRUNING that will tell the transaction that we
+> do not want to delete this ref from the packed refs.
 
-Thanks.!
+s/from the packed refs/from packed-refs, nor delete the ref's reflog/
 
-  It can record information about what is
-> wrong with this update in the transaction and succeed so the caller
-> knows to keep going and collect other updates before the _commit()
-> that will fail.
->
-> Of course it's easily possible I'm missing something.  That's just how
-> I see it now.
->
-> Does that make sense?
+[...]
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -235,6 +235,11 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
+>   * The following functions add a reference check or update to a
+>   * ref_transaction.  In all of them, refname is the name of the
+>   * reference to be affected.  The functions make internal copies of
+>   * refname, so the caller retains ownership of the parameter.  flags
+>   * can be REF_NODEREF; it is passed to update_ref_lock().
+>   */
+>  
+>  /*
+> + * ref_transaction_update ref_transaction_create and ref_transaction_delete
+> + * all take a flag argument. Currently the only public flag is REF_NODEREF.
+> + * Flag values >= 0x100 are reserved for internal use.
+> + */
+> +/*
+>   * Add a reference update to transaction.  new_sha1 is the value that
 
-Makes perfect sense.
+The comment right before here already tries to explain the flag argument,
+though it isn't in an obvious place so it's easy to miss.  Maybe the flag
+argument should be explained in the overview documentation for the
+ref_transaction API near the top of the file (but I haven't thought that
+through, so leaving it alone).
+
+How about this as a way to make the reserved flag values easier to
+find when adding new flags?
+
+diff --git i/refs.h w/refs.h
+index 25ac4a9..dee7c8f 100644
+--- i/refs.h
++++ w/refs.h
+@@ -171,8 +171,17 @@ extern int ref_exists(const char *);
+  */
+ extern int peel_ref(const char *refname, unsigned char *sha1);
+ 
+-/** Locks any ref (for 'HEAD' type refs). */
++/*
++ * Flags controlling lock_any_ref_for_update(), ref_transaction_update(),
++ * ref_transaction_create(), etc.
++ * REF_NODEREF: act on the ref directly, instead of dereferencing
++ *              symbolic references.
++ *
++ * Flags >= 0x100 are reserved for internal use.
++ */
+ #define REF_NODEREF	0x01
++
++/** Locks any ref (for 'HEAD' type refs). */
+ extern struct ref_lock *lock_any_ref_for_update(const char *refname,
+ 						const unsigned char *old_sha1,
+ 						int flags, int *type_p);
+@@ -265,11 +274,6 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
+  */
+ 
+ /*
+- * ref_transaction_update ref_transaction_create and ref_transaction_delete
+- * all take a flag argument. Currently the only public flag is REF_NODEREF.
+- * Flag values >= 0x100 are reserved for internal use.
+- */
+-/*
+  * Add a reference update to transaction.  new_sha1 is the value that
+  * the reference should have after the update, or zeros if it should
+  * be deleted.  If have_old is true, then old_sha1 holds the value
