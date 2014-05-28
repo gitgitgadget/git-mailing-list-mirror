@@ -1,63 +1,118 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v11 10/41] update-ref.c: log transaction error from the
- update_ref
-Date: Wed, 28 May 2014 09:49:50 -0700
-Message-ID: <20140528164950.GL12314@google.com>
-References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
- <1401222360-21175-11-git-send-email-sahlberg@google.com>
- <20140528002738.GJ12314@google.com>
- <CAL=YDWnvo-oLd80Kgd1qnqUSSSrwNfcq_wHEjLRCa0Jr4XCjwA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 41/44] refs.c: add a new flag for transaction delete for refs we know are packed only
+Date: Wed, 28 May 2014 09:58:06 -0700
+Message-ID: <xmqqk395et7l.fsf@gitster.dls.corp.google.com>
+References: <1400174999-26786-1-git-send-email-sahlberg@google.com>
+	<1400174999-26786-42-git-send-email-sahlberg@google.com>
+	<537F67DD.5010101@alum.mit.edu>
+	<xmqqzji3f55i.fsf@gitster.dls.corp.google.com>
+	<5385F0E5.4010306@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed May 28 18:50:01 2014
+Cc: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed May 28 18:58:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wph37-0001Cs-If
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 18:49:57 +0200
+	id 1WphBG-00054u-8U
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 18:58:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753754AbaE1Qtx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 12:49:53 -0400
-Received: from mail-pa0-f49.google.com ([209.85.220.49]:62738 "EHLO
-	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753282AbaE1Qtx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 12:49:53 -0400
-Received: by mail-pa0-f49.google.com with SMTP id kp14so1444592pab.8
-        for <git@vger.kernel.org>; Wed, 28 May 2014 09:49:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=8iAT6SWZ+As1GfSc0U8OmiXNlFEnAsRJKWMUucyKpTI=;
-        b=1ApOZELz1Yuvcr9dkT11RcXTVsBmsO03IiesXI7/hSs3oWbwXuvft2VpRbC6IMYvqN
-         0uI7iG+6RZlEiO9JvRJRdnxU2T15Lrlr9fCS9iU0CXtfVE+tl2YgFyfZ1GLKsSr8Im0K
-         lWuG9zHXbn7gTewrlG5CaSUCf4ZR2pwx5ZMrgcoBaLToA/VeirvIwqJj60n1EvVjcLNT
-         zWg0yrtvAUvr5RWV0PxMZC4yd9bnGrVU+mZ0/P3B7PIcPWZIJ8gpt4XfL5gG47AAbrNb
-         xXyQGJcGZ8ghj7NMI5xQAhaAOc/zylVLHtplYo9RcW0GhfWIyWnP8PqTk12KBvRAE5q7
-         JBpA==
-X-Received: by 10.66.244.109 with SMTP id xf13mr1234811pac.28.1401295792681;
-        Wed, 28 May 2014 09:49:52 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id ie9sm91127206pad.29.2014.05.28.09.49.51
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 28 May 2014 09:49:52 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <CAL=YDWnvo-oLd80Kgd1qnqUSSSrwNfcq_wHEjLRCa0Jr4XCjwA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751605AbaE1Q6S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 12:58:18 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63732 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751250AbaE1Q6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 12:58:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F28D31993B;
+	Wed, 28 May 2014 12:58:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hiAI/rRq12E9R9bhV7MKlLj0l/4=; b=NtOctW
+	wgKy0xBAi5b0zpcJb7JDWIKxE/K/vgtfuxRexNzue0ipbf4A5LjxplwrP85qX6gL
+	oQIyTxCfRF6AdfSzWlbqmdhfEiY3nenN8mjxH5imjeRKRwQ6TQU53j5W24rOOe6F
+	BNwoGF7B3LjBfzXzPs9rD01ULO6NkhsiHW6AA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HVJqb8WqP4tLcyACu/1xPfJiZO/F33r7
+	MSZ4GVDJfqmFtqm3J+uf7YDN1oZ3wwZpZNFQLrVQMj5rCGBPrPyN7UY4DolLEba8
+	fT6LlK/0LF3SnSQzGxkCauRC6zoGNj+HBq/i/oYQoRZeQpk+2zwfzaw+013ec8yl
+	hrv3RdXc0jw=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E8F461993A;
+	Wed, 28 May 2014 12:58:11 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 81D6819935;
+	Wed, 28 May 2014 12:58:08 -0400 (EDT)
+In-Reply-To: <5385F0E5.4010306@alum.mit.edu> (Michael Haggerty's message of
+	"Wed, 28 May 2014 16:21:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3E8ABD2E-E689-11E3-A50A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250294>
 
-Ronnie Sahlberg wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> I reworded the commit message.
+> I think for any two backends that are stacked, you would need to break
+> down a transaction as follows (here generalized to include not only
+> deletions):
+>
+>     packed->begin_transaction()
+>     loose->begin_transaction()
+>
+>     # And this part is done within stacked->commit_transaction():
+>     for entry in many_ref_updates():
+>         if have_old:
+>             stacked->verify_reference(ref, old_sha1)
+>
+>         if entry is a delete:
+>             packed->delete_reference(entry)
+>         loose->update_reference(entry)
+>
+>     if (!packed->commit_transaction())
+>         loose->commit_transaction()
 
-Thanks much.  Looks good.
+Ugggly.  In general you would need to worry about the case where the
+first commit succeeds and then the second commit fails, wouldn't
+you?
+
+The above happens not to break horribly wrong for the "Loose on top
+of Packed" layering, in that the refs you wanted to delete are only
+gone from Packed but still are in Loose, and the end result would be
+some of them are really gone (because they weren't in Loose) and
+some others remain (because they were in Loose), and at least you
+did not lose any ref you did not want to discard.  But it still is
+not what should happen in a proper "transaction".
+
+>> But the above would not quite work, as somebody needs to remove logs
+>> for refs that were only in the Packed backend, and "repack without
+>> these refs" API supported by the Packed backend cannot be that
+>> somebody---"repack packed-refs without A B C" cannot unconditionally
+>> remove logs for A B C without checking if A B C exists as Loose.
+>
+> Correct.  That's another reason that logging has to be the
+> responsibility of something at the "stacked" level of abstraction or higher.
+>
+> I think the logging should be done by yet another outer layer of
+> wrapper that only does the logging, while also passing all updates
+> down 1:1 to the backend that it wraps (which in our case would be
+> a stacked backend). ... Then the loose and packed backends could
+> remain completely ignorant of the fact that reference updates can
+> be logged.
+
+That would mean that Loose (or Packed) class cannot be used as-is
+and always needs to be wrapped with the layer that does the logging,
+no?  In a system with "only packed-refs, no loose", you would want
+Packed.deleteRefs() to remove the named refs ref and their reflogs,
+but that would mean that the Layered wrapper that uses Loose
+overlayed on Packed cannot call that method, because it does not
+want reflogs of the refs in Packed covered by the ones in Loose.
