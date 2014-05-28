@@ -1,100 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v11 23/41] refs.c: change update_ref to use a transaction
-Date: Wed, 28 May 2014 12:31:39 -0700
-Message-ID: <20140528193139.GW12314@google.com>
-References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
- <1401222360-21175-24-git-send-email-sahlberg@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v12 11/11] Documentation: add documentation for 'git interpret-trailers'
+Date: Wed, 28 May 2014 12:35:37 -0700
+Message-ID: <xmqqegzdd7cm.fsf@gitster.dls.corp.google.com>
+References: <20140525051254.5329.66539.chriscool@tuxfamily.org>
+	<20140525053223.5329.28002.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed May 28 21:31:51 2014
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed May 28 21:35:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WpjZi-0000BK-RL
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 21:31:47 +0200
+	id 1Wpjdb-00064v-GB
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 21:35:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754897AbaE1Tbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 15:31:43 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:37867 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751268AbaE1Tbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 15:31:42 -0400
-Received: by mail-pa0-f50.google.com with SMTP id fb1so11520917pad.37
-        for <git@vger.kernel.org>; Wed, 28 May 2014 12:31:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=u6BBWYLwS9er9vve3oFosle9XIyof4LPL7ZifUL2cYo=;
-        b=AsmZ4isv5iTmnCHKMPROg8vqXaVmcNWuEI9/Bq2xQ8viQmCL6ZAlM3O6OrL/LCDpL3
-         Y4xpeLCjobiDVPTEqurNhA/K4qM00WixJWj/g9FFi1Fo+9u6giW4wiI78MgAxCvEFeSc
-         TAvMFhLftHqJSGFU72k1hZNQYDmO7wna1M/bvDjefoB/654iqoj28Jwr3RkXyOikWbHz
-         ddIYBgVReTcCycKeIt6u3RmCyeipeRJ3/0Z9mQ4ofV3hPivv7uayuiy5mepB/SiA1gsS
-         CEsRKZjnf/cKyR5ox29T0OPy68FSGnsuG/TWa+MRjW3PFeQEV6HRd1S9ScQDpEQa045R
-         Ksdg==
-X-Received: by 10.66.148.230 with SMTP id tv6mr1975034pab.155.1401305501853;
-        Wed, 28 May 2014 12:31:41 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id si8sm92766937pab.27.2014.05.28.12.31.41
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 28 May 2014 12:31:41 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1401222360-21175-24-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751866AbaE1Tfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 15:35:44 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56727 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751756AbaE1Tfn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 15:35:43 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CF90A1BBA2;
+	Wed, 28 May 2014 15:35:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jzmCLoKUZ/UXYSIQeCqh1CPyUYw=; b=GCA9Ws
+	e8ptThO0TZjV2GhEv6NT2nE605zG2JiDNtkSTqd8AyAReTINhiu82SOgpbXgD1e7
+	hdIfASVvX46PwMWGiIb6IoVZzGQgBvPC6E3RuFiLD+cR73QFuVNU6Y0rOX/dghdk
+	z16X81vF7HZk+3E12YlJiufvmhf+Jq8AMYzkY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=B5VL3p11lRjirK30D0i/Fy9iiUID936p
+	H+c3uCrpf6HonMZWrl2MaCP7bMd1i4eL6ESIyV0awT6L/N6chjQ1QrcsZdkR4T/+
+	HIUh/qtA8a1PHSxE/fxwm1PSjGAHlkpxE1Yxl17vmXPVR+S3cMUsZhE+NhS3upB/
+	HJ0GFCBmvZ0=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C3C761BBA1;
+	Wed, 28 May 2014 15:35:42 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 611DB1BBA0;
+	Wed, 28 May 2014 15:35:39 -0400 (EDT)
+In-Reply-To: <20140525053223.5329.28002.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Sun, 25 May 2014 07:32:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3FBD4A0C-E69F-11E3-ACDB-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250321>
 
-Ronnie Sahlberg wrote:
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -3474,11 +3474,28 @@ int update_ref(const char *action, const char *refname,
->  	       const unsigned char *sha1, const unsigned char *oldval,
->  	       int flags, enum action_on_err onerr)
->  {
-> -	struct ref_lock *lock;
-> -	lock = update_ref_lock(refname, oldval, flags, NULL, onerr);
-> -	if (!lock)
-> +	struct ref_transaction *t;
-> +	struct strbuf err = STRBUF_INIT;
+> +The trailers are recognized in the input message using the following
+> +rules:
 > +
-> +	t = ref_transaction_begin(&err);
-> +	if ((!t ||
-> +	    ref_transaction_update(t, refname, sha1, oldval, flags,
-> +				   !!oldval, &err)) ||
+> +* only lines that contains a ':' (colon) are considered trailers,
+> +
+> +* the trailer lines must all be next to each other,
+> +
+> +* after them it's only possible to have some lines that contain only
+> +  spaces, and then a patch; the patch part is recognized using the
+> +  fact that its first line starts with '---' (three minus signs),
+> +
+> +* before them there must be at least one line with only spaces.
 
-(style) Extra parens.
-
-> +	    (ref_transaction_commit(t, action, &err) && !(t = NULL))) {
-
-No need for this assignment-in-if.
-
-With the following squashed in,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-diff --git i/refs.c w/refs.c
-index 568b358..fb462a3 100644
---- i/refs.c
-+++ w/refs.c
-@@ -3474,10 +3474,10 @@ int update_ref(const char *action, const char *refname,
- 	struct strbuf err = STRBUF_INIT;
- 
- 	t = ref_transaction_begin(&err);
--	if ((!t ||
-+	if (!t ||
- 	    ref_transaction_update(t, refname, sha1, oldval, flags,
--				   !!oldval, &err)) ||
--	    (ref_transaction_commit(t, action, &err) && !(t = NULL))) {
-+				   !!oldval, &err) ||
-+	    ref_transaction_commit(t, action, &err)) {
- 		const char *str = "update_ref failed for ref '%s': %s";
- 
- 		ref_transaction_free(t);
+While I agree with Michael on the other thread that we should limit
+the syntax and start with ':' only, if you really want to allow
+random syntax like "Bug #12345" and "Acked-by= Peff", for which you
+have demonstrations in the tests in the other patch, the above rule
+should be updated to also allow prefix matches to possible set of
+keys defined by the user, so that an existing line that is produced
+by your tool, e.g. "Acked-by= Peff", can be picked up as matching
+with some token having a key "Acked-by= ".  Otherwise, the input
+side of your tool is inconsistent with the output side of your own
+tool, and that will make the flexiblity of the output side useless.
