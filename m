@@ -1,111 +1,118 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH 1/5] progress.c: replace signal() with sigaction()
-Date: Wed, 28 May 2014 08:45:09 -0700
-Message-ID: <20140528154509.GA7076@hudson.localdomain>
-References: <1401257655-6043-1-git-send-email-jmmahler@gmail.com>
- <1401257655-6043-2-git-send-email-jmmahler@gmail.com>
- <5385994A.5040507@gmail.com>
+From: Bram Geron <bgeron@bgeron.nl>
+Subject: Re: [BUG] Git clone of a bundle fails, but works (somewhat) when run with strace
+Date: Wed, 28 May 2014 15:59:37 +0000 (UTC)
+Message-ID: <loom.20140528T171956-380@post.gmane.org>
+References: <511E8D84.6060601@gmail.com> <kfmclb$4ro$2@ger.gmane.org> <kfmide$4ro$3@ger.gmane.org> <20130216040109.GA31630@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Wed May 28 17:45:22 2014
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed May 28 18:05:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wpg2b-0004Zj-Aa
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 17:45:21 +0200
+	id 1WpgM1-0008Jm-H6
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 18:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754570AbaE1PpP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 28 May 2014 11:45:15 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:49257 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753754AbaE1PpN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 11:45:13 -0400
-Received: by mail-pa0-f43.google.com with SMTP id hz1so11181649pad.16
-        for <git@vger.kernel.org>; Wed, 28 May 2014 08:45:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=r5NfeNwyFIVmCHZ2jrAtz0mFnmXzuqhA87W5Q6vE6c0=;
-        b=piZ96cedVNkPxhOfpXxvfqCwB/7/7DcQKBaLuGNH3wdsxdQakDsDrQkkGvJ4QzKIy3
-         0oI6K8I6izfTEHok8uaEZ/yJ8/xPmeKD/rihl2xKVoMbw5Tzh64VsZhTU8Kw7taH1yuH
-         inlheXXuL0vFLZMXXT0FzrBobFXWCqS9Fi+9U5VkQkaVesJYiaAa+W6TbM6jiVvIvnh6
-         UHpGXmEnikB2JBdfJcrRWOfMDxQcFK/s1Mt3i8tKEOvjeALtroLPGBCjiGxrJB6rtmAf
-         7KzxOLB3aPw1MXT5NITpR3PFq5vHuI6huS04F7a6Gf7o6ZDssOv5TTluiDbfzK8OJ1JU
-         9OjA==
-X-Received: by 10.66.244.176 with SMTP id xh16mr706355pac.20.1401291913254;
-        Wed, 28 May 2014 08:45:13 -0700 (PDT)
-Received: from hudson (o247-linksys-rtr.CSUChico.EDU. [132.241.18.53])
-        by mx.google.com with ESMTPSA id z3sm90476523pas.15.2014.05.28.08.45.09
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 28 May 2014 08:45:11 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Wed, 28 May 2014 08:45:09 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <5385994A.5040507@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1754768AbaE1QFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 12:05:17 -0400
+Received: from plane.gmane.org ([80.91.229.3]:41116 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753144AbaE1QFP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 28 May 2014 12:05:15 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WpgLg-0007pw-1i
+	for git@vger.kernel.org; Wed, 28 May 2014 18:05:04 +0200
+Received: from dynamic200-212.cs.bham.ac.uk ([147.188.200.212])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 28 May 2014 18:05:04 +0200
+Received: from bgeron by dynamic200-212.cs.bham.ac.uk with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 28 May 2014 18:05:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 147.188.200.212 (Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:29.0) Gecko/20100101 Firefox/29.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250291>
 
-On Wed, May 28, 2014 at 08:07:38PM +1200, Chris Packham wrote:
-> On 28/05/14 18:14, Jeremiah Mahler wrote:
-> > From signal(2)
-> >=20
-> >   The behavior of signal() varies across UNIX versions, and has als=
-o var=E2=80=90
-> >   ied historically across different versions of Linux.   Avoid  its=
-  use:
-> >   use sigaction(2) instead.  See Portability below.
->=20
-> Minor nit. The last sentence applies to the man page you're quoting a=
-nd
-> doesn't really make sense when viewed in the context of this commit
-> message. Same applies to other patches in this series.
->=20
-Yes, that is confusing.
+Jeff King <peff <at> peff.net> writes:
+> [..]
+> Secondly, I do get the same warning about HEAD:
+> 
+>   $ git clone repo.bundle repofrombundle
+>   Cloning into 'repofrombundle'...
+>   Receiving objects: 100% (3/3), done.
+>   warning: remote HEAD refers to nonexistent ref, unable to checkout.
+> 
+> but that warning makes sense. You did not create a bundle that contains
+> HEAD, therefore when we clone it, we do not know what to point HEAD to.
+> You probably wanted "git bundle create ../repo.bundle --all" which
+> includes both "master" and "HEAD".
 
-=2E..
-> > @@ -66,8 +66,12 @@ static void set_progress_signal(void)
-> >  static void clear_progress_signal(void)
-> >  {
-> >  	struct itimerval v =3D {{0,},};
-> > +	struct sigaction sa;
-> > +
-> > +	memset(&sa, 0, sizeof(sa));
-> > +	sa.sa_handler =3D SIG_IGN;
->=20
-> A C99 initialiser here would save the call to memset. Unfortunately
-> Documentation/CodingGuidelines is fairly clear on not using C99
-> initialisers, given the fact we're now at git 2.0 maybe it's time to
-> revisit this policy?
->=20
+I'd like to revive this discussion and submit a patch, as I just spent
+significant time wondering why git clone failed. It's been a while, so I'll
+summarize: when you make a git bundle without including HEAD explicitly,
+then clone from that bundle, Git throws a warning and leaves you with a
+broken HEAD.
 
-struct sigaction sa =3D { .sa_handler =3D SIG_IGN };
+I do not agree that the warning makes sense. It implies that HEAD exists but
+is invalid. In reality, no ref is referred to by HEAD in the first place.
+Furthermore, .git/HEAD in the clone is "autocorrected" to be
+refs/heads/master, so the error message is even more misleading.
 
-I do like that.
+It's like saying "Our CEO's guitar is actually an air guitar", then
+explaining where he stores his guitar, when I don't work in a company in the
+first place.
 
-This brings up another issue.  memset(&sa, 0, sizeof(sa)); The sigactio=
-n
-examples I have seen always use memset.  The manpage for sigaction(2)
-doesn't mention it.  Other code it Git uses memset with sigaction (see
-fast-import.c line 530).
+> It would be slightly more accurate to say "the remote HEAD does not
+> exist", rather than "refers to nonexistent ref".  It would perhaps be
+> nicer still for "git clone" to make a guess about the correct HEAD when
+> one is not present (especially in the single-branch case, it is easy to
+> make the right guess).
 
-Is this struct guaranteed to be initialized to zero so I don't have to
-use memset?
+Seems sensible at first sight, though it seems orthogonal to the warning
+message.
 
---=20
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+> Patches welcome. In the meantime, you can clone with "-b master" to tell
+> it explicitly, or you can "git checkout master" inside the newly-cloned
+> repository.
+
+Alright :) See below.
+
+Cheers, Bram
+
+
+>From bc799b12b659d7ab20df7fe420d5f1f1c90450aa Mon Sep 17 00:00:00 2001
+From: Bram Geron <bgeron@bgeron.nl>
+Date: Wed, 28 May 2014 15:54:37 +0100
+Subject: [PATCH] Clearer error message when cloning a bundle without a HEAD
+ ref.
+
+---
+ builtin/clone.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 9b3c04d..e3c1447 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -623,7 +623,7 @@ static int checkout(void)
+ 
+ 	head = resolve_refdup("HEAD", sha1, 1, NULL);
+ 	if (!head) {
+-		warning(_("remote HEAD refers to nonexistent ref, "
++		warning(_("no HEAD in remote or HEAD refers to nonexistent ref, "
+ 			  "unable to checkout.\n"));
+ 		return 0;
+ 	}
+-- 
+1.9.1
