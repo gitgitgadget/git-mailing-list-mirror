@@ -1,63 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: [PATCH] check_refname_component: Optimize
-Date: Wed, 28 May 2014 14:24:07 -0700
-Message-ID: <xmqq38ftd2bs.fsf@gitster.dls.corp.google.com>
-References: <1401307055-11603-1-git-send-email-dturner@twitter.com>
+Date: Wed, 28 May 2014 23:44:32 +0200
+Message-ID: <538658C0.8050001@alum.mit.edu>
+References: <1401311055-480-1-git-send-email-dturner@twitter.com> <1401311055-480-2-git-send-email-dturner@twitter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu,
-	David Turner <dturner@twitter.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed May 28 23:24:17 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed May 28 23:44:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WplKb-00082s-E3
-	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 23:24:17 +0200
+	id 1WpleK-0004Sd-Ap
+	for gcvg-git-2@plane.gmane.org; Wed, 28 May 2014 23:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752610AbaE1VYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 28 May 2014 17:24:14 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53292 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751388AbaE1VYN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 28 May 2014 17:24:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B0BF91BB66;
-	Wed, 28 May 2014 17:24:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cexx3KxGQ3Pd1quj3QItgX3PQX4=; b=QBtZ1l
-	PYlfYfCWQj7+EAdBPRAAQhdhjIRp6mcwuQQg5t+zqyj73yEEtVOR8k1PQ08UYHw3
-	sLUWr634zOlefTQc6vCib4+AA99Xvj2lCZaZ6AoTIYnLOnEnFuETV3lrBVH+c/ul
-	UG93yyrgBhdxNENXphAs2U2WPd2HMknSDuycQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TcPhqpgd2CoTBfZgEJkJhX3lvrIe9QxX
-	FKBXf6RALPSJUWef90+OxmoXuSJ9U6JxsHnXBGgLluRKJ6QOc3clnVSHORFVqIEZ
-	c2mpSXBUjyLF3vwtP/GRgRPnCNgSsR1pWjyPaFEoDDZF7U2yynMt5tCouS0krIZF
-	USug/AYyuDY=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A55DE1BB63;
-	Wed, 28 May 2014 17:24:12 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 561841BB56;
-	Wed, 28 May 2014 17:24:09 -0400 (EDT)
-In-Reply-To: <1401307055-11603-1-git-send-email-dturner@twitter.com> (David
-	Turner's message of "Wed, 28 May 2014 15:57:35 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 67EEB34E-E6AE-11E3-BF1F-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752347AbaE1Vog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 28 May 2014 17:44:36 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:48503 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751830AbaE1Vof (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 28 May 2014 17:44:35 -0400
+X-AuditID: 1207440c-f79656d000000c83-97-538658c2d07d
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 72.EF.03203.2C856835; Wed, 28 May 2014 17:44:34 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC97A4D.dip0.t-ipconnect.de [79.201.122.77])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4SLiWCO032208
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 28 May 2014 17:44:33 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <1401311055-480-2-git-send-email-dturner@twitter.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrAKsWRmVeSWpSXmKPExsUixO6iqHsooi3Y4HWjhsWHK88ZLeZvOsFo
+	0XWlm8miofcKswOLx8VLyh4Xu58weyx4fp/d4/MmuQCWKG6bpMSSsuDM9Dx9uwTujNanYgX/
+	4iqubDrH2MC4waOLkZNDQsBEYu3cqawQtpjEhXvr2boYuTiEBC4zSqzfeoUdwjnPJLHl/xZ2
+	kCpeAW2J3SfnsYHYLAKqErtubGIGsdkEdCUW9TQzdTFycIgKBEn8OasIUS4ocXLmExYQW0Qg
+	RmLH1RVMIDazgJpE98mJYCOFBcwkLh/aBFYjJFAu8aC5B2w8p4CTxMt9O1hARkoIiEv0NAZB
+	tOpIvOt7wAxhy0tsfzuHeQKj4Cwk22YhKZuFpGwBI/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzU
+	Il1DvdzMEr3UlNJNjJAQ59nB+G2dzCFGAQ5GJR5eCdm2YCHWxLLiytxDjJIcTEqivFfDgEJ8
+	SfkplRmJxRnxRaU5qcWHGCU4mJVEeDXCgXK8KYmVValF+TApaQ4WJXFe1SXqfkIC6Yklqdmp
+	qQWpRTBZGQ4OJQneBSCNgkWp6akVaZk5JQhpJg5OkOFcUiLFqXkpqUWJpSUZ8aDojS8Gxi9I
+	igdorz7Y3uKCxFygKETrKUZdjlN3jrUxCbHk5eelSonzyoEUCYAUZZTmwa2AJbRXjOJAHwvz
+	FoFU8QCTIdykV0BLmICWPOlsBVlSkoiQkmpglNSa8GDpP6bv62Y59h1rZV106VHApM54A3ne
+	nacObmvg4lTc92dK1/TNVsF9Nvxbrudwvw3rlxP9ytiktqG0P893n2jt5Y9rT5kG 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250332>
 
-David Turner <dturner@twopensource.com> writes:
-
+On 05/28/2014 11:04 PM, David Turner wrote:
 > In a repository with tens of thousands of refs, the command
 > ~/git/git-diff-index --cached --quiet --ignore-submodules [revision]
 > is a bit slow.  check_refname_component is a major contributor to the
@@ -65,33 +62,41 @@ David Turner <dturner@twopensource.com> writes:
 > machines with SSE4.2, and one for machines without.  The speedup for
 > this command on one particular repo (with about 60k refs) is about 12%
 > for the SSE version and 8% for the non-SSE version.
->
+
+Interesting.  Thanks for the patch.
+
+Why do you use "git diff-index" to benchmark your change?  Is there
+something particular about that command that leads to especially bad
+performance with lots of references?
+
+I assume that most of the time spent in check_refname_component() is
+while reading the packed-refs file, right?  If so, there are probably
+other git commands that would better measure that time, with less other
+work.  For example, "git rev-parse refname" will read the packed-refs
+file, too (assuming that "refname" is not a loose reference).  If you
+test the speedup of a cheaper command like that, it seems to me that you
+will get a better idea of how much you are speeding up the ref-reading
+part.  It would also be interesting to see the difference in
+milliseconds (rather than a percentage) for some specified number of
+references.
+
+I think it's worth using your LUT-based approach to save 8%.  I'm less
+sure it's worth the complication and unreadability of using SSE to get
+the next 4% speedup.  But the gains might be proven to be more
+significant if you benchmark them differently.
+
+I won't critique the code in detail until we have thrashed out the
+metaissues, but I made a few comments below about nits that I noticed
+when I scanned through.
+
 > Signed-off-by: David Turner <dturner@twitter.com>
-
-Just a few quick impressions (I do not have time today to look at
-new patches).
-
- - The title seems a bit strange.
-   Perhaps "refs.c: optimize check_refname_component()" or something?
-
- - "~/git/git-diff-index" looks doubly strange in that the issue you
-   are addressing would not depend on your compiled Git being
-   installed in your $HOME/git at all.  For that matter, from the
-   command line and the patch, I am not sure if this is specific to
-   "git diff-index", or the same issue exists for anything that
-   takes revs and pathspecs from the command line.
-
-
-
-
-
 > ---
 >  Makefile           |   6 +++
 >  configure.ac       |   6 +++
->  refs.c             | 143 +++++++++++++++++++++++++++++++++++++++++++++++++++--
+>  refs.c             | 152 +++++++++++++++++++++++++++++++++++++++++++++++++++--
 >  t/t5511-refspec.sh |  13 +++++
->  4 files changed, 163 insertions(+), 5 deletions(-)
->
+>  4 files changed, 172 insertions(+), 5 deletions(-)
+> 
 > diff --git a/Makefile b/Makefile
 > index a53f3a8..123e2fc 100644
 > --- a/Makefile
@@ -141,7 +146,7 @@ new patches).
 >  if test -n "$ASCIIDOC"; then
 >  	AC_MSG_CHECKING([for asciidoc version])
 > diff --git a/refs.c b/refs.c
-> index 28d5eca..8ca124c 100644
+> index 28d5eca..8f0de04 100644
 > --- a/refs.c
 > +++ b/refs.c
 > @@ -5,6 +5,8 @@
@@ -151,33 +156,243 @@ new patches).
 > +#include <nmmintrin.h>
 > +
 
-We would prefer not to add inclusion of any system header files in
-random *.c files, as there often are system dependencies (order of
-inclusion, definition of feature macros, etc.) we would rather want
-to encapsulate in one place, that is git-compat-util.h.
+You include this file unconditionally, but I doubt that it is present on
+all platforms.  I guess it has to be protected with #ifdef or something
+at a minimum.
 
 >  /*
 >   * Make sure "ref" is something reasonable to have under ".git/refs/";
 >   * We do not like it if:
-> @@ -29,30 +31,160 @@ static inline int bad_ref_char(int ch)
+> @@ -29,30 +31,169 @@ static inline int bad_ref_char(int ch)
 >  	return 0;
 >  }
 >  
+
+Please add a comment here about what the values in refname_disposition
+signify.  And maybe add some line comments explaining unusual values,
+for people who haven't memorized the ASCII encoding; e.g., on the third
+line,
+
+/* SP -> 0, '.' -> 2, '-' -> 1 */
+
+Also, this variable could be static.  And if you change your encoding to
+use 0 instead of 9 for valid characters, then you could define the table
+with an explicit length of 256 and omit the second half of the
+initializers, letting those values be initialized to zero automatically.
+
 > +char refname_disposition[] = {
 > +       1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 > +       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-> ...
+> +       0, 9, 9, 9, 9, 9, 9, 9, 9, 9, 0, 9, 9, 9, 2, 1,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 0, 9, 9, 9, 9, 0,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 0, 0, 9, 0, 9,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 3, 9, 9, 0, 0,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
+> +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9,
 > +       9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9
 > +};
 > +
+>  /*
+>   * Try to read one refname component from the front of refname.  Return
+>   * the length of the component found, or -1 if the component is not
+>   * legal.
+>   */
+> -static int check_refname_component(const char *refname, int flags)
+> +static int check_refname_component_1(const char *refname, int flags)
+>  {
+>  	const char *cp;
+>  	char last = '\0';
+>  
+>  	for (cp = refname; ; cp++) {
+> -		char ch = *cp;
+> -		if (ch == '\0' || ch == '/')
+> +		unsigned char ch = (unsigned char) *cp;
+> +		char disp = refname_disposition[ch];
+> +		switch(disp) {
+> +		case 0:
+> +		       return -1;
+> +		case 1:
+> +			goto out;
+> +		case 2:
+> +			if (last == '.')
+> +				return -1;
+>  			break;
+> -		if (bad_ref_char(ch))
+> -			return -1; /* Illegal character in refname. */
+> +		case 3:
+> +		       if (last == '@')
+> +			       return -1;
+> +		       break;
+> +	       }
 
-Does this array need to be extern?
+You seem to have some indentation problems.  Please always indent with
+TAB characters.
 
-Is this table designed to take both positive and negative values?
-If the answer is "I expect we add only positive", then please make
-it explicitly "unsigned char".
+> +
+>  		if (last == '.' && ch == '.')
+>  			return -1; /* Refname contains "..". */
+>  		if (last == '@' && ch == '{')
+>  			return -1; /* Refname contains "@{". */
+>  		last = ch;
+>  	}
+> +out:
+> +	if (cp == refname)
+> +		return 0; /* Component has zero length. */
+> +
+> +	if (refname[0] == '.') {
+> +		if (!(flags & REFNAME_DOT_COMPONENT))
+> +			return -1; /* Component starts with '.'. */
+> +		/*
+> +		 * Even if leading dots are allowed, don't allow "."
+> +		 * as a component (".." is prevented by a rule above).
+> +		 */
+> +		if (refname[1] == '\0')
+> +			return -1; /* Component equals ".". */
+> +	}
+> +	if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
+> +		return -1; /* Refname ends with ".lock". */
+> +	return cp - refname;
+> +}
+> +
+> +#ifdef NO_SSE
+> +#define check_refname_component check_refname_component_1
+> +#else
+> +
+> +#ifndef _SIDD_UBYTE_OPS
+> +#define _SIDD_UBYTE_OPS                 0x00
+> +#define _SIDD_CMP_EQUAL_ANY             0x00
+> +#define _SIDD_CMP_RANGES                0x04
+> +#define _SIDD_CMP_EQUAL_ORDERED         0x0c
+> +#define _SIDD_NEGATIVE_POLARITY         0x10
+> +#endif
+> +#ifndef PAGE_SIZE
+> +#define PAGE_SIZE 4096
+> +#endif
+> +#define BLOCK_SIZE 16
+> +
+> +/* Vectorized version of check_refname_component */
+> +static int check_refname_component(const char *refname, int flags)
+> +{
+> +	const __m128i *refname_vec = (__m128i*) refname;
+> +
+> +	/* Character ranges for characters forbidden in refs; see
+> +	 * above */
+> +	static const __v16qi bad = {
+> +		0x01, 0x20,  0x7e, 0x7f,  0x5e, 0x5e,  0x3a, 0x3a,
+> +		0x5b, 0x5c,  0x2a, 0x2a,  0x3f, 0x3f,  0x3f, 0x3f};
+> +
+> +	static const __v16qi nonslashes = {
+> +		'\001', '/' -1, '/' + 1, 0xff,
+> +	};
+> +
+> +	static const __v16qi dotdot = {'.','.',0};
+> +	static const __v16qi atcurly = {'@','{',0};
+> +
+> +	const __m128i *vp;
+> +	const char *cp = (const char *)refname_vec;
+> +
+> +
+> +	int dotdotpos = BLOCK_SIZE, atcurlypos = BLOCK_SIZE;
+> +	for (vp = refname_vec; ; vp++) {
+> +		__m128i tmp;
+> +		int endpos;
+> +
+> +		/* Handle case of forbidden substrings .. and @{ crossing
+> +		 * sixteen-byte boudaries */
+> +		if (dotdotpos == 15 && *cp == '.')
+> +			return -1;
+> +
+> +		if (atcurlypos == 15 && *cp == '{')
+> +			return -1;
+> +
+> +		if (((uintptr_t) vp & (PAGE_SIZE - 1)) > PAGE_SIZE - BLOCK_SIZE)
+> +			/* End-of-page; fall back to slow method for
+> +			 * this entire component. */
+> +			return check_refname_component_1(refname, flags);
+> +
+> +		tmp = _mm_lddqu_si128(vp);
+> +
+> +		/* Find slashes or end-of-string. The double-negative
+> +		 * (negative-polarity search for non-slashes) is
+> +		 * necessary so that \0 will also be counted.  */
+> +		endpos = _mm_cmpistri((__m128i) nonslashes, tmp,
+> +				      _SIDD_UBYTE_OPS | _SIDD_CMP_RANGES |
+> +				      _SIDD_NEGATIVE_POLARITY);
+> +
+> +		if (_mm_cmpestrc((__m128i) bad, BLOCK_SIZE, tmp, endpos,
+> +				 _SIDD_UBYTE_OPS | _SIDD_CMP_RANGES))
+> +			return -1;
+> +
+> +		dotdotpos = _mm_cmpestri((__m128i) dotdot, 2, tmp, endpos,
+> +					 _SIDD_UBYTE_OPS |
+> +					 _SIDD_CMP_EQUAL_ORDERED);
+> +		if (dotdotpos < 15)
+> +			return -1;
+> +
+> +		atcurlypos = _mm_cmpestri((__m128i) atcurly, 2, tmp, endpos,
+> +					  _SIDD_UBYTE_OPS |
+> +					  _SIDD_CMP_EQUAL_ORDERED);
+> +		if (atcurlypos < 15)
+> +			return -1;
+> +
+> +		if (endpos < BLOCK_SIZE) {
+> +			cp = ((const char*) vp) + endpos;
+> +			break;
+> +		}
+> +		cp = (const char*) vp + BLOCK_SIZE;
+> +	}
+> +
+>  	if (cp == refname)
+>  		return 0; /* Component has zero length. */
+> +
+>  	if (refname[0] == '.') {
+>  		if (!(flags & REFNAME_DOT_COMPONENT))
+>  			return -1; /* Component starts with '.'. */
+> @@ -67,6 +208,7 @@ static int check_refname_component(const char *refname, int flags)
+>  		return -1; /* Refname ends with ".lock". */
+>  	return cp - refname;
+>  }
+> +#endif
+>  
+>  int check_refname_format(const char *refname, int flags)
+>  {
+> diff --git a/t/t5511-refspec.sh b/t/t5511-refspec.sh
+> index c289322..0f03f9c 100755
+> --- a/t/t5511-refspec.sh
+> +++ b/t/t5511-refspec.sh
+> @@ -84,4 +84,17 @@ test_refspec push 'refs/heads/*/*/for-linus:refs/remotes/mine/*' invalid
+>  test_refspec fetch 'refs/heads/*/for-linus:refs/remotes/mine/*'
+>  test_refspec push 'refs/heads/*/for-linus:refs/remotes/mine/*'
+>  
+> +test_refspec fetch 'refs/heads/a-very-long-refname'
+> +test_refspec fetch 'refs/heads/.a-very-long-refname'		invalid
+> +test_refspec fetch 'refs/heads/abcdefgh0123..'			invalid
+> +test_refspec fetch 'refs/heads/abcdefgh01234..'			invalid
+> +test_refspec fetch 'refs/heads/abcdefgh012345..'		invalid
+> +test_refspec fetch 'refs/heads/abcdefgh0123456..'		invalid
+> +test_refspec fetch 'refs/heads/abcdefgh01234567..'		invalid
+> +test_refspec fetch 'refs/heads/abcdefgh0123.a'
+> +test_refspec fetch 'refs/heads/abcdefgh01234.a'
+> +test_refspec fetch 'refs/heads/abcdefgh012345.a'
+> +test_refspec fetch 'refs/heads/abcdefgh0123456.a'
+> +test_refspec fetch 'refs/heads/abcdefgh01234567.a'
+> +
+>  test_done
+> 
 
-What do these magic numbers in the array mean?
+Please mention in your commit message why you added these tests.  (Are
+they to test peculiarities around 16-byte boundaries?)
 
-How were the values derived?  What are you doing in this commit to
-help others who later need to debug, fix and enhance this table?
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
