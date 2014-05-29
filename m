@@ -1,100 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/5] fetch doc: on pulling multiple refspecs
-Date: Thu, 29 May 2014 15:42:29 -0700
-Message-ID: <1401403350-7122-5-git-send-email-gitster@pobox.com>
+Subject: [PATCH 5/5] fetch doc: update refspec format description
+Date: Thu, 29 May 2014 15:42:30 -0700
+Message-ID: <1401403350-7122-6-git-send-email-gitster@pobox.com>
 References: <1401403350-7122-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 30 00:43:11 2014
+X-From: git-owner@vger.kernel.org Fri May 30 00:43:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq92U-0003vU-PS
+	id 1Wq92V-0003vU-9R
 	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 00:43:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753938AbaE2Wm6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 18:42:58 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65278 "EHLO smtp.pobox.com"
+	id S1753966AbaE2WnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 18:43:03 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65140 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753841AbaE2Wm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 18:42:56 -0400
+	id S1753841AbaE2WnB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 18:43:01 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DB76B1C338;
-	Thu, 29 May 2014 18:42:55 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 383D21C342;
+	Thu, 29 May 2014 18:43:01 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=AlMp
-	4sQHyN/JbRercxuY3gRvUn0=; b=xthZDqRwekFlmaMSmKwXXhZw0OUYufE1JWQo
-	BnB51n5Jx1aLKNDPllLbXTGsr7hPZMH4I+0mXYgRC/bQXZptapZ/PyzIDCB2epaY
-	UZmFkNWn5WsI5aPcz+dzFNjG6KVDBtpQ5Iwuf5nxJ6Md77fkN//+Qh4AAlml9rtL
-	vHeUl5c=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=rTx+
+	6u31Axa5d8Y6kAizzqhWWIk=; b=ok62dokAjHV349y4dh5EestrNvacax+x/XHo
+	jMCJw1g5DBvPx70GMrFx8JYsG67Bq4JkGsbOK1y90NNSAJtI+Z/oJEzHbJjeos7P
+	OMDuF26VCdgOzzdwxgrNHZZDSJa4HtKycFcrFf0O22Y3/NesElsJJdW02ofZh03T
+	hFsfaCY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=AayCze
-	aY60Z3XJU/PBm7oIkiiVb++o09yh1h1l5sO41naHwwTiKoPHHR+b+hH0EDDtNfVm
-	o9bBnrNA9mIDLOtQZhbom0++tplbhRW4uj2gtsKKVkblW/6X2eNe+jtazNgCFJdI
-	eWexPr4nmBWIHC5W2Ea+Og7GfwumNfMpt8LHM=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=OTCWo1
+	GNWZj3cQ3pU07dZIYHwM+b51ptpT4/oXc7zGGsw/x1XN2Dtzqd5V8yfX4B4x8agl
+	EF3oLd3Q1mwK1hTTI3sSsYRozz7hacoYULlZheAnQ2I/gsSVLfs+mYg0W6d2AA0i
+	w9OP13cmNcJYrlfrYsE505aK+KkZrkg8icMcw=
 Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D37CE1C337;
-	Thu, 29 May 2014 18:42:55 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0B1171C341;
+	Thu, 29 May 2014 18:43:00 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CE4741C328;
-	Thu, 29 May 2014 18:42:51 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0185D1C339;
+	Thu, 29 May 2014 18:42:56 -0400 (EDT)
 X-Mailer: git-send-email 2.0.0-479-g59ac8f9
 In-Reply-To: <1401403350-7122-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 912B5D82-E782-11E3-AAC7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 943EC7C0-E782-11E3-9FCE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250416>
 
-Replace desription of old-style "Pull:" lines in remotes/
-configuration with modern remote.*.fetch variables.
-
-As this note applies only to "git pull", enable it only
-in git-pull manual page.
+The text made it sound as if the leading plus is the only thing that
+is optional, and forgot that <lhs> is the same as <lhs>:, i.e. fetch
+it and do not store anywhere.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/pull-fetch-param.txt | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ Documentation/pull-fetch-param.txt | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index e266c2d..ea4c5a6 100644
+index ea4c5a6..27cfd5c 100644
 --- a/Documentation/pull-fetch-param.txt
 +++ b/Documentation/pull-fetch-param.txt
-@@ -34,22 +34,26 @@ will be needed for such branches.  There is no way to
- determine or declare that a branch will be made available
- in a repository with this behavior; the pulling user simply
- must know this is the expected usage pattern for a branch.
-+ifdef::git-pull[]
+@@ -15,6 +15,7 @@ endif::git-pull[]
+ 	The format of a <refspec> parameter is an optional plus
+ 	`+`, followed by the source ref <src>, followed
+ 	by a colon `:`, followed by the destination ref <dst>.
++	The colon can be omitted when <dst> is empty.
  +
- [NOTE]
- There is a difference between listing multiple <refspec>
- directly on 'git pull' command line and having multiple
--`Pull:` <refspec> lines for a <repository> and running
-+`remote.<repository>.fetch` entries in your configuration
-+for a <repository> and running
- 'git pull' command without any explicit <refspec> parameters.
- <refspec> listed explicitly on the command line are always
- merged into the current branch after fetching.  In other words,
- if you list more than one remote refs, you would be making
--an Octopus.  While 'git pull' run without any explicit <refspec>
--parameter takes default <refspec>s from `Pull:` lines, it
-+an Octopus merge. On the other hand, 'git pull' that is run
-+without any explicit <refspec> parameter takes default
-+<refspec>s from `remote.<repository>.fetch` configuration, it
- merges only the first <refspec> found into the current branch,
--after fetching all the remote refs.  This is because making an
-+after fetching all the remote refs specified.  This is because making an
- Octopus from remote refs is rarely done, while keeping track
- of multiple remote heads in one-go by fetching more than one
- is often useful.
-+endif::git-pull[]
- +
- Some short-cut notations are also supported.
- +
+ The remote ref that matches <src>
+ is fetched, and if <dst> is not empty string, the local
 -- 
 2.0.0-479-g59ac8f9
