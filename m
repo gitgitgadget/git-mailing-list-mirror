@@ -1,81 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] check_refname_component: Optimize
-Date: Thu, 29 May 2014 09:36:33 -0700
-Message-ID: <xmqqfvjsbkz2.fsf@gitster.dls.corp.google.com>
-References: <1401311055-480-1-git-send-email-dturner@twitter.com>
-	<1401311055-480-2-git-send-email-dturner@twitter.com>
-	<538658C0.8050001@alum.mit.edu> <1401320968.18134.98.camel@stross>
-	<CACsJy8BcBmuC3KMu+5dhGiOXX=u7WtHWQzQuT=ZPTbSCduJdbw@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v11 25/41] fast-import.c: use a ref transaction when
+ dumping tags
+Date: Thu, 29 May 2014 10:41:06 -0700
+Message-ID: <20140529174106.GE12314@google.com>
+References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
+ <1401222360-21175-26-git-send-email-sahlberg@google.com>
+ <20140528194746.GX12314@google.com>
+ <CAL=YDWkUhdoJkdg_zaq+p=XRu7H9fqNXDz89uPhbr4equTyVLQ@mail.gmail.com>
+ <20140528221720.GB12314@google.com>
+ <CAL=YDW=ruMzd=twadncjgFTh3yv=796cN72amJ4ep8a41tgmrA@mail.gmail.com>
+ <20140528233940.GC12314@google.com>
+ <CAL=YDW=WmNObkTO_uybTToeMKGGQf5NC0oFvy_pMrsg+ehpzog@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Turner <dturner@twopensource.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twitter.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu May 29 18:36:52 2014
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu May 29 19:41:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq3Jw-0006qN-BR
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 18:36:48 +0200
+	id 1Wq4KK-000144-79
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 19:41:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757989AbaE2Qgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 12:36:43 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56646 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757532AbaE2Qgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 12:36:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 57A931A5CB;
-	Thu, 29 May 2014 12:36:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5bi2K8Kc4Y5dFNhJ9zmCdeSO3Yg=; b=tOquH4
-	1vSpUmElSZ+O8wT3mIyJV3pMD0H/7zE0TqAQTCGwDCNw8jx2JiHbNp0q3IyV0W06
-	tEy4SmGThCkzBLQqs9BDPRTTZJr2+5oqKi0+tGnVjoxA/yGmm3KupsLt4ciC0g9i
-	XKEScIITI68jcDgSXg+2u4zc6ifR2/G3dEPms=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jnAumO+bArl7OKIjGkxEQmxPR5uyn3g0
-	wLh8WW9pHAg3SGl3hha1l1AKn+xjwjiMNx7d8OZMYfOLEEdSjQ5UKAl/3av29i7C
-	MrHOC0Gg3zGl+xoZRDk84tU49X8DBpAEdHNYMgRx3iHm5WlFg6wgtH0jzgPlGew0
-	RiTP1jvSWCA=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4D66B1A5CA;
-	Thu, 29 May 2014 12:36:38 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C54FA1A5C6;
-	Thu, 29 May 2014 12:36:34 -0400 (EDT)
-In-Reply-To: <CACsJy8BcBmuC3KMu+5dhGiOXX=u7WtHWQzQuT=ZPTbSCduJdbw@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 29 May 2014 20:41:52 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 65D5F7B0-E74F-11E3-92F4-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932902AbaE2RlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 13:41:11 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:48869 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932640AbaE2RlK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 13:41:10 -0400
+Received: by mail-pa0-f44.google.com with SMTP id lj1so725828pab.3
+        for <git@vger.kernel.org>; Thu, 29 May 2014 10:41:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=DwDql8Fm5a8ijOC0RL9+dutiN/FNLfw35dkZVocRsus=;
+        b=p1ag6cgqmEqZ/q+pbx+nmwIT6QhqPKnYodoZEhQtbpvxWb7y47zOmdpr0f+z8YmbyB
+         8dxCTdmGE7X+Vn5ILIgrLzUfeVAdhHV9pEJBzZ9bl7PwFFvSmACVAFhcdmAtq+iYd+gU
+         6vGTmDMExxoJ5778a0sGAXcH/CltGBKWRS4h/uU/zv6i8+98pqM0oCNG03910EU+4Cxt
+         knQb8MmS1Hi3DUL9fkvqShAMHbJKknE0CQ5ahSuQ34pMJJS91K04LB3zxivI89eQ3ieh
+         iGuZXygQ5s9f2JkCaPNUsMFTuEcb0Ix7+W4cgAiTDBx611RUEuBWdiMhTlIgGqwTwDRj
+         H5hQ==
+X-Received: by 10.66.242.204 with SMTP id ws12mr11005726pac.10.1401385269658;
+        Thu, 29 May 2014 10:41:09 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id iz2sm2198163pbb.95.2014.05.29.10.41.08
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 29 May 2014 10:41:08 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAL=YDW=WmNObkTO_uybTToeMKGGQf5NC0oFvy_pMrsg+ehpzog@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250394>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Ronnie Sahlberg wrote:
+> On Wed, May 28, 2014 at 4:39 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-> On Thu, May 29, 2014 at 6:49 AM, David Turner <dturner@twopensource.com> wrote:
->>> I assume that most of the time spent in check_refname_component() is
->>> while reading the packed-refs file, right?
+>> Usually when ref_transaction_commit is called I can do
 >>
->> Yes.
+>>         struct strbuf err = STRBUF_INIT;
+>>         if (ref_transaction_commit(..., &err))
+>>                 die("%s", err.buf);
+>>
+>> and I know that since ref_transaction_commit has returned a nonzero
+>> result, err.buf is populated with a sensible message that will
+>> describe what went wrong.
+[...]
+>> But the guarantee you are describing removes that property.  It
+>> creates a case where ref_transaction_commit can return nonzero without
+>> updating err.  So I get the following message:
+>>
+>>         fatal:
+>>
+>> I don't think that's a good outcome.
 >
-> I wonder if we can get away without SSE code by saving stat info of
-> the packed-refs version that we have verified. When we read pack-refs,
-> if stat info matches, skip check_refname_component(). Assuming that
-> pack-refs does not change often, of course.
+> In this case "fatal:" can not happen.
+> This is no more subtle than most of the git core.
+>
+> I have changed this function to explicitly abort on _update failing
+> but I think this is making the api too restrictive.
 
-Can you elaborate a bit more?
+I don't want to push you toward making a change you think is wrong.  I
+certainly don't own the codebase, and there are lots of other people
+(e.g., Michael, Junio, Jeff) to get advice from.  So I guess I should
+try to address this.
 
-Regardless, I think I would prefer to see this patch done as at
-least a two step series, one that does only the look-up table thing,
-and then the other with arch-specific tweaks as a follow-up on top.
+I'm not quite sure what you mean by too restrictive.
+
+ a. Having API constraints that aren't enforced by the function makes
+    using the API too fussy.
+
+    I agree with that.  That was something I liked about keeping track
+    of the OPEN/CLOSED state of a transaction, which would let
+    functions like _commit die() if someone is misusing the API so the
+    problem gets detected early.
+
+ b. Having to check the return value from _update() is too fussy.
+ 
+    It certainly seems *possible* to have an API that doesn't require
+    checking the return value, while still avoiding the usability
+    problem I described in the quoted message above.  For example:
+
+     * _update() returns void and has no strbuf parameter
+     * error handling happens by checking the error from _commit()
+
+    That would score well on the scale described at
+    http://ozlabs.org/~rusty/index.cgi/tech/2008-03-30.html
+
+    An API where checking the return value is optional would be
+    doable, too.  For example:
+
+     * _update() returns int and has a strbuf parameter
+     * if the strbuf parameter is NULL, the caller is expected to
+       wait for _commit() to check for errors, and a relevant
+       message will be passed back then
+     * if the strbuf parameter is non-NULL, then calling _commit()
+       after an error is an API violation
+
+I don't understand the comment about no more subtle than most of git.
+Are you talking about the errno action at a distance you found in some
+functions?  I thought we agreed that those were mistakes that accrue
+when people aim for a quick fix without thinking about maintainability
+and something git should have less of.
+
+Jonathan
