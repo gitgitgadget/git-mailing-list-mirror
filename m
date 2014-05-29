@@ -1,75 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] fetch doc: update refspec format description
-Date: Thu, 29 May 2014 15:42:30 -0700
-Message-ID: <1401403350-7122-6-git-send-email-gitster@pobox.com>
-References: <1401403350-7122-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 30 00:43:12 2014
+From: Jonathan Leonard <johanatan@gmail.com>
+Subject: Re: .gitmodules containing SSH clone URLs should fall back to HTTPS
+ when SSH key is not valid/existent
+Date: Thu, 29 May 2014 16:12:38 -0700
+Message-ID: <CA+OJ3utofb+od5uct4HF1yoQGfWgX7YTn4hPChDpC7LTFVJDYQ@mail.gmail.com>
+References: <CA+OJ3uv0XqeodTCzeauUrH9FjzknBupMd5kxh+3qgyji5TwOzA@mail.gmail.com>
+	<53871B8D.40608@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, John Albietz <inthecloud247@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri May 30 01:12:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq92V-0003vU-9R
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 00:43:11 +0200
+	id 1Wq9V5-000604-QF
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 01:12:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753966AbaE2WnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 18:43:03 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65140 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753841AbaE2WnB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 18:43:01 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 383D21C342;
-	Thu, 29 May 2014 18:43:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=rTx+
-	6u31Axa5d8Y6kAizzqhWWIk=; b=ok62dokAjHV349y4dh5EestrNvacax+x/XHo
-	jMCJw1g5DBvPx70GMrFx8JYsG67Bq4JkGsbOK1y90NNSAJtI+Z/oJEzHbJjeos7P
-	OMDuF26VCdgOzzdwxgrNHZZDSJa4HtKycFcrFf0O22Y3/NesElsJJdW02ofZh03T
-	hFsfaCY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=OTCWo1
-	GNWZj3cQ3pU07dZIYHwM+b51ptpT4/oXc7zGGsw/x1XN2Dtzqd5V8yfX4B4x8agl
-	EF3oLd3Q1mwK1hTTI3sSsYRozz7hacoYULlZheAnQ2I/gsSVLfs+mYg0W6d2AA0i
-	w9OP13cmNcJYrlfrYsE505aK+KkZrkg8icMcw=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0B1171C341;
-	Thu, 29 May 2014 18:43:00 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0185D1C339;
-	Thu, 29 May 2014 18:42:56 -0400 (EDT)
-X-Mailer: git-send-email 2.0.0-479-g59ac8f9
-In-Reply-To: <1401403350-7122-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 943EC7C0-E782-11E3-9FCE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1754038AbaE2XMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 19:12:40 -0400
+Received: from mail-qg0-f51.google.com ([209.85.192.51]:53708 "EHLO
+	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751577AbaE2XMj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 19:12:39 -0400
+Received: by mail-qg0-f51.google.com with SMTP id q107so3114580qgd.24
+        for <git@vger.kernel.org>; Thu, 29 May 2014 16:12:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=1dF4UAKKe1uaTDYvjjp+msellCNThtJOWS47x8ltna0=;
+        b=EV45p5G28QmaX0ynpuhy9OYv2qtg+Ht8Yhf3Qep1a73bxfqUOMcvYiBslye2pa3M3V
+         I9YxOcTSGM8ElMxmiNABXgdw4EsOiZCFgyFPRc4744NfnhA53zIyB6DUA+H5dpiMmkBh
+         ZxZmVljQZ3Zd2HhvmTzqiD/k/it8ZblZZgZAcQfpzJo5a3q92Gsp+2CoeQSbXJXi+fPU
+         88JgqiTEL8ZvnUwbUiThpLZT3IkTPEWH0R+Hp1ewnV33xgCR2zIU2TCDU2SzSByeHuAV
+         RpG7Kn/5AtM3dWNtI/4nWLG7S3k4/Ur6J5Y/zTGMBietSrt5ZGr0H9CmgvA7grBoM5d7
+         ygcg==
+X-Received: by 10.140.42.165 with SMTP id c34mr14576144qga.40.1401405158621;
+ Thu, 29 May 2014 16:12:38 -0700 (PDT)
+Received: by 10.140.108.203 with HTTP; Thu, 29 May 2014 16:12:38 -0700 (PDT)
+In-Reply-To: <53871B8D.40608@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250417>
 
-The text made it sound as if the leading plus is the only thing that
-is optional, and forgot that <lhs> is the same as <lhs>:, i.e. fetch
-it and do not store anywhere.
+> But you do not give much information about your special use
+> case. I assume you have submodule repositories for which some
+> developers have a valid ssh key and others don't (maybe
+> because they should only have read access via https)?
+>
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/pull-fetch-param.txt | 1 +
- 1 file changed, 1 insertion(+)
+Precisely. Specifically this is for a collection (17 or more) of
+GitHub-hosted projects which are maintained by only a couple of people
+(who have the ability to directly push via git:// or ssh://).
+Everyone else (including deployments and ordinary users) who clones
+the repo should be able to just grab the code via HTTPS and have it
+work.
 
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index ea4c5a6..27cfd5c 100644
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -15,6 +15,7 @@ endif::git-pull[]
- 	The format of a <refspec> parameter is an optional plus
- 	`+`, followed by the source ref <src>, followed
- 	by a colon `:`, followed by the destination ref <dst>.
-+	The colon can be omitted when <dst> is empty.
- +
- The remote ref that matches <src>
- is fetched, and if <dst> is not empty string, the local
--- 
-2.0.0-479-g59ac8f9
+> If that is the case you might want to look into access control
+> tools like gitolite.
+>
+
+We are using GitHub.
+
+>>  Lack of this feature (or presence
+>> of this bug [depending on your perspective]) is a major PITA.
+>
+> But why is https special? Why not fall back to the git
+> protocol? Or http? (And no: I'm not serious here ;-)
+>
+
+HTTPS isn't special except in that it is the least privileged
+transport type (and thus should be the last resort). Whether to
+fallback to git:// from ssh:// or vice versa is inconsequential to
+this request.
+
+> After the first failed clone of the submodule at via SSH the
+> developer could also just do a
+>
+>    git config submodule.<name>.url https://host/repo
+>
+> and override the URL from .gitmodules.
+>
+
+Yes, this would work. But it would be a painful manual step which we
+would not want to force on ordinary users (and would not want to
+experience ourselves either).
+
+It should be noted that this is only really a problem as the other
+options GitHub gives us are also equally (or more) painful:
+a) - a unique deploy key per machine and project. (which at current
+would be 17 * 3 keys all manually maintained via clicking through a
+GUI [unless we wanted to automate via GitHub API (which is also a
+non-trivial amount of work)]).
+- or -
+b) - a fake 'team' with read-only access with a single fake GitHub
+account as member thereof.
+
+I imagine this feature would be convenient for non-GitHub scenarios as
+well though.
+
+--Jonathan
