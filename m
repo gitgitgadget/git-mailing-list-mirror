@@ -1,117 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [RFC PATCH] git log: support "auto" decorations
-Date: Thu, 29 May 2014 15:31:58 -0700 (PDT)
-Message-ID: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri May 30 00:32:07 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/5] Documentation updates for 'git fetch'
+Date: Thu, 29 May 2014 15:42:25 -0700
+Message-ID: <1401403350-7122-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri May 30 00:42:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq8rm-0007fD-HX
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 00:32:06 +0200
+	id 1Wq921-0003O0-IP
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 00:42:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751914AbaE2WcC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 18:32:02 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:50161 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750940AbaE2WcB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 18:32:01 -0400
-Received: by mail-pa0-f47.google.com with SMTP id ld10so962147pab.34
-        for <git@vger.kernel.org>; Thu, 29 May 2014 15:32:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version
-         :content-type;
-        bh=KhKyGrcejfixyRUYT2CKa5WsIRw/eYxu9FIj79a2AjU=;
-        b=uccdvLXAEr9FUJ3pPgbeVMx+RTj6YXkC8nK1d5BUIhkeTzIg8xBOU8MaR3B3WUgt00
-         AzzAjbQSoMpLsdR1J9cOcQ+/we6Uffv0U1nlTSXEK70uFQGqTpwY2/yPSHog3wu2lvhe
-         osHKM1kiZ3DeqvlGDU33KJoJ1lLqjxLW2daQWWtw2WVFqtGMZ7czORA3j4OMEmTLx7iz
-         fptoeYdU24blBEfP04z6YZiyeG5eA9AwXsL4tTwJ73jSxUs6TLBjnK6OmlZ8dr/w72gl
-         zk+AYjCkfvQfrfbQItV9ntw52PmQAiW53LlyWZLQw/1T3trHZk+Q1tK0h4h/pBjavQMm
-         1I3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version
-         :content-type;
-        bh=KhKyGrcejfixyRUYT2CKa5WsIRw/eYxu9FIj79a2AjU=;
-        b=KR7S0yRYr5aNyepVXnKII5i4XkmCKnemUoHg3+Yhr2qQcCxkY09sv4jYCqMuikNiu/
-         seTr70RtmURE/XcVssI98LGsY1XM3lY5BCF+ydhnPvlC6vL9JtO/eSpDbhh8XeBb3YUD
-         Cg2ypUdhmrHK7E3sk5/G6DFStTamxtSeyMR9g=
-X-Received: by 10.66.66.135 with SMTP id f7mr13202979pat.22.1401402720616;
-        Thu, 29 May 2014 15:32:00 -0700 (PDT)
-Received: from i7.lan (c-24-22-13-12.hsd1.or.comcast.net. [24.22.13.12])
-        by mx.google.com with ESMTPSA id fk4sm8905722pab.23.2014.05.29.15.31.59
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 29 May 2014 15:31:59 -0700 (PDT)
-User-Agent: Alpine 2.11 (LFD 23 2013-08-11)
+	id S1753785AbaE2Wmh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 18:42:37 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54852 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753210AbaE2Wmg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 18:42:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 00BA01C317;
+	Thu, 29 May 2014 18:42:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id; s=sasl; bh=0F9R143ID3gemOZHLAD6yD9IP9Q
+	=; b=lwd5QWSGJSUa55de/uGyoM8Q5v8bbvxaXlp5MxOkBIKAd6iQBHHA/l8h6Ad
+	AnHsrhEoBEz9vayUqO6vKXBm0kAiguK4xnudna5E/Wf2bWGl3r7sXnnnu+DR3TIf
+	ICEJ98ODL6A5nH+6fh6xika/K53dq2+aV/4rnJK89czXMG/g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id; q=dns; s=sasl; b=vLsGsJeYfn2+M9cSRoIfc1hO3MDJM
+	ioKrvOcUyZZg5eqaCvgk/pcFpChp3oFELCpSGlYEMMyHGU7AyO11JuG2pmdvhuk9
+	/PMP8eHP6UQ5sBrW7lLVLe4z2DJrNLllqpg5OXJZSUPhJcCtTV5dlhknpL4K92Aq
+	2FLoNzaumDa3Ng=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E9CAF1C316;
+	Thu, 29 May 2014 18:42:35 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7EF341C315;
+	Thu, 29 May 2014 18:42:32 -0400 (EDT)
+X-Mailer: git-send-email 2.0.0-479-g59ac8f9
+X-Pobox-Relay-ID: 85A648AA-E782-11E3-9BA5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250411>
 
+Noticed that this page has antiquated description, which may still
+be correct, that can use some modernization.
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 29 May 2014 15:19:40 -0700
-Subject: [RFC PATCH] git log: support "auto" decorations
+There are a few more larger updates coming, but these are small
+enough to be reviewed separately and quickly, so I am sending them
+out early.
 
-This works kind of like "--color=auto" - add decorations for interactive
-use, but do not change defaults when scripting or when piping the output
-to anything but a terminal.
+Junio C Hamano (5):
+  fetch doc: update introductory part for clarity
+  fetch doc: update note on '+' in front of the refspec
+  fetch doc: remove notes on outdated "mixed layout"
+  fetch doc: on pulling multiple refspecs
+  fetch doc: update refspec format description
 
-You can use either
+ Documentation/git-fetch.txt        | 29 ++++++++++++++-----------
+ Documentation/pull-fetch-param.txt | 44 ++++++++++++++++----------------------
+ 2 files changed, 34 insertions(+), 39 deletions(-)
 
-    [log]
-         decorate=auto
-
-in the git config files, or the "--decorate=auto" command line option to
-choose this behavior.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
-
-I actually like seeing decorations by default, but I do *not* think our 
-current "log.decorate" options make sense, since they will change any 
-random use of "git log" to have decorations. I much prefer the 
-"ui.color=auto" behavior that we have for coloration. This is a trivial 
-patch that tries to approximate that.
-
-It's marked with RFC because
-
- (a) that "isatty(1) || pager_in_use()" test is kind of hacky, maybe we 
-     would be better off sharing something with the auto-coloration?
-
- (b) I also think it would be nice to have the equivalent for 
-     "--show-signature", but there we don't have any preexisting config 
-     file option.
-
- (c) maybe somebody would like a way to combine "auto" and "full", 
-     although personally that doesn't seem to strike me as all that useful 
-     (would you really want to see the full refname when not scripting it)
-
-but the patch is certainly simple and seems to work. Comments?
-
- builtin/log.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 39e883635279..df6396c9c3d9 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -63,6 +63,8 @@ static int parse_decoration_style(const char *var, const char *value)
- 		return DECORATE_FULL_REFS;
- 	else if (!strcmp(value, "short"))
- 		return DECORATE_SHORT_REFS;
-+	else if (!strcmp(value, "auto"))
-+		return (isatty(1) || pager_in_use()) ? DECORATE_SHORT_REFS : 0;
- 	return -1;
- }
- 
 -- 
-2.0.0.1.g5beb60c
+2.0.0-479-g59ac8f9
