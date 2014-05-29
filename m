@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v12 26/41] walker.c: use ref transaction for ref updates
-Date: Thu, 29 May 2014 09:07:48 -0700
-Message-ID: <1401379676-9307-7-git-send-email-sahlberg@google.com>
+Subject: [PATCH v12 24/41] receive-pack.c: use a reference transaction for updating the refs
+Date: Thu, 29 May 2014 09:07:46 -0700
+Message-ID: <1401379676-9307-5-git-send-email-sahlberg@google.com>
 References: <1401379676-9307-1-git-send-email-sahlberg@google.com>
 Cc: jrnieder@gmail.com, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,172 +11,132 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq2su-00079r-Tw
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 18:08:53 +0200
+	id 1Wq2sv-00079r-VJ
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 18:08:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757099AbaE2QIs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 12:08:48 -0400
-Received: from mail-ob0-f201.google.com ([209.85.214.201]:59673 "EHLO
-	mail-ob0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757464AbaE2QIA (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932521AbaE2QIv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 12:08:51 -0400
+Received: from mail-pb0-f73.google.com ([209.85.160.73]:38027 "EHLO
+	mail-pb0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757461AbaE2QIA (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 29 May 2014 12:08:00 -0400
-Received: by mail-ob0-f201.google.com with SMTP id wn1so105522obc.0
+Received: by mail-pb0-f73.google.com with SMTP id ma3so96182pbc.4
         for <git@vger.kernel.org>; Thu, 29 May 2014 09:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=hT/OnDUQrbr/w3QLjqlQtSGC4miM8XORmSJlJUrK2m0=;
-        b=F8tv1TIv/ErTzopAegFoxLSEflqSR18XZgRNvTdga6cRFkvAA5iJ4ku8jpcUqqZd9i
-         owitKWwOn5JeN0SGIIzAug5qGJriY8dW4qb8Jxm+ku/8+NYsU36Z3GSuhxjqesz/VQXW
-         FjvSyF4XploqgIVbhn2mZJYRl15j0dFn9ZVvUSbbRNj0+1fmK3z3VkvFHvUWlLpHaB6o
-         SpeFxx0CyYt2LwKozzum8yCpd4Rze8OgbgvP+Qgx25mzDsK0H/7lDQp76vBh18f59BCw
-         3T9Ghz1S94AWsQ+exmSoTMQYKrdqctTv20MDLqusm8SyA1h4hDXuvy2cPjelU4ms06TU
-         C7fA==
+        bh=QZm6XYdRw1f1MslzbHEtj7JiSS7zuB+Xq3xVHf3vIjw=;
+        b=niODeksW/Cnc3L8jSwUDgihI+7l9JFBCkQ2xYTbp1A1FjVwFOlQbFIl6TT3TEnyTHn
+         YxaMs1XhHjxBzCz66pOGQn/STYsj62hW4638RAN/7Ly/0CcX2sBryiCfQZKhCzVElAtY
+         bayYxIVwBZd+ryBSMbHnedd89eLZF1Fmonf0OyOyaRpm6C976x6rGSYZTWRTO7ZqnT4Z
+         2gzkZe7lowVwN/lQf5pHFeohPXWaUtnhHdde6ADMyPXZOcp4EiYFwDV1kg04mJaiS1f6
+         VWVvF8hSbxyUFnSqPReVvwyEAAGicpmg9XBtJz542rq6Sc5hxfdG0IMTzMRdUBprAdCV
+         TNlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=hT/OnDUQrbr/w3QLjqlQtSGC4miM8XORmSJlJUrK2m0=;
-        b=GTo47iBwr7Ed72C77mUZlFTp3EQhWvRMCQIDVCOxVOYo6fO5tOGqNgw8VE1gu+M9CR
-         q6zwnl/V234vnXKOhpITVewQcJm1DKLPdd8nwCuDuoRkMbWY3CBfevhy2NNtO6rf6cQA
-         RQsP46j+CAh6Bc3Vj2S2YGB5Z23V4eIvq4KS60C98TtfsgpJU00VvJqg1q9xPnN9Etk1
-         dq9/qp7WPGOKswLFW7hqxz+BXrJGGgryO1z2lHRKPyh5WLAPt+rGtd1+Zls/2lNEllfC
-         9XmmeiMwyAeb/kpSBX6DeXB0lWD9Hp/vauukMDOr4vOKW/3K+kRDT4IYHIGFhuMHFvhf
-         /sUQ==
-X-Gm-Message-State: ALoCoQn1aoVr5UCJjLQsWXTyNlYIcM23booNeMTdgNDM/YRCvgEl8dkL5XlgmuKLgJzF+oijPvA/
-X-Received: by 10.182.213.37 with SMTP id np5mr3490069obc.36.1401379679602;
+        bh=QZm6XYdRw1f1MslzbHEtj7JiSS7zuB+Xq3xVHf3vIjw=;
+        b=kqPnodJspx4OYIGpzCSJ/4hL3qGUVLhPKf7VaUZdlDAJ3ke/6IuwlQsDctzYQQEeL0
+         qFQhkcORXaCvkVU4ZocqgmCaKljlabh3djY8QngyH0tc1/pUbR4Wy95EKuge281B/fed
+         jGAUaZG6iq3BbYzhdP8E/CosWhUfx+Zw7RakqMo3AEwFk/h58f3brB50KHxOZ6BETZR5
+         ZbI4YJfjAEZDfgr9Yl+lUnF7ZUQ8eXLdVv8kSH3Fmn2792nGAGBeWxD3wIzsqr5BkCu8
+         w44CLqbmsZQwLEUeMCKs6vLY545lt5gzqC/8SwJq3fgdIFWE0sFZZebq5OXFkfsIOlqB
+         HEnQ==
+X-Gm-Message-State: ALoCoQmHITWubAXjSj6shs2pYWfZdRXcyfqJli/s+FprehHssBTpdCw0aNVIqRX2T9jUiF5D8FLC
+X-Received: by 10.68.133.138 with SMTP id pc10mr3154422pbb.5.1401379679548;
         Thu, 29 May 2014 09:07:59 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id i65si82019yhg.2.2014.05.29.09.07.59
+        by gmr-mx.google.com with ESMTPS id i65si82017yhg.2.2014.05.29.09.07.59
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 29 May 2014 09:07:59 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 55C405A4340;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 565C25A4353;
 	Thu, 29 May 2014 09:07:59 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 05AEAE11F5; Thu, 29 May 2014 09:07:58 -0700 (PDT)
+	id EB619E1352; Thu, 29 May 2014 09:07:58 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.474.g3833130
 In-Reply-To: <1401379676-9307-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250389>
 
-Switch to using ref transactions in walker_fetch(). As part of the refactoring
-to use ref transactions we also fix a potential memory leak where in the
-original code if write_ref_sha1() would fail we would end up returning from
-the function without free()ing the msg string.
-
-Note that this function is only called when fetching from a remote HTTP
-repository onto the local (most of the time single-user) repository which
-likely means that the type of collissions that the previous locking would
-protect against and cause the fetch to fail for to be even more rare.
+Wrap all the ref updates inside a transaction.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- walker.c | 59 +++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 35 insertions(+), 24 deletions(-)
+ builtin/receive-pack.c | 31 ++++++++++++++++++++++---------
+ 1 file changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/walker.c b/walker.c
-index 1dd86b8..60d9f9e 100644
---- a/walker.c
-+++ b/walker.c
-@@ -251,39 +251,36 @@ void walker_targets_free(int targets, char **target, const char **write_ref)
- int walker_fetch(struct walker *walker, int targets, char **target,
- 		 const char **write_ref, const char *write_ref_log_details)
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index c323081..13f4a63 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -46,6 +46,7 @@ static void *head_name_to_free;
+ static int sent_capabilities;
+ static int shallow_update;
+ static const char *alt_shallow_file;
++static struct string_list error_strings = STRING_LIST_INIT_DUP;
+ 
+ static enum deny_action parse_deny_action(const char *var, const char *value)
  {
--	struct ref_lock **lock = xcalloc(targets, sizeof(struct ref_lock *));
-+	struct strbuf ref_name = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_transaction *transaction = NULL;
- 	unsigned char *sha1 = xmalloc(targets * 20);
--	char *msg;
--	int ret;
-+	char *msg = NULL;
- 	int i;
+@@ -475,7 +476,6 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	const char *namespaced_name;
+ 	unsigned char *old_sha1 = cmd->old_sha1;
+ 	unsigned char *new_sha1 = cmd->new_sha1;
+-	struct ref_lock *lock;
  
- 	save_commit_buffer = 0;
+ 	/* only refs/... are allowed */
+ 	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
+@@ -576,19 +576,31 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 		return NULL; /* good */
+ 	}
+ 	else {
++		struct strbuf err = STRBUF_INIT;
++		struct ref_transaction *transaction;
++
+ 		if (shallow_update && si->shallow_ref[cmd->index] &&
+ 		    update_shallow_ref(cmd, si))
+ 			return "shallow error";
  
--	for (i = 0; i < targets; i++) {
--		if (!write_ref || !write_ref[i])
--			continue;
--
--		lock[i] = lock_ref_sha1(write_ref[i], NULL);
--		if (!lock[i]) {
--			error("Can't lock ref %s", write_ref[i]);
--			goto unlock_and_fail;
-+	if (write_ref) {
+-		lock = lock_any_ref_for_update(namespaced_name, old_sha1,
+-					       0, NULL);
+-		if (!lock) {
+-			rp_error("failed to lock %s", name);
+-			return "failed to lock";
+-		}
+-		if (write_ref_sha1(lock, new_sha1, "push")) {
+-			return "failed to write"; /* error() already called */
 +		transaction = ref_transaction_begin(&err);
-+		if (!transaction) {
-+			error("%s", err.buf);
-+			goto rollback_and_fail;
++		if (!transaction ||
++		    ref_transaction_update(transaction, namespaced_name,
++					   new_sha1, old_sha1, 0, 1, &err) ||
++		    ref_transaction_commit(transaction, "push", &err)) {
++
++			const char *str;
++			string_list_append(&error_strings, err.buf);
++			str = error_strings.items[error_strings.nr - 1].string;
++			strbuf_release(&err);
++
++			ref_transaction_free(transaction);
++			rp_error("%s", str);
++			return str;
  		}
- 	}
--
- 	if (!walker->get_recover)
- 		for_each_ref(mark_complete, NULL);
- 
- 	for (i = 0; i < targets; i++) {
- 		if (interpret_target(walker, target[i], &sha1[20 * i])) {
- 			error("Could not interpret response from server '%s' as something to pull", target[i]);
--			goto unlock_and_fail;
-+			goto rollback_and_fail;
- 		}
- 		if (process(walker, lookup_unknown_object(&sha1[20 * i])))
--			goto unlock_and_fail;
-+			goto rollback_and_fail;
- 	}
- 
- 	if (loop(walker))
--		goto unlock_and_fail;
-+		goto rollback_and_fail;
- 
- 	if (write_ref_log_details) {
- 		msg = xmalloc(strlen(write_ref_log_details) + 12);
-@@ -294,19 +291,33 @@ int walker_fetch(struct walker *walker, int targets, char **target,
- 	for (i = 0; i < targets; i++) {
- 		if (!write_ref || !write_ref[i])
- 			continue;
--		ret = write_ref_sha1(lock[i], &sha1[20 * i], msg ? msg : "fetch (unknown)");
--		lock[i] = NULL;
--		if (ret)
--			goto unlock_and_fail;
-+		strbuf_reset(&ref_name);
-+		strbuf_addf(&ref_name, "refs/%s", write_ref[i]);
-+		if (ref_transaction_update(transaction, ref_name.buf,
-+					   &sha1[20 * i], NULL, 0, 0,
-+					   &err)) {
-+			error("%s", err.buf);
-+			goto rollback_and_fail;
-+		}
-+	}
-+	if (write_ref) {
-+		if (ref_transaction_commit(transaction,
-+					   msg ? msg : "fetch (unknown)",
-+					   &err)) {
-+			error("%s", err.buf);
-+			goto rollback_and_fail;
-+		}
++
 +		ref_transaction_free(transaction);
++		strbuf_release(&err);
+ 		return NULL; /* good */
  	}
--	free(msg);
- 
-+	free(msg);
+ }
+@@ -1215,5 +1227,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		packet_flush(1);
+ 	sha1_array_clear(&shallow);
+ 	sha1_array_clear(&ref);
++	string_list_clear(&error_strings, 0);
  	return 0;
- 
--unlock_and_fail:
--	for (i = 0; i < targets; i++)
--		if (lock[i])
--			unlock_ref(lock[i]);
-+rollback_and_fail:
-+	ref_transaction_free(transaction);
-+	free(msg);
-+	strbuf_release(&err);
-+	strbuf_release(&ref_name);
- 
- 	return -1;
  }
 -- 
 2.0.0.rc3.474.g3833130
