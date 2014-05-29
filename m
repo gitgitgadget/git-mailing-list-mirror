@@ -1,116 +1,117 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH 11/10] fixup! t9904: new __git_ps1 tests for Zsh
-Date: Thu, 29 May 2014 18:30:33 -0400
-Message-ID: <1401402633-14742-1-git-send-email-rhansen@bbn.com>
-References: <87fvjsmmr4.fsf@thomasrast.ch>
-Cc: git@vger.kernel.org, rhansen@bbn.com
-To: tr@thomasrast.ch
-X-From: git-owner@vger.kernel.org Fri May 30 00:30:49 2014
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [RFC PATCH] git log: support "auto" decorations
+Date: Thu, 29 May 2014 15:31:58 -0700 (PDT)
+Message-ID: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri May 30 00:32:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq8qW-00068I-DW
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 00:30:48 +0200
+	id 1Wq8rm-0007fD-HX
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 00:32:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751924AbaE2Wan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 18:30:43 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:62145 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751487AbaE2Wan (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 18:30:43 -0400
-Received: from socket.bbn.com ([192.1.120.102]:34205)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1Wq8qO-0003qD-5J; Thu, 29 May 2014 18:30:40 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id DACB740BE2
-X-Mailer: git-send-email 2.0.0
-In-Reply-To: <87fvjsmmr4.fsf@thomasrast.ch>
+	id S1751914AbaE2WcC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 18:32:02 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:50161 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750940AbaE2WcB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 18:32:01 -0400
+Received: by mail-pa0-f47.google.com with SMTP id ld10so962147pab.34
+        for <git@vger.kernel.org>; Thu, 29 May 2014 15:32:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version
+         :content-type;
+        bh=KhKyGrcejfixyRUYT2CKa5WsIRw/eYxu9FIj79a2AjU=;
+        b=uccdvLXAEr9FUJ3pPgbeVMx+RTj6YXkC8nK1d5BUIhkeTzIg8xBOU8MaR3B3WUgt00
+         AzzAjbQSoMpLsdR1J9cOcQ+/we6Uffv0U1nlTSXEK70uFQGqTpwY2/yPSHog3wu2lvhe
+         osHKM1kiZ3DeqvlGDU33KJoJ1lLqjxLW2daQWWtw2WVFqtGMZ7czORA3j4OMEmTLx7iz
+         fptoeYdU24blBEfP04z6YZiyeG5eA9AwXsL4tTwJ73jSxUs6TLBjnK6OmlZ8dr/w72gl
+         zk+AYjCkfvQfrfbQItV9ntw52PmQAiW53LlyWZLQw/1T3trHZk+Q1tK0h4h/pBjavQMm
+         1I3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=sender:date:from:to:cc:subject:message-id:user-agent:mime-version
+         :content-type;
+        bh=KhKyGrcejfixyRUYT2CKa5WsIRw/eYxu9FIj79a2AjU=;
+        b=KR7S0yRYr5aNyepVXnKII5i4XkmCKnemUoHg3+Yhr2qQcCxkY09sv4jYCqMuikNiu/
+         seTr70RtmURE/XcVssI98LGsY1XM3lY5BCF+ydhnPvlC6vL9JtO/eSpDbhh8XeBb3YUD
+         Cg2ypUdhmrHK7E3sk5/G6DFStTamxtSeyMR9g=
+X-Received: by 10.66.66.135 with SMTP id f7mr13202979pat.22.1401402720616;
+        Thu, 29 May 2014 15:32:00 -0700 (PDT)
+Received: from i7.lan (c-24-22-13-12.hsd1.or.comcast.net. [24.22.13.12])
+        by mx.google.com with ESMTPSA id fk4sm8905722pab.23.2014.05.29.15.31.59
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 29 May 2014 15:31:59 -0700 (PDT)
+User-Agent: Alpine 2.11 (LFD 23 2013-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250410>
 
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
+
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 29 May 2014 15:19:40 -0700
+Subject: [RFC PATCH] git log: support "auto" decorations
+
+This works kind of like "--color=auto" - add decorations for interactive
+use, but do not change defaults when scripting or when piping the output
+to anything but a terminal.
+
+You can use either
+
+    [log]
+         decorate=auto
+
+in the git config files, or the "--decorate=auto" command line option to
+choose this behavior.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 ---
 
-On 2014-05-29 15:02, Thomas Rast wrote:
-> Richard Hansen <rhansen@bbn.com> writes:
->
->> These are the same tests as in t9903, but run in zsh instead of bash.
->>
->> Signed-off-by: Richard Hansen <rhansen@bbn.com>
->> ---
->>  t/lib-zsh.sh          | 30 ++++++++++++++++++++++++++++++
->>  t/t9904-zsh-prompt.sh | 10 ++++++++++
->>  2 files changed, 40 insertions(+)
->>  create mode 100644 t/lib-zsh.sh
->>  create mode 100755 t/t9904-zsh-prompt.sh
->
-> This doesn't appear to work in valgrind mode:
->
-> $ ./t9904-zsh-prompt.sh --valgrind
-> error: Test script did not set test_description.
->
-> t9903 however works.  I'm not sure how much of a difference it makes,
-> but: I use bash as my shell and as /bin/sh, but I do have zsh installed.
->
-> Can you look into it?
+I actually like seeing decorations by default, but I do *not* think our 
+current "log.decorate" options make sense, since they will change any 
+random use of "git log" to have decorations. I much prefer the 
+"ui.color=auto" behavior that we have for coloration. This is a trivial 
+patch that tries to approximate that.
 
-*sigh* By default, Zsh munges $0 whenever a function is called or a
-file is sourced, with no (immediately obvious) way to get the original
-value of $0.  This fixup causes that feature to be temporarily turned
-off so that test-lib.sh does the right thing when it execs $0.
+It's marked with RFC because
 
-Thank you for finding this bug!
+ (a) that "isatty(1) || pager_in_use()" test is kind of hacky, maybe we 
+     would be better off sharing something with the auto-coloration?
 
--Richard
+ (b) I also think it would be nice to have the equivalent for 
+     "--show-signature", but there we don't have any preexisting config 
+     file option.
 
+ (c) maybe somebody would like a way to combine "auto" and "full", 
+     although personally that doesn't seem to strike me as all that useful 
+     (would you really want to see the full refname when not scripting it)
 
- t/lib-zsh.sh | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+but the patch is certainly simple and seems to work. Comments?
 
-diff --git a/t/lib-zsh.sh b/t/lib-zsh.sh
-index fa6fcd9..ab4bef2 100644
---- a/t/lib-zsh.sh
-+++ b/t/lib-zsh.sh
-@@ -2,17 +2,23 @@
- # run under Zsh; primarily intended for tests of the git-prompt.sh
- # script.
- 
--if test -n "$ZSH_VERSION" && test -z "$POSIXLY_CORRECT"; then
-+if test -n "$ZSH_VERSION" && test -z "$POSIXLY_CORRECT" && [[ ! -o FUNCTION_ARGZERO ]]; then
- 	true
- elif command -v zsh >/dev/null 2>&1; then
- 	unset POSIXLY_CORRECT
--	exec zsh "$0" "$@"
-+	# Run Zsh with the FUNCTION_ARGZERO option disabled so that
-+	# test-lib.sh sees the test script pathname when it examines
-+	# $0 instead of "./lib-zsh.sh".  (This works around a Zsh bug;
-+	# 'emulate sh -c' should temporarily restore $0 to the POSIX
-+	# specification for $0, but it doesn't.)
-+	exec zsh +o FUNCTION_ARGZERO "$0" "$@"
- else
- 	echo '1..0 #SKIP skipping Zsh-specific tests; zsh not available'
- 	exit 0
- fi
- 
--# ensure that we are in full-on Zsh mode
-+# ensure that we are in full-on Zsh mode.  note: this re-enables the
-+# FUNCTION_ARGZERO option
- emulate -R zsh || exit 1
- 
- shellname=Zsh
-@@ -27,4 +33,7 @@ set_ps1_format_vars () {
- 	c_clear='%%f'
+ builtin/log.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/builtin/log.c b/builtin/log.c
+index 39e883635279..df6396c9c3d9 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -63,6 +63,8 @@ static int parse_decoration_style(const char *var, const char *value)
+ 		return DECORATE_FULL_REFS;
+ 	else if (!strcmp(value, "short"))
+ 		return DECORATE_SHORT_REFS;
++	else if (!strcmp(value, "auto"))
++		return (isatty(1) || pager_in_use()) ? DECORATE_SHORT_REFS : 0;
+ 	return -1;
  }
  
-+# note: although the FUNCTION_ARGZERO option is currently enabled, sh
-+# emulation mode temporarily turns it off ($0 is left alone when
-+# sourcing test-lib.sh)
- emulate sh -c '. ./test-lib.sh'
 -- 
-2.0.0
+2.0.0.1.g5beb60c
