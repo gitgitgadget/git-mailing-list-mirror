@@ -1,95 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG REPORT] Git log pretty date
-Date: Thu, 29 May 2014 11:57:15 -0700
-Message-ID: <xmqq7g54begk.fsf@gitster.dls.corp.google.com>
-References: <CACJZPBtv-Cpb8_WZMz9Hsk9MrC86YGfbvREt6G=QKvMBjrqsEg@mail.gmail.com>
-	<CACsJy8BREpVFKq3mW=Lwn+uNm1r40Xe8f4EyXLFN2yybZRT0oA@mail.gmail.com>
-	<20140529161628.GB3763@sigill.intra.peff.net>
+From: Thomas Rast <tr@thomasrast.ch>
+Subject: Re: [PATCH 10/10] t9904: new __git_ps1 tests for Zsh
+Date: Thu, 29 May 2014 21:02:39 +0200
+Message-ID: <87fvjsmmr4.fsf@thomasrast.ch>
+References: <xmqqbnusz46e.fsf@gitster.dls.corp.google.com>
+	<1401176460-31564-1-git-send-email-rhansen@bbn.com>
+	<1401176460-31564-11-git-send-email-rhansen@bbn.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Rodrigo Fernandes <rtfrodrigo@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu May 29 20:57:33 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Thu May 29 21:03:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq5W2-0001YQ-8C
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 20:57:26 +0200
+	id 1Wq5bO-0007Nk-Kt
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 21:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752294AbaE2S5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 14:57:22 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50171 "EHLO smtp.pobox.com"
+	id S932171AbaE2TCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 15:02:54 -0400
+Received: from ip1.thgersdorf.net ([148.251.9.194]:58061 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751518AbaE2S5W (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 14:57:22 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 81E2719E5A;
-	Thu, 29 May 2014 14:57:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZCJtIpoyX1Id3yEtE29WSmoVmoo=; b=Ec/R44
-	BPAcJX1MVYSV183IQJK8NvMjW+bF0lA+wNtE0ddKbpjuu97N605u69Y+sY7QhMv5
-	hKrLX3xNp7mg4KD5Hrrp8wZhacAS2g23WBy5rIMyfbXr5iMoBciALu4p7sKYPCmi
-	TQhR4WzRE9w95afYFoivL1Hw5Bq32r0pm1sQo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bedXgR4VoutR9G1saA2nLAPeC8D51szx
-	GWMNDKGb26lbD28a+R9qaL6O6vbk3i2W3iKUQ2mgXWSVLMfS3AahopJBs6iuc6qx
-	t06imLwxS/rUcxEP1QFfam6cxuS4U2Gtu4qc1zBEmH9ChbTHn1ZnuOEkWhqrgfbg
-	8rjitPhKRCA=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 71C5619E59;
-	Thu, 29 May 2014 14:57:21 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A01DB19E51;
-	Thu, 29 May 2014 14:57:17 -0400 (EDT)
-In-Reply-To: <20140529161628.GB3763@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 29 May 2014 12:16:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0E2AC798-E763-11E3-AAF0-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932078AbaE2TCy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 15:02:54 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by localhost.psioc.net (Postfix) with ESMTP id F06F04D659B;
+	Thu, 29 May 2014 21:02:49 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at psioc.net
+Received: from mail.psioc.net ([127.0.0.1])
+	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id DZTJ-4Rh3FWD; Thu, 29 May 2014 21:02:40 +0200 (CEST)
+Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(Client did not present a certificate)
+	by mail.psioc.net (Postfix) with ESMTPSA id CA3374D64C5;
+	Thu, 29 May 2014 21:02:39 +0200 (CEST)
+In-Reply-To: <1401176460-31564-11-git-send-email-rhansen@bbn.com> (Richard
+	Hansen's message of "Tue, 27 May 2014 03:41:00 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250399>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250400>
 
-Jeff King <peff@peff.net> writes:
+Richard Hansen <rhansen@bbn.com> writes:
 
-> ...
-> to at least make --format date output consistent with the rest of git
-> (and to make "%at" consistent with "%ad" and --date=raw). That still
-> doesn't address Rodrigo's concern, though (we would print "0 +0000").
+> These are the same tests as in t9903, but run in zsh instead of bash.
 >
-> For that, we would want on top:
->
->   1. Teach split_ident_line to return _something_ for his malformed
->      case.
->
->   2. Teach show_ident_line to treat DATE_RAW to truly output raw
->      content, even if it is malformed.
->
-> I am not sure whether those are a good idea or not. The current code
-> provides some level of sanitization, so that a parser of log output will
-> not get malformed cruft. And DATE_RAW may mean "show me what is in the
-> raw commit, even if it is broken". Or it may just mean "show me the date
-> in unix timestamp format, because that is easy to parse".
->
-> I'd argue that if somebody really wants the former, they should be using
-> "--pretty=raw", which will show the raw commit headers, without any
-> parsing or fixup at all.
+> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+> ---
+>  t/lib-zsh.sh          | 30 ++++++++++++++++++++++++++++++
+>  t/t9904-zsh-prompt.sh | 10 ++++++++++
+>  2 files changed, 40 insertions(+)
+>  create mode 100644 t/lib-zsh.sh
+>  create mode 100755 t/t9904-zsh-prompt.sh
 
-I actually am not very much interested in deciding what to show for
-a broken timestamp.  An empty string is just as good as any random
-cruft.  I agree with you that it would be nice to have one escape
-hatch to let the users see what garbage is recorded, if only for
-diagnostic purposes, and DATE_RAW may be one good way to do so (but
-I'd rather recommend "cat-file commit" for real diagnostics).
+This doesn't appear to work in valgrind mode:
 
-I would be more interested to see whatever broken tool that created
-such a commit gets fixed.  Do we know where it came from?
+$ ./t9904-zsh-prompt.sh --valgrind
+error: Test script did not set test_description.
+
+t9903 however works.  I'm not sure how much of a difference it makes,
+but: I use bash as my shell and as /bin/sh, but I do have zsh installed.
+
+Can you look into it?
+
+-- 
+Thomas Rast
+tr@thomasrast.ch
