@@ -1,72 +1,81 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH 10/10] t9904: new __git_ps1 tests for Zsh
-Date: Thu, 29 May 2014 21:02:39 +0200
-Message-ID: <87fvjsmmr4.fsf@thomasrast.ch>
-References: <xmqqbnusz46e.fsf@gitster.dls.corp.google.com>
-	<1401176460-31564-1-git-send-email-rhansen@bbn.com>
-	<1401176460-31564-11-git-send-email-rhansen@bbn.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Thu May 29 21:03:00 2014
+From: worley@alum.mit.edu (Dale R. Worley)
+Subject: Re: Git chokes on large file
+Date: Thu, 29 May 2014 15:12:02 -0400
+Message-ID: <201405291912.s4TJC2Wr028094@hobgoblin.ariadne.com>
+References: <201405271647.s4RGlDJc024596@hobgoblin.ariadne.com> <CACsJy8BM1f1pJPzGPf--a-kUim6wyX+Mr1AfMupY3mpREY+8DA@mail.gmail.com> <201405281815.s4SIF5hF025886@hobgoblin.ariadne.com> <alpine.DEB.2.02.1405281121200.32611@nftneq.ynat.uz>
+ <201405281847.s4SIlW5K027160@hobgoblin.ariadne.com> <alpine.DEB.2.02.1405281200570.32611@nftneq.ynat.uz>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu May 29 21:12:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq5bO-0007Nk-Kt
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 21:02:58 +0200
+	id 1Wq5kH-0001xd-HD
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 21:12:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932171AbaE2TCy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 15:02:54 -0400
-Received: from ip1.thgersdorf.net ([148.251.9.194]:58061 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932078AbaE2TCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 15:02:54 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id F06F04D659B;
-	Thu, 29 May 2014 21:02:49 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id DZTJ-4Rh3FWD; Thu, 29 May 2014 21:02:40 +0200 (CEST)
-Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id CA3374D64C5;
-	Thu, 29 May 2014 21:02:39 +0200 (CEST)
-In-Reply-To: <1401176460-31564-11-git-send-email-rhansen@bbn.com> (Richard
-	Hansen's message of "Tue, 27 May 2014 03:41:00 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932139AbaE2TMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 15:12:06 -0400
+Received: from qmta15.westchester.pa.mail.comcast.net ([76.96.59.228]:34632
+	"EHLO qmta15.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932078AbaE2TME (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 29 May 2014 15:12:04 -0400
+Received: from omta06.westchester.pa.mail.comcast.net ([76.96.62.51])
+	by qmta15.westchester.pa.mail.comcast.net with comcast
+	id 7ud31o00416LCl05FvC30H; Thu, 29 May 2014 19:12:03 +0000
+Received: from hobgoblin.ariadne.com ([24.34.72.61])
+	by omta06.westchester.pa.mail.comcast.net with comcast
+	id 7vC31o0091KKtkw3SvC3mj; Thu, 29 May 2014 19:12:03 +0000
+Received: from hobgoblin.ariadne.com (hobgoblin.ariadne.com [127.0.0.1])
+	by hobgoblin.ariadne.com (8.14.7/8.14.7) with ESMTP id s4TJC213028095
+	for <git@vger.kernel.org>; Thu, 29 May 2014 15:12:02 -0400
+Received: (from worley@localhost)
+	by hobgoblin.ariadne.com (8.14.7/8.14.7/Submit) id s4TJC2Wr028094;
+	Thu, 29 May 2014 15:12:02 -0400
+In-reply-to: <alpine.DEB.2.02.1405281200570.32611@nftneq.ynat.uz>
+	(david@lang.hm)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1401390723;
+	bh=BOnx1QIUcCpHgi45fOGRZ6+HClBYQo3SJ1RryP5Wwy8=;
+	h=Received:Received:Received:Received:Date:Message-Id:From:To:
+	 Subject;
+	b=S+hgV075UvW5NED3h+dDOfY1e1oH7buHVzamGkigaJu1MSemvlvvjxMLRo2phzq8U
+	 9yBdAmmRoHQwOpHkoanqL0nzW7oCiPZ0+dS+yAXy+dtZUrNT0T6trCsOoQUCXnlpg+
+	 uFmszvpvWloyKH6I/3AqPFzLqAd157BGGNYjWeu1voe2hpauH8fhBcbLBMTTtp6T//
+	 IDxc9YskdtK6G8sId8ZP1nJDv/L3NqooxsivMVi5BfsiJzi6OIxTRr9Ac0dxAzf/NC
+	 wyXL8Yl/Rby0ZkXuIEiAmXEoWD3eRuaZ8B6eQZ8teMJ+4NF9CcvQMYsVLyoFCa2La3
+	 fdgGsykSXE/7w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250401>
 
-Richard Hansen <rhansen@bbn.com> writes:
+> From: David Lang <david@lang.hm>
 
-> These are the same tests as in t9903, but run in zsh instead of bash.
->
-> Signed-off-by: Richard Hansen <rhansen@bbn.com>
-> ---
->  t/lib-zsh.sh          | 30 ++++++++++++++++++++++++++++++
->  t/t9904-zsh-prompt.sh | 10 ++++++++++
->  2 files changed, 40 insertions(+)
->  create mode 100644 t/lib-zsh.sh
->  create mode 100755 t/t9904-zsh-prompt.sh
+> well, as others noted, the problem is actually caused by doing the diffs, and 
+> that is something that is a very common thing to do with source code.
 
-This doesn't appear to work in valgrind mode:
+To some degree, my attitude comes from When I Was A Boy, when you got
+16k for both your bytecode and your data, so you never kept more than
+one line of a file in memory unless you had to.
 
-$ ./t9904-zsh-prompt.sh --valgrind
-error: Test script did not set test_description.
+Regardless of that, the problem with "git fsck" is not due to doing
+diffs, and "git commit" by default does diffs even if you don't ask
+for them, so the observed problems cannot be subsumed under the label
+"you asked for a diff of a file that can't be diffed".
 
-t9903 however works.  I'm not sure how much of a difference it makes,
-but: I use bash as my shell and as /bin/sh, but I do have zsh installed.
+> And I would assume that files of several MB would be able to fit in
+> memory (again, this was assumed to be for development, and compilers
+> take a lot of ram to run, so having enough ram to hold any
+> individual source file while the compiler is _not_ using ram doesn't
+> seem likely to be a problem)
 
-Can you look into it?
+At least the first versions of GCC only kept one function (and the
+global symbol table) in memory at once, so you could compile a source
+file that was larger than the available memory.
 
--- 
-Thomas Rast
-tr@thomasrast.ch
+In any case, if Git is no longer limited to handling source files, it
+needs to be updated so it can handle large files.
+
+Dale
