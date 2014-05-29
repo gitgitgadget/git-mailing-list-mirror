@@ -1,68 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: .gitmodules containing SSH clone URLs should fall back to HTTPS when SSH key is not valid/existent
-Date: Thu, 29 May 2014 11:49:53 -0700
-Message-ID: <xmqqbnugbesu.fsf@gitster.dls.corp.google.com>
-References: <CA+OJ3uv0XqeodTCzeauUrH9FjzknBupMd5kxh+3qgyji5TwOzA@mail.gmail.com>
-	<53871B8D.40608@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [ANNOUNCE] Git v2.0.0
+Date: Thu, 29 May 2014 14:53:11 -0400
+Message-ID: <20140529185311.GB10865@sigill.intra.peff.net>
+References: <xmqqr43dbkni.fsf@gitster.dls.corp.google.com>
+ <53866e8562b7a_12a7a052f87a@nysa.notmuch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Leonard <johanatan@gmail.com>, git@vger.kernel.org,
-	John Albietz <inthecloud247@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu May 29 20:50:14 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	git-fc@googlegroups.com
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Thu May 29 20:53:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq5P2-0000dh-Ao
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 20:50:12 +0200
+	id 1Wq5S1-0004XX-PZ
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 20:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751889AbaE2SuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 14:50:06 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56751 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750940AbaE2SuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 14:50:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B3EFA19B95;
-	Thu, 29 May 2014 14:49:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Bhifl9C5W8clSyiT0YP2m23pJ9w=; b=eyd/ed
-	YMck9KlN4/ARLocBGkqfC21I50EGbR8lp7wM7mjaPqUo9t42b7KR7ipuFWmrg+93
-	fyClyjmPAS9y/LRbMx2LNdCcVwGo00y7k6xvoOWcbG9Nn6xqLRH/QBe4mGE51E9A
-	XzHxrwRO7CJf5oeZfzgxmJTgl6uDUznoOgDGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aUx+S482MAd/f1Ee5xKy3FnssAtFJW1y
-	4OLa1sAysU3DVDQthVigr1OIcdRRNs2zxDSnq2pABtxG8zMBjrgawtlLyGXEvYnp
-	LOj/Q/CBxO/Dmayv8ALjZbCZmEXUS0bWXGCIXVq0Hb2SexPuZM8CREoLvRLySMT5
-	QV7srF/Jw48=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A8C3D19B94;
-	Thu, 29 May 2014 14:49:58 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C563A19B8F;
-	Thu, 29 May 2014 14:49:54 -0400 (EDT)
-In-Reply-To: <53871B8D.40608@web.de> (Jens Lehmann's message of "Thu, 29 May
-	2014 13:35:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0634FD02-E762-11E3-A55C-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1755180AbaE2SxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 14:53:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33613 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750940AbaE2SxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 14:53:13 -0400
+Received: (qmail 14200 invoked by uid 102); 29 May 2014 18:53:13 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 May 2014 13:53:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 May 2014 14:53:11 -0400
+Content-Disposition: inline
+In-Reply-To: <53866e8562b7a_12a7a052f87a@nysa.notmuch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250398>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Wed, May 28, 2014 at 06:17:25PM -0500, Felipe Contreras wrote:
 
-> Am 29.05.2014 04:07, schrieb Jonathan Leonard:
->> The title pretty much says it all.
->
-> But you do not give much information about your special use
-> case.
+> This is the last mail I sent to you, because you ignore them anyway, and
+> remove them from the mailing list.
+> [...]
+> [2], a mail you conveniently removed from the tracked record.
+> [...]
+> You also conveniently removed this mail from the archives.
 
-Perhaps "git grep insteadOf Documentation/" is all that is needed?
+I see you already noticed the changes in v2.0, but I wanted to address
+these points, because I consider silent censorship to be a serious
+accusation.
+
+I do not think Junio or anyone else has the technical ability to remove
+messages from the archive. There is not one archive, but rather several
+that get messages straight from vger.kernel.org and keep their own
+database (e.g., gmane, marc, spinics, nabble). E.g., here is the
+"deleted" message on nabble:
+
+  http://git.661346.n2.nabble.com/PATCH-remote-helpers-point-at-their-upstream-repositories-td7610799i20.html#a7611324
+
+Here it is on gmane:
+
+  http://permalink.gmane.org/gmane.comp.version-control.git/249741
+
+However, I had to pull that link from the NNTP interface. If you look at
+the non-threaded web interface for gmane here:
+
+  http://blog.gmane.org/gmane.comp.version-control.git/day=20140520
+
+and here:
+
+  http://blog.gmane.org/gmane.comp.version-control.git/day=20140521
+
+you will see that there is a huge gap in the list coverage from about
+midnight on the 20th until the 24th (but these messages are available
+via nntp). So this seems much more like a gmane bug than anything else.
+
+I've reported the bug to gmane.discuss (no link yet, as I'm waiting for
+the message to go through, but it is not a high traffic group, so it
+should be easy to find the thread once it is there).
+
+-Peff
