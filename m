@@ -1,8 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v12 31/41] refs.c: make prune_ref use a transaction to delete the ref
-Date: Thu, 29 May 2014 09:07:49 -0700
-Message-ID: <1401379676-9307-8-git-send-email-sahlberg@google.com>
-References: <1401379676-9307-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH v12 00/44] Use ref transactions for all ref updates
+Date: Thu, 29 May 2014 09:07:42 -0700
+Message-ID: <1401379676-9307-1-git-send-email-sahlberg@google.com>
 Cc: jrnieder@gmail.com, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu May 29 18:08:19 2014
@@ -11,152 +10,134 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wq2sN-0006TU-1X
-	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 18:08:19 +0200
+	id 1Wq2sM-0006TU-BO
+	for gcvg-git-2@plane.gmane.org; Thu, 29 May 2014 18:08:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757554AbaE2QIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 12:08:09 -0400
-Received: from mail-pb0-f73.google.com ([209.85.160.73]:55495 "EHLO
-	mail-pb0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757453AbaE2QIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 12:08:00 -0400
-Received: by mail-pb0-f73.google.com with SMTP id ma3so97011pbc.0
+	id S1757546AbaE2QII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 12:08:08 -0400
+Received: from mail-oa0-f74.google.com ([209.85.219.74]:55831 "EHLO
+	mail-oa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755978AbaE2QH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 12:07:59 -0400
+Received: by mail-oa0-f74.google.com with SMTP id m1so105238oag.3
         for <git@vger.kernel.org>; Thu, 29 May 2014 09:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=3mzGC5Ay1k7maOOE0cZqQl8LCcad0nRdQ0/9l7NCwds=;
-        b=KE+pSF0J8SONqnuNAsmeUaa2BzXR2T32ODOl9iwxDNjSajkj0RsimH1sA2R9+U2/ZR
-         meLdYQoFBA/uvmqz+gNUFIRfXIr7R6zxkHC4mI/zuWQ+e9jRWP0//pqyPhb1qkRIzJFD
-         kj/Gxx7wFcfw7+7kXbT39NlI46IS0YFlAqMfsPwP3rSWHIKx6LHwINc0NwWvhJMtGbGJ
-         /NWyic0djJWdRYAMd1TiMczWdhmZ28kaG5B3EjGK8waijlyKRXD3q7+qqpYmR4qTar+H
-         XkspAuTzpIU2voBjVn2C4GCNorPUnBb+/19Y3ytn4g3dLHOVCW7C708BAEMon5L20p0F
-         GZgg==
+        h=from:to:cc:subject:date:message-id;
+        bh=/ToPhx9ZU9cajrZyUXMRDE8CXfy7b4KlzL8t4ggNdYM=;
+        b=ph1LektiWGn8r0T/n06wfeFmdstiXBNNUsmZ3HoFVqTdB7sQe4LQqVjyPjncdDRT0Z
+         1lPoVJGyf9aEefqAm3viNF8TaTCUzmpiQro2w+nWfzLmeewZqTrG01Poz7wIxguSxdnR
+         cWZHLB+JVW1YI1FIFLk8B2mDffDZb3CH2/P41SeGjbde6RzpqjiZTU/0qyv3NFhWdK/8
+         5rPy5cO3rLI5NUJB2rdgpQu1ClRCV8k7kFtcibBQ0bqQ2s+lXRL2u9a4SPwFoUG0WAav
+         gM40ClDeq70e4uTqYibBRDu4WcDt3JBDWHOdtWZJn+OitkTQ6htGCtFpXbK7aXH8TpJS
+         9hkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=3mzGC5Ay1k7maOOE0cZqQl8LCcad0nRdQ0/9l7NCwds=;
-        b=Rymf5FXvkVxqOQSoIM+Wb2aRMNRVEMKJd/3AbCvCemIPDD0mac01bGeN15bVC7THSj
-         Q9QAVmfeJXkL1hDwjyMXaHXIyf3HpyyXPtZWK56dShAKisF1bIdo/88hi4+E8Wz/sz+1
-         KXsdXnbfwJ4qji4Rw7XH7+LPhmwAKpxw0m1vt0B5LZAnQJPWiu24PobDIg1YOmHExU1a
-         P4LhNt9aivpnSjI4N+O8TYJJdWi2NW5/FumdvZOXYfjkipx/OrHS1p9IE+LORzhgME4u
-         oRrD0yJo7mNQT0YdQ3TeGS9g/NK7I26X8Fcx+XR4u7U+4fUxegkCJD//MLoCYmIp7VNG
-         428A==
-X-Gm-Message-State: ALoCoQkbvm+4D/FMTJRlbpL420zGfiVnJUPOp+z0kDw9VXXMH7E+PzB5mGYBQcSSTGm5B+43/K3i
-X-Received: by 10.66.216.130 with SMTP id oq2mr3536426pac.44.1401379679577;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=/ToPhx9ZU9cajrZyUXMRDE8CXfy7b4KlzL8t4ggNdYM=;
+        b=PJyZ7TUOT7k4wu+kowBfVEplwJ+sZWinW+2uzE76eKn3DiAYZEdXddtxWTxA5sbRTq
+         /3KM/aZ10n9EXU+ijwAWQmgXfIsaRerNrXT5oxS4Vb2+440IDD9WF/ZobNCuEFTIPQUE
+         R9ScvD866Edg8RNZA5MU0ZK5sRQ6idr1cP0TZ7/241HtKh7pI0HG553gHM1PLUXHRz0H
+         Jw2+ysp//fq/4fx0fn0rouJ2org1qQmfvhMrUGIFGS2qrSjhou29XfpwHXZ/P+1GgrmO
+         bBERd6mebdOYnp3WDPyX7Gx7TOfEKyK4moibS+v29b60ltM9pZlz2JNkaxCUOCS4d8xB
+         LMRw==
+X-Gm-Message-State: ALoCoQl60XBnMiH1+a5vr2apMNLJ0wGDj/Dhm0FjuEZupzFqdN8j8XjqGvWuCpfV1w2vsNMfV+0f
+X-Received: by 10.182.73.200 with SMTP id n8mr3558321obv.33.1401379679109;
         Thu, 29 May 2014 09:07:59 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id k43si81559yhq.3.2014.05.29.09.07.59
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id h13si82904yhj.0.2014.05.29.09.07.59
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 29 May 2014 09:07:59 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 5F04E5A445E;
-	Thu, 29 May 2014 09:07:59 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id ED34431C3F1;
+	Thu, 29 May 2014 09:07:58 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 143C9E0DDD; Thu, 29 May 2014 09:07:58 -0700 (PDT)
+	id 8D40AE0DDD; Thu, 29 May 2014 09:07:58 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.rc3.474.g3833130
-In-Reply-To: <1401379676-9307-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250377>
 
-Change prune_ref to delete the ref using a ref transaction. To do this we also
-need to add a new flag REF_ISPRUNING that will tell the transaction that we
-do not want to delete this ref from the packed refs. This flag is private to
-refs.c and not exposed to external callers.
+This patch series can also be found at
+https://github.com/rsahlberg/git/tree/ref-transactions
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- refs.c | 28 +++++++++++++++++++++-------
- refs.h | 11 ++++++++++-
- 2 files changed, 31 insertions(+), 8 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 7cea694..60593d7 100644
---- a/refs.c
-+++ b/refs.c
-@@ -30,6 +30,12 @@ static inline int bad_ref_char(int ch)
- }
- 
- /*
-+ * Used as a flag to ref_transaction_delete when a loose ref is being
-+ * pruned.
-+ */
-+#define REF_ISPRUNING	0x0100
-+
-+/*
-  * Try to read one refname component from the front of refname.  Return
-  * the length of the component found, or -1 if the component is not
-  * legal.
-@@ -2328,17 +2334,24 @@ static void try_remove_empty_parents(char *name)
- /* make sure nobody touched the ref, and unlink */
- static void prune_ref(struct ref_to_prune *r)
- {
--	struct ref_lock *lock;
-+	struct ref_transaction *transaction;
-+	struct strbuf err = STRBUF_INIT;
- 
- 	if (check_refname_format(r->name + 5, 0))
- 		return;
- 
--	lock = lock_ref_sha1_basic(r->name, r->sha1, 0, NULL);
--	if (lock) {
--		unlink_or_warn(git_path("%s", r->name));
--		unlock_ref(lock);
--		try_remove_empty_parents(r->name);
-+	transaction = ref_transaction_begin(&err);
-+	if (!transaction ||
-+	    ref_transaction_delete(transaction, r->name, r->sha1,
-+				   REF_ISPRUNING, 1, &err) ||
-+	    ref_transaction_commit(transaction, NULL, &err)) {
-+		ref_transaction_free(transaction);
-+		error("%s", err.buf);
-+		strbuf_release(&err);
-+		return;
- 	}
-+	ref_transaction_free(transaction);
-+	try_remove_empty_parents(r->name);
- }
- 
- static void prune_refs(struct ref_to_prune *r)
-@@ -3536,9 +3549,10 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		struct ref_update *update = updates[i];
- 
- 		if (update->lock) {
--			delnames[delnum++] = update->lock->ref_name;
- 			ret |= delete_ref_loose(update->lock, update->type,
- 						err);
-+			if (!(update->flags & REF_ISPRUNING))
-+				delnames[delnum++] = update->lock->ref_name;
- 		}
- 	}
- 
-diff --git a/refs.h b/refs.h
-index c38ee09..dee7c8f 100644
---- a/refs.h
-+++ b/refs.h
-@@ -171,8 +171,17 @@ extern int ref_exists(const char *);
-  */
- extern int peel_ref(const char *refname, unsigned char *sha1);
- 
--/** Locks any ref (for 'HEAD' type refs). */
-+/*
-+ * Flags controlling lock_any_ref_for_update(), ref_transaction_update(),
-+ * ref_transaction_create(), etc.
-+ * REF_NODEREF: act on the ref directly, instead of dereferencing
-+ *              symbolic references.
-+ *
-+ * Flags >= 0x100 are reserved for internal use.
-+ */
- #define REF_NODEREF	0x01
-+
-+/** Locks any ref (for 'HEAD' type refs). */
- extern struct ref_lock *lock_any_ref_for_update(const char *refname,
- 						const unsigned char *old_sha1,
- 						int flags, int *type_p);
+Ronnie please review these remaining patches in this series.
+
+
+ Sahlberg (44):
+  refs.c: constify the sha arguments for
+    ref_transaction_create|delete|update
+  refs.c: allow passing NULL to ref_transaction_free
+  refs.c: add a strbuf argument to ref_transaction_commit for error
+    logging
+  refs.c: add an err argument to repack_without_refs
+  refs.c: make ref_update_reject_duplicates take a strbuf argument for
+    errors
+  refs.c: add an err argument to delete_ref_loose
+  refs.c: make update_ref_write update a strbuf on failure
+  update-ref.c: log transaction error from the update_ref
+  refs.c: remove the onerr argument to ref_transaction_commit
+  refs.c: change ref_transaction_update() to do error checking and
+    return status
+  refs.c: change ref_transaction_create to do error checking and return
+    status
+  refs.c: ref_transaction_delete to check for error and return status
+  tag.c: use ref transactions when doing updates
+  replace.c: use the ref transaction functions for updates
+  commit.c: use ref transactions for updates
+  sequencer.c: use ref transactions for all ref updates
+  fast-import.c: change update_branch to use ref transactions
+  branch.c: use ref transaction for all ref updates
+  refs.c: change update_ref to use a transaction
+  refs.c: free the transaction before returning when number of updates
+    is 0
+  refs.c: ref_transaction_commit should not free the transaction
+  fetch.c: clear errno before calling functions that might set it
+  fetch.c: change s_update_ref to use a ref transaction
+  fetch.c: use a single ref transaction for all ref updates
+  receive-pack.c: use a reference transaction for updating the refs
+  fast-import.c: use a ref transaction when dumping tags
+  walker.c: use ref transaction for ref updates
+  refs.c: make write_ref_sha1 static
+  refs.c: make lock_ref_sha1 static
+  refs.c: add transaction.status and track OPEN/CLOSED/ERROR
+  refs.c: remove the update_ref_lock function
+  refs.c: remove the update_ref_write function
+  refs.c: remove lock_ref_sha1
+  refs.c: make prune_ref use a transaction to delete the ref
+  refs.c: make delete_ref use a transaction
+  refs.c: pass the ref log message to _create/delete/update instead of
+    _commit
+  refs.c: pass NULL as *flags to read_ref_full
+  refs.c: pack all refs before we start to rename a ref
+  refs.c: move the check for valid refname to lock_ref_sha1_basic
+  refs.c: call lock_ref_sha1_basic directly from commit
+  refs.c: add a new flag for transaction delete for refs we know are
+    packed only
+  refs.c: pass a skip list to name_conflict_fn
+  refs.c: make rename_ref use a transaction
+  refs.c: remove forward declaration of write_ref_sha1
+
+ branch.c               |  30 ++--
+ builtin/commit.c       |  24 ++-
+ builtin/fetch.c        |  29 +--
+ builtin/receive-pack.c |  21 +--
+ builtin/replace.c      |  15 +-
+ builtin/tag.c          |  15 +-
+ builtin/update-ref.c   |  32 ++--
+ cache.h                |   2 +
+ fast-import.c          |  42 +++--
+ lockfile.c             |  21 ++-
+ refs.c                 | 468 +++++++++++++++++++++++++++++--------------------
+ refs.h                 |  54 +++---
+ sequencer.c            |  24 ++-
+ t/t3200-branch.sh      |   2 +-
+ walker.c               |  51 +++---
+ 15 files changed, 491 insertions(+), 339 deletions(-)
+
 -- 
-2.0.0.rc3.474.g3833130
+2.0.0.rc3.510.g20c254b
