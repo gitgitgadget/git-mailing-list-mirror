@@ -1,82 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] check_refname_component: Optimize
-Date: Fri, 30 May 2014 13:29:44 -0400
-Message-ID: <20140530172944.GC25443@sigill.intra.peff.net>
-References: <1401311055-480-2-git-send-email-dturner@twitter.com>
- <538658C0.8050001@alum.mit.edu>
- <1401320968.18134.98.camel@stross>
- <CACsJy8BcBmuC3KMu+5dhGiOXX=u7WtHWQzQuT=ZPTbSCduJdbw@mail.gmail.com>
- <xmqqfvjsbkz2.fsf@gitster.dls.corp.google.com>
- <CACsJy8BS_YhMB9ZZRx4faj=_YWZQrqm7B9AHkTGye=okja=m-Q@mail.gmail.com>
- <20140529234109.GA28683@sigill.intra.peff.net>
- <CACsJy8BgriBBWJ6ZzQS8S7p4SUB=bdZHdnUQsyN03g+vtApbxA@mail.gmail.com>
- <20140530000728.GC28683@sigill.intra.peff.net>
- <538853B5.1080308@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] git log: support "auto" decorations
+Date: Fri, 30 May 2014 10:35:14 -0700
+Message-ID: <xmqqmwdz9nl9.fsf@gitster.dls.corp.google.com>
+References: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
+	<20140530015855.GG28683@sigill.intra.peff.net>
+	<CA+55aFzwy09-i=hpBy-5bYS6eowGzkdcF65cFJpL2qnJvYq85w@mail.gmail.com>
+	<20140530065737.GA13591@sigill.intra.peff.net>
+	<xmqqvbsn9pfx.fsf@gitster.dls.corp.google.com>
+	<20140530170330.GA25443@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twitter.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri May 30 19:29:51 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 30 19:35:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqQco-00030n-N0
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 19:29:51 +0200
+	id 1WqQiE-0007Qw-1O
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 19:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933075AbaE3R3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2014 13:29:47 -0400
-Received: from cloud.peff.net ([50.56.180.127]:34274 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933015AbaE3R3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 13:29:46 -0400
-Received: (qmail 15230 invoked by uid 102); 30 May 2014 17:29:46 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 May 2014 12:29:46 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 May 2014 13:29:44 -0400
-Content-Disposition: inline
-In-Reply-To: <538853B5.1080308@alum.mit.edu>
+	id S1754568AbaE3RfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 13:35:21 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58518 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752209AbaE3RfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 13:35:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8FE9D19576;
+	Fri, 30 May 2014 13:35:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1KwfHB0gbZkIiaEZqRMOEN4noQo=; b=iABELV
+	Dr+Xa01k/9SNgpYqLr0hbsrDvpGvAYEBOGKVaUC3FEp9x3s4OqEcFSE349c+S+aG
+	lu78MTRSgAFdNjx4N8xP+ROSCpeDUX6z8UqHhrdwZt5Uacq2OBTnxFdsBW80aNae
+	R8XgrZUvf8Xar9eGzvDScE4/8MMNJ2WV7Xwmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=kFOw6klv35+4YP63tpS+y4nY/2jCK6WM
+	fukcGouCzkfSM6vHZ+L6AK7N/NBMDMjJ6B2FOMuFyqy0sMqLAGn/ga+Hz/n9CDQ0
+	yG51xlK4VWZ6HMqMzAVmyaTNUi6ZEdgrqSF0N/83bFyTwLhSN3gs4HmfbXt5swk4
+	E00b/NB/hf0=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 826B319575;
+	Fri, 30 May 2014 13:35:19 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E2D6D19572;
+	Fri, 30 May 2014 13:35:15 -0400 (EDT)
+In-Reply-To: <20140530170330.GA25443@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 30 May 2014 13:03:30 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C3003A5A-E820-11E3-95D1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250450>
 
-On Fri, May 30, 2014 at 11:47:33AM +0200, Michael Haggerty wrote:
+Jeff King <peff@peff.net> writes:
 
-> > I could guess something like "the writer has a different idea of what a
-> > valid refname is than we do". But that applies as well to (2), but just
-> > as "the reader who wrote packed-refs.stat has a different idea than we
-> > do".
-> 
-> If we want to be robust to future changes to refname rules, we could add
-> a header flag like
-> 
->     # pack-refs with: peeled fully-peeled check-level=1.0
-> 
-> which promises that the reference names in the file conform to the
-> current ("version 1.0") check_refname_format() rules.
+> On Fri, May 30, 2014 at 09:55:14AM -0700, Junio C Hamano wrote:
+>
+> I don't think we need to worry about commit->buffer being mucked with.
+> It is always either NULL, or points to the original object contents.
+> Encoded log messages are always placed in a separate buffer (and in fact
+> we use the same "optionally point to commit->buffer" trick there). And
+> things like mucking with parents always happen on the parsed form.
+>
+> Of course I may be missing a site, and it's certainly a maintenance risk
+> for the future. But I'd go so far as to say that anything modifying
+> commit->buffer is wrong, and that side should be fixed.
 
-Yeah, I thought about mentioning something like that. But really, this
-just seems like a lot of complexity to solve the problem in a wrong way.
+I fully agree, and "that side should be fixed" implying "we should
+always be on a look-out for such a change" is something the lazyness
+tried to avoid.
 
-It's not running check_refname_format that is the real problem. It's the
-fact that we do O(# of refs) work whenever we have to access the
-packed-refs file. check_refname_format is part of that, surely, but so
-is reading the file, creating all of the refname structs in memory, etc.
+> Do you want me to roll it up with a real commit message?
 
-I'd much rather see a solution that lets us do O(log N) or O(1) work to
-access a ref, and then we don't have to care about optimizing
-check_refname_format specifically.
-
-I don't mind internal code speedups to micro-optimize check_refname_format.
-They may make the code uglier, but they're fairly contained. But things
-like check-level are much more invasive, and we'll need to keep
-compatibility with them in future versions.
-
--Peff
+Yes.  I think the change is sensible.
