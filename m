@@ -1,95 +1,108 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH] git log: support "auto" decorations
-Date: Thu, 29 May 2014 21:58:55 -0400
-Message-ID: <20140530015855.GG28683@sigill.intra.peff.net>
-References: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] check_refname_component: Optimize
+Date: Fri, 30 May 2014 09:03:58 +0700
+Message-ID: <CACsJy8CAhGT+dF511cbLZTEre9SKzs2EHfHaskuXh7sMTYL6JQ@mail.gmail.com>
+References: <1401311055-480-1-git-send-email-dturner@twitter.com>
+ <1401311055-480-2-git-send-email-dturner@twitter.com> <538658C0.8050001@alum.mit.edu>
+ <1401320968.18134.98.camel@stross> <CACsJy8BcBmuC3KMu+5dhGiOXX=u7WtHWQzQuT=ZPTbSCduJdbw@mail.gmail.com>
+ <xmqqfvjsbkz2.fsf@gitster.dls.corp.google.com> <CACsJy8BS_YhMB9ZZRx4faj=_YWZQrqm7B9AHkTGye=okja=m-Q@mail.gmail.com>
+ <20140529234109.GA28683@sigill.intra.peff.net> <CACsJy8BgriBBWJ6ZzQS8S7p4SUB=bdZHdnUQsyN03g+vtApbxA@mail.gmail.com>
+ <20140530000728.GC28683@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri May 30 03:59:01 2014
+	David Turner <dturner@twopensource.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Turner <dturner@twitter.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 30 04:04:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqC61-0003pv-7O
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 03:59:01 +0200
+	id 1WqCBN-000296-Ta
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 04:04:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754150AbaE3B65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 21:58:57 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33858 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751538AbaE3B65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 21:58:57 -0400
-Received: (qmail 3010 invoked by uid 102); 30 May 2014 01:58:57 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 May 2014 20:58:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 May 2014 21:58:55 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
+	id S1751975AbaE3CE3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 22:04:29 -0400
+Received: from mail-qg0-f41.google.com ([209.85.192.41]:39917 "EHLO
+	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751037AbaE3CE3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 22:04:29 -0400
+Received: by mail-qg0-f41.google.com with SMTP id j5so3568507qga.28
+        for <git@vger.kernel.org>; Thu, 29 May 2014 19:04:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=pTt7rIOJQe5nOIPr+vuRuFVluuocV6yBNtCknWTdjN4=;
+        b=v+jyzLsDKn8Xj+Va3n5abe7JgRusZvsHgmwiR2Y/z59Mks0ar4DB619obc7Vt8ux8s
+         UflRxyoS9Qa/Y4RjTpUK4Ay7k8ff+EsqbzauxyaUldg8wXiXqxdcCVq8R/HDK5onyJWK
+         cW/GC1iLYtt+xdL9LCCIg+lrrhl7TfsdDdz/AnrJ+LMtBUUUiFWNhZGJfl51bD7Svssy
+         xHX7CluY2aEzJD3FjEO10aey+sTk73ik24t/oWzwuuYru0Aggot9axLmYwp9ngYTy36I
+         HjB7IBuVKXok8GLp3Ke1Z5UE6M9oOc4I8MOh/kE/8Wu3S8ZgqCY3v1ne29p3LhpDErll
+         WBnQ==
+X-Received: by 10.140.47.167 with SMTP id m36mr15133189qga.21.1401415468106;
+ Thu, 29 May 2014 19:04:28 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Thu, 29 May 2014 19:03:58 -0700 (PDT)
+In-Reply-To: <20140530000728.GC28683@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250429>
 
-On Thu, May 29, 2014 at 03:31:58PM -0700, Linus Torvalds wrote:
+On Fri, May 30, 2014 at 7:07 AM, Jeff King <peff@peff.net> wrote:
+> But then we're just trusting that the "trust me" flag on disk is
+> correct. Why not just trust that packed-refs is correct in the first
+> place?
+>
+> IOW, consider this progression of changes:
+>
+>   1. Check refname format when we read packed-refs (the current
+>      behavior).
+>
+>   2. Keep a separate file "packed-refs.stat" with stat information. If
+>      the packed-refs file matches that stat information, do not bother
+>      checking refname formats.
+>
+>   3. Put a flag in "packed-refs" that says "trust me, I'm valid". Check
+>      the refnames when it is generated.
+>
+>   4. Realize that we already check the refnames when we write it out.
+>      Don't bother writing "trust me, I'm valid"; readers can assume that
+>      it is.
+>
+> What is the scenario that option (2) protects against that options (3)
+> and (4) do not?
+>
+> I could guess something like "the writer has a different idea of what a
+> valid refname is than we do". But that applies as well to (2), but just
+> as "the reader who wrote packed-refs.stat has a different idea than we
+> do".
 
-> From: Linus Torvalds <torvalds@linux-foundation.org>
-> Date: Thu, 29 May 2014 15:19:40 -0700
-> Subject: [RFC PATCH] git log: support "auto" decorations
+The reader and the writer have to agree on the same "valid" definition
+or it wouldn't work. I don't suppose this packed-refs.stat idea would
+spread out to other implementations than C git, so we're still good.
+If we could write a flag in packed-refs saying "trust me" and other
+implementations will strip it when they update packed-refs, then we're
+good too.
 
-I will spare you the usual lecture on having these lines in the message
-body. ;)
+>
+> As a side note, while it is nice that we might make check_refname_format
+> faster, I think if you _really_ want to make repos with a lot of refs
+> faster, it would make more sense to introduce an on-disk format that
+> does not need linear parsing (e.g., something we could mmap and binary
+> search, or even something dbm-ish that could be updated without
+> rewriting the whole file (deletions, for example, must rewrite the
+> whole file, giving quadratic performance when deleting all refs one by
+> one).
 
-> I actually like seeing decorations by default, but I do *not* think our 
-> current "log.decorate" options make sense, since they will change any 
-> random use of "git log" to have decorations. I much prefer the 
-> "ui.color=auto" behavior that we have for coloration. This is a trivial 
-> patch that tries to approximate that.
-
-Yeah, I think this makes a lot of sense. I do use log.decorate=true, and
-it is usually not a big deal. However, I think I have run into
-annoyances once or twice when piping it. I'd probably use
-log.decorate=auto if we had it.
-
-> It's marked with RFC because
-> 
->  (a) that "isatty(1) || pager_in_use()" test is kind of hacky, maybe we 
->      would be better off sharing something with the auto-coloration?
-
-The magic for this is in color.c, want_color() and check_auto_color().
-
-The color code checks "pager_use_color" when the pager is in use, but I
-do not think that makes any sense here.  It also checks that $TERM is
-not "dumb", but that also does not make sense here.
-
-So I think your check is fine. It would be nice to share with the color
-code, but I doubt it will end up any more readable, because of
-conditionally dealing with those two differences.
-
->  (b) I also think it would be nice to have the equivalent for 
->      "--show-signature", but there we don't have any preexisting config 
->      file option.
-
-Potentially yes, though there is a real performance impact for "log
---show-signature" if you actually have a lot of signatures. Even on
-linux.git, a full "git log" is 15s with --show-signature, and 5s
-without. Maybe that is acceptable for interactive use (and certainly it
-is not a reason to make it an _option_, if somebody wants to turn it
-on).
-
->  (c) maybe somebody would like a way to combine "auto" and "full", 
->      although personally that doesn't seem to strike me as all that useful 
->      (would you really want to see the full refname when not scripting it)
-
-Yeah, "full/short" is really orthogonal to "true/false/auto". If we were
-starting from scratch, I think putting "full/short" into
-log.decorateStyle would make more sense, but it is probably not worth
-changing now. I agree that "full auto" is probably not something useful,
-and we can live without it.
-
--Peff
+Yeah, I bring up the idea because I think Mike's multiple ref backends
+is the way to go (assuming that it won't take as long as pack v4
+development). If we assume we'll go with that, then we can keep the
+workaround to minimum.
+-- 
+Duy
