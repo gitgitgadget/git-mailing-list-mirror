@@ -1,77 +1,95 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Bugreport: git push disobeys -c remote.xxx.url=...
-Date: Thu, 29 May 2014 21:43:59 -0400
-Message-ID: <20140530014359.GF28683@sigill.intra.peff.net>
-References: <20140530000356.GA8033@fuz.su>
+Subject: Re: [RFC PATCH] git log: support "auto" decorations
+Date: Thu, 29 May 2014 21:58:55 -0400
+Message-ID: <20140530015855.GG28683@sigill.intra.peff.net>
+References: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: fuz@fuz.su
-X-From: git-owner@vger.kernel.org Fri May 30 03:44:08 2014
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri May 30 03:59:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqBrb-0002ZT-8H
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 03:44:07 +0200
+	id 1WqC61-0003pv-7O
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 03:59:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753952AbaE3BoD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 29 May 2014 21:44:03 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33845 "HELO peff.net"
+	id S1754150AbaE3B65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 29 May 2014 21:58:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33858 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751745AbaE3BoB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 29 May 2014 21:44:01 -0400
-Received: (qmail 2327 invoked by uid 102); 30 May 2014 01:44:01 -0000
+	id S1751538AbaE3B65 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 29 May 2014 21:58:57 -0400
+Received: (qmail 3010 invoked by uid 102); 30 May 2014 01:58:57 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 May 2014 20:44:01 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 May 2014 21:43:59 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 29 May 2014 20:58:57 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 29 May 2014 21:58:55 -0400
 Content-Disposition: inline
-In-Reply-To: <20140530000356.GA8033@fuz.su>
+In-Reply-To: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250428>
 
-On Fri, May 30, 2014 at 02:03:56AM +0200, fuz@fuz.su wrote:
+On Thu, May 29, 2014 at 03:31:58PM -0700, Linus Torvalds wrote:
 
-> I've tried to changing the URL of a remote temporarily because of network
-> issues. I tried something like this:
+> From: Linus Torvalds <torvalds@linux-foundation.org>
+> Date: Thu, 29 May 2014 15:19:40 -0700
+> Subject: [RFC PATCH] git log: support "auto" decorations
+
+I will spare you the usual lecture on having these lines in the message
+body. ;)
+
+> I actually like seeing decorations by default, but I do *not* think our 
+> current "log.decorate" options make sense, since they will change any 
+> random use of "git log" to have decorations. I much prefer the 
+> "ui.color=auto" behavior that we have for coloration. This is a trivial 
+> patch that tries to approximate that.
+
+Yeah, I think this makes a lot of sense. I do use log.decorate=true, and
+it is usually not a big deal. However, I think I have run into
+annoyances once or twice when piping it. I'd probably use
+log.decorate=auto if we had it.
+
+> It's marked with RFC because
 > 
->     git -c remote.foo.url=http://gitserver.example/repo.git push foo bar
-> 
-> Tracing shows that git push does not use the provided URL for the remote foo
-> and instead uses the URL configured in the repository configuration as if the
-> -c option was not present at all. This looks like a bug to me.
+>  (a) that "isatty(1) || pager_in_use()" test is kind of hacky, maybe we 
+>      would be better off sharing something with the auto-coloration?
 
-You are correct that this won't work, but the reason is a bit
-complicated.
+The magic for this is in color.c, want_color() and check_auto_color().
 
-The remote.*.url config field is actually a "multivar", meaning that you
-can specify it multiple times. In that case, "git push" will push to
-each configured URL in order in which they appear in the config.
+The color code checks "pager_use_color" when the pager is in use, but I
+do not think that makes any sense here.  It also checks that $TERM is
+not "dumb", but that also does not make sense here.
 
-In the command above you are not overwriting remote.foo.url, but rather
-adding an extra value to it. So we first try to push to the remote
-defined in your actual config, and then to the one on the command-line.
-You can see this in action like:
+So I think your check is fine. It would be nice to share with the color
+code, but I doubt it will end up any more readable, because of
+conditionally dealing with those two differences.
 
-  $ git init --bare /tmp/foo
-  $ git init --bare /tmp/bar
-  $ git remote add foo /tmp/foo
-  $ git -c remote.foo.url=/tmp/bar push foo HEAD
+>  (b) I also think it would be nice to have the equivalent for 
+>      "--show-signature", but there we don't have any preexisting config 
+>      file option.
 
-You should see pushes to both /tmp/foo and /tmp/bar.
+Potentially yes, though there is a real performance impact for "log
+--show-signature" if you actually have a lot of signatures. Even on
+linux.git, a full "git log" is 15s with --show-signature, and 5s
+without. Maybe that is acceptable for interactive use (and certainly it
+is not a reason to make it an _option_, if somebody wants to turn it
+on).
 
-Config multivars like this are rather hard to work with, as there is no
-way to say "reset the multivar to empty, _then_ add this new value". So
-there isn't a simple solution using remote.*.url from the command-line
-like this.
+>  (c) maybe somebody would like a way to combine "auto" and "full", 
+>      although personally that doesn't seem to strike me as all that useful 
+>      (would you really want to see the full refname when not scripting it)
 
-Another way of doing what you want is to use url.*.insteadOf, like:
-
-   git -c url./tmp/bar.insteadof=/tmp/foo push foo HEAD
+Yeah, "full/short" is really orthogonal to "true/false/auto". If we were
+starting from scratch, I think putting "full/short" into
+log.decorateStyle would make more sense, but it is probably not worth
+changing now. I agree that "full auto" is probably not something useful,
+and we can live without it.
 
 -Peff
