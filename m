@@ -1,82 +1,118 @@
 From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v2 0/2] replace signal() with sigaction()
-Date: Fri, 30 May 2014 13:58:15 -0700
-Message-ID: <cover.1401482787.git.jmmahler@gmail.com>
+Subject: [PATCH v2 1/2] compat/mingw.c: expand MinGW support for sigaction
+Date: Fri, 30 May 2014 13:58:16 -0700
+Message-ID: <d5fc7d72b2d51d1b90fb7f238eff120cb4c6d0e7.1401482787.git.jmmahler@gmail.com>
+References: <cover.1401482787.git.jmmahler@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri May 30 22:58:52 2014
+X-From: git-owner@vger.kernel.org Fri May 30 22:58:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqTsy-0004VY-S3
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 22:58:45 +0200
+	id 1WqTt7-0004bL-Nd
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 22:58:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934102AbaE3U6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2014 16:58:41 -0400
-Received: from mail-pd0-f174.google.com ([209.85.192.174]:59913 "EHLO
-	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754614AbaE3U6i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 16:58:38 -0400
-Received: by mail-pd0-f174.google.com with SMTP id r10so1328179pdi.19
-        for <git@vger.kernel.org>; Fri, 30 May 2014 13:58:37 -0700 (PDT)
+	id S934190AbaE3U6u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 May 2014 16:58:50 -0400
+Received: from mail-pb0-f44.google.com ([209.85.160.44]:38039 "EHLO
+	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755748AbaE3U6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 16:58:49 -0400
+Received: by mail-pb0-f44.google.com with SMTP id rq2so2114803pbb.31
+        for <git@vger.kernel.org>; Fri, 30 May 2014 13:58:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=vKDuYXC/fLJxfA9peLC6JsmRdX8QI3uxJRtBO7Fut74=;
-        b=b1SxAwryX6+7Nvko29j/Zxme/6BbtIkOo1VwYza1FmTtOvsOn2Zwe6VjN61/z1um8h
-         aTWh5cCQLS6/nqUQ2Y8PbaiZUFsD/Ni4QrRA4MRhLddxT7cSGHT7gsC9tXCSM+O0Amnj
-         OeErBAHcYj8d85tFwd0OXXTSE3IEVgtcmktLt/Y0QbG22QnnVf/EMW2UUnwMN56lxbzL
-         TswSYSc5/yAjPa/UNJH01OEo18EbSHKBv+T++3Twlt/tfjeuhhhyAP70WJ2l//S3IOFD
-         Ptn/VCgYRBw6OSbV+ZWT8Up/hpEQ9AGGfOKH+192oGfoMgGsOjGLxp8me22jVRYsTFQ2
-         P8uw==
-X-Received: by 10.68.231.35 with SMTP id td3mr21241195pbc.137.1401483517858;
-        Fri, 30 May 2014 13:58:37 -0700 (PDT)
+        bh=Hp9sl35QVfQoNnJo5Psiqm5soi57KMDXnOAonhtpA/c=;
+        b=OrU2Jw1fQudgWAb6hf9AlQHi77ordGIeyfc56jynpN3ahrIHZn5Ev+Tj6Ye17ap7QX
+         0KIPp5/WW46YdhRVk1WyU8f1lu7tigaJAKrNoXguQw9rMDHUtUEbNAnWtgA0OHMrh/lo
+         6Nc3Nq7WCdJsMtPSAybHC8OjdUCUkJT7gJofK4XCzyoE8Y3FcgspSxM3OqgId60qWc5A
+         24MNvbvKf9xTTao0WUydB+tx5Zv7B3XIE2LBhBRZ7jxSe4ewrRVBpZE9R8JcGvwhxBBs
+         aLI9oQmXbPz1PO6Zd8FEYGw8RtY+08Pac4WQwp4G1tPCAbQCdnXdYDCsucjLT1NkL2s5
+         kUUA==
+X-Received: by 10.66.162.103 with SMTP id xz7mr22124986pab.104.1401483529010;
+        Fri, 30 May 2014 13:58:49 -0700 (PDT)
 Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id wl5sm7931685pbc.13.2014.05.30.13.58.34
+        by mx.google.com with ESMTPSA id xc1sm23469105pab.39.2014.05.30.13.58.45
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 30 May 2014 13:58:36 -0700 (PDT)
+        Fri, 30 May 2014 13:58:47 -0700 (PDT)
 X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Fri, 30 May 2014 13:58:33 -0700
+Received: by hudson (sSMTP sendmail emulation); Fri, 30 May 2014 13:58:44 -0700
 X-Mailer: git-send-email 2.0.0.2.g1d11d5d
+In-Reply-To: <cover.1401482787.git.jmmahler@gmail.com>
+In-Reply-To: <cover.1401482787.git.jmmahler@gmail.com>
+References: <cover.1401482787.git.jmmahler@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250483>
 
-This is the second revision to the patch set to replace signal(2) with
-sigaction(2) [1].
+Due to portability issues across UNIX versions sigaction(2) should be u=
+sed
+instead of signal(2).
 
-As Johannes pointed out [2], replacing signal with sigaction would break
-MinGW compatibility.  The first patch in this series addresses this
-problem by expanding the faux sigaction function in compat/mingw.c to
-support signals other than just SIGALRM.  Details are in the patch
-description.
+=46rom the signal(2) man page:
 
-The second patch is a proof of concept.  It converts signal to sigaction
-in a case where signal SIGCHILD was used.  Previously this would have
-failed with MinGW since the faux sigaction function only supported
-SIGALRM.  Now it works as expected.
+  The behavior of signal() varies across UNIX versions, and has also va=
+r=E2=80=90
+  ied historically across different versions of Linux.   Avoid  its  us=
+e:
+  use sigaction(2) instead.
 
-I have tested these changes under Linux and under Windows 7 using Msysgit.
+Unfortunately MinGW under Windows has limited support for signal and no
+support for sigaction.  And this prevents sigaction from being used acr=
+oss
+the entire Git project.
 
-[1]: http://marc.info/?l=git&m=140125769223552&w=2
-[2]: http://marc.info/?l=git&m=140126288325213&w=2
+In compat/mingw.c there is a faux sigaction function but it only suppor=
+ts
+SIGALARM.  Hence the need for continuing to use signal() in other cases=
+=2E
 
-Jeremiah Mahler (2):
-  compat/mingw.c: expand MinGW support for sigaction
-  connect.c: replace signal() with sigaction()
+This patch expands the faux sigaction function so that it calls signal =
+in
+cases other than SIGALRM.  Now sigaction can be used across the entire =
+Git
+project and MinGW will still work with signal as it did before.
 
+Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
+---
  compat/mingw.c | 9 +++++----
- connect.c      | 5 ++++-
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
--- 
+diff --git a/compat/mingw.c b/compat/mingw.c
+index e9892f8..e504cef 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1651,14 +1651,15 @@ int setitimer(int type, struct itimerval *in, s=
+truct itimerval *out)
+=20
+ int sigaction(int sig, struct sigaction *in, struct sigaction *out)
+ {
+-	if (sig !=3D SIGALRM)
+-		return errno =3D EINVAL,
+-			error("sigaction only implemented for SIGALRM");
+ 	if (out !=3D NULL)
+ 		return errno =3D EINVAL,
+ 			error("sigaction: param 3 !=3D NULL not implemented");
+=20
+-	timer_fn =3D in->sa_handler;
++	if (sig =3D=3D SIGALRM)
++		timer_fn =3D in->sa_handler;
++	else
++		signal(sig, in->sa_handler);
++
+ 	return 0;
+ }
+=20
+--=20
 2.0.0.2.g1d11d5d
