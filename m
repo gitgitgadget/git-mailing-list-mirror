@@ -1,83 +1,85 @@
-From: Nathan Neulinger <nneul@neulinger.org>
-Subject: Re: feature request - implement a "GIT_AUTHOR_EMAIL" equivalent,
- but processed BEFORE .gitconfig
-Date: Fri, 30 May 2014 13:44:05 -0500
-Organization: Neulinger Consulting
-Message-ID: <5388D175.3060500@neulinger.org>
-References: <5388CBA5.9030403@neulinger.org> <20140530182746.GK12314@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Improve function dir.c:trim_trailing_spaces()
+Date: Fri, 30 May 2014 11:45:36 -0700
+Message-ID: <xmqqa99z9kbz.fsf@gitster.dls.corp.google.com>
+References: <1401320757-9360-1-git-send-email-pasha.bolokhov@gmail.com>
+	<20140529201334.GA17355@sigill.intra.peff.net>
+	<CAKpPgveDfNq+kxWCukULPqvn7H2XsfS8maC0ExzvHzFGiEAPbg@mail.gmail.com>
+	<20140530020444.GH28683@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri May 30 20:44:18 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Pasha Bolokhov <pasha.bolokhov@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Duy Nguyen <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 30 20:45:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqRmn-0003D1-RZ
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 20:44:14 +0200
+	id 1WqRoI-0004QI-Sx
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 20:45:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754433AbaE3SoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2014 14:44:09 -0400
-Received: from mail-oa0-f45.google.com ([209.85.219.45]:50175 "EHLO
-	mail-oa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751818AbaE3SoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 14:44:07 -0400
-Received: by mail-oa0-f45.google.com with SMTP id l6so2293621oag.32
-        for <git@vger.kernel.org>; Fri, 30 May 2014 11:44:06 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:organization:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=RrCAW3+/DXalAxHreut+lURZIhIayN0VLPT6PiUaznI=;
-        b=mZSsu1njjpKIbMo403aVnSA6eUM7hFRUp+H0nM0ORJbjRe9MvCFWUPIdIiqxG3qyyp
-         mKj838EmrmzSiOOiuR1mrrBs3pRord96zK8P0QlGbnmjGtqWRbPB/PYOljyHHeDoMo8N
-         uEsO3JSjyURBpawzmT/Yp7boYociwqSkGBFyXdCn+kbQrpMLMvkMW1fws049UVD23Ohk
-         g+Y3xIXw/GegOr6cHmc9Jzmau3eAYIgbsHfai2QzuEdMH5kkFlEbkPl/GvIYVlBSVHpj
-         YCugHpVyzPC4l3JwjlF5rqLFMW6vWOgMXyenGQTjNY1DPuKExjbr1pHEGvyzb7yDwSpO
-         OfcA==
-X-Gm-Message-State: ALoCoQmRHTWobwxf15mbYtpSc/RaTyPjCHOZjeTurHWcQOPL5G9Paq9lokx7YfOsYNS7a5+HDscQ
-X-Received: by 10.60.54.101 with SMTP id i5mr19788646oep.10.1401475446673;
-        Fri, 30 May 2014 11:44:06 -0700 (PDT)
-Received: from infinity.srv.mst.edu (infinity.srv.mst.edu. [131.151.49.1])
-        by mx.google.com with ESMTPSA id yt12sm8475200obc.4.2014.05.30.11.44.05
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 30 May 2014 11:44:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140530182746.GK12314@google.com>
+	id S933182AbaE3Spn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 14:45:43 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53132 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932413AbaE3Spm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 14:45:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C9C681A560;
+	Fri, 30 May 2014 14:45:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qOJqIP+O/+VnfQH+IeQN2U7Ou3o=; b=kiNANo
+	fXc7ViGXueysoBy9a/N8vjcnaeBxo5CsUvg0vb4UB0ja0fuL1PDVBXYKNhLdvDEy
+	oIPrtxW6oLofAxYAIWrg50d9zw//4CoMTdpBMGhAjFsb4rwrYa8WM0equbIH7aeF
+	oP0YpteZeQSmdmRfTXX0RjRcXIOBNQqJK7H/8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QVpbI97nrCk64KmV9nlZD8FIbKIY3/Ys
+	p5BOhUtFWBPhnIyj283AVE8sNnVL7ji0G8e9r/gf7Rvkcs+4SovkdiP4zQCFYlkQ
+	Em3GzG5DiPwWDdtspFfM3IvGTcghobXAktUVS9uM1z+LoqZy7tDTnmEn+FsnPCKK
+	ZTc0JETgRXI=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFD2A1A55F;
+	Fri, 30 May 2014 14:45:41 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 523601A559;
+	Fri, 30 May 2014 14:45:38 -0400 (EDT)
+In-Reply-To: <20140530020444.GH28683@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 29 May 2014 22:04:44 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 97C073C8-E82A-11E3-81DB-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250466>
 
-> I wouldn't mind having a GIT_EMAIL envvar with the semantics you mean,
-> but can you say more about the use case?  What's wrong with the usual
-> EMAIL environment variable?
+Jeff King <peff@peff.net> writes:
 
-EMAIL actually worked for this case for me, but there wasn't any equivalent for author name, so the commits all look 
-like "sharedaccount <myuser@mydomain>".
-
-> [...]
->> [include]
->>     path = !/usr/local/bin/gen-git-env
+> On Thu, May 29, 2014 at 02:34:33PM -0700, Pasha Bolokhov wrote:
 >
-> This is scary in terms of privilege escalation attacks.  ("Admin,
-> could you please take a look at this repo?  When I run 'git status',
-> ...".)
+>> > However, I doubt it makes that much of a difference in practice, so
+>> > unless it's measurable, I would certainly go with the version that is
+>> > more readable (and correct, of course).
+>> 
+>>     Sorry, just to recap, you would go with the existing version
+>> (which needs correction), or with the one that is being suggested? (I
+>> agree I can format the style a tiny bit better in the latter one)
+>
+> I actually think the original left-to-right is a little easier to
+> follow, but I do not feel strongly. I mainly meant "argue based on
+> readability and correctness, do not argue based on speed".
 
-Wouldn't that be pulling from ~sharedaccount/.gitconfig anyway though? (Agreed that it could be an issue if you have 
-shared ssh agent, krb5 tgts, etc. - but that would exist any time you connected into a shared account.)
+Sensible.
 
-I would probably take the approach of not supporting that syntax in anything other than the per-user gitconfig file 
-though as a safety measure - per-repo config could indeed be a problem.
+> I'd be OK with either, though I have a slight preference for the first,
+> just because I find the "bslash ^= 1" bit of yours, while clever, a bit
+> hard to follow.
 
--- Nathan
-
-------------------------------------------------------------
-Nathan Neulinger                       nneul@neulinger.org
-Neulinger Consulting                   (573) 612-1412
+FWIW, I think I agree.
