@@ -1,79 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] git log: support "auto" decorations
-Date: Fri, 30 May 2014 13:52:11 -0700
-Message-ID: <xmqqfvjr7zwk.fsf@gitster.dls.corp.google.com>
-References: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
-	<20140530015855.GG28683@sigill.intra.peff.net>
-	<CA+55aFzwy09-i=hpBy-5bYS6eowGzkdcF65cFJpL2qnJvYq85w@mail.gmail.com>
-	<20140530065737.GA13591@sigill.intra.peff.net>
-	<xmqqvbsn9pfx.fsf@gitster.dls.corp.google.com>
-	<20140530170330.GA25443@sigill.intra.peff.net>
-	<xmqqmwdz9nl9.fsf@gitster.dls.corp.google.com>
-	<20140530183441.GA3704@sigill.intra.peff.net>
-	<xmqqmwdz809b.fsf@gitster.dls.corp.google.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: [PATCH v2 0/2] replace signal() with sigaction()
+Date: Fri, 30 May 2014 13:58:15 -0700
+Message-ID: <cover.1401482787.git.jmmahler@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 30 22:52:22 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri May 30 22:58:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqTmn-00088c-G7
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 22:52:21 +0200
+	id 1WqTsy-0004VY-S3
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 22:58:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756231AbaE3UwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2014 16:52:17 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55494 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752164AbaE3UwQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 16:52:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5EF101A375;
-	Fri, 30 May 2014 16:52:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=aUCIsY1eO34K0j3m5B4mS9uJSDA=; b=uB7rjx
-	Y9T6ZlfFefHVQta4T5yWiqiNUAM53umo8TptJT+LercoZyzdgGbSPs1t8LylgECB
-	9WCXiLJ1hmYVoIqfLqUKfftKPZ5UYJNN+/+PqbEt2QeQwPe7ITZAYz3wE6p1s4cM
-	JzEjC/wFJJ0RohF6DZ0w5ZlpKGzXpp5iTfROs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mc1Lrc9kmS4O+bjXEFiNosQ8o+oYDhbq
-	U1Y3kJIJ92Jb61pWOd9FVR74Ckg+tPkVv5dyQlzpmr2u+ZxYVugVadD+MAdNbuHr
-	GFWqoPqLTYoKSpw/l4avvaxLLkMcs4DEyQjoJyvSYPifWkGDXU4DYK9pKy6lv4us
-	sX3Jcqlc6J4=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5638A1A374;
-	Fri, 30 May 2014 16:52:16 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id ECFD11A371;
-	Fri, 30 May 2014 16:52:12 -0400 (EDT)
-In-Reply-To: <xmqqmwdz809b.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 30 May 2014 13:44:32 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4681400C-E83C-11E3-9819-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S934102AbaE3U6l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 16:58:41 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:59913 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754614AbaE3U6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 16:58:38 -0400
+Received: by mail-pd0-f174.google.com with SMTP id r10so1328179pdi.19
+        for <git@vger.kernel.org>; Fri, 30 May 2014 13:58:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=vKDuYXC/fLJxfA9peLC6JsmRdX8QI3uxJRtBO7Fut74=;
+        b=b1SxAwryX6+7Nvko29j/Zxme/6BbtIkOo1VwYza1FmTtOvsOn2Zwe6VjN61/z1um8h
+         aTWh5cCQLS6/nqUQ2Y8PbaiZUFsD/Ni4QrRA4MRhLddxT7cSGHT7gsC9tXCSM+O0Amnj
+         OeErBAHcYj8d85tFwd0OXXTSE3IEVgtcmktLt/Y0QbG22QnnVf/EMW2UUnwMN56lxbzL
+         TswSYSc5/yAjPa/UNJH01OEo18EbSHKBv+T++3Twlt/tfjeuhhhyAP70WJ2l//S3IOFD
+         Ptn/VCgYRBw6OSbV+ZWT8Up/hpEQ9AGGfOKH+192oGfoMgGsOjGLxp8me22jVRYsTFQ2
+         P8uw==
+X-Received: by 10.68.231.35 with SMTP id td3mr21241195pbc.137.1401483517858;
+        Fri, 30 May 2014 13:58:37 -0700 (PDT)
+Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id wl5sm7931685pbc.13.2014.05.30.13.58.34
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 30 May 2014 13:58:36 -0700 (PDT)
+X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
+Received: by hudson (sSMTP sendmail emulation); Fri, 30 May 2014 13:58:33 -0700
+X-Mailer: git-send-email 2.0.0.2.g1d11d5d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250482>
 
-Junio C Hamano <gitster@pobox.com> writes:
+This is the second revision to the patch set to replace signal(2) with
+sigaction(2) [1].
 
-> Jeff King <peff@peff.net> writes:
->
->> Subject: [PATCH] reuse commit->buffer when parsing signatures
->> ...
->> Signed-off-by: Jeff King <peff@peff.net>
->
-> Hmph, unfortunately this seems to break t7510.
+As Johannes pointed out [2], replacing signal with sigaction would break
+MinGW compatibility.  The first patch in this series addresses this
+problem by expanding the faux sigaction function in compat/mingw.c to
+support signals other than just SIGALRM.  Details are in the patch
+description.
 
-And I think without re-reading the patch I know what is wrong.  The
-length of the object and strlen(commit->buffer) would be different,
-no?
+The second patch is a proof of concept.  It converts signal to sigaction
+in a case where signal SIGCHILD was used.  Previously this would have
+failed with MinGW since the faux sigaction function only supported
+SIGALRM.  Now it works as expected.
+
+I have tested these changes under Linux and under Windows 7 using Msysgit.
+
+[1]: http://marc.info/?l=git&m=140125769223552&w=2
+[2]: http://marc.info/?l=git&m=140126288325213&w=2
+
+Jeremiah Mahler (2):
+  compat/mingw.c: expand MinGW support for sigaction
+  connect.c: replace signal() with sigaction()
+
+ compat/mingw.c | 9 +++++----
+ connect.c      | 5 ++++-
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+-- 
+2.0.0.2.g1d11d5d
