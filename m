@@ -1,134 +1,101 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] refs.c: change read_ref_at to use the reflog iterators
-Date: Fri, 30 May 2014 18:51:06 -0400
-Message-ID: <CAPig+cTi5qzS0xOvZcu05SK9vihufPDOxYYEEyo9AqG6wsKxoQ@mail.gmail.com>
-References: <1401479462-2329-1-git-send-email-sahlberg@google.com>
+From: "Naumov, Michael (North Sydney)" <Michael.Naumov@Fiserv.com>
+Subject: [PATCH] sideband.c: Get rid of ANSI sequences for non-terminal shell
+Date: Fri, 30 May 2014 23:10:51 +0000
+Message-ID: <81E85F13A4BE084BAF4B1AA24173EDA0144E14B7@JWPKEXMBX03.corp.checkfree.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Sat May 31 00:51:15 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "peff@peff.net" <peff@peff.net>,
+	"spearce@spearce.org" <spearce@spearce.org>,
+	"j6t@kdbg.org" <j6t@kdbg.org>, "nico@cam.org" <nico@cam.org>,
+	"junkio@cox.net" <junkio@cox.net>,
+	"kusmabite@gmail.com" <kusmabite@gmail.com>,
+	"mnaoumov@gmail.com" <mnaoumov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat May 31 01:20:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqVdp-0001wX-I4
-	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 00:51:13 +0200
+	id 1WqW64-0004Hn-6B
+	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 01:20:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030207AbaE3WvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2014 18:51:08 -0400
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:40028 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964939AbaE3WvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 18:51:07 -0400
-Received: by mail-yh0-f50.google.com with SMTP id 29so2148991yhl.23
-        for <git@vger.kernel.org>; Fri, 30 May 2014 15:51:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=9whaFLi/TfuDRFpXe+8vk7mMRYlPDSQ2r1wTsGtC1SY=;
-        b=gLYmd8qWjqLOMbxzXle/PWytuCORUh8uuGj/LnIKqDLfpJpzI1Hi9Il5XofbvTvptS
-         RgListPXm8YcoCtpofLAY3idnjcYTv7qjMNQ7lil5K+X/sw4amcPPkz9DTlF+lSMp4v9
-         BTewciD/ExHSKVPqppDYxqpKrLOEZA/xkiiGMmGVHkXYOO49UUDyVANEuwK+EMgTHtv0
-         F5ffyhosmjrLvs5OKcQIyVzrJCh3xguL6BVwfLR/AAgUQCUxwdMnBwlEDO+JvbBJwsa4
-         kLB6Z7Tr6A7Xgw2lLQwgKwXk4VYhj25dkSG84c+jnL4YYwg2+5gH+WkoXHvN3gVa97GH
-         sG3Q==
-X-Received: by 10.236.72.70 with SMTP id s46mr8043562yhd.145.1401490266711;
- Fri, 30 May 2014 15:51:06 -0700 (PDT)
-Received: by 10.170.169.65 with HTTP; Fri, 30 May 2014 15:51:06 -0700 (PDT)
-In-Reply-To: <1401479462-2329-1-git-send-email-sahlberg@google.com>
-X-Google-Sender-Auth: y5ljlyYcMC7xsujL0_SpKTCIDvM
+	id S933058AbaE3XUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 19:20:20 -0400
+Received: from mail1.checkfree.com ([204.95.150.32]:41456 "EHLO
+	mail1.checkfree.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751983AbaE3XUT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 30 May 2014 19:20:19 -0400
+X-Greylist: delayed 566 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 May 2014 19:20:19 EDT
+X-IronPort-AV: E=Sophos;i="4.98,944,1392181200"; 
+   d="scan'208";a="25589304"
+Received: from iwpdlpem03.corp.checkfree.com (HELO iwpexht01.corp.checkfree.com) ([10.132.91.27])
+  by iapiron02.corp.checkfree.com with ESMTP; 30 May 2014 19:10:52 -0400
+Received: from JWPKEXHT02.corp.checkfree.com (10.141.82.34) by
+ iwpexht01.corp.checkfree.com (10.132.91.140) with Microsoft SMTP Server (TLS)
+ id 8.3.279.5; Fri, 30 May 2014 19:10:52 -0400
+Received: from JWPKEXMBX03.corp.checkfree.com ([169.254.5.29]) by
+ JWPKEXHT02.corp.checkfree.com ([10.141.82.34]) with mapi id 14.02.0342.003;
+ Fri, 30 May 2014 19:10:52 -0400
+Thread-Topic: [PATCH] sideband.c: Get rid of ANSI sequences for non-terminal
+ shell
+Thread-Index: Ac96Im92MGNFpZ4kRCKYl87yS9me0A==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.1.121.8]
+X-CFilter-Loop: True
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250494>
 
-On Fri, May 30, 2014 at 3:51 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
-> read_ref_at has its own parsing of the reflog file for no really good reason
-> so lets change this to use the existing reflog iterators. This removes one
-> instance where we manually unmarshall the reflog file format.
->
-> Log messages for errors are changed slightly. We no longer print the file
-> name for the reflog, instead we refer to it as 'Log for ref <refname>'.
-> This might be a minor useability regression, but I don't really think so, since
-> experienced users would know where the log is anyway and inexperienced users
-> would not know what to do about/how to repair 'Log ... has gap ...' anyway.
->
-> Adapt the t1400 test to handle the cahnge in log messages.
+Some git tools such as GitExtensions for Windows use environment
+variable TERM=msys which causes the weird ANSI sequence shown for the
+messages returned from server-side hooks
+We add those ANSI sequences to help format sideband data on the user's
+terminal. However, GitExtensions is not using a terminal, and the ANSI
+sequences just confuses it. We can recognize this use by checking
+isatty().
+See https://github.com/gitextensions/gitextensions/issues/1313 for
+more details
 
-s/cahnge/change/
+NOTE: I considered to cover the case that a pager has already been
+started. But decided that is probably not worth worrying about here,
+though, as we shouldn't be using a pager for commands that do network
+communications (and if we do, omitting the magic line-clearing signal
+is probably a sane thing to do).
 
-More below.
+Signed-off-by: Michael Naumov <mnaoumov@gmail.com>
+Thanks-to: Erik Faye-Lund <kusmabite@gmail.com>
+Thanks-to: Jeff King <peff@peff.net>
+---
+ sideband.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> ---
-> diff --git a/refs.c b/refs.c
-> index 6898263..99d4832 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2936,109 +2936,132 @@ static char *ref_msg(const char *line, const char *endp)
->         return xmemdupz(line, ep - line);
->  }
->
-> +static int read_ref_at_ent(unsigned char *osha1, unsigned char *nsha1,
-> +               const char *email, unsigned long timestamp, int tz,
-> +               const char *message, void *cb_data)
-> +{
-> +       struct read_ref_at_cb *cb = cb_data;
-> +
-> +       cb->reccnt++;
-> +       cb->tz = tz;
-> +       cb->date = timestamp;
-> +
-> +       if (timestamp <= cb->at_time || cb->cnt == 0) {
-> +               if (cb->msg)
-> +                       *cb->msg = xstrdup(message);
-> +               if (cb->cutoff_time)
-> +                       *cb->cutoff_time = timestamp;
-> +               if (cb->cutoff_tz)
-> +                       *cb->cutoff_tz = tz;
-> +               if (cb->cutoff_cnt)
-> +                       *cb->cutoff_cnt = cb->reccnt - 1;
-> +
-> +               /*
-> +                * we have not yet updated cb->[n|o]sha1 so they still
-> +                * hold the values for the previous record.
-> +                */
-> +               if (!is_null_sha1(cb->osha1)) {
-> +                       hashcpy(cb->sha1, nsha1);
-> +                       if (hashcmp(cb->osha1, nsha1))
-> +                               warning("Log for ref %s has gap after %s.",
-> +                                       cb->refname, show_date(cb->date, cb->tz, DATE_RFC2822));
-> +               }
-> +               else if (cb->date == cb->at_time)
-> +                       hashcpy(cb->sha1, nsha1);
-> +               else
-> +                       if (hashcmp(nsha1, cb->sha1))
+diff --git a/sideband.c b/sideband.c
+index d1125f5..7f9dc22 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -30,7 +30,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 
+ 	memcpy(buf, PREFIX, pf);
+ 	term = getenv("TERM");
+-	if (term && strcmp(term, "dumb"))
++	if (isatty(2) && term && strcmp(term, "dumb"))
+ 		suffix = ANSI_SUFFIX;
+ 	else
+ 		suffix = DUMB_SUFFIX;
+-- 
+1.8.3.msysgit.0
 
-This could be an 'else if', allowing you to drop one level of indentation.
+P.S. I gave up trying to send this letter from gmail, it eats my tab
+character
+P.S 2. Sorry, my tab character has been eaten again!
+P.S 3. Wrapped the letter lines to fit on the terminal
 
-> +                               warning("Log for ref %s unexpectedly ended on %s.",
-> +                                       cb->refname, show_date(cb->date, cb->tz,
-> +                                                          DATE_RFC2822));
-> +
-> +               /*
-> +                * return 1. Not to signal an error but to break the loop
-> +                * since we have found the entry we want.
-> +                */
-> +               hashcpy(cb->osha1, osha1);
-> +               hashcpy(cb->nsha1, nsha1);
-> +               cb->found_it = 1;
-> +               return 1;
-> +       }
-> +
-> +       hashcpy(cb->osha1, osha1);
-> +       hashcpy(cb->nsha1, nsha1);
-> +       if (cb->cnt > 0)
-> +               cb->cnt--;
-> +
-> +       return 0;
-> +}
+Regards,
+Michael
