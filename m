@@ -1,84 +1,247 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] git log: support "auto" decorations
-Date: Fri, 30 May 2014 10:35:14 -0700
-Message-ID: <xmqqmwdz9nl9.fsf@gitster.dls.corp.google.com>
-References: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
-	<20140530015855.GG28683@sigill.intra.peff.net>
-	<CA+55aFzwy09-i=hpBy-5bYS6eowGzkdcF65cFJpL2qnJvYq85w@mail.gmail.com>
-	<20140530065737.GA13591@sigill.intra.peff.net>
-	<xmqqvbsn9pfx.fsf@gitster.dls.corp.google.com>
-	<20140530170330.GA25443@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH v2] t5538: move http push tests out to t5542
+Date: Fri, 30 May 2014 13:36:21 -0400
+Message-ID: <20140530173621.GD25443@sigill.intra.peff.net>
+References: <87y4xk8asq.fsf@spindle.srvr.nix>
+ <20140530010649.GD28683@sigill.intra.peff.net>
+ <20140530013419.GE28683@sigill.intra.peff.net>
+ <87lhtj8sqx.fsf_-_@spindle.srvr.nix>
+ <20140530172051.GB25443@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri May 30 19:35:27 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Nix <nix@esperi.org.uk>
+X-From: git-owner@vger.kernel.org Fri May 30 19:36:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqQiE-0007Qw-1O
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 19:35:26 +0200
+	id 1WqQjD-0008GM-G7
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 19:36:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754568AbaE3RfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2014 13:35:21 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58518 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752209AbaE3RfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 13:35:20 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8FE9D19576;
-	Fri, 30 May 2014 13:35:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1KwfHB0gbZkIiaEZqRMOEN4noQo=; b=iABELV
-	Dr+Xa01k/9SNgpYqLr0hbsrDvpGvAYEBOGKVaUC3FEp9x3s4OqEcFSE349c+S+aG
-	lu78MTRSgAFdNjx4N8xP+ROSCpeDUX6z8UqHhrdwZt5Uacq2OBTnxFdsBW80aNae
-	R8XgrZUvf8Xar9eGzvDScE4/8MMNJ2WV7Xwmk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kFOw6klv35+4YP63tpS+y4nY/2jCK6WM
-	fukcGouCzkfSM6vHZ+L6AK7N/NBMDMjJ6B2FOMuFyqy0sMqLAGn/ga+Hz/n9CDQ0
-	yG51xlK4VWZ6HMqMzAVmyaTNUi6ZEdgrqSF0N/83bFyTwLhSN3gs4HmfbXt5swk4
-	E00b/NB/hf0=
-Received: from pb-smtp0. (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 826B319575;
-	Fri, 30 May 2014 13:35:19 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E2D6D19572;
-	Fri, 30 May 2014 13:35:15 -0400 (EDT)
-In-Reply-To: <20140530170330.GA25443@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 30 May 2014 13:03:30 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C3003A5A-E820-11E3-95D1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S933195AbaE3RgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 13:36:23 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34288 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932564AbaE3RgX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 13:36:23 -0400
+Received: (qmail 15599 invoked by uid 102); 30 May 2014 17:36:23 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 May 2014 12:36:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 May 2014 13:36:21 -0400
+Content-Disposition: inline
+In-Reply-To: <20140530172051.GB25443@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250451>
 
-Jeff King <peff@peff.net> writes:
+From: Nick Alcock <nick.alcock@oracle.com>
 
-> On Fri, May 30, 2014 at 09:55:14AM -0700, Junio C Hamano wrote:
->
-> I don't think we need to worry about commit->buffer being mucked with.
-> It is always either NULL, or points to the original object contents.
-> Encoded log messages are always placed in a separate buffer (and in fact
-> we use the same "optionally point to commit->buffer" trick there). And
-> things like mucking with parents always happen on the parsed form.
->
-> Of course I may be missing a site, and it's certainly a maintenance risk
-> for the future. But I'd go so far as to say that anything modifying
-> commit->buffer is wrong, and that side should be fixed.
+As 0232852b, but for the push tests instead: this avoids a start_httpd
+in the middle of the file, which fails under GIT_TEST_HTTPD=false.
 
-I fully agree, and "that side should be fixed" implying "we should
-always be on a look-out for such a change" is something the lazyness
-tried to avoid.
+Note that we have to munge the test in a few ways while
+moving it:
 
-> Do you want me to roll it up with a real commit message?
+  1. We drop the `test -z "$GIT_TEST_HTTPD"` check; this is
+     too simplistic since 83d842d, and we should let
+     lib-httpd.sh handle it.
 
-Yes.  I think the change is sensible.
+  2. We have to port over some of the old setup from t5538.
+
+  3. In the final test, we no longer expect the extra commit
+     "1" built on top of "4". This was a side effect from an
+     earlier test in t5538 which was not ported over.
+
+Signed-off-by: Nick Alcock <nick.alcock@oracle.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Here it is with the fixups I suggested in the last email. This passes
+for me, but I'd love to have a sanity check from Duy.
+
+ t/t5538-push-shallow.sh      |  59 -------------------------
+ t/t5542-push-http-shallow.sh | 100 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 100 insertions(+), 59 deletions(-)
+ create mode 100755 t/t5542-push-http-shallow.sh
+
+diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
+index 8e54ac5..ceee95b 100755
+--- a/t/t5538-push-shallow.sh
++++ b/t/t5538-push-shallow.sh
+@@ -120,63 +120,4 @@ EOF
+ 	git cat-file blob `echo 1|git hash-object --stdin` >/dev/null
+ 	)
+ '
+-
+-if test -n "$NO_CURL" -o -z "$GIT_TEST_HTTPD"; then
+-	say 'skipping remaining tests, git built without http support'
+-	test_done
+-fi
+-
+-. "$TEST_DIRECTORY"/lib-httpd.sh
+-start_httpd
+-
+-test_expect_success 'push to shallow repo via http' '
+-	git clone --bare --no-local shallow "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	(
+-	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	git config http.receivepack true
+-	) &&
+-	(
+-	cd full &&
+-	commit 9 &&
+-	git push $HTTPD_URL/smart/repo.git +master:refs/remotes/top/master
+-	) &&
+-	(
+-	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	git fsck &&
+-	git log --format=%s top/master >actual &&
+-	cat <<EOF >expect &&
+-9
+-4
+-3
+-EOF
+-	test_cmp expect actual
+-	)
+-'
+-
+-test_expect_success 'push from shallow repo via http' '
+-	mv "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" shallow-upstream.git &&
+-	git clone --bare --no-local full "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	(
+-	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	git config http.receivepack true
+-	) &&
+-	commit 10 &&
+-	git push $HTTPD_URL/smart/repo.git +master:refs/remotes/top/master &&
+-	(
+-	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+-	git fsck &&
+-	git log --format=%s top/master >actual &&
+-	cat <<EOF >expect &&
+-10
+-1
+-4
+-3
+-2
+-1
+-EOF
+-	test_cmp expect actual
+-	)
+-'
+-
+-stop_httpd
+ test_done
+diff --git a/t/t5542-push-http-shallow.sh b/t/t5542-push-http-shallow.sh
+new file mode 100755
+index 0000000..2a691e0
+--- /dev/null
++++ b/t/t5542-push-http-shallow.sh
+@@ -0,0 +1,100 @@
++#!/bin/sh
++
++test_description='push from/to a shallow clone over http'
++
++. ./test-lib.sh
++
++if test -n "$NO_CURL"; then
++	say 'skipping test, git built without http support'
++	test_done
++fi
++
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++commit() {
++	echo "$1" >tracked &&
++	git add tracked &&
++	git commit -m "$1"
++}
++
++test_expect_success 'setup' '
++	git config --global transfer.fsckObjects true &&
++	commit 1 &&
++	commit 2 &&
++	commit 3 &&
++	commit 4 &&
++	git clone . full &&
++	(
++	git init full-abc &&
++	cd full-abc &&
++	commit a &&
++	commit b &&
++	commit c
++	) &&
++	git clone --no-local --depth=2 .git shallow &&
++	git --git-dir=shallow/.git log --format=%s >actual &&
++	cat <<EOF >expect &&
++4
++3
++EOF
++	test_cmp expect actual &&
++	git clone --no-local --depth=2 full-abc/.git shallow2 &&
++	git --git-dir=shallow2/.git log --format=%s >actual &&
++	cat <<EOF >expect &&
++c
++b
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'push to shallow repo via http' '
++	git clone --bare --no-local shallow "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	(
++	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	git config http.receivepack true
++	) &&
++	(
++	cd full &&
++	commit 9 &&
++	git push $HTTPD_URL/smart/repo.git +master:refs/remotes/top/master
++	) &&
++	(
++	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	git fsck &&
++	git log --format=%s top/master >actual &&
++	cat <<EOF >expect &&
++9
++4
++3
++EOF
++	test_cmp expect actual
++	)
++'
++
++test_expect_success 'push from shallow repo via http' '
++	mv "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" shallow-upstream.git &&
++	git clone --bare --no-local full "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	(
++	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	git config http.receivepack true
++	) &&
++	commit 10 &&
++	git push $HTTPD_URL/smart/repo.git +master:refs/remotes/top/master &&
++	(
++	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
++	git fsck &&
++	git log --format=%s top/master >actual &&
++	cat <<EOF >expect &&
++10
++4
++3
++2
++1
++EOF
++	test_cmp expect actual
++	)
++'
++
++stop_httpd
++test_done
+-- 
+2.0.0.rc1.436.g03cb729
