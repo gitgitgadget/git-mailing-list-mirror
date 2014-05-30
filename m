@@ -1,59 +1,111 @@
-From: Eddie Monge <eddie@eddiemonge.com>
-Subject: Git stash gpg prompting
-Date: Fri, 30 May 2014 13:07:16 -0700
-Message-ID: <CALp-zYGRLKJfC5rVygRg8adjsxP0h2dguNSYsvmcZxq7tcEQfg@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: feature request - implement a "GIT_AUTHOR_EMAIL" equivalent, but
+ processed BEFORE .gitconfig
+Date: Fri, 30 May 2014 16:09:45 -0400
+Message-ID: <20140530200945.GB5513@sigill.intra.peff.net>
+References: <5388CBA5.9030403@neulinger.org>
+ <20140530182746.GK12314@google.com>
+ <5388D175.3060500@neulinger.org>
+ <xmqqvbsn82u6.fsf@gitster.dls.corp.google.com>
+ <5388E2F7.606@neulinger.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri May 30 22:09:40 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Nathan Neulinger <nneul@neulinger.org>
+X-From: git-owner@vger.kernel.org Fri May 30 22:10:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqT7R-00020K-DS
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 22:09:37 +0200
+	id 1WqT81-0002SZ-1e
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 22:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030470AbaE3UHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2014 16:07:23 -0400
-Received: from mail-wg0-f47.google.com ([74.125.82.47]:54410 "EHLO
-	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932413AbaE3UHS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 16:07:18 -0400
-Received: by mail-wg0-f47.google.com with SMTP id x12so2455164wgg.18
-        for <git@vger.kernel.org>; Fri, 30 May 2014 13:07:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=Do1ymoC0WvhQnlQlvmI+FUAAot4Ee8avh3Tw8erTB0U=;
-        b=YhHUbCt1Z2+/SO7yXq716hDNWIFn2nmTOBFU4r1xxIbLwj8Wss7lXBF4KIcNOvaRCg
-         FCoAU/dxY91xrQH9/F5Jtvk8aTLSLwGo00V1kN3K6oVxWdtVOk6CkRgR+VfeIvDSEbRk
-         NawlzfBCd1M9SniwKRIbD5Ivr6JYS1E2vZaVKbqBv1RWYdWXsvnWh9MjeiJa7RJVM5JD
-         PUnTBCoOCA7GPodZBEWzhaUGuP0/xKlXMAOn/m3jEqwZsENMVjQhfAQS1/hgZDG3vsnM
-         VzcEFIKhSMEF1ZV56OErnwddmKWwY+JHH/FjYPRf7i26Or2PjcEkgAhqnOyLChLNWzf2
-         g50g==
-X-Gm-Message-State: ALoCoQkJvRKeCu/inHkM2S1xFpvj21I3hswjHlcxaYf/dgXyfz1zx2ia2qqLmxBobf15AYxI5lYI
-X-Received: by 10.180.77.68 with SMTP id q4mr10062449wiw.21.1401480436571;
- Fri, 30 May 2014 13:07:16 -0700 (PDT)
-Received: by 10.216.80.135 with HTTP; Fri, 30 May 2014 13:07:16 -0700 (PDT)
-X-Originating-IP: [66.211.109.190]
+	id S934510AbaE3UKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 16:10:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:34403 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934432AbaE3UJr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 16:09:47 -0400
+Received: (qmail 29386 invoked by uid 102); 30 May 2014 20:09:47 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 30 May 2014 15:09:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 30 May 2014 16:09:45 -0400
+Content-Disposition: inline
+In-Reply-To: <5388E2F7.606@neulinger.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250474>
 
-Git stash is prompting for passphrase to try to "sign" the changes
-being stashed.
+On Fri, May 30, 2014 at 02:58:47PM -0500, Nathan Neulinger wrote:
 
-Reproduce:
-Add to global gitconfig with signing key:
-```
-[commit]
-  gpgsign = true
-```
-Go to a repo, make some changes, and then run `git stash`
+> Yes, the behavior currently is:
+> 
+> 	If I can figure out "who", I'll set the EMAIL/attributes based on that.
+> 	If not, it'll default to the "don't know" behavior that throws up the list
+> 
+> Ideally, I'd prefer the second option be:
+> 
+> 	Force user to specify --author if a good default can't be determined
+> 
+> But there doesn't appear to be a way to do that.
 
-Expected: stash the changes as normal
-Actual: git prompts for passphrase (if set)
+Yeah, I don't think there is a blessed way to tell git "I am explicitly
+_not_ giving you an identity". You can set user.email to "bogus.(none)"
+which git will think "oh, I tried to get the FQDN, but failed". However,
+that is not a documented interface, and I would not be surprised if it
+changes in the future.
+
+The instructions you get:
+
+	*** Please tell me who you are.
+	
+	Run
+	
+	  git config --global user.email "you@example.com"
+	  git config --global user.name "Your Name"
+	
+	to set your account's default identity.
+	Omit --global to set the identity only in this repository.
+	
+
+are probably not helpful either (you do not want the user to run "git
+config", as that would interfere with the other shared users).
+
+> >If so, wouldn't it be a better option to use that mechanism to set
+> >separate $HOME (or XDG_CONFIG_HOME if you prefer) to these real
+> >users who share the account, so that separate $HOME/.gitconfig files
+> >can be used by them?
+> 
+> Not really, since there are lots of servers, and lots of application/service
+> accounts. Where filesystem acl'ing can be used reasonably, it is, making
+> this moot, but it still boils down to example case of "I have a team of X
+> people maintaining Y different applications, each on their own dedicated
+> account". I'd just like a good mechanism to set defaults based on
+> information other than what is in the home dir on the occasions that users
+> log in directly to the app account, as opposed to doing updates offline on
+> their own systems/to central repo/etc.
+
+But I think anything you could set up in the environment could be set up
+in an on-the-fly $HOME. For example, instead of:
+
+  GIT_WEAK_AUTHOR_NAME=$name
+  GIT_WEAK_AUTHOR_EMAIL=$email
+
+do:
+
+  HOME=$(mktemp -d gitenv.XXXXXX")
+  trap 'rm -rf "$HOME"' 0
+  git config --global user.name "$name"
+  git config --global user.email "$email"
+
+You'd want to link in anything else you actually _want_ in $HOME, but
+that also gives an opportunity to set up application-specific options
+based on the user (e.g., if you could pull their .vimrc from some shared
+storage or something).
+
+-Peff
