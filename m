@@ -1,242 +1,156 @@
-From: Keval Patel <patel.keval88@gmail.com>
-Subject: [PATCH 2/2] contrib/subtree: List subcmd and modify push/pull to use .gittrees
-Date: Fri, 30 May 2014 13:45:15 -0400
-Message-ID: <1401471915-47195-2-git-send-email-kapatel@lutron.com>
-References: <1401471915-47195-1-git-send-email-kapatel@lutron.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] fetch doc: update introductory part for clarity
+Date: Fri, 30 May 2014 10:52:32 -0700
+Message-ID: <xmqqioon9msf.fsf@gitster.dls.corp.google.com>
+References: <1401403350-7122-1-git-send-email-gitster@pobox.com>
+	<1401403350-7122-2-git-send-email-gitster@pobox.com>
+	<5388972C.5020307@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Keval Patel <patel.keval88@gmail.com>,
-	Keval Patel <kapatel@lutron.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri May 30 19:45:42 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Fri May 30 19:52:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqQs9-0007Fh-D9
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 19:45:41 +0200
+	id 1WqQyw-0004R4-H3
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 19:52:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932716AbaE3Rpg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 May 2014 13:45:36 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:48744 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932189AbaE3Rpg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 13:45:36 -0400
-Received: by mail-qg0-f42.google.com with SMTP id q107so6321099qgd.15
-        for <git@vger.kernel.org>; Fri, 30 May 2014 10:45:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        bh=jMD287PI1Cx1IYa+LRn0ZcNleYj+7RQ+o78oWpUnCyY=;
-        b=fmcc1HP5iBB3dlPuZd3pC3PZ5y8Wo6Fb9lt9Z4h+DXJ0uJo8cbSVP8IXfa00GQf/Q2
-         qCsl/ZRLmKiNUZjqDTUeJOZKFuH4Curs6F7JBEDDyvouQfuGJs83EUzqC5vqUH4gQ8du
-         5961VbLMvo3dclsuIT9fPtgOoABAJJytJ4pkcN2W1ELrZuYi5FdTtabMuB1r2owd+V/a
-         7AID3bv/u28X/6V1wjjVV0FN2TyAr4cGUUohSlUF/KEa1NQOctnlCJ0gym5SLB6ELS4z
-         4nioa0ngEmZM0d4gD88r4KGepeC0iDQzmYMR4SwAXxZLr8yYRWSoQBj81sx1CIE9y6xO
-         4NuA==
-X-Received: by 10.140.104.195 with SMTP id a61mr21733003qgf.102.1401471935170;
-        Fri, 30 May 2014 10:45:35 -0700 (PDT)
-Received: from dangoudesiphone.intra.lutron.com.com (lutron48.lutron.com. [8.14.172.48])
-        by mx.google.com with ESMTPSA id 6sm7186512qam.44.2014.05.30.10.45.34
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 30 May 2014 10:45:34 -0700 (PDT)
-X-Google-Original-From: Keval Patel <kapatel@lutron.com>
-X-Mailer: git-send-email 1.8.5.2 (Apple Git-48)
-In-Reply-To: <1401471915-47195-1-git-send-email-kapatel@lutron.com>
+	id S1754513AbaE3Rwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 13:52:39 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52240 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754324AbaE3Rwi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 13:52:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA852198C1;
+	Fri, 30 May 2014 13:52:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wtnZp5mIYvLZwJZ1aQ7at+QnBmo=; b=HFfTpJ
+	/s3ooDTFGnlNwkU3lQCA0GPOWcNnwN9He7mNMqXel/X30+itbb4ytlnflsFHMGH4
+	zkhu+jjmsb9Pm6PnGK2zYtQxQ3JNue1YntziKyAAN5DvfvjQVfNZXTS6wyJGS9VD
+	Yesq/GWNwDVH7z3tl0PjNh3YgM4XH8W5PIiJw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZSyK3PJlJLuYKrTyNaFk0zgeXKKGoe4b
+	+uYBzKRib8ZL7RVxnR/hCNuSHt0IYXgNsbrZMRcg3a1u1HxYb99Ex1K/HZOowv7B
+	uooUzFBrFpDw5lwZiPME1nKEWaJQ0zXF6QG91RncFYQwB6gREgTz+JXkaCG85vAA
+	Cfe9jWkNDH8=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AED86198C0;
+	Fri, 30 May 2014 13:52:37 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3D803198BE;
+	Fri, 30 May 2014 13:52:34 -0400 (EDT)
+In-Reply-To: <5388972C.5020307@xiplink.com> (Marc Branchaud's message of "Fri,
+	30 May 2014 10:35:24 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 2DE33172-E823-11E3-B843-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250455>
 
-- Add subtree list sub-command
-- git subtree list - Lists the subtrees in current project
-- Changes taken from helmo=E2=80=99s repository from following URL:
-https://github.com/helmo/git-subtree/blob/master/git-subtree.sh
-- Add tests for subtree list and subtree push/pull using .gittrees
-- Files changed in this commit:
-1. git/contrib/subtree/git-subtree.sh
-2. git/contrib/subtree/t/t7900-subtree.sh
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
-Signed-off-by: Keval Patel <kapatel@lutron.com>
----
-A selection of updates to git-subtree were offered to the list by coupl=
-e of people
-($gmane/196667) by Herman van Rink and ($gmane/217820) by Paul Campbell
-=46or various reasons the work stalled and I would like to pick it up f=
-rom there
+> On 14-05-29 06:42 PM, Junio C Hamano wrote:
+>>  - "Branches" is a more common way to say "heads" in these days.
+>> 
+>>  - Remote-tracking branches are used a lot more these days and it is
+>>    worth mentioning that it is one of the primary side effects of
+>>    the command to update them.
+>> 
+>>  - Avoid "X. That means Y."  If Y is easier to understand to
+>>    readers, just say that upfront.
+>> 
+>>  - Use of explicit refspec to fetch tags does not have much to do
+>>    with turning "auto following" on or off.  It is a way to fetch
+>>    tags that otherwise would not be fetched by auto-following.
+>> 
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  Documentation/git-fetch.txt | 29 ++++++++++++++++-------------
+>>  1 file changed, 16 insertions(+), 13 deletions(-)
+>> 
+>> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+>> index 5809aa4..d5f5b54 100644
+>> --- a/Documentation/git-fetch.txt
+>> +++ b/Documentation/git-fetch.txt
+>> @@ -17,20 +17,23 @@ SYNOPSIS
+>>  
+>>  DESCRIPTION
+>>  -----------
+>> -Fetches named heads or tags from one or more other repositories,
+>> -along with the objects necessary to complete them.
+>> -
+>> -The ref names and their object names of fetched refs are stored
+>> -in `.git/FETCH_HEAD`.  This information is left for a later merge
+>> -operation done by 'git merge'.
+>> -
+>> -By default, tags are auto-followed.  This means that when fetching
+>> -from a remote, any tags on the remote that point to objects that exist
+>> -in the local repository are fetched.  The effect is to fetch tags that
+>> +Fetch branches and/or tags (collectively, "refs") from one or more
+>> +other repositories, along with the objects necessary to complete the
+>> +histories of them.
+>
+> Phrasing: s/the histories of them/their histories/
 
-The following patches take a selection of these commits and rebase them=
-=20
-against the tip of master.
-The make test works and I have added more tests to cover the new comman=
-ds and=20
-use of .gittrees file for storing the subtree metadata
+Yeah, thanks.
 
-Thanks-to and Based-on-patch-by:
-- Herman van Rink
-- Matt Hoffman
-- Michael Hart
-- Nate Jones
-- Paul Campbell
-- Paul Cartwright
-- Peter Jaros
-- bibendi
+>> +
+>> +The names of refs that are fetched, together with the object names
+>> +they point at, are written to `.git/FETCH_HEAD`.  This information
+>> +is used by a later merge operation done by 'git merge'.  In addition,
+>
+> Isn't this merge stuff about pull, not fetch?
 
- contrib/subtree/git-subtree.sh     |   25 ++++++++++--
- contrib/subtree/t/t7900-subtree.sh |   72 ++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 93 insertions(+), 4 deletions(-)
+It is true that "git pull" uses "git fetch" and .git/FETCH_HEAD is a
+documented mechanism between the two to communicate what commits the
+latter downloaded are to be merged by the former, and that is one of
+the reasons why we had the description here in the original before
+this patch.  A user can also do this to refer to the tip of the
+single branch she fetched:
 
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtr=
-ee.sh
-index 7d01b4b..1151884 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -10,9 +10,10 @@ fi
- OPTS_SPEC=3D"\
- git subtree add   --prefix=3D<prefix> <repository> <refspec>
- git subtree merge --prefix=3D<prefix> <commit>
--git subtree pull  --prefix=3D<prefix> <repository> <ref>
--git subtree push  --prefix=3D<prefix> <repository> <ref>
-+git subtree pull  --prefix=3D<prefix> [<repository> [<refspec>...]]
-+git subtree push  --prefix=3D<prefix> [<repository> [<refspec>...]]
- git subtree split --prefix=3D<prefix> <commit...>
-+git subtree list
- --
- h,help        show the help
- q             quiet
-@@ -102,15 +103,16 @@ command=3D"$1"
- shift
- case "$command" in
- 	add|merge|pull) default=3D ;;
--	split|push) default=3D"--default HEAD" ;;
-+	split|push|list) default=3D"--default HEAD" ;;
- 	*) die "Unknown command '$command'" ;;
- esac
-=20
--if [ -z "$prefix" ]; then
-+if [ -z "$prefix" -a "$command" !=3D "list" ]; then
- 	die "You must provide the --prefix option."
- fi
-=20
- case "$command" in
-+	list);;
- 	add) [ -e "$prefix" ] &&=20
- 		die "prefix '$prefix' already exists." ;;
- 	*)   [ -e "$prefix" ] ||=20
-@@ -759,4 +761,19 @@ cmd_push()
- 	fi
- }
-=20
-+subtree_list()=20
-+{
-+	git config -f .gittrees -l | grep subtree | grep path | grep -o '=3D.=
-*' | grep -o '[^=3D].*' |
-+	while read path; do=20
-+		repository=3D$(git config -f .gittrees subtree.$path.url)
-+		refspec=3D$(git config -f .gittrees subtree.$path.branch)
-+		echo "    $path        (merged from $repository branch $refspec) "
-+	done
-+}
-+
-+cmd_list()
-+{
-+	subtree_list
-+}
-+
- "cmd_$command" "$@"
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t79=
-00-subtree.sh
-index 05110f7..c29993e 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -571,4 +571,76 @@ test_expect_success 'add another subtree with mast=
-er branch' '
-         check_equal ''"$(last_commit_message)"'' "Add sub2 subtree"
- '
-=20
-+# Lets commit the changes we made to .gittrees file
-+test_expect_success 'Commit chages to .gittrees for sub1 and sub2 in r=
-epo' '
-+        git add .gittrees &&
-+        git commit -m "Add .gittrees file"
-+'
-+# Tests for subtree list
-+# Hardcode expected output to a file
-+cat >expect <<-\EOF
-+    sub1        (merged from ../shared_projects/subtree1 branch master=
-)=20
-+    sub2        (merged from ../shared_projects/subtree2 branch master=
-)=20
-+EOF
-+
-+test_expect_success 'check subtree list gives correct output' '
-+        git subtree list>output &&
-+        test_cmp expect output
-+'
-+# Lets commit the changes to parent1 before proceeding
-+test_expect_success 'Commit changes to the repository' '
-+        git add --all &&
-+        git commit -m "Commit expect and output file additions"
-+'
-+
-+# Tests for individual subtree pull using information in .gittrees
-+# Go to subtree1 and make a change
-+cd ../shared_projects/subtree1
-+
-+subtree1_change1=3D"Add_line_to_Sub1_File2"
-+
-+echo $subtree1_change1>>sub1_file2
-+
-+# Lets commit the changes to subtree1 before proceeding
-+test_expect_success 'Commit changes to the subtree1' '
-+        git add --all &&
-+        git commit -m "Commit change to sub1_file2"
-+'
-+
-+# Switch to develop branch for a future test to push changes to master
-+test_expect_success 'Switch to branch develop' '
-+        git checkout -b develop
-+'
-+
-+# Back to parent1
-+cd ../../parent1
-+
-+test_expect_success 'check  git subtree pull <prefix> works' '
-+        git subtree pull -P sub1 master &&
-+        test_cmp sub1/sub1_file1 ../shared_projects/subtree1/sub1_file=
-1 &&
-+        test_cmp sub1/sub1_file2 ../shared_projects/subtree1/sub1_file=
-2
-+'
-+
-+# Now lets make local change on subtree and push it to subtree remote
-+cd sub1
-+
-+local_change=3D"Local addition of line to sub1 file 2"
-+echo $local_change1>>sub1_file2
-+
-+# Back to parent1
-+cd ..
-+
-+# Lets commit the changes to parent1 before proceeding
-+test_expect_success 'Commit changes to parent repository' '
-+        git add --all &&
-+        git commit -m "Commit local changes to sub1/sub1 file2"
-+'
-+
-+test_expect_success 'check git subtree push <prefix> works' '
-+        git subtree push -P sub1 &&
-+        cd ../shared_projects/subtree1 &&
-+        git checkout master &&
-+        test_cmp ../../parent1/sub1/sub1_file1 sub1_file1 &&
-+        test_cmp ../../parent1/sub1/sub1_file2 sub1_file2
-+'
- test_done
---=20
-1.7.9
+	git fetch origin master
+        git log -p ..FETCH_HEAD
+        git merge FETCH_HEAD
+
+Perhaps "is used ... by 'git merge'" can be rephrased somehow, like
+"can be used to refer to what was fetched"?  Or we could go in the
+opposite direction and be more explicit, i.e.
+
+	"git pull" calls "git fetch" internally, and this
+	information is used by the former to learn what commits were
+	fetched by the latter.
+
+I dunno.
+
+>> +the remote-tracking branches may be updated (see description on
+>> +<refspec> below for details).
+>
+> I realize that "may be updated" is strictly correct, in that if the remote's
+> branches have not changed since the last fetch then the local tracking
+> branches won't change.
+>
+> But it took me a second or two to think of that.  The "may" kindof tripped me
+> up.  The fact is that the local tracking branches are always updated to match
+> the remote's branches, it's just that sometimes the remote's branches don't
+> change.  So I think it would be clearer to say
+>
+> 	the remote-tracking branches are updated
+>
+> because this makes it clear that the command always makes your local tracking
+> branches match the remote's.
+
+The primary reason behind my "may be" was not "they may not have
+done anything in the meantime", but was "we may not have configured
+to track at all", but in that case by definition we don't have "the
+remote-tracking branches", so now I realize that it is pointless to
+say "may be updated".
