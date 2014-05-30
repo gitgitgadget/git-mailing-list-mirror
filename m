@@ -1,96 +1,86 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v2 2/2] connect.c: replace signal() with sigaction()
-Date: Fri, 30 May 2014 13:58:17 -0700
-Message-ID: <1d11d5da7ebc3a6e0d4ab64802b601526c19113c.1401482787.git.jmmahler@gmail.com>
-References: <cover.1401482787.git.jmmahler@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] git log: support "auto" decorations
+Date: Fri, 30 May 2014 14:13:05 -0700
+Message-ID: <xmqqa99z7yxq.fsf@gitster.dls.corp.google.com>
+References: <alpine.LFD.2.11.1405291523520.8270@i7.linux-foundation.org>
+	<20140530015855.GG28683@sigill.intra.peff.net>
+	<CA+55aFzwy09-i=hpBy-5bYS6eowGzkdcF65cFJpL2qnJvYq85w@mail.gmail.com>
+	<20140530065737.GA13591@sigill.intra.peff.net>
+	<xmqqvbsn9pfx.fsf@gitster.dls.corp.google.com>
+	<20140530170330.GA25443@sigill.intra.peff.net>
+	<xmqqmwdz9nl9.fsf@gitster.dls.corp.google.com>
+	<20140530183441.GA3704@sigill.intra.peff.net>
+	<xmqqmwdz809b.fsf@gitster.dls.corp.google.com>
+	<20140530204853.GA9271@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri May 30 22:59:04 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri May 30 23:13:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqTtF-0004hz-5t
-	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 22:59:01 +0200
+	id 1WqU74-00014Q-Bz
+	for gcvg-git-2@plane.gmane.org; Fri, 30 May 2014 23:13:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934318AbaE3U65 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 30 May 2014 16:58:57 -0400
-Received: from mail-pb0-f53.google.com ([209.85.160.53]:65035 "EHLO
-	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755748AbaE3U64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 16:58:56 -0400
-Received: by mail-pb0-f53.google.com with SMTP id md12so2118266pbc.12
-        for <git@vger.kernel.org>; Fri, 30 May 2014 13:58:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=0Szw9MrkW5zmbrIVKxS75DLQB+hSWXd6hKZm4GrRuts=;
-        b=PGR7si3cDgYDf7K2P8xWwFrQSlTTTmdzP2mZ3cO4RmrP8FJFP+TcDs+QR7m+Pb9xMo
-         wyiFipfyUkwegOsk6GHaHz9w5f1vNgrtv1CIiTI9JmPZcJt6kDsVA6Pn7sqyA4hLS/fh
-         z2mlf+FzaVCL5ByqvOy5c9jkjHMa1OOiWOGv6aedlLlqkKRjox0iZvK6aui0/O+WVLCZ
-         BMnO8uMjkrJGbytoY6YwomwoWDXVRFUaPVLR3HBeM3kLNty8iA9/hG/3N4x5IqktzTV2
-         KHFTHv3Q1a5V3UE6JYmAjaLNECZeYx0+aTyIvSITQCLvvlqZt+SAr4AwYnMbRme1M5U7
-         rItg==
-X-Received: by 10.68.242.135 with SMTP id wq7mr21574376pbc.147.1401483536517;
-        Fri, 30 May 2014 13:58:56 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id bu1sm7894825pbb.54.2014.05.30.13.58.53
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 30 May 2014 13:58:55 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Fri, 30 May 2014 13:58:52 -0700
-X-Mailer: git-send-email 2.0.0.2.g1d11d5d
-In-Reply-To: <cover.1401482787.git.jmmahler@gmail.com>
-In-Reply-To: <cover.1401482787.git.jmmahler@gmail.com>
-References: <cover.1401482787.git.jmmahler@gmail.com>
+	id S932303AbaE3VNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 17:13:13 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65377 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751525AbaE3VNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 17:13:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A32C81AA7F;
+	Fri, 30 May 2014 17:13:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=lxxlr7/7efqIKKncojM9PXK+lRY=; b=nPU39l
+	ipfNgm84fd/W/4L/bMnzt3PcKDUZIAE1e6hZ8Z1klDOILb7dx73Mkrck1SEGN8Ri
+	nFKb0zWA2ps7iMOTDz49uakN9HjcI1La1Pw7noJ0ChYtu30/rO5lQJkuQRRM2R4s
+	BRE4d+MsBIt9U8/VSIaT3fh+Ct3ksNA7qvXoQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HHA2pnS2aUzvG26WfxJrqkLeNm8wLP8s
+	/PPcN6AoNebGuztLsx/4RPNqW4eeT01AxLOzsP9C5dHH05ZCewXbO0AS1xDAm6VK
+	2l20FQ4yt8tbTl6gWkJKxIRf6W0obKjNUOwCZ6hfR+ol2VbgfFv7yPifDuEFwaqg
+	8vsq+2Ee918=
+Received: from pb-smtp0. (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8DE9A1AA7E;
+	Fri, 30 May 2014 17:13:10 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F21AA1AA79;
+	Fri, 30 May 2014 17:13:06 -0400 (EDT)
+In-Reply-To: <20140530204853.GA9271@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 30 May 2014 16:48:53 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 31F66ACE-E83F-11E3-ABC1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250485>
 
-=46rom signal(2) man page:
+Jeff King <peff@peff.net> writes:
 
-  The behavior of signal() varies across UNIX versions, and has also va=
-r=E2=80=90
-  ied historically across different versions of Linux.   Avoid  its  us=
-e:
-  use sigaction(2) instead.
+> I wonder if it would be sane to remove or quote NULs when attaching the
+> buffer to commit->buffer. That would _break_ signatures, but that is a
+> good thing. I do not think there is a reason to have NULs in your commit
+> message unless you are doing something malicious (or using utf16, but
+> that already is horribly broken).
 
-Replaced signal() with sigaction() in connect.c
+Ahh, our messages crossed.  I do not think we are quite ready to
+depart from our traditional position: the payload of a commit object
+can be any bytestream, even though we do expect and encourage them
+to be human readable text in a reasonable encoding.  And there is no
+fundamental reason why we should forbid signing the payload that
+happens to be a structured binary blob.
 
-Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
----
- connect.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/connect.c b/connect.c
-index a983d06..b2a33c9 100644
---- a/connect.c
-+++ b/connect.c
-@@ -665,11 +665,14 @@ struct child_process *git_connect(int fd[2], cons=
-t char *url,
- 	enum protocol protocol;
- 	const char **arg;
- 	struct strbuf cmd =3D STRBUF_INIT;
-+	struct sigaction sa;
-=20
- 	/* Without this we cannot rely on waitpid() to tell
- 	 * what happened to our children.
- 	 */
--	signal(SIGCHLD, SIG_DFL);
-+	memset(&sa, 0, sizeof(sa));
-+	sa.sa_handler =3D SIG_DFL;
-+	sigaction(SIGCHLD, &sa, 0);
-=20
- 	protocol =3D parse_connect_url(url, &hostandport, &path);
- 	if (flags & CONNECT_DIAG_URL) {
---=20
-2.0.0.2.g1d11d5d
+The user may need some way other than "log --show-signature" that
+can be used to validate, because "log" itself will be useless for
+such a payload with or without signature.  But I think that may be
+a more or less orthogonal issue.
