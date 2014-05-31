@@ -1,101 +1,167 @@
-From: "Naumov, Michael (North Sydney)" <Michael.Naumov@Fiserv.com>
-Subject: [PATCH] sideband.c: Get rid of ANSI sequences for non-terminal shell
-Date: Fri, 30 May 2014 23:10:51 +0000
-Message-ID: <81E85F13A4BE084BAF4B1AA24173EDA0144E14B7@JWPKEXMBX03.corp.checkfree.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v11 39/41] refs.c: propagate any errno==ENOTDIR from
+ _commit back to the callers
+Date: Fri, 30 May 2014 17:22:30 -0700
+Message-ID: <20140531002230.GL12314@google.com>
+References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
+ <1401222360-21175-40-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "peff@peff.net" <peff@peff.net>,
-	"spearce@spearce.org" <spearce@spearce.org>,
-	"j6t@kdbg.org" <j6t@kdbg.org>, "nico@cam.org" <nico@cam.org>,
-	"junkio@cox.net" <junkio@cox.net>,
-	"kusmabite@gmail.com" <kusmabite@gmail.com>,
-	"mnaoumov@gmail.com" <mnaoumov@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat May 31 01:20:27 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Sat May 31 02:22:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqW64-0004Hn-6B
-	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 01:20:24 +0200
+	id 1WqX4H-0000w1-Q4
+	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 02:22:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933058AbaE3XUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2014 19:20:20 -0400
-Received: from mail1.checkfree.com ([204.95.150.32]:41456 "EHLO
-	mail1.checkfree.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751983AbaE3XUT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 30 May 2014 19:20:19 -0400
-X-Greylist: delayed 566 seconds by postgrey-1.27 at vger.kernel.org; Fri, 30 May 2014 19:20:19 EDT
-X-IronPort-AV: E=Sophos;i="4.98,944,1392181200"; 
-   d="scan'208";a="25589304"
-Received: from iwpdlpem03.corp.checkfree.com (HELO iwpexht01.corp.checkfree.com) ([10.132.91.27])
-  by iapiron02.corp.checkfree.com with ESMTP; 30 May 2014 19:10:52 -0400
-Received: from JWPKEXHT02.corp.checkfree.com (10.141.82.34) by
- iwpexht01.corp.checkfree.com (10.132.91.140) with Microsoft SMTP Server (TLS)
- id 8.3.279.5; Fri, 30 May 2014 19:10:52 -0400
-Received: from JWPKEXMBX03.corp.checkfree.com ([169.254.5.29]) by
- JWPKEXHT02.corp.checkfree.com ([10.141.82.34]) with mapi id 14.02.0342.003;
- Fri, 30 May 2014 19:10:52 -0400
-Thread-Topic: [PATCH] sideband.c: Get rid of ANSI sequences for non-terminal
- shell
-Thread-Index: Ac96Im92MGNFpZ4kRCKYl87yS9me0A==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.1.121.8]
-X-CFilter-Loop: True
+	id S934889AbaEaAWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 20:22:34 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:47176 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934624AbaEaAWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 20:22:33 -0400
+Received: by mail-ie0-f175.google.com with SMTP id y20so2367097ier.6
+        for <git@vger.kernel.org>; Fri, 30 May 2014 17:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=wFeXm8pqfV2u4SVFwcLqmfhOXPPS9cQw0UUZU9WQPzA=;
+        b=mrmrP1FFVP2yneXHt8XIqqFeNH7gDzsmVKgKeqiuvTwgDXRIVXDCmgatcIbfNPGGjJ
+         wiwbE1IJDeHG28QHS91Mfx398KcV3RUadGvN0gjx03YNn44burplFj38AauW+dUm2+jX
+         oPSgMj5ovhk8Jp90iFrbC2Hsjx8cmN1Lmp+0FA12pC9ThhTsc3rGY31wjmmXHrmMdBs/
+         Ehb7/hdGU2VIblBHNOqzG8hDlFGvBArG/pOfrdcGODFvCHjaKr1tT9SIqSMTWvyRsxaU
+         TIhH+Jju5W4J8Iwe7fNvT61ep5ul1D1JCV+4Sx43KhjlKYT2BwIPqUFCJzavBWbL9Qle
+         gKww==
+X-Received: by 10.50.50.231 with SMTP id f7mr1030963igo.42.1401495752863;
+        Fri, 30 May 2014 17:22:32 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id y7sm9211221igl.13.2014.05.30.17.22.31
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 30 May 2014 17:22:32 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1401222360-21175-40-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250495>
 
-Some git tools such as GitExtensions for Windows use environment
-variable TERM=msys which causes the weird ANSI sequence shown for the
-messages returned from server-side hooks
-We add those ANSI sequences to help format sideband data on the user's
-terminal. However, GitExtensions is not using a terminal, and the ANSI
-sequences just confuses it. We can recognize this use by checking
-isatty().
-See https://github.com/gitextensions/gitextensions/issues/1313 for
-more details
+Hi,
 
-NOTE: I considered to cover the case that a pager has already been
-started. But decided that is probably not worth worrying about here,
-though, as we shouldn't be using a pager for commands that do network
-communications (and if we do, omitting the magic line-clearing signal
-is probably a sane thing to do).
+Ronnie Sahlberg wrote:
 
-Signed-off-by: Michael Naumov <mnaoumov@gmail.com>
-Thanks-to: Erik Faye-Lund <kusmabite@gmail.com>
-Thanks-to: Jeff King <peff@peff.net>
----
- sideband.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> For these cases, save the errno value and abort and make sure that the caller
+> can see errno==ENOTDIR.
+>
+> Also start defining specific return codes for _commit, assign -1 as a generic
+> error and -2 as the error that refers to a name conflict. Callers can (and
+> should) use that return value inspecting errno directly.
 
-diff --git a/sideband.c b/sideband.c
-index d1125f5..7f9dc22 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -30,7 +30,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+Heh.  Here's a patch on top to hopefully finish that part of the job.
+
+Unfortunately, the value of errno after calling lock_ref_sha1_basic is
+not reliable.
+http://thread.gmane.org/gmane.comp.version-control.git/249159/focus=249407
+lists the error paths that are broken (marked with "[!]" in that
+message).
+
+diff --git i/builtin/fetch.c w/builtin/fetch.c
+index b13e8f9..0a01cda 100644
+--- i/builtin/fetch.c
++++ w/builtin/fetch.c
+@@ -377,6 +377,7 @@ static int s_update_ref(const char *action,
+ 	char *rla = getenv("GIT_REFLOG_ACTION");
+ 	struct ref_transaction *transaction;
+ 	struct strbuf err = STRBUF_INIT;
++	int ret, df_conflict = 0;
  
- 	memcpy(buf, PREFIX, pf);
- 	term = getenv("TERM");
--	if (term && strcmp(term, "dumb"))
-+	if (isatty(2) && term && strcmp(term, "dumb"))
- 		suffix = ANSI_SUFFIX;
- 	else
- 		suffix = DUMB_SUFFIX;
--- 
-1.8.3.msysgit.0
-
-P.S. I gave up trying to send this letter from gmail, it eats my tab
-character
-P.S 2. Sorry, my tab character has been eaten again!
-P.S 3. Wrapped the letter lines to fit on the terminal
-
-Regards,
-Michael
+ 	if (dry_run)
+ 		return 0;
+@@ -387,16 +388,22 @@ static int s_update_ref(const char *action,
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_update(transaction, ref->name, ref->new_sha1,
+-				   ref->old_sha1, 0, check_old, msg, &err) ||
+-	    ref_transaction_commit(transaction, &err)) {
+-		ref_transaction_free(transaction);
+-		error("%s", err.buf);
+-		strbuf_release(&err);
+-		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
+-					  STORE_REF_ERROR_OTHER;
+-	}
++				   ref->old_sha1, 0, check_old, msg, &err))
++		goto fail;
++
++	ret = ref_transaction_commit(transaction, &err);
++	if (ret == UPDATE_REFS_NAME_CONFLICT)
++		df_conflict = 1;
++	if (ret)
++		goto fail;
+ 	ref_transaction_free(transaction);
+ 	return 0;
++fail:
++	ref_transaction_free(transaction);
++	error("%s", err.buf);
++	strbuf_release(&err);
++	return df_conflict ? STORE_REF_ERROR_DF_CONFLICT
++			   : STORE_REF_ERROR_OTHER;
+ }
+ 
+ #define REFCOL_WIDTH  10
+diff --git i/refs.c w/refs.c
+index dbaabba..b22b99b 100644
+--- i/refs.c
++++ w/refs.c
+@@ -3499,7 +3499,7 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   struct strbuf *err)
+ {
+-	int ret = 0, delnum = 0, i, save_errno = 0;
++	int ret = 0, delnum = 0, i, df_conflict = 0;
+ 	const char **delnames;
+ 	int n = transaction->nr;
+ 	struct ref_update **updates = transaction->updates;
+@@ -3535,7 +3535,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 						   delnames, delnum);
+ 		if (!update->lock) {
+ 			if (errno == ENOTDIR)
+-				save_errno = errno;
++				df_conflict = 1;
+ 			if (err)
+ 				strbuf_addf(err, "Cannot lock the ref '%s'.",
+ 					    update->refname);
+@@ -3590,8 +3590,7 @@ cleanup:
+ 		if (updates[i]->lock)
+ 			unlock_ref(updates[i]->lock);
+ 	free(delnames);
+-	errno = save_errno;
+-	if (save_errno == ENOTDIR)
++	if (df_conflict)
+ 		ret = -2;
+ 	return ret;
+ }
+diff --git i/refs.h w/refs.h
+index 88732a1..1583097 100644
+--- i/refs.h
++++ w/refs.h
+@@ -325,9 +325,11 @@ int ref_transaction_delete(struct ref_transaction *transaction,
+  * problem.
+  * If the transaction is already in failed state this function will return
+  * an error.
+- * Function returns 0 on success, -1 for generic failures and -2 if the
+- * failure was due to a name collision (ENOTDIR).
++ * Function returns 0 on success, -1 for generic failures and
++ * UPDATE_REFS_NAME_CONFLICT (-2) if the failure was due to a name
++ * collision (ENOTDIR).
+  */
++#define UPDATE_REFS_NAME_CONFLICT -2
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   struct strbuf *err);
+ 
