@@ -1,82 +1,84 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: Reset by checkout?
-Date: Sat, 31 May 2014 10:27:04 +0300
-Message-ID: <53898448.8040105@bracey.fi>
-References: <20140531144610.754B.B013761@chejz.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v2 2/2] connect.c: replace signal() with sigaction()
+Date: Sat, 31 May 2014 07:45:16 -0700
+Message-ID: <20140531144516.GA22508@hudson.localdomain>
+References: <cover.1401482787.git.jmmahler@gmail.com>
+ <1d11d5da7ebc3a6e0d4ab64802b601526c19113c.1401482787.git.jmmahler@gmail.com>
+ <5389B16B.6070004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Atsushi Nakagawa <atnak@chejz.com>
-X-From: git-owner@vger.kernel.org Sat May 31 14:47:17 2014
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 31 16:45:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wqigu-0001he-9L
-	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 14:47:16 +0200
+	id 1WqkXH-0006Gt-88
+	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 16:45:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756390AbaEaMrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2014 08:47:06 -0400
-Received: from mo68.mail-out.ovh.net ([178.32.228.68]:40547 "EHLO
-	mo68.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756382AbaEaMrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2014 08:47:05 -0400
-X-Greylist: delayed 12604 seconds by postgrey-1.27 at vger.kernel.org; Sat, 31 May 2014 08:47:05 EDT
-Received: from mail173.ha.ovh.net (gw6.ovh.net [213.251.189.206])
-	by mo68.mail-out.ovh.net (Postfix) with SMTP id D13F4FFA7BA
-	for <git@vger.kernel.org>; Sat, 31 May 2014 09:27:08 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 31 May 2014 09:33:00 +0200
-Received: from 62-183-157-30.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@62.183.157.30)
-  by ns0.ovh.net with SMTP; 31 May 2014 09:32:57 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <20140531144610.754B.B013761@chejz.com>
-X-Ovh-Tracer-Id: 9631229278703357969
-X-Ovh-Remote: 62.183.157.30 (62-183-157-30.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: -100
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrieejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-X-Spam-Check: DONE|U 0.538278/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrieejucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+	id S1755276AbaEaOpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 May 2014 10:45:23 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:63823 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752580AbaEaOpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2014 10:45:22 -0400
+Received: by mail-pa0-f53.google.com with SMTP id lj1so1641144pab.40
+        for <git@vger.kernel.org>; Sat, 31 May 2014 07:45:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:date:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=wnOFOC6dWZODz1JkRxHWNO84CdiajU2+MW26Sr6zQbU=;
+        b=kfRWPvp8Cvl1MkmmdVvXcVpUdwErBU9Tg0sRxwaCX8iJE47LJ5gJQmH8o4zfZM/14/
+         N87oMsT1k/eZ/2PLOsMWhOz/+PzuFGo+/KQ2ndr8Ee0ZWpx7wWItyD8KtO5Yr8CEkSNI
+         NuTZJHPkVqNo5H975G04qBZXcNd0CyH607PdYLOqIHhm96t38UpuqYbAaeGO7rm2BiRf
+         wLVkCuSNGZ0ShH9w1lzLfrcWLHPETCFKfh4nBPXjUk3oqNndognHwlw4QBtQRkxAnMoG
+         x5shnxH9ZuKqVAQkh1ypQSga1kdhkpEDp+KtZCYYCjw36KJCOKRnAJfIGbzn8diH+ogX
+         16FQ==
+X-Received: by 10.66.66.225 with SMTP id i1mr27400051pat.0.1401547521499;
+        Sat, 31 May 2014 07:45:21 -0700 (PDT)
+Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id se3sm11635883pbb.80.2014.05.31.07.45.18
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Sat, 31 May 2014 07:45:20 -0700 (PDT)
+X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
+Received: by hudson (sSMTP sendmail emulation); Sat, 31 May 2014 07:45:17 -0700
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <5389B16B.6070004@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250509>
 
-On 31/05/2014 08:46, Atsushi Nakagawa wrote:
->    `git checkout -B <current-branch-name> <tree-ish>`
->
-> This is such an useful notion that I can fathom why there isn't a better,
-> first-tier, alternative.q
-I'm 100% in agreement. "Reset current branch to X" is an extremely 
-common operation, and I use this all the time. But having to actually 
-name the current branch is silly, and like you, I'm prone to swapping 
-the parameters.
+Chris,
 
-I guess in theory using "checkout" allows fancier extra options like 
-"--merge" and "--patch", but I don't think I've ever used those with 
-checkout, let alone this mode, where I really do just want a "reset", 
-with safety checks.
+On Sat, May 31, 2014 at 10:39:39PM +1200, Chris Packham wrote:
+> On 31/05/14 08:58, Jeremiah Mahler wrote:
+> > From signal(2) man page:
+> > 
+...
+> > -	signal(SIGCHLD, SIG_DFL);
+> > +	memset(&sa, 0, sizeof(sa));
+> > +	sa.sa_handler = SIG_DFL;
+> > +	sigaction(SIGCHLD, &sa, 0);
+> 
+> I think this got lost in the wash with v1 but
+> Documentation/CodingGuidelines says to use NULL here instead of 0.
+> 
+Got it.  Will be in to the next revision.
 
-The original "git reset --hard" used to be a pretty top-level command. 
-It was used for aborting merges in particular. But I think it now stands 
-out as being one of the only really dangerous porcelain commands, and I 
-can't think of any real workflow it's still useful for. Maybe it could 
-now be modified to warn and require "-f" to overwrite anything in the 
-working tree?
+  sigaction(SIGCHLD, &sa, NULL);
 
-While digging into this, it seems "git reset --keep" is actually pretty 
-close to "git checkout -B <current branch>". It certainly won't lose 
-your workspace file, but unlike checkout it /does /forget what you've 
-staged, which could be annoying. Maybe that could be modified to keep 
-the index too?
-
-(I like your alias.become - might try that).
-
-Kevin
+Thanks,
+-- 
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
