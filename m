@@ -1,167 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v11 39/41] refs.c: propagate any errno==ENOTDIR from
- _commit back to the callers
-Date: Fri, 30 May 2014 17:22:30 -0700
-Message-ID: <20140531002230.GL12314@google.com>
-References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
- <1401222360-21175-40-git-send-email-sahlberg@google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2] t5538: move http push tests out to t5542
+Date: Sat, 31 May 2014 08:03:32 +0700
+Message-ID: <CACsJy8B22uypM3-Zt-1NP0ZxfZ242fBnHR0rHmt-xg7yG30+Aw@mail.gmail.com>
+References: <87y4xk8asq.fsf@spindle.srvr.nix> <20140530010649.GD28683@sigill.intra.peff.net>
+ <20140530013419.GE28683@sigill.intra.peff.net> <87lhtj8sqx.fsf_-_@spindle.srvr.nix>
+ <20140530172051.GB25443@sigill.intra.peff.net> <20140530173621.GD25443@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Sat May 31 02:22:38 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Nix <nix@esperi.org.uk>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 31 03:04:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqX4H-0000w1-Q4
-	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 02:22:38 +0200
+	id 1WqXiZ-0002Yo-9o
+	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 03:04:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934889AbaEaAWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 30 May 2014 20:22:34 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:47176 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934624AbaEaAWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 30 May 2014 20:22:33 -0400
-Received: by mail-ie0-f175.google.com with SMTP id y20so2367097ier.6
-        for <git@vger.kernel.org>; Fri, 30 May 2014 17:22:32 -0700 (PDT)
+	id S1755769AbaEaBEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 30 May 2014 21:04:05 -0400
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:52075 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754575AbaEaBEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 30 May 2014 21:04:04 -0400
+Received: by mail-qg0-f54.google.com with SMTP id q108so7554172qgd.27
+        for <git@vger.kernel.org>; Fri, 30 May 2014 18:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=wFeXm8pqfV2u4SVFwcLqmfhOXPPS9cQw0UUZU9WQPzA=;
-        b=mrmrP1FFVP2yneXHt8XIqqFeNH7gDzsmVKgKeqiuvTwgDXRIVXDCmgatcIbfNPGGjJ
-         wiwbE1IJDeHG28QHS91Mfx398KcV3RUadGvN0gjx03YNn44burplFj38AauW+dUm2+jX
-         oPSgMj5ovhk8Jp90iFrbC2Hsjx8cmN1Lmp+0FA12pC9ThhTsc3rGY31wjmmXHrmMdBs/
-         Ehb7/hdGU2VIblBHNOqzG8hDlFGvBArG/pOfrdcGODFvCHjaKr1tT9SIqSMTWvyRsxaU
-         TIhH+Jju5W4J8Iwe7fNvT61ep5ul1D1JCV+4Sx43KhjlKYT2BwIPqUFCJzavBWbL9Qle
-         gKww==
-X-Received: by 10.50.50.231 with SMTP id f7mr1030963igo.42.1401495752863;
-        Fri, 30 May 2014 17:22:32 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id y7sm9211221igl.13.2014.05.30.17.22.31
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 30 May 2014 17:22:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1401222360-21175-40-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=3jLC5NLXs38nrOjMNm9Yrx9DRxICqF/65v6YZJD/508=;
+        b=pCe3m4ZKrsugQSloN/myCHgHVyHBQfAGOmAej0o0nT2tuaxm9NnffQ9krmnhaXNqUN
+         MkQrGD6AtiR+0L3XbpKZNeakKRN+2edKyxRfdEFWTn6+oq0ZMwS7cD1YZ3D4OLJ7iygs
+         u5kDqVofWQZmJEk8eoa0kdPxM+4EDBWfE7UYlbv98rHAKlvRUXUJZI5zmRJpOs3RFrMf
+         v5ZBDpDBsC7zzDRqJ7fSIrNlk33iHXMvXmplI73juoCDcWNa3e4kuz6yBb+2dP4LRqb7
+         2ggWjzQbgtXQ+9imzuKdk9RRcDzMBWE4qprxQXacR/8Jz/VpOSeaWjxlq1Ygk1tawkEp
+         tt4w==
+X-Received: by 10.229.220.197 with SMTP id hz5mr26580009qcb.9.1401498243077;
+ Fri, 30 May 2014 18:04:03 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Fri, 30 May 2014 18:03:32 -0700 (PDT)
+In-Reply-To: <20140530173621.GD25443@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250496>
 
-Hi,
-
-Ronnie Sahlberg wrote:
-
-> For these cases, save the errno value and abort and make sure that the caller
-> can see errno==ENOTDIR.
+On Sat, May 31, 2014 at 12:36 AM, Jeff King <peff@peff.net> wrote:
+> From: Nick Alcock <nick.alcock@oracle.com>
 >
-> Also start defining specific return codes for _commit, assign -1 as a generic
-> error and -2 as the error that refers to a name conflict. Callers can (and
-> should) use that return value inspecting errno directly.
+> As 0232852b, but for the push tests instead: this avoids a start_httpd
+> in the middle of the file, which fails under GIT_TEST_HTTPD=false.
+>
+> Note that we have to munge the test in a few ways while
+> moving it:
+>
+>   1. We drop the `test -z "$GIT_TEST_HTTPD"` check; this is
+>      too simplistic since 83d842d, and we should let
+>      lib-httpd.sh handle it.
+>
+>   2. We have to port over some of the old setup from t5538.
+>
+>   3. In the final test, we no longer expect the extra commit
+>      "1" built on top of "4". This was a side effect from an
+>      earlier test in t5538 which was not ported over.
+>
+> Signed-off-by: Nick Alcock <nick.alcock@oracle.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> Here it is with the fixups I suggested in the last email. This passes
+> for me, but I'd love to have a sanity check from Duy.
 
-Heh.  Here's a patch on top to hopefully finish that part of the job.
-
-Unfortunately, the value of errno after calling lock_ref_sha1_basic is
-not reliable.
-http://thread.gmane.org/gmane.comp.version-control.git/249159/focus=249407
-lists the error paths that are broken (marked with "[!]" in that
-message).
-
-diff --git i/builtin/fetch.c w/builtin/fetch.c
-index b13e8f9..0a01cda 100644
---- i/builtin/fetch.c
-+++ w/builtin/fetch.c
-@@ -377,6 +377,7 @@ static int s_update_ref(const char *action,
- 	char *rla = getenv("GIT_REFLOG_ACTION");
- 	struct ref_transaction *transaction;
- 	struct strbuf err = STRBUF_INIT;
-+	int ret, df_conflict = 0;
- 
- 	if (dry_run)
- 		return 0;
-@@ -387,16 +388,22 @@ static int s_update_ref(const char *action,
- 	transaction = ref_transaction_begin(&err);
- 	if (!transaction ||
- 	    ref_transaction_update(transaction, ref->name, ref->new_sha1,
--				   ref->old_sha1, 0, check_old, msg, &err) ||
--	    ref_transaction_commit(transaction, &err)) {
--		ref_transaction_free(transaction);
--		error("%s", err.buf);
--		strbuf_release(&err);
--		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
--					  STORE_REF_ERROR_OTHER;
--	}
-+				   ref->old_sha1, 0, check_old, msg, &err))
-+		goto fail;
-+
-+	ret = ref_transaction_commit(transaction, &err);
-+	if (ret == UPDATE_REFS_NAME_CONFLICT)
-+		df_conflict = 1;
-+	if (ret)
-+		goto fail;
- 	ref_transaction_free(transaction);
- 	return 0;
-+fail:
-+	ref_transaction_free(transaction);
-+	error("%s", err.buf);
-+	strbuf_release(&err);
-+	return df_conflict ? STORE_REF_ERROR_DF_CONFLICT
-+			   : STORE_REF_ERROR_OTHER;
- }
- 
- #define REFCOL_WIDTH  10
-diff --git i/refs.c w/refs.c
-index dbaabba..b22b99b 100644
---- i/refs.c
-+++ w/refs.c
-@@ -3499,7 +3499,7 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
- {
--	int ret = 0, delnum = 0, i, save_errno = 0;
-+	int ret = 0, delnum = 0, i, df_conflict = 0;
- 	const char **delnames;
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
-@@ -3535,7 +3535,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 						   delnames, delnum);
- 		if (!update->lock) {
- 			if (errno == ENOTDIR)
--				save_errno = errno;
-+				df_conflict = 1;
- 			if (err)
- 				strbuf_addf(err, "Cannot lock the ref '%s'.",
- 					    update->refname);
-@@ -3590,8 +3590,7 @@ cleanup:
- 		if (updates[i]->lock)
- 			unlock_ref(updates[i]->lock);
- 	free(delnames);
--	errno = save_errno;
--	if (save_errno == ENOTDIR)
-+	if (df_conflict)
- 		ret = -2;
- 	return ret;
- }
-diff --git i/refs.h w/refs.h
-index 88732a1..1583097 100644
---- i/refs.h
-+++ w/refs.h
-@@ -325,9 +325,11 @@ int ref_transaction_delete(struct ref_transaction *transaction,
-  * problem.
-  * If the transaction is already in failed state this function will return
-  * an error.
-- * Function returns 0 on success, -1 for generic failures and -2 if the
-- * failure was due to a name collision (ENOTDIR).
-+ * Function returns 0 on success, -1 for generic failures and
-+ * UPDATE_REFS_NAME_CONFLICT (-2) if the failure was due to a name
-+ * collision (ENOTDIR).
-  */
-+#define UPDATE_REFS_NAME_CONFLICT -2
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err);
- 
+Looks good.
+-- 
+Duy
