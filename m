@@ -1,66 +1,88 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Reset by checkout?
-Date: Sat, 31 May 2014 09:03:05 +0200
-Message-ID: <m261kmmnva.fsf@linux-m68k.org>
-References: <20140531144610.754B.B013761@chejz.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [ANNOUNCE] Git v2.0.0
+Date: Sat, 31 May 2014 11:52:24 +0200
+Message-ID: <87k392e0mf.fsf@fencepost.gnu.org>
+References: <xmqqr43dbkni.fsf@gitster.dls.corp.google.com>
+	<53866e8562b7a_12a7a052f87a@nysa.notmuch>
+	<20140529185311.GB10865@sigill.intra.peff.net>
+	<5388fb283edaf_bd8167d3002b@nysa.notmuch>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Atsushi Nakagawa <atnak@chejz.com>
-X-From: git-owner@vger.kernel.org Sat May 31 09:03:26 2014
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, git-fc@googlegroups.com
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Sat May 31 11:52:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WqdK7-0004jF-AR
-	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 09:03:23 +0200
+	id 1Wqfy0-0002HI-BE
+	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 11:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752187AbaEaHDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2014 03:03:16 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:38217 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751708AbaEaHDQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2014 03:03:16 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3ggYWh60Pjz3hhZs;
-	Sat, 31 May 2014 09:03:12 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3ggYWh5bzVzbbvf;
-	Sat, 31 May 2014 09:03:12 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id 4AcdzKwxSPzJ; Sat, 31 May 2014 09:03:11 +0200 (CEST)
-X-Auth-Info: cPcWfG3ZOrK1hK6ipgyTn7NjHBEb4jCeGl5vqhOdf/w=
-Received: from linux.local (ppp-93-104-159-37.dynamic.mnet-online.de [93.104.159.37])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Sat, 31 May 2014 09:03:11 +0200 (CEST)
-Received: by linux.local (Postfix, from userid 501)
-	id BEBD21E56D6; Sat, 31 May 2014 09:03:06 +0200 (CEST)
-X-Yow: I decided to be JOHN TRAVOLTA instead!!
-In-Reply-To: <20140531144610.754B.B013761@chejz.com> (Atsushi Nakagawa's
-	message of "Sat, 31 May 2014 14:46:12 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.91 (gnu/linux)
+	id S1756206AbaEaJwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 May 2014 05:52:39 -0400
+Received: from fencepost.gnu.org ([208.118.235.10]:44709 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755986AbaEaJwi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2014 05:52:38 -0400
+Received: from localhost ([127.0.0.1]:43748 helo=lola)
+	by fencepost.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <dak@gnu.org>)
+	id 1Wqfxt-0002R9-LE; Sat, 31 May 2014 05:52:37 -0400
+Received: by lola (Postfix, from userid 1000)
+	id 4FC81E0627; Sat, 31 May 2014 11:52:24 +0200 (CEST)
+In-Reply-To: <5388fb283edaf_bd8167d3002b@nysa.notmuch> (Felipe Contreras's
+	message of "Fri, 30 May 2014 16:42:00 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250503>
 
-Atsushi Nakagawa <atnak@chejz.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Ok, the typical use case is: I'm on 'master' and I make a few test
-> commits.  Afterwards, I want to discard the commits and move back to
-> 'origin/master'.  I could type 'reset --hard origin/master' and risk
-> blowing away dirty files if I'm not careful.  Or, I could use "reset by
-> checkout" and be carefree.
+> Jeff King wrote:
+>> On Wed, May 28, 2014 at 06:17:25PM -0500, Felipe Contreras wrote:
+>> 
+>> > This is the last mail I sent to you, because you ignore them anyway, and
+>> > remove them from the mailing list.
+>> > [...]
+>> > [2], a mail you conveniently removed from the tracked record.
+>> > [...]
+>> > You also conveniently removed this mail from the archives.
+>> 
+>> I see you already noticed the changes in v2.0, but I wanted to address
+>> these points, because I consider silent censorship to be a serious
+>> accusation.
+>
+> Yes, I also think silent censorship is a very seriours matter, and I was
+> very dissapointed that this mailing list would engage in that.
+>
+>> I've reported the bug to gmane.discuss (no link yet, as I'm waiting
+>> for the message to go through, but it is not a high traffic group, so
+>> it should be easy to find the thread once it is there).
+>
+> Thanks. At first I thought that was the reason, but then I noticed it
+> was always my mails that seemed to get this "bug", so I decided it was
+> too much of a coincidence.
 
-I think that is what 'reset --keep' is doing.
+Some mailing list filters and/or spam filters flag mails with too many
+recipients so that they need to pass through moderation first.  The
+typical threads on this list are short and have few recipients while
+longer threads, due to the list policy of adding every participants to
+the Cc, will tend to have more recipients.
 
-Andreas.
+So there may a bias against long-running threads with multiple
+participants with regard to timely delivery.
+
+And frankly, if I were a list moderator and software asked me through
+this sort of coincidence whether a mail should be delivered or not and a
+glance at it shows nothing but insults, wild accusations, threats and so
+on for the umpteenth time, I'd consider twice clicking "Accept".
+Whether or not I ultimately did so, this would likely contribute to the
+delay.
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+David Kastrup
