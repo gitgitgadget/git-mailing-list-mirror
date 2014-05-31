@@ -1,138 +1,87 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-Subject: [PATCH] Improve function dir.c:trim_trailing_spaces()
-Date: Sat, 31 May 2014 08:21:31 -0700
-Message-ID: <1401549691-20788-1-git-send-email-pasha.bolokhov@gmail.com>
-Cc: pclouds@gmail.com, peff@peff.net, gitster@pobox.com,
-	Pasha Bolokhov <pasha.bolokhov@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat May 31 17:21:52 2014
+From: Azat Khuzhin <a3at.mail@gmail.com>
+Subject: Re: git-multimail: migration: Config is not iterable
+Date: Sat, 31 May 2014 19:21:50 +0400
+Message-ID: <20140531151931.GJ27473@azat>
+References: <20140529142208.GB27005@azat>
+ <5389EE61.9060108@alum.mit.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Sat May 31 17:22:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wql6T-0002oK-A9
-	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 17:21:49 +0200
+	id 1Wql6f-0002zf-Ns
+	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 17:22:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751884AbaEaPVp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2014 11:21:45 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:62803 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751793AbaEaPVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2014 11:21:44 -0400
-Received: by mail-pa0-f50.google.com with SMTP id fb1so2708027pad.23
-        for <git@vger.kernel.org>; Sat, 31 May 2014 08:21:44 -0700 (PDT)
+	id S1751916AbaEaPV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 May 2014 11:21:58 -0400
+Received: from mail-la0-f54.google.com ([209.85.215.54]:64230 "EHLO
+	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751793AbaEaPV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2014 11:21:57 -0400
+Received: by mail-la0-f54.google.com with SMTP id pv20so1705461lab.27
+        for <git@vger.kernel.org>; Sat, 31 May 2014 08:21:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=lGCnMrzaoqwJSpJud0xJ4mIgv4OhJ2GNd32RrUikA1c=;
-        b=AFkaOc2YgUDsmwqkZzn/L9ejeKZusufbHwCJbZX61DA8Eiwg6JwpyF39mEe2ymDsh5
-         p0NeMVO3fLiE9jtKrq6HqE5Ttj8p+OjTE0UsQ5NU0rX1STUVLfliwNPPdt3zzrsoDEuC
-         Tbl7l23/d90Ez2+BhFDs3LNbieS3dh9lWOo2JrbJCoc1BljFqUgjtebzs205DsqqFR3i
-         Dn+g/XT18MfQ8YDOsCP2pm0PkUzBetgM468TnbjcFleez/5NeU1kqxh8pZGYQIsg7QaB
-         l/pN6P+8IYUxxhVHv4Or87o19G/zz9huePH53BQhwnNJvp7BxScX78uvDlhH2zuGNaci
-         4YMw==
-X-Received: by 10.68.202.194 with SMTP id kk2mr27159442pbc.156.1401549704526;
-        Sat, 31 May 2014 08:21:44 -0700 (PDT)
-Received: from ani.gv.shawcable.net (S0106586d8f8ca92a.gv.shawcable.net. [96.54.196.148])
-        by mx.google.com with ESMTPSA id ei4sm11800834pbb.42.2014.05.31.08.21.43
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=8r7BHYTeNqIveRDsr8CU9gUICInB0t8FidYHLsXePL8=;
+        b=xWqCq+MVkYu0bEL+sXG49DwGDjVG9GtlqGCipF2/aVlUQrznCf8RTXmqxiUNo9vskI
+         i1UMrbo4Dya53rSVt+iMxxRYz+M62LVV5QcIuTRLu0Y9eexO+1eIp3nMno5BFavT6+KG
+         iDWqptSLcBocviiAhlxbe/aLiw0qQ/PYwndDZ/M2loNXQtTHHJjyZcQ7LYVAp9j7t5OP
+         4R4oqlOs4wOv6oS5AVBhu74hA4VVpXPd9JN6M8rDLXOdNacBfC/k7VxFXfgV5Gi9wU7w
+         T/de18VjNV+NQxXkhA7mlIfzipOQsO0XBezgK25702FWF6f5jT4AIbmLQKXP1Zsgaq5v
+         /HqA==
+X-Received: by 10.152.4.39 with SMTP id h7mr19103892lah.12.1401549716197;
+        Sat, 31 May 2014 08:21:56 -0700 (PDT)
+Received: from localhost ([188.134.22.24])
+        by mx.google.com with ESMTPSA id s10sm6072637lal.22.2014.05.31.08.21.54
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 31 May 2014 08:21:43 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 31 May 2014 08:21:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <5389EE61.9060108@alum.mit.edu>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250512>
 
-Discard the unnecessary 'nr_spaces' variable, remove 'strlen()' and
-improve the 'if' structure. Switch to pointers instead of integers
+On Sat, May 31, 2014 at 04:59:45PM +0200, Michael Haggerty wrote:
+> On 05/29/2014 04:22 PM, Azat Khuzhin wrote:
+> > Using the latest version of git-multimail there is an issue with
+> > migration:
+> > 
+> > $ ~azat/git-multimail/git-multimail/migrate-mailhook-config --overwrite
+> > Traceback (most recent call last):
+> >   File "/home/azat/git-multimail/git-multimail/migrate-mailhook-config", line 271, in <module>
+> >     main(sys.argv[1:])
+> >   File "/home/azat/git-multimail/git-multimail/migrate-mailhook-config", line 268, in main
+> >     migrate_config(strict=options.strict, retain=options.retain, overwrite=options.overwrite)
+> >   File "/home/azat/git-multimail/git-multimail/migrate-mailhook-config", line 159, in migrate_config
+> >     if not _check_old_config_exists(old):
+> >   File "/home/azat/git-multimail/git-multimail/migrate-mailhook-config", line 66, in _check_old_config_exists
+> >     if name in old:
+> > TypeError: argument of type 'Config' is not iterable
+> > 
+> > Tested on 2.6 and 2.7 python versions.
+> > 
+> > If you revert 09d0d5b92203f019763e43cef1e57f76f117d2b4 ("Get Python files to
+> > pass pep8's tests.") there issue goes away. I understand that this is not the
+> > right solution and I'm not the guru of python, so just let you know.
+> 
+> Thanks for the bug report and for narrowing it down to the broken
+> commit.  I just pushed a fix to GitHub.  Let me know if it works for you
+> now.
 
-Slightly more rare occurrences of 'text  \    ' with a backslash
-in between spaces are handled correctly. Namely, the code in
-8ba87adad6 does not reset 'last_space' when a backslash is
-encountered and the above line stays intact as a result.
-Add a test at the end of t/t0008-ignores.sh to exhibit this behavior
+Yeah, it works, thanks!
 
-Signed-off-by: Pasha Bolokhov <pasha.bolokhov@gmail.com>
----
-Correct 'if()' statements to conform to the general style
-which implies using 'if(ptr)' as an equivalent of 'if(ptr != NULL)'
-
- dir.c              | 29 ++++++++++++++---------------
- t/t0008-ignores.sh | 21 +++++++++++++++++++++
- 2 files changed, 35 insertions(+), 15 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index eb6f581..98c81a8 100644
---- a/dir.c
-+++ b/dir.c
-@@ -508,21 +508,20 @@ void clear_exclude_list(struct exclude_list *el)
- 
- static void trim_trailing_spaces(char *buf)
- {
--	int i, last_space = -1, nr_spaces, len = strlen(buf);
--	for (i = 0; i < len; i++)
--		if (buf[i] == '\\')
--			i++;
--		else if (buf[i] == ' ') {
--			if (last_space == -1) {
--				last_space = i;
--				nr_spaces = 1;
--			} else
--				nr_spaces++;
--		} else
--			last_space = -1;
--
--	if (last_space != -1 && last_space + nr_spaces == len)
--		buf[last_space] = '\0';
-+	char *p, *last_space = NULL;
-+
-+	for (p = buf; *p; p++)
-+		if (*p == ' ') {
-+			if (!last_space)
-+				last_space = p;
-+		} else {
-+			if (*p == '\\')
-+				p++;
-+			last_space = NULL;
-+		}
-+
-+	if (last_space)
-+		*last_space = '\0';
- }
- 
- int add_excludes_from_file_to_list(const char *fname,
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index 63beb99..7becf96 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -806,4 +806,25 @@ test_expect_success !MINGW 'quoting allows trailing whitespace' '
- 	test_cmp err.expect err
- '
- 
-+test_expect_success NOT_MINGW,NOT_CYGWIN 'correct handling of backslashes' '
-+	rm -rf whitespace &&
-+	mkdir whitespace &&
-+	>"whitespace/trailing 1  "	&&
-+	>"whitespace/trailing 2 \\\\"	&&
-+	>"whitespace/trailing 3 \\\\"	&&
-+	>"whitespace/trailing 4   \\ "	&&
-+	>"whitespace/trailing 5 \\ \\ "	&&
-+	>whitespace/untracked &&
-+	echo "whitespace/trailing 1 \\    "			>ignore  &&
-+	echo "whitespace/trailing 2 \\\\\\\\\\\\\\\\"		>>ignore &&
-+	echo "whitespace/trailing 3 \\\\\\\\\\\\\\\\ "		>>ignore &&
-+	echo "whitespace/trailing 4   \\\\\\\\\\\\    "		>>ignore &&
-+	echo "whitespace/trailing 5 \\\\\\\\ \\\\\\\\\\\\   "	>>ignore &&
-+	echo whitespace/untracked >expect &&
-+	: >err.expect &&
-+	git ls-files -o -X ignore whitespace >actual 2>err &&
-+	test_cmp expect actual &&
-+	test_cmp err.expect err
-+'
-+
- test_done
 -- 
-1.9.1
+Respectfully
+Azat Khuzhin
