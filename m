@@ -1,88 +1,96 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ANNOUNCE] Git v2.0.0
-Date: Sat, 31 May 2014 11:52:24 +0200
-Message-ID: <87k392e0mf.fsf@fencepost.gnu.org>
-References: <xmqqr43dbkni.fsf@gitster.dls.corp.google.com>
-	<53866e8562b7a_12a7a052f87a@nysa.notmuch>
-	<20140529185311.GB10865@sigill.intra.peff.net>
-	<5388fb283edaf_bd8167d3002b@nysa.notmuch>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [PATCH v2 2/2] connect.c: replace signal() with sigaction()
+Date: Sat, 31 May 2014 22:39:39 +1200
+Message-ID: <5389B16B.6070004@gmail.com>
+References: <cover.1401482787.git.jmmahler@gmail.com> <1d11d5da7ebc3a6e0d4ab64802b601526c19113c.1401482787.git.jmmahler@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, git-fc@googlegroups.com
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Sat May 31 11:52:45 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Sat May 31 12:40:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wqfy0-0002HI-BE
-	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 11:52:44 +0200
+	id 1Wqghl-0005bB-I7
+	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 12:40:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756206AbaEaJwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 31 May 2014 05:52:39 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:44709 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755986AbaEaJwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2014 05:52:38 -0400
-Received: from localhost ([127.0.0.1]:43748 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wqfxt-0002R9-LE; Sat, 31 May 2014 05:52:37 -0400
-Received: by lola (Postfix, from userid 1000)
-	id 4FC81E0627; Sat, 31 May 2014 11:52:24 +0200 (CEST)
-In-Reply-To: <5388fb283edaf_bd8167d3002b@nysa.notmuch> (Felipe Contreras's
-	message of "Fri, 30 May 2014 16:42:00 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1754682AbaEaKjp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 May 2014 06:39:45 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:44039 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754118AbaEaKjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 31 May 2014 06:39:44 -0400
+Received: by mail-pd0-f181.google.com with SMTP id z10so1795903pdj.26
+        for <git@vger.kernel.org>; Sat, 31 May 2014 03:39:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=9evRCr0yPIdexZeohaXZxEwMWD/RrvZhCsNPjXgsEc4=;
+        b=vWKFjTJdPSuRqngsuutC1C+EEyvo5XPvpNOY+rhqZkLK5MS/p2nLWwMmg4wRs4Ahbd
+         +i2kCq4NYryL1k1HB9AIs3g1sbi4+YPWwybesDoP1cFpX4tIXnce6bkfAL8aPM14Muy4
+         m3tXoqXhIv6uaZs4VD65jIJMlxUAB+IeOUsA1l9OZfm2UtA+SIxh37geD/7J5qv70SJw
+         lcWELib5WLJBjl9AyrfgXSxihlRQUWOv3Oje74QsZwL4WUR+amNQyauzU+FPaWr1Bzij
+         yAtLIvI4z1TZJCW/3lT2/Pc4kwwrhOjCDOW1QZkjAp2pulbt03hMxrLPyb6Go/0LRLo/
+         E5rA==
+X-Received: by 10.68.178.131 with SMTP id cy3mr26237842pbc.146.1401532783616;
+        Sat, 31 May 2014 03:39:43 -0700 (PDT)
+Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
+        by mx.google.com with ESMTPSA id yl9sm32216715pac.25.2014.05.31.03.39.41
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 31 May 2014 03:39:42 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <1d11d5da7ebc3a6e0d4ab64802b601526c19113c.1401482787.git.jmmahler@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250504>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+On 31/05/14 08:58, Jeremiah Mahler wrote:
+> From signal(2) man page:
+>=20
+>   The behavior of signal() varies across UNIX versions, and has also =
+var=E2=80=90
+>   ied historically across different versions of Linux.   Avoid  its  =
+use:
+>   use sigaction(2) instead.
+>=20
+> Replaced signal() with sigaction() in connect.c
+>=20
+> Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
+> ---
+>  connect.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/connect.c b/connect.c
+> index a983d06..b2a33c9 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -665,11 +665,14 @@ struct child_process *git_connect(int fd[2], co=
+nst char *url,
+>  	enum protocol protocol;
+>  	const char **arg;
+>  	struct strbuf cmd =3D STRBUF_INIT;
+> +	struct sigaction sa;
+> =20
+>  	/* Without this we cannot rely on waitpid() to tell
+>  	 * what happened to our children.
+>  	 */
+> -	signal(SIGCHLD, SIG_DFL);
+> +	memset(&sa, 0, sizeof(sa));
+> +	sa.sa_handler =3D SIG_DFL;
+> +	sigaction(SIGCHLD, &sa, 0);
 
-> Jeff King wrote:
->> On Wed, May 28, 2014 at 06:17:25PM -0500, Felipe Contreras wrote:
->> 
->> > This is the last mail I sent to you, because you ignore them anyway, and
->> > remove them from the mailing list.
->> > [...]
->> > [2], a mail you conveniently removed from the tracked record.
->> > [...]
->> > You also conveniently removed this mail from the archives.
->> 
->> I see you already noticed the changes in v2.0, but I wanted to address
->> these points, because I consider silent censorship to be a serious
->> accusation.
->
-> Yes, I also think silent censorship is a very seriours matter, and I was
-> very dissapointed that this mailing list would engage in that.
->
->> I've reported the bug to gmane.discuss (no link yet, as I'm waiting
->> for the message to go through, but it is not a high traffic group, so
->> it should be easy to find the thread once it is there).
->
-> Thanks. At first I thought that was the reason, but then I noticed it
-> was always my mails that seemed to get this "bug", so I decided it was
-> too much of a coincidence.
+I think this got lost in the wash with v1 but
+Documentation/CodingGuidelines says to use NULL here instead of 0.
 
-Some mailing list filters and/or spam filters flag mails with too many
-recipients so that they need to pass through moderation first.  The
-typical threads on this list are short and have few recipients while
-longer threads, due to the list policy of adding every participants to
-the Cc, will tend to have more recipients.
-
-So there may a bias against long-running threads with multiple
-participants with regard to timely delivery.
-
-And frankly, if I were a list moderator and software asked me through
-this sort of coincidence whether a mail should be delivered or not and a
-glance at it shows nothing but insults, wild accusations, threats and so
-on for the umpteenth time, I'd consider twice clicking "Accept".
-Whether or not I ultimately did so, this would likely contribute to the
-delay.
-
--- 
-David Kastrup
+> =20
+>  	protocol =3D parse_connect_url(url, &hostandport, &path);
+>  	if (flags & CONNECT_DIAG_URL) {
+>=20
