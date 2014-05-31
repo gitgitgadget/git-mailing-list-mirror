@@ -1,96 +1,77 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [PATCH v2 2/2] connect.c: replace signal() with sigaction()
-Date: Sat, 31 May 2014 22:39:39 +1200
-Message-ID: <5389B16B.6070004@gmail.com>
-References: <cover.1401482787.git.jmmahler@gmail.com> <1d11d5da7ebc3a6e0d4ab64802b601526c19113c.1401482787.git.jmmahler@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH] check_refname_component: Optimize
+Date: Sat, 31 May 2014 12:47:56 +0200
+Message-ID: <5389B35C.8060308@alum.mit.edu>
+References: <1401311055-480-2-git-send-email-dturner@twitter.com> <538658C0.8050001@alum.mit.edu> <1401320968.18134.98.camel@stross> <CACsJy8BcBmuC3KMu+5dhGiOXX=u7WtHWQzQuT=ZPTbSCduJdbw@mail.gmail.com> <xmqqfvjsbkz2.fsf@gitster.dls.corp.google.com> <CACsJy8BS_YhMB9ZZRx4faj=_YWZQrqm7B9AHkTGye=okja=m-Q@mail.gmail.com> <20140529234109.GA28683@sigill.intra.peff.net> <CACsJy8BgriBBWJ6ZzQS8S7p4SUB=bdZHdnUQsyN03g+vtApbxA@mail.gmail.com> <20140530000728.GC28683@sigill.intra.peff.net> <538853B5.1080308@alum.mit.edu> <20140530172944.GC25443@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Sat May 31 12:40:02 2014
+Content-Transfer-Encoding: 7bit
+Cc: Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Turner <dturner@twitter.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat May 31 12:48:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wqghl-0005bB-I7
-	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 12:40:01 +0200
+	id 1Wqgpn-00041B-Fk
+	for gcvg-git-2@plane.gmane.org; Sat, 31 May 2014 12:48:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754682AbaEaKjp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 31 May 2014 06:39:45 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:44039 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754118AbaEaKjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 31 May 2014 06:39:44 -0400
-Received: by mail-pd0-f181.google.com with SMTP id z10so1795903pdj.26
-        for <git@vger.kernel.org>; Sat, 31 May 2014 03:39:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=9evRCr0yPIdexZeohaXZxEwMWD/RrvZhCsNPjXgsEc4=;
-        b=vWKFjTJdPSuRqngsuutC1C+EEyvo5XPvpNOY+rhqZkLK5MS/p2nLWwMmg4wRs4Ahbd
-         +i2kCq4NYryL1k1HB9AIs3g1sbi4+YPWwybesDoP1cFpX4tIXnce6bkfAL8aPM14Muy4
-         m3tXoqXhIv6uaZs4VD65jIJMlxUAB+IeOUsA1l9OZfm2UtA+SIxh37geD/7J5qv70SJw
-         lcWELib5WLJBjl9AyrfgXSxihlRQUWOv3Oje74QsZwL4WUR+amNQyauzU+FPaWr1Bzij
-         yAtLIvI4z1TZJCW/3lT2/Pc4kwwrhOjCDOW1QZkjAp2pulbt03hMxrLPyb6Go/0LRLo/
-         E5rA==
-X-Received: by 10.68.178.131 with SMTP id cy3mr26237842pbc.146.1401532783616;
-        Sat, 31 May 2014 03:39:43 -0700 (PDT)
-Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id yl9sm32216715pac.25.2014.05.31.03.39.41
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 31 May 2014 03:39:42 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <1d11d5da7ebc3a6e0d4ab64802b601526c19113c.1401482787.git.jmmahler@gmail.com>
+	id S1754558AbaEaKsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 31 May 2014 06:48:01 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:55523 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754118AbaEaKsA (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 31 May 2014 06:48:00 -0400
+X-AuditID: 12074413-f79bc6d000000b9e-a9-5389b35f04e7
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 8E.21.02974.F53B9835; Sat, 31 May 2014 06:47:59 -0400 (EDT)
+Received: from [192.168.69.130] (p4FC97BB9.dip0.t-ipconnect.de [79.201.123.185])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s4VAluW5025823
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Sat, 31 May 2014 06:47:58 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.4.0
+In-Reply-To: <20140530172944.GC25443@sigill.intra.peff.net>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrEKsWRmVeSWpSXmKPExsUixO6iqBu/uTPYoOGohcWHK88ZLeZvOsFo
+	0XWlm8miofcKs0X3lLeMFj9aepgd2Dx2zrrL7vGsdw+jx8VLyh4Xu58weyx4fp/d4/MmuQC2
+	KG6bpMSSsuDM9Dx9uwTujCub1jIXbGapOPtqOUsD4z7mLkYODgkBE4nJO4K7GDmBTDGJC/fW
+	s3UxcnEICVxmlPj/rZ8JwrnAJLFh2TlWkCpeAW2Jie/OsoE0swioSjRu4QUJswnoSizqaWYC
+	CYsKBEn8OasIUS0ocXLmExYQW0RAVuL74Y2MIDazwDVGiQN/NUBsYQEzicuHNrFArFrPIvGt
+	+y4TSIJTwFpi1fa9bBB3ikv0NAaBmMwC6hLr5wlBjJGX2P52DvMERsFZSLbNQqiahaRqASPz
+	Kka5xJzSXN3cxMyc4tRk3eLkxLy81CJdc73czBK91JTSTYyQOBDewbjrpNwhRgEORiUeXocZ
+	HcFCrIllxZW5hxglOZiURHkTp3cGC/El5adUZiQWZ8QXleakFh9ilOBgVhLhlawDyvGmJFZW
+	pRblw6SkOViUxHnVlqj7CQmkJ5akZqemFqQWwWRlODiUJHhlNwE1ChalpqdWpGXmlCCkmTg4
+	QYZzSYkUp+alpBYllpZkxIMiN74YGLsgKR6gvSEg7bzFBYm5QFGI1lOMuhyn7hxrYxJiycvP
+	S5US503fCFQkAFKUUZoHtwKW9F4xigN9LMxrCDKKB5gw4Sa9AlrCBLTkbRXYkpJEhJRUA+OW
+	poxdrz9kOsx3m1gtm7BqbZXHq5tX1yfG307Vk4plYLzWnnB8iekVcd0Hj1xmyJzP 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250505>
 
-On 31/05/14 08:58, Jeremiah Mahler wrote:
-> From signal(2) man page:
->=20
->   The behavior of signal() varies across UNIX versions, and has also =
-var=E2=80=90
->   ied historically across different versions of Linux.   Avoid  its  =
-use:
->   use sigaction(2) instead.
->=20
-> Replaced signal() with sigaction() in connect.c
->=20
-> Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
-> ---
->  connect.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->=20
-> diff --git a/connect.c b/connect.c
-> index a983d06..b2a33c9 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -665,11 +665,14 @@ struct child_process *git_connect(int fd[2], co=
-nst char *url,
->  	enum protocol protocol;
->  	const char **arg;
->  	struct strbuf cmd =3D STRBUF_INIT;
-> +	struct sigaction sa;
-> =20
->  	/* Without this we cannot rely on waitpid() to tell
->  	 * what happened to our children.
->  	 */
-> -	signal(SIGCHLD, SIG_DFL);
-> +	memset(&sa, 0, sizeof(sa));
-> +	sa.sa_handler =3D SIG_DFL;
-> +	sigaction(SIGCHLD, &sa, 0);
+On 05/30/2014 07:29 PM, Jeff King wrote:
+> On Fri, May 30, 2014 at 11:47:33AM +0200, Michael Haggerty wrote:
+>> [...]
+>> If we want to be robust to future changes to refname rules, we could add
+>> a header flag like
+>>
+>>     # pack-refs with: peeled fully-peeled check-level=1.0
+> [...]
+> Yeah, I thought about mentioning something like that. But really, this
+> just seems like a lot of complexity to solve the problem in a wrong way.
 
-I think this got lost in the wash with v1 but
-Documentation/CodingGuidelines says to use NULL here instead of 0.
+Yes, you are right.
 
-> =20
->  	protocol =3D parse_connect_url(url, &hostandport, &path);
->  	if (flags & CONNECT_DIAG_URL) {
->=20
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
