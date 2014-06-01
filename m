@@ -1,89 +1,75 @@
 From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] mailinfo: use strcmp() for string comparison
-Date: Sun, 01 Jun 2014 11:00:40 +0200
-Message-ID: <538AEBB8.9070505@web.de>
+Subject: [PATCH] pack-objects: use free()+xcalloc() instead of xrealloc()+memset()
+Date: Sun, 01 Jun 2014 13:07:21 +0200
+Message-ID: <538B0969.9080409@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Vicent Marti <tanoku@gmail.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jun 01 11:10:17 2014
+X-From: git-owner@vger.kernel.org Sun Jun 01 13:07:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wr1mP-0000sO-1n
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Jun 2014 11:10:13 +0200
+	id 1Wr3cA-0005F1-0d
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Jun 2014 13:07:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbaFAJCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 1 Jun 2014 05:02:35 -0400
-Received: from mout.web.de ([212.227.15.4]:56711 "EHLO mout.web.de"
+	id S1753384AbaFALHh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2014 07:07:37 -0400
+Received: from mout.web.de ([212.227.15.4]:64232 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751200AbaFAJCe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2014 05:02:34 -0400
-Received: from [192.168.178.27] ([79.253.133.25]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0LrsGE-1WgKQ636j8-013bq4; Sun, 01 Jun 2014 11:01:16
+	id S1751929AbaFALHg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2014 07:07:36 -0400
+Received: from [192.168.178.27] ([79.253.133.25]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LaCmk-1WPBAh3Chi-00lzYd; Sun, 01 Jun 2014 13:07:33
  +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-X-Provags-ID: V03:K0:53zy9cNCQzDcTzI1BkQWVcgN5g4Gaay/iPSi0+crVToHVm6VhTm
- RVHhe6XHPSpBOkRKb+SQamUxo/g71U/KgJkF27MNnqxkGmEWfL7tl/GfPh60TVhMLnoUNHX
- 9Zx2oqwrmnbvmP1rOgP01TFm1GkVLLi+CHyiK2yexjGtkpZ9ug92Q36bmzmzLPkXe2sD9Oi
- 56ElupK2DPEPidOpBdoZQ==
+X-Provags-ID: V03:K0:SkMGdl++C2MN8qi7qydkfn+diOI50HocEy7reF8BqFYBVI5MnTS
+ HxZzHLxEwt9rT3P+oZIZW2SKGy7m7Xeriq9zhJx0bFMtWJd0R/XoNmqzi3h2lfaMYVJm8L5
+ xQ8Sf7rTKgUFgry/gsXEIqN/Gf7NfGwBG12595KFFIaff+FEkgWBogm02dr8xZ0hfJGUgzs
+ yISwQqQPdx8wv1HHPnT1A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250525>
 
-The array header is defined as:
+Whenever the hash table becomes too small then its size is increased,
+the original part (and the added space) is zerod out using memset(),
+and the table is rebuilt from scratch.
 
-	static const char *header[MAX_HDR_PARSED] = {
-	     "From","Subject","Date",
-	};
+Simplify this proceess by returning the old memory using free() and
+allocating the new buffer using xcalloc(), which already clears the
+buffer for us.  That way we avoid copying the old hash table contents
+needlessly inside xrealloc().
 
-When looking for the index of a specfic string in that array, simply
-use strcmp() instead of memcmp().  This avoids running over the end of
-the string (e.g. with memcmp("Subject", "From", 7)) and gets rid of
-magic string length constants.
+While at it, use the first array member with sizeof instead of a
+specific type.  The old code used uint32_t and int, while index is
+actually an array of int32_t.  Their sizes are the same basically
+everywhere, so it's not actually a problem, but the new code is
+cleaner and doesn't have to be touched should the type be changed.
 
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
-This is a minimal fix.  A good question, however, would be: Why do we
-keep on looking up constant strings in a (short) constant string array
-anyway?
+ pack-objects.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- builtin/mailinfo.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index 2c3cd8e..cf11c8d 100644
---- a/builtin/mailinfo.c
-+++ b/builtin/mailinfo.c
-@@ -334,7 +334,7 @@ static int check_header(const struct strbuf *line,
- 	}
- 	if (starts_with(line->buf, "[PATCH]") && isspace(line->buf[7])) {
- 		for (i = 0; header[i]; i++) {
--			if (!memcmp("Subject", header[i], 7)) {
-+			if (!strcmp("Subject", header[i])) {
- 				handle_header(&hdr_data[i], line);
- 				ret = 1;
- 				goto check_header_out;
-@@ -929,13 +929,13 @@ static void handle_info(void)
- 		else
- 			continue;
+diff --git a/pack-objects.c b/pack-objects.c
+index d01d851..4f36c32 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -47,8 +47,8 @@ static void rehash_objects(struct packing_data *pdata)
+ 	if (pdata->index_size < 1024)
+ 		pdata->index_size = 1024;
  
--		if (!memcmp(header[i], "Subject", 7)) {
-+		if (!strcmp(header[i], "Subject")) {
- 			if (!keep_subject) {
- 				cleanup_subject(hdr);
- 				cleanup_space(hdr);
- 			}
- 			output_header_lines(fout, "Subject", hdr);
--		} else if (!memcmp(header[i], "From", 4)) {
-+		} else if (!strcmp(header[i], "From")) {
- 			cleanup_space(hdr);
- 			handle_from(hdr);
- 			fprintf(fout, "Author: %s\n", name.buf);
+-	pdata->index = xrealloc(pdata->index, sizeof(uint32_t) * pdata->index_size);
+-	memset(pdata->index, 0, sizeof(int) * pdata->index_size);
++	free(pdata->index);
++	pdata->index = xcalloc(pdata->index_size, sizeof(*pdata->index));
+ 
+ 	entry = pdata->objects;
+ 
 -- 
 2.0.0
