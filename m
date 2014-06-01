@@ -1,115 +1,105 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v3 9/9] sigchain.c: replace signal() with sigaction()
-Date: Sun,  1 Jun 2014 11:10:18 -0700
-Message-ID: <06d9d4d29fc7ada8d6f4f3f1f1e3e2a764ba7c67.1401645403.git.jmmahler@gmail.com>
-References: <cover.1401645403.git.jmmahler@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 4/4] contrib: add convert-grafts-to-replace-refs.sh
+Date: Sun, 1 Jun 2014 15:42:25 -0400
+Message-ID: <CAPig+cTjJHRDQFckLqRCW0xHkMFLVbuYGrLCWHXZQoFsYY5WwA@mail.gmail.com>
+References: <20140601150409.15428.27017.chriscool@tuxfamily.org>
+	<20140601151038.15428.20661.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Jeremiah Mahler <jmmahler@gmail.com>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jun 01 20:11:26 2014
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sun Jun 01 21:42:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrAE9-0007dx-SA
-	for gcvg-git-2@plane.gmane.org; Sun, 01 Jun 2014 20:11:26 +0200
+	id 1WrBeJ-00022o-1t
+	for gcvg-git-2@plane.gmane.org; Sun, 01 Jun 2014 21:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792AbaFASLU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 1 Jun 2014 14:11:20 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:42127 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752526AbaFASLS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 1 Jun 2014 14:11:18 -0400
-Received: by mail-pa0-f41.google.com with SMTP id kx10so3453997pab.28
-        for <git@vger.kernel.org>; Sun, 01 Jun 2014 11:11:18 -0700 (PDT)
+	id S1752824AbaFATm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 1 Jun 2014 15:42:26 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:65311 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752210AbaFATmZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 1 Jun 2014 15:42:25 -0400
+Received: by mail-yk0-f179.google.com with SMTP id 19so3080383ykq.24
+        for <git@vger.kernel.org>; Sun, 01 Jun 2014 12:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=7Kr3uSPXnRrGIGc/APq2VRvkvczFnO05uXfoFmYHkbc=;
-        b=X0surFBx1eO4KuYI+kmcgCajzpiKhyZ++pTHtydCgvFertdWIOrnYQbERTGJqsxQgG
-         YqIDxE9A095oQ4DKFT+KTKzGHhG7R5OR3GF59F2VQaX5TiYeJIy+XQKHEIghDz5RVVQv
-         Nl/5OfAAhI/HDiClD33cR38a5LUkvi9xDYe2JzB3r2ZRv9Oie0dxHwrK8mm5d84rtkFZ
-         gc2bLvjR6Qw+h+Siyu82Zavm3tpYqA+Y71LyHcAvSqtyGlky5JzUS2rMllYCSqn1sbcZ
-         2+z/8M9zaXqgLglTPqchuri9ueAjDVNA+we2uMTe2JE9xv37WY5p9KhXGfkZbrkPRQ4T
-         R+lQ==
-X-Received: by 10.68.237.228 with SMTP id vf4mr34920383pbc.131.1401646278165;
-        Sun, 01 Jun 2014 11:11:18 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id cj1sm51717030pac.40.2014.06.01.11.11.15
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Sun, 01 Jun 2014 11:11:17 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Sun, 01 Jun 2014 11:11:14 -0700
-X-Mailer: git-send-email 2.0.0.8.g7bf6e1f.dirty
-In-Reply-To: <cover.1401645403.git.jmmahler@gmail.com>
-In-Reply-To: <cover.1401645403.git.jmmahler@gmail.com>
-References: <cover.1401645403.git.jmmahler@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=7IEFaCkcgsKFFoZIxtRmNR3IjQE3UXwlbgbDFXe/BHg=;
+        b=RvOP/burrCK4K1vKXwtN6cXlzngVla0iI/ek3KLg/NmAgSNVZGiAv97i6Bz+psEVS3
+         41hFYFo/9YpDp8EDoftS7Av2reNdFAYoOIukJs/KUvojHQUGOzWv6e2eOUrfcOAV1Uyk
+         e3z3rFStussyJ1ngSK2HCCes3vqlyGOdw/YzehkNmJq0eNhxAxbDwH98VySOuA98ijSy
+         og1aCE0HtRcEe8xfSh7wvakSicdWoUCpalLxmH4G3ZirGBVjAWUoSjiEsad+x2BD/+a9
+         seTvRx/wM1OGxss1vn0ijKt3G51H+WY6dz6Day4dlb4FlBWqh8povTwGcYp4aR8XeOBn
+         sjfA==
+X-Received: by 10.236.66.139 with SMTP id h11mr44948362yhd.30.1401651745215;
+ Sun, 01 Jun 2014 12:42:25 -0700 (PDT)
+Received: by 10.170.169.65 with HTTP; Sun, 1 Jun 2014 12:42:25 -0700 (PDT)
+In-Reply-To: <20140601151038.15428.20661.chriscool@tuxfamily.org>
+X-Google-Sender-Auth: _JGBbTQr5l6HleCAHG9I5a-J5VY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250543>
 
-=46rom the signal(2) man page:
+On Sun, Jun 1, 2014 at 11:10 AM, Christian Couder
+<chriscool@tuxfamily.org> wrote:
+> This patch adds into contrib/ an example script to convert
+> grafts from an existing grafts file into replace refs using
+> the new --graft option of "git replace".
+>
+> While at it let's mention this new script in the
+> "git replace" documentation for the --graft option.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+> diff --git a/contrib/convert-grafts-to-replace-refs.sh b/contrib/convert-grafts-to-replace-refs.sh
+> new file mode 100755
+> index 0000000..7718a53
+> --- /dev/null
+> +++ b/contrib/convert-grafts-to-replace-refs.sh
+> @@ -0,0 +1,29 @@
+> +#!/bin/sh
+> +
+> +# You should execute this script in the repository where you
+> +# want to convert grafts to replace refs.
+> +
+> +die () {
+> +       echo >&2 "$@"
+> +       exit 1
+> +}
+> +
+> +GRAFTS_FILE="${GIT_DIR:-.git}/info/grafts"
+> +
+> +test -f "$GRAFTS_FILE" || die "Could not find graft file: '$GRAFTS_FILE'"
+> +
+> +grep '^[^# ]' "$GRAFTS_FILE" | while read definition
+> +do
+> +       test -n "$definition" && {
+> +               echo "Converting: $definition"
+> +               git replace --graft $definition ||
+> +                       die "Convertion failed for: $definition"
 
-  The behavior of signal() varies across UNIX versions, and has also va=
-r=E2=80=90
-  ied historically across different versions of Linux.   Avoid  its  us=
-e:
-  use sigaction(2) instead.
+s/Convertion/Conversion/  [1]
 
-Replaced signal() with sigaction() in sigchain.c
+[1]: http://git.661346.n2.nabble.com/Re-PATCH-contrib-add-convert-grafts-to-replace-refs-sh-tp7611822.html
 
-Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
----
- sigchain.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+> +       }
+> +done
+> +
+> +mv "$GRAFTS_FILE" "$GRAFTS_FILE.bak" ||
+> +       die "Could not mv '$GRAFTS_FILE' to '$GRAFTS_FILE.bak'"
 
-diff --git a/sigchain.c b/sigchain.c
-index 1118b99..deab262 100644
---- a/sigchain.c
-+++ b/sigchain.c
-@@ -19,11 +19,16 @@ static void check_signum(int sig)
- int sigchain_push(int sig, sigchain_fun f)
- {
- 	struct sigchain_signal *s =3D signals + sig;
-+	struct sigaction sa, sa_old;
-+	int result;
- 	check_signum(sig);
-=20
- 	ALLOC_GROW(s->old, s->n + 1, s->alloc);
--	s->old[s->n] =3D signal(sig, f);
--	if (s->old[s->n] =3D=3D SIG_ERR)
-+	memset(&sa, 0, sizeof(sa));
-+	sa.sa_handler =3D f;
-+	result =3D sigaction(sig, &sa, &sa_old);
-+	s->old[s->n] =3D sa_old.sa_handler;
-+	if (result =3D=3D -1)
- 		return -1;
- 	s->n++;
- 	return 0;
-@@ -32,11 +37,14 @@ int sigchain_push(int sig, sigchain_fun f)
- int sigchain_pop(int sig)
- {
- 	struct sigchain_signal *s =3D signals + sig;
-+	struct sigaction sa, sa_old;
- 	check_signum(sig);
- 	if (s->n < 1)
- 		return 0;
-=20
--	if (signal(sig, s->old[s->n - 1]) =3D=3D SIG_ERR)
-+	memset(&sa, 0, sizeof(sa));
-+	sa.sa_handler =3D s->old[s->n - 1];
-+	if (sigaction(sig, &sa, &sa_old) =3D=3D -1)
- 		return -1;
- 	s->n--;
- 	return 0;
---=20
-2.0.0.8.g7bf6e1f.dirty
+"Could not rename..." might be a bit more friendly to non-Unixy folk.
+
+> +echo "Success!"
+> +echo "All the grafts in '$GRAFTS_FILE' have been converted to replace refs!"
+> +echo "The grafts file '$GRAFTS_FILE' has been renamed: '$GRAFTS_FILE.bak'"
+> --
+> 2.0.0.rc0.40.gd30ccc4
