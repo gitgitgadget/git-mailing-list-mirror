@@ -1,148 +1,149 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-Subject: [PATCH alt-v2] Improve function dir.c:trim_trailing_spaces()
-Date: Mon,  2 Jun 2014 09:45:51 -0700
-Message-ID: <1401727551-8871-1-git-send-email-pasha.bolokhov@gmail.com>
-Cc: pclouds@gmail.com, peff@peff.net, gitster@pobox.com,
-	Pasha Bolokhov <pasha.bolokhov@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 02 18:46:06 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH] refs.c: change read_ref_at to use the reflog iterators
+Date: Mon, 2 Jun 2014 10:59:05 -0700
+Message-ID: <CAL=YDWmc40RdtMfOra0y4fnAfFAnQMsxmpF7oMBNNvjF5t54ig@mail.gmail.com>
+References: <1401479462-2329-1-git-send-email-sahlberg@google.com>
+	<CAPig+cTi5qzS0xOvZcu05SK9vihufPDOxYYEEyo9AqG6wsKxoQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 19:59:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrVN6-0000h7-UV
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 18:46:05 +0200
+	id 1WrWVv-0004R6-Lr
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 19:59:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754216AbaFBQqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 12:46:00 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:59979 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755484AbaFBQp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 12:45:59 -0400
-Received: by mail-pa0-f51.google.com with SMTP id kx10so2114318pab.10
-        for <git@vger.kernel.org>; Mon, 02 Jun 2014 09:45:59 -0700 (PDT)
+	id S1752168AbaFBR7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 13:59:08 -0400
+Received: from mail-ve0-f172.google.com ([209.85.128.172]:50917 "EHLO
+	mail-ve0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750927AbaFBR7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 13:59:06 -0400
+Received: by mail-ve0-f172.google.com with SMTP id oz11so5693684veb.3
+        for <git@vger.kernel.org>; Mon, 02 Jun 2014 10:59:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=TekJDFf7/5OqbSFyyv5CNQlfibeah7NBXEGHjOlmMxo=;
-        b=XNZs/BlJaSAdpwbwSsdu44WFkodTLMg/WGb/dZf0qMqC1cFS111Mc7Cnn+N2AKZqig
-         NrWkcjWOX0P8Lv0C6ur8bl7SexxgMlOQUHA8x/iLPkGDM89RkJcoG3eVuhQWMlXwhxNg
-         Y+71gU8w/z7nLIQ5T0gdDevVsPcoGvRz+XQdgFXbEl6x9dcAHbTQ17Mea/gsS5BitsBM
-         DWmaBRzBpGbtXfhYEWoYe/X7XTE1nLE9M9VTEUlywzZythmnn/5mcgNnS1uqRobfxIh5
-         rCsaKjPyvl/gOcMt29QCEg9Y4iB4AO7dYhB/BFTXonXUendpZ+OKHJ216XKReBxdB+3g
-         Qsgw==
-X-Received: by 10.67.13.134 with SMTP id ey6mr42102573pad.44.1401727558989;
-        Mon, 02 Jun 2014 09:45:58 -0700 (PDT)
-Received: from ani.gv.shawcable.net (S0106586d8f8ca92a.gv.shawcable.net. [96.54.196.148])
-        by mx.google.com with ESMTPSA id cj1sm66265729pac.40.2014.06.02.09.45.57
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 02 Jun 2014 09:45:58 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=q5Ygl3QxIP3Cgrrm4/TtXhKFJnQPLuoBaJVYEOi+uQE=;
+        b=K2q2q1HzAs5cx2/NTuBrYYv7Zbyist5A0AjQDau+EfH+ZZS4MzZnyiMPUDSs+bLGCR
+         t46KdUZHO/AyHNVRVRt9lHZTEWxvVtNFd/Vkc0csFy7PSywAI+R9wflVttvCMWioLhEP
+         tDSfNjo+RBKtmpdaVdOh7rddCI4ys8+o8QyAG++SZzvqx1DFm3ZcQ5r3pMtCCusaxoaY
+         KAt5U0OMv2TtSzbnc+PZW5xCM14NYvFeu2o6/9sIlKWRBc9oCWbC2Kgr4TH4g3+W4t16
+         rblm2DcokFP6njeyJhIexiRwti9p5KxyxTAYfjCjndCYFAUBMXO6X0On0RWr/hR9/n1b
+         gdeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=q5Ygl3QxIP3Cgrrm4/TtXhKFJnQPLuoBaJVYEOi+uQE=;
+        b=IiJv9cYcjR46PRDL4m3cAPaZ49Ptip6ii/bqolsdkctyWHwIx1sYr573l897k7wRAj
+         Ra2K+5+xxPA4y+GUk5uBeAl3l+jeBPnfhVYkLSxkDfdMYrUE+OB/9d7qZuSHGc2AlbK5
+         i/yHIBkNwiXrEApy/wpzPbhgj1ZGgl3aVyT9dEQ/aVItVI0jOPU6WQSmXaBU4+YODChA
+         SRGAj+eiTAYAia4vetZE4hWJZtgcQpSTC2+vXzUlMLTTS0h1d83Ntz2laYj6AeY5yz7W
+         fCQQTYlyObghRBOV9F0oNtaMzu9yUdrckmfJ9H2/3gvXOTMzXB+SOpP2dN5Si2gsntaO
+         SwCA==
+X-Gm-Message-State: ALoCoQnC90d8cAOiYi8XR8UOlJXJAaw0VODqD9wXEW9e5neihZD4GZVMQQ98JorYv5b2loe6yXfv
+X-Received: by 10.220.250.203 with SMTP id mp11mr31882255vcb.2.1401731945347;
+ Mon, 02 Jun 2014 10:59:05 -0700 (PDT)
+Received: by 10.52.255.65 with HTTP; Mon, 2 Jun 2014 10:59:05 -0700 (PDT)
+In-Reply-To: <CAPig+cTi5qzS0xOvZcu05SK9vihufPDOxYYEEyo9AqG6wsKxoQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250574>
 
-Discard the unnecessary 'nr_spaces' variable, remove 'strlen()' and
-improve the 'if' structure. Switch to pointers instead of integers
+Fixed. Thanks.
 
-Slightly more rare occurrences of 'text  \    ' with a backslash
-in between spaces are handled correctly. Namely, the code in
-8ba87adad6 does not reset 'last_space' when a backslash is
-encountered and the above line stays intact as a result.
-Add a test at the end of t/t0008-ignores.sh to exhibit this behavior
-
-Signed-off-by: Pasha Bolokhov <pasha.bolokhov@gmail.com>
----
-After correcting for the trailing backslash 'text\', a switch()
-structure gives better readability than nested 'ifs', the way I see it.
-Add a test to show that the trailing backslash 'text\' is handled
-correctly
-
- dir.c              | 35 ++++++++++++++++++++---------------
- t/t0008-ignores.sh | 23 +++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 15 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index eb6f581..06483d4 100644
---- a/dir.c
-+++ b/dir.c
-@@ -508,21 +508,26 @@ void clear_exclude_list(struct exclude_list *el)
- 
- static void trim_trailing_spaces(char *buf)
- {
--	int i, last_space = -1, nr_spaces, len = strlen(buf);
--	for (i = 0; i < len; i++)
--		if (buf[i] == '\\')
--			i++;
--		else if (buf[i] == ' ') {
--			if (last_space == -1) {
--				last_space = i;
--				nr_spaces = 1;
--			} else
--				nr_spaces++;
--		} else
--			last_space = -1;
--
--	if (last_space != -1 && last_space + nr_spaces == len)
--		buf[last_space] = '\0';
-+	char *p, *last_space = NULL;
-+
-+	for (p = buf; *p; p++)
-+		switch (*p) {
-+		case ' ':
-+			if (!last_space)
-+				last_space = p;
-+			break;
-+
-+		case '\\':
-+			p++;
-+			if (!*p)
-+				return;
-+
-+		default:
-+			last_space = NULL;
-+		}
-+
-+	if (last_space)
-+		*last_space = '\0';
- }
- 
- int add_excludes_from_file_to_list(const char *fname,
-diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
-index 63beb99..4cea858 100755
---- a/t/t0008-ignores.sh
-+++ b/t/t0008-ignores.sh
-@@ -806,4 +806,27 @@ test_expect_success !MINGW 'quoting allows trailing whitespace' '
- 	test_cmp err.expect err
- '
- 
-+test_expect_success NOT_MINGW,NOT_CYGWIN 'correct handling of backslashes' '
-+	rm -rf whitespace &&
-+	mkdir whitespace &&
-+	>"whitespace/trailing 1  "	&&
-+	>"whitespace/trailing 2 \\\\"	&&
-+	>"whitespace/trailing 3 \\\\"	&&
-+	>"whitespace/trailing 4   \\ "	&&
-+	>"whitespace/trailing 5 \\ \\ "	&&
-+	>"whitespace/trailing 6 \\a\\"	&&
-+	>whitespace/untracked &&
-+	echo "whitespace/trailing 1 \\    "			>ignore  &&
-+	echo "whitespace/trailing 2 \\\\\\\\\\\\\\\\"		>>ignore &&
-+	echo "whitespace/trailing 3 \\\\\\\\\\\\\\\\ "		>>ignore &&
-+	echo "whitespace/trailing 4   \\\\\\\\\\\\    "		>>ignore &&
-+	echo "whitespace/trailing 5 \\\\\\\\ \\\\\\\\\\\\   "	>>ignore &&
-+	echo "whitespace/trailing 6 \\\\\\\\a\\\\\\\\"		>>ignore &&
-+	echo whitespace/untracked >expect &&
-+	: >err.expect &&
-+	git ls-files -o -X ignore whitespace >actual 2>err &&
-+	test_cmp expect actual &&
-+	test_cmp err.expect err
-+'
-+
- test_done
--- 
-1.9.1
+On Fri, May 30, 2014 at 3:51 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On Fri, May 30, 2014 at 3:51 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+>> read_ref_at has its own parsing of the reflog file for no really good reason
+>> so lets change this to use the existing reflog iterators. This removes one
+>> instance where we manually unmarshall the reflog file format.
+>>
+>> Log messages for errors are changed slightly. We no longer print the file
+>> name for the reflog, instead we refer to it as 'Log for ref <refname>'.
+>> This might be a minor useability regression, but I don't really think so, since
+>> experienced users would know where the log is anyway and inexperienced users
+>> would not know what to do about/how to repair 'Log ... has gap ...' anyway.
+>>
+>> Adapt the t1400 test to handle the cahnge in log messages.
+>
+> s/cahnge/change/
+>
+> More below.
+>
+>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>> ---
+>> diff --git a/refs.c b/refs.c
+>> index 6898263..99d4832 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -2936,109 +2936,132 @@ static char *ref_msg(const char *line, const char *endp)
+>>         return xmemdupz(line, ep - line);
+>>  }
+>>
+>> +static int read_ref_at_ent(unsigned char *osha1, unsigned char *nsha1,
+>> +               const char *email, unsigned long timestamp, int tz,
+>> +               const char *message, void *cb_data)
+>> +{
+>> +       struct read_ref_at_cb *cb = cb_data;
+>> +
+>> +       cb->reccnt++;
+>> +       cb->tz = tz;
+>> +       cb->date = timestamp;
+>> +
+>> +       if (timestamp <= cb->at_time || cb->cnt == 0) {
+>> +               if (cb->msg)
+>> +                       *cb->msg = xstrdup(message);
+>> +               if (cb->cutoff_time)
+>> +                       *cb->cutoff_time = timestamp;
+>> +               if (cb->cutoff_tz)
+>> +                       *cb->cutoff_tz = tz;
+>> +               if (cb->cutoff_cnt)
+>> +                       *cb->cutoff_cnt = cb->reccnt - 1;
+>> +
+>> +               /*
+>> +                * we have not yet updated cb->[n|o]sha1 so they still
+>> +                * hold the values for the previous record.
+>> +                */
+>> +               if (!is_null_sha1(cb->osha1)) {
+>> +                       hashcpy(cb->sha1, nsha1);
+>> +                       if (hashcmp(cb->osha1, nsha1))
+>> +                               warning("Log for ref %s has gap after %s.",
+>> +                                       cb->refname, show_date(cb->date, cb->tz, DATE_RFC2822));
+>> +               }
+>> +               else if (cb->date == cb->at_time)
+>> +                       hashcpy(cb->sha1, nsha1);
+>> +               else
+>> +                       if (hashcmp(nsha1, cb->sha1))
+>
+> This could be an 'else if', allowing you to drop one level of indentation.
+>
+>> +                               warning("Log for ref %s unexpectedly ended on %s.",
+>> +                                       cb->refname, show_date(cb->date, cb->tz,
+>> +                                                          DATE_RFC2822));
+>> +
+>> +               /*
+>> +                * return 1. Not to signal an error but to break the loop
+>> +                * since we have found the entry we want.
+>> +                */
+>> +               hashcpy(cb->osha1, osha1);
+>> +               hashcpy(cb->nsha1, nsha1);
+>> +               cb->found_it = 1;
+>> +               return 1;
+>> +       }
+>> +
+>> +       hashcpy(cb->osha1, osha1);
+>> +       hashcpy(cb->nsha1, nsha1);
+>> +       if (cb->cnt > 0)
+>> +               cb->cnt--;
+>> +
+>> +       return 0;
+>> +}
