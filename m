@@ -1,128 +1,118 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: 2.0.0 regression? request pull does not seem to find head
-Date: Tue, 3 Jun 2014 00:01:31 +0300
-Message-ID: <20140602210131.GA17171@redhat.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] refs.c: change read_ref_at to use the reflog iterators
+Date: Mon, 02 Jun 2014 14:21:48 -0700
+Message-ID: <xmqq4n033t3n.fsf@gitster.dls.corp.google.com>
+References: <1401732941-6498-1-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 02 23:01:15 2014
+Cc: git@vger.kernel.org, jrnieder@gmail.com, sunshine@sunshineco.com
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 23:22:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrZLy-0007Q6-Eb
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 23:01:10 +0200
+	id 1WrZg7-0002VX-6q
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 23:21:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753876AbaFBVBG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 17:01:06 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:36169 "EHLO mx1.redhat.com"
+	id S932311AbaFBVVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 17:21:55 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59255 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753429AbaFBVBD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 17:01:03 -0400
-Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s52L127x028605
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <git@vger.kernel.org>; Mon, 2 Jun 2014 17:01:03 -0400
-Received: from redhat.com (ovpn-116-42.ams2.redhat.com [10.36.116.42])
-	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s52L1187013088
-	for <git@vger.kernel.org>; Mon, 2 Jun 2014 17:01:02 -0400
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+	id S932300AbaFBVVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 17:21:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C09781D08B;
+	Mon,  2 Jun 2014 17:21:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9TyEEDj4+7CXeQ2AT/ZwOriawFU=; b=dayK7o
+	FklbqqXku/c9hc9nGfZ5shPeyiNHpq1sI408Pl9m9cjmrjEYoB7Q2HBrrynyl/mm
+	Cc0PiorFOPK3dDuA5DlMOegOqxzW8KrlgCwGwziNZkPteJjU9/53ix3nTLFv6/xU
+	iAFCHwj5YE5s/i65ExdqF2CvWwZynL2cMGwWk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SSi1J909VV5UYDWojtGeOi1S2fPWgRXE
+	3oK0sLIdYtcyQEnTLEajfxqtY52ehT9gVsBDgdoAyRLahveMuu585cIZZiOmfg1t
+	n+RB1aXOOBu314Y/BdB+yQasq4McXaZ2RcK48/N+mnrCUHVXUU528n1U3moA9lHa
+	Ta8awt7OSoE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B729D1D08A;
+	Mon,  2 Jun 2014 17:21:53 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 146FE1D081;
+	Mon,  2 Jun 2014 17:21:50 -0400 (EDT)
+In-Reply-To: <1401732941-6498-1-git-send-email-sahlberg@google.com> (Ronnie
+	Sahlberg's message of "Mon, 2 Jun 2014 11:15:41 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E8FCC034-EA9B-11E3-AAAC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250596>
 
-Looks like pull requests no longer work for me on linux.
-Some other trees (non-linux) work fine but I didn't yet
-check whether it's the local or the remote tree that's
-at issue.
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-Or maybe it's a configuration change that I missed?
+> read_ref_at has its own parsing of the reflog file for no really good reason
+> so lets change this to use the existing reflog iterators. This removes one
+> instance where we manually unmarshall the reflog file format.
+>
+> Log messages for errors are changed slightly. We no longer print the file
+> name for the reflog, instead we refer to it as 'Log for ref <refname>'.
+> This might be a minor useability regression, but I don't really think so, since
+> experienced users would know where the log is anyway and inexperienced users
+> would not know what to do about/how to repair 'Log ... has gap ...' anyway.
+>
+> Adapt the t1400 test to handle the change in log messages.
+>
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  refs.c                | 202 ++++++++++++++++++++++++++------------------------
+>  t/t1400-update-ref.sh |   4 +-
+>  2 files changed, 107 insertions(+), 99 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 6898263..b45bb2f 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2936,109 +2936,117 @@ static char *ref_msg(const char *line, const char *endp)
+>  	return xmemdupz(line, ep - line);
+>  }
 
-Note: I have
-[push]
-        default = matching
-configured in .gitconfig.
+If I am not mistaken, this function will become unused with this
+rewrite.  Let's drop it and justify it in the log message.
 
-[mst@robin linux]$ git request-pull net-next/master  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git net-next
-warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-warn: Are you sure you pushed 'net-next' there?
-The following changes since commit 96b2e73c5471542cb9c622c4360716684f8797ed:
+> +struct read_ref_at_cb {
+> +	const char *refname;
+> +	unsigned long at_time;
+> +	int cnt;
+> +	int reccnt;
+> +	unsigned char *sha1;
+> +	int found_it;
+> +
+> +	char osha1[20];
+> +	char nsha1[20];
 
-  Revert "net/mlx4_en: Use affinity hint" (2014-06-02 00:18:48 -0700)
+These should be unsigned char, shouldn't they?
 
-are available in the git repository at:
+> +	for_each_reflog_ent_reverse(refname, read_ref_at_ent, &cb);
+> +
+> +	if (!cb.reccnt)
+> +		die("Log for %s is empty.", refname);
+> +	if (cb.found_it)
+> +		return 0;
+> +
+> +	for_each_reflog_ent(refname, read_ref_at_ent_oldest, &cb);
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git net-next
+Hmph.
 
-for you to fetch changes up to 2ae76693b8bcabf370b981cd00c36cd41d33fabc:
-
-  vhost: replace rcu with mutex (2014-06-02 23:47:59 +0300)
-
-----------------------------------------------------------------
-Michael S. Tsirkin (2):
-      vhost-net: extend device allocation to vmalloc
-      vhost: replace rcu with mutex
-
- drivers/vhost/net.c   | 23 ++++++++++++++++++-----
- drivers/vhost/vhost.c | 10 +++++++++-
- 2 files changed, 27 insertions(+), 6 deletions(-)
-[mst@robin linux]$ git request-pull net-next/master  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git net-next
-warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-warn: Are you sure you pushed 'net-next' there?
-The following changes since commit 96b2e73c5471542cb9c622c4360716684f8797ed:
-
-  Revert "net/mlx4_en: Use affinity hint" (2014-06-02 00:18:48 -0700)
-
-are available in the git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git net-next
-
-for you to fetch changes up to 2ae76693b8bcabf370b981cd00c36cd41d33fabc:
-
-  vhost: replace rcu with mutex (2014-06-02 23:47:59 +0300)
-
-----------------------------------------------------------------
-Michael S. Tsirkin (2):
-      vhost-net: extend device allocation to vmalloc
-      vhost: replace rcu with mutex
-
- drivers/vhost/net.c   | 23 ++++++++++++++++++-----
- drivers/vhost/vhost.c | 10 +++++++++-
- 2 files changed, 27 insertions(+), 6 deletions(-)
-[mst@robin linux]$ git --version
-git version 2.0.0.538.gb6dd70f
-
-
-
-
-[mst@robin linux]$ /usr/bin/git request-pull net-next/master  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git net-next
-The following changes since commit 96b2e73c5471542cb9c622c4360716684f8797ed:
-
-  Revert "net/mlx4_en: Use affinity hint" (2014-06-02 00:18:48 -0700)
-
-are available in the git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git vhost-next
-
-for you to fetch changes up to 2ae76693b8bcabf370b981cd00c36cd41d33fabc:
-
-  vhost: replace rcu with mutex (2014-06-02 23:47:59 +0300)
-
-----------------------------------------------------------------
-Michael S. Tsirkin (2):
-      vhost-net: extend device allocation to vmalloc
-      vhost: replace rcu with mutex
-
- drivers/vhost/net.c   | 23 ++++++++++++++++++-----
- drivers/vhost/vhost.c | 10 +++++++++-
- 2 files changed, 27 insertions(+), 6 deletions(-)
-[mst@robin linux]$ /usr/bin/git --version
-git version 1.8.3.1
-
-
--- 
-MST
+We have already scanned the same reflog in the backward direction in
+full.  Do we need to make another call just to pick up the entry at
+the beginning?  Is this because the callback is not told that it is
+fed the last entry (in other words, if there is some clue that this
+is the last call from for-each-reflog-ent-reverse to the callback,
+the callback could record the value it received in its cb-data)?
