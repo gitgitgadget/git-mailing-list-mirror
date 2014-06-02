@@ -1,74 +1,111 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-Subject: [PATCH alt-v3] Improve function dir.c:trim_trailing_spaces()
-Date: Mon,  2 Jun 2014 15:36:56 -0700
-Message-ID: <1401748616-14632-1-git-send-email-pasha.bolokhov@gmail.com>
-Cc: pclouds@gmail.com, peff@peff.net, gitster@pobox.com,
-	Pasha Bolokhov <pasha.bolokhov@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 03 00:37:10 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH alt-v3] Improve function dir.c:trim_trailing_spaces()
+Date: Mon, 02 Jun 2014 15:54:06 -0700
+Message-ID: <xmqqfvjm3ott.fsf@gitster.dls.corp.google.com>
+References: <1401748616-14632-1-git-send-email-pasha.bolokhov@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, pclouds@gmail.com, peff@peff.net
+To: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 00:54:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wraqr-00023J-Nh
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 00:37:10 +0200
+	id 1Wrb7Q-0002vO-GQ
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 00:54:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752208AbaFBWhD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 18:37:03 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:60225 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751319AbaFBWhC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 18:37:02 -0400
-Received: by mail-pd0-f169.google.com with SMTP id w10so3856989pde.14
-        for <git@vger.kernel.org>; Mon, 02 Jun 2014 15:37:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=GDX1nWNyQ5eUfknNV0+TCH0tF2/Ki+bCwjPq28Tj2b8=;
-        b=QSVHq7+c4MRwAYt75YjcvhNa7VszCnpks96zIYa9jKRb8WrNBtlHokedwrmOF1OAgC
-         f4btF4zEE9QxBS9+2i8y7ZZR2mBKTUXqJydUKDfdfeH6Qzqbgwa2/n31/EqvzxbTMqXv
-         9IQicpSZCqMeb/6u4j1YcUf79i1ZEoR3h12Pi85N0UknG2o+BduMMrDKrfnTrGuHbFxq
-         5fM0xzIME4I4RhCx7Mm9walpV8UBgWqaZ8eLMUuvjqEXNlxSNJg/dFKKtadwjDIme+WW
-         Sk2aNh45GQyDP8EkSmoX86GzFTV0Z9gx3e0YMfupPIMItls4DUnA+JQTJ8dOd6QKqG7L
-         Yfkw==
-X-Received: by 10.66.228.37 with SMTP id sf5mr44130702pac.19.1401748621568;
-        Mon, 02 Jun 2014 15:37:01 -0700 (PDT)
-Received: from ani.gv.shawcable.net (S0106586d8f8ca92a.gv.shawcable.net. [96.54.196.148])
-        by mx.google.com with ESMTPSA id wt6sm19572207pac.29.2014.06.02.15.37.00
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 02 Jun 2014 15:37:00 -0700 (PDT)
-X-Mailer: git-send-email 1.9.1
+	id S1752132AbaFBWyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 18:54:13 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62580 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751036AbaFBWyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 18:54:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1DC871D53E;
+	Mon,  2 Jun 2014 18:54:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=u3t9ruK1xiCcaPPbwQZkEjd6V7c=; b=NvqkXy
+	tQmwQRbQNvm/gE1rh04u6cM2yQCIN7FzIbmUaQ7LL5gn18J5ke5sEo60ARw4z2Oa
+	6sJb41GfEM5IXxeLsWd96sCVi6x9vnGh3/c8KKUF6pfXK+6E6Xw1Zzhm3GZViKIG
+	MG95ZuYyCEGSTQt+aIuoIObNmqfMixmtK0gCc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qbHDSRDMilz43zf+VQJgX4qsil6qKg2K
+	dWD9g39pVSXC8xQPH3jfo2VzL/b7pSxC4FNJnUPCFBtH6ZzroXLMzjExtH4us9m/
+	5C62ojdbrHjwIZtGHgSmN4NYrrxJCEkePz62/G16mQFgH4cX9yFkTNj5wJTlh0Ou
+	Wrk+5DryaNo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1497D1D53D;
+	Mon,  2 Jun 2014 18:54:11 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 85ED61D53B;
+	Mon,  2 Jun 2014 18:54:07 -0400 (EDT)
+In-Reply-To: <1401748616-14632-1-git-send-email-pasha.bolokhov@gmail.com>
+	(Pasha Bolokhov's message of "Mon, 2 Jun 2014 15:36:56 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CD92AC5C-EAA8-11E3-8209-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250606>
+
+Pasha Bolokhov <pasha.bolokhov@gmail.com> writes:
+
+> Discard the unnecessary 'nr_spaces' variable, remove 'strlen()' and
+> improve the 'if' structure. Switch to pointers instead of integers
+>
+> Slightly more rare occurrences of 'text  \    ' with a backslash
+> in between spaces are handled correctly. Namely, the code in
+> 8ba87adad6 does not reset 'last_space' when a backslash is
+> encountered and the above line stays intact as a result.
+> Add a test at the end of t/t0008-ignores.sh to exhibit this behavior
+>
+> Signed-off-by: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+> ---
+> Add /* fallthrough */ comment to switch(), remove TABs in test,
+> and remove ":" command in file truncation in the test
+
+8ba87adad6 does not seem to do anything to do with this change,
+though.  Tentatively I've queued the following (but not merged to
+anywhere nor pushed out).
+
+Thanks.
+
+-- >8 --
+From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+Date: Mon, 2 Jun 2014 15:36:56 -0700
+Subject: [PATCH] dir.c:trim_trailing_spaces(): fix for " \ " sequence
 
 Discard the unnecessary 'nr_spaces' variable, remove 'strlen()' and
-improve the 'if' structure. Switch to pointers instead of integers
+improve the 'if' structure.  Switch to pointers instead of integers
+to control the loop.
 
 Slightly more rare occurrences of 'text  \    ' with a backslash
-in between spaces are handled correctly. Namely, the code in
-8ba87adad6 does not reset 'last_space' when a backslash is
-encountered and the above line stays intact as a result.
-Add a test at the end of t/t0008-ignores.sh to exhibit this behavior
+in between spaces are handled correctly.  Namely, the code in
+7e2e4b37 (dir: ignore trailing spaces in exclude patterns, 2014-02-09)
+does not reset 'last_space' when a backslash is encountered and the above
+line stays intact as a result.
+
+Add a test at the end of t/t0008-ignores.sh to exhibit this behavior.
 
 Signed-off-by: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
-Add /* fallthrough */ comment to switch(), remove TABs in test,
-and remove ":" command in file truncation in the test
-
- dir.c              | 36 +++++++++++++++++++++---------------
+ dir.c              | 34 +++++++++++++++++++---------------
  t/t0008-ignores.sh | 23 +++++++++++++++++++++++
- 2 files changed, 44 insertions(+), 15 deletions(-)
+ 2 files changed, 42 insertions(+), 15 deletions(-)
 
 diff --git a/dir.c b/dir.c
-index eb6f581..c7dc846 100644
+index eb6f581..797805d 100644
 --- a/dir.c
 +++ b/dir.c
-@@ -508,21 +508,27 @@ void clear_exclude_list(struct exclude_list *el)
+@@ -508,21 +508,25 @@ void clear_exclude_list(struct exclude_list *el)
  
  static void trim_trailing_spaces(char *buf)
  {
@@ -95,13 +132,11 @@ index eb6f581..c7dc846 100644
 +			if (!last_space)
 +				last_space = p;
 +			break;
-+
 +		case '\\':
 +			p++;
 +			if (!*p)
 +				return;
 +			/* fallthrough */
-+
 +		default:
 +			last_space = NULL;
 +		}
@@ -144,4 +179,4 @@ index 63beb99..5ef5ad3 100755
 +
  test_done
 -- 
-1.9.1
+2.0.0-511-g1433423
