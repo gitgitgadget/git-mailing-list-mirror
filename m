@@ -1,59 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pack-objects: use free()+xcalloc() instead of
- xrealloc()+memset()
-Date: Mon, 2 Jun 2014 17:59:11 -0400
-Message-ID: <20140602215911.GA4612@sigill.intra.peff.net>
-References: <538B0969.9080409@web.de>
- <20140602194246.GD2510@sigill.intra.peff.net>
- <878upf9h9v.fsf@fencepost.gnu.org>
+From: James Spencer <james.s.spencer@gmail.com>
+Subject: Re: 2.0.0 regression? request pull does not seem to find head
+Date: Mon, 2 Jun 2014 22:10:25 +0000 (UTC)
+Message-ID: <loom.20140602T235730-544@post.gmane.org>
+References: <20140602210131.GA17171@redhat.com> <CA+55aFyuj=B4jhc9vPkxHotSgJnRXMj_P_QkHCt-TKXtj8tOFQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Vicent Marti <tanoku@gmail.com>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jun 02 23:59:33 2014
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 03 00:15:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WraGP-0006Y3-Rl
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 23:59:30 +0200
+	id 1WraVe-0006q8-9I
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 00:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752259AbaFBV7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 17:59:17 -0400
-Received: from cloud.peff.net ([50.56.180.127]:36185 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752055AbaFBV7N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 17:59:13 -0400
-Received: (qmail 12277 invoked by uid 102); 2 Jun 2014 21:59:13 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Jun 2014 16:59:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jun 2014 17:59:11 -0400
-Content-Disposition: inline
-In-Reply-To: <878upf9h9v.fsf@fencepost.gnu.org>
+	id S1751202AbaFBWPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 18:15:08 -0400
+Received: from plane.gmane.org ([80.91.229.3]:47854 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750786AbaFBWPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 18:15:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WraVT-0006k2-IO
+	for git@vger.kernel.org; Tue, 03 Jun 2014 00:15:03 +0200
+Received: from 88-105-38-76.dynamic.dsl.as9105.com ([88.105.38.76])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Jun 2014 00:15:03 +0200
+Received: from james.s.spencer by 88-105-38-76.dynamic.dsl.as9105.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 03 Jun 2014 00:15:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 88.105.38.76 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.114 Safari/537.36)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250604>
 
-On Mon, Jun 02, 2014 at 10:40:44PM +0200, David Kastrup wrote:
+Linus Torvalds <torvalds <at> linux-foundation.org> writes:
 
-> > BTW, the code does git-blame to Vicent's 2834bc2 (which I also worked
-> > on), but actually originated in 7a979d9 (Thin pack - create packfile
-> > with missing delta base., 2006-02-19). Not that it matters, but I was
-> > just surprised since the code you are changing did not seem familiar to
-> > me. I guess there was just too much refactoring during the code movement
-> > for git-blame to pass along the blame in this case.
-> 
-> Without -M, "too much refactoring" for git-blame may just be moving a
-> function to a different place in the same file.
+>
+> On Mon, Jun 2, 2014 at 2:01 PM, Michael S. Tsirkin <mst <at> redhat.com>
+wrote:
+> >
+> > [mst <at> robin linux]$ git request-pull net-next/master
+> git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git net-next
+> > warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found
+at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
+> > warn: Are you sure you pushed 'net-next' there?
+>
+> git request-pull is clearly correct. There is no "net-next" in that
+> public repository.
 
-I tried "git blame -M -C -C -C pack-objects.c" but couldn't get anything
-but the whole thing blamed to 2834bc2.
+I am seeing something similar:
 
--Peff
+$ git request-pull master origin > /dev/null
+warn: No match for commit 64ea29197d5e13772b1f7b6c24feaa79cc97d997 found at
+origin
+warn: Are you sure you pushed 'HEAD' there?
+
+but I pushed 64ea29197d5e13772b1f7b6c24feaa79cc97d997:
+
+$ git show-ref bug_fix/init_report
+64ea29197d5e13772b1f7b6c24feaa79cc97d997 refs/heads/bug_fix/init_report
+64ea29197d5e13772b1f7b6c24feaa79cc97d997 
+refs/remotes/origin/bug_fix/init_report
+
+The warning goes away if I give an explicit end commit.
+
+Should the default value for $remote in the call to $find_matching_ref be
+$head rather than HEAD (and similarly for the warning message)?
+
+   --James
