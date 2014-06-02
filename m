@@ -1,94 +1,68 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH v3 0/9] replace signal() with sigaction()
-Date: Mon, 2 Jun 2014 13:25:18 -0700
-Message-ID: <20140602202518.GA2012@hudson.localdomain>
-References: <cover.1401645403.git.jmmahler@gmail.com>
- <538C5FD9.1010706@viscovery.net>
- <xmqqzjhv3zeu.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: don't hardcode HEAD in dist target
+Date: Mon, 02 Jun 2014 13:27:14 -0700
+Message-ID: <xmqqd2er3vml.fsf@gitster.dls.corp.google.com>
+References: <20140531202507.GA9101@spirit>
+	<xmqq4n035ej3.fsf@gitster.dls.corp.google.com>
+	<20140602193419.GA10198@spirit>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 22:25:30 2014
+Cc: git@vger.kernel.org
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Mon Jun 02 22:27:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrYnR-0003ya-Jz
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 22:25:29 +0200
+	id 1WrYpJ-00053K-1J
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 22:27:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753681AbaFBUZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 16:25:25 -0400
-Received: from mail-pb0-f44.google.com ([209.85.160.44]:61675 "EHLO
-	mail-pb0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753623AbaFBUZX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 16:25:23 -0400
-Received: by mail-pb0-f44.google.com with SMTP id rq2so4613290pbb.3
-        for <git@vger.kernel.org>; Mon, 02 Jun 2014 13:25:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=h/b+XcI+W8U9zVO2meq3kk27hSUipyOhFqGi/9aHh6I=;
-        b=uMybXU00iRjzaKQ3XrE1jpEEPAYWYGmKJMheVLyPvUFLSjFF6PBG/+WIQ7KJuoqnO1
-         VyQHT87bfwsQno3CJn2TEwad2W7hJzCKqOS5wITbFOCATyb+nOvfC8B61c9TLvZ1cC3q
-         B2LPfeTLWCzg78ITC1e5BD5/K4dEnKBPE9bcHygbKV4yu1UbIHcbcYy6hwEQEPszimhQ
-         mebLj35is9R+5X645J6Owh12VmN+wiGDB1/SPJ6k6fyhQ3r3dK2jbf5ftp3eYMOokob4
-         E+Awrni1RmQp18dlSs5XW3H3fs4Gy3+Ox5O8/AcdTI4Q3hBwP26OYbHYK065gp5+OMJi
-         axdw==
-X-Received: by 10.67.1.39 with SMTP id bd7mr44256420pad.15.1401740722811;
-        Mon, 02 Jun 2014 13:25:22 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id bv4sm21326343pad.25.2014.06.02.13.25.19
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 02 Jun 2014 13:25:21 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Mon, 02 Jun 2014 13:25:18 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <xmqqzjhv3zeu.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752423AbaFBU1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 16:27:21 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50546 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751642AbaFBU1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 16:27:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C93401DFD8;
+	Mon,  2 Jun 2014 16:27:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=as0mCLj/qhOF0w0iBDY+gQEtym4=; b=yakcm9
+	xf6YR96NWs9CxMp8CWe9ctk1F6qmIlWhkHbTdfgTevNZRhCXp6PNJZdslUzYVmYJ
+	vqc0D70ZsMoINDfCeR41kCwomiFyiM2A54oX5/WZk/Xl0CoTpTp+uePXwzwtCE4x
+	k1syg8jWYd0UIf9KJGcZ6x64uevNUPgrMMf68=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GovgQ2ejAAP1la/HXpRs0Ss5Xr+/fSG1
+	z9lU+rlLNpv1eZds/PJBK/xc6P3YgsIiTnwS++4csH9Z5K92GInFnlYzx5M6UjS2
+	Mj8MxtIE0H+GzDjVCs0AMYRVZnCiYBqWcEh2XC12PRkvLnlOQ7oA6sFg07mzhe6w
+	SLGNb/BvTVg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BD3DC1DFD7;
+	Mon,  2 Jun 2014 16:27:19 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 094131DFD6;
+	Mon,  2 Jun 2014 16:27:15 -0400 (EDT)
+In-Reply-To: <20140602193419.GA10198@spirit> (Dennis Kaarsemaker's message of
+	"Mon, 2 Jun 2014 21:34:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4980EB0E-EA94-11E3-B0BF-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250593>
 
-On Mon, Jun 02, 2014 at 12:05:29PM -0700, Junio C Hamano wrote:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
-> >> Jeremiah Mahler (9):
-> >>   compat/mingw.c: expand MinGW support for sigaction
-> >>   connect.c: replace signal() with sigaction()
-> >>   progress.c: replace signal() with sigaction()
-> >>   write_or_die.c: replace signal() with sigaction()
-> >>   daemon.c: replace signal() with sigaction()
-> >>   builtin/log.c: replace signal() with sigaction()
-> >>   builtin/merge-index.c: replace signal() with sigaction()
-> >>   builtin/verify-tag.c: replace signal() with sigaction()
-> >>   sigchain.c: replace signal() with sigaction()
-> >
-> > The series without patch 9/9 works on Windows so far.
-> >
-> > Without patch patch 9/9 and a more complete implementation of sigaction in
-> > compat/mingw.c the series misses its goal. But even if you complete it, it
-> > is IMHO only code churn without practical merits.
-> 
-> Hmm, you sound a bit harsher than you usually do---although I
-> sort of share with you the doubt on the practical merits.
-> 
+Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
 
-Alright, I'm dropping it.  Too much work for no real gain other than
-some piece of mind.
+> I'd say it would make the consistency better, because now both look at
+> what is checked out instead of at HEAD.
 
-Thanks Johannes and Junio for your feedback.
-
--- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+The version with your patch does not even look at HEAD; it looks at
+whatever GIT_VERSION points at, which could be a very different
+version that does not have anything to do with what is checked out
+Can't GIT_VERSION come from ./version file, for example?
