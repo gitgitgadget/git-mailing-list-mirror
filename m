@@ -1,80 +1,81 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ANNOUNCE] Git v2.0.0
-Date: Mon, 02 Jun 2014 09:24:09 +0200
-Message-ID: <871tv7bwpy.fsf@fencepost.gnu.org>
-References: <xmqqr43dbkni.fsf@gitster.dls.corp.google.com>
-	<53866e8562b7a_12a7a052f87a@nysa.notmuch>
-	<20140529185311.GB10865@sigill.intra.peff.net>
-	<5388fb283edaf_bd8167d3002b@nysa.notmuch>
-	<87k392e0mf.fsf@fencepost.gnu.org>
-	<20140602063607.GA27445@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	git-fc@googlegroups.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 02 09:59:46 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH] string-list.h: Add a value to string_list initializer lists
+Date: Mon,  2 Jun 2014 01:58:24 -0700
+Message-ID: <1401699504-29826-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 02 11:00:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrN9k-0001je-Kk
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 09:59:44 +0200
+	id 1WrO6f-0007h6-Rw
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 11:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752041AbaFBH7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 03:59:40 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:50011 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751348AbaFBH7k (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 03:59:40 -0400
-Received: from localhost ([127.0.0.1]:49051 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WrN9e-0006th-So; Mon, 02 Jun 2014 03:59:39 -0400
-Received: by lola (Postfix, from userid 1000)
-	id D2F18E05E7; Mon,  2 Jun 2014 09:24:09 +0200 (CEST)
-In-Reply-To: <20140602063607.GA27445@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 2 Jun 2014 02:36:07 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1752869AbaFBJAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 05:00:34 -0400
+Received: from mail-pb0-f49.google.com ([209.85.160.49]:40597 "EHLO
+	mail-pb0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752402AbaFBJAd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 05:00:33 -0400
+Received: by mail-pb0-f49.google.com with SMTP id jt11so3965536pbb.8
+        for <git@vger.kernel.org>; Mon, 02 Jun 2014 02:00:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=wVz9dOWWnjbecpQbXkP1Sc8nXFi6Y0RgvBRSucrCVwg=;
+        b=uRFVcwf0u5yBrKtaNDMZRKTGqwCPsJmaUJbhU4sf8iY+mvLyofv4QNryWYlCL9qfP3
+         XastOzNscWQyloLsShUzv9emPPvWK5ig6v2Ybybb0DbNyuCKcnRi+5BQa/294GZrb993
+         wsGEnZHpK+P8+zh3RpH6Tj4JyajB0usMYWRD9+BWlF3JO9OcMCQd60xxtnWBgTiFsg+c
+         6NxQsFqvS8dEG1G/SguJErpQ5wsifGeDiFbVL6zbSngSzUSo0AnvERjhBYLmXUKokdNa
+         9jzPdIAI6TUfLlC3hMyDFWBvLq5fnzgJxYkkSJo7ej2KMOTC1Q3xBAJghjbD417g//Qd
+         R55A==
+X-Received: by 10.66.162.137 with SMTP id ya9mr39314952pab.31.1401699632763;
+        Mon, 02 Jun 2014 02:00:32 -0700 (PDT)
+Received: from localhost.localdomain ([117.254.219.180])
+        by mx.google.com with ESMTPSA id ir10sm19314337pbc.59.2014.06.02.02.00.26
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 02 Jun 2014 02:00:32 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250560>
 
-Jeff King <peff@peff.net> writes:
+Add a NULL value in the end of STRING_LIST_INIT_NODUP and
+STRING_LIST_DUP to initialize `compare_strings_fn`.
 
-> On Sat, May 31, 2014 at 11:52:24AM +0200, David Kastrup wrote:
->
->> Some mailing list filters and/or spam filters flag mails with too many
->> recipients so that they need to pass through moderation first.  The
->> typical threads on this list are short and have few recipients while
->> longer threads, due to the list policy of adding every participants to
->> the Cc, will tend to have more recipients.
->
-> AFAIK, vger does not do anything like this. They block HTML, messages
-> lacking a message-id, messages over 100K, and certain taboo phrases:
->
->   http://vger.kernel.org/majordomo-info.html#taboo
->
-> And anyway, I do not think vger is responsible here. The messages were
-> delivered through the list, and other archives have them. This looks
-> like a gmane problem.
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+---
+When I used a malloced string_list to play around with string-list API and
+used the default init_list, it caused a seg fault. After an hour of debugging
+I saw that comapre_strings_fn should be initialized to NULL. In C, even an
+incomplete initialzer initializes every value to NULl or 0, so in normal
+usage in the codebase this problem never occurs. Still it is better to be
+thorough.
 
-I am reading more than one list through Gmane/nntp, and in the last
-years it was not infrequent that delivery paused for even days and/or
-spurious old messages from the last day or even more were getting
-redelivered.
+ string-list.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> According to gmane.org, their admins will look manually at messages
-> flagged as spam, but I find it unlikely that they flagged several days
-> worth of git traffic (and when they do, I think they cross-post them
-> to a spam group in NNTP, and the messages do not seem to be marked as
-> such). So I think this really is just a bug.
-
-Quite so.  In particular when other mirrors got the messages timely.
-
+diff --git a/string-list.h b/string-list.h
+index de6769c..87ee419 100644
+--- a/string-list.h
++++ b/string-list.h
+@@ -15,8 +15,8 @@ struct string_list {
+ 	compare_strings_fn cmp; /* NULL uses strcmp() */
+ };
+ 
+-#define STRING_LIST_INIT_NODUP { NULL, 0, 0, 0 }
+-#define STRING_LIST_INIT_DUP   { NULL, 0, 0, 1 }
++#define STRING_LIST_INIT_NODUP { NULL, 0, 0, 0, NULL }
++#define STRING_LIST_INIT_DUP   { NULL, 0, 0, 1, NULL }
+ 
+ void print_string_list(const struct string_list *p, const char *text);
+ void string_list_clear(struct string_list *list, int free_util);
 -- 
-David Kastrup
+1.9.0.GIT
