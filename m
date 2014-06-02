@@ -1,69 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: feature request - implement a "GIT_AUTHOR_EMAIL" equivalent, but
- processed BEFORE .gitconfig
-Date: Mon, 2 Jun 2014 02:59:51 -0400
-Message-ID: <20140602065947.GC27254@sigill.intra.peff.net>
-References: <5388CBA5.9030403@neulinger.org>
- <20140530182746.GK12314@google.com>
- <5388D175.3060500@neulinger.org>
- <xmqqvbsn82u6.fsf@gitster.dls.corp.google.com>
- <5388E2F7.606@neulinger.org>
- <20140530200945.GB5513@sigill.intra.peff.net>
- <xmqq1tvb7xw6.fsf@gitster.dls.corp.google.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] request-pull: resurrect for-linus -> tags/for-linus DWIM
+Date: Mon, 02 Jun 2014 09:06:56 +0200
+Message-ID: <538C2290.3060506@viscovery.net>
+References: <1400263070-15312-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nathan Neulinger <nneul@neulinger.org>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Michael S. Tsirkin" <mst@redhat.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 08:59:59 2014
+X-From: git-owner@vger.kernel.org Mon Jun 02 09:07:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrMDu-0006i2-50
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 08:59:58 +0200
+	id 1WrMKt-0003xq-DB
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 09:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752476AbaFBG7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 02:59:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:35734 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752462AbaFBG7x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 02:59:53 -0400
-Received: (qmail 547 invoked by uid 102); 2 Jun 2014 06:59:54 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Jun 2014 01:59:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jun 2014 02:59:51 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq1tvb7xw6.fsf@gitster.dls.corp.google.com>
+	id S1752455AbaFBHHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 03:07:04 -0400
+Received: from so.liwest.at ([212.33.55.24]:40280 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751567AbaFBHHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 03:07:03 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WrMKf-0001Oa-3m; Mon, 02 Jun 2014 09:06:57 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id D32C316613;
+	Mon,  2 Jun 2014 09:06:56 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <1400263070-15312-1-git-send-email-gitster@pobox.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250558>
 
-On Fri, May 30, 2014 at 02:35:37PM -0700, Junio C Hamano wrote:
+Am 5/16/2014 19:57, schrieb Junio C Hamano:
+> --- a/t/t5150-request-pull.sh
+> +++ b/t/t5150-request-pull.sh
+> @@ -223,7 +223,13 @@ test_expect_success 'pull request format' '
+>  		git request-pull initial "$downstream_url" tags/full:refs/tags/full
+>  	) >request &&
+>  	sed -nf fuzz.sed <request >request.fuzzy &&
+> -	test_i18ncmp expect request.fuzzy
+> +	test_i18ncmp expect request.fuzzy &&
+> +
+> +	(
+> +		cd local &&
+> +		git request-pull initial "$downstream_url" full
+> +	) >request &&
+> +	grep ' tags/full$'
+>  '
 
-> Nathan's installation can set a "GIT_MYSELF" and then have something
-> like this in the shared $HOME/.gitconfig
-> 
-> 	[include]
->         	path = /usr/local/users/$GIT_MYSELF/ident
-> 
-> we could even make the whole thing fail when GIT_MYSELF is not set
-> but I haven't thought things through ;-)
+What's this crap? Here's a fix. Feel free to tame down the subject line
+if you think it's too strong ;)
 
-Yeah, that is something I considered[1] when writing the initial
-include.path implementation. Something like:
+--- 8< ---
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH] fix brown paper bag breakage in t5150-request-pull.sh
 
-  [include]
-	path = .gitconfig-$HOSTNAME
+The recent addition to the test case 'pull request format' interrupted
+the single-quoted text, effectively adding a third argument to the
+test_expect_success command. Since we do not have a prerequisite named
+"pull request format", the test is skipped, no matter what. Additionally,
+the file name argument to the grep command is missing. Fix both issues.
 
-could be potentially useful. But I punted at the time to wait for
-somebody to actually ask for it. If somebody wanted to implement it, I
-don't see a reason to avoid it.
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t5150-request-pull.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--Peff
+diff --git a/t/t5150-request-pull.sh b/t/t5150-request-pull.sh
+index 93e2c65..82c33b8 100755
+--- a/t/t5150-request-pull.sh
++++ b/t/t5150-request-pull.sh
+@@ -229,7 +229,7 @@ test_expect_success 'pull request format' '
+ 		cd local &&
+ 		git request-pull initial "$downstream_url" full
+ 	) >request &&
+-	grep ' tags/full$'
++	grep " tags/full\$" request
+ '
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/190196
+ test_expect_success 'request-pull ignores OPTIONS_KEEPDASHDASH poison' '
+-- 
+2.0.0.1326.g81a507a
