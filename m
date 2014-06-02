@@ -1,88 +1,136 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: 2.0.0 regression? request pull does not seem to find head
-Date: Mon, 2 Jun 2014 14:36:01 -0700
-Message-ID: <CA+55aFyuj=B4jhc9vPkxHotSgJnRXMj_P_QkHCt-TKXtj8tOFQ@mail.gmail.com>
-References: <20140602210131.GA17171@redhat.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Reset by checkout?
+Date: Mon, 02 Jun 2014 14:54:47 -0700
+Message-ID: <xmqqmwdv2d08.fsf@gitster.dls.corp.google.com>
+References: <20140531144610.754B.B013761@chejz.com>
+	<53898448.8040105@bracey.fi> <20140601132624.821C.B013761@chejz.com>
+	<538AE814.2010407@bracey.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 23:36:11 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Atsushi Nakagawa <atnak@chejz.com>, git@vger.kernel.org
+To: Kevin Bracey <kevin@bracey.fi>
+X-From: git-owner@vger.kernel.org Mon Jun 02 23:54:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrZtp-00020H-2V
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 23:36:09 +0200
+	id 1WraC2-00043O-Oy
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 23:54:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751619AbaFBVgE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 17:36:04 -0400
-Received: from mail-vc0-f175.google.com ([209.85.220.175]:64393 "EHLO
-	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751644AbaFBVgD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 17:36:03 -0400
-Received: by mail-vc0-f175.google.com with SMTP id id10so5787537vcb.20
-        for <git@vger.kernel.org>; Mon, 02 Jun 2014 14:36:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=m1UgrbiBqN61BbqJ/JRIp9CA9tjrGZtggdjw8sGxOxQ=;
-        b=mTtP+osmg8C+MC4zR7xaNgExv2fX8EecAQ+VjUNfsX5HRSxxa+up9laZFwUoH4QJwD
-         YlA+o++/QuJQAfRUwfyXeITb8oe7FgEgVGYBaDP0WvFR1FQUZHgfRMfMWK4M3eIHUn+S
-         xOXYoKRIZGCLMdEaagpmUJUjhYgpuqS167Z1kCuT1Luggk57F5/WZFFHIBNKoz0NyEmZ
-         6rxJvJO1gDxjj1/Obmp4lVDkuhxuRJvpTUuuaqyCtcHjYoeFV65PuWsY+hBdn+dmYD9T
-         BPxv04fjUtezndMLh1EpqeK0/lkYCy92zfIbQUmSmo5ZeeZdFJQD8xUMzUF3dMcBw6cM
-         CJVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=m1UgrbiBqN61BbqJ/JRIp9CA9tjrGZtggdjw8sGxOxQ=;
-        b=KHxYVlgqeI3KDGbc7Q1IUjdV57dQNQvr2Q61iXc68X+BNq0Axm3hlJnZDhyyhl3Ss9
-         n4t7WRWDb5ZGISJAxEtodV8JBf9jXqzPdR/qfKrJ6GiX0zc1HgBZmro9tPN5CVOWkMc9
-         L/93XHmpRbqnIRRVlPnyGaaWozVvbOmst+Rew=
-X-Received: by 10.58.207.74 with SMTP id lu10mr32027301vec.15.1401744962111;
- Mon, 02 Jun 2014 14:36:02 -0700 (PDT)
-Received: by 10.220.13.16 with HTTP; Mon, 2 Jun 2014 14:36:01 -0700 (PDT)
-In-Reply-To: <20140602210131.GA17171@redhat.com>
-X-Google-Sender-Auth: AVtc1s9FTwwRzrjd82RpsAZi0Kg
+	id S1751213AbaFBVyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 17:54:55 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52970 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751000AbaFBVyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 17:54:54 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 97E031D850;
+	Mon,  2 Jun 2014 17:54:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=HGV1VTObAZX3rBMDAHHImWZaeTc=; b=Q23Acm
+	p8btqyr+WbtDzrddnh9DqRWK7s/3BsdNC9tB8Fw1mgvTGuD9ICV/wygkueggmJLX
+	yXGYwaFnuCuicJEmbVjDQxI/RrFsy3Bi1Qx5xskx+obU/tuOuQyHoTqOG88aVw94
+	/nLPaTgas7KErWHpqmT9ID7rc4cG8dZN5sRxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=apTJvAqGDb3tRyUmn7wdcuVzWVyuAEui
+	4A5++DzGLzbzCMkxjyhtSaAsZe2y5/1taN7v3IEO6VEfgO/DVppDIVIwquP/9682
+	Kiq5AWWBOfj6t9GikanN4CDzj2oogYWLY3O+ok9CVb8X2jDqjhvDj21yGkYHjjaa
+	Q6jLFM+fw1s=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8F9321D84F;
+	Mon,  2 Jun 2014 17:54:53 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7EFEF1D848;
+	Mon,  2 Jun 2014 17:54:49 -0400 (EDT)
+In-Reply-To: <538AE814.2010407@bracey.fi> (Kevin Bracey's message of "Sun, 01
+	Jun 2014 11:45:08 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 84D2A952-EAA0-11E3-914E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250602>
 
-On Mon, Jun 2, 2014 at 2:01 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
+Kevin Bracey <kevin@bracey.fi> writes:
+
+> Maybe something like this:
+
+I like the overall direction to re-organize the description by
+operations, but the new description seem to introduce a bit of new
+confusion.
+
+> "All modes move the current branch pointer so that HEAD now points to
+> the specified commit. ORIG_HEAD is set to the original HEAD
+> location. The modes differ in what happens to the contents of
+> ORIG_HEAD, that are no longer on the reset branch; and also what
+> happens to your not-yet-committed changes.
 >
-> [mst@robin linux]$ git request-pull net-next/master  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git net-next
-> warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-> warn: Are you sure you pushed 'net-next' there?
+> --soft
+>      Retains the contents of ORIG_HEAD in the index+work area,
+> leaving the difference as "changes to be committed".
 
-git request-pull is clearly correct. There is no "net-next" in that
-public repository.
+This (and everything that talks about ORIG_HEAD) asks the user to
+think of the working tree state as a combination of "the state the
+commit you were on represents" plus "the changes you made relative
+to it".
 
-It *used* to be that request-pull then magically tried to fix it up
-for you, which in turn resulted in the guess not being right, like
-pointing to the wrong branch that just happened to have the same SHA1,
-or pointing to a branch when it _should_ have pointed to a tag.
+Given that everything Git records is a whole-tree snapshot, "state"
+(not "changes"), and that is how tutorials teach Git, I wonder if
+the "what is done to ORIG_HEAD and changes" gets the user into right
+mindset to understand various modes of operations.
 
-Now, if you pushed your local "net-next" branch to another branch name
-(I can find a branch name called "vhost-next" at that repository, then
-you can *tell* git that, using the same syntax you must have used for
-the push.
+And with that "ORIG_HEAD and changes" mindset, a --soft reset
+becomes very hard to explain.  "ORIG_HEAD and changes (you had
+before you issued the 'reset --soft' command)" are left in the
+index/work, "HEAD" becomes the named commit, "changes from that
+updated HEAD" becomes the original changes (you had since ORIG_HEAD)
+mixed with the differences between ORIG_HEAD and HEAD.
 
-So something like
+If you explain this in terms of "state", a --soft reset will keep
+the state of the index and the working tree as-is and changes the
+HEAD pointer to point at a different commit.
 
-  git request-pull net-next/master
-git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-net-next:vhost-next
+> "git reset --soft HEAD~1"
+> would be the first step if you want to remove the last commit, but
+> intend to recommit most or all of its changes.
+>
+> "git status" after reset --soft shows:
+>
+>   To be committed:
+>        Changes in ORIG_HEAD relative to HEAD
+>        (+Any initial staged changes)
 
-should work so that git doesn't end up having to guess (and
-potentially guessing wrong).
+There would be overlapping parts of "Any initial staged changes" and
+"Changes in ORIG_HEAD relative to HEAD".  They may be mixed, they may
+be partly reverted, or they may totally cancel out, depending on the
+changes the user made since starting to work on ORIG_HEAD.
 
-But it may actually be a simpler driver error, and you wanted to use
-"vhost-next", and that "net-next" was actually incorrect?
 
-       Linus
+>   Not staged:
+>        (Any initial unstaged changes)
+>
+> --mixed (default)
+>     Retains the contents of ORIG_HEAD in the work area, leaving the
+> difference as unstaged changes.
+
+I am confused by the above the same way.  If the operation "retains
+the contents of ORIG_HEAD" in the working tree, would that mean the
+edit I made is somehow reverted?  No, because you say "leaving the
+difference ...", but then the operation is not really retaining the
+contents of ORIG_HEAD.  It is leaving the state I had in my working
+tree as-is, regardless of ORIG_HEAD and/or HEAD that is updated.
+
+Not that I can think of a better way to update these descriptions,
+and not that I am opposing to update these descriptions to make it
+easier for new people to learn, but I am not sure if these "treat
+ORIG_HEAD and the changes since that commit as separate entities"
+is a good approach to do so.
+
+Somewhat frustrated, not by your patch but by being unable to
+suggest a better way X-<.
