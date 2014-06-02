@@ -1,77 +1,69 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.0.0
-Date: Mon, 02 Jun 2014 01:57:50 -0500
-Message-ID: <538c206ea4f86_79bdcdb2fc42@nysa.notmuch>
-References: <xmqqr43dbkni.fsf@gitster.dls.corp.google.com>
- <53866e8562b7a_12a7a052f87a@nysa.notmuch>
- <20140529185311.GB10865@sigill.intra.peff.net>
- <5388fb283edaf_bd8167d3002b@nysa.notmuch>
- <87k392e0mf.fsf@fencepost.gnu.org>
- <20140602063607.GA27445@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: feature request - implement a "GIT_AUTHOR_EMAIL" equivalent, but
+ processed BEFORE .gitconfig
+Date: Mon, 2 Jun 2014 02:59:51 -0400
+Message-ID: <20140602065947.GC27254@sigill.intra.peff.net>
+References: <5388CBA5.9030403@neulinger.org>
+ <20140530182746.GK12314@google.com>
+ <5388D175.3060500@neulinger.org>
+ <xmqqvbsn82u6.fsf@gitster.dls.corp.google.com>
+ <5388E2F7.606@neulinger.org>
+ <20140530200945.GB5513@sigill.intra.peff.net>
+ <xmqq1tvb7xw6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	git-fc@googlegroups.com
-To: Jeff King <peff@peff.net>, David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Jun 02 08:57:59 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Nathan Neulinger <nneul@neulinger.org>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 08:59:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrMBy-0005AE-CZ
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 08:57:58 +0200
+	id 1WrMDu-0006i2-50
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 08:59:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752309AbaFBG5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 02:57:54 -0400
-Received: from mail-oa0-f50.google.com ([209.85.219.50]:35188 "EHLO
-	mail-oa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752042AbaFBG5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 02:57:53 -0400
-Received: by mail-oa0-f50.google.com with SMTP id i7so4224826oag.23
-        for <git@vger.kernel.org>; Sun, 01 Jun 2014 23:57:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:message-id:in-reply-to:references:subject
-         :mime-version:content-type:content-transfer-encoding;
-        bh=hUn3Drc+E2k0P6O9wsCkf4i+0b7x+DPOiKmHIg5uPP8=;
-        b=knLEcKprl40XrwrebOsrf68Nj4K+IwfAHrRTPznf25zMDbf4umw34huDLNClpUQWKQ
-         HcEAHMWfUC309ljRjPZfTbq22E7fGHAg65lRl2j3Ml1XbCMu0CNoNJj+5yRTRV34mmoi
-         UQvVGcDIUzSTMEDZENcMq8Rk7+D8UJcJAvZRonlp6fQUEdw4Rnfq86OfnqhRlM0iaNMU
-         rx2BPic3qRzJwxu52Mdgx0D44ZwTwcZlf2+TMe30LRBY3sf3hjeB4vzEXEKR8Tb5O3C5
-         RLiMTGnwblWGKijRybeNk5d1m18au5imwZrJ3MOi3+3yf4Tz7AAgazcxn3Oan4hRSPt8
-         +wiQ==
-X-Received: by 10.60.142.169 with SMTP id rx9mr36005320oeb.1.1401692272821;
-        Sun, 01 Jun 2014 23:57:52 -0700 (PDT)
-Received: from localhost (189-211-224-40.static.axtel.net. [189.211.224.40])
-        by mx.google.com with ESMTPSA id ar2sm23279280obc.29.2014.06.01.23.57.51
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 01 Jun 2014 23:57:52 -0700 (PDT)
-In-Reply-To: <20140602063607.GA27445@sigill.intra.peff.net>
+	id S1752476AbaFBG7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 02:59:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:35734 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752462AbaFBG7x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 02:59:53 -0400
+Received: (qmail 547 invoked by uid 102); 2 Jun 2014 06:59:54 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 02 Jun 2014 01:59:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 02 Jun 2014 02:59:51 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq1tvb7xw6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250557>
 
-Jeff King wrote:
-> On Sat, May 31, 2014 at 11:52:24AM +0200, David Kastrup wrote:
+On Fri, May 30, 2014 at 02:35:37PM -0700, Junio C Hamano wrote:
 
-> > And frankly, if I were a list moderator and software asked me through
-> > this sort of coincidence whether a mail should be delivered or not and a
-> > glance at it shows nothing but insults, wild accusations, threats and so
-> > on for the umpteenth time, I'd consider twice clicking "Accept".
-> > Whether or not I ultimately did so, this would likely contribute to the
-> > delay.
+> Nathan's installation can set a "GIT_MYSELF" and then have something
+> like this in the shared $HOME/.gitconfig
 > 
-> I do not disagree, but please let's not rehash all of that again.
+> 	[include]
+>         	path = /usr/local/users/$GIT_MYSELF/ident
+> 
+> we could even make the whole thing fail when GIT_MYSELF is not set
+> but I haven't thought things through ;-)
 
-FTR. I haven't insulted anybody, I on the other hand have been insulted
-plenty of times, included by Junio.
+Yeah, that is something I considered[1] when writing the initial
+include.path implementation. Something like:
 
--- 
-Felipe Contreras
+  [include]
+	path = .gitconfig-$HOSTNAME
+
+could be potentially useful. But I punted at the time to wait for
+somebody to actually ask for it. If somebody wanted to implement it, I
+don't see a reason to avoid it.
+
+-Peff
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/190196
