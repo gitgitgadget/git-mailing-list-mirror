@@ -1,110 +1,187 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v3 1/9] compat/mingw.c: expand MinGW support for sigaction
-Date: Mon, 02 Jun 2014 07:57:35 +0200
-Message-ID: <538C124F.2010103@viscovery.net>
-References: <cover.1401645403.git.jmmahler@gmail.com> <d5fc7d72b2d51d1b90fb7f238eff120cb4c6d0e7.1401645403.git.jmmahler@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 07:57:48 2014
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v5 1/2] refs.c: optimize check_refname_component()
+Date: Mon,  2 Jun 2014 02:20:14 -0400
+Message-ID: <1401690015-19191-1-git-send-email-dturner@twitter.com>
+Cc: David Turner <dturner@twitter.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 02 08:22:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrLFi-0001uD-9l
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 07:57:46 +0200
+	id 1WrLdT-0002vb-Rm
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 08:22:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751948AbaFBF5l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 2 Jun 2014 01:57:41 -0400
-Received: from so.liwest.at ([212.33.55.24]:34240 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751905AbaFBF5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 01:57:41 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WrLFY-0004el-2K; Mon, 02 Jun 2014 07:57:36 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CC33516613;
-	Mon,  2 Jun 2014 07:57:35 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <d5fc7d72b2d51d1b90fb7f238eff120cb4c6d0e7.1401645403.git.jmmahler@gmail.com>
-X-Enigmail-Version: 1.6
-X-Spam-Score: -1.0 (-)
+	id S1752043AbaFBGWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 02:22:16 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:33383 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477AbaFBGWP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 02:22:15 -0400
+Received: by mail-pa0-f46.google.com with SMTP id hz1so1566660pad.5
+        for <git@vger.kernel.org>; Sun, 01 Jun 2014 23:22:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=jRlmU/1p+3nKFJM8fj7tRz6HKkLgXSvXp0jcYiiWvQo=;
+        b=R/cZzmMfDJFyWGFZkBaddVT4C6rezBW7jAnXcE5trMK3reRR/mf50ryLHx4GHra8ZC
+         WmUK9I9CLIB9FsINmIjf5n7KkeyNYMPkJG87kkTZJYizxwi9ZOGlFExvVTmSPrAyV28K
+         eGdAeH13OfwlYmV8UPsONRe5nPkwjTvTHIcmpJVNkDvaqz4fscdPNEWBBAnrnR1fYluz
+         bQOVdksOt6c1e5cm1Vv4WkK7RnDk2CTD60fXpJ9wDNKadKlS0i4QXk/zE0zH7UhUK2m2
+         PmOrDIKgUPXzA9uBMCVu0dPq3RpbZaeAFP1dBXjKp2qGAg2jAQlox6xJxzxesf+9ytCc
+         WC4Q==
+X-Gm-Message-State: ALoCoQkWc3rvQM+InohofDYwNDsVrHNnIi6JsIlH2GTCzncuzZbAesM+qPtpNRbADgXrniIk+XfZ
+X-Received: by 10.68.196.202 with SMTP id io10mr37236577pbc.149.1401690134863;
+        Sun, 01 Jun 2014 23:22:14 -0700 (PDT)
+Received: from stross.twitter.corp (207-38-164-98.c3-0.43d-ubr2.qens-43d.ny.cable.rcn.com. [207.38.164.98])
+        by mx.google.com with ESMTPSA id mt1sm18534676pbb.31.2014.06.01.23.22.12
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 01 Jun 2014 23:22:13 -0700 (PDT)
+X-Google-Original-From: David Turner <dturner@twitter.com>
+X-Mailer: git-send-email 2.0.0.rc1.18.gf763c0f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250551>
 
-Am 6/1/2014 20:10, schrieb Jeremiah Mahler:
-> Due to portability issues across UNIX versions sigaction(2) should be=
- used
-> instead of signal(2).
->=20
->>From the signal(2) man page:
->=20
->   The behavior of signal() varies across UNIX versions, and has also =
-var=E2=80=90
->   ied historically across different versions of Linux.   Avoid  its  =
-use:
->   use sigaction(2) instead.
->=20
-> Unfortunately MinGW under Windows has limited support for signal and =
-no
-> support for sigaction.  And this prevents sigaction from being used a=
-cross
-> the entire Git project.
->=20
-> In compat/mingw.c there is a faux sigaction function but it only supp=
-orts
-> SIGALARM.  Hence the need for continuing to use signal() in other cas=
-es.
->=20
-> This patch expands the faux sigaction function so that it calls signa=
-l in
-> cases other than SIGALRM.  Now sigaction can be used across the entir=
-e Git
-> project and MinGW will still work with signal as it did before.
->=20
-> Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
-> ---
->  compat/mingw.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->=20
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index e9892f8..e504cef 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1651,14 +1651,15 @@ int setitimer(int type, struct itimerval *in,=
- struct itimerval *out)
-> =20
->  int sigaction(int sig, struct sigaction *in, struct sigaction *out)
->  {
-> -	if (sig !=3D SIGALRM)
-> -		return errno =3D EINVAL,
-> -			error("sigaction only implemented for SIGALRM");
->  	if (out !=3D NULL)
->  		return errno =3D EINVAL,
->  			error("sigaction: param 3 !=3D NULL not implemented");
+In a repository with many refs, check_refname_component can be a major
+contributor to the runtime of some git commands. One such command is
 
-A fix for this missing implementation is needed before patch 9/9 can be
-applied.
+git rev-parse HEAD
 
-> =20
-> -	timer_fn =3D in->sa_handler;
-> +	if (sig =3D=3D SIGALRM)
-> +		timer_fn =3D in->sa_handler;
-> +	else
-> +		signal(sig, in->sa_handler);
-> +
->  	return 0;
->  }
-> =20
->=20
+Timings for one particular repo, with about 60k refs, almost all
+packed, are:
 
--- Hannes
+Old: 35 ms
+New: 29 ms
+
+Many other commands which read refs are also sped up.
+
+Signed-off-by: David Turner <dturner@twitter.com>
+---
+ refs.c             | 67 +++++++++++++++++++++++++++++++-----------------------
+ t/t5511-refspec.sh |  6 ++++-
+ 2 files changed, 44 insertions(+), 29 deletions(-)
+
+diff --git a/refs.c b/refs.c
+index 28d5eca..dd28f2a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -6,8 +6,29 @@
+ #include "string-list.h"
+ 
+ /*
+- * Make sure "ref" is something reasonable to have under ".git/refs/";
+- * We do not like it if:
++ * How to handle various characters in refnames:
++ * 0: An acceptable character for refs
++ * 1: End-of-component
++ * 2: ., look for a preceding . to reject .. in refs
++ * 3: {, look for a preceding @ to reject @{ in refs
++ * 4: A bad character: ASCII control characters, "~", "^", ":" or SP
++ */
++static unsigned char refname_disposition[256] = {
++	1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
++	4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
++	4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 2, 1,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 4, 0,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
++	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
++};
++
++/*
++ * Try to read one refname component from the front of refname.
++ * Return the length of the component found, or -1 if the component is
++ * not legal.  It is legal if it is something reasonable to have under
++ * ".git/refs/"; We do not like it if:
+  *
+  * - any path component of it begins with ".", or
+  * - it has double dots "..", or
+@@ -16,41 +37,31 @@
+  * - it ends with ".lock"
+  * - it contains a "\" (backslash)
+  */
+-
+-/* Return true iff ch is not allowed in reference names. */
+-static inline int bad_ref_char(int ch)
+-{
+-	if (((unsigned) ch) <= ' ' || ch == 0x7f ||
+-	    ch == '~' || ch == '^' || ch == ':' || ch == '\\')
+-		return 1;
+-	/* 2.13 Pattern Matching Notation */
+-	if (ch == '*' || ch == '?' || ch == '[') /* Unsupported */
+-		return 1;
+-	return 0;
+-}
+-
+-/*
+- * Try to read one refname component from the front of refname.  Return
+- * the length of the component found, or -1 if the component is not
+- * legal.
+- */
+ static int check_refname_component(const char *refname, int flags)
+ {
+ 	const char *cp;
+ 	char last = '\0';
+ 
+ 	for (cp = refname; ; cp++) {
+-		char ch = *cp;
+-		if (ch == '\0' || ch == '/')
++		unsigned char ch = (unsigned char) *cp;
++		unsigned char disp = refname_disposition[ch];
++		switch(disp) {
++		case 1:
++			goto out;
++		case 2:
++			if (last == '.')
++				return -1; /* Refname contains "..". */
++			break;
++		case 3:
++			if (last == '@')
++				return -1; /* Refname contains "@{". */
+ 			break;
+-		if (bad_ref_char(ch))
+-			return -1; /* Illegal character in refname. */
+-		if (last == '.' && ch == '.')
+-			return -1; /* Refname contains "..". */
+-		if (last == '@' && ch == '{')
+-			return -1; /* Refname contains "@{". */
++		case 4:
++			return -1;
++		}
+ 		last = ch;
+ 	}
++out:
+ 	if (cp == refname)
+ 		return 0; /* Component has zero length. */
+ 	if (refname[0] == '.') {
+diff --git a/t/t5511-refspec.sh b/t/t5511-refspec.sh
+index c289322..1571176 100755
+--- a/t/t5511-refspec.sh
++++ b/t/t5511-refspec.sh
+@@ -5,7 +5,6 @@ test_description='refspec parsing'
+ . ./test-lib.sh
+ 
+ test_refspec () {
+-
+ 	kind=$1 refspec=$2 expect=$3
+ 	git config remote.frotz.url "." &&
+ 	git config --remove-section remote.frotz &&
+@@ -84,4 +83,9 @@ test_refspec push 'refs/heads/*/*/for-linus:refs/remotes/mine/*' invalid
+ test_refspec fetch 'refs/heads/*/for-linus:refs/remotes/mine/*'
+ test_refspec push 'refs/heads/*/for-linus:refs/remotes/mine/*'
+ 
++good=$(echo -n '\0377')
++test_refspec fetch "refs/heads/${good}"
++bad=$(echo -n '\011')
++test_refspec fetch "refs/heads/${bad}"				invalid
++
+ test_done
+-- 
+2.0.0.rc1.18.gf763c0f
