@@ -1,78 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 2.0.0 regression? request pull does not seem to find head
-Date: Mon, 02 Jun 2014 14:27:25 -0700
-Message-ID: <xmqqzjhv2e9u.fsf@gitster.dls.corp.google.com>
-References: <20140602210131.GA17171@redhat.com>
+Subject: Re: Reset by checkout?
+Date: Mon, 02 Jun 2014 14:29:19 -0700
+Message-ID: <xmqqvbsj2e6o.fsf@gitster.dls.corp.google.com>
+References: <20140531144610.754B.B013761@chejz.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 23:27:37 2014
+Cc: git@vger.kernel.org
+To: Atsushi Nakagawa <atnak@chejz.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 23:29:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrZlY-0005i7-OB
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 23:27:37 +0200
+	id 1WrZnN-0006jV-9c
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 23:29:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752821AbaFBV1c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 17:27:32 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59662 "EHLO smtp.pobox.com"
+	id S1753001AbaFBV3Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 17:29:25 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52084 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751721AbaFBV1b (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 17:27:31 -0400
+	id S1751102AbaFBV3Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 17:29:25 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 896A21D1C9;
-	Mon,  2 Jun 2014 17:27:30 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A49CC1D232;
+	Mon,  2 Jun 2014 17:29:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fCAIjbNIXM0gvrNfqxiRZFB/aFE=; b=A4OJPG
-	24Zs9tVVh+8bGuRoYmiaZdE/Rp3Aofgzpx/Zyhc1s3ttDQ1Q3wdMSZs1doaXvy7I
-	rLvdcB8v/b/+idVY/aQ9tUB2P+XcOVBYOSYRHCjmAB1ZK5xgh28pnnZx+xv5FXEA
-	Z/yzPzOx3XlKPAuvrRfvwD2asB86f2JLj7tYQ=
+	:content-type; s=sasl; bh=qDYsT8jXjeCJQTYGPzvoaNLuAkY=; b=aydtrs
+	fktBU5UEF8HZ/oAnTykz39Z3OkuXRsRueZ9bxOYiUkcQ6FHR4VGmmHCl0RpQ5+Uf
+	wdaz8mgcrjTPA2PVrUjjcpfVej46CI89rpRCJrRMVQZkw/RGjAdEZyODqi8B/r8Q
+	HfnSFpHovAuDvpP97wQN+r/TKyYc7lfx71VAI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w9w7rSIJKBt5p+ZjD36sV4r95YDPzxuo
-	r8+KaOFWkBWr0fVRhTVeKPAphX8DGmj/ocduU5cJ8juOviP0Wm4BFmkDz1Qc64bE
-	xwIJ+0MKepP9x8mizkK7d56FMD3hYZxH2Yd8LlVgGcP6BlWV29NNDKkvs0GTJVAW
-	mGsj13lQry0=
+	:content-type; q=dns; s=sasl; b=tSP1gsilKiUzSm++wdXnagBrULyQH9LM
+	OKWXDaqOQtX8icuC+s+3H7v47fF3aTIN4AsjJoR8lloO0fkb0ZKUtaepldBqkliO
+	zaF2BRTO4Foy3Gzix4JNzTG4SVlPc5dkNXHg5cjih7HI6g1VsBnGHJ5cNFyVTBKm
+	N3Oldig+zGU=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 80B981D1C8;
-	Mon,  2 Jun 2014 17:27:30 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9B8811D22F;
+	Mon,  2 Jun 2014 17:29:24 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EF9F21D1C6;
-	Mon,  2 Jun 2014 17:27:26 -0400 (EDT)
-In-Reply-To: <20140602210131.GA17171@redhat.com> (Michael S. Tsirkin's message
-	of "Tue, 3 Jun 2014 00:01:31 +0300")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C60541D22A;
+	Mon,  2 Jun 2014 17:29:20 -0400 (EDT)
+In-Reply-To: <20140531144610.754B.B013761@chejz.com> (Atsushi Nakagawa's
+	message of "Sat, 31 May 2014 14:46:12 +0900")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B1CAE176-EA9C-11E3-89EC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: F5A3F40A-EA9C-11E3-BC4C-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250598>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Atsushi Nakagawa <atnak@chejz.com> writes:
 
-> Looks like pull requests no longer work for me on linux.
-
-Wasn't "does not seem to find head" was very much deliberate?
-
-Linus's patch wanted the users to explicitly tell the tool, without
-tool trying to be too helpful and risking to guess incorrectly.
-
-> Some other trees (non-linux) work fine but I didn't yet
-> check whether it's the local or the remote tree that's
-> at issue.
+> One of the more underrepresented command I use in git use on a regular
+> basis is this "reset by checkout".  It's what's currently achieved by
+> this convoluted expression:
 >
-> Or maybe it's a configuration change that I missed?
+>   `git checkout -B <current-branch-name> <tree-ish>`
 >
-> Note: I have
-> [push]
->         default = matching
-> configured in .gitconfig.
+> This is such an useful notion that I can fathom why there isn't a better,
+> first-tier, alternative.
 
-This should not affect anything in request-pull, I think.
+Hmph.  checkout *is* the first-tier way to do this.  Why do you even
+want to do it via "reset"?  Is it because you learned "reset" first
+and then learned how "checkout" with various modes all do useful
+things?
