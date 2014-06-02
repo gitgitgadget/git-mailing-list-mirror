@@ -1,97 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] pack-objects: use free()+xcalloc() instead of xrealloc()+memset()
-Date: Mon, 02 Jun 2014 16:09:12 -0700
-Message-ID: <xmqqbnua3o4n.fsf@gitster.dls.corp.google.com>
-References: <538B0969.9080409@web.de>
-	<20140602194246.GD2510@sigill.intra.peff.net>
-	<878upf9h9v.fsf@fencepost.gnu.org>
-	<20140602215911.GA4612@sigill.intra.peff.net>
+From: "Naumov, Michael (North Sydney)" <Michael.Naumov@Fiserv.com>
+Subject: [PATCH] sideband.c: Get rid of ANSI sequences for non-terminal shell
+Date: Mon, 2 Jun 2014 23:40:51 +0000
+Message-ID: <81E85F13A4BE084BAF4B1AA24173EDA0144E47EC@JWPKEXMBX03.corp.checkfree.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Vicent Marti <tanoku@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 03 01:09:25 2014
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "peff@peff.net" <peff@peff.net>,
+	"spearce@spearce.org" <spearce@spearce.org>,
+	"j6t@kdbg.org" <j6t@kdbg.org>, "nico@cam.org" <nico@cam.org>,
+	"junkio@cox.net" <junkio@cox.net>,
+	"kusmabite@gmail.com" <kusmabite@gmail.com>,
+	"mnaoumov@gmail.com" <mnaoumov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 03 01:50:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrbM3-0002d0-Ai
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 01:09:23 +0200
+	id 1Wrbzq-0008RL-QF
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 01:50:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753111AbaFBXJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 19:09:19 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53476 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751740AbaFBXJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 19:09:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 45F3D1D8A8;
-	Mon,  2 Jun 2014 19:09:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1jjkkL3L0rv/Za8Rl5siy8DUJD0=; b=qPUeSw
-	joxgCWzgn2V4aTg66UixMFdGy5iL/6xfBPuRjgJtRO4o9LKZDiOcSv/ZkU55tTxd
-	qfPMPCAkxVxLlLCSRJrPmvbgj409E2lIu8KfR9rpSgsKdkhbrq6iGNUYKTitpIZN
-	GB5hy3Dm01trKzBHfM/jFFeBCV+XKPn7WNCDI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=C6H3T5QWT7yhMQC11XWc1xZ/jxjsXeiu
-	AGh9DNhFyhnqikvu4vX/umaS83hgUMLnQYXAwa1638m2po782A7uM0Elqqe6nK76
-	BQl0GxxTfLjlPAOW0XnLneHgcxKvb6g26I0f89+NWOnH3Z07JfYBJmZwQOUfVkgD
-	jKt2v7jv5wg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3BFC61D8A7;
-	Mon,  2 Jun 2014 19:09:18 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9DCE91D8A6;
-	Mon,  2 Jun 2014 19:09:14 -0400 (EDT)
-In-Reply-To: <20140602215911.GA4612@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 2 Jun 2014 17:59:11 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EA3EC870-EAAA-11E3-B2A3-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752055AbaFBXu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 19:50:27 -0400
+Received: from mail1.checkfree.com ([204.95.150.32]:22584 "EHLO
+	mail1.checkfree.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751955AbaFBXu0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 2 Jun 2014 19:50:26 -0400
+X-Greylist: delayed 572 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Jun 2014 19:50:26 EDT
+X-IronPort-AV: E=Sophos;i="4.98,960,1392181200"; 
+   d="scan'208";a="25951945"
+Received: from iwpdlpem01.corp.checkfree.com (HELO iwpexht01.corp.checkfree.com) ([10.132.91.25])
+  by iapiron02.corp.checkfree.com with ESMTP; 02 Jun 2014 19:40:52 -0400
+Received: from JWPKEXHT01.corp.checkfree.com (10.141.82.33) by
+ iwpexht01.corp.checkfree.com (10.132.91.140) with Microsoft SMTP Server (TLS)
+ id 8.3.279.5; Mon, 2 Jun 2014 19:40:52 -0400
+Received: from JWPKEXMBX03.corp.checkfree.com ([169.254.5.29]) by
+ JWPKEXHT01.corp.checkfree.com ([10.141.82.33]) with mapi id 14.02.0342.003;
+ Mon, 2 Jun 2014 19:40:52 -0400
+Thread-Topic: [PATCH] sideband.c: Get rid of ANSI sequences for non-terminal
+ shell
+Thread-Index: Ac96Im92MGNFpZ4kRCKYl87yS9me0A==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.1.121.62]
+X-CFilter-Loop: True
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250608>
 
-Jeff King <peff@peff.net> writes:
+From: Michael Naumov <mnaoumov@gmail.com>
 
-> On Mon, Jun 02, 2014 at 10:40:44PM +0200, David Kastrup wrote:
->
->> > BTW, the code does git-blame to Vicent's 2834bc2 (which I also worked
->> > on), but actually originated in 7a979d9 (Thin pack - create packfile
->> > with missing delta base., 2006-02-19). Not that it matters, but I was
->> > just surprised since the code you are changing did not seem familiar to
->> > me. I guess there was just too much refactoring during the code movement
->> > for git-blame to pass along the blame in this case.
->> 
->> Without -M, "too much refactoring" for git-blame may just be moving a
->> function to a different place in the same file.
->
-> I tried "git blame -M -C -C -C pack-objects.c" but couldn't get anything
-> but the whole thing blamed to 2834bc2.
+Diagnostic messages received on the sideband #2 from the server side
+are sent to the standard error with ANSI terminal control sequence
+"\033[K" that erases to the end of line appended at the end of each
+line.
 
-Are you two being a bit too unreasonable, or trying to be fanciful
-and funny and I am not getting the humor?
+However, some programs (e.g. GitExtensions for Windows) read and
+interpret and/or show the message without understanding the terminal
+control sequences, resulting them to be shown to their end users.
+To help these programs, squelch the control sequence when the
+standard error stream is not being sent to a tty.
 
-Here is the relevant part of what 2834bc27 (pack-objects: refactor
-the packing list, 2013-10-24) removes from builtin/pack-objects.c:
+NOTE: I considered to cover the case that a pager has already been 
+started. But decided that is probably not worth worrying about here, 
+though, as we shouldn't be using a pager for commands that do network 
+communications (and if we do, omitting the magic line-clearing signal 
+is probably a sane thing to do).
 
--	object_ix = xrealloc(object_ix, sizeof(int) * object_ix_hashsz);
--	memset(object_ix, 0, sizeof(int) * object_ix_hashsz);
+Signed-off-by: Michael Naumov <mnaoumov@gmail.com>
+Thanks-to: Erik Faye-Lund <kusmabite@gmail.com>
+Thanks-to: Jeff King <peff@peff.net>
+---
+ sideband.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-And here is how the same rehash is done in pack-objects.c at the
-toplevel in the new code:
+diff --git a/sideband.c b/sideband.c
+index d1125f5..7f9dc22 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -30,7 +30,7 @@ int recv_sideband(const char *me, int in_stream, int out)
+ 
+ 	memcpy(buf, PREFIX, pf);
+ 	term = getenv("TERM");
+-	if (term && strcmp(term, "dumb"))
++	if (isatty(2) && term && strcmp(term, "dumb"))
+ 		suffix = ANSI_SUFFIX;
+ 	else
+ 		suffix = DUMB_SUFFIX;
+-- 
+1.8.3.msysgit.0
 
-+	pdata->index = xrealloc(pdata->index, sizeof(uint32_t) * pdata->index_size);
-+	memset(pdata->index, 0, sizeof(int) * pdata->index_size);
+P.S. I gave up trying to send this letter from gmail, it eats my tab
+character
+P.S 2. Sorry, my tab character has been eaten again!
+P.S 3. Wrapped the letter lines to fit on the terminal
+P.S 4. GitExtensions tried to use TERM=dumb but this caused process leakage for diff tools. See https://github.com/gitextensions/gitextensions/issues/1092
 
-Surely, the code structure may be similar, but the similarity ends
-there.  These lines are not equivalent even under the "-w" option.
+Regards,
+Michael
