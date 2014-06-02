@@ -1,83 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Reset by checkout?
-Date: Mon, 02 Jun 2014 14:31:59 -0700
-Message-ID: <xmqqr4372e28.fsf@gitster.dls.corp.google.com>
-References: <20140531144610.754B.B013761@chejz.com>
-	<xmqqvbsj2e6o.fsf@gitster.dls.corp.google.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: 2.0.0 regression? request pull does not seem to find head
+Date: Tue, 3 Jun 2014 00:34:56 +0300
+Message-ID: <20140602213456.GB17832@redhat.com>
+References: <20140602210131.GA17171@redhat.com>
+ <xmqqzjhv2e9u.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Atsushi Nakagawa <atnak@chejz.com>
-X-From: git-owner@vger.kernel.org Mon Jun 02 23:32:12 2014
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 02 23:35:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrZq0-0008Ka-AX
-	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 23:32:12 +0200
+	id 1WrZt0-0001Yi-K5
+	for gcvg-git-2@plane.gmane.org; Mon, 02 Jun 2014 23:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751000AbaFBVcH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 17:32:07 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52672 "EHLO smtp.pobox.com"
+	id S1751887AbaFBVfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 17:35:12 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:11499 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750702AbaFBVcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 2 Jun 2014 17:32:05 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 357DC1D2BF;
-	Mon,  2 Jun 2014 17:32:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zCi3xkOvFwW92mw8hwNQ6Wsmleo=; b=sG2VFT
-	t/6/d24modVG5Yfu5PyVKqfH6UjZUmyYlAIRnGRqaNFKoS1M04rgYTSXeooYvwHr
-	11nSj3uuH9ZYPS8bIpZ5jPFEJsnR+P95HHH9gxX/HMAnXa8Zsk4iyIF47xF9jrU4
-	BPfTpNnuGX7YF/VEBp3iRIYEfMjtI2poqINzE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Hf+i1K0fXmK+fLddwLGdHjD5PTzA7K/u
-	8Aj/aE8spmtsOHjhFF5QDmVjI/UkQiFjeaInqF8jNDhRhLFQCHGjGGxYP3+sbg8O
-	b4buYbNBYeoifZ16pd6BLOrIknwgj5+msQ03/V/7SiWeCk6gzzblAJAgCF55kRVn
-	cDWu98jWANo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2D01A1D2BE;
-	Mon,  2 Jun 2014 17:32:05 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 94BC61D2B9;
-	Mon,  2 Jun 2014 17:32:01 -0400 (EDT)
-In-Reply-To: <xmqqvbsj2e6o.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 02 Jun 2014 14:29:19 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 557C6A92-EA9D-11E3-A8A8-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751202AbaFBVfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 17:35:11 -0400
+Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s52LYR1x027157
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 2 Jun 2014 17:34:27 -0400
+Received: from redhat.com (ovpn-116-42.ams2.redhat.com [10.36.116.42])
+	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s52LYPBh025024;
+	Mon, 2 Jun 2014 17:34:26 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqzjhv2e9u.fsf@gitster.dls.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250600>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Jun 02, 2014 at 02:27:25PM -0700, Junio C Hamano wrote:
+> "Michael S. Tsirkin" <mst@redhat.com> writes:
+> 
+> > Looks like pull requests no longer work for me on linux.
+> 
+> Wasn't "does not seem to find head" was very much deliberate?
 
-> Atsushi Nakagawa <atnak@chejz.com> writes:
->
->> One of the more underrepresented command I use in git use on a regular
->> basis is this "reset by checkout".  It's what's currently achieved by
->> this convoluted expression:
->>
->>   `git checkout -B <current-branch-name> <tree-ish>`
->>
->> This is such an useful notion that I can fathom why there isn't a better,
->> first-tier, alternative.
->
-> Hmph.  checkout *is* the first-tier way to do this.  Why do you even
-> want to do it via "reset"?  Is it because you learned "reset" first
-> and then learned how "checkout" with various modes all do useful
-> things?
+I'm sorry I don't understand what you are asking here.
+Same thing happens if I use a branch name explicitly, not just HEAD.
 
-Ahh, the "branch to be checked out" being the "current" branch is
-indeed strange.  That is what "reset --keep" was invented for.
+> Linus's patch wanted the users to explicitly tell the tool, without
+> tool trying to be too helpful and risking to guess incorrectly.
 
-I use "git checkout -B <something-else> <commit>" all the time, and
-somehow I thought that was what you were talking about.
+So this is an intentional behaviour change?
+Which patch do you refer to?
 
-Sorry for the noise.
+> > Some other trees (non-linux) work fine but I didn't yet
+> > check whether it's the local or the remote tree that's
+> > at issue.
+> >
+> > Or maybe it's a configuration change that I missed?
+> >
+> > Note: I have
+> > [push]
+> >         default = matching
+> > configured in .gitconfig.
+> 
+> This should not affect anything in request-pull, I think.
+
+I just thought I'd mention this.
+push behaviour is the only big incompatible change I'm aware
+of between 1.8 which works for me and 2.0 which doesn't.
+
+-- 
+MST
