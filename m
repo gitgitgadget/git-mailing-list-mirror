@@ -1,148 +1,221 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v11 25/41] fast-import.c: use a ref transaction when
- dumping tags
-Date: Tue, 3 Jun 2014 14:32:49 -0700
-Message-ID: <CAL=YDW=M1nioeiXu5mEHPY+hgPhLbm6MC509Je5E-13UYOUnPQ@mail.gmail.com>
-References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
-	<1401222360-21175-26-git-send-email-sahlberg@google.com>
-	<20140528194746.GX12314@google.com>
-	<CAL=YDWkUhdoJkdg_zaq+p=XRu7H9fqNXDz89uPhbr4equTyVLQ@mail.gmail.com>
-	<20140528221720.GB12314@google.com>
-	<CAL=YDW=ruMzd=twadncjgFTh3yv=796cN72amJ4ep8a41tgmrA@mail.gmail.com>
-	<20140528233940.GC12314@google.com>
-	<CAL=YDW=WmNObkTO_uybTToeMKGGQf5NC0oFvy_pMrsg+ehpzog@mail.gmail.com>
-	<20140529174106.GE12314@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] receive-pack: optionally deny case-clone refs
+Date: Tue, 03 Jun 2014 14:33:58 -0700
+Message-ID: <xmqqioohwud5.fsf@gitster.dls.corp.google.com>
+References: <1401822896-816-1-git-send-email-dturner@twitter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 23:32:57 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 23:34:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrwKF-0001pJ-4W
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 23:32:55 +0200
+	id 1WrwLT-0002hR-Iv
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 23:34:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934123AbaFCVcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 17:32:51 -0400
-Received: from mail-ve0-f170.google.com ([209.85.128.170]:41117 "EHLO
-	mail-ve0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932907AbaFCVcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2014 17:32:50 -0400
-Received: by mail-ve0-f170.google.com with SMTP id db11so7672886veb.15
-        for <git@vger.kernel.org>; Tue, 03 Jun 2014 14:32:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=H5DgRx938VJvLGMBlOrlxuH+kgM628uwu6svoxUNZZw=;
-        b=PxCUjdmakpj3DwqdC8l2kJrAJFYx7F/lGVjmOcf1uUR3QiZk3RX2PVYBb4pzZVU8St
-         yEhsl1OAFSvy2pyBNsYkUU0wh+ocHQQ1usB2s70OWboVvkNqmVzNcbeAhswCE8I81k7y
-         eQfeqnKhK6zxFQRwT16UdhWFWrgyYeIzjpshU0VpUvhX++vkvg3rAdGEbfYajDLA01qO
-         2C0vOXhpv1sv0WUSReD46Qvovdr/F/JUdBj/NIBesVaAP1rzufzXTXMgYbm20k5bPM94
-         va9+QTyboHLA09zDqKxcjora0Utrjdmjjn8mQNGwflAL+I4t8UNQvE7jC7guJw1o7jJb
-         bTpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=H5DgRx938VJvLGMBlOrlxuH+kgM628uwu6svoxUNZZw=;
-        b=j9pKKkaXDFRqfPJlUqrLmtA3b0Y3IrF1DnY+lc72rSxYdqyP4PnmgY+2jZZdBaKCeb
-         vtzDZze3u96B+kYd/9ZzGw6BAKjrm/JAvPC4BDvlE8wNNy9rJA6BsC/wLMjywru+w15B
-         5fIlvTzT9H1xZcpd4WfaOwwhtdxNISrY3h7GI0phrZeOP8TdJ8zFGYm7VhfRpf/GpVY1
-         VqWHWSSv2vPC/VmgSwwTAHfknfCyzAgww+p39S/UM5a4mJU2peW/qbhzpH7cqDMMexQ/
-         n15E++MpwFf5Mp3qrSBLjkEZ86PD9pjjbVlTPeez4A0Jq3qULBf6Kip4Ba+ADkVTpCBM
-         TDBQ==
-X-Gm-Message-State: ALoCoQmKSB3zFMNnLJMtGQmEFPO4NxzYgcjXcUTJSB248E4dIbHg7a18OFAeWdvxAzTKOPyCcdS4
-X-Received: by 10.58.112.8 with SMTP id im8mr11014349veb.35.1401831169093;
- Tue, 03 Jun 2014 14:32:49 -0700 (PDT)
-Received: by 10.52.255.65 with HTTP; Tue, 3 Jun 2014 14:32:49 -0700 (PDT)
-In-Reply-To: <20140529174106.GE12314@google.com>
+	id S965081AbaFCVeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2014 17:34:06 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58372 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932907AbaFCVeE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2014 17:34:04 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F23301D38A;
+	Tue,  3 Jun 2014 17:34:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UDrU9oX25rAurK+4uFkUWr8mTH0=; b=Ju4s3Q
+	xPCerBWlA0FngnEsXCJ2jMNMb1p+3guyTcXGb2lGWrksG6S0DDQsvZmdgex7KX6M
+	S/6ClL9EJXx1mNgZcVHxsHtRHxwNEyfz7OoRLhI0hqeZ9x75ehXfsUrGAwu37G+Z
+	Z9sLsZrPjrTFCJbMPO6DMVhZrysfa+UWqakeQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=YnIsBGh7qGCHBDxZhTlt8+O+PJXEazdd
+	BTMh788PH2+wC8GVLvjP6zlaf/rrQ1NvrzVpDmfNlYLsFgMWDx3G2jXwfrAI4bGk
+	bY3QWXv9lSvJK4v0OqEmlAfRIepQTejGYYNIBhSBdV9ZW/+f1YVUf6IEVsSXRT9C
+	GcMY1YunsfQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E609A1D389;
+	Tue,  3 Jun 2014 17:34:03 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 209941D382;
+	Tue,  3 Jun 2014 17:34:00 -0400 (EDT)
+In-Reply-To: <1401822896-816-1-git-send-email-dturner@twitter.com> (David
+	Turner's message of "Tue, 3 Jun 2014 15:14:56 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C68B5EE0-EB66-11E3-8D01-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250647>
 
-Thanks.
+David Turner <dturner@twopensource.com> writes:
 
-I have changed the transaction functions to die(BUG:) if the user
-tries to call _update/_create/_delete on a failed transaction.
+> It is possible to have two branches which are the same but for case.
+> This works great on the case-sensitive filesystems, but not so well on
+> case-insensitive filesystems.  It is fairly typical to have
+> case-insensitive clients (Macs, say) with a case-sensitive server
+> (GNU/Linux).
+>
+> Should a user attempt to pull on a Mac when there are case-clone
+> branches with differing contents, they'll get an error message
+> containing something like "Ref refs/remotes/origin/lower is at
+> [sha-of-lowercase-branch] but expected [sha-of-uppercase-branch]....
+> (unable to update local ref)"
+>
+> With a case-insensitive git server, if a branch called capital-M
+> Master (that differs from lowercase-m-master) is pushed, nobody else
+> can push to (lowercase-m) master until the branch is removed.
+>
+> Create the option receive.denycaseclonebranches, which checks pushed
+> branches to ensure that they are not case-clones of an existing
+> branch.  This setting is turned on by default if core.ignorecase is
+> set, but not otherwise.
+>
+> Signed-off-by: David Turner <dturner@twitter.com>
+> ---
 
+I do not object to this new feature in principle, but I do not know
+if we want to introduce a new word "case-clone refs" without adding
+it to the glossary documentation.
 
+It feels a bit funny to tie this to core.ignorecase, which is an
+attribute of the filesystem used for the working tree, though.
 
-On Thu, May 29, 2014 at 10:41 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
->> On Wed, May 28, 2014 at 4:39 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Updates to Documentation/config.txt and Documentation/git-push.txt
+are also needed.
+
+>  builtin/receive-pack.c | 29 ++++++++++++++++++++++++++++-
+>  t/t5400-send-pack.sh   | 20 ++++++++++++++++++++
+>  2 files changed, 48 insertions(+), 1 deletion(-)
 >
->>> Usually when ref_transaction_commit is called I can do
->>>
->>>         struct strbuf err = STRBUF_INIT;
->>>         if (ref_transaction_commit(..., &err))
->>>                 die("%s", err.buf);
->>>
->>> and I know that since ref_transaction_commit has returned a nonzero
->>> result, err.buf is populated with a sensible message that will
->>> describe what went wrong.
-> [...]
->>> But the guarantee you are describing removes that property.  It
->>> creates a case where ref_transaction_commit can return nonzero without
->>> updating err.  So I get the following message:
->>>
->>>         fatal:
->>>
->>> I don't think that's a good outcome.
->>
->> In this case "fatal:" can not happen.
->> This is no more subtle than most of the git core.
->>
->> I have changed this function to explicitly abort on _update failing
->> but I think this is making the api too restrictive.
->
-> I don't want to push you toward making a change you think is wrong.  I
-> certainly don't own the codebase, and there are lots of other people
-> (e.g., Michael, Junio, Jeff) to get advice from.  So I guess I should
-> try to address this.
->
-> I'm not quite sure what you mean by too restrictive.
->
->  a. Having API constraints that aren't enforced by the function makes
->     using the API too fussy.
->
->     I agree with that.  That was something I liked about keeping track
->     of the OPEN/CLOSED state of a transaction, which would let
->     functions like _commit die() if someone is misusing the API so the
->     problem gets detected early.
->
->  b. Having to check the return value from _update() is too fussy.
->
->     It certainly seems *possible* to have an API that doesn't require
->     checking the return value, while still avoiding the usability
->     problem I described in the quoted message above.  For example:
->
->      * _update() returns void and has no strbuf parameter
->      * error handling happens by checking the error from _commit()
->
->     That would score well on the scale described at
->     http://ozlabs.org/~rusty/index.cgi/tech/2008-03-30.html
->
->     An API where checking the return value is optional would be
->     doable, too.  For example:
->
->      * _update() returns int and has a strbuf parameter
->      * if the strbuf parameter is NULL, the caller is expected to
->        wait for _commit() to check for errors, and a relevant
->        message will be passed back then
->      * if the strbuf parameter is non-NULL, then calling _commit()
->        after an error is an API violation
->
-> I don't understand the comment about no more subtle than most of git.
-> Are you talking about the errno action at a distance you found in some
-> functions?  I thought we agreed that those were mistakes that accrue
-> when people aim for a quick fix without thinking about maintainability
-> and something git should have less of.
->
-> Jonathan
+> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> index c323081..0894ded 100644
+> --- a/builtin/receive-pack.c
+> +++ b/builtin/receive-pack.c
+> @@ -27,6 +27,7 @@ enum deny_action {
+>  
+>  static int deny_deletes;
+>  static int deny_non_fast_forwards;
+> +static int deny_case_clone_branches = -1;
+>  static enum deny_action deny_current_branch = DENY_UNCONFIGURED;
+>  static enum deny_action deny_delete_current = DENY_UNCONFIGURED;
+
+Would it make sense to reuse the enum deny_action for this new
+settings, with an eye to later convert the older boolean ones also
+to use enum deny_action to make them consistent and more flexible?
+
+> @@ -69,6 +70,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+>  	if (status)
+>  		return status;
+>  
+> +	if (strcmp(var, "receive.denycaseclonebranches") == 0) {
+> +		deny_case_clone_branches = git_config_bool(var, value);
+> +		return 0;
+> +	}
+> +
+>  	if (strcmp(var, "receive.denydeletes") == 0) {
+>  		deny_deletes = git_config_bool(var, value);
+>  		return 0;
+> @@ -468,6 +474,24 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+>  	return 0;
+>  }
+>  
+> +static int is_case_clone(const char *refname, const unsigned char *sha1,
+> +			int flags, void *cb_data)
+> +{
+> +	const char* incoming_refname = cb_data;
+
+We write C not C++ around here; the pointer-asterisk sticks to the
+variable name, not typename.
+
+> +	return !strcasecmp(refname, incoming_refname) &&
+> +		strcmp(refname, incoming_refname);
+
+(Mental note to the reviewer himself) This returns true iff there is
+an existing ref whose name is only different in case, and cause
+for-each-ref to return early with true.  In a sane case of not
+receiving problematic refs, this will have to iterate over all the
+existing refnames.  Wonder if there are better ways to optimize this
+in a repository with hundreds or thousands of refs, which is not all
+that uncommon.
+
+> +}
+> +
+> +static int ref_is_denied_case_clone(const char *name)
+> +{
+> +
+> +	if (!deny_case_clone_branches)
+> +		return 0;
+> +
+> +	return for_each_ref(is_case_clone, (void *) name);
+> +
+
+The trailing blank line inside a function at the end is somewhat
+unusual.
+
+> +}
+> +
+
+> diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+> index 0736bcb..099c0e3 100755
+> --- a/t/t5400-send-pack.sh
+> +++ b/t/t5400-send-pack.sh
+> @@ -129,6 +129,26 @@ test_expect_success 'denyNonFastforwards trumps --force' '
+>  	test "$victim_orig" = "$victim_head"
+>  '
+>  
+> +if ! test_have_prereq CASE_INSENSITIVE_FS
+> +then
+
+Hmm, don't we want the feature to kick in for both case sensitive
+and case insensitive filesystems?
+
+> +test_expect_success 'denyCaseCloneBranches works' '
+> +	(
+> +	    cd victim &&
+> +	    git config receive.denyCaseCloneBranches true
+> +	    git config receive.denyDeletes false
+> +	) &&
+> +	git checkout -b caseclone &&
+> +	git send-pack ./victim caseclone &&
+> +	git checkout -b CaseClone &&
+> +	test_must_fail git send-pack ./victim CaseClone &&
+
+At this point, we would want to see not just that send-pack fails
+but also that "victim" does not have CaseClone branch and does have
+caseclone branch pointing at the original value (i.e. we do not want
+to see "caseclone" updated to a value that would have gone to
+CaseClone with this push).
+
+Each push in the sequence should be preceded by a "git commit" or
+something so that we can verify the object at the tip of the ref in
+the "victim" repository, I would think.  Otherwise it is hard to
+tell an expected no-op that has failed and a no-op because it
+mistakenly pushed the same value to a wrong ref.
+
+> +	git checkout -b notacaseclone &&
+> +	git send-pack ./victim notacaseclone &&
+> +	test_must_fail git send-pack ./victim :CaseClone &&
+
+This is expected to fail we expect that earlier push of CaseClone
+has failed and we do not have such a branch, OK.
+
+> +	git send-pack ./victim :caseclone &&
+
+This is expected to succeed because we expect that earlier push of
+CaseClone has failed and we still have caseclone intact.
+
+> +	git send-pack ./victim CaseClone
+> +'
+> +fi
+> +
+>  test_expect_success 'push --all excludes remote-tracking hierarchy' '
+>  	mkdir parent &&
+>  	(
