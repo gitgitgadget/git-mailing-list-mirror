@@ -1,92 +1,98 @@
-From: Mara Kim <mara.kim@vanderbilt.edu>
-Subject: Paper cut bug: Why isn't "git clone xxxx" recursive by default?
-Date: Tue, 3 Jun 2014 13:11:03 -0500
-Message-ID: <CAJdEhSa20ODuN4LkdvaWi0cSztgbJ+p50AYbtZs2oYWLitnjbA@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v11 00/41] Use ref transactions
+Date: Tue, 3 Jun 2014 11:31:24 -0700
+Message-ID: <20140603183124.GD30019@google.com>
+References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 03 20:26:35 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 20:31:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrtPu-0005Vc-J8
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 20:26:34 +0200
+	id 1WrtUi-0000NQ-Dp
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 20:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754692AbaFCS0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 14:26:30 -0400
-Received: from co9ehsobe004.messaging.microsoft.com ([207.46.163.27]:23266
-	"EHLO co9outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754244AbaFCS0O (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2014 14:26:14 -0400
-Received: from mail50-co9-R.bigfish.com (10.236.132.253) by
- CO9EHSOBE018.bigfish.com (10.236.130.81) with Microsoft SMTP Server id
- 14.1.225.22; Tue, 3 Jun 2014 18:11:07 +0000
-Received: from mail50-co9 (localhost [127.0.0.1])	by mail50-co9-R.bigfish.com
- (Postfix) with ESMTP id 43D80B405F8	for <git@vger.kernel.org>; Tue,  3 Jun
- 2014 18:11:07 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:129.59.94.73;KIP:(null);UIP:(null);IPV:NLI;H:hub.vanderbilt.edu;RD:error;EFVD:FOP
-X-SpamScore: 8
-X-BigFish: VPS8(zz1447Izz1f42h2148h1d77h1ee6h1de0h1fdah2073h2146h1202h1e76h2189h1d1ah1d2ah21bch2297h1fc6h208chzzz2dh2a8h839h93fhf0ah107ah1288h12a5h12a9h12bdh137ah13b6h1441h1504h1537h153bh15a8h162dh1631h1741h1758h17eeh1946h19b5h19ceh1ad9h1b0ah1b2fh2222h224fh1fb3h1d0ch1d2eh1d3fh1dc1h1dfeh1dffh1e1dh1fe8h1ff5h2216h22d0h2336h2438h2461h24d7h2516h2545h255eh25f6h2605h268bh26d3h27e2h282bh1a81i1b1cn15a9i1b1bi181ch)
-Received: from mail50-co9 (localhost.localdomain [127.0.0.1]) by mail50-co9
- (MessageSwitch) id 1401819065354940_12141; Tue,  3 Jun 2014 18:11:05 +0000
- (UTC)
-Received: from CO9EHSMHS009.bigfish.com (unknown [10.236.132.226])	by
- mail50-co9.bigfish.com (Postfix) with ESMTP id 52DDD2C00B2	for
- <git@vger.kernel.org>; Tue,  3 Jun 2014 18:11:05 +0000 (UTC)
-Received: from hub.vanderbilt.edu (129.59.94.73) by CO9EHSMHS009.bigfish.com
- (10.236.130.19) with Microsoft SMTP Server (TLS) id 14.16.227.3; Tue, 3 Jun
- 2014 18:11:05 +0000
-Received: from mail-vc0-f172.google.com (209.85.220.172) by
- smtpauth.vanderbilt.edu (10.1.154.73) with Microsoft SMTP Server (TLS) id
- 14.3.174.1; Tue, 3 Jun 2014 13:11:04 -0500
-Received: by mail-vc0-f172.google.com with SMTP id lf12so7098389vcb.17
-        for <git@vger.kernel.org>; Tue, 03 Jun 2014 11:11:03 -0700 (PDT)
-X-Received: by 10.52.5.129 with SMTP id s1mr23675810vds.31.1401819063474; Tue,
- 03 Jun 2014 11:11:03 -0700 (PDT)
-Received: by 10.221.41.10 with HTTP; Tue, 3 Jun 2014 11:11:03 -0700 (PDT)
-X-Originating-IP: [209.85.220.172]
-X-OriginatorOrg: vanderbilt.edu
-X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
+	id S1755127AbaFCSb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2014 14:31:28 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:64663 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753937AbaFCSb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2014 14:31:27 -0400
+Received: by mail-pd0-f182.google.com with SMTP id r10so5026980pdi.27
+        for <git@vger.kernel.org>; Tue, 03 Jun 2014 11:31:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=yjPIhhlRjYwTFkZx3tggSjz93/ODO3vmqJf9l1sjpcc=;
+        b=TEy38SzWmgxZ5S7BizODBARGuijBkcfBRrzxDES+Bm6uBtAoqx8DFWlpvWm9h8U6D3
+         s74fk+vNWsYs4qkoiV7dqZ6WqPcgSGsZEaqZ5rjWEfX36pXa2R/dQoyo8+wdkuKV+KCf
+         xVvD5bBZNrP0dqfSfA9wXYw2HDzE38ZEaOZJ2qJ5jZ7VmeiQ+Et1sSvtcG/ezotaf3Gn
+         2kfuSVi9D7XeyrDcDcPndn0Q3u4HjKHQCYsHR3ezrXpwAO7i/vDbG/d3LLobUOmKKPsP
+         xtjx0C6pwzMFxGFtIYHO7Qw0iMCGugbQvaPPfmxeceB3KLSzxhqD969XCCIOJ4pTWhJw
+         vkEA==
+X-Received: by 10.69.31.202 with SMTP id ko10mr48554297pbd.23.1401820287475;
+        Tue, 03 Jun 2014 11:31:27 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id jh2sm30774880pbd.93.2014.06.03.11.31.26
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 03 Jun 2014 11:31:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1401222360-21175-1-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250638>
 
-Hello git devs!
+Hi,
 
-I'd like to start off by saying that git is an amazing piece of
-software and every one of you deserve major kudos for your work on the
-project.  However, I'd like to point out a few "paper cut" bugs (to
-use the Ubuntu parlance).
+Ronnie Sahlberg wrote:
 
-Apologies if this question has been asked already, but what is the
-reasoning behind making git clone not recursive (--recursive) by
-default?  I have just recently started splitting my projects into
-submodules, and I feel like this is a major usability issue,
-especially for newbies.  Wouldn't it be better to have a
-"--non-recursive" option and clone recursively by default?  Similarly,
-I feel that "git pull" should automatically "git submodule update
---recursive --init" as well, with the current behavior able to be
-specified with a "--non-recursive" option.
+>                                                                        It
+> converts all ref updates, inside refs.c as well as external, to use the
+> transaction API for updates. This makes most of the ref updates to become
+> atomic when there are failures locking or writing to a ref.
 
-I feel like these sorts of choices make submodules seem very much like
-second class citizens in git and make git much less user friendly.  I
-feel that the most common use case that people want is to keep
-submodules properly in sync.  In addition, I feel that power users
-that really want to make shallow clones, non-recursive clones, etc.
-could still be served with a simple option.  I guess there are
-problems with changes in submodules being overwritten, so I suppose
-there would need to be additional warnings or even just refusal to
-pull into dirty directories, similar to the way git behaves in a
-regular repository.
+I'm still excited about this series.  Most of it looks ready.  The
+remaining problems I see fall into a few categories:
 
-Thanks for the excellent work,
-Mara Kim
+ * The rename_ref codepath is strange.  You've convinced me that the
+   approach you're taking there is not much of a regression, but it's
+   confusing enough that I'd be happier if someone else takes a closer
+   look (or I can try to find time to).
 
-Ph.D. Candidate
-Computational Biology
-Vanderbilt University
-Nashville, TN
+ * I think the approach taken in the patch "add transaction.status and
+   track OPEN/CLOSED/ERROR" is a mistake and would make callers more
+   error-prone.  The basic idea of checking that the caller is using
+   the API right is valuable, so there is something in that patch I
+   really like --- it's just the details (involving the same kind of
+   easy-to-clobber error messages as errno provides with stdio) that
+   seem broken.
+
+   I suspect I'm just not communicating very well there.  Maybe
+   mhagger or someone else could give it a sanity check.
+
+ * Some commit messages (e.g., the one to "pack all refs before we
+   start to rename a ref") are confusing.  That might be a sign that
+   what those patches are trying to do is confusing.
+
+ * The error handling in "add an err argument to repack_without_refs"
+   is a thorny thicket.  It still has bugs.  I can completely
+   understand not wanting to take that on but I think it is important
+   to add a NEEDSWORK comment describing the known bugs to help people
+   when they work with this code in the future.
+
+I realize the process of addressing review comments in such a long
+series has been a bit of a pain, and if there's anything I can do to
+make it easier please let me know.  Hopefully adding some other
+reviewers can help.
+
+Thanks,
+Jonathan
