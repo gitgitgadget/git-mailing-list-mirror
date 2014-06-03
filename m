@@ -1,221 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] receive-pack: optionally deny case-clone refs
-Date: Tue, 03 Jun 2014 14:33:58 -0700
-Message-ID: <xmqqioohwud5.fsf@gitster.dls.corp.google.com>
-References: <1401822896-816-1-git-send-email-dturner@twitter.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 23:34:14 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v13 02/41] refs.c: ref_transaction_commit should not free the transaction
+Date: Tue,  3 Jun 2014 14:37:20 -0700
+Message-ID: <1401831479-3388-3-git-send-email-sahlberg@google.com>
+References: <1401831479-3388-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 03 23:38:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrwLT-0002hR-Iv
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 23:34:12 +0200
+	id 1WrwPP-0005MX-8M
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 23:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965081AbaFCVeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 17:34:06 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58372 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932907AbaFCVeE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2014 17:34:04 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F23301D38A;
-	Tue,  3 Jun 2014 17:34:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UDrU9oX25rAurK+4uFkUWr8mTH0=; b=Ju4s3Q
-	xPCerBWlA0FngnEsXCJ2jMNMb1p+3guyTcXGb2lGWrksG6S0DDQsvZmdgex7KX6M
-	S/6ClL9EJXx1mNgZcVHxsHtRHxwNEyfz7OoRLhI0hqeZ9x75ehXfsUrGAwu37G+Z
-	Z9sLsZrPjrTFCJbMPO6DMVhZrysfa+UWqakeQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YnIsBGh7qGCHBDxZhTlt8+O+PJXEazdd
-	BTMh788PH2+wC8GVLvjP6zlaf/rrQ1NvrzVpDmfNlYLsFgMWDx3G2jXwfrAI4bGk
-	bY3QWXv9lSvJK4v0OqEmlAfRIepQTejGYYNIBhSBdV9ZW/+f1YVUf6IEVsSXRT9C
-	GcMY1YunsfQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E609A1D389;
-	Tue,  3 Jun 2014 17:34:03 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 209941D382;
-	Tue,  3 Jun 2014 17:34:00 -0400 (EDT)
-In-Reply-To: <1401822896-816-1-git-send-email-dturner@twitter.com> (David
-	Turner's message of "Tue, 3 Jun 2014 15:14:56 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C68B5EE0-EB66-11E3-8D01-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S934119AbaFCViJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2014 17:38:09 -0400
+Received: from mail-oa0-f74.google.com ([209.85.219.74]:46755 "EHLO
+	mail-oa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932485AbaFCViH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2014 17:38:07 -0400
+Received: by mail-oa0-f74.google.com with SMTP id m1so1536714oag.3
+        for <git@vger.kernel.org>; Tue, 03 Jun 2014 14:38:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=p38JjYdICcRasJFKqYeDcheRbgW6zpzZv3Mg4bDIKcA=;
+        b=SUhdRoV3tTIHgaT01iKbkRdrWo/CKmEBkLWvIZ5LnaeyCfmCAL0hP8nbgmEI0eMnUQ
+         1ZZzuEX6sZIT8wOCD8YKRiWcd4k82vRxGo4VgICweFtK4+uO27Kt/K/6+q5x9DdutGZ1
+         1ddpWC7K61uNAtlZe2xudtFgsXlQLkY8p1lUeg0pP2RfS4J0802IKquh6dJ7+spp9SIp
+         2QRnm2MvrciWXKZoryDTLWVeVTyvjSLrQ0XlAI2/06YHrVNP7sUhN+xvYC605s4p7jAf
+         vH0t9kWQblmsOh69EkPlLVFzz7tyvkJeXfE46QHNxixVsdatCKjEtrTWEY00GLRUJ949
+         J43A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=p38JjYdICcRasJFKqYeDcheRbgW6zpzZv3Mg4bDIKcA=;
+        b=QgGOQ0m2kt6RX0lFkM+DhsSHJMr8SWtYx3U0pBtebyNWpgmZqNhdBliNKURHgk8K71
+         79ePpOIcg6d7v8+GzZ8nkxN1ErOC/MGrS2AlL7NlwOev5ZGkJqzbvaURzwuiNkIob3+V
+         CVrXkbBdVmcqCWUUNUPaGDnRLFF5DIK289zDZhxOmavoyqij08921MbJLa7GrGa7+yqR
+         pzFzvA9yw3owRORg9pbpOp3A6nsdfQDt0v7euM9eghhEoLgASW2CfhD5QSTrnk7LYanj
+         waPEj63S25NRxA1xPjOcmAg9kqpdxaQRyIh2UmPIRJjUos/x8MZA39ahAiHWSVyJiRI4
+         n9IQ==
+X-Gm-Message-State: ALoCoQkVJRGt/elYFw+/4TaWzRJyczzxcU5bMmaEQHjkT3hvKaPz+PMMsYUm54Zo1ptGF7f/6oTd
+X-Received: by 10.50.6.45 with SMTP id x13mr10817459igx.4.1401831486788;
+        Tue, 03 Jun 2014 14:38:06 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id z50si30036yhb.3.2014.06.03.14.38.06
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 03 Jun 2014 14:38:06 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 9DE485A43C6;
+	Tue,  3 Jun 2014 14:38:06 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id 4C9D5E00FA; Tue,  3 Jun 2014 14:38:06 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.567.g64a7adf
+In-Reply-To: <1401831479-3388-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250648>
 
-David Turner <dturner@twopensource.com> writes:
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ builtin/update-ref.c | 1 +
+ refs.c               | 1 -
+ refs.h               | 5 ++---
+ 3 files changed, 3 insertions(+), 4 deletions(-)
 
-> It is possible to have two branches which are the same but for case.
-> This works great on the case-sensitive filesystems, but not so well on
-> case-insensitive filesystems.  It is fairly typical to have
-> case-insensitive clients (Macs, say) with a case-sensitive server
-> (GNU/Linux).
->
-> Should a user attempt to pull on a Mac when there are case-clone
-> branches with differing contents, they'll get an error message
-> containing something like "Ref refs/remotes/origin/lower is at
-> [sha-of-lowercase-branch] but expected [sha-of-uppercase-branch]....
-> (unable to update local ref)"
->
-> With a case-insensitive git server, if a branch called capital-M
-> Master (that differs from lowercase-m-master) is pushed, nobody else
-> can push to (lowercase-m) master until the branch is removed.
->
-> Create the option receive.denycaseclonebranches, which checks pushed
-> branches to ensure that they are not case-clones of an existing
-> branch.  This setting is turned on by default if core.ignorecase is
-> set, but not otherwise.
->
-> Signed-off-by: David Turner <dturner@twitter.com>
-> ---
-
-I do not object to this new feature in principle, but I do not know
-if we want to introduce a new word "case-clone refs" without adding
-it to the glossary documentation.
-
-It feels a bit funny to tie this to core.ignorecase, which is an
-attribute of the filesystem used for the working tree, though.
-
-Updates to Documentation/config.txt and Documentation/git-push.txt
-are also needed.
-
->  builtin/receive-pack.c | 29 ++++++++++++++++++++++++++++-
->  t/t5400-send-pack.sh   | 20 ++++++++++++++++++++
->  2 files changed, 48 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index c323081..0894ded 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -27,6 +27,7 @@ enum deny_action {
->  
->  static int deny_deletes;
->  static int deny_non_fast_forwards;
-> +static int deny_case_clone_branches = -1;
->  static enum deny_action deny_current_branch = DENY_UNCONFIGURED;
->  static enum deny_action deny_delete_current = DENY_UNCONFIGURED;
-
-Would it make sense to reuse the enum deny_action for this new
-settings, with an eye to later convert the older boolean ones also
-to use enum deny_action to make them consistent and more flexible?
-
-> @@ -69,6 +70,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
->  	if (status)
->  		return status;
->  
-> +	if (strcmp(var, "receive.denycaseclonebranches") == 0) {
-> +		deny_case_clone_branches = git_config_bool(var, value);
-> +		return 0;
-> +	}
-> +
->  	if (strcmp(var, "receive.denydeletes") == 0) {
->  		deny_deletes = git_config_bool(var, value);
->  		return 0;
-> @@ -468,6 +474,24 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
->  	return 0;
->  }
->  
-> +static int is_case_clone(const char *refname, const unsigned char *sha1,
-> +			int flags, void *cb_data)
-> +{
-> +	const char* incoming_refname = cb_data;
-
-We write C not C++ around here; the pointer-asterisk sticks to the
-variable name, not typename.
-
-> +	return !strcasecmp(refname, incoming_refname) &&
-> +		strcmp(refname, incoming_refname);
-
-(Mental note to the reviewer himself) This returns true iff there is
-an existing ref whose name is only different in case, and cause
-for-each-ref to return early with true.  In a sane case of not
-receiving problematic refs, this will have to iterate over all the
-existing refnames.  Wonder if there are better ways to optimize this
-in a repository with hundreds or thousands of refs, which is not all
-that uncommon.
-
-> +}
-> +
-> +static int ref_is_denied_case_clone(const char *name)
-> +{
-> +
-> +	if (!deny_case_clone_branches)
-> +		return 0;
-> +
-> +	return for_each_ref(is_case_clone, (void *) name);
-> +
-
-The trailing blank line inside a function at the end is somewhat
-unusual.
-
-> +}
-> +
-
-> diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-> index 0736bcb..099c0e3 100755
-> --- a/t/t5400-send-pack.sh
-> +++ b/t/t5400-send-pack.sh
-> @@ -129,6 +129,26 @@ test_expect_success 'denyNonFastforwards trumps --force' '
->  	test "$victim_orig" = "$victim_head"
->  '
->  
-> +if ! test_have_prereq CASE_INSENSITIVE_FS
-> +then
-
-Hmm, don't we want the feature to kick in for both case sensitive
-and case insensitive filesystems?
-
-> +test_expect_success 'denyCaseCloneBranches works' '
-> +	(
-> +	    cd victim &&
-> +	    git config receive.denyCaseCloneBranches true
-> +	    git config receive.denyDeletes false
-> +	) &&
-> +	git checkout -b caseclone &&
-> +	git send-pack ./victim caseclone &&
-> +	git checkout -b CaseClone &&
-> +	test_must_fail git send-pack ./victim CaseClone &&
-
-At this point, we would want to see not just that send-pack fails
-but also that "victim" does not have CaseClone branch and does have
-caseclone branch pointing at the original value (i.e. we do not want
-to see "caseclone" updated to a value that would have gone to
-CaseClone with this push).
-
-Each push in the sequence should be preceded by a "git commit" or
-something so that we can verify the object at the tip of the ref in
-the "victim" repository, I would think.  Otherwise it is hard to
-tell an expected no-op that has failed and a no-op because it
-mistakenly pushed the same value to a wrong ref.
-
-> +	git checkout -b notacaseclone &&
-> +	git send-pack ./victim notacaseclone &&
-> +	test_must_fail git send-pack ./victim :CaseClone &&
-
-This is expected to fail we expect that earlier push of CaseClone
-has failed and we do not have such a branch, OK.
-
-> +	git send-pack ./victim :caseclone &&
-
-This is expected to succeed because we expect that earlier push of
-CaseClone has failed and we still have caseclone intact.
-
-> +	git send-pack ./victim CaseClone
-> +'
-> +fi
-> +
->  test_expect_success 'push --all excludes remote-tracking hierarchy' '
->  	mkdir parent &&
->  	(
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 405267f..1fd7a89 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -369,6 +369,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 		update_refs_stdin();
+ 		ret = ref_transaction_commit(transaction, msg,
+ 					     UPDATE_REFS_DIE_ON_ERR);
++		ref_transaction_free(transaction);
+ 		return ret;
+ 	}
+ 
+diff --git a/refs.c b/refs.c
+index 48573e3..33541f4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3483,7 +3483,6 @@ cleanup:
+ 		if (updates[i]->lock)
+ 			unlock_ref(updates[i]->lock);
+ 	free(delnames);
+-	ref_transaction_free(transaction);
+ 	return ret;
+ }
+ 
+diff --git a/refs.h b/refs.h
+index a07a5d0..306d833 100644
+--- a/refs.h
++++ b/refs.h
+@@ -216,8 +216,7 @@ enum action_on_err {
+ 
+ /*
+  * Begin a reference transaction.  The reference transaction must
+- * eventually be commited using ref_transaction_commit() or freed by
+- * calling ref_transaction_free().
++ * be freed by calling ref_transaction_free().
+  */
+ struct ref_transaction *ref_transaction_begin(void);
+ 
+@@ -265,7 +264,7 @@ void ref_transaction_delete(struct ref_transaction *transaction,
+ /*
+  * Commit all of the changes that have been queued in transaction, as
+  * atomically as possible.  Return a nonzero value if there is a
+- * problem.  The ref_transaction is freed by this function.
++ * problem.
+  */
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   const char *msg, enum action_on_err onerr);
+-- 
+2.0.0.567.g64a7adf
