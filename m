@@ -1,205 +1,486 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v13 38/41] refs.c: pass a skip list to name_conflict_fn
-Date: Tue,  3 Jun 2014 14:37:56 -0700
-Message-ID: <1401831479-3388-39-git-send-email-sahlberg@google.com>
+Subject: [PATCH v13 33/41] refs.c: pass the ref log message to _create/delete/update instead of _commit
+Date: Tue,  3 Jun 2014 14:37:51 -0700
+Message-ID: <1401831479-3388-34-git-send-email-sahlberg@google.com>
 References: <1401831479-3388-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 03 23:41:11 2014
+X-From: git-owner@vger.kernel.org Tue Jun 03 23:41:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrwSE-0007H4-KJ
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 23:41:11 +0200
+	id 1WrwSF-0007H4-Q6
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 23:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934192AbaFCVjL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 17:39:11 -0400
-Received: from mail-ve0-f202.google.com ([209.85.128.202]:53803 "EHLO
+	id S934380AbaFCVjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2014 17:39:13 -0400
+Received: from mail-ve0-f202.google.com ([209.85.128.202]:54881 "EHLO
 	mail-ve0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934329AbaFCViJ (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S934308AbaFCViJ (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 3 Jun 2014 17:38:09 -0400
-Received: by mail-ve0-f202.google.com with SMTP id pa12so1408511veb.5
+Received: by mail-ve0-f202.google.com with SMTP id pa12so1408507veb.5
         for <git@vger.kernel.org>; Tue, 03 Jun 2014 14:38:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=fQ5c7ybUS/qhzWOEdj9pBhuonRhIuEVHZ216BAKn/Zs=;
-        b=ljFBALfwd1sCtGnYoLtztkfVSo9qEFwDNFHyAwoWe3mFssLEJqfbUil2uXFrCiS9Us
-         xUU4d70eiEQkKQzZ1riunpvn0C/ijCOhjtFb3AAgOObhX2sYp3dC5VlZZyzL1pGouoXt
-         QKMyr/K/uaGQ0Q1qYDryX6nbUoaAhekjWDu/MMJoh5eD7BUhFgrsg3lqryogHnTN4NzU
-         LsGMoEkxpUvgoqt6DmA3QkfviKLYSdmE99MrHyc7jmL/TJ3ju7tONiPBYxe8KxRF+Dd6
-         hJNTREkZoSknmRxSPXisAFeZdnvlGdtUvi4Fgvp+wmHckpti0TcjZtU5d4wOkhgpue/h
-         5O9g==
+        bh=mf7+ZTGJspYuNvUDhu7REkhc9sv+mz0IlR/F07OhplA=;
+        b=BlC5m1LxCSQaxYbuaoodStiQyXvdgLIzdTtnVFs+iSljYBapeVUIjwgWKDRiVAkzOV
+         TdoIjPje5T+BbNlYZQSsIc17zlrjQXRprvHSUuJiklIOAV9zf+aWyX+AICZmwUvqn153
+         NugMR266HvT0YYMeCLXoOsLpeUE9FCMMim9elLbBOnhNczJoLqaiB+SxVeLthOo0dDx5
+         LjOam1+5xC66frvpUXRgA5Ut60IMbr03kWjCH4jHOqa2uHTxHzemuLIxZlpVG2Y6mlCq
+         P9mUZNgGHO1Xf1UN6n+6oMzRqd9T8LutoQUxiArKf43atiMptMDMWKJn1rw9IEdfph+K
+         a4kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=fQ5c7ybUS/qhzWOEdj9pBhuonRhIuEVHZ216BAKn/Zs=;
-        b=dL0hN66Vu+RRHZwwgnZxJWXGJUVDv2Uz4WWQHBiL6F0REYs25KWLVeE97rDH7+TIic
-         U6LHESltVKozUq8UwCIL3BnoFvCEX6iF05f1UmIaPmgoF6hakE5wcGGnR4eXBbGOQHJ4
-         pesR6Mzwznysz94EfQc0ljBZwFBqzIBW5XKeBE1z7lk168AC+p/i+jrDSuCRU+juVTKe
-         Ezg6J7Dz3hm/alPTIHoISHv//esr72wpAb/0b5xDO0prUSAPxt2Mssoz2jpktRgx2q0F
-         IuLvJ8PCDI3oD4kN6SdNumf+GjFZlxfPA6CYoqhWsRV0xm3u/uOpBIqrE3uZ4PpOmcyW
-         2Oog==
-X-Gm-Message-State: ALoCoQn3xkrQXSUFsRLbB1YREC8OmND3fzr/s/q2Nidn3XEVaZoZnwc9UtpMXwPOac6MYdiHVDs9
-X-Received: by 10.236.124.100 with SMTP id w64mr7694441yhh.57.1401831488680;
+        bh=mf7+ZTGJspYuNvUDhu7REkhc9sv+mz0IlR/F07OhplA=;
+        b=PjZaPBDsFcDwuBp2ZxttkC9oZ6eysSj66IKRB78Cdp8WHIEuBQ9dnH1V4TKIvkUF4h
+         UeS8kgQ+T2vF40BlCcrcfVi1RFWZUQHdJ3mRLxFFcfJte+f+CbPpASMq7oFK5lf1/C1b
+         3VrfiMgnHYEA2Pt6x4gc1wvZCMY1Jh76mylAN3HiPc+dnLW6jx1cITh8iGuYuy0rqi7U
+         IhJabtYdSVCGCBmHhREUTMCKfdk1rffd6nksmK44PIO9CkCBYRH1RMtil5/Y+9x+4m1d
+         lE3cuTMVYNVm04G/ZJXurYki0rpjholY39IGQpyntf2NlF5ahNK0Cdsh/jV9gav0eaCI
+         1MEQ==
+X-Gm-Message-State: ALoCoQmHmwLVk80UCdkEofrOT8LbjnRLfXIUw+2wqv014j6BSz/SDeey1lcNSEZxbhFq5gp+GmCW
+X-Received: by 10.52.144.106 with SMTP id sl10mr15120011vdb.9.1401831488552;
         Tue, 03 Jun 2014 14:38:08 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id y50si29586yhk.4.2014.06.03.14.38.08
+        by gmr-mx.google.com with ESMTPS id c22si30649yhe.1.2014.06.03.14.38.08
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 03 Jun 2014 14:38:08 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 790FB31C425;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 57BDF31C435;
 	Tue,  3 Jun 2014 14:38:08 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 5B334E07FA; Tue,  3 Jun 2014 14:38:08 -0700 (PDT)
+	id 341F9E00FA; Tue,  3 Jun 2014 14:38:07 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.567.g64a7adf
 In-Reply-To: <1401831479-3388-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250667>
 
-Allow passing a list of refs to skip checking to name_conflict_fn.
-There are some conditions where we want to allow a temporary conflict and skip
-checking those refs. For example if we have a transaction that
-1, guarantees that m is a packed refs and there is no loose ref for m
-2, the transaction will delete m from the packed ref
-3, the transaction will create conflicting m/m
+Change the reference transactions so that we pass the reflog message
+through to the create/delete/update function instead of the commit message.
+This allows for individual messages for each change in a multi ref
+transaction.
 
-For this case we want to be able to lock and create m/m since we know that the
-conflict is only transient. I.e. the conflict will be automatically resolved
-by the transaction when it deletes m.
-
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 41 ++++++++++++++++++++++++++---------------
- 1 file changed, 26 insertions(+), 15 deletions(-)
+ branch.c               |  4 ++--
+ builtin/commit.c       |  4 ++--
+ builtin/fetch.c        |  3 +--
+ builtin/receive-pack.c |  7 ++++---
+ builtin/replace.c      |  4 ++--
+ builtin/tag.c          |  4 ++--
+ builtin/update-ref.c   | 13 +++++++------
+ fast-import.c          |  8 ++++----
+ refs.c                 | 34 +++++++++++++++++++++-------------
+ refs.h                 |  8 ++++----
+ sequencer.c            |  4 ++--
+ walker.c               |  5 ++---
+ 12 files changed, 53 insertions(+), 45 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index f13c0be..f2ca96a 100644
---- a/refs.c
-+++ b/refs.c
-@@ -791,15 +791,18 @@ static int names_conflict(const char *refname1, const char *refname2)
- 
- struct name_conflict_cb {
- 	const char *refname;
--	const char *oldrefname;
- 	const char *conflicting_refname;
-+	const char **skip;
-+	int skipnum;
- };
- 
- static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
- {
- 	struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
--	if (data->oldrefname && !strcmp(data->oldrefname, entry->name))
--		return 0;
-+	int i;
-+	for (i = 0; i < data->skipnum; i++)
-+		if (!strcmp(entry->name, data->skip[i]))
-+			return 0;
- 	if (names_conflict(data->refname, entry->name)) {
- 		data->conflicting_refname = entry->name;
- 		return 1;
-@@ -812,15 +815,18 @@ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
-  * conflicting with the name of an existing reference in dir.  If
-  * oldrefname is non-NULL, ignore potential conflicts with oldrefname
-  * (e.g., because oldrefname is scheduled for deletion in the same
-- * operation).
-+ * operation). skip contains a list of refs we want to skip checking for
-+ * conflicts with.
-  */
--static int is_refname_available(const char *refname, const char *oldrefname,
--				struct ref_dir *dir)
-+static int is_refname_available(const char *refname,
-+				struct ref_dir *dir,
-+				const char **skip, int skipnum)
- {
- 	struct name_conflict_cb data;
- 	data.refname = refname;
--	data.oldrefname = oldrefname;
- 	data.conflicting_refname = NULL;
-+	data.skip = skip;
-+	data.skipnum = skipnum;
- 
- 	sort_ref_dir(dir);
- 	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
-@@ -2047,7 +2053,8 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 
- static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 					    const unsigned char *old_sha1,
--					    int flags, int *type_p)
-+					    int flags, int *type_p,
-+					    const char **skip, int skipnum)
- {
- 	char *ref_file;
- 	const char *orig_refname = refname;
-@@ -2096,7 +2103,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	 * name is a proper prefix of our refname.
- 	 */
- 	if (missing &&
--	     !is_refname_available(refname, NULL, get_packed_refs(&ref_cache))) {
-+	     !is_refname_available(refname, get_packed_refs(&ref_cache),
-+				   skip, skipnum)) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
+diff --git a/branch.c b/branch.c
+index c1eae00..e0439af 100644
+--- a/branch.c
++++ b/branch.c
+@@ -301,8 +301,8 @@ void create_branch(const char *head,
+ 		transaction = ref_transaction_begin(&err);
+ 		if (!transaction ||
+ 		    ref_transaction_update(transaction, ref.buf, sha1,
+-					   null_sha1, 0, !forcing, &err) ||
+-		    ref_transaction_commit(transaction, msg, &err))
++					   null_sha1, 0, !forcing, msg, &err) ||
++		    ref_transaction_commit(transaction, &err))
+ 			die("%s", err.buf);
+ 		ref_transaction_free(transaction);
  	}
-@@ -2154,7 +2162,7 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
- 					 const unsigned char *old_sha1,
- 					 int flags, int *type_p)
- {
--	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p);
-+	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p, NULL, 0);
- }
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 14cd9f4..e01b333 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1753,8 +1753,8 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	    ref_transaction_update(transaction, "HEAD", sha1,
+ 				   current_head ?
+ 				   current_head->object.sha1 : NULL,
+-				   0, !!current_head, &err) ||
+-	    ref_transaction_commit(transaction, sb.buf, &err)) {
++				   0, !!current_head, sb.buf, &err) ||
++	    ref_transaction_commit(transaction, &err)) {
+ 		rollback_index_files();
+ 		die("%s", err.buf);
+ 	}
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 55f457c..faa1233 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -673,10 +673,9 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 			}
+ 		}
+ 	}
+-
+ 	if (rc & STORE_REF_ERROR_DF_CONFLICT)
+ 		error(_("some local refs could not be updated; try running\n"
+-		      " 'git remote prune %s' to remove any old, conflicting "
++		      "'git remote prune %s' to remove any old, conflicting "
+ 		      "branches"), remote_name);
+ 
+  abort:
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 13f4a63..5653fa2 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -586,10 +586,11 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 		transaction = ref_transaction_begin(&err);
+ 		if (!transaction ||
+ 		    ref_transaction_update(transaction, namespaced_name,
+-					   new_sha1, old_sha1, 0, 1, &err) ||
+-		    ref_transaction_commit(transaction, "push", &err)) {
+-
++					   new_sha1, old_sha1, 0, 1, "push",
++					   &err) ||
++		    ref_transaction_commit(transaction, &err)) {
+ 			const char *str;
++
+ 			string_list_append(&error_strings, err.buf);
+ 			str = error_strings.items[error_strings.nr - 1].string;
+ 			strbuf_release(&err);
+diff --git a/builtin/replace.c b/builtin/replace.c
+index cf92e5d..c42b26e 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -171,8 +171,8 @@ static int replace_object_sha1(const char *object_ref,
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_update(transaction, ref, repl, prev,
+-				   0, !is_null_sha1(prev), &err) ||
+-	    ref_transaction_commit(transaction, NULL, &err))
++				   0, !is_null_sha1(prev), NULL, &err) ||
++	    ref_transaction_commit(transaction, &err))
+ 		die("%s", err.buf);
+ 
+ 	ref_transaction_free(transaction);
+diff --git a/builtin/tag.c b/builtin/tag.c
+index c9bfc9a..74af63e 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -705,8 +705,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_update(transaction, ref.buf, object, prev,
+-				   0, !is_null_sha1(prev), &err) ||
+-	    ref_transaction_commit(transaction, NULL, &err))
++				   0, !is_null_sha1(prev), NULL, &err) ||
++	    ref_transaction_commit(transaction, &err))
+ 		die("%s", err.buf);
+ 	ref_transaction_free(transaction);
+ 	if (force && !is_null_sha1(prev) && hashcmp(prev, object))
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index c6ad0be..28b478a 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -16,6 +16,7 @@ static struct ref_transaction *transaction;
+ 
+ static char line_termination = '\n';
+ static int update_flags;
++static const char *msg;
+ static struct strbuf err = STRBUF_INIT;
  
  /*
-@@ -2645,10 +2653,12 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 	if (!symref)
- 		return error("refname %s not found", oldrefname);
+@@ -199,7 +200,7 @@ static const char *parse_cmd_update(struct strbuf *input, const char *next)
+ 		die("update %s: extra input: %s", refname, next);
  
--	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(&ref_cache)))
-+	if (!is_refname_available(newrefname, get_packed_refs(&ref_cache),
-+				  &oldrefname, 1))
- 		return 1;
+ 	if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+-				   update_flags, have_old, &err))
++				   update_flags, have_old, msg, &err))
+ 		die("%s", err.buf);
  
--	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(&ref_cache)))
-+	if (!is_refname_available(newrefname, get_loose_refs(&ref_cache),
-+				  &oldrefname, 1))
- 		return 1;
+ 	update_flags = 0;
+@@ -227,7 +228,7 @@ static const char *parse_cmd_create(struct strbuf *input, const char *next)
+ 		die("create %s: extra input: %s", refname, next);
  
- 	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
-@@ -2681,7 +2691,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	if (ref_transaction_create(transaction, refname, new_sha1,
+-				   update_flags, &err))
++				   update_flags, msg, &err))
+ 		die("%s", err.buf);
  
- 	logmoved = log;
+ 	update_flags = 0;
+@@ -259,7 +260,7 @@ static const char *parse_cmd_delete(struct strbuf *input, const char *next)
+ 		die("delete %s: extra input: %s", refname, next);
  
--	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL);
-+	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL, NULL, 0);
- 	if (!lock) {
- 		error("unable to lock %s for update", newrefname);
- 		goto rollback;
-@@ -2696,7 +2706,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	if (ref_transaction_delete(transaction, refname, old_sha1,
+-				   update_flags, have_old, &err))
++				   update_flags, have_old, msg, &err))
+ 		die("%s", err.buf);
+ 
+ 	update_flags = 0;
+@@ -292,7 +293,7 @@ static const char *parse_cmd_verify(struct strbuf *input, const char *next)
+ 		die("verify %s: extra input: %s", refname, next);
+ 
+ 	if (ref_transaction_update(transaction, refname, new_sha1, old_sha1,
+-				   update_flags, have_old, &err))
++				   update_flags, have_old, msg, &err))
+ 		die("%s", err.buf);
+ 
+ 	update_flags = 0;
+@@ -345,7 +346,7 @@ static void update_refs_stdin(void)
+ 
+ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ {
+-	const char *refname, *oldval, *msg = NULL;
++	const char *refname, *oldval;
+ 	unsigned char sha1[20], oldsha1[20];
+ 	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0, flags = 0;
+ 	struct option options[] = {
+@@ -371,7 +372,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 		if (end_null)
+ 			line_termination = '\0';
+ 		update_refs_stdin();
+-		if (ref_transaction_commit(transaction, msg, &err))
++		if (ref_transaction_commit(transaction, &err))
+ 			die("%s", err.buf);
+ 		ref_transaction_free(transaction);
+ 		return 0;
+diff --git a/fast-import.c b/fast-import.c
+index 587ef4a..7ca8b5a 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1709,8 +1709,8 @@ static int update_branch(struct branch *b)
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_update(transaction, b->name, b->sha1, old_sha1,
+-				   0, 1, &err) ||
+-	    ref_transaction_commit(transaction, msg, &err)) {
++				   0, 1, msg, &err) ||
++	    ref_transaction_commit(transaction, &err)) {
+ 		ref_transaction_free(transaction);
+ 		error("%s", err.buf);
+ 		strbuf_release(&err);
+@@ -1749,12 +1749,12 @@ static void dump_tags(void)
+ 		strbuf_addf(&ref_name, "refs/tags/%s", t->name);
+ 
+ 		if (ref_transaction_update(transaction, ref_name.buf, t->sha1,
+-					   NULL, 0, 0, &err)) {
++					   NULL, 0, 0, msg, &err)) {
+ 			failure |= error("%s", err.buf);
+ 			goto cleanup;
+ 		}
+ 	}
+-	if (ref_transaction_commit(transaction, msg, &err))
++	if (ref_transaction_commit(transaction, &err))
+ 		failure |= error("%s", err.buf);
+ 
+  cleanup:
+diff --git a/refs.c b/refs.c
+index 4cdbc26..88d9351 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2362,8 +2362,8 @@ static void prune_ref(struct ref_to_prune *r)
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_delete(transaction, r->name, r->sha1,
+-				   REF_ISPRUNING, 1, &err) ||
+-	    ref_transaction_commit(transaction, NULL, &err)) {
++				   REF_ISPRUNING, 1, NULL, &err) ||
++	    ref_transaction_commit(transaction, &err)) {
+ 		ref_transaction_free(transaction);
+ 		error("%s", err.buf);
+ 		strbuf_release(&err);
+@@ -2558,8 +2558,8 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_delete(transaction, refname, sha1, delopt,
+-				   sha1 && !is_null_sha1(sha1), &err) ||
+-	    ref_transaction_commit(transaction, NULL, &err)) {
++				   sha1 && !is_null_sha1(sha1), NULL, &err) ||
++	    ref_transaction_commit(transaction, &err)) {
+ 		error("%s", err.buf);
+ 		ref_transaction_free(transaction);
+ 		strbuf_release(&err);
+@@ -3336,6 +3336,7 @@ struct ref_update {
+ 	int have_old; /* 1 if old_sha1 is valid, 0 otherwise */
+ 	struct ref_lock *lock;
+ 	int type;
++	char *msg;
+ 	const char refname[FLEX_ARRAY];
+ };
+ 
+@@ -3383,9 +3384,10 @@ void ref_transaction_free(struct ref_transaction *transaction)
+ 	if (!transaction)
+ 		return;
+ 
+-	for (i = 0; i < transaction->nr; i++)
++	for (i = 0; i < transaction->nr; i++) {
++		free(transaction->updates[i]->msg);
+ 		free(transaction->updates[i]);
+-
++	}
+ 	free(transaction->updates);
+ 	free(transaction);
+ }
+@@ -3406,7 +3408,7 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 			   const char *refname,
+ 			   const unsigned char *new_sha1,
+ 			   const unsigned char *old_sha1,
+-			   int flags, int have_old,
++			   int flags, int have_old, const char *msg,
+ 			   struct strbuf *err)
+ {
+ 	struct ref_update *update;
+@@ -3423,13 +3425,15 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 	update->have_old = have_old;
+ 	if (have_old)
+ 		hashcpy(update->old_sha1, old_sha1);
++	if (msg)
++		update->msg = xstrdup(msg);
  	return 0;
+ }
  
-  rollback:
--	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL);
-+	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL, NULL, 0);
- 	if (!lock) {
- 		error("unable to lock %s for rollback", oldrefname);
- 		goto rollbacklog;
-@@ -3572,7 +3582,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 						    update->old_sha1 :
- 						    NULL),
- 						   update->flags,
--						   &update->type);
-+						   &update->type,
-+						   delnames, delnum);
- 		if (!update->lock) {
- 			if (err)
- 				strbuf_addf(err, "Cannot lock the ref '%s'.",
+ int ref_transaction_create(struct ref_transaction *transaction,
+ 			   const char *refname,
+ 			   const unsigned char *new_sha1,
+-			   int flags,
++			   int flags, const char *msg,
+ 			   struct strbuf *err)
+ {
+ 	struct ref_update *update;
+@@ -3446,13 +3450,15 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ 	hashclr(update->old_sha1);
+ 	update->flags = flags;
+ 	update->have_old = 1;
++	if (msg)
++		update->msg = xstrdup(msg);
+ 	return 0;
+ }
+ 
+ int ref_transaction_delete(struct ref_transaction *transaction,
+ 			   const char *refname,
+ 			   const unsigned char *old_sha1,
+-			   int flags, int have_old,
++			   int flags, int have_old, const char *msg,
+ 			   struct strbuf *err)
+ {
+ 	struct ref_update *update;
+@@ -3470,6 +3476,8 @@ int ref_transaction_delete(struct ref_transaction *transaction,
+ 		assert(!is_null_sha1(old_sha1));
+ 		hashcpy(update->old_sha1, old_sha1);
+ 	}
++	if (msg)
++		update->msg = xstrdup(msg);
+ 	return 0;
+ }
+ 
+@@ -3483,8 +3491,8 @@ int update_ref(const char *action, const char *refname,
+ 	t = ref_transaction_begin(&err);
+ 	if (!t ||
+ 	    ref_transaction_update(t, refname, sha1, oldval, flags,
+-				   !!oldval, &err) ||
+-	    ref_transaction_commit(t, action, &err)) {
++				   !!oldval, action, &err) ||
++	    ref_transaction_commit(t, &err)) {
+ 		const char *str = "update_ref failed for ref '%s': %s";
+ 
+ 		ref_transaction_free(t);
+@@ -3525,7 +3533,7 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ }
+ 
+ int ref_transaction_commit(struct ref_transaction *transaction,
+-			   const char *msg, struct strbuf *err)
++			   struct strbuf *err)
+ {
+ 	int ret = 0, delnum = 0, i;
+ 	const char **delnames;
+@@ -3574,7 +3582,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 
+ 		if (!is_null_sha1(update->new_sha1)) {
+ 			ret = write_ref_sha1(update->lock, update->new_sha1,
+-					     msg);
++					     update->msg);
+ 			update->lock = NULL; /* freed by write_ref_sha1 */
+ 			if (ret) {
+ 				const char *str = "Cannot update the ref '%s'.";
+diff --git a/refs.h b/refs.h
+index dee7c8f..5c6c20f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -287,7 +287,7 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 			   const char *refname,
+ 			   const unsigned char *new_sha1,
+ 			   const unsigned char *old_sha1,
+-			   int flags, int have_old,
++			   int flags, int have_old, const char *msg,
+ 			   struct strbuf *err);
+ 
+ /*
+@@ -302,7 +302,7 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ int ref_transaction_create(struct ref_transaction *transaction,
+ 			   const char *refname,
+ 			   const unsigned char *new_sha1,
+-			   int flags,
++			   int flags, const char *msg,
+ 			   struct strbuf *err);
+ 
+ /*
+@@ -316,7 +316,7 @@ int ref_transaction_create(struct ref_transaction *transaction,
+ int ref_transaction_delete(struct ref_transaction *transaction,
+ 			   const char *refname,
+ 			   const unsigned char *old_sha1,
+-			   int flags, int have_old,
++			   int flags, int have_old, const char *msg,
+ 			   struct strbuf *err);
+ 
+ /*
+@@ -325,7 +325,7 @@ int ref_transaction_delete(struct ref_transaction *transaction,
+  * problem.
+  */
+ int ref_transaction_commit(struct ref_transaction *transaction,
+-			   const char *msg, struct strbuf *err);
++			   struct strbuf *err);
+ 
+ /*
+  * Free an existing transaction and all associated data.
+diff --git a/sequencer.c b/sequencer.c
+index fd8acaf..f9906ef 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -285,8 +285,8 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
+ 	transaction = ref_transaction_begin(&err);
+ 	if (!transaction ||
+ 	    ref_transaction_update(transaction, "HEAD", to, from,
+-				   0, !unborn, &err) ||
+-	    ref_transaction_commit(transaction, sb.buf, &err)) {
++				   0, !unborn, sb.buf, &err) ||
++	    ref_transaction_commit(transaction, &err)) {
+ 		ref_transaction_free(transaction);
+ 		error("%s", err.buf);
+ 		strbuf_release(&sb);
+diff --git a/walker.c b/walker.c
+index 60d9f9e..fd9ef87 100644
+--- a/walker.c
++++ b/walker.c
+@@ -295,15 +295,14 @@ int walker_fetch(struct walker *walker, int targets, char **target,
+ 		strbuf_addf(&ref_name, "refs/%s", write_ref[i]);
+ 		if (ref_transaction_update(transaction, ref_name.buf,
+ 					   &sha1[20 * i], NULL, 0, 0,
++					   msg ? msg : "fetch (unknown)",
+ 					   &err)) {
+ 			error("%s", err.buf);
+ 			goto rollback_and_fail;
+ 		}
+ 	}
+ 	if (write_ref) {
+-		if (ref_transaction_commit(transaction,
+-					   msg ? msg : "fetch (unknown)",
+-					   &err)) {
++		if (ref_transaction_commit(transaction, &err)) {
+ 			error("%s", err.buf);
+ 			goto rollback_and_fail;
+ 		}
 -- 
 2.0.0.567.g64a7adf
