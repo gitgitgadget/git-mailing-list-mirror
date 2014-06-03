@@ -1,105 +1,107 @@
-From: "Naumov, Michael (North Sydney)" <Michael.Naumov@Fiserv.com>
-Subject: [PATCH] sideband.c: Get rid of ANSI sequences for non-terminal shell
-Date: Mon, 2 Jun 2014 23:40:51 +0000
-Message-ID: <81E85F13A4BE084BAF4B1AA24173EDA0144E47EC@JWPKEXMBX03.corp.checkfree.com>
+From: NeilBrown <neilb@suse.de>
+Subject: Re: [ANNOUNCE] Git v2.0.0
+Date: Tue, 3 Jun 2014 12:08:32 +1000
+Message-ID: <20140603120832.7235c706@notabene.brown>
+References: <xmqqr43dbkni.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "peff@peff.net" <peff@peff.net>,
-	"spearce@spearce.org" <spearce@spearce.org>,
-	"j6t@kdbg.org" <j6t@kdbg.org>, "nico@cam.org" <nico@cam.org>,
-	"junkio@cox.net" <junkio@cox.net>,
-	"kusmabite@gmail.com" <kusmabite@gmail.com>,
-	"mnaoumov@gmail.com" <mnaoumov@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 03 01:50:32 2014
+Content-Type: multipart/signed; micalg=PGP-SHA1;
+ boundary="Sig_/vQA/ceXIEL_s5f5NbrsoJa5"; protocol="application/pgp-signature"
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 04:08:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wrbzq-0008RL-QF
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 01:50:31 +0200
+	id 1Wre9f-0000a2-7U
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 04:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752055AbaFBXu1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 2 Jun 2014 19:50:27 -0400
-Received: from mail1.checkfree.com ([204.95.150.32]:22584 "EHLO
-	mail1.checkfree.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751955AbaFBXu0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 2 Jun 2014 19:50:26 -0400
-X-Greylist: delayed 572 seconds by postgrey-1.27 at vger.kernel.org; Mon, 02 Jun 2014 19:50:26 EDT
-X-IronPort-AV: E=Sophos;i="4.98,960,1392181200"; 
-   d="scan'208";a="25951945"
-Received: from iwpdlpem01.corp.checkfree.com (HELO iwpexht01.corp.checkfree.com) ([10.132.91.25])
-  by iapiron02.corp.checkfree.com with ESMTP; 02 Jun 2014 19:40:52 -0400
-Received: from JWPKEXHT01.corp.checkfree.com (10.141.82.33) by
- iwpexht01.corp.checkfree.com (10.132.91.140) with Microsoft SMTP Server (TLS)
- id 8.3.279.5; Mon, 2 Jun 2014 19:40:52 -0400
-Received: from JWPKEXMBX03.corp.checkfree.com ([169.254.5.29]) by
- JWPKEXHT01.corp.checkfree.com ([10.141.82.33]) with mapi id 14.02.0342.003;
- Mon, 2 Jun 2014 19:40:52 -0400
-Thread-Topic: [PATCH] sideband.c: Get rid of ANSI sequences for non-terminal
- shell
-Thread-Index: Ac96Im92MGNFpZ4kRCKYl87yS9me0A==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.1.121.62]
-X-CFilter-Loop: True
+	id S1752258AbaFCCIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 2 Jun 2014 22:08:43 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:58374 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751441AbaFCCIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 2 Jun 2014 22:08:42 -0400
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.220.254])
+	by mx2.suse.de (Postfix) with ESMTP id 88DE3AD46;
+	Tue,  3 Jun 2014 02:08:40 +0000 (UTC)
+In-Reply-To: <xmqqr43dbkni.fsf@gitster.dls.corp.google.com>
+X-Mailer: Claws Mail 3.9.2 (GTK+ 2.24.22; x86_64-suse-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250609>
 
-From: Michael Naumov <mnaoumov@gmail.com>
+--Sig_/vQA/ceXIEL_s5f5NbrsoJa5
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Diagnostic messages received on the sideband #2 from the server side
-are sent to the standard error with ANSI terminal control sequence
-"\033[K" that erases to the end of line appended at the end of each
-line.
+On Wed, 28 May 2014 15:31:13 -0700 Junio C Hamano <gitster@pobox.com> wrote:
 
-However, some programs (e.g. GitExtensions for Windows) read and
-interpret and/or show the message without understanding the terminal
-control sequences, resulting them to be shown to their end users.
-To help these programs, squelch the control sequence when the
-standard error stream is not being sent to a tty.
+> The latest feature release Git v2.0.0 is now available at the
+> usual places.
 
-NOTE: I considered to cover the case that a pager has already been 
-started. But decided that is probably not worth worrying about here, 
-though, as we shouldn't be using a pager for commands that do network 
-communications (and if we do, omitting the magic line-clearing signal 
-is probably a sane thing to do).
 
-Signed-off-by: Michael Naumov <mnaoumov@gmail.com>
-Thanks-to: Erik Faye-Lund <kusmabite@gmail.com>
-Thanks-to: Jeff King <peff@peff.net>
----
- sideband.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> "git request-pull" lost a few "heuristics" that often led to mistakes.
+>=20
 
-diff --git a/sideband.c b/sideband.c
-index d1125f5..7f9dc22 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -30,7 +30,7 @@ int recv_sideband(const char *me, int in_stream, int out)
- 
- 	memcpy(buf, PREFIX, pf);
- 	term = getenv("TERM");
--	if (term && strcmp(term, "dumb"))
-+	if (isatty(2) && term && strcmp(term, "dumb"))
- 		suffix = ANSI_SUFFIX;
- 	else
- 		suffix = DUMB_SUFFIX;
--- 
-1.8.3.msysgit.0
+I've installed git 2.0.0 and now when I
 
-P.S. I gave up trying to send this letter from gmail, it eats my tab
-character
-P.S 2. Sorry, my tab character has been eaten again!
-P.S 3. Wrapped the letter lines to fit on the terminal
-P.S 4. GitExtensions tried to use TERM=dumb but this caused process leakage for diff tools. See https://github.com/gitextensions/gitextensions/issues/1092
+  git request-pull master git://neil.brown.name/md
 
-Regards,
-Michael
+after tagging the current commit as "md/3.15-fixes" and pushing out the tag,
+I get
+
+warn: No match for commit 2ac295a544dcae9299cba13ce250419117ae7fd1 found at=
+ git://neil.brown.name/md
+warn: Are you sure you pushed 'HEAD' there?
+
+Yet=20
+   git ls-remote git://neil.brown.name/md | grep 2ac29
+shows
+
+2ac295a544dcae9299cba13ce250419117ae7fd1	refs/tags/md/3.15-fixes^{}
+
+Which seems clear and unambiguous.
+
+Does this mean that the 'end' arg to 'git request-pull' is no longer option=
+al
+(i.e. the man page is wrong), or that too many heuristics were removed?
+
+.... Looking through the change log a bit, it seems that if the 'end' arg is
+omitted, then the current 'branch' name is used and must match the same name
+at the git URL.  Could it also check the current 'tag' name?  As we are
+encouraged to used signed tags, this seems sensible.
+In fact, I would suggest checking for a tag first, and only considering the
+branch name if there is no tag on the current commit.
+
+Thanks,
+NeilBrown
+
+
+--Sig_/vQA/ceXIEL_s5f5NbrsoJa5
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.22 (GNU/Linux)
+
+iQIVAwUBU40uIDnsnt1WYoG5AQL8OQ//T26PpapgTfzKzvRICGEprZDgl73iq4XR
+3gSWbZdQPWKVSn7aPu3iiOdWY/o1Dg9hY+vQrixWHiC+aIaiHmyBU1Emx977ByLx
+a4PA43SNwAN0c2WbVld8eoMeHGOUs+pk5ijvvrtAV8i0Dp9lTXVlPtQQEB0KJH2e
+YZ6JuPQuvTdasjce50uHjlX0AyoL83y0oRhALi6EE/NHxt2NDTVWz66aJHoRVAmL
+EKthvj0tOuZmPQuPL1epkbxQnDT8V29lI9GLOlr/DKTomrs3UjfLCYGPiSeyYHz/
++XD6wYROTcn/F2asIUjvESaM92nwoodDUUwLBLTrqIlUDLX94ngvg4SFvsJkUD/B
+bm6AV/Kznlhma+PBKrPFxS5qTWmtoXjBLx97Vd8i8bMgaxqeW1R3toVUvAx+ZegI
+KmYJdnQg60c7khZZqDqarK43jdYB6lUZEyPLc+Iv+uKIfeE1SGYeRDSi+CSBhd8r
+nTGlJLmcKfTIxe4kyw74DxYdjizlvmxPu1nV9r7+5FeqfgWz6tCOZAcmak9s6Pb3
+jiIsaQH6WLtDjOyvmxDpropKbpGcomr6bzrilFlokndl06RvTxdxYilvp5AFBqyS
+CzsDAyrJJIoSoK0uomO5k3Z9jTpMB7DqwONSnBZEt+0GjwYjh+xK4DO6ho6Qa9YI
+A8LVfS7Hs1k=
+=hA/J
+-----END PGP SIGNATURE-----
+
+--Sig_/vQA/ceXIEL_s5f5NbrsoJa5--
