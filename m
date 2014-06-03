@@ -1,86 +1,148 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Paper cut bug: Why isn't "git clone xxxx" recursive by default?
-Date: Tue, 03 Jun 2014 14:05:45 -0700
-Message-ID: <xmqqoay9wvo6.fsf@gitster.dls.corp.google.com>
-References: <CAJdEhSa20ODuN4LkdvaWi0cSztgbJ+p50AYbtZs2oYWLitnjbA@mail.gmail.com>
-	<xmqqvbshwz2e.fsf@gitster.dls.corp.google.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v11 25/41] fast-import.c: use a ref transaction when
+ dumping tags
+Date: Tue, 3 Jun 2014 14:32:49 -0700
+Message-ID: <CAL=YDW=M1nioeiXu5mEHPY+hgPhLbm6MC509Je5E-13UYOUnPQ@mail.gmail.com>
+References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
+	<1401222360-21175-26-git-send-email-sahlberg@google.com>
+	<20140528194746.GX12314@google.com>
+	<CAL=YDWkUhdoJkdg_zaq+p=XRu7H9fqNXDz89uPhbr4equTyVLQ@mail.gmail.com>
+	<20140528221720.GB12314@google.com>
+	<CAL=YDW=ruMzd=twadncjgFTh3yv=796cN72amJ4ep8a41tgmrA@mail.gmail.com>
+	<20140528233940.GC12314@google.com>
+	<CAL=YDW=WmNObkTO_uybTToeMKGGQf5NC0oFvy_pMrsg+ehpzog@mail.gmail.com>
+	<20140529174106.GE12314@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Mara Kim <mara.kim@vanderbilt.edu>
-X-From: git-owner@vger.kernel.org Tue Jun 03 23:05:57 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 03 23:32:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wrvu8-0001D1-Av
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 23:05:56 +0200
+	id 1WrwKF-0001pJ-4W
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 23:32:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933343AbaFCVFw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 17:05:52 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64591 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933057AbaFCVFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2014 17:05:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D8B921CCF7;
-	Tue,  3 Jun 2014 17:05:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9vsIq2uA1agtVJuaHF0p1o/34Sw=; b=BIukuF
-	Z0BqHdSzid4iABvPIe0ZXR8N4v0L+S4E5EikEODyKci1icpGodVlO7dWDUmeri/G
-	Sx8wzS9AwhZDS4TZb8Wtk7WIwI5IZOhasHWaURR2vldOS5bj+Trl0GM21dRqw3IF
-	2iDt39pPhAZRXfINZ9wzGqArTe2NY9RQQjYgM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lHfTNq4zSx1fwJq7CigII9IWZdTFNlB/
-	2zVqLKmk26dHAL5f85N5jAlBQUmpVPl6XxtRtXNqA7fI27ABaH+hdcsWmVbDFMuG
-	2H37lwgNGlZAUpQkJ+j+DvR1i5nEXbTfQMwYOG8sCf3+DSkeM/Z50P9aAZ4/tWAV
-	IbmJZle9ZIk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CEBBD1CCF4;
-	Tue,  3 Jun 2014 17:05:50 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E4B511CCE9;
-	Tue,  3 Jun 2014 17:05:46 -0400 (EDT)
-In-Reply-To: <xmqqvbshwz2e.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 03 Jun 2014 12:52:25 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D5519632-EB62-11E3-9AB6-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S934123AbaFCVcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2014 17:32:51 -0400
+Received: from mail-ve0-f170.google.com ([209.85.128.170]:41117 "EHLO
+	mail-ve0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932907AbaFCVcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2014 17:32:50 -0400
+Received: by mail-ve0-f170.google.com with SMTP id db11so7672886veb.15
+        for <git@vger.kernel.org>; Tue, 03 Jun 2014 14:32:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=H5DgRx938VJvLGMBlOrlxuH+kgM628uwu6svoxUNZZw=;
+        b=PxCUjdmakpj3DwqdC8l2kJrAJFYx7F/lGVjmOcf1uUR3QiZk3RX2PVYBb4pzZVU8St
+         yEhsl1OAFSvy2pyBNsYkUU0wh+ocHQQ1usB2s70OWboVvkNqmVzNcbeAhswCE8I81k7y
+         eQfeqnKhK6zxFQRwT16UdhWFWrgyYeIzjpshU0VpUvhX++vkvg3rAdGEbfYajDLA01qO
+         2C0vOXhpv1sv0WUSReD46Qvovdr/F/JUdBj/NIBesVaAP1rzufzXTXMgYbm20k5bPM94
+         va9+QTyboHLA09zDqKxcjora0Utrjdmjjn8mQNGwflAL+I4t8UNQvE7jC7guJw1o7jJb
+         bTpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=H5DgRx938VJvLGMBlOrlxuH+kgM628uwu6svoxUNZZw=;
+        b=j9pKKkaXDFRqfPJlUqrLmtA3b0Y3IrF1DnY+lc72rSxYdqyP4PnmgY+2jZZdBaKCeb
+         vtzDZze3u96B+kYd/9ZzGw6BAKjrm/JAvPC4BDvlE8wNNy9rJA6BsC/wLMjywru+w15B
+         5fIlvTzT9H1xZcpd4WfaOwwhtdxNISrY3h7GI0phrZeOP8TdJ8zFGYm7VhfRpf/GpVY1
+         VqWHWSSv2vPC/VmgSwwTAHfknfCyzAgww+p39S/UM5a4mJU2peW/qbhzpH7cqDMMexQ/
+         n15E++MpwFf5Mp3qrSBLjkEZ86PD9pjjbVlTPeez4A0Jq3qULBf6Kip4Ba+ADkVTpCBM
+         TDBQ==
+X-Gm-Message-State: ALoCoQmKSB3zFMNnLJMtGQmEFPO4NxzYgcjXcUTJSB248E4dIbHg7a18OFAeWdvxAzTKOPyCcdS4
+X-Received: by 10.58.112.8 with SMTP id im8mr11014349veb.35.1401831169093;
+ Tue, 03 Jun 2014 14:32:49 -0700 (PDT)
+Received: by 10.52.255.65 with HTTP; Tue, 3 Jun 2014 14:32:49 -0700 (PDT)
+In-Reply-To: <20140529174106.GE12314@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250646>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thanks.
 
-> Mara Kim <mara.kim@vanderbilt.edu> writes:
->
->> Apologies if this question has been asked already, but what is the
->> reasoning behind making git clone not recursive (--recursive) by
->> default?
->
-> The primary reason why submodules are separate repositories is not
-> to require people to have everything.  Some people want recursive,
-> some others don't, and the world is not always "majority wins" (not
-> that I am saying that majority will want recursive).
->
-> Inertia, aka backward compatibility and not surprising existing
-> users, plays some role when deciding the default.
->
-> Also, going --recursive when the user did not want is a lot more
-> expensive mistake to fix than not being --recursive when the user
-> wanted to.
+I have changed the transaction functions to die(BUG:) if the user
+tries to call _update/_create/_delete on a failed transaction.
 
-Having said all that, I do not mean to say that I am opposed to
-introduce some mechanism to let the users express their preference
-between recursive and non-recursive better, so that "git clone"
-without an explicit --recursive (or --no-recursive) can work to
-their taste.  A configuration in $HOME/.gitconfig might be a place
-to start, even though that has the downside of assuming that the
-given user would want to use the same settings for all his projects,
-which may not be the case in practice.
+
+
+On Thu, May 29, 2014 at 10:41 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
+>> On Wed, May 28, 2014 at 4:39 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+>>> Usually when ref_transaction_commit is called I can do
+>>>
+>>>         struct strbuf err = STRBUF_INIT;
+>>>         if (ref_transaction_commit(..., &err))
+>>>                 die("%s", err.buf);
+>>>
+>>> and I know that since ref_transaction_commit has returned a nonzero
+>>> result, err.buf is populated with a sensible message that will
+>>> describe what went wrong.
+> [...]
+>>> But the guarantee you are describing removes that property.  It
+>>> creates a case where ref_transaction_commit can return nonzero without
+>>> updating err.  So I get the following message:
+>>>
+>>>         fatal:
+>>>
+>>> I don't think that's a good outcome.
+>>
+>> In this case "fatal:" can not happen.
+>> This is no more subtle than most of the git core.
+>>
+>> I have changed this function to explicitly abort on _update failing
+>> but I think this is making the api too restrictive.
+>
+> I don't want to push you toward making a change you think is wrong.  I
+> certainly don't own the codebase, and there are lots of other people
+> (e.g., Michael, Junio, Jeff) to get advice from.  So I guess I should
+> try to address this.
+>
+> I'm not quite sure what you mean by too restrictive.
+>
+>  a. Having API constraints that aren't enforced by the function makes
+>     using the API too fussy.
+>
+>     I agree with that.  That was something I liked about keeping track
+>     of the OPEN/CLOSED state of a transaction, which would let
+>     functions like _commit die() if someone is misusing the API so the
+>     problem gets detected early.
+>
+>  b. Having to check the return value from _update() is too fussy.
+>
+>     It certainly seems *possible* to have an API that doesn't require
+>     checking the return value, while still avoiding the usability
+>     problem I described in the quoted message above.  For example:
+>
+>      * _update() returns void and has no strbuf parameter
+>      * error handling happens by checking the error from _commit()
+>
+>     That would score well on the scale described at
+>     http://ozlabs.org/~rusty/index.cgi/tech/2008-03-30.html
+>
+>     An API where checking the return value is optional would be
+>     doable, too.  For example:
+>
+>      * _update() returns int and has a strbuf parameter
+>      * if the strbuf parameter is NULL, the caller is expected to
+>        wait for _commit() to check for errors, and a relevant
+>        message will be passed back then
+>      * if the strbuf parameter is non-NULL, then calling _commit()
+>        after an error is an API violation
+>
+> I don't understand the comment about no more subtle than most of git.
+> Are you talking about the errno action at a distance you found in some
+> functions?  I thought we agreed that those were mistakes that accrue
+> when people aim for a quick fix without thinking about maintainability
+> and something git should have less of.
+>
+> Jonathan
