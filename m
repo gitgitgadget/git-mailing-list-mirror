@@ -1,347 +1,92 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v5 2/2] refs.c: SSE4.2 optimizations for check_refname_component
-Date: Tue,  3 Jun 2014 14:21:25 -0400
-Message-ID: <1401819685-17064-2-git-send-email-dturner@twitter.com>
-References: <1401819685-17064-1-git-send-email-dturner@twitter.com>
-Cc: David Turner <dturner@twitter.com>
-To: gitster@pobox.com, git@vger.kernel.org, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Tue Jun 03 20:22:06 2014
+From: Mara Kim <mara.kim@vanderbilt.edu>
+Subject: Paper cut bug: Why isn't "git clone xxxx" recursive by default?
+Date: Tue, 3 Jun 2014 13:11:03 -0500
+Message-ID: <CAJdEhSa20ODuN4LkdvaWi0cSztgbJ+p50AYbtZs2oYWLitnjbA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 03 20:26:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrtLa-0002Rx-2T
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 20:22:06 +0200
+	id 1WrtPu-0005Vc-J8
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 20:26:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754916AbaFCSVw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 14:21:52 -0400
-Received: from mail-qa0-f43.google.com ([209.85.216.43]:41398 "EHLO
-	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754488AbaFCSVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2014 14:21:50 -0400
-Received: by mail-qa0-f43.google.com with SMTP id m5so5571806qaj.30
-        for <git@vger.kernel.org>; Tue, 03 Jun 2014 11:21:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=efpY0e+iJWUxmmdWGA+mFETQ89eUAk0Rz4AULr0RwKM=;
-        b=TvHjyS7TfBuzXM54grzlQAKdOn6jPLqfS0NxmT1IHLXQaGhNTQaSW2X6VKNZIhQ/qw
-         6+OGpQhMq/u1KjqYe/CrM42+Ml5NqyxDhamdaFJbLVNpoLueADeyW441RCrUS7ah3/W8
-         z8sOh07XbZlz5fjhCuu/0zuZZkl1BfOVhNhcTsdrc9O6Z+5+w5iBLegZEt4MRic2L/9Q
-         Z8NhwpTv54TTHUN9nhGtb2xJ8pe0vNoGVCVqppLQBNEG45GyCoUGKLcV0ENvdOwYVLPR
-         3ShhMxgKIKNMmN97dG4+RidMLhLf7UFQAh45Kf46LLcnE4dDsAb6dEuQMN/ZhFL3qt0c
-         oobQ==
-X-Gm-Message-State: ALoCoQntxA4vi7PUjxFvCZScDLuDxfFsck2T00VbLJX4AUHLW8N1psncQGG/ewJAST9ckm/bwImD
-X-Received: by 10.140.88.112 with SMTP id s103mr59103533qgd.113.1401819709898;
-        Tue, 03 Jun 2014 11:21:49 -0700 (PDT)
-Received: from stross.twitter.corp ([38.104.173.198])
-        by mx.google.com with ESMTPSA id w101sm2229qge.12.2014.06.03.11.21.48
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Jun 2014 11:21:49 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
-X-Mailer: git-send-email 2.0.0.rc1.18.gf763c0f
-In-Reply-To: <1401819685-17064-1-git-send-email-dturner@twitter.com>
+	id S1754692AbaFCS0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2014 14:26:30 -0400
+Received: from co9ehsobe004.messaging.microsoft.com ([207.46.163.27]:23266
+	"EHLO co9outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754244AbaFCS0O (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2014 14:26:14 -0400
+Received: from mail50-co9-R.bigfish.com (10.236.132.253) by
+ CO9EHSOBE018.bigfish.com (10.236.130.81) with Microsoft SMTP Server id
+ 14.1.225.22; Tue, 3 Jun 2014 18:11:07 +0000
+Received: from mail50-co9 (localhost [127.0.0.1])	by mail50-co9-R.bigfish.com
+ (Postfix) with ESMTP id 43D80B405F8	for <git@vger.kernel.org>; Tue,  3 Jun
+ 2014 18:11:07 +0000 (UTC)
+X-Forefront-Antispam-Report: CIP:129.59.94.73;KIP:(null);UIP:(null);IPV:NLI;H:hub.vanderbilt.edu;RD:error;EFVD:FOP
+X-SpamScore: 8
+X-BigFish: VPS8(zz1447Izz1f42h2148h1d77h1ee6h1de0h1fdah2073h2146h1202h1e76h2189h1d1ah1d2ah21bch2297h1fc6h208chzzz2dh2a8h839h93fhf0ah107ah1288h12a5h12a9h12bdh137ah13b6h1441h1504h1537h153bh15a8h162dh1631h1741h1758h17eeh1946h19b5h19ceh1ad9h1b0ah1b2fh2222h224fh1fb3h1d0ch1d2eh1d3fh1dc1h1dfeh1dffh1e1dh1fe8h1ff5h2216h22d0h2336h2438h2461h24d7h2516h2545h255eh25f6h2605h268bh26d3h27e2h282bh1a81i1b1cn15a9i1b1bi181ch)
+Received: from mail50-co9 (localhost.localdomain [127.0.0.1]) by mail50-co9
+ (MessageSwitch) id 1401819065354940_12141; Tue,  3 Jun 2014 18:11:05 +0000
+ (UTC)
+Received: from CO9EHSMHS009.bigfish.com (unknown [10.236.132.226])	by
+ mail50-co9.bigfish.com (Postfix) with ESMTP id 52DDD2C00B2	for
+ <git@vger.kernel.org>; Tue,  3 Jun 2014 18:11:05 +0000 (UTC)
+Received: from hub.vanderbilt.edu (129.59.94.73) by CO9EHSMHS009.bigfish.com
+ (10.236.130.19) with Microsoft SMTP Server (TLS) id 14.16.227.3; Tue, 3 Jun
+ 2014 18:11:05 +0000
+Received: from mail-vc0-f172.google.com (209.85.220.172) by
+ smtpauth.vanderbilt.edu (10.1.154.73) with Microsoft SMTP Server (TLS) id
+ 14.3.174.1; Tue, 3 Jun 2014 13:11:04 -0500
+Received: by mail-vc0-f172.google.com with SMTP id lf12so7098389vcb.17
+        for <git@vger.kernel.org>; Tue, 03 Jun 2014 11:11:03 -0700 (PDT)
+X-Received: by 10.52.5.129 with SMTP id s1mr23675810vds.31.1401819063474; Tue,
+ 03 Jun 2014 11:11:03 -0700 (PDT)
+Received: by 10.221.41.10 with HTTP; Tue, 3 Jun 2014 11:11:03 -0700 (PDT)
+X-Originating-IP: [209.85.220.172]
+X-OriginatorOrg: vanderbilt.edu
+X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250637>
 
-Optimize check_refname_component using SSE4.2, where available.
+Hello git devs!
 
-git rev-parse HEAD is a good test-case for this, since it does almost
-nothing except parse refs.  For one particular repo with about 60k
-refs, almost all packed, the timings are:
+I'd like to start off by saying that git is an amazing piece of
+software and every one of you deserve major kudos for your work on the
+project.  However, I'd like to point out a few "paper cut" bugs (to
+use the Ubuntu parlance).
 
-Look up table: 29 ms
-SSE4.2:        25 ms
+Apologies if this question has been asked already, but what is the
+reasoning behind making git clone not recursive (--recursive) by
+default?  I have just recently started splitting my projects into
+submodules, and I feel like this is a major usability issue,
+especially for newbies.  Wouldn't it be better to have a
+"--non-recursive" option and clone recursively by default?  Similarly,
+I feel that "git pull" should automatically "git submodule update
+--recursive --init" as well, with the current behavior able to be
+specified with a "--non-recursive" option.
 
-This is about a 15% improvement.
+I feel like these sorts of choices make submodules seem very much like
+second class citizens in git and make git much less user friendly.  I
+feel that the most common use case that people want is to keep
+submodules properly in sync.  In addition, I feel that power users
+that really want to make shallow clones, non-recursive clones, etc.
+could still be served with a simple option.  I guess there are
+problems with changes in submodules being overwritten, so I suppose
+there would need to be additional warnings or even just refusal to
+pull into dirty directories, similar to the way git behaves in a
+regular repository.
 
-The configure.ac changes include code from the GNU C Library written
-by Joseph S. Myers <joseph at codesourcery dot com>.
+Thanks for the excellent work,
+Mara Kim
 
-Signed-off-by: David Turner <dturner@twitter.com>
----
- Makefile           |   6 +++
- aclocal.m4         |   6 +++
- configure.ac       |  17 ++++++++
- git-compat-util.h  |  20 +++++++++
- refs.c             | 116 +++++++++++++++++++++++++++++++++++++++++++++--------
- t/t5511-refspec.sh |  13 ++++++
- 6 files changed, 161 insertions(+), 17 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index a53f3a8..dd2127a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1326,6 +1326,11 @@ else
- 		COMPAT_OBJS += compat/win32mmap.o
- 	endif
- endif
-+ifdef NO_SSE42
-+	BASIC_CFLAGS += -DNO_SSE42
-+else
-+	BASIC_CFLAGS += -msse4.2
-+endif
- ifdef OBJECT_CREATION_USES_RENAMES
- 	COMPAT_CFLAGS += -DOBJECT_CREATION_MODE=1
- endif
-@@ -2199,6 +2204,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
- 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@
-+	@echo NO_SSE42=\''$(subst ','\'',$(subst ','\'',$(NO_SSE42)))'\' >>$@
- ifdef TEST_OUTPUT_DIRECTORY
- 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@
- endif
-diff --git a/aclocal.m4 b/aclocal.m4
-index f11bc7e..d9f3f19 100644
---- a/aclocal.m4
-+++ b/aclocal.m4
-@@ -38,3 +38,9 @@ AC_DEFUN([TYPE_SOCKLEN_T],
-       [#include <sys/types.h>
- #include <sys/socket.h>])
- ])
-+
-+dnl Test a compiler option or options with an empty input file.
-+dnl LIBC_TRY_CC_OPTION([options], [action-if-true], [action-if-false])
-+AC_DEFUN([LIBC_TRY_CC_OPTION],
-+[AS_IF([AC_TRY_COMMAND([${CC-cc} $1 -xc /dev/null -S -o /dev/null])],
-+	[$2], [$3])])
-diff --git a/configure.ac b/configure.ac
-index b711254..3a5bda9 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -382,6 +382,23 @@ AS_HELP_STRING([],[Tcl/Tk interpreter will be found in a system.]),
- GIT_PARSE_WITH(tcltk))
- #
- 
-+# Declare the with-sse42/without-sse42 options.
-+AC_ARG_WITH(sse42,
-+AS_HELP_STRING([--with-sse42],[use SSE4.2 instructions])
-+AS_HELP_STRING([],[(default is YES if your compiler supports -msse4.2)]),
-+GIT_PARSE_WITH(sse42))
-+
-+if test "$NO_SSE42" != "YesPlease"; then
-+   dnl Check if -msse4.2 works.
-+   AC_CACHE_CHECK(for SSE4.2 support, cc_cv_sse42, [dnl
-+   LIBC_TRY_CC_OPTION([-msse4.2], [cc_cv_sse42=yes], [cc_cv_sse42=no])
-+   ])
-+   if test $cc_cv_sse42 = no; then
-+     NO_SSE42=1
-+   fi
-+fi
-+
-+GIT_CONF_SUBST([NO_SSE42])
- 
- ## Checks for programs.
- AC_MSG_NOTICE([CHECKS for programs])
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f6d3a46..254487a 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -668,6 +668,26 @@ void git_qsort(void *base, size_t nmemb, size_t size,
- #endif
- #endif
- 
-+#ifndef NO_SSE42
-+#include <nmmintrin.h>
-+/* Clang ships with a version of nmmintrin.h that's incomplete; if
-+ * necessary, we define the constants that we're going to use. */
-+#ifndef _SIDD_UBYTE_OPS
-+#define _SIDD_UBYTE_OPS                 0x00
-+#define _SIDD_CMP_EQUAL_ANY             0x00
-+#define _SIDD_CMP_RANGES                0x04
-+#define _SIDD_CMP_EQUAL_ORDERED         0x0c
-+#define _SIDD_NEGATIVE_POLARITY         0x10
-+#endif
-+
-+/* This is the system memory page size; it's used so that we can read
-+ * outside the bounds of an allocation without segfaulting. It is
-+ * assumed to be a power of 2. */
-+#ifndef PAGE_SIZE
-+#define PAGE_SIZE 4096
-+#endif
-+#endif
-+
- #ifdef UNRELIABLE_FSTAT
- #define fstat_is_reliable() 0
- #else
-diff --git a/refs.c b/refs.c
-index 46139d2..532aaf4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -24,6 +24,25 @@ static unsigned char refname_disposition[256] = {
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
- };
- 
-+static int check_refname_component_trailer(const char *cp, const char *refname, int flags)
-+{
-+	if (cp == refname)
-+		return 0; /* Component has zero length. */
-+	if (refname[0] == '.') {
-+		if (!(flags & REFNAME_DOT_COMPONENT))
-+			return -1; /* Component starts with '.'. */
-+		/*
-+		 * Even if leading dots are allowed, don't allow "."
-+		 * as a component (".." is prevented by a rule above).
-+		 */
-+		if (refname[1] == '\0')
-+			return -1; /* Component equals ".". */
-+	}
-+	if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
-+		return -1; /* Refname ends with ".lock". */
-+	return cp - refname;
-+}
-+
- /*
-  * Try to read one refname component from the front of refname.
-  * Return the length of the component found, or -1 if the component is
-@@ -37,7 +56,7 @@ static unsigned char refname_disposition[256] = {
-  * - it ends with ".lock"
-  * - it contains a "\" (backslash)
-  */
--static int check_refname_component(const char *refname, int flags)
-+static int check_refname_component_1(const char *refname, int flags)
- {
- 	const char *cp;
- 	char last = '\0';
-@@ -47,7 +66,7 @@ static int check_refname_component(const char *refname, int flags)
- 		unsigned char disp = refname_disposition[ch];
- 		switch(disp) {
- 		case 1:
--			goto out;
-+			return check_refname_component_trailer(cp, refname, flags);
- 		case 2:
- 			if (last == '.')
- 				return -1; /* Refname contains "..". */
-@@ -61,23 +80,86 @@ static int check_refname_component(const char *refname, int flags)
- 		}
- 		last = ch;
- 	}
--out:
--	if (cp == refname)
--		return 0; /* Component has zero length. */
--	if (refname[0] == '.') {
--		if (!(flags & REFNAME_DOT_COMPONENT))
--			return -1; /* Component starts with '.'. */
--		/*
--		 * Even if leading dots are allowed, don't allow "."
--		 * as a component (".." is prevented by a rule above).
--		 */
--		if (refname[1] == '\0')
--			return -1; /* Component equals ".". */
-+}
-+
-+#ifdef NO_SSE42
-+#define check_refname_component check_refname_component_1
-+#else
-+#define BLOCK_SIZE 16
-+
-+/* Vectorized version of check_refname_component */
-+static int check_refname_component(const char *refname, int flags)
-+{
-+	const __m128i *refname_vec = (__m128i*) refname;
-+
-+	/* Character ranges for characters forbidden in refs; see
-+	 * above */
-+	static const __v16qi bad = {
-+		0x01, 0x20,  0x7e, 0x7f,  0x5e, 0x5e,  0x3a, 0x3a,
-+		0x5b, 0x5c,  0x2a, 0x2a,  0x3f, 0x3f,  0x3f, 0x3f};
-+
-+	static const __v16qi nonslashes = {
-+		'\001', '/' -1, '/' + 1, 0xff,
-+	};
-+
-+	static const __v16qi dotdot = {'.','.',0};
-+	static const __v16qi atcurly = {'@','{',0};
-+
-+	const __m128i *vp;
-+	const char *cp = (const char *)refname_vec;
-+
-+	int dotdotpos = BLOCK_SIZE, atcurlypos = BLOCK_SIZE;
-+	for (vp = refname_vec; ; vp++) {
-+		__m128i tmp;
-+		int endpos;
-+
-+		/* Handle case of forbidden substrings .. and @{ crossing
-+		 * sixteen-byte boundaries */
-+		if (dotdotpos == 15 && *cp == '.')
-+			return -1;
-+
-+		if (atcurlypos == 15 && *cp == '{')
-+			return -1;
-+
-+		if (((uintptr_t) vp & (PAGE_SIZE - 1)) > PAGE_SIZE - BLOCK_SIZE)
-+			/* End-of-page; fall back to slow method for
-+			 * this entire component. */
-+			return check_refname_component_1(refname, flags);
-+
-+		tmp = _mm_lddqu_si128(vp);
-+
-+		/* Find slashes or end-of-string. The double-negative
-+		 * (negative-polarity search for non-slashes) is
-+		 * necessary so that \0 will also be counted.  */
-+		endpos = _mm_cmpistri((__m128i) nonslashes, tmp,
-+				      _SIDD_UBYTE_OPS | _SIDD_CMP_RANGES |
-+				      _SIDD_NEGATIVE_POLARITY);
-+
-+		if (_mm_cmpestrc((__m128i) bad, BLOCK_SIZE, tmp, endpos,
-+				 _SIDD_UBYTE_OPS | _SIDD_CMP_RANGES))
-+			return -1;
-+
-+		dotdotpos = _mm_cmpestri((__m128i) dotdot, 2, tmp, endpos,
-+					 _SIDD_UBYTE_OPS |
-+					 _SIDD_CMP_EQUAL_ORDERED);
-+		if (dotdotpos < 15)
-+			return -1;
-+
-+		atcurlypos = _mm_cmpestri((__m128i) atcurly, 2, tmp, endpos,
-+					  _SIDD_UBYTE_OPS |
-+					  _SIDD_CMP_EQUAL_ORDERED);
-+		if (atcurlypos < 15)
-+			return -1;
-+
-+		if (endpos < BLOCK_SIZE) {
-+			cp = ((const char*) vp) + endpos;
-+			break;
-+		}
-+		cp = (const char*) vp + BLOCK_SIZE;
- 	}
--	if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
--		return -1; /* Refname ends with ".lock". */
--	return cp - refname;
-+	return check_refname_component_trailer(cp, refname, flags);
- }
-+#endif
- 
- int check_refname_format(const char *refname, int flags)
- {
-diff --git a/t/t5511-refspec.sh b/t/t5511-refspec.sh
-index de6db86..7f1bd74 100755
---- a/t/t5511-refspec.sh
-+++ b/t/t5511-refspec.sh
-@@ -88,4 +88,17 @@ test_refspec fetch "refs/heads/${good}"
- bad=$(printf '\011tab')
- test_refspec fetch "refs/heads/${bad}"				invalid
- 
-+test_refspec fetch 'refs/heads/a-very-long-refname'
-+test_refspec fetch 'refs/heads/.a-very-long-refname'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh0123..'			invalid
-+test_refspec fetch 'refs/heads/abcdefgh01234..'			invalid
-+test_refspec fetch 'refs/heads/abcdefgh012345..'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh0123456..'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh01234567..'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh0123.a'
-+test_refspec fetch 'refs/heads/abcdefgh01234.a'
-+test_refspec fetch 'refs/heads/abcdefgh012345.a'
-+test_refspec fetch 'refs/heads/abcdefgh0123456.a'
-+test_refspec fetch 'refs/heads/abcdefgh01234567.a'
-+
- test_done
--- 
-2.0.0.rc1.18.gf763c0f
+Ph.D. Candidate
+Computational Biology
+Vanderbilt University
+Nashville, TN
