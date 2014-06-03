@@ -1,109 +1,61 @@
-From: Mara Kim <mara.kim@vanderbilt.edu>
-Subject: Re: Paper cut bug: Why isn't "git clone xxxx" recursive by default?
-Date: Tue, 3 Jun 2014 17:24:41 -0500
-Message-ID: <CAJdEhSbo_-s7T9Mu=sM+-60s8t28NDogoA36xJoZowwU3hErOg@mail.gmail.com>
-References: <CAJdEhSa20ODuN4LkdvaWi0cSztgbJ+p50AYbtZs2oYWLitnjbA@mail.gmail.com>
-	<xmqqvbshwz2e.fsf@gitster.dls.corp.google.com>
-	<xmqqoay9wvo6.fsf@gitster.dls.corp.google.com>
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: What's cooking in git.git (Jun 2014, #01; Tue, 3)
+Date: Tue, 03 Jun 2014 19:52:45 -0400
+Message-ID: <538E5FCD.3060808@bbn.com>
+References: <xmqqzjhtvdua.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 00:39:58 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 04 01:52:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrxN6-000300-Ko
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 00:39:56 +0200
+	id 1WryVg-0008OL-2L
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 01:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933781AbaFCWjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 18:39:52 -0400
-Received: from ch1ehsobe004.messaging.microsoft.com ([216.32.181.184]:20841
-	"EHLO ch1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751717AbaFCWjv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 3 Jun 2014 18:39:51 -0400
-Received: from mail28-ch1-R.bigfish.com (10.43.68.233) by
- CH1EHSOBE015.bigfish.com (10.43.70.65) with Microsoft SMTP Server id
- 14.1.225.22; Tue, 3 Jun 2014 22:24:47 +0000
-Received: from mail28-ch1 (localhost [127.0.0.1])	by mail28-ch1-R.bigfish.com
- (Postfix) with ESMTP id CC94A200586	for <git@vger.kernel.org>; Tue,  3 Jun
- 2014 22:24:47 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:129.59.94.73;KIP:(null);UIP:(null);IPV:NLI;H:hub.vanderbilt.edu;RD:error;EFVD:FOP
-X-SpamScore: 5
-X-BigFish: VPS5(zz98dI9371I1432Izz1f42h2148h1d77h1ee6h1de0h1fdah2073h2146h1202h1e76h2189h1d1ah1d2ah21bch2297h1fc6h208chzz1de098h8275bh1de097hz2dh2a8h839h93fhf0ah107ah1288h12a5h12a9h12bdh137ah13b6h1441h1504h1537h153bh15a8h162dh1631h1741h1758h17eeh1946h19b5h19ceh1ad9h1b0ah1b2fh2222h224fh1fb3h1d0ch1d2eh1d3fh1dfeh1dffh1e1dh1fe8h1ff5h2216h22d0h2336h2438h2461h24d7h2516h2545h255eh25f6h2605h2667h268bh26d3h27e2h282bh1b1cn15a9i1b1bi181ch)
-Received: from mail28-ch1 (localhost.localdomain [127.0.0.1]) by mail28-ch1
- (MessageSwitch) id 1401834285990171_29938; Tue,  3 Jun 2014 22:24:45 +0000
- (UTC)
-Received: from CH1EHSMHS009.bigfish.com (snatpool1.int.messaging.microsoft.com
- [10.43.68.251])	by mail28-ch1.bigfish.com (Postfix) with ESMTP id E8F94440066
-	for <git@vger.kernel.org>; Tue,  3 Jun 2014 22:24:45 +0000 (UTC)
-Received: from hub.vanderbilt.edu (129.59.94.73) by CH1EHSMHS009.bigfish.com
- (10.43.70.9) with Microsoft SMTP Server (TLS) id 14.16.227.3; Tue, 3 Jun 2014
- 22:24:44 +0000
-Received: from mail-vc0-f178.google.com (209.85.220.178) by
- smtpauth.vanderbilt.edu (10.1.154.73) with Microsoft SMTP Server (TLS) id
- 14.3.174.1; Tue, 3 Jun 2014 17:24:41 -0500
-Received: by mail-vc0-f178.google.com with SMTP id hy4so3892911vcb.37
-        for <git@vger.kernel.org>; Tue, 03 Jun 2014 15:24:41 -0700 (PDT)
-X-Received: by 10.52.117.41 with SMTP id kb9mr408044vdb.97.1401834281447; Tue,
- 03 Jun 2014 15:24:41 -0700 (PDT)
-Received: by 10.221.41.10 with HTTP; Tue, 3 Jun 2014 15:24:41 -0700 (PDT)
-In-Reply-To: <xmqqoay9wvo6.fsf@gitster.dls.corp.google.com>
-X-Originating-IP: [209.85.220.178]
-X-OriginatorOrg: vanderbilt.edu
-X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
+	id S934038AbaFCXws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2014 19:52:48 -0400
+Received: from smtp.bbn.com ([128.33.0.80]:33278 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755235AbaFCXwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2014 19:52:47 -0400
+Received: from socket.bbn.com ([192.1.120.102]:34501)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1WryVa-00004r-0Y; Tue, 03 Jun 2014 19:52:46 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id BDF4D40190
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqqzjhtvdua.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250707>
 
-That is good to hear.  I would be pretty happy about that. ^.^
+On 2014-06-03 18:16, Junio C Hamano wrote:
+> * rh/prompt-tests (2014-05-30) 10 commits
+>  - t9904: new __git_ps1 tests for Zsh
+>  - lib-prompt-tests.sh: add variable for string that encodes percent in PS1
+>  - lib-prompt-tests.sh: put all tests inside a function
+>  - t9903: move prompt tests to a new lib-prompt-tests.sh file
+>  - t9903: move PS1 color code variable definitions to lib-bash.sh
+>  - t9903: include "Bash" in test names via new $shellname var
+>  - t9903: run pc mode tests again with PS1 expansion disabled
+>  - t9903: move test name prefix to a separate variable
+>  - t9903: put the Bash pc mode prompt test cases in a function
+>  - t9903: remove Zsh test from the suite of Bash prompt tests
+> 
+>  Will merge to 'next'.
 
-Obviously any major changes will need to be done carefully.  I was
-thinking of the way that you guys introduced new defaults for Git 2.0,
-phasing them in slowly through the 1.x cycle.  Maybe I can get my
-hopes up for Git 3.0 --- 9 years from now :P
+Please hold off on merging -- I just discovered some bugs while
+conversing with the zsh developers about some zsh shell emulation stuff
+I didn't fully understand.  (Surprisingly, the tests in that patch
+series are actually run in zsh's sh emulation mode.)
 
-On Tue, Jun 3, 2014 at 4:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Mara Kim <mara.kim@vanderbilt.edu> writes:
->>
->>> Apologies if this question has been asked already, but what is the
->>> reasoning behind making git clone not recursive (--recursive) by
->>> default?
->>
->> The primary reason why submodules are separate repositories is not
->> to require people to have everything.  Some people want recursive,
->> some others don't, and the world is not always "majority wins" (not
->> that I am saying that majority will want recursive).
->>
->> Inertia, aka backward compatibility and not surprising existing
->> users, plays some role when deciding the default.
->>
->> Also, going --recursive when the user did not want is a lot more
->> expensive mistake to fix than not being --recursive when the user
->> wanted to.
->
-> Having said all that, I do not mean to say that I am opposed to
-> introduce some mechanism to let the users express their preference
-> between recursive and non-recursive better, so that "git clone"
-> without an explicit --recursive (or --no-recursive) can work to
-> their taste.  A configuration in $HOME/.gitconfig might be a place
-> to start, even though that has the downside of assuming that the
-> given user would want to use the same settings for all his projects,
-> which may not be the case in practice.
->
-
-
-
--- 
-Mara Kim
-
-Ph.D. Candidate
-Computational Biology
-Vanderbilt University
-Nashville, TN
+Thanks,
+Richard
