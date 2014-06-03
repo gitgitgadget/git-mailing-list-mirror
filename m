@@ -1,90 +1,177 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v11 36/41] refs.c: move the check for valid refname to lock_ref_sha1_basic
-Date: Tue, 3 Jun 2014 11:33:14 -0700
-Message-ID: <CAL=YDWkFt6cfHUyTtxYAhd=PU=5FYfh0kULRKGifAH3q0+wjOA@mail.gmail.com>
-References: <1401222360-21175-1-git-send-email-sahlberg@google.com>
-	<1401222360-21175-37-git-send-email-sahlberg@google.com>
-	<20140530181242.GJ12314@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 03 20:33:26 2014
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH] receive-pack: optionally deny case-clone refs
+Date: Tue,  3 Jun 2014 15:14:56 -0400
+Message-ID: <1401822896-816-1-git-send-email-dturner@twitter.com>
+Cc: David Turner <dturner@twitter.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 03 21:15:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WrtWX-0001dQ-1q
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 20:33:25 +0200
+	id 1WruBD-00044o-02
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 21:15:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933760AbaFCSdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 14:33:17 -0400
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:36824 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933717AbaFCSdQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2014 14:33:16 -0400
-Received: by mail-vc0-f169.google.com with SMTP id il7so3644458vcb.0
-        for <git@vger.kernel.org>; Tue, 03 Jun 2014 11:33:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=48OgVLc2UerexSYd8xqHx0+AVVhizFvj3rtgo9JKtBY=;
-        b=KSjaytDKLZmsxgkB4L8UejuZ7IsUlnyIwe/39oZPt0uzeCJhtCbfGbyqfZyvaaYmfS
-         r+qfUuQ58FhEN2Bz5zi1EuJ+VQw8gNDncnXeremQNYe/U4K2POjDwbh5CxW3r6M/IQs+
-         dpnN8VlZhd7vO9J3Z7g+jWKRVZKPwJjFmWFATGyYbghAm3rVkBY9CSdCyIGI0NkXWgun
-         tOw+TerDc7J8iFQRvTjevuSyL99hiAdb4vdm8pbHNjSZQ/BqICIFRkQI9rfQex4ezCrE
-         Y9NKPSJKce76uRZf8SX9RyyHXh3T7BJ2qwXXJBE7xHcJSIqUz61Ie0e3d30aStIVtQuR
-         tCHQ==
+	id S1753897AbaFCTPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2014 15:15:23 -0400
+Received: from mail-qa0-f44.google.com ([209.85.216.44]:65268 "EHLO
+	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752813AbaFCTPW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2014 15:15:22 -0400
+Received: by mail-qa0-f44.google.com with SMTP id j7so5521640qaq.31
+        for <git@vger.kernel.org>; Tue, 03 Jun 2014 12:15:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=48OgVLc2UerexSYd8xqHx0+AVVhizFvj3rtgo9JKtBY=;
-        b=e9A5YNsxLmgzL3wR74yHae8C0KPyucPXGjZU/hYfvkL08Mbd1OeEj9VGvdnSQE3pAs
-         rO4gclINvP8Y6AyYqbmYhdCXHcmuWPYPksdoZ3N7EclqKgBtqpX+8pTGOLne9JiAUian
-         q5cNbKSoFoytAx4t7ssiuQVSktmGEBme07xo6HB45FdhxmEzvbgRx0Tq6pF3ScCVDCaw
-         WDc/C1pUpkNn11jXnpy8p4B3OHISiT+wd05YoHTvj+1ky8a7Q7PSzvBK0s5EVh59d6Kc
-         hYeHJDC5w03Zh0vXk+AY++66rVMSX/1vf2+tTyPjPKg1XTNB6cIF8k9UlSnwhdT7y79Q
-         Tqzw==
-X-Gm-Message-State: ALoCoQlQq7p3sjGJ2tbLT63cF8d+aVRj/THBce7IwKr8zaufkfI9ptBIw3FU1A6frd5Zw0pUwY27
-X-Received: by 10.58.132.41 with SMTP id or9mr26110440veb.5.1401820395069;
- Tue, 03 Jun 2014 11:33:15 -0700 (PDT)
-Received: by 10.52.255.65 with HTTP; Tue, 3 Jun 2014 11:33:14 -0700 (PDT)
-In-Reply-To: <20140530181242.GJ12314@google.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=oNOTz2mGNJVb3vu4dReCQfPBvOKfWcwRqY8kHU5Z+6E=;
+        b=Zm/CbPNXUvpj5IV3UfMXJAAOx3PJYTFjRBl3pVgMW9jHBbScDjqpZkgQAnmlZ2AFfH
+         84qc/zqCxYkgS/ZgvRJEbH2uPv+xViK9l6hNwOgpcSwIYPTYFvBKMrWzd+sLr4PQyrN0
+         IkFFsX42ln4IxKTOA+lyiBL/OvUhseiB5z9HgxuF7gthNkZDqLaI81nBc7BYW7lKRZp+
+         2t1G+ps3BkToF/C78wNYAvrgynk/EgvA+yvqNfgNxs71hIptJzdnfBa0bHaMkLNfVb9d
+         RJefhhl/7p0Jfdb3yPyc4RagXFrRtlDwfmz+o5/Xqw5HHE0Be/G6O2yQhFRZUGVJ8ZtC
+         TXXg==
+X-Gm-Message-State: ALoCoQl1TYD9ozdU3akbWrhbWLu56l1gEtf/NE/yEO7FT5090wsl4Iibs4BYQGlI/1xuOGN8gA9U
+X-Received: by 10.224.151.82 with SMTP id b18mr65017199qaw.27.1401822920899;
+        Tue, 03 Jun 2014 12:15:20 -0700 (PDT)
+Received: from stross.twitter.corp ([38.104.173.198])
+        by mx.google.com with ESMTPSA id t4sm217550qat.4.2014.06.03.12.15.19
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 03 Jun 2014 12:15:19 -0700 (PDT)
+X-Google-Original-From: David Turner <dturner@twitter.com>
+X-Mailer: git-send-email 2.0.0.rc1.18.gf763c0f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250640>
 
-On Fri, May 30, 2014 at 11:12 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Ronnie Sahlberg wrote:
->
->> Move the check for check_refname_format from lock_any_ref_for_update
->> to lock_ref_sha1_basic. At some later stage we will get rid of
->> lock_any_ref_for_update completely.
->
-> Do you know if this will cause any functional change?
->
-> What is the potential impact?  Is that impact worth it?  (Given how
-> broken the recovery codepaths currently are, I suspect this change is
-> worth it, but it seems worth documenting in the log message.)
+It is possible to have two branches which are the same but for case.
+This works great on the case-sensitive filesystems, but not so well on
+case-insensitive filesystems.  It is fairly typical to have
+case-insensitive clients (Macs, say) with a case-sensitive server
+(GNU/Linux).
 
-Thanks.
+Should a user attempt to pull on a Mac when there are case-clone
+branches with differing contents, they'll get an error message
+containing something like "Ref refs/remotes/origin/lower is at
+[sha-of-lowercase-branch] but expected [sha-of-uppercase-branch]....
+(unable to update local ref)"
 
-Updated the commit message to mention this.
+With a case-insensitive git server, if a branch called capital-M
+Master (that differs from lowercase-m-master) is pushed, nobody else
+can push to (lowercase-m) master until the branch is removed.
 
-  This changes semantics for lock_ref_sha1_basic slightly. With this change
-  it is no longer possible to open a ref that has a badly name which breaks
-  any codepaths that tries to open and repair badly named refs. The normal refs
-  API should not allow neither creating nor accessing refs with invalid names.
-  If we need such recovery code we could add it as an option to git
-fsck and have
-  git fsck be the only sanctioned way of bypassing the normal API and checks.
+Create the option receive.denycaseclonebranches, which checks pushed
+branches to ensure that they are not case-clones of an existing
+branch.  This setting is turned on by default if core.ignorecase is
+set, but not otherwise.
 
->
-> Thanks,
-> Jonathan
+Signed-off-by: David Turner <dturner@twitter.com>
+---
+ builtin/receive-pack.c | 29 ++++++++++++++++++++++++++++-
+ t/t5400-send-pack.sh   | 20 ++++++++++++++++++++
+ 2 files changed, 48 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index c323081..0894ded 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -27,6 +27,7 @@ enum deny_action {
+ 
+ static int deny_deletes;
+ static int deny_non_fast_forwards;
++static int deny_case_clone_branches = -1;
+ static enum deny_action deny_current_branch = DENY_UNCONFIGURED;
+ static enum deny_action deny_delete_current = DENY_UNCONFIGURED;
+ static int receive_fsck_objects = -1;
+@@ -69,6 +70,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 	if (status)
+ 		return status;
+ 
++	if (strcmp(var, "receive.denycaseclonebranches") == 0) {
++		deny_case_clone_branches = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	if (strcmp(var, "receive.denydeletes") == 0) {
+ 		deny_deletes = git_config_bool(var, value);
+ 		return 0;
+@@ -468,6 +474,24 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+ 	return 0;
+ }
+ 
++static int is_case_clone(const char *refname, const unsigned char *sha1,
++			int flags, void *cb_data)
++{
++	const char* incoming_refname = cb_data;
++	return !strcasecmp(refname, incoming_refname) &&
++		strcmp(refname, incoming_refname);
++}
++
++static int ref_is_denied_case_clone(const char *name)
++{
++
++	if (!deny_case_clone_branches)
++		return 0;
++
++	return for_each_ref(is_case_clone, (void *) name);
++
++}
++
+ static const char *update(struct command *cmd, struct shallow_info *si)
+ {
+ 	const char *name = cmd->ref_name;
+@@ -478,7 +502,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	struct ref_lock *lock;
+ 
+ 	/* only refs/... are allowed */
+-	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
++	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0) ||
++	    ref_is_denied_case_clone(name)) {
+ 		rp_error("refusing to create funny ref '%s' remotely", name);
+ 		return "funny refname";
+ 	}
+@@ -1171,6 +1196,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		die("'%s' does not appear to be a git repository", dir);
+ 
+ 	git_config(receive_pack_config, NULL);
++	if (deny_case_clone_branches == -1)
++		deny_case_clone_branches = ignore_case;
+ 
+ 	if (0 <= transfer_unpack_limit)
+ 		unpack_limit = transfer_unpack_limit;
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 0736bcb..099c0e3 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -129,6 +129,26 @@ test_expect_success 'denyNonFastforwards trumps --force' '
+ 	test "$victim_orig" = "$victim_head"
+ '
+ 
++if ! test_have_prereq CASE_INSENSITIVE_FS
++then
++test_expect_success 'denyCaseCloneBranches works' '
++	(
++	    cd victim &&
++	    git config receive.denyCaseCloneBranches true
++	    git config receive.denyDeletes false
++	) &&
++	git checkout -b caseclone &&
++	git send-pack ./victim caseclone &&
++	git checkout -b CaseClone &&
++	test_must_fail git send-pack ./victim CaseClone &&
++	git checkout -b notacaseclone &&
++	git send-pack ./victim notacaseclone &&
++	test_must_fail git send-pack ./victim :CaseClone &&
++	git send-pack ./victim :caseclone &&
++	git send-pack ./victim CaseClone
++'
++fi
++
+ test_expect_success 'push --all excludes remote-tracking hierarchy' '
+ 	mkdir parent &&
+ 	(
+-- 
+2.0.0.rc1.18.gf763c0f
