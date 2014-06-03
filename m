@@ -1,177 +1,74 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH] receive-pack: optionally deny case-clone refs
-Date: Tue,  3 Jun 2014 15:14:56 -0400
-Message-ID: <1401822896-816-1-git-send-email-dturner@twitter.com>
-Cc: David Turner <dturner@twitter.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 03 21:15:32 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Paper cut bug: Why isn't "git clone xxxx" recursive by default?
+Date: Tue, 03 Jun 2014 12:52:25 -0700
+Message-ID: <xmqqvbshwz2e.fsf@gitster.dls.corp.google.com>
+References: <CAJdEhSa20ODuN4LkdvaWi0cSztgbJ+p50AYbtZs2oYWLitnjbA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: Mara Kim <mara.kim@vanderbilt.edu>
+X-From: git-owner@vger.kernel.org Tue Jun 03 21:52:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WruBD-00044o-02
-	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 21:15:27 +0200
+	id 1WrulB-0003Zp-57
+	for gcvg-git-2@plane.gmane.org; Tue, 03 Jun 2014 21:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753897AbaFCTPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 15:15:23 -0400
-Received: from mail-qa0-f44.google.com ([209.85.216.44]:65268 "EHLO
-	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752813AbaFCTPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2014 15:15:22 -0400
-Received: by mail-qa0-f44.google.com with SMTP id j7so5521640qaq.31
-        for <git@vger.kernel.org>; Tue, 03 Jun 2014 12:15:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=oNOTz2mGNJVb3vu4dReCQfPBvOKfWcwRqY8kHU5Z+6E=;
-        b=Zm/CbPNXUvpj5IV3UfMXJAAOx3PJYTFjRBl3pVgMW9jHBbScDjqpZkgQAnmlZ2AFfH
-         84qc/zqCxYkgS/ZgvRJEbH2uPv+xViK9l6hNwOgpcSwIYPTYFvBKMrWzd+sLr4PQyrN0
-         IkFFsX42ln4IxKTOA+lyiBL/OvUhseiB5z9HgxuF7gthNkZDqLaI81nBc7BYW7lKRZp+
-         2t1G+ps3BkToF/C78wNYAvrgynk/EgvA+yvqNfgNxs71hIptJzdnfBa0bHaMkLNfVb9d
-         RJefhhl/7p0Jfdb3yPyc4RagXFrRtlDwfmz+o5/Xqw5HHE0Be/G6O2yQhFRZUGVJ8ZtC
-         TXXg==
-X-Gm-Message-State: ALoCoQl1TYD9ozdU3akbWrhbWLu56l1gEtf/NE/yEO7FT5090wsl4Iibs4BYQGlI/1xuOGN8gA9U
-X-Received: by 10.224.151.82 with SMTP id b18mr65017199qaw.27.1401822920899;
-        Tue, 03 Jun 2014 12:15:20 -0700 (PDT)
-Received: from stross.twitter.corp ([38.104.173.198])
-        by mx.google.com with ESMTPSA id t4sm217550qat.4.2014.06.03.12.15.19
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Jun 2014 12:15:19 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
-X-Mailer: git-send-email 2.0.0.rc1.18.gf763c0f
+	id S932956AbaFCTwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 3 Jun 2014 15:52:32 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58405 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753568AbaFCTwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 3 Jun 2014 15:52:31 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1204A1B3D4;
+	Tue,  3 Jun 2014 15:52:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3leZAbEIP4VJipUsV8wyv6Wg7H4=; b=WEXO2X
+	hBgW1OuK8p3GiMvxPoYMS2QDwqSYbz/yzPHhE0rRxFdz59dMdI0kocW2/1/z035X
+	JuonMD1XH+2JI8RlJq6zzPgokqtbz0zZ925cwV0ixCUlrrBsFPsYS0HwOiUIMbjQ
+	tXQ9xeyz2gdW8+cJV2u30jcylM8BPyg8zNsYw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tpL6ykllNNeQvpvGMowaZmBr1ODi4gGp
+	ZvQHpxJVj2K3DNjryLkjbHvT6RwkkV67wsZbNl0nuKdZ8NgtQ4Oro2s9q0O7Ko/+
+	v1mj94pxthaF8Bcnxtqjc/WE2AKjsN3RsQHSVKH2Uubi5E2TyZoxp2zfJCTunUiv
+	VJ0e48jBu8E=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 076CD1B3D3;
+	Tue,  3 Jun 2014 15:52:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6EFE61B3CD;
+	Tue,  3 Jun 2014 15:52:27 -0400 (EDT)
+In-Reply-To: <CAJdEhSa20ODuN4LkdvaWi0cSztgbJ+p50AYbtZs2oYWLitnjbA@mail.gmail.com>
+	(Mara Kim's message of "Tue, 3 Jun 2014 13:11:03 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 97062104-EB58-11E3-8CBC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250641>
 
-It is possible to have two branches which are the same but for case.
-This works great on the case-sensitive filesystems, but not so well on
-case-insensitive filesystems.  It is fairly typical to have
-case-insensitive clients (Macs, say) with a case-sensitive server
-(GNU/Linux).
+Mara Kim <mara.kim@vanderbilt.edu> writes:
 
-Should a user attempt to pull on a Mac when there are case-clone
-branches with differing contents, they'll get an error message
-containing something like "Ref refs/remotes/origin/lower is at
-[sha-of-lowercase-branch] but expected [sha-of-uppercase-branch]....
-(unable to update local ref)"
+> Apologies if this question has been asked already, but what is the
+> reasoning behind making git clone not recursive (--recursive) by
+> default?
 
-With a case-insensitive git server, if a branch called capital-M
-Master (that differs from lowercase-m-master) is pushed, nobody else
-can push to (lowercase-m) master until the branch is removed.
+The primary reason why submodules are separate repositories is not
+to require people to have everything.  Some people want recursive,
+some others don't, and the world is not always "majority wins" (not
+that I am saying that majority will want recursive).
 
-Create the option receive.denycaseclonebranches, which checks pushed
-branches to ensure that they are not case-clones of an existing
-branch.  This setting is turned on by default if core.ignorecase is
-set, but not otherwise.
+Inertia, aka backward compatibility and not surprising existing
+users, plays some role when deciding the default.
 
-Signed-off-by: David Turner <dturner@twitter.com>
----
- builtin/receive-pack.c | 29 ++++++++++++++++++++++++++++-
- t/t5400-send-pack.sh   | 20 ++++++++++++++++++++
- 2 files changed, 48 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c323081..0894ded 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -27,6 +27,7 @@ enum deny_action {
- 
- static int deny_deletes;
- static int deny_non_fast_forwards;
-+static int deny_case_clone_branches = -1;
- static enum deny_action deny_current_branch = DENY_UNCONFIGURED;
- static enum deny_action deny_delete_current = DENY_UNCONFIGURED;
- static int receive_fsck_objects = -1;
-@@ -69,6 +70,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- 	if (status)
- 		return status;
- 
-+	if (strcmp(var, "receive.denycaseclonebranches") == 0) {
-+		deny_case_clone_branches = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (strcmp(var, "receive.denydeletes") == 0) {
- 		deny_deletes = git_config_bool(var, value);
- 		return 0;
-@@ -468,6 +474,24 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
- 	return 0;
- }
- 
-+static int is_case_clone(const char *refname, const unsigned char *sha1,
-+			int flags, void *cb_data)
-+{
-+	const char* incoming_refname = cb_data;
-+	return !strcasecmp(refname, incoming_refname) &&
-+		strcmp(refname, incoming_refname);
-+}
-+
-+static int ref_is_denied_case_clone(const char *name)
-+{
-+
-+	if (!deny_case_clone_branches)
-+		return 0;
-+
-+	return for_each_ref(is_case_clone, (void *) name);
-+
-+}
-+
- static const char *update(struct command *cmd, struct shallow_info *si)
- {
- 	const char *name = cmd->ref_name;
-@@ -478,7 +502,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 	struct ref_lock *lock;
- 
- 	/* only refs/... are allowed */
--	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
-+	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0) ||
-+	    ref_is_denied_case_clone(name)) {
- 		rp_error("refusing to create funny ref '%s' remotely", name);
- 		return "funny refname";
- 	}
-@@ -1171,6 +1196,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		die("'%s' does not appear to be a git repository", dir);
- 
- 	git_config(receive_pack_config, NULL);
-+	if (deny_case_clone_branches == -1)
-+		deny_case_clone_branches = ignore_case;
- 
- 	if (0 <= transfer_unpack_limit)
- 		unpack_limit = transfer_unpack_limit;
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 0736bcb..099c0e3 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -129,6 +129,26 @@ test_expect_success 'denyNonFastforwards trumps --force' '
- 	test "$victim_orig" = "$victim_head"
- '
- 
-+if ! test_have_prereq CASE_INSENSITIVE_FS
-+then
-+test_expect_success 'denyCaseCloneBranches works' '
-+	(
-+	    cd victim &&
-+	    git config receive.denyCaseCloneBranches true
-+	    git config receive.denyDeletes false
-+	) &&
-+	git checkout -b caseclone &&
-+	git send-pack ./victim caseclone &&
-+	git checkout -b CaseClone &&
-+	test_must_fail git send-pack ./victim CaseClone &&
-+	git checkout -b notacaseclone &&
-+	git send-pack ./victim notacaseclone &&
-+	test_must_fail git send-pack ./victim :CaseClone &&
-+	git send-pack ./victim :caseclone &&
-+	git send-pack ./victim CaseClone
-+'
-+fi
-+
- test_expect_success 'push --all excludes remote-tracking hierarchy' '
- 	mkdir parent &&
- 	(
--- 
-2.0.0.rc1.18.gf763c0f
+Also, going --recursive when the user did not want is a lot more
+expensive mistake to fix than not being --recursive when the user
+wanted to.
