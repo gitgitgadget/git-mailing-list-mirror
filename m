@@ -1,139 +1,166 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] t5000, t5003: do not use test_cmp to compare
- binary files
-Date: Wed, 04 Jun 2014 11:22:56 -0700
-Message-ID: <xmqq8upcv8jj.fsf@gitster.dls.corp.google.com>
-References: <20140604114252.GA22250@camelia.ucw.cz>
-	<538F0D78.3020708@virtuell-zuhause.de>
-	<20140604124257.GA22415@camelia.ucw.cz>
-	<538F1840.7010803@virtuell-zuhause.de>
-	<20140604155752.GA23226@camelia.ucw.cz>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: 2.0.0 regression? request pull does not seem to find head
+Date: Wed, 4 Jun 2014 21:40:33 +0300
+Message-ID: <20140604184033.GB11756@redhat.com>
+References: <20140602210131.GA17171@redhat.com>
+ <CA+55aFyuj=B4jhc9vPkxHotSgJnRXMj_P_QkHCt-TKXtj8tOFQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>,  Thomas Braun <thomas.braun@virtuell-zuhause.de>,  msysgit@googlegroups.com
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBCG77UMM3EJRBBWIXWOAKGQEKNK5KMY@googlegroups.com Wed Jun 04 20:23:07 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBBWIXWOAKGQEKNK5KMY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f191.google.com ([209.85.220.191])
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Jun 04 20:40:18 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBBWIXWOAKGQEKNK5KMY@googlegroups.com>)
-	id 1WsFq3-0007Od-P7
-	for gcvm-msysgit@m.gmane.org; Wed, 04 Jun 2014 20:23:04 +0200
-Received: by mail-vc0-f191.google.com with SMTP id id10sf2092471vcb.8
-        for <gcvm-msysgit@m.gmane.org>; Wed, 04 Jun 2014 11:23:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=SNv2gzlvkP1N7kahcAsMScNjIXLKiX2hC/KqBQO/JX4=;
-        b=aMYcqxOHtGhwpqch3uEPMY675FRPFxXIyV7IK52gXFxU70C+VDvSabBh+UND2j4xvk
-         /TexCftZNT369DiVVb4ZxpHCUcFpuoVApuiotwYmKhVHwp7yvQdoeNas9W96OE8WVPJf
-         fEJOdD3YFhnUem90AU459R0Iu7wpmoJA8tK7s33B77j2IFt7cpSoLKUE4WgYxEc2e77f
-         LNgh7mYDnRKtcTUB27Ew8j23sHGZ2i8KIGU9JMET9zuMj1zvx89UpeZ//YoSSpahXhFZ
-         ySunektHdmDHlr/hWDG59/MVS2N8h0wVtKbtEs6O9dLPib7VEOJj4oka2kY8EzSY4zVS
-         9D9A==
-X-Received: by 10.50.60.7 with SMTP id d7mr27393igr.10.1401906182833;
-        Wed, 04 Jun 2014 11:23:02 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.51.17.104 with SMTP id gd8ls823808igd.16.gmail; Wed, 04 Jun
- 2014 11:23:02 -0700 (PDT)
-X-Received: by 10.50.61.146 with SMTP id p18mr2818358igr.3.1401906182059;
-        Wed, 04 Jun 2014 11:23:02 -0700 (PDT)
-Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id x2si872850qch.0.2014.06.04.11.23.01
-        for <msysgit@googlegroups.com>;
-        Wed, 04 Jun 2014 11:23:01 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B95491910B;
-	Wed,  4 Jun 2014 14:23:01 -0400 (EDT)
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B03631910A;
-	Wed,  4 Jun 2014 14:23:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1505C19104;
-	Wed,  4 Jun 2014 14:22:58 -0400 (EDT)
-In-Reply-To: <20140604155752.GA23226@camelia.ucw.cz> (Stepan Kasal's message
-	of "Wed, 4 Jun 2014 17:57:52 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 410B2E4E-EC15-11E3-A603-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250753>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WsG6g-00035l-AY
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 20:40:15 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751240AbaFDSkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 14:40:07 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:29035 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750933AbaFDSkG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 14:40:06 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s54Ie4PC032517
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 4 Jun 2014 14:40:05 -0400
+Received: from redhat.com (ovpn-116-26.ams2.redhat.com [10.36.116.26])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s54Ie3kf011975;
+	Wed, 4 Jun 2014 14:40:03 -0400
+Content-Disposition: inline
+In-Reply-To: <CA+55aFyuj=B4jhc9vPkxHotSgJnRXMj_P_QkHCt-TKXtj8tOFQ@mail.gmail.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250754>
 
-Stepan Kasal <kasal@ucw.cz> writes:
+On Mon, Jun 02, 2014 at 02:36:01PM -0700, Linus Torvalds wrote:
+> On Mon, Jun 2, 2014 at 2:01 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > [mst@robin linux]$ git request-pull net-next/master  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git net-next
+> > warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
+> > warn: Are you sure you pushed 'net-next' there?
+> 
+> git request-pull is clearly correct. There is no "net-next" in that
+> public repository.
 
-> test_cmp() is primarily meant to compare text files (and display the
-> difference for debug purposes).
->
-> Raw "cmp" is better suited to compare binary files (tar, zip, etc.).
->
-> On MinGW, test_cmp is a shell function mingw_test_cmp that tries to
-> read both files into environment, stripping CR characters (introduced
-> in commit 4d715ac0).
->
-> This function usually speeds things up, as fork is extremly slow on
-> Windows.  But no wonder that this function is extremely slow and
-> sometimes even crashes when comparing large tar or zip files.
->
-> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
-> ---
->
-> Hi Thomas,
-> On Wed, Jun 04, 2014 at 02:59:44PM +0200, Thomas Braun wrote:
->> Using test_cmp_bin instead of cmp would result in then four assertions
->> for comparing arbitrary data
->> test_cmp
->> test_i18ncmp
->> test_cmp_text
->> test_cmp_bin
->> where I think the purpose of each function is clear from its name.
->
-> [test_cmp_text does not exist (yet)]
->
-> OK, I agree, hence this modified version of the patch.
+OK, I see that it's correct.
+It used to match commit and go from there, but it does not anymore, and
+I didn't know this.
 
-Yeah, I think the above reasoning is sound.  And I do not think we
-ever need to have test_cmp_text -- our payload and our messages
-compared by tests to make sure our expectations hold are text by
-default.
+However, it does not tell me this.
+It tells me there's no match for commit
+2ae76693b8bcabf370b981cd00c36cd41d33fabc:
+that commit is there.
+Also "match" implies some matching still going on, might be best
+to drop this.
 
-Will queue; thanks.
+> It *used* to be that request-pull then magically tried to fix it up
+> for you, which in turn resulted in the guess not being right, like
+> pointing to the wrong branch that just happened to have the same SHA1,
+> or pointing to a branch when it _should_ have pointed to a tag.
+
+Why not just put the SHA1 in there?
+In fact it would be a bit more robust in case of
+non-signed pull requests, won't it?
+
+> Now, if you pushed your local "net-next" branch to another branch name
+> (I can find a branch name called "vhost-next" at that repository, then
+> you can *tell* git that, using the same syntax you must have used for
+> the push.
+> 
+> So something like
+> 
+>   git request-pull net-next/master
+> git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
+> net-next:vhost-next
+> 
+> should work so that git doesn't end up having to guess (and
+> potentially guessing wrong).
+> 
+> But it may actually be a simpler driver error, and you wanted to use
+> "vhost-next", and that "net-next" was actually incorrect?
+> 
+>        Linus
+
+Yes: net-next is a local name, on the remote it's called vhost-next.
+
+
+I realize now that with
+       git request-pull [-p] <start> <url> [<end>]
+<end> actually is a name of commit in the *remote*
+tree, not the local one.
+Documentation could be improved a bit:
+
+           Commit to end at (defaults to HEAD). This names the commit at
+		the tip of the history you are asking to be pulled.
+
+           When the repository named by <url> has the commit at a tip of
+		a ref that is different from the ref you have locally, you can use
+           the <local>:<remote> syntax, to have its local name, a colon
+		:, and its remote name.
+
+It does not have to be commit (could be signed tag), and
+that text does not make it very clear what is different from what
+until you re-read it a couple of times.
+How about:
+           Object (commit or tag) to end at (defaults to HEAD). This names the object at
+		the tip of the history you are asking to be pulled.
+		The name <end> must refer to the same object in both the
+		local tree and the remote tree pointed at by <url>.
+	
+           If the object that you want pulled has a different name
+	   in the local and the remote trees, you can use
+           the <local>:<remote> syntax, to have its local name, a colon
+		:, and its remote name.
+
+
+
+The error message could be improved too, it asks me whether
+I pushed net-next which I did.
+Would be nicer if it asked "Pushed net-next to net-next there?"
+
+Also, how is it supposed to work without <end>?
+
+ git request-pull net-next/master
+git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
+warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found
+at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
+warn: Are you sure you pushed 'HEAD' there?
+
+Where should I push HEAD, and how?
+In fact does git let you push to HEAD?
+
+
+Finally, the output even with a warning could be better:
+
+git request-pull net-next/master
+git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
+warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found
+at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
+warn: Are you sure you pushed 'HEAD' there?
+The following changes since commit
+96b2e73c5471542cb9c622c4360716684f8797ed:
+
+  Revert "net/mlx4_en: Use affinity hint" (2014-06-02 00:18:48 -0700)
+
+are available in the git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git 
+
+
+If someone does not notice the warning (e.g. the warning is
+on stderr and script could only redirect stdout)
+then pull request is actually wrong.
+It would be better to find the commit on both sides and
+if it's there, just use the hash name.
+
+
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+MST
