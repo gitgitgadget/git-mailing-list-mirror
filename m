@@ -1,109 +1,143 @@
-From: Richard Hansen <rhansen@bbn.com>
-Subject: [PATCH v2 09/11] lib-prompt-tests.sh: add variable for string that encodes percent in PS1
-Date: Wed,  4 Jun 2014 17:01:25 -0400
-Message-ID: <1401915687-8602-10-git-send-email-rhansen@bbn.com>
-References: <1401176460-31564-1-git-send-email-rhansen@bbn.com>
- <1401915687-8602-1-git-send-email-rhansen@bbn.com>
-Cc: rhansen@bbn.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 04 23:03:36 2014
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v6 2/2] refs.c: SSE4.2 optimizations for
+ check_refname_component
+Date: Wed, 04 Jun 2014 17:14:36 -0400
+Organization: Twitter
+Message-ID: <1401916476.18134.165.camel@stross>
+References: <1401853091-15535-1-git-send-email-dturner@twitter.com>
+	 <1401853091-15535-2-git-send-email-dturner@twitter.com>
+	 <538ED2F1.9030003@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu,
+	David Turner <dturner@twitter.com>
+To: Torsten =?ISO-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 04 23:14:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsILQ-0006YF-7J
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 23:03:36 +0200
+	id 1WsIWD-0006Ed-B0
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 23:14:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752124AbaFDVD0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2014 17:03:26 -0400
-Received: from smtp.bbn.com ([128.33.0.80]:30083 "EHLO smtp.bbn.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751914AbaFDVB6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 17:01:58 -0400
-Received: from socket.bbn.com ([192.1.120.102]:34541)
-	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
-	(Exim 4.77 (FreeBSD))
-	(envelope-from <rhansen@bbn.com>)
-	id 1WsIJq-000IYU-BP; Wed, 04 Jun 2014 17:01:58 -0400
-X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 25D463FFFC
-X-Mailer: git-send-email 2.0.0
-In-Reply-To: <1401915687-8602-1-git-send-email-rhansen@bbn.com>
+	id S1751405AbaFDVOl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 17:14:41 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:37462 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751010AbaFDVOk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 17:14:40 -0400
+Received: by mail-qg0-f42.google.com with SMTP id q107so145159qgd.29
+        for <git@vger.kernel.org>; Wed, 04 Jun 2014 14:14:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=VtBt1vXffOAAja+majBZxovIODTFj5prliH/cut260c=;
+        b=OwFO55WHqbToYON9HTOl8bxcC9onAH8dBeyOwRGbKnPH198NYAhTGMHrWw6SfX/h7Z
+         0PFHF+IEc2BSCnawH58Hlh7t2JKkaNaPcKHFMIRGk/EgHtl2uAnz+neqA0I89F7DdHhs
+         uFRXGDAGSJ67vEf5P3eoCqHJJBzb87lQ2sUw1EKZ2AaTl4pJf4mfF3RCDOqK4buxiGwD
+         ZcRqpPeXFWF+C8nL+YC4NH9ULGxM35xoRGH+PxUJmPZbEjXwDVkbZ86FEyBa+OU7hGY1
+         MBbsQTgi7L83c744N+9vaNle7ps8oGW5fAJgtysYc4SbrY5fKU/r2ql9hUkiHnBpGd/p
+         tqzQ==
+X-Gm-Message-State: ALoCoQknKWqhwCmD/W2xY8LRmAgvBbq0lvVAMcRg5bAtNEAkkj+vIzOKAUf9qGYY/OWq+48tZ/s3
+X-Received: by 10.140.84.168 with SMTP id l37mr72866736qgd.104.1401916479291;
+        Wed, 04 Jun 2014 14:14:39 -0700 (PDT)
+Received: from [172.18.24.70] ([8.25.196.25])
+        by mx.google.com with ESMTPSA id i9sm5953068qaq.14.2014.06.04.14.14.37
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Wed, 04 Jun 2014 14:14:38 -0700 (PDT)
+In-Reply-To: <538ED2F1.9030003@web.de>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250793>
 
-To add a literal percent character to a Zsh prompt, the string "%%" is
-used in PS1.  Bash and POSIX shells simply use "%".  To accommodate
-this difference, use ${percent} where a percent character is expected
-and define the percent variable in the set_ps1_format_vars function.
+On Wed, 2014-06-04 at 10:04 +0200, Torsten B=C3=B6gershausen wrote:
+[snip discussion of compiler flags; I'll look into a cpuid approach]
 
-Signed-off-by: Richard Hansen <rhansen@bbn.com>
----
- t/lib-bash.sh         |  1 +
- t/lib-prompt-tests.sh | 15 ++++++++-------
- 2 files changed, 9 insertions(+), 7 deletions(-)
+> > --- a/git-compat-util.h
+> > +++ b/git-compat-util.h
+> > @@ -668,6 +668,28 @@ void git_qsort(void *base, size_t nmemb, size_=
+t size,
+> >  #endif
+> >  #endif
+> > =20
+> > +#ifndef NO_SSE42
+> > +#include <nmmintrin.h>
+> > +/*
+> > + * Clang ships with a version of nmmintrin.h that's incomplete; if
+> > + * necessary, we define the constants that we're going to use.
+> > + */
+> > +#ifndef _SIDD_UBYTE_OPS
+> > +#define _SIDD_UBYTE_OPS                 0x00
+> > +#define _SIDD_CMP_EQUAL_ANY             0x00
+> > +#define _SIDD_CMP_RANGES                0x04
+> > +#define _SIDD_CMP_EQUAL_ORDERED         0x0c
+> > +#define _SIDD_NEGATIVE_POLARITY         0x10
+> > +#endif
+> Why do this defines end up in git-compat-util.h when they are needed =
+by one file?
+> (see even below)
 
-diff --git a/t/lib-bash.sh b/t/lib-bash.sh
-index 9d428bd..8a030ac 100644
---- a/t/lib-bash.sh
-+++ b/t/lib-bash.sh
-@@ -19,6 +19,7 @@ shellname=Bash
- ps1_expansion_enable () { shopt -s promptvars; }
- ps1_expansion_disable () { shopt -u promptvars; }
- set_ps1_format_vars () {
-+	percent='%%'
- 	c_red='\\[\\e[31m\\]'
- 	c_green='\\[\\e[32m\\]'
- 	c_lblue='\\[\\e[1;34m\\]'
-diff --git a/t/lib-prompt-tests.sh b/t/lib-prompt-tests.sh
-index ba22acc..c6226b1 100644
---- a/t/lib-prompt-tests.sh
-+++ b/t/lib-prompt-tests.sh
-@@ -12,10 +12,11 @@
- #      (non-zero) and ps1_expansion_disable should simply return
- #      non-zero (0)
- #   3. define a function named set_ps1_format_vars that sets the
--#      variables c_red, c_green, c_lblue, and c_clear to the strings
--#      that __git_ps1 uses to add color to the prompt.  The values of
--#      these variables are used in the first argument to the printf
--#      command, so they must be escaped appropriately.
-+#      variables percent, c_red, c_green, c_lblue, and c_clear to the
-+#      strings that __git_ps1 uses to add percent characters and color
-+#      to the prompt.  The values of these variables are used in the
-+#      first argument to the printf command, so they must be escaped
-+#      appropriately.
- #   4. source this library
- #   5. invoke the run_prompt_tests function
- 
-@@ -403,7 +404,7 @@ newline'
- 	'
- 
- 	test_expect_success "$pfx - untracked files status indicator - untracked files" '
--		printf " (master %%)" >expected &&
-+		printf " (master ${percent})" >expected &&
- 		(
- 			GIT_PS1_SHOWUNTRACKEDFILES=y &&
- 			__git_ps1 >"$actual"
-@@ -442,7 +443,7 @@ newline'
- 	'
- 
- 	test_expect_success "$pfx - untracked files status indicator - shell variable set with config enabled" '
--		printf " (master %%)" >expected &&
-+		printf " (master ${percent})" >expected &&
- 		test_config bash.showUntrackedFiles true &&
- 		(
- 			GIT_PS1_SHOWUNTRACKEDFILES=y &&
-@@ -632,7 +633,7 @@ _run_pcmode_tests () {
- 
- 	test_expect_success "$pfx - untracked files status indicator" '
- 		set_ps1expansion &&
--		pcmode_expected "BEFORE: (${c_green}%s${c_clear} ${c_red}%%${c_clear}):AFTER\\n%s" master &&
-+		pcmode_expected "BEFORE: (${c_green}%s${c_clear} ${c_red}${percent}${c_clear}):AFTER\\n%s" master &&
- 		(
- 			GIT_PS1_SHOWUNTRACKEDFILES=y &&
- 			GIT_PS1_SHOWCOLORHINTS=y &&
--- 
-2.0.0
+Because Junio told me to:
+"We would prefer not to add inclusion of any system header files in
+random *.c files, as there often are system dependencies (order of
+inclusion, definition of feature macros, etc.) we would rather want
+to encapsulate in one place, that is git-compat-util.h."
+
+> > --- a/refs.c
+> > +++ b/refs.c
+> > @@ -24,6 +24,25 @@ static unsigned char refname_disposition[256] =3D=
+ {
+> >  	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
+> >  };
+> > =20
+> > +static int check_refname_component_trailer(const char *cp, const c=
+har *refname, int flags)
+> > +{
+> > +	if (cp =3D=3D refname)
+> > +		return 0; /* Component has zero length. */
+> > +	if (refname[0] =3D=3D '.') {
+> > +		if (!(flags & REFNAME_DOT_COMPONENT))
+> > +			return -1; /* Component starts with '.'. */
+> > +		/*
+> > +		 * Even if leading dots are allowed, don't allow "."
+> > +		 * as a component (".." is prevented by a rule above).
+> > +		 */
+> > +		if (refname[1] =3D=3D '\0')
+> > +			return -1; /* Component equals ".". */
+> > +	}
+> > +	if (cp - refname >=3D 5 && !memcmp(cp - 5, ".lock", 5))
+> > +		return -1; /* Refname ends with ".lock". */
+> > +	return cp - refname;
+> > +}
+> > +
+> >  /*
+> >   * Try to read one refname component from the front of refname.
+> >   * Return the length of the component found, or -1 if the componen=
+t is
+> > @@ -37,7 +56,7 @@ static unsigned char refname_disposition[256] =3D=
+ {
+> >   * - it ends with ".lock"
+> >   * - it contains a "\" (backslash)
+> >   */
+> > -static int check_refname_component(const char *refname, int flags)
+> > +static int check_refname_component_1(const char *refname, int flag=
+s)
+> The name check_refname_component_1() doesn't tell too much,
+> (check_refname_component_sse42()  or check_refname_component_nonsse42=
+() say more)
+
+I'll go with "_bytewise", since that's how it works.
+
+> can I suggest to move all SSE code out to a file under compat/,
+> like compat/refs_sse42.c, or something similar ?
+
+Since this is a relatively small section of code, I think that would be
+overkill.  Does anyone else have an opinion?
