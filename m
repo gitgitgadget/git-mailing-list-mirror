@@ -1,130 +1,126 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: Re: [PATCH] Add a Windows-specific fallback to getenv("HOME");
-Date: Wed, 4 Jun 2014 18:16:25 +0200
-Organization: <)><
-Message-ID: <20140604161625.GB23226@camelia.ucw.cz>
-References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com> <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com> <alpine.DEB.1.00.1406041713500.14982@s15462909.onlinehome-server.info> <CABPQNSavYCrdUDyNru-HHMFkdgDRvaCp++f8ZgGKv07sS0eXGQ@mail.gmail.com> <alpine.DEB.1.00.1406041725460.14982@s15462909.onlinehome-server.info> <20140604154503.GB22681@camelia.ucw.cz> <alpine.DEB.1.00.1406041749590.14982@s15462909.onlinehome-server.info>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] clone: add clone.recursesubmodules config option
+Date: Wed, 04 Jun 2014 10:24:06 -0700
+Message-ID: <xmqqvbsgvb9l.fsf@gitster.dls.corp.google.com>
+References: <xmqqoay9wvo6.fsf@gitster.dls.corp.google.com>
+	<1401874256-13332-1-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Erik Faye-Lund <kusmabite@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
-        GIT Mailing-list <git@vger.kernel.org>,
-        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-        msysGit <msysgit@googlegroups.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: msysgit+bncBCU63DXMWULRBW4MXWOAKGQEHVGJULQ@googlegroups.com Wed Jun 04 18:16:54 2014
-Return-path: <msysgit+bncBCU63DXMWULRBW4MXWOAKGQEHVGJULQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f185.google.com ([209.85.212.185])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mara.kim@vanderbilt.edu,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 19:40:08 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBW4MXWOAKGQEHVGJULQ@googlegroups.com>)
-	id 1WsDrY-0005Ye-1U
-	for gcvm-msysgit@m.gmane.org; Wed, 04 Jun 2014 18:16:28 +0200
-Received: by mail-wi0-f185.google.com with SMTP id e4sf124376wiv.2
-        for <gcvm-msysgit@m.gmane.org>; Wed, 04 Jun 2014 09:16:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:organization:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=ckcYcWyHCMG7EhxPATGXtXJ0Gpr5rjIvJJc19zOgkNg=;
-        b=RGEW2aP6F/sLAwvCHluszcNG6cVd8A4aPI4BrN0U9jdnRQlcPPVWGMmpDuxlfL1Mn1
-         VwVDlszI+eecYD7DEW+M9lYAXMDuU+4j3jIC5FM8UJSqZpYY0j8HzLIb08AG1yGH9PHE
-         fiG2eZ3/6k/H4Yk+5rHoJBjE3xYQFRg0OeXboCvUe2zzsPGr71Jzm/HxzMreFZKLQwJc
-         i1ya7CLR/Fdo5AtoAzjB4NCfXgm537EUnApj6IBFnzGalHDEyq+qutCp1a5SzUSjtKw2
-         a6KYwRYKdZyRqgTXBjIelA/xwFB9jjhm5aZfETTtC6ZJERUTfERqs/WaKdCE84CShGdz
-         3S1A==
-X-Received: by 10.152.37.65 with SMTP id w1mr101laj.42.1401898587763;
-        Wed, 04 Jun 2014 09:16:27 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.205.11 with SMTP id lc11ls585441lac.79.gmail; Wed, 04 Jun
- 2014 09:16:26 -0700 (PDT)
-X-Received: by 10.112.163.195 with SMTP id yk3mr400871lbb.20.1401898586817;
-        Wed, 04 Jun 2014 09:16:26 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id el3si1221923wib.0.2014.06.04.09.16.26
-        for <msysgit@googlegroups.com>;
-        Wed, 04 Jun 2014 09:16:26 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 7A97E1C00A8;
-	Wed,  4 Jun 2014 18:16:26 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s54GGQRs023376;
-	Wed, 4 Jun 2014 18:16:26 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s54GGP5c023375;
-	Wed, 4 Jun 2014 18:16:25 +0200
-In-Reply-To: <alpine.DEB.1.00.1406041749590.14982@s15462909.onlinehome-server.info>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250746>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WsFAU-0001Hf-BJ
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 19:40:07 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752016AbaFDRYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 13:24:15 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62885 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751214AbaFDRYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 13:24:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 71D8C1C072;
+	Wed,  4 Jun 2014 13:24:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=crol9q3DH28DRHzYgPrwCxWhEzU=; b=E8Gxqn
+	RPugIBCJ6+3YNQeBsXWpPOlqoB5fl7evyIjJ9gO8IPiAnaf2v8BCMoA3CWojgEJI
+	wLqvvqM9PNvbn8TFTMNT1eZVpeiQiv9+l11hmJDXEPVloJnfs1I3GL2pYl4FdOCC
+	h1Rb+8RG+ciXmHF3Yz1YSeuoQlmJkTuWUsNOg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=n12dfnGVZMVRrJ78zIdX9wzV/de0cg72
+	ZX46Y0wl+dDsGZfFlMCNDRoqg0LSciUTg+PtY1690pgFGGPAxejujw6QoCOJsGgS
+	51By37oMmBCxCyiLG/+ppOWKq1idZAx5aKWl6++x9mpB2rOkVgcsBfZU3O9qFG+u
+	app05hRpDmQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6821A1C071;
+	Wed,  4 Jun 2014 13:24:12 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A6B421C06A;
+	Wed,  4 Jun 2014 13:24:08 -0400 (EDT)
+In-Reply-To: <1401874256-13332-1-git-send-email-judge.packham@gmail.com>
+	(Chris Packham's message of "Wed, 4 Jun 2014 21:30:56 +1200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 096589B0-EC0D-11E3-9EBB-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250747>
 
-Hi dscho,
+Chris Packham <judge.packham@gmail.com> writes:
 
-your arguments seem really strong.  (Especially the four years of
-battle testing, with the memories of constant problems with HOME before.)
+> On 04/06/14 09:05, Junio C Hamano wrote:
+>>> Also, going --recursive when the user did not want is a lot more
+>>> expensive mistake to fix than not being --recursive when the user
+>>> wanted to.
+>> 
+>> Having said all that, I do not mean to say that I am opposed to
+>> introduce some mechanism to let the users express their preference
+>> between recursive and non-recursive better, so that "git clone"
+>> without an explicit --recursive (or --no-recursive) can work to
+>> their taste.  A configuration in $HOME/.gitconfig might be a place
+>> to start, even though that has the downside of assuming that the
+>> given user would want to use the same settings for all his projects,
+>> which may not be the case in practice.
+>
+> And here's a quick proof of concept. Not sure about the config variable name
+> and it could probably do with a negative test as well.
 
-I hope they are strong enough to convince Junio to accept this patch;
-that would help.
+I would be more worried about the semantics than the name, though;
+re-read the part you quoted with extra stress on "has the downside".
 
-Stepan
+I think I heard the submodule folks (cc'ed) discuss an approach to
+allow various submodules to be marked with "tags" with a new type of
+entry in .gitmodules file in the superproject, and use these tags to
+signal "by default, a new clone will recurse into this submodule".
 
-PS (about mingwGitDevEnv):
-> plan is to switch to mingwGitDevEnv for said release. No more msysGit.
-> Like, bu-bye. Thanks for all the fish.
+E.g. if projects standardized on "defaultClone" to mark such
+submodules, then $HOME/.gitconfig could say
 
-Interesting.
+    [clone]
+        recursesubmodules = defaultClone
 
-With msysgit, there is the "net installer" - first time I installed
-msys/mingw sucessfully, it was as easy as Cygwin, perhaps even
-easier.
+Or the projects may mark platform specific submodules with tags,
+e.g. a .gitmodules in a typical superproject might say something
+like this:
 
-When I go to mingwGitDevEnv home page, I read about chickens, eggs,
-and upgrading Perl (which msysGit simply gives up, hinting that it is
-almost impossible).
-So I decided to wait for their Git 2.0.0 release before I try to
-install it (again).
+    [submodule "posix"]
+    	path = ports/posix
+        tags = linux obsd fbsd osx
+    [submodule "windows"]
+        path = ports/windows
+        tags = win32
+    [submodule "doc"]
+    	path = documentation
+        tags = defaultClone
 
-I apologize for being so cheeky, I hope it will help anyway...
+and then the user's $HOME/.gitconfig might say
 
-PPS: from marketing point of view, mingwGitDevEnv is far from usable
-name.  Dscho, if you support the idea, would you mind franchising
-msysGit 2.0 for a decent amount?
+    [clone]
+        recursesubmodules = defaultClone win32
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+to tell a "git clone" of such a superproject to clone the top-level,
+read its .gitmodules, and choose documentation/ and ports/windows
+submodules but not ports/posix submodule to be further cloned into
+the working tree of the superproject.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Of course, if this kind of project organization proves to be useful,
+we should try to standardize the set of tags early before people
+start coming up with random variations of the same thing, spelling
+the same concept in different ways only to be different, and if that
+happens, then we could even give a non-empty default value for the
+clone.recursesubmodules when $HOME/.gitconfig is missing one.
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Just a random thought.
