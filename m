@@ -1,143 +1,94 @@
 From: David Turner <dturner@twopensource.com>
 Subject: Re: [PATCH v6 2/2] refs.c: SSE4.2 optimizations for
  check_refname_component
-Date: Wed, 04 Jun 2014 17:14:36 -0400
+Date: Wed, 04 Jun 2014 17:16:00 -0400
 Organization: Twitter
-Message-ID: <1401916476.18134.165.camel@stross>
+Message-ID: <1401916560.18134.167.camel@stross>
 References: <1401853091-15535-1-git-send-email-dturner@twitter.com>
 	 <1401853091-15535-2-git-send-email-dturner@twitter.com>
 	 <538ED2F1.9030003@web.de>
+	 <CACsJy8CK3LNaPVNv=EfFX06uOgpujAz364ZDFL3HBPicDNF57w@mail.gmail.com>
+	 <538F2C6B.2030004@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu,
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
 	David Turner <dturner@twitter.com>
 To: Torsten =?ISO-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 04 23:14:45 2014
+X-From: git-owner@vger.kernel.org Wed Jun 04 23:16:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsIWD-0006Ed-B0
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 23:14:45 +0200
+	id 1WsIXa-0007Hl-BC
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 23:16:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751405AbaFDVOl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 17:14:41 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:37462 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751010AbaFDVOk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 17:14:40 -0400
-Received: by mail-qg0-f42.google.com with SMTP id q107so145159qgd.29
-        for <git@vger.kernel.org>; Wed, 04 Jun 2014 14:14:39 -0700 (PDT)
+	id S1751122AbaFDVQG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 17:16:06 -0400
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:35515 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750742AbaFDVQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 17:16:05 -0400
+Received: by mail-qg0-f43.google.com with SMTP id 63so153736qgz.16
+        for <git@vger.kernel.org>; Wed, 04 Jun 2014 14:16:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
          :references:organization:content-type:content-transfer-encoding
          :mime-version;
-        bh=VtBt1vXffOAAja+majBZxovIODTFj5prliH/cut260c=;
-        b=OwFO55WHqbToYON9HTOl8bxcC9onAH8dBeyOwRGbKnPH198NYAhTGMHrWw6SfX/h7Z
-         0PFHF+IEc2BSCnawH58Hlh7t2JKkaNaPcKHFMIRGk/EgHtl2uAnz+neqA0I89F7DdHhs
-         uFRXGDAGSJ67vEf5P3eoCqHJJBzb87lQ2sUw1EKZ2AaTl4pJf4mfF3RCDOqK4buxiGwD
-         ZcRqpPeXFWF+C8nL+YC4NH9ULGxM35xoRGH+PxUJmPZbEjXwDVkbZ86FEyBa+OU7hGY1
-         MBbsQTgi7L83c744N+9vaNle7ps8oGW5fAJgtysYc4SbrY5fKU/r2ql9hUkiHnBpGd/p
-         tqzQ==
-X-Gm-Message-State: ALoCoQknKWqhwCmD/W2xY8LRmAgvBbq0lvVAMcRg5bAtNEAkkj+vIzOKAUf9qGYY/OWq+48tZ/s3
-X-Received: by 10.140.84.168 with SMTP id l37mr72866736qgd.104.1401916479291;
-        Wed, 04 Jun 2014 14:14:39 -0700 (PDT)
+        bh=oTedYxWxUwg1LKS1J3KhB4Lx4DPAmms8tNEdIQapOZI=;
+        b=MicpsF+pt3akx29OsTLLKZocJBS1ld+zw8WCM2mZAVQ3NZlKzHCYzCj96FS/DpEyol
+         isgWmGe05eHinpDHs7fD88myPJb5WSVLoeH+3QU2EilhpVmNZlRptQx4LSLZlCD18oLS
+         GkCieBiuQAndlwFeWPOFxTQIY/UP58C7jnnwupG/vk7dqCxzi/dttU6lZ4UoKu1fTSIl
+         x9avAmTBKckWWPdXXoMk7d2sibyzFG2mmmdMUXk2bhTnFRXUyTwV56gQVop4w4Lvifuc
+         ZXl3/qjwpaZ3aKa77lNyy4MwR1o9v5Nac/J0GVJnRFSytU+HNJi6aE/x1SF62wNkXYMZ
+         8U/g==
+X-Gm-Message-State: ALoCoQlWy/r9JomtClbfo2B1K29TG365lnNP19A9r+7KuqvnPmjLZLKqj8xTwYt2u45K1cS1DD7o
+X-Received: by 10.140.80.67 with SMTP id b61mr71986428qgd.98.1401916563788;
+        Wed, 04 Jun 2014 14:16:03 -0700 (PDT)
 Received: from [172.18.24.70] ([8.25.196.25])
-        by mx.google.com with ESMTPSA id i9sm5953068qaq.14.2014.06.04.14.14.37
+        by mx.google.com with ESMTPSA id i16sm2371761qge.9.2014.06.04.14.16.01
         for <multiple recipients>
         (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Wed, 04 Jun 2014 14:14:38 -0700 (PDT)
-In-Reply-To: <538ED2F1.9030003@web.de>
+        Wed, 04 Jun 2014 14:16:02 -0700 (PDT)
+In-Reply-To: <538F2C6B.2030004@web.de>
 X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250794>
 
-On Wed, 2014-06-04 at 10:04 +0200, Torsten B=C3=B6gershausen wrote:
-[snip discussion of compiler flags; I'll look into a cpuid approach]
+On Wed, 2014-06-04 at 16:25 +0200, Torsten B=C3=B6gershausen wrote:
+> On the other hand, looking here:=20
+> http://sourceware.org/ml/libc-alpha/2009-10/msg00063.html
+> and looking into refs.c,
+> it seems as if we can try to run=20
+> strcspn(refname, bad_characters)
+> and=20
+> strstr(refname, "@{"
+> and=20
+> strstr(refname, ".."
+> on each refname, instead of checking each char in a loop.
+> The library will pick the fastest version for strcspn() automatically=
+=2E
 
-> > --- a/git-compat-util.h
-> > +++ b/git-compat-util.h
-> > @@ -668,6 +668,28 @@ void git_qsort(void *base, size_t nmemb, size_=
-t size,
-> >  #endif
-> >  #endif
-> > =20
-> > +#ifndef NO_SSE42
-> > +#include <nmmintrin.h>
-> > +/*
-> > + * Clang ships with a version of nmmintrin.h that's incomplete; if
-> > + * necessary, we define the constants that we're going to use.
-> > + */
-> > +#ifndef _SIDD_UBYTE_OPS
-> > +#define _SIDD_UBYTE_OPS                 0x00
-> > +#define _SIDD_CMP_EQUAL_ANY             0x00
-> > +#define _SIDD_CMP_RANGES                0x04
-> > +#define _SIDD_CMP_EQUAL_ORDERED         0x0c
-> > +#define _SIDD_NEGATIVE_POLARITY         0x10
-> > +#endif
-> Why do this defines end up in git-compat-util.h when they are needed =
-by one file?
-> (see even below)
+Yes, you could try that, but I worry that it would be less efficient,
+because it duplicates the looping machinery.
 
-Because Junio told me to:
-"We would prefer not to add inclusion of any system header files in
-random *.c files, as there often are system dependencies (order of
-inclusion, definition of feature macros, etc.) we would rather want
-to encapsulate in one place, that is git-compat-util.h."
+> David, the repo you run the tests on, is it public?
 
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -24,6 +24,25 @@ static unsigned char refname_disposition[256] =3D=
- {
-> >  	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
-> >  };
-> > =20
-> > +static int check_refname_component_trailer(const char *cp, const c=
-har *refname, int flags)
-> > +{
-> > +	if (cp =3D=3D refname)
-> > +		return 0; /* Component has zero length. */
-> > +	if (refname[0] =3D=3D '.') {
-> > +		if (!(flags & REFNAME_DOT_COMPONENT))
-> > +			return -1; /* Component starts with '.'. */
-> > +		/*
-> > +		 * Even if leading dots are allowed, don't allow "."
-> > +		 * as a component (".." is prevented by a rule above).
-> > +		 */
-> > +		if (refname[1] =3D=3D '\0')
-> > +			return -1; /* Component equals ".". */
-> > +	}
-> > +	if (cp - refname >=3D 5 && !memcmp(cp - 5, ".lock", 5))
-> > +		return -1; /* Refname ends with ".lock". */
-> > +	return cp - refname;
-> > +}
-> > +
-> >  /*
-> >   * Try to read one refname component from the front of refname.
-> >   * Return the length of the component found, or -1 if the componen=
-t is
-> > @@ -37,7 +56,7 @@ static unsigned char refname_disposition[256] =3D=
- {
-> >   * - it ends with ".lock"
-> >   * - it contains a "\" (backslash)
-> >   */
-> > -static int check_refname_component(const char *refname, int flags)
-> > +static int check_refname_component_1(const char *refname, int flag=
-s)
-> The name check_refname_component_1() doesn't tell too much,
-> (check_refname_component_sse42()  or check_refname_component_nonsse42=
-() say more)
+Unfortunately, it is an internal Twitter repo.
 
-I'll go with "_bytewise", since that's how it works.
+> Or is there a public repo with this many refs ?
 
-> can I suggest to move all SSE code out to a file under compat/,
-> like compat/refs_sse42.c, or something similar ?
+I do not know of one.
 
-Since this is a relatively small section of code, I think that would be
-overkill.  Does anyone else have an opinion?
+> Or can you make a dummy repo with 60k refs ?
+
+Sure!  I actually went with > 120k to make measurement easier:
+https://github.com/dturner-tw/many-refs
