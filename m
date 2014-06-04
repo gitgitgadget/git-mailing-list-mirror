@@ -1,166 +1,134 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: 2.0.0 regression? request pull does not seem to find head
-Date: Wed, 4 Jun 2014 21:40:33 +0300
-Message-ID: <20140604184033.GB11756@redhat.com>
-References: <20140602210131.GA17171@redhat.com>
- <CA+55aFyuj=B4jhc9vPkxHotSgJnRXMj_P_QkHCt-TKXtj8tOFQ@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH] t9001: avoid not portable '\n' with sed
+Date: Wed, 04 Jun 2014 20:42:35 +0200
+Message-ID: <538F689B.1020804@web.de>
+References: <538ED6DF.5020505@web.de>	<xmqqr434vaeh.fsf@gitster.dls.corp.google.com> <xmqqd2eov8ys.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jun 04 20:40:18 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 04 20:43:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsG6g-00035l-AY
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 20:40:15 +0200
+	id 1WsG9g-0005OJ-CL
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 20:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751240AbaFDSkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2014 14:40:07 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:29035 "EHLO mx1.redhat.com"
+	id S1751694AbaFDSnP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 14:43:15 -0400
+Received: from mout.web.de ([212.227.15.4]:61923 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750933AbaFDSkG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 14:40:06 -0400
-Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s54Ie4PC032517
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 4 Jun 2014 14:40:05 -0400
-Received: from redhat.com (ovpn-116-26.ams2.redhat.com [10.36.116.26])
-	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s54Ie3kf011975;
-	Wed, 4 Jun 2014 14:40:03 -0400
-Content-Disposition: inline
-In-Reply-To: <CA+55aFyuj=B4jhc9vPkxHotSgJnRXMj_P_QkHCt-TKXtj8tOFQ@mail.gmail.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
+	id S1751109AbaFDSnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 14:43:14 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0LlayN-1WHHV81ryp-00bKnj; Wed, 04 Jun 2014 20:42:41
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqqd2eov8ys.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:K8PgLCfqs57HOl38T4gJ73rFfXBCA9gr9YlLb8CD4kysjL4Q0aE
+ WE7oa9GZyp/m4WjT1UnNmGTNeaf4txhDhihW65OUgYvKxh/rPoXDlr+M0Z476bMHyHnJmDk
+ XMR+yT0aoQ4b1XKkRumG1i6IZcJA2ursm5WUdGipeN8gs5Yh1hQmAgshdkyQvej42tl5H/m
+ 3Tg+8CDvoZxJ7who/NBow==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250755>
 
-On Mon, Jun 02, 2014 at 02:36:01PM -0700, Linus Torvalds wrote:
-> On Mon, Jun 2, 2014 at 2:01 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > [mst@robin linux]$ git request-pull net-next/master  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git net-next
-> > warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-> > warn: Are you sure you pushed 'net-next' there?
-> 
-> git request-pull is clearly correct. There is no "net-next" in that
-> public repository.
+On 2014-06-04 20.13, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>=20
+>> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>>
+>>> t9001 used a '\n' in a sed expression to split one line into two li=
+nes.
+>>> Some versions of sed simply ignore the '\' before the 'n', treating
+>>> '\n' as 'n'.
+>>>
+>>> As the test already requires perl as a prerequisite, use perl inste=
+ad of sed.
+>>>
+>>> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+>>> ---
+>>
+>> Hmph.  I read this in pubs.opengroup.org/onlinepubs/9699919799/utili=
+ties/sed.html
+>>
+>>     The escape sequence '\n' shall match a <newline> embedded in the
+>>     pattern space.
+>>
+>> so it may be better to be a bit more explicit in the log message to
+>> say whose implementation has this issue to warn people.
+>>
+>>>  t/t9001-send-email.sh | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+>>> index 64d9434..2bf48d1 100755
+>>> --- a/t/t9001-send-email.sh
+>>> +++ b/t/t9001-send-email.sh
+>>> @@ -1342,7 +1342,7 @@ test_cover_addresses () {
+>>>  	git format-patch --cover-letter -2 -o outdir &&
+>>>  	cover=3D`echo outdir/0000-*.patch` &&
+>>>  	mv $cover cover-to-edit.patch &&
+>>> -	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.p=
+atch >"$cover" &&
+>>> +	"$PERL_PATH" -pe "s/^From:/$header: extra\@address.com\nFrom:/" c=
+over-to-edit.patch | tr Q "$LF" >"$cover" &&
+>>
+>> We have a shell function "perl" in test-lib-function.sh these days
+>> so that you do not have to write "$PERL_PATH" yourself in tests ;-)
+>=20
+> Also, piping output from perl to tr feels somewhat suboptimal.  I do
+> not see where in the test material we use "Q to LF", and we may want
+> to remove that altogether, but without that removal, an updated
+> patch may look like this.
+>=20
+>  t/t9001-send-email.sh | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 64d9434..9f06b8c 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -1342,7 +1342,10 @@ test_cover_addresses () {
+>  	git format-patch --cover-letter -2 -o outdir &&
+>  	cover=3D`echo outdir/0000-*.patch` &&
+>  	mv $cover cover-to-edit.patch &&
+> -	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.pat=
+ch >"$cover" &&
+> +	perl -pe "
+> +		s/^From:/$header: extra\@address.com\nFrom:/;
+> +		y/Q/\n/;
+> +	" cover-to-edit.patch >"$cover" &&
+>  	git send-email \
+>  	  --force \
+>  	  --from=3D"Example <nobody@example.com>" \
+Good catch, the "tr" should had been removed.
+My first version used
+sed "s/^From:/$header: extra@address.comQFrom:/"
+and the Q was replaced by tr with a literal LF.
+So I think the 'Q' -> '\n' conversion should be removed completely :-)
 
-OK, I see that it's correct.
-It used to match commit and go from there, but it does not anymore, and
-I didn't know this.
+The sed in question is /usr/bin/sed under Mac OS X.
+Then we have the question: What exactly is the pattern space?
 
-However, it does not tell me this.
-It tells me there's no match for commit
-2ae76693b8bcabf370b981cd00c36cd41d33fabc:
-that commit is there.
-Also "match" implies some matching still going on, might be best
-to drop this.
+>In default operation, sed cyclically shall append a line of input, les=
+s its terminating <newline> >character, into the pattern space....
 
-> It *used* to be that request-pull then magically tried to fix it up
-> for you, which in turn resulted in the guess not being right, like
-> pointing to the wrong branch that just happened to have the same SHA1,
-> or pointing to a branch when it _should_ have pointed to a tag.
-
-Why not just put the SHA1 in there?
-In fact it would be a bit more robust in case of
-non-signed pull requests, won't it?
-
-> Now, if you pushed your local "net-next" branch to another branch name
-> (I can find a branch name called "vhost-next" at that repository, then
-> you can *tell* git that, using the same syntax you must have used for
-> the push.
-> 
-> So something like
-> 
->   git request-pull net-next/master
-> git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-> net-next:vhost-next
-> 
-> should work so that git doesn't end up having to guess (and
-> potentially guessing wrong).
-> 
-> But it may actually be a simpler driver error, and you wanted to use
-> "vhost-next", and that "net-next" was actually incorrect?
-> 
->        Linus
-
-Yes: net-next is a local name, on the remote it's called vhost-next.
-
-
-I realize now that with
-       git request-pull [-p] <start> <url> [<end>]
-<end> actually is a name of commit in the *remote*
-tree, not the local one.
-Documentation could be improved a bit:
-
-           Commit to end at (defaults to HEAD). This names the commit at
-		the tip of the history you are asking to be pulled.
-
-           When the repository named by <url> has the commit at a tip of
-		a ref that is different from the ref you have locally, you can use
-           the <local>:<remote> syntax, to have its local name, a colon
-		:, and its remote name.
-
-It does not have to be commit (could be signed tag), and
-that text does not make it very clear what is different from what
-until you re-read it a couple of times.
-How about:
-           Object (commit or tag) to end at (defaults to HEAD). This names the object at
-		the tip of the history you are asking to be pulled.
-		The name <end> must refer to the same object in both the
-		local tree and the remote tree pointed at by <url>.
-	
-           If the object that you want pulled has a different name
-	   in the local and the remote trees, you can use
-           the <local>:<remote> syntax, to have its local name, a colon
-		:, and its remote name.
-
-
-
-The error message could be improved too, it asks me whether
-I pushed net-next which I did.
-Would be nicer if it asked "Pushed net-next to net-next there?"
-
-Also, how is it supposed to work without <end>?
-
- git request-pull net-next/master
-git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found
-at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-warn: Are you sure you pushed 'HEAD' there?
-
-Where should I push HEAD, and how?
-In fact does git let you push to HEAD?
-
-
-Finally, the output even with a warning could be better:
-
-git request-pull net-next/master
-git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-warn: No match for commit 2ae76693b8bcabf370b981cd00c36cd41d33fabc found
-at git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git
-warn: Are you sure you pushed 'HEAD' there?
-The following changes since commit
-96b2e73c5471542cb9c622c4360716684f8797ed:
-
-  Revert "net/mlx4_en: Use affinity hint" (2014-06-02 00:18:48 -0700)
-
-are available in the git repository at:
-
-  git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost.git 
-
-
-If someone does not notice the warning (e.g. the warning is
-on stderr and script could only redirect stdout)
-then pull request is actually wrong.
-It would be better to find the commit on both sides and
-if it's there, just use the hash name.
+Isn't that the stuff from the input?
+But that doesn't make too much sence to me, since "input lines" are ter=
+minated by \n.
+So pattern space seems to mean output when they talk about the \n
+Anyway, the \n (to insert a newline into the output) works under Linux,=
+ but not Mac OS.
 
 
 
--- 
-MST
+
+=20
