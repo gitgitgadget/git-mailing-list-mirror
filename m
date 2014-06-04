@@ -1,125 +1,101 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Harden UTF-8 handling in generated links
-Date: Wed, 04 Jun 2014 20:47:54 +0200
-Message-ID: <538F69DA.9010201@gmail.com>
-References: <20140514184145.GA25699@localhost.localdomain> <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com> <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com> <20140515050820.GA30785@localhost.localdomain> <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se> <20140515184808.GA7964@localhost.localdomain> <CANQwDwe+GJ+yAYWdVfMaHq97zGXBoepCfUdLiaQD9LFoz3SiOA@mail.gmail.com> <53849FB2.7000701@gmail.com> <20140604154128.GA28549@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Wagner <mail@mwagner.org>
-X-From: git-owner@vger.kernel.org Wed Jun 04 20:48:23 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH 00/11] Add transaction support for reflog
+Date: Wed,  4 Jun 2014 11:57:41 -0700
+Message-ID: <1401908272-7600-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 04 20:58:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsGES-0000iO-UW
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 20:48:17 +0200
+	id 1WsGO0-0007t0-77
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 20:58:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751651AbaFDSsG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 14:48:06 -0400
-Received: from mail-we0-f171.google.com ([74.125.82.171]:40135 "EHLO
-	mail-we0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751209AbaFDSsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 14:48:04 -0400
-Received: by mail-we0-f171.google.com with SMTP id w62so9105192wes.30
-        for <git@vger.kernel.org>; Wed, 04 Jun 2014 11:48:03 -0700 (PDT)
+	id S1751685AbaFDS56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 14:57:58 -0400
+Received: from mail-vc0-f202.google.com ([209.85.220.202]:56025 "EHLO
+	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751522AbaFDS55 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 14:57:57 -0400
+Received: by mail-vc0-f202.google.com with SMTP id lc6so11020vcb.5
+        for <git@vger.kernel.org>; Wed, 04 Jun 2014 11:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=kiNhKWzw5hcYahT8LEYZ/XWNyj4yRCrxGoja59/wNtk=;
-        b=K4POsRAZSoq9HDU9tsHACLO1tEJhsK6WTpXcT4uVqYzWrPz75oshBC3VkISMKL/j1N
-         XU/ZAmZzfiEFHrI1WT/9S3UQCHnbYE8+ePRSyiswIRcE6p9XKGHffyXRNOyDqsyeK/iB
-         qTqjTuDl+C467GLif1GMibdJpQ/Ia++oBDMIrhwASuKaoyaliMydZuIGhd73nudjijje
-         nrcCCFcZSZ2SPPLRhGi8XXUcdWbPdVjRyzJL4e0Z198foGnJKsAwaLij/0Dbpmyx8l4V
-         oGM6WdjGNEPD5mKaQcZV4+v0dpQJASH39iHELIu/H2cACfTIeR+hYN/gQMsyOP7vbOZQ
-         R0RA==
-X-Received: by 10.15.35.137 with SMTP id g9mr3205406eev.73.1401907683545;
-        Wed, 04 Jun 2014 11:48:03 -0700 (PDT)
-Received: from [192.168.130.241] ([158.75.2.130])
-        by mx.google.com with ESMTPSA id l48sm7832721eey.15.2014.06.04.11.48.01
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=v8NIeOrmx+aafgH8cVuZiEhdE4RUN+SjC9QqbZaW+Qw=;
+        b=pknWXQNby0tke4aDlwF4+wQZseDkAagaSqzdh0ldlNc3MLWcQ3G3wt/uk+GGYWeyLm
+         yUAsCaETXMlCORnveqdbu5EScYayZot2bRfMgs3XHpMLqEUcmT3ln4w5KpyW7PNBWD8K
+         ckx2RFxl43csACYkDwyMbg+fonwsDpvInMshJynPmKWWgu5YVFBZ/qsw1oh7X++1jCU1
+         gcDdTGU/RvsAtbfSM8XXz/9bdH3rb1M5a9aT8pmzhkawQq4K4u0bKfHKp4q7famFJhjH
+         UxUsyD/NixxGfvGOxCfamP9Ug+XzhG8nxiXBUWnTfzs8hdql8EUN3BYkNAJ60Z1RBIgj
+         htSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=v8NIeOrmx+aafgH8cVuZiEhdE4RUN+SjC9QqbZaW+Qw=;
+        b=Ghsx1jTNx+Zpd4qzUgtJruCQwbXDPobNudpw57xysnVtBwVDDelaCx/kiWKatWFtpT
+         /CMEd99ixO/BUaAb4s4q+i7brKuX/SxheoxIn3mupVHKa1G8SmsuyjRXCJqo4YdLSqg9
+         TEczXO5ZpBZDtUJ6ylD1vjdvQ2OHM1bjRXlhwHt1va2Mbw/zHAdm8561b9pN1JeNMBvs
+         LC7lUzlQKuYm7p4UL1mwpBA/uuqLDWxQhM5RcbvbTm7iDZc3/cd25T31sdes7kyB4Y15
+         53m9X48treNDU6ER1oKGgXOAK1zxGTZZleHq6Zqo0j0X2YegUWVep/wXOeGO3TF3fSNw
+         tN6Q==
+X-Gm-Message-State: ALoCoQlEiaqFq0LeKIXu8rDXsff5J3sQIJx7PF/vGbrLWWfdJ7sigxgo37IHyqJQWAE5AX/qxA8a
+X-Received: by 10.236.123.68 with SMTP id u44mr19338347yhh.19.1401908276409;
+        Wed, 04 Jun 2014 11:57:56 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id o69si330863yhp.6.2014.06.04.11.57.56
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 04 Jun 2014 11:48:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140604154128.GA28549@localhost.localdomain>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 04 Jun 2014 11:57:56 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 3F42431D63D;
+	Wed,  4 Jun 2014 11:57:56 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id CFA61E0887; Wed,  4 Jun 2014 11:57:55 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.578.gb9e379f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250759>
 
-Michael Wagner wrote:
-> On Tue, May 27, 2014 at 04:22:42PM +0200, Jakub Nar=C4=99bski wrote:
+This patch series is based on the ref-transaction series and is available at
+https://github.com/rsahlberg/git/tree/ref-transactions-reflog
 
->> Subject: [PATCH] gitweb: Harden UTF-8 handling in generated links
->>
->> esc_html() ensures that its input is properly UTF-8 encoded and mark=
-ed
->> as UTF-8 with to_utf8().  Make esc_param() (used for query parameter=
-s
->> in generated URLs), esc_path_info() (for escaping path_info
->> components) and esc_url() use it too.
->>
->> This hardens gitweb against errors in UTF-8 handling; because
->> to_utf8() is idempotent it won't change correct output.
-[...]
->>   sub esc_param {
->>   	my $str =3D shift;
->>   	return undef unless defined $str;
->> +
->> +	$str =3D to_utf8($str);
->>   	$str =3D~ s/([^A-Za-z0-9\-_.~()\/:@ ]+)/CGI::escape($1)/eg;
->>   	$str =3D~ s/ /\+/g;
->> +
->>   	return $str;
->>   }  =20
-=20
-> While trying to view a "blob_plain" of "G=C3=BCtekritierien.txt", a 4=
-04 error
-> occured. "git_get_hash_by_path" tries to resolve the hash with the wr=
-ong
-> filename (git ls-tree -z HEAD -- G=C3=83=C2=BCtekriterien.txt) and fa=
-ils.
->=20
-> The filename needs the correct encoding. Something like this is proba=
-bly
-> needed for all filenames and should be done at a prior stage:
+This patch series adds transaction support for updating the reflog.
 
-True.
+Ronnie Sahlberg (11):
+  refs.c make ref_transaction_create a wrapper to ref_transaction_update
+  refs.c: make ref_transaction_delete a wrapper for
+    ref_transaction_update
+  refs.c: rename the transaction functions
+  refs.c: add a new update_type field to ref_update
+  refs.c: add a function to append a reflog entry to a fd
+  lockfile.c: make hold_lock_file_for_append preserve meaningful errno
+  refs.c: add a transaction function to append a reflog entry
+  refs.c: add a flag to allow reflog updates to truncate the log
+  refs.c: only write reflog update if msg is non-NULL
+  refs.c: allow multiple reflog updates during a single transaction
+  reflog.c: use a reflog transaction when writing during expire
 
-=46irst, I wonder why the tests I did for this situation didn't
-show any errors even before the "harden href()" patch. What
-is different in your config that you see those errors?
+ branch.c               |  11 +-
+ builtin/commit.c       |  14 +--
+ builtin/fetch.c        |  12 +-
+ builtin/receive-pack.c |  14 +--
+ builtin/reflog.c       |  84 ++++++-------
+ builtin/replace.c      |  10 +-
+ builtin/tag.c          |  10 +-
+ builtin/update-ref.c   |  22 ++--
+ copy.c                 |  20 ++--
+ fast-import.c          |  23 ++--
+ lockfile.c             |   7 +-
+ refs.c                 | 317 ++++++++++++++++++++++++++++++++++++-------------
+ refs.h                 |  64 ++++++----
+ sequencer.c            |  12 +-
+ walker.c               |  17 ++-
+ 15 files changed, 404 insertions(+), 233 deletions(-)
 
-> ---
->   gitweb/gitweb.perl |    2 +-
->   1 files changed, 1 insertions(+), 1 deletions(-)
->=20
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 77e1312..e4a50e7 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -4725,7 +4725,7 @@ sub git_print_tree_entry {
->                  }
->                  print " | " .
->                          $cgi->a({-href =3D> href(action=3D>"blob_pla=
-in", hash_base=3D>$hash_base,
-> -                                              file_name=3D>"$basedir=
-$t->{'name'}")},
-> +                                              file_name=3D>"$basedir=
-" . to_utf8($t->{'name'}))},
-
-Second, my "harder href()" patch does not work for this because
-concatenation of non-UFT8 with UTF8 string screws up Perl
-knowledge what is and isn't UTF8.  So to_utf8() after concat
-doesn't help.
-
-
->                                  "raw");
->                  print "</td>\n";
->=20
+-- 
+2.0.0.578.gb9e379f
