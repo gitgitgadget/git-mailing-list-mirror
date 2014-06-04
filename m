@@ -1,135 +1,146 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: Re: [PATCH] Add a Windows-specific fallback to getenv("HOME");
-Date: Wed, 04 Jun 2014 16:55:46 +0200
-Message-ID: <538F3372.5070400@gmail.com>
-References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com> <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com>
+From: Marc Branchaud <mbranchaud@xiplink.com>
+Subject: Re: [PATCH v2 8/9] fetch doc: add a section on configured remote-tracking
+ branches
+Date: Wed, 04 Jun 2014 10:55:21 -0400
+Message-ID: <538F3359.2050601@xiplink.com>
+References: <1401833792-2486-1-git-send-email-gitster@pobox.com> <1401833792-2486-9-git-send-email-gitster@pobox.com>
+Reply-To: marcnarc@xiplink.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>, 
- Thomas Braun <thomas.braun@virtuell-zuhause.de>,
- msysGit <msysgit@googlegroups.com>
-To: kusmabite@gmail.com, Duy Nguyen <pclouds@gmail.com>
-X-From: msysgit+bncBCH3XYXLXQDBB4XGXSOAKGQEHD5Q72Q@googlegroups.com Wed Jun 04 16:55:47 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBB4XGXSOAKGQEHD5Q72Q@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f192.google.com ([209.85.217.192])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 04 17:02:06 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBB4XGXSOAKGQEHD5Q72Q@googlegroups.com>)
-	id 1WsCbS-0005nz-Uf
-	for gcvm-msysgit@m.gmane.org; Wed, 04 Jun 2014 16:55:46 +0200
-Received: by mail-lb0-f192.google.com with SMTP id p9sf763192lbv.19
-        for <gcvm-msysgit@m.gmane.org>; Wed, 04 Jun 2014 07:55:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=KEKneIZLQPven7P1uTA4vA8xlFVPJTTkhDdSwO7yk9M=;
-        b=lYiseTqO17ZrkWMWwdSY2liR+OpzKey51cxAFdTzicdogFTKkugZBhu1Y/BmyFw9uR
-         Jylqn5T3/GflEKwxoDMPe6lhjD3Jen1h3yp/xBwV1VZlzlnKKA9BV+Hpqio6IgnNq1DN
-         OR3kDM/MVLmXmFG7G2NN90DID3JIVCTmfTlBl8qqPBEj6LKxGCimZMkzEtjfGGkGb5k0
-         psSqiMBONR8Rrf65NMfvdf1bTlWNb4Bzgf3HUSBLVnnHwyx5nr1NsLLDcNYVM5x0auly
-         /2zZvf5XFBMSVFHp3wD8WB4zGciAfis6hkgzVI5dCt2of1nEMka4uN7uXWMT+e6pel5D
-         iH8Q==
-X-Received: by 10.152.20.194 with SMTP id p2mr13769lae.24.1401893746782;
-        Wed, 04 Jun 2014 07:55:46 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.120.2 with SMTP id ky2ls482245lab.96.gmail; Wed, 04 Jun
- 2014 07:55:45 -0700 (PDT)
-X-Received: by 10.112.19.103 with SMTP id d7mr2335613lbe.2.1401893745735;
-        Wed, 04 Jun 2014 07:55:45 -0700 (PDT)
-Received: from mail-wi0-x234.google.com (mail-wi0-x234.google.com [2a00:1450:400c:c05::234])
-        by gmr-mx.google.com with ESMTPS id x7si585708wiw.1.2014.06.04.07.55.45
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 04 Jun 2014 07:55:45 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::234 as permitted sender) client-ip=2a00:1450:400c:c05::234;
-Received: by mail-wi0-x234.google.com with SMTP id hi2so1644176wib.13
-        for <msysgit@googlegroups.com>; Wed, 04 Jun 2014 07:55:45 -0700 (PDT)
-X-Received: by 10.15.61.5 with SMTP id h5mr2037535eex.40.1401893745562;
-        Wed, 04 Jun 2014 07:55:45 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id 8sm6339909eea.10.2014.06.04.07.55.44
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 04 Jun 2014 07:55:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::234
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250734>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WsChU-0001o6-NX
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 17:02:03 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751995AbaFDPBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 11:01:43 -0400
+Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:50517 "EHLO
+	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752622AbaFDPBl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 11:01:41 -0400
+X-Greylist: delayed 384 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jun 2014 11:01:41 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp22.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 8E964200B41;
+	Wed,  4 Jun 2014 10:55:16 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp22.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 2EBEF200902;
+	Wed,  4 Jun 2014 10:55:16 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <1401833792-2486-9-git-send-email-gitster@pobox.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250735>
 
-Am 04.06.2014 16:05, schrieb Erik Faye-Lund:
-> On Wed, Jun 4, 2014 at 3:47 PM, Duy Nguyen <pclouds@gmail.com> wrote:
->> On Wed, Jun 4, 2014 at 6:47 PM, Stepan Kasal <kasal@ucw.cz> wrote:
->>> @@ -133,7 +133,7 @@ char *git_path(const char *fmt, ...)
->>>  void home_config_paths(char **global, char **xdg, char *file)
->>>  {
->>>         char *xdg_home =3D getenv("XDG_CONFIG_HOME");
->>> -       char *home =3D getenv("HOME");
->>> +       const char *home =3D get_home_directory();
->>>         char *to_free =3D NULL;
->>>
->>>         if (!home) {
->>
->> Just checking. Instead of replace the call sites, can we check and
->> setenv("HOME") if it's missing instead? MinGW port already replaces
->> main(). Extra initialization should not be a problem. I feel
->> "getenv("HOME")" a tiny bit more familiar than get_home_directory(),
->> but that's really weak argument as the number of call sites has not
->> increased in 4 years.
->=20
+On 14-06-03 06:16 PM, Junio C Hamano wrote:
+> To resurrect a misleading mention removed in the previous step,
+> add a section to explain how the remote-tracking configuration
+> interacts with the refspecs given as the command-line arguments.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-fetch.txt | 43 +++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 43 insertions(+)
+> 
+> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+> index 06106b9..d09736a 100644
+> --- a/Documentation/git-fetch.txt
+> +++ b/Documentation/git-fetch.txt
+> @@ -51,6 +51,49 @@ include::pull-fetch-param.txt[]
+>  include::urls-remotes.txt[]
+>  
+>  
+> +CONFIGURED REMOTE-TRACKING BRANCHES
+> +-----------------------------------
+> +
+> +You would often interact with the same remote repository by
 
-Setting the variable instead of wrapping getenv has the additional benefit =
-that it also affects child processes (read: scripted commands).
+s/would//
 
-> Yeah. But we already set %HOME% to %HOMEDRIVE%%HOMEPATH% in
-> /etc/profile, git-cmd.bat, gitk.cmd *and* git-wrapper... Do we really
-> need one more place?
->=20
+> +regularly and repeatedly fetching from it.  In order to keep track
+> +of the progress of such a remote repository, `git fetch` allows you
+> +to configure `remote.<repository>.fetch` configuration variable.
 
-...all of these also do the string concatenation correctly (i.e. not "C:/\U=
-sers\MyName" as this patch does), fall back to %USERPROFILE% if %HOMEPATH% =
-is not set, and most (except git-wrapper) even check that the directory exi=
-sts. So IMO this patch has been superseded by more robust solutions and sho=
-uld be dropped.
+/variable/variables/
+
+> +
+> +Typically such a variable may look like this:
+> +
+> +------------------------------------------------
+> +[remote "origin"]
+> +	fetch = +refs/heads/*:refs/remotes/origin/*
+> +------------------------------------------------
+> +
+> +This configuration is used in two ways:
+> +
+> +* When `git fetch` command is run without specifying what branches
+
+s/command//
+
+> +  and/or tags to fetch on the command line, e.g. `git fetch origin`
+> +  or `git fetch`, the values configured to this variable are used as
+
+s/values configured to this variable/`remote.<repository>.fetch` values/
+
+> +  the refspecs to be used to fetch.  The example above will fetch
+
+/to be used//
+
+> +  all branches that exist on the `origin` (i.e. any ref that matches
+
+s/on/in/
+
+> +  the left-hand side of the value, `refs/heads/*`) and update the
+> +  corresponding remote-tracking branches in `refs/remotes/origin/*`
+
+s/in/in the/
+
+> +  hierarchy.
+> +
+> +* When `git fetch` command is run with explicit branches and/or tags
+
+s/command//
+
+> +  to fetch on the command line, e.g. `git fetch origin master`, the
+> +  <refspec> given on the command line (e.g. `master` in the example,
+> +  which is a short-hand for `master:`, which in turn would mean
+> +  "fetch the 'master' branch but I do not explicitly say what
+> +  remote-tracking branch to update with it from the command line")
+> +  determines what are to be fetched, and the example command will
+
+Change "determines what are to be fetched" to "determines what gets fetched"
+and move the phrase to before the parenthetical comment.
+
+> +  fetch _only_ the 'master' branch.  The values of the variable are
+
+s/values of the variable/`remote.<repository>.fetch` values/
+
+> +  used to map the branch (i.e. `master`) to determine which
+
+s/used to map the branch (i.e. `master`) to//
+
+> +  remote-tracking branch, if any, is updated.  When used in this
+> +  way, the values of the configuration variable do not have any
+
+s/values of the configuration variable/`remote.<repository>.fetch` values/
+
+		M.
 
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> +  effect in deciding _what_ gets fetched (i.e. the values are not
+> +  used as refspecs when the command-line lists refspecs); they are
+> +  only used to decide _where_ the refs that are fetched are stored
+> +  by acting as a mapping.
+> +
+> +
+>  EXAMPLES
+>  --------
+>  
+> 
