@@ -1,114 +1,99 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Re: [PATCH] Add a Windows-specific fallback to getenv("HOME");
-Date: Wed, 4 Jun 2014 16:05:58 +0200
-Message-ID: <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com>
-References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v6 2/2] refs.c: SSE4.2 optimizations for check_refname_component
+Date: Wed, 04 Jun 2014 16:25:47 +0200
+Message-ID: <538F2C6B.2030004@web.de>
+References: <1401853091-15535-1-git-send-email-dturner@twitter.com> <1401853091-15535-2-git-send-email-dturner@twitter.com> <538ED2F1.9030003@web.de> <CACsJy8CK3LNaPVNv=EfFX06uOgpujAz364ZDFL3HBPicDNF57w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>, 
-	Thomas Braun <thomas.braun@virtuell-zuhause.de>, msysGit <msysgit@googlegroups.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: msysgit+bncBDR53PPJ7YHRB3WPXSOAKGQE3S2EWVQ@googlegroups.com Wed Jun 04 16:06:41 2014
-Return-path: <msysgit+bncBDR53PPJ7YHRB3WPXSOAKGQE3S2EWVQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pb0-f58.google.com ([209.85.160.58])
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	David Turner <dturner@twitter.com>
+To: Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 04 16:26:02 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBDR53PPJ7YHRB3WPXSOAKGQE3S2EWVQ@googlegroups.com>)
-	id 1WsBpw-0004iv-H8
-	for gcvm-msysgit@m.gmane.org; Wed, 04 Jun 2014 16:06:40 +0200
-Received: by mail-pb0-f58.google.com with SMTP id jt11sf2099001pbb.13
-        for <gcvm-msysgit@m.gmane.org>; Wed, 04 Jun 2014 07:06:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=FuGPO/gyCEqCN9pINy53/+8/RDFn4lDvt50cl8MISzg=;
-        b=OCh/l6mocxLBj2mei0zIDJiBpWkPLMtcL/lnJDRQzAaNYHiDFKeI63o6L2BhBW6Vv8
-         1AsSxpiEngKXlcNP9RN/u1fN7dBxGCA/xv6cwx0hfD+fARVPJdByImU6ioiZHLO6f4+H
-         3HHODhIlFl+h6TUJYNFSFNzz3zWI+TGoYVdW9MMMvTG9B9jjd4HDODxhZjYUtI/4mM75
-         IPIGDHra4v+S+TGZOiXdAsY7YSIPcW4J63O8bns4//gVb5e9ZoBblZY4U4LrE8YRhSOr
-         ywLfoFvo9PrrMtCMyoTv1k3IqYkBOoyinchJA372wNkL05KQReSMWS+vePll/LzX0K8T
-         MS2A==
-X-Received: by 10.140.109.71 with SMTP id k65mr15432qgf.30.1401890799233;
-        Wed, 04 Jun 2014 07:06:39 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.19.173 with SMTP id 42ls3010739qgh.27.gmail; Wed, 04 Jun
- 2014 07:06:38 -0700 (PDT)
-X-Received: by 10.236.123.68 with SMTP id u44mr18516038yhh.19.1401890798687;
-        Wed, 04 Jun 2014 07:06:38 -0700 (PDT)
-Received: from mail-ie0-x233.google.com (mail-ie0-x233.google.com [2607:f8b0:4001:c03::233])
-        by gmr-mx.google.com with ESMTPS id kx2si1534676igb.0.2014.06.04.07.06.38
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 04 Jun 2014 07:06:38 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::233 as permitted sender) client-ip=2607:f8b0:4001:c03::233;
-Received: by mail-ie0-x233.google.com with SMTP id rd18so7298043iec.38
-        for <msysgit@googlegroups.com>; Wed, 04 Jun 2014 07:06:38 -0700 (PDT)
-X-Received: by 10.50.78.8 with SMTP id x8mr7509604igw.45.1401890798256; Wed,
- 04 Jun 2014 07:06:38 -0700 (PDT)
-Received: by 10.64.227.43 with HTTP; Wed, 4 Jun 2014 07:05:58 -0700 (PDT)
-In-Reply-To: <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of kusmabite@gmail.com designates 2607:f8b0:4001:c03::233
- as permitted sender) smtp.mail=kusmabite@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250729>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WsC8b-0001gZ-Ec
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 16:25:59 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753139AbaFDOZx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 10:25:53 -0400
+Received: from mout.web.de ([212.227.15.3]:52337 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751782AbaFDOZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 10:25:52 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0MeBVG-1XAQ0g2PGg-00PxLf; Wed, 04 Jun 2014 16:25:48
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <CACsJy8CK3LNaPVNv=EfFX06uOgpujAz364ZDFL3HBPicDNF57w@mail.gmail.com>
+X-Provags-ID: V03:K0:TNaDj9gZOGZYyu/SmjTvZLCkdHbTT3ul5a2zW0mWUGhTuHCfkQd
+ 7S1OF20ZhAfY9c1lveFPeuuNFqMLM0c15+bq1qg42KfEcNkUCvx504k8KMTG5OMVTCUxPhm
+ oZrgclHLB8IiVo13pY8ZixEj2nzouaGFGVqQImYtbYJbdLJhUDWI/sTtwNBBS5LDBzcmmSq
+ 83aSodi0WJIPLFCsAAkvw==
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250730>
 
-On Wed, Jun 4, 2014 at 3:47 PM, Duy Nguyen <pclouds@gmail.com> wrote:
-> On Wed, Jun 4, 2014 at 6:47 PM, Stepan Kasal <kasal@ucw.cz> wrote:
->> @@ -133,7 +133,7 @@ char *git_path(const char *fmt, ...)
->>  void home_config_paths(char **global, char **xdg, char *file)
->>  {
->>         char *xdg_home = getenv("XDG_CONFIG_HOME");
->> -       char *home = getenv("HOME");
->> +       const char *home = get_home_directory();
->>         char *to_free = NULL;
+On 2014-06-04 13.21, Duy Nguyen wrote:
+> On Wed, Jun 4, 2014 at 3:04 PM, Torsten B=C3=B6gershausen <tboegi@web=
+=2Ede> wrote:
 >>
->>         if (!home) {
->
-> Just checking. Instead of replace the call sites, can we check and
-> setenv("HOME") if it's missing instead? MinGW port already replaces
-> main(). Extra initialization should not be a problem. I feel
-> "getenv("HOME")" a tiny bit more familiar than get_home_directory(),
-> but that's really weak argument as the number of call sites has not
-> increased in 4 years.
+>> On 2014-06-04 05.38, David Turner wrote:
+>> []
+>>> []
+>>> diff --git a/Makefile b/Makefile
+>>> index a53f3a8..dd2127a 100644
+>>> --- a/Makefile
+>>> +++ b/Makefile
+>>> @@ -1326,6 +1326,11 @@ else
+>>>               COMPAT_OBJS +=3D compat/win32mmap.o
+>>>       endif
+>>>  endif
+>>> +ifdef NO_SSE42
+>>> +     BASIC_CFLAGS +=3D -DNO_SSE42
+>>> +else
+>>> +     BASIC_CFLAGS +=3D -msse4.2
+>>> +endif
+>> This does work for some people, but break for others, like the syste=
+ms in my test-lab.
+>> On 2 different systems the gcc has support for -msse4.2, but the pro=
+cessor has not,
+>> and t5511 fails with "Illegal instruction".
+>> How can that be?
+>> The maintainer of a Linux distro wants to ship gcc with all possible=
+ features,
+>> an the end-user can compile the code with all the features his very =
+processor has.
+>=20
+> I think glibc code uses cpuid instruction to decide whether to use
+> optimized version. May be we can do the same? If we go that route and
+> have a way to detect sse support from compiler, then we can drop
+> NO_SSE42, enable all and pick one at runtime.
+>=20
+Running make under a non-X86 processor like arm fails, as his gcc does =
+not have -msse4.2
 
-Yeah. But we already set %HOME% to %HOMEDRIVE%%HOMEPATH% in
-/etc/profile, git-cmd.bat, gitk.cmd *and* git-wrapper... Do we really
-need one more place?
+On the other hand, looking here:=20
+http://sourceware.org/ml/libc-alpha/2009-10/msg00063.html
+and looking into refs.c,
+it seems as if we can try to run=20
+strcspn(refname, bad_characters)
+and=20
+strstr(refname, "@{"
+and=20
+strstr(refname, ".."
+on each refname, instead of checking each char in a loop.
+The library will pick the fastest version for strcspn() automatically.
 
-It seems some of these could be dropped...
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+David, the repo you run the tests on, is it public?
+Or is there a public repo with this many refs ?
+Or can you make a dummy repo with 60k refs ?
