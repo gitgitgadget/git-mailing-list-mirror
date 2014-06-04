@@ -1,82 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [msysGit] Re: [PATCH] Add a Windows-specific fallback to
- getenv("HOME");
-Date: Wed, 4 Jun 2014 19:49:42 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1406041946510.14982@s15462909.onlinehome-server.info>
-References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com> <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com> <alpine.DEB.1.00.1406041713500.14982@s15462909.onlinehome-server.info>
- <CABPQNSavYCrdUDyNru-HHMFkdgDRvaCp++f8ZgGKv07sS0eXGQ@mail.gmail.com> <alpine.DEB.1.00.1406041725460.14982@s15462909.onlinehome-server.info> <20140604154503.GB22681@camelia.ucw.cz> <alpine.DEB.1.00.1406041749590.14982@s15462909.onlinehome-server.info>
- <20140604161625.GB23226@camelia.ucw.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] update-index: fix segfault with missing --cacheinfo argument
+Date: Wed, 04 Jun 2014 11:03:13 -0700
+Message-ID: <xmqqioogv9ge.fsf@gitster.dls.corp.google.com>
+References: <20140604071110.GA22158@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-	msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: git-owner@vger.kernel.org Wed Jun 04 19:49:56 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 04 20:03:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsFJt-0007wW-TE
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 19:49:50 +0200
+	id 1WsFX3-0001BK-Cc
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 20:03:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751387AbaFDRtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2014 13:49:46 -0400
-Received: from mout.gmx.net ([212.227.17.22]:58664 "EHLO mout.gmx.net"
+	id S1751460AbaFDSDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 14:03:21 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54562 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750925AbaFDRtp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 13:49:45 -0400
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0Lm34j-1WIudL442L-00Zggr;
- Wed, 04 Jun 2014 19:49:43 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <20140604161625.GB23226@camelia.ucw.cz>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:Go2Nqb7dwQNme5fNvjNMez4k5pn4XDNKsUkKm9la7UUgmnD8hfA
- aE6EI9eaIEq0Gf5MLRBh1pfYLVE4s6YNlDX8R4zg3Do7fOKqBapfVuTda6s0OzOM008Zqcl
- zM1bZmz2CRczE7DhQH93UANphfryVo2VYegw4iHq3B/397UkauGxEEEySNd1DSzuETY0jjP
- 7k7KUebLKhHhELBuhMaOQ==
+	id S1751362AbaFDSDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 14:03:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D12F11CAFF;
+	Wed,  4 Jun 2014 14:03:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mbkkWr3AXegkv+GvxOjQ3i0dOoY=; b=f8Xxif
+	C62T33a7Y7+4458YoUM+LS2TItLetYrNVRemgj3Yscj9/Kg4qjaRix0AvB261JO+
+	32Impe4a51xPJ9+vMgKynYMY61GSRA6QYnLkNiH8qEvg6qWa2WBQrxI5aKBV+gPJ
+	wFzABLz5t+2iA2tD6HQu4urdHAxFapO+7ctqU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=I737sdrM4hmcuCT1er5bUh3lJ0A1QAL0
+	ILO7px3D8bUYnT4O1OPEX3jBwz3b9Qb4oNWlXB4BB5kBH2UJQmQ9ZHh8F1l9TtK7
+	6J3mLfR52p/KIc/iv87FBjhwyS35Z6pBoKR1Gh8ZvqnmqCC2uyiwjZ9f4ke03bgJ
+	dZwU6AuyBCg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C40591CAFE;
+	Wed,  4 Jun 2014 14:03:19 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D1B591CAF8;
+	Wed,  4 Jun 2014 14:03:15 -0400 (EDT)
+In-Reply-To: <20140604071110.GA22158@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 4 Jun 2014 03:11:11 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 806249AE-EC12-11E3-8FDF-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250751>
 
-Hi Stepan,
+Jeff King <peff@peff.net> writes:
 
-On Wed, 4 Jun 2014, Stepan Kasal wrote:
+> Running "git update-index --cacheinfo" without any further
+> arguments results in a segfault rather than an error
+> message. Commit ec160ae (update-index: teach --cacheinfo a
+> new syntax "mode,sha1,path", 2014-03-23) added code to
+> examine the format of the argument, but forgot to handle the
+> NULL case.
+>
+> Returning an error from the parser is enough, since we then
+> treat it as an old-style "--cacheinfo <mode> <sha1> <path>",
+> and complain that we have less than 3 arguments to read.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
 
-> PS (about mingwGitDevEnv):
-> > plan is to switch to mingwGitDevEnv for said release. No more msysGit.
-> > Like, bu-bye. Thanks for all the fish.
-> 
-> Interesting.
-> 
-> With msysgit, there is the "net installer" - first time I installed
-> msys/mingw sucessfully, it was as easy as Cygwin, perhaps even
-> easier.
-> 
-> When I go to mingwGitDevEnv home page, I read about chickens, eggs, and
-> upgrading Perl (which msysGit simply gives up, hinting that it is almost
-> impossible).  So I decided to wait for their Git 2.0.0 release before I
-> try to install it (again).
-
-I understand. And now that upstream Git 2.0.0 is out, it will be very hard
-to use that as a deadline to push against. So: don't hold your breath.
-
-> PPS: from marketing point of view, mingwGitDevEnv is far from usable
-> name.  Dscho, if you support the idea, would you mind franchising
-> msysGit 2.0 for a decent amount?
-
-Make me an offer :-P
-
-Seriously again, I am in favor of calling it the Git for Windows SDK. But
-really, it is bikeshedding at this point. There is real work to do, still,
-before we can switch. Lots of unaddressed questions. Too little time.
-Speaking of which... budget's depleted for today ;-)
-
-Ciao,
-Dscho
+Thanks.
