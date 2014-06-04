@@ -1,99 +1,113 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v6 2/2] refs.c: SSE4.2 optimizations for check_refname_component
-Date: Wed, 04 Jun 2014 16:25:47 +0200
-Message-ID: <538F2C6B.2030004@web.de>
-References: <1401853091-15535-1-git-send-email-dturner@twitter.com> <1401853091-15535-2-git-send-email-dturner@twitter.com> <538ED2F1.9030003@web.de> <CACsJy8CK3LNaPVNv=EfFX06uOgpujAz364ZDFL3HBPicDNF57w@mail.gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH v2 5/9] fetch doc: on pulling multiple refspecs
+Date: Wed, 04 Jun 2014 10:44:18 -0400
+Message-ID: <538F30C2.2000601@xiplink.com>
+References: <1401833792-2486-1-git-send-email-gitster@pobox.com> <1401833792-2486-6-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	David Turner <dturner@twitter.com>
-To: Duy Nguyen <pclouds@gmail.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 04 16:26:02 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 04 16:44:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsC8b-0001gZ-Ec
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 16:25:59 +0200
+	id 1WsCQj-0006c9-53
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 16:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753139AbaFDOZx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 10:25:53 -0400
-Received: from mout.web.de ([212.227.15.3]:52337 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751782AbaFDOZw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 10:25:52 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MeBVG-1XAQ0g2PGg-00PxLf; Wed, 04 Jun 2014 16:25:48
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <CACsJy8CK3LNaPVNv=EfFX06uOgpujAz364ZDFL3HBPicDNF57w@mail.gmail.com>
-X-Provags-ID: V03:K0:TNaDj9gZOGZYyu/SmjTvZLCkdHbTT3ul5a2zW0mWUGhTuHCfkQd
- 7S1OF20ZhAfY9c1lveFPeuuNFqMLM0c15+bq1qg42KfEcNkUCvx504k8KMTG5OMVTCUxPhm
- oZrgclHLB8IiVo13pY8ZixEj2nzouaGFGVqQImYtbYJbdLJhUDWI/sTtwNBBS5LDBzcmmSq
- 83aSodi0WJIPLFCsAAkvw==
+	id S1752495AbaFDOof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 10:44:35 -0400
+Received: from smtp138.ord.emailsrvr.com ([173.203.6.138]:55172 "EHLO
+	smtp138.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752189AbaFDOoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 10:44:14 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp22.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 5D7392008A2;
+	Wed,  4 Jun 2014 10:44:13 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp22.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 0E1B7200645;
+	Wed,  4 Jun 2014 10:44:12 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <1401833792-2486-6-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250731>
 
-On 2014-06-04 13.21, Duy Nguyen wrote:
-> On Wed, Jun 4, 2014 at 3:04 PM, Torsten B=C3=B6gershausen <tboegi@web=
-=2Ede> wrote:
->>
->> On 2014-06-04 05.38, David Turner wrote:
->> []
->>> []
->>> diff --git a/Makefile b/Makefile
->>> index a53f3a8..dd2127a 100644
->>> --- a/Makefile
->>> +++ b/Makefile
->>> @@ -1326,6 +1326,11 @@ else
->>>               COMPAT_OBJS +=3D compat/win32mmap.o
->>>       endif
->>>  endif
->>> +ifdef NO_SSE42
->>> +     BASIC_CFLAGS +=3D -DNO_SSE42
->>> +else
->>> +     BASIC_CFLAGS +=3D -msse4.2
->>> +endif
->> This does work for some people, but break for others, like the syste=
-ms in my test-lab.
->> On 2 different systems the gcc has support for -msse4.2, but the pro=
-cessor has not,
->> and t5511 fails with "Illegal instruction".
->> How can that be?
->> The maintainer of a Linux distro wants to ship gcc with all possible=
- features,
->> an the end-user can compile the code with all the features his very =
-processor has.
->=20
-> I think glibc code uses cpuid instruction to decide whether to use
-> optimized version. May be we can do the same? If we go that route and
-> have a way to detect sse support from compiler, then we can drop
-> NO_SSE42, enable all and pick one at runtime.
->=20
-Running make under a non-X86 processor like arm fails, as his gcc does =
-not have -msse4.2
+On 14-06-03 06:16 PM, Junio C Hamano wrote:
+> Replace desription of old-style "Pull:" lines in remotes/
+> configuration with modern remote.*.fetch variables.
+> 
+> As this note applies only to "git pull", enable it only
+> in git-pull manual page.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/pull-fetch-param.txt | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
+> index 40f8687..25af2ce 100644
+> --- a/Documentation/pull-fetch-param.txt
+> +++ b/Documentation/pull-fetch-param.txt
+> @@ -34,22 +34,26 @@ will be needed for such branches.  There is no way to
+>  determine or declare that a branch will be made available
+>  in a repository with this behavior; the pulling user simply
+>  must know this is the expected usage pattern for a branch.
+> +ifdef::git-pull[]
+>  +
+>  [NOTE]
+>  There is a difference between listing multiple <refspec>
+>  directly on 'git pull' command line and having multiple
+> -`Pull:` <refspec> lines for a <repository> and running
+> +`remote.<repository>.fetch` entries in your configuration
+> +for a <repository> and running
 
-On the other hand, looking here:=20
-http://sourceware.org/ml/libc-alpha/2009-10/msg00063.html
-and looking into refs.c,
-it seems as if we can try to run=20
-strcspn(refname, bad_characters)
-and=20
-strstr(refname, "@{"
-and=20
-strstr(refname, ".."
-on each refname, instead of checking each char in a loop.
-The library will pick the fastest version for strcspn() automatically.
+s/running/running a/
 
-David, the repo you run the tests on, is it public?
-Or is there a public repo with this many refs ?
-Or can you make a dummy repo with 60k refs ?
+>  'git pull' command without any explicit <refspec> parameters.
+>  <refspec> listed explicitly on the command line are always
+
+s/<refspec>/<refspec>s/
+
+>  merged into the current branch after fetching.  In other words,
+>  if you list more than one remote refs, you would be making
+
+s/refs, you would be making/ref, 'git pull' will create/
+
+> -an Octopus.  While 'git pull' run without any explicit <refspec>
+> -parameter takes default <refspec>s from `Pull:` lines, it
+> +an Octopus merge. On the other hand, 'git pull' that is run
+> +without any explicit <refspec> parameter takes default
+> +<refspec>s from `remote.<repository>.fetch` configuration, it
+>  merges only the first <refspec> found into the current branch,
+> -after fetching all the remote refs.  This is because making an
+> +after fetching all the remote refs specified.  This is because making an
+
+That "On the other hand" sentence is hard to parse.  How about
+
+	On the other hand, if you do not list any remote refs, 'git pull'
+	will fetch all the <refspec>s it finds in the
+	`remote.<repository>.fetch` configuration and merge only the
+	first <refspec> found into the current branch.
+
+Actually, "first <refspec> found" is also wrong, isn't it?  I'm not sure I
+can craft a succinct summary of pull's merge behaviour for this note!
+
+>  Octopus from remote refs is rarely done, while keeping track
+>  of multiple remote heads in one-go by fetching more than one
+>  is often useful.
+> +endif::git-pull[]
+>  +
+>  Some short-cut notations are also supported.
+>  +
+
+Hmmm, in my 2.0 man page output (asciidoc 8.6.9 on Ubuntu) there's no empty
+line between the end of the note and the "Some short-cut notations" line,
+which I think is inconsistent with the rest of the formatting.  The HTML
+version looks fine though.  Is there some asciidoc-ese that would insert a
+line there for the man format?
+
+		M.
