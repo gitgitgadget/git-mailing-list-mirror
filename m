@@ -1,352 +1,177 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v6 2/2] refs.c: SSE4.2 optimizations for check_refname_component
-Date: Tue,  3 Jun 2014 23:38:11 -0400
-Message-ID: <1401853091-15535-2-git-send-email-dturner@twitter.com>
-References: <1401853091-15535-1-git-send-email-dturner@twitter.com>
-Cc: David Turner <dturner@twitter.com>
-To: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Wed Jun 04 05:38:38 2014
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] receive-pack: optionally deny case clone refs
+Date: Wed, 04 Jun 2014 08:06:00 +0200
+Message-ID: <538EB748.3050300@viscovery.net>
+References: <1401851607-8255-1-git-send-email-dturner@twitter.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 08:06:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ws229-0000YT-Nq
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 05:38:38 +0200
+	id 1Ws4L0-0002yE-Rl
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 08:06:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754879AbaFDDic (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 3 Jun 2014 23:38:32 -0400
-Received: from mail-qg0-f50.google.com ([209.85.192.50]:53443 "EHLO
-	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754262AbaFDDib (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 3 Jun 2014 23:38:31 -0400
-Received: by mail-qg0-f50.google.com with SMTP id z60so14500053qgd.23
-        for <git@vger.kernel.org>; Tue, 03 Jun 2014 20:38:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=BOA/zqXWfCVM5DmATnjuvP0jhBwMIyKqf5WH/LtXaBY=;
-        b=dCn0cGioAqYale0b2OcuxxHb4thFntXGE4OBM6RfKnQRkHZKcId2/c/55Nr78bAU3e
-         73avHvFQt2wwx56Zt91Xp4+buMJbafkrpKCjr1wWr0CYsPjScYQigLLyj1iW1rvySIc4
-         Rp09Hb7AO/VPEx/Q2kTURVa8wb1pBLk01g+vgZnsD3Nq7BpS8GQUbQEtugpNlRChjghA
-         cAEARfNA3J4+nVBj/uxX7SMK6s6N2Xp543xKk7JTcJB5PBrcWSz+tE5ZJ7+jYoeWA29Z
-         Ww9QaRFLIyKw8YhoP/indjtE6+tFxclurOkxrpiAkfn4iQJnt7HaMZ3pdygMnco82QMU
-         4EQw==
-X-Gm-Message-State: ALoCoQkQ6ux0PoMgF1ErLBF1KzZ/LGNVtncQkkXld/yV9ckzIJ0C9Pa82Lk7RPMhxV+K14SeV3Vd
-X-Received: by 10.224.49.67 with SMTP id u3mr1639955qaf.63.1401853110571;
-        Tue, 03 Jun 2014 20:38:30 -0700 (PDT)
-Received: from stross.twitter.corp ([8.25.196.25])
-        by mx.google.com with ESMTPSA id m2sm2141188qac.3.2014.06.03.20.38.29
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 03 Jun 2014 20:38:29 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
-X-Mailer: git-send-email 2.0.0.rc1.18.gf763c0f
-In-Reply-To: <1401853091-15535-1-git-send-email-dturner@twitter.com>
+	id S932160AbaFDGGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 02:06:09 -0400
+Received: from so.liwest.at ([212.33.55.25]:37195 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755171AbaFDGGI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 02:06:08 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Ws4Kn-0000oq-53; Wed, 04 Jun 2014 08:06:01 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id B4D9516613;
+	Wed,  4 Jun 2014 08:06:00 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <1401851607-8255-1-git-send-email-dturner@twitter.com>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250716>
 
-Optimize check_refname_component using SSE4.2, where available.
+Am 6/4/2014 5:13, schrieb David Turner:
+> It is possible to have two branches which are the same but for case.
+> This works great on the case-sensitive filesystems, but not so well on
+> case-insensitive filesystems.  It is fairly typical to have
+> case-insensitive clients (Macs, say) with a case-sensitive server
+> (GNU/Linux).
+> 
+> Should a user attempt to pull on a Mac when there are case clone
+> branches with differing contents, they'll get an error message
+> containing something like "Ref refs/remotes/origin/lower is at
+> [sha-of-lowercase-branch] but expected [sha-of-uppercase-branch]....
+> (unable to update local ref)"
+> 
+> With a case-insensitive git server, if a branch called capital-M
+> Master (that differs from lowercase-m-master) is pushed, nobody else
+> can push to (lowercase-m) master until the branch is removed.
+> 
+> Create the option receive.denycaseclonebranches, which checks pushed
+> branches to ensure that they are not case clones of an existing
+> branch.  This setting is turned on by default if core.ignorecase is
+> set, but not otherwise.
+> 
+> Signed-off-by: David Turner <dturner@twitter.com>
+> ---
+>  Documentation/config.txt           |  6 ++++++
+>  Documentation/git-push.txt         |  5 +++--
+>  Documentation/glossary-content.txt |  5 +++++
+>  builtin/receive-pack.c             | 27 +++++++++++++++++++++++-
+>  t/t5400-send-pack.sh               | 43 ++++++++++++++++++++++++++++++++++++++
+>  5 files changed, 83 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1932e9b..4deddf8 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2053,6 +2053,12 @@ receive.unpackLimit::
+>  	especially on slow filesystems.  If not set, the value of
+>  	`transfer.unpackLimit` is used instead.
+>  
+> +receive.denyCaseCloneBranches::
+> +	If set to true, git-receive-pack will deny a ref update that creates
+> +	a ref which is the same but for case as an existing ref.  This is
+> +	useful when clients are on a case-insensitive filesystem, which
+> +	will cause errors when given refs which differ only in case.
 
-git rev-parse HEAD is a good test-case for this, since it does almost
-nothing except parse refs.  For one particular repo with about 60k
-refs, almost all packed, the timings are:
+Shouldn't this better be named 'receive.denyCaseCloneRefs'?
 
-Look up table: 29 ms
-SSE4.2:        25 ms
+How about 'denyCaseInsensitiveRefs', 'denyIgnoreCaseRefs'?
 
-This is about a 15% improvement.
+Is this entry really so important that it must be the first in the list of
+receive.deny* list, which is not alphabetically sorted?
 
-The configure.ac changes include code from the GNU C Library written
-by Joseph S. Myers <joseph at codesourcery dot com>.
+> +
+>  receive.denyDeletes::
+>  	If set to true, git-receive-pack will deny a ref update that deletes
+>  	the ref. Use this to prevent such a ref deletion via a push.
 
-Signed-off-by: David Turner <dturner@twitter.com>
----
- Makefile           |   6 +++
- aclocal.m4         |   6 +++
- configure.ac       |  17 ++++++++
- git-compat-util.h  |  22 ++++++++++
- refs.c             | 117 ++++++++++++++++++++++++++++++++++++++++++++++-------
- t/t5511-refspec.sh |  13 ++++++
- 6 files changed, 166 insertions(+), 15 deletions(-)
+> --- a/t/t5400-send-pack.sh
+> +++ b/t/t5400-send-pack.sh
+> @@ -129,6 +129,49 @@ test_expect_success 'denyNonFastforwards trumps --force' '
+>  	test "$victim_orig" = "$victim_head"
+>  '
+>  
+> +test_expect_success 'denyCaseCloneBranches works' '
+> +	(
+> +	    cd victim &&
+> +	    git config receive.denyCaseCloneBranches true
 
-diff --git a/Makefile b/Makefile
-index a53f3a8..dd2127a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1326,6 +1326,11 @@ else
- 		COMPAT_OBJS += compat/win32mmap.o
- 	endif
- endif
-+ifdef NO_SSE42
-+	BASIC_CFLAGS += -DNO_SSE42
-+else
-+	BASIC_CFLAGS += -msse4.2
-+endif
- ifdef OBJECT_CREATION_USES_RENAMES
- 	COMPAT_CFLAGS += -DOBJECT_CREATION_MODE=1
- endif
-@@ -2199,6 +2204,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
- 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@
-+	@echo NO_SSE42=\''$(subst ','\'',$(subst ','\'',$(NO_SSE42)))'\' >>$@
- ifdef TEST_OUTPUT_DIRECTORY
- 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@
- endif
-diff --git a/aclocal.m4 b/aclocal.m4
-index f11bc7e..d9f3f19 100644
---- a/aclocal.m4
-+++ b/aclocal.m4
-@@ -38,3 +38,9 @@ AC_DEFUN([TYPE_SOCKLEN_T],
-       [#include <sys/types.h>
- #include <sys/socket.h>])
- ])
-+
-+dnl Test a compiler option or options with an empty input file.
-+dnl LIBC_TRY_CC_OPTION([options], [action-if-true], [action-if-false])
-+AC_DEFUN([LIBC_TRY_CC_OPTION],
-+[AS_IF([AC_TRY_COMMAND([${CC-cc} $1 -xc /dev/null -S -o /dev/null])],
-+	[$2], [$3])])
-diff --git a/configure.ac b/configure.ac
-index b711254..3a5bda9 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -382,6 +382,23 @@ AS_HELP_STRING([],[Tcl/Tk interpreter will be found in a system.]),
- GIT_PARSE_WITH(tcltk))
- #
- 
-+# Declare the with-sse42/without-sse42 options.
-+AC_ARG_WITH(sse42,
-+AS_HELP_STRING([--with-sse42],[use SSE4.2 instructions])
-+AS_HELP_STRING([],[(default is YES if your compiler supports -msse4.2)]),
-+GIT_PARSE_WITH(sse42))
-+
-+if test "$NO_SSE42" != "YesPlease"; then
-+   dnl Check if -msse4.2 works.
-+   AC_CACHE_CHECK(for SSE4.2 support, cc_cv_sse42, [dnl
-+   LIBC_TRY_CC_OPTION([-msse4.2], [cc_cv_sse42=yes], [cc_cv_sse42=no])
-+   ])
-+   if test $cc_cv_sse42 = no; then
-+     NO_SSE42=1
-+   fi
-+fi
-+
-+GIT_CONF_SUBST([NO_SSE42])
- 
- ## Checks for programs.
- AC_MSG_NOTICE([CHECKS for programs])
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f6d3a46..218d510 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -668,6 +668,28 @@ void git_qsort(void *base, size_t nmemb, size_t size,
- #endif
- #endif
- 
-+#ifndef NO_SSE42
-+#include <nmmintrin.h>
-+/*
-+ * Clang ships with a version of nmmintrin.h that's incomplete; if
-+ * necessary, we define the constants that we're going to use.
-+ */
-+#ifndef _SIDD_UBYTE_OPS
-+#define _SIDD_UBYTE_OPS                 0x00
-+#define _SIDD_CMP_EQUAL_ANY             0x00
-+#define _SIDD_CMP_RANGES                0x04
-+#define _SIDD_CMP_EQUAL_ORDERED         0x0c
-+#define _SIDD_NEGATIVE_POLARITY         0x10
-+#endif
-+
-+/* This is the system memory page size; it's used so that we can read
-+ * outside the bounds of an allocation without segfaulting.
-+ */
-+#ifndef PAGE_SIZE
-+#define PAGE_SIZE 4096
-+#endif
-+#endif
-+
- #ifdef UNRELIABLE_FSTAT
- #define fstat_is_reliable() 0
- #else
-diff --git a/refs.c b/refs.c
-index 46139d2..2fe0075 100644
---- a/refs.c
-+++ b/refs.c
-@@ -24,6 +24,25 @@ static unsigned char refname_disposition[256] = {
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
- };
- 
-+static int check_refname_component_trailer(const char *cp, const char *refname, int flags)
-+{
-+	if (cp == refname)
-+		return 0; /* Component has zero length. */
-+	if (refname[0] == '.') {
-+		if (!(flags & REFNAME_DOT_COMPONENT))
-+			return -1; /* Component starts with '.'. */
-+		/*
-+		 * Even if leading dots are allowed, don't allow "."
-+		 * as a component (".." is prevented by a rule above).
-+		 */
-+		if (refname[1] == '\0')
-+			return -1; /* Component equals ".". */
-+	}
-+	if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
-+		return -1; /* Refname ends with ".lock". */
-+	return cp - refname;
-+}
-+
- /*
-  * Try to read one refname component from the front of refname.
-  * Return the length of the component found, or -1 if the component is
-@@ -37,7 +56,7 @@ static unsigned char refname_disposition[256] = {
-  * - it ends with ".lock"
-  * - it contains a "\" (backslash)
-  */
--static int check_refname_component(const char *refname, int flags)
-+static int check_refname_component_1(const char *refname, int flags)
- {
- 	const char *cp;
- 	char last = '\0';
-@@ -47,7 +66,7 @@ static int check_refname_component(const char *refname, int flags)
- 		unsigned char disp = refname_disposition[ch];
- 		switch(disp) {
- 		case 1:
--			goto out;
-+			return check_refname_component_trailer(cp, refname, flags);
- 		case 2:
- 			if (last == '.')
- 				return -1; /* Refname contains "..". */
-@@ -61,23 +80,91 @@ static int check_refname_component(const char *refname, int flags)
- 		}
- 		last = ch;
- 	}
--out:
--	if (cp == refname)
--		return 0; /* Component has zero length. */
--	if (refname[0] == '.') {
--		if (!(flags & REFNAME_DOT_COMPONENT))
--			return -1; /* Component starts with '.'. */
-+}
-+
-+#ifdef NO_SSE42
-+#define check_refname_component check_refname_component_1
-+#else
-+#define SSE_VECTOR_BYTES 16
-+
-+/* Vectorized version of check_refname_component */
-+static int check_refname_component(const char *refname, int flags)
-+{
-+	const __m128i *refname_vec = (__m128i*) refname;
-+
-+	/* Character ranges for characters forbidden in refs; see above */
-+	static const __v16qi bad = {
-+		0x01, 0x20,  0x7e, 0x7f,  0x5e, 0x5e,  0x3a, 0x3a,
-+		0x5b, 0x5c,  0x2a, 0x2a,  0x3f, 0x3f,  0x3f, 0x3f};
-+
-+	static const __v16qi nonslashes = {
-+		'\001', '/' -1, '/' + 1, 0xff,
-+	};
-+
-+	static const __v16qi dotdot = {'.', '.', 0};
-+	static const __v16qi atcurly = {'@', '{', 0};
-+
-+	const __m128i *vp;
-+	const char *cp = (const char *)refname_vec;
-+
-+	int dotdotpos = SSE_VECTOR_BYTES, atcurlypos = SSE_VECTOR_BYTES;
-+	for (vp = refname_vec; ; vp++) {
-+		__m128i tmp;
-+		int endpos;
-+
- 		/*
--		 * Even if leading dots are allowed, don't allow "."
--		 * as a component (".." is prevented by a rule above).
-+		 * Handle case of forbidden substrings .. and @{ crossing
-+		 * sixteen-byte boundaries
- 		 */
--		if (refname[1] == '\0')
--			return -1; /* Component equals ".". */
-+		if (dotdotpos == 15 && *cp == '.')
-+			return -1;
-+
-+		if (atcurlypos == 15 && *cp == '{')
-+			return -1;
-+
-+		if (((uintptr_t) vp % PAGE_SIZE) > PAGE_SIZE - SSE_VECTOR_BYTES)
-+			/*
-+			 * End-of-page; fall back to slow method for
-+			 * this entire component.
-+			 */
-+			return check_refname_component_1(refname, flags);
-+
-+		tmp = _mm_lddqu_si128(vp);
-+
-+		/*
-+		 * Find slashes or end-of-string. The double-negative
-+		 * (negative-polarity search for non-slashes) is
-+		 * necessary so that \0 will also be counted.
-+		 */
-+		endpos = _mm_cmpistri((__m128i) nonslashes, tmp,
-+				      _SIDD_UBYTE_OPS | _SIDD_CMP_RANGES |
-+				      _SIDD_NEGATIVE_POLARITY);
-+
-+		if (_mm_cmpestrc((__m128i) bad, SSE_VECTOR_BYTES, tmp, endpos,
-+				 _SIDD_UBYTE_OPS | _SIDD_CMP_RANGES))
-+			return -1;
-+
-+		dotdotpos = _mm_cmpestri((__m128i) dotdot, 2, tmp, endpos,
-+					 _SIDD_UBYTE_OPS |
-+					 _SIDD_CMP_EQUAL_ORDERED);
-+		if (dotdotpos < 15)
-+			return -1;
-+
-+		atcurlypos = _mm_cmpestri((__m128i) atcurly, 2, tmp, endpos,
-+					  _SIDD_UBYTE_OPS |
-+					  _SIDD_CMP_EQUAL_ORDERED);
-+		if (atcurlypos < 15)
-+			return -1;
-+
-+		if (endpos < SSE_VECTOR_BYTES) {
-+			cp = ((const char*) vp) + endpos;
-+			break;
-+		}
-+		cp = (const char*) vp + SSE_VECTOR_BYTES;
- 	}
--	if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
--		return -1; /* Refname ends with ".lock". */
--	return cp - refname;
-+	return check_refname_component_trailer(cp, refname, flags);
- }
-+#endif
- 
- int check_refname_format(const char *refname, int flags)
- {
-diff --git a/t/t5511-refspec.sh b/t/t5511-refspec.sh
-index de6db86..7f1bd74 100755
---- a/t/t5511-refspec.sh
-+++ b/t/t5511-refspec.sh
-@@ -88,4 +88,17 @@ test_refspec fetch "refs/heads/${good}"
- bad=$(printf '\011tab')
- test_refspec fetch "refs/heads/${bad}"				invalid
- 
-+test_refspec fetch 'refs/heads/a-very-long-refname'
-+test_refspec fetch 'refs/heads/.a-very-long-refname'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh0123..'			invalid
-+test_refspec fetch 'refs/heads/abcdefgh01234..'			invalid
-+test_refspec fetch 'refs/heads/abcdefgh012345..'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh0123456..'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh01234567..'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh0123.a'
-+test_refspec fetch 'refs/heads/abcdefgh01234.a'
-+test_refspec fetch 'refs/heads/abcdefgh012345.a'
-+test_refspec fetch 'refs/heads/abcdefgh0123456.a'
-+test_refspec fetch 'refs/heads/abcdefgh01234567.a'
-+
- test_done
--- 
-2.0.0.rc1.18.gf763c0f
+Broken && chain.
+
+> +	    git config receive.denyDeletes false
+> +	) &&
+> +	git send-pack ./victim HEAD:refs/heads/caseclone &&
+> +	orig_ver=$(git rev-parse HEAD) &&
+> +	test_must_fail git send-pack ./victim HEAD^:refs/heads/CaseClone &&
+> +	#confirm that this had no effect upstream
+> +	(
+> +	    cd victim &&
+> +	    test_must_fail git rev-parse CaseClone &&
+> +	    remote_ver=$(git rev-parse caseclone) &&
+> +	    test $orig_ver = $remote_ver
+
+Please use double-quotes around the variable expansions: There could be a
+failure mode where remote_ver (and even orig_ver) are empty, which would
+lead to a syntax error or a wrong result.
+
+BTW, on a case-insensitive file system, is there not a chance that 'git
+rev-parse CaseClone' succeeds even though the ref is stored in
+victim/.git/refs/heads/caseclone? Perhaps you should inspect the output of
+'git for-each-ref' for the expected result? (Mental note: At least a
+case-preserving file system is required to run the test.)
+
+> +	) &&
+> +	git send-pack ./victim HEAD^:refs/heads/notacaseclone &&
+> +	test_must_fail git send-pack ./victim :CaseClone &&
+> +	#confirm that this had no effect upstream
+
+Please insert a blank after the hash mark.
+
+> +	(
+> +	    cd victim &&
+> +	    test_must_fail git rev-parse CaseClone &&
+> +	    remote_ver=$(git rev-parse caseclone) &&
+> +	    test $orig_ver = $remote_ver
+> +	) &&
+> +	git send-pack ./victim :caseclone &&
+> +	#confirm that this took effect upstream
+> +	(
+> +	    cd victim &&
+> +	    test_must_fail git rev-parse caseclone
+> +	)
+
+Broken && chain.
+
+> +	#check that we can recreate a branch after deleting a
+> +	#case-clone of it
+> +	case_clone_ver=$(git rev-parse HEAD^)
+
+Broken && chain.
+
+> +	git send-pack ./victim HEAD^:CaseClone &&
+> +	(
+> +	    cd victim &&
+> +	    test_must_fail git rev-parse caseclone &&
+> +	    remote_ver=$(git rev-parse CaseClone) &&
+> +	    test $case_clone_ver = $remote_ver
+> +	)
+> +'
+> +
+>  test_expect_success 'push --all excludes remote-tracking hierarchy' '
+>  	mkdir parent &&
+>  	(
+> 
+
+-- Hannes
