@@ -1,127 +1,139 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t9001: avoid not portable '\n' with sed
-Date: Wed, 04 Jun 2014 11:13:47 -0700
-Message-ID: <xmqqd2eov8ys.fsf@gitster.dls.corp.google.com>
-References: <538ED6DF.5020505@web.de>
-	<xmqqr434vaeh.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2] t5000, t5003: do not use test_cmp to compare
+ binary files
+Date: Wed, 04 Jun 2014 11:22:56 -0700
+Message-ID: <xmqq8upcv8jj.fsf@gitster.dls.corp.google.com>
+References: <20140604114252.GA22250@camelia.ucw.cz>
+	<538F0D78.3020708@virtuell-zuhause.de>
+	<20140604124257.GA22415@camelia.ucw.cz>
+	<538F1840.7010803@virtuell-zuhause.de>
+	<20140604155752.GA23226@camelia.ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 04 20:14:08 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: GIT Mailing-list <git@vger.kernel.org>,  Thomas Braun <thomas.braun@virtuell-zuhause.de>,  msysgit@googlegroups.com
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: msysgit+bncBCG77UMM3EJRBBWIXWOAKGQEKNK5KMY@googlegroups.com Wed Jun 04 20:23:07 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBBWIXWOAKGQEKNK5KMY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-vc0-f191.google.com ([209.85.220.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsFhL-0000hF-61
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 20:14:04 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751261AbaFDSN7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 14:13:59 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53811 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750904AbaFDSN6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2014 14:13:58 -0400
+	(envelope-from <msysgit+bncBCG77UMM3EJRBBWIXWOAKGQEKNK5KMY@googlegroups.com>)
+	id 1WsFq3-0007Od-P7
+	for gcvm-msysgit@m.gmane.org; Wed, 04 Jun 2014 20:23:04 +0200
+Received: by mail-vc0-f191.google.com with SMTP id id10sf2092471vcb.8
+        for <gcvm-msysgit@m.gmane.org>; Wed, 04 Jun 2014 11:23:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=SNv2gzlvkP1N7kahcAsMScNjIXLKiX2hC/KqBQO/JX4=;
+        b=aMYcqxOHtGhwpqch3uEPMY675FRPFxXIyV7IK52gXFxU70C+VDvSabBh+UND2j4xvk
+         /TexCftZNT369DiVVb4ZxpHCUcFpuoVApuiotwYmKhVHwp7yvQdoeNas9W96OE8WVPJf
+         fEJOdD3YFhnUem90AU459R0Iu7wpmoJA8tK7s33B77j2IFt7cpSoLKUE4WgYxEc2e77f
+         LNgh7mYDnRKtcTUB27Ew8j23sHGZ2i8KIGU9JMET9zuMj1zvx89UpeZ//YoSSpahXhFZ
+         ySunektHdmDHlr/hWDG59/MVS2N8h0wVtKbtEs6O9dLPib7VEOJj4oka2kY8EzSY4zVS
+         9D9A==
+X-Received: by 10.50.60.7 with SMTP id d7mr27393igr.10.1401906182833;
+        Wed, 04 Jun 2014 11:23:02 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.51.17.104 with SMTP id gd8ls823808igd.16.gmail; Wed, 04 Jun
+ 2014 11:23:02 -0700 (PDT)
+X-Received: by 10.50.61.146 with SMTP id p18mr2818358igr.3.1401906182059;
+        Wed, 04 Jun 2014 11:23:02 -0700 (PDT)
+Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id x2si872850qch.0.2014.06.04.11.23.01
+        for <msysgit@googlegroups.com>;
+        Wed, 04 Jun 2014 11:23:01 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0034A1CE1E;
-	Wed,  4 Jun 2014 14:13:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=+nWpdm7TbQKZ
-	38IQ+Ng7CitEcbw=; b=MrW5ih/ZY1gjMDekPiAQZRqohWMdFYvCtOU2EgS2aF7N
-	YqKJKVZO3nYVJfIp0u0mHxm/p0JD0z0eVf5c4wrcwJ7hvPzWyITYadwh+lK3csdI
-	wQ8PEe7/fj0v4PIARjW1cL9HR3CidF7KbL1gKaSICC7Z4Pv8ibv8Xbm+6ti2P6g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=utUhLc
-	E3ko4FsFRNEgK+xd8xFENVWk7vfWaecf5Mx+6fDTxI+uEX0M0x0eiAMRTyu2bilg
-	FbSPinMVr4P+1qy/5qSJtGuhx8vxsXwEV1gCgUSK/OgHUrtY4w9rm66YxEbIbW4T
-	iKo7gv3YRR2yQHTEda38Qt4QDwQnqjUVojCdg=
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B95491910B;
+	Wed,  4 Jun 2014 14:23:01 -0400 (EDT)
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EA4761CE1D;
-	Wed,  4 Jun 2014 14:13:52 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B03631910A;
+	Wed,  4 Jun 2014 14:23:01 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 58B6B1CE1A;
-	Wed,  4 Jun 2014 14:13:49 -0400 (EDT)
-In-Reply-To: <xmqqr434vaeh.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 04 Jun 2014 10:42:46 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1505C19104;
+	Wed,  4 Jun 2014 14:22:58 -0400 (EDT)
+In-Reply-To: <20140604155752.GA23226@camelia.ucw.cz> (Stepan Kasal's message
+	of "Wed, 4 Jun 2014 17:57:52 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F9FAB494-EC13-11E3-829B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250752>
+X-Pobox-Relay-ID: 410B2E4E-EC15-11E3-A603-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250753>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Stepan Kasal <kasal@ucw.cz> writes:
 
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+> test_cmp() is primarily meant to compare text files (and display the
+> difference for debug purposes).
 >
->> t9001 used a '\n' in a sed expression to split one line into two lin=
-es.
->> Some versions of sed simply ignore the '\' before the 'n', treating
->> '\n' as 'n'.
->>
->> As the test already requires perl as a prerequisite, use perl instea=
-d of sed.
->>
->> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
->> ---
+> Raw "cmp" is better suited to compare binary files (tar, zip, etc.).
 >
-> Hmph.  I read this in pubs.opengroup.org/onlinepubs/9699919799/utilit=
-ies/sed.html
+> On MinGW, test_cmp is a shell function mingw_test_cmp that tries to
+> read both files into environment, stripping CR characters (introduced
+> in commit 4d715ac0).
 >
->     The escape sequence '\n' shall match a <newline> embedded in the
->     pattern space.
+> This function usually speeds things up, as fork is extremly slow on
+> Windows.  But no wonder that this function is extremely slow and
+> sometimes even crashes when comparing large tar or zip files.
 >
-> so it may be better to be a bit more explicit in the log message to
-> say whose implementation has this issue to warn people.
+> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+> ---
 >
->>  t/t9001-send-email.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
->> index 64d9434..2bf48d1 100755
->> --- a/t/t9001-send-email.sh
->> +++ b/t/t9001-send-email.sh
->> @@ -1342,7 +1342,7 @@ test_cover_addresses () {
->>  	git format-patch --cover-letter -2 -o outdir &&
->>  	cover=3D`echo outdir/0000-*.patch` &&
->>  	mv $cover cover-to-edit.patch &&
->> -	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.pa=
-tch >"$cover" &&
->> +	"$PERL_PATH" -pe "s/^From:/$header: extra\@address.com\nFrom:/" co=
-ver-to-edit.patch | tr Q "$LF" >"$cover" &&
+> Hi Thomas,
+> On Wed, Jun 04, 2014 at 02:59:44PM +0200, Thomas Braun wrote:
+>> Using test_cmp_bin instead of cmp would result in then four assertions
+>> for comparing arbitrary data
+>> test_cmp
+>> test_i18ncmp
+>> test_cmp_text
+>> test_cmp_bin
+>> where I think the purpose of each function is clear from its name.
 >
-> We have a shell function "perl" in test-lib-function.sh these days
-> so that you do not have to write "$PERL_PATH" yourself in tests ;-)
+> [test_cmp_text does not exist (yet)]
+>
+> OK, I agree, hence this modified version of the patch.
 
-Also, piping output from perl to tr feels somewhat suboptimal.  I do
-not see where in the test material we use "Q to LF", and we may want
-to remove that altogether, but without that removal, an updated
-patch may look like this.
+Yeah, I think the above reasoning is sound.  And I do not think we
+ever need to have test_cmp_text -- our payload and our messages
+compared by tests to make sure our expectations hold are text by
+default.
 
- t/t9001-send-email.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Will queue; thanks.
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 64d9434..9f06b8c 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1342,7 +1342,10 @@ test_cover_addresses () {
- 	git format-patch --cover-letter -2 -o outdir &&
- 	cover=3D`echo outdir/0000-*.patch` &&
- 	mv $cover cover-to-edit.patch &&
--	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.patch=
- >"$cover" &&
-+	perl -pe "
-+		s/^From:/$header: extra\@address.com\nFrom:/;
-+		y/Q/\n/;
-+	" cover-to-edit.patch >"$cover" &&
- 	git send-email \
- 	  --force \
- 	  --from=3D"Example <nobody@example.com>" \
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
