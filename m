@@ -1,105 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t9001: avoid not portable '\n' with sed
-Date: Wed, 04 Jun 2014 10:42:46 -0700
-Message-ID: <xmqqr434vaeh.fsf@gitster.dls.corp.google.com>
-References: <538ED6DF.5020505@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] Re: [PATCH] Add a Windows-specific fallback to
+ getenv("HOME");
+Date: Wed, 4 Jun 2014 19:49:42 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1406041946510.14982@s15462909.onlinehome-server.info>
+References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com> <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com> <alpine.DEB.1.00.1406041713500.14982@s15462909.onlinehome-server.info>
+ <CABPQNSavYCrdUDyNru-HHMFkdgDRvaCp++f8ZgGKv07sS0eXGQ@mail.gmail.com> <alpine.DEB.1.00.1406041725460.14982@s15462909.onlinehome-server.info> <20140604154503.GB22681@camelia.ucw.cz> <alpine.DEB.1.00.1406041749590.14982@s15462909.onlinehome-server.info>
+ <20140604161625.GB23226@camelia.ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 04 19:43:42 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Erik Faye-Lund <kusmabite@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+	msysGit <msysgit@googlegroups.com>
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: git-owner@vger.kernel.org Wed Jun 04 19:49:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsFDy-0001Hf-Be
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 19:43:42 +0200
+	id 1WsFJt-0007wW-TE
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 19:49:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751339AbaFDRmx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 13:42:53 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54070 "EHLO smtp.pobox.com"
+	id S1751387AbaFDRtq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 13:49:46 -0400
+Received: from mout.gmx.net ([212.227.17.22]:58664 "EHLO mout.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751094AbaFDRmw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2014 13:42:52 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EDB7A1C532;
-	Wed,  4 Jun 2014 13:42:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=DlkU49veh8ad
-	uhWN1fpX0e6ctf8=; b=fudvo7CxJvj58ua0PhUaX3jaxbpfW/qx+ZmfjAiTBvx5
-	/9cTmMr+cTUO4Ye23rYJnUfVcFNgNm8oeKBKhrpH7xNc9BvY0aFoSzi80sTiZ/8u
-	wYo0rrqgaPBbSflB945OH3yhLW3wN2z4bHx/tH7s0Jt2teZV3PIxhyk0OKSCObU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=b4pyRv
-	iyBaxHjgNm+JgZZtiVEPc7f/jZ2ICD0HKJ4fmJzTv1UvClqzC1A1/HIzSUudcNgk
-	MZ2OYHKcTLvamPc7/a/6rN8HGnFG24o3X1ThNZN/S/pWkEqEQkdvF+EV34o3TFvq
-	jCwyLmbkrF6Ca9PxhEYOCV2EU1L6JERqNCXY0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E3F601C531;
-	Wed,  4 Jun 2014 13:42:51 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3F3DA1C52E;
-	Wed,  4 Jun 2014 13:42:48 -0400 (EDT)
-In-Reply-To: <538ED6DF.5020505@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Wed, 04 Jun 2014 10:20:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A4ACC08A-EC0F-11E3-9BE2-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750925AbaFDRtp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 13:49:45 -0400
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx001) with ESMTPSA (Nemesis) id 0Lm34j-1WIudL442L-00Zggr;
+ Wed, 04 Jun 2014 19:49:43 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20140604161625.GB23226@camelia.ucw.cz>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:Go2Nqb7dwQNme5fNvjNMez4k5pn4XDNKsUkKm9la7UUgmnD8hfA
+ aE6EI9eaIEq0Gf5MLRBh1pfYLVE4s6YNlDX8R4zg3Do7fOKqBapfVuTda6s0OzOM008Zqcl
+ zM1bZmz2CRczE7DhQH93UANphfryVo2VYegw4iHq3B/397UkauGxEEEySNd1DSzuETY0jjP
+ 7k7KUebLKhHhELBuhMaOQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250750>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Hi Stepan,
 
-> t9001 used a '\n' in a sed expression to split one line into two line=
-s.
-> Some versions of sed simply ignore the '\' before the 'n', treating
-> '\n' as 'n'.
->
-> As the test already requires perl as a prerequisite, use perl instead=
- of sed.
->
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
+On Wed, 4 Jun 2014, Stepan Kasal wrote:
 
-Hmph.  I read this in pubs.opengroup.org/onlinepubs/9699919799/utilitie=
-s/sed.html
+> PS (about mingwGitDevEnv):
+> > plan is to switch to mingwGitDevEnv for said release. No more msysGit.
+> > Like, bu-bye. Thanks for all the fish.
+> 
+> Interesting.
+> 
+> With msysgit, there is the "net installer" - first time I installed
+> msys/mingw sucessfully, it was as easy as Cygwin, perhaps even
+> easier.
+> 
+> When I go to mingwGitDevEnv home page, I read about chickens, eggs, and
+> upgrading Perl (which msysGit simply gives up, hinting that it is almost
+> impossible).  So I decided to wait for their Git 2.0.0 release before I
+> try to install it (again).
 
-    The escape sequence '\n' shall match a <newline> embedded in the
-    pattern space.
+I understand. And now that upstream Git 2.0.0 is out, it will be very hard
+to use that as a deadline to push against. So: don't hold your breath.
 
-so it may be better to be a bit more explicit in the log message to
-say whose implementation has this issue to warn people.
+> PPS: from marketing point of view, mingwGitDevEnv is far from usable
+> name.  Dscho, if you support the idea, would you mind franchising
+> msysGit 2.0 for a decent amount?
 
->  t/t9001-send-email.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 64d9434..2bf48d1 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1342,7 +1342,7 @@ test_cover_addresses () {
->  	git format-patch --cover-letter -2 -o outdir &&
->  	cover=3D`echo outdir/0000-*.patch` &&
->  	mv $cover cover-to-edit.patch &&
-> -	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.pat=
-ch >"$cover" &&
-> +	"$PERL_PATH" -pe "s/^From:/$header: extra\@address.com\nFrom:/" cov=
-er-to-edit.patch | tr Q "$LF" >"$cover" &&
+Make me an offer :-P
 
-We have a shell function "perl" in test-lib-function.sh these days
-so that you do not have to write "$PERL_PATH" yourself in tests ;-)
+Seriously again, I am in favor of calling it the Git for Windows SDK. But
+really, it is bikeshedding at this point. There is real work to do, still,
+before we can switch. Lots of unaddressed questions. Too little time.
+Speaking of which... budget's depleted for today ;-)
 
->  	git send-email \
->  	  --force \
->  	  --from=3D"Example <nobody@example.com>" \
-
-Thanks.
+Ciao,
+Dscho
