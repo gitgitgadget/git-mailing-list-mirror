@@ -1,96 +1,85 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 2/2] refs.c: SSE4.2 optimizations for check_refname_component
-Date: Wed, 04 Jun 2014 14:46:28 -0700
-Message-ID: <xmqqsinktkjv.fsf@gitster.dls.corp.google.com>
-References: <1401853091-15535-1-git-send-email-dturner@twitter.com>
-	<1401853091-15535-2-git-send-email-dturner@twitter.com>
-	<538ED2F1.9030003@web.de> <1401916476.18134.165.camel@stross>
+Subject: Re: [PATCH v2 8/9] fetch doc: add a section on configured remote-tracking branches
+Date: Wed, 04 Jun 2014 15:17:35 -0700
+Message-ID: <xmqqfvjktj40.fsf@gitster.dls.corp.google.com>
+References: <1401833792-2486-1-git-send-email-gitster@pobox.com>
+	<1401833792-2486-9-git-send-email-gitster@pobox.com>
+	<538F3359.2050601@xiplink.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, mhagger@alum.mit.edu,
-	David Turner <dturner@twitter.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 23:46:42 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: marcnarc@xiplink.com
+X-From: git-owner@vger.kernel.org Thu Jun 05 00:17:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsJ15-0003za-LS
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 23:46:39 +0200
+	id 1WsJVB-0000jO-Fc
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 00:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752108AbaFDVqf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 17:46:35 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50486 "EHLO smtp.pobox.com"
+	id S1751974AbaFDWRl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 18:17:41 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53587 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751949AbaFDVqe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2014 17:46:34 -0400
+	id S1751776AbaFDWRk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 18:17:40 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 70FF11C150;
-	Wed,  4 Jun 2014 17:46:33 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 15D2B1C849;
+	Wed,  4 Jun 2014 18:17:40 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=3ixFc6JSZReS
-	RM6+tWWCK8PXR8M=; b=rCM0FPdAkMGA54WZJirRSqw/KDUNFsteMQ8jI/Bbt5qK
-	N3Pt2tvgsFKIpKQ1GduUEzFuMhF1Ux9Ut/DeK5GAZtI8vubtdKeOM7PkYGph048l
-	BMYjowsGu6yE6fFCOfZL7NWQ+PhgtLBQC4rC1oyIl/DFNdkEqTaBgPPpWecp+OA=
+	:content-type; s=sasl; bh=LWUTv9VqJ0M7e6PSUO9S0dDi//k=; b=aii9vY
+	araVxvFGPl8CcMhs94SklUJf5gsk939pFLErKvOLx5eQ8wr8ZNSieWZmwK4+v1sH
+	sCrYvlnwjyCLjOBWBryuWK8DxXDthzWbtjq7soxC2KNcK2lVWDL2SZkvTpZvtBdC
+	ZlPbh9DrwNq/dACFl5MF082PyJUUW+1ptPXxA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=gogavl
-	9UVdUNJQWJ1IkhxccWGxbN1mvCnu9j4dAS7tt8jLOVksAsCB/SXkUijKwbNnD52E
-	KpeDuxRDoyVN+XYmTaQooPuvm78BuSm2N+reznZ3RBT+1b+f2SATsFDRD+Rj5/Xb
-	UV48rjDlV7qDnc7CUTq2xeH2t+cwz+gA4suAc=
+	:content-type; q=dns; s=sasl; b=fZPwT8H6hOuCNPvTdPVQjUyDLhfAl4Qw
+	TsT4bnHjxUPwLM0IWjKh8++h+gBbP/8rlk22ao739UjnXKaHp29CtTwSvUT1jnE+
+	Mh1hZhpxBlidsX8hJUkw5leELunxxCCptSlrwh9bdhdPTscMq6NgbzRjZAp9APXK
+	ZamxUGNFF0g=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 658491C14F;
-	Wed,  4 Jun 2014 17:46:33 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0CA181C848;
+	Wed,  4 Jun 2014 18:17:40 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B6F0A1C14C;
-	Wed,  4 Jun 2014 17:46:29 -0400 (EDT)
-In-Reply-To: <1401916476.18134.165.camel@stross> (David Turner's message of
-	"Wed, 04 Jun 2014 17:14:36 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6AB011C846;
+	Wed,  4 Jun 2014 18:17:36 -0400 (EDT)
+In-Reply-To: <538F3359.2050601@xiplink.com> (Marc Branchaud's message of "Wed,
+	04 Jun 2014 10:55:21 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: AFC3974C-EC31-11E3-B276-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 08653140-EC36-11E3-84D3-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250797>
 
-David Turner <dturner@twopensource.com> writes:
+Marc Branchaud <mbranchaud@xiplink.com> writes:
 
-> On Wed, 2014-06-04 at 10:04 +0200, Torsten B=C3=B6gershausen wrote:
-> [snip discussion of compiler flags; I'll look into a cpuid approach]
+[jc: omitted good suggestions I'll use in amending]
 
-Hmmmm, I am not sure if the complexity is really worth it.
-
-In any case, [PATCH 1/2] is fairly uncontroversial, so I am inclined
-to queue it by itself early without waiting for the discussion on
-2/2 to settle.
-
->> The name check_refname_component_1() doesn't tell too much,
->> (check_refname_component_sse42()  or check_refname_component_nonsse4=
-2() say more)
+>> +  the refspecs to be used to fetch.  The example above will fetch
 >
-> I'll go with "_bytewise", since that's how it works.
+> /to be used//
 
-That naming assumes that there will never be any alternative
-implementation of the bytewise checker other than the one that uses
-sse42, no?
+I have a problem with that change, actually, because you do not
+"fetch" refspec from anywhere.  A refspec is what is used to
+determine what histories to fetch (i.e. left-hand side of it before
+the colon) and which local refs to update with what is fetched
+(i.e. right-hand side of it after the colon), and this description
+of the traditional behaviour is meant to highlight the difference
+from the second usage, which is relatively new since f2690487
+(fetch: opportunistically update tracking refs, 2013-05-11),
+i.e. how the variable is *not* used as a refspec when the command
+line already has one.
 
->> can I suggest to move all SSE code out to a file under compat/,
->> like compat/refs_sse42.c, or something similar ?
->
-> Since this is a relatively small section of code, I think that would =
-be
-> overkill.  Does anyone else have an opinion?
+Perhaps
 
-If we foresee people on other architectures to invent different
-vectorized implementations on their favourite archs, we may end up
-separating it out into compat/.  I have no opinion on how likely
-that will happen, though, and because this is a small piece of code
-right now, it shouldn't be too painful to reorganize when the time
-comes.
+    ... `remote.<repository>.fetch` values are used as the refspecs,
+    i.e. they specify what refs to fetch and what local refs to
+    update.
+
+or something?
