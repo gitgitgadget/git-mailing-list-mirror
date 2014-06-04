@@ -1,177 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] receive-pack: optionally deny case clone refs
-Date: Wed, 04 Jun 2014 08:06:00 +0200
-Message-ID: <538EB748.3050300@viscovery.net>
-References: <1401851607-8255-1-git-send-email-dturner@twitter.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] update-index: fix segfault with missing --cacheinfo argument
+Date: Wed, 4 Jun 2014 03:11:11 -0400
+Message-ID: <20140604071110.GA22158@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	David Turner <dturner@twitter.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 08:06:16 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 09:11:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ws4L0-0002yE-Rl
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 08:06:15 +0200
+	id 1Ws5Lx-0004iE-Uz
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 09:11:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160AbaFDGGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2014 02:06:09 -0400
-Received: from so.liwest.at ([212.33.55.25]:37195 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755171AbaFDGGI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 02:06:08 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Ws4Kn-0000oq-53; Wed, 04 Jun 2014 08:06:01 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id B4D9516613;
-	Wed,  4 Jun 2014 08:06:00 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <1401851607-8255-1-git-send-email-dturner@twitter.com>
-X-Spam-Score: -1.0 (-)
+	id S932643AbaFDHLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 03:11:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37109 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755489AbaFDHLN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 03:11:13 -0400
+Received: (qmail 12886 invoked by uid 102); 4 Jun 2014 07:11:13 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 04 Jun 2014 02:11:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 04 Jun 2014 03:11:11 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250717>
 
-Am 6/4/2014 5:13, schrieb David Turner:
-> It is possible to have two branches which are the same but for case.
-> This works great on the case-sensitive filesystems, but not so well on
-> case-insensitive filesystems.  It is fairly typical to have
-> case-insensitive clients (Macs, say) with a case-sensitive server
-> (GNU/Linux).
-> 
-> Should a user attempt to pull on a Mac when there are case clone
-> branches with differing contents, they'll get an error message
-> containing something like "Ref refs/remotes/origin/lower is at
-> [sha-of-lowercase-branch] but expected [sha-of-uppercase-branch]....
-> (unable to update local ref)"
-> 
-> With a case-insensitive git server, if a branch called capital-M
-> Master (that differs from lowercase-m-master) is pushed, nobody else
-> can push to (lowercase-m) master until the branch is removed.
-> 
-> Create the option receive.denycaseclonebranches, which checks pushed
-> branches to ensure that they are not case clones of an existing
-> branch.  This setting is turned on by default if core.ignorecase is
-> set, but not otherwise.
-> 
-> Signed-off-by: David Turner <dturner@twitter.com>
-> ---
->  Documentation/config.txt           |  6 ++++++
->  Documentation/git-push.txt         |  5 +++--
->  Documentation/glossary-content.txt |  5 +++++
->  builtin/receive-pack.c             | 27 +++++++++++++++++++++++-
->  t/t5400-send-pack.sh               | 43 ++++++++++++++++++++++++++++++++++++++
->  5 files changed, 83 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 1932e9b..4deddf8 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2053,6 +2053,12 @@ receive.unpackLimit::
->  	especially on slow filesystems.  If not set, the value of
->  	`transfer.unpackLimit` is used instead.
->  
-> +receive.denyCaseCloneBranches::
-> +	If set to true, git-receive-pack will deny a ref update that creates
-> +	a ref which is the same but for case as an existing ref.  This is
-> +	useful when clients are on a case-insensitive filesystem, which
-> +	will cause errors when given refs which differ only in case.
+Running "git update-index --cacheinfo" without any further
+arguments results in a segfault rather than an error
+message. Commit ec160ae (update-index: teach --cacheinfo a
+new syntax "mode,sha1,path", 2014-03-23) added code to
+examine the format of the argument, but forgot to handle the
+NULL case.
 
-Shouldn't this better be named 'receive.denyCaseCloneRefs'?
+Returning an error from the parser is enough, since we then
+treat it as an old-style "--cacheinfo <mode> <sha1> <path>",
+and complain that we have less than 3 arguments to read.
 
-How about 'denyCaseInsensitiveRefs', 'denyIgnoreCaseRefs'?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/update-index.c        | 3 +++
+ t/t2107-update-index-basic.sh | 4 ++++
+ 2 files changed, 7 insertions(+)
 
-Is this entry really so important that it must be the first in the list of
-receive.deny* list, which is not alphabetically sorted?
-
-> +
->  receive.denyDeletes::
->  	If set to true, git-receive-pack will deny a ref update that deletes
->  	the ref. Use this to prevent such a ref deletion via a push.
-
-> --- a/t/t5400-send-pack.sh
-> +++ b/t/t5400-send-pack.sh
-> @@ -129,6 +129,49 @@ test_expect_success 'denyNonFastforwards trumps --force' '
->  	test "$victim_orig" = "$victim_head"
->  '
->  
-> +test_expect_success 'denyCaseCloneBranches works' '
-> +	(
-> +	    cd victim &&
-> +	    git config receive.denyCaseCloneBranches true
-
-Broken && chain.
-
-> +	    git config receive.denyDeletes false
-> +	) &&
-> +	git send-pack ./victim HEAD:refs/heads/caseclone &&
-> +	orig_ver=$(git rev-parse HEAD) &&
-> +	test_must_fail git send-pack ./victim HEAD^:refs/heads/CaseClone &&
-> +	#confirm that this had no effect upstream
-> +	(
-> +	    cd victim &&
-> +	    test_must_fail git rev-parse CaseClone &&
-> +	    remote_ver=$(git rev-parse caseclone) &&
-> +	    test $orig_ver = $remote_ver
-
-Please use double-quotes around the variable expansions: There could be a
-failure mode where remote_ver (and even orig_ver) are empty, which would
-lead to a syntax error or a wrong result.
-
-BTW, on a case-insensitive file system, is there not a chance that 'git
-rev-parse CaseClone' succeeds even though the ref is stored in
-victim/.git/refs/heads/caseclone? Perhaps you should inspect the output of
-'git for-each-ref' for the expected result? (Mental note: At least a
-case-preserving file system is required to run the test.)
-
-> +	) &&
-> +	git send-pack ./victim HEAD^:refs/heads/notacaseclone &&
-> +	test_must_fail git send-pack ./victim :CaseClone &&
-> +	#confirm that this had no effect upstream
-
-Please insert a blank after the hash mark.
-
-> +	(
-> +	    cd victim &&
-> +	    test_must_fail git rev-parse CaseClone &&
-> +	    remote_ver=$(git rev-parse caseclone) &&
-> +	    test $orig_ver = $remote_ver
-> +	) &&
-> +	git send-pack ./victim :caseclone &&
-> +	#confirm that this took effect upstream
-> +	(
-> +	    cd victim &&
-> +	    test_must_fail git rev-parse caseclone
-> +	)
-
-Broken && chain.
-
-> +	#check that we can recreate a branch after deleting a
-> +	#case-clone of it
-> +	case_clone_ver=$(git rev-parse HEAD^)
-
-Broken && chain.
-
-> +	git send-pack ./victim HEAD^:CaseClone &&
-> +	(
-> +	    cd victim &&
-> +	    test_must_fail git rev-parse caseclone &&
-> +	    remote_ver=$(git rev-parse CaseClone) &&
-> +	    test $case_clone_ver = $remote_ver
-> +	)
-> +'
-> +
->  test_expect_success 'push --all excludes remote-tracking hierarchy' '
->  	mkdir parent &&
->  	(
-> 
-
--- Hannes
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index ba54e19..ebea285 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -637,6 +637,9 @@ static int parse_new_style_cacheinfo(const char *arg,
+ 	unsigned long ul;
+ 	char *endp;
+ 
++	if (!arg)
++		return -1;
++
+ 	errno = 0;
+ 	ul = strtoul(arg, &endp, 8);
+ 	if (errno || endp == arg || *endp != ',' || (unsigned int) ul != ul)
+diff --git a/t/t2107-update-index-basic.sh b/t/t2107-update-index-basic.sh
+index fe2fb17..1bafb90 100755
+--- a/t/t2107-update-index-basic.sh
++++ b/t/t2107-update-index-basic.sh
+@@ -29,6 +29,10 @@ test_expect_success 'update-index -h with corrupt index' '
+ 	test_i18ngrep "[Uu]sage: git update-index" broken/usage
+ '
+ 
++test_expect_success '--cacheinfo complains of missing arguments' '
++	test_must_fail git update-index --cacheinfo
++'
++
+ test_expect_success '--cacheinfo does not accept blob null sha1' '
+ 	echo content >file &&
+ 	git add file &&
+-- 
+2.0.0.rc1.436.g03cb729
