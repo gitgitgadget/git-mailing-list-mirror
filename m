@@ -1,97 +1,101 @@
-From: Michael Wagner <mail@mwagner.org>
-Subject: Re: [PATCH] gitweb: Harden UTF-8 handling in generated links
-Date: Wed, 4 Jun 2014 22:47:46 +0200
-Message-ID: <20140604204746.GA1855@localhost.localdomain>
-References: <20140514184145.GA25699@localhost.localdomain>
- <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
- <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
- <20140515050820.GA30785@localhost.localdomain>
- <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
- <20140515184808.GA7964@localhost.localdomain>
- <CANQwDwe+GJ+yAYWdVfMaHq97zGXBoepCfUdLiaQD9LFoz3SiOA@mail.gmail.com>
- <53849FB2.7000701@gmail.com>
- <20140604154128.GA28549@localhost.localdomain>
- <538F69DA.9010201@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jun 2014, #01; Tue, 3)
+Date: Wed, 04 Jun 2014 13:50:05 -0700
+Message-ID: <xmqqwqcwtn5u.fsf@gitster.dls.corp.google.com>
+References: <xmqqzjhtvdua.fsf@gitster.dls.corp.google.com>
+	<538F7050.3040103@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 22:47:56 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 04 22:50:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsI6G-0003mN-2I
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 22:47:56 +0200
+	id 1WsI8b-0005WB-5D
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 22:50:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbaFDUrw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 16:47:52 -0400
-Received: from caelum.uberspace.de ([95.143.172.212]:47884 "EHLO
-	caelum.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751082AbaFDUrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 16:47:51 -0400
-Received: (qmail 32070 invoked from network); 4 Jun 2014 20:47:48 -0000
-Received: from localhost (HELO localhost) (127.0.0.1)
-  by caelum.uberspace.de with SMTP; 4 Jun 2014 20:47:48 -0000
-Content-Disposition: inline
-In-Reply-To: <538F69DA.9010201@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751628AbaFDUuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 16:50:14 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65301 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751591AbaFDUuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 16:50:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AAB0C1B268;
+	Wed,  4 Jun 2014 16:50:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sfhJUPNAEKAVYXVUsZ9qADXcw8c=; b=OmBzLB
+	h42lfFAxQEoo79tFec6tkVp4mw2AX8PZCuk00rvdWXDsTONvV4xokdvT1eyWZKEU
+	GAgw8L7bE7cN6bKcqGOC+ZjkWfaFgnx/zFy2mnZQOcsGQKHHkV6BpbfE4zOmypd2
+	7UrKNxYQnXh7/uBw3SU3j3vbYk7LAz3npr+wo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ny2YtKkK3S63MnhKCjHe+OuvLScli0jB
+	4fXlLQyzDuOQac8bYlPdceEmcbGodnLC0/kjQhGawNu3vTSnOAIdinTBD+Lgx1En
+	yi2jGw4Kc0n+VMP5Q6bZd72wLmY82gDndkg4+KzpreFWAxAgP2GlYN+4b+WzD77U
+	dNGfaTi7jXg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A1D8B1B267;
+	Wed,  4 Jun 2014 16:50:10 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EA03D1B25E;
+	Wed,  4 Jun 2014 16:50:06 -0400 (EDT)
+In-Reply-To: <538F7050.3040103@web.de> (Jens Lehmann's message of "Wed, 04 Jun
+	2014 21:15:28 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CF765EBA-EC29-11E3-8D2C-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250779>
 
-On Wed, Jun 04, 2014 at 08:47:54PM +0200, Jakub Nar=C4=99bski wrote:
-> Michael Wagner wrote:
-> > On Tue, May 27, 2014 at 04:22:42PM +0200, Jakub Nar=C4=99bski wrote=
-:
->=20
-> >> Subject: [PATCH] gitweb: Harden UTF-8 handling in generated links
-> >>
-> >> esc_html() ensures that its input is properly UTF-8 encoded and ma=
-rked
-> >> as UTF-8 with to_utf8().  Make esc_param() (used for query paramet=
-ers
-> >> in generated URLs), esc_path_info() (for escaping path_info
-> >> components) and esc_url() use it too.
-> >>
-> >> This hardens gitweb against errors in UTF-8 handling; because
-> >> to_utf8() is idempotent it won't change correct output.
-> [...]
-> >>   sub esc_param {
-> >>   	my $str =3D shift;
-> >>   	return undef unless defined $str;
-> >> +
-> >> +	$str =3D to_utf8($str);
-> >>   	$str =3D~ s/([^A-Za-z0-9\-_.~()\/:@ ]+)/CGI::escape($1)/eg;
-> >>   	$str =3D~ s/ /\+/g;
-> >> +
-> >>   	return $str;
-> >>   }  =20
-> =20
-> > While trying to view a "blob_plain" of "G=C3=BCtekritierien.txt", a=
- 404 error
-> > occured. "git_get_hash_by_path" tries to resolve the hash with the =
-wrong
-> > filename (git ls-tree -z HEAD -- G=C3=83=C2=BCtekriterien.txt) and =
-fails.
-> >=20
-> > The filename needs the correct encoding. Something like this is pro=
-bably
-> > needed for all filenames and should be done at a prior stage:
->=20
-> True.
->=20
-> First, I wonder why the tests I did for this situation didn't
-> show any errors even before the "harden href()" patch. What
-> is different in your config that you see those errors?
->=20
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Nothing special. It is reproducible with git 1.9.3 (Fedora 20), git
-instaweb (lighttpd) and LANG=3Dde_DE.UTF-8. =20
-=20
+> Am 04.06.2014 00:16, schrieb Junio C Hamano:
+>> * jl/status-added-submodule-is-never-ignored (2014-04-07) 2 commits
+>>  - commit -m: commit staged submodules regardless of ignore config
+>>  - status/commit: show staged submodules regardless of ignore config
+>> 
+>>  There also are a few patches Ronald Weiss and Jens are working on
+>>  polishing around this topic, and a patch from Jens each for gitk
+>>  and git-gui.
+>> 
+>>  Waiting for the dust to settle until picking them up all.
+>
+> To me it looks like the dust settled enough around that part of the
+> topic and I remember consensus about that change. But it would be
+> nice to have the gitk and git-gui patches in at the same time.
+
+Yes, what I meant was that after the dust settled, it may turn out
+that these two may need to be adjusted.  If these two commits can be
+used without any change as a base for any further development, that
+is good---shall I move it back to "Cooking" category?
+
+>> * jl/submodule-recursive-checkout (2013-12-26) 5 commits
+>>  - Teach checkout to recursively checkout submodules
+>>  - submodule: teach unpack_trees() to update submodules
+>>  - submodule: teach unpack_trees() to repopulate submodules
+>>  - submodule: teach unpack_trees() to remove submodule contents
+>>  - submodule: prepare for recursive checkout of submodules
+>> 
+>>  An RFCv2 exists ($gmane/241455) with sizable review comments.
+>>  Expecting a reroll.
+>
+> Will do, but only after I rerolled the submodule test harness
+> ($gmane/245048) soonish, as I intend to reuse the infrastructure
+> introduced there for tests.
+>
+>> * jh/submodule-tests (2014-04-17) 1 commit
+>>  - t7410: 210 tests for various 'git submodule update' scenarios
+>
+> Will look deeper into that one in the next days, we really need more
+> test coverage in that area.
+
+OK. Thanks.
