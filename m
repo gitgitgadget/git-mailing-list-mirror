@@ -1,108 +1,72 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Add a Windows-specific fallback to getenv("HOME");
-Date: Wed, 4 Jun 2014 20:47:58 +0700
-Message-ID: <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com>
-References: <20140604114730.GB22250@camelia.ucw.cz>
+Subject: Re: [PATCH v4] Add an explicit GIT_DIR to the list of excludes
+Date: Wed, 4 Jun 2014 20:52:28 +0700
+Message-ID: <CACsJy8A_CtC_05mja3L-udM_CYwGA46UoN122Xp6kxaUGkFYSw@mail.gmail.com>
+References: <1401163007-5808-1-git-send-email-pasha.bolokhov@gmail.com>
+ <CACsJy8By-58wBoV8BydWbpDkpUG6jJhM16aO+Ed8J2ucq66VcQ@mail.gmail.com>
+ <CAKpPgvfvrdBr7oxyKg2G1XDHwS=Dzs9=K9MmQLtLzUx-Zi+1dA@mail.gmail.com>
+ <CACsJy8Dy2quFrXynH7g5DzNMikwkOiyJZGMoSqLyjxzzvRreYQ@mail.gmail.com> <CAKpPgvcv10-DNM4xetfmcckG6ancfEn_y7i8EJ3mWQLaELDdUQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: GIT Mailing-list <git@vger.kernel.org>, Thomas Braun <thomas.braun@virtuell-zuhause.de>, 
-	msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBC2ZN5PHQUMBBLOHXSOAKGQEBYORY2Y@googlegroups.com Wed Jun 04 15:48:32 2014
-Return-path: <msysgit+bncBC2ZN5PHQUMBBLOHXSOAKGQEBYORY2Y@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qa0-f59.google.com ([209.85.216.59])
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 15:53:06 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC2ZN5PHQUMBBLOHXSOAKGQEBYORY2Y@googlegroups.com>)
-	id 1WsBYM-0000PV-Ac
-	for gcvm-msysgit@m.gmane.org; Wed, 04 Jun 2014 15:48:30 +0200
-Received: by mail-qa0-f59.google.com with SMTP id hw13sf1363620qab.24
-        for <gcvm-msysgit@m.gmane.org>; Wed, 04 Jun 2014 06:48:29 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WsBcn-0003cQ-SD
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 15:53:06 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752074AbaFDNxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 09:53:00 -0400
+Received: from mail-qa0-f48.google.com ([209.85.216.48]:46395 "EHLO
+	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751437AbaFDNw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 09:52:59 -0400
+Received: by mail-qa0-f48.google.com with SMTP id i13so7097117qae.7
+        for <git@vger.kernel.org>; Wed, 04 Jun 2014 06:52:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=aymzTHWi6IIaSrOuxCRMxFFwidqiV45dcVkXPbgPL+0=;
-        b=VTJpV9VDwDabhlev1GkvJZgACYbvgmoW7ZPVMyIwdCG2bAMu5T5dM6bA/2DbG149U9
-         JvHjD8NDE0/cMAcsvOedhCjaU6WZCt77kH/xZJCXRc4n6Lw73XL+5xw75qqcpFl+gZRE
-         vpjLrKJaq9TH4u6wGLYDasVUjqGOS+kr43K8Jk48IdXzoc1U4rdKKimW0uOAcqxXNhm+
-         eC0eFt6ygCz/1s/K9p3zVTuimbs5jgGab+t4Y57Nhz/Toujw4nKXTUILtBngwIL4KxFC
-         1QCCv6CtJkKSGM/wPIq4QPsgS9Dsgv2AiKmKsdPHCGCl6r7LrS6+4a3a/zSp9dx4DksF
-         h/7A==
-X-Received: by 10.140.100.204 with SMTP id s70mr326934qge.9.1401889709555;
-        Wed, 04 Jun 2014 06:48:29 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.108.4 with SMTP id i4ls3015903qgf.78.gmail; Wed, 04 Jun
- 2014 06:48:28 -0700 (PDT)
-X-Received: by 10.236.138.113 with SMTP id z77mr17983548yhi.25.1401889708910;
-        Wed, 04 Jun 2014 06:48:28 -0700 (PDT)
-Received: from mail-qa0-x22c.google.com (mail-qa0-x22c.google.com [2607:f8b0:400d:c00::22c])
-        by gmr-mx.google.com with ESMTPS id x7si751844qcd.3.2014.06.04.06.48.28
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 04 Jun 2014 06:48:28 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c00::22c as permitted sender) client-ip=2607:f8b0:400d:c00::22c;
-Received: by mail-qa0-f44.google.com with SMTP id j7so7020674qaq.31
-        for <msysgit@googlegroups.com>; Wed, 04 Jun 2014 06:48:28 -0700 (PDT)
-X-Received: by 10.140.92.200 with SMTP id b66mr66429172qge.41.1401889708792;
- Wed, 04 Jun 2014 06:48:28 -0700 (PDT)
-Received: by 10.96.66.129 with HTTP; Wed, 4 Jun 2014 06:47:58 -0700 (PDT)
-In-Reply-To: <20140604114730.GB22250@camelia.ucw.cz>
-X-Original-Sender: pclouds@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c00::22c
- as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250727>
+         :cc:content-type;
+        bh=e3YSH/TcrJ+M70A8OrXf980kaN+FKBiTkSnklFR3tHY=;
+        b=Oqi/SL+QoY9fZY9+TAzzk8T41zDqFbPg6mymEP/RzDVPeZWON9WezkyObGQ3m0A34A
+         EzTAAXQ27/5tTuXmgwFzgAikTCnNtcxGgk1h6MOIpS9+mjZu90lsEgHb215Tv0H4TJY+
+         KreMSdiWezZdc4AqHrRAAOFuIPm2zTB4joTleV76h6r7pldEk+5JC4NYLbp0QffiMxBa
+         e6iW2188E52W02iw/F+vz5g9xcP30+gmg19oMvHbALWe/RskYVxchNVc3+D4QkX32z6U
+         K8+oNhRIgMuwrFqwrutcZxhUeL7VdcgHO/1rqpkk8Hvvtk3s3B8OHPnmEcoU8D5UHkLo
+         OpFg==
+X-Received: by 10.229.27.198 with SMTP id j6mr71430694qcc.12.1401889978914;
+ Wed, 04 Jun 2014 06:52:58 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Wed, 4 Jun 2014 06:52:28 -0700 (PDT)
+In-Reply-To: <CAKpPgvcv10-DNM4xetfmcckG6ancfEn_y7i8EJ3mWQLaELDdUQ@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250728>
 
-On Wed, Jun 4, 2014 at 6:47 PM, Stepan Kasal <kasal@ucw.cz> wrote:
-> @@ -133,7 +133,7 @@ char *git_path(const char *fmt, ...)
->  void home_config_paths(char **global, char **xdg, char *file)
->  {
->         char *xdg_home = getenv("XDG_CONFIG_HOME");
-> -       char *home = getenv("HOME");
-> +       const char *home = get_home_directory();
->         char *to_free = NULL;
+On Wed, Jun 4, 2014 at 3:55 AM, Pasha Bolokhov <pasha.bolokhov@gmail.com> wrote:
+>> The case when $GIT_DIR points to a _file_ seems uncovered.
+>> setup_git_directory() will transform the file to the directory
+>> internally and we never know the .git file's path (so we can't exclude
+>> it). So people could accidentally add the .git file in, then remove it
+>> from from work tree and suddenly the work tree becomes repo-less. It's
+>> not as bad as .git _directory_ because we don't lose valuable data. I
+>> don't know if you want to cover this too.
 >
->         if (!home) {
+> That's right, there is no way of knowing what the original .git file
+> was. I guess the only way to work around this problem is to modify
+> "read_gitfile()" so it saves the name of the original file. Then we
+> can add both that .git-file and GIT_DIR to the exclude list. Not a big
+> problem with me, but need to see what you guys think
 
-Just checking. Instead of replace the call sites, can we check and
-setenv("HOME") if it's missing instead? MinGW port already replaces
-main(). Extra initialization should not be a problem. I feel
-"getenv("HOME")" a tiny bit more familiar than get_home_directory(),
-but that's really weak argument as the number of call sites has not
-increased in 4 years.
+My view is this non-standard $(basename $GIT_DIR) is a corner case.
+Unless people who care about it (e.g. you) do something that affects
+the common ".git" case, or really mess up the code, I don't think it's
+a problem if you decide to ignore some smaller cases.
 -- 
 Duy
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
