@@ -1,134 +1,113 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+From: John Keeping <john@keeping.me.uk>
 Subject: Re: [PATCH] t9001: avoid not portable '\n' with sed
-Date: Wed, 04 Jun 2014 20:42:35 +0200
-Message-ID: <538F689B.1020804@web.de>
-References: <538ED6DF.5020505@web.de>	<xmqqr434vaeh.fsf@gitster.dls.corp.google.com> <xmqqd2eov8ys.fsf@gitster.dls.corp.google.com>
+Date: Wed, 4 Jun 2014 19:46:04 +0100
+Message-ID: <20140604184604.GC14457@serenity.lan>
+References: <538ED6DF.5020505@web.de>
+ <xmqqr434vaeh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Wed Jun 04 20:43:21 2014
+Cc: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 04 20:46:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsG9g-0005OJ-CL
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 20:43:20 +0200
+	id 1WsGCZ-0007dD-HQ
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 20:46:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694AbaFDSnP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 14:43:15 -0400
-Received: from mout.web.de ([212.227.15.4]:61923 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751109AbaFDSnO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 14:43:14 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0LlayN-1WHHV81ryp-00bKnj; Wed, 04 Jun 2014 20:42:41
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <xmqqd2eov8ys.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:K8PgLCfqs57HOl38T4gJ73rFfXBCA9gr9YlLb8CD4kysjL4Q0aE
- WE7oa9GZyp/m4WjT1UnNmGTNeaf4txhDhihW65OUgYvKxh/rPoXDlr+M0Z476bMHyHnJmDk
- XMR+yT0aoQ4b1XKkRumG1i6IZcJA2ursm5WUdGipeN8gs5Yh1hQmAgshdkyQvej42tl5H/m
- 3Tg+8CDvoZxJ7who/NBow==
+	id S1751340AbaFDSqO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 14:46:14 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:44927 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751209AbaFDSqO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 4 Jun 2014 14:46:14 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 659D42171F;
+	Wed,  4 Jun 2014 19:46:13 +0100 (BST)
+X-Quarantine-ID: <3JQ8FOQZhDqj>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3JQ8FOQZhDqj; Wed,  4 Jun 2014 19:46:12 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by hyena.aluminati.org (Postfix) with ESMTP id 505DE1FC24;
+	Wed,  4 Jun 2014 19:46:12 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 3F00B161E570;
+	Wed,  4 Jun 2014 19:46:12 +0100 (BST)
+X-Quarantine-ID: <Aq45pa4crqDH>
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id Aq45pa4crqDH; Wed,  4 Jun 2014 19:46:11 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id DA259161E40D;
+	Wed,  4 Jun 2014 19:46:06 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqr434vaeh.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250756>
 
-On 2014-06-04 20.13, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Jun 04, 2014 at 10:42:46AM -0700, Junio C Hamano wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
 >=20
->> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->>
->>> t9001 used a '\n' in a sed expression to split one line into two li=
+> > t9001 used a '\n' in a sed expression to split one line into two li=
 nes.
->>> Some versions of sed simply ignore the '\' before the 'n', treating
->>> '\n' as 'n'.
->>>
->>> As the test already requires perl as a prerequisite, use perl inste=
+> > Some versions of sed simply ignore the '\' before the 'n', treating
+> > '\n' as 'n'.
+> >
+> > As the test already requires perl as a prerequisite, use perl inste=
 ad of sed.
->>>
->>> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
->>> ---
->>
->> Hmph.  I read this in pubs.opengroup.org/onlinepubs/9699919799/utili=
-ties/sed.html
->>
->>     The escape sequence '\n' shall match a <newline> embedded in the
->>     pattern space.
->>
->> so it may be better to be a bit more explicit in the log message to
->> say whose implementation has this issue to warn people.
->>
->>>  t/t9001-send-email.sh | 2 +-
->>>  1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
->>> index 64d9434..2bf48d1 100755
->>> --- a/t/t9001-send-email.sh
->>> +++ b/t/t9001-send-email.sh
->>> @@ -1342,7 +1342,7 @@ test_cover_addresses () {
->>>  	git format-patch --cover-letter -2 -o outdir &&
->>>  	cover=3D`echo outdir/0000-*.patch` &&
->>>  	mv $cover cover-to-edit.patch &&
->>> -	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.p=
+> >
+> > Signed-off-by: Torsten B=F6gershausen <tboegi@web.de>
+> > ---
+>=20
+> Hmph.  I read this in pubs.opengroup.org/onlinepubs/9699919799/utilit=
+ies/sed.html
+>=20
+>     The escape sequence '\n' shall match a <newline> embedded in the
+>     pattern space.
+>=20
+> so it may be better to be a bit more explicit in the log message to
+> say whose implementation has this issue to warn people.
+>=20
+> > -	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.p=
 atch >"$cover" &&
->>> +	"$PERL_PATH" -pe "s/^From:/$header: extra\@address.com\nFrom:/" c=
+> > +	"$PERL_PATH" -pe "s/^From:/$header: extra\@address.com\nFrom:/" c=
 over-to-edit.patch | tr Q "$LF" >"$cover" &&
->>
->> We have a shell function "perl" in test-lib-function.sh these days
->> so that you do not have to write "$PERL_PATH" yourself in tests ;-)
->=20
-> Also, piping output from perl to tr feels somewhat suboptimal.  I do
-> not see where in the test material we use "Q to LF", and we may want
-> to remove that altogether, but without that removal, an updated
-> patch may look like this.
->=20
->  t/t9001-send-email.sh | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->=20
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 64d9434..9f06b8c 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -1342,7 +1342,10 @@ test_cover_addresses () {
->  	git format-patch --cover-letter -2 -o outdir &&
->  	cover=3D`echo outdir/0000-*.patch` &&
->  	mv $cover cover-to-edit.patch &&
-> -	sed "s/^From:/$header: extra@address.com\nFrom:/" cover-to-edit.pat=
-ch >"$cover" &&
-> +	perl -pe "
-> +		s/^From:/$header: extra\@address.com\nFrom:/;
-> +		y/Q/\n/;
-> +	" cover-to-edit.patch >"$cover" &&
->  	git send-email \
->  	  --force \
->  	  --from=3D"Example <nobody@example.com>" \
-Good catch, the "tr" should had been removed.
-My first version used
-sed "s/^From:/$header: extra@address.comQFrom:/"
-and the Q was replaced by tr with a literal LF.
-So I think the 'Q' -> '\n' conversion should be removed completely :-)
 
-The sed in question is /usr/bin/sed under Mac OS X.
-Then we have the question: What exactly is the pattern space?
+Note that quoted section of POSIX says "embedded in the pattern space";
+under the description of the "s" command, it says:
 
->In default operation, sed cyclically shall append a line of input, les=
-s its terminating <newline> >character, into the pattern space....
+	The replacement string shall be scanned from beginning to end.
+	[...]
+	The meaning of a <backslash> immediately followed by any
+	character other than '&', <backslash>, a digit, or the delimiter
+	character used for this command, is unspecified.
 
-Isn't that the stuff from the input?
-But that doesn't make too much sence to me, since "input lines" are ter=
-minated by \n.
-So pattern space seems to mean output when they talk about the \n
-Anyway, the \n (to insert a newline into the output) works under Linux,=
- but not Mac OS.
+	A line can be split by substituting a <newline> into it. The
+	application shall escape the <newline> in the replacement by
+	preceding it by a <backslash>.
 
+So the portable way to do it is:
 
+	sed "s/^From:/$header: extra@address.com\
+=46rom:/" cover-to-edit.patch >"$cover" &&
 
-
-=20
+but that requires the continuation to start in column 0, so the Perl
+variant is probably neater.
