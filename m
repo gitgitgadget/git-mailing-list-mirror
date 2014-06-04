@@ -1,75 +1,70 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: What's cooking in git.git (Jun 2014, #01; Tue, 3)
-Date: Wed, 04 Jun 2014 21:15:28 +0200
-Message-ID: <538F7050.3040103@web.de>
-References: <xmqqzjhtvdua.fsf@gitster.dls.corp.google.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] t9001: avoid not portable '\n' with sed
+Date: Wed, 04 Jun 2014 21:16:03 +0200
+Message-ID: <87wqcw1o5o.fsf@igel.home>
+References: <538ED6DF.5020505@web.de>
+	<xmqqr434vaeh.fsf@gitster.dls.corp.google.com>
+	<20140604184604.GC14457@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Jun 04 21:15:43 2014
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Torsten =?utf-8?Q?B=C3=B6gershaus?= =?utf-8?Q?en?= 
+	<tboegi@web.de>, git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Wed Jun 04 21:16:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsGf0-00040O-54
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 21:15:42 +0200
+	id 1WsGfW-0004PP-Gu
+	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 21:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201AbaFDTPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 4 Jun 2014 15:15:37 -0400
-Received: from mout.web.de ([212.227.15.14]:64784 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750925AbaFDTPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 15:15:36 -0400
-Received: from [192.168.178.41] ([79.193.71.10]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0LiUC0-1WFvAb1b00-00cjUH; Wed, 04 Jun 2014 21:15:29
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <xmqqzjhtvdua.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:rD7UYe/fdivEbHKo9bxDY47eJKglkbCyA8wed5LUQG2JcRsuIW2
- fo+JF4Qs/45ZO66grTby093fplgKUbBcQPZyeCFvzvYho858R2OYoHXDevCuWSpJygKWQ5j
- s/AZXCcacMvpuDYw1/k7VAfnPVcQc3g2nKG5OF24kNTvKlcY3CZNKapgXUvF3Nmx3PJ5r2e
- iBfS7scA6iZHuqb4wOxSA==
+	id S1751240AbaFDTQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 4 Jun 2014 15:16:09 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:47654 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750925AbaFDTQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 4 Jun 2014 15:16:08 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3gkKbT1YB7z3hhcr;
+	Wed,  4 Jun 2014 21:16:05 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3gkKbT15hMzbbhY;
+	Wed,  4 Jun 2014 21:16:05 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id 4omU4kG8a26w; Wed,  4 Jun 2014 21:16:04 +0200 (CEST)
+X-Auth-Info: 1tfhsX6Z9XfjD+3VZEDgSbcT5J+VEGopzDvclLm7XM8=
+Received: from igel.home (host-188-174-215-65.customer.m-online.net [188.174.215.65])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Wed,  4 Jun 2014 21:16:04 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id B5F302C3686; Wed,  4 Jun 2014 21:16:03 +0200 (CEST)
+X-Yow: -- I can do ANYTHING ... I can even ... SHOPLIFT!!
+In-Reply-To: <20140604184604.GC14457@serenity.lan> (John Keeping's message of
+	"Wed, 4 Jun 2014 19:46:04 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250774>
 
-Am 04.06.2014 00:16, schrieb Junio C Hamano:
-> * jl/status-added-submodule-is-never-ignored (2014-04-07) 2 commits
->  - commit -m: commit staged submodules regardless of ignore config
->  - status/commit: show staged submodules regardless of ignore config
-> 
->  There also are a few patches Ronald Weiss and Jens are working on
->  polishing around this topic, and a patch from Jens each for gitk
->  and git-gui.
-> 
->  Waiting for the dust to settle until picking them up all.
+John Keeping <john@keeping.me.uk> writes:
 
-To me it looks like the dust settled enough around that part of the
-topic and I remember consensus about that change. But it would be
-nice to have the gitk and git-gui patches in at the same time.
+> So the portable way to do it is:
+>
+> 	sed "s/^From:/$header: extra@address.com\
+> From:/" cover-to-edit.patch >"$cover" &&
 
-> * jl/submodule-recursive-checkout (2013-12-26) 5 commits
->  - Teach checkout to recursively checkout submodules
->  - submodule: teach unpack_trees() to update submodules
->  - submodule: teach unpack_trees() to repopulate submodules
->  - submodule: teach unpack_trees() to remove submodule contents
->  - submodule: prepare for recursive checkout of submodules
-> 
->  An RFCv2 exists ($gmane/241455) with sizable review comments.
->  Expecting a reroll.
+That wouldn't work as \<newline> is removed in double quotes.  You
+either need to double the backslash or put it in single quotes.
 
-Will do, but only after I rerolled the submodule test harness
-($gmane/245048) soonish, as I intend to reuse the infrastructure
-introduced there for tests.
+Andreas.
 
-> * jh/submodule-tests (2014-04-17) 1 commit
->  - t7410: 210 tests for various 'git submodule update' scenarios
-
-Will look deeper into that one in the next days, we really need more
-test coverage in that area.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
