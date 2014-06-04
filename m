@@ -1,177 +1,130 @@
-From: Michael Wagner <mail@mwagner.org>
-Subject: Re: [PATCH] gitweb: Harden UTF-8 handling in generated links
-Date: Wed, 4 Jun 2014 17:41:29 +0200
-Message-ID: <20140604154128.GA28549@localhost.localdomain>
-References: <20140514184145.GA25699@localhost.localdomain>
- <xmqqd2fghvlf.fsf@gitster.dls.corp.google.com>
- <CANQwDwdh1qQkYi9sB=22wbNnb+g5qv5prCzj2aWhHBbTZhVhdg@mail.gmail.com>
- <20140515050820.GA30785@localhost.localdomain>
- <alpine.DEB.2.00.1405150957520.10221@ds9.cixit.se>
- <20140515184808.GA7964@localhost.localdomain>
- <CANQwDwe+GJ+yAYWdVfMaHq97zGXBoepCfUdLiaQD9LFoz3SiOA@mail.gmail.com>
- <53849FB2.7000701@gmail.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: Re: [PATCH] Add a Windows-specific fallback to getenv("HOME");
+Date: Wed, 4 Jun 2014 18:16:25 +0200
+Organization: <)><
+Message-ID: <20140604161625.GB23226@camelia.ucw.cz>
+References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com> <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com> <alpine.DEB.1.00.1406041713500.14982@s15462909.onlinehome-server.info> <CABPQNSavYCrdUDyNru-HHMFkdgDRvaCp++f8ZgGKv07sS0eXGQ@mail.gmail.com> <alpine.DEB.1.00.1406041725460.14982@s15462909.onlinehome-server.info> <20140604154503.GB22681@camelia.ucw.cz> <alpine.DEB.1.00.1406041749590.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 04 18:00:02 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Erik Faye-Lund <kusmabite@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncBCU63DXMWULRBW4MXWOAKGQEHVGJULQ@googlegroups.com Wed Jun 04 18:16:54 2014
+Return-path: <msysgit+bncBCU63DXMWULRBW4MXWOAKGQEHVGJULQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f185.google.com ([209.85.212.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsDbc-0000bQ-IM
-	for gcvg-git-2@plane.gmane.org; Wed, 04 Jun 2014 18:00:01 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751945AbaFDP7R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 4 Jun 2014 11:59:17 -0400
-Received: from caelum.uberspace.de ([95.143.172.212]:47397 "EHLO
-	caelum.uberspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338AbaFDP7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 4 Jun 2014 11:59:16 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Wed, 04 Jun 2014 11:59:16 EDT
-Received: (qmail 5689 invoked from network); 4 Jun 2014 15:52:33 -0000
-Received: from localhost (HELO localhost) (127.0.0.1)
-  by caelum.uberspace.de with SMTP; 4 Jun 2014 15:52:33 -0000
+	(envelope-from <msysgit+bncBCU63DXMWULRBW4MXWOAKGQEHVGJULQ@googlegroups.com>)
+	id 1WsDrY-0005Ye-1U
+	for gcvm-msysgit@m.gmane.org; Wed, 04 Jun 2014 18:16:28 +0200
+Received: by mail-wi0-f185.google.com with SMTP id e4sf124376wiv.2
+        for <gcvm-msysgit@m.gmane.org>; Wed, 04 Jun 2014 09:16:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=ckcYcWyHCMG7EhxPATGXtXJ0Gpr5rjIvJJc19zOgkNg=;
+        b=RGEW2aP6F/sLAwvCHluszcNG6cVd8A4aPI4BrN0U9jdnRQlcPPVWGMmpDuxlfL1Mn1
+         VwVDlszI+eecYD7DEW+M9lYAXMDuU+4j3jIC5FM8UJSqZpYY0j8HzLIb08AG1yGH9PHE
+         fiG2eZ3/6k/H4Yk+5rHoJBjE3xYQFRg0OeXboCvUe2zzsPGr71Jzm/HxzMreFZKLQwJc
+         i1ya7CLR/Fdo5AtoAzjB4NCfXgm537EUnApj6IBFnzGalHDEyq+qutCp1a5SzUSjtKw2
+         a6KYwRYKdZyRqgTXBjIelA/xwFB9jjhm5aZfETTtC6ZJERUTfERqs/WaKdCE84CShGdz
+         3S1A==
+X-Received: by 10.152.37.65 with SMTP id w1mr101laj.42.1401898587763;
+        Wed, 04 Jun 2014 09:16:27 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.205.11 with SMTP id lc11ls585441lac.79.gmail; Wed, 04 Jun
+ 2014 09:16:26 -0700 (PDT)
+X-Received: by 10.112.163.195 with SMTP id yk3mr400871lbb.20.1401898586817;
+        Wed, 04 Jun 2014 09:16:26 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id el3si1221923wib.0.2014.06.04.09.16.26
+        for <msysgit@googlegroups.com>;
+        Wed, 04 Jun 2014 09:16:26 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 7A97E1C00A8;
+	Wed,  4 Jun 2014 18:16:26 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s54GGQRs023376;
+	Wed, 4 Jun 2014 18:16:26 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s54GGP5c023375;
+	Wed, 4 Jun 2014 18:16:25 +0200
+In-Reply-To: <alpine.DEB.1.00.1406041749590.14982@s15462909.onlinehome-server.info>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-In-Reply-To: <53849FB2.7000701@gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250746>
 
-On Tue, May 27, 2014 at 04:22:42PM +0200, Jakub Nar=C4=99bski wrote:
-> W dniu 2014-05-15 21:28, Jakub Nar=C4=99bski pisze:
-> > On Thu, May 15, 2014 at 8:48 PM, Michael Wagner <accounts@mwagner.o=
-rg> wrote:
-> >> On Thu, May 15, 2014 at 10:04:24AM +0100, Peter Krefting wrote:
-> >>> Michael Wagner:
->=20
-> >> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> >> index a9f57d6..f1414e1 100755
-> >> --- a/gitweb/gitweb.perl
-> >> +++ b/gitweb/gitweb.perl
-> >> @@ -7138,7 +7138,7 @@ sub git_tree {
-> >>          my @entries =3D ();
-> >>          {
-> >>                  local $/ =3D "\0";
-> >> -               open my $fd, "-|", git_cmd(), "ls-tree", '-z',
-> >> +               open my $fd, "-|encoding(UTF-8)", git_cmd(), "ls-t=
-ree", '-z',
-> >>                          ($show_sizes ? '-l' : ()), @extra_options=
-, $hash
-> >>                          or die_error(500, "Open git-ls-tree faile=
-d");
-> >=20
-> > Or put
-> >=20
-> >                     binmode $fd, ':utf8';
-> >=20
-> > like in the rest of the code.
-> >=20
-> >>                  @entries =3D map { chomp; $_ } <$fd>;
-> >>
-> >=20
-> > Even better solution would be to use
-> >=20
-> >      use open IN =3D> ':encoding(utf-8)';
-> >=20
-> > at the beginning of gitweb.perl, once and for all.
->=20
-> Or harden esc_param / esc_path_info the same way esc_html
-> is hardened against missing ':utf8' flag.
->=20
-> -- >8 --=20
-> Subject: [PATCH] gitweb: Harden UTF-8 handling in generated links
->=20
-> esc_html() ensures that its input is properly UTF-8 encoded and marke=
-d
-> as UTF-8 with to_utf8().  Make esc_param() (used for query parameters
-> in generated URLs), esc_path_info() (for escaping path_info
-> components) and esc_url() use it too.
->=20
-> This hardens gitweb against errors in UTF-8 handling; because
-> to_utf8() is idempotent it won't change correct output.
->=20
-> Reported-by: Michael Wagner <accounts@mwagner.org>
-> Signed-off-by: Jakub Nar=C4=99bski <jnareb@gmail.com>
-> ---
->  gitweb/gitweb.perl |    7 +++++++
->  1 files changed, 7 insertions(+), 0 deletions(-)
->=20
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index a9f57d6..77e1312 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1548,8 +1548,11 @@ sub to_utf8 {
->  sub esc_param {
->  	my $str =3D shift;
->  	return undef unless defined $str;
-> +
-> +	$str =3D to_utf8($str);
->  	$str =3D~ s/([^A-Za-z0-9\-_.~()\/:@ ]+)/CGI::escape($1)/eg;
->  	$str =3D~ s/ /\+/g;
-> +
->  	return $str;
->  }
-> =20
-> @@ -1558,6 +1561,7 @@ sub esc_path_info {
->  	my $str =3D shift;
->  	return undef unless defined $str;
-> =20
-> +	$str =3D to_utf8($str);
->  	# path_info doesn't treat '+' as space (specially), but '?' must be=
- escaped
->  	$str =3D~ s/([^A-Za-z0-9\-_.~();\/;:@&=3D +]+)/CGI::escape($1)/eg;
-> =20
-> @@ -1568,8 +1572,11 @@ sub esc_path_info {
->  sub esc_url {
->  	my $str =3D shift;
->  	return undef unless defined $str;
-> +
-> +	$str =3D to_utf8($str);
->  	$str =3D~ s/([^A-Za-z0-9\-_.~();\/;?:@&=3D ]+)/CGI::escape($1)/eg;
->  	$str =3D~ s/ /\+/g;
-> +
->  	return $str;
->  }
-> =20
-> --=20
-> 1.7.1
->=20
->=20
+Hi dscho,
 
-While trying to view a "blob_plain" of "G=C3=BCtekritierien.txt", a 404=
- error
-occured. "git_get_hash_by_path" tries to resolve the hash with the wron=
-g
-filename (git ls-tree -z HEAD -- G=C3=83=C2=BCtekriterien.txt) and fail=
-s.
+your arguments seem really strong.  (Especially the four years of
+battle testing, with the memories of constant problems with HOME before.)
 
-The filename needs the correct encoding. Something like this is probabl=
-y
-needed for all filenames and should be done at a prior stage:
----
- gitweb/gitweb.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+I hope they are strong enough to convince Junio to accept this patch;
+that would help.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 77e1312..e4a50e7 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -4725,7 +4725,7 @@ sub git_print_tree_entry {
-                }
-                print " | " .
-                        $cgi->a({-href =3D> href(action=3D>"blob_plain"=
-, hash_base=3D>$hash_base,
--                                              file_name=3D>"$basedir$t=
-->{'name'}")},
-+                                              file_name=3D>"$basedir" =
-=2E to_utf8($t->{'name'}))},=20
-                                "raw");
-                print "</td>\n";
+Stepan
 
---=20
-1.7.1
+PS (about mingwGitDevEnv):
+> plan is to switch to mingwGitDevEnv for said release. No more msysGit.
+> Like, bu-bye. Thanks for all the fish.
+
+Interesting.
+
+With msysgit, there is the "net installer" - first time I installed
+msys/mingw sucessfully, it was as easy as Cygwin, perhaps even
+easier.
+
+When I go to mingwGitDevEnv home page, I read about chickens, eggs,
+and upgrading Perl (which msysGit simply gives up, hinting that it is
+almost impossible).
+So I decided to wait for their Git 2.0.0 release before I try to
+install it (again).
+
+I apologize for being so cheeky, I hope it will help anyway...
+
+PPS: from marketing point of view, mingwGitDevEnv is far from usable
+name.  Dscho, if you support the idea, would you mind franchising
+msysGit 2.0 for a decent amount?
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
