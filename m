@@ -1,114 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Proposal for pruning tags
-Date: Thu, 05 Jun 2014 13:50:58 -0700
-Message-ID: <xmqqoay7rsgd.fsf@gitster.dls.corp.google.com>
-References: <CAHd499BLX3q2FHLfFpq_14w2mmosywfRqMHVjkke0BRhAAjx7g@mail.gmail.com>
+Subject: Re: [PATCH v2 10/11] test-lib: make it possible to override how test code is eval'd
+Date: Thu, 05 Jun 2014 14:11:19 -0700
+Message-ID: <xmqqk38vrrig.fsf@gitster.dls.corp.google.com>
+References: <1401176460-31564-1-git-send-email-rhansen@bbn.com>
+	<1401915687-8602-1-git-send-email-rhansen@bbn.com>
+	<1401915687-8602-11-git-send-email-rhansen@bbn.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 22:51:17 2014
+Cc: git@vger.kernel.org
+To: Richard Hansen <rhansen@bbn.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 23:11:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wsed2-0002hP-NB
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 22:51:17 +0200
+	id 1Wsex0-0008SP-QZ
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 23:11:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752659AbaFEUvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 16:51:12 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64602 "EHLO smtp.pobox.com"
+	id S1751821AbaFEVL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 17:11:27 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57582 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752652AbaFEUvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 16:51:11 -0400
+	id S1751440AbaFEVLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 17:11:25 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA0721DCB2;
-	Thu,  5 Jun 2014 16:51:04 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5ACF41E468;
+	Thu,  5 Jun 2014 17:11:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FoDPYje2wRMGkvMeZJNJk/85398=; b=yQKwIN
-	uHw0O7IoRUQeCpiX21voa9Lz6y5Td0I1UfYIiR7xB3+VsKQeaKkP1MGtVcdWUxhg
-	23YKvAZtDWHcYmG58AII75yzPvSZ4eo9B8ljP3AYS1y0z6nsT4VE6Z9ERU0dDWpA
-	7BuAlzr2acIN9BRR4ZSHOiDa3633/gD+v93QE=
+	:content-type; s=sasl; bh=ULWHxHOdHrAXxJT91QCV/fe4hmk=; b=nIDWNT
+	JKT6xgPLmwdE1emrlUxifPBy6pNEp+RW9E0gYfriEZMppUaUFu15VS6UjaCB0lbK
+	yHa8imQLbsQlTYBA1tlFHzrL+z1fuxSvfENHKJdbEMEJRPOJQGoMRziAVj3NK5ZG
+	oq3ANAdsLbrwhNoUbkIMYLbvdhiV/6Mn9yVSY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GiIeh8Xaay5BvrB+0La5Hzz4DmF9yoj/
-	kGpxNMfNEmZlYdoJSTWV/pB8r4h57eTv1/LwHLMh+1zd/2AqARtbaks5upO62+Gv
-	jQdsmh6/tSJUE0iQFrLRxFreU+JI+f/v+FMok5tvxKghxq/O4DJLhWa1/UF42Oo0
-	e7PI3KYUSyo=
+	:content-type; q=dns; s=sasl; b=CrPPnZ34ADhayafvS23ldYaR0QY9QQv/
+	IStiVfxdWIghDoj3d69pYrKKVBzwzX2WX8pw8wVyEnDK0vJQhDrQpws9mBPiUUSA
+	/3Z5WNMjtnR/NYv9UK/udvzs8PjxfGRgGvpS3gud68K3C3JPY1LkHGK7W0yoVfza
+	IroDOhYZZik=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AEC211DCB1;
-	Thu,  5 Jun 2014 16:51:04 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4E7021E467;
+	Thu,  5 Jun 2014 17:11:24 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B5B091DCAD;
-	Thu,  5 Jun 2014 16:51:00 -0400 (EDT)
-In-Reply-To: <CAHd499BLX3q2FHLfFpq_14w2mmosywfRqMHVjkke0BRhAAjx7g@mail.gmail.com>
-	(Robert Dailey's message of "Thu, 5 Jun 2014 09:51:47 -0500")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9AF471E465;
+	Thu,  5 Jun 2014 17:11:20 -0400 (EDT)
+In-Reply-To: <1401915687-8602-11-git-send-email-rhansen@bbn.com> (Richard
+	Hansen's message of "Wed, 4 Jun 2014 17:01:26 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 19EF3664-ECF3-11E3-A70E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: F10B917C-ECF5-11E3-9A94-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250863>
 
-Robert Dailey <rcdailey.lists@gmail.com> writes:
+Richard Hansen <rhansen@bbn.com> writes:
 
-> I've never contributed to the Git project before. I'm a Windows user,
-> so I use msysgit, but I'd be happy to install linux just so I can help
-> implement this feature if everyone feels it would be useful.
+> Because test_eval_ is defined while zsh is in sh emulation mode, the
+> shell code passed as an argument to test_expect_success would normally
+> be evaluated in sh emulation mode.  However, with this change, it is
+> now possible to evaluate the test code in zsh mode by adding the
+> following line to a zsh-based test script:
 >
-> Right now AFAIK, there is no way to prune tags through Git. The way I
-> currently do it is like so:
+>     emulate -R zsh -c 'test_eval_override () { eval "$*"; }'
 >
-> $ git tag -l | xargs git tag -d
-> $ git fetch --all
+> With test_eval_override defined in zsh emulation mode, the call to
+> test_eval_override from test_eval_ will temporarily cause zsh to
+> switch from sh emulation mode to zsh emulation mode.
 
-I think you need to explain what you mean by "prune" a lot better
-than what you are doing in your message to be understood by others.
+Micronit: aren't all "zsh emulation mode"s above "zsh native mode"s?
 
-After seeing the above two commands, my *guess* of what you want to
-do is to remove any of your local tag that is *not* present in the
-repository you usually fetch from (aka "origin"), but that directly
-contradicts with what you said you wish, i.e.
+In any case, the above explanation confuses me somewhat.  test_eval_
+is fed a scriptlet defined for various test_expect_success tests,
+and they are written in POSIX shells, not zsh, so wouldn't it be
+wrong to run them as if they are zsh native scripts, following
+non-POSIX shell syntax rules?
 
-> This is not only wasteful, but dangerous. I might accidentally delete
-> a local tag I haven't pushed yet...
+Puzzled...
 
-which only shows that your definition of "prune" is different from
-"remove what I do not have at 'origin'".
-
-But it does not say *how* that is different.  How should "prune"
-behave differently from the two commands above?  How does your
-"prune" decide a tag needs to be removed locally when it is not at
-your "origin" [*1*]?
-
-There is *nothing* in git that lets you look at a local tag that is
-missing from the other side and determine if that is something you
-did not want to push (hence it is missing there) of if that is
-something you forgot to push (hence it is missing there but you
-would rather have pushed if you did not forget).  So you must have
-some new mechanism to record and/or infer that distinction in mind,
-but it is not clear what it is from your message.
-
-So until that is clarified, there is not much more to say if your
-"feature" has any merit---as there is no way to tell what that
-"feature" exactly is, at least not yet ;-)
-
-
-[Footnote]
-
-*1* By the way, removing and then refetching would be a silly way to
-    do this kind of thing anyway.  After removing but before you
-    have a chance to fetch, your ISP may severe your network
-    connection and then what happens?
-
-    Whatever your definition of "prune" is, I would think it would
-    be built around "ls-remote --tags" output, to see what tags the
-    other repository (or other repositories, by looping over the
-    remotes you interact with) have, compare that set with the tags
-    you locally have in order to decide which subset of tags you
-    locally have to remove.
+> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+> ---
+>  t/test-lib.sh | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index c081668..3779634 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -414,7 +414,12 @@ maybe_setup_valgrind () {
+>  test_eval_ () {
+>  	# This is a separate function because some tests use
+>  	# "return" to end a test_expect_success block early.
+> -	eval </dev/null >&3 2>&4 "$*"
+> +	if command -v test_eval_override >/dev/null 2>&1
+> +	then
+> +		test_eval_override "$*"
+> +	else
+> +		eval "$*"
+> +	fi </dev/null >&3 2>&4
+>  }
+>  
+>  test_run_ () {
