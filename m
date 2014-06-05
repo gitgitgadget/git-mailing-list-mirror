@@ -1,108 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] docs: Explain the purpose of fetch's and pull's <refspec> parameter.
-Date: Thu, 05 Jun 2014 15:12:15 -0700
-Message-ID: <xmqq61kfroow.fsf@gitster.dls.corp.google.com>
-References: <53908CE3.6080106@xiplink.com>
-	<1401982803-22346-1-git-send-email-marcnarc@xiplink.com>
+Subject: Re: [PATCH 1/2] userdiff: support C# async methods and correct C# keywords
+Date: Thu, 05 Jun 2014 15:59:31 -0700
+Message-ID: <xmqqy4xbq7xo.fsf@gitster.dls.corp.google.com>
+References: <1401682405-3319-1-git-send-email-ch3cooli@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 00:12:41 2014
+To: Sup Yut Sum <ch3cooli@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 00:59:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wsftk-0007lZ-SM
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 00:12:37 +0200
+	id 1WsgdM-0007S5-3o
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 00:59:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966AbaFEWM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 18:12:26 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62861 "EHLO smtp.pobox.com"
+	id S1752514AbaFEW7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 18:59:40 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54465 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752947AbaFEWMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 18:12:21 -0400
+	id S1751471AbaFEW7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 18:59:39 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CF2391D631;
-	Thu,  5 Jun 2014 18:12:20 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A5F7A1E204;
+	Thu,  5 Jun 2014 18:59:38 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HCD1QmkxhnZLpgbC3J0QpRIujIM=; b=mKyiRt
-	BLwCn8bjaT7tGMYy9uap9rL4F8Di3KTpZOfu90+VpS2WLzG7RQVx9xcTnSz+giXr
-	MHhIQLsx0HoCJdDdFklcyjAVtKmNn6c47sjzbvDQ4r26SnZGSuimyhb05Y1ZqePq
-	4wrYljzqX0ELriw6SxuvevMnpG+0teBdSWsuw=
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=GxJvE4+h+rtFDlR/hU6YY0aiojg=; b=SlLdEpefGkgeCI3VB8tF
+	bmqpC0B9EaBUJz2KgyO1vhr0I99zWrTg+fjOQYvU1UibEYZjlhGRZNSsg5mGNJaw
+	KfiqbtO73MExXZBgt2ekw4z3OM41yG0MlzQU6Ha5x/iw0SmK9P1rBGOCJ23ao6rf
+	yXnqA8ENm2pVwOV9qvTixcw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=a9EcIu+fjC3q6p10v6BzvOwrVNxkEVS3
-	FLqv4cnJCA/dli2Xuw9yH/ohiJnZL9suZZttyXj1vKkRAL2ZKQqjtbhVvq33sZZw
-	TN/y/mvENnOGJ/So4WLpkXApvDP9Nt3SqedUOHPi+wjGu9HPQUtpmZGm2TizVb6q
-	nvfGfFsYeIQ=
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=sE5Nn5rx24V3X9P/iIDs2JjwEfBBT3+ZLNqwKZXhsHngsZ
+	mgGUNwuuUjnyYFBwQhrpDJ9+mvsoQGjvi/Je/lE2NAemHQkZu5cew6ceuvZfyzLq
+	GtPLGj9iD0p8SvAoLsu8CV2WaSxDn7uc/VtRKvHItumeOt2wkpNJ0AjaWQl6g=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C62B81D630;
-	Thu,  5 Jun 2014 18:12:20 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9C2EE1E203;
+	Thu,  5 Jun 2014 18:59:38 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1D6971D62E;
-	Thu,  5 Jun 2014 18:12:17 -0400 (EDT)
-In-Reply-To: <1401982803-22346-1-git-send-email-marcnarc@xiplink.com> (Marc
-	Branchaud's message of "Thu, 5 Jun 2014 11:40:03 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C26ED1E1FF;
+	Thu,  5 Jun 2014 18:59:32 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 747ABB84-ECFE-11E3-85F0-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 0EACF824-ED05-11E3-83C5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250873>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+Sup Yut Sum <ch3cooli@gmail.com> writes:
 
-> This patch applies atop your 8/9.  I feel strongly that some kind of
-> reference should accompany this description, and your new CONFIGURED
-> REMOTE-TRACKING BRANCHES section seems like a good one for the fetch
-> variant, but since pull's variant doesn't have that section I just
-> made it link to fetch's doc.
+> async is in C# 5.0
+> foreach is in C# 1.0
+
+> instanceof is in Java. The similar keywords are typeof, is, as in C# 1.0
+
+This one made me read it twice, until I realized you meant
+
+    instanceof() is listed as keywords, but there is no such thing
+    (it is in Java, though); in C# we use typeof() for similar
+    purposes
+
+> default, try are in C# 1.0
 >
-> (Also, I'm not sure if "CRTB" is a good link ID for your new section.)
-
-Nobody looks at these ids, hopefully ;-)
-
-> diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-> index 18cffc2..40304c6 100644
-> --- a/Documentation/pull-fetch-param.txt
-> +++ b/Documentation/pull-fetch-param.txt
-> @@ -12,9 +12,20 @@ ifndef::git-pull[]
->  endif::git-pull[]
->  
->  <refspec>::
-> -	The format of a <refspec> parameter is an optional plus
-> -	`+`, followed by the source ref <src>, followed
-> -	by a colon `:`, followed by the destination ref <dst>.
-> +	Specifies which refs to fetch and which local refs to update.
-
-That is an improvement.  We should first say what it is and what it
-is for before saying how you spell it and the above change is
-exactly that.
-
-> +	<refspec> parameters are not normally specified on the command
-> +	line, but instead are read from `remote.<repository>.fetch`
-
-I however am not sure if this is an improvement, especially the
-"normally" part.  Those who respond to a git-pull-request output
-might be fewer than those who send pull requests, but that does not
-mean they are abnormal.
-
-	The command line often omit <refspec> parameters when
-	fetching or pulling from a remote you regularly interact
-	with, in which case `remote.<repository>.fetch` values are
-	used instead.
-
-would be OK, though.
-
-Later today I'll push out the series on 'pu' after amending them
-with your comments so far.  It would be nice if you can reroll this
-on top of the updated one ("git log --oneline --first-parent
-master..pu" and find jc/fetch-pull-refmap in there).
-
-Thanks.
+> Signed-off-by: Sup Yut Sum <ch3cooli@gmail.com>
+> ---
+>  userdiff.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/userdiff.c b/userdiff.c
+> index fad52d6..96eda6c 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -134,9 +134,9 @@ PATTERNS("cpp",
+>  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*"),
+>  PATTERNS("csharp",
+>  	 /* Keywords */
+> -	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
+> +	 "!^[ \t]*(do|while|for|foreach|if|else|typeof|is|as|new|return|switch|case|default|throw|try|catch|using)\n"
+>  	 /* Methods and constructors */
+> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
+> +	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
+>  	 /* Properties */
+>  	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
+>  	 /* Type definitions */
