@@ -1,280 +1,77 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH] mingw: redefine the wrapper macro after the
- corresponding function
-Date: Thu, 5 Jun 2014 10:05:19 +0200
-Organization: <)><
-Message-ID: <20140605080519.GB28029@camelia.ucw.cz>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: Git autocorrect bug
+Date: Thu, 05 Jun 2014 04:28:23 -0400
+Organization: Twitter
+Message-ID: <1401956903.18134.173.camel@stross>
+References: <1401940145.18134.170.camel@stross>
+	 <CACsJy8BSHAUiF_BR_Vi4_LOW0CSP-N09UpAg-UJvZJ1fvipejg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysGit <msysgit@googlegroups.com>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBQGJYCOAKGQEDFAL3XA@googlegroups.com Thu Jun 05 10:05:22 2014
-Return-path: <msysgit+bncBCU63DXMWULRBQGJYCOAKGQEDFAL3XA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f187.google.com ([209.85.217.187])
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git mailing list <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 10:28:35 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBQGJYCOAKGQEDFAL3XA@googlegroups.com>)
-	id 1WsSfp-0004w3-1B
-	for gcvm-msysgit@m.gmane.org; Thu, 05 Jun 2014 10:05:21 +0200
-Received: by mail-lb0-f187.google.com with SMTP id z11sf60484lbi.4
-        for <gcvm-msysgit@m.gmane.org>; Thu, 05 Jun 2014 01:05:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:mime-version:organization
-         :user-agent:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type
-         :content-disposition;
-        bh=QDNrHTcgYBmfyrgfjkPeNwjE8VzQl13rnNKxw9rkZ60=;
-        b=gWs6yxXPhRSrT9399opr6HTyREC5tXvhgGOyMOfUR320tYMs+gK0E2rmMtO38wljAS
-         AMONK8BRdE1RgIYax0OmsTTALifmwXv3rWmikBLmwMvHjDk2OggOjfAhPzm5tmB7prwZ
-         /Ew7bAuo2oZQ69lp88dCXL1Kq6WytN2EHtnoq8UqD8udFsTmmbOEqEswfzQym8hD57Ey
-         AxkyreyuWeaLi2xAPDoRsg1nakyEgO+s2jXYIuUV3zAGivNOksNbI7RvNBAvArzymU5+
-         aB4/AVlFf0ct5lodx2spEPZhx6GgKmSGepdapNLySKSsADTXcm5U+qVft87YhFFKIghj
-         TqBw==
-X-Received: by 10.152.2.40 with SMTP id 8mr41930lar.12.1401955520802;
-        Thu, 05 Jun 2014 01:05:20 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.36.227 with SMTP id t3ls21893laj.11.gmail; Thu, 05 Jun
- 2014 01:05:19 -0700 (PDT)
-X-Received: by 10.112.73.232 with SMTP id o8mr6448077lbv.0.1401955519769;
-        Thu, 05 Jun 2014 01:05:19 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id e12si1194589wiv.1.2014.06.05.01.05.19
-        for <msysgit@googlegroups.com>;
-        Thu, 05 Jun 2014 01:05:19 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 773681C009E;
-	Thu,  5 Jun 2014 10:05:19 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s5585JZC028100;
-	Thu, 5 Jun 2014 10:05:19 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s5585JAW028098;
-	Thu, 5 Jun 2014 10:05:19 +0200
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250823>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WsT2I-0004Gh-JZ
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 10:28:34 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751126AbaFEI23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 04:28:29 -0400
+Received: from mail-qg0-f45.google.com ([209.85.192.45]:37268 "EHLO
+	mail-qg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750840AbaFEI21 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 04:28:27 -0400
+Received: by mail-qg0-f45.google.com with SMTP id z60so1025074qgd.32
+        for <git@vger.kernel.org>; Thu, 05 Jun 2014 01:28:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=4B5y1KsMVCm+uaF5KccKnyt1oTw5tdhT+0s/HcLzwtc=;
+        b=HZLCGJAZJSekUgKLTKda3mYnmqWkRv52evFVCorml6CuOgDYeCQY0tmORt7YpRLez/
+         FxK7kwNI0b9mPlGHF4794E87osOQtpXQSdb4F1dA21V7Jv8pEBDOeIDJUr7clKAkKNwd
+         qrJB+y3ZsmLp91gi3/i/yemEpQF0OpvpDkoTbiVp/3fcnDzeVjJgSHDbpCD2wBCwbdKz
+         l9wKxZm8jsc1MT9vN0tFB01qCxMGawxC46lJ8eV6YGs49e6ICtPtFxNVNRtXqDkmuzBt
+         M8t4at1+Un6P2pn3NHoHN0IyXuFnZmK+DLqSgbs22D8mSHtUmo2hMLucQzliXrJYAFOe
+         h2vg==
+X-Gm-Message-State: ALoCoQnM1cMRpo+7UXejrlEN9NfDOpRs/cf6EpRonRGPaq/VXyq7N1m2/iBOU9YI6DdtvHns064V
+X-Received: by 10.224.165.148 with SMTP id i20mr14787973qay.41.1401956906770;
+        Thu, 05 Jun 2014 01:28:26 -0700 (PDT)
+Received: from [172.18.24.70] ([8.25.196.25])
+        by mx.google.com with ESMTPSA id o88sm3318696qge.19.2014.06.05.01.28.25
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Thu, 05 Jun 2014 01:28:25 -0700 (PDT)
+In-Reply-To: <CACsJy8BSHAUiF_BR_Vi4_LOW0CSP-N09UpAg-UJvZJ1fvipejg@mail.gmail.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250824>
 
-mingw.c defines several wrapper functionsi, like mingw_unlink().
-These wrappers are deployed by macros like this:
-	#define unlink mingw_unlink
-The function itself is preceded by #undef, leaving the wrapper out
-of the game for the rest of mingw.c.
+On Thu, 2014-06-05 at 13:29 +0700, Duy Nguyen wrote:
+> On Thu, Jun 5, 2014 at 10:49 AM, David Turner <dturner@twopensource.com> wrote:
+> > fatal: internal error: work tree has already been set
+> > Current worktree: /home/dturner/git
+> > New worktree: /home/dturner/git/foo
+> 
+> This is the part you complain about, right? 
 
-This was not probably intentional; for example, there are three
-calls to open() below the definition mingw_open() that probably
-have no reason to circumvent the wrapper.
-OTOH, there is one call to gethostbyname() before it was undefined;
-probably happy that it actually calls mingw_gethostbyname().
+Yes.
 
-This patch adds back the #define after each wrapper definition.
+> I think I might know
+> what's going on here. But do you expect "git git foo" to turn to "git
+> init foo" in the first place?
 
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
- compat/mingw.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Yes.  That is, I generally expect autocorrect to work without internal
+errors.  This one was a genuine typo (I typed git, got distracted, and
+typed it again).  
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index a0e13bc..e7193c0 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -224,6 +224,7 @@ int mingw_unlink(const char *pathname)
- 	       ret = unlink(pathname);
- 	return ret;
- }
-+#define unlink mingw_unlink
- 
- static int is_dir_empty(const char *path)
- {
-@@ -279,6 +280,7 @@ int mingw_rmdir(const char *pathname)
- 	       ret = rmdir(pathname);
- 	return ret;
- }
-+#define rmdir mingw_rmdir
- 
- #undef open
- int mingw_open (const char *filename, int oflags, ...)
-@@ -303,6 +305,7 @@ int mingw_open (const char *filename, int oflags, ...)
- 	}
- 	return fd;
- }
-+#define open mingw_open
- 
- static BOOL WINAPI ctrl_ignore(DWORD type)
- {
-@@ -328,6 +331,7 @@ int mingw_fgetc(FILE *stream)
- 	SetConsoleCtrlHandler(ctrl_ignore, FALSE);
- 	return ch;
- }
-+#define fgetc mingw_fgetc
- 
- #undef fopen
- FILE *mingw_fopen (const char *filename, const char *otype)
-@@ -336,6 +340,7 @@ FILE *mingw_fopen (const char *filename, const char *otype)
- 		filename = "nul";
- 	return fopen(filename, otype);
- }
-+#define fopen mingw_fopen
- 
- #undef freopen
- FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream)
-@@ -344,6 +349,7 @@ FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream)
- 		filename = "nul";
- 	return freopen(filename, otype, stream);
- }
-+#define freopen mingw_freopen
- 
- #undef fflush
- int mingw_fflush(FILE *stream)
-@@ -366,6 +372,7 @@ int mingw_fflush(FILE *stream)
- 
- 	return ret;
- }
-+#define fflush mingw_fflush
- 
- /*
-  * The unit of FILETIME is 100-nanoseconds since January 1, 1601, UTC.
-@@ -629,6 +636,7 @@ char *mingw_getcwd(char *pointer, int len)
- 			pointer[i] = '/';
- 	return ret;
- }
-+#define getcwd mingw_getcwd
- 
- /*
-  * See http://msdn2.microsoft.com/en-us/library/17w5ykft(vs.71).aspx
-@@ -1183,6 +1191,7 @@ char *mingw_getenv(const char *name)
- 	}
- 	return result;
- }
-+#define getenv mingw_getenv
- 
- /*
-  * Note, this isn't a complete replacement for getaddrinfo. It assumes
-@@ -1366,6 +1375,7 @@ int mingw_gethostname(char *name, int namelen)
-     ensure_socket_initialization();
-     return gethostname(name, namelen);
- }
-+#define gethostname mingw_gethostname
- 
- #undef gethostbyname
- struct hostent *mingw_gethostbyname(const char *host)
-@@ -1373,6 +1383,7 @@ struct hostent *mingw_gethostbyname(const char *host)
- 	ensure_socket_initialization();
- 	return gethostbyname(host);
- }
-+#define gethostbyname mingw_gethostbyname
- 
- void mingw_freeaddrinfo(struct addrinfo *res)
- {
-@@ -1429,6 +1440,7 @@ int mingw_connect(int sockfd, struct sockaddr *sa, size_t sz)
- 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
- 	return connect(s, sa, sz);
- }
-+#define connect mingw_connect
- 
- #undef bind
- int mingw_bind(int sockfd, struct sockaddr *sa, size_t sz)
-@@ -1436,6 +1448,7 @@ int mingw_bind(int sockfd, struct sockaddr *sa, size_t sz)
- 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
- 	return bind(s, sa, sz);
- }
-+#define bind mingw_bind
- 
- #undef setsockopt
- int mingw_setsockopt(int sockfd, int lvl, int optname, void *optval, int optlen)
-@@ -1443,6 +1456,7 @@ int mingw_setsockopt(int sockfd, int lvl, int optname, void *optval, int optlen)
- 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
- 	return setsockopt(s, lvl, optname, (const char*)optval, optlen);
- }
-+#define setsockopt mingw_setsockopt
- 
- #undef shutdown
- int mingw_shutdown(int sockfd, int how)
-@@ -1450,6 +1464,7 @@ int mingw_shutdown(int sockfd, int how)
- 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
- 	return shutdown(s, how);
- }
-+#define shutdown mingw_shutdown
- 
- #undef listen
- int mingw_listen(int sockfd, int backlog)
-@@ -1457,6 +1472,7 @@ int mingw_listen(int sockfd, int backlog)
- 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
- 	return listen(s, backlog);
- }
-+#define listen mingw_listen
- 
- #undef accept
- int mingw_accept(int sockfd1, struct sockaddr *sa, socklen_t *sz)
-@@ -1475,6 +1491,7 @@ int mingw_accept(int sockfd1, struct sockaddr *sa, socklen_t *sz)
- 	}
- 	return sockfd2;
- }
-+#define accept mingw_accept
- 
- #undef rename
- int mingw_rename(const char *pold, const char *pnew)
-@@ -1530,6 +1547,7 @@ repeat:
- 	errno = EACCES;
- 	return -1;
- }
-+#define rename mingw_rename
- 
- /*
-  * Note that this doesn't return the actual pagesize, but
-@@ -1684,6 +1702,7 @@ sig_handler_t mingw_signal(int sig, sig_handler_t handler)
- 
- 	return old;
- }
-+#define signal mingw_signal
- 
- #undef raise
- int mingw_raise(int sig)
-@@ -1709,6 +1728,7 @@ int mingw_raise(int sig)
- 		return raise(sig);
- 	}
- }
-+#define raise mingw_raise
- 
- 
- static const char *make_backslash_path(const char *path)
--- 
-2.0.0.9635.g0be03cb
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+(I actually think "git git" should just be "git", and I know some people
+have a command for that; I should set that up)
