@@ -1,101 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] clone: add clone.recursesubmodules config option
-Date: Thu, 05 Jun 2014 11:18:28 -0700
-Message-ID: <xmqq4mzzte2z.fsf@gitster.dls.corp.google.com>
-References: <xmqqoay9wvo6.fsf@gitster.dls.corp.google.com>
-	<1401874256-13332-1-git-send-email-judge.packham@gmail.com>
-	<xmqqvbsgvb9l.fsf@gitster.dls.corp.google.com>
-	<538F6E52.9000009@web.de>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: Submodules with feature branches
+Date: Thu, 5 Jun 2014 13:31:39 -0500
+Message-ID: <CAHd499CBAQHG4rdojb8pdjymUCaZNYSnKb-ksmsLesq73OWTyA@mail.gmail.com>
+References: <CAHd499Bn7CCVy=vhFzpLYXCssxR0oGxm3Vdgou_Yk5zSt1gfmA@mail.gmail.com>
+	<20140605151549.GQ21803@odin.tremily.us>
+	<CAHd499Dc7_fob2-X1KZ77sdx20r+erQ_9JbDc7y4G0RUxG65eg@mail.gmail.com>
+	<20140605162333.GR21803@odin.tremily.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org,
-	mara.kim@vanderbilt.edu, Jonathan Nieder <jrnieder@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 20:18:46 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: "W. Trevor King" <wking@tremily.us>
+X-From: git-owner@vger.kernel.org Thu Jun 05 20:31:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WscFQ-0007jz-8A
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 20:18:45 +0200
+	id 1WscS2-0008Dk-0y
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 20:31:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498AbaFESSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 14:18:40 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56156 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751980AbaFESSj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 14:18:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B9AF11CB99;
-	Thu,  5 Jun 2014 14:18:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eHonsVxmUfz8S/Q6TBpAa1ZMm1k=; b=MjmKhy
-	nEJQrEavpUoUW8B2N/cM+oy791DKC6JQRmCT1lDX6NNv8zU7tIXZ31bV+B0kwowz
-	hXeqt/ZI0UOlnfn8ouSplFzWijaotiG91zoEyP4SgoXyQpzZytB5gfK7SHcCX303
-	FiZztUVXwaREcwYAORLH1DZ3VAxbfPKEfVeJQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=s2o34xz66lKRMmpcRz0vqKwoSADKWuqY
-	XnUugWw9IJD/pd/lepjF6wsKy7CMpWhB3aqgaELZuwGkxGYnNTBYqZ2UXvDNJGpl
-	92Pf16403jT6+/x2DKKLyc1wRLOJru3I1N28dsE+wr5zpprVkJB4AuNeu0gnm+aQ
-	PDPFDaD9bdQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AED031CB98;
-	Thu,  5 Jun 2014 14:18:33 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EC5941CB93;
-	Thu,  5 Jun 2014 14:18:29 -0400 (EDT)
-In-Reply-To: <538F6E52.9000009@web.de> (Jens Lehmann's message of "Wed, 04 Jun
-	2014 21:06:58 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CBB06050-ECDD-11E3-8FB8-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752801AbaFESbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 14:31:40 -0400
+Received: from mail-vc0-f181.google.com ([209.85.220.181]:62674 "EHLO
+	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752164AbaFESbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 14:31:40 -0400
+Received: by mail-vc0-f181.google.com with SMTP id hq11so1611032vcb.26
+        for <git@vger.kernel.org>; Thu, 05 Jun 2014 11:31:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=Idfg8ePAMir5Fbj+Ivr0sGsMS7XWlRMkdcWv295JEnQ=;
+        b=msXwkfXvQY6cwwPvjpvLlraUbY8oMPZZIyPls33wPQQMrNzlN97J2MeuBTy2tKKrPP
+         y5uZWL3BlCw8cUkZjShuG8Ky5C52SJB/2cFBYm6G6KTXHdMI9admv8aIHZeqPzgvRRdj
+         LqQjGffVQKXmEw80H2PkebtDAum4MjsZbMzhP7ReIgC85QSStMNMKoxWDumZGRMroFbN
+         IfxREGznbTr0D/LDwbrEEHfv4wIjY6ptGNHkL2nXjSP4pSdvNQdWGcATt3ps2jgi29EZ
+         M50qj45NfFuvPWCJpXPeV8VoGdWJ7VVGg0NMscxT2W6acpTEB7LOeLq1iooDJSWA0f+F
+         wcnA==
+X-Received: by 10.52.147.9 with SMTP id tg9mr9907250vdb.76.1401993099321; Thu,
+ 05 Jun 2014 11:31:39 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.102.204 with HTTP; Thu, 5 Jun 2014 11:31:39 -0700 (PDT)
+In-Reply-To: <20140605162333.GR21803@odin.tremily.us>
+X-Google-Sender-Auth: ScmKWQa3KGiMAWluEVQ538xRQqU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250854>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Thu, Jun 5, 2014 at 11:23 AM, W. Trevor King <wking@tremily.us> wrote:
+> 3rd party libraries sound loosely-coupled to me ;).  In one of my more
+> mature projects I did a similar thing, and just used relative URLs [1]
+> and sibling mirrors/forks [2,3,4].
+>
+> Cheers,
+> Trevor
+>
+> [1]: https://github.com/wking/pygrader/blob/master/.gitmodules
+> [2]: https://github.com/wking/pgp-mime
+> [3]: https://github.com/wking/pyassuan
+> [4]: https://github.com/wking/jinja2
 
-> ... I believe we
-> should have one or two switches telling Git "I want my submodules be
-> updated without having to use the 'git submodule' command". And
-> after that submodule specific overrides can kick in, e.g. when
-> "submodule.<name>.update" is set to "none" the submodule won't be
-> updated no matter how the default is.
+I guess I'm still confused on how relative URLs help here. Won't the
+capping commits (A and C in your first email) still be needed? Or is
+there a way I can modify the local "../third-party.git" submodule repo
+instead? Can you explain?
 
-OK, so submodule.*.update for each submodule, and a default value
-for submodules that do not have submodule.*.update set to anything.
+Unfortunately, the reason why I feel third party in a submodule
+creates tight coupling is because:
 
-Sounds workable.
+* You can't make changes to third party libs for your feature branch
+without breaking the trunk
+* Merge conflicts are insane to resolve and involve two clones if
+trunk maintainers modify third party binaries and you do as well.
+* Feature branching requires those capping / meta commits to simply
+setup your branch to be a feature branch.
 
-> We had two settings in mind,...
-> So what if clone would just do an "git submodule init" for now when
-> "submodule.autoinit" is set but "submodule.autoupdate" isn't [?]
-> ... and a single "submodule.auto" setting would be what users really want?
+Instead of just creating my branch and starting to make commits, I now
+have to setup my submodule branch first. Also pull requests won't show
+the changes to the third party libraries unless I do a second pull
+request for the third party repo.
 
-I do not offhand think of a sensible scenario where you want to init
-a submodule once but do not want to update it when the superproject
-changes.  Even if the user uses the mode to detach the submodule
-HEAD, i.e. the branches in submodules do not matter and the whole
-tree is described by the superproject's commit and gitlinks recorded
-in it, the user would want the new objects necessary for the updated
-superproject, which means a submodule that is init'ed (whether it is
-via "git submodule init" or the submodule.autoinit variable) must be
-updated.
-
-So I am not sure why a user wants to disable autoupdate in the first
-place.  For the same reason, setting submodule.*.update to none
-would not make much sense, either.  Perhaps I am missing something.
-
-Unless the user is very conservative and suspects that these
-recursive behaviour we are going to bolt on to various commands
-could be buggy and untrustworthy, in which case the user might want
-to manually run "git submodule update", or even run "git fetch"
-after going there while bypassing the whole "git submodule".  But I
-do not think that is healthy in the longer run.
+It just seems like a mess :-(
