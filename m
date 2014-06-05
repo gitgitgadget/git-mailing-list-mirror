@@ -1,95 +1,134 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v6 2/2] refs.c: SSE4.2 optimizations for
- check_refname_component
-Date: Thu, 05 Jun 2014 15:26:02 -0400
-Organization: Twitter
-Message-ID: <1401996362.18134.179.camel@stross>
-References: <1401853091-15535-1-git-send-email-dturner@twitter.com>
-		 <1401853091-15535-2-git-send-email-dturner@twitter.com>
-		 <538ED2F1.9030003@web.de>
-		 <CACsJy8CK3LNaPVNv=EfFX06uOgpujAz364ZDFL3HBPicDNF57w@mail.gmail.com>
-		 <538F2C6B.2030004@web.de> <1401916560.18134.167.camel@stross>
-	 <539062D9.60000@web.de>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH v2] Add a Windows-specific fallback to getenv("HOME");
+Date: Thu, 05 Jun 2014 22:03:42 +0200
+Message-ID: <5390CD1E.5080500@gmail.com>
+References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com> <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com> <alpine.DEB.1.00.1406041713500.14982@s15462909.onlinehome-server.info> <CABPQNSavYCrdUDyNru-HHMFkdgDRvaCp++f8ZgGKv07sS0eXGQ@mail.gmail.com> <alpine.DEB.1.00.1406041725460.14982@s15462909.onlinehome-server.info> <alpine.DEB.1.00.1406041741470.14982@s15462909.onlinehome-server.info> <538FCAF5.7030102@gmail.com> <20140605080317.GA28029@camelia.ucw.cz> <53903B22.70507@gmail.com> <alpine.DEB.1.00.1406051411580.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	David Turner <dturner@twitter.com>
-To: Torsten =?ISO-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 21:39:30 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: Stepan Kasal <kasal@ucw.cz>, Erik Faye-Lund <kusmabite@gmail.com>, 
+ Duy Nguyen <pclouds@gmail.com>,
+ GIT Mailing-list <git@vger.kernel.org>, 
+ Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+ msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: msysgit+bncBCH3XYXLXQDBBHM2YOOAKGQE2D5YVJY@googlegroups.com Thu Jun 05 22:03:42 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBHM2YOOAKGQE2D5YVJY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f61.google.com ([74.125.82.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsdIh-0005XO-Vt
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 21:26:12 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751761AbaFET0H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2014 15:26:07 -0400
-Received: from mail-qg0-f42.google.com ([209.85.192.42]:37139 "EHLO
-	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751446AbaFET0G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 15:26:06 -0400
-Received: by mail-qg0-f42.google.com with SMTP id q107so2421164qgd.1
-        for <git@vger.kernel.org>; Thu, 05 Jun 2014 12:26:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=gHV2jhdBw2F8+bXXFYH5NmnYSRu7TVuWMoKSF38nMeg=;
-        b=iKn2uCp1ZxnHuySmQKaJv7l2UwEHsn1Na4qCxVWKcR58kvFmO4sm1uRobL17OUze4n
-         R5EH80yfYwMqYm/Ug1WDI7/0hHwgLL678WL3IsdQb9RL+GNuq5HAdvPpt08jWRVVlSKT
-         OJj9lOA9i2ICqv8KjeD97QpO/wjaMMUH6VErVb/j3yAyFmZ0Y3u+5VBauwDDFx2gN77H
-         NxvqAbpYaBSmjtAQFXf8ztooAddFwPO7VmOaXDcpzQoqxYHbv0cMbra/OJKbbqV0VryM
-         akXiTn4MB4wPsNwvUkR3RuETCVlzV1VuHV7TiUH7iTeB9qs8H1/wG99S1Ccl4QPKRSlp
-         QjHA==
-X-Gm-Message-State: ALoCoQkaFzEaBfKwKnHlQe06F1O+aXjIf9gKIVL6Gygy5q1XdtoazVeds+6w5iFbWxlydl7QLKJE
-X-Received: by 10.140.86.99 with SMTP id o90mr81088786qgd.14.1401996364914;
-        Thu, 05 Jun 2014 12:26:04 -0700 (PDT)
-Received: from [172.17.3.196] ([38.104.173.198])
-        by mx.google.com with ESMTPSA id j3sm4294502qgj.24.2014.06.05.12.26.03
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBHM2YOOAKGQE2D5YVJY@googlegroups.com>)
+	id 1Wsdt0-0003nh-Gl
+	for gcvm-msysgit@m.gmane.org; Thu, 05 Jun 2014 22:03:42 +0200
+Received: by mail-wg0-f61.google.com with SMTP id m15sf178513wgh.6
+        for <gcvm-msysgit@m.gmane.org>; Thu, 05 Jun 2014 13:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-transfer-encoding;
+        bh=4edIX5gs73RNCWC/gPDpN8w+vdBDd3MKqv59xATPhkM=;
+        b=NV1SKWebALtcZ7k8U1x5Aq3tXNsRUGZtW9EhBm5w7CK2Eu8bZ3N2Codm0j1/zbEHzY
+         /BYyvWOG0qATGJ7iemUT1Sgcs4xFzMbAz5eCE6zRU066ip94PVg6UuW9+wNL/XdTEHE9
+         ysXTONnlbKsJJxIa8s2ZP5iILyeum74cOIQCWP/vJrsT6qxfp5LO+eCQWlZAsuyvelCJ
+         BqE+WB9clhTaLYhO2glSGK5HuOj8SEyr6GvYLFLTQ8PmF0mu0VzbIRE9kGF74C8inb7y
+         lG9f67DEPKLNGvVseDuMBjCpIB+PkYaTJbFBOCnVrIFJfgICyJMEaLGR/P57iXca3l0j
+         10+w==
+X-Received: by 10.152.120.37 with SMTP id kz5mr37564lab.30.1401998622256;
+        Thu, 05 Jun 2014 13:03:42 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.44.165 with SMTP id f5ls71020lam.39.gmail; Thu, 05 Jun
+ 2014 13:03:41 -0700 (PDT)
+X-Received: by 10.112.54.169 with SMTP id k9mr7251637lbp.1.1401998621325;
+        Thu, 05 Jun 2014 13:03:41 -0700 (PDT)
+Received: from mail-we0-x234.google.com (mail-we0-x234.google.com [2a00:1450:400c:c03::234])
+        by gmr-mx.google.com with ESMTPS id h4si1697866wib.2.2014.06.05.13.03.41
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 05 Jun 2014 13:03:41 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::234 as permitted sender) client-ip=2a00:1450:400c:c03::234;
+Received: by mail-we0-f180.google.com with SMTP id q58so1730772wes.39
+        for <msysgit@googlegroups.com>; Thu, 05 Jun 2014 13:03:41 -0700 (PDT)
+X-Received: by 10.15.111.195 with SMTP id cj43mr240502eeb.17.1401998621186;
+        Thu, 05 Jun 2014 13:03:41 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id b12sm16995052eeh.45.2014.06.05.13.03.39
         for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 05 Jun 2014 12:26:03 -0700 (PDT)
-In-Reply-To: <539062D9.60000@web.de>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250860>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 05 Jun 2014 13:03:40 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <alpine.DEB.1.00.1406051411580.14982@s15462909.onlinehome-server.info>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::234
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250861>
 
-On Thu, 2014-06-05 at 14:30 +0200, Torsten B=C3=B6gershausen wrote:
-> On 2014-06-04 23.16, David Turner wrote:
-> >=20
-> > Sure!  I actually went with > 120k to make measurement easier:
-> > https://github.com/dturner-tw/many-refs
-> Hm, I didn't get so man
->=20
-> git remote -v
-> origin  https://github.com/dturner-tw/many-refs=20
->=20
->  wc .git/packed-refs=20
->      750    1130   38868 .git/packed-refs
->=20
+Am 05.06.2014 15:39, schrieb Johannes Schindelin:
+> And in particular with your changes to Unicodify the complete environment=
+,
+> I am *highly* doubtful that child processes will be able to handle
+> themselves properly, unless we spend a whole lot of time converting back
+> and forth the environment when calling children.
 
-Oops.  It looks like I forgot to push all of the refs.  And when I try,
-it fails with "fatal: cannot exec 'send-pack': Argument list too long"
+The unicode version _does_ convert back and forth, in mingw_startup and mak=
+e_environment_block, respectively. However, as the unicode environment is s=
+orted, this is actually much faster than the original version.
 
-I hacked git to send batches of 1000; maybe I'll actually make a real
-patch with ARG_MAX at some point. Anyway, this is uploading now, but I
-estimate that it will take at least five hours, because github is being
-really slow about this.
+To put things in perspective *:
 
-=2E..
-> where only patch 1/2 doesn't seem to speed up things on my system:
-=2E..
+entire mingw_startup: ~450 =B5s
+ * _wgetmainargs: 25 =B5s
+ * allocate+convert args and environment: 25 =B5s
+ * qsort environment: 15 =B5s
+ * winansi_init: 393 =B5s
 
-I would not expect a noticeable change on a tiny number of refs; it's
-only when ref parsing takes up a large percentage of runtime -- tens of
-thousands of refs.
+entire mingw_spawnve_fd: ~1250 =B5s
+ * make_environment_block: 25 =B5s
+ * CreateProcessW: 690 =B5s
+
+Now, the unicode mingw_getenv is O(log n) (~0.15 =B5s per call) and MSVCRT'=
+s getenv is O(n) (~3.6 =B5s per call).
+
+A git command that just launches a script (e.g. git gui) calls getenv ~25 t=
+imes. (3.6 =B5s - 0.15 =B5s) * 25 =3D 86 =B5s, i.e. this compensates the ad=
+ditional startup time (including qsort) more than twice.
+
+(*) Measurements done via QueryPerformanceCounter, with 75 environment entr=
+ies, on a Core i7 960, Windows 7 x64
+
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+
+---=20
+You received this message because you are subscribed to the Google Groups "=
+msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
