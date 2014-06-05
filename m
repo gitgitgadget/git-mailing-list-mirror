@@ -1,78 +1,57 @@
-From: Fran Mico <fran.mico@schoolworks.co.uk>
-Subject: FW: Git crash in windows 2012 R2
-Date: Thu, 5 Jun 2014 13:42:49 +0000
-Message-ID: <b7ef9c4922a24fba91686ded022991dd@AMXPR04MB085.eurprd04.prod.outlook.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Submodules with feature branches
+Date: Thu, 5 Jun 2014 09:03:25 -0500
+Message-ID: <CAHd499Bn7CCVy=vhFzpLYXCssxR0oGxm3Vdgou_Yk5zSt1gfmA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 05 15:43:57 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jun 05 16:03:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsXxS-0008TI-U7
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 15:43:55 +0200
+	id 1WsYGQ-0005ev-S9
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 16:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752126AbaFENmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 09:42:53 -0400
-Received: from mail-am1lp0016.outbound.protection.outlook.com ([213.199.154.16]:51255
-	"EHLO emea01-am1-obe.outbound.protection.outlook.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751162AbaFENmw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jun 2014 09:42:52 -0400
-Received: from AMXPR04MB085.eurprd04.prod.outlook.com (10.242.71.16) by
- AMXPR04MB085.eurprd04.prod.outlook.com (10.242.71.16) with Microsoft SMTP
- Server (TLS) id 15.0.954.9; Thu, 5 Jun 2014 13:42:49 +0000
-Received: from AMXPR04MB085.eurprd04.prod.outlook.com ([169.254.16.94]) by
- AMXPR04MB085.eurprd04.prod.outlook.com ([169.254.16.94]) with mapi id
- 15.00.0954.000; Thu, 5 Jun 2014 13:42:49 +0000
-Thread-Topic: Git crash in windows 2012 R2
-Thread-Index: Ac+Aw7mp7QA+RrbQQU68SeKU5GNiuwAADKpQ
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [87.81.130.229]
-x-microsoft-antispam: BL:0;ACTION:Default;RISK:Low;SCL:0;SPMLVL:NotSpam;PCL:0;RULEID:
-x-forefront-prvs: 0233768B38
-x-forefront-antispam-report: SFV:NSPM;SFS:(6009001)(428001)(189002)(199002)(71364002)(66654002)(99396002)(555904002)(33646001)(76482001)(64706001)(79102001)(80022001)(77982001)(86362001)(21056001)(74316001)(46102001)(92566001)(66066001)(83322001)(81342001)(54356999)(50986999)(85852003)(74662001)(83072002)(76576001)(4396001)(20776003)(81542001)(101416001)(87936001)(31966008)(74502001)(74482001)(2656002)(24736002)(36394004);DIR:OUT;SFP:;SCL:1;SRVR:AMXPR04MB085;H:AMXPR04MB085.eurprd04.prod.outlook.com;FPR:;MLV:sfv;PTR:InfoNoRecords;MX:1;A:1;LANG:en;
-received-spf: None (: schoolworks.co.uk does not designate permitted sender
- hosts)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=fran.mico@schoolworks.co.uk; 
-X-OriginatorOrg: schoolworks.co.uk
+	id S1751952AbaFEOD0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 10:03:26 -0400
+Received: from mail-vc0-f182.google.com ([209.85.220.182]:54837 "EHLO
+	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751440AbaFEOD0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 10:03:26 -0400
+Received: by mail-vc0-f182.google.com with SMTP id il7so1166945vcb.41
+        for <git@vger.kernel.org>; Thu, 05 Jun 2014 07:03:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=Roq61BVmVQGO/Kt4I8QVX9kGS2F8Z5zpBNIlb7N9qG0=;
+        b=ljZLF4yMRLInv4uEKHGVFoVyGYFL/w/oZbDcRcNg521sb7BH/Q49ZKS8zWuqovlO7p
+         dbs7kep9X3ua5dGKLO0O6EEZPti1Kzdh36AK6rtRUdNgmLnsr7szSTBuFo5guu29YXbw
+         GCka210ZLzrwn6b+InamovTQBYtjQ0BoACW4wHBitjRLdnyvh67iV+yNyi66hEKKzeGx
+         cYgQjx13B3phYDWlpfirSM+QMPNB0kOeNLr1VAIZdbbNHwoUf7OLvII2TCNnvaWRVssh
+         yf9jgw5DD56nY3cBGtQEGOvRZBCGNCA0q/n/wLIkbLKrd2zpkI04OxrXVsu+I5ULMXLz
+         aKqg==
+X-Received: by 10.58.185.165 with SMTP id fd5mr1898338vec.41.1401977005345;
+ Thu, 05 Jun 2014 07:03:25 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.102.204 with HTTP; Thu, 5 Jun 2014 07:03:25 -0700 (PDT)
+X-Google-Sender-Auth: XlklfrcmlikeNQr-r6QwAX9CSvI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250838>
 
-Hi,
+I have a question regarding submodules and their applicability given
+our workflow at the place I work.
 
-My name is Fran, we are a development team who uses git. We have our Development Environment in the server office (Windows 2008 R2) where everything runs without problems. We are planning to move to Windows Azure so we bought a virtual server to try our Development Environment and check the performance and if we will be able to do everything we are doing at the moment in the office server in the virtual server (Windows Azure).
+When I work on a feature, I normally create a feature branch. If I
+happen to make changes to the submodule that only work with the
+changes introduced in my feature branch, that seems to complicate
+things. For the purposes of the feature branch, do I need to create a
+corresponding feature branch in the submodule and temporarily update
+the submodule URL to point to it? When I merge my feature branch, I'd
+have to swap it back?
 
-We came across with a problem when installing Git in the Virtual server (Window Azure - Windows 2012 R2 64bits)
-
-All the installation process went ok (except once that it didn't finished, the only thing missing was the Environment Variable that I had to introduce manually) , the only problem is that when we run in the Window Command Prompt the command 'git' the command prompt crashes and do not respond anymore.
-
-This is the installation options we have tried:
-
-First installation (Git 1.9.2)
-	Windows Explorer integration (Advanced context menu git-cheetah plugin)
-	Use Git from the Windows Command Prompt
-Second installation (Git 1.9.2)
-	Windows Explorer integration (Git Bash Here, Git GUI Here)
-	Use Git from the Windows command prompt
-Third installation (Portable Git 1.9.0)
-	We have try as well downloading the portable version and setting the Environment variables
-
-All the installations cause the same behaviour in the command prompt when running the command 'git' on it
-
-If you need any more information (screenshoots...) that could be useful for you, let me know and I will send it over.
-
-Many thanks.
-
-Kind regards,
-Fran Mico
+What is a recommended workflow for this? Thanks in advance.
