@@ -1,108 +1,67 @@
 From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: [PATCH] docs: Explain the purpose of fetch's and pull's <refspec> parameter.
-Date: Thu,  5 Jun 2014 11:40:03 -0400
-Message-ID: <1401982803-22346-1-git-send-email-marcnarc@xiplink.com>
-References: <53908CE3.6080106@xiplink.com>
+Subject: Re: [PATCH v2 9/9] fetch: allow explicit --refmap to override configuration
+Date: Thu, 05 Jun 2014 11:45:49 -0400
+Message-ID: <539090AD.9040100@xiplink.com>
+References: <1401833792-2486-1-git-send-email-gitster@pobox.com>	<1401833792-2486-10-git-send-email-gitster@pobox.com>	<538F34E1.6010704@xiplink.com> <xmqqbnu8tim1.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 17:40:50 2014
+X-From: git-owner@vger.kernel.org Thu Jun 05 17:46:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsZln-0006hS-QC
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 17:40:00 +0200
+	id 1WsZrO-0002zp-6E
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 17:45:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751118AbaFEPjz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 11:39:55 -0400
-Received: from domain.not.configured ([192.252.130.194]:14006 "EHLO
-	cubert.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750809AbaFEPjy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 11:39:54 -0400
-Received: from xiplink.com (rincewind.xiplink.com [10.10.1.32])
-	by cubert.xiplink.com (Postfix) with ESMTP id C341661CA4;
-	Thu,  5 Jun 2014 11:39:52 -0400 (EDT)
-X-Mailer: git-send-email 2.0.0.dirty
-In-Reply-To: <53908CE3.6080106@xiplink.com>
+	id S1752158AbaFEPpm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 11:45:42 -0400
+Received: from smtp154.ord.emailsrvr.com ([173.203.6.154]:59716 "EHLO
+	smtp154.ord.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750907AbaFEPpm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 11:45:42 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp12.relay.ord1a.emailsrvr.com (SMTP Server) with ESMTP id 200892E0C26;
+	Thu,  5 Jun 2014 11:45:41 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp12.relay.ord1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id B053E2E1083;
+	Thu,  5 Jun 2014 11:45:40 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqqbnu8tim1.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250847>
 
-Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
----
- Documentation/git-fetch.txt        |  4 ++--
- Documentation/pull-fetch-param.txt | 17 ++++++++++++++---
- 2 files changed, 16 insertions(+), 5 deletions(-)
-
-On 14-06-04 06:17 PM, Junio C Hamano wrote:
+On 14-06-04 06:28 PM, Junio C Hamano wrote:
+> Marc Branchaud <mbranchaud@xiplink.com> writes:
 > 
-> Perhaps
+>>> Teach the command to pay attention to the --refmap=<lhs>:<rhs>
+>>> command-line options that can be used to override the use of
+>>> configured remote.*.fetch as the refmap.
+>>
+>> (Your 0/9 message merely said "The new patches at the
+>> end clarifies how remote.*.fetch configuration variables are used in
+>> two conceptually different ways." so I was not expecting fetch to get a new
+>> option.)
 > 
->     ... `remote.<repository>.fetch` values are used as the refspecs,
->     i.e. they specify what refs to fetch and what local refs to
->     update.
-> 
-> or something?
+> This is more about conceptual consistency & completeness than new
+> and useful addition, in that configured values and the feature they
+> enable ought to be expressible and overridable from the command line
+> options but we so far lacked a way to trigger the "do not affect
+> what gets fetched, only affect where they go locally" feature, which
+> is offered by the second way to use remote.*.fetch variable.  I do
+> not think we absolutely need it and that is why it is at the end as
+> an optional addition.
 
-In fact, I like that so much I think it should be *the* description of
-the <refspec> parameter.  Much better than just jumping straight into
-the syntax.
+Ah, OK.
 
-This patch applies atop your 8/9.  I feel strongly that some kind of
-reference should accompany this description, and your new CONFIGURED
-REMOTE-TRACKING BRANCHES section seems like a good one for the fetch
-variant, but since pull's variant doesn't have that section I just
-made it link to fetch's doc.
-
-(Also, I'm not sure if "CRTB" is a good link ID for your new section.)
+I don't have any objection to the option per se.  But I do wonder if there's
+a need to add yet another knob to git just for completeness.  Has anyone ever
+needed this?
 
 		M.
-
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index 4a735ab..a4cafa3 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -49,8 +49,8 @@ include::pull-fetch-param.txt[]
- include::urls-remotes.txt[]
- 
- 
--CONFIGURED REMOTE-TRACKING BRANCHES
-------------------------------------
-+CONFIGURED REMOTE-TRACKING BRANCHES[[CRTB]]
-+-------------------------------------------
- 
- You would often interact with the same remote repository by
- regularly and repeatedly fetching from it.  In order to keep track
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index 18cffc2..40304c6 100644
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -12,9 +12,20 @@ ifndef::git-pull[]
- endif::git-pull[]
- 
- <refspec>::
--	The format of a <refspec> parameter is an optional plus
--	`+`, followed by the source ref <src>, followed
--	by a colon `:`, followed by the destination ref <dst>.
-+	Specifies which refs to fetch and which local refs to update.
-+	<refspec> parameters are not normally specified on the command
-+	line, but instead are read from `remote.<repository>.fetch`
-+	configuration variables
-+ifndef::git-pull[]
-+	(see <<CRTB,CONFIGURED REMOTE-TRACKING BRANCHES>> below).
-+endif::git-pull[]
-+ifdef::git-pull[]
-+	(see linkgit:git-fetch[1]).
-+endif::git-pull[]
-++
-+The format of a <refspec> parameter is an optional plus
-+`+`, followed by the source ref <src>, followed
-+by a colon `:`, followed by the destination ref <dst>.
- +
- The remote ref that matches <src>
- is fetched, and if <dst> is not empty string, the local
--- 
-2.0.0.dirty
