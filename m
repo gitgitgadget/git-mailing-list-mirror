@@ -1,132 +1,103 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 1/4] refs.c: allow passing raw git_committer_info as email to _update_reflog
-Date: Thu,  5 Jun 2014 16:17:11 -0700
-Message-ID: <1402010234-7628-2-git-send-email-sahlberg@google.com>
-References: <1402010234-7628-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH 0/2] Write multi-ref updates directly to packed refs
+Date: Thu,  5 Jun 2014 16:26:26 -0700
+Message-ID: <1402010788-8236-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 06 01:37:29 2014
+X-From: git-owner@vger.kernel.org Fri Jun 06 01:39:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WshDr-0001SA-Dy
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 01:37:27 +0200
+	id 1WshG7-0002yy-Jz
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 01:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559AbaFEXhX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 19:37:23 -0400
-Received: from mail-yk0-f201.google.com ([209.85.160.201]:61049 "EHLO
-	mail-yk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751332AbaFEXhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 19:37:22 -0400
-Received: by mail-yk0-f201.google.com with SMTP id q9so79658ykb.2
-        for <git@vger.kernel.org>; Thu, 05 Jun 2014 16:37:21 -0700 (PDT)
+	id S1751679AbaFEXjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 19:39:44 -0400
+Received: from mail-qa0-f73.google.com ([209.85.216.73]:65442 "EHLO
+	mail-qa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419AbaFEXjn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 19:39:43 -0400
+Received: by mail-qa0-f73.google.com with SMTP id hw13so417647qab.4
+        for <git@vger.kernel.org>; Thu, 05 Jun 2014 16:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BKPHt+6MTv2SpLj5jC5za1coP6f7zn7Fvt5lqwEik54=;
-        b=BDo8j7N/nwl4iKxfR8l7/pPeDRkkgopuVAoyxNG/oyOuYCe08uFZg8Kuv918L7R5QV
-         501nEdrJwJfa2B08yvsFlNLZX9skF8qgjESn5FF8wbQIkQ+sErGxsCeXhrDIBkWDGqcz
-         Hj9e1CiQdd+EZY/KG8L9AjyPgjYZdhTDclzUtuePCixmSdr1kGE1qhhd0yRxwkbRkhS6
-         gCxno+HCZg4iu4mcsWnAVgSZPapDyaA+WpHLa/VgXcTHRdmpTK+lj1QsIvrY6mrgCcTs
-         w6gAgLSG6IgumQb4uhreggA+gQ4/eIT5ryXUI26O64fBS7JpZ4LEQQP7ltGx+0CPOlSs
-         js9A==
+        h=from:to:cc:subject:date:message-id;
+        bh=QYN7ko09VEM9RKU/NwvBcKhlgz/aU2pzVVIDY3kudsU=;
+        b=S0NcZlyTurtZ2d9MGoTZylx4f0GUITMbP2uzmHxLZDunwkLmGzSVijYkxENfIdbR28
+         StfTidGZ0PrpXjB+90fd3UkW7NTHP2W2jrD2jMLfV+1FcinSq5hDCsJnVd7n97KE3V8z
+         3uB2cwMcv3nYYZasXaa9dE0qsxYD2ykLutL8ylOHBiIenjDJ5mi4/xO07V+ANPk0Vlv6
+         mxf5sW3oVzShvNa3ZMg18mBB4Z2oGMXLrcxNXYkGAJtLjf7TMTEcEuJ00T1/r5mZN5Oj
+         J0psRKcd4omVHDxY5AhQof0jZHbSf3SmGaN9JCJ+tiUxv9snGu/RHvupGZDFLUkdn8En
+         zZ2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=BKPHt+6MTv2SpLj5jC5za1coP6f7zn7Fvt5lqwEik54=;
-        b=XUDvLTi2rDnq737oabde2pDYiMyEpddnEPtpnFkPpaG9f8senaW1d0nuDi1LifqsdE
-         QxSt99pTVUhpwmBlpqcF5vxjlf6Z6Zc+VLGf326RYJgeRQKMqKm53IAxUYGQ3n82f1rq
-         Ts5TDX8eM5V/94E8lwOsHkBMg80obzI/FLqgHCdqeq2DQOMqkc1Pq0Fxet1o7E0O8/lJ
-         Qi0lOTNYTzxb1CmD2Zp41W4cCL3qnUTtKlJex+6uCstrl7NRXndu79PlHRgHde7WnmWt
-         LBoS5D3oOX1QOXxcFiecKLvOohT1AFISHyewyrkh5giljYEv9TXRz4AL/gU4eKaTU/PW
-         FdlA==
-X-Gm-Message-State: ALoCoQn5Hm+CGzv1IjKJcoCJsatk43gjjJQdnrgO86uFYwGqaPiVgfllxPfrC/mxaHO6QmOsT56j
-X-Received: by 10.236.19.7 with SMTP id m7mr236017yhm.35.1402010238167;
-        Thu, 05 Jun 2014 16:17:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=QYN7ko09VEM9RKU/NwvBcKhlgz/aU2pzVVIDY3kudsU=;
+        b=ilIWTvuDc59fR/1hl91AXIx8Jm5sHzKjhiPRZoV1fOp9uHmnTinkAH44ehUBM6SbY1
+         YbCLIe9oDSuHxa7t5qCLeNWNgxs3vFJ3ny6yHxUVxI5IMSXoGXNuUdXiJDxULFVsnzcr
+         GLZy2dp2YeX7wycPSEz+b/cJaSYxzNUMcJgQzIjLpwpj8WVjdGPmjkO+r8X6ArE5ePpk
+         D+NZ3twIFbojFS8gidVFh2K8Don6EBCaYquOngLO7vNsb2JMlVoGbF18uChdaCQ6BSm6
+         uaOf+Fy/jRMfkoU2B10p3cWEEU6tYF9GDkxGh/Iy+R2l3IrUcRuNoNgRsoBWHi6Dfaky
+         n9lw==
+X-Gm-Message-State: ALoCoQl/pri4eS9rfCAjU7geAoQmSFeGx0liKlDedEpFnLmX4fNh1Q0TbpDZWaSL+t2dYFCeY5v6
+X-Received: by 10.236.200.194 with SMTP id z42mr261200yhn.28.1402010793117;
+        Thu, 05 Jun 2014 16:26:33 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id i65si670078yhg.2.2014.06.05.16.17.18
+        by gmr-mx.google.com with ESMTPS id t4si649767yhm.0.2014.06.05.16.26.33
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Jun 2014 16:17:18 -0700 (PDT)
+        Thu, 05 Jun 2014 16:26:33 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 02A8B5A4756;
-	Thu,  5 Jun 2014 16:17:18 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id F24CE5A4740;
+	Thu,  5 Jun 2014 16:26:32 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id A74A7E0440; Thu,  5 Jun 2014 16:17:17 -0700 (PDT)
+	id 94FD5E0B87; Thu,  5 Jun 2014 16:26:32 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.583.g402232d
-In-Reply-To: <1402010234-7628-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250881>
 
-In many places in the code we do not have access to the individual fields
-in the committer data. Instead we might only have access to prebaked data
-such as what is returned by git_committer_info() containing a string
-that consists of email, timestamp, zone etc.
+This patch adds support to the transaction system to update all non-refs as
+packed refs instead of loose refs.
 
-This makes it inconvenient to use transaction_update_reflog since it means you
-would have to first parse git_committer_info before you can call update_reflog.
+This series can also be found at
+https://github.com/rsahlberg/git/tree/ref-transactions-req-packed-refs
 
-Add a new flag REFLOG_EMAIL_IS_COMMITTER to _update_reflog to tell it
-that what we pass in as email is already the fully baked committer string
-we can use as-is.
+This series adds support to have transaction write updates to packed refs
+instead of as loose refs.
+If the transaction only contains a single update to a single ref, such as the
+commit case, we continue to update this as locking and writing to the loose
+ref file.
+But If on the other hand the transaction will update more than one ref, then
+we perform all these updates inside the packed refs file and remove all the
+affected loose refs files. This allows us to both perform deletes (added
+previously) as well as updates-of-more-than-one-ref as one single atomic rename
+operation.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+Since the transactions will now by default write directly to the packed refs
+file for updates to more than one ref, we no longer need to provide a
+pacekd refs api to builtin/clone.c any more. So lets change clone.c to
+use a transaction. This removes 4 fucntions from the refs.c API we can now
+unexport and make static.
 
-Conflicts:
-	refs.c
----
- refs.c | 20 ++++++++++++--------
- refs.h |  1 +
- 2 files changed, 13 insertions(+), 8 deletions(-)
+This change means that clone will now apear as one single atomic operation
+to any external observer where all refs appear at once instead of one
+ref becoming visible at a time.
 
-diff --git a/refs.c b/refs.c
-index 9689592..e3a0383 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3489,14 +3489,18 @@ int transaction_update_reflog(struct ref_transaction *transaction,
- 	hashcpy(update->old_sha1, old_sha1);
- 	update->reflog_fd = -1;
- 	if (email) {
--		struct strbuf buf = STRBUF_INIT;
--		char sign = (tz < 0) ? '-' : '+';
--		int zone = (tz < 0) ? (-tz) : tz;
--
--		strbuf_addf(&buf, "%s %lu %c%04d", email, timestamp, sign,
--			    zone);
--		update->committer = xstrdup(buf.buf);
--		strbuf_release(&buf);
-+		if (flags & REFLOG_EMAIL_IS_COMMITTER)
-+			update->committer = xstrdup(email);
-+		else {
-+			struct strbuf buf = STRBUF_INIT;
-+			char sign = (tz < 0) ? '-' : '+';
-+			int zone = (tz < 0) ? (-tz) : tz;
-+
-+			strbuf_addf(&buf, "%s %lu %c%04d", email, timestamp,
-+				    sign, zone);
-+			update->committer = xstrdup(buf.buf);
-+			strbuf_release(&buf);
-+		}
- 	}
- 	if (msg)
- 		update->msg = xstrdup(msg);
-diff --git a/refs.h b/refs.h
-index 1b6a055..3c99619 100644
---- a/refs.h
-+++ b/refs.h
-@@ -318,6 +318,7 @@ int transaction_delete_sha1(struct ref_transaction *transaction,
- 			    struct strbuf *err);
- 
- #define REFLOG_TRUNCATE 0x01
-+#define REFLOG_EMAIL_IS_COMMITTER 0x02
- /*
-  * Append a reflog entry for refname. If the REFLOG_TRUNCATE flag is set
-  * this update will first truncate the reflog before writing the entry.
+
+Ronnie Sahlberg (2):
+  refs.c: write updates to packed refs when a transaction has more than
+    one ref
+  refs.c: make the *_packed_refs functions static
+
+ builtin/clone.c | 16 ++++++++---
+ refs.c          | 82 ++++++++++++++++++++++++++++++++++++++++-----------------
+ refs.h          | 28 --------------------
+ 3 files changed, 70 insertions(+), 56 deletions(-)
+
 -- 
 2.0.0.583.g402232d
