@@ -1,129 +1,127 @@
 From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Re: [RFC PATCH] clone: add clone.recursesubmodules config
- option
-Date: Thu, 5 Jun 2014 11:43:40 -0700
-Message-ID: <20140605184340.GA31746@odin.tremily.us>
-References: <xmqqoay9wvo6.fsf@gitster.dls.corp.google.com>
- <1401874256-13332-1-git-send-email-judge.packham@gmail.com>
- <xmqqvbsgvb9l.fsf@gitster.dls.corp.google.com>
- <538F6E52.9000009@web.de>
- <xmqq4mzzte2z.fsf@gitster.dls.corp.google.com>
+Subject: Re: Submodules with feature branches
+Date: Thu, 5 Jun 2014 12:18:29 -0700
+Message-ID: <20140605191829.GA32192@odin.tremily.us>
+References: <CAHd499Bn7CCVy=vhFzpLYXCssxR0oGxm3Vdgou_Yk5zSt1gfmA@mail.gmail.com>
+ <20140605151549.GQ21803@odin.tremily.us>
+ <CAHd499Dc7_fob2-X1KZ77sdx20r+erQ_9JbDc7y4G0RUxG65eg@mail.gmail.com>
+ <20140605162333.GR21803@odin.tremily.us>
+ <CAHd499CBAQHG4rdojb8pdjymUCaZNYSnKb-ksmsLesq73OWTyA@mail.gmail.com>
+ <20140605190033.GV21803@odin.tremily.us>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="C7zPtVaVf+AK4Oqc"
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org,
-	mara.kim@vanderbilt.edu, Jonathan Nieder <jrnieder@gmail.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 21:20:26 2014
+	protocol="application/pgp-signature"; boundary="PEIAKu/WMn1b1Hv9"
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 05 21:26:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wscep-0001aq-67
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 20:44:59 +0200
+	id 1WsdBQ-00067A-Hy
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 21:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973AbaFESno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 14:43:44 -0400
-Received: from qmta07.westchester.pa.mail.comcast.net ([76.96.62.64]:35719
-	"EHLO qmta07.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751799AbaFESnn (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 5 Jun 2014 14:43:43 -0400
-Received: from omta10.westchester.pa.mail.comcast.net ([76.96.62.28])
-	by qmta07.westchester.pa.mail.comcast.net with comcast
-	id AiVn1o0080cZkys57ijic6; Thu, 05 Jun 2014 18:43:42 +0000
+	id S1752625AbaFETSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 15:18:35 -0400
+Received: from qmta02.westchester.pa.mail.comcast.net ([76.96.62.24]:51953
+	"EHLO qmta02.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752564AbaFETSc (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 5 Jun 2014 15:18:32 -0400
+Received: from omta06.westchester.pa.mail.comcast.net ([76.96.62.51])
+	by qmta02.westchester.pa.mail.comcast.net with comcast
+	id AiVm1o00316LCl051jJX2g; Thu, 05 Jun 2014 19:18:31 +0000
 Received: from odin.tremily.us ([24.18.63.50])
-	by omta10.westchester.pa.mail.comcast.net with comcast
-	id Aijh1o004152l3L3WijhEb; Thu, 05 Jun 2014 18:43:42 +0000
+	by omta06.westchester.pa.mail.comcast.net with comcast
+	id AjJW1o00U152l3L3SjJXQJ; Thu, 05 Jun 2014 19:18:31 +0000
 Received: by odin.tremily.us (Postfix, from userid 1000)
-	id B8E2E120A648; Thu,  5 Jun 2014 11:43:40 -0700 (PDT)
+	id DB174120A70E; Thu,  5 Jun 2014 12:18:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1401993820; bh=jIQw4AXu6+DdyvFTrpevXBIpuqPVD6P85Isa6lI85Cg=;
+	t=1401995909; bh=ah0C4JG4gq1Nv1Y0Znt9X+gtPljzESpl61e8uUzP3sM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=I+lMeqMGCeclYqBJ+hIg6H0eZjDsV1nP/iGBaG4aANm6t/B553Z2cUgVxaSbH/3J5
-	 C3T/ajj3nW3aSXmJ2FsLS8qIASWBIqGjDuXZLMLAW7zykeSXoMw9yB3XEzv9Ft3w1W
-	 MjaeIZqDRQWfAlLe5MuxaZ8g53uvw/s1zdB9yrD0=
+	b=CuO4TcfnotOqlo2DBwFFRCRKIVy/WULszXP5xdFlo+YRSxjnYIbs96SFKujMqzoww
+	 ZWEpRmdm2EcLsti6vgnM3f058SmMfOzPIzHCYsHB4tmUOSTKLEEt+9Z27B0+Gk8uTN
+	 OGU74BOO+S3caYKNp6v0N8yUmDDy+ipmKGY4JnSQ=
 Content-Disposition: inline
-In-Reply-To: <xmqq4mzzte2z.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <20140605190033.GV21803@odin.tremily.us>
 OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
  url=http://tremily.us/pubkey.txt
 User-Agent: Mutt/1.5.23 (2014-03-12)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1401993822;
-	bh=pFrfl6/eYAq4ngVfc3w/K5Admkd1+lUumz6vBQzYFug=;
+	s=q20140121; t=1401995911;
+	bh=t+dtZogT048rA7s3a97ypJ1s0MNgXKl6My5xEPtX8qk=;
 	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
 	 MIME-Version:Content-Type;
-	b=GIat8xaYzp0KGwrMYuH39yCoBVRWVHLfc+af2FgK5rEKFfBSJX8LkzJ9pfoYYxTs9
-	 YqTo1g1A1o4UxqSuOtACmvZiYOZRH3lyAJ12QxnWaMSAJkkhTe0oxt5fYOhp2zoRRt
-	 cxMtFROu9kNl9vBJJPNS/XLx6TkPXyZBYldyVmVSvRK+Weik0SEC9eXK4Ph8hg8NFO
-	 2i003mDjWlqzbWNOcIfF90Taf/vkpRJt+9OHplUhGhNi9hn/gudWOMXQHZMcnL3lrm
-	 arQYdvpmR12dm6nroCUGDesJhg3dhHMjt/vrx+6lElQ32U6i3CBbGZR+59C6vIUZuL
-	 RO04Z57xKQMhA==
+	b=EhearZ0ASnY6bP2kQUxzzbsOd6EZzWVoR/TpLX4Oax8yUY4Zl52ZVZuirXxCjGjw5
+	 m7pp/RYVqr5fWLPlGPQ/+YaeRjQco9Qv7UEA5sv/fYadZCWjMf1CJkqzvV1zSdgCSH
+	 1qYr/vri73H1DZVaa9TpqtVONwdutGtEt3ao7gItmBbz/cJ7ukY92y3BFKpu7azarg
+	 QeVHUM/Potjm6N2deD5/+dRi/Elh12EZuIT1rRSvYTXs62M7AVztd0sAbJQtW4i39M
+	 25e6NT2SitNcEydm2V5dSLBXkX19zZPTglAhXDlOYNgfuIyuMTk42ShmWpyEn+NyXN
+	 bDyYZv1R2klrA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250857>
 
 
---C7zPtVaVf+AK4Oqc
-Content-Type: text/plain; charset=us-ascii
+--PEIAKu/WMn1b1Hv9
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 05, 2014 at 11:18:28AM -0700, Junio C Hamano wrote:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> > We had two settings in mind,...
-> > So what if clone would just do an "git submodule init" for now when
-> > "submodule.autoinit" is set but "submodule.autoupdate" isn't [?]
-> > ... and a single "submodule.auto" setting would be what users really wa=
-nt?
+On Thu, Jun 05, 2014 at 12:00:33PM -0700, W. Trevor King wrote:
+> On Thu, Jun 05, 2014 at 01:31:39PM -0500, Robert Dailey wrote:
+> > Instead of just creating my branch and starting to make commits, I
+> > now have to setup my submodule branch first. Also pull requests
+> > won't show the changes to the third party libraries unless I do a
+> > second pull request for the third party repo.
 >=20
-> I do not offhand think of a sensible scenario where you want to init
-> a submodule once but do not want to update it when the superproject
-> changes.  Even if the user uses the mode to detach the submodule
-> HEAD, i.e. the branches in submodules do not matter and the whole
-> tree is described by the superproject's commit and gitlinks recorded
-> in it, the user would want the new objects necessary for the updated
-> superproject, which means a submodule that is init'ed (whether it is
-> via "git submodule init" or the submodule.autoinit variable) must be
-> updated.
+> That I agree with ;).  However, if you're treating the third-party
+> library as a separate repo, I think it makes sense that you need to
+> be making branches and pull requests in the submodule independently
+> from your branches and pull requests in the superproject.
 
-I agreed that once we have the ability to do so, autoupdating any
-initialized submodules should be automatic and non-optional.  However,
-making it optional during a transition period while the ability gets
-fleshed out would make sense too (so checkout-mode folks can opt in
-before we clobber the local-branch folks ;).
+To make this more concrete, I think you'll rarely have tight
+one-to-one binding between third-party library changes and your
+superproject.  More likely, you'll have some high-level feature branch
+in the superproject (=E2=80=9Caccept comments via email=E2=80=9D) and an un=
+related
+number of prerequisite feature branches for your libraries (=E2=80=9Cadd
+support for MIME documents,=E2=80=9D =E2=80=9Cparse RFC 2822 dates,=E2=80=
+=9D =E2=80=A6).  You only
+have synchronized branches when you mess with the API tying components
+together (updating the submodule API and updating the superproject to
+use it).  With good library design, that type of API migration should
+happen more and more rarely as the library stabilizes.
 
-Ceers,
+Cheers,
 Trevor
 
 --=20
 This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
 For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
 
---C7zPtVaVf+AK4Oqc
+--PEIAKu/WMn1b1Hv9
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Description: OpenPGP digital signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.22 (GNU/Linux)
 
-iQIcBAEBAgAGBQJTkLpaAAoJEG8/JgBt8ol8zN8QAJMzSpY+mZ4PjCvDOf7vafgT
-Vbqkcqf1A3GpIArvKx7R0zWURoD9jpKPu6lBiSkAGveLFvc8/vVav5BbiqBIkaMA
-gQTu7NbMxOvUHCnzuzo6y1phOYz7cERN+QBAUkom9CiWFS0+vG9+7fH4qnr+TyIG
-ubJGFjixvAnJx7Lo6ceIQvQpWUEkM4lT7Fz3JPS80ct74ePWSl0JwjZ7qoFdWaJL
-M383F66Hk+f9KedOfpUIeT+ll7jFYmbzYxV72nG+zOv4LHdjjnRRKqFadf5dS9f5
-2dVJ5tOXL1Se06gjkQZqIsSX2fNlev8o4wu4isGlm2n4hTLNJw0HOqh13wwtzE7L
-8uxT5V9MScXKRGkwEgsaJ7OSqRjSzYxnSa6TC67WphxVPF9Mk2GXqbCl+DM0Pj8m
-SBVipH9V497+RJI9ofAyGlVLDGLV6nWUVbVuqNbGxDfuecaAxYHSdTD1YD1/3lDY
-OcMbJrrnsrhffKoeB/Na/UghMGSRToNudJcVhd+7CQAsRt18uzwejCXWZl/MRcXW
-ZZTvqWII4+DbjkB1GrfkXETC/mtr7wBZTvezQlPfrvS4y/H3lE5kQLFa4jIPUwe0
-WG3ZOc4uNhZuIY0gsqMP/hEyOxCc2TMq+5se2c7OSLw33C+SJsckmW2h7oewnkcH
-Jc+tdOTgLWmaku+rBumN
-=BueQ
+iQIcBAEBAgAGBQJTkMKDAAoJEG8/JgBt8ol8eVMQAKFrynPPAdFLuX7zpTWED27O
+H1KvfBHgOTB8ViT7FxMMF1VPSdd/1KMsNQp9OiAnhGDHoHteEpSgNsNp3X8MjkRb
+z0vgZerWDwl7kobk/qQx866E+cZyrZeWklqwJ4PmXxwtdA0snITfI9PdzdESIrG4
+w1FGQcP1l6kexyW6C433xUyHNC0wqdWXwdKBRy3IqxOxR44xy5TNxnzoXWpUwehs
+eGWsfnkhIv6RZ1Q97e1HmYHS/W1MUbCYVydFaBBM2SXGX0/A5Fk16ZgLjDypk9NW
+ZxN++8Cj2W041uW08nZGgcpR47IUykp4DXZjH5Yz1v8VyzA2M6voKVHXr3Vmrvz2
+xj4LNljYVkL54QuPaiVmmbfDsb6ZGhapP8aLUQamHAez2pJsUhgbaNZjWtPzEOu3
+1EPlbT5hS/rPFBTKHMVspik8+qrsGZLNI5V3jXL3BqQPbKpqQ+5fSEgrNK5N6whJ
+AYoRufEn50j3eBb0nyqM75Zvrg2KwEvJtZIIdvb5ad+pjO0Kw+3RuM1NfMZs+yIO
+PVu20INOUEyoGgUC/O4gE8Af4K7XB+ntKXXYg1P8YmhCTHOC6P9zIoDzWM0Ll+GU
+SM7hgVtGKEtAilR1pYIURLopBMmUxA52RzxuTCBYgbaMNPXCew9eih9R4wnYlzjO
+zaRB5MnytPGnMzGPgVjT
+=I3Kh
 -----END PGP SIGNATURE-----
 
---C7zPtVaVf+AK4Oqc--
+--PEIAKu/WMn1b1Hv9--
