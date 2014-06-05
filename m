@@ -1,206 +1,140 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC PATCH] clone: add clone.recursesubmodules config option
-Date: Thu, 05 Jun 2014 19:48:33 +1200
-Message-ID: <539020D1.1090601@gmail.com>
-References: <xmqqoay9wvo6.fsf@gitster.dls.corp.google.com> <1401874256-13332-1-git-send-email-judge.packham@gmail.com> <xmqqvbsgvb9l.fsf@gitster.dls.corp.google.com> <20140604194216.GA4636@sandbox-ub>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: [PATCH v2] Add a Windows-specific fallback to getenv("HOME");
+Date: Thu, 5 Jun 2014 10:03:17 +0200
+Organization: <)><
+Message-ID: <20140605080317.GA28029@camelia.ucw.cz>
+References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com> <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com> <alpine.DEB.1.00.1406041713500.14982@s15462909.onlinehome-server.info> <CABPQNSavYCrdUDyNru-HHMFkdgDRvaCp++f8ZgGKv07sS0eXGQ@mail.gmail.com> <alpine.DEB.1.00.1406041725460.14982@s15462909.onlinehome-server.info> <alpine.DEB.1.00.1406041741470.14982@s15462909.onlinehome-server.info> <538FCAF5.7030102@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, mara.kim@vanderbilt.edu,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Heiko Voigt <hvoigt@hvoigt.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 09:48:44 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Erik Faye-Lund <kusmabite@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+        msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCU63DXMWULRBR6IYCOAKGQEYP55X5A@googlegroups.com Thu Jun 05 10:03:21 2014
+Return-path: <msysgit+bncBCU63DXMWULRBR6IYCOAKGQEYP55X5A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f191.google.com ([209.85.212.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsSPj-0001dB-O7
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 09:48:44 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751428AbaFEHsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 03:48:39 -0400
-Received: from mail-pb0-f50.google.com ([209.85.160.50]:52592 "EHLO
-	mail-pb0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751058AbaFEHsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 03:48:38 -0400
-Received: by mail-pb0-f50.google.com with SMTP id ma3so745811pbc.9
-        for <git@vger.kernel.org>; Thu, 05 Jun 2014 00:48:38 -0700 (PDT)
+	(envelope-from <msysgit+bncBCU63DXMWULRBR6IYCOAKGQEYP55X5A@googlegroups.com>)
+	id 1WsSds-0003Xe-Ut
+	for gcvm-msysgit@m.gmane.org; Thu, 05 Jun 2014 10:03:21 +0200
+Received: by mail-wi0-f191.google.com with SMTP id r20sf193919wiv.18
+        for <gcvm-msysgit@m.gmane.org>; Thu, 05 Jun 2014 01:03:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=azxe8nZc4ERl6/ny5qxwavm0QCfKf4nbDwFKW0LHsYM=;
-        b=o4NWBWQL+9Mq11SngjwVhGdwjsIStQZJ6AYq2mYJ4dJAhn4X7oCM2/iPFvhSNAkoF2
-         XXPitwkJXC5ktoW+VMGEj40p1mG3HSag2EV+lLjYbqgQsqtUNN9UkVtvyO4Qq9/VXCdj
-         O/qnmq7ePG28Qhbv+fsDrkZAyHyVm4o6BLj9iK8QgdYbF86jTTkgY1Yn+CP72JbXgKGG
-         0/X1NZlXS0wJTrG1hBDVjSOU0v0LVxrOZO1FXTMT2GIQRRdxNSzfdQUmoQHTUb1a3h1n
-         gjDi3OZ8RDJHMacw+dCCg2hoTNeYiDaEdEdLP/U1xa+j1oVtskLoDER9OreIBhXH/fMR
-         GXgw==
-X-Received: by 10.68.78.66 with SMTP id z2mr74369387pbw.71.1401954518284;
-        Thu, 05 Jun 2014 00:48:38 -0700 (PDT)
-Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id su8sm19336125pbc.72.2014.06.05.00.48.35
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 05 Jun 2014 00:48:37 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140604194216.GA4636@sandbox-ub>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250821>
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=dxZmui3/bDrri7XgSS9VT3A7wz3XDKvFL6v6gMYxqWA=;
+        b=wCbJUNLwk4VrlvGtzs0B4vBAlTDVD1GjOMf6ENGME+foXuK9EHsMJKVcZ891ZHy8dn
+         aQTiUfMco9hTLiAu0Yd5dwoCuQS9mmuoiqc7F1c4UrzOMaOcRrdzR2TtqnIhoCssH9hi
+         x+lqTkcC6J1QnMAec6SVWU4gPwLQxlOnIih+heqi6kTZfAsTNctDI+HmbrkiU/t9twQE
+         nWENh+cFj+Ut9/M3vvBJ2HPIo0uafOP6OXkmF/eIZKmFW+4iaUyFqRSiqJ4xK1D3edKG
+         vgY/FUcIQbnJ2dRQ+PyXb6tbHi+mAMX7TiA4qHREvgUKaDT1ojpBcBblIuKv9bahh8PQ
+         PZ9Q==
+X-Received: by 10.152.42.225 with SMTP id r1mr42189lal.13.1401955400207;
+        Thu, 05 Jun 2014 01:03:20 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.27.66 with SMTP id r2ls21717lag.29.gmail; Thu, 05 Jun 2014
+ 01:03:19 -0700 (PDT)
+X-Received: by 10.152.6.97 with SMTP id z1mr6481191laz.0.1401955399200;
+        Thu, 05 Jun 2014 01:03:19 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id se3si1432012wic.3.2014.06.05.01.03.19
+        for <msysgit@googlegroups.com>;
+        Thu, 05 Jun 2014 01:03:19 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id D7E151C009E;
+	Thu,  5 Jun 2014 10:03:18 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s5583IvA028073;
+	Thu, 5 Jun 2014 10:03:18 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s5583HVW028072;
+	Thu, 5 Jun 2014 10:03:17 +0200
+In-Reply-To: <538FCAF5.7030102@gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250822>
 
-On 05/06/14 07:42, Heiko Voigt wrote:
-> On Wed, Jun 04, 2014 at 10:24:06AM -0700, Junio C Hamano wrote:
->> Chris Packham <judge.packham@gmail.com> writes:
->>
->>> On 04/06/14 09:05, Junio C Hamano wrote:
->>>>> Also, going --recursive when the user did not want is a lot more
->>>>> expensive mistake to fix than not being --recursive when the user
->>>>> wanted to.
->>>>
->>>> Having said all that, I do not mean to say that I am opposed to
->>>> introduce some mechanism to let the users express their preference
->>>> between recursive and non-recursive better, so that "git clone"
->>>> without an explicit --recursive (or --no-recursive) can work to
->>>> their taste.  A configuration in $HOME/.gitconfig might be a place
->>>> to start, even though that has the downside of assuming that the
->>>> given user would want to use the same settings for all his projects,
->>>> which may not be the case in practice.
->>>
->>> And here's a quick proof of concept. Not sure about the config variable name
->>> and it could probably do with a negative test as well.
->>
->> I would be more worried about the semantics than the name, though;
->> re-read the part you quoted with extra stress on "has the downside".
->>
->> I think I heard the submodule folks (cc'ed) discuss an approach to
->> allow various submodules to be marked with "tags" with a new type of
->> entry in .gitmodules file in the superproject, and use these tags to
->> signal "by default, a new clone will recurse into this submodule".
->>
->> E.g. if projects standardized on "defaultClone" to mark such
->> submodules, then $HOME/.gitconfig could say
->>
->>     [clone]
->>         recursesubmodules = defaultClone
->>
->> Or the projects may mark platform specific submodules with tags,
->> e.g. a .gitmodules in a typical superproject might say something
->> like this:
->>
->>     [submodule "posix"]
->>     	path = ports/posix
->>         tags = linux obsd fbsd osx
->>     [submodule "windows"]
->>         path = ports/windows
->>         tags = win32
->>     [submodule "doc"]
->>     	path = documentation
->>         tags = defaultClone
->>
->> and then the user's $HOME/.gitconfig might say
->>
->>     [clone]
->>         recursesubmodules = defaultClone win32
->>
->> to tell a "git clone" of such a superproject to clone the top-level,
->> read its .gitmodules, and choose documentation/ and ports/windows
->> submodules but not ports/posix submodule to be further cloned into
->> the working tree of the superproject.
->>
->> Of course, if this kind of project organization proves to be useful,
->> we should try to standardize the set of tags early before people
->> start coming up with random variations of the same thing, spelling
->> the same concept in different ways only to be different, and if that
->> happens, then we could even give a non-empty default value for the
->> clone.recursesubmodules when $HOME/.gitconfig is missing one.
->>
->> Just a random thought.
-> 
-> I like this idea of specifying different "views" by giving tags. But
-> does it rule out a boolean clone.recursesubmodules? For the simple case
-> some people might not want to worry about specifying tags but just want
-> to configure: "Yes give me everything". So if we were to do this I would
-> like it if we could have both. Also because the option for clone is
-> --recurse-submodules and our typical schema is that a configuration
-> option is named similar so clone.recursesubmodules would fit here.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Wed, 2 Jun 2010 00:41:33 +0200
 
-Maybe using a glob pattern would work.
+If HOME is not set, use $HOMEDRIVE$HOMEPATH
 
-The user might say
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+---
 
-     [clone]
-         recursesubmodules = x86*
+Hello Karsten,
+thanks for your explanation.  There are more things to be done, but
+I hope you can ack this patch as a step forward.
 
-And .gitmodules might say
+Hello Dscho,
+I hope you can ack this as well: it is basically equivalent with your
+patch, tailored according to current upstream fashion,  ;-)
 
-     [submodule "foo"]
-         tags = x86_64
-     [submodule "bar"]
-         tags = x86
-     [submodule "frotz"]
-         tags = powerpc
+Stepan
 
-For the "Yes give me everything" case the user could say
+ compat/mingw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-     [clone]
-         recursesubmodules = *
+diff --git a/compat/mingw.c b/compat/mingw.c
+index a0e13bc..e108388 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1181,6 +1181,11 @@ char *mingw_getenv(const char *name)
+ 		if (!result)
+ 			result = getenv_cs("TEMP");
+ 	}
++	if (!result && !strcmp(name, "HOME")) {
++		struct strbuf buf = STRBUF_INIT;
++		strbuf_addf(&buf, "%s%s", getenv_cs("HOMEDRIVE"), getenv_cs("HOMEPATH"));
++		result = strbuf_detach(&buf, NULL);
++	}
+ 	return result;
+ }
+ 
+-- 
+2.0.0.9635.g0be03cb
 
-> 
-> So either we do this "magically" and all valid boolean values are
-> forbidden as tags or we would need a different config option. Further
-> thinking about it: Maybe a general option that does not only apply to
-> clone would suit the "views" use-case more. E.g. "submodule.tags" or
-> similar.
-> 
-> Also please note: We have been talking about adding two configurations
-> for submodules:
-> 
-> 	submodule."name".autoclone (IIRC)
-> 
-> I am not sure whether that was the correct name, but this option should
-> tell recursive fetch / clone whether to automatically clone a submodule
-> when it appears on a fetch in the history.
-> 
-> 	submodule."name".autoinit
-> 
-> And this one is for recursive checkout and tells whether an appearing
-> submodule should automatically be initialized.
-> 
-> These options fullfill a similar use-case and are planned for the future
-> when recursive fetch/clone and checkout are in place (which is not that
-> far away). We might need to rethink these to incoporate the "views from
-> tags" idea nicely and since we do not want a configuration nightmare.
-> 
-> Cheers Heiko
-> 
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-I'm a little confused at how autoclone and autoinit differ. Aren't they
-the same? i.e. when this module appears grab it by default. I see
-autoupdate as a little different meaning update it if it's been
-initialised. Also does autoinit imply autoupdate?
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-At $dayjob we have a superproject which devs clone this has submodules
-for the important and/or high touch repositories. We have other
-repositories that are normally build from a tarball (or not built at
-all) but we can build them from external repositories if needed. The
-latter case is painfully manual. If autoinit/autoupdate existed we'd
-probably setup out projects with.
-
-    [submodule "linux"]
-        autoinit = true
-	autoupdate = true
-    [submodule "userland"]
-        autoinit = true
-	autoupdate = true
-    [submodule "not-used-that-much"]
-	autoupdate = true
-
-We probably wouldn't make use of tags because we're building complete
-embedded systems and generally want everything, even if we are doing
-most of our work on a particular target we need to do builds for other
-targets for sanity checks.
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
