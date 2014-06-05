@@ -1,104 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] environment: enable core.preloadindex by default
-Date: Thu, 05 Jun 2014 15:59:55 -0700
-Message-ID: <xmqqr433q7x0.fsf@gitster.dls.corp.google.com>
-References: <CACbrTHdoA3UgoXOMVeB2ST_y-JzA2FZM7s8_uwG8C3D29WZK=Q@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git <git@vger.kernel.org>
-To: Steve Hoelzer <shoelzer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 01:00:08 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH 0/4] Use transactions for renames
+Date: Thu,  5 Jun 2014 16:17:10 -0700
+Message-ID: <1402010234-7628-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 06 01:17:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wsgdj-0007ku-Uy
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 01:00:08 +0200
+	id 1WsguW-0003jr-3q
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 01:17:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752960AbaFEXAD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 19:00:03 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55623 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752083AbaFEXAC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 19:00:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 437C71E227;
-	Thu,  5 Jun 2014 19:00:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 s=sasl; bh=BnKXUpqXOjBmL3Wd3qfK/fbwy9Y=; b=QJRtuhL0D5x2W58+1wdP
-	JP2U4WWNcMLbNAGdqTl/0KRlRbP3s6dnJYlKnd51e/h/wvzDQYmG7fuXB78HjHmD
-	Jmxs2BXh0uKCToE+LHWg2cUERHlVPaN/kGx/DkTnSFHScP3p3Lc0eydYrO9nXQ67
-	MI8TvVPtQ66ZbW6qalja8/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:message-id:mime-version:content-type;
-	 q=dns; s=sasl; b=g1H6KAo2OCpoCtDeW8rqzAPDsWAMfylBehpJY3UIjUSl5T
-	kVzilgRMyGc5U6D6WQEnQ63VQzxiJLhAjTYKMowVJ6mjBM7/4eJVA/tjoEYvw6oI
-	qZnEW64i+rzIvtev7fAwyBRERcDIrR0e9rgo36Su6IOqgn3/gOEt51qUYQ5tM=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B7CF81E223;
-	Thu,  5 Jun 2014 19:00:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 07F911E210;
-	Thu,  5 Jun 2014 18:59:56 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1D1ED8FA-ED05-11E3-832D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753120AbaFEXRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 19:17:23 -0400
+Received: from mail-qg0-f74.google.com ([209.85.192.74]:62657 "EHLO
+	mail-qg0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753090AbaFEXRS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 19:17:18 -0400
+Received: by mail-qg0-f74.google.com with SMTP id i50so136676qgf.3
+        for <git@vger.kernel.org>; Thu, 05 Jun 2014 16:17:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=nSA8sFGEmroF0UX8d7QtLDzbx8wOES7zjVk3cs4U044=;
+        b=mlSKcJiiAU9Um5oB8IFzF16f6/2PegtkmN/hC922OZn+hPAHPu/wXpoeEu8gS9MH+Y
+         nOuzlH7yYprxGELLo7n85wrWhOzwlXW6H5LXnPk8Eun+rPEeAIqxEdL0sPVynThJx3lz
+         YRwV4L4SDRg4KvpO0Af7dfJcnCIla8oiI5D8/vwXY5BZVovlU+dWSTBT8wjlM2lEsjAv
+         SxKTTkxN8BF0o0p/EOab8zrPvejLhcdKcwEzO2J9qIFm+Muge9I9GrUlkIVmJYL8Ft5l
+         RNCkmG1afuTJKq+EWmntljRUhtyV7MLRgkTfkppqzhSj1okoEatfAqjTl/ghFh5oGsHT
+         2EQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=nSA8sFGEmroF0UX8d7QtLDzbx8wOES7zjVk3cs4U044=;
+        b=c630e/58G2beQhMiUAemBJxsDLrtfhGegXGMPaRicmU7ZVaP+kZJMvWw5AZ7zG3MPM
+         EjuR0+u0nZG6ZrTOZrSSsdnaSzvz7/u4JiuNMjyjbGvJHP8GFm6cbTPzzhL9AXJ3oEgW
+         pxn3h4mFJpKgvjJ+i8hahExYQrUApRq3YFcrwXXU+XR5Dw+fwtiW4O0NZ0dQPDB60o6z
+         FQwGvP0dtgEmWEIacrWnfIDTJx9OHl+D6x/PpWRshXkjqjHWi6oI9shs9P/3zITJBwni
+         GOEUjqv+K6yGV+4gfaMu4+FWhtuoWxCQxiMXrTknp3izw8VoezVgy4EQ+M7SbjvH0+By
+         Q3HQ==
+X-Gm-Message-State: ALoCoQm2jt7eww5Kxb3I839QSiaW6ObcMRTBdTZkcPnPoqHKk0Ls0tbMM34lStlJUK0WbA3lset7
+X-Received: by 10.236.197.226 with SMTP id t62mr225325yhn.50.1402010238074;
+        Thu, 05 Jun 2014 16:17:18 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id c22si670229yhe.1.2014.06.05.16.17.18
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 05 Jun 2014 16:17:18 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id E94FF5A4755;
+	Thu,  5 Jun 2014 16:17:17 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id 8976BE0B87; Thu,  5 Jun 2014 16:17:17 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.583.g402232d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250875>
 
-Steve Hoelzer <shoelzer@gmail.com> writes:
+This series is based on ref-transactions-reflog
+It is also available at
+https://github.com/rsahlberg/git/tree/ref-transactions-rename
 
-> There is consensus that the default should change because it will
-> benefit nearly all users (some just a little, but some a lot).
-> See [1] and replies.
->
-> [1]: http://git.661346.n2.nabble.com/git-status-takes-30-seconds-on-Windows-7-Why-tp7580816p7580853.html
->
-> Signed-off-by: Steve Hoelzer <shoelzer@gmail.com>
-> ---
+This series adds support to perform rename_ref as a single transaction for
+both deleting/re-creating the ref and updating the reflog.
 
-The patch is whitespace damaged, and the log message was unusable
-without referring to an external site.  Both locally fixed and
-queued.
+Since we no longer use rename() for the reflog changes we can now support
+renames even if the reflogs are symlinks.
 
-Thanks.
+In order to make the delete-then-create fully atomic and also to ensure that
+at no point in time is the object unreferenced we add support to do
+deletes via the packed refs file to transaction_commit. For any refs that are
+to be deleted, we first copy these refs to the packed refs file.
+This allows us to immediately delete the loose ref files for those refs and
+still being able to cancel/rollback the transaction.
+Once all the changes are successfully updated we finally commit the packed
+refs file a second time at which stage all the refs-to-be-deleted all
+disappear in one atomic rename().
 
->  Documentation/config.txt | 4 ++--
->  environment.c            | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 1932e9b..4b3d965 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -613,9 +613,9 @@ core.preloadindex::
->  +
->  This can speed up operations like 'git diff' and 'git status' especially
->  on filesystems like NFS that have weak caching semantics and thus
-> -relatively high IO latencies.  With this set to 'true', Git will do the
-> +relatively high IO latencies.  When enabled, Git will do the
->  index comparison to the filesystem data in parallel, allowing
-> -overlapping IO's.
-> +overlapping IO's.  Defaults to true.
->
->  core.createObject::
->   You can set this to 'link', in which case a hardlink followed by
-> diff --git a/environment.c b/environment.c
-> index 5c4815d..1c686c9 100644
-> --- a/environment.c
-> +++ b/environment.c
-> @@ -71,7 +71,7 @@ unsigned long pack_size_limit_cfg;
->  char comment_line_char = '#';
->
->  /* Parallel index stat data preload? */
-> -int core_preload_index = 0;
-> +int core_preload_index = 1;
->
->  /* This is set by setup_git_dir_gently() and/or git_default_config() */
->  char *git_work_tree_cfg;
+This allows us to perform transactions that delete multiple refs and have the
+delete appear as one atomic transaction to any external observer.
+
+
+Ronnie Sahlberg (4):
+  refs.c: allow passing raw git_committer_info as email to
+    _update_reflog
+  refs.c: return error instead of dying when locking fails during
+    transaction
+  refs.c: use packed refs when deleting refs during a transaction
+  refs.c: update rename_ref to use a transaction
+
+ refs.c            | 308 +++++++++++++++++++++++++++++++++---------------------
+ refs.h            |   1 +
+ t/t3200-branch.sh |   7 --
+ 3 files changed, 192 insertions(+), 124 deletions(-)
+
+-- 
+2.0.0.583.g402232d
