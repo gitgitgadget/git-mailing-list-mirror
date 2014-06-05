@@ -1,92 +1,71 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH 0/5] submodule config lookup API
-Date: Thu, 5 Jun 2014 08:04:25 +0200
-Message-ID: <20140605060425.GA23874@sandbox-ub>
+From: =?utf-8?b?w5h5c3RlaW4=?= Walle <oystwa@gmail.com>
+Subject: Re: Git autocorrect bug
+Date: Thu, 5 Jun 2014 06:06:13 +0000 (UTC)
+Message-ID: <loom.20140605T080345-353@post.gmane.org>
+References: <1401940145.18134.170.camel@stross>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 05 08:04:41 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 05 08:06:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsQn1-0005ld-Fp
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 08:04:39 +0200
+	id 1WsQoo-0006yV-II
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 08:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306AbaFEGEf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 02:04:35 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.31.35]:50425 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750891AbaFEGEe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 02:04:34 -0400
-Received: from [77.20.146.74] (helo=sandbox-ub)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1WsQms-0000Op-E8; Thu, 05 Jun 2014 08:04:30 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1751166AbaFEGG1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2014 02:06:27 -0400
+Received: from plane.gmane.org ([80.91.229.3]:48692 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750888AbaFEGG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 02:06:26 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1WsQoh-0006sv-Qx
+	for git@vger.kernel.org; Thu, 05 Jun 2014 08:06:23 +0200
+Received: from 80.156.189.109.customer.cdi.no ([109.189.156.80])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 05 Jun 2014 08:06:23 +0200
+Received: from oystwa by 80.156.189.109.customer.cdi.no with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 05 Jun 2014 08:06:23 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 109.189.156.80 (Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250812>
 
-I have been holding back this series during the RC phase but now I think
-it is ready for another round. The most important changes:
+David Turner <dturner <at> twopensource.com> writes:
 
-  * The API is using a singleton now. No need to pass in the cache
-    object anymore.
+>=20
+> $ cd [some existing git repo]
+> $ git git foo
+> WARNING: You called a Git command named 'git', which does not exist.
+> Continuing under the assumption that you meant 'init'
+> in 0.1 seconds automatically...
+> fatal: internal error: work tree has already been set
+> Current worktree: /home/dturner/git
+> New worktree: /home/dturner/git/foo
+>=20
+> (I am extremely unlikely to fix this bug myself, since it only arises=
+ in
+> very rare circumstances).
+>=20
+>=20
 
-  * Local configuration can be looked up by passing in the null_sha1
+You have help.autocorrect enabled. Then this is expected behaviour (it
+doesn't seem out of place to me at least)
 
-  * We use the API for existing lookup of submodule values
+Running `git config --unset help.autocorrect` should disable it. It
+may be that you enabled it for only one repo by accident.
 
-One open question:
-
-  * Since behind the scenes there is a global cache filled with the
-    values: Do we need to free it explicitely? Or is it ok to let it be
-    dealt with on exit?
-
-The last iteration was here:
-
-http://article.gmane.org/gmane.comp.version-control.git/243818
-
-Heiko Voigt (5):
-  hashmap: add enum for hashmap free_entries option
-  implement submodule config cache for lookup of submodule names
-  extract functions for submodule config set and lookup
-  use new config API for worktree configurations of submodules
-  do not die on error of parsing fetchrecursesubmodules option
-
- .gitignore                                       |   1 +
- Documentation/technical/api-hashmap.txt          |   2 +-
- Documentation/technical/api-submodule-config.txt |  63 ++++
- Makefile                                         |   2 +
- builtin/checkout.c                               |   1 +
- builtin/fetch.c                                  |   1 +
- diff.c                                           |   1 +
- diffcore-rename.c                                |   2 +-
- hashmap.c                                        |   2 +-
- hashmap.h                                        |   8 +-
- name-hash.c                                      |   4 +-
- submodule-config.c                               | 435 +++++++++++++++++++++++
- submodule-config.h                               |  29 ++
- submodule.c                                      | 122 ++-----
- submodule.h                                      |   4 +-
- t/t7410-submodule-config.sh                      | 141 ++++++++
- test-hashmap.c                                   |   6 +-
- test-submodule-config.c                          |  74 ++++
- 18 files changed, 791 insertions(+), 107 deletions(-)
- create mode 100644 Documentation/technical/api-submodule-config.txt
- create mode 100644 submodule-config.c
- create mode 100644 submodule-config.h
- create mode 100755 t/t7410-submodule-config.sh
- create mode 100644 test-submodule-config.c
-
--- 
-2.0.0
+=C3=98sse
