@@ -1,73 +1,159 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v6 2/2] refs.c: SSE4.2 optimizations for check_refname_component
-Date: Thu, 05 Jun 2014 23:42:19 +0200
-Message-ID: <5390E43B.3070501@web.de>
-References: <1401853091-15535-1-git-send-email-dturner@twitter.com>		 <1401853091-15535-2-git-send-email-dturner@twitter.com>		 <538ED2F1.9030003@web.de>		 <CACsJy8CK3LNaPVNv=EfFX06uOgpujAz364ZDFL3HBPicDNF57w@mail.gmail.com>		 <538F2C6B.2030004@web.de> <1401916560.18134.167.camel@stross>	 <539062D9.60000@web.de> <1401996362.18134.179.camel@stross>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH v2] Add a Windows-specific fallback to getenv("HOME");
+Date: Thu, 05 Jun 2014 23:44:22 +0200
+Message-ID: <5390E4B6.60206@gmail.com>
+References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com> <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com> <alpine.DEB.1.00.1406041713500.14982@s15462909.onlinehome-server.info> <CABPQNSavYCrdUDyNru-HHMFkdgDRvaCp++f8ZgGKv07sS0eXGQ@mail.gmail.com> <alpine.DEB.1.00.1406041725460.14982@s15462909.onlinehome-server.info> <alpine.DEB.1.00.1406041741470.14982@s15462909.onlinehome-server.info> <538FCAF5.7030102@gmail.com> <20140605080317.GA28029@camelia.ucw.cz> <53903B22.70507@gmail.com> <CABPQNSYtxLyWkRGOyst7VOpw-_=rQvKF_VsbDB7Y0-K=d9rvkQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	David Turner <dturner@twitter.com>
-To: David Turner <dturner@twopensource.com>,
-	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXI=?= =?UTF-8?B?c2hhdXNlbg==?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 23:42:28 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Transfer-Encoding: quoted-printable
+Cc: Stepan Kasal <kasal@ucw.cz>, 
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Duy Nguyen <pclouds@gmail.com>, GIT Mailing-list <git@vger.kernel.org>, 
+ Thomas Braun <thomas.braun@virtuell-zuhause.de>,
+ msysGit <msysgit@googlegroups.com>
+To: kusmabite@gmail.com
+X-From: msysgit+bncBCH3XYXLXQDBBNOJYOOAKGQERYB6PDY@googlegroups.com Thu Jun 05 23:44:25 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBNOJYOOAKGQERYB6PDY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f185.google.com ([209.85.217.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsfQa-0003nN-0A
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 23:42:28 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbaFEVmY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 5 Jun 2014 17:42:24 -0400
-Received: from mout.web.de ([212.227.17.12]:62339 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751644AbaFEVmX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 17:42:23 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0M09z2-1WeAPQ1xSW-00uGpm; Thu, 05 Jun 2014 23:42:20
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <1401996362.18134.179.camel@stross>
-X-Provags-ID: V03:K0:NvA1ciX5fy2z3PsnRQhsc0VS5rVs6Kg+JM0p8+srz4TqYgxG6cB
- b8EbM/9LXen393FZD3evyA4J688bmQ7BbLzRhrohhsaHzy63HumNuFpGUVhW68LknDzWpsW
- ZcvHiX91eE23QXIW9C9Qjf1HlbEmN7mQQIGaAK+mFt61J/zAz6eH4inYAKJpE4tDeuq3rIO
- OHPb0WXAeYhGzHY1TpVWw==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250865>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBNOJYOOAKGQERYB6PDY@googlegroups.com>)
+	id 1WsfSQ-0005DM-3P
+	for gcvm-msysgit@m.gmane.org; Thu, 05 Jun 2014 23:44:22 +0200
+Received: by mail-lb0-f185.google.com with SMTP id w7sf194105lbi.12
+        for <gcvm-msysgit@m.gmane.org>; Thu, 05 Jun 2014 14:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-transfer-encoding;
+        bh=J8x5wD0to0eQJZmTgmoEQpOz4g2MrRIprRHDnCDf+DM=;
+        b=rkadHCCmW7QD/Bm3bgDsQeLYKt3y4UsDP2FXnWwRdy9ePLie8gPD7Z9uJaWSDiK5b7
+         Dz4qEufQIgIwZGTO7OzlDjvWF5At/kQmtypwgm48ukZ2SKVQmzfjwbvvNuk9DTii9w4J
+         ej4YmX8uqQvGi902Yovzu1c4VEqQT2Hr1sHC3F+h3imGUpMt/E5lTLRQL4bqf0VHGkOC
+         S/zkhEsw2dTt3iWshLkUxeQGbvbfNoWqWzgeyb2mvromBPSud1qYxVMSKiimXpIwNP7N
+         /SyepqW8U6oQMLT9QobhjdSvMPeJjfoCtxxOcDuZCVYI5iC7G5Fj4ADSn1+OlW7rSmy0
+         xF9g==
+X-Received: by 10.152.26.129 with SMTP id l1mr5289lag.38.1402004661948;
+        Thu, 05 Jun 2014 14:44:21 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.206.37 with SMTP id ll5ls67854lac.97.gmail; Thu, 05 Jun
+ 2014 14:44:20 -0700 (PDT)
+X-Received: by 10.112.49.229 with SMTP id x5mr277592lbn.14.1402004660971;
+        Thu, 05 Jun 2014 14:44:20 -0700 (PDT)
+Received: from mail-we0-x229.google.com (mail-we0-x229.google.com [2a00:1450:400c:c03::229])
+        by gmr-mx.google.com with ESMTPS id ck3si419775wib.0.2014.06.05.14.44.20
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 05 Jun 2014 14:44:20 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::229 as permitted sender) client-ip=2a00:1450:400c:c03::229;
+Received: by mail-we0-f169.google.com with SMTP id q58so1689452wes.0
+        for <msysgit@googlegroups.com>; Thu, 05 Jun 2014 14:44:20 -0700 (PDT)
+X-Received: by 10.14.108.198 with SMTP id q46mr269087eeg.31.1402004660834;
+        Thu, 05 Jun 2014 14:44:20 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id i2sm17577447eem.11.2014.06.05.14.44.19
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 05 Jun 2014 14:44:19 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <CABPQNSYtxLyWkRGOyst7VOpw-_=rQvKF_VsbDB7Y0-K=d9rvkQ@mail.gmail.com>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::229
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250866>
 
-On 2014-06-05 21.26, David Turner wrote:
-> On Thu, 2014-06-05 at 14:30 +0200, Torsten B=C3=B6gershausen wrote:
->> On 2014-06-04 23.16, David Turner wrote:
+Am 05.06.2014 11:58, schrieb Erik Faye-Lund:
+> On Thu, Jun 5, 2014 at 11:40 AM, Karsten Blees <karsten.blees@gmail.com> =
+wrote:
+>> Am 05.06.2014 10:03, schrieb Stepan Kasal:
+>>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>> Date: Wed, 2 Jun 2010 00:41:33 +0200
 >>>
->>> Sure!  I actually went with > 120k to make measurement easier:
->>> https://github.com/dturner-tw/many-refs
->> Hm, I didn't get so man
+>>> If HOME is not set, use $HOMEDRIVE$HOMEPATH
+>>>
+>>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>> Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+>>> ---
+>>>
+>>> Hello Karsten,
+>>> thanks for your explanation.  There are more things to be done, but
+>>> I hope you can ack this patch as a step forward.
+>>>
 >>
->> git remote -v
->> origin  https://github.com/dturner-tw/many-refs=20
+>> No, not really. Its sure better than introducing a special get_home_dire=
+ctory(), but it still increases the diff between upstream and msysgit rathe=
+r than reducing it. The main critique points still remain:
 >>
->>  wc .git/packed-refs=20
->>      750    1130   38868 .git/packed-refs
->>
+>>  * $HOME is usually set up correctly before calling git, so this is esse=
+ntially dead code (just checked, portable git's git-bash.bat and git-cmd.ba=
+t also do this correctly)
 >=20
-> Oops.  It looks like I forgot to push all of the refs.  And when I tr=
-y,
-> it fails with "fatal: cannot exec 'send-pack': Argument list too long=
-"
+> What about when tools like TortoiseGit and Git Extensions call git?
+> We're not guaranteed that they did the $HOME-dance, are we?
+>=20
 
-I just noticed that I may be able to re-use code from t5551 to create a=
- repo
-with 50000 tags.
+GitExtensions does the same thing, see issue 497. I don't know about Tortoi=
+seGit, but I suspect the same.
 
+>>  * even if $HOME was empty, git should setenv("HOME") so that child proc=
+esses can benefit from it (similar to TMPDIR and TERM in current msysgit's =
+mingw_startup()). Not setting $HOME because it may hypothetically break chi=
+ld processes is a very weak argument, as we always did set $HOME in etc/pro=
+file (since the initial version back in 2007).
+>>
+>>  * no fallback to $USERPROFILE doesn't work with diconnected home share
+>>
+>> If you really have time to spare, I suggest you focus on getting the Uni=
+code patches upstream so that we can progress from there (e.g. move $HOME s=
+etup to mingw_startup() so that we can get rid of redundant logic in etc/pr=
+ofile, git-wrapper, git-bash.bat, git-cmd.bat etc.).
+>=20
+> Perhaps we can patch up the upstream to better match Git for Windows
+> without upstreaming the Unicode patches? Don't get me wrong; I think
+> upstreaming them is a good idea, but in case time is lacking...
+>=20
 
-And how about renaming check_refname_component_1() into
-check_refname_component_slow() ;-)
+The unicode patch series happens to be one of the first on top of upstream,=
+ and its also the longest (~40 patches) and I believe most intrusive one (~=
+1500 lines changed). So I think the most time-preserving option is to send =
+it upstream as unchanged as possible (probably with the bugfix-patches squa=
+shed). There's only ~50 lines changed outside of compat, so hopefully there=
+ won't be too many additional review-rounds...
+
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+
+---=20
+You received this message because you are subscribed to the Google Groups "=
+msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
