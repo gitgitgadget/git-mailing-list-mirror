@@ -1,71 +1,81 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: [msysGit] Re: [PATCH] Add a Windows-specific fallback to
-	getenv("HOME");
-Date: Thu, 5 Jun 2014 14:15:21 +0200
-Organization: <)><
-Message-ID: <20140605121521.GA28894@camelia.ucw.cz>
-References: <20140604114730.GB22250@camelia.ucw.cz> <CACsJy8BDk4gdRzjp_XpQXXMW1sEnS4DoedanFLONODuJXdeeRA@mail.gmail.com> <CABPQNSYXsu1muRTVUg6ybB9_MJP_wJi-4PmSec+8EwrvsCHMRw@mail.gmail.com> <alpine.DEB.1.00.1406041713500.14982@s15462909.onlinehome-server.info> <CABPQNSavYCrdUDyNru-HHMFkdgDRvaCp++f8ZgGKv07sS0eXGQ@mail.gmail.com> <alpine.DEB.1.00.1406041725460.14982@s15462909.onlinehome-server.info> <alpine.DEB.1.00.1406041741470.14982@s15462909.onlinehome-server.info> <538FCAF5.7030102@gmail.com> <alpine.DEB.1.00.1406051354000.14982@s15462909.onlinehome-server.info>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v6 2/2] refs.c: SSE4.2 optimizations for check_refname_component
+Date: Thu, 05 Jun 2014 14:30:17 +0200
+Message-ID: <539062D9.60000@web.de>
+References: <1401853091-15535-1-git-send-email-dturner@twitter.com>	 <1401853091-15535-2-git-send-email-dturner@twitter.com>	 <538ED2F1.9030003@web.de>	 <CACsJy8CK3LNaPVNv=EfFX06uOgpujAz364ZDFL3HBPicDNF57w@mail.gmail.com>	 <538F2C6B.2030004@web.de> <1401916560.18134.167.camel@stross>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-	msysGit <msysgit@googlegroups.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Jun 05 14:15:29 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXI=?= =?UTF-8?B?c2hhdXNlbg==?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jun 05 14:30:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsWZt-00047j-1L
-	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 14:15:29 +0200
+	id 1WsWoO-00063s-W6
+	for gcvg-git-2@plane.gmane.org; Thu, 05 Jun 2014 14:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbaFEMPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 08:15:24 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:48823 "EHLO
-	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751065AbaFEMPY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 08:15:24 -0400
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id B99331C009B;
-	Thu,  5 Jun 2014 14:15:22 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s55CFMRv028938;
-	Thu, 5 Jun 2014 14:15:22 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s55CFLMV028937;
-	Thu, 5 Jun 2014 14:15:21 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.1406051354000.14982@s15462909.onlinehome-server.info>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751384AbaFEMaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 08:30:25 -0400
+Received: from mout.web.de ([212.227.15.14]:53483 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751085AbaFEMaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 08:30:24 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0M89fV-1WWtHn47WL-00vflZ; Thu, 05 Jun 2014 14:30:19
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <1401916560.18134.167.camel@stross>
+X-Provags-ID: V03:K0:E/ubU5t/b7wQO3EJLFNnNsS0f7ZO5eBFYuE4pYdp7wSDALEGTjp
+ XsTZ5S+6MCN8bYM9QlShzlpqCOGA+tfklqWWBivOqzQ0XNRbeY6qAcjOpoUHSCgwweGfOr2
+ ZdiUtmcUqcZGkMk4CR19LaKg0hARbamyJet7tGXDCHP2GgnFZHU3gEmVDWlciRIqlmYD9xK
+ iVwBhTtqzOWot2YvqZYOA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250834>
 
-Hi,
+On 2014-06-04 23.16, David Turner wrote:
+> 
+> Sure!  I actually went with > 120k to make measurement easier:
+> https://github.com/dturner-tw/many-refs
+Hm, I didn't get so man
 
-On Thu, Jun 05, 2014 at 02:03:39PM +0200, Johannes Schindelin wrote:
-> Render me even more convinced that the API call is the cleanest way to go,
+git remote -v
+origin  https://github.com/dturner-tw/many-refs 
 
-But not me.  
+ wc .git/packed-refs 
+     750    1130   38868 .git/packed-refs
 
-In a paralel post, Duy Nguyen wrote:
-> Thank you for working on pushing msysgit patches upstream. I don't use
-> git on windows, but it's nice to see all windows-specific changes in
-> one code base so we can try to workaround it when new patches/features
-> are developed.
 
-... but we should not obscure that more than necessary.  If the API
-call is   getenv("HOME");  it helps.  And the hack with
-mingw_getenv() is not that bad, so we should be pragmatic and accept
-it.
 
-Stepan
+time git rev-parse HEAD
+7ac416f789fd4f1e398449113f6e1ec1d699141a
+
+real    0m0.008s
+user    0m0.002s
+sys     0m0.004s
+
+where only patch 1/2 doesn't seem to speed up things on my system:
+
+time ~/projects/git/tb.140604_DavidTurner_SSE4/git rev-parse HEAD
+7ac416f789fd4f1e398449113f6e1ec1d699141a
+
+real    0m0.010s
+user    0m0.002s
+sys     0m0.005s
+
+
+
+Intel Core Duo @ 2.4 Ghz, Mac OS
+
+(and I get similar values under an AMD Dual core running 2Ghz under Linux)
