@@ -1,102 +1,95 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH 0/5] Windows dirent patches
-Date: Fri, 06 Jun 2014 18:33:27 +0200
-Message-ID: <5391ED57.1000601@gmail.com>
-References: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] clone: add clone.recursesubmodules config option
+Date: Fri, 06 Jun 2014 09:35:55 -0700
+Message-ID: <xmqqmwdqq9lg.fsf@gitster.dls.corp.google.com>
+References: <xmqqoay9wvo6.fsf@gitster.dls.corp.google.com>
+	<1401874256-13332-1-git-send-email-judge.packham@gmail.com>
+	<xmqqvbsgvb9l.fsf@gitster.dls.corp.google.com>
+	<20140604194216.GA4636@sandbox-ub> <539020D1.1090601@gmail.com>
+	<20140606055430.GC77405@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCH3XYXLXQDBBVO2Y6OAKGQEKS5PIKQ@googlegroups.com Fri Jun 06 18:33:26 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBVO2Y6OAKGQEKS5PIKQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f190.google.com ([209.85.212.190])
+Content-Type: text/plain; charset=us-ascii
+Cc: Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org,
+	mara.kim@vanderbilt.edu, Jonathan Nieder <jrnieder@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Fri Jun 06 18:36:16 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBVO2Y6OAKGQEKS5PIKQ@googlegroups.com>)
-	id 1Wsx53-0004mj-PK
-	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 18:33:25 +0200
-Received: by mail-wi0-f190.google.com with SMTP id q5sf152297wiv.27
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 09:33:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=H22mCaVKvaDwhxjql3Xz5d9Cr/9269gKPL2BosGyRBQ=;
-        b=BKtU2CejICMncy5DpCm/DtEoHOOyWBniscUEoGdxweyAIqTTNCm/vwsUlFmc2pGopH
-         8gNBid4lC5+TWD5dBf4cwoSDXNm2M07mTv/tx0X+kuImVob/JUrVmooTn2q6vCQ4+Dyt
-         ynnBuXC+HMHGNWtMCApz+rYiBcKjtRYBGg22Oky/COg/K1FZu3K/sVjintK2o61/RNGY
-         oipO1BThWeUk6xl9iAvDo56Pp8ksHUtFa0NYc3LfIG3ZAV9zWWlCiedz3DiRJOZI2yt1
-         FII5jf9zGEGj3IXCSUmWyCIsSwi+YG0QsQiVpubki56pNjmtpCGp4UJbmNMJZZMResp0
-         7dMg==
-X-Received: by 10.152.115.146 with SMTP id jo18mr32387lab.16.1402072405538;
-        Fri, 06 Jun 2014 09:33:25 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.170.165 with SMTP id an5ls152794lac.19.gmail; Fri, 06 Jun
- 2014 09:33:24 -0700 (PDT)
-X-Received: by 10.112.155.67 with SMTP id vu3mr1678501lbb.9.1402072404505;
-        Fri, 06 Jun 2014 09:33:24 -0700 (PDT)
-Received: from mail-we0-x22b.google.com (mail-we0-x22b.google.com [2a00:1450:400c:c03::22b])
-        by gmr-mx.google.com with ESMTPS id eh2si1364880wib.2.2014.06.06.09.33.24
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 06 Jun 2014 09:33:24 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22b as permitted sender) client-ip=2a00:1450:400c:c03::22b;
-Received: by mail-we0-f171.google.com with SMTP id w62so3084192wes.2
-        for <msysgit@googlegroups.com>; Fri, 06 Jun 2014 09:33:24 -0700 (PDT)
-X-Received: by 10.14.10.5 with SMTP id 5mr460963eeu.78.1402072404373;
-        Fri, 06 Jun 2014 09:33:24 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id w9sm23846627eev.4.2014.06.06.09.33.23
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 06 Jun 2014 09:33:23 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22b
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250946>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wsx7m-0006Le-1x
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 18:36:14 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751915AbaFFQgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2014 12:36:09 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56825 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751866AbaFFQgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2014 12:36:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 34A891AF13;
+	Fri,  6 Jun 2014 12:36:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uEjMQYIrF5PiQIY4qqXs1xb9hUA=; b=KQcT5x
+	ICuV6Ls9E0xstLxZKzazX8EJr14Ytq/lzuCA2dUH0afCA6e1RZC7x2gRH6DxIvux
+	uhnMx1246IeMB1FPF54o/1HwAGqJMI+HUxg6nA4YxJo14OS87G38e3vlucGojYjr
+	N4eYbAFt7augq0MmLUyDCf2cl+3NJZqVOHaWo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CXI1y4xjzL/KDFPLFZFgO4Z4DfPjlnZf
+	pRg7swRDr7eiggeQBQDapUBKhTEd1T2xBT/vU76wvow9doPuf7uvqQZOrTsp5QkD
+	XHnljt1F0TIj+/7OQfWzRocU98s1PiDYMhKltuzXdUY8MyVIzffG7WnqFGpoczWu
+	rhQPScUrcds=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1B5641AF12;
+	Fri,  6 Jun 2014 12:36:02 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A61341AF0E;
+	Fri,  6 Jun 2014 12:35:57 -0400 (EDT)
+In-Reply-To: <20140606055430.GC77405@book.hvoigt.net> (Heiko Voigt's message
+	of "Fri, 6 Jun 2014 07:54:30 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A302EA2C-ED98-11E3-AAC0-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250947>
 
-Am 06.06.2014 15:43, schrieb Stepan Kasal:
-> Hello,
-> 
-> This is a series of dirent modifications, 4 tiny ones and one bigger.
-> As the date indicates, these are battle tested in mysgit for several years.
-> 
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-The dates are actually missing from the patches, otherwise full ack from me. Thanks!
+> On Thu, Jun 05, 2014 at 07:48:33PM +1200, Chris Packham wrote:
+> ...
+>> I'm a little confused at how autoclone and autoinit differ. Aren't they
+>> the same? i.e. when this module appears grab it by default. I see
+>> autoupdate as a little different meaning update it if it's been
+>> initialised. Also does autoinit imply autoupdate?
+>
+> autoclone is about cloning the history of submodules. So e.g. when a
+> submodule first appears in the superprojects history whether it should
+> automatically be cloned to .git/modules.
+>
+> autoinit is all about the checkout phase. When a commit with a new
+> submodule is checked out: Should that new submodule be automatically
+> initialised?
+>
+> As far as autoupdate is concerned: Maybe autoinit can imply that it is
+> enabled, yes. But I guess we still need autoupdate for the case of big
+> submodules that cause to much performance trouble if updated by every
+> checkout.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+> So its actually three values: autoclone, autoinit, autoupdate. Damn,
+> these configurations become more complicated everytime.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+I suspect that as an end-user you do not need to set all three in
+most cases.  Just like an unspecified autoupdate can default to
+whatever autoinit setting for the submodule is, because it is less
+likely that a user wants to have a submodule checked out *and* leave
+it stale, an unspecified autoinit can default to the autoclone
+setting, because it is less likely that a user who does not want to
+have a checkout would want to spend network bandwidth to clone it.
