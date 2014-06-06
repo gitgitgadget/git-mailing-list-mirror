@@ -1,109 +1,102 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 4/4] contrib: add convert-grafts-to-replace-refs.sh
-Date: Fri, 6 Jun 2014 17:47:39 +0200
-Message-ID: <CAP8UFD2kSP-ONaANhXhmr5-USC4af9RHEkeTOAhH6Jm-1TNdiA@mail.gmail.com>
-References: <20140604194118.23903.3019.chriscool@tuxfamily.org>
-	<20140604194353.23903.58934.chriscool@tuxfamily.org>
-	<xmqqa99rrpgx.fsf@gitster.dls.corp.google.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH 0/5] Windows dirent patches
+Date: Fri, 06 Jun 2014 18:33:27 +0200
+Message-ID: <5391ED57.1000601@gmail.com>
+References: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 17:47:47 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysGit <msysgit@googlegroups.com>
+To: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>
+X-From: msysgit+bncBCH3XYXLXQDBBVO2Y6OAKGQEKS5PIKQ@googlegroups.com Fri Jun 06 18:33:26 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBVO2Y6OAKGQEKS5PIKQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f190.google.com ([209.85.212.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WswMq-0004jG-9x
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 17:47:44 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751883AbaFFPrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2014 11:47:40 -0400
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:48151 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460AbaFFPrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2014 11:47:39 -0400
-Received: by mail-vc0-f169.google.com with SMTP id la4so3291615vcb.0
-        for <git@vger.kernel.org>; Fri, 06 Jun 2014 08:47:39 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBVO2Y6OAKGQEKS5PIKQ@googlegroups.com>)
+	id 1Wsx53-0004mj-PK
+	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 18:33:25 +0200
+Received: by mail-wi0-f190.google.com with SMTP id q5sf152297wiv.27
+        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 09:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=8ZOZDz+251txAQUGUG26Tm3OwDKNB7xJPDcQVLQ/CNM=;
-        b=akNEBGvzd97tU4XeDZbpgNnShuXrR2DHWDEY2pmBMDzN4IkJOiNGReS5k2Ovj9PmLN
-         KIDKQ7epvFZweCCuLRVraagsnwLFq0eCT0Q6aTZpC1MfJdG2T+5wxU3XPtpKIPAbPz7C
-         F50lOGIYcRxvP2hAN1XmE47Tg7OGw1ElD6R0DpEOBZGeLOC2r9wQj1mM9fpkUsgGm86t
-         bw+v76TmhwTjWDkU58L/gOVfMMCT9CxSjo9yk7g3QXiYPnu+cfmGOpphud/pKMi39/Fo
-         GfmKymY3A8N/ZPQhV+em943YCV24a6SlHUfvZjrzCel8MrhgUEAbXwG9JNCVCEljt7eR
-         41FQ==
-X-Received: by 10.220.92.135 with SMTP id r7mr6383572vcm.11.1402069659205;
- Fri, 06 Jun 2014 08:47:39 -0700 (PDT)
-Received: by 10.58.134.107 with HTTP; Fri, 6 Jun 2014 08:47:39 -0700 (PDT)
-In-Reply-To: <xmqqa99rrpgx.fsf@gitster.dls.corp.google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250944>
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=H22mCaVKvaDwhxjql3Xz5d9Cr/9269gKPL2BosGyRBQ=;
+        b=BKtU2CejICMncy5DpCm/DtEoHOOyWBniscUEoGdxweyAIqTTNCm/vwsUlFmc2pGopH
+         8gNBid4lC5+TWD5dBf4cwoSDXNm2M07mTv/tx0X+kuImVob/JUrVmooTn2q6vCQ4+Dyt
+         ynnBuXC+HMHGNWtMCApz+rYiBcKjtRYBGg22Oky/COg/K1FZu3K/sVjintK2o61/RNGY
+         oipO1BThWeUk6xl9iAvDo56Pp8ksHUtFa0NYc3LfIG3ZAV9zWWlCiedz3DiRJOZI2yt1
+         FII5jf9zGEGj3IXCSUmWyCIsSwi+YG0QsQiVpubki56pNjmtpCGp4UJbmNMJZZMResp0
+         7dMg==
+X-Received: by 10.152.115.146 with SMTP id jo18mr32387lab.16.1402072405538;
+        Fri, 06 Jun 2014 09:33:25 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.170.165 with SMTP id an5ls152794lac.19.gmail; Fri, 06 Jun
+ 2014 09:33:24 -0700 (PDT)
+X-Received: by 10.112.155.67 with SMTP id vu3mr1678501lbb.9.1402072404505;
+        Fri, 06 Jun 2014 09:33:24 -0700 (PDT)
+Received: from mail-we0-x22b.google.com (mail-we0-x22b.google.com [2a00:1450:400c:c03::22b])
+        by gmr-mx.google.com with ESMTPS id eh2si1364880wib.2.2014.06.06.09.33.24
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 06 Jun 2014 09:33:24 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22b as permitted sender) client-ip=2a00:1450:400c:c03::22b;
+Received: by mail-we0-f171.google.com with SMTP id w62so3084192wes.2
+        for <msysgit@googlegroups.com>; Fri, 06 Jun 2014 09:33:24 -0700 (PDT)
+X-Received: by 10.14.10.5 with SMTP id 5mr460963eeu.78.1402072404373;
+        Fri, 06 Jun 2014 09:33:24 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id w9sm23846627eev.4.2014.06.06.09.33.23
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 06 Jun 2014 09:33:23 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22b
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250946>
 
-On Thu, Jun 5, 2014 at 11:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <chriscool@tuxfamily.org> writes:
->
->> diff --git a/contrib/convert-grafts-to-replace-refs.sh b/contrib/convert-grafts-to-replace-refs.sh
->> new file mode 100755
->> index 0000000..8472879
->> --- /dev/null
->> +++ b/contrib/convert-grafts-to-replace-refs.sh
->> @@ -0,0 +1,29 @@
->> +#!/bin/sh
->> +
->> +# You should execute this script in the repository where you
->> +# want to convert grafts to replace refs.
->> +
->> +die () {
->> +     echo >&2 "$@"
->> +     exit 1
->> +}
->
-> Don't we install git-sh-setup in GIT_EXEC_PATH, in order to allow
-> these third-party scripts to begin with:
->
->         . $(git --exec-path)/git-sh-setup
->
-> just like our own scripted Porcelains?
+Am 06.06.2014 15:43, schrieb Stepan Kasal:
+> Hello,
+> 
+> This is a series of dirent modifications, 4 tiny ones and one bigger.
+> As the date indicates, these are battle tested in mysgit for several years.
+> 
 
-Ok, I will use that.
+The dates are actually missing from the patches, otherwise full ack from me. Thanks!
 
->> +GRAFTS_FILE="${GIT_DIR:-.git}/info/grafts"
->> +
->> +test -f "$GRAFTS_FILE" || die "Could not find graft file: '$GRAFTS_FILE'"
->> +
->> +grep '^[^# ]' "$GRAFTS_FILE" | while read definition
->> +do
->
-> Format the above like so:
->
->     grep '^[^# ]' "$GRAFTS_FILE" |
->     while read definition
->     do
->
-> which is easier to see what that "do" is doing.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Ok.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
->> +     test -n "$definition" && {
->> +             echo "Converting: $definition"
->> +             git replace --graft $definition ||
->> +                     die "Conversion failed for: $definition"
->> +     }
->
-> Hmph, why not if/then/fi?
-
-Ok, I will use if/then/fi.
-
-Thanks,
-Christian.
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
