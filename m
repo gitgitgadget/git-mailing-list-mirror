@@ -1,121 +1,123 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH 5/5] Win32: Thread-safe windows console output
-Date: Sat, 07 Jun 2014 00:03:52 +0200
-Message-ID: <53923AC8.2030309@gmail.com>
-References: <1402062173-9602-1-git-send-email-kasal@ucw.cz> <1402062173-9602-6-git-send-email-kasal@ucw.cz> <alpine.DEB.2.00.1406062224530.17391@ds9.cixit.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Cc: GIT Mailing-list <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>,
- Karsten Blees <blees@dcon.de>
-To: Peter Krefting <peter@softwolves.pp.se>, Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBCH3XYXLXQDBBRPVZCOAKGQEFKWRZKI@googlegroups.com Sat Jun 07 00:03:55 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBRPVZCOAKGQEFKWRZKI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f184.google.com ([74.125.82.184])
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v14 02/40] refs.c: ref_transaction_commit should not free the transaction
+Date: Fri,  6 Jun 2014 15:28:40 -0700
+Message-ID: <1402093758-3162-3-git-send-email-sahlberg@google.com>
+References: <1402093758-3162-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jun 07 00:29:28 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBRPVZCOAKGQEFKWRZKI@googlegroups.com>)
-	id 1Wt2Eo-0006C4-9u
-	for gcvm-msysgit@m.gmane.org; Sat, 07 Jun 2014 00:03:50 +0200
-Received: by mail-we0-f184.google.com with SMTP id u56sf208045wes.21
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 15:03:50 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wt2dc-0002CD-Bl
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Jun 2014 00:29:28 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752563AbaFFW3X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2014 18:29:23 -0400
+Received: from mail-ie0-f202.google.com ([209.85.223.202]:41283 "EHLO
+	mail-ie0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752427AbaFFW3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2014 18:29:22 -0400
+Received: by mail-ie0-f202.google.com with SMTP id rd18so740482iec.5
+        for <git@vger.kernel.org>; Fri, 06 Jun 2014 15:29:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=TKSrEzuI1RchQkdsDGLzU19zR6A1d+HYcswYN99OtWM=;
-        b=hTI0rd+Wh6zmwZZhoNazAEdwJih9AUXg0jl1r/idk6DUDf6CI9A6m+alEpmCj+Lkjk
-         qF4shMrT/+HkTEcqwLvfW90ZpVmYanheI054VbLH5LKY70+q8gV7BanRCOnfrWlAuN9J
-         GBWTDA2dTobgiN7ANJ6RT60lnnvNvackJU+vJBSSdodaUsGQOAON0AZDHMTxz9iJ+Dzq
-         9/SLlKR0Mm147KSve0OCDo/dBKiVUDW3RldLn3IlmFgrNkcreOO+MXT05/REjng3dHyf
-         CM0z8e4Bp69irG3ckoEw4NRpO+5vtM65fe6luIwJN0/EFoxTa4keBfH8oolstm2kWLJZ
-         S1/A==
-X-Received: by 10.152.87.2 with SMTP id t2mr82laz.40.1402092229944;
-        Fri, 06 Jun 2014 15:03:49 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.44.130 with SMTP id e2ls154625lam.16.gmail; Fri, 06 Jun
- 2014 15:03:48 -0700 (PDT)
-X-Received: by 10.112.204.201 with SMTP id la9mr2226280lbc.3.1402092228899;
-        Fri, 06 Jun 2014 15:03:48 -0700 (PDT)
-Received: from mail-we0-x235.google.com (mail-we0-x235.google.com [2a00:1450:400c:c03::235])
-        by gmr-mx.google.com with ESMTPS id xk11si1441146wib.0.2014.06.06.15.03.48
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 06 Jun 2014 15:03:48 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::235 as permitted sender) client-ip=2a00:1450:400c:c03::235;
-Received: by mail-we0-f181.google.com with SMTP id w61so3412342wes.40
-        for <msysgit@googlegroups.com>; Fri, 06 Jun 2014 15:03:48 -0700 (PDT)
-X-Received: by 10.14.113.136 with SMTP id a8mr1820324eeh.0.1402092228792;
-        Fri, 06 Jun 2014 15:03:48 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id w6sm25647496eej.7.2014.06.06.15.03.47
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=RnY1nv5KfaMyS7S0fa+Jw4P5v3sndMbqAWOfPssOEAw=;
+        b=bZl1NtXIcSx+ml20pmcgQd2+bMr3wBFHJiQFF/Ceefe8GNb8OlrdhcvgNi+lNxZJCL
+         uDTDdauTg73fwLj3gOLfycWcioa3oPMlJsBg4DFrpEsBlcpE7KPkryYjBn+ac3OKGqA0
+         oPHuuzSi+znpVBU0HDs2gUGlex2s/e1L6XpjfXfNtj6VJ1tdnUtgjgdM3nUwi+KsnGZ5
+         MTZyoXDb+e/msBaztHS6XsmpSpjwJjflx8WhjyFY7SvKAQUrf3TfQH6aMJb0HJaBfufb
+         aRQQVZBFLiie5PXAKn1FL2DvDBKAOXVKCa2lyeqV4iRH4wc0BvaIjQpkkdfxfiCU4gfF
+         bGAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=RnY1nv5KfaMyS7S0fa+Jw4P5v3sndMbqAWOfPssOEAw=;
+        b=aNeni1onqQ0AqY1gHUV7MSPYLtJa31x/yKga2mDgPCp9xXCutY+xAzDO9Kg6Slt9Iz
+         tp1Q7ReiTmdIxXWH65QAU1G2G0A97lXQe0SNzYwALKa/4dt7dEy3aEKqzERK4MXRocwj
+         1Nz88KIBLfK/8W/EZuXLpHCVDxR0SvPGx76Rl0nV1Eb9G3m4HC8n47GZqqw0s1JxcYv2
+         wrKirdNaTESkcqNV4BUdSieUaR5QlfncIK7i94E/IykorVqhvA4glunCD8+MfyodalAR
+         Ch/iuOCl9VBpYms0uXq/j2LameV+d+AJJWxtY+YvbtAS39czJmkd46wXi1z/OFyTKq9s
+         lLjg==
+X-Gm-Message-State: ALoCoQkD2Gb5Aq9MdVD+EgR+PeSDbdx+5oAkJBRA0WttfIunaiKKQw1cp9wxgnq5PHXijxS9Qszm
+X-Received: by 10.43.65.4 with SMTP id xk4mr4517756icb.12.1402093761625;
+        Fri, 06 Jun 2014 15:29:21 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id ds6si750426vdb.0.2014.06.06.15.29.21
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 06 Jun 2014 15:03:47 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <alpine.DEB.2.00.1406062224530.17391@ds9.cixit.se>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::235
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250972>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 06 Jun 2014 15:29:21 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 5FD5E31C61F;
+	Fri,  6 Jun 2014 15:29:21 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id 0A8A7E047D; Fri,  6 Jun 2014 15:29:20 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.582.ge25c160
+In-Reply-To: <1402093758-3162-1-git-send-email-sahlberg@google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250973>
 
-Am 06.06.2014 23:29, schrieb Peter Krefting:
-> Stepan Kasal:
->=20
->> +    /* only called from console_thread, so a static buffer will do */
->> +    static wchar_t wbuf[2 * BUFFER_SIZE + 1];
->=20
-> Wouldn't BUFFER_SIZE + 1 (or even BUFFER_SIZE) do here? If you convert fr=
-om up to BUFFER_SIZE octets of UTF-8 input, you should never get back more =
-than BUFFER_SIZE code units of UTF-16 output. Worst case would be ASCII, wh=
-ich is one UTF-16 code unit per UTF-8 octet, everything else is less (non-B=
-MP is four UTF-8 octets mapping to two UTF-16 code units).
->=20
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ builtin/update-ref.c | 1 +
+ refs.c               | 1 -
+ refs.h               | 5 ++---
+ 3 files changed, 3 insertions(+), 4 deletions(-)
 
-You're right for MultiByteToWideChar. However, the next patch series will i=
-ntroduce another conversion function that converts invalid UTF-8 to hex cod=
-e, i.e. two wide chars per invalid UTF-8 char, +1 for L'\0' (see [1] mingw.=
-h:365ff for space requirement rationale). And yet another patch will replac=
-e this patch's MultiByteToWideChar for consistentcy [2].
-
-[1] https://github.com/msysgit/git/commit/018c94a8
-[2] https://github.com/msysgit/git/commit/45e28a4d
-
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 405267f..1fd7a89 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -369,6 +369,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 		update_refs_stdin();
+ 		ret = ref_transaction_commit(transaction, msg,
+ 					     UPDATE_REFS_DIE_ON_ERR);
++		ref_transaction_free(transaction);
+ 		return ret;
+ 	}
+ 
+diff --git a/refs.c b/refs.c
+index 48573e3..33541f4 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3483,7 +3483,6 @@ cleanup:
+ 		if (updates[i]->lock)
+ 			unlock_ref(updates[i]->lock);
+ 	free(delnames);
+-	ref_transaction_free(transaction);
+ 	return ret;
+ }
+ 
+diff --git a/refs.h b/refs.h
+index a07a5d0..306d833 100644
+--- a/refs.h
++++ b/refs.h
+@@ -216,8 +216,7 @@ enum action_on_err {
+ 
+ /*
+  * Begin a reference transaction.  The reference transaction must
+- * eventually be commited using ref_transaction_commit() or freed by
+- * calling ref_transaction_free().
++ * be freed by calling ref_transaction_free().
+  */
+ struct ref_transaction *ref_transaction_begin(void);
+ 
+@@ -265,7 +264,7 @@ void ref_transaction_delete(struct ref_transaction *transaction,
+ /*
+  * Commit all of the changes that have been queued in transaction, as
+  * atomically as possible.  Return a nonzero value if there is a
+- * problem.  The ref_transaction is freed by this function.
++ * problem.
+  */
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   const char *msg, enum action_on_err onerr);
+-- 
+2.0.0.582.ge25c160
