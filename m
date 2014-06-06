@@ -1,7 +1,7 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 1/5] Win32 dirent: remove unused dirent.d_ino member
-Date: Fri,  6 Jun 2014 15:43:17 +0200
-Message-ID: <1402062201-9709-2-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 2/5] Win32 dirent: remove unused dirent.d_reclen member
+Date: Fri,  6 Jun 2014 15:43:18 +0200
+Message-ID: <1402062201-9709-3-git-send-email-kasal@ucw.cz>
 References: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -10,15 +10,15 @@ Cc: msysGit <msysgit@googlegroups.com>,
 	Erik Faye-Lund <kusmabite@gmail.com>,
 	Stepan Kasal <kasal@ucw.cz>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com Fri Jun 06 15:43:37 2014
+X-From: msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com Fri Jun 06 15:43:38 2014
 Return-path: <msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f57.google.com ([209.85.215.57])
+Received: from mail-we0-f189.google.com ([74.125.82.189])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com>)
-	id 1WsuQc-0000p4-EA
+	id 1WsuQc-0000pF-LA
 	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 15:43:30 +0200
-Received: by mail-la0-f57.google.com with SMTP id hr17sf317434lab.22
+Received: by mail-we0-f189.google.com with SMTP id w62sf325695wes.16
         for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 06:43:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -26,27 +26,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=wXS4ax+VV/tNciJ7yzbmIAyZe5PAmcfKaVAsolJIUlM=;
-        b=JYMuEOq5bb1HdNPu4Um5q9tZz/s4AmmWfbSKn9ASf6jxdSvLuby5d8MGZkxFH0d7eX
-         1yfhQnxyyK8fbCm+sLcxk3hGHCILi4KGwEKVZy7siUR5EF6u0PbHW7FZY1adDlYyZEfi
-         i4ldwZ4hgsHod2yX9trnLAZy4JRs/erLY2s+tC3xW8c2jXJmvk3TpIlpB59u/yqLGz7R
-         dnslPQuqTiLB0QLMiQ9AQlE+tUl7ocz0JAULEY/6+/sd6f7LTgKXAVsNMRNUaXHpyVAL
-         WNk1pwOsT7tBAiom5LVX/tdoXtG4nylSsuj4Nv7OwF5fK4RaBHf01SqHM+3VPTjOIMNz
-         AjQA==
-X-Received: by 10.152.9.194 with SMTP id c2mr14649lab.20.1402062210266;
+        bh=Nl3ho1QFIDVfHhe9e2OLeB7/vqV01sPbTR9l5RZf62c=;
+        b=E7v6rEzqkwPoCb3BFPJBoNDI4QwYSCrbXp5dUj8znIhrHmaqxeMfcQgUbumVjEqoFt
+         2D9Yp+vBgTwuuG6KQdEUtyLgMsV8UKqZgefN7OC3G4iXmG60fvN49Nt+vU9ik2UbArmh
+         drtwoN4O53x9OMOrKbu9bRaa3dYHSwBaH/8ZtT+Pyx2qKzaHAWw93o+A7cdG4tpnF8N8
+         PJG/ZS1wPZE9UlfnQicj2hbNNSeDGvF0oNrWOP4bhPdVIKWV0squrs+o/Jsx6HycUA2s
+         Q6l/w/GDEXud4ZXs6CQMBcRA/n+qE8ZmTchFhHKJs8FHkBtw1Z3l3ITFiFL/QlkDoGat
+         Nspg==
+X-Received: by 10.152.2.228 with SMTP id 4mr4374lax.37.1402062210390;
         Fri, 06 Jun 2014 06:43:30 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.6.134 with SMTP id b6ls122273laa.44.gmail; Fri, 06 Jun
+Received: by 10.152.198.236 with SMTP id jf12ls132201lac.60.gmail; Fri, 06 Jun
  2014 06:43:29 -0700 (PDT)
-X-Received: by 10.152.115.195 with SMTP id jq3mr1461203lab.4.1402062209332;
+X-Received: by 10.112.140.170 with SMTP id rh10mr1340221lbb.7.1402062209386;
         Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id x7si1305909wiw.1.2014.06.06.06.43.29
+        by gmr-mx.google.com with ESMTP id ck3si598729wib.0.2014.06.06.06.43.29
         for <msysgit@googlegroups.com>;
         Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 1FBE01C00A0; Fri,  6 Jun 2014 15:43:29 +0200 (CEST)
+	id 234571C00A5; Fri,  6 Jun 2014 15:43:29 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
@@ -62,54 +62,37 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250910>
 
 From: Karsten Blees <blees@dcon.de>
 
-There are no proper inodes on Windows, so remove dirent.d_ino and #define
-NO_D_INO_IN_DIRENT in the Makefile (this skips e.g. an ineffective qsort in
-fsck.c).
+Remove the union around dirent.d_type and the unused dirent.d_reclen member
+(which was necessary for compatibility with the MinGW dirent runtime, which
+is no longer used).
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 Signed-off-by: Stepan Kasal <kasal@ucw.cz>
 ---
- compat/win32/dirent.h | 1 -
- config.mak.uname      | 2 ++
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ compat/win32/dirent.h | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/compat/win32/dirent.h b/compat/win32/dirent.h
-index 927a25c..b38973b 100644
+index b38973b..7f4e6c7 100644
 --- a/compat/win32/dirent.h
 +++ b/compat/win32/dirent.h
-@@ -9,7 +9,6 @@ typedef struct DIR DIR;
- #define DT_LNK     3
+@@ -10,10 +10,7 @@ typedef struct DIR DIR;
  
  struct dirent {
--	long d_ino;                      /* Always zero. */
  	char d_name[FILENAME_MAX];       /* File name. */
- 	union {
- 		unsigned short d_reclen; /* Always zero. */
-diff --git a/config.mak.uname b/config.mak.uname
-index 1ae675b..8131c81 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -354,6 +354,7 @@ ifeq ($(uname_S),Windows)
- 	NO_POSIX_GOODIES = UnfortunatelyYes
- 	NATIVE_CRLF = YesPlease
- 	DEFAULT_HELP_FORMAT = html
-+	NO_D_INO_IN_DIRENT = YesPlease
+-	union {
+-		unsigned short d_reclen; /* Always zero. */
+-		unsigned char  d_type;   /* Reimplementation adds this */
+-	};
++	unsigned char d_type;      /* file type to prevent lstat after readdir */
+ };
  
- 	CC = compat/vcbuild/scripts/clink.pl
- 	AR = compat/vcbuild/scripts/lib.pl
-@@ -503,6 +504,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_INET_NTOP = YesPlease
- 	NO_POSIX_GOODIES = UnfortunatelyYes
- 	DEFAULT_HELP_FORMAT = html
-+	NO_D_INO_IN_DIRENT = YesPlease
- 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -D_USE_32BIT_TIME_T -DNOGDI -Icompat -Icompat/win32
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+ DIR *opendir(const char *dirname);
 -- 
 2.0.0.9635.g0be03cb
 
