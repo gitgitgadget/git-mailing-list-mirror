@@ -1,7 +1,7 @@
 From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH 11/20] t/lib-httpd.sh: avoid "test <cond> -a/-o <cond>"
-Date: Fri,  6 Jun 2014 07:55:54 -0700
-Message-ID: <1402066563-28519-12-git-send-email-gitter.spiros@gmail.com>
+Subject: [PATCH 12/20] t/t0025-crlf-auto.sh: avoid "test <cond> -a/-o <cond>"
+Date: Fri,  6 Jun 2014 07:55:55 -0700
+Message-ID: <1402066563-28519-13-git-send-email-gitter.spiros@gmail.com>
 References: <1402066563-28519-1-git-send-email-gitter.spiros@gmail.com>
 Cc: jrnieder@gmail.com, Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
@@ -11,41 +11,41 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsvZA-0001nQ-OJ
+	id 1WsvZB-0001nQ-9l
 	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 16:56:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752151AbaFFO4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752197AbaFFO4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2014 10:56:22 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:53459 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751870AbaFFO4T (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 6 Jun 2014 10:56:19 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:44764 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751952AbaFFO4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2014 10:56:18 -0400
-Received: by mail-pb0-f42.google.com with SMTP id md12so2584226pbc.1
-        for <git@vger.kernel.org>; Fri, 06 Jun 2014 07:56:18 -0700 (PDT)
+Received: by mail-pb0-f43.google.com with SMTP id up15so2565668pbc.16
+        for <git@vger.kernel.org>; Fri, 06 Jun 2014 07:56:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GM162k/PVfhPXg/Q3tJ3jSrKHfJTgIojO/17jDR+m0Y=;
-        b=QhgRZ9X3CYClyT0193hIXtlPqJA8aoGNBN5Iba1u5WBe2JgfF5CpTdgo4okAydx8uc
-         dxwyggIsImUaONVOiYHwZoANwQiBg1CO9noVYgV7s7vcZpi0By8pNuUg/xAQz7crmkTu
-         p8pYoF9EdszjbwePknF1BFp8W7jEel8CT4IOX59Jv/SqTYCV3O9m8JvJBzkUGr+d3TQM
-         r52AgpRNrNms/cIZIZU4KpMuY6IdH+K3Pt1ePJpTn4SmrZnDs9yxsiwWhAkoD2u4GYWb
-         ZSXn53FnZyZaVVQlysSMda0K2erXLkZU+M3z7ZP6igVyglG7vNzE2x51eYoi6qbm6fDn
-         IqIA==
-X-Received: by 10.68.194.134 with SMTP id hw6mr1692459pbc.49.1402066578096;
-        Fri, 06 Jun 2014 07:56:18 -0700 (PDT)
+        bh=jV/pq3DuqVMi76hQZEZTOJAACwCaxdaNOwIQdKO2HoM=;
+        b=lCsILUYQNqv5HevGymN9ED4SOoqrFGzhEu0/m9/eb8tHiccka1jr0kxfB+ZulYYkDR
+         CLIIEtQf/Azh61E7CGKOLQ8Pf5bkWsnpbawTvDlRdba2vAVFXe1kzk5zraFmqr1A1z6R
+         akxdb0I0EykXwj3gYd84aytbaJA/YmHd5ibU3SJaqWkczvfFaxmVP0/n74MVc/BP8Ig2
+         k3QaEudkck54TmMiZU3L9/UDLQ9YGX85AxHF3xKVKlT6Um7urRG1Orwl08LI6yQs+zW4
+         FYOHF/2jq4ZSkw2uuQ7sJt+d+XkxWRpFmhhnjPSsya0hoeUA4PHf3LYQpCN6iYHnH7Bo
+         ewsg==
+X-Received: by 10.68.135.100 with SMTP id pr4mr1658419pbb.46.1402066579004;
+        Fri, 06 Jun 2014 07:56:19 -0700 (PDT)
 Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id pu5sm36850769pbb.4.2014.06.06.07.56.17
+        by mx.google.com with ESMTPSA id pu5sm36850769pbb.4.2014.06.06.07.56.18
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 06 Jun 2014 07:56:17 -0700 (PDT)
+        Fri, 06 Jun 2014 07:56:18 -0700 (PDT)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1402066563-28519-1-git-send-email-gitter.spiros@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250924>
 
 The construct is error-prone; "test" being built-in in most modern
 shells, the reason to avoid "test <cond> && test <cond>" spawning
@@ -54,21 +54,39 @@ longer exists.
 
 Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- t/lib-httpd.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t0025-crlf-auto.sh |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 252cbf1..38a47fe 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -132,7 +132,7 @@ prepare_httpd() {
- 	HTTPD_URL_USER=$HTTPD_PROTO://user%40host@$HTTPD_DEST
- 	HTTPD_URL_USER_PASS=$HTTPD_PROTO://user%40host:pass%40host@$HTTPD_DEST
+diff --git a/t/t0025-crlf-auto.sh b/t/t0025-crlf-auto.sh
+index b0e5694..28102de 100755
+--- a/t/t0025-crlf-auto.sh
++++ b/t/t0025-crlf-auto.sh
+@@ -36,7 +36,7 @@ test_expect_success 'default settings cause no changes' '
+ 	onediff=$(git diff one) &&
+ 	twodiff=$(git diff two) &&
+ 	threediff=$(git diff three) &&
+-	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
++	test -z "$onediff" && test -z "$twodiff" && test -z "$threediff"
+ '
  
--	if test -n "$LIB_HTTPD_DAV" -o -n "$LIB_HTTPD_SVN"
-+	if test -n "$LIB_HTTPD_DAV" || test -n "$LIB_HTTPD_SVN"
- 	then
- 		HTTPD_PARA="$HTTPD_PARA -DDAV"
+ test_expect_success 'crlf=true causes a CRLF file to be normalized' '
+@@ -111,7 +111,7 @@ test_expect_success 'autocrlf=true does not normalize CRLF files' '
+ 	onediff=$(git diff one) &&
+ 	twodiff=$(git diff two) &&
+ 	threediff=$(git diff three) &&
+-	test -z "$onediff" -a -z "$twodiff" -a -z "$threediff"
++	test -z "$onediff" && test -z "$twodiff" && test -z "$threediff"
+ '
  
+ test_expect_success 'text=auto, autocrlf=true _does_ normalize CRLF files' '
+@@ -126,7 +126,7 @@ test_expect_success 'text=auto, autocrlf=true _does_ normalize CRLF files' '
+ 	onediff=$(git diff one) &&
+ 	twodiff=$(git diff two) &&
+ 	threediff=$(git diff three) &&
+-	test -z "$onediff" -a -n "$twodiff" -a -z "$threediff"
++	test -z "$onediff" && test -n "$twodiff" && test -z "$threediff"
+ '
+ 
+ test_expect_success 'text=auto, autocrlf=true does not normalize binary files' '
 -- 
 1.7.10.4
