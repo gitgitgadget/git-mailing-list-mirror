@@ -1,55 +1,64 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 4/5] Win32 dirent: clarify #include directives
-Date: Fri,  6 Jun 2014 22:15:43 +0200
-Message-ID: <1402085744-15829-5-git-send-email-kasal@ucw.cz>
-References: <5391ED57.1000601@gmail.com>
- <1402085744-15829-1-git-send-email-kasal@ucw.cz>
+Subject: Re: Re: [PATCH 0/5] First part of Unicode console support
+ for msysgit
+Date: Fri, 6 Jun 2014 22:48:30 +0200
+Organization: <)><
+Message-ID: <20140606204830.GA4671@camelia.ucw.cz>
+References: <1402062173-9602-1-git-send-email-kasal@ucw.cz> <5391FE01.9040501@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysGit <msysgit@googlegroups.com>,
-	Karsten Blees <blees@dcon.de>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Stepan Kasal <kasal@ucw.cz>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRB6OCZCOAKGQEVG45WZQ@googlegroups.com Fri Jun 06 22:16:02 2014
-Return-path: <msysgit+bncBCU63DXMWULRB6OCZCOAKGQEVG45WZQ@googlegroups.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCU63DXMWULRBH6SZCOAKGQEKDJROBQ@googlegroups.com Fri Jun 06 22:48:34 2014
+Return-path: <msysgit+bncBCU63DXMWULRBH6SZCOAKGQEKDJROBQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f57.google.com ([209.85.215.57])
+Received: from mail-wi0-f187.google.com ([209.85.212.187])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRB6OCZCOAKGQEVG45WZQ@googlegroups.com>)
-	id 1Wt0YM-0005KG-1W
-	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 22:15:54 +0200
-Received: by mail-la0-f57.google.com with SMTP id hr17sf408836lab.2
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 13:15:53 -0700 (PDT)
+	(envelope-from <msysgit+bncBCU63DXMWULRBH6SZCOAKGQEKDJROBQ@googlegroups.com>)
+	id 1Wt13w-0005Lp-DP
+	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 22:48:32 +0200
+Received: by mail-wi0-f187.google.com with SMTP id f8sf198151wiw.14
+        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 13:48:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
-         :references:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=hrm4JGX65f71vbmkc3iRbG684lo4OwRFvfT/A3V7OhE=;
-        b=aDJZp6wdEfQuXwu8aEMCOqymDqwEfeuK01IwVpGMHpf55SMJuB6KcGFYBg9kHywuWd
-         l/jIRy0b+A9ydD0PfN/SxlrVo6GlNZBMMDiWCgbsfWTw/tsPYG8GUtssdw7aTbXZeB7+
-         xEB7ZeummaUE4zcpRJYi2JIOkkwlYRRrdwVpCBohx0rk1BFeAQz9s+X+q0LBtgFoXgbN
-         rMF8dFvyUFgUGYNc67rXafrcYI8abuOtXxUqt7F5pzLzRj3X94uVzAfngp44xg5LBZYJ
-         Sv09AOwUa18pzh7RWwTzqVFTO8UoCS9rmhjFKA8ehbu/5q8D1+69Vy4R9+kStOE3qo+x
-         EAnw==
-X-Received: by 10.152.2.131 with SMTP id 3mr47900lau.18.1402085753866;
-        Fri, 06 Jun 2014 13:15:53 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=OXdWbjF9eQdF3NjnZzP5226JAq9KYhuQQZdl4fN3G0o=;
+        b=U/UzRktTkZDYEbxoxdbbZTWvt4a+XZ463uMC+UhEykEN0C5HIZMYeFDd5pt70YgvEa
+         jOgoi3D6w/LTA0Ti7jk8jNtLa0MDOYnfPyhaTkCzq+yDMhtbc50wf5OIPfGrLiImfCbB
+         OfZMFp2w/Cni77WEILp0pLEqG3oBunN9XDiRS8JLS5+8bGqiWn1+ScBgjwZizD8QMbJ2
+         SEF5dWHmywDrRlGFjtopE5vp5O9xZ/oF/Aq0fkSSVr96T3Qyv6NB0uGQJUBUJ4zPe0ZF
+         cfPK7vh+OepianRAj6DMyO0JAuABVbUSVdUbTY1hce2dSRsebhI0LP9zpAUs5Tloh+Ne
+         ViRA==
+X-Received: by 10.180.188.105 with SMTP id fz9mr37740wic.0.1402087712104;
+        Fri, 06 Jun 2014 13:48:32 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.43.228 with SMTP id z4ls161856lal.65.gmail; Fri, 06 Jun
- 2014 13:15:52 -0700 (PDT)
-X-Received: by 10.112.155.67 with SMTP id vu3mr2082134lbb.9.1402085752938;
-        Fri, 06 Jun 2014 13:15:52 -0700 (PDT)
+Received: by 10.180.79.232 with SMTP id m8ls165116wix.38.canary; Fri, 06 Jun
+ 2014 13:48:31 -0700 (PDT)
+X-Received: by 10.180.36.234 with SMTP id t10mr1897090wij.1.1402087711286;
+        Fri, 06 Jun 2014 13:48:31 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id e12si1787922wiv.1.2014.06.06.13.15.52
+        by gmr-mx.google.com with ESMTP id gz10si1772498wib.0.2014.06.06.13.48.31
         for <msysgit@googlegroups.com>;
-        Fri, 06 Jun 2014 13:15:52 -0700 (PDT)
+        Fri, 06 Jun 2014 13:48:31 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id BDE8F1C00AC; Fri,  6 Jun 2014 22:15:52 +0200 (CEST)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1402085744-15829-1-git-send-email-kasal@ucw.cz>
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id EF5821C00A0;
+	Fri,  6 Jun 2014 22:48:30 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s56KmU3f004732;
+	Fri, 6 Jun 2014 22:48:30 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s56KmU5x004731;
+	Fri, 6 Jun 2014 22:48:30 +0200
+In-Reply-To: <5391FE01.9040501@gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 X-Original-Sender: kasal@ucw.cz
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
  (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
@@ -63,34 +72,42 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250965>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250966>
 
-From: Karsten Blees <blees@dcon.de>
-Date: Fri, 7 Jan 2011 17:47:41 +0100
+Hello,
 
-Git-compat-util.h is two dirs up, and already includes <dirent.h> (which
-is the same as "dirent.h" due to -Icompat/win32 in the Makefile).
+On Fri, Jun 06, 2014 at 07:44:33PM +0200, Karsten Blees wrote:
+> > Karsten Blees (5):
+> >   Support Unicode console output on Windows
+> 
+> [..] you could have squashed half of
+> "Win32: fix segfault in WriteConsoleW when debugging in gdb" [2] (second  half in [5/5]).
+> 
+> >   Detect console streams more reliably on Windows
+> >   Warn if the Windows console font doesn't support Unicode
+> 
+> I think this one includes
+> "MSVC: fix winansi.c compile errors " [3] and
+> "Unicode console: fix font warning on Vista and Win7" [4]
+[...]
+> >   Win32: move main macro to a function
+> >   Win32: Thread-safe windows console output
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
- compat/win32/dirent.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+> [2] https://github.com/msysgit/git/commit/cd0792af
+> [3] https://github.com/msysgit/git/commit/3abcb04d
+> [4] https://github.com/msysgit/git/commit/981aa538
 
-diff --git a/compat/win32/dirent.c b/compat/win32/dirent.c
-index 7a0debe..fac7f25 100644
---- a/compat/win32/dirent.c
-+++ b/compat/win32/dirent.c
-@@ -1,5 +1,4 @@
--#include "../git-compat-util.h"
--#include "dirent.h"
-+#include "../../git-compat-util.h"
- 
- struct DIR {
- 	struct dirent dd_dir; /* includes d_type */
--- 
-2.0.0.9635.g0be03cb
+Indeed, you identified them correctly.  And [2] is actually squashed
+in [5/5]; I think I can keep it that way.
+
+I'll add the missing fix, take care about original dates, improve the
+cover letter (the above links), and resubmit.
+
+Thanks for review this batch of your patches.
+
+Regards,
+	Stepan
 
 -- 
 -- 
