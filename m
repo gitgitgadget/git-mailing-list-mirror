@@ -1,103 +1,145 @@
-From: Brett Randall <javabrett@gmail.com>
-Subject: git-svn, different merge-parent selected in independent clones
- following SVN merge
-Date: Fri, 6 Jun 2014 19:06:16 +1000
-Message-ID: <CALeEUB4k+Uc+Yr4-ronuHcG0YUcxJgy-N=mffxAF6jGMr0x9ig@mail.gmail.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH] mingw: redefine the wrapper macro after the
+ corresponding function
+Date: Fri, 06 Jun 2014 11:43:03 +0200
+Message-ID: <53918D27.7060604@gmail.com>
+References: <20140605080519.GB28029@camelia.ucw.cz> <5390A139.2090406@kdbg.org> <5390E893.9060600@gmail.com> <20140606083233.GB1303@camelia.ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 06 11:33:26 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: Johannes Sixt <j6t@kdbg.org>, GIT Mailing-list <git@vger.kernel.org>, 
+ msysGit <msysgit@googlegroups.com>
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: msysgit+bncBCH3XYXLXQDBBJU2Y2OAKGQEXBDOMPA@googlegroups.com Fri Jun 06 11:49:52 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBJU2Y2OAKGQEXBDOMPA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f191.google.com ([209.85.212.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wsq6R-0006rs-VD
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 11:06:24 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752716AbaFFJGS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2014 05:06:18 -0400
-Received: from mail-ie0-f178.google.com ([209.85.223.178]:62091 "EHLO
-	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752386AbaFFJGR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2014 05:06:17 -0400
-Received: by mail-ie0-f178.google.com with SMTP id rl12so2045871iec.23
-        for <git@vger.kernel.org>; Fri, 06 Jun 2014 02:06:16 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBJU2Y2OAKGQEXBDOMPA@googlegroups.com>)
+	id 1Wsqfv-0001Jt-0r
+	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 11:43:03 +0200
+Received: by mail-wi0-f191.google.com with SMTP id r20sf62395wiv.8
+        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 02:43:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=eZkpjUT2OwEMDCDKoLxGjpfV2xvuUFsd9iNw7bTTioE=;
-        b=nUw/aFvJhhwlmdxkJ/hCbc9BbRVI1jO5dI6elUSi4PvQxNuvV/jO3fC4ROdqp+3a1J
-         2CeZARvE1D2pPsaN/h30w9Ns6D1WsIHV2RtDgRdB3NJLST6nCb+ZA46sGNLOtRwu8OU6
-         SAYet1ptPQuMvZrBeWptlld6o7cx/CRCybl+cQczVZ91VvkM5Jv0JnI+1NuwToBaBUUT
-         I6aRyvTUZucagalw0tccfek2C+YHDQOx3x89XjN4n6FlPAtq6R3stIdvIHBaUqAziGgs
-         aOoW/ep7KnJeKIMGZF7CyzyuqWrkvHRIFdzJdCALkRsyNpZYM/lJ0ASbxgVDoScJ+LEy
-         xkMg==
-X-Received: by 10.50.109.202 with SMTP id hu10mr4258204igb.1.1402045576396;
- Fri, 06 Jun 2014 02:06:16 -0700 (PDT)
-Received: by 10.64.138.200 with HTTP; Fri, 6 Jun 2014 02:06:16 -0700 (PDT)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250896>
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-transfer-encoding;
+        bh=+iuXZvpILPH/KXjz9HpJj4wQVNYARlo3Fl5TtEU1RuI=;
+        b=A5WtBIIgxRsfPpU0+WE8IkCo348b9bGC81+gNuOeoFk6tbP5znhwfacQBFqVbahtzS
+         /1OuaQG1/qTzMjQG4IoyTFK85PK2g2KL6bmxIp2cA5tXzAXvdHokl4YMTb1gqTJRP3tD
+         RRgx46GsdUBty3Rl5G0MR5a1/WN2c2rRMbw3pSLU5e2heC3uZgljS/VOkgi/T+MuYVQw
+         713Zor9U2smTr9Voc2hppVBEjV0fyIsckOurnUwKUUCADpGwpnmO4KZsZg03cD6mzSAc
+         lbLYxwiF0XY+SBsPjqUyj2cD2bdqAcoOxy1dpFTFfNjPsxLTz1xEPdk/5XIn2pCICfEF
+         yMzQ==
+X-Received: by 10.152.37.200 with SMTP id a8mr6066lak.19.1402047782573;
+        Fri, 06 Jun 2014 02:43:02 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.5.200 with SMTP id u8ls111235lau.33.gmail; Fri, 06 Jun
+ 2014 02:43:01 -0700 (PDT)
+X-Received: by 10.152.6.97 with SMTP id z1mr1179463laz.0.1402047781511;
+        Fri, 06 Jun 2014 02:43:01 -0700 (PDT)
+Received: from mail-wg0-x231.google.com (mail-wg0-x231.google.com [2a00:1450:400c:c00::231])
+        by gmr-mx.google.com with ESMTPS id e12si1612599wiv.1.2014.06.06.02.43.01
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 06 Jun 2014 02:43:01 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::231 as permitted sender) client-ip=2a00:1450:400c:c00::231;
+Received: by mail-wg0-f49.google.com with SMTP id m15so2553046wgh.32
+        for <msysgit@googlegroups.com>; Fri, 06 Jun 2014 02:43:01 -0700 (PDT)
+X-Received: by 10.14.203.199 with SMTP id f47mr617690eeo.3.1402047781414;
+        Fri, 06 Jun 2014 02:43:01 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id ci54sm21657010eeb.19.2014.06.06.02.42.59
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 06 Jun 2014 02:43:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <20140606083233.GB1303@camelia.ucw.cz>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::231
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250897>
 
-Hi,
+Am 06.06.2014 10:32, schrieb Stepan Kasal:
+> Hello,
+>=20
+> On Fri, Jun 06, 2014 at 12:00:51AM +0200, Karsten Blees wrote:
+>> Am 05.06.2014 18:56, schrieb Johannes Sixt:
+>>> Within mingw.c, if some other function inside mingw.c wants to use
+>>> mingw_unlink, then it should be written as 'mingw_unlink(foo)', not
+>>> 'unlink(foo)'.
+>> I very much like this approach. In fact, we already do this for e.g. min=
+gw_raise.
+>=20
+> Hannes, this is consistent with your commit 06bc4b7.  Settled.
+>=20
+>> Other callers would typically want the wrapped version (i.e.
+>> mingw_*).
+>=20
+> If this assumption were true, then we have to keep the wrapper macros
+> defined, both above and below the wrapper function definition.
 
-git version 1.8.3.2
+That's not what I meant. Assume all other callers are written 'mingw_foo', =
+as suggested by Hannes, and no one except 'mingw_foo' has the need to call =
+MSVCRT's 'foo' directly. Then its irrelevant whether the #undef is at the t=
+op or immediately before 'mingw_foo'. Having the #undef in close vicinity o=
+f the function definition helps removing it when its no longer needed.
 
-I've used git-svn on a few repositories for a long time. In what is a
-testament to the consistency and stability of git-svn, despite often
-maintaining separate git-svn clones on different machines, I've never
-once seen a different commit-sha in independent clones for the same
-SVN revision. That is until just now. Two of three clones have the
-same commit-sha, the third has a different sha for the same SVN
-revision (and as expected for all subsequent commits). All of the
-tree-shas are identical. I never mix/push/pull local commits between
-these independent clones.
+Thinking about this some more, the best solution is probably to eliminate t=
+he problem altogether by adding inline-wrappers for required CRT-functions,=
+ e.g.:
 
-The commit where the commit-sha diverged on the one clone is an SVN
-commit that involved a branch merge. The difference in this clone is
-that git-svn selected a different parent commit for one of the two
-parents of the merge (the other parent is the same). For that commit,
-the two clones that agreed had:
+mingw.h:
 
-commit de2dbe2e045f626cff8e282da1660c239b926765
-tree f57a4d8b88262e1f1cd79f98c7d2f5ae82751636
-parent f058fd2e05a2ef54c6bf056a3d2a46d17735253d
-parent e2722a1a24b490dbc8d7375b64050f1a0c010018
+static inline int crt_gethostname(char *host, int namelen)
+{
+	return gethostname(host, namelen);
+}
+int mingw_gethostname(char *host, int namelen);
+#define gethostname mingw_gethostname
 
-and the one that did not had:
+mingw.c:
 
-commit a3cfdff262b6afe8b22acd92f01554294f98c851
-tree f57a4d8b88262e1f1cd79f98c7d2f5ae82751636
-parent f058fd2e05a2ef54c6bf056a3d2a46d17735253d
-parent be09b04a3fa582ba12420e0a9b9c3233b41b600d
+int mingw_gethostname(char *name, int namelen)
+{
+    ensure_socket_initialization();
+    return crt_gethostname(name, namelen);
+}
 
-(tree and one parent same, other parent and therefore new commit sha differ)
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
 
-On investigation, I found that commit be09b0 is actually an ancestor
-of e2722a, and the parent commit of e2722a is another (SVN) merge
-commit, with be09b0 as one of the parents.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
 
-My best guess is that this can happen when git-svn rebase-ing
-trunk/master, when the associated branch isn't fully fetched. I often
-run "git svn fetch" on these clones, which fetches all branches,
-before "git svn rebase" but there's a chance that I've occasionally
-run "git svn rebase" on master (trunk) on its own, which only fetches
-trunk.
-
-So my questions are:
-
-1) Does that sound like the most likely way this would happen - seeing
-an SVN merge hit trunk during an git svn rebase on master, when the
-merged branch was not completely git svn fetch-ed? And on the other
-agreeing clones, the better parent commit had already been picked-up
-as part of a git svn fetch?
-
-2) If so, is there any reasonable way to prevent this ... I guess
-making sure (perhaps via an alias) that svn rebases occur only via git
-svn fetch followed by git svn rebase -l .
-
-Thanks
-Brett
+---=20
+You received this message because you are subscribed to the Google Groups "=
+msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
