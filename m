@@ -1,145 +1,274 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH] mingw: redefine the wrapper macro after the
- corresponding function
-Date: Fri, 06 Jun 2014 11:43:03 +0200
-Message-ID: <53918D27.7060604@gmail.com>
-References: <20140605080519.GB28029@camelia.ucw.cz> <5390A139.2090406@kdbg.org> <5390E893.9060600@gmail.com> <20140606083233.GB1303@camelia.ucw.cz>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Git autocorrect bug
+Date: Fri, 6 Jun 2014 18:09:35 +0700
+Message-ID: <20140606110935.GA14446@lanh>
+References: <1401940145.18134.170.camel@stross>
+ <CACsJy8BSHAUiF_BR_Vi4_LOW0CSP-N09UpAg-UJvZJ1fvipejg@mail.gmail.com>
+ <1401956903.18134.173.camel@stross>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
-Cc: Johannes Sixt <j6t@kdbg.org>, GIT Mailing-list <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBCH3XYXLXQDBBJU2Y2OAKGQEXBDOMPA@googlegroups.com Fri Jun 06 11:49:52 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBJU2Y2OAKGQEXBDOMPA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f191.google.com ([209.85.212.191])
+Content-Type: text/plain; charset=us-ascii
+Cc: git mailing list <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 13:09:43 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBJU2Y2OAKGQEXBDOMPA@googlegroups.com>)
-	id 1Wsqfv-0001Jt-0r
-	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 11:43:03 +0200
-Received: by mail-wi0-f191.google.com with SMTP id r20sf62395wiv.8
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 02:43:02 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wss1m-0007hG-Mh
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 13:09:43 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751948AbaFFLJi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2014 07:09:38 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:37345 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750803AbaFFLJh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2014 07:09:37 -0400
+Received: by mail-ig0-f172.google.com with SMTP id l13so659620iga.17
+        for <git@vger.kernel.org>; Fri, 06 Jun 2014 04:09:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=+iuXZvpILPH/KXjz9HpJj4wQVNYARlo3Fl5TtEU1RuI=;
-        b=A5WtBIIgxRsfPpU0+WE8IkCo348b9bGC81+gNuOeoFk6tbP5znhwfacQBFqVbahtzS
-         /1OuaQG1/qTzMjQG4IoyTFK85PK2g2KL6bmxIp2cA5tXzAXvdHokl4YMTb1gqTJRP3tD
-         RRgx46GsdUBty3Rl5G0MR5a1/WN2c2rRMbw3pSLU5e2heC3uZgljS/VOkgi/T+MuYVQw
-         713Zor9U2smTr9Voc2hppVBEjV0fyIsckOurnUwKUUCADpGwpnmO4KZsZg03cD6mzSAc
-         lbLYxwiF0XY+SBsPjqUyj2cD2bdqAcoOxy1dpFTFfNjPsxLTz1xEPdk/5XIn2pCICfEF
-         yMzQ==
-X-Received: by 10.152.37.200 with SMTP id a8mr6066lak.19.1402047782573;
-        Fri, 06 Jun 2014 02:43:02 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.5.200 with SMTP id u8ls111235lau.33.gmail; Fri, 06 Jun
- 2014 02:43:01 -0700 (PDT)
-X-Received: by 10.152.6.97 with SMTP id z1mr1179463laz.0.1402047781511;
-        Fri, 06 Jun 2014 02:43:01 -0700 (PDT)
-Received: from mail-wg0-x231.google.com (mail-wg0-x231.google.com [2a00:1450:400c:c00::231])
-        by gmr-mx.google.com with ESMTPS id e12si1612599wiv.1.2014.06.06.02.43.01
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 06 Jun 2014 02:43:01 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::231 as permitted sender) client-ip=2a00:1450:400c:c00::231;
-Received: by mail-wg0-f49.google.com with SMTP id m15so2553046wgh.32
-        for <msysgit@googlegroups.com>; Fri, 06 Jun 2014 02:43:01 -0700 (PDT)
-X-Received: by 10.14.203.199 with SMTP id f47mr617690eeo.3.1402047781414;
-        Fri, 06 Jun 2014 02:43:01 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id ci54sm21657010eeb.19.2014.06.06.02.42.59
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=qPhVtFI/7GDNy575wCS6nuSGrRPMJWJN6HMx6ZVujzY=;
+        b=EnRCP+kiAl3H54nIP7X8b2cW2gcjLug3yAeJ06T6421qQsKnjcfbaMOef2OV9zdsGp
+         KHt3X49MwXAL3lvL0cFpUk/K1VSvVcqYMSYosbS2beP8PkQ51wbC2aBRPtOO1zrKOTnc
+         KApOEIQsR4JKbaKFABQPODQgeWlzSpqbx+LS39k5NGP+8Z++Ybcv1VG+V/bY3MwlVXRp
+         Krwo6thychKEoKFjFS+/vnKJH/EJFEeunqyBUnyw5INKgDY7gfP2qxl87SkQDcOYm50E
+         9AcvD3k5RQd77LaB1XbudAFXtsOxI2hRMlhtQMctlfmd0gAlIb+AjukxtlhzvNlGjq9i
+         mInw==
+X-Received: by 10.50.43.136 with SMTP id w8mr4527195igl.20.1402052976600;
+        Fri, 06 Jun 2014 04:09:36 -0700 (PDT)
+Received: from lanh ([115.73.251.64])
+        by mx.google.com with ESMTPSA id gw8sm34574504pbc.28.2014.06.06.04.09.33
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 06 Jun 2014 02:43:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140606083233.GB1303@camelia.ucw.cz>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::231
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250897>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 06 Jun 2014 04:09:35 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Fri, 06 Jun 2014 18:09:35 +0700
+Content-Disposition: inline
+In-Reply-To: <1401956903.18134.173.camel@stross>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250898>
 
-Am 06.06.2014 10:32, schrieb Stepan Kasal:
-> Hello,
->=20
-> On Fri, Jun 06, 2014 at 12:00:51AM +0200, Karsten Blees wrote:
->> Am 05.06.2014 18:56, schrieb Johannes Sixt:
->>> Within mingw.c, if some other function inside mingw.c wants to use
->>> mingw_unlink, then it should be written as 'mingw_unlink(foo)', not
->>> 'unlink(foo)'.
->> I very much like this approach. In fact, we already do this for e.g. min=
-gw_raise.
->=20
-> Hannes, this is consistent with your commit 06bc4b7.  Settled.
->=20
->> Other callers would typically want the wrapped version (i.e.
->> mingw_*).
->=20
-> If this assumption were true, then we have to keep the wrapper macros
-> defined, both above and below the wrapper function definition.
+On Thu, Jun 05, 2014 at 04:28:23AM -0400, David Turner wrote:
+> On Thu, 2014-06-05 at 13:29 +0700, Duy Nguyen wrote:
+> > On Thu, Jun 5, 2014 at 10:49 AM, David Turner <dturner@twopensource.com> wrote:
+> > > fatal: internal error: work tree has already been set
+> > > Current worktree: /home/dturner/git
+> > > New worktree: /home/dturner/git/foo
+> > 
+> > This is the part you complain about, right? 
+> 
+> Yes.
+> 
+> > I think I might know
+> > what's going on here. But do you expect "git git foo" to turn to "git
+> > init foo" in the first place?
+> 
+> Yes.
 
-That's not what I meant. Assume all other callers are written 'mingw_foo', =
-as suggested by Hannes, and no one except 'mingw_foo' has the need to call =
-MSVCRT's 'foo' directly. Then its irrelevant whether the #undef is at the t=
-op or immediately before 'mingw_foo'. Having the #undef in close vicinity o=
-f the function definition helps removing it when its no longer needed.
+I was hoping you would say no so I could get away without doing
+anything :) The problem is "setup pollution". When somebody looks up
+an alias (autocorrect does), $GIT_DIR must be searched because
+$GIT_DIR/config may have repo-local aliases. But 'git init' (and
+clone) expects a clean no-setup state.
 
-Thinking about this some more, the best solution is probably to eliminate t=
-he problem altogether by adding inline-wrappers for required CRT-functions,=
- e.g.:
+This is a known issue. You can reproduce by aliasing init to
+something, then init a new repo using that alias. In fact Jonathan
+wrote a few test to catch this. The solution is we start out fresh in
+a new process. The fork/exec overhead should not matter because this
+is interactive session.
 
-mingw.h:
+I'm just wondering if I should remove the "only applicable to init and
+clone" check in the patch because there's another companion problem:
+if we find $GIT_DIR automatically, then $GIT_DIR/config points out
+that work-tree must be moved, it'll get nasty because we already set
+everything up for the auto-found worktree. But maybe I already solved
+that, not sure..
 
-static inline int crt_gethostname(char *host, int namelen)
-{
-	return gethostname(host, namelen);
-}
-int mingw_gethostname(char *host, int namelen);
-#define gethostname mingw_gethostname
-
-mingw.c:
-
-int mingw_gethostname(char *name, int namelen)
-{
-    ensure_socket_initialization();
-    return crt_gethostname(name, namelen);
-}
-
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
-
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+-- 8< --
+diff --git a/compat/mingw.c b/compat/mingw.c
+index e9892f8..34722fe 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1080,19 +1080,6 @@ int mingw_kill(pid_t pid, int sig)
+ 	return -1;
+ }
+ 
+-static char **copy_environ(void)
+-{
+-	char **env;
+-	int i = 0;
+-	while (environ[i])
+-		i++;
+-	env = xmalloc((i+1)*sizeof(*env));
+-	for (i = 0; environ[i]; i++)
+-		env[i] = xstrdup(environ[i]);
+-	env[i] = NULL;
+-	return env;
+-}
+-
+ void free_environ(char **env)
+ {
+ 	int i;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 76910e6..1db4dec 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -732,4 +732,6 @@ struct tm *git_gmtime_r(const time_t *, struct tm *);
+ #define gmtime_r git_gmtime_r
+ #endif
+ 
++char **copy_environ(void);
++
+ #endif
+diff --git a/git.c b/git.c
+index 7780572..77d9204 100644
+--- a/git.c
++++ b/git.c
+@@ -20,6 +20,22 @@ const char git_more_info_string[] =
+ 
+ static struct startup_info git_startup_info;
+ static int use_pager = -1;
++static char orig_cwd[PATH_MAX];
++static char **orig_environ;
++
++static void save_env(void)
++{
++	getcwd(orig_cwd, sizeof(orig_cwd));
++	orig_environ = copy_environ();
++}
++
++static void restore_env(void)
++{
++	if (*orig_cwd && chdir(orig_cwd))
++		die_errno("could not move to %s", orig_cwd);
++	if (orig_environ)
++		environ = orig_environ;
++}
+ 
+ static void commit_pager_choice(void) {
+ 	switch (use_pager) {
+@@ -459,7 +475,7 @@ int is_builtin(const char *s)
+ 	return 0;
+ }
+ 
+-static void handle_builtin(int argc, const char **argv)
++static void handle_builtin(int argc, const char **argv, int preprocessed)
+ {
+ 	const char *cmd = argv[0];
+ 	int i;
+@@ -484,6 +500,11 @@ static void handle_builtin(int argc, const char **argv)
+ 		struct cmd_struct *p = commands+i;
+ 		if (strcmp(p->cmd, cmd))
+ 			continue;
++		if (preprocessed &&
++		    (p->fn == cmd_init_db || p->fn == cmd_clone)) {
++			restore_env();
++			break;
++		}
+ 		exit(run_builtin(p, argc, argv));
+ 	}
+ }
+@@ -524,13 +545,13 @@ static void execv_dashed_external(const char **argv)
+ 	strbuf_release(&cmd);
+ }
+ 
+-static int run_argv(int *argcp, const char ***argv)
++static int run_argv(int *argcp, const char ***argv, int done_help)
+ {
+ 	int done_alias = 0;
+ 
+ 	while (1) {
+ 		/* See if it's a builtin */
+-		handle_builtin(*argcp, *argv);
++		handle_builtin(*argcp, *argv, done_help || done_alias);
+ 
+ 		/* .. then try the external ones */
+ 		execv_dashed_external(*argv);
+@@ -539,7 +560,10 @@ static int run_argv(int *argcp, const char ***argv)
+ 		 * of overriding "git log" with "git show" by having
+ 		 * alias.log = show
+ 		 */
+-		if (done_alias || !handle_alias(argcp, argv))
++		if (done_alias)
++			break;
++		save_env();
++		if (!handle_alias(argcp, argv))
+ 			break;
+ 		done_alias = 1;
+ 	}
+@@ -581,7 +605,7 @@ int main(int argc, char **av)
+ 	if (starts_with(cmd, "git-")) {
+ 		cmd += 4;
+ 		argv[0] = cmd;
+-		handle_builtin(argc, argv);
++		handle_builtin(argc, argv, 0);
+ 		die("cannot handle %s as a builtin", cmd);
+ 	}
+ 
+@@ -613,7 +637,7 @@ int main(int argc, char **av)
+ 	while (1) {
+ 		static int done_help = 0;
+ 		static int was_alias = 0;
+-		was_alias = run_argv(&argc, &argv);
++		was_alias = run_argv(&argc, &argv, done_help);
+ 		if (errno != ENOENT)
+ 			break;
+ 		if (was_alias) {
+@@ -623,6 +647,7 @@ int main(int argc, char **av)
+ 			exit(1);
+ 		}
+ 		if (!done_help) {
++			save_env();
+ 			cmd = argv[0] = help_unknown_cmd(cmd);
+ 			done_help = 1;
+ 		} else
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 2f30203..e62c0ff 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -56,7 +56,7 @@ test_expect_success 'plain through aliased command, outside any git repo' '
+ 	check_config plain-aliased/.git false unset
+ '
+ 
+-test_expect_failure 'plain nested through aliased command' '
++test_expect_success 'plain nested through aliased command' '
+ 	(
+ 		git init plain-ancestor-aliased &&
+ 		cd plain-ancestor-aliased &&
+@@ -68,7 +68,7 @@ test_expect_failure 'plain nested through aliased command' '
+ 	check_config plain-ancestor-aliased/plain-nested/.git false unset
+ '
+ 
+-test_expect_failure 'plain nested in bare through aliased command' '
++test_expect_success 'plain nested in bare through aliased command' '
+ 	(
+ 		git init --bare bare-ancestor-aliased.git &&
+ 		cd bare-ancestor-aliased.git &&
+diff --git a/wrapper.c b/wrapper.c
+index bc1bfb8..8a82097 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -493,3 +493,16 @@ struct passwd *xgetpwuid_self(void)
+ 		    errno ? strerror(errno) : _("no such user"));
+ 	return pw;
+ }
++
++char **copy_environ(void)
++{
++	char **env;
++	int i = 0;
++	while (environ[i])
++		i++;
++	env = xmalloc((i+1)*sizeof(*env));
++	for (i = 0; environ[i]; i++)
++		env[i] = xstrdup(environ[i]);
++	env[i] = NULL;
++	return env;
++}
+-- 8< --
