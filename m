@@ -1,52 +1,64 @@
-From: =?UTF-8?B?VG9yYWxmIEbDtnJzdGVy?= <toralf.foerster@gmx.de>
-Subject: sort entries numerically
-Date: Sat, 07 Jun 2014 08:05:34 +0200
-Message-ID: <5392ABAE.6030208@gmx.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 07 08:05:45 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v4 2/4] replace: add test for --graft
+Date: Fri, 06 Jun 2014 22:25:33 +0200
+Message-ID: <20140606202536.3722.42995.chriscool@tuxfamily.org>
+References: <20140606201741.3722.96819.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 07 08:44:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wt9lA-0005AY-HN
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Jun 2014 08:05:44 +0200
+	id 1WtAN5-0000bt-PH
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Jun 2014 08:44:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750879AbaFGGFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2014 02:05:37 -0400
-Received: from mout.gmx.net ([212.227.15.19]:63029 "EHLO mout.gmx.net"
+	id S1751584AbaFGGoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Jun 2014 02:44:46 -0400
+Received: from mail-2y.bbox.fr ([194.158.98.15]:51163 "EHLO mail-2y.bbox.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750832AbaFGGFg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2014 02:05:36 -0400
-Received: from [192.168.178.21] ([80.171.230.1]) by mail.gmx.com (mrgmx103)
- with ESMTPSA (Nemesis) id 0M4o41-1Wafw33bxN-00z1mp for <git@vger.kernel.org>;
- Sat, 07 Jun 2014 08:05:35 +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:7LDvwVTVd0YbJ4ixoIhp7X66B4DsIzerKeEFSfPFMIVNTupKOru
- /BVNPqM0lrtLPwt5i9kGmhsYAxdv/9Pt2PH+QfdiIntRYtigKyYuKnmbVHHCegzMOu4/tKM
- gggUt1ecu0LGz27NZYbdpOz0i8SeWbYG3GO4aq68bY7O/iVHyAjz5C1I0Zqju+uR0kuwHce
- BvjmMwNMUHycuJCysNmBw==
+	id S1751287AbaFGGoq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2014 02:44:46 -0400
+Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 4BA8044;
+	Sat,  7 Jun 2014 08:44:44 +0200 (CEST)
+X-git-sha1: 5292219f643178ebc0f902f13a9f65b4de79cc78 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20140606201741.3722.96819.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251021>
 
-Hi,
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ t/t6050-replace.sh | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-is there any chance to have "1.8" before "1.10" in an output like the following :
-
-...
-From https://code.wireshark.org/review/wireshark
-   52fe0aa..b69642d  master     -> origin/master
-   460db8a..540f061  master-1.10 -> origin/master-1.10
-   25bb29a..5741a40  master-1.12 -> origin/master-1.12
-   4ee4fc11..97898a2 master-1.8 -> origin/master-1.8
-
-
+diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
+index 68b3cb2..ca45a84 100755
+--- a/t/t6050-replace.sh
++++ b/t/t6050-replace.sh
+@@ -351,4 +351,16 @@ test_expect_success 'replace ref cleanup' '
+ 	test -z "$(git replace)"
+ '
+ 
++test_expect_success '--graft with and without already replaced object' '
++	test $(git log --oneline | wc -l) = 7 &&
++	git replace --graft $HASH5 &&
++	test $(git log --oneline | wc -l) = 3 &&
++	git cat-file -p $HASH5 | test_must_fail grep parent &&
++	test_must_fail git replace --graft $HASH5 $HASH4 $HASH3 &&
++	git replace --force -g $HASH5 $HASH4 $HASH3 &&
++	git cat-file -p $HASH5 | grep "parent $HASH4" &&
++	git cat-file -p $HASH5 | grep "parent $HASH3" &&
++	git replace -d $HASH5
++'
++
+ test_done
 -- 
-Toralf
+2.0.0.rc0.40.gd30ccc4
