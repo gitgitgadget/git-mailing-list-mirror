@@ -1,67 +1,67 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH] mingw: redefine the wrapper macro after the
- corresponding function
-Date: Fri, 06 Jun 2014 20:20:05 +0200
-Message-ID: <53920655.6070207@gmail.com>
-References: <20140605080519.GB28029@camelia.ucw.cz> <5390A139.2090406@kdbg.org> <5390E893.9060600@gmail.com> <20140606083233.GB1303@camelia.ucw.cz> <53918D27.7060604@gmail.com> <20140606111028.GA1909@camelia.ucw.cz>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: Re: [PATCH 0/5] First part of Unicode console support
+ for msysgit
+Date: Fri, 6 Jun 2014 20:39:35 +0200
+Organization: <)><
+Message-ID: <20140606183935.GA4197@camelia.ucw.cz>
+References: <1402062173-9602-1-git-send-email-kasal@ucw.cz> <5391FE01.9040501@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j6t@kdbg.org>, GIT Mailing-list <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBCH3XYXLXQDBBU4MZCOAKGQESOIT4VY@googlegroups.com Fri Jun 06 20:20:05 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBU4MZCOAKGQESOIT4VY@googlegroups.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCU63DXMWULRB2MVZCOAKGQES33OA6I@googlegroups.com Fri Jun 06 20:39:40 2014
+Return-path: <msysgit+bncBCU63DXMWULRB2MVZCOAKGQES33OA6I@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f63.google.com ([74.125.82.63])
+Received: from mail-la0-f63.google.com ([209.85.215.63])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBU4MZCOAKGQESOIT4VY@googlegroups.com>)
-	id 1WsykG-00029P-7m
-	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 20:20:04 +0200
-Received: by mail-wg0-f63.google.com with SMTP id x12sf75975wgg.18
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 11:20:03 -0700 (PDT)
+	(envelope-from <msysgit+bncBCU63DXMWULRB2MVZCOAKGQES33OA6I@googlegroups.com>)
+	id 1Wsz3B-000431-St
+	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 20:39:37 +0200
+Received: by mail-la0-f63.google.com with SMTP id b8sf387762lan.28
+        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 11:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=/viQYxD5Y+Uibw/t5wN1UgB90fEHzLT0/W6ID3NVbsE=;
-        b=LLO7icAGVWxznBs4kofNWg69wUMOeTwPImVjTMKBvGHYNT2IRcWYM1lZRaCz0n3Qeg
-         LORPSYz0mhXJEAQMYOrlYPNzF6+kvIbT+/Zi6IkqewuTlRGOLNPpQZVgGP8luxdBMbwo
-         awXEZDuidSorqVpBPRY0tmz5yW81qs1JVtEEJLufmVP8b9Txz1Bh/2JKhfg7TuRZrg0x
-         cGuJL7w+6UegZOAACUucK/rLPxY4x2HYLG8gdR4RaLOm0jzipI+nEh3+agy43ll/k/Q1
-         9/HgoJfQ+7Ufpbkl1wvTuFOPIMLK6FbZq35MZ0e0tooH39TMp4nLRR3+zQZYdw4qlJTW
-         5YFQ==
-X-Received: by 10.180.89.99 with SMTP id bn3mr31758wib.11.1402078803952;
-        Fri, 06 Jun 2014 11:20:03 -0700 (PDT)
+         :list-unsubscribe:content-type:content-disposition;
+        bh=zqqMIgZgGkBG15z2NqDrHbuiMRYEljtNzpjci2/TOGQ=;
+        b=vv58XlDpWzphfu3HqrImXNt837f5ilagvXlrAA8GK9e4t7YM21AZAZGApt8zNbCBSH
+         5DykIGiMWtnvuaMEeQ3qpetMf5uuoLns9BDTpIh8BflmqJHJ+SkWTtyPjlhSKTuI+KfF
+         RlECOVNxKMuradRRqvhNMMEOJR2nvSg9MKQIPFLF6WScJI3ZhDFL421Nj60HFku9uXSd
+         V5PAXgBhheYg94otDVjicEVGnmsbEZAueUEo7QaoIBSrNSRh58WNA7h/YBGMZQbfNCUi
+         RnMI10rnqDiBjxcZx3z6Pegw7TiE0heztMrrm23rB9GvLycPbLKkIsEhxVh/2i7MuZtH
+         bsCg==
+X-Received: by 10.180.75.13 with SMTP id y13mr32825wiv.3.1402079977668;
+        Fri, 06 Jun 2014 11:39:37 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.182.198 with SMTP id eg6ls146112wic.32.canary; Fri, 06 Jun
- 2014 11:20:02 -0700 (PDT)
-X-Received: by 10.14.218.9 with SMTP id j9mr2107570eep.2.1402078802895;
-        Fri, 06 Jun 2014 11:20:02 -0700 (PDT)
-Received: from mail-wi0-x22a.google.com (mail-wi0-x22a.google.com [2a00:1450:400c:c05::22a])
-        by gmr-mx.google.com with ESMTPS id e12si1759196wiv.1.2014.06.06.11.20.02
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 06 Jun 2014 11:20:02 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22a as permitted sender) client-ip=2a00:1450:400c:c05::22a;
-Received: by mail-wi0-x22a.google.com with SMTP id bs8so1452046wib.1
-        for <msysgit@googlegroups.com>; Fri, 06 Jun 2014 11:20:02 -0700 (PDT)
-X-Received: by 10.14.4.199 with SMTP id 47mr1524331eej.9.1402078802786;
-        Fri, 06 Jun 2014 11:20:02 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id l49sm24441626eef.27.2014.06.06.11.20.01
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 06 Jun 2014 11:20:01 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140606111028.GA1909@camelia.ucw.cz>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22a
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Received: by 10.181.13.50 with SMTP id ev18ls149882wid.48.gmail; Fri, 06 Jun
+ 2014 11:39:36 -0700 (PDT)
+X-Received: by 10.14.198.200 with SMTP id v48mr2183425een.5.1402079976704;
+        Fri, 06 Jun 2014 11:39:36 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id x7si1397161wiw.1.2014.06.06.11.39.36
+        for <msysgit@googlegroups.com>;
+        Fri, 06 Jun 2014 11:39:36 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 64FA11C00A0;
+	Fri,  6 Jun 2014 20:39:36 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s56IdaOv004208;
+	Fri, 6 Jun 2014 20:39:36 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s56IdZAS004207;
+	Fri, 6 Jun 2014 20:39:35 +0200
+In-Reply-To: <5391FE01.9040501@gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -72,33 +72,27 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250955>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250956>
 
-Am 06.06.2014 13:10, schrieb Stepan Kasal:
-> Hi Karsten,
-> 
-> On Fri, Jun 06, 2014 at 11:43:03AM +0200, Karsten Blees wrote:
->> Thinking about this some more, the best solution is probably to
->> eliminate the problem altogether by adding inline-wrappers for
->> required CRT-functions, e.g.:
-> 
-> Yes, this is acceptable.  But I wouldn't pollute mingw.h.  You can do
-> it on top of mingw.c like this:
+Hello Karsten,
 
-But having it in the .h file may come in handy if we want to split the overlong mingw.c into several compilation units...
+On Fri, Jun 06, 2014 at 07:44:33PM +0200, Karsten Blees wrote:
+> Nicely done, thanks!
 
-> 
-> #undef gethostname
-> static inline int crt_gethostname(char *host, int namelen)
-> {
-> 	return gethostname(host, namelen);
-> }
-> #define gethostname please_call_the_mingw_or_crt_version
-> 
+thank you for your kind words.
 
-Now you're mixing all three variants...note that with my suggestion to #define crt_foo in mingw.h, you don't need '#undef foo', nor redefine foo (your variant), nor rename other callers in mingw.c to 'mingw_foo' (Hannes' variant).
+Please hold back, I will re-submit in a few days.
 
-Callers of foo() would simply write "foo()", no matter whether in mingw.c or anywhere else. In the special case that you really want the CRT version, you'd write crt_foo(). This works everywhere, even in core-git code wrapped in #ifdef GIT_WINDOWS_NATIVE.
+> Note: this one was submitted seperately on May 29 and May 1 (can't
+> find it in the gmane archive, though).
+
+It was cc'ed to msysgit as usual and gmane selected it as the primary
+place to store it:
+http://thread.gmane.org/gmane.comp.version-control.msysgit/20324
+
+regards,
+	Stepan
 
 -- 
 -- 
