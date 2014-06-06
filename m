@@ -1,134 +1,67 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: [PATCH] mingw: redefine the wrapper macro after the
- corresponding function
-Date: Fri, 6 Jun 2014 13:10:28 +0200
-Organization: <)><
-Message-ID: <20140606111028.GA1909@camelia.ucw.cz>
-References: <20140605080519.GB28029@camelia.ucw.cz> <5390A139.2090406@kdbg.org> <5390E893.9060600@gmail.com> <20140606083233.GB1303@camelia.ucw.cz> <53918D27.7060604@gmail.com>
+From: Steve Hoelzer <shoelzer@gmail.com>
+Subject: Re: [PATCH 1/2] userdiff: support C# async methods and correct C# keywords
+Date: Fri, 6 Jun 2014 08:27:43 -0500
+Message-ID: <CACbrTHcVNmffTHPPnPYDXXwYQacmiS77573Y+GpyjSv-yHQM7g@mail.gmail.com>
+References: <1401682405-3319-1-git-send-email-ch3cooli@gmail.com> <xmqqy4xbq7xo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Johannes Sixt <j6t@kdbg.org>, GIT Mailing-list <git@vger.kernel.org>,
-        msysGit <msysgit@googlegroups.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCU63DXMWULRBJODY2OAKGQEEIYXO5Y@googlegroups.com Fri Jun 06 13:10:31 2014
-Return-path: <msysgit+bncBCU63DXMWULRBJODY2OAKGQEEIYXO5Y@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f184.google.com ([209.85.212.184])
+Content-Type: text/plain; charset=UTF-8
+Cc: Sup Yut Sum <ch3cooli@gmail.com>, git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 15:28:13 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBJODY2OAKGQEEIYXO5Y@googlegroups.com>)
-	id 1Wss2Y-0008Ef-E8
-	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 13:10:30 +0200
-Received: by mail-wi0-f184.google.com with SMTP id d1sf87097wiv.11
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 04:10:30 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WsuBm-00088B-Om
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 15:28:11 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752201AbaFFN2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2014 09:28:06 -0400
+Received: from mail-oa0-f49.google.com ([209.85.219.49]:50328 "EHLO
+	mail-oa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752171AbaFFN2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2014 09:28:04 -0400
+Received: by mail-oa0-f49.google.com with SMTP id o6so844231oag.22
+        for <git@vger.kernel.org>; Fri, 06 Jun 2014 06:28:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:organization:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=6LZuLie7e6XgEaS0jL95tdMcJl6vAnvgeB/Ilu5qGNk=;
-        b=otl+i6dUzzzn71GYbU5fw9Wk663EdiO/R3mUJbh52ghwnIqKOi/s7eLLaFdOQpSwGG
-         JVc9dh8qmZ3n8kW8UH2NklZDTdsgfM50btSNXJQGHodI11coFrlLBuzR7xfpaqqsnpa/
-         PvfLVXNx8CkWdtjN/Ty82Q+1THnUpZTgtCxxqek28B9VzE59ga3Ni1onHS1DdqA3dttK
-         6jCfyjeuSo5esvbETQx5G6yluGZMURFkMzuzsqYFg9XR0fTBdGrl3qQ4ljMWLEpSZ+Vx
-         zVPQU6psOyNlebtR3TdTBatJmGntD9zqHGGG3akAoNcX9x0UBVx9m5RMNayq7Tg7hq1m
-         aW1w==
-X-Received: by 10.180.90.51 with SMTP id bt19mr11841wib.6.1402053030156;
-        Fri, 06 Jun 2014 04:10:30 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.76.75 with SMTP id i11ls78320wiw.16.canary; Fri, 06 Jun
- 2014 04:10:29 -0700 (PDT)
-X-Received: by 10.180.211.114 with SMTP id nb18mr806022wic.4.1402053029203;
-        Fri, 06 Jun 2014 04:10:29 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id h4si1874538wib.2.2014.06.06.04.10.29
-        for <msysgit@googlegroups.com>;
-        Fri, 06 Jun 2014 04:10:29 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id CA9B31C009F;
-	Fri,  6 Jun 2014 13:10:28 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s56BASLO001984;
-	Fri, 6 Jun 2014 13:10:28 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s56BAStb001983;
-	Fri, 6 Jun 2014 13:10:28 +0200
-In-Reply-To: <53918D27.7060604@gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250899>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=OjZnv11FqLBxcFMA8ej8Rl60bN/j5WxCumi2wrK/SAI=;
+        b=oFCv9AKqIE5Edz7/39dwjdKGZ1AW+VkMzLhpTGiy0JoMrYTpYdnwkKs7d9hrsdoqzY
+         ZMwH0SVE0e+5Rh5fa3lGxTX91NM+Q9fx0ALdKuWFijJV92Fn3BGsGfPBHuMKf3QW0bGa
+         0UUppdqDZ8V1SiLVEwP+QvabWGdZMabZrYI8LZ9amcNcW9zUtn6z0RSlFt+LzR2CCSwn
+         mmAeL7S3cJJqvCE9Hi7AjznByyRAX7ERFDtFfJJpvjSCyL24/gMSNkw3URHxF22AXtps
+         qxJoh9xAV67CTiubORulQOYaUuDH9D0/8HWldkOSxInxRAfecrQ06k96e7Oj770zguaq
+         uUiw==
+X-Received: by 10.182.142.69 with SMTP id ru5mr4616617obb.6.1402061283586;
+ Fri, 06 Jun 2014 06:28:03 -0700 (PDT)
+Received: by 10.202.190.198 with HTTP; Fri, 6 Jun 2014 06:27:43 -0700 (PDT)
+In-Reply-To: <xmqqy4xbq7xo.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250901>
 
-Hi Karsten,
+On Thu, Jun 5, 2014 at 5:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Sup Yut Sum <ch3cooli@gmail.com> writes:
+>
+>> async is in C# 5.0
+>> foreach is in C# 1.0
+>
+>> instanceof is in Java. The similar keywords are typeof, is, as in C# 1.0
+>
+> This one made me read it twice, until I realized you meant
+>
+>     instanceof() is listed as keywords, but there is no such thing
+>     (it is in Java, though); in C# we use typeof() for similar
+>     purposes
 
-On Fri, Jun 06, 2014 at 11:43:03AM +0200, Karsten Blees wrote:
-> [...] Assume all other callers are written
-> 'mingw_foo', as suggested by Hannes, and no one except 'mingw_foo'
-> has the need to call MSVCRT's 'foo' directly. Then its irrelevant
-> whether the #undef is at the top or immediately before 'mingw_foo'.
+The original email was a bit hard to parse. Junio's clarification left
+out the C# keywords 'is' and 'as'. I suggest phrasing it like this:
 
-Yet there is still danger that someone calls foo() by mistake.
-It is still best to have a protection:
-#define foo choke_here_do_not_use_this
-
-> Thinking about this some more, the best solution is probably to
-> eliminate the problem altogether by adding inline-wrappers for
-> required CRT-functions, e.g.:
-
-Yes, this is acceptable.  But I wouldn't pollute mingw.h.  You can do
-it on top of mingw.c like this:
-
-#undef gethostname
-static inline int crt_gethostname(char *host, int namelen)
-{
-	return gethostname(host, namelen);
-}
-#define gethostname please_call_the_mingw_or_crt_version
-
-This would also be an acceptable solution, though I still prefer my
-solution, because, as you put it:
-> Having the #undef in close vicinity of the function definition
-> helps removing it when it's no longer needed.
-
-Stepan
-
-PS: Anyway, this is another patch which I can mark as "too much
-discussion, try later."  Then I can proceed and submit your unicode
-branch.
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+instanceof() is listed as keywords, but there is no such thing (it is
+in Java, though); in C# we use typeof(), 'is', and 'as for similar
+purposes
