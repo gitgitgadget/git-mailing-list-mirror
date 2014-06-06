@@ -1,119 +1,114 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 10/11] test-lib: make it possible to override how test code is eval'd
-Date: Fri, 06 Jun 2014 09:53:20 -0700
-Message-ID: <xmqqiooeq8sf.fsf@gitster.dls.corp.google.com>
-References: <1401176460-31564-1-git-send-email-rhansen@bbn.com>
-	<1401915687-8602-1-git-send-email-rhansen@bbn.com>
-	<1401915687-8602-11-git-send-email-rhansen@bbn.com>
-	<xmqqk38vrrig.fsf@gitster.dls.corp.google.com>
-	<53911297.9030106@bbn.com>
+Subject: Re: [PATCH v3 1/4] replace: add --graft option
+Date: Fri, 06 Jun 2014 09:59:18 -0700
+Message-ID: <xmqqegz2q8ih.fsf@gitster.dls.corp.google.com>
+References: <20140604194118.23903.3019.chriscool@tuxfamily.org>
+	<20140604194353.23903.89933.chriscool@tuxfamily.org>
+	<xmqqfvjjrpq9.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD3k98_6Uh+noJgt4xqEooATVMAEf58FFkuy6rHBnP10zw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 18:53:34 2014
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 18:59:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsxOV-0007KL-Tk
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 18:53:32 +0200
+	id 1WsxUH-0002Cc-K3
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 18:59:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752273AbaFFQx2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2014 12:53:28 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64387 "EHLO smtp.pobox.com"
+	id S1752209AbaFFQ7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2014 12:59:25 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50033 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752258AbaFFQx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2014 12:53:26 -0400
+	id S1752175AbaFFQ7Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2014 12:59:25 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 553F01B428;
-	Fri,  6 Jun 2014 12:53:26 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 636111B670;
+	Fri,  6 Jun 2014 12:59:24 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=m4QTIigxiTQWC1TR19zzObFjaZA=; b=M46A7N
-	qZ/S998tNCe3ZmlQEdoC8Ahr3fvtOuESfx0GTuA/P7ssyC8YT6KYSSBW9oSky9sV
-	vt1CAA/OsgKTSN6RX7zrfpXnoEceQMe0PoRldw0M4IWVKilE1pkrMmB7IZ8dJkZK
-	sR9RL5qjDzvINSrzSqYHmG6EH90Vuv35zpEds=
+	:content-type; s=sasl; bh=Z8n5H17HYoKaa+QE/Z/c5TsijKk=; b=VafQws
+	vR5tkVVrpfiV1HHAKKRDgWGMy3shTHEp0Tydd4awe7nQAHm6p/UVnl2ciYKkXU2J
+	THj8QJPPCXIYHJzrdd+jvBIeJwpxf9FdksZWWyng8TiA5Gp1wtszR7XbCdLst/g6
+	XN4SqCYDd1Ft9q6mJ7ziR/16l04aYmZ+jgBTM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Mns/eSukmsTVadGtpTc9MDWkWSOdQwIR
-	MXd82lt6b8vMztMlQ7OkHzyOTj2z23LhRWAVNjjqMFvBm+3soBhIwwva93fjE24x
-	tnI+P8ZpgL1EoAOdVZfRUQ+lYlgB/06GM8LQYyxZsaU9ssS0Z7d0bD0rCylNy5cF
-	ipIU2xZO3TA=
+	:content-type; q=dns; s=sasl; b=lbsCO/tzUN2/ZJi+hRgShQhD8NNmTL7F
+	VHACQxqEtv0EVOMAGx+FXDxYSkFriCQMUp9K+NZOkg9y+SGiypQkEPaadK0p/NaS
+	8riddCRYrcn6g2De/sl6S1ESOZiCezNY0LFWmoYkYwBAuMZES2YHvzDHpETb395i
+	W4EJwMuu52k=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4A42F1B427;
-	Fri,  6 Jun 2014 12:53:26 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 576651B66F;
+	Fri,  6 Jun 2014 12:59:24 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 718351B421;
-	Fri,  6 Jun 2014 12:53:22 -0400 (EDT)
-In-Reply-To: <53911297.9030106@bbn.com> (Richard Hansen's message of "Thu, 05
-	Jun 2014 21:00:07 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 336001B66C;
+	Fri,  6 Jun 2014 12:59:20 -0400 (EDT)
+In-Reply-To: <CAP8UFD3k98_6Uh+noJgt4xqEooATVMAEf58FFkuy6rHBnP10zw@mail.gmail.com>
+	(Christian Couder's message of "Fri, 6 Jun 2014 17:29:01 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 11BFACE6-ED9B-11E3-A6E4-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: E7056A30-ED9B-11E3-A269-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250949>
 
-Richard Hansen <rhansen@bbn.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> On 2014-06-05 17:11, Junio C Hamano wrote:
-> ...
->> In any case, the above explanation confuses me somewhat.  test_eval_
->> is fed a scriptlet defined for various test_expect_success tests,
->> and they are written in POSIX shells, not zsh, so wouldn't it be
->> wrong to run them as if they are zsh native scripts, following
->> non-POSIX shell syntax rules?
+> On Thu, Jun 5, 2014 at 11:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Christian Couder <chriscool@tuxfamily.org> writes:
+>>
+>>> +static int create_graft(int argc, const char **argv, int force)
+>>> +{
+>>> +     unsigned char old[20], new[20];
+>>> +     const char *old_ref = argv[0];
+>>> +     struct commit *commit;
+>>> +     struct strbuf buf = STRBUF_INIT;
+>>> +     struct strbuf new_parents = STRBUF_INIT;
+>>> +     const char *parent_start, *parent_end;
+>>> +     int i;
+>>> +
+>>> +     if (get_sha1(old_ref, old) < 0)
+>>> +             die(_("Not a valid object name: '%s'"), old_ref);
+>>> +     commit = lookup_commit_or_die(old, old_ref);
+>>
+>> Not a problem with this patch, but the above sequence somehow makes
+>> me wonder if lookup-commit-or-die is a good API for this sort of
+>> thing.  Wouldn't it be more natural if it took not "unsigned char
+>> old[20]" but anything that would be understood by get_sha1()?
+>>
+>> It could be that this particular caller is peculiar and all the
+>> existing callers are happy, though.  I didn't "git grep" to spot
+>> patterns in existing callers.
 >
-> The scriptlets in lib-prompt-tests.sh are not actually written for POSIX
-> sh -- they are written in a common subset of the zsh and bash languages
-> (I should document this in lib-prompt-tests.sh).
->
-> We want to test how the __git_ps1 code behaves when interpreted in
-> "native" zsh mode (default options), because that's how it will be used
-> in the wild, so the scriptlets must be valid zsh code.  We also want to
-> test how __git_ps1 behaves in native bash mode, so the scriptlets must
-> also be valid bash code.  (Fortunately the similarities between the
-> shells make this easy to do.)
+> lookup_commit_or_die() looked like a good API to me because I saw that
+> it checked a lot of things and die in case of problems, which could
+> make the patch shorter.
 
-OK.  The above all makes sense, but I think we would prefer a
-solution with changes limited to lib-prompt-tests and lib-zsh
-without touching lib-test-functions at all if that is the case.
+Perhaps I was vague.  "find the commit object and die if that object
+is not properly formed" is a good thing.  I was referring to the
+fact that you
 
-> An alternative to this commit -- and I kinda like this idea so I'm
-> tempted to rewrite the series -- would be to do change the form of the
-> tests in lib-prompt-tests.sh to something like this:
->
->     test_expect_success 'name of test here' '
->         run_in_native_shell_mode '\''
->             scriptlet code here
->         '\''
->     '
+    - first had to do get-sha1 yourself to turn the extended sha1
+      you got from the user into a binary object name, and die with
+      your own error message if the user input was malformed.
 
-Yeah, or even:
+    - and then had to call lookup-commit-or-die to do the checking
+      and let it die.
 
-	prompt_test_expect success 'name of test' '
-        	scriptlet code here
-	'
+It would have been simpler for *this* particular codepath if we had
+another helper function you can use like so:
 
-with a helper prompt_test_expect that wraps whatever logic you will
-have in run-in-native-shell-mode.
+	commit = lookup_commit_with_extended_sha1_or_die(old_ref);
 
-> ...
-> This approach makes it clear to others that the scriptlet code is not
-> actually POSIX shell code, but a common subset of multiple shell languages.
->
-> What do you think?
-
-;-)
-
-> Ignoring t9902 for a moment, we could even stop doing that messy 'exec
-> $SHELL "$0" "$@"' stuff in lib-*sh.sh and let t9903 and t9904 run under
-> /bin/sh.  Then run_in_native_shell_mode() would be defined as follows:
-
-No, let's not go there (and you stated the reason why we do not want
-to yourself already ;-).
+which did the two-call sequence you handrolled above, and I was
+wondering if other existing callers to lookup-commit-or-die wished
+the same thing.
