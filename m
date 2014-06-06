@@ -1,118 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] userdiff: support C# async methods and correct C# keywords
-Date: Fri, 06 Jun 2014 10:34:11 -0700
-Message-ID: <xmqq61keq6wc.fsf@gitster.dls.corp.google.com>
-References: <1401682405-3319-1-git-send-email-ch3cooli@gmail.com>
-	<xmqqy4xbq7xo.fsf@gitster.dls.corp.google.com>
-	<CACbrTHcVNmffTHPPnPYDXXwYQacmiS77573Y+GpyjSv-yHQM7g@mail.gmail.com>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH 0/5] First part of Unicode console support for msysgit
+Date: Fri, 06 Jun 2014 19:44:33 +0200
+Message-ID: <5391FE01.9040501@gmail.com>
+References: <1402062173-9602-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sup Yut Sum <ch3cooli@gmail.com>, git <git@vger.kernel.org>
-To: Steve Hoelzer <shoelzer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 19:34:22 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+Cc: msysGit <msysgit@googlegroups.com>
+To: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>
+X-From: msysgit+bncBCH3XYXLXQDBB773Y6OAKGQE4527OBY@googlegroups.com Fri Jun 06 19:44:33 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBB773Y6OAKGQE4527OBY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f60.google.com ([209.85.215.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wsy22-000383-58
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 19:34:22 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750862AbaFFReS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2014 13:34:18 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65386 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750773AbaFFReR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2014 13:34:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C5B691C233;
-	Fri,  6 Jun 2014 13:34:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6IIUS1ylnQuUGa6kJSoy8z8+/5U=; b=HJ16jG
-	K26rr/UR8DgBciBzwkvZilLYFSLnYgPxeNqVhRsnS8uoCs/MUbzdT0K2wWLonhfF
-	mlMu853s0xyb4SVf4NAZ62ZIiYeDQGwWMupIQVC8k9PJJ7k50hvp25ZJmnFSSes8
-	j38mIEg5veGSBSoBCXqzYMDceJ5usGCpRFO2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BbzhHzMbieo93o7SgEfsD63ndSerMA3b
-	L0tKA4gmB3O9RCMGZuzk3Fq1uJgLyk5SZcrayJ59Krk8znp4nAhHI9wZYU5cK/i+
-	MI/d6knfX2Zhzca7W2SUwY+3hiDoydR6FBKCIUHrV+UDp6LrdwFZQ+EW/Si6lP8r
-	olWQGMdBBZs=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BC2C41C232;
-	Fri,  6 Jun 2014 13:34:16 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0F1301C22E;
-	Fri,  6 Jun 2014 13:34:12 -0400 (EDT)
-In-Reply-To: <CACbrTHcVNmffTHPPnPYDXXwYQacmiS77573Y+GpyjSv-yHQM7g@mail.gmail.com>
-	(Steve Hoelzer's message of "Fri, 6 Jun 2014 08:27:43 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C66B4FB0-EDA0-11E3-AF81-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250952>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBB773Y6OAKGQE4527OBY@googlegroups.com>)
+	id 1WsyBs-0000AY-8d
+	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 19:44:32 +0200
+Received: by mail-la0-f60.google.com with SMTP id pn19sf376684lab.25
+        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 10:44:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-transfer-encoding;
+        bh=qiGmSiaOYOOu/MPkc6eLIZ778Hq5mID5Mmzu2iYsVaE=;
+        b=g0/da4S1+V/I8U9kTg48BYUm2ExCGqrVU9+kd/lQMqRvFrxnHDYUhQY90wNTULiDGY
+         j+WomvcnPsy8Aynxa4BkqTwMXNK0zEKdqS0Wp0bS7aA8N9v5EsXXAJPypdMraBa+EW6p
+         qP5dp2+Fpv0mEwS7Q5VY1s5AloSypePtzIfOUfQXYkVzDtQGiYKh73exDNIDoAPGK6LP
+         hiiXVLtL9vxTuvmll97TXuT3gHRKybjztB0s+AcnMOUra8gqJniuN38wQcTAn4i9MV2a
+         NB4+V1uiA81TGA2/6MHD/GwhSdmsGLm7DCxmjkECDyrc+YSiVOtx1FcB18yhbCpj10F9
+         9OTw==
+X-Received: by 10.152.2.131 with SMTP id 3mr37503lau.18.1402076672126;
+        Fri, 06 Jun 2014 10:44:32 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.36.4 with SMTP id m4ls144276laj.45.gmail; Fri, 06 Jun 2014
+ 10:44:31 -0700 (PDT)
+X-Received: by 10.112.199.101 with SMTP id jj5mr488211lbc.22.1402076671040;
+        Fri, 06 Jun 2014 10:44:31 -0700 (PDT)
+Received: from mail-wi0-x236.google.com (mail-wi0-x236.google.com [2a00:1450:400c:c05::236])
+        by gmr-mx.google.com with ESMTPS id xk11si1384384wib.0.2014.06.06.10.44.31
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 06 Jun 2014 10:44:31 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236 as permitted sender) client-ip=2a00:1450:400c:c05::236;
+Received: by mail-wi0-x236.google.com with SMTP id r20so1430135wiv.3
+        for <msysgit@googlegroups.com>; Fri, 06 Jun 2014 10:44:31 -0700 (PDT)
+X-Received: by 10.15.64.76 with SMTP id n52mr813125eex.48.1402076670733;
+        Fri, 06 Jun 2014 10:44:30 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id f45sm3327703eem.15.2014.06.06.10.44.29
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 06 Jun 2014 10:44:29 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <1402062173-9602-1-git-send-email-kasal@ucw.cz>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250953>
 
-Steve Hoelzer <shoelzer@gmail.com> writes:
+Am 06.06.2014 15:42, schrieb Stepan Kasal:
+> Hello,
+>=20
+> this is first part of the unicode support pathes from msysgit.
+>=20
 
-> On Thu, Jun 5, 2014 at 5:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Sup Yut Sum <ch3cooli@gmail.com> writes:
->>
->>> async is in C# 5.0
->>> foreach is in C# 1.0
->>
->>> instanceof is in Java. The similar keywords are typeof, is, as in C# 1.0
->>
->> This one made me read it twice, until I realized you meant
->>
->>     instanceof() is listed as keywords, but there is no such thing
->>     (it is in Java, though); in C# we use typeof() for similar
->>     purposes
->
-> The original email was a bit hard to parse. Junio's clarification left
-> out the C# keywords 'is' and 'as'. I suggest phrasing it like this:
->
-> instanceof() is listed as keywords, but there is no such thing (it is
-> in Java, though); in C# we use typeof(), 'is', and 'as for similar
-> purposes
+Nicely done, thanks!
 
-You would need to balance the quotes around "as" ;-)
+I think its important to reiterate that these patches were written several =
+years apart, so there are some inconsistencies and back-and-forth changes (=
+e.g. [5/5] fixes line break errors introduced in [3/5]). I'm OK with mergin=
+g this as is, if there are no objections from the list, simply because it r=
+epresents the battle tested history we have in Git for Windows.
 
-But reading the patch again after noticing that you have () after
-typeof but not after is/as, I am not sure if the change proposed
-here is even correct for the latter two.  I do not speal c-sharp, so
-I asked http://msdn.microsoft.com/en-us/library/cscsdfbt.aspx for
-some examples and here are what I found:
+The only real complaint I have is that I'm missing [6/5] "Win32: fix broken=
+ pipe detection" [1], which leaves this series in a slightly broken state (=
+terminating the pager will not terminate the calling git process).
 
-    Type t = typeof(ExampleClass)
-    Base b = derived as Base;
-    if (obj is MyObject) ...
 
-Unlike the control-flow keywords (e.g. do/while/for/...), do they
-typically appear at the beginning of lines?  
+Nitpicking follows...
 
-Isn't the purpose of these !^[ \t]* patterns to reject lines that
-begin with the language keywords that do not start functions, so
-listing a keyword that does not usually appear at the beginning of
-line looks like a churn that is not useful.
+> The first three patches originate in Jun 2010, though some fixups from 20=
+12
+> have been squashed in.
+> The fourth one is just a trivial prerequisite for
+> the last one, that was written in Jan 2012, with a fixup from Mar 2012.
+>=20
 
-> diff --git a/userdiff.c b/userdiff.c
-> index fad52d6..96eda6c 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -134,9 +134,9 @@ PATTERNS("cpp",
->  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*"),
->  PATTERNS("csharp",
->  	 /* Keywords */
-> -	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
-> +	 "!^[ \t]*(do|while|for|foreach|if|else|typeof|is|as|new|return|switch|case|default|throw|try|catch|using)\n"
->  	 /* Methods and constructors */
-> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
-> +	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
->  	 /* Properties */
->  	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
->  	 /* Type definitions */
+The dates are missing from the patches.
+It would also have been nice to name (or link to) the patches you sqashed.
+
+> Regards,
+> 	Stepan
+>=20
+> Karsten Blees (5):
+>   Support Unicode console output on Windows
+
+This introduces WriteConsoleW, so you could have squashed half of "Win32: f=
+ix segfault in WriteConsoleW when debugging in gdb" [2] (second  half in [5=
+/5]).
+
+>   Detect console streams more reliably on Windows
+>   Warn if the Windows console font doesn't support Unicode
+
+I think this one includes "MSVC: fix winansi.c compile errors " [3] and "Un=
+icode console: fix font warning on Vista and Win7" [4] (which is partly rev=
+erted by [5/5], which also fixes the formatting).
+
+>   Win32: move main macro to a function
+
+Note: this one was submitted seperately on May 29 and May 1 (can't find it =
+in the gmane archive, though).
+
+>   Win32: Thread-safe windows console output
+>=20
+>  compat/mingw.c   |  24 ++-
+>  compat/mingw.h   |  24 +--
+>  compat/winansi.c | 446 ++++++++++++++++++++++++++++++++++++++++---------=
+------
+>  3 files changed, 356 insertions(+), 138 deletions(-)
+>=20
+
+[1] https://github.com/msysgit/git/commit/67934f93
+[2] https://github.com/msysgit/git/commit/cd0792af
+[3] https://github.com/msysgit/git/commit/3abcb04d
+[4] https://github.com/msysgit/git/commit/981aa538
+
+
+--=20
+--=20
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
+accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+
+---=20
+You received this message because you are subscribed to the Google Groups "=
+msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
