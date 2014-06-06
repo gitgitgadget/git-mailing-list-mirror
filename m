@@ -1,253 +1,190 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v3] receive-pack: optionally deny case clone refs
-Date: Thu,  5 Jun 2014 20:52:34 -0400
-Message-ID: <1402015954-5320-1-git-send-email-dturner@twitter.com>
-Cc: David Turner <dturner@twitter.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 06 02:53:18 2014
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [PATCH v2 10/11] test-lib: make it possible to override how test
+ code is eval'd
+Date: Thu, 05 Jun 2014 21:00:07 -0400
+Message-ID: <53911297.9030106@bbn.com>
+References: <1401176460-31564-1-git-send-email-rhansen@bbn.com>	<1401915687-8602-1-git-send-email-rhansen@bbn.com>	<1401915687-8602-11-git-send-email-rhansen@bbn.com> <xmqqk38vrrig.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 03:00:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WsiPF-000450-PZ
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 02:53:18 +0200
+	id 1WsiW8-0000A7-0u
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 03:00:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751654AbaFFAxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 20:53:09 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:38887 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419AbaFFAxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 20:53:08 -0400
-Received: by mail-qg0-f46.google.com with SMTP id q108so2996641qgd.33
-        for <git@vger.kernel.org>; Thu, 05 Jun 2014 17:53:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=KiWiqb+iSs5JdP+OaC4xFT1l6H3ttt3s1ARAtLUBuAU=;
-        b=J+9epSfz1w2/aG3pkfrO6rdYGcYp77yVd+WFdkXlRt2hvZ2Tk0wbdWszztq58PY3/I
-         5S5gWHEnFX3xwsWE/FpktabUuZCvZeJvF5tjzDpNe9LgoXzcC7OpCENazODT6/0F79u5
-         ibv1hje09bF6bPSVjxyiSmIOuzUKdWJ0S5OFs5cb9F0acyKLAAwnCvuyzldT8+wy+0Zl
-         Lo6DBDlgXpBd0siJQUhNNa4PlAOAGNyupsqpjQNwP72JvebaItRRP8cfCXfpaDv3WfcJ
-         /OnLPydrbKRmA/jdLYsLzAqI1OEyRHJ9YBgEnQSCoNACcko3FFtYhgJ/Ztk/fs7pujAU
-         bOqQ==
-X-Gm-Message-State: ALoCoQlkIfLneLQgtPK6/WcjmdopVM1COhsViRDQVJZc14Ppo1yO3poG5baaBuVbr6TofM15elBo
-X-Received: by 10.224.7.6 with SMTP id b6mr2051033qab.45.1402015987168;
-        Thu, 05 Jun 2014 17:53:07 -0700 (PDT)
-Received: from stross.twitter.corp ([38.104.173.198])
-        by mx.google.com with ESMTPSA id 6sm12079285qam.44.2014.06.05.17.53.05
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Jun 2014 17:53:06 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
-X-Mailer: git-send-email 2.0.0.rc1.24.g0588c94.dirty
+	id S1751619AbaFFBAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 21:00:11 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:38849 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751384AbaFFBAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 21:00:10 -0400
+Received: from socket.bbn.com ([192.1.120.102]:36643)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1WsiW4-000Lvw-3P; Thu, 05 Jun 2014 21:00:20 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id E71E33FF81
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqqk38vrrig.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250885>
 
-It is possible to have two refs which are the same but for case.
-This works great on the case-sensitive filesystems, but not so well on
-case-insensitive filesystems.  It is fairly typical to have
-case-insensitive clients (Macs, say) with a case-sensitive server
-(GNU/Linux).
+On 2014-06-05 17:11, Junio C Hamano wrote:
+> Richard Hansen <rhansen@bbn.com> writes:
+> 
+>> Because test_eval_ is defined while zsh is in sh emulation mode, the
+>> shell code passed as an argument to test_expect_success would normally
+>> be evaluated in sh emulation mode.  However, with this change, it is
+>> now possible to evaluate the test code in zsh mode by adding the
+>> following line to a zsh-based test script:
+>>
+>>     emulate -R zsh -c 'test_eval_override () { eval "$*"; }'
+>>
+>> With test_eval_override defined in zsh emulation mode, the call to
+>> test_eval_override from test_eval_ will temporarily cause zsh to
+>> switch from sh emulation mode to zsh emulation mode.
+> 
+> Micronit: aren't all "zsh emulation mode"s above "zsh native mode"s?
 
-Should a user attempt to pull on a Mac when there are case clone refs
-with differing contents, they'll get an error message containing
-something like "Ref refs/remotes/origin/lower is at
-[sha-of-lowercase-ref] but expected [sha-of-uppercase-ref]....
-(unable to update local ref)"
+Sort of...  Zsh's emulation is under-documented, confusing, and
+awkwardly implemented (in my opinion) so it's hard to precisely describe
+what's going on in a few words.
 
-With a case-insensitive git server, if a branch called capital-M
-Master (that differs from lowercase-m-master) is pushed, nobody else
-can push to (lowercase-m) master until the branch is removed.
+I'll explain it here more precisely (apologies for the length) and you
+can let me know if I should add more detail to the commit message and/or
+code comments:
 
-Create the option receive.denycaseclonerefs, which checks pushed
-refs to ensure that they are not case clones of an existing
-ref.  This setting is turned on by default if core.ignorecase is
-set, but not otherwise.
+As far as I understand it, there isn't really such a thing as an
+"emulation mode" in Zsh -- the phrase "emulation mode" is just a
+convenient way to refer to the mechanism.  Zsh "emulates" other shells
+by simply toggling a particular collection of shell options.  For
+example, 'emulate sh' turns on the option that controls field splitting
+and turns off the option that updates $0 whenever a function is called
+(among other option changes).
 
-Signed-off-by: David Turner <dturner@twitter.com>
----
- Documentation/config.txt           |  6 +++++
- Documentation/git-push.txt         |  5 +++--
- Documentation/glossary-content.txt |  5 +++++
- builtin/receive-pack.c             | 27 +++++++++++++++++++++-
- t/t5400-send-pack.sh               | 46 ++++++++++++++++++++++++++++++++++++++
- 5 files changed, 86 insertions(+), 3 deletions(-)
+One might expect 'emulate <shell> -c <code>' to be equivalent to
+'emulate <shell>; <code>; emulate <previous_shell>' but it's not --
+there's a significant behavior difference.  When '-c <code>' is used,
+and only when '-c <code>' is used, a function defined inside <code> gets
+"sticky options":  The shell remembers the state of some (all?) options
+and saves them along with the function definition.  Whenever the
+function is called, those sticky options are temporarily restored for
+the duration of the function call.  (This is not entirely accurate --
+there are some relatively unimportant cases where the sticky options
+aren't restored -- but I don't understand the subtleties of the
+mechanism well enough to provide a perfectly accurate description.)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1932e9b..b24b117 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2053,6 +2053,12 @@ receive.unpackLimit::
- 	especially on slow filesystems.  If not set, the value of
- 	`transfer.unpackLimit` is used instead.
- 
-+receive.denyCaseCloneRefs::
-+	If set to true, git-receive-pack will deny a ref update that creates
-+	a ref which is the same but for case as an existing ref.  This is
-+	useful when clients are on a case-insensitive filesystem, which
-+	will cause errors when given refs which differ only in case.
-+
- receive.denyDeletes::
- 	If set to true, git-receive-pack will deny a ref update that deletes
- 	the ref. Use this to prevent such a ref deletion via a push.
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 21cd455..c92c3a6 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -323,8 +323,9 @@ remote rejected::
- 	of the following safety options in effect:
- 	`receive.denyCurrentBranch` (for pushes to the checked out
- 	branch), `receive.denyNonFastForwards` (for forced
--	non-fast-forward updates), `receive.denyDeletes` or
--	`receive.denyDeleteCurrent`.  See linkgit:git-config[1].
-+	non-fast-forward updates), `receive.denyDeletes`,
-+	`receive.denyCaseCloneRefs` or `receive.denyDeleteCurrent`.
-+	See linkgit:git-config[1].
- 
- remote failure::
- 	The remote end did not report the successful update of the ref,
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index be0858c..ed5ac23 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -31,6 +31,11 @@
- [[def_cache]]cache::
- 	Obsolete for: <<def_index,index>>.
- 
-+[[def_case_clone]]case clone::
-+	Two entities (e.g. filenames or refs) that differ only in case.
-+	These can cause problems on case-insensitive filesystems, and
-+	Git has machinery to prevent these problems in various cases.
-+
- [[def_chain]]chain::
- 	A list of objects, where each <<def_object,object>> in the list contains
- 	a reference to its successor (for example, the successor of a
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c323081..8530a6c 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -27,6 +27,7 @@ enum deny_action {
- 
- static int deny_deletes;
- static int deny_non_fast_forwards;
-+static int deny_case_clone_refs = DENY_UNCONFIGURED;
- static enum deny_action deny_current_branch = DENY_UNCONFIGURED;
- static enum deny_action deny_delete_current = DENY_UNCONFIGURED;
- static int receive_fsck_objects = -1;
-@@ -69,6 +70,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
- 	if (status)
- 		return status;
- 
-+	if (strcmp(var, "receive.denycaseclonerefs") == 0) {
-+		deny_case_clone_refs = parse_deny_action(var, value);
-+		return 0;
-+	}
-+
- 	if (strcmp(var, "receive.denydeletes") == 0) {
- 		deny_deletes = git_config_bool(var, value);
- 		return 0;
-@@ -468,6 +474,22 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
- 	return 0;
- }
- 
-+static int is_case_clone(const char *refname, const unsigned char *sha1,
-+			int flags, void *cb_data)
-+{
-+	const char *incoming_refname = cb_data;
-+	return !strcasecmp(refname, incoming_refname) &&
-+		strcmp(refname, incoming_refname);
-+}
-+
-+static int ref_is_denied_case_clone(const char *name)
-+{
-+	if (!deny_case_clone_refs)
-+		return 0;
-+
-+	return for_each_ref(is_case_clone, (void *) name);
-+}
-+
- static const char *update(struct command *cmd, struct shallow_info *si)
- {
- 	const char *name = cmd->ref_name;
-@@ -478,7 +500,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 	struct ref_lock *lock;
- 
- 	/* only refs/... are allowed */
--	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
-+	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0) ||
-+	    ref_is_denied_case_clone(name)) {
- 		rp_error("refusing to create funny ref '%s' remotely", name);
- 		return "funny refname";
- 	}
-@@ -1171,6 +1194,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		die("'%s' does not appear to be a git repository", dir);
- 
- 	git_config(receive_pack_config, NULL);
-+	if (deny_case_clone_refs == DENY_UNCONFIGURED)
-+		deny_case_clone_refs = ignore_case;
- 
- 	if (0 <= transfer_unpack_limit)
- 		unpack_limit = transfer_unpack_limit;
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index 0736bcb..a7023dc 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -129,6 +129,52 @@ test_expect_success 'denyNonFastforwards trumps --force' '
- 	test "$victim_orig" = "$victim_head"
- '
- 
-+test_expect_success 'denyCaseCloneRefs works' '
-+	(
-+	    cd victim &&
-+	    git config receive.denyCaseCloneRefs true &&
-+	    git config receive.denyDeletes false
-+	) &&
-+	git send-pack ./victim HEAD:refs/heads/caseclone &&
-+	orig_ver=$(git rev-parse HEAD) &&
-+	test_must_fail git send-pack ./victim HEAD^:refs/heads/CaseClone &&
-+	# confirm that this had no effect upstream
-+	(
-+	    cd victim &&
-+	    ref=$(git for-each-ref --format="%(refname)" refs/heads/CaseClone) &&
-+	    echo "$ref" | test_must_fail grep -q CaseClone &&
-+	    remote_ver=$(git rev-parse caseclone) &&
-+	    test "$orig_ver" = "$remote_ver"
-+	) &&
-+	git send-pack ./victim HEAD^:refs/heads/notacaseclone &&
-+	test_must_fail git send-pack ./victim :CaseClone &&
-+	# confirm that this had no effect upstream
-+	(
-+	    cd victim &&
-+	    ref=$(git for-each-ref --format="%(refname)" refs/heads/CaseClone) &&
-+	    echo "$ref" | test_must_fail grep -q CaseClone &&
-+	    remote_ver=$(git rev-parse caseclone) &&
-+	    test "$orig_ver" = "$remote_ver"
-+	) &&
-+	git send-pack ./victim :caseclone &&
-+	# confirm that this took effect upstream
-+	(
-+	    cd victim &&
-+	    test_must_fail git rev-parse caseclone
-+	) &&
-+	# check that we can recreate a branch after deleting a
-+	# case-clone of it
-+	case_clone_ver=$(git rev-parse HEAD^) &&
-+	git send-pack ./victim HEAD^:refs/heads/CaseClone &&
-+	(
-+	    cd victim &&
-+	    ref=$(git for-each-ref --format="%(refname)" refs/heads/caseclone) &&
-+	    test_echo "$ref" | test_must_fail grep -q caseclone  &&
-+	    remote_ver=$(git rev-parse CaseClone) &&
-+	    test "$case_clone_ver" = "$remote_ver"
-+	)
-+'
-+
- test_expect_success 'push --all excludes remote-tracking hierarchy' '
- 	mkdir parent &&
- 	(
--- 
-2.0.0.rc1.24.g0588c94.dirty
+If a function with sticky options calls a function without sticky
+options, the sticky options remain in effect -- Zsh doesn't temporarily
+revert the sticky options while it calls the non-sticky function.
+
+Thus, if a function foo() is declared inside 'emulate sh -c <code>', and
+it calls a function bar() that was declared outside of 'emulate', the
+options are still set for POSIX sh during bar()'s execution.  This might
+cause bar() to misbehave.  To work around this, bar() must be declared
+like 'emulate zsh -c "bar() { stuff... }"' so that bar() gets its own
+sticky options.
+
+This commit makes it possible to declare a function that will get sticky
+options so that we can control the state of the shell when the scriptlet
+is executed.
+
+> 
+> In any case, the above explanation confuses me somewhat.  test_eval_
+> is fed a scriptlet defined for various test_expect_success tests,
+> and they are written in POSIX shells, not zsh, so wouldn't it be
+> wrong to run them as if they are zsh native scripts, following
+> non-POSIX shell syntax rules?
+
+The scriptlets in lib-prompt-tests.sh are not actually written for POSIX
+sh -- they are written in a common subset of the zsh and bash languages
+(I should document this in lib-prompt-tests.sh).
+
+We want to test how the __git_ps1 code behaves when interpreted in
+"native" zsh mode (default options), because that's how it will be used
+in the wild, so the scriptlets must be valid zsh code.  We also want to
+test how __git_ps1 behaves in native bash mode, so the scriptlets must
+also be valid bash code.  (Fortunately the similarities between the
+shells make this easy to do.)
+
+An alternative to this commit -- and I kinda like this idea so I'm
+tempted to rewrite the series -- would be to do change the form of the
+tests in lib-prompt-tests.sh to something like this:
+
+    test_expect_success 'name of test here' '
+        run_in_native_shell_mode '\''
+            scriptlet code here
+        '\''
+    '
+
+Then lib-zsh.sh would do this:
+
+    run_in_native_shell_mode () { emulate -R zsh -c "$*"; }
+
+and lib-bash.sh would do this:
+
+    run_in_native_shell_mode () { eval "$*"; }
+
+This approach makes it clear to others that the scriptlet code is not
+actually POSIX shell code, but a common subset of multiple shell languages.
+
+What do you think?
+
+Ignoring t9902 for a moment, we could even stop doing that messy 'exec
+$SHELL "$0" "$@"' stuff in lib-*sh.sh and let t9903 and t9904 run under
+/bin/sh.  Then run_in_native_shell_mode() would be defined as follows:
+
+  for zsh:
+
+    # wrap the scriptlet in a function in case it does 'return'
+    run_in_native_shell_mode () { zsh -c "foo () { $*; }; foo"; }
+
+  for bash:
+
+    # wrap the scriptlet in a function in case it does 'return'
+    run_in_native_shell_mode () { bash -c "foo () { $*; }; foo"; }
+
+Running the scriptlets in a separate process like this would cause its
+own mess -- the separate processes wouldn't be able to use those
+convenience shell functions I added (pcmode_expected(), etc.), so either
+there'd be a lot of code copy+paste or each scriptlet would have to
+source a helper library.
+
+-Richard
+
+> 
+> Puzzled...
+> 
+>> Signed-off-by: Richard Hansen <rhansen@bbn.com>
+>> ---
+>>  t/test-lib.sh | 7 ++++++-
+>>  1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/t/test-lib.sh b/t/test-lib.sh
+>> index c081668..3779634 100644
+>> --- a/t/test-lib.sh
+>> +++ b/t/test-lib.sh
+>> @@ -414,7 +414,12 @@ maybe_setup_valgrind () {
+>>  test_eval_ () {
+>>  	# This is a separate function because some tests use
+>>  	# "return" to end a test_expect_success block early.
+>> -	eval </dev/null >&3 2>&4 "$*"
+>> +	if command -v test_eval_override >/dev/null 2>&1
+>> +	then
+>> +		test_eval_override "$*"
+>> +	else
+>> +		eval "$*"
+>> +	fi </dev/null >&3 2>&4
+>>  }
+>>  
+>>  test_run_ () {
