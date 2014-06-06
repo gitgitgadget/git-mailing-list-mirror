@@ -1,25 +1,25 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: [PATCH] mingw: redefine the wrapper macro after the
+Subject: [PATCH v2] mingw: redefine the wrapper macro after the
  corresponding function
-Date: Fri, 6 Jun 2014 10:32:33 +0200
+Date: Fri, 6 Jun 2014 10:41:22 +0200
 Organization: <)><
-Message-ID: <20140606083233.GB1303@camelia.ucw.cz>
-References: <20140605080519.GB28029@camelia.ucw.cz> <5390A139.2090406@kdbg.org> <5390E893.9060600@gmail.com>
+Message-ID: <20140606084122.GC1303@camelia.ucw.cz>
+References: <20140605080519.GB28029@camelia.ucw.cz> <5390A139.2090406@kdbg.org> <5390E893.9060600@gmail.com> <20140606083233.GB1303@camelia.ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Johannes Sixt <j6t@kdbg.org>, GIT Mailing-list <git@vger.kernel.org>,
         msysGit <msysgit@googlegroups.com>
 To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCU63DXMWULRBI7ZYWOAKGQE7LX35VI@googlegroups.com Fri Jun 06 10:32:36 2014
-Return-path: <msysgit+bncBCU63DXMWULRBI7ZYWOAKGQE7LX35VI@googlegroups.com>
+X-From: msysgit+bncBCU63DXMWULRBNH5YWOAKGQE52IBIXY@googlegroups.com Fri Jun 06 10:41:27 2014
+Return-path: <msysgit+bncBCU63DXMWULRBNH5YWOAKGQE52IBIXY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f190.google.com ([209.85.212.190])
+Received: from mail-la0-f56.google.com ([209.85.215.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBI7ZYWOAKGQE7LX35VI@googlegroups.com>)
-	id 1WspZk-0005B6-Gt
-	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 10:32:36 +0200
-Received: by mail-wi0-f190.google.com with SMTP id q5sf53166wiv.7
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 01:32:36 -0700 (PDT)
+	(envelope-from <msysgit+bncBCU63DXMWULRBNH5YWOAKGQE52IBIXY@googlegroups.com>)
+	id 1WspiG-0000uG-Uo
+	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 10:41:24 +0200
+Received: by mail-la0-f56.google.com with SMTP id mc6sf251753lab.1
+        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 01:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=date:from:to:cc:subject:message-id:references:mime-version
@@ -27,38 +27,38 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type:content-disposition;
-        bh=u6dl/Px/RxHlPSV3RE2ROaFTZarLXYmhlrtsQ47bpJk=;
-        b=HiGfgrNMpdfq5fTKS02zuN8QtDMB98QP/YrPa4E3eiKzVR1lNcx5+O5rlJ/OfwSE4n
-         IJ/UTeV8mAJVm2QiiAAYZ3T96Gf+VUknRMo49LicRoX+ad642gAuwxZqm7/b76tIPRpX
-         my2dIbdIPhMjvP8qD874KpaT0tqhKSypLwnIppWuFQY5+pGDUe2kWXXu4RCqkZ0I3hGe
-         ZaYONBA8A92HgX0Mg7NL8itRszIv5wwWYh+Np21rogCDb8bMwNZEb2ya7p5vn8P5IBaR
-         qfIqkE0uxeAcFwhc+cArojoyWCoDir91t+pJ3Gw9pmLSmXyqbJJwsxDuJ2WfX2JMZCJ2
-         IBww==
-X-Received: by 10.180.20.43 with SMTP id k11mr8510wie.12.1402043556287;
-        Fri, 06 Jun 2014 01:32:36 -0700 (PDT)
+        bh=FMcsEt77p1orRpldtG5LMK13vxmyXphqSNHlfhvhMkY=;
+        b=smxV4S+1wQWk6Z+efqwbYLkqGkKKObef8U1YLXW0QKhlAUohQCVwVqmWdqpZQMxCwr
+         g29oNsguQu/NKVobgLBrXcU5yUdWo3+cHTXyJQ61tV+wuZdi1fSCTHLS3kfQXyh/dXyk
+         mdrU0Bn6xPlM9V7DmefI76ZtBlZOe6z3LZl5h2BozuQkRjUYzCeyUy7OvBmtmADzaMCn
+         YAftT5utMRJ9t5EgcmLRrEStGdwVtGYcFfdLXEeiskApVYV8ThBRGqe962G2RynBgOm5
+         lhhdIt1ck6XDhS8lD2hySNApb7kf1McIrM0Gj/vlgkuC7viL4r+u+9uCh6UEZgPZ3jEP
+         lQKg==
+X-Received: by 10.152.88.65 with SMTP id be1mr2006lab.35.1402044084718;
+        Fri, 06 Jun 2014 01:41:24 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.93.162 with SMTP id cv2ls45040wib.25.gmail; Fri, 06 Jun
- 2014 01:32:35 -0700 (PDT)
-X-Received: by 10.180.82.98 with SMTP id h2mr591376wiy.0.1402043555293;
-        Fri, 06 Jun 2014 01:32:35 -0700 (PDT)
+Received: by 10.152.197.1 with SMTP id iq1ls91109lac.18.gmail; Fri, 06 Jun
+ 2014 01:41:23 -0700 (PDT)
+X-Received: by 10.112.89.10 with SMTP id bk10mr1115774lbb.5.1402044083589;
+        Fri, 06 Jun 2014 01:41:23 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id e12si1594117wiv.1.2014.06.06.01.32.35
+        by gmr-mx.google.com with ESMTP id eh2si1227762wib.2.2014.06.06.01.41.23
         for <msysgit@googlegroups.com>;
-        Fri, 06 Jun 2014 01:32:35 -0700 (PDT)
+        Fri, 06 Jun 2014 01:41:23 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client did not present a certificate)
 	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 06E481C009B;
-	Fri,  6 Jun 2014 10:32:35 +0200 (CEST)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 2C3FA1C009B;
+	Fri,  6 Jun 2014 10:41:23 +0200 (CEST)
 Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s568WYv4001465;
-	Fri, 6 Jun 2014 10:32:34 +0200
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s568fMA1001524;
+	Fri, 6 Jun 2014 10:41:22 +0200
 Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s568WXrd001464;
-	Fri, 6 Jun 2014 10:32:33 +0200
-In-Reply-To: <5390E893.9060600@gmail.com>
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s568fMXD001523;
+	Fri, 6 Jun 2014 10:41:22 +0200
+In-Reply-To: <20140606083233.GB1303@camelia.ucw.cz>
 User-Agent: Mutt/1.5.19 (2009-01-05)
 X-Original-Sender: kasal@ucw.cz
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
@@ -74,29 +74,232 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
 Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250894>
 
-Hello,
+>From 624d15bd5d2d06035abc17415127a7cf37b5f981 Mon Sep 17 00:00:00 2001
+From: Stepan Kasal <kasal@ucw.cz>
+Date: Thu, 5 Jun 2014 09:17:17 +0200
 
-On Fri, Jun 06, 2014 at 12:00:51AM +0200, Karsten Blees wrote:
-> Am 05.06.2014 18:56, schrieb Johannes Sixt:
-> > Within mingw.c, if some other function inside mingw.c wants to use
-> > mingw_unlink, then it should be written as 'mingw_unlink(foo)', not
-> > 'unlink(foo)'.
-> I very much like this approach. In fact, we already do this for e.g. mingw_raise.
+mingw.c defines several wrapper functions, e.g., mingw_unlink().
+These wrappers are deployed by macros like this:
+	#define unlink mingw_unlink
+The mingw_foo() wrapper often calls the original function, so it has
+to be #undef'ed at that place.
 
-Hannes, this is consistent with your commit 06bc4b7.  Settled.
+But for the rest of mingw.c, if the function is used, the user probably
+meant the fixed functionality.  So it is safer to redefine the macro
+back.
 
-> Other callers would typically want the wrapped version (i.e.
-> mingw_*).
+Nonetheless, it is preferable to call mingw_foo() explicitly throughout
+mingw.c itself.
 
-If this assumption were true, then we have to keep the wrapper macros
-defined, both above and below the wrapper function definition.
-You are in fact advocating my patch.
+Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+---
+ compat/mingw.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-Updated version follows.
-
-Stepan
+diff --git a/compat/mingw.c b/compat/mingw.c
+index a0e13bc..ee83211 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -224,6 +224,7 @@ int mingw_unlink(const char *pathname)
+ 	       ret = unlink(pathname);
+ 	return ret;
+ }
++#define unlink mingw_unlink
+ 
+ static int is_dir_empty(const char *path)
+ {
+@@ -279,6 +280,7 @@ int mingw_rmdir(const char *pathname)
+ 	       ret = rmdir(pathname);
+ 	return ret;
+ }
++#define rmdir mingw_rmdir
+ 
+ #undef open
+ int mingw_open (const char *filename, int oflags, ...)
+@@ -303,6 +305,7 @@ int mingw_open (const char *filename, int oflags, ...)
+ 	}
+ 	return fd;
+ }
++#define open mingw_open
+ 
+ static BOOL WINAPI ctrl_ignore(DWORD type)
+ {
+@@ -328,6 +331,7 @@ int mingw_fgetc(FILE *stream)
+ 	SetConsoleCtrlHandler(ctrl_ignore, FALSE);
+ 	return ch;
+ }
++#define fgetc mingw_fgetc
+ 
+ #undef fopen
+ FILE *mingw_fopen (const char *filename, const char *otype)
+@@ -336,6 +340,7 @@ FILE *mingw_fopen (const char *filename, const char *otype)
+ 		filename = "nul";
+ 	return fopen(filename, otype);
+ }
++#define fopen mingw_fopen
+ 
+ #undef freopen
+ FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream)
+@@ -344,6 +349,7 @@ FILE *mingw_freopen (const char *filename, const char *otype, FILE *stream)
+ 		filename = "nul";
+ 	return freopen(filename, otype, stream);
+ }
++#define freopen mingw_freopen
+ 
+ #undef fflush
+ int mingw_fflush(FILE *stream)
+@@ -366,6 +372,7 @@ int mingw_fflush(FILE *stream)
+ 
+ 	return ret;
+ }
++#define fflush mingw_fflush
+ 
+ /*
+  * The unit of FILETIME is 100-nanoseconds since January 1, 1601, UTC.
+@@ -525,7 +532,7 @@ int mingw_utime (const char *file_name, const struct utimbuf *times)
+ 		SetFileAttributes(file_name, attrs & ~FILE_ATTRIBUTE_READONLY);
+ 	}
+ 
+-	if ((fh = open(file_name, O_RDWR | O_BINARY)) < 0) {
++	if ((fh = mingw_open(file_name, O_RDWR | O_BINARY)) < 0) {
+ 		rc = -1;
+ 		goto revert_attrs;
+ 	}
+@@ -564,7 +571,7 @@ int mkstemp(char *template)
+ 	char *filename = mktemp(template);
+ 	if (filename == NULL)
+ 		return -1;
+-	return open(filename, O_RDWR | O_CREAT, 0600);
++	return mingw_open(filename, O_RDWR | O_CREAT, 0600);
+ }
+ 
+ int gettimeofday(struct timeval *tv, void *tz)
+@@ -629,6 +636,7 @@ char *mingw_getcwd(char *pointer, int len)
+ 			pointer[i] = '/';
+ 	return ret;
+ }
++#define getcwd mingw_getcwd
+ 
+ /*
+  * See http://msdn2.microsoft.com/en-us/library/17w5ykft(vs.71).aspx
+@@ -700,7 +708,7 @@ static const char *parse_interpreter(const char *cmd)
+ 	if (n >= 4 && !strcasecmp(cmd+n-4, ".exe"))
+ 		return NULL;
+ 
+-	fd = open(cmd, O_RDONLY);
++	fd = mingw_open(cmd, O_RDONLY);
+ 	if (fd < 0)
+ 		return NULL;
+ 	n = read(fd, buf, sizeof(buf)-1);
+@@ -1183,6 +1191,7 @@ char *mingw_getenv(const char *name)
+ 	}
+ 	return result;
+ }
++#define getenv mingw_getenv
+ 
+ /*
+  * Note, this isn't a complete replacement for getaddrinfo. It assumes
+@@ -1199,7 +1208,7 @@ static int WSAAPI getaddrinfo_stub(const char *node, const char *service,
+ 	struct sockaddr_in *sin;
+ 
+ 	if (node) {
+-		h = gethostbyname(node);
++		h = mingw_gethostbyname(node);
+ 		if (!h)
+ 			return WSAGetLastError();
+ 	}
+@@ -1366,6 +1375,7 @@ int mingw_gethostname(char *name, int namelen)
+     ensure_socket_initialization();
+     return gethostname(name, namelen);
+ }
++#define gethostname mingw_gethostname
+ 
+ #undef gethostbyname
+ struct hostent *mingw_gethostbyname(const char *host)
+@@ -1373,6 +1383,7 @@ struct hostent *mingw_gethostbyname(const char *host)
+ 	ensure_socket_initialization();
+ 	return gethostbyname(host);
+ }
++#define gethostbyname mingw_gethostbyname
+ 
+ void mingw_freeaddrinfo(struct addrinfo *res)
+ {
+@@ -1429,6 +1440,7 @@ int mingw_connect(int sockfd, struct sockaddr *sa, size_t sz)
+ 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
+ 	return connect(s, sa, sz);
+ }
++#define connect mingw_connect
+ 
+ #undef bind
+ int mingw_bind(int sockfd, struct sockaddr *sa, size_t sz)
+@@ -1436,6 +1448,7 @@ int mingw_bind(int sockfd, struct sockaddr *sa, size_t sz)
+ 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
+ 	return bind(s, sa, sz);
+ }
++#define bind mingw_bind
+ 
+ #undef setsockopt
+ int mingw_setsockopt(int sockfd, int lvl, int optname, void *optval, int optlen)
+@@ -1443,6 +1456,7 @@ int mingw_setsockopt(int sockfd, int lvl, int optname, void *optval, int optlen)
+ 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
+ 	return setsockopt(s, lvl, optname, (const char*)optval, optlen);
+ }
++#define setsockopt mingw_setsockopt
+ 
+ #undef shutdown
+ int mingw_shutdown(int sockfd, int how)
+@@ -1450,6 +1464,7 @@ int mingw_shutdown(int sockfd, int how)
+ 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
+ 	return shutdown(s, how);
+ }
++#define shutdown mingw_shutdown
+ 
+ #undef listen
+ int mingw_listen(int sockfd, int backlog)
+@@ -1457,6 +1472,7 @@ int mingw_listen(int sockfd, int backlog)
+ 	SOCKET s = (SOCKET)_get_osfhandle(sockfd);
+ 	return listen(s, backlog);
+ }
++#define listen mingw_listen
+ 
+ #undef accept
+ int mingw_accept(int sockfd1, struct sockaddr *sa, socklen_t *sz)
+@@ -1475,6 +1491,7 @@ int mingw_accept(int sockfd1, struct sockaddr *sa, socklen_t *sz)
+ 	}
+ 	return sockfd2;
+ }
++#define accept mingw_accept
+ 
+ #undef rename
+ int mingw_rename(const char *pold, const char *pnew)
+@@ -1530,6 +1547,7 @@ repeat:
+ 	errno = EACCES;
+ 	return -1;
+ }
++#define rename mingw_rename
+ 
+ /*
+  * Note that this doesn't return the actual pagesize, but
+@@ -1684,6 +1702,7 @@ sig_handler_t mingw_signal(int sig, sig_handler_t handler)
+ 
+ 	return old;
+ }
++#define signal mingw_signal
+ 
+ #undef raise
+ int mingw_raise(int sig)
+@@ -1709,6 +1728,7 @@ int mingw_raise(int sig)
+ 		return raise(sig);
+ 	}
+ }
++#define raise mingw_raise
+ 
+ 
+ static const char *make_backslash_path(const char *path)
+-- 
+2.0.0.9635.g0be03cb
 
 -- 
 -- 
