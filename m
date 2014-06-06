@@ -1,54 +1,50 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 4/5] Win32 dirent: clarify #include directives
-Date: Fri,  6 Jun 2014 15:43:20 +0200
-Message-ID: <1402062201-9709-5-git-send-email-kasal@ucw.cz>
-References: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 0/5] Windows dirent patches
+Date: Fri,  6 Jun 2014 15:43:16 +0200
+Message-ID: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: msysGit <msysgit@googlegroups.com>,
-	Karsten Blees <blees@dcon.de>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
 	Stepan Kasal <kasal@ucw.cz>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com Fri Jun 06 15:43:40 2014
+X-From: msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com Fri Jun 06 15:43:36 2014
 Return-path: <msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f184.google.com ([209.85.212.184])
+Received: from mail-la0-f57.google.com ([209.85.215.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com>)
-	id 1WsuQc-0000pB-Iy
+	id 1WsuQc-0000p1-1h
 	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 15:43:30 +0200
-Received: by mail-wi0-f184.google.com with SMTP id hi2sf17940wib.1
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 06:43:30 -0700 (PDT)
+Received: by mail-la0-f57.google.com with SMTP id hr17sf317432lab.22
+        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
-         :references:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=+5BTychrptt6wUWlNSsDo1Y5uXEV3tM9nEqnK6Sm9u8=;
-        b=jg8cM0poqdWX0Exl/Qu1bCt1pq7mxPyczqDizFO3yyllCu4JSJb1dlUYwEWYYi/MRW
-         ww5Px5RTl8uch7/lPHVl0FS1m9H7JMsz9NmKUytOlDhQX9VpzFkoAxcRKp7Z6KCYx3TF
-         Anm3IKIlgFG7NLt85fTTHlJFe4m0En/zfz7ua5/nReJUqC/Oj8e0OSzKkYs6qfxmNoyN
-         O6MjkL6N9u9tGPNtIOj4syjsdFHS+OEEtc5MlCt3Q1w/PLuu+ugUVK86G9tKlGlFONxf
-         M9SMzPPq3//DFMQh5OQCOynWOgH7ppOTejP3ADVwX/mXX0SIzQ5+AIXNFvJ7O01A5wq/
-         C1Lg==
-X-Received: by 10.152.87.105 with SMTP id w9mr7633laz.31.1402062210279;
-        Fri, 06 Jun 2014 06:43:30 -0700 (PDT)
+        h=mime-version:from:to:cc:subject:date:message-id:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=K4KqJPui/tpWaWjzTsr3NpciJdxoCAA8CCub3bAvUqw=;
+        b=AjF+x5zqI43xBkhSCq0USzuSuwF4aJs7U6d2jgesZd7M7yxVc/52Thlhd4TGWLXa9W
+         iMMQbefPcwYobAGygO+J4BOzetS3iP9vWBCNpR/gTYPKRrefVAsln/2Tb9W5k5ZhrYue
+         C028ilP/w3f+3xF6p3Sr0oWj894YuKij9JZ7xfelkxIeFueww4VBmszybY2QKEQNZ6as
+         M2rhSOgxulIC3zIKd99j9V93Pzdn6GdWCcP1WCeoMcQZaGmzVs31zhRTVRpeAqqxiRAJ
+         i468x3AyepEsm5Yh7ZilhIn+Oq0A7/8dp57jo4wTl+ZbuPfKqz+P9vZm99/TrXvF61xk
+         Z4Qg==
+X-Received: by 10.152.28.6 with SMTP id x6mr7873lag.32.1402062209885;
+        Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.19.166 with SMTP id g6ls118112lae.48.gmail; Fri, 06 Jun
+Received: by 10.152.87.178 with SMTP id az18ls133653lab.4.gmail; Fri, 06 Jun
  2014 06:43:29 -0700 (PDT)
-X-Received: by 10.112.157.129 with SMTP id wm1mr1298353lbb.17.1402062209329;
+X-Received: by 10.152.43.3 with SMTP id s3mr1315917lal.5.1402062209256;
         Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id h4si1912407wib.2.2014.06.06.06.43.29
+        by gmr-mx.google.com with ESMTP id x7si1305907wiw.1.2014.06.06.06.43.29
         for <msysgit@googlegroups.com>;
         Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 2CBE51C00A8; Fri,  6 Jun 2014 15:43:29 +0200 (CEST)
+	id 1B6071C009F; Fri,  6 Jun 2014 15:43:29 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
  (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
@@ -62,31 +58,28 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250913>
 
-From: Karsten Blees <blees@dcon.de>
+Hello,
 
-Git-compat-util.h is two dirs up, and already includes <dirent.h> (which
-is the same as "dirent.h" due to -Icompat/win32 in the Makefile).
+This is a series of dirent modifications, 4 tiny ones and one bigger.
+As the date indicates, these are battle tested in mysgit for several years.
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
- compat/win32/dirent.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+Regards,
+	Stepan
 
-diff --git a/compat/win32/dirent.c b/compat/win32/dirent.c
-index 7a0debe..fac7f25 100644
---- a/compat/win32/dirent.c
-+++ b/compat/win32/dirent.c
-@@ -1,5 +1,4 @@
--#include "../git-compat-util.h"
--#include "dirent.h"
-+#include "../../git-compat-util.h"
- 
- struct DIR {
- 	struct dirent dd_dir; /* includes d_type */
+Karsten Blees (5):
+  Win32 dirent: remove unused dirent.d_ino member
+  Win32 dirent: remove unused dirent.d_reclen member
+  Win32 dirent: change FILENAME_MAX to MAX_PATH
+  Win32 dirent: clarify #include directives
+  Win32 dirent: improve dirent implementation
+
+ compat/win32/dirent.c | 116 ++++++++++++++++++++++++--------------------------
+ compat/win32/dirent.h |   8 +---
+ config.mak.uname      |   2 +
+ 3 files changed, 59 insertions(+), 67 deletions(-)
+
 -- 
 2.0.0.9635.g0be03cb
 
