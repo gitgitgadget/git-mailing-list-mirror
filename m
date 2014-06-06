@@ -1,130 +1,122 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: Re: [PATCH 0/5] First part of Unicode console support
- for msysgit
-Date: Fri, 6 Jun 2014 22:48:30 +0200
-Organization: <)><
-Message-ID: <20140606204830.GA4671@camelia.ucw.cz>
-References: <1402062173-9602-1-git-send-email-kasal@ucw.cz> <5391FE01.9040501@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] gitk: show staged submodules regardless of ignore config
+Date: Fri, 06 Jun 2014 14:08:29 -0700
+Message-ID: <xmqqtx7xpwz6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCU63DXMWULRBH6SZCOAKGQEKDJROBQ@googlegroups.com Fri Jun 06 22:48:34 2014
-Return-path: <msysgit+bncBCU63DXMWULRBH6SZCOAKGQEKDJROBQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f187.google.com ([209.85.212.187])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Fri Jun 06 23:10:50 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBH6SZCOAKGQEKDJROBQ@googlegroups.com>)
-	id 1Wt13w-0005Lp-DP
-	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 22:48:32 +0200
-Received: by mail-wi0-f187.google.com with SMTP id f8sf198151wiw.14
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 13:48:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:organization:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=OXdWbjF9eQdF3NjnZzP5226JAq9KYhuQQZdl4fN3G0o=;
-        b=U/UzRktTkZDYEbxoxdbbZTWvt4a+XZ463uMC+UhEykEN0C5HIZMYeFDd5pt70YgvEa
-         jOgoi3D6w/LTA0Ti7jk8jNtLa0MDOYnfPyhaTkCzq+yDMhtbc50wf5OIPfGrLiImfCbB
-         OfZMFp2w/Cni77WEILp0pLEqG3oBunN9XDiRS8JLS5+8bGqiWn1+ScBgjwZizD8QMbJ2
-         SEF5dWHmywDrRlGFjtopE5vp5O9xZ/oF/Aq0fkSSVr96T3Qyv6NB0uGQJUBUJ4zPe0ZF
-         cfPK7vh+OepianRAj6DMyO0JAuABVbUSVdUbTY1hce2dSRsebhI0LP9zpAUs5Tloh+Ne
-         ViRA==
-X-Received: by 10.180.188.105 with SMTP id fz9mr37740wic.0.1402087712104;
-        Fri, 06 Jun 2014 13:48:32 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.79.232 with SMTP id m8ls165116wix.38.canary; Fri, 06 Jun
- 2014 13:48:31 -0700 (PDT)
-X-Received: by 10.180.36.234 with SMTP id t10mr1897090wij.1.1402087711286;
-        Fri, 06 Jun 2014 13:48:31 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id gz10si1772498wib.0.2014.06.06.13.48.31
-        for <msysgit@googlegroups.com>;
-        Fri, 06 Jun 2014 13:48:31 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id EF5821C00A0;
-	Fri,  6 Jun 2014 22:48:30 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s56KmU3f004732;
-	Fri, 6 Jun 2014 22:48:30 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s56KmU5x004731;
-	Fri, 6 Jun 2014 22:48:30 +0200
-In-Reply-To: <5391FE01.9040501@gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250966>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wt1NQ-0006NE-FW
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 23:08:40 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752240AbaFFVIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2014 17:08:36 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61805 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751901AbaFFVIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2014 17:08:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 43F511D4B5;
+	Fri,  6 Jun 2014 17:08:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=s
+	djeaWcdkcZ71tPDWbbNUS/kWMc=; b=Ij/T3T/e227KAifj+sBxONTnIOXWV3Rsy
+	IPh6ddoMGIq2gKhlqKk4f0ysUAAjEggAEoXvHgpq0cSk/AuZYFwbTRilIdnJYgwo
+	9fDHF8R8nKaC52jioiZtC7yZEGOlc/+9+ujUgzvqZIAMw4LgSoYGQukr/HU1JlVZ
+	CM0RuvlHAg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; q=dns; s=
+	sasl; b=FXnhaz+Hz5QfjbhQpH2gOJ8bBpxo27jjlH7TjjzzhiXthB89tLcoWATE
+	hZfISqyCctx8B0UG0EKZZGUQJzwSjbKrOtPNEOwAzNgroRCGEo8XPSIaOhWGZw9g
+	h/t/Q2MogzDpBbHjAGDCX0tFoDKfuDlZiaAUgrL3LlOclPObS1w=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3A7B41D4B4;
+	Fri,  6 Jun 2014 17:08:35 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7B7C61D498;
+	Fri,  6 Jun 2014 17:08:31 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B6A64030-EDBE-11E3-A692-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250967>
 
-Hello,
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Date: Tue, 8 Apr 2014 21:36:08 +0200
 
-On Fri, Jun 06, 2014 at 07:44:33PM +0200, Karsten Blees wrote:
-> > Karsten Blees (5):
-> >   Support Unicode console output on Windows
-> 
-> [..] you could have squashed half of
-> "Win32: fix segfault in WriteConsoleW when debugging in gdb" [2] (second  half in [5/5]).
-> 
-> >   Detect console streams more reliably on Windows
-> >   Warn if the Windows console font doesn't support Unicode
-> 
-> I think this one includes
-> "MSVC: fix winansi.c compile errors " [3] and
-> "Unicode console: fix font warning on Vista and Win7" [4]
-[...]
-> >   Win32: move main macro to a function
-> >   Win32: Thread-safe windows console output
+Currently setting submodule.<name>.ignore and/or diff.ignoreSubmodules to
+"all" suppresses all output of submodule changes for gitk. This is really
+confusing, as even when the user chooses to record a new commit for an
+ignored submodule by adding it manually this change won't show up under
+"Local changes checked in to index but not committed".
 
-> [2] https://github.com/msysgit/git/commit/cd0792af
-> [3] https://github.com/msysgit/git/commit/3abcb04d
-> [4] https://github.com/msysgit/git/commit/981aa538
+Fix that by using the '--ignore-submodules=dirty' option for both callers
+of "git diff-index --cached" when the underlying git version supports that
+option.
 
-Indeed, you identified them correctly.  And [2] is actually squashed
-in [5/5]; I think I can keep it that way.
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-I'll add the missing fix, take care about original dates, improve the
-cover letter (the above links), and resubmit.
+ * Paul, I've been carrying this in my 'pu' but I would prefer
+   changes to gitk fed to me through you.  Could you apply this so
+   that I can drop my tentative copy?
 
-Thanks for review this batch of your patches.
+   Thanks.
 
-Regards,
-	Stepan
+ gitk | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
+diff --git a/gitk b/gitk
+index 90764e8..f6efaa6 100755
+--- a/gitk
++++ b/gitk
+@@ -5205,11 +5205,15 @@ proc dohidelocalchanges {} {
+ # spawn off a process to do git diff-index --cached HEAD
+ proc dodiffindex {} {
+     global lserial showlocalchanges vfilelimit curview
+-    global hasworktree
++    global hasworktree git_version
+ 
+     if {!$showlocalchanges || !$hasworktree} return
+     incr lserial
+-    set cmd "|git diff-index --cached HEAD"
++    if {[package vcompare $git_version "1.7.2"] >= 0} {
++	set cmd "|git diff-index --cached --ignore-submodules=dirty HEAD"
++    } else {
++	set cmd "|git diff-index --cached HEAD"
++    }
+     if {$vfilelimit($curview) ne {}} {
+ 	set cmd [concat $cmd -- $vfilelimit($curview)]
+     }
+@@ -7705,7 +7709,7 @@ proc addtocflist {ids} {
+ }
+ 
+ proc diffcmd {ids flags} {
+-    global log_showroot nullid nullid2
++    global log_showroot nullid nullid2 git_version
+ 
+     set i [lsearch -exact $ids $nullid]
+     set j [lsearch -exact $ids $nullid2]
+@@ -7726,6 +7730,9 @@ proc diffcmd {ids flags} {
+ 	    }
+ 	}
+     } elseif {$j >= 0} {
++	if {[package vcompare $git_version "1.7.2"] >= 0} {
++	    set flags "$flags --ignore-submodules=dirty"
++	}
+ 	set cmd [concat | git diff-index --cached $flags]
+ 	if {[llength $ids] > 1} {
+ 	    # comparing index with specific revision
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+2.0.0-531-gbd04298
