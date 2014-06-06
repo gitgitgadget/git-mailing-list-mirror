@@ -1,83 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Proposal for pruning tags
-Date: Fri, 06 Jun 2014 10:18:40 -0700
-Message-ID: <xmqqa99qq7m7.fsf@gitster.dls.corp.google.com>
-References: <CAHd499BLX3q2FHLfFpq_14w2mmosywfRqMHVjkke0BRhAAjx7g@mail.gmail.com>
-	<xmqqoay7rsgd.fsf@gitster.dls.corp.google.com>
-	<CAHd499A2c09am7iFU9st-9MiNqBh_2SSyMqm+54cKL+Yq27fWA@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] Use starts_with() for C strings instead of memcmp()
+Date: Fri, 06 Jun 2014 19:24:48 +0200
+Message-ID: <5391F960.8070702@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 06 19:18:52 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 06 19:26:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wsxn1-0003IA-Fv
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 19:18:51 +0200
+	id 1WsxuA-0007Ih-Gd
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 19:26:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340AbaFFRSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 6 Jun 2014 13:18:47 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54664 "EHLO smtp.pobox.com"
+	id S1752526AbaFFR0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2014 13:26:09 -0400
+Received: from mout.web.de ([212.227.17.12]:52216 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752081AbaFFRSq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 6 Jun 2014 13:18:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 188861BD49;
-	Fri,  6 Jun 2014 13:18:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YwJtmEsl95jhp+g+IcrlAf/rQi4=; b=HsONBa
-	0L4dlnql9OLYkpr7sDZOjUiHrG9udjcptknDLrp1qmG46f7On5Mt+kt7gMpnTgiR
-	aTOxP3JZQOnw+WMnlMGAsmzlqNiEgM4KILJKprW420c6BfOC3ryBV4N3AtjEZXXy
-	psu5IHX2SnrzXOyGFonhGsmcvGPqr4NjhwlGU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tj1T6W/RUxHje7KqH4jhsrYzfJ0vVmc7
-	g8ZkhyVz7XxAqqRzOXvLsoPQrhxAdDWn/Aa+kd8u1C5G8VzgOg7a3OIgkJVoCMnf
-	U27EUePej5Tricw1xryaf4nRCSz9r1PBnVwUGqFap+N380VBkrixB+J9RwbD9phn
-	91xQzmUyYAo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0E5BE1BD48;
-	Fri,  6 Jun 2014 13:18:46 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 56D1D1BD42;
-	Fri,  6 Jun 2014 13:18:42 -0400 (EDT)
-In-Reply-To: <CAHd499A2c09am7iFU9st-9MiNqBh_2SSyMqm+54cKL+Yq27fWA@mail.gmail.com>
-	(Robert Dailey's message of "Fri, 6 Jun 2014 08:54:30 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9BAC8D5E-ED9E-11E3-9408-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752334AbaFFR0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2014 13:26:08 -0400
+Received: from [192.168.178.27] ([79.253.174.36]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MhlP1-1X6M0L2b3L-00MvPB; Fri, 06 Jun 2014 19:25:18
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+X-Provags-ID: V03:K0:J3hO4500zE2lJpkS6gPYa5Kr63ZojgYKZH22y9lr5qFLk5K7pOz
+ AS/Gw8YRC2anqp3hvOX2dB6hcxqmDa/4Y2TBxLPfcGpNHrIhMpM+uFPH/JQhMCPO1X/AmTk
+ BUwJPxs9FXeopvXFmX0lPgULYV+XRS06d99cYvahJ/Sk5o3vKD0xxERlJtci/dXE95YipPE
+ fMnKQUOkgIOZsyYIHCxmA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250951>
 
-Robert Dailey <rcdailey.lists@gmail.com> writes:
+Convert three cases of checking for a constant prefix using memcmp() to
+starts_with().  This way there is no need for magic string length
+constants and we avoid running over the end of the string should it be
+shorter than the prefix.
 
-> ... Having git clean up tags
-> automatically would really help with this, even though you may not
-> feel it's the responsibility of Git. It's more of a usability issue,
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+These are the easy cases I found; there are several more comparisons
+of strings to constants using memcmp().  Some could benefit from
+skip_prefix(), others may need a bit more thought, and perhaps I
+missed a few.
 
-I agree with "Having ... help with this".  I did not say at all that
-it is not something Git should and can try to help.  I also agree
-with it is a usability issue.
+ builtin/for-each-ref.c | 2 +-
+ fetch-pack.c           | 2 +-
+ remote.c               | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-The thing is, the word "automatically" in your "clean up tags
-automatically" is still too loose a definition of what we want, and
-we cannot come up with a way to help users without tightening that
-looseness.  As you said, you are looking for something that can tell
-between two kinds of tags that locally exist without having a copy
-at the 'origin':
-
- - ones that you do not want to keep
- - others that you haven't pushed to (or forgot to push to) 'origin'
-
-without giving the users a way to help Git to tell these two kinds
-apart and only remove the former.
-
-So...
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 3e1d5c3..4135980 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -193,7 +193,7 @@ static int verify_format(const char *format)
+ 		at = parse_atom(sp + 2, ep);
+ 		cp = ep + 1;
+ 
+-		if (!memcmp(used_atom[at], "color:", 6))
++		if (starts_with(used_atom[at], "color:"))
+ 			need_color_reset_at_eol = !!strcmp(used_atom[at], color_reset);
+ 	}
+ 	return 0;
+diff --git a/fetch-pack.c b/fetch-pack.c
+index eeee2bb..b12bd4c 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -507,7 +507,7 @@ static void filter_refs(struct fetch_pack_args *args,
+ 		int keep = 0;
+ 		next = ref->next;
+ 
+-		if (!memcmp(ref->name, "refs/", 5) &&
++		if (starts_with(ref->name, "refs/") &&
+ 		    check_refname_format(ref->name, 0))
+ 			; /* trash */
+ 		else {
+diff --git a/remote.c b/remote.c
+index eea2c8d..0f6ef36 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1194,7 +1194,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 	case 1:
+ 		break;
+ 	case 0:
+-		if (!memcmp(dst_value, "refs/", 5))
++		if (starts_with(dst_value, "refs/"))
+ 			matched_dst = make_linked_ref(dst_value, dst_tail);
+ 		else if (is_null_sha1(matched_src->new_sha1))
+ 			error("unable to delete '%s': remote ref does not exist",
+-- 
+2.0.0
