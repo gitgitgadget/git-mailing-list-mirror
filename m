@@ -1,423 +1,253 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH v7 1/1] refs.c: SSE4.2 optimizations for check_refname_component
-Date: Thu,  5 Jun 2014 19:56:15 -0400
-Message-ID: <1402012575-16546-2-git-send-email-dturner@twitter.com>
-References: <1402012575-16546-1-git-send-email-dturner@twitter.com>
+Subject: [PATCH v3] receive-pack: optionally deny case clone refs
+Date: Thu,  5 Jun 2014 20:52:34 -0400
+Message-ID: <1402015954-5320-1-git-send-email-dturner@twitter.com>
 Cc: David Turner <dturner@twitter.com>
-To: git@vger.kernel.org, gitster@pobox.com, mhagger@alum.mit.edu
-X-From: git-owner@vger.kernel.org Fri Jun 06 01:58:33 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 06 02:53:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WshYF-0008At-VX
-	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 01:58:32 +0200
+	id 1WsiPF-000450-PZ
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 02:53:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752629AbaFEX60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 5 Jun 2014 19:58:26 -0400
-Received: from mail-qa0-f46.google.com ([209.85.216.46]:64119 "EHLO
-	mail-qa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752614AbaFEX6Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Jun 2014 19:58:24 -0400
-Received: by mail-qa0-f46.google.com with SMTP id w8so2501107qac.33
-        for <git@vger.kernel.org>; Thu, 05 Jun 2014 16:58:24 -0700 (PDT)
+	id S1751654AbaFFAxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 5 Jun 2014 20:53:09 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:38887 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419AbaFFAxI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 5 Jun 2014 20:53:08 -0400
+Received: by mail-qg0-f46.google.com with SMTP id q108so2996641qgd.33
+        for <git@vger.kernel.org>; Thu, 05 Jun 2014 17:53:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=dDn1D5Ew6vQ4zhaHd0Dc2Joeaj1jFro5wN5DmUIuvXY=;
-        b=ZzgewdcFjw4v2aGJLDgiAzPrsgHudWCHA76LRBdW/5L8hXUxqbn9B2D6eKHjdG06r5
-         hQBofj1m0Ccp6Abh7QZUinY1plYtnE2mQNAJN5JopueM9N+BnNY9czYMvIqvF79BW4ig
-         DFHX0OR+HHK/za1gfdb5FA1AJsBYlaSGuCYN23DL6U9ywyz+3J2eNgA8kDtY4AIg6Joh
-         /HVrUHgqAHllvZ9hNKHVvqFNI5V7RvzElr/Q6sCBnkkD3fDNO23M6e4+MgNXq4wqemRk
-         lVjn4YxUyf+OqSeOA9Y1QS25b/1RMv7EQ+41xUbRK5oNQJZKZjgqXHnqti1BFaorIbv/
-         gABg==
-X-Gm-Message-State: ALoCoQkZ3LmwqdzWf2glYs8jRliOBWUTUcXlK1DVHziVDxBv7C83KKuZA/Gtb0QGlMqujvje+omV
-X-Received: by 10.224.98.197 with SMTP id r5mr1503370qan.57.1402012704070;
-        Thu, 05 Jun 2014 16:58:24 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=KiWiqb+iSs5JdP+OaC4xFT1l6H3ttt3s1ARAtLUBuAU=;
+        b=J+9epSfz1w2/aG3pkfrO6rdYGcYp77yVd+WFdkXlRt2hvZ2Tk0wbdWszztq58PY3/I
+         5S5gWHEnFX3xwsWE/FpktabUuZCvZeJvF5tjzDpNe9LgoXzcC7OpCENazODT6/0F79u5
+         ibv1hje09bF6bPSVjxyiSmIOuzUKdWJ0S5OFs5cb9F0acyKLAAwnCvuyzldT8+wy+0Zl
+         Lo6DBDlgXpBd0siJQUhNNa4PlAOAGNyupsqpjQNwP72JvebaItRRP8cfCXfpaDv3WfcJ
+         /OnLPydrbKRmA/jdLYsLzAqI1OEyRHJ9YBgEnQSCoNACcko3FFtYhgJ/Ztk/fs7pujAU
+         bOqQ==
+X-Gm-Message-State: ALoCoQlkIfLneLQgtPK6/WcjmdopVM1COhsViRDQVJZc14Ppo1yO3poG5baaBuVbr6TofM15elBo
+X-Received: by 10.224.7.6 with SMTP id b6mr2051033qab.45.1402015987168;
+        Thu, 05 Jun 2014 17:53:07 -0700 (PDT)
 Received: from stross.twitter.corp ([38.104.173.198])
-        by mx.google.com with ESMTPSA id l46sm4719383qga.21.2014.06.05.16.58.22
+        by mx.google.com with ESMTPSA id 6sm12079285qam.44.2014.06.05.17.53.05
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 05 Jun 2014 16:58:23 -0700 (PDT)
+        Thu, 05 Jun 2014 17:53:06 -0700 (PDT)
 X-Google-Original-From: David Turner <dturner@twitter.com>
 X-Mailer: git-send-email 2.0.0.rc1.24.g0588c94.dirty
-In-Reply-To: <1402012575-16546-1-git-send-email-dturner@twitter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250884>
 
-Optimize check_refname_component using SSE4.2, where available.
+It is possible to have two refs which are the same but for case.
+This works great on the case-sensitive filesystems, but not so well on
+case-insensitive filesystems.  It is fairly typical to have
+case-insensitive clients (Macs, say) with a case-sensitive server
+(GNU/Linux).
 
-git rev-parse HEAD is a good test-case for this, since it does almost
-nothing except parse refs.  For one particular repo with about 60k
-refs, almost all packed, the timings are:
+Should a user attempt to pull on a Mac when there are case clone refs
+with differing contents, they'll get an error message containing
+something like "Ref refs/remotes/origin/lower is at
+[sha-of-lowercase-ref] but expected [sha-of-uppercase-ref]....
+(unable to update local ref)"
 
-Look up table: 29 ms
-SSE4.2:        25 ms
+With a case-insensitive git server, if a branch called capital-M
+Master (that differs from lowercase-m-master) is pushed, nobody else
+can push to (lowercase-m) master until the branch is removed.
 
-This is about a 15% improvement.
-
-The configure.ac changes include code from the GNU C Library written
-by Joseph S. Myers <joseph at codesourcery dot com>.
-
-Only supports GCC and Clang at present, because C interfaces to the
-cpuid instruction are not well-standardized.
+Create the option receive.denycaseclonerefs, which checks pushed
+refs to ensure that they are not case clones of an existing
+ref.  This setting is turned on by default if core.ignorecase is
+set, but not otherwise.
 
 Signed-off-by: David Turner <dturner@twitter.com>
 ---
- Makefile           |   6 +++
- aclocal.m4         |   6 +++
- compat/cpuid.h     |  25 +++++++++
- configure.ac       |  17 ++++++
- git-compat-util.h  |  23 ++++++++
- refs.c             | 150 +++++++++++++++++++++++++++++++++++++++++++++++------
- t/t5511-refspec.sh |  13 +++++
- 7 files changed, 225 insertions(+), 15 deletions(-)
- create mode 100644 compat/cpuid.h
+ Documentation/config.txt           |  6 +++++
+ Documentation/git-push.txt         |  5 +++--
+ Documentation/glossary-content.txt |  5 +++++
+ builtin/receive-pack.c             | 27 +++++++++++++++++++++-
+ t/t5400-send-pack.sh               | 46 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 86 insertions(+), 3 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index a53f3a8..dd2127a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1326,6 +1326,11 @@ else
- 		COMPAT_OBJS += compat/win32mmap.o
- 	endif
- endif
-+ifdef NO_SSE42
-+	BASIC_CFLAGS += -DNO_SSE42
-+else
-+	BASIC_CFLAGS += -msse4.2
-+endif
- ifdef OBJECT_CREATION_USES_RENAMES
- 	COMPAT_CFLAGS += -DOBJECT_CREATION_MODE=1
- endif
-@@ -2199,6 +2204,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo NO_PERL=\''$(subst ','\'',$(subst ','\'',$(NO_PERL)))'\' >>$@
- 	@echo NO_PYTHON=\''$(subst ','\'',$(subst ','\'',$(NO_PYTHON)))'\' >>$@
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@
-+	@echo NO_SSE42=\''$(subst ','\'',$(subst ','\'',$(NO_SSE42)))'\' >>$@
- ifdef TEST_OUTPUT_DIRECTORY
- 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@
- endif
-diff --git a/aclocal.m4 b/aclocal.m4
-index f11bc7e..d9f3f19 100644
---- a/aclocal.m4
-+++ b/aclocal.m4
-@@ -38,3 +38,9 @@ AC_DEFUN([TYPE_SOCKLEN_T],
-       [#include <sys/types.h>
- #include <sys/socket.h>])
- ])
-+
-+dnl Test a compiler option or options with an empty input file.
-+dnl LIBC_TRY_CC_OPTION([options], [action-if-true], [action-if-false])
-+AC_DEFUN([LIBC_TRY_CC_OPTION],
-+[AS_IF([AC_TRY_COMMAND([${CC-cc} $1 -xc /dev/null -S -o /dev/null])],
-+	[$2], [$3])])
-diff --git a/compat/cpuid.h b/compat/cpuid.h
-new file mode 100644
-index 0000000..7709e35
---- /dev/null
-+++ b/compat/cpuid.h
-@@ -0,0 +1,25 @@
-+#ifndef COMPAT_CPUID_H
-+#define COMPAT_CPUID_H
-+
-+#if (defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)))
-+#include <cpuid.h>
-+#define CPUID_SSE42_BIT (1 << 20)
-+
-+static int processor_supports_sse42(void)
-+{
-+	unsigned eax, ebx, ecx, edx;
-+	__cpuid(1, eax, ebx, ecx, edx);
-+	return ecx & CPUID_SSE42_BIT;
-+}
-+
-+#else
-+
-+static int processor_supports_sse42(void)
-+{
-+	/* TODO: handle CPUID on non-GCC compilers */
-+	return 0;
-+}
-+
-+#endif
-+
-+#endif /* COMPAT_CPUID_H */
-diff --git a/configure.ac b/configure.ac
-index b711254..3a5bda9 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -382,6 +382,23 @@ AS_HELP_STRING([],[Tcl/Tk interpreter will be found in a system.]),
- GIT_PARSE_WITH(tcltk))
- #
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1932e9b..b24b117 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2053,6 +2053,12 @@ receive.unpackLimit::
+ 	especially on slow filesystems.  If not set, the value of
+ 	`transfer.unpackLimit` is used instead.
  
-+# Declare the with-sse42/without-sse42 options.
-+AC_ARG_WITH(sse42,
-+AS_HELP_STRING([--with-sse42],[use SSE4.2 instructions])
-+AS_HELP_STRING([],[(default is YES if your compiler supports -msse4.2)]),
-+GIT_PARSE_WITH(sse42))
++receive.denyCaseCloneRefs::
++	If set to true, git-receive-pack will deny a ref update that creates
++	a ref which is the same but for case as an existing ref.  This is
++	useful when clients are on a case-insensitive filesystem, which
++	will cause errors when given refs which differ only in case.
 +
-+if test "$NO_SSE42" != "YesPlease"; then
-+   dnl Check if -msse4.2 works.
-+   AC_CACHE_CHECK(for SSE4.2 support, cc_cv_sse42, [dnl
-+   LIBC_TRY_CC_OPTION([-msse4.2], [cc_cv_sse42=yes], [cc_cv_sse42=no])
-+   ])
-+   if test $cc_cv_sse42 = no; then
-+     NO_SSE42=1
-+   fi
-+fi
-+
-+GIT_CONF_SUBST([NO_SSE42])
+ receive.denyDeletes::
+ 	If set to true, git-receive-pack will deny a ref update that deletes
+ 	the ref. Use this to prevent such a ref deletion via a push.
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 21cd455..c92c3a6 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -323,8 +323,9 @@ remote rejected::
+ 	of the following safety options in effect:
+ 	`receive.denyCurrentBranch` (for pushes to the checked out
+ 	branch), `receive.denyNonFastForwards` (for forced
+-	non-fast-forward updates), `receive.denyDeletes` or
+-	`receive.denyDeleteCurrent`.  See linkgit:git-config[1].
++	non-fast-forward updates), `receive.denyDeletes`,
++	`receive.denyCaseCloneRefs` or `receive.denyDeleteCurrent`.
++	See linkgit:git-config[1].
  
- ## Checks for programs.
- AC_MSG_NOTICE([CHECKS for programs])
-diff --git a/git-compat-util.h b/git-compat-util.h
-index f6d3a46..2c66d6d 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -668,6 +668,29 @@ void git_qsort(void *base, size_t nmemb, size_t size,
- #endif
- #endif
+ remote failure::
+ 	The remote end did not report the successful update of the ref,
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index be0858c..ed5ac23 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -31,6 +31,11 @@
+ [[def_cache]]cache::
+ 	Obsolete for: <<def_index,index>>.
  
-+#ifndef NO_SSE42
-+#include <nmmintrin.h>
-+#include "compat/cpuid.h"
-+/*
-+ * Clang ships with a version of nmmintrin.h that's incomplete; if
-+ * necessary, we define the constants that we're going to use.
-+ */
-+#ifndef _SIDD_UBYTE_OPS
-+#define _SIDD_UBYTE_OPS                 0x00
-+#define _SIDD_CMP_EQUAL_ANY             0x00
-+#define _SIDD_CMP_RANGES                0x04
-+#define _SIDD_CMP_EQUAL_ORDERED         0x0c
-+#define _SIDD_NEGATIVE_POLARITY         0x10
-+#endif
++[[def_case_clone]]case clone::
++	Two entities (e.g. filenames or refs) that differ only in case.
++	These can cause problems on case-insensitive filesystems, and
++	Git has machinery to prevent these problems in various cases.
 +
-+/* This is the system memory page size; it's used so that we can read
-+ * outside the bounds of an allocation without segfaulting.
-+ */
-+#ifndef PAGE_SIZE
-+#define PAGE_SIZE 4096
-+#endif
-+#endif
-+
- #ifdef UNRELIABLE_FSTAT
- #define fstat_is_reliable() 0
- #else
-diff --git a/refs.c b/refs.c
-index 46139d2..b3bd333 100644
---- a/refs.c
-+++ b/refs.c
-@@ -24,6 +24,25 @@ static unsigned char refname_disposition[256] = {
- 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4, 4
- };
+ [[def_chain]]chain::
+ 	A list of objects, where each <<def_object,object>> in the list contains
+ 	a reference to its successor (for example, the successor of a
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index c323081..8530a6c 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -27,6 +27,7 @@ enum deny_action {
  
-+static int check_refname_component_trailer(const char *cp, const char *refname, int flags)
-+{
-+	if (cp == refname)
-+		return 0; /* Component has zero length. */
-+	if (refname[0] == '.') {
-+		if (!(flags & REFNAME_DOT_COMPONENT))
-+			return -1; /* Component starts with '.'. */
-+		/*
-+		 * Even if leading dots are allowed, don't allow "."
-+		 * as a component (".." is prevented by a rule above).
-+		 */
-+		if (refname[1] == '\0')
-+			return -1; /* Component equals ".". */
+ static int deny_deletes;
+ static int deny_non_fast_forwards;
++static int deny_case_clone_refs = DENY_UNCONFIGURED;
+ static enum deny_action deny_current_branch = DENY_UNCONFIGURED;
+ static enum deny_action deny_delete_current = DENY_UNCONFIGURED;
+ static int receive_fsck_objects = -1;
+@@ -69,6 +70,11 @@ static int receive_pack_config(const char *var, const char *value, void *cb)
+ 	if (status)
+ 		return status;
+ 
++	if (strcmp(var, "receive.denycaseclonerefs") == 0) {
++		deny_case_clone_refs = parse_deny_action(var, value);
++		return 0;
 +	}
-+	if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
-+		return -1; /* Refname ends with ".lock". */
-+	return cp - refname;
-+}
 +
- /*
-  * Try to read one refname component from the front of refname.
-  * Return the length of the component found, or -1 if the component is
-@@ -37,7 +56,7 @@ static unsigned char refname_disposition[256] = {
-  * - it ends with ".lock"
-  * - it contains a "\" (backslash)
-  */
--static int check_refname_component(const char *refname, int flags)
-+static int check_refname_component_bytewise(const char *refname, int flags)
- {
- 	const char *cp;
- 	char last = '\0';
-@@ -47,7 +66,7 @@ static int check_refname_component(const char *refname, int flags)
- 		unsigned char disp = refname_disposition[ch];
- 		switch(disp) {
- 		case 1:
--			goto out;
-+			return check_refname_component_trailer(cp, refname, flags);
- 		case 2:
- 			if (last == '.')
- 				return -1; /* Refname contains "..". */
-@@ -61,24 +80,125 @@ static int check_refname_component(const char *refname, int flags)
- 		}
- 		last = ch;
- 	}
--out:
--	if (cp == refname)
--		return 0; /* Component has zero length. */
--	if (refname[0] == '.') {
--		if (!(flags & REFNAME_DOT_COMPONENT))
--			return -1; /* Component starts with '.'. */
-+}
-+
-+#if defined(NO_SSE42) || !(defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)))
-+#define check_refname_component check_refname_component_bytewise
-+#else
-+#define SSE_VECTOR_BYTES 16
-+
-+/* Vectorized version of check_refname_component */
-+static int check_refname_component_sse42(const char *refname, int flags)
-+{
-+	const __m128i *refname_vec = (__m128i*) refname;
-+
-+	/* Character ranges for characters forbidden in refs; see above */
-+	static const __v16qi bad = {
-+		0x01, 0x20,  0x7e, 0x7f,  0x5e, 0x5e,  0x3a, 0x3a,
-+		0x5b, 0x5c,  0x2a, 0x2a,  0x3f, 0x3f,  0x3f, 0x3f};
-+
-+	static const __v16qi nonslashes = {
-+		'\001', '/' -1, '/' + 1, 0xff,
-+	};
-+
-+	static const __v16qi dotdot = {'.', '.', 0};
-+	static const __v16qi atcurly = {'@', '{', 0};
-+
-+	const __m128i *vp;
-+	const char *cp = (const char *)refname_vec;
-+
-+	int dotdotpos = SSE_VECTOR_BYTES, atcurlypos = SSE_VECTOR_BYTES;
-+	for (vp = refname_vec; ; vp++) {
-+		__m128i tmp;
-+		int endpos;
-+
- 		/*
--		 * Even if leading dots are allowed, don't allow "."
--		 * as a component (".." is prevented by a rule above).
-+		 * Handle case of forbidden substrings .. and @{ crossing
-+		 * sixteen-byte boundaries
- 		 */
--		if (refname[1] == '\0')
--			return -1; /* Component equals ".". */
-+		if (dotdotpos == 15 && *cp == '.')
-+			return -1;
-+
-+		if (atcurlypos == 15 && *cp == '{')
-+			return -1;
-+
-+		if (((uintptr_t) vp % PAGE_SIZE) > PAGE_SIZE - SSE_VECTOR_BYTES)
-+			/*
-+			 * End-of-page; fall back to slow method for
-+			 * this entire component.
-+			 */
-+			return check_refname_component_bytewise(refname, flags);
-+
-+		tmp = _mm_lddqu_si128(vp);
-+
-+		/*
-+		 * Find slashes or end-of-string. The double-negative
-+		 * (negative-polarity search for non-slashes) is
-+		 * necessary so that \0 will also be counted.
-+		 */
-+		endpos = _mm_cmpistri((__m128i) nonslashes, tmp,
-+				      _SIDD_UBYTE_OPS | _SIDD_CMP_RANGES |
-+				      _SIDD_NEGATIVE_POLARITY);
-+
-+		if (_mm_cmpestrc((__m128i) bad, SSE_VECTOR_BYTES, tmp, endpos,
-+				 _SIDD_UBYTE_OPS | _SIDD_CMP_RANGES))
-+			return -1;
-+
-+		dotdotpos = _mm_cmpestri((__m128i) dotdot, 2, tmp, endpos,
-+					 _SIDD_UBYTE_OPS |
-+					 _SIDD_CMP_EQUAL_ORDERED);
-+		if (dotdotpos < 15)
-+			return -1;
-+
-+		atcurlypos = _mm_cmpestri((__m128i) atcurly, 2, tmp, endpos,
-+					  _SIDD_UBYTE_OPS |
-+					  _SIDD_CMP_EQUAL_ORDERED);
-+		if (atcurlypos < 15)
-+			return -1;
-+
-+		if (endpos < SSE_VECTOR_BYTES) {
-+			cp = ((const char*) vp) + endpos;
-+			break;
-+		}
-+		cp = (const char*) vp + SSE_VECTOR_BYTES;
- 	}
--	if (cp - refname >= 5 && !memcmp(cp - 5, ".lock", 5))
--		return -1; /* Refname ends with ".lock". */
--	return cp - refname;
-+	return check_refname_component_trailer(cp, refname, flags);
-+}
-+
-+static void* find_check_refname_component(void)
-+{
-+	if (processor_supports_sse42())
-+		return check_refname_component_sse42;
-+	else
-+		return check_refname_component_bytewise;
+ 	if (strcmp(var, "receive.denydeletes") == 0) {
+ 		deny_deletes = git_config_bool(var, value);
+ 		return 0;
+@@ -468,6 +474,22 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+ 	return 0;
  }
  
-+#ifdef __clang__
-+
-+static int check_refname_component_autodetect(const char *refname, int flags);
-+
-+static int (*check_refname_component)(const char *, int) = check_refname_component_autodetect;
-+
-+/*
-+ * On the first run of check_refname_component, autodetect the correct
-+ * version for this CPU.  This is necessary because Clang doesn't support
-+ * ifunc.
-+ */
-+static int check_refname_component_autodetect(const char *refname, int flags)
++static int is_case_clone(const char *refname, const unsigned char *sha1,
++			int flags, void *cb_data)
 +{
-+	check_refname_component = find_check_refname_component();
-+	return check_refname_component(refname, flags);
++	const char *incoming_refname = cb_data;
++	return !strcasecmp(refname, incoming_refname) &&
++		strcmp(refname, incoming_refname);
 +}
 +
-+#else
++static int ref_is_denied_case_clone(const char *name)
++{
++	if (!deny_case_clone_refs)
++		return 0;
 +
-+static int check_refname_component(const char *refname, int flags)
-+	__attribute__ ((ifunc ("find_check_refname_component")));
++	return for_each_ref(is_case_clone, (void *) name);
++}
 +
-+#endif /* __clang__ */
-+
-+#endif /* NO_SSE42 */
-+
- int check_refname_format(const char *refname, int flags)
+ static const char *update(struct command *cmd, struct shallow_info *si)
  {
- 	int component_len, component_count = 0;
-diff --git a/t/t5511-refspec.sh b/t/t5511-refspec.sh
-index de6db86..7f1bd74 100755
---- a/t/t5511-refspec.sh
-+++ b/t/t5511-refspec.sh
-@@ -88,4 +88,17 @@ test_refspec fetch "refs/heads/${good}"
- bad=$(printf '\011tab')
- test_refspec fetch "refs/heads/${bad}"				invalid
+ 	const char *name = cmd->ref_name;
+@@ -478,7 +500,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	struct ref_lock *lock;
  
-+test_refspec fetch 'refs/heads/a-very-long-refname'
-+test_refspec fetch 'refs/heads/.a-very-long-refname'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh0123..'			invalid
-+test_refspec fetch 'refs/heads/abcdefgh01234..'			invalid
-+test_refspec fetch 'refs/heads/abcdefgh012345..'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh0123456..'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh01234567..'		invalid
-+test_refspec fetch 'refs/heads/abcdefgh0123.a'
-+test_refspec fetch 'refs/heads/abcdefgh01234.a'
-+test_refspec fetch 'refs/heads/abcdefgh012345.a'
-+test_refspec fetch 'refs/heads/abcdefgh0123456.a'
-+test_refspec fetch 'refs/heads/abcdefgh01234567.a'
+ 	/* only refs/... are allowed */
+-	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
++	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0) ||
++	    ref_is_denied_case_clone(name)) {
+ 		rp_error("refusing to create funny ref '%s' remotely", name);
+ 		return "funny refname";
+ 	}
+@@ -1171,6 +1194,8 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 		die("'%s' does not appear to be a git repository", dir);
+ 
+ 	git_config(receive_pack_config, NULL);
++	if (deny_case_clone_refs == DENY_UNCONFIGURED)
++		deny_case_clone_refs = ignore_case;
+ 
+ 	if (0 <= transfer_unpack_limit)
+ 		unpack_limit = transfer_unpack_limit;
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 0736bcb..a7023dc 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -129,6 +129,52 @@ test_expect_success 'denyNonFastforwards trumps --force' '
+ 	test "$victim_orig" = "$victim_head"
+ '
+ 
++test_expect_success 'denyCaseCloneRefs works' '
++	(
++	    cd victim &&
++	    git config receive.denyCaseCloneRefs true &&
++	    git config receive.denyDeletes false
++	) &&
++	git send-pack ./victim HEAD:refs/heads/caseclone &&
++	orig_ver=$(git rev-parse HEAD) &&
++	test_must_fail git send-pack ./victim HEAD^:refs/heads/CaseClone &&
++	# confirm that this had no effect upstream
++	(
++	    cd victim &&
++	    ref=$(git for-each-ref --format="%(refname)" refs/heads/CaseClone) &&
++	    echo "$ref" | test_must_fail grep -q CaseClone &&
++	    remote_ver=$(git rev-parse caseclone) &&
++	    test "$orig_ver" = "$remote_ver"
++	) &&
++	git send-pack ./victim HEAD^:refs/heads/notacaseclone &&
++	test_must_fail git send-pack ./victim :CaseClone &&
++	# confirm that this had no effect upstream
++	(
++	    cd victim &&
++	    ref=$(git for-each-ref --format="%(refname)" refs/heads/CaseClone) &&
++	    echo "$ref" | test_must_fail grep -q CaseClone &&
++	    remote_ver=$(git rev-parse caseclone) &&
++	    test "$orig_ver" = "$remote_ver"
++	) &&
++	git send-pack ./victim :caseclone &&
++	# confirm that this took effect upstream
++	(
++	    cd victim &&
++	    test_must_fail git rev-parse caseclone
++	) &&
++	# check that we can recreate a branch after deleting a
++	# case-clone of it
++	case_clone_ver=$(git rev-parse HEAD^) &&
++	git send-pack ./victim HEAD^:refs/heads/CaseClone &&
++	(
++	    cd victim &&
++	    ref=$(git for-each-ref --format="%(refname)" refs/heads/caseclone) &&
++	    test_echo "$ref" | test_must_fail grep -q caseclone  &&
++	    remote_ver=$(git rev-parse CaseClone) &&
++	    test "$case_clone_ver" = "$remote_ver"
++	)
++'
 +
- test_done
+ test_expect_success 'push --all excludes remote-tracking hierarchy' '
+ 	mkdir parent &&
+ 	(
 -- 
 2.0.0.rc1.24.g0588c94.dirty
