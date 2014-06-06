@@ -1,104 +1,106 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 0/5] Windows dirent patches
-Date: Fri,  6 Jun 2014 15:43:16 +0200
-Message-ID: <1402062201-9709-1-git-send-email-kasal@ucw.cz>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: Proposal for pruning tags
+Date: Fri, 6 Jun 2014 08:54:30 -0500
+Message-ID: <CAHd499A2c09am7iFU9st-9MiNqBh_2SSyMqm+54cKL+Yq27fWA@mail.gmail.com>
+References: <CAHd499BLX3q2FHLfFpq_14w2mmosywfRqMHVjkke0BRhAAjx7g@mail.gmail.com>
+	<xmqqoay7rsgd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysGit <msysgit@googlegroups.com>,
-	Stepan Kasal <kasal@ucw.cz>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com Fri Jun 06 15:43:36 2014
-Return-path: <msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f57.google.com ([209.85.215.57])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 06 15:54:35 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBAMLY6OAKGQE5IXTXZI@googlegroups.com>)
-	id 1WsuQc-0000p1-1h
-	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 15:43:30 +0200
-Received: by mail-la0-f57.google.com with SMTP id hr17sf317432lab.22
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WsubL-0007mt-6P
+	for gcvg-git-2@plane.gmane.org; Fri, 06 Jun 2014 15:54:35 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751591AbaFFNyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 6 Jun 2014 09:54:31 -0400
+Received: from mail-ve0-f177.google.com ([209.85.128.177]:34451 "EHLO
+	mail-ve0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751015AbaFFNya (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 6 Jun 2014 09:54:30 -0400
+Received: by mail-ve0-f177.google.com with SMTP id db11so3137967veb.8
+        for <git@vger.kernel.org>; Fri, 06 Jun 2014 06:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=K4KqJPui/tpWaWjzTsr3NpciJdxoCAA8CCub3bAvUqw=;
-        b=AjF+x5zqI43xBkhSCq0USzuSuwF4aJs7U6d2jgesZd7M7yxVc/52Thlhd4TGWLXa9W
-         iMMQbefPcwYobAGygO+J4BOzetS3iP9vWBCNpR/gTYPKRrefVAsln/2Tb9W5k5ZhrYue
-         C028ilP/w3f+3xF6p3Sr0oWj894YuKij9JZ7xfelkxIeFueww4VBmszybY2QKEQNZ6as
-         M2rhSOgxulIC3zIKd99j9V93Pzdn6GdWCcP1WCeoMcQZaGmzVs31zhRTVRpeAqqxiRAJ
-         i468x3AyepEsm5Yh7ZilhIn+Oq0A7/8dp57jo4wTl+ZbuPfKqz+P9vZm99/TrXvF61xk
-         Z4Qg==
-X-Received: by 10.152.28.6 with SMTP id x6mr7873lag.32.1402062209885;
-        Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.87.178 with SMTP id az18ls133653lab.4.gmail; Fri, 06 Jun
- 2014 06:43:29 -0700 (PDT)
-X-Received: by 10.152.43.3 with SMTP id s3mr1315917lal.5.1402062209256;
-        Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id x7si1305907wiw.1.2014.06.06.06.43.29
-        for <msysgit@googlegroups.com>;
-        Fri, 06 Jun 2014 06:43:29 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 1B6071C009F; Fri,  6 Jun 2014 15:43:29 +0200 (CEST)
-X-Mailer: git-send-email 1.7.10.4
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250913>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=sndTL1DF20Rzasxj2AKYyWJ4QW/UgucvElwEsmts+p8=;
+        b=ekEL8az1VOnfFNAkY6TeaOeCz9OAPJN1NxfMiUlQ2iyUq5nOScQ5Tz9Ibl075ANEr4
+         miYVgjbiuBYTcefMpMxbNjCjpJnpgbJCs587Z0DHTSbUvMNt7xu83qH5CuJF/YehzuIw
+         T/1y/A1yftBr5eJGburgklsronEjSWM+X8Yu2MKAj40kqHj7/GMq6oiKG7X053T4viJ1
+         DoNG3nHHJUCo83WovUXLYoqWU6xQdoaRAG1VRcmugJWwwXPOGWyTW86JkEYL6m6zSHGx
+         LZ3gL4XWUje2t2qC6DBzNS7C6cp547FjpOQaQNW7tZJtzA2nn13z9GHg7VI15tWpxU9D
+         lhUw==
+X-Received: by 10.58.109.71 with SMTP id hq7mr5644821veb.26.1402062870043;
+ Fri, 06 Jun 2014 06:54:30 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.102.204 with HTTP; Fri, 6 Jun 2014 06:54:30 -0700 (PDT)
+In-Reply-To: <xmqqoay7rsgd.fsf@gitster.dls.corp.google.com>
+X-Google-Sender-Auth: kzb9Njb9zRksM4DVgSnoR_3rKCI
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250914>
 
-Hello,
+On Thu, Jun 5, 2014 at 3:50 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> I think you need to explain what you mean by "prune" a lot better
+> than what you are doing in your message to be understood by others.
+>
+> After seeing the above two commands, my *guess* of what you want to
+> do is to remove any of your local tag that is *not* present in the
+> repository you usually fetch from (aka "origin"), but that directly
+> contradicts with what you said you wish, i.e.
+>
+>> This is not only wasteful, but dangerous. I might accidentally delete
+>> a local tag I haven't pushed yet...
+>
+> which only shows that your definition of "prune" is different from
+> "remove what I do not have at 'origin'".
+>
+> But it does not say *how* that is different.  How should "prune"
+> behave differently from the two commands above?  How does your
+> "prune" decide a tag needs to be removed locally when it is not at
+> your "origin" [*1*]?
+>
+> There is *nothing* in git that lets you look at a local tag that is
+> missing from the other side and determine if that is something you
+> did not want to push (hence it is missing there) of if that is
+> something you forgot to push (hence it is missing there but you
+> would rather have pushed if you did not forget).  So you must have
+> some new mechanism to record and/or infer that distinction in mind,
+> but it is not clear what it is from your message.
+>
+> So until that is clarified, there is not much more to say if your
+> "feature" has any merit---as there is no way to tell what that
+> "feature" exactly is, at least not yet ;-)
+> <snip>
 
-This is a series of dirent modifications, 4 tiny ones and one bigger.
-As the date indicates, these are battle tested in mysgit for several years.
+You're right I didn't clarify, although I feel you're not providing
+the most welcome response to someone who isn't as familiar with the
+internals of Git as you are.
 
-Regards,
-	Stepan
+It was an oversight on my part. What I was expecting is that it would
+behave exactly like branch pruning does, but that would require
+"remote tracking tags", which we don't have. So, apparently my idea
+doesn't hold much water.
 
-Karsten Blees (5):
-  Win32 dirent: remove unused dirent.d_ino member
-  Win32 dirent: remove unused dirent.d_reclen member
-  Win32 dirent: change FILENAME_MAX to MAX_PATH
-  Win32 dirent: clarify #include directives
-  Win32 dirent: improve dirent implementation
+The general problem I see in the day to day workflow with my team is
+that if tags exist locally and they push, those tags continuously get
+recreated on the remote repo even after I delete them remotely. So I
+can never truly delete tags until I go to each person and make sure
+the tool they're using isn't accidentally pushing tags. For example,
+SourceTree pushes all tags by default. Everyone on my team is new to
+Git, so they don't know to turn that off. Having git clean up tags
+automatically would really help with this, even though you may not
+feel it's the responsibility of Git. It's more of a usability issue,
+it's just prone to error.
 
- compat/win32/dirent.c | 116 ++++++++++++++++++++++++--------------------------
- compat/win32/dirent.h |   8 +---
- config.mak.uname      |   2 +
- 3 files changed, 59 insertions(+), 67 deletions(-)
-
--- 
-2.0.0.9635.g0be03cb
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+I can setup my config to prune tracking branches after I pull. Having
+something like this for tags would be wonderful. However, this
+requires a bigger overhaul than what I initially was proposing.
