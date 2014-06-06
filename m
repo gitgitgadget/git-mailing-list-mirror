@@ -1,24 +1,25 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 4/5] Win32: move main macro to a function
-Date: Fri,  6 Jun 2014 15:42:52 +0200
-Message-ID: <1402062173-9602-5-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 3/5] Warn if the Windows console font doesn't
+ support Unicode
+Date: Fri,  6 Jun 2014 15:42:51 +0200
+Message-ID: <1402062173-9602-4-git-send-email-kasal@ucw.cz>
 References: <1402062173-9602-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: msysGit <msysgit@googlegroups.com>,
 	Karsten Blees <blees@dcon.de>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stepan Kasal <kasal@ucw.cz>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRB5EKY6OAKGQEC7CDM2I@googlegroups.com Fri Jun 06 15:43:23 2014
+X-From: msysgit+bncBCU63DXMWULRB5EKY6OAKGQEC7CDM2I@googlegroups.com Fri Jun 06 15:43:24 2014
 Return-path: <msysgit+bncBCU63DXMWULRB5EKY6OAKGQEC7CDM2I@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f60.google.com ([74.125.82.60])
+Received: from mail-la0-f57.google.com ([209.85.215.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBCU63DXMWULRB5EKY6OAKGQEC7CDM2I@googlegroups.com>)
-	id 1WsuQP-0000f9-3B
-	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 15:43:17 +0200
-Received: by mail-wg0-f60.google.com with SMTP id n12sf307603wgh.25
+	id 1WsuQO-0000em-UA
+	for gcvm-msysgit@m.gmane.org; Fri, 06 Jun 2014 15:43:16 +0200
+Received: by mail-la0-f57.google.com with SMTP id hr17sf306190lab.12
         for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 06:43:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -26,27 +27,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=jb7CC/hSVTa1N3dV6kSy2ZJ8xtd01zARthiJnGbMcrI=;
-        b=XkjIyf/MrNVTILo7FzADMVWg+kAL+/mCF1Zpr5z6UK10iJBBWMW18LNL1yPz14zbfj
-         Btn/JbkOQKP4/ZmYaDA2WTAwQqT8Wt1Kt7uYpYn48DXsyRoY4mjxADMyFUWy8WY6ChhZ
-         f++PIpYOcca1ED0WgLlxyTsyMzYdIigEB8KDUh6ZetkT67pfCw4d5vnwsE1pIGCDLxfh
-         I7qdVQS1GxPeght74FjHa7IeYnEKeGm7ljEWprIOde1V1v3QsfUU+h1a0EF2Wu9QW9Mr
-         wizOcX7WIBP3Ns0Yrvf4Dua3l85nYrULyMha/jT4BpZfk+QMVWqQKbhIubR31Mwzt+4R
-         15lw==
-X-Received: by 10.152.4.136 with SMTP id k8mr15111lak.17.1402062196840;
+        bh=Eztdv1mKfaVGzfFYd/4cpYkIaP7yfdFHW8lT4H4Y+sQ=;
+        b=nrIQQo/3xAb55WyvXUkerhDEz4i4c4fw0ownjVLhpVz54CONxjD6maj4jZNaoOs9OK
+         Tnba07MOycKV7hduAGWctKIjcXXYbWBbOajC21uro7Cot18qe1wYSg24XZDvh9oZWL8o
+         6Bp3Pz+EZtqtO0uuEDuyQwAoJjKjhSPx4jzm3OiXRPpLf20R2+T+qlat4Bn5ucFWcHF9
+         RAgEwMj0LvOr1mXTCZ1ltRlAIM0TBTMu2xB9v2xR7cPUh/1c5ktltLsRKWhRR+CPkY2V
+         oqxo1BdteLU451SusvsNkFc8VWKjMa9J/Ie5nAXn3X8EhIV/GVgbVqXzpTWXLfmjZVyU
+         7ddg==
+X-Received: by 10.152.203.193 with SMTP id ks1mr7911lac.29.1402062196727;
         Fri, 06 Jun 2014 06:43:16 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.44.165 with SMTP id f5ls133708lam.39.gmail; Fri, 06 Jun
- 2014 06:43:15 -0700 (PDT)
-X-Received: by 10.152.22.38 with SMTP id a6mr1410043laf.6.1402062195816;
+Received: by 10.152.6.3 with SMTP id w3ls129384law.72.gmail; Fri, 06 Jun 2014
+ 06:43:15 -0700 (PDT)
+X-Received: by 10.112.54.169 with SMTP id k9mr1319114lbp.1.1402062195797;
         Fri, 06 Jun 2014 06:43:15 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id eh2si1304822wib.2.2014.06.06.06.43.15
+        by gmr-mx.google.com with ESMTP id s1si1302906wiw.3.2014.06.06.06.43.15
         for <msysgit@googlegroups.com>;
         Fri, 06 Jun 2014 06:43:15 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id A058E1C00A8; Fri,  6 Jun 2014 15:43:15 +0200 (CEST)
+	id 9B33B1C00A6; Fri,  6 Jun 2014 15:43:15 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1402062173-9602-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
@@ -62,75 +63,119 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/250906>
 
 From: Karsten Blees <blees@dcon.de>
 
-The code in the MinGW main macro is getting more and more complex, move to
-a separate initialization function for readabiliy and extensibility.
+Unicode console output won't display correctly with default settings
+because the default console font ("Terminal") only supports the system's
+OEM charset. Unfortunately, this is a user specific setting, so it cannot
+be easily fixed by e.g. some registry tricks in the setup program.
+
+This change prints a warning on exit if console output contained non-ascii
+characters and the console font is supposedly not a TrueType font (which
+usually have decent Unicode support).
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Stepan Kasal <kasal@ucw.cz>
 ---
- compat/mingw.c | 15 +++++++++++++++
- compat/mingw.h | 14 ++++----------
- 2 files changed, 19 insertions(+), 10 deletions(-)
+ compat/winansi.c | 66 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 66 insertions(+)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index a0e13bc..c03bafa 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1847,3 +1847,18 @@ int mingw_offset_1st_component(const char *path)
- 
- 	return offset + is_dir_sep(path[offset]);
- }
-+
-+void mingw_startup()
-+{
-+	/* copy executable name to argv[0] */
-+	__argv[0] = xstrdup(_pgmptr);
-+
-+	/* initialize critical section for waitpid pinfo_t list */
-+	InitializeCriticalSection(&pinfo_cs);
-+
-+	/* set up default file mode and file modes for stdin/out/err */
-+	_fmode = _O_BINARY;
-+	_setmode(_fileno(stdin), _O_BINARY);
-+	_setmode(_fileno(stdout), _O_BINARY);
-+	_setmode(_fileno(stderr), _O_BINARY);
-+}
-diff --git a/compat/mingw.h b/compat/mingw.h
-index a465d1e..96d15ca 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -365,22 +365,16 @@ void free_environ(char **env);
- extern CRITICAL_SECTION pinfo_cs;
- 
- /*
-- * A replacement of main() that ensures that argv[0] has a path
-- * and that default fmode and std(in|out|err) are in binary mode
-+ * A replacement of main() that adds win32 specific initialization.
+diff --git a/compat/winansi.c b/compat/winansi.c
+index c4be401..bec6713 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -2,8 +2,11 @@
+  * Copyright 2008 Peter Harris <git@peter.is-a-geek.org>
   */
  
-+void mingw_startup();
- #define main(c,v) dummy_decl_mingw_main(); \
- static int mingw_main(c,v); \
- int main(int argc, char **argv) \
- { \
--	extern CRITICAL_SECTION pinfo_cs; \
--	_fmode = _O_BINARY; \
--	_setmode(_fileno(stdin), _O_BINARY); \
--	_setmode(_fileno(stdout), _O_BINARY); \
--	_setmode(_fileno(stderr), _O_BINARY); \
--	argv[0] = xstrdup(_pgmptr); \
--	InitializeCriticalSection(&pinfo_cs); \
--	return mingw_main(argc, argv); \
-+	mingw_startup(); \
-+	return mingw_main(__argc, __argv); \
- } \
- static int mingw_main(c,v)
++#undef NOGDI
+ #include "../git-compat-util.h"
+ #include <malloc.h>
++#include <wingdi.h>
++#include <winreg.h>
  
+ /*
+  Functions to be wrapped:
+@@ -27,6 +30,62 @@ static WORD attr;
+ static int negative;
+ static FILE *last_stream = NULL;
+ 
++#ifdef __MINGW32__
++typedef struct _CONSOLE_FONT_INFOEX {
++	ULONG cbSize;
++	DWORD nFont;
++	COORD dwFontSize;
++	UINT FontFamily;
++	UINT FontWeight;
++	WCHAR FaceName[LF_FACESIZE];
++} CONSOLE_FONT_INFOEX, *PCONSOLE_FONT_INFOEX;
++#endif
++
++typedef BOOL (WINAPI *PGETCURRENTCONSOLEFONTEX)(HANDLE, BOOL,
++		PCONSOLE_FONT_INFOEX);
++
++static void print_font_warning(void)
++{
++	warning("Your console font probably doesn\'t support Unicode. If "
++		"you experience strange characters in the output, consider "
++		"switching to a TrueType font such as Lucida Console!");
++}
++
++static void check_truetype_font(void)
++{
++	static int truetype_font_checked;
++	DWORD fontFamily = 0;
++	PGETCURRENTCONSOLEFONTEX pGetCurrentConsoleFontEx;
++
++	/* don't do this twice */
++	if (truetype_font_checked)
++		return;
++	truetype_font_checked = 1;
++
++	/* GetCurrentConsoleFontEx is available since Vista */
++	pGetCurrentConsoleFontEx = (PGETCURRENTCONSOLEFONTEX) GetProcAddress(
++			GetModuleHandle("kernel32.dll"), "GetCurrentConsoleFontEx");
++	if (pGetCurrentConsoleFontEx) {
++		CONSOLE_FONT_INFOEX cfi;
++		cfi.cbSize = sizeof(cfi);
++		if (pGetCurrentConsoleFontEx(console, 0, &cfi))
++			fontFamily = cfi.FontFamily;
++	} else {
++		/* pre-Vista: check default console font in registry */
++		HKEY hkey;
++		if (ERROR_SUCCESS == RegOpenKeyExA(HKEY_CURRENT_USER, "Console", 0,
++				KEY_READ, &hkey)) {
++			DWORD size = sizeof(fontFamily);
++			RegQueryValueExA(hkey, "FontFamily", NULL, NULL,
++					(LPVOID) &fontFamily, &size);
++			RegCloseKey(hkey);
++		}
++	}
++
++	if (!(fontFamily & TMPF_TRUETYPE))
++		atexit(print_font_warning);
++}
++
+ static int is_console(FILE *stream)
+ {
+ 	CONSOLE_SCREEN_BUFFER_INFO sbi;
+@@ -69,6 +128,13 @@ static int write_console(const char *str, size_t len)
+ 
+ 	WriteConsoleW(console, wbuf, wlen, NULL, NULL);
+ 
++	/*
++	 * if non-ascii characters are printed, check that the current console
++	 * font supports this
++	 */
++	if (wlen != len)
++		check_truetype_font();
++
+ 	/* return original (utf-8 encoded) length */
+ 	return len;
+ }
 -- 
 2.0.0.9635.g0be03cb
 
