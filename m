@@ -1,7 +1,7 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH v2 1/6] Support Unicode console output on Windows
-Date: Sat,  7 Jun 2014 09:57:20 +0200
-Message-ID: <1402127845-4862-2-git-send-email-kasal@ucw.cz>
+Subject: [PATCH v2 2/6] Detect console streams more reliably on Windows
+Date: Sat,  7 Jun 2014 09:57:21 +0200
+Message-ID: <1402127845-4862-3-git-send-email-kasal@ucw.cz>
 References: <20140606183935.GA4197@camelia.ucw.cz>
  <1402127845-4862-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
@@ -11,15 +11,15 @@ Cc: msysGit <msysgit@googlegroups.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stepan Kasal <kasal@ucw.cz>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRB2ELZOOAKGQERMNYXBI@googlegroups.com Sat Jun 07 09:57:32 2014
+X-From: msysgit+bncBCU63DXMWULRB2ELZOOAKGQERMNYXBI@googlegroups.com Sat Jun 07 09:57:33 2014
 Return-path: <msysgit+bncBCU63DXMWULRB2ELZOOAKGQERMNYXBI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f58.google.com ([74.125.82.58])
+Received: from mail-la0-f57.google.com ([209.85.215.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBCU63DXMWULRB2ELZOOAKGQERMNYXBI@googlegroups.com>)
-	id 1WtBVJ-0004YN-GT
+	id 1WtBVJ-0004YK-9y
 	for gcvm-msysgit@m.gmane.org; Sat, 07 Jun 2014 09:57:29 +0200
-Received: by mail-wg0-f58.google.com with SMTP id z12sf25987wgg.23
+Received: by mail-la0-f57.google.com with SMTP id hr17sf441413lab.12
         for <gcvm-msysgit@m.gmane.org>; Sat, 07 Jun 2014 00:57:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -27,27 +27,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=nUYE66/pQLmKIScAxGuTKK5XmpokVobVz6+L74G3/sk=;
-        b=kjuH4h55cXIwzVujTogQclkqS4kh/OKlZ9kMWLW/t3E2qg/Yrq027fkJ8FNMVnlTZb
-         nqRmcLuzDnUm7u+4XJAoznmuxWiTEJjoIJh0tXn5HxH9DU/Uwi+VqSjFrhbpMBaIRVp4
-         m2RzppzqIpC+k0plVsFe9FaiMaOR0CctVpSN7qZuOoiRJ82J9FO103Q4LFJTr7jOCEr5
-         FtkEW4+2qOf4EzXkn5yx9CSmUNinpj0ayf5HR/LXsrpWLBDH450zbAx0qBD9vNUovxfr
-         gbdyEPVNgeO0LieN/0Szy31QM9nv9YFYbK418IEf1QL5dTV6jL7myULaxm2YpA3mfYMk
-         qWLg==
-X-Received: by 10.152.43.67 with SMTP id u3mr4513lal.7.1402127849168;
-        Sat, 07 Jun 2014 00:57:29 -0700 (PDT)
+        bh=r6UVGkRLYsGQ+wxI7he/a1MLzH5/Qe8fiYqQkHEPbLM=;
+        b=LsJ0eQRSRkvP665df4rmG1mFF/c0jPrpJkYc9PpB/G8KlKGYrBlern/gJreUjBnOge
+         Kpjvx8tCpz28qiFNFmCg5oxQIbL/90Ak7YoZLRqSUvfuE+BKzcZ61y9WIqFi2YgkEh/n
+         /dTnEqKz4rzkakXs+XV05ztiihnDoBO3qOocQGM4xHrLRiY6PnuKO189jyGPPo6JhPa6
+         QskoLmRhXpxQWFt2+9udKqs2Q/UOC4fbZ3uWOB80jMRh0QFHz6FcCElHe1W5gtRl+OV0
+         i/JtGYqrWo88f4TP0nWb5aFJZICiJTFD9PMOWF3omoQ1YKODYcPevzzaq7q6SVjTZkA3
+         MbwQ==
+X-Received: by 10.152.18.225 with SMTP id z1mr3129lad.10.1402127848903;
+        Sat, 07 Jun 2014 00:57:28 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.23.132 with SMTP id m4ls167913laf.106.gmail; Sat, 07 Jun
- 2014 00:57:28 -0700 (PDT)
-X-Received: by 10.112.156.138 with SMTP id we10mr89025lbb.12.1402127847893;
+Received: by 10.152.29.37 with SMTP id g5ls205182lah.3.gmail; Sat, 07 Jun 2014
+ 00:57:27 -0700 (PDT)
+X-Received: by 10.112.149.162 with SMTP id ub2mr88399lbb.18.1402127847915;
         Sat, 07 Jun 2014 00:57:27 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id gz10si86422wib.0.2014.06.07.00.57.27
+        by gmr-mx.google.com with ESMTP id se3si75212wic.3.2014.06.07.00.57.27
         for <msysgit@googlegroups.com>;
         Sat, 07 Jun 2014 00:57:27 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id A6ABB1C00A5; Sat,  7 Jun 2014 09:57:27 +0200 (CEST)
+	id AB5401C00A6; Sat,  7 Jun 2014 09:57:27 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1402127845-4862-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
@@ -63,122 +63,111 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251039>
 
 From: Karsten Blees <blees@dcon.de>
-Date: Sat, 31 Jul 2010 00:04:01 +0000
+Date: Sat, 31 Jul 2010 00:04:02 +0000
 
-WriteConsoleW seems to be the only way to reliably print unicode to the
-console (without weird code page conversions).
+GetStdHandle(STD_OUTPUT_HANDLE) doesn't work for stderr if stdout is
+redirected. Use _get_osfhandle of the FILE* instead.
 
-Also redirects vfprintf to the winansi.c version.
+_isatty() is true for all character devices (including parallel and serial
+ports). Check return value of GetConsoleScreenBufferInfo instead to
+reliably detect console handles (also don't initialize internal state from
+an uninitialized CONSOLE_SCREEN_BUFFER_INFO structure if the function
+fails).
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Stepan Kasal <kasal@ucw.cz>
 ---
- compat/mingw.h   |  2 ++
- compat/winansi.c | 26 ++++++++++++++++++++------
- 2 files changed, 22 insertions(+), 6 deletions(-)
+ compat/winansi.c | 50 ++++++++++++++++++++++++++------------------------
+ 1 file changed, 26 insertions(+), 24 deletions(-)
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 6dc8b1a..d3cffb7 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -320,9 +320,11 @@ int mingw_raise(int sig);
- int winansi_fputs(const char *str, FILE *stream);
- int winansi_printf(const char *format, ...) __attribute__((format (printf, 1, 2)));
- int winansi_fprintf(FILE *stream, const char *format, ...) __attribute__((format (printf, 2, 3)));
-+int winansi_vfprintf(FILE *stream, const char *format, va_list list);
- #define fputs winansi_fputs
- #define printf(...) winansi_printf(__VA_ARGS__)
- #define fprintf(...) winansi_fprintf(__VA_ARGS__)
-+#define vfprintf winansi_vfprintf
- 
- /*
-  * git specific compatibility
 diff --git a/compat/winansi.c b/compat/winansi.c
-index dedce21..abe0fea 100644
+index abe0fea..c4be401 100644
 --- a/compat/winansi.c
 +++ b/compat/winansi.c
-@@ -3,6 +3,7 @@
-  */
+@@ -25,27 +25,39 @@ static HANDLE console;
+ static WORD plain_attr;
+ static WORD attr;
+ static int negative;
++static FILE *last_stream = NULL;
  
- #include "../git-compat-util.h"
-+#include <malloc.h>
- 
- /*
-  Functions to be wrapped:
-@@ -10,6 +11,7 @@
- #undef printf
- #undef fprintf
- #undef fputs
-+#undef vfprintf
- /* TODO: write */
- 
- /*
-@@ -46,6 +48,18 @@ static void init(void)
- 	initialized = 1;
- }
- 
-+static int write_console(const char *str, size_t len)
-+{
-+	/* convert utf-8 to utf-16, write directly to console */
-+	int wlen = MultiByteToWideChar(CP_UTF8, 0, str, len, NULL, 0);
-+	wchar_t *wbuf = (wchar_t *) alloca(wlen * sizeof(wchar_t));
-+	MultiByteToWideChar(CP_UTF8, 0, str, len, wbuf, wlen);
-+
-+	WriteConsoleW(console, wbuf, wlen, NULL, NULL);
-+
-+	/* return original (utf-8 encoded) length */
-+	return len;
-+}
- 
- #define FOREGROUND_ALL (FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE)
- #define BACKGROUND_ALL (BACKGROUND_RED | BACKGROUND_GREEN | BACKGROUND_BLUE)
-@@ -245,13 +259,15 @@ static int ansi_emulate(const char *str, FILE *stream)
- 	int rv = 0;
- 	const char *pos = str;
- 
-+	fflush(stream);
-+
- 	while (*pos) {
- 		pos = strstr(str, "\033[");
- 		if (pos) {
- 			size_t len = pos - str;
- 
- 			if (len) {
--				size_t out_len = fwrite(str, 1, len, stream);
-+				size_t out_len = write_console(str, len);
- 				rv += out_len;
- 				if (out_len < len)
- 					return rv;
-@@ -260,14 +276,12 @@ static int ansi_emulate(const char *str, FILE *stream)
- 			str = pos + 2;
- 			rv += 2;
- 
--			fflush(stream);
--
- 			pos = set_attr(str);
- 			rv += pos - str;
- 			str = pos;
- 		} else {
--			rv += strlen(str);
--			fputs(str, stream);
-+			size_t len = strlen(str);
-+			rv += write_console(str, len);
- 			return rv;
- 		}
- 	}
-@@ -294,7 +308,7 @@ int winansi_fputs(const char *str, FILE *stream)
- 		return EOF;
- }
- 
--static int winansi_vfprintf(FILE *stream, const char *format, va_list list)
-+int winansi_vfprintf(FILE *stream, const char *format, va_list list)
+-static void init(void)
++static int is_console(FILE *stream)
  {
- 	int len, rv;
- 	char small_buf[256];
+ 	CONSOLE_SCREEN_BUFFER_INFO sbi;
++	HANDLE hcon;
+ 
+ 	static int initialized = 0;
+-	if (initialized)
+-		return;
+ 
+-	console = GetStdHandle(STD_OUTPUT_HANDLE);
+-	if (console == INVALID_HANDLE_VALUE)
+-		console = NULL;
++	/* use cached value if stream hasn't changed */
++	if (stream == last_stream)
++		return console != NULL;
+ 
+-	if (!console)
+-		return;
++	last_stream = stream;
++	console = NULL;
+ 
+-	GetConsoleScreenBufferInfo(console, &sbi);
+-	attr = plain_attr = sbi.wAttributes;
+-	negative = 0;
++	/* get OS handle of the stream */
++	hcon = (HANDLE) _get_osfhandle(_fileno(stream));
++	if (hcon == INVALID_HANDLE_VALUE)
++		return 0;
++
++	/* check if its a handle to a console output screen buffer */
++	if (!GetConsoleScreenBufferInfo(hcon, &sbi))
++		return 0;
++
++	if (!initialized) {
++		attr = plain_attr = sbi.wAttributes;
++		negative = 0;
++		initialized = 1;
++	}
+ 
+-	initialized = 1;
++	console = hcon;
++	return 1;
+ }
+ 
+ static int write_console(const char *str, size_t len)
+@@ -292,12 +304,7 @@ int winansi_fputs(const char *str, FILE *stream)
+ {
+ 	int rv;
+ 
+-	if (!isatty(fileno(stream)))
+-		return fputs(str, stream);
+-
+-	init();
+-
+-	if (!console)
++	if (!is_console(stream))
+ 		return fputs(str, stream);
+ 
+ 	rv = ansi_emulate(str, stream);
+@@ -315,12 +322,7 @@ int winansi_vfprintf(FILE *stream, const char *format, va_list list)
+ 	char *buf = small_buf;
+ 	va_list cp;
+ 
+-	if (!isatty(fileno(stream)))
+-		goto abort;
+-
+-	init();
+-
+-	if (!console)
++	if (!is_console(stream))
+ 		goto abort;
+ 
+ 	va_copy(cp, list);
 -- 
 2.0.0.9635.g0be03cb
 
