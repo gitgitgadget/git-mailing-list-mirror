@@ -1,73 +1,82 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH] send-email: do not insert third header
-Date: Sat, 7 Jun 2014 10:09:40 +0200
-Organization: <)><
-Message-ID: <20140607080940.GA8858@camelia.ucw.cz>
+From: Fredrik Gustafsson <iveqy@iveqy.com>
+Subject: Re: sort entries numerically
+Date: Sat, 7 Jun 2014 12:38:05 +0200
+Message-ID: <20140607103805.GD4015@paksenarrion.iveqy.com>
+References: <5392ABAE.6030208@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 07 10:09:57 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Toralf =?iso-8859-1?Q?F=F6rster?= <toralf.foerster@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Jun 07 12:35:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WtBhN-0002ix-Cg
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Jun 2014 10:09:57 +0200
+	id 1WtDyY-00032C-5s
+	for gcvg-git-2@plane.gmane.org; Sat, 07 Jun 2014 12:35:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbaFGIJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2014 04:09:47 -0400
-Received: from jabberwock.ucw.cz ([46.255.230.98]:57603 "EHLO
-	jabberwock.ucw.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752805AbaFGIJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2014 04:09:43 -0400
-Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	(Authenticated sender: kasal)
-	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 562661C006D
-	for <git@vger.kernel.org>; Sat,  7 Jun 2014 10:09:41 +0200 (CEST)
-Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
-	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s5789fio008870
-	for <git@vger.kernel.org>; Sat, 7 Jun 2014 10:09:41 +0200
-Received: (from kasal@localhost)
-	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s5789eiO008869
-	for git@vger.kernel.org; Sat, 7 Jun 2014 10:09:40 +0200
+	id S1752455AbaFGKfk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Jun 2014 06:35:40 -0400
+Received: from mail-lb0-f169.google.com ([209.85.217.169]:36986 "EHLO
+	mail-lb0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750851AbaFGKfj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Jun 2014 06:35:39 -0400
+Received: by mail-lb0-f169.google.com with SMTP id s7so2129387lbd.28
+        for <git@vger.kernel.org>; Sat, 07 Jun 2014 03:35:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=m5th3F4U15ytUYaxNoLBWxc9mWSAk927jd1WJrUljRw=;
+        b=J/NBNFpnGUjwTMdcDhcIMJJ4O+WMFi1kl1Pe+9EklworKHdNSr9sQGfevmwQYYQ+iU
+         BcH+JsPhIs3ka8Ku5//FwWb/oKH1nCe0Zd12V8H0lvreCM66fqA8PYsBuDB+9CU+nkLM
+         sHHATvRO8PSUPlwyP59h7gCODhXxEMe5Kce4BwaQCDYxQB6RBQuSuvo7Oq6TvnharQAr
+         i+GqB4S0OfOEuGrLF65d4s4n6zLazNYFv61O8yuZuHVvvg5eDdWT1G+yRof107Yq/E4r
+         knLdRrbY921azYI44o2vsnBOwSaRrKbPuISh1v7sh0ahH0ONCK4KEfKVT2ZMw1MwILMv
+         3TXw==
+X-Received: by 10.112.159.7 with SMTP id wy7mr7919282lbb.4.1402137337634;
+        Sat, 07 Jun 2014 03:35:37 -0700 (PDT)
+Received: from paksenarrion.paks.iveqy.com (c83-250-237-167.bredband.comhem.se. [83.250.237.167])
+        by mx.google.com with ESMTPSA id o8sm10064713laj.10.2014.06.07.03.35.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sat, 07 Jun 2014 03:35:36 -0700 (PDT)
+Received: from iveqy by paksenarrion.paks.iveqy.com with local (Exim 4.82)
+	(envelope-from <iveqy@paksenarrion.iveqy.com>)
+	id 1WtE0j-0007Ao-DB; Sat, 07 Jun 2014 12:38:05 +0200
 Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-05)
+In-Reply-To: <5392ABAE.6030208@gmx.de>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251041>
 
-It is sometimes desirable to insert several header lines at the top of
-the body, e.g., if From or Date differs from the mail header.
-(Linus even recommends to use this second header for all kernel
-submissions.)
+On Sat, Jun 07, 2014 at 08:05:34AM +0200, Toralf F=F6rster wrote:
+> is there any chance to have "1.8" before "1.10" in an output like the=
+ following :
+>=20
+> ...
+> From https://code.wireshark.org/review/wireshark
+>    52fe0aa..b69642d  master     -> origin/master
+>    460db8a..540f061  master-1.10 -> origin/master-1.10
+>    25bb29a..5741a40  master-1.12 -> origin/master-1.12
+>    4ee4fc11..97898a2 master-1.8 -> origin/master-1.8
 
-send-email has a minimal support for this; make sure it is not applied
-when there is a second header already inserted in the patch file.
+I don't find anything about it in git branch man page. However there's =
+always:
 
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
- git-send-email.perl | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+git <command> | sort -d -r
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 9949db0..891df13 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1456,7 +1456,9 @@ foreach my $t (@files) {
- 	}
- 
- 	if (defined $sauthor and $sauthor ne $sender) {
--		$message = "From: $author\n\n$message";
-+		if ($message !~ m/^From: /) {
-+			$message = "From: $author\n\n$message";
-+		}
- 		if (defined $author_encoding) {
- 			if ($has_content_type) {
- 				if ($body_encoding eq $author_encoding) {
--- 
-1.9.2.msysgit.0.496.g9a846d6
+as a workaround.
+
+--=20
+Med v=E4nlig h=E4lsning
+=46redrik Gustafsson
+
+tel: 0733-608274
+e-post: iveqy@iveqy.com
