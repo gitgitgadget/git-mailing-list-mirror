@@ -1,69 +1,116 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 3/4] Documentation: replace: add --graft option
-Date: Fri, 06 Jun 2014 22:25:34 +0200
-Message-ID: <20140606202536.3722.22418.chriscool@tuxfamily.org>
-References: <20140606201741.3722.96819.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 07 08:45:11 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: [PATCH v2 0/2] mingw: macro main(), const warnings
+Date: Sat,  7 Jun 2014 08:46:39 +0200
+Message-ID: <1402123601-26312-1-git-send-email-kasal@ucw.cz>
+References: <53922F58.80509@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysGit <msysgit@googlegroups.com>,
+	Stepan Kasal <kasal@ucw.cz>
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: msysgit+bncBCU63DXMWULRBWHKZKOAKGQEVFPDDSA@googlegroups.com Sat Jun 07 08:46:49 2014
+Return-path: <msysgit+bncBCU63DXMWULRBWHKZKOAKGQEVFPDDSA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f187.google.com ([209.85.217.187])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WtANI-0000k1-Dj
-	for gcvg-git-2@plane.gmane.org; Sat, 07 Jun 2014 08:45:08 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752708AbaFGGoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 7 Jun 2014 02:44:54 -0400
-Received: from mail-2y.bbox.fr ([194.158.98.15]:51167 "EHLO mail-2y.bbox.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751301AbaFGGoq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 7 Jun 2014 02:44:46 -0400
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-2y.bbox.fr (Postfix) with ESMTP id B415A5E;
-	Sat,  7 Jun 2014 08:44:44 +0200 (CEST)
-X-git-sha1: 9684a5140cba6b964e12fad2cf706d5a637c017f 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20140606201741.3722.96819.chriscool@tuxfamily.org>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251025>
+	(envelope-from <msysgit+bncBCU63DXMWULRBWHKZKOAKGQEVFPDDSA@googlegroups.com>)
+	id 1WtAOu-0001gz-VL
+	for gcvm-msysgit@m.gmane.org; Sat, 07 Jun 2014 08:46:48 +0200
+Received: by mail-lb0-f187.google.com with SMTP id z11sf451522lbi.4
+        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 23:46:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=8Ny0alR6QSf/7jWdK/kGY/LgxEci50y0nRSHFawgCSQ=;
+        b=mutkxrX1pMHQ4u/gGbsmQdo0bk4PGwDFbXcJ3Lw0ooXa5dESaculshlKyOF4PJLUr/
+         XKC9GigmKvBEHaKCRWGN2uNwSfwq+0LVl4G3ZdRzGmi08shgtRv7IGKpObQRqkF4heGg
+         Iq33WmXFw4Xey5MEfgq1fylAx9I8Zde82qgDXmu+qAFOJB6Ytjmxs0V8g+/xg/VlttdL
+         w7PCxNTIbfPeFa2UvnYw6/QQ/XtE7Srq5OEIg14GoqhwtGIZJH475zhbG3vox7k070Hp
+         zT0NlwnFXpkRf23+fsvWm1fkUtnjobmSzmqnmbVQiYdqFqf+zn0FjAajj0XNH/Zrx+HA
+         ljGQ==
+X-Received: by 10.152.23.165 with SMTP id n5mr138872laf.5.1402123608758;
+        Fri, 06 Jun 2014 23:46:48 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.36.4 with SMTP id m4ls177589laj.45.gmail; Fri, 06 Jun 2014
+ 23:46:47 -0700 (PDT)
+X-Received: by 10.152.21.133 with SMTP id v5mr51127lae.9.1402123607632;
+        Fri, 06 Jun 2014 23:46:47 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id xk11si77373wib.0.2014.06.06.23.46.47
+        for <msysgit@googlegroups.com>;
+        Fri, 06 Jun 2014 23:46:47 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
+	id 6B88D1C00A0; Sat,  7 Jun 2014 08:46:47 +0200 (CEST)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <53922F58.80509@gmail.com>
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251026>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-replace.txt | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Hi,
 
-diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-index 61461b9..491875e 100644
---- a/Documentation/git-replace.txt
-+++ b/Documentation/git-replace.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git replace' [-f] <object> <replacement>
- 'git replace' [-f] --edit <object>
-+'git replace' [-f] --graft <commit> [<parent>...]
- 'git replace' -d <object>...
- 'git replace' [--format=<format>] [-l [<pattern>]]
- 
-@@ -73,6 +74,13 @@ OPTIONS
- 	newly created object. See linkgit:git-var[1] for details about
- 	how the editor will be chosen.
- 
-+--graft <commit> [<parent>...]::
-+	Create a graft commit. A new commit is created with the same
-+	content as <commit> except that its parents will be
-+	[<parent>...] instead of <commit>'s parents. A replacement ref
-+	is then created to replace <commit> with the newly created
-+	commit.
-+
- -l <pattern>::
- --list <pattern>::
- 	List replace refs for objects that match the given pattern (or
+On Fri, Jun 06, 2014 at 11:15:04PM +0200, Karsten Blees wrote:
+> Am 06.06.2014 21:13, schrieb Junio C Hamano:
+> > I am wondering why the solution is not a more obvious "drop const
+> > that is not ANSI C", though.  I only have a ready-access to N1570
+> > draft but in it I find:
+> >
+>
+> Actually, that was the original solution ($gmane/247535).
+
+> > Karsten Blees <karsten.blees@gmail.com> writes:
+> >> A simpler solution that works with all definitions of main() is to
+> >> cast to void* (tell the compiler all responsibility is on
+> >> us).
+
+Indeed, verified.  Re-submitting.
+Cheers,
+	Stepan
+
+Karsten Blees (1):
+  Win32: move main macro to a function
+
+Stepan Kasal (1):
+  mingw: avoid const warning
+
+ compat/mingw.c | 15 +++++++++++++++
+ compat/mingw.h | 14 ++++----------
+ 2 files changed, 19 insertions(+), 10 deletions(-)
+
 -- 
-2.0.0.rc0.40.gd30ccc4
+2.0.0.9635.g0be03cb
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
