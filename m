@@ -1,53 +1,66 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH v2 2/2] mingw: avoid const warning
-Date: Sat,  7 Jun 2014 08:46:41 +0200
-Message-ID: <1402123601-26312-3-git-send-email-kasal@ucw.cz>
-References: <53922F58.80509@gmail.com>
- <1402123601-26312-1-git-send-email-kasal@ucw.cz>
+Subject: Re: Re: [PATCH 3/5] Warn if the Windows console font
+ doesn't support Unicode
+Date: Sat, 7 Jun 2014 09:02:08 +0200
+Organization: <)><
+Message-ID: <20140607070208.GA8400@camelia.ucw.cz>
+References: <1402062173-9602-1-git-send-email-kasal@ucw.cz> <1402062173-9602-4-git-send-email-kasal@ucw.cz> <alpine.DEB.2.00.1406062211360.17391@ds9.cixit.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: msysGit <msysgit@googlegroups.com>,
-	Stepan Kasal <kasal@ucw.cz>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBWHKZKOAKGQEVFPDDSA@googlegroups.com Sat Jun 07 08:46:54 2014
-Return-path: <msysgit+bncBCU63DXMWULRBWHKZKOAKGQEVFPDDSA@googlegroups.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>,
+        Karsten Blees <blees@dcon.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: msysgit+bncBCU63DXMWULRB4XRZKOAKGQEP6KJOTY@googlegroups.com Sat Jun 07 09:02:13 2014
+Return-path: <msysgit+bncBCU63DXMWULRB4XRZKOAKGQEP6KJOTY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f183.google.com ([209.85.212.183])
+Received: from mail-we0-f186.google.com ([74.125.82.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBWHKZKOAKGQEVFPDDSA@googlegroups.com>)
-	id 1WtAOv-0001h2-A1
-	for gcvm-msysgit@m.gmane.org; Sat, 07 Jun 2014 08:46:49 +0200
-Received: by mail-wi0-f183.google.com with SMTP id n15sf227863wiw.20
-        for <gcvm-msysgit@m.gmane.org>; Fri, 06 Jun 2014 23:46:48 -0700 (PDT)
+	(envelope-from <msysgit+bncBCU63DXMWULRB4XRZKOAKGQEP6KJOTY@googlegroups.com>)
+	id 1WtAdn-0001Iy-0y
+	for gcvm-msysgit@m.gmane.org; Sat, 07 Jun 2014 09:02:11 +0200
+Received: by mail-we0-f186.google.com with SMTP id u57sf432323wes.23
+        for <gcvm-msysgit@m.gmane.org>; Sat, 07 Jun 2014 00:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
-         :references:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=ugLVb4oI8zgzu8xBrp4KXpifxJInQl3lh2ZcCuIYbMc=;
-        b=JnZ22OUok9GBJmum9iWDIMIbvq598TKRFKenPAS89Iqam1P5mtFBZycgbV43lU57AM
-         dDQFOhnowVhyGAZfsaNOp6fAhjE0LD/1R03PrIiqxWuPi2msOxkhh+LpwoyEYwiv2fWu
-         7qzVqt9fzFr72Sr9ZqEAypF6yvIrFyO5TbNi5eA5oVFklJ6yjE/J1E5RQB/Jb/BVH9q4
-         aROpm6gqmoTuihBUrCorF8MYGUgQFvu8OHP47KgqGTqzmSwQq4RIPquZ/M0HrbA2R0Di
-         RC5Fz0Yrh3oaPoh8fsbPpUlsYTl7VP6w/UnydCVOS8YHgdAno3lj4owWU5MrsEgs6Ka9
-         JjdQ==
-X-Received: by 10.181.13.230 with SMTP id fb6mr39173wid.1.1402123608831;
-        Fri, 06 Jun 2014 23:46:48 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:organization:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=3I+0XSOApZfBtGUiVmZ4gofKUFtd3V2V9mnUCJ9j47w=;
+        b=AJe22Fh6DHDugWTfmZe/f3kEHZVm8MN4iJAxoFKJComdGHmzfAPtPSFesJaiHZeInJ
+         1oS60JyJsfKxF99HdfyTVYo+xzfAaIfzJfjIB6rAxZHkDl6mv3jyrj3vXJNJiYrAK2NZ
+         i1rK8UMuymjxvllSau2IncXqUelHSMf0/whgmrwH6p0z6bODElbQjaAdSJ6N3ANySpLF
+         ZIJsRg0GjVOembC59eeygCNEppBBPdb97mmS6BFaRUNiTp7PxSGvZZ5lRKHYgImUrxwp
+         JkH7170X4irjlx3dNvVqs4vX3Q/MEaRsrkxzp64VGVSIjId8rT8+oCv+1mnci4oHee37
+         PKhg==
+X-Received: by 10.152.18.134 with SMTP id w6mr128479lad.1.1402124530618;
+        Sat, 07 Jun 2014 00:02:10 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.24.102 with SMTP id t6ls201648wif.33.gmail; Fri, 06 Jun
- 2014 23:46:47 -0700 (PDT)
-X-Received: by 10.14.101.2 with SMTP id a2mr3370eeg.7.1402123607652;
-        Fri, 06 Jun 2014 23:46:47 -0700 (PDT)
+Received: by 10.152.170.133 with SMTP id am5ls179385lac.36.gmail; Sat, 07 Jun
+ 2014 00:02:09 -0700 (PDT)
+X-Received: by 10.152.37.100 with SMTP id x4mr124863laj.6.1402124529538;
+        Sat, 07 Jun 2014 00:02:09 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id ck3si792169wib.0.2014.06.06.23.46.47
+        by gmr-mx.google.com with ESMTP id e12si74289wiv.1.2014.06.07.00.02.09
         for <msysgit@googlegroups.com>;
-        Fri, 06 Jun 2014 23:46:47 -0700 (PDT)
+        Sat, 07 Jun 2014 00:02:09 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 789281C00A6; Sat,  7 Jun 2014 08:46:47 +0200 (CEST)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1402123601-26312-1-git-send-email-kasal@ucw.cz>
+Received: from 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (84.64.broadband3.iol.cz [85.70.64.84])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: kasal)
+	by jabberwock.ucw.cz (Postfix) with ESMTPSA id 3EF901C00A0;
+	Sat,  7 Jun 2014 09:02:09 +0200 (CEST)
+Received: from camelia.ucw.cz (camelia.ucw.cz [127.0.0.1])
+	by 49-117-207-85.strcechy.adsl-llu.static.bluetone.cz (8.14.3/8.14.3) with ESMTP id s577289R008441;
+	Sat, 7 Jun 2014 09:02:08 +0200
+Received: (from kasal@localhost)
+	by camelia.ucw.cz (8.14.3/8.14.3/Submit) id s57728u6008440;
+	Sat, 7 Jun 2014 09:02:08 +0200
+In-Reply-To: <alpine.DEB.2.00.1406062211360.17391@ds9.cixit.se>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 X-Original-Sender: kasal@ucw.cz
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
  (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
@@ -61,35 +74,24 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251028>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251029>
 
-Fix const warnings in http-fetch.c and remote-curl.c main() where is
-argv declared as const.
+Hi,
 
-The fix should work for all future declarations of main, no matter
-whether the second parameter's type is "char**", "const char**", or
-"char *[]".
+On Fri, Jun 06, 2014 at 10:18:43PM +0100, Peter Krefting wrote:
+> Stepan Kasal:
+>> +		"switching to a TrueType font such as Lucida Console!");
+[...]
+> modernizing the suggestion here to recomment "Consolas". It is available 
 
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
- compat/mingw.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Indeed.
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 15f0c9d..6dc8b1a 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -372,7 +372,7 @@ static int mingw_main(c,v); \
- int main(int argc, char **argv) \
- { \
- 	mingw_startup(); \
--	return mingw_main(__argc, __argv); \
-+	return mingw_main(__argc, (void *)__argv); \
- } \
- static int mingw_main(c,v)
- 
--- 
-2.0.0.9635.g0be03cb
+So, I'll keep this patch as it is, for the records, and apply your
+suggestion to the subsequent
+	[PATCH 5/5] Win32: Thread-safe windows console output
+
+Stepan
 
 -- 
 -- 
