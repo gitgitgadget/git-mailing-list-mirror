@@ -1,93 +1,125 @@
-From: Matthieu Moy <Matthieu.Moy@Grenoble-INP.fr>
-Subject: Re: [PATCH v1] config: Add hashtable for config parsing & retrival
-Date: Mon, 09 Jun 2014 16:24:47 +0200
-Message-ID: <vpqmwdmtb2o.fsf@anie.imag.fr>
-References: <1402318146-5062-1-git-send-email-tanayabh@gmail.com>
-	<1402318146-5062-2-git-send-email-tanayabh@gmail.com>
+From: Fabian Ruch <bafain@gmail.com>
+Subject: Re: [RFC 1/3] sequencer: Signal failed ff as an aborted, not a conflicted
+ merge
+Date: Mon, 09 Jun 2014 17:04:36 +0200
+Message-ID: <5395CD04.2050303@gmail.com>
+References: <xmqqvbsrf4hd.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>, Torsten Bogershausen <tboegi@web.de>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 16:25:02 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Phil Hord <hordp@cisco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 09 17:05:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu0VR-0001tN-JE
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jun 2014 16:25:01 +0200
+	id 1Wu17t-0000g8-U1
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jun 2014 17:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933388AbaFIOY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 10:24:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:45033 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750720AbaFIOY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 10:24:57 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s59EOjRq027610
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 9 Jun 2014 16:24:45 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s59EOlao013954;
-	Mon, 9 Jun 2014 16:24:47 +0200
-In-Reply-To: <1402318146-5062-2-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Mon, 9 Jun 2014 05:49:06 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 09 Jun 2014 16:24:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s59EOjRq027610
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1402928688.30257@S/rcXtR68JpXIdb0vIKcwA
+	id S964836AbaFIPEm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 11:04:42 -0400
+Received: from mail-we0-f173.google.com ([74.125.82.173]:39345 "EHLO
+	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964810AbaFIPEk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 11:04:40 -0400
+Received: by mail-we0-f173.google.com with SMTP id u57so5967272wes.18
+        for <git@vger.kernel.org>; Mon, 09 Jun 2014 08:04:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=K7sLc5wnspY8pc3b0CN+RtK2y1sljmtjMDpylBui6yM=;
+        b=xxwElMiYTYcpA/bVs7cxOqKbZbs8rPPxJRceMANakDWNkBVcpawXTkWdMjrd9PTuym
+         wE+0DEw5/ZUnM8GOmHb7RO+uhwsry1JuJazkZeBDKvfnr6r/RGVxQbwWjwh1iQCgGe+T
+         bkrNRT9oXo7wsMUTiKR5S96k+x7mubfRgIWtAPV46+slM6MQGlNvWhw5OJFCkuUP8GRW
+         5rHTbYxL+rk0M4NTS0mnjpcoB4RC3mGwEVhF4lavDDer544mWskBsXOsxy4DeqO7IRlA
+         4ob+EDNbiTxWHxCAcMXj0Zj+yY3SXgjkYIvyXUdK1aaSeAKWi5FXlqfbVLOkx+xS4sSS
+         2YjA==
+X-Received: by 10.14.224.196 with SMTP id x44mr2564eep.111.1402326278928;
+        Mon, 09 Jun 2014 08:04:38 -0700 (PDT)
+Received: from client.googlemail.com ([2a02:8108:1bc0:1bf4:224:d7ff:fe92:3de1])
+        by mx.google.com with ESMTPSA id i4sm45550545eeg.28.2014.06.09.08.04.37
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 09 Jun 2014 08:04:38 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqqvbsrf4hd.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251080>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Hi Junio,
 
-> +the highest priority(i.e. for the same variable value in the repo config
-                       ^
-missing space.
+On 05/27/2014 08:42 PM, Junio C Hamano wrote:
+> Fabian Ruch <bafain@gmail.com> writes:
+>> [..]
+>>
+>> In order to signal the three possible situations (not only success and
+>> failure to complete) after a pick through porcelain commands such as
+>> `cherry-pick`, exit with a return value that is neither 0 nor 1. -1 was
+>> chosen in line with the other situations in which the sequencer
+>> encounters an error.
+> 
+> Hmph... do we still pass negative to exit() anywhere in our codebase?
 
-> +struct config_cache_entry {
-> +	struct hashmap_entry ent;
-> +	char *key;
-> +	struct string_list *value_list;
-> +};
+No, but I thought `cmd_cherry_pick` would just forward the `return -1` from the
+sequencer to the shell. I had another look and found that `cmd_cherry_pick`
+calls `die` instead. Now, the commit inserts 128 as exit status in
+`fast_forward_to`.
 
-I guess this crossed Eric's remark about the fact that this is a
-pointer.
+Would it be appropriate to mention the choice of exit status in the coding
+guidelines? I didn't know that the int-argument to exit(3) gets truncated and
+that this is why it is a general rule to only use values in the range from 0 to
+255 with exit(3).
 
-> +static int hashmap_is_init;
+Kind regards,
+   Fabian
 
-I'd call it hashmap_initialized, but that's a matter of taste.
+-- >8 --
+Subject: sequencer: Signal failed ff as an aborted, not a conflicted merge
 
-> +static void config_cache_free(void)
+`do_pick_commit` handles three situations if it is not fast-forwarding.
+In order for `do_pick_commit` to identify the situation, it examines the
+return value of the selected merge command.
 
-I didn't look closely enough to make sure there were no memory leak
-remaining, but did you check with valgrind --leak-check that it is the
-case in practice?
+1. return value 0 stands for a clean merge
+2. 1 is passed in case of a failed merge due to conflict
+3. any other return value means that the merge did not even start
 
-> +	/* contents of config file has changed, so invalidate the
-> +	 * config cache used by non-callback based query functions.
-> +	 */
+So far, the sequencer returns 1 in case of a failed fast-forward, which
+would mean "failed merge due to conflict". However, a fast-forward
+either starts and succeeds or does not start at all. In particular, it
+cannot fail in between like a merge with a dirty index due to conflicts.
 
-Style: Git usually writes multi-line comments
+In order to signal the three possible situations (not only success and
+failure to complete) after a pick through porcelain commands such as
+`cherry-pick`, exit with a return value that is neither 0 nor 1. 128 was
+chosen in line with the other situations in which the sequencer
+encounters an error. In such situations, the sequencer returns a
+negative value and `cherry-pick` translates this into a call to `die`.
+`die` then terminates the process with exit status 128.
 
-/*
- * like
- * this
- */
+Signed-off-by: Fabian Ruch <bafain@gmail.com>
+---
+ sequencer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-(not always applied, but documented in Documentation/CodingGuidelines)
-
-(no time for a more detailed review, sorry)
-
+diff --git a/sequencer.c b/sequencer.c
+index 90cac7b..225afcb 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -278,7 +278,7 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from,
+ 
+ 	read_cache();
+ 	if (checkout_fast_forward(from, to, 1))
+-		exit(1); /* the callee should have complained already */
++		exit(128); /* the callee should have complained already */
+ 	ref_lock = lock_any_ref_for_update("HEAD", unborn ? null_sha1 : from,
+ 					   0, NULL);
+ 	strbuf_addf(&sb, "%s: fast-forward", action_name(opts));
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.0.0
