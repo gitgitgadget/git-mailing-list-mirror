@@ -1,129 +1,132 @@
 From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH/RFC v1 2/5] add strbuf_set operations documentation
-Date: Mon, 9 Jun 2014 14:49:58 -0700
-Message-ID: <20140609214958.GA18783@hudson.localdomain>
+Subject: Re: [PATCH/RFC v1 4/5] fast-import.c: cleanup using strbuf_set
+ operations
+Date: Mon, 9 Jun 2014 15:00:39 -0700
+Message-ID: <20140609220039.GB18783@hudson.localdomain>
 References: <cover.1402301815.git.jmmahler@gmail.com>
- <ce477667323a531b4b3c39724160e66360061816.1402301816.git.jmmahler@gmail.com>
- <CAPig+cSB78YZiqWm7oTn3oFXE2yZZFbKmD6R5oHmEJMc9CtwvQ@mail.gmail.com>
+ <b64218c4f2a188c5aeb48a07da01972ef4d0ca33.1402301816.git.jmmahler@gmail.com>
+ <CAPig+cRPPN7N+KUHULXxoGHetN8WPtASxnC7L1fe5rFoBFQ4KA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 23:50:10 2014
+X-From: git-owner@vger.kernel.org Tue Jun 10 00:00:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu7SC-0003nA-Qc
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jun 2014 23:50:09 +0200
+	id 1Wu7cW-0003Kl-7H
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 00:00:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754213AbaFIVuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 17:50:05 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:32802 "EHLO
+	id S1754160AbaFIWAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 18:00:45 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:47192 "EHLO
 	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751223AbaFIVuD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 17:50:03 -0400
-Received: by mail-pb0-f43.google.com with SMTP id up15so5446333pbc.2
-        for <git@vger.kernel.org>; Mon, 09 Jun 2014 14:50:02 -0700 (PDT)
+	with ESMTP id S1753838AbaFIWAo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 18:00:44 -0400
+Received: by mail-pb0-f43.google.com with SMTP id up15so5457589pbc.2
+        for <git@vger.kernel.org>; Mon, 09 Jun 2014 15:00:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:date:to:cc:subject:message-id:mail-followup-to:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=SKZEIyhNxRLuXDkiQ80My6UN7Uc6kCGbUb8DZAn9PeY=;
-        b=rxwYUYk6z4k+bbjJZt2IVEqfgZM7zBq4fGotC966hF+4RBJouDkuPcqlN+QOylRNo7
-         5mVSHPosov0JLoosSGk0WXYzpi96q75LpfJlmixXMfOUb4RYk96t6Fk30jGKc6b5zJTy
-         9b2BXZCZUr91r8AOqDcr0a7ZzNVByI+JAa0+qFf76E6ZNkK1Zt9lJmKIVUFerAaU0rxW
-         SyOh6lZPdfzpMXFHvELII81ZhPZhhADr8CBD21+nOd13yMoMNNhMhEzl7ZDIWuwkq4nr
-         DjHS7A1aX/02WvogIHzBnmDpnxfCjG16C5MU9gPo2y81bEf/3l52JCtknm2UEhwj10fp
-         3sbg==
-X-Received: by 10.69.19.139 with SMTP id gu11mr7278227pbd.36.1402350602592;
-        Mon, 09 Jun 2014 14:50:02 -0700 (PDT)
+        bh=Oi7N96K8fIXtLMpF4Y1wLvrVokQ3SZV2gzVEVOL+8MM=;
+        b=WNmHNyxvcyVCtGakKs/QZK7aNLbENuERpLShu8Hq/NjShP3vTmv09YQtZ0+hZT4ad4
+         zJkXDYqSinm0bEL/oole3F+H4A9kaByZmAvPdaujO1E4LMdcu5IB2s76kZr3XjHOI82i
+         kGNmDQ81SVaF45OA21wCUf4wQMLFgAAj2agwVd3c1llgmZj7aMFp0T+X0MYInH+60wDI
+         VaU44jyc5N1Bl9ynB+YIa0EhXch2/I7JNpGmCV9gXsXYbh4OU8iYjcftKNdrhzqrk8Mu
+         5Jtdt5ZjDzaFDFZZJYpReIcXRtmJj+BzC0y5A5NkpSKXrfzqMfL3cEKGgPDomwTSLcAH
+         uDjg==
+X-Received: by 10.66.244.176 with SMTP id xh16mr1204529pac.20.1402351243688;
+        Mon, 09 Jun 2014 15:00:43 -0700 (PDT)
 Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id io8sm65668353pbc.96.2014.06.09.14.49.59
+        by mx.google.com with ESMTPSA id pq3sm65747507pbb.57.2014.06.09.15.00.40
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 09 Jun 2014 14:50:01 -0700 (PDT)
+        Mon, 09 Jun 2014 15:00:42 -0700 (PDT)
 X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Mon, 09 Jun 2014 14:49:58 -0700
+Received: by hudson (sSMTP sendmail emulation); Mon, 09 Jun 2014 15:00:39 -0700
 Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <CAPig+cSB78YZiqWm7oTn3oFXE2yZZFbKmD6R5oHmEJMc9CtwvQ@mail.gmail.com>
+In-Reply-To: <CAPig+cRPPN7N+KUHULXxoGHetN8WPtASxnC7L1fe5rFoBFQ4KA@mail.gmail.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251105>
 
 Eric,
 
-On Mon, Jun 09, 2014 at 05:53:49AM -0400, Eric Sunshine wrote:
+On Mon, Jun 09, 2014 at 06:12:12AM -0400, Eric Sunshine wrote:
 > On Mon, Jun 9, 2014 at 4:36 AM, Jeremiah Mahler <jmmahler@gmail.com> wrote:
-> > Add documentation of the strbuf_set operations to
-> > technical/api-strbuf.txt.
+> > Subject: fast-import.c: cleanup using strbuf_set operations
 > 
-> Since this patch is concise and so closely related to patch 1/5, it
-> probably should be squashed into that one.
-> 
-Fixed.
-
-> More below.
+...
 > 
 > > Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
 > > ---
-> >  Documentation/technical/api-strbuf.txt | 18 ++++++++++++++++++
-> >  1 file changed, 18 insertions(+)
+> >  fast-import.c | 19 ++++++-------------
+> >  1 file changed, 6 insertions(+), 13 deletions(-)
 > >
-> > diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-> > index 077a709..ab430d9 100644
-> > --- a/Documentation/technical/api-strbuf.txt
-> > +++ b/Documentation/technical/api-strbuf.txt
-> > @@ -149,6 +149,24 @@ Functions
-> >         than zero if the first buffer is found, respectively, to be less than,
-> >         to match, or be greater than the second buffer.
+> > diff --git a/fast-import.c b/fast-import.c
+> > index e8ec34d..c23935c 100644
+> > --- a/fast-import.c
+> > +++ b/fast-import.c
+> > @@ -2741,8 +2741,7 @@ static void parse_new_commit(void)
+> >         hashcpy(b->branch_tree.versions[0].sha1,
+> >                 b->branch_tree.versions[1].sha1);
 > >
-> > +* Setting the buffer
-> > +
-> > +`strbuf_set`::
-> > +
-> > +    Set the buffer to some data up to a given length.
+> > -       strbuf_reset(&new_data);
+> > -       strbuf_addf(&new_data, "tree %s\n",
+> > +       strbuf_setf(&new_data, "tree %s\n",
+> >                 sha1_to_hex(b->branch_tree.versions[1].sha1));
+> >         if (!is_null_sha1(b->sha1))
+> >                 strbuf_addf(&new_data, "parent %s\n", sha1_to_hex(b->sha1));
 > 
-> I personally find this slightly ambiguous. Upon reading it, the first
-> question that pops into my mind is whether or not the existing strbuf
-> content is replaced (even though "set" should imply that it is). I
-> wonder if it would make sense to rewrite as:
+> Unlike the cases in patches 3/5 and 5/5 where the strbuf is used or
+> returned immediately following the strbuf_set() call, I am not
+> convinced that this change is an improvement. This code has the
+> general form:
 > 
->     Set the buffer to [...], replacing the old content
->     of the buffer.
+>     strbuf_reset(...);
+>     strbuf_add(...);
+>     if (condition)
+>         strbuf_add(...);
+>     strbuf_add(...);
 > 
-> Alternately:
+> in which it is clear that the string is being built piecemeal, and
+> it's easy for a programmer to insert, remove, or re-order strbuf_add()
+> calls.
 > 
->     Replace the buffer content with [...].
+> Replacing the first two lines with strbuf_set() somewhat obscures the
+> fact that the string is going to be built up piecemeal. Plus, the
+> change makes it more difficult to insert, remove, or re-order the
+> strbuf_add() invocations.
 > 
-On a second reading, I agree that it is ambigous.  'Replace' is much
-more clear.  Great suggestion.
+> This isn't a strong objection, but the benefit of the change seems
+> minimal or non-existent.
+> 
+> Ditto for several remaining cases in this patch.
+> 
+...
 
-> Ditto for the others.
-> 
-> > +`strbuf_setstr`::
-> > +
-> > +       Set the buffer to a NUL-terminated string.
-> > +
-> > +`strbuf_setf`::
-> > +
-> > +       Set the buffer to a formatted string.
-> > +
-> > +`strbuf_setbuf`::
-> > +
-> > +       Set the current buffer to the contents of some other buffer.
-> > +
-> >  * Adding data to the buffer
-> >
-> >  NOTE: All of the functions in this section will grow the buffer as necessary.
-> > --
+This is a great observation that I certainly did overlook.  Using
+strbuf_add or strbuf_set to help make it more obvious what the code is
+doing.
+
+By the same token, strbuf_set can be used to replace strbuf_add to make
+it clear that nothing important was being added to and that the entire
+buffer is being replaced.
+
+  struct strbuf mybuf = STRBUF_INIT;
+
+  strbuf_add(&mybuf, ...);  /* Was something there before? */
+
+  strbuf_set(&mybuf, ...);  /* Replace everything. */
 
 -- 
 Jeremiah Mahler
