@@ -1,110 +1,103 @@
-From: =?UTF-8?Q?Pierre=2DFran=C3=A7ois_CLEMENT?= <likeyn@gmail.com>
-Subject: Re: Git reset --hard with staged changes
-Date: Tue, 10 Jun 2014 01:22:55 +0200
-Message-ID: <CANWD=rVB249Vu1QMk64V+FxfCfJPzxqZgCfyEuixJJ_iKoTLPQ@mail.gmail.com>
-References: <CANWD=rWmzgAwTp=E_1=th0Myk-dh4m5Y9PE3=fpHeirsVVQKwQ@mail.gmail.com>
- <CANWD=rX-MEiS4cNzDWr2wwkshz2zu8-L31UrKwbZrJSBcJX-nQ@mail.gmail.com> <87vbsayy9w.fsf@fencepost.gnu.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jun 10 01:23:33 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 4/7] t3302: do not chdir around in the primary test process
+Date: Mon,  9 Jun 2014 16:22:52 -0700
+Message-ID: <1402356175-7249-5-git-send-email-gitster@pobox.com>
+References: <1402356175-7249-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 10 01:23:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu8uZ-0004KM-S5
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:23:32 +0200
+	id 1Wu8ui-0004Rp-6z
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:23:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934463AbaFIXXS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jun 2014 19:23:18 -0400
-Received: from mail-ve0-f173.google.com ([209.85.128.173]:49220 "EHLO
-	mail-ve0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932414AbaFIXXQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2014 19:23:16 -0400
-Received: by mail-ve0-f173.google.com with SMTP id db11so1892163veb.18
-        for <git@vger.kernel.org>; Mon, 09 Jun 2014 16:23:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=MAOm4Jmz58eDzbAE27eqXu8TS4tlE45/yCo+XsJh2Tc=;
-        b=SCmTlgHgQ7TQx4mDobsCXdwHZer4OQgXgVJAKagSpjOlWA3hSHp1Mvq1gRaPidox0I
-         j704Pg9B+D2U3/TqoJyZr1x059pERL2jnStSqgxEWrePOdoDbPiX57Uh4zzTILTBvo6c
-         yH0yiGGkeYNhm1sWvZ4n4wlheJVsyknEyew1l1v/CtKsNo2EhIPxFXCvVudNzWVHnwjA
-         AP7EBl8o4lwidU7wSVNfH5Iztnap+trdr1UPNRDilzzn/qLDm3YtLOkV6tWakUk/58D6
-         figiiDOb7At+MwhDdBHiLDfas+VNQ0arAGWO4s6FDW3OLTKkV8CgHDv5uWofa/4/VjAD
-         hhZA==
-X-Received: by 10.58.160.164 with SMTP id xl4mr6758127veb.38.1402356195999;
- Mon, 09 Jun 2014 16:23:15 -0700 (PDT)
-Received: by 10.58.182.104 with HTTP; Mon, 9 Jun 2014 16:22:55 -0700 (PDT)
-In-Reply-To: <87vbsayy9w.fsf@fencepost.gnu.org>
+	id S933957AbaFIXXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 19:23:30 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52931 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932414AbaFIXXX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 19:23:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA29A1D40A;
+	Mon,  9 Jun 2014 19:23:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=rGyw
+	ZQy3134rkFqT5Mk4S13379o=; b=Lx3FlksTR2Q7+qznknhbYc1WsQozx28Rbtzx
+	r+tqexiislOwp+zT3DQiH34VkS5pep45IezWMdsQlaA+NWrybCNSeT6eFozsaEFY
+	qLDdlP2/cJ/hGcwNVBnJ0FpirH1C09d1Js7+WNw/r0820prulmmiUB++iIM8ubFU
+	IkmR6tw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=YixyUf
+	Il2xtRlTOq4cixwqrI2jHZISyfqEFh9HCnHMvRYXT17MhmYz62LaHtHl1gb+fSR3
+	SYhCmujn2QCbHv033RCXgLfBAXZ8W9tR3UdLuWRvLaIChZOx1uB3PNWnnKjnAt+r
+	P6ROeXBGWg9u6cXmkPd0nNfXY1JuhmEu0k/jY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D20231D405;
+	Mon,  9 Jun 2014 19:23:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AAB961D401;
+	Mon,  9 Jun 2014 19:23:18 -0400 (EDT)
+X-Mailer: git-send-email 2.0.0-483-g1a584c4
+In-Reply-To: <1402356175-7249-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 0A3B220E-F02D-11E3-92BE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251136>
 
-2014-06-09 16:04 GMT+02:00 David Kastrup <dak@gnu.org>:
-> Pierre-Fran=C3=A7ois CLEMENT <likeyn@gmail.com> writes:
->
->> Hi all,
->>
->> Someone pointed out on the "Git for human beings" Google group
->> (https://groups.google.com/d/topic/git-users/27_FxIV_100/discussion)
->> that using git-reset's hard mode when having staged untracked files
->> simply deletes them from the working dir.
->>
->> Since git-reset specifically doesn't touch untracked files, one coul=
-d
->> expect having staged untracked files reset to their previous
->> "untracked" state rather than being deleted.
->>
->> Could this be a bug or a missing feature? Or if it isn't, can someon=
-e
->> explain what we got wrong?
->
-> git reset --keep maybe?
->
-> In a work dir and index without modifications, I expect
->
-> git apply --index ...
-> git reset --hard
->
-> to remove any files that git apply created.  It would not do so using
-> your proposal.  I agree that it seems a bit of a borderline, but I
-> consider it better that once a file _is_ tracked, git reset --hard wi=
-ll
-> first physically remove it before untracking it.
->
-> --
-> David Kastrup
+These days^Wyears we strive to do stuff in subdirectories inside
+subshells to avoid mistakes.
 
-Hm, I didn't think of "git apply --index"... Makes sense for this
-special use, but I'm not sure about the other use cases. Consider this
-scenario:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t3302-notes-index-expensive.sh | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
-You create a new (untracked) file.
-You use git-reset's hard mode to go one commit back, the new
-(untracked) file's still there.
-You add/stage that new file.
-You use git-reset's hard mode again to go one commit back, and the new
-untracked file you just staged gets deleted.
-
-Also, according to Git-scm
-(http://git-scm.com/book/en/Git-Basics-Recording-Changes-to-the-Reposit=
-ory):
-
-"Tracked files are files that were in the last snapshot [...].
-Untracked files are everything else."
-
-So it seems to me like staged untracked files shouldn't be considered
-as tracked files, and thus shouldn't be removed. Or maybe, git-reset's
-hard mode should always delete everything including untracked files?
-It would also make sense, given the numerous modes it has.
-
---
-Pierre-Fran=C3=A7ois CLEMENT
-Application developer at Upcast Social
+diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-expensive.sh
+index aa9dbd7..7712cf3 100755
+--- a/t/t3302-notes-index-expensive.sh
++++ b/t/t3302-notes-index-expensive.sh
+@@ -106,18 +106,27 @@ do_tests () {
+ 	pr=$1
+ 	count=$2
+ 
+-	test_expect_success $pr 'setup / mkdir' '
+-		mkdir $count &&
+-		cd $count
++	test_expect_success $pr "setup $count" '
++		mkdir "$count" &&
++		(
++			cd "$count" &&
++			create_repo "$count"
++		)
+ 	'
+ 
+-	test_expect_success $pr "setup $count" "create_repo $count"
+-
+-	test_expect_success $pr 'notes work' "test_notes $count"
+-
+-	test_expect_success USR_BIN_TIME,$pr 'notes timing with /usr/bin/time' "time_notes 100"
++	test_expect_success $pr 'notes work' '
++		(
++			cd "$count" &&
++			test_notes "$count"
++		)
++	'
+ 
+-	test_expect_success $pr 'teardown / cd ..' 'cd ..'
++	test_expect_success USR_BIN_TIME,$pr 'notes timing with /usr/bin/time' '
++		(
++			cd "$count" &&
++			time_notes 100
++		)
++	'
+ }
+ 
+ do_tests NOT_EXPENSIVE 10
+-- 
+2.0.0-435-g307a092
