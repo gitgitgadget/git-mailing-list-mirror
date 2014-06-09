@@ -1,108 +1,160 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH/RFC v1 2/5] add strbuf_set operations documentation
-Date: Mon, 9 Jun 2014 05:53:49 -0400
-Message-ID: <CAPig+cSB78YZiqWm7oTn3oFXE2yZZFbKmD6R5oHmEJMc9CtwvQ@mail.gmail.com>
+Subject: Re: [PATCH/RFC v1 4/5] fast-import.c: cleanup using strbuf_set operations
+Date: Mon, 9 Jun 2014 06:12:12 -0400
+Message-ID: <CAPig+cRPPN7N+KUHULXxoGHetN8WPtASxnC7L1fe5rFoBFQ4KA@mail.gmail.com>
 References: <cover.1402301815.git.jmmahler@gmail.com>
-	<ce477667323a531b4b3c39724160e66360061816.1402301816.git.jmmahler@gmail.com>
+	<b64218c4f2a188c5aeb48a07da01972ef4d0ca33.1402301816.git.jmmahler@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
 To: Jeremiah Mahler <jmmahler@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 11:53:58 2014
+X-From: git-owner@vger.kernel.org Mon Jun 09 12:12:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WtwH5-0002g4-3z
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jun 2014 11:53:55 +0200
+	id 1WtwYu-0003PT-8E
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jun 2014 12:12:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932675AbaFIJxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 05:53:51 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:51570 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932348AbaFIJxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 05:53:50 -0400
-Received: by mail-yk0-f170.google.com with SMTP id q9so7534ykb.15
-        for <git@vger.kernel.org>; Mon, 09 Jun 2014 02:53:49 -0700 (PDT)
+	id S1754777AbaFIKMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 06:12:17 -0400
+Received: from mail-yk0-f176.google.com ([209.85.160.176]:50636 "EHLO
+	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752948AbaFIKMN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 06:12:13 -0400
+Received: by mail-yk0-f176.google.com with SMTP id 131so748362ykp.21
+        for <git@vger.kernel.org>; Mon, 09 Jun 2014 03:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=WRka4qQDNafKQuTzhg4qKxB2H4uO2n61Xj4UCTG3y78=;
-        b=AMbc9X/RJr0q9nbjROQCaL/CdDaKDTA+ZF5NgVcQF/i4y5Qe3TomNSjA7asdbruq7t
-         68C8Ob7odpkgrMASv8FUzQXDejokHRtYccjqwlI8+aRpDMdz5vmQ+ZjTW+fVzJ4Qo/Dy
-         Noa6DJimwyQtSKPdd6mHhimKNp6QHtAxjS4kuvOAAZxwjMkMIZ2otmSlJTROqr+ORJsa
-         K7b5zm7NPqabdKlrhHswIN9Ihs7YrWketp65iL6OvPtOP8Af9B6/KBBIU0LnJJz5wcn5
-         UECWv31yFVeGcam2DGYkTvmyav2bafIVAOo8hkxWTOn6VFx9bOP3YoNNUzfScG6MBbcP
-         MUmA==
-X-Received: by 10.236.117.80 with SMTP id i56mr14295777yhh.15.1402307629506;
- Mon, 09 Jun 2014 02:53:49 -0700 (PDT)
-Received: by 10.170.169.65 with HTTP; Mon, 9 Jun 2014 02:53:49 -0700 (PDT)
-In-Reply-To: <ce477667323a531b4b3c39724160e66360061816.1402301816.git.jmmahler@gmail.com>
-X-Google-Sender-Auth: ttn-AHoO6Xq_5zPJFgFgda1ujpc
+        bh=BOn2yNnUM3TMOFHHKTmdaen4Ej7HcPk1ai0uctH4Msk=;
+        b=exo7/pzG3eZzu7mmwkohZ3SwTq49F7ljtWj6zRcrcFjwajlcd9u3WB0RyUQod0pj2O
+         wWs9cBvXiLEoa5u/9abON4y50kvAh6SA9CUdR6r4GqGfjomLPg3XVJDz28liUqIS7zqK
+         yjBScCcHRLf2uhxuBbVPDaT1pPeCwmyOI9yN2iclHG89a3kP2purLlMXJRvmdy9Qx2+7
+         d2BhsXZzMMfxD7RTV3DRlRwG050DkDkCHi5yzskKY1jw4s6bjpb9+l2aEJWTLwvaRczw
+         sbL30e8zaQijFwq62X+WxcGowyZhoazEUi01icI5l/XpSdcB3BlE2zhnl4Ta0E5UkQ+6
+         3vTA==
+X-Received: by 10.236.66.139 with SMTP id h11mr12826822yhd.30.1402308732346;
+ Mon, 09 Jun 2014 03:12:12 -0700 (PDT)
+Received: by 10.170.169.65 with HTTP; Mon, 9 Jun 2014 03:12:12 -0700 (PDT)
+In-Reply-To: <b64218c4f2a188c5aeb48a07da01972ef4d0ca33.1402301816.git.jmmahler@gmail.com>
+X-Google-Sender-Auth: thPd9qAjIItkSgxlRIBDOZ5vQeQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251066>
 
 On Mon, Jun 9, 2014 at 4:36 AM, Jeremiah Mahler <jmmahler@gmail.com> wrote:
-> Add documentation of the strbuf_set operations to
-> technical/api-strbuf.txt.
+> Subject: fast-import.c: cleanup using strbuf_set operations
 
-Since this patch is concise and so closely related to patch 1/5, it
-probably should be squashed into that one.
+This might read more clearly if written:
+
+    fast-import: simplify via strbuf_set()
+
+> Simplified cases where a strbuf_reset was immediately followed by a
+> strbuf_add using the new strbuf_set operations.
+
+On this project, commit messages are written in imperative mood:
+
+    Simplify cases where ... is immediately ...
 
 More below.
 
 > Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
 > ---
->  Documentation/technical/api-strbuf.txt | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+>  fast-import.c | 19 ++++++-------------
+>  1 file changed, 6 insertions(+), 13 deletions(-)
 >
-> diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-> index 077a709..ab430d9 100644
-> --- a/Documentation/technical/api-strbuf.txt
-> +++ b/Documentation/technical/api-strbuf.txt
-> @@ -149,6 +149,24 @@ Functions
->         than zero if the first buffer is found, respectively, to be less than,
->         to match, or be greater than the second buffer.
+> diff --git a/fast-import.c b/fast-import.c
+> index e8ec34d..c23935c 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -2741,8 +2741,7 @@ static void parse_new_commit(void)
+>         hashcpy(b->branch_tree.versions[0].sha1,
+>                 b->branch_tree.versions[1].sha1);
 >
-> +* Setting the buffer
-> +
-> +`strbuf_set`::
-> +
-> +    Set the buffer to some data up to a given length.
+> -       strbuf_reset(&new_data);
+> -       strbuf_addf(&new_data, "tree %s\n",
+> +       strbuf_setf(&new_data, "tree %s\n",
+>                 sha1_to_hex(b->branch_tree.versions[1].sha1));
+>         if (!is_null_sha1(b->sha1))
+>                 strbuf_addf(&new_data, "parent %s\n", sha1_to_hex(b->sha1));
 
-I personally find this slightly ambiguous. Upon reading it, the first
-question that pops into my mind is whether or not the existing strbuf
-content is replaced (even though "set" should imply that it is). I
-wonder if it would make sense to rewrite as:
+Unlike the cases in patches 3/5 and 5/5 where the strbuf is used or
+returned immediately following the strbuf_set() call, I am not
+convinced that this change is an improvement. This code has the
+general form:
 
-    Set the buffer to [...], replacing the old content
-    of the buffer.
+    strbuf_reset(...);
+    strbuf_add(...);
+    if (condition)
+        strbuf_add(...);
+    strbuf_add(...);
 
-Alternately:
+in which it is clear that the string is being built piecemeal, and
+it's easy for a programmer to insert, remove, or re-order strbuf_add()
+calls.
 
-    Replace the buffer content with [...].
+Replacing the first two lines with strbuf_set() somewhat obscures the
+fact that the string is going to be built up piecemeal. Plus, the
+change makes it more difficult to insert, remove, or re-order the
+strbuf_add() invocations.
 
-Ditto for the others.
+This isn't a strong objection, but the benefit of the change seems
+minimal or non-existent.
 
-> +`strbuf_setstr`::
-> +
-> +       Set the buffer to a NUL-terminated string.
-> +
-> +`strbuf_setf`::
-> +
-> +       Set the buffer to a formatted string.
-> +
-> +`strbuf_setbuf`::
-> +
-> +       Set the current buffer to the contents of some other buffer.
-> +
->  * Adding data to the buffer
+Ditto for several remaining cases in this patch.
+
+> @@ -2829,9 +2828,7 @@ static void parse_new_tag(void)
+>         parse_data(&msg, 0, NULL);
 >
->  NOTE: All of the functions in this section will grow the buffer as necessary.
+>         /* build the tag object */
+> -       strbuf_reset(&new_data);
+> -
+> -       strbuf_addf(&new_data,
+> +       strbuf_setf(&new_data,
+>                     "object %s\n"
+>                     "type %s\n"
+>                     "tag %s\n",
+> @@ -2898,8 +2895,7 @@ static void cat_blob(struct object_entry *oe, unsigned char sha1[20])
+>          * Output based on batch_one_object() from cat-file.c.
+>          */
+>         if (type <= 0) {
+> -               strbuf_reset(&line);
+> -               strbuf_addf(&line, "%s missing\n", sha1_to_hex(sha1));
+> +               strbuf_setf(&line, "%s missing\n", sha1_to_hex(sha1));
+>                 cat_blob_write(line.buf, line.len);
+>                 strbuf_release(&line);
+>                 free(buf);
+> @@ -2910,8 +2906,7 @@ static void cat_blob(struct object_entry *oe, unsigned char sha1[20])
+>         if (type != OBJ_BLOB)
+>                 die("Object %s is a %s but a blob was expected.",
+>                     sha1_to_hex(sha1), typename(type));
+> -       strbuf_reset(&line);
+> -       strbuf_addf(&line, "%s %s %lu\n", sha1_to_hex(sha1),
+> +       strbuf_setf(&line, "%s %s %lu\n", sha1_to_hex(sha1),
+>                                                 typename(type), size);
+>         cat_blob_write(line.buf, line.len);
+>         strbuf_release(&line);
+> @@ -3034,14 +3029,12 @@ static void print_ls(int mode, const unsigned char *sha1, const char *path)
+>
+>         if (!mode) {
+>                 /* missing SP path LF */
+> -               strbuf_reset(&line);
+> -               strbuf_addstr(&line, "missing ");
+> +               strbuf_setstr(&line, "missing ");
+>                 quote_c_style(path, &line, NULL, 0);
+>                 strbuf_addch(&line, '\n');
+>         } else {
+>                 /* mode SP type SP object_name TAB path LF */
+> -               strbuf_reset(&line);
+> -               strbuf_addf(&line, "%06o %s %s\t",
+> +               strbuf_setf(&line, "%06o %s %s\t",
+>                                 mode & ~NO_DELTA, type, sha1_to_hex(sha1));
+>                 quote_c_style(path, &line, NULL, 0);
+>                 strbuf_addch(&line, '\n');
 > --
 > 2.0.0.573.ged771ce.dirty
