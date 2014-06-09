@@ -1,82 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 0/1] refs.c: SSE4.2 optimizations for check_refname_component
-Date: Mon, 09 Jun 2014 16:05:04 -0700
-Message-ID: <xmqqvbs9d6qn.fsf@gitster.dls.corp.google.com>
-References: <1402012575-16546-1-git-send-email-dturner@twitter.com>
-	<xmqqfvjdenk5.fsf@gitster.dls.corp.google.com>
+From: Kevin Bracey <kevin@bracey.fi>
+Subject: Re: Reset by checkout?
+Date: Mon, 09 Jun 2014 23:12:31 +0300
+Message-ID: <5396152F.4020704@bracey.fi>
+References: <20140601132624.821C.B013761@chejz.com> <538AE814.2010407@bracey.fi> <20140607135439.7893.B013761@chejz.com> <241E3E5EB7AE44E6821EA5DFAA24C28F@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 01:05:21 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Atsushi Nakagawa <atnak@chejz.com>, git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Tue Jun 10 01:17:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu8cy-0007Ja-RD
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:05:21 +0200
+	id 1Wu8p8-0008Mr-C2
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932889AbaFIXFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 19:05:12 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63316 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932475AbaFIXFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 19:05:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9E8721D00B;
-	Mon,  9 Jun 2014 19:05:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+n1H0wtMvW1EOG97V2CAn/4PCfc=; b=tjcQKI
-	filkzHIuT1AV8QS06cOnwnW/+kbu1gohmQSZAOyc9ObVn6eHWZ98deHKYbtnYlFA
-	nL8MbwO5LBp737yVc9rSHHkgzFw0n5y720eUQ9UTpH7c7CM/7wV2O2d/flN9MQYI
-	AH896kBciP14PwAAbvQ5DKUgesAvZBZdvbnbE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KMcplBwTJ0MEjTb1P1XVqbbhbU3aAEae
-	GskDwTw7ziGRNHAMl2gz49xI4cvPShXzGJR5FwwwSCIpzGdM1K6VXZDyunoGPIf9
-	7gWFVcx1IdxO/yOVGm45BZEC+fh2zXkO/ydr6MhWlvK498sdXIF4GJK7J2+eataG
-	ap51/1Xspxk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 907C31D00A;
-	Mon,  9 Jun 2014 19:05:09 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A54CD1D007;
-	Mon,  9 Jun 2014 19:05:05 -0400 (EDT)
-In-Reply-To: <xmqqfvjdenk5.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 09 Jun 2014 15:16:26 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7EBD3E3A-F02A-11E3-8139-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932701AbaFIXRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 19:17:51 -0400
+Received: from mo6.mail-out.ovh.net ([178.32.228.6]:46504 "EHLO
+	mo6.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932143AbaFIXRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 19:17:49 -0400
+Received: from mail172.ha.ovh.net (b6.ovh.net [213.186.33.56])
+	by mo6.mail-out.ovh.net (Postfix) with SMTP id BF1C4FFA6CE
+	for <git@vger.kernel.org>; Mon,  9 Jun 2014 22:12:34 +0200 (CEST)
+Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
+	by b0.ovh.net with SMTP; 9 Jun 2014 22:12:34 +0200
+Received: from 81-175-152-164.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@81.175.152.164)
+  by ns0.ovh.net with SMTP; 9 Jun 2014 22:12:32 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
+In-Reply-To: <241E3E5EB7AE44E6821EA5DFAA24C28F@PhilipOakley>
+X-Ovh-Tracer-Id: 1526720275633967157
+X-Ovh-Remote: 81.175.152.164 (81-175-152-164.bb.dnainternet.fi)
+X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
+X-OVH-SPAMSTATE: OK
+X-OVH-SPAMSCORE: -51
+X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrjeekucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmd
+X-Spam-Check: DONE|U 0.5/N
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -51
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrjeekucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251131>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> David Turner <dturner@twopensource.com> writes:
+On 07/06/2014 17:52, Philip Oakley wrote:
 >
->> Since Junio has picked up the first patch from previous versions of
->> this series, I'm just going to send the second (SSE) one.  I decided
->> not to s/NO_SSE42/!HAVE_SSE42/ because it looks like git mostly uses
->> the former convention (for instance, that's what GIT_PARSE_WITH
->> generates).
 >
-> Yeah but NO_FROTZ is used only when FROTZ is something everybody is
-> expected to have (e.g. it's in posix, people ought to have it, but
-> we do support those who don't), isn't it?  For a very arch specific
-> stuff like sse42, I'd feel better to make it purely opt-in by
-> forcing people to explicitly say HAVE_SSE42 to enable it.
+> Just to say there has been a similar confusion about 'git reset' 
+> reported on the Git Users group for the case of reset with added 
+> (staged), but uncommitted changes being wiped out, which simlarly 
+> reports on the difficulty of explaining some of the conditions 
+> especially when some are wrong ;-)
+>
+> https://groups.google.com/forum/#!topic/git-users/27_FxIV_100
 
-Just FYI: I am getting
+I'm coming around to the view that "git reset <mode>" should be (almost) 
+demoted to plumbing, leaving only the "reset <file>" that reverses "add 
+<file>" as everyday Porcelain.
 
-compat/cpuid.h:8:12: error: 'processor_supports_sse42' defined but
-not used [-Werror=unused-function]
-cc1: all warnings being treated as errors
+I think "reset --keep" and "--merge" were a step in the wrong direction, 
+at least for the Porcelain - trying to make reset <mode> "more useful", 
+rather than less necessary. Normal users shouldn't be needing to touch 
+these hard-to-explain-and-slightly-dangerous commands.
 
-while building 'pu'; I'll have to rebuild 'pu' without this patch
-before I can push the day's result out.
+The addition of "--abort" to merge and other commands was much more 
+solid. They helped a lot, and I think we should follow that model by 
+adding "--undo" to various commands. That would mop up all the common 
+"reset"s, in conjunction with Atsushi's proposed "checkout -u" 
+alternative to -B, which I quite like.
+
+Main few:
+
+commit --undo = reset --soft HEAD^
+merge --undo  = reset --keep HEAD^
+rebase --undo = reset --keep ORIG_HEAD   [bug report: rebase -p doesn't 
+set ORIG_HEAD reliably]
+pull --undo = merge/rebase --undo depending on rebase settings [could we 
+go nuts and undo the fetch too?]
+
+Bonus:
+
+commit --amend --undo: reset --soft HEAD@{1}
+
+The undos can also have a bit of extra veneer that checks the log/reflog 
+for whether it matches the proposed undo, and also checks the upstream 
+to see if the thing being undone is already public.
+
+Given those, I honestly don't think I'd ever need to explain git reset 
+<mode> to anyone again. Which would be nice...
+
+(Note I propose no "--mixed" equivalent for the commit undos, but it's 
+easy enough to follow the "commit --undo" with a normal "git reset". I'd 
+rather re-document the normal git reset under "commit --undo" than add 
+and document yet another option).
+
+Kevin
