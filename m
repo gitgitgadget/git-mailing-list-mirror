@@ -1,47 +1,47 @@
 From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v2 03/19] fast-import: simplify via strbuf_set()
-Date: Mon,  9 Jun 2014 15:19:22 -0700
-Message-ID: <3c2074297916c6f5f8deb923432af22edd1dccd2.1402348696.git.jmmahler@gmail.com>
+Subject: [PATCH v2 04/19] builtin/remote: simplify via strbuf_set()
+Date: Mon,  9 Jun 2014 15:19:23 -0700
+Message-ID: <93f9d508bddd51115797da346e58880818d0dd6f.1402348696.git.jmmahler@gmail.com>
 References: <cover.1402348696.git.jmmahler@gmail.com>
 Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 00:20:39 2014
+X-From: git-owner@vger.kernel.org Tue Jun 10 00:20:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu7vh-0000WP-9v
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 00:20:37 +0200
+	id 1Wu7vl-0000Yh-PP
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 00:20:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932371AbaFIWUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 18:20:33 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:47537 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932097AbaFIWUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 18:20:32 -0400
-Received: by mail-pd0-f182.google.com with SMTP id r10so5378309pdi.13
-        for <git@vger.kernel.org>; Mon, 09 Jun 2014 15:20:32 -0700 (PDT)
+	id S932383AbaFIWUh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 18:20:37 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:55886 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932097AbaFIWUg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 18:20:36 -0400
+Received: by mail-pb0-f52.google.com with SMTP id rr13so5526920pbb.39
+        for <git@vger.kernel.org>; Mon, 09 Jun 2014 15:20:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :in-reply-to:references;
-        bh=BstEYalxiOKLar+PHP+zmTu15IdKWeUUqMZ6YSoW4uU=;
-        b=A2nc9ZfhCwM+MJSXCaCJjq37hgbzSDKDLoRDgcIPQ4gUp3NhkFWgLlfnbZuyMbwwjl
-         CzC4QYrHoFPO6g2rPuGHNlzerr4AtKuCKZ2CPHoNh20oDeqFaE9az9WuBzA+Z006LlDJ
-         nZVa3UBBlO4YBB61TGAU3yApSv4s07fTFBngCor1GiZzW+9fxb1DAmbZFJuchXG+evA/
-         c5jXX0TCPDZbrCEfwt2s88vdbNkLmQiwYkgqtNowdvSTFIOmkJYnCjOsLlK+LzuoK3Uh
-         OokFdiI1MetkTR9/4MFsHM3JhxgAz6omznfaqFHxzQS1jBW8oWUsn0NqQ9z2ZSezLVa7
-         +Npw==
-X-Received: by 10.68.253.73 with SMTP id zy9mr7474129pbc.114.1402352432058;
-        Mon, 09 Jun 2014 15:20:32 -0700 (PDT)
+        bh=fXXL6zMyFpB7N/v62UiGPsZY2wkqdDmFIQz6bgh+4/I=;
+        b=k/vHF5wH3Ho+6OcJu1LwKqwXWrfeGvG7e3o6qyY/gS3t7UgtDTx/hYxtyutcZQbz0y
+         Oolpdj6oYuOeLOaGeHqeHh3gCrqZ4du0yejjZ/d+VNBEguZQ54tVzvgWNh7nihxEQgC9
+         z5CrxFNlAjYoN/J391vprsly9x1onBPxVMD+BWorYV9dg+c4hWLK6ty/5qwJ2DlxRYBZ
+         lLcVAuqeHstjKrtLQrFUBNhNuTeNb5LaAxn2pIaUEBNGoIju0fgPClMFb4sgzlekSV3s
+         gm+9OJfIAI2XvPMVcLWbnLyEtRsLYSOReYBvcPGYPVcACInQ1Z11MaDP6ae+trts9utW
+         s2Yg==
+X-Received: by 10.68.171.4 with SMTP id aq4mr6593770pbc.150.1402352436196;
+        Mon, 09 Jun 2014 15:20:36 -0700 (PDT)
 Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id is5sm65864285pbb.8.2014.06.09.15.20.28
+        by mx.google.com with ESMTPSA id io6sm2658229pac.44.2014.06.09.15.20.33
         for <multiple recipients>
         (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 09 Jun 2014 15:20:30 -0700 (PDT)
+        Mon, 09 Jun 2014 15:20:35 -0700 (PDT)
 X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Mon, 09 Jun 2014 15:20:27 -0700
+Received: by hudson (sSMTP sendmail emulation); Mon, 09 Jun 2014 15:20:32 -0700
 X-Mailer: git-send-email 2.0.0.592.gf55b190
 In-Reply-To: <cover.1402348696.git.jmmahler@gmail.com>
 In-Reply-To: <cover.1402348696.git.jmmahler@gmail.com>
@@ -50,39 +50,173 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251112>
 
 Simplify cases where a strbuf_reset is immediately followed by a
 strbuf_add by using strbuf_set operations.
 
 Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
 ---
- fast-import.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ builtin/remote.c | 59 ++++++++++++++++++++------------------------------------
+ 1 file changed, 21 insertions(+), 38 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index e8ec34d..cfe9404 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2898,8 +2898,7 @@ static void cat_blob(struct object_entry *oe, unsigned char sha1[20])
- 	 * Output based on batch_one_object() from cat-file.c.
- 	 */
- 	if (type <= 0) {
--		strbuf_reset(&line);
--		strbuf_addf(&line, "%s missing\n", sha1_to_hex(sha1));
-+		strbuf_setf(&line, "%s missing\n", sha1_to_hex(sha1));
- 		cat_blob_write(line.buf, line.len);
- 		strbuf_release(&line);
- 		free(buf);
-@@ -2910,8 +2909,7 @@ static void cat_blob(struct object_entry *oe, unsigned char sha1[20])
- 	if (type != OBJ_BLOB)
- 		die("Object %s is a %s but a blob was expected.",
- 		    sha1_to_hex(sha1), typename(type));
--	strbuf_reset(&line);
--	strbuf_addf(&line, "%s %s %lu\n", sha1_to_hex(sha1),
-+	strbuf_setf(&line, "%s %s %lu\n", sha1_to_hex(sha1),
- 						typename(type), size);
- 	cat_blob_write(line.buf, line.len);
- 	strbuf_release(&line);
+diff --git a/builtin/remote.c b/builtin/remote.c
+index c9b67ff..f2d809d 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -193,8 +193,7 @@ static int add(int argc, const char **argv)
+ 		return 1;
+ 
+ 	if (!mirror || mirror & MIRROR_FETCH) {
+-		strbuf_reset(&buf);
+-		strbuf_addf(&buf, "remote.%s.fetch", name);
++		strbuf_setf(&buf, "remote.%s.fetch", name);
+ 		if (track.nr == 0)
+ 			string_list_append(&track, "*");
+ 		for (i = 0; i < track.nr; i++) {
+@@ -205,15 +204,13 @@ static int add(int argc, const char **argv)
+ 	}
+ 
+ 	if (mirror & MIRROR_PUSH) {
+-		strbuf_reset(&buf);
+-		strbuf_addf(&buf, "remote.%s.mirror", name);
++		strbuf_setf(&buf, "remote.%s.mirror", name);
+ 		if (git_config_set(buf.buf, "true"))
+ 			return 1;
+ 	}
+ 
+ 	if (fetch_tags != TAGS_DEFAULT) {
+-		strbuf_reset(&buf);
+-		strbuf_addf(&buf, "remote.%s.tagopt", name);
++		strbuf_setf(&buf, "remote.%s.tagopt", name);
+ 		if (git_config_set(buf.buf,
+ 			fetch_tags == TAGS_SET ? "--tags" : "--no-tags"))
+ 			return 1;
+@@ -223,11 +220,9 @@ static int add(int argc, const char **argv)
+ 		return 1;
+ 
+ 	if (master) {
+-		strbuf_reset(&buf);
+-		strbuf_addf(&buf, "refs/remotes/%s/HEAD", name);
++		strbuf_setf(&buf, "refs/remotes/%s/HEAD", name);
+ 
+-		strbuf_reset(&buf2);
+-		strbuf_addf(&buf2, "refs/remotes/%s/%s", name, master);
++		strbuf_setf(&buf2, "refs/remotes/%s/%s", name, master);
+ 
+ 		if (create_symref(buf.buf, buf2.buf, "remote add"))
+ 			return error(_("Could not setup master '%s'"), master);
+@@ -584,19 +579,17 @@ static int migrate_file(struct remote *remote)
+ 	int i;
+ 	const char *path = NULL;
+ 
+-	strbuf_addf(&buf, "remote.%s.url", remote->name);
++	strbuf_setf(&buf, "remote.%s.url", remote->name);
+ 	for (i = 0; i < remote->url_nr; i++)
+ 		if (git_config_set_multivar(buf.buf, remote->url[i], "^$", 0))
+ 			return error(_("Could not append '%s' to '%s'"),
+ 					remote->url[i], buf.buf);
+-	strbuf_reset(&buf);
+-	strbuf_addf(&buf, "remote.%s.push", remote->name);
++	strbuf_setf(&buf, "remote.%s.push", remote->name);
+ 	for (i = 0; i < remote->push_refspec_nr; i++)
+ 		if (git_config_set_multivar(buf.buf, remote->push_refspec[i], "^$", 0))
+ 			return error(_("Could not append '%s' to '%s'"),
+ 					remote->push_refspec[i], buf.buf);
+-	strbuf_reset(&buf);
+-	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
++	strbuf_setf(&buf, "remote.%s.fetch", remote->name);
+ 	for (i = 0; i < remote->fetch_refspec_nr; i++)
+ 		if (git_config_set_multivar(buf.buf, remote->fetch_refspec[i], "^$", 0))
+ 			return error(_("Could not append '%s' to '%s'"),
+@@ -640,27 +633,24 @@ static int mv(int argc, const char **argv)
+ 	if (newremote && (newremote->url_nr > 1 || newremote->fetch_refspec_nr))
+ 		die(_("remote %s already exists."), rename.new);
+ 
+-	strbuf_addf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new);
++	strbuf_setf(&buf, "refs/heads/test:refs/remotes/%s/test", rename.new);
+ 	if (!valid_fetch_refspec(buf.buf))
+ 		die(_("'%s' is not a valid remote name"), rename.new);
+ 
+-	strbuf_reset(&buf);
+-	strbuf_addf(&buf, "remote.%s", rename.old);
+-	strbuf_addf(&buf2, "remote.%s", rename.new);
++	strbuf_setf(&buf, "remote.%s", rename.old);
++	strbuf_setf(&buf2, "remote.%s", rename.new);
+ 	if (git_config_rename_section(buf.buf, buf2.buf) < 1)
+ 		return error(_("Could not rename config section '%s' to '%s'"),
+ 				buf.buf, buf2.buf);
+ 
+-	strbuf_reset(&buf);
+-	strbuf_addf(&buf, "remote.%s.fetch", rename.new);
++	strbuf_setf(&buf, "remote.%s.fetch", rename.new);
+ 	if (git_config_set_multivar(buf.buf, NULL, NULL, 1))
+ 		return error(_("Could not remove config section '%s'"), buf.buf);
+-	strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old);
++	strbuf_setf(&old_remote_context, ":refs/remotes/%s/", rename.old);
+ 	for (i = 0; i < oldremote->fetch_refspec_nr; i++) {
+ 		char *ptr;
+ 
+-		strbuf_reset(&buf2);
+-		strbuf_addstr(&buf2, oldremote->fetch_refspec[i]);
++		strbuf_setstr(&buf2, oldremote->fetch_refspec[i]);
+ 		ptr = strstr(buf2.buf, old_remote_context.buf);
+ 		if (ptr) {
+ 			refspec_updated = 1;
+@@ -683,8 +673,7 @@ static int mv(int argc, const char **argv)
+ 		struct string_list_item *item = branch_list.items + i;
+ 		struct branch_info *info = item->util;
+ 		if (info->remote_name && !strcmp(info->remote_name, rename.old)) {
+-			strbuf_reset(&buf);
+-			strbuf_addf(&buf, "branch.%s.remote", item->string);
++			strbuf_setf(&buf, "branch.%s.remote", item->string);
+ 			if (git_config_set(buf.buf, rename.new)) {
+ 				return error(_("Could not set '%s'"), buf.buf);
+ 			}
+@@ -715,12 +704,10 @@ static int mv(int argc, const char **argv)
+ 
+ 		if (item->util)
+ 			continue;
+-		strbuf_reset(&buf);
+-		strbuf_addstr(&buf, item->string);
++		strbuf_setstr(&buf, item->string);
+ 		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old),
+ 				rename.new, strlen(rename.new));
+-		strbuf_reset(&buf2);
+-		strbuf_addf(&buf2, "remote: renamed %s to %s",
++		strbuf_setf(&buf2, "remote: renamed %s to %s",
+ 				item->string, buf.buf);
+ 		if (rename_ref(item->string, buf.buf, buf2.buf))
+ 			die(_("renaming '%s' failed"), item->string);
+@@ -730,16 +717,13 @@ static int mv(int argc, const char **argv)
+ 
+ 		if (!item->util)
+ 			continue;
+-		strbuf_reset(&buf);
+-		strbuf_addstr(&buf, item->string);
++		strbuf_setstr(&buf, item->string);
+ 		strbuf_splice(&buf, strlen("refs/remotes/"), strlen(rename.old),
+ 				rename.new, strlen(rename.new));
+-		strbuf_reset(&buf2);
+-		strbuf_addstr(&buf2, item->util);
++		strbuf_setstr(&buf2, item->util);
+ 		strbuf_splice(&buf2, strlen("refs/remotes/"), strlen(rename.old),
+ 				rename.new, strlen(rename.new));
+-		strbuf_reset(&buf3);
+-		strbuf_addf(&buf3, "remote: renamed %s to %s",
++		strbuf_setf(&buf3, "remote: renamed %s to %s",
+ 				item->string, buf.buf);
+ 		if (create_symref(buf.buf, buf2.buf, buf3.buf))
+ 			die(_("creating '%s' failed"), buf.buf);
+@@ -804,8 +788,7 @@ static int rm(int argc, const char **argv)
+ 		if (info->remote_name && !strcmp(info->remote_name, remote->name)) {
+ 			const char *keys[] = { "remote", "merge", NULL }, **k;
+ 			for (k = keys; *k; k++) {
+-				strbuf_reset(&buf);
+-				strbuf_addf(&buf, "branch.%s.%s",
++				strbuf_setf(&buf, "branch.%s.%s",
+ 						item->string, *k);
+ 				if (git_config_set(buf.buf, NULL)) {
+ 					strbuf_release(&buf);
 -- 
 2.0.0.592.gf55b190
