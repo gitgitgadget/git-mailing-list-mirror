@@ -1,70 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 0/1] refs.c: SSE4.2 optimizations for check_refname_component
-Date: Mon, 09 Jun 2014 15:16:26 -0700
-Message-ID: <xmqqfvjdenk5.fsf@gitster.dls.corp.google.com>
-References: <1402012575-16546-1-git-send-email-dturner@twitter.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 00:16:42 2014
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: [PATCH v2 00/19] add strbuf_set operations
+Date: Mon,  9 Jun 2014 15:19:19 -0700
+Message-ID: <cover.1402348696.git.jmmahler@gmail.com>
+Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 00:20:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu7rt-0006Bw-Qy
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 00:16:42 +0200
+	id 1Wu7vM-0000Eg-38
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 00:20:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754171AbaFIWQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 18:16:39 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58376 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753838AbaFIWQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 18:16:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA55E1DEF6;
-	Mon,  9 Jun 2014 18:16:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/5nuYt9TTvGtPv97gyxozREjq4o=; b=fIIl0f
-	quuEfbY+HqEO47qfLLVtDILA6xwZhbS/mhwBpM+Ay7B8ZDYEdW7Mz06++smlVmla
-	/xrmoxBMaxki6U1clnAv/UMVZKroUwhkRrGimUIP4Luv37LrKznblNnzso/n7mhX
-	TxIb3vetLCthDUqbmSZdyuH02qkcSpMc9soTc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=r23fcP4nfzdicTSSvAikzb7ATUyxYcOB
-	vncxDj8J/wYSr9U4JgID6I1T9+530dXLnvZZOkxP1lNEgGePHLYykRFvLYvk/IcV
-	F6TPRWVBLp3mWINkbVjbwBkGvt/meSJg1GzMuC4pNv5gcO3nMCkm/cRvMLpQuaH+
-	X5h9muDO8XQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B02251DEF5;
-	Mon,  9 Jun 2014 18:16:31 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BCBD71DEEA;
-	Mon,  9 Jun 2014 18:16:27 -0400 (EDT)
-In-Reply-To: <1402012575-16546-1-git-send-email-dturner@twitter.com> (David
-	Turner's message of "Thu, 5 Jun 2014 19:56:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B38863EE-F023-11E3-960D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1754266AbaFIWUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 18:20:13 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:54969 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753838AbaFIWUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 18:20:11 -0400
+Received: by mail-pd0-f175.google.com with SMTP id z10so5375162pdj.34
+        for <git@vger.kernel.org>; Mon, 09 Jun 2014 15:20:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=i7wogMWNUBPODOwhSPSXUdg8wB5UaiCclRhjRHo0fY4=;
+        b=uto+8u8q8GWTo+wEwP6nuIvHw2vcVa9YA2gfSDxPiv7a59+tupXPxsGwCDoGpWiS2y
+         YfK5wa4Z3SdnznvIel9Q+beaGAFN8Sita+/J0psvSz40x6imjcp8H3POFCysw/pBgk4D
+         OjomXBMazVyjWeA7ivqHlREHFST6pcmWOYUYRFHa0zXy4SSqhfpxKvLHviHt8MMMKfK0
+         zLKnqHH3RKWer9GG/+sMVkOpTLY+j4jxwiurgWzV7h747m0yUK5QtveRQDpAEtaI1CS5
+         ivgveKD+DxNlGlrtzcKMfL8qGGtMfK1iaiTj7T5xb50+G+/ag98CG5i6IebPnBoqjnTZ
+         DSbA==
+X-Received: by 10.66.221.230 with SMTP id qh6mr1136807pac.5.1402352410885;
+        Mon, 09 Jun 2014 15:20:10 -0700 (PDT)
+Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id zq5sm65819044pbb.37.2014.06.09.15.20.07
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Mon, 09 Jun 2014 15:20:09 -0700 (PDT)
+X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
+Received: by hudson (sSMTP sendmail emulation); Mon, 09 Jun 2014 15:20:06 -0700
+X-Mailer: git-send-email 2.0.0.592.gf55b190
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251108>
 
-David Turner <dturner@twopensource.com> writes:
+Version 2 of the patch set to add strbuf_set operations.
 
-> Since Junio has picked up the first patch from previous versions of
-> this series, I'm just going to send the second (SSE) one.  I decided
-> not to s/NO_SSE42/!HAVE_SSE42/ because it looks like git mostly uses
-> the former convention (for instance, that's what GIT_PARSE_WITH
-> generates).
+Includes suggestions from Eric Sunshine [1]:
 
-Yeah but NO_FROTZ is used only when FROTZ is something everybody is
-expected to have (e.g. it's in posix, people ought to have it, but
-we do support those who don't), isn't it?  For a very arch specific
-stuff like sse42, I'd feel better to make it purely opt-in by
-forcing people to explicitly say HAVE_SSE42 to enable it.
+  - New operations and their documentation placed in one patch.
+
+  - Less ambiguous documentation: "Replace the buffer content with [...]"
+
+  - Use imperative mood in log messages.
+
+  - Don't use strbuf_set operations in cases where strbuf_add is used to
+    build up a buffer in multiple steps.  Multiple adds suggest that
+	re-ordering is possible whereas a strbuf_set at the beginning
+	suggests that it isn't.  This is confusing.
+
+Using strbuf_set before a sequence of adds can be confusing.  But using
+strbuf_add when nothing important was being added to can also be
+confusing.  strbuf_set can be used to make these cases more clear.
+
+  struct strbuf mybuf = STRBUF_INIT;
+
+  strbuf_add(&mybuf, ...);  /* Was something there before? */
+
+  strbuf_set(&mybuf, ...);  /* Replace everything. */
+
+Several single line replacements were made for this reason.
+
+Additional files have also been converted compared to version 1 [1].
+
+[1]: http://marc.info/?l=git&m=140230874124060&w=2
+
+Jeremiah Mahler (19):
+  add strbuf_set operations
+  sha1_name: simplify via strbuf_set()
+  fast-import: simplify via strbuf_set()
+  builtin/remote: simplify via strbuf_set()
+  branch: simplify via strbuf_set()
+  builtin/branch: simplify via strbuf_set()
+  builtin/checkout: simplify via strbuf_set()
+  builtin/mailinfo: simplify via strbuf_set()
+  builtin/tag: simplify via strbuf_set()
+  date: simplify via strbuf_set()
+  diffcore-order: simplify via strbuf_set()
+  http-backend: simplify via strbuf_set()
+  http: simplify via strbuf_set()
+  ident: simplify via strbuf_set()
+  remote-curl: simplify via strbuf_set()
+  submodule: simplify via strbuf_set()
+  transport: simplify via strbuf_set()
+  vcs-svn/svndump: simplify via strbuf_set()
+  wt-status: simplify via strbuf_set()
+
+ Documentation/technical/api-strbuf.txt | 18 +++++++++++
+ branch.c                               |  6 ++--
+ builtin/branch.c                       |  3 +-
+ builtin/checkout.c                     | 18 ++++-------
+ builtin/mailinfo.c                     | 18 ++++-------
+ builtin/remote.c                       | 59 ++++++++++++----------------------
+ builtin/tag.c                          |  3 +-
+ date.c                                 |  3 +-
+ diffcore-order.c                       |  3 +-
+ fast-import.c                          |  6 ++--
+ http-backend.c                         |  6 ++--
+ http.c                                 |  3 +-
+ ident.c                                |  6 ++--
+ remote-curl.c                          |  3 +-
+ sha1_name.c                            | 15 +++------
+ strbuf.c                               | 21 ++++++++++++
+ strbuf.h                               | 14 ++++++++
+ submodule.c                            |  5 ++-
+ transport.c                            |  3 +-
+ vcs-svn/svndump.c                      |  3 +-
+ wt-status.c                            |  3 +-
+ 21 files changed, 110 insertions(+), 109 deletions(-)
+
+-- 
+2.0.0.592.gf55b190
