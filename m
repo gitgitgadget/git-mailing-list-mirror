@@ -1,100 +1,70 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH/RFC v1 0/5] add strbuf_set operations
-Date: Mon, 9 Jun 2014 15:06:41 -0700
-Message-ID: <20140609220641.GC18783@hudson.localdomain>
-References: <cover.1402301815.git.jmmahler@gmail.com>
- <CACsJy8D_eM9OtH=6Z_F0P7GZpqmAdSCEnBjCr_gniZr649P1uw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 0/1] refs.c: SSE4.2 optimizations for check_refname_component
+Date: Mon, 09 Jun 2014 15:16:26 -0700
+Message-ID: <xmqqfvjdenk5.fsf@gitster.dls.corp.google.com>
+References: <1402012575-16546-1-git-send-email-dturner@twitter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 00:06:53 2014
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 00:16:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu7iN-0007af-Fp
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 00:06:51 +0200
+	id 1Wu7rt-0006Bw-Qy
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 00:16:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754266AbaFIWGs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 18:06:48 -0400
-Received: from mail-pd0-f175.google.com ([209.85.192.175]:44154 "EHLO
-	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754093AbaFIWGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 18:06:46 -0400
-Received: by mail-pd0-f175.google.com with SMTP id z10so5361916pdj.34
-        for <git@vger.kernel.org>; Mon, 09 Jun 2014 15:06:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:date:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=xAMnj8x3RvfHFLjuDJfvaHI5cIFeklDr7YE5RS8Ug0o=;
-        b=nhBOk+DM9LJO8DBdg2OOvuzFvkNYjcTpVV+YzJq3EhW/Ey6tMOVym3irjHL7yriub9
-         re/bPU1jJ5Ske7Fi8j0WyfXQjsgs9dyVIPVTChZWxwwIuQwCSYYcAS47PhHXx/nt2KbS
-         2A0nQgsoD+G40CbBj2AfgYWtqUEJW4Wvhc7bG3f20VMP4zFJ+i9bWtsDgPIhpXbg8L1V
-         UmvqX4xic36mQuinQx7Xoq2neRoGTItZZDH13JsZIleV2vw3YAwNAnYD3byQS1YAdAsR
-         90ZvE6fLMb3ZenmLDHjPBneyHicnn90kyX7K6VmxKHDc6IKXjrpFyALY1/l8p41l+B7Z
-         VhYw==
-X-Received: by 10.68.106.130 with SMTP id gu2mr7319692pbb.59.1402351606376;
-        Mon, 09 Jun 2014 15:06:46 -0700 (PDT)
-Received: from hudson (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id tf10sm65745714pbc.70.2014.06.09.15.06.43
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 09 Jun 2014 15:06:45 -0700 (PDT)
-X-Google-Original-From: "Jeremiah Mahler" <jeri@hudson>
-Received: by hudson (sSMTP sendmail emulation); Mon, 09 Jun 2014 15:06:41 -0700
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <CACsJy8D_eM9OtH=6Z_F0P7GZpqmAdSCEnBjCr_gniZr649P1uw@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1754171AbaFIWQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 18:16:39 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58376 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753838AbaFIWQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 18:16:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BA55E1DEF6;
+	Mon,  9 Jun 2014 18:16:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/5nuYt9TTvGtPv97gyxozREjq4o=; b=fIIl0f
+	quuEfbY+HqEO47qfLLVtDILA6xwZhbS/mhwBpM+Ay7B8ZDYEdW7Mz06++smlVmla
+	/xrmoxBMaxki6U1clnAv/UMVZKroUwhkRrGimUIP4Luv37LrKznblNnzso/n7mhX
+	TxIb3vetLCthDUqbmSZdyuH02qkcSpMc9soTc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r23fcP4nfzdicTSSvAikzb7ATUyxYcOB
+	vncxDj8J/wYSr9U4JgID6I1T9+530dXLnvZZOkxP1lNEgGePHLYykRFvLYvk/IcV
+	F6TPRWVBLp3mWINkbVjbwBkGvt/meSJg1GzMuC4pNv5gcO3nMCkm/cRvMLpQuaH+
+	X5h9muDO8XQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B02251DEF5;
+	Mon,  9 Jun 2014 18:16:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BCBD71DEEA;
+	Mon,  9 Jun 2014 18:16:27 -0400 (EDT)
+In-Reply-To: <1402012575-16546-1-git-send-email-dturner@twitter.com> (David
+	Turner's message of "Thu, 5 Jun 2014 19:56:14 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B38863EE-F023-11E3-960D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251107>
 
-Duy,
+David Turner <dturner@twopensource.com> writes:
 
-On Mon, Jun 09, 2014 at 05:39:12PM +0700, Duy Nguyen wrote:
-> On Mon, Jun 9, 2014 at 3:36 PM, Jeremiah Mahler <jmmahler@gmail.com> wrote:
-> > Currently, the data in a strbuf is modified using add operations.  To
-> > set the buffer to some data a reset must be performed before an add.
-> >
-> >   strbuf_reset(buf);
-> >   strbuf_add(buf, cb.buf.buf, cb.buf.len);
-> >
-> > And this is a common sequence of operations with 70 occurrences found in
-> > the current source code.  This includes all the different variations
-> > (add, addf, addstr, addbuf, addch).
-> >
-> >   FILES=`find ./ -name '*.c'`
-> >   CNT=$(pcregrep -M "strbuf_reset.*\n.*strbuf_add" $FILES | wc -l)
-> 
-> Hmm.. I wonder if git-grep could do this.. There's pcre support but I
-> never tried.
-> 
-Not sure if git-grep does this.  The multi-line (-M) support was the
-thing I needed.
+> Since Junio has picked up the first patch from previous versions of
+> this series, I'm just going to send the second (SSE) one.  I decided
+> not to s/NO_SSE42/!HAVE_SSE42/ because it looks like git mostly uses
+> the former convention (for instance, that's what GIT_PARSE_WITH
+> generates).
 
-> >   CNT=$(echo "$CNT / 2" | bc)
-> >   echo $CNT
-> >   70
-> 
-> The change in this series looks nice. There's another pattern, save
-> strbuf length, then strbuf_setlen() at the beginning or the end of a
-> loop. But I think it's less often.
-
-A quick look did not see any obvious patterns for this.  I think you are
-right, there may be fewer cases.
-
-> -- 
-> Duy
-
--- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+Yeah but NO_FROTZ is used only when FROTZ is something everybody is
+expected to have (e.g. it's in posix, people ought to have it, but
+we do support those who don't), isn't it?  For a very arch specific
+stuff like sse42, I'd feel better to make it purely opt-in by
+forcing people to explicitly say HAVE_SSE42 to enable it.
