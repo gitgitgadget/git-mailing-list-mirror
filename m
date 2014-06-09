@@ -1,102 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 1/7] test: turn EXPENSIVE into a lazy prerequisite
-Date: Mon,  9 Jun 2014 16:22:49 -0700
-Message-ID: <1402356175-7249-2-git-send-email-gitster@pobox.com>
+Subject: [PATCH 2/7] test: turn USR_BIN_TIME into a lazy prerequisite
+Date: Mon,  9 Jun 2014 16:22:50 -0700
+Message-ID: <1402356175-7249-3-git-send-email-gitster@pobox.com>
 References: <1402356175-7249-1-git-send-email-gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 01:23:22 2014
+X-From: git-owner@vger.kernel.org Tue Jun 10 01:23:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu8uO-0004Aw-02
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:23:20 +0200
+	id 1Wu8uZ-0004KM-Bb
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934427AbaFIXXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 19:23:09 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55298 "EHLO smtp.pobox.com"
+	id S934278AbaFIXXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 19:23:15 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58746 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932414AbaFIXXG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 19:23:06 -0400
+	id S932414AbaFIXXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 19:23:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 688141D3F7;
-	Mon,  9 Jun 2014 19:23:06 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B45E01D3FB;
+	Mon,  9 Jun 2014 19:23:11 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=vSzn
-	fG35tadwNzIfeAR3YyRep/4=; b=BP8XuCdy4M/lU+E7Qm8y1bk9ZW5qNK3OfWpo
-	/kChJPvKN1VgpuBrMJLAb/gT63v00GDFA6Kmg9vPb3O0Jfp/EWyiYcmA3S9h0DAo
-	sAclqsDTMPC7kzAbaV5hm0dr+RtYdkPsOSIy7USqjfr0IjIO97prnmoNCt3VU02R
-	30t9vnI=
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=m2gW
+	NuoUfhJKNE9vHC+jgVWL2aQ=; b=yV5BWm3erfGnaovFZ6jJ/HEY51ZUm5TDYa0S
+	Nh0oZvyLRHRFnobJzEh8SdWyNaCjhQ8uPadsSV8DC5RlXcNXm+UqyA6zh8TRS4QX
+	JRCkSZYwu3G4mkk6xy3flFnOEEuVwU+7//Snfnc4M61ElIhb5iim5/pnT2QbNgjp
+	w+2BVBI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=U5ecBA
-	DJqWJpHCEZI26J8xixICBToJVoEvhKA7TUKhCDh71qA+F9Sj4/+jGhKMwJUhMV+P
-	6RIKRhad6m+q4lXRsMGB/RcdDtUTMwcf2l2xUX+fNoWkYWiPUem9k+p40VxqMrxB
-	0QLmE3vbVkb4f4adG1D+WPo83v7WDburEkQDk=
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=h2IsLH
+	ZSVhraBWCRr346PAGJIuzOUvAzTOr/D3BsBAqGljdGa8bP0tN9TArE+bh7hw2EyF
+	Gf4CLcbj6BzoWbywE/llKtRZAdIisr17bnTH7DRdqd/IUVtISP6UWUR3uwW2mDcz
+	UrjjvfeuD20/XmXYbHJuFh8cxV874w+/SYPFM=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5F6671D3F6;
-	Mon,  9 Jun 2014 19:23:06 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AA8421D3FA;
+	Mon,  9 Jun 2014 19:23:11 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7867A1D3F2;
-	Mon,  9 Jun 2014 19:23:02 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BB7321D3F8;
+	Mon,  9 Jun 2014 19:23:07 -0400 (EDT)
 X-Mailer: git-send-email 2.0.0-483-g1a584c4
 In-Reply-To: <1402356175-7249-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 0091EF9E-F02D-11E3-BE02-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 03B7487C-F02D-11E3-8787-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251133>
 
-Two test scripts (t0021 and t5551) had copy & paste code to set
-EXPENSIVE prerequisite.  Use the test_lazy_prereq helper to define
+Two test scripts (t3302 and t3419) had copy & paste code to set
+USR_BIN_TIME prerequisite.  Use the test_lazy_prereq helper to define
 them in the common t/test-lib.sh.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t0021-conversion.sh | 2 --
- t/t5551-http-fetch.sh | 2 --
- t/test-lib.sh         | 4 ++++
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ t/t3302-notes-index-expensive.sh | 1 -
+ t/t3419-rebase-patch-id.sh       | 1 -
+ t/test-lib.sh                    | 4 ++++
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index b92e6cb..f890c54 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -190,8 +190,6 @@ test_expect_success 'required filter clean failure' '
- 	test_must_fail git add test.fc
- '
+diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-expensive.sh
+index e35d781..dc706ab 100755
+--- a/t/t3302-notes-index-expensive.sh
++++ b/t/t3302-notes-index-expensive.sh
+@@ -9,7 +9,6 @@ test_description='Test commit notes index (expensive!)'
  
--test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
--
- test_expect_success EXPENSIVE 'filter large file' '
- 	git config filter.largefile.smudge cat &&
- 	git config filter.largefile.clean cat &&
-diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
-index afb439e..d697393 100755
---- a/t/t5551-http-fetch.sh
-+++ b/t/t5551-http-fetch.sh
-@@ -214,8 +214,6 @@ test_expect_success 'cookies stored in http.cookiefile when http.savecookies set
- 	test_cmp expect_cookies.txt cookies_tail.txt
- '
+ test_set_prereq NOT_EXPENSIVE
+ test -n "$GIT_NOTES_TIMING_TESTS" && test_set_prereq EXPENSIVE
+-test -x /usr/bin/time && test_set_prereq USR_BIN_TIME
  
--test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
--
- test_expect_success EXPENSIVE 'create 50,000 tags in the repo' '
- 	(
- 	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+ create_repo () {
+ 	number_of_commits=$1
+diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
+index e70ac10..08e30b3 100755
+--- a/t/t3419-rebase-patch-id.sh
++++ b/t/t3419-rebase-patch-id.sh
+@@ -6,7 +6,6 @@ test_description='git rebase - test patch id computation'
+ 
+ test_set_prereq NOT_EXPENSIVE
+ test -n "$GIT_PATCHID_TIMING_TESTS" && test_set_prereq EXPENSIVE
+-test -x /usr/bin/time && test_set_prereq USR_BIN_TIME
+ 
+ count()
+ {
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index b25249e..d70d05e 100644
+index d70d05e..884c57c 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -855,6 +855,10 @@ test_lazy_prereq AUTOIDENT '
- 	git var GIT_AUTHOR_IDENT
+@@ -859,6 +859,10 @@ test_lazy_prereq EXPENSIVE '
+ 	test -n "$GIT_TEST_LONG"
  '
  
-+test_lazy_prereq EXPENSIVE '
-+	test -n "$GIT_TEST_LONG"
++test_lazy_prereq USR_BIN_TIME '
++	test -x /usr/bin/time
 +'
 +
  # When the tests are run as root, permission tests will report that
