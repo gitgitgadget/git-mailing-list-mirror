@@ -1,73 +1,93 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Git reset --hard with staged changes
-Date: Mon, 09 Jun 2014 16:04:43 +0200
-Message-ID: <87vbsayy9w.fsf@fencepost.gnu.org>
-References: <CANWD=rWmzgAwTp=E_1=th0Myk-dh4m5Y9PE3=fpHeirsVVQKwQ@mail.gmail.com>
-	<CANWD=rX-MEiS4cNzDWr2wwkshz2zu8-L31UrKwbZrJSBcJX-nQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@Grenoble-INP.fr>
+Subject: Re: [PATCH v1] config: Add hashtable for config parsing & retrival
+Date: Mon, 09 Jun 2014 16:24:47 +0200
+Message-ID: <vpqmwdmtb2o.fsf@anie.imag.fr>
+References: <1402318146-5062-1-git-send-email-tanayabh@gmail.com>
+	<1402318146-5062-2-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Pierre-Fran=E7ois?= CLEMENT <likeyn@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 09 16:04:50 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Jeff King <peff@peff.net>, Torsten Bogershausen <tboegi@web.de>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 09 16:25:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu0Bu-0007Sb-2E
-	for gcvg-git-2@plane.gmane.org; Mon, 09 Jun 2014 16:04:50 +0200
+	id 1Wu0VR-0001tN-JE
+	for gcvg-git-2@plane.gmane.org; Mon, 09 Jun 2014 16:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754188AbaFIOEq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jun 2014 10:04:46 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:37569 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752094AbaFIOEp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2014 10:04:45 -0400
-Received: from localhost ([127.0.0.1]:36611 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1Wu0Bo-0002gq-8E; Mon, 09 Jun 2014 10:04:44 -0400
-Received: by lola (Postfix, from userid 1000)
-	id D44AAE075E; Mon,  9 Jun 2014 16:04:43 +0200 (CEST)
-In-Reply-To: <CANWD=rX-MEiS4cNzDWr2wwkshz2zu8-L31UrKwbZrJSBcJX-nQ@mail.gmail.com>
-	(=?iso-8859-1?Q?=22Pierre-Fran=E7ois?= CLEMENT"'s message of "Mon, 9 Jun
- 2014 13:24:56
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S933388AbaFIOY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 10:24:58 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:45033 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750720AbaFIOY5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 10:24:57 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s59EOjRq027610
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 9 Jun 2014 16:24:45 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s59EOlao013954;
+	Mon, 9 Jun 2014 16:24:47 +0200
+In-Reply-To: <1402318146-5062-2-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Mon, 9 Jun 2014 05:49:06 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 09 Jun 2014 16:24:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s59EOjRq027610
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1402928688.30257@S/rcXtR68JpXIdb0vIKcwA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251079>
 
-Pierre-Fran=E7ois CLEMENT <likeyn@gmail.com> writes:
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-> Hi all,
->
-> Someone pointed out on the "Git for human beings" Google group
-> (https://groups.google.com/d/topic/git-users/27_FxIV_100/discussion)
-> that using git-reset's hard mode when having staged untracked files
-> simply deletes them from the working dir.
->
-> Since git-reset specifically doesn't touch untracked files, one could
-> expect having staged untracked files reset to their previous
-> "untracked" state rather than being deleted.
->
-> Could this be a bug or a missing feature? Or if it isn't, can someone
-> explain what we got wrong?
+> +the highest priority(i.e. for the same variable value in the repo config
+                       ^
+missing space.
 
-git reset --keep maybe?
+> +struct config_cache_entry {
+> +	struct hashmap_entry ent;
+> +	char *key;
+> +	struct string_list *value_list;
+> +};
 
-In a work dir and index without modifications, I expect
+I guess this crossed Eric's remark about the fact that this is a
+pointer.
 
-git apply --index ...
-git reset --hard
+> +static int hashmap_is_init;
 
-to remove any files that git apply created.  It would not do so using
-your proposal.  I agree that it seems a bit of a borderline, but I
-consider it better that once a file _is_ tracked, git reset --hard will
-first physically remove it before untracking it.
+I'd call it hashmap_initialized, but that's a matter of taste.
 
---=20
-David Kastrup
+> +static void config_cache_free(void)
+
+I didn't look closely enough to make sure there were no memory leak
+remaining, but did you check with valgrind --leak-check that it is the
+case in practice?
+
+> +	/* contents of config file has changed, so invalidate the
+> +	 * config cache used by non-callback based query functions.
+> +	 */
+
+Style: Git usually writes multi-line comments
+
+/*
+ * like
+ * this
+ */
+
+(not always applied, but documented in Documentation/CodingGuidelines)
+
+(no time for a more detailed review, sorry)
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
