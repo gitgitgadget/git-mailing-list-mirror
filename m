@@ -1,102 +1,88 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 7/7] tests: drop GIT_*_TIMING_TESTS environment variable support
-Date: Mon,  9 Jun 2014 16:22:55 -0700
-Message-ID: <1402356175-7249-8-git-send-email-gitster@pobox.com>
-References: <1402356175-7249-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 01:23:53 2014
+Subject: Re: [PATCH 10/20] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
+Date: Mon, 09 Jun 2014 16:23:45 -0700
+Message-ID: <xmqqoay1d5vi.fsf@gitster.dls.corp.google.com>
+References: <1402066563-28519-1-git-send-email-gitter.spiros@gmail.com>
+	<1402066563-28519-11-git-send-email-gitter.spiros@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 01:23:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu8uu-0004br-4W
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:23:52 +0200
+	id 1Wu8uy-0004f1-Uy
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:23:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934434AbaFIXXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 19:23:41 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54690 "EHLO smtp.pobox.com"
+	id S934395AbaFIXXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 19:23:52 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61882 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932414AbaFIXXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 19:23:39 -0400
+	id S932414AbaFIXXv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 19:23:51 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1CC191D429;
-	Mon,  9 Jun 2014 19:23:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=RTaI
-	wrChiKDGatEQFPJl+roVLOM=; b=Kou6sy7rpKbBboJUrg9MgG2y6yiBHLWleUmB
-	0plmGbKsoeTKEAuhcff9evMAEWDCLgq+Ez+Bog0mevuDAt6K77R7LJy0hBWpvdxo
-	hjyU/9zFFV9zRmLivON/LvciJRtlDtDJmNsjIaXJPvj5Ov1l3gDAF3DIvJ/cNTVd
-	8vqcias=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=C3lOWH
-	jTAQUMV53FY/9aVDBPu3qaqvDGg6PITGIMKvja1jeo9aWhVw5jrFSH/9fsWGPkdu
-	ORk4D3rzPeyc+tcpQyfsCn9XbjFommhz5e8u9rEfWr3aJf2ulv0lehGRt9JvMizW
-	kWHNEkPG97IQVpCrbG3Rv7+B8/VOkW7ww1f4Y=
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 95FFB1D42D;
+	Mon,  9 Jun 2014 19:23:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=I4OlePuV8YmN0I0yKLDAPfdS17M=; b=ujAQ63gLl7v3rZUwdoaK
+	AwSd0LGQBVy/LaHFJ8f1gDWJaqHgaOafQ85TfvvbjcabDC5YrYAHSy3WRqQFbKbt
+	I7ov54R6HNVbwg0I4emCFHMFlrh/72GVcx0LxMgyyyY7QuOCFZLijkZ9gG+tQ4Ik
+	JIAvlC9DC52ATrPvsOLBoZ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=BuyVZO93V39p/fPlSn3uA+MpTLniJhnU4xO2AranrZg6kf
+	6IvD96e9KrZPn0r0mVldZRbf1Js6xfxlayHXa1YEZd7f6IPoh/dr9ehXd9/lg6Hc
+	5tuQWZW94v3QE+IpEocUDwcmmCjMeCoi10xKfJX4uYuG/vF7TntsFh96sTiVU=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 13BF31D428;
-	Mon,  9 Jun 2014 19:23:39 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D0F01D42C;
+	Mon,  9 Jun 2014 19:23:50 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2F2E41D41E;
-	Mon,  9 Jun 2014 19:23:35 -0400 (EDT)
-X-Mailer: git-send-email 2.0.0-483-g1a584c4
-In-Reply-To: <1402356175-7249-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 140FC3DE-F02D-11E3-B121-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AB7B31D42B;
+	Mon,  9 Jun 2014 19:23:46 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1AEC10CC-F02D-11E3-A6A7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251141>
 
-Two tests (t3302 and t3419) used to have their own environment
-variable to trigger expensive tests without enabling expensive
-tests in other scripts; a user could set GIT_NOTES_TIMING_TESTS
-but not GIT_TEST_LONG and run the whole test suite and trigger
-expensive tests only in t3302 but not other tests.  The same for
-GIT_PATCHID_TIMING_TESTS in t3419.
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-While this may have seemed a good flexibility, in reality if you are
-concentrating on a single test (e.g. t3302), you can just run that
-single test with the GIT_TEST_LONG to trigger expensive tests.  It
-does not seem worth forcing other people who may want to come up
-with their own expesive tests to invent new environment variables by
-keeping this convention.
+> @@ -1059,13 +1059,17 @@ cmd_summary() {
+>  		while read mod_src mod_dst sha1_src sha1_dst status sm_path
+>  		do
+>  			# Always show modules deleted or type-changed (blob<->module)
+> -			test $status = D -o $status = T && echo "$sm_path" && continue
+> +			case "$status" in
+> +			[DT])
+> +				printf '%s\n' "$sm_path" &&
+> +				continue
+> +			esac
 
-Drop them.
+I think this conversion is wrong and causes parse error.  The
+surrounding code cannot be seen in the context of thsi patch, but
+looks somewhat like this:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t3302-notes-index-expensive.sh | 2 --
- t/t3419-rebase-patch-id.sh       | 2 --
- 2 files changed, 4 deletions(-)
+	modules=$( ....
+                   case "$status" in
+                   [DT])
+                           ...
+                   esac
+                   .... )
 
-diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-expensive.sh
-index 8d44e04..7217c5e 100755
---- a/t/t3302-notes-index-expensive.sh
-+++ b/t/t3302-notes-index-expensive.sh
-@@ -7,8 +7,6 @@ test_description='Test commit notes index (expensive!)'
- 
- . ./test-lib.sh
- 
--test -n "$GIT_NOTES_TIMING_TESTS" && test_set_prereq EXPENSIVE
--
- create_repo () {
- 	number_of_commits=$1
- 	nr=0
-diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
-index 9292b49..217dd79 100755
---- a/t/t3419-rebase-patch-id.sh
-+++ b/t/t3419-rebase-patch-id.sh
-@@ -4,8 +4,6 @@ test_description='git rebase - test patch id computation'
- 
- . ./test-lib.sh
- 
--test -n "$GIT_PATCHID_TIMING_TESTS" && test_set_prereq EXPENSIVE
--
- count () {
- 	i=0
- 	while test $i -lt $1
--- 
-2.0.0-435-g307a092
+Perhaps you would need to spell it with the extra opening
+parenthesis, like so:
+
+	case string in
+        ([DT])
+        	...
+	esac
+
+or something.
