@@ -1,102 +1,106 @@
-From: Kevin Bracey <kevin@bracey.fi>
-Subject: Re: Reset by checkout?
-Date: Mon, 09 Jun 2014 23:12:31 +0300
-Message-ID: <5396152F.4020704@bracey.fi>
-References: <20140601132624.821C.B013761@chejz.com> <538AE814.2010407@bracey.fi> <20140607135439.7893.B013761@chejz.com> <241E3E5EB7AE44E6821EA5DFAA24C28F@PhilipOakley>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Atsushi Nakagawa <atnak@chejz.com>, git@vger.kernel.org
-To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Tue Jun 10 01:17:55 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/7] test: turn EXPENSIVE into a lazy prerequisite
+Date: Mon,  9 Jun 2014 16:22:49 -0700
+Message-ID: <1402356175-7249-2-git-send-email-gitster@pobox.com>
+References: <1402356175-7249-1-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 10 01:23:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu8p8-0008Mr-C2
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:17:54 +0200
+	id 1Wu8uO-0004Aw-02
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:23:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932701AbaFIXRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 19:17:51 -0400
-Received: from mo6.mail-out.ovh.net ([178.32.228.6]:46504 "EHLO
-	mo6.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932143AbaFIXRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 19:17:49 -0400
-Received: from mail172.ha.ovh.net (b6.ovh.net [213.186.33.56])
-	by mo6.mail-out.ovh.net (Postfix) with SMTP id BF1C4FFA6CE
-	for <git@vger.kernel.org>; Mon,  9 Jun 2014 22:12:34 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 9 Jun 2014 22:12:34 +0200
-Received: from 81-175-152-164.bb.dnainternet.fi (HELO ?192.168.1.10?) (kevin@bracey.fi@81.175.152.164)
-  by ns0.ovh.net with SMTP; 9 Jun 2014 22:12:32 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.0; WOW64; rv:17.0) Gecko/20130215 Thunderbird/17.0.3
-In-Reply-To: <241E3E5EB7AE44E6821EA5DFAA24C28F@PhilipOakley>
-X-Ovh-Tracer-Id: 1526720275633967157
-X-Ovh-Remote: 81.175.152.164 (81-175-152-164.bb.dnainternet.fi)
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: -51
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrjeekucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmd
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -51
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejvddrjeekucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmd
+	id S934427AbaFIXXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 19:23:09 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55298 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932414AbaFIXXG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 19:23:06 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 688141D3F7;
+	Mon,  9 Jun 2014 19:23:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:in-reply-to:references; s=sasl; bh=vSzn
+	fG35tadwNzIfeAR3YyRep/4=; b=BP8XuCdy4M/lU+E7Qm8y1bk9ZW5qNK3OfWpo
+	/kChJPvKN1VgpuBrMJLAb/gT63v00GDFA6Kmg9vPb3O0Jfp/EWyiYcmA3S9h0DAo
+	sAclqsDTMPC7kzAbaV5hm0dr+RtYdkPsOSIy7USqjfr0IjIO97prnmoNCt3VU02R
+	30t9vnI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
+	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=U5ecBA
+	DJqWJpHCEZI26J8xixICBToJVoEvhKA7TUKhCDh71qA+F9Sj4/+jGhKMwJUhMV+P
+	6RIKRhad6m+q4lXRsMGB/RcdDtUTMwcf2l2xUX+fNoWkYWiPUem9k+p40VxqMrxB
+	0QLmE3vbVkb4f4adG1D+WPo83v7WDburEkQDk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5F6671D3F6;
+	Mon,  9 Jun 2014 19:23:06 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7867A1D3F2;
+	Mon,  9 Jun 2014 19:23:02 -0400 (EDT)
+X-Mailer: git-send-email 2.0.0-483-g1a584c4
+In-Reply-To: <1402356175-7249-1-git-send-email-gitster@pobox.com>
+X-Pobox-Relay-ID: 0091EF9E-F02D-11E3-BE02-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251132>
 
-On 07/06/2014 17:52, Philip Oakley wrote:
->
->
-> Just to say there has been a similar confusion about 'git reset' 
-> reported on the Git Users group for the case of reset with added 
-> (staged), but uncommitted changes being wiped out, which simlarly 
-> reports on the difficulty of explaining some of the conditions 
-> especially when some are wrong ;-)
->
-> https://groups.google.com/forum/#!topic/git-users/27_FxIV_100
+Two test scripts (t0021 and t5551) had copy & paste code to set
+EXPENSIVE prerequisite.  Use the test_lazy_prereq helper to define
+them in the common t/test-lib.sh.
 
-I'm coming around to the view that "git reset <mode>" should be (almost) 
-demoted to plumbing, leaving only the "reset <file>" that reverses "add 
-<file>" as everyday Porcelain.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t0021-conversion.sh | 2 --
+ t/t5551-http-fetch.sh | 2 --
+ t/test-lib.sh         | 4 ++++
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-I think "reset --keep" and "--merge" were a step in the wrong direction, 
-at least for the Porcelain - trying to make reset <mode> "more useful", 
-rather than less necessary. Normal users shouldn't be needing to touch 
-these hard-to-explain-and-slightly-dangerous commands.
-
-The addition of "--abort" to merge and other commands was much more 
-solid. They helped a lot, and I think we should follow that model by 
-adding "--undo" to various commands. That would mop up all the common 
-"reset"s, in conjunction with Atsushi's proposed "checkout -u" 
-alternative to -B, which I quite like.
-
-Main few:
-
-commit --undo = reset --soft HEAD^
-merge --undo  = reset --keep HEAD^
-rebase --undo = reset --keep ORIG_HEAD   [bug report: rebase -p doesn't 
-set ORIG_HEAD reliably]
-pull --undo = merge/rebase --undo depending on rebase settings [could we 
-go nuts and undo the fetch too?]
-
-Bonus:
-
-commit --amend --undo: reset --soft HEAD@{1}
-
-The undos can also have a bit of extra veneer that checks the log/reflog 
-for whether it matches the proposed undo, and also checks the upstream 
-to see if the thing being undone is already public.
-
-Given those, I honestly don't think I'd ever need to explain git reset 
-<mode> to anyone again. Which would be nice...
-
-(Note I propose no "--mixed" equivalent for the commit undos, but it's 
-easy enough to follow the "commit --undo" with a normal "git reset". I'd 
-rather re-document the normal git reset under "commit --undo" than add 
-and document yet another option).
-
-Kevin
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index b92e6cb..f890c54 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -190,8 +190,6 @@ test_expect_success 'required filter clean failure' '
+ 	test_must_fail git add test.fc
+ '
+ 
+-test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
+-
+ test_expect_success EXPENSIVE 'filter large file' '
+ 	git config filter.largefile.smudge cat &&
+ 	git config filter.largefile.clean cat &&
+diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
+index afb439e..d697393 100755
+--- a/t/t5551-http-fetch.sh
++++ b/t/t5551-http-fetch.sh
+@@ -214,8 +214,6 @@ test_expect_success 'cookies stored in http.cookiefile when http.savecookies set
+ 	test_cmp expect_cookies.txt cookies_tail.txt
+ '
+ 
+-test -n "$GIT_TEST_LONG" && test_set_prereq EXPENSIVE
+-
+ test_expect_success EXPENSIVE 'create 50,000 tags in the repo' '
+ 	(
+ 	cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index b25249e..d70d05e 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -855,6 +855,10 @@ test_lazy_prereq AUTOIDENT '
+ 	git var GIT_AUTHOR_IDENT
+ '
+ 
++test_lazy_prereq EXPENSIVE '
++	test -n "$GIT_TEST_LONG"
++'
++
+ # When the tests are run as root, permission tests will report that
+ # things are writable when they shouldn't be.
+ test -w / || test_set_prereq SANITY
+-- 
+2.0.0-435-g307a092
