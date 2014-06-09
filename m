@@ -1,115 +1,72 @@
-From: "W. Trevor King" <wking@tremily.us>
-Subject: Re: Re: [RFC PATCH] clone: add clone.recursesubmodules config
- option
-Date: Mon, 9 Jun 2014 16:27:25 -0700
-Message-ID: <20140609232725.GA9047@odin.tremily.us>
-References: <xmqqoay9wvo6.fsf@gitster.dls.corp.google.com>
- <1401874256-13332-1-git-send-email-judge.packham@gmail.com>
- <xmqqvbsgvb9l.fsf@gitster.dls.corp.google.com>
- <20140604194216.GA4636@sandbox-ub>
- <539020D1.1090601@gmail.com>
- <20140606055430.GC77405@book.hvoigt.net>
- <5395B3D3.9060501@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git reset --hard with staged changes
+Date: Mon, 09 Jun 2014 16:28:31 -0700
+Message-ID: <xmqq61k9d5nk.fsf@gitster.dls.corp.google.com>
+References: <CANWD=rWmzgAwTp=E_1=th0Myk-dh4m5Y9PE3=fpHeirsVVQKwQ@mail.gmail.com>
+	<CANWD=rX-MEiS4cNzDWr2wwkshz2zu8-L31UrKwbZrJSBcJX-nQ@mail.gmail.com>
+	<87vbsayy9w.fsf@fencepost.gnu.org>
+	<CANWD=rVB249Vu1QMk64V+FxfCfJPzxqZgCfyEuixJJ_iKoTLPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="nFreZHaLTZJo0R7j"
-Cc: Heiko Voigt <hvoigt@hvoigt.net>,
-	Chris Packham <judge.packham@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	mara.kim@vanderbilt.edu, Jonathan Nieder <jrnieder@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Jun 10 01:27:40 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+To: =?utf-8?Q?Pierre-Fran=C3=A7ois?= CLEMENT <likeyn@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 01:28:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu8yT-0007SJ-B3
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:27:33 +0200
+	id 1Wu8za-0008Gv-LM
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:28:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932317AbaFIX13 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Jun 2014 19:27:29 -0400
-Received: from qmta13.westchester.pa.mail.comcast.net ([76.96.59.243]:34008
-	"EHLO qmta13.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751388AbaFIX12 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2014 19:27:28 -0400
-Received: from omta22.westchester.pa.mail.comcast.net ([76.96.62.73])
-	by qmta13.westchester.pa.mail.comcast.net with comcast
-	id CPNP1o0021ap0As5DPTTsL; Mon, 09 Jun 2014 23:27:27 +0000
-Received: from odin.tremily.us ([24.18.63.50])
-	by omta22.westchester.pa.mail.comcast.net with comcast
-	id CPTS1o003152l3L3iPTSLr; Mon, 09 Jun 2014 23:27:27 +0000
-Received: by odin.tremily.us (Postfix, from userid 1000)
-	id 5E9B6120E25F; Mon,  9 Jun 2014 16:27:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tremily.us; s=odin;
-	t=1402356445; bh=ZOFfXCGO3HIwI/OV8Ha8Gj18g4utjZrSz77Tdgb6PgY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=kMJfH7k4pvSsHZkVOCBk9sxlFM53I1KbUXiN9pGtonemgg9QpUmY/ss/dZkblu/KI
-	 kUyxZnTbIBqCmEtSoHV61m4vi4/G3Hr91GBaJmF7DU1fJadNOr8LMeJMq7cMQnMJOZ
-	 7WtV+w0ycDtbacXbY0O//+TuBw/Pl7D9JCehJx1A=
-Content-Disposition: inline
-In-Reply-To: <5395B3D3.9060501@web.de>
-OpenPGP: id=39A2F3FA2AB17E5D8764F388FC29BDCDF15F5BE8;
- url=http://tremily.us/pubkey.txt
-User-Agent: Mutt/1.5.23 (2014-03-12)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1402356447;
-	bh=sXAkmz1/IJhNKuV+vJpLQRTrn4JDLv7IAudozPwPLZw=;
-	h=Received:Received:Received:Date:From:To:Subject:Message-ID:
-	 MIME-Version:Content-Type;
-	b=Xm5eFq8fmiZ529iWh4cHK8ay7g0HgZhFJqD7mycZnVm+90QqQFxqFRROwtgVc1ktR
-	 ZEi/LxP+rxy5VIWIIsfADD02KO1qEa1wu1bXGCOZm2zaX5if9XA4g5WRBGEALn0zwC
-	 wTINBoZBCLm+5domVQref+jfCbb/3LECnM3KVxjl4gLnVxF/7hz93ZUc7T1FE2xygU
-	 VYo7vH1WhiYsM6KQZRXa9TobDCT8Ga4Z81+Rzn9ckA9/7+HyhxgIWEU6Mj3lqKqj6l
-	 Wdd+MX1Xhy2GkGyXL2CA09SzLneSAJ+ub32fYRA3Y9DgFHOx2i+0XE5+Q9oqtjiWPj
-	 YJlI4RsNGBUCQ==
+	id S932562AbaFIX2i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jun 2014 19:28:38 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53090 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932349AbaFIX2h convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2014 19:28:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 27D681D51D;
+	Mon,  9 Jun 2014 19:28:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=mbm3JDbS0QYW
+	Xul6wERxafgOABg=; b=to+stEjG173KycAXywUQJRHkGUy1vDEc5DR+BQE88NJa
+	xLCdcbH0gsk6cFOFeudKB4GgWJRevAhXh9732WQpucIjMAGB0MNRn8YI8f0yINgm
+	a00t77UJbcVjySXGuj29HwEL/A5ZREgebltDcchTfoFJLEhbRa2OdnXu9Yu9ods=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=e5DU58
+	5aIHGWhxCUtyqlOUH7VMINfYDNWW2/8P6zJhZrM2mbw/AAbRfozzClH9TUSsFBqO
+	NDn0nan0VjLPVB4XkxvmtQo5OO4LSjFIHe8lCW7PJ86JpbJARx7Ru45AIElhreUP
+	4y3MfogrZGj8HeKnWKcsDbmQa0o6Y6v8Rj4y8=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1E7391D51C;
+	Mon,  9 Jun 2014 19:28:37 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 43A871D517;
+	Mon,  9 Jun 2014 19:28:33 -0400 (EDT)
+In-Reply-To: <CANWD=rVB249Vu1QMk64V+FxfCfJPzxqZgCfyEuixJJ_iKoTLPQ@mail.gmail.com>
+	(=?utf-8?Q?=22Pierre-Fran=C3=A7ois?= CLEMENT"'s message of "Tue, 10 Jun
+ 2014 01:22:55
+	+0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C5BBE7A2-F02D-11E3-A0BA-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251145>
 
+Pierre-Fran=C3=A7ois CLEMENT <likeyn@gmail.com> writes:
 
---nFreZHaLTZJo0R7j
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Hm, I didn't think of "git apply --index"... Makes sense for this
+> special use, but I'm not sure about the other use cases.
 
-On Mon, Jun 09, 2014 at 03:17:07PM +0200, Jens Lehmann wrote:
-> And by the way: wouldn't it make more sense to tell the user /what/
-> we do automatically? So maybe 'submodule.autoupdate' is a better
-> name for the new switch?
-
-Or autocheckout?  No need to preserve submodule-specific jargon when
-we have a perfectly acceptable word for this in the core interface ;).
-
-Cheers,
-Trevor
-
---=20
-This email may be signed or encrypted with GnuPG (http://www.gnupg.org).
-For more information, see http://en.wikipedia.org/wiki/Pretty_Good_Privacy
-
---nFreZHaLTZJo0R7j
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.22 (GNU/Linux)
-
-iQIcBAEBAgAGBQJTlkLaAAoJEG8/JgBt8ol8XYsP/1B2saETZfDH3s59OX7ZasyN
-yYjhPFB+hjYSwpORlxeIsjApSIcdttHVL/6oBWZcQ/NULSQN+b0RYaQ55JRzBel0
-S79vj1+ip31fuUJyk/tHSDEN2meL7AhJXcZxahnn1WxTzS/+MwEnKYpJaz65rs/x
-RI0lVmMbjp6oOIINZMVlqX3ByULT6JAPDso27AtS5asAvkBzypIM4YqkrOuAf6U1
-nzjvDpYbwkuCN6bKTm10SYj1MPzAZo4ZV3j3JZODsDXH67TLLKUtAZ1MbmkvLO/H
-nqNeUv6GdtTh3IhlKB5vF8PrtM5S/7e458bArA2Pjmq784wdEwPGIYNvaNKovuhu
-e3HWtyg6yyroPBK/9W1LBenBguQCOfwF3m6EBQtNUu0UMSnqAN+juVZTa6FXmpRR
-lY3scvKP7BVzauEYycO2KMr72WrW+P7ienLm/ol2ATm1ysriXfhFzro3XhIS9U31
-z14clQzMZp//HloxQYJbNcU3A/Y9rVr4GifjvY/SLCGZTui5zFsa5ok+wfyyGtnz
-niu+INKV5OiQN0jE3WWMClLLFImrgrVqG9A9dr+ngzdqT3gReQxZqoNDm4yTicYJ
-QMpQANYQHXH0U1oloyWdYWqnq6W7aDEdhcY9EC8EjN5jX3yHZBJWPqcZeuUVZ1s2
-5Z9ROc9EGSVXnP1nQNN5
-=ZR6a
------END PGP SIGNATURE-----
-
---nFreZHaLTZJo0R7j--
+Try merging another branch that tracks a file your current branch
+does not know about and ending up with conflicts during that merge.
+Resetting the half-done result away must remove that new path from
+your working tree and the index.
