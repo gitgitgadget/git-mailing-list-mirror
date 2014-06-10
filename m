@@ -1,101 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] send-email: do not insert third header
-Date: Mon, 09 Jun 2014 22:38:14 -0700
-Message-ID: <xmqqwqcpb9yx.fsf@gitster.dls.corp.google.com>
-References: <20140607080940.GA8858@camelia.ucw.cz>
-	<xmqqa99ld5sp.fsf@gitster.dls.corp.google.com>
+Subject: Re: Git reset --hard with staged changes
+Date: Mon, 09 Jun 2014 22:44:53 -0700
+Message-ID: <xmqqsindb9nu.fsf@gitster.dls.corp.google.com>
+References: <CANWD=rWmzgAwTp=E_1=th0Myk-dh4m5Y9PE3=fpHeirsVVQKwQ@mail.gmail.com>
+	<CANWD=rX-MEiS4cNzDWr2wwkshz2zu8-L31UrKwbZrJSBcJX-nQ@mail.gmail.com>
+	<87vbsayy9w.fsf@fencepost.gnu.org>
+	<CANWD=rVB249Vu1QMk64V+FxfCfJPzxqZgCfyEuixJJ_iKoTLPQ@mail.gmail.com>
+	<loom.20140610T025754-449@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: git-owner@vger.kernel.org Tue Jun 10 07:38:30 2014
+Cc: git@vger.kernel.org
+To: Dale Worley <worley@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Jun 10 07:45:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuElQ-0006YL-P7
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 07:38:29 +0200
+	id 1WuErp-00049e-Tc
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 07:45:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752219AbaFJFiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 01:38:24 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56492 "EHLO smtp.pobox.com"
+	id S1751095AbaFJFo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 01:44:59 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51533 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750958AbaFJFiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 01:38:23 -0400
+	id S1750959AbaFJFo6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 01:44:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F01851FF1B;
-	Tue, 10 Jun 2014 01:38:19 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 67BE310023;
+	Tue, 10 Jun 2014 01:44:58 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sC9QKYbyxZHltpgG2FaBdWTq8T0=; b=chFtjk
-	/16fQay+yZN4WY46YMKCboIFOPUV1jlXQqRsvfQTxfQo5FC1ivAKmTAAsJpv+kHi
-	b3U3GP19TRzzRQtx+ov/iXz8HRZE+4/IxAidC3pVVm3wqlyFFxrzzGvCkvW7XLYz
-	U0Urgdfhynv/kilvB2TR1vHKJcGz1/SdJwkic=
+	:content-type; s=sasl; bh=9Ky1oOZcDNyMcUS704hiPRn1AV0=; b=izTjjQ
+	dkP8TbmxDqxxERF8ueXDl23cPkaYOR30cfALArp7tTViGhJiAyueCmsrM/w+Ji5c
+	bV+VbYU5gQQcSt4zJXMcbC22tDE7Js3XOSH+MldjO6e7F2L21jEL+yxYAIQrBkjp
+	cdIXSnywBq9o0I81C/9zoBiXjJW69r8PXWYSs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OrqYNiO4YVOlz3J6ud1YIwz0jmqCIsPU
-	XR1ZshmJdxNaEC3SnyMNgD+AUJtp6X1BEVKjgYL1rbTQi5O/YfPLXerAo1IAk6ub
-	YpwROaDSlfvb2s7uzii+k7x7cGyDse0OO89HoXcqniACcYnEbXWGPe48jKgRZnDz
-	kdGHmdnRBws=
+	:content-type; q=dns; s=sasl; b=hkXtfwCXgJbCDfq1fDr1cmVUBykhoqb+
+	bYVxqdHaqm6Qot8yumjaIsL+61VfLvvd+3dKXuN7APRfRAyN2wHHJlIkXTbmvE3f
+	lALTLnWP4bBX/vIZUd5RtyN2qzUBw8bzb3GQiW1v/YS/DeG5xcWCLMMnqWJ04ztE
+	esHQgqcgmJw=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E7E481FF1A;
-	Tue, 10 Jun 2014 01:38:19 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5F1F210022;
+	Tue, 10 Jun 2014 01:44:58 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 14F921FF14;
-	Tue, 10 Jun 2014 01:38:16 -0400 (EDT)
-In-Reply-To: <xmqqa99ld5sp.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 09 Jun 2014 16:25:26 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8893A1001E;
+	Tue, 10 Jun 2014 01:44:54 -0400 (EDT)
+In-Reply-To: <loom.20140610T025754-449@post.gmane.org> (Dale Worley's message
+	of "Tue, 10 Jun 2014 01:03:09 +0000 (UTC)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6BB7D30E-F061-11E3-842A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 593A1CAE-F062-11E3-9AB0-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251161>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Dale Worley <worley@alum.mit.edu> writes:
 
-> Stepan Kasal <kasal@ucw.cz> writes:
->
->> It is sometimes desirable to insert several header lines at the top of
->> the body, e.g., if From or Date differs from the mail header.
->> (Linus even recommends to use this second header for all kernel
->> submissions.)
->>
->> send-email has a minimal support for this; make sure it is not applied
->> when there is a second header already inserted in the patch file.
->
-> I have a slight suspicion that you are reading the recommendation
-> wrong.  We do not recommend to record these in-body headers in the
-> message of the commit object (the recommendation is to prepend
-> in-body headers to the message of the commit object when sending it
-> out for review---it pretty much assumes that the underlying commit
-> does not have these in-body headers that are used only during the
-> transit over e-mail forwarding chain).
->
-> But your patch seems to assume that the input message to send-email
-> already has the in-body header.  Doesn't that indicate a misuse of
-> the tool, making this new "feature" smell more like a way to
-> encourage such a misuse by covering up the result?
->
-> I dunno.
+> (As far as I can tell from Git's behavior, the definition of tracked file is
+> "any file that is in the base commit or in the index".  Based on that
+> definition, "git reset --hard" is working as documented.)
 
-I forgot to mention that possible enhancements. As you mentioned,
-there is only a minimal support for this in send-email.  After you
-committed somebody else's patch in your tree, format-patch will
-produce the normal From: and Date: using the original author's
-identity and timestamp, but send-email only uses the in-body header
-for "From:" (but not "Date:") to propagate this information and only
-when the author is different from yourself.  It is plausible that
-two new options to tell send-email to optionally
-
- (1) propagate "Date:" in the output from format-patch as an in-body
-     header; and
-
- (2) propagate "From:" in the output from format-patch as an in-body
-     header even when you are sending out your own patch
-
-would support the recent kernel submission convention better.
+The book (whichever book you guys are talking about) is wrong, if it
+considers only the paths in the HEAD commit tracked.  After the user
+deliberately does "git add" a path not in HEAD, the user runs any
+command (e.g. "git apply --index", "git cherry-pick --no-commit")
+that may bring a path not in HEAD to the result without recording a
+new commit that updates the HEAD, a new path is recorded in the
+index and that path is considered "tracked" before the resulting
+contents in the index is made into a commit.
