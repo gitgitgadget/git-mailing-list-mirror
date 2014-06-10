@@ -1,98 +1,93 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
-Date: Tue, 10 Jun 2014 15:47:03 -0400
-Message-ID: <CAPig+cTTOCe0-U_bMbzo6fp3PFsN+8eJHi9iTxoE9d3UHyRMhg@mail.gmail.com>
-References: <1402418594-1377-1-git-send-email-gitter.spiros@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/6] pack-objects: stop respecting pack.writebitmaps
+Date: Tue, 10 Jun 2014 14:07:37 -0700
+Message-ID: <xmqqoay08odi.fsf@gitster.dls.corp.google.com>
+References: <20140610200741.GA11248@sigill.intra.peff.net>
+	<20140610201913.GD14974@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 22:35:51 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 10 23:07:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuSlq-0001jv-Cp
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 22:35:50 +0200
+	id 1WuTGp-0003F5-7y
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 23:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932392AbaFJUfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 16:35:43 -0400
-Received: from mail-yh0-f50.google.com ([209.85.213.50]:62197 "EHLO
-	mail-yh0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753155AbaFJTrE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 15:47:04 -0400
-Received: by mail-yh0-f50.google.com with SMTP id 29so4231781yhl.37
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 12:47:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=dsCU2X6z9ZGO8PYrVvT04VBqGJpjcbvTevN7RwbNsJs=;
-        b=J7LRqJ6eoXs8giQk65XvUcQkOmG/CsAQ9BJsXjic2zjWMgNEgj/bSw4VH3FdqBRATB
-         g4/IBSXdqPzXq1rPzhgG3uukXMrzQM0ooTAOZg1tsO1K2wV4/LnwKb00r6SctNtONI1m
-         X5vTJx+x0ErD1gFOK7P1AfIyb8MqN3IZFKw57Ps+YjgHjDaeIMEyCzzjs/FnCuiCOCH7
-         Tpbm0tc1qlDBMYxtY5s2ySqk1pV+ud9yCrJ5v8dHBO/HmHA0OI9QMURvTG1tZJg08obn
-         WuE/O1ktHrMe7gyVUyuqY2wkmMz1M/aJ2LJjQZMq1dMmOxk3mCr2mE+4dZLrQsWxQnZv
-         sMgA==
-X-Received: by 10.236.66.139 with SMTP id h11mr25873147yhd.30.1402429623701;
- Tue, 10 Jun 2014 12:47:03 -0700 (PDT)
-Received: by 10.170.169.65 with HTTP; Tue, 10 Jun 2014 12:47:03 -0700 (PDT)
-In-Reply-To: <1402418594-1377-1-git-send-email-gitter.spiros@gmail.com>
-X-Google-Sender-Auth: 6p7vT9TH42z5tGW6IIOEw4sFik4
+	id S1753271AbaFJVHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 17:07:45 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55718 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753009AbaFJVHo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 17:07:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2BF081E15A;
+	Tue, 10 Jun 2014 17:07:43 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+xAaOs1jkSmE1ANchHnSFrzEUT8=; b=IjoP9p
+	GTU8t9GC2SOqUgBKS3Bd75Tz1sTwlSapOjYWptftAME7eR3iVJX4a6u2EiJqPPMZ
+	+RKO2H6dQpuZVDE2szgQb2Q9cpW43pcXYxz/3pdNyDFe2IyZa/fAdgyXG06rrQBj
+	2rGOV1RN65DTfr22jESErqnf/1Yk13sqIo07c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=sacK2avX4mQlvfmJJNcOYMxtWkPAFeK6
+	0/btxRggOP4ao8LP9yakjBBkhQVtfo3hxzZIKyQD3mib2kiilfBaoIJ0BQiaiTKg
+	mP8D0W4X5w4fF4WRGTT5Vtg0BP3wcVbpGwDSW0Jlat5TP/g0U4yA5TKWaORX54q5
+	HmHxRbXUKpY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 239161E159;
+	Tue, 10 Jun 2014 17:07:43 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2D4081E154;
+	Tue, 10 Jun 2014 17:07:39 -0400 (EDT)
+In-Reply-To: <20140610201913.GD14974@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 10 Jun 2014 16:19:13 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 411DA1AA-F0E3-11E3-A482-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251236>
 
-On Tue, Jun 10, 2014 at 12:43 PM, Elia Pinto <gitter.spiros@gmail.com> wrote:
-> The construct is error-prone; "test" being built-in in most modern
-> shells, the reason to avoid "test <cond> && test <cond>" spawning
-> one extra process by using a single "test <cond> -a <cond>" no
-> longer exists.
->
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
-> This is the fifth revision.
->
-> Change based on Junio bugfix and better rewrite of the case condition
-> http://permalink.gmane.org/gmane.comp.version-control.git/251198
->
-> I dropped also the echo -> printf replacement for doing
-> it in another patch.
->
-> Pass all the t/*submodule* tests. Finally ! :=)
->
-> Thank you all very much and sorry for the mess.
->
->  git-submodule.sh |   32 ++++++++++++++++++++------------
->  1 file changed, 20 insertions(+), 12 deletions(-)
->
-> diff --git a/git-submodule.sh b/git-submodule.sh
-> index e146b83..e128a4a 100755
-> --- a/git-submodule.sh
-> +++ b/git-submodule.sh
->                 while read mod_src mod_dst sha1_src sha1_dst status sm_path
->                 do
->                         # Always show modules deleted or type-changed (blob<->module)
-> -                       test $status = D -o $status = T && echo "$sm_path" && continue
-> +                       if test "$status" = D || test "$status" = T
-> +                        then
-> +                               echo "$sm_path" &&
+Jeff King <peff@peff.net> writes:
 
-Unnecessary &&.
+> I'm not sure what we want to do with this. It _is_ a possible regression
+> as explained above, but I really do find it improbable that anyone will
+> care. Even at GitHub, where we use a custom script instead of running
+> `git gc`, we hook into the repack code, and not directly into
+> pack-objects.
+>
+> One option is obviously to drop it as not worth it (you don't see the
+> benefit here, but it enables the cleanups in the rest of the series).
+>
+> Another option is noting that the regression is worth dealing with,
+> adding a deprecation notice, and phasing it out eventually. I tend to
+> think it's not worth the trouble here.
+>
+> Another option is to track it to graduate to master during the next
+> cycle. I.e., decide that the possible regression isn't a big deal.
 
-> +                               continue
-> +                       fi
->                         # Respect the ignore setting for --for-status.
->                         if test -n "$for_status"
->                         then
->                                 name=$(module_name "$sm_path")
->                                 ignore_config=$(get_submodule_config "$name" ignore none)
-> -                               test $status != A -a $ignore_config = all && continue
-> +                               test $status != A && test $ignore_config = all && continue
->                         fi
->                         # Also show added or modified modules which are checked out
->                         GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
+My gut feeling is that the last one is sufficient.  These low level
+subcommands that are designed to be used by scripts (aka plumbing)
+shouldn't have configuration options in the first place, and users
+shouldn't depend on them even if they were added by design mistake.
+
+> The final option is to track it for maint, along with the earlier
+> patches.  The argument for that is:
+>
+>   1. It's not a regression worth caring about (i.e., if it's not worth
+>      caring about for master, it's probably not worth caring about for
+>      maint, either).
+>
+>   2. It shortens the window in which the old behavior is in a release,
+>      making it less likely for somebody to try depending on it.
+
+Yeah, probably.  But I am not sure if that is even needed.
