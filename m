@@ -1,75 +1,91 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 10/15] use get_commit_buffer to avoid duplicate code
-Date: Tue, 10 Jun 2014 04:01:29 -0400
-Message-ID: <CAPig+cTztiY3va-oztwe+FRsEgtFh0r6jsYY1Vn5dtvg3fHfZA@mail.gmail.com>
-References: <20140609180236.GA24644@sigill.intra.peff.net>
-	<20140609181247.GJ20315@sigill.intra.peff.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 10/20] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
+Date: Tue, 10 Jun 2014 10:19:54 +0200
+Message-ID: <5396BFAA.3000003@viscovery.net>
+References: <1402066563-28519-1-git-send-email-gitter.spiros@gmail.com>	<1402066563-28519-11-git-send-email-gitter.spiros@gmail.com> <xmqqoay1d5vi.fsf@gitster.dls.corp.google.com> <5396AB10.8020603@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 10 10:01:36 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>,
+	Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 10:20:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuGzu-00047V-TM
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 10:01:35 +0200
+	id 1WuHHy-0005RE-27
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 10:20:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218AbaFJIBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 04:01:31 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:34377 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751894AbaFJIBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 04:01:30 -0400
-Received: by mail-yk0-f180.google.com with SMTP id 131so1784686ykp.39
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 01:01:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=bPa6/FfP8UePyMz0sRsMjbekKNmwKNuEbHB8SzPgsqs=;
-        b=cvnT0wpORqGBtAfy/TYIN0Od3RVDJcGWVoDgKRT/m7U47xy747YLG+8Ra0Z67JDcQx
-         HaNZT1sd1ZIvIiU2uFsJZ+x1u1TEMsJ3gcg+3V3yCz9Vk9Qui4jLAZ9BFnZM0KNf4miY
-         YYwJPJ41wMMq4Ewh0995sGkLmJO095Cw/b3sVWCzLoxrFdfz3r+kLLQKIoCntbGGxjdd
-         DPN/2ZRWJ2YmijzXDd6VisBpcss/sueARY5YcSTZ5I1yZMAQ4thFLWcytV8iWLawTUFP
-         zDj+WdEqX1AjIa9gdttvDCrOjI6t/EfhKf1UDK9GfgHlg7LnVg+M8WyalZNXB29sHGSU
-         71zQ==
-X-Received: by 10.236.88.193 with SMTP id a41mr22320517yhf.22.1402387289937;
- Tue, 10 Jun 2014 01:01:29 -0700 (PDT)
-Received: by 10.170.169.65 with HTTP; Tue, 10 Jun 2014 01:01:29 -0700 (PDT)
-In-Reply-To: <20140609181247.GJ20315@sigill.intra.peff.net>
-X-Google-Sender-Auth: tGtBt2PabeFDDJNi7hdvyloX7O0
+	id S936052AbaFJIUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 04:20:05 -0400
+Received: from so.liwest.at ([212.33.55.14]:36409 "EHLO so.liwest.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932209AbaFJIT7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 04:19:59 -0400
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by so.liwest.at with esmtpa (Exim 4.80.1)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1WuHHe-0007xp-Ph; Tue, 10 Jun 2014 10:19:55 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 81BCF16613;
+	Tue, 10 Jun 2014 10:19:54 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
+In-Reply-To: <5396AB10.8020603@viscovery.net>
+X-Spam-Score: -1.0 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251173>
 
-On Monday, June 9, 2014, Jeff King <peff@peff.net> wrote:
-> For both of these sites, we already do the "fallback to
-> read_sha1_file" trick. But we can shorten the code by just
-> using get_commit_buffer.
->
-> Note that the error cases are slightly different when
-> read_sha1_file fails. get_commit_buffer will die() if the
-> object cannot be loaded, or is a non-commit.
->
-> For get_sha1_oneline, this will almost certainly never
-> happen, as we will have just called parse_object (and if it
-> does, it's probably worth complaining about).
->
-> For record_author_date, the new behavior is probably better;
-> we notify the user of the error instead of silently ignoring
-> it. And because it's used only for sorting by author-date,
-> somebody examining a corrupt can fallback to the regular
+Am 6/10/2014 8:52, schrieb Johannes Sixt:
+> Am 6/10/2014 1:23, schrieb Junio C Hamano:
+>> Elia Pinto <gitter.spiros@gmail.com> writes:
+>>
+>>> @@ -1059,13 +1059,17 @@ cmd_summary() {
+>>>  		while read mod_src mod_dst sha1_src sha1_dst status sm_path
+>>>  		do
+>>>  			# Always show modules deleted or type-changed (blob<->module)
+>>> -			test $status = D -o $status = T && echo "$sm_path" && continue
+>>> +			case "$status" in
+>>> +			[DT])
+>>> +				printf '%s\n' "$sm_path" &&
+>>> +				continue
+>>> +			esac
+>>
+>> I think this conversion is wrong and causes parse error.  The
+>> surrounding code cannot be seen in the context of thsi patch, but
+>> looks somewhat like this:
+>>
+>> 	modules=$( ....
+>>                    case "$status" in
+>>                    [DT])
+>>                            ...
+>>                    esac
+>>                    .... )
+>>
+>> Perhaps you would need to spell it with the extra opening
+>> parenthesis, like so:
+>>
+>> 	case string in
+>>         ([DT])
+>>         	...
+>> 	esac
+>>
+>> or something.
+> 
+> Do you just think that it causes parse errors or did you actually observe
+> them? Because I think that no parse error should occur.
 
-Missing word here? "examining a corrupt [...] can"
+(I should not talk, but test...) bash and zsh get it wrong, dash and ksh
+get it right.
+http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_03
+item 5 does leave some leeway for interpretation. So it's better to adjust
+as you suggest.
 
-> traversal order.
->
-> Signed-off-by: Jeff King <peff@peff.net>
+-- Hannes
+-- 
+"Atomic objects are neither active nor radioactive." --
+Programming Languages -- C++, Final Committee Draft (Doc.N3092)
