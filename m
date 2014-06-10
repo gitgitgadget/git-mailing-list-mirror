@@ -1,96 +1,79 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 08/20] git-mergetool.sh: avoid "test <cond> -a/-o <cond>"
-Date: Tue, 10 Jun 2014 00:37:05 -0700
-Message-ID: <CAJDDKr5dvsChQDk+0qJS8qJq+jr6XggWFaveFkaUj0T2OiGSpA@mail.gmail.com>
-References: <1402066563-28519-1-git-send-email-gitter.spiros@gmail.com>
-	<1402066563-28519-9-git-send-email-gitter.spiros@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 08/15] provide helpers to access the commit buffer
+Date: Tue, 10 Jun 2014 04:00:34 -0400
+Message-ID: <CAPig+cTkwFVDEj7L6qriNP9-Qsu=B-wJsv0z1b++u57dir8XOw@mail.gmail.com>
+References: <20140609180236.GA24644@sigill.intra.peff.net>
+	<20140609181158.GH20315@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 09:37:20 2014
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 10 10:00:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuGcL-0006Sa-TO
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 09:37:14 +0200
+	id 1WuGz6-0003HD-Qt
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 10:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754985AbaFJHhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 03:37:07 -0400
-Received: from mail-qc0-f181.google.com ([209.85.216.181]:36750 "EHLO
-	mail-qc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751462AbaFJHhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 03:37:06 -0400
-Received: by mail-qc0-f181.google.com with SMTP id x3so1818469qcv.12
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 00:37:05 -0700 (PDT)
+	id S1751575AbaFJIAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 04:00:36 -0400
+Received: from mail-yh0-f47.google.com ([209.85.213.47]:50046 "EHLO
+	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751457AbaFJIAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 04:00:35 -0400
+Received: by mail-yh0-f47.google.com with SMTP id v1so1304704yhn.34
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 01:00:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=m5INlZunn3aWeulEki3sNz3AIKJUyT2WCCmgXQkdbt4=;
-        b=hJuI9eqag3wzFc5oQA4r8shkCVwZCRywt4OWOLfQYTRXZKL2GbsQn9C8mDBpPhfwdm
-         sXYlgeRqTiSWQOyHMIf0nPVrmdtOo20AIgA8ibCcW9RBDImdEDBJLrlJbGpqS+Vs+9o9
-         mN4zragIum8YDjr0eTmy8B4Xi1SBuUYr3XqmUywHQl4TMLtp1b8kTsCr7i7aZo72NTlS
-         vulbZeisTkBio72unE83z7sUuNCsRT0qcKF4NXI92hrHXZMglYTzL13xnaUh5Ux/RU3R
-         S1dkvCSwAfs40BbrLj7NW2Tkndh0zO98QaYCfFABTdFmZm1kKOyl2k8hSmwfHYs6RDIA
-         Q1Eg==
-X-Received: by 10.140.108.4 with SMTP id i4mr37955477qgf.80.1402385825773;
- Tue, 10 Jun 2014 00:37:05 -0700 (PDT)
-Received: by 10.229.123.198 with HTTP; Tue, 10 Jun 2014 00:37:05 -0700 (PDT)
-In-Reply-To: <1402066563-28519-9-git-send-email-gitter.spiros@gmail.com>
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=GbXnj/t4yqsdbPICKKtdKw1psXCjr061KwI+ltCr8do=;
+        b=NRp5lRDmC9jqvS7elH72lHpfy8Vh/yp9mBqWG7GIm9rYpfdOfcVwn/SwLxl5u8QWFN
+         fLvZb43JuvbBNYJoYtMxZiEki2+SgbEOMsfPUvyQsgnLZA3Z4OqLCKcfIYTsU61zNPf5
+         +bLLybyrztwquB/mxyFl9duQWvStmhlc6nXh3nOQWj6fDOnCStZe10lqgFS68Y1K4V+s
+         m+iQO1Bz1x1LjQbvnHM7xEIGIoRmtf/ccMuKU2R4ZrkNrOePJM8GhsBoIwBcxsxqI7c4
+         O86HwzzXH0cPInWN18f8c+doWSKAKli+Ki6rtLO/wAfYU+CNpm6BVXG4saOd2wWG5NZ6
+         7OXA==
+X-Received: by 10.236.126.174 with SMTP id b34mr20833361yhi.56.1402387234506;
+ Tue, 10 Jun 2014 01:00:34 -0700 (PDT)
+Received: by 10.170.169.65 with HTTP; Tue, 10 Jun 2014 01:00:34 -0700 (PDT)
+In-Reply-To: <20140609181158.GH20315@sigill.intra.peff.net>
+X-Google-Sender-Auth: 4KMOGu3gYuDofHiAEYOnIddujp8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251171>
 
-On Fri, Jun 6, 2014 at 7:55 AM, Elia Pinto <gitter.spiros@gmail.com> wrote:
-> The construct is error-prone; "test" being built-in in most modern
-> shells, the reason to avoid "test <cond> && test <cond>" spawning
-> one extra process by using a single "test <cond> -a <cond>" no
-> longer exists.
+On Monday, June 9, 2014, Jeff King <peff@peff.net> wrote:
+> Many sites look at commit->buffer to get more detailed
+> information than what is in the parsed commit struct.
+> However, we sometimes drop commit->buffer to save memory,
+> in which case the caller would need to read the object
+> afresh. Some callers do this (leading to duplicated code),
+> and others do not (which opens the possibility of a segfault
+> if somebody else frees the buffer).
 >
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
+> Let's provide a pair of helpers, "get" and "unuse", that let
+> callers easily get the buffer. They will use the cached
+> buffer when possible, and otherwise load from disk using
+> read_sha1_file.
+>
+> Note that we also need to add a "get_cached" variant which
+> returns NULL when we do not have a cached buffer. At first
+> glance this seems to defeat the purpose of "get", which is
+> to always provide a return value. However, some log code
+> paths actually use the NULL-ness of commit->buffer as a
+> boolean flag to decide whether to try to printing the
 
-This looks good to me.  Thanks Elia,
+s/printing/print/ ... or some other variation of the phrase.
 
-Acked-by: David Aguilar <davvid@gmail.com>
-
->  git-mergetool.sh |    4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> commit. At least for now, we want to continue supporting
+> that use.
 >
-> diff --git a/git-mergetool.sh b/git-mergetool.sh
-> index d08dc92..9a046b7 100755
-> --- a/git-mergetool.sh
-> +++ b/git-mergetool.sh
-> @@ -205,7 +205,7 @@ checkout_staged_file () {
->                 "$(git checkout-index --temp --stage="$1" "$2" 2>/dev/null)" \
->                 : '\([^ ]*\)    ')
->
-> -       if test $? -eq 0 -a -n "$tmpfile"
-> +       if test $? -eq 0 && test -n "$tmpfile"
->         then
->                 mv -- "$(git rev-parse --show-cdup)$tmpfile" "$3"
->         else
-> @@ -256,7 +256,7 @@ merge_file () {
->         checkout_staged_file 2 "$MERGED" "$LOCAL"
->         checkout_staged_file 3 "$MERGED" "$REMOTE"
->
-> -       if test -z "$local_mode" -o -z "$remote_mode"
-> +       if test -z "$local_mode" || test -z "$remote_mode"
->         then
->                 echo "Deleted merge conflict for '$MERGED':"
->                 describe_file "$local_mode" "local" "$LOCAL"
-> --
-> 1.7.10.4
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
--- 
-David
+> Signed-off-by: Jeff King <peff@peff.net>
