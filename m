@@ -1,85 +1,65 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: [PATCH 2/5] implement submodule config cache for lookup of
- submodule names
-Date: Tue, 10 Jun 2014 12:19:27 +0200
-Message-ID: <20140610101927.GA23384@t2784.greatnet.de>
-References: <20140605060425.GA23874@sandbox-ub>
- <20140605060750.GC23874@sandbox-ub>
- <CAPig+cTmXu09QLca4W=VpUS82m0uDSQLch7Gb06U_XeUZ83FrQ@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: What's cooking in git.git (Jun 2014, #02; Fri, 6)
+Date: Tue, 10 Jun 2014 13:03:39 +0200
+Message-ID: <CALKQrgdc+52JA1XX3TQfc4=6AJ5QWXOxQ-zxux+Eh=x=jrHxBQ@mail.gmail.com>
+References: <xmqqfvjhpsn9.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 12:29:42 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 13:03:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuJJE-0002sV-Sr
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 12:29:41 +0200
+	id 1WuJqI-00073X-BF
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 13:03:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049AbaFJK3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 06:29:36 -0400
-Received: from smtprelay03.ispgateway.de ([80.67.31.26]:54894 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750805AbaFJK3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 06:29:36 -0400
-Received: from [83.133.105.219] (helo=t2784.greatnet.de)
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1WuJ9Q-00081u-9G; Tue, 10 Jun 2014 12:19:32 +0200
-Content-Disposition: inline
-In-Reply-To: <CAPig+cTmXu09QLca4W=VpUS82m0uDSQLch7Gb06U_XeUZ83FrQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1750971AbaFJLDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 07:03:46 -0400
+Received: from locusts.copyleft.no ([188.94.218.116]:63395 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750796AbaFJLDp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 07:03:45 -0400
+Received: from mail-ob0-f178.google.com ([209.85.214.178])
+	by mail.mailgateway.no with esmtpsa (TLSv1:RC4-SHA:128)
+	(Exim 4.72 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1WuJqB-000H7r-FF
+	for git@vger.kernel.org; Tue, 10 Jun 2014 13:03:43 +0200
+Received: by mail-ob0-f178.google.com with SMTP id wn1so409177obc.23
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 04:03:39 -0700 (PDT)
+X-Received: by 10.60.178.243 with SMTP id db19mr31785051oec.11.1402398219687;
+ Tue, 10 Jun 2014 04:03:39 -0700 (PDT)
+Received: by 10.182.245.41 with HTTP; Tue, 10 Jun 2014 04:03:39 -0700 (PDT)
+In-Reply-To: <xmqqfvjhpsn9.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251177>
 
-On Sun, Jun 08, 2014 at 05:04:44AM -0400, Eric Sunshine wrote:
-> On Thu, Jun 5, 2014 at 2:07 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> > This submodule configuration cache allows us to lazily read .gitmodules
-> > configurations by commit into a runtime cache which can then be used to
-> > easily lookup values from it. Currently only the values for path or name
-> > are stored but it can be extended for any value needed.
-> >
-> > [...]
-> >
-> > Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> > ---
-> > diff --git a/t/t7410-submodule-config.sh b/t/t7410-submodule-config.sh
-> > new file mode 100755
-> > index 0000000..ea453c5
-> > --- /dev/null
-> > +++ b/t/t7410-submodule-config.sh
-> > @@ -0,0 +1,73 @@
-> > +#!/bin/sh
-> > +#
-> > +# Copyright (c) 2014 Heiko Voigt
-> > +#
-> > +
-> > +test_description='Test submodules config cache infrastructure
-> > +
-> > +This test verifies that parsing .gitmodules configuration directly
-> > +from the database works.
-> > +'
-> > +
-> > +TEST_NO_CREATE_REPO=1
-> > +. ./test-lib.sh
-> > +
-> > +test_expect_success 'submodule config cache setup' '
-> > +       mkdir submodule &&
-> > +       (cd submodule &&
-> > +               git init
-> 
-> Broken &&-chain.
+On Sat, Jun 7, 2014 at 12:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * jh/submodule-tests (2014-04-17) 1 commit
+>  - t7410: 210 tests for various 'git submodule update' scenarios
+>
+>  What's the status of this one?
 
-Will fix. Thanks for catching.
+More or less abandoned. It was an experiment to try to understand the
+interaction of the many variables that affect the behavior of 'git
+submodule update'. The experiment raised some questions which were
+discussed in the ensuing thread [1]. There is AFAIK ongoing work by
+Jens to develop a more substantial test framework for submodules [2].
+That work will certainly overlap (and preferably supersede) my tests.
+I have not found the time to look more at that effort.
 
-Cheers Heiko
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/246312
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/245048/focus=245046
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
