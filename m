@@ -1,179 +1,348 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
-Date: Tue, 10 Jun 2014 05:28:33 -0700
-Message-ID: <1402403313-22468-1-git-send-email-gitter.spiros@gmail.com>
-Cc: jrnieder@gmail.com, gitster@pobox.com,
-	Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 14:28:48 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [PATCH v1] config: Add hashtable for config parsing & retrival
+Date: Tue, 10 Jun 2014 05:35:08 -0700
+Message-ID: <5396FB7C.6000709@gmail.com>
+References: <1402318146-5062-1-git-send-email-tanayabh@gmail.com> <1402318146-5062-2-git-send-email-tanayabh@gmail.com> <CAPig+cTR5SdDF0QnKN8GFEKFkNEK_HoCDHj_vTnAbp37HK3kDA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>, Torsten Bogershausen <tboegi@web.de>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 14:35:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuLAV-000549-A9
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 14:28:47 +0200
+	id 1WuLHJ-0002o9-DU
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 14:35:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751854AbaFJM2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 08:28:43 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:37232 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750993AbaFJM2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 08:28:42 -0400
-Received: by mail-pa0-f47.google.com with SMTP id fa1so652034pad.34
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 05:28:42 -0700 (PDT)
+	id S1751022AbaFJMfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 08:35:45 -0400
+Received: from mail-pd0-f180.google.com ([209.85.192.180]:48473 "EHLO
+	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750861AbaFJMfp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 08:35:45 -0400
+Received: by mail-pd0-f180.google.com with SMTP id ft15so786926pdb.39
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 05:35:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=PEpI8T9OhsPkT6efRcJyUItLex8ZjK+YPxtaYx8Hg04=;
-        b=j6n5dttY0E7Ei1v/+T6BMhKzOyIfOR25j1qMjQEci1wiS4OCDBL8oXyL58TAXkNjzl
-         1/cTvaj+JTmKzLAFOPLjH0D6bS3JJMnIVKEw71imUs+hMiv9L69Hi1T0VOTZRg39/kfz
-         bx554zX2waOVjrwGfJWJvhDzE+Gd8ewhV3jbxJ6gPHsxwD8pR5yKNxubpuI5AuRhIJ+/
-         WARk9fWcTYD7I1CfPMH4YSWvE5mgFOV+aqQtEdbZVPUwc8xkobwkBlaX/xA9ZJZGurqA
-         ijBORD5WLFln6jcMinDoySmEzBGIrl6Jt4efDEqCIjBCLzdrvRCds+fzSXYbUVakTt0O
-         JLpw==
-X-Received: by 10.68.197.99 with SMTP id it3mr11277991pbc.37.1402403322451;
-        Tue, 10 Jun 2014 05:28:42 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id gg3sm69347190pbc.34.2014.06.10.05.28.41
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=g/LhNoRYkp8CLJU9Xj5eQdJWED2Jcw14FQn4d2sPfOg=;
+        b=JzEf5wLHSiEaNC01wo9AEgd8Q1+xbyBh3uQW/zWyaNMrlQFvD0vANESCBD9fDrNZ17
+         s/PmsnXV0QHmhO9JlSbX8EAA5qT2LDsjoeJvUrWW2vqdphLznMDUavhrxo9vBN3X5qC/
+         8fNpdbAuGmIUiDU55eniqglA5X2hosOcifnjkgFwbTza/UwosT0eKnFm4xUhjZimWepH
+         NZEakyv/yvyjAwAipVPl9ZNC+v5Ah1cjf02h6Cw88FhNrFlJ+OSyoOgjocv3QgFWQmif
+         u+G9LvY+RQX7+dqtFH3pgfYDr373yWSPbMigDjY6MyMG2Nic9xHDWJLkf3n2gl7USw6E
+         vkQg==
+X-Received: by 10.66.231.139 with SMTP id tg11mr5152329pac.87.1402403744551;
+        Tue, 10 Jun 2014 05:35:44 -0700 (PDT)
+Received: from [192.168.52.160] ([117.254.217.189])
+        by mx.google.com with ESMTPSA id wl5sm69414121pbc.13.2014.06.10.05.35.26
         for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 10 Jun 2014 05:28:41 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 10 Jun 2014 05:35:44 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <CAPig+cTR5SdDF0QnKN8GFEKFkNEK_HoCDHj_vTnAbp37HK3kDA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251183>
 
-The construct is error-prone; "test" being built-in in most modern
-shells, the reason to avoid "test <cond> && test <cond>" spawning
-one extra process by using a single "test <cond> -a <cond>" no
-longer exists.
+Hi,
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
+Thanks for the review, Eric. I have replied to your comments below,
+I will try to reply early and more promptly now.
 
-This is the fourth revision of this patch.
+On 06/10/2014 04:27 AM, Eric Sunshine wrote:
+>> ---
+>> diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
+>> index 230b3a0..5b6e376 100644
+>> --- a/Documentation/technical/api-config.txt
+>> +++ b/Documentation/technical/api-config.txt
+>> @@ -77,6 +77,24 @@ To read a specific file in git-config format, use
+>>  `git_config_from_file`. This takes the same callback and data parameters
+>>  as `git_config`.
+>>
+>> +Querying For Specific Variables
+>> +-------------------------------
+>> +
+>> +For programs wanting to query for specific variables in a non-callback
+>> +manner, the config API provides two functions `git_config_get_string`
+>> +and `git_config_get_string_multi`. They both take a single parameter,
+>> +
+>> +- a key string in canonical flat form for which the corresponding values
+>> +  will be retrieved and returned.
+> 
+> It's strange to have a bulleted list for a single item. It can be
+> stated more naturally as a full sentence, without the list.
 
-Change based on Junio suggestions http://www.spinics.net/lists/git/msg233569.html
+Point Noted.
 
- git-submodule.sh |   32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+>> +They both read values from an internal cache generated previously from
+>> +reading the config files. `git_config_get_string` returns the value with
+>> +the highest priority(i.e. for the same variable value in the repo config
+>> +will be preferred over value in user wide config).
+>> +
+>> +`git_config_get_string_multi` returns a `string_list` containing all the
+>> +values for that particular key, sorted in order of increasing priority.
+>> +
+>>  Value Parsing Helpers
+>>  ---------------------
+>>
+>> diff --git a/config.c b/config.c
+>> index a30cb5c..6f6b04e 100644
+>> --- a/config.c
+>> +++ b/config.c
+>> @@ -9,6 +9,8 @@
+>>  #include "exec_cmd.h"
+>>  #include "strbuf.h"
+>>  #include "quote.h"
+>> +#include "hashmap.h"
+>> +#include "string-list.h"
+>>
+>>  struct config_source {
+>>         struct config_source *prev;
+>> @@ -37,6 +39,120 @@ static struct config_source *cf;
+>>
+>>  static int zlib_compression_seen;
+>>
+>> +struct config_cache_entry {
+>> +       struct hashmap_entry ent;
+>> +       char *key;
+>> +       struct string_list *value_list;
+> 
+> Same question as in my v1 and v2 reviews [1][2], and reiterated by
+> Matthieu [3]: Why is 'value_list' a pointer to a structure rather than
+> just a structure?
+> 
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index e146b83..d6a1dea 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -393,7 +393,7 @@ cmd_add()
- 			sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
- 	fi
- 
--	if test -z "$repo" -o -z "$sm_path"; then
-+	if test -z "$repo" || test -z "$sm_path"; then
- 		usage
- 	fi
- 
-@@ -450,7 +450,7 @@ Use -f if you really want to add it." >&2
- 	# perhaps the path exists and is already a git repo, else clone it
- 	if test -e "$sm_path"
- 	then
--		if test -d "$sm_path"/.git -o -f "$sm_path"/.git
-+		if test -d "$sm_path"/.git || test -f "$sm_path"/.git
- 		then
- 			eval_gettextln "Adding existing repo at '\$sm_path' to the index"
- 		else
-@@ -832,7 +832,7 @@ Maybe you want to use 'update --init'?")"
- 			continue
- 		fi
- 
--		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
-+		if ! test -d "$sm_path"/.git || test -f "$sm_path"/.git
- 		then
- 			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
- 			cloned_modules="$cloned_modules;$name"
-@@ -857,11 +857,11 @@ Maybe you want to use 'update --init'?")"
- 			die "$(eval_gettext "Unable to find current ${remote_name}/${branch} revision in submodule path '\$sm_path'")"
- 		fi
- 
--		if test "$subsha1" != "$sha1" -o -n "$force"
-+		if test "$subsha1" != "$sha1" || test -n "$force"
- 		then
- 			subforce=$force
- 			# If we don't already have a -f flag and the submodule has never been checked out
--			if test -z "$subsha1" -a -z "$force"
-+			if test -z "$subsha1" && test -z "$force"
- 			then
- 				subforce="-f"
- 			fi
-@@ -1031,7 +1031,7 @@ cmd_summary() {
- 	then
- 		head=$rev
- 		test $# = 0 || shift
--	elif test -z "$1" -o "$1" = "HEAD"
-+	elif test -z "$1" || test "$1" = "HEAD"
- 	then
- 		# before the first commit: compare with an empty tree
- 		head=$(git hash-object -w -t tree --stdin </dev/null)
-@@ -1056,13 +1056,17 @@ cmd_summary() {
- 		while read mod_src mod_dst sha1_src sha1_dst status sm_path
- 		do
- 			# Always show modules deleted or type-changed (blob<->module)
--			test $status = D -o $status = T && echo "$sm_path" && continue
-+			case "$status" in
-+			([DT])
-+				printf '%s\n' "$sm_path" &&
-+				continue
-+			esac
- 			# Respect the ignore setting for --for-status.
- 			if test -n "$for_status"
- 			then
- 				name=$(module_name "$sm_path")
- 				ignore_config=$(get_submodule_config "$name" ignore none)
--				test $status != A -a $ignore_config = all && continue
-+				test $status != A && test $ignore_config = all && continue
- 			fi
- 			# Also show added or modified modules which are checked out
- 			GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
-@@ -1122,7 +1126,7 @@ cmd_summary() {
- 		*)
- 			errmsg=
- 			total_commits=$(
--			if test $mod_src = 160000 -a $mod_dst = 160000
-+			if test $mod_src = 160000 && test $mod_dst = 160000
- 			then
- 				range="$sha1_src...$sha1_dst"
- 			elif test $mod_src = 160000
-@@ -1159,7 +1163,7 @@ cmd_summary() {
- 			# i.e. deleted or changed to blob
- 			test $mod_dst = 160000 && echo "$errmsg"
- 		else
--			if test $mod_src = 160000 -a $mod_dst = 160000
-+			if test $mod_src = 160000 && test $mod_dst = 160000
- 			then
- 				limit=
- 				test $summary_limit -gt 0 && limit="-$summary_limit"
-@@ -1230,7 +1234,11 @@ cmd_status()
- 			say "U$sha1 $displaypath"
- 			continue
- 		fi
--		if test -z "$url" || ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
-+		if test -z "$url" ||
-+		{
-+			! test -d "$sm_path"/.git &&
-+			! test -f "$sm_path"/.git
-+		}
- 		then
- 			say "-$sha1 $displaypath"
- 			continue;
-@@ -1399,7 +1407,7 @@ then
- fi
- 
- # "--cached" is accepted only by "status" and "summary"
--if test -n "$cached" && test "$command" != status -a "$command" != summary
-+if test -n "$cached" && test "$command" != status && test "$command" != summary
- then
- 	usage
- fi
--- 
-1.7.10.4
+Sorry for the lack of response on this part. I thought choosing a pointer to a
+structure or just the structure itself was a stylistic choice. Since most of the
+functions just pass the pointer to this struct, I thought it would be more natural to
+use it. But I have changed my mind on this one. In the next iteration I will be using
+a plane old struct.
+
+> 
+>> +};
+>> +
+>> +static int hashmap_is_init;
+>> +
+>> +static int config_cache_set_value(const char *key, const char *value);
+>> +
+>> +static int config_cache_entry_cmp_case(const struct config_cache_entry *e1,
+>> +                                const struct config_cache_entry *e2, const void *unused)
+>> +{
+>> +       return strcmp(e1->key, e2->key);
+> 
+> As suggested by Peff [4], this comparison is now case-sensitive,
+> instead of case-insensitive as in the previous version. Rather than
+> changing the appended '_icase' to '_case', a more typical function
+> name would be simply config_cache_entry_cmp().
+
+Noted.
+
+>> +}
+>> +
+>> +static void config_cache_init(struct hashmap *config_cache)
+>> +{
+>> +       hashmap_init(config_cache, (hashmap_cmp_fn) config_cache_entry_cmp_case, 0);
+> 
+> In his review [4], Peff suggested giving config_cache_entry_cmp_case()
+> the correct hashmap_cmp_fn signature so that this cast can be dropped.
+> It's not clear whether you disagree with his advice or overlooked or
+> forgot about it. If you disagree with his suggestion, it's okay to say
+> so and explain why you feel the way you do, but without feedback from
+> you, he or another reviewer is going to continue suggesting the same
+> change.
+
+Now on this one, I checked the code thoroughly. Every single hashmap_init()
+incantation in git code has a hashmap_cmp_fn cast. I don't think that it is
+necessary to do so. Is it?
+
+>> +}
+>> +
+>> +static int config_cache_callback(const char *key, const char *value, void *unused)
+>> +{
+>> +       config_cache_set_value(key, value);
+>> +       return 0;
+>> +}
+>> +
+>> +static struct hashmap *get_config_cache(void)
+>> +{
+>> +       static struct hashmap config_cache;
+>> +       if (!hashmap_is_init) {
+>> +               config_cache_init(&config_cache);
+>> +               hashmap_is_init = 1;
+>> +               git_config(config_cache_callback, NULL);
+>> +               return &config_cache;
+> 
+> Why do you 'return' here rather than just falling through to the
+> 'return' outside the conditional?
+
+Noted.
+
+>> +static struct config_cache_entry *config_cache_find_entry(const char *key)
+>> +{
+>> +       struct hashmap *config_cache;
+>> +       struct config_cache_entry k;
+>> +       char *normalized_key;
+>> +       int baselength = 0, ret;
+>> +       config_cache = get_config_cache();
+>> +       ret = git_config_parse_key(key, &normalized_key, &baselength);
+> 
+> Since you neither care about nor ever reference 'baselength', you
+> should just pass NULL as the third argument.
+> 
+
+Noted.
+
+>> +       if (ret)
+>> +               return NULL;
+>> +
+>> +       hashmap_entry_init(&k, strhash(normalized_key));
+>> +       k.key = (char*) key;
+> 
+> This looks fishy. You're hashing based upon 'normalized_key' but then
+> comparing against the unnormalized 'key'. Peff's suggestion [4] was to
+> store the normalized key in the hash, which means that you should use
+> 'normalized_key' for both hashing and comparing. (See additional
+> commentary about this issue below in config_cache_set_value().)
+
+Ouch, this I had corrected in a future commit. But forgot to include in
+this patch.
+
+> Style: (char *)key
+
+Noted. In function arguments the code uses (char*) key. I copied it from there.
+:)
+
+>> +       return hashmap_get(config_cache, &k, NULL);
+> 
+> You're leaking 'normalized_key', which git_config_parse_key()
+> allocated on your behalf.
+>
+Noted. I will now check with valgrind before sending any future series.
+
+>> +}
+>> +
+>> +static struct string_list *config_cache_get_value(const char *key)
+>> +{
+>> +       struct config_cache_entry *e = config_cache_find_entry(key);
+>> +       return e ? e->value_list : NULL;
+>> +}
+>> +
+>> +
+>> +static int config_cache_set_value(const char *key, const char *value)
+>> +{
+>> +       struct hashmap *config_cache;
+>> +       struct config_cache_entry *e;
+>> +
+>> +       config_cache = get_config_cache();
+>> +       e = config_cache_find_entry(key);
+>> +       if (!e) {
+>> +               e = xmalloc(sizeof(*e));
+>> +               hashmap_entry_init(e, strhash(key));
+> 
+> The hash computed to store the key should be the same as the hash to
+> look it up. In config_cache_find_entry(), you're correctly computing
+> the hash based upon the normalized key, but here you're doing so from
+> the unnormalized key.
+> 
+>> +               e->key = xstrdup(key);
+> 
+> Likewise. Normalized keys should be stored in the hash, not unnormalized.
+> 
+> You should be invoking git_config_parse_key() to normalize the key
+> both for hashing and storing.
+> 
+> Note, also, that call git_config_parse_key() allocates the normalize
+> key on your behalf, so you do *not* want to xstrdup() it here.
+
+config_cache_set_value() gets its values from git_config() as it the callback.
+git_config() feeds the callback only normalized values by using functions like
+get_extended_base_var(), get_base_var() etc. Thus, I didn't use
+git_config_parse_key(). Please correct me if I am wrong, but I tested this case
+thoroughly.
+
+>> +               e->value_list = xcalloc(sizeof(struct string_list), 1);
+>> +               e->value_list->strdup_strings = 1;
+> 
+> This code is perhaps too intimate with the implementation of
+> string_list. It may work today (because it is safe to initialize all
+> string_list fields to 0 via xcalloc()), but a future change to the
+> string_list implementation may invalidate that assumption. The
+> initialization macros in string-list.h exist to preserve the
+> abstraction, so you don't have to know the details of initialization.
+> The macros are not suitable for your use-case, but an initialization
+> function, such as string_list_init(), would be suitable, and it would
+> be appropriate to add such a function in a preparatory patch (as
+> already suggested by [1]).
+
+Noted. As I am going to use a simple struct for the list, this won't be
+a problem.
+
+>> +               string_list_append(e->value_list, value);
+>> +               hashmap_add(config_cache, e);
+>> +       } else {
+>> +               string_list_append(e->value_list, value);
+>> +       }
+>> +       return 0;
+>> +}
+>> +
+>> +extern const char *git_config_get_string(const char *key)
+> 
+> Drop the 'extern'. The header already declares it such.
+>
+
+Noted.
+
+>> +{
+>> +       struct string_list *values;
+>> +       values = config_cache_get_value(key);
+>> +       if (!values)
+>> +               return NULL;
+>> +       assert(values->nr > 0);
+>> +       return values->items[values->nr - 1].string;
+>> +}
+>> +
+>> +extern const struct string_list *git_config_get_string_multi(const char *key)
+> 
+> Drop the 'extern'. The header already declares it such.
+> 
+
+Noted.
+
+>> +{
+>> +       return config_cache_get_value(key);
+>> +}
+>> +
+>>  static int config_file_fgetc(struct config_source *conf)
+>>  {
+>>         return fgetc(conf->u.file);
+>> @@ -1700,6 +1816,12 @@ int git_config_set_multivar_in_file(const char *config_filename,
+>>         lock = NULL;
+>>         ret = 0;
+>>
+>> +       /* contents of config file has changed, so invalidate the
+>> +        * config cache used by non-callback based query functions.
+>> +        */
+>> +       if (hashmap_is_init)
+>> +               config_cache_free();
+>> +
+>>  out_free:
+>>         if (lock)
+>>                 rollback_lock_file(lock);
+>> --
+>> 1.9.0.GIT
+> 
+> [1]: http://git.661346.n2.nabble.com/RFC-PATCH-0-2-Git-config-cache-amp-special-querying-api-utilizing-the-cache-td7611691.html#a7611860
+> [2]: http://thread.gmane.org/gmane.comp.version-control.git/250566/focus=251058
+> [3]: http://thread.gmane.org/gmane.comp.version-control.git/251073/focus=251079
+> [4]: http://thread.gmane.org/gmane.comp.version-control.git/250566/focus=250618
+> 
