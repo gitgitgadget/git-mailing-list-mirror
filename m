@@ -1,89 +1,97 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 15/20] t/t5000-tar-tree.sh: avoid "test <cond> -a/-o
- <cond>"
-Date: Tue, 10 Jun 2014 11:49:15 -0700
-Message-ID: <20140610184913.GD72751@gmail.com>
-References: <1402066563-28519-1-git-send-email-gitter.spiros@gmail.com>
- <1402066563-28519-16-git-send-email-gitter.spiros@gmail.com>
+From: Phil Hord <hordp@cisco.com>
+Subject: Re: [RFC 1/3] sequencer: Signal failed ff as an aborted, not a conflicted
+ merge
+Date: Tue, 10 Jun 2014 14:51:47 -0400
+Message-ID: <539753C3.2020101@cisco.com>
+References: <xmqqvbsrf4hd.fsf@gitster.dls.corp.google.com>	<5395CD04.2050303@gmail.com> <xmqq8up4abs3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, jrnieder@gmail.com
-To: Elia Pinto <gitter.spiros@gmail.com>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Jun 10 20:50:04 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Fabian Ruch <bafain@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 20:51:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuR7O-0006TF-53
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 20:49:58 +0200
+	id 1WuR9G-00086D-3M
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 20:51:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752569AbaFJSty convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2014 14:49:54 -0400
-Received: from mail-pb0-f51.google.com ([209.85.160.51]:44434 "EHLO
-	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752194AbaFJStx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 14:49:53 -0400
-Received: by mail-pb0-f51.google.com with SMTP id rp16so1100152pbb.24
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 11:49:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=6GxHgrTCSEpBFULdCvEU3SE22mWqrhStD6azyn0AbMQ=;
-        b=sU+wmF5l3bEAzvQpH3qSLVIw/WfhHdIf+9caXU2/w+oU9hjbHic67KG7n23O7xFrqY
-         DfBN89U1+vF+4e1LwG+pzDLCY2E5rvaDboOJKiowLkOKuzn2KxvAL0VsU0QunWaXSrjV
-         pYT007A4yUTirNwTwdvuZS8r2TUvkavqNckGvgfeG/RiFo2RmaVLi6Bnl8T/HxQmpSjt
-         OfdcMETwdjEomKW+c+0L/9ELy8fW0Zpxh7Zv8wWdW0iSrV7Uu1qWfzIBI+/sczDo12Ir
-         dgPqhQ84KHBq4RBWGxO7/F3ChCLeB69I9VwVDy5dkh8qgmOrKUk7B/KTz/6j3v5+/AL2
-         CDPQ==
-X-Received: by 10.68.197.39 with SMTP id ir7mr13855070pbc.78.1402426193560;
-        Tue, 10 Jun 2014 11:49:53 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id ys1sm16879698pab.7.2014.06.10.11.49.40
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 10 Jun 2014 11:49:52 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1402066563-28519-16-git-send-email-gitter.spiros@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751564AbaFJSvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 14:51:50 -0400
+Received: from alln-iport-4.cisco.com ([173.37.142.91]:14492 "EHLO
+	alln-iport-4.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750861AbaFJSvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 14:51:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=2362; q=dns/txt; s=iport;
+  t=1402426309; x=1403635909;
+  h=message-id:date:from:mime-version:to:cc:subject:
+   references:in-reply-to:content-transfer-encoding;
+  bh=agdMxjC7itYFr78b9KpidDwHZUUF/kXyCQVF8T3+TqA=;
+  b=iIlu1VCrdRUKzYw+c9JwHyk4Bvih144Dh2lwN2tw1bzRlMgh2AW7T5D8
+   Hr8X2g1kxlmWLkfV6D3+j+mv8T1R1ENBDuIEMh7L13a5felzc9NXzlfMS
+   yx17lOe9P+RDI+XDacczblTVZ/7/GqfDuGCInRVhuRlZDsNLiv9PhBlty
+   o=;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvwKAGFTl1OtJV2d/2dsb2JhbABZgw2sFAEBBpkSAYEKFnWEAwEBAQRHMQEQCxgJFg8JAwIBAgEPNgYBDAEFAgEBiCoDEbNak2wNhUcXhVaGUYIiB4RBAQOWGoIQgXqGdoZWhXmDWA
+X-IronPort-AV: E=Sophos;i="4.98,1010,1392163200"; 
+   d="scan'208";a="51938374"
+Received: from rcdn-core-6.cisco.com ([173.37.93.157])
+  by alln-iport-4.cisco.com with ESMTP; 10 Jun 2014 18:51:48 +0000
+Received: from [64.100.104.110] (dhcp-64-100-104-110.cisco.com [64.100.104.110])
+	by rcdn-core-6.cisco.com (8.14.5/8.14.5) with ESMTP id s5AIplkt003917;
+	Tue, 10 Jun 2014 18:51:48 GMT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqq8up4abs3.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251214>
 
-On Fri, Jun 06, 2014 at 07:55:58AM -0700, Elia Pinto wrote:
-> The construct is error-prone; "test" being built-in in most modern
-> shells, the reason to avoid "test <cond> && test <cond>" spawning
-> one extra process by using a single "test <cond> -a <cond>" no
-> longer exists.
->=20
-> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
-> ---
->  t/t5000-tar-tree.sh |    2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
-> index 74fc5a8..ad6fa0d 100755
-> --- a/t/t5000-tar-tree.sh
-> +++ b/t/t5000-tar-tree.sh
-> @@ -72,7 +72,7 @@ check_tar() {
->  			for header in *.paxheader
->  			do
->  				data=3D${header%.paxheader}.data &&
-> -				if test -h $data -o -e $data
-> +				if test -h $data || test -e $data
->  				then
 
-This looks okay, but it raises a question for the original author
-(Ren=C3=A9, I think that's you so I've added you to the To: line).
+On 06/10/2014 01:56 PM, Junio C Hamano wrote:
+> Fabian Ruch <bafain@gmail.com> writes:
+>
+>> On 05/27/2014 08:42 PM, Junio C Hamano wrote:
+>>> Fabian Ruch <bafain@gmail.com> writes:
+>>>> [..]
+>>>>
+>>>> In order to signal the three possible situations (not only success and
+>>>> failure to complete) after a pick through porcelain commands such as
+>>>> `cherry-pick`, exit with a return value that is neither 0 nor 1. -1 was
+>>>> chosen in line with the other situations in which the sequencer
+>>>> encounters an error.
+>>> Hmph... do we still pass negative to exit() anywhere in our codebase?
+>> No, but I thought `cmd_cherry_pick` would just forward the `return -1` from the
+>> sequencer to the shell. I had another look and found that `cmd_cherry_pick`
+>> calls `die` instead. Now, the commit inserts 128 as exit status in
+>> `fast_forward_to`.
+>>
+>> Would it be appropriate to mention the choice of exit status in the coding
+>> guidelines? I didn't know that the int-argument to exit(3) gets truncated and
+>> that this is why it is a general rule to only use values in the range from 0 to
+>> 255 with exit(3).
+> I personally do not think of a reason why it is necessary to mention
+> how the argument to exit(3) is expected to be used by the system, but
+> if it is common not to know it, I guess it would not hurt to have a
+> single paragraph with at most two lines.
+>
+> In any case, I agree that exiting with 1 that signals "failed with
+> conflict" can be confusing to the caller.  Can we have a test to
+> demonstrate when this fix matters?
 
-Should that be "test -f" instead of "test -e"?
+I think you are asking for a test and not for clarification.  But a test
+was provided in 3/3 in this series.  Was it not related directly enough?
 
-This is a very minor note and should not block this patch.
---=20
-David
+For clarification, this tri-state return value matters when the caller
+is planning to do some cleanup and needs to handle the fallout
+correctly.  Maybe changing this return value is not the correct way
+forward, though.  It might be better if the caller could examine the
+result after-the-fact instead.  This would require some reliable state
+functions which I recall were somewhat scattered last time I looked. 
+Also I cannot think of a reliable test for "the previous cherry-pick
+failed during pre-condition checks" and I'm not sure anything should
+exist to track this in .git outside of the return value for this function. 
