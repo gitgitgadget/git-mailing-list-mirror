@@ -1,79 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix "t0001: test git init when run via an alias"
-Date: Tue, 10 Jun 2014 11:53:47 -0700
-Message-ID: <xmqqzjhk8ukk.fsf@gitster.dls.corp.google.com>
-References: <20140606110935.GA14446@lanh>
-	<1402220230-799-1-git-send-email-pclouds@gmail.com>
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: git rebase --skip stuck in a loop
+Date: Tue, 10 Jun 2014 14:57:32 -0400
+Message-ID: <5397551C.4030709@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
-	dturner@twopensource.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 20:54:42 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 10 21:00:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuRBv-0001x2-Kx
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 20:54:40 +0200
+	id 1WuRHj-0006wc-RD
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 21:00:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753270AbaFJSyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 14:54:35 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50581 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753194AbaFJSx7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 14:53:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6A1451CF9E;
-	Tue, 10 Jun 2014 14:53:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1tSM+o4jGElQ07dWl38WMKkvgwA=; b=Lj2/d7
-	x9bJVyZOMvwBj8xphOwSzTyvBNiG0JS2qZXYtEd5WBAF6/NIZShrxGYSBFkBflFn
-	D2TMD7pvcz6keLkqavUsF0OuDKsJFfDtm1jFs1q3f6WMgeh3wcPT/jv9sAngOzg0
-	rj1+LSV3pveEeyVal2Al4JJ/lYV5WJaWUcDBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=G4d3P4W53Oi+ylqWbfixffydWFjS+QU+
-	uvd1cvR4zMOLO8GUSBMhD6QnAPmt7U6XI8HGMFs87cjjVmDv0rQaGRHy93XPeAzs
-	jLBC0XPC1M7vb5vdgA5X/TEeDyDfzIVCtIwmZV7gfawUTfKRIqkB1ye5DH5ztOFJ
-	0OhC1T6EO30=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 605E41CF9D;
-	Tue, 10 Jun 2014 14:53:53 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 69F9E1CF97;
-	Tue, 10 Jun 2014 14:53:49 -0400 (EDT)
-In-Reply-To: <1402220230-799-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpCU5n4buNYw==?= Duy"'s message of "Sun, 8 Jun
- 2014 16:37:10 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8F03013E-F0D0-11E3-8FBF-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752727AbaFJTAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 15:00:35 -0400
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.226]:46838 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752709AbaFJTAe (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2014 15:00:34 -0400
+Received: from [67.78.168.186] ([67.78.168.186:58802] helo=[10.1.1.200])
+	by cdptpa-oedge01 (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 40/CB-15059-C1557935; Tue, 10 Jun 2014 18:57:32 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+X-Enigmail-Version: 1.6
+X-RR-Connecting-IP: 107.14.168.118:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251217>
 
-I'd squash this in, though.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
- git.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I'm in the middle of a long rebase and have had no trouble with git rebase --skip several times, but now it has become stuck:
 
-diff --git a/git.c b/git.c
-index 6bb2043..9bfa8fb 100644
---- a/git.c
-+++ b/git.c
-@@ -36,7 +36,8 @@ static void save_env(void)
- 	if (saved_environment)
- 		return;
- 	saved_environment = 1;
--	getcwd(orig_cwd, sizeof(orig_cwd));
-+	if (getcwd(orig_cwd, sizeof(orig_cwd)))
-+		die_errno("cannot getcwd");
- 	for (i = 0; i < ARRAY_SIZE(env_names); i++) {
- 		orig_env[i] = getenv(env_names[i]);
- 		if (orig_env[i])
+psusi@devserv:~/parted.git$ git rebase --skip
+Auto-merging libparted/arch/linux.c
+CONFLICT (content): Merge conflict in libparted/arch/linux.c
+
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+
+psusi@devserv:~/parted.git$ cat .git/rebase-merge/msgnum
+17
+
+Each time I try to skip, it just keeps trying to reapply this one patch.  Any ideas?
+
+git version 1.9.1
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (MingW32)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJTl1UcAAoJEI5FoCIzSKrwwHIH/38Cm19zg+37zgckLiy/3GhN
+3Gmil5kX+3KkIHCxlPz3Ti3xCA5baM7tDzFdDIKcx8N/i8oALgWeAWf1Euy9Ww1K
+3etIAMKzO463kmV7UbgSbLz5DpYWSaGo9WiYAC7xklhQV94w1Ainx5Lo4kRv1Wfj
+R9TpQgViFnW2gNJv1zw0qHLXk1/h88LlAQsBaaY6I4f/DOLhAte7rGinkTgZtjmo
+G/9PUMudQcehG65ITPlNLtoFsM8UHadNMLwJts/B7Yq23XNyRF50IaT8c1A/irSU
+mfYqdHCho3D4kq+k0u+t0Z0bj6pfvo4b0khLafrYLrWGHC5K+Z3lE63ysJ/Mdj8=
+=LZ9q
+-----END PGP SIGNATURE-----
