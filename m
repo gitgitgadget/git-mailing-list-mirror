@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v15 33/48] fast-import.c: use a ref transaction when dumping tags
-Date: Tue, 10 Jun 2014 15:29:21 -0700
-Message-ID: <1402439376-25839-34-git-send-email-sahlberg@google.com>
+Subject: [PATCH v15 07/48] lockfile.c: make lock_file return a meaningful errno on failurei
+Date: Tue, 10 Jun 2014 15:28:55 -0700
+Message-ID: <1402439376-25839-8-git-send-email-sahlberg@google.com>
 References: <1402439376-25839-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,106 +11,150 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuUZf-0005yY-L1
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 00:31:24 +0200
+	id 1WuUaZ-0006or-Oz
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 00:32:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754777AbaFJWbA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 18:31:00 -0400
-Received: from mail-ie0-f201.google.com ([209.85.223.201]:59435 "EHLO
-	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753642AbaFJW3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 18:29:42 -0400
-Received: by mail-ie0-f201.google.com with SMTP id lx4so206453iec.0
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
+	id S1753339AbaFJWcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 18:32:13 -0400
+Received: from mail-ob0-f202.google.com ([209.85.214.202]:42162 "EHLO
+	mail-ob0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753194AbaFJW3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 18:29:41 -0400
+Received: by mail-ob0-f202.google.com with SMTP id wm4so1714666obc.5
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 15:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+epwu/XF4B4Veo1e5Iq5emHXO1NsvhFnV+WmCJRwXwM=;
-        b=CtipVcYe2O30wQ911i8j7hSZ4LXuPLqtrIpj/bbfdjskG8ZOOtVGnKZbSFMq+XuyM7
-         27T/kZ/Z/QI4F+3hYxABSwmiZz4sPfbnNhLtXv5gmvme1elCLIKKqJLRbHRannl9t1Ft
-         aJF5aOBT8H1Ue5mqK2pVnuBD0lJ+osdyTy0fqUAcN1JZSdgg2dSn3vi9jTYXiEI+gyP6
-         yTt0yFkBELgtflQEO7Gd/PJd55HsZq71TpImItu6xd0iqvtH2jVwiymDgUbcCPQx2FtO
-         zf3EkOav6K81t47dKEj5PRu8I/6k2HHkUDvRphqlIWR+GzcEVbMhHwmpiwh8UajmYcs4
-         M+yw==
+        bh=8d+iyvAsbzd7Y1MDZf2uryZypiBkGrGtIA0JX05BnE0=;
+        b=R22dDQY7FUpOqmJq2gHn2nzng4f5FmsC7m3ZVqLr56XOFB1W+XPxW3Edo0OEUxMdM6
+         yTnqAcA/RW82pvw7RWHh170EgwW55OHkJBom2VhtIvf+cBA8wOVtk8Cu2zZ1LadDSIph
+         7lCaHtnWyzXIM8+gFQchpxZX3L7Juv2F7/qcnVMaXzLTny9sS75NLe30WrxETewdzndy
+         4uAK468E9wO9V0AXz6dOLVfJce5zyyfp27o7yczoVw9x9pdnH4vgTTnUF/Xm1+5gc00i
+         iYwND6jGRWkxYG21QDtSvynGUTHirYnEhZBnJbmFUtIRovd5tFyu34u9jUC0KSvT+zcX
+         tJ3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+epwu/XF4B4Veo1e5Iq5emHXO1NsvhFnV+WmCJRwXwM=;
-        b=JPSF0ggQyxMlIsMjPTRezA0Vvw/BrCn/C04JTI4gD+jIPCMQDw76OJW8MlnpY5kpzB
-         6z4zEs0RV6PPe/z3965quZLqFVe5EBSBhj2mTqS0+MCKO84ytfcOmrimoTRn8UQqitP7
-         pJP1v1LUbaIVHQ75vMV8Q7Rg6fjJ5eIzjLWEbTaMtW08p2k/ndGTK5o5tAVq6vab8iLB
-         Yt5J7kk9nn7vUWQrRAKuLszGt+4aqBPg+Xu94HJvKN1pU+gQ8rMBk7WZrInwJ2kFYLX/
-         OTC9hpXcNNZ5046iy/0/tzDejqxw1H2yoHjcZ1Qy/1CoFwSmQ1A+F/THUvegAYyKLCIn
-         XZfA==
-X-Gm-Message-State: ALoCoQkMCLIO8+/ZnFq/6KXzpWFxAOzEtB1lXM1bZ/G/MJ5+GVi37USXn55bXqgzrXnpbkTpgG7B
-X-Received: by 10.43.66.6 with SMTP id xo6mr5010124icb.33.1402439381572;
-        Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
+        bh=8d+iyvAsbzd7Y1MDZf2uryZypiBkGrGtIA0JX05BnE0=;
+        b=mgsH8ge7saQVOPwm0/rbbdFH0fw7YASy9yT6vQhJHruMSwF8CHLan9kFFDXHva7b0s
+         N6e9XbBCG3THvg0ipq+dMcuqx5Vo//aJybAhbNC7znnq63AD641ZWkAqpeZbopUbO3VJ
+         ohVE9iWvMtnTzr55K6Z9sTqC1iyqKzIteL+vGAwn++bM7wjsyJEEmfX4qFFiAaa9p9pt
+         LQcQcBLU6w/2ZejxRU61ufrk35rAD4rjPELdjM24gl4A3f27I5P5ERNWqy4VLMfyyzCi
+         uhOwlXshSHXwkkDOFOWFIhRwyWdYn5INQ37l6SA9Gfs9XrDRci/dhr8SLV/qTk+iqWzj
+         UrKw==
+X-Gm-Message-State: ALoCoQlrIYnSCJIt0VQhrb8JO11J6XKr/vIsMa9hR81nVxY7pQlVDlCPwhYg6SCNOG+dMfVN5YFg
+X-Received: by 10.42.136.1 with SMTP id r1mr16171156ict.24.1402439380477;
+        Tue, 10 Jun 2014 15:29:40 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id y50si1395394yhk.4.2014.06.10.15.29.41
+        by gmr-mx.google.com with ESMTPS id c50si1394547yhl.7.2014.06.10.15.29.40
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
+        Tue, 10 Jun 2014 15:29:40 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 692595A47F3;
-	Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 42D125A46F1;
+	Tue, 10 Jun 2014 15:29:40 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 45987E0AA8; Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
+	id C0C95E0BF1; Tue, 10 Jun 2014 15:29:39 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.574.g30c2c5e
 In-Reply-To: <1402439376-25839-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251307>
+
+Making errno when returning from lock_file() meaningful, which should
+fix
+
+ * an existing almost-bug in lock_ref_sha1_basic where it assumes
+   errno==ENOENT is meaningful and could waste some work on retries
+
+ * an existing bug in repack_without_refs where it prints
+   strerror(errno) and picks advice based on errno, despite errno
+   potentially being zero and potentially having been clobbered by
+   that point
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- fast-import.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ lockfile.c | 17 ++++++++++++-----
+ refs.c     |  1 +
+ refs.h     |  1 +
+ 3 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 4a7b196..587ef4a 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1735,15 +1735,32 @@ static void dump_tags(void)
- {
- 	static const char *msg = "fast-import";
- 	struct tag *t;
--	struct ref_lock *lock;
--	char ref_name[PATH_MAX];
-+	struct strbuf ref_name = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_transaction *transaction;
- 
-+	transaction = ref_transaction_begin(&err);
-+	if (!transaction) {
-+		failure |= error("%s", err.buf);
-+		goto cleanup;
-+	}
- 	for (t = first_tag; t; t = t->next_tag) {
--		sprintf(ref_name, "tags/%s", t->name);
--		lock = lock_ref_sha1(ref_name, NULL);
--		if (!lock || write_ref_sha1(lock, t->sha1, msg) < 0)
--			failure |= error("Unable to update %s", ref_name);
-+		strbuf_reset(&ref_name);
-+		strbuf_addf(&ref_name, "refs/tags/%s", t->name);
-+
-+		if (ref_transaction_update(transaction, ref_name.buf, t->sha1,
-+					   NULL, 0, 0, &err)) {
-+			failure |= error("%s", err.buf);
-+			goto cleanup;
-+		}
- 	}
-+	if (ref_transaction_commit(transaction, msg, &err))
-+		failure |= error("%s", err.buf);
-+
-+ cleanup:
-+	ref_transaction_free(transaction);
-+	strbuf_release(&ref_name);
-+	strbuf_release(&err);
+diff --git a/lockfile.c b/lockfile.c
+index 464031b..a921d77 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -121,7 +121,7 @@ static char *resolve_symlink(char *p, size_t s)
+ 	return p;
  }
  
- static void dump_marks_helper(FILE *f,
+-
++/* Make sure errno contains a meaningful value on error */
+ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ {
+ 	/*
+@@ -130,8 +130,10 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 	 */
+ 	static const size_t max_path_len = sizeof(lk->filename) - 5;
+ 
+-	if (strlen(path) >= max_path_len)
++	if (strlen(path) >= max_path_len) {
++		errno = ENAMETOOLONG;
+ 		return -1;
++	}
+ 	strcpy(lk->filename, path);
+ 	if (!(flags & LOCK_NODEREF))
+ 		resolve_symlink(lk->filename, max_path_len);
+@@ -148,9 +150,13 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 			lock_file_list = lk;
+ 			lk->on_list = 1;
+ 		}
+-		if (adjust_shared_perm(lk->filename))
+-			return error("cannot fix permission bits on %s",
+-				     lk->filename);
++		if (adjust_shared_perm(lk->filename)) {
++			int save_errno = errno;
++			error("cannot fix permission bits on %s",
++			      lk->filename);
++			errno = save_errno;
++			return -1;
++		}
+ 	}
+ 	else
+ 		lk->filename[0] = 0;
+@@ -188,6 +194,7 @@ NORETURN void unable_to_lock_index_die(const char *path, int err)
+ 	die("%s", buf.buf);
+ }
+ 
++/* This should return a meaningful errno on failure */
+ int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
+ {
+ 	int fd = lock_file(lk, path, flags);
+diff --git a/refs.c b/refs.c
+index 25c3a93..1e8f293 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2184,6 +2184,7 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
+ 	return 0;
+ }
+ 
++/* This should return a meaningful errno on failure */
+ int lock_packed_refs(int flags)
+ {
+ 	struct packed_ref_cache *packed_ref_cache;
+diff --git a/refs.h b/refs.h
+index 94d4cd4..948cc53 100644
+--- a/refs.h
++++ b/refs.h
+@@ -81,6 +81,7 @@ extern void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refn
+ /*
+  * Lock the packed-refs file for writing.  Flags is passed to
+  * hold_lock_file_for_update().  Return 0 on success.
++ * Errno is set to something meaningful on error.
+  */
+ extern int lock_packed_refs(int flags);
+ 
 -- 
 2.0.0.574.g30c2c5e
