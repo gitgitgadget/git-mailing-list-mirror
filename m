@@ -1,186 +1,109 @@
-From: Elia Pinto <gitter.spiros@gmail.com>
-Subject: [PATCH] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
-Date: Tue, 10 Jun 2014 09:43:14 -0700
-Message-ID: <1402418594-1377-1-git-send-email-gitter.spiros@gmail.com>
-Cc: gitster@pobox.com, jrnieder@gmail.com,
-	Elia Pinto <gitter.spiros@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 18:43:32 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
+Date: Tue, 10 Jun 2014 10:02:06 -0700
+Message-ID: <xmqqegywaeb5.fsf@gitster.dls.corp.google.com>
+References: <1402418594-1377-1-git-send-email-gitter.spiros@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Elia Pinto <gitter.spiros@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 19:03:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuP90-0002lK-1x
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 18:43:30 +0200
+	id 1WuPRe-00019p-7o
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 19:03:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751505AbaFJQnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 12:43:25 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:41420 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751135AbaFJQnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 12:43:24 -0400
-Received: by mail-pb0-f46.google.com with SMTP id rq2so6413142pbb.19
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 09:43:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=qIykiuXx7/m2Zv3c76dZoE54aA1S+HZZzZEt2vvIiPE=;
-        b=UD1vPRgoZdF5wBINUVEhh4eeedTM/qYuHDunRg85BMAQHSEDde3H0vM3+HKN586IyP
-         ykgV3TSkm7T5hsqV2tKgdrN9g8giK9dGupUFaduYMKYGnGV3nk/pqoH77tuCKGwF7ou0
-         n2e+AYtb13satYEvUcM5YEuVNQ7LdCj2I9szc5lsHEAcJ/Ow5g6zuOuI5dXQY1MDIc7z
-         ncbWrzAfonqCE3FZwZpH3tbbyb5LY5eIRxC7scSOpFrHWGEfmeFGeJ36InOQoHmn1pkJ
-         M3sm0ciIyHCcFiWJdq8BwohKgJMpx0Iwi1lsKdIdip1GlSDarJmIid8JRbJ+E8bQH4S+
-         KJ+Q==
-X-Received: by 10.68.249.2 with SMTP id yq2mr13003680pbc.70.1402418604166;
-        Tue, 10 Jun 2014 09:43:24 -0700 (PDT)
-Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
-        by mx.google.com with ESMTPSA id co3sm70321214pbb.89.2014.06.10.09.43.23
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 10 Jun 2014 09:43:23 -0700 (PDT)
-X-Mailer: git-send-email 1.7.10.4
+	id S1752263AbaFJRCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 13:02:19 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55867 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751888AbaFJRCS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 13:02:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 673361CCCC;
+	Tue, 10 Jun 2014 13:02:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3ekRO32gp2p9+Tf7SZMUEw5wWPA=; b=BIlPHx
+	uK3iZ63ef1x6YQDl68b9ZeKt1A1BiBSaoUhfYdjm7K75fZuifooNZ5vwE7SxCmU2
+	oOu4DlsIDPATO2u3zqwiQ6zRvBWjsSz5zc52r5IaHnRt4oOS9Gv53C7eMUHceRRD
+	0OxmBqio/NzdSkk+C9nHTYeHBJZsiz75NPCbQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Twcm3AnOOl23zoRvWashfYZcM1hWBEop
+	FkSHkLIrwbGIpdElLDee8PcUXyrSrKJoIzkppulJPrEdBcDNlk42Twaa4zyGOjYB
+	gcNni4YfJyzg4GiP+PU6V0xu7ditpdPtOXzE5j4hsJkW/LX7Rl0czj4EcE+9orlr
+	+q+cv7yMDPE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5E3191CCCA;
+	Tue, 10 Jun 2014 13:02:17 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 336DE1CCB5;
+	Tue, 10 Jun 2014 13:02:08 -0400 (EDT)
+In-Reply-To: <1402418594-1377-1-git-send-email-gitter.spiros@gmail.com> (Elia
+	Pinto's message of "Tue, 10 Jun 2014 09:43:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F4C5BCC4-F0C0-11E3-B135-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251205>
 
-The construct is error-prone; "test" being built-in in most modern
-shells, the reason to avoid "test <cond> && test <cond>" spawning
-one extra process by using a single "test <cond> -a <cond>" no
-longer exists.
+Elia Pinto <gitter.spiros@gmail.com> writes:
 
-Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
----
-This is the fifth revision.
+> @@ -832,7 +832,7 @@ Maybe you want to use 'update --init'?")"
+>  			continue
+>  		fi
+>  
+> -		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
+> +		if ! test -d "$sm_path"/.git && test -f "$sm_path"/.git
 
-Change based on Junio bugfix and better rewrite of the case condition
-http://permalink.gmane.org/gmane.comp.version-control.git/251198
+Hmmmm.  Is the above correct?
 
-I dropped also the echo -> printf replacement for doing
-it in another patch.
+    $ if ! false && true; then echo true; else echo false; fi
+    true
 
-Pass all the t/*submodule* tests. Finally ! :=)
+In other words, "! cmd1 && cmd2" parses not as "! (cmd1 && cmd2)"
+but as "(! cmd1) && cmd2".
 
-Thank you all very much and sorry for the mess.
+It almost makes me wonder if the code may become simpler if we did
+it the way in the attached.  That is, "if $sm_path/.git is there
+(whether as an embedded repository, or a file pointing to a
+repository elsewhere), then grab its HEAD, otherwise $sm_path is a
+submodule that hasn't been run 'submodule init' on, so run the whole
+nine yards starting from module_clone".
 
- git-submodule.sh |   32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ git-submodule.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/git-submodule.sh b/git-submodule.sh
-index e146b83..e128a4a 100755
+index e146b83..018f1bb 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -393,7 +393,7 @@ cmd_add()
- 			sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
- 	fi
- 
--	if test -z "$repo" -o -z "$sm_path"; then
-+	if test -z "$repo" || test -z "$sm_path"; then
- 		usage
- 	fi
- 
-@@ -450,7 +450,7 @@ Use -f if you really want to add it." >&2
- 	# perhaps the path exists and is already a git repo, else clone it
- 	if test -e "$sm_path"
- 	then
--		if test -d "$sm_path"/.git -o -f "$sm_path"/.git
-+		if test -d "$sm_path"/.git || test -f "$sm_path"/.git
- 		then
- 			eval_gettextln "Adding existing repo at '\$sm_path' to the index"
- 		else
-@@ -832,7 +832,7 @@ Maybe you want to use 'update --init'?")"
+@@ -832,15 +832,15 @@ Maybe you want to use 'update --init'?")"
  			continue
  		fi
  
 -		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
-+		if ! test -d "$sm_path"/.git && test -f "$sm_path"/.git
++		if test -e "$sm_path/.git"
  		then
- 			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
- 			cloned_modules="$cloned_modules;$name"
-@@ -857,11 +857,11 @@ Maybe you want to use 'update --init'?")"
- 			die "$(eval_gettext "Unable to find current ${remote_name}/${branch} revision in submodule path '\$sm_path'")"
+-			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
+-			cloned_modules="$cloned_modules;$name"
+-			subsha1=
+-		else
+ 			subsha1=$(clear_local_git_env; cd "$sm_path" &&
+ 				git rev-parse --verify HEAD) ||
+ 			die "$(eval_gettext "Unable to find current revision in submodule path '\$displaypath'")"
++		else
++			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
++			cloned_modules="$cloned_modules;$name"
++			subsha1=
  		fi
  
--		if test "$subsha1" != "$sha1" -o -n "$force"
-+		if test "$subsha1" != "$sha1" || test -n "$force"
- 		then
- 			subforce=$force
- 			# If we don't already have a -f flag and the submodule has never been checked out
--			if test -z "$subsha1" -a -z "$force"
-+			if test -z "$subsha1" && test -z "$force"
- 			then
- 				subforce="-f"
- 			fi
-@@ -1031,7 +1031,7 @@ cmd_summary() {
- 	then
- 		head=$rev
- 		test $# = 0 || shift
--	elif test -z "$1" -o "$1" = "HEAD"
-+	elif test -z "$1" || test "$1" = "HEAD"
- 	then
- 		# before the first commit: compare with an empty tree
- 		head=$(git hash-object -w -t tree --stdin </dev/null)
-@@ -1056,13 +1056,17 @@ cmd_summary() {
- 		while read mod_src mod_dst sha1_src sha1_dst status sm_path
- 		do
- 			# Always show modules deleted or type-changed (blob<->module)
--			test $status = D -o $status = T && echo "$sm_path" && continue
-+			if test "$status" = D || test "$status" = T
-+                        then
-+				echo "$sm_path" &&
-+				continue
-+			fi
- 			# Respect the ignore setting for --for-status.
- 			if test -n "$for_status"
- 			then
- 				name=$(module_name "$sm_path")
- 				ignore_config=$(get_submodule_config "$name" ignore none)
--				test $status != A -a $ignore_config = all && continue
-+				test $status != A && test $ignore_config = all && continue
- 			fi
- 			# Also show added or modified modules which are checked out
- 			GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
-@@ -1122,7 +1126,7 @@ cmd_summary() {
- 		*)
- 			errmsg=
- 			total_commits=$(
--			if test $mod_src = 160000 -a $mod_dst = 160000
-+			if test $mod_src = 160000 && test $mod_dst = 160000
- 			then
- 				range="$sha1_src...$sha1_dst"
- 			elif test $mod_src = 160000
-@@ -1159,7 +1163,7 @@ cmd_summary() {
- 			# i.e. deleted or changed to blob
- 			test $mod_dst = 160000 && echo "$errmsg"
- 		else
--			if test $mod_src = 160000 -a $mod_dst = 160000
-+			if test $mod_src = 160000 && test $mod_dst = 160000
- 			then
- 				limit=
- 				test $summary_limit -gt 0 && limit="-$summary_limit"
-@@ -1230,7 +1234,11 @@ cmd_status()
- 			say "U$sha1 $displaypath"
- 			continue
- 		fi
--		if test -z "$url" || ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
-+		if test -z "$url" ||
-+		{
-+			! test -d "$sm_path"/.git &&
-+			! test -f "$sm_path"/.git
-+		}
- 		then
- 			say "-$sha1 $displaypath"
- 			continue;
-@@ -1399,7 +1407,7 @@ then
- fi
- 
- # "--cached" is accepted only by "status" and "summary"
--if test -n "$cached" && test "$command" != status -a "$command" != summary
-+if test -n "$cached" && test "$command" != status && test "$command" != summary
- then
- 	usage
- fi
--- 
-1.7.10.4
+ 		if test -n "$remote"
