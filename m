@@ -1,98 +1,186 @@
-From: =?UTF-8?Q?Pierre=2DFran=C3=A7ois_CLEMENT?= <likeyn@gmail.com>
-Subject: Re: Git reset --hard with staged changes
-Date: Tue, 10 Jun 2014 18:30:13 +0200
-Message-ID: <CANWD=rWRT1iarnZzyd75g6gr0nyo3rrdH01j+Bjq0t4q2UUhhg@mail.gmail.com>
-References: <CANWD=rWmzgAwTp=E_1=th0Myk-dh4m5Y9PE3=fpHeirsVVQKwQ@mail.gmail.com>
- <CANWD=rX-MEiS4cNzDWr2wwkshz2zu8-L31UrKwbZrJSBcJX-nQ@mail.gmail.com>
- <87vbsayy9w.fsf@fencepost.gnu.org> <CANWD=rVB249Vu1QMk64V+FxfCfJPzxqZgCfyEuixJJ_iKoTLPQ@mail.gmail.com>
- <xmqq61k9d5nk.fsf@gitster.dls.corp.google.com> <CANWD=rUz9Wgoktp7-NkQMvWDmYOPv0kMqUNoe4FPJ9+Ax_UJBA@mail.gmail.com>
- <871tuwss2p.fsf@fencepost.gnu.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Jun 10 18:31:19 2014
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
+Date: Tue, 10 Jun 2014 09:43:14 -0700
+Message-ID: <1402418594-1377-1-git-send-email-gitter.spiros@gmail.com>
+Cc: gitster@pobox.com, jrnieder@gmail.com,
+	Elia Pinto <gitter.spiros@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 10 18:43:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuOwk-000123-EN
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 18:31:17 +0200
+	id 1WuP90-0002lK-1x
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 18:43:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835AbaFJQag convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2014 12:30:36 -0400
-Received: from mail-ve0-f169.google.com ([209.85.128.169]:40048 "EHLO
-	mail-ve0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750735AbaFJQaf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2014 12:30:35 -0400
-Received: by mail-ve0-f169.google.com with SMTP id pa12so2141056veb.0
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 09:30:35 -0700 (PDT)
+	id S1751505AbaFJQnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 12:43:25 -0400
+Received: from mail-pb0-f46.google.com ([209.85.160.46]:41420 "EHLO
+	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751135AbaFJQnY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 12:43:24 -0400
+Received: by mail-pb0-f46.google.com with SMTP id rq2so6413142pbb.19
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 09:43:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=j6puxk2w9oaFnQVhv9DvylI7WBI8pao/E9a6LGdiTB0=;
-        b=LJv9YqKFeW6on3FbPHrZIfpLOS3XEZfOBnuuH7TSFMNUiTSciAU25EVmO7ASvmjdG8
-         mylN/t5vs2bGJOemX7fcz6L7OwolN6BUu2gQL6c4JdjVT03juYYgmuhaNaOTJ3IwvEIP
-         uqY7SMeIy5MIl8EHO1pxAwlYeptQlRHauGVKv2bmJpjvJ0CSlESL6/K8B98XbwIUrIlK
-         nAEnTgun25JuiUe6c0z3XwQ0/HficKXkMzFz6uHyvFB9XqytBdtLOy5+OWvvJmEROlwE
-         eAZujpKAPKqu4G5cbpI3DNL4LLu69qUqmfP55utktD738UYQ0atADGHWRuSxurvstGiL
-         gMSw==
-X-Received: by 10.52.121.19 with SMTP id lg19mr14027918vdb.54.1402417835016;
- Tue, 10 Jun 2014 09:30:35 -0700 (PDT)
-Received: by 10.58.182.104 with HTTP; Tue, 10 Jun 2014 09:30:13 -0700 (PDT)
-In-Reply-To: <871tuwss2p.fsf@fencepost.gnu.org>
+        h=from:to:cc:subject:date:message-id;
+        bh=qIykiuXx7/m2Zv3c76dZoE54aA1S+HZZzZEt2vvIiPE=;
+        b=UD1vPRgoZdF5wBINUVEhh4eeedTM/qYuHDunRg85BMAQHSEDde3H0vM3+HKN586IyP
+         ykgV3TSkm7T5hsqV2tKgdrN9g8giK9dGupUFaduYMKYGnGV3nk/pqoH77tuCKGwF7ou0
+         n2e+AYtb13satYEvUcM5YEuVNQ7LdCj2I9szc5lsHEAcJ/Ow5g6zuOuI5dXQY1MDIc7z
+         ncbWrzAfonqCE3FZwZpH3tbbyb5LY5eIRxC7scSOpFrHWGEfmeFGeJ36InOQoHmn1pkJ
+         M3sm0ciIyHCcFiWJdq8BwohKgJMpx0Iwi1lsKdIdip1GlSDarJmIid8JRbJ+E8bQH4S+
+         KJ+Q==
+X-Received: by 10.68.249.2 with SMTP id yq2mr13003680pbc.70.1402418604166;
+        Tue, 10 Jun 2014 09:43:24 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id co3sm70321214pbb.89.2014.06.10.09.43.23
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 10 Jun 2014 09:43:23 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251204>
 
-2014-06-10 17:27 GMT+02:00 David Kastrup <dak@gnu.org>:
-> Pierre-Fran=C3=A7ois CLEMENT <likeyn@gmail.com> writes:
->
->> 2014-06-10 1:28 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
->>> Pierre-Fran=C3=A7ois CLEMENT <likeyn@gmail.com> writes:
->>>
->>>> Hm, I didn't think of "git apply --index"... Makes sense for this
->>>> special use, but I'm not sure about the other use cases.
->>>
->>> Try merging another branch that tracks a file your current branch
->>> does not know about and ending up with conflicts during that merge.
->>> Resetting the half-done result away must remove that new path from
->>> your working tree and the index.
->>
->> Hm I see. Even though the documentation doesn't make it very clear
->> about what happens to such files, it turns out the scenario we
->> stumbled upon seems to be the special use case after all. Thanks for
->> shedding some light on this :) I wonder why does git-reset's hard mo=
-de
->> not always remove untracked files then?
->
-> Because it never removes them?  Git only removes files once it tracks
-> them.  This includes the operation of removing _and_ untracking them,
-> like with git reset --hard.
->
-> The only command which explicitly messes with untracked files is
-> git-clean.
->
-> --
-> David Kastrup
+The construct is error-prone; "test" being built-in in most modern
+shells, the reason to avoid "test <cond> && test <cond>" spawning
+one extra process by using a single "test <cond> -a <cond>" no
+longer exists.
 
-Yeah sorry, I just noticed the emails on the definition of what are
-(un)tracked files
-(http://thread.gmane.org/gmane.comp.version-control.git/251071/focus=3D=
-251151),
-as I didn't get them in my inbox for some reason. So staged files
-which aren't in HEAD are also considered tracked -- which explains it
-all. Someone told me that too on the "Git for human beings" Google
-Group, but I couldn't find a definition that backs this in the man
-pages (maybe the git-glossary would be a good place for it?), and the
-one from the Git-Scm book only confused me in thinking the opposite.
-Thanks for the clarification
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+---
+This is the fifth revision.
 
---
-Pierre-Fran=C3=A7ois CLEMENT
-Application developer at Upcast Social
+Change based on Junio bugfix and better rewrite of the case condition
+http://permalink.gmane.org/gmane.comp.version-control.git/251198
+
+I dropped also the echo -> printf replacement for doing
+it in another patch.
+
+Pass all the t/*submodule* tests. Finally ! :=)
+
+Thank you all very much and sorry for the mess.
+
+ git-submodule.sh |   32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index e146b83..e128a4a 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -393,7 +393,7 @@ cmd_add()
+ 			sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
+ 	fi
+ 
+-	if test -z "$repo" -o -z "$sm_path"; then
++	if test -z "$repo" || test -z "$sm_path"; then
+ 		usage
+ 	fi
+ 
+@@ -450,7 +450,7 @@ Use -f if you really want to add it." >&2
+ 	# perhaps the path exists and is already a git repo, else clone it
+ 	if test -e "$sm_path"
+ 	then
+-		if test -d "$sm_path"/.git -o -f "$sm_path"/.git
++		if test -d "$sm_path"/.git || test -f "$sm_path"/.git
+ 		then
+ 			eval_gettextln "Adding existing repo at '\$sm_path' to the index"
+ 		else
+@@ -832,7 +832,7 @@ Maybe you want to use 'update --init'?")"
+ 			continue
+ 		fi
+ 
+-		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
++		if ! test -d "$sm_path"/.git && test -f "$sm_path"/.git
+ 		then
+ 			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
+ 			cloned_modules="$cloned_modules;$name"
+@@ -857,11 +857,11 @@ Maybe you want to use 'update --init'?")"
+ 			die "$(eval_gettext "Unable to find current ${remote_name}/${branch} revision in submodule path '\$sm_path'")"
+ 		fi
+ 
+-		if test "$subsha1" != "$sha1" -o -n "$force"
++		if test "$subsha1" != "$sha1" || test -n "$force"
+ 		then
+ 			subforce=$force
+ 			# If we don't already have a -f flag and the submodule has never been checked out
+-			if test -z "$subsha1" -a -z "$force"
++			if test -z "$subsha1" && test -z "$force"
+ 			then
+ 				subforce="-f"
+ 			fi
+@@ -1031,7 +1031,7 @@ cmd_summary() {
+ 	then
+ 		head=$rev
+ 		test $# = 0 || shift
+-	elif test -z "$1" -o "$1" = "HEAD"
++	elif test -z "$1" || test "$1" = "HEAD"
+ 	then
+ 		# before the first commit: compare with an empty tree
+ 		head=$(git hash-object -w -t tree --stdin </dev/null)
+@@ -1056,13 +1056,17 @@ cmd_summary() {
+ 		while read mod_src mod_dst sha1_src sha1_dst status sm_path
+ 		do
+ 			# Always show modules deleted or type-changed (blob<->module)
+-			test $status = D -o $status = T && echo "$sm_path" && continue
++			if test "$status" = D || test "$status" = T
++                        then
++				echo "$sm_path" &&
++				continue
++			fi
+ 			# Respect the ignore setting for --for-status.
+ 			if test -n "$for_status"
+ 			then
+ 				name=$(module_name "$sm_path")
+ 				ignore_config=$(get_submodule_config "$name" ignore none)
+-				test $status != A -a $ignore_config = all && continue
++				test $status != A && test $ignore_config = all && continue
+ 			fi
+ 			# Also show added or modified modules which are checked out
+ 			GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
+@@ -1122,7 +1126,7 @@ cmd_summary() {
+ 		*)
+ 			errmsg=
+ 			total_commits=$(
+-			if test $mod_src = 160000 -a $mod_dst = 160000
++			if test $mod_src = 160000 && test $mod_dst = 160000
+ 			then
+ 				range="$sha1_src...$sha1_dst"
+ 			elif test $mod_src = 160000
+@@ -1159,7 +1163,7 @@ cmd_summary() {
+ 			# i.e. deleted or changed to blob
+ 			test $mod_dst = 160000 && echo "$errmsg"
+ 		else
+-			if test $mod_src = 160000 -a $mod_dst = 160000
++			if test $mod_src = 160000 && test $mod_dst = 160000
+ 			then
+ 				limit=
+ 				test $summary_limit -gt 0 && limit="-$summary_limit"
+@@ -1230,7 +1234,11 @@ cmd_status()
+ 			say "U$sha1 $displaypath"
+ 			continue
+ 		fi
+-		if test -z "$url" || ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
++		if test -z "$url" ||
++		{
++			! test -d "$sm_path"/.git &&
++			! test -f "$sm_path"/.git
++		}
+ 		then
+ 			say "-$sha1 $displaypath"
+ 			continue;
+@@ -1399,7 +1407,7 @@ then
+ fi
+ 
+ # "--cached" is accepted only by "status" and "summary"
+-if test -n "$cached" && test "$command" != status -a "$command" != summary
++if test -n "$cached" && test "$command" != status && test "$command" != summary
+ then
+ 	usage
+ fi
+-- 
+1.7.10.4
