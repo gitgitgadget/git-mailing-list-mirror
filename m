@@ -1,99 +1,104 @@
-From: Dale Worley <worley@alum.mit.edu>
-Subject: Re: Git reset --hard with staged changes
-Date: Tue, 10 Jun 2014 01:03:09 +0000 (UTC)
-Message-ID: <loom.20140610T025754-449@post.gmane.org>
-References: <CANWD=rWmzgAwTp=E_1=th0Myk-dh4m5Y9PE3=fpHeirsVVQKwQ@mail.gmail.com> <CANWD=rX-MEiS4cNzDWr2wwkshz2zu8-L31UrKwbZrJSBcJX-nQ@mail.gmail.com> <87vbsayy9w.fsf@fencepost.gnu.org> <CANWD=rVB249Vu1QMk64V+FxfCfJPzxqZgCfyEuixJJ_iKoTLPQ@mail.gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 04/15] logmsg_reencode: return const buffer
+Date: Mon, 9 Jun 2014 21:36:43 -0400
+Message-ID: <CAPig+cQzNnnTST-SVgxRsgLtHFO8NFpnJ=uFzHStgMeJDhgMfQ@mail.gmail.com>
+References: <20140609180236.GA24644@sigill.intra.peff.net>
+	<20140609181017.GD20315@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 03:15:18 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 10 03:36:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuAej-0005nW-KK
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 03:15:17 +0200
+	id 1WuAzY-0006Oc-JY
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 03:36:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932778AbaFJBPI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jun 2014 21:15:08 -0400
-Received: from plane.gmane.org ([80.91.229.3]:34189 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752750AbaFJBPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Jun 2014 21:15:07 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WuAeW-0005cj-Uc
-	for git@vger.kernel.org; Tue, 10 Jun 2014 03:15:05 +0200
-Received: from c-24-34-72-61.hsd1.ma.comcast.net ([24.34.72.61])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 03:15:04 +0200
-Received: from worley by c-24-34-72-61.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 03:15:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 24.34.72.61 (Mozilla/5.0 (X11; Linux x86_64; rv:29.0) Gecko/20100101 Firefox/29.0)
+	id S933608AbaFJBgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 21:36:44 -0400
+Received: from mail-yh0-f46.google.com ([209.85.213.46]:48027 "EHLO
+	mail-yh0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932345AbaFJBgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 21:36:43 -0400
+Received: by mail-yh0-f46.google.com with SMTP id 29so3278047yhl.5
+        for <git@vger.kernel.org>; Mon, 09 Jun 2014 18:36:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=2JcU+D/tRJQdkg0UbM5IHGqZuSkDxUEfPsUli0t4aEc=;
+        b=O9AdpJe8vb7QScXOUhSNYAJ32IsWYYzhzYUpT3mVczBog/1OUsqiU4ZkuxSbcG8Z1x
+         xD6FfxlPF9Ir2NFaeylY+X4DpQpQB6S47D3N94iP90SX4aqknzBGiITngO+OVhW3miJ5
+         BoCoF20dlqDg0fSsMheM9i6ZW5sO5CUAi49e4Bv9PceoytE5a6yVyjQ5eUIDopoaHMCI
+         VpZhVTlSBx8vZu9SN0o8j0bfQrQlQGcQNhD3RBZ7HGBInLPTiMlIS24dXT0uH47r0DJk
+         Y5ApjQCOJ/xo+mTQB7ln6jcqMOseiCyhMgtjL5e+SCUyXqszSgRbf/y9pOu9T6F0lHId
+         QPQA==
+X-Received: by 10.236.66.139 with SMTP id h11mr18858661yhd.30.1402364203218;
+ Mon, 09 Jun 2014 18:36:43 -0700 (PDT)
+Received: by 10.170.169.65 with HTTP; Mon, 9 Jun 2014 18:36:43 -0700 (PDT)
+In-Reply-To: <20140609181017.GD20315@sigill.intra.peff.net>
+X-Google-Sender-Auth: qpWz4BVpoCndVMIIuIwpq5z0QeU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251152>
 
-=46rom: Pierre-Fran=C3=A7ois CLEMENT <likeyn <at> gmail.com>
-> You create a new (untracked) file.
-> You use git-reset's hard mode to go one commit back, the new
-> (untracked) file's still there.
-> You add/stage that new file.
-> You use git-reset's hard mode again to go one commit back, and the ne=
-w
-> untracked file you just staged gets deleted.
->=20
-> Also, according to Git-scm
-> (http://git-scm.com/book/en/Git-Basics-Recording-Changes-to-the-Repos=
-itory):
->=20
-> "Tracked files are files that were in the last snapshot [...].
-> Untracked files are everything else."
->=20
-> So it seems to me like staged untracked files shouldn't be considered
-> as tracked files, and thus shouldn't be removed. Or maybe, git-reset'=
-s
-> hard mode should always delete everything including untracked files?
-> It would also make sense, given the numerous modes it has.
+On Mon, Jun 9, 2014 at 2:10 PM, Jeff King <peff@peff.net> wrote:
+> The return value from logmsg_reencode may be either a newly
+> allocated buffer or a pointer to the existing commit->buffer.
+> We would not want the caller to accidentally free() or
+> modify the latter, so let's mark it as const.  We can cast
+> away the constness in logmsg_free, but only once we have
+> determined that it is a free-able buffer.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> index 71e2337..47e5b7a 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -2788,7 +2788,7 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+>  {
+>         int retval;
+>         const char *encoding;
+> -       char *message;
+> +       const char *message;
+>         struct strbuf buf = STRBUF_INIT;
+>
+>         if (!opt->grep_filter.pattern_list && !opt->grep_filter.header_list)
+> @@ -2830,12 +2830,18 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+>                 format_display_notes(commit->object.sha1, &buf, encoding, 1);
+>         }
+>
+> -       /* Find either in the original commit message, or in the temporary */
+> +       /* Find either in the original commit message, or in the temporary.
 
-There's a core question that must be answered:  What, *exactly*, is a
-"tracked file"?
+Style:
 
-If you look at that passage in the book, it continues:
+    /*
+     * Find either...
+     */
 
-"Tracked files are files that were in the last snapshot; they can be
-unmodified, modified, or staged. Untracked files are everything else =E2=
-=80=94 any
-files in your working directory that were not in your last snapshot and=
- are
-not in your staging area."
-
-But if you look carefully, that passage gives two definitions of "untra=
-cked
-files", and *they don't agree*, specifically in the case of a file that=
- is
-in the index but not in the base commit.  And that's the case we're con=
-sidering.
-
-To fix this, you've got to figure out what the definition of "tracked f=
-ile"
-is supposed to be, and then ensure that everything (code and documentat=
-ion)
-is consistent with that.
-
-(As far as I can tell from Git's behavior, the definition of tracked fi=
-le is
-"any file that is in the base commit or in the index".  Based on that
-definition, "git reset --hard" is working as documented.)
-
-Dale
+> +        * Note that we cast away the constness of "message" here. It is
+> +        * const because it may come from the cached commit buffer. That's OK,
+> +        * because we know that it is modifiable heap memory, and that while
+> +        * grep_buffer may modify it for speed, it will restore any
+> +        * changes before returning.
+> +        */
+>         if (buf.len)
+>                 retval = grep_buffer(&opt->grep_filter, buf.buf, buf.len);
+>         else
+>                 retval = grep_buffer(&opt->grep_filter,
+> -                                    message, strlen(message));
+> +                                    (char *)message, strlen(message));
+>         strbuf_release(&buf);
+>         logmsg_free(message, commit);
+>         return retval;
+> --
+> 2.0.0.729.g520999f
+>
