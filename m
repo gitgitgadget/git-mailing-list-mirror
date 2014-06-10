@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 12/17] use get_commit_buffer to avoid duplicate code
-Date: Tue, 10 Jun 2014 17:41:02 -0400
-Message-ID: <20140610214102.GL19147@sigill.intra.peff.net>
+Subject: [PATCH 13/17] convert logmsg_reencode to get_commit_buffer
+Date: Tue, 10 Jun 2014 17:41:39 -0400
+Message-ID: <20140610214139.GM19147@sigill.intra.peff.net>
 References: <20140610213509.GA26979@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -10,133 +10,228 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 23:41:13 2014
+X-From: git-owner@vger.kernel.org Tue Jun 10 23:41:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuTn6-0005aF-GM
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 23:41:12 +0200
+	id 1WuTnc-00063U-Vq
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 23:41:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754329AbaFJVlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 17:41:06 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41417 "HELO peff.net"
+	id S1754003AbaFJVll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 17:41:41 -0400
+Received: from cloud.peff.net ([50.56.180.127]:41423 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754312AbaFJVlE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 17:41:04 -0400
-Received: (qmail 19722 invoked by uid 102); 10 Jun 2014 21:41:03 -0000
+	id S1752040AbaFJVlk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 17:41:40 -0400
+Received: (qmail 19782 invoked by uid 102); 10 Jun 2014 21:41:40 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Jun 2014 16:41:03 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jun 2014 17:41:02 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 10 Jun 2014 16:41:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 10 Jun 2014 17:41:39 -0400
 Content-Disposition: inline
 In-Reply-To: <20140610213509.GA26979@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251257>
 
-For both of these sites, we already do the "fallback to
-read_sha1_file" trick. But we can shorten the code by just
-using get_commit_buffer.
+Like the callsites in the previous commit, logmsg_reencode
+already falls back to read_sha1_file when necessary.
+However, I split its conversion out into its own commit
+because it's a bit more complex.
 
-Note that the error cases are slightly different when
-read_sha1_file fails. get_commit_buffer will die() if the
-object cannot be loaded, or is a non-commit.
+We return either:
 
-For get_sha1_oneline, this will almost certainly never
-happen, as we will have just called parse_object (and if it
-does, it's probably worth complaining about).
+  1. The original commit->buffer
 
-For record_author_date, the new behavior is probably better;
-we notify the user of the error instead of silently ignoring
-it. And because it's used only for sorting by author-date,
-somebody examining a corrupt repo can fallback to the
-regular traversal order.
+  2. A newly allocated buffer from read_sha1_file
+
+  3. A reencoded buffer (based on either 1 or 2 above).
+
+while trying to do as few extra reads/allocations as
+possible. Callers currently free the result with
+logmsg_free, but we can simplify this by pointing them
+straight to unuse_commit_buffer. This is a slight layering
+violation, in that we may be passing a buffer from (3).
+However, since the end result is to free() anything except
+(1), which is unlikely to change, and because this makes the
+interface much simpler, it's a reasonable bending of the
+rules.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-Typofix in commit message since v1.
+ builtin/blame.c |  4 ++--
+ builtin/reset.c |  2 +-
+ commit.h        |  1 -
+ pretty.c        | 40 +++++++++++-----------------------------
+ revision.c      |  2 +-
+ sequencer.c     |  2 +-
+ 6 files changed, 16 insertions(+), 35 deletions(-)
 
- commit.c    | 16 +++-------------
- sha1_name.c | 18 ++++--------------
- 2 files changed, 7 insertions(+), 27 deletions(-)
-
-diff --git a/commit.c b/commit.c
-index b6b0e0d..1903dde 100644
---- a/commit.c
-+++ b/commit.c
-@@ -583,22 +583,12 @@ static void record_author_date(struct author_date_slab *author_date,
- 			       struct commit *commit)
- {
- 	const char *buf, *line_end, *ident_line;
--	char *buffer = NULL;
-+	const char *buffer = get_commit_buffer(commit);
- 	struct ident_split ident;
- 	char *date_end;
- 	unsigned long date;
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 0af3a18..cde19eb 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -1666,7 +1666,7 @@ static void get_commit_info(struct commit *commit,
+ 		    &ret->author_time, &ret->author_tz);
  
--	if (!commit->buffer) {
--		unsigned long size;
--		enum object_type type;
--		buffer = read_sha1_file(commit->object.sha1, &type, &size);
--		if (!buffer)
--			return;
--	}
--
--	for (buf = commit->buffer ? commit->buffer : buffer;
--	     buf;
--	     buf = line_end + 1) {
-+	for (buf = buffer; buf; buf = line_end + 1) {
- 		line_end = strchrnul(buf, '\n');
- 		ident_line = skip_prefix(buf, "author ");
- 		if (!ident_line) {
-@@ -619,7 +609,7 @@ static void record_author_date(struct author_date_slab *author_date,
- 	*(author_date_slab_at(author_date, commit)) = date;
+ 	if (!detailed) {
+-		logmsg_free(message, commit);
++		unuse_commit_buffer(commit, message);
+ 		return;
+ 	}
  
- fail_exit:
--	free(buffer);
-+	unuse_commit_buffer(commit, buffer);
+@@ -1680,7 +1680,7 @@ static void get_commit_info(struct commit *commit,
+ 	else
+ 		strbuf_addf(&ret->summary, "(%s)", sha1_to_hex(commit->object.sha1));
+ 
+-	logmsg_free(message, commit);
++	unuse_commit_buffer(commit, message);
  }
  
- static int compare_commits_by_author_date(const void *a_, const void *b_,
-diff --git a/sha1_name.c b/sha1_name.c
-index 2b6322f..0a65d23 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -862,27 +862,17 @@ static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
- 		commit_list_insert(l->item, &backup);
+ /*
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 7ebee07..850d532 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -109,7 +109,7 @@ static void print_new_head_line(struct commit *commit)
  	}
- 	while (list) {
--		char *p, *to_free = NULL;
-+		const char *p, *buf;
- 		struct commit *commit;
+ 	else
+ 		printf("\n");
+-	logmsg_free(msg, commit);
++	unuse_commit_buffer(commit, msg);
+ }
+ 
+ static void update_index_from_diff(struct diff_queue_struct *q,
+diff --git a/commit.h b/commit.h
+index 259c0ae..5ce5ce7 100644
+--- a/commit.h
++++ b/commit.h
+@@ -156,7 +156,6 @@ struct rev_info; /* in revision.h, it circularly uses enum cmit_fmt */
+ extern const char *logmsg_reencode(const struct commit *commit,
+ 				   char **commit_encoding,
+ 				   const char *output_encoding);
+-extern void logmsg_free(const char *msg, const struct commit *commit);
+ extern void get_commit_format(const char *arg, struct rev_info *);
+ extern const char *format_subject(struct strbuf *sb, const char *msg,
+ 				  const char *line_separator);
+diff --git a/pretty.c b/pretty.c
+index d152de2..8fd60cd 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -613,22 +613,9 @@ const char *logmsg_reencode(const struct commit *commit,
+ 	static const char *utf8 = "UTF-8";
+ 	const char *use_encoding;
+ 	char *encoding;
+-	char *msg = commit->buffer;
++	const char *msg = get_commit_buffer(commit);
+ 	char *out;
+ 
+-	if (!msg) {
 -		enum object_type type;
 -		unsigned long size;
- 		int matches;
- 
- 		commit = pop_most_recent_commit(&list, ONELINE_SEEN);
- 		if (!parse_object(commit->object.sha1))
- 			continue;
--		if (commit->buffer)
--			p = commit->buffer;
--		else {
--			p = read_sha1_file(commit->object.sha1, &type, &size);
--			if (!p)
--				continue;
--			to_free = p;
--		}
 -
--		p = strstr(p, "\n\n");
-+		buf = get_commit_buffer(commit);
-+		p = strstr(buf, "\n\n");
- 		matches = p && !regexec(&regex, p + 2, 0, NULL, 0);
--		free(to_free);
-+		unuse_commit_buffer(commit, buf);
+-		msg = read_sha1_file(commit->object.sha1, &type, &size);
+-		if (!msg)
+-			die("Cannot read commit object %s",
+-			    sha1_to_hex(commit->object.sha1));
+-		if (type != OBJ_COMMIT)
+-			die("Expected commit for '%s', got %s",
+-			    sha1_to_hex(commit->object.sha1), typename(type));
+-	}
+-
+ 	if (!output_encoding || !*output_encoding) {
+ 		if (commit_encoding)
+ 			*commit_encoding =
+@@ -652,12 +639,13 @@ const char *logmsg_reencode(const struct commit *commit,
+ 		 * Otherwise, we still want to munge the encoding header in the
+ 		 * result, which will be done by modifying the buffer. If we
+ 		 * are using a fresh copy, we can reuse it. But if we are using
+-		 * the cached copy from commit->buffer, we need to duplicate it
+-		 * to avoid munging commit->buffer.
++		 * the cached copy from get_commit_buffer, we need to duplicate it
++		 * to avoid munging the cached copy.
+ 		 */
+-		out = msg;
+-		if (out == commit->buffer)
+-			out = xstrdup(out);
++		if (msg == get_cached_commit_buffer(commit))
++			out = xstrdup(msg);
++		else
++			out = (char *)msg;
+ 	}
+ 	else {
+ 		/*
+@@ -667,8 +655,8 @@ const char *logmsg_reencode(const struct commit *commit,
+ 		 * copy, we can free it.
+ 		 */
+ 		out = reencode_string(msg, output_encoding, use_encoding);
+-		if (out && msg != commit->buffer)
+-			free(msg);
++		if (out)
++			unuse_commit_buffer(commit, msg);
+ 	}
  
- 		if (matches) {
- 			hashcpy(sha1, commit->object.sha1);
+ 	/*
+@@ -687,12 +675,6 @@ const char *logmsg_reencode(const struct commit *commit,
+ 	return out ? out : msg;
+ }
+ 
+-void logmsg_free(const char *msg, const struct commit *commit)
+-{
+-	if (msg != commit->buffer)
+-		free((void *)msg);
+-}
+-
+ static int mailmap_name(const char **email, size_t *email_len,
+ 			const char **name, size_t *name_len)
+ {
+@@ -1531,7 +1513,7 @@ void format_commit_message(const struct commit *commit,
+ 	}
+ 
+ 	free(context.commit_encoding);
+-	logmsg_free(context.message, commit);
++	unuse_commit_buffer(commit, context.message);
+ 	free(context.signature_check.gpg_output);
+ 	free(context.signature_check.signer);
+ }
+@@ -1767,7 +1749,7 @@ void pretty_print_commit(struct pretty_print_context *pp,
+ 	if (pp->fmt == CMIT_FMT_EMAIL && sb->len <= beginning_of_body)
+ 		strbuf_addch(sb, '\n');
+ 
+-	logmsg_free(reencoded, commit);
++	unuse_commit_buffer(commit, reencoded);
+ }
+ 
+ void pp_commit_easy(enum cmit_fmt fmt, const struct commit *commit,
+diff --git a/revision.c b/revision.c
+index be151ef..1cc91e5 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2844,7 +2844,7 @@ static int commit_match(struct commit *commit, struct rev_info *opt)
+ 		retval = grep_buffer(&opt->grep_filter,
+ 				     (char *)message, strlen(message));
+ 	strbuf_release(&buf);
+-	logmsg_free(message, commit);
++	unuse_commit_buffer(commit, message);
+ 	return retval;
+ }
+ 
+diff --git a/sequencer.c b/sequencer.c
+index 3fcab4d..4632f7d 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -154,7 +154,7 @@ static int get_message(struct commit *commit, struct commit_message *out)
+ static void free_message(struct commit *commit, struct commit_message *msg)
+ {
+ 	free(msg->parent_label);
+-	logmsg_free(msg->message, commit);
++	unuse_commit_buffer(commit, msg->message);
+ }
+ 
+ static void write_cherry_pick_head(struct commit *commit, const char *pseudoref)
 -- 
 2.0.0.729.g520999f
