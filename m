@@ -1,135 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fix "t0001: test git init when run via an alias"
-Date: Tue, 10 Jun 2014 11:48:04 -0700
-Message-ID: <xmqq4mzsa9ej.fsf@gitster.dls.corp.google.com>
-References: <20140606110935.GA14446@lanh>
-	<1402220230-799-1-git-send-email-pclouds@gmail.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 15/20] t/t5000-tar-tree.sh: avoid "test <cond> -a/-o
+ <cond>"
+Date: Tue, 10 Jun 2014 11:49:15 -0700
+Message-ID: <20140610184913.GD72751@gmail.com>
+References: <1402066563-28519-1-git-send-email-gitter.spiros@gmail.com>
+ <1402066563-28519-16-git-send-email-gitter.spiros@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
-	dturner@twopensource.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 20:48:21 2014
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Elia Pinto <gitter.spiros@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Jun 10 20:50:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuR5m-00056c-03
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 20:48:18 +0200
+	id 1WuR7O-0006TF-53
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 20:49:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751820AbaFJSsO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2014 14:48:14 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57955 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751140AbaFJSsN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2014 14:48:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1060C1CDE4;
-	Tue, 10 Jun 2014 14:48:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=CKxCqJ1GXkon
-	QylvS4x1/J44MeY=; b=uwQVhfltibqYxCbC3s7tFUMLsXYQxLXv/r1xhXXmu+0f
-	2i2yVcnEwAPIywo3f8+gITOI0ilZJm9pDao+99BMa0nqYW5v4CHjlgtmH3m+rHxC
-	ugonAPEubqAsHSuhvogD9n9XAUoO8Xar5uKLeViONymrm8SY/XbjXcvf3lKvhr8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=khzGBv
-	yY+LKIhXV/177okJFIuKKGs9bzCpMw9d0QcbhewD61uOaLU5rZg47EVgg1XqTk3Z
-	tYGMy2y0SzBppmxkTm5vwgQNCMQS4KstxgT5/Dtin90FwgW+zJMIE6O3UGOBXV9/
-	hUIfKItYcv2QDN2b374HidrnLed4gphsWOAls=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0590F1CDE2;
-	Tue, 10 Jun 2014 14:48:10 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EE4E11CDDE;
-	Tue, 10 Jun 2014 14:48:05 -0400 (EDT)
-In-Reply-To: <1402220230-799-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpCU5n4buNYw==?= Duy"'s message of "Sun, 8 Jun
- 2014 16:37:10 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C24B80BC-F0CF-11E3-B290-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752569AbaFJSty convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2014 14:49:54 -0400
+Received: from mail-pb0-f51.google.com ([209.85.160.51]:44434 "EHLO
+	mail-pb0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752194AbaFJStx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 14:49:53 -0400
+Received: by mail-pb0-f51.google.com with SMTP id rp16so1100152pbb.24
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 11:49:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=6GxHgrTCSEpBFULdCvEU3SE22mWqrhStD6azyn0AbMQ=;
+        b=sU+wmF5l3bEAzvQpH3qSLVIw/WfhHdIf+9caXU2/w+oU9hjbHic67KG7n23O7xFrqY
+         DfBN89U1+vF+4e1LwG+pzDLCY2E5rvaDboOJKiowLkOKuzn2KxvAL0VsU0QunWaXSrjV
+         pYT007A4yUTirNwTwdvuZS8r2TUvkavqNckGvgfeG/RiFo2RmaVLi6Bnl8T/HxQmpSjt
+         OfdcMETwdjEomKW+c+0L/9ELy8fW0Zpxh7Zv8wWdW0iSrV7Uu1qWfzIBI+/sczDo12Ir
+         dgPqhQ84KHBq4RBWGxO7/F3ChCLeB69I9VwVDy5dkh8qgmOrKUk7B/KTz/6j3v5+/AL2
+         CDPQ==
+X-Received: by 10.68.197.39 with SMTP id ir7mr13855070pbc.78.1402426193560;
+        Tue, 10 Jun 2014 11:49:53 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id ys1sm16879698pab.7.2014.06.10.11.49.40
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 10 Jun 2014 11:49:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1402066563-28519-16-git-send-email-gitter.spiros@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251213>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> Commit 4ad8332 (t0001: test git init when run via an alias -
-> 2010-11-26) noted breakages when running init via alias. The problem
-> is for alias to be used, $GIT_DIR must be searched, but 'init' and
-> 'clone' are not happy with that. So we start a new process like an
-> external command, with clean environment in this case. Env variables
-> that are set by command line (e.g. "git --git-dir=3D.. ") are kept.
->
-> This should also fix autocorrecting a command typo to "init" because
-> it's the same problem: aliases are read, then "init" is unhappy with
-> $GIT_DIR already set up because of that.
->
-> Reminded-by: David Turner <dturner@twopensource.com>
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+On Fri, Jun 06, 2014 at 07:55:58AM -0700, Elia Pinto wrote:
+> The construct is error-prone; "test" being built-in in most modern
+> shells, the reason to avoid "test <cond> && test <cond>" spawning
+> one extra process by using a single "test <cond> -a <cond>" no
+> longer exists.
+>=20
+> Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 > ---
->  git.c           | 52 +++++++++++++++++++++++++++++++++++++++++++++++=
-+----
+>  t/t5000-tar-tree.sh |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+> index 74fc5a8..ad6fa0d 100755
+> --- a/t/t5000-tar-tree.sh
+> +++ b/t/t5000-tar-tree.sh
+> @@ -72,7 +72,7 @@ check_tar() {
+>  			for header in *.paxheader
+>  			do
+>  				data=3D${header%.paxheader}.data &&
+> -				if test -h $data -o -e $data
+> +				if test -h $data || test -e $data
+>  				then
 
-This goes far deeper than "Fix t0001", doesn't it?
+This looks okay, but it raises a question for the original author
+(Ren=C3=A9, I think that's you so I've added you to the To: line).
 
->  t/t0001-init.sh |  4 ++--
->  2 files changed, 50 insertions(+), 6 deletions(-)
->
-> diff --git a/git.c b/git.c
-> index 7780572..d1e49da 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -484,6 +521,10 @@ static void handle_builtin(int argc, const char =
-**argv)
->  		struct cmd_struct *p =3D commands+i;
->  		if (strcmp(p->cmd, cmd))
->  			continue;
-> +		if (saved_environment && (p->option & NO_SETUP)) {
-> +			restore_env();
-> +			break;
-> +		}
->  		exit(run_builtin(p, argc, argv));
->  	}
->  }
-> @@ -539,7 +580,10 @@ static int run_argv(int *argcp, const char ***ar=
-gv)
->  		 * of overriding "git log" with "git show" by having
->  		 * alias.log =3D show
->  		 */
-> -		if (done_alias || !handle_alias(argcp, argv))
-> +		if (done_alias)
-> +			break;
-> +		save_env();
-> +		if (!handle_alias(argcp, argv))
->  			break;
->  		done_alias =3D 1;
->  	}
+Should that be "test -f" instead of "test -e"?
 
-So the save-env kicks in only after we tried the builtins and the
-externals and didn't find any, and before expanding the alias (which
-has to look at the config, which means we need to do discovery and
-may contaminate the environment and the globals), and then when we
-retry with the expanded alias, we restore when we know the command
-will misbehave if we didn't do so?
-
-That does not sound so bad.  Even though I wonder if that "save and
-then restore" sequence logically belongs around handle_alias(), you
-would not have sufficient clue to let you cheat by not restoring the
-environment for commands that you happen to know that they do not
-care, so that may be a reasonable optimization.
-
-Is it too brittle a solution to force people to mark problematic
-subcommands with NO_SETUP, though?  What kind of change to a
-subcommand that currently does not have to be marked with NO_SETUP
-would make it necessary to mark it with NO_SETUP?
-
-Thanks.
+This is a very minor note and should not block this patch.
+--=20
+David
