@@ -1,72 +1,138 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git reset --hard with staged changes
-Date: Mon, 09 Jun 2014 16:28:31 -0700
-Message-ID: <xmqq61k9d5nk.fsf@gitster.dls.corp.google.com>
-References: <CANWD=rWmzgAwTp=E_1=th0Myk-dh4m5Y9PE3=fpHeirsVVQKwQ@mail.gmail.com>
-	<CANWD=rX-MEiS4cNzDWr2wwkshz2zu8-L31UrKwbZrJSBcJX-nQ@mail.gmail.com>
-	<87vbsayy9w.fsf@fencepost.gnu.org>
-	<CANWD=rVB249Vu1QMk64V+FxfCfJPzxqZgCfyEuixJJ_iKoTLPQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 12/15] use get_commit_buffer everywhere
+Date: Mon, 9 Jun 2014 20:02:24 -0400
+Message-ID: <20140610000223.GA20644@sigill.intra.peff.net>
+References: <20140609180236.GA24644@sigill.intra.peff.net>
+ <20140609181323.GL20315@sigill.intra.peff.net>
+ <xmqqbnu1emfa.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: =?utf-8?Q?Pierre-Fran=C3=A7ois?= CLEMENT <likeyn@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 01:28:43 2014
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 10 02:02:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wu8za-0008Gv-LM
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 01:28:43 +0200
+	id 1Wu9WI-0008Tc-A9
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 02:02:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932562AbaFIX2i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Jun 2014 19:28:38 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53090 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932349AbaFIX2h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Jun 2014 19:28:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 27D681D51D;
-	Mon,  9 Jun 2014 19:28:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=mbm3JDbS0QYW
-	Xul6wERxafgOABg=; b=to+stEjG173KycAXywUQJRHkGUy1vDEc5DR+BQE88NJa
-	xLCdcbH0gsk6cFOFeudKB4GgWJRevAhXh9732WQpucIjMAGB0MNRn8YI8f0yINgm
-	a00t77UJbcVjySXGuj29HwEL/A5ZREgebltDcchTfoFJLEhbRa2OdnXu9Yu9ods=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=e5DU58
-	5aIHGWhxCUtyqlOUH7VMINfYDNWW2/8P6zJhZrM2mbw/AAbRfozzClH9TUSsFBqO
-	NDn0nan0VjLPVB4XkxvmtQo5OO4LSjFIHe8lCW7PJ86JpbJARx7Ru45AIElhreUP
-	4y3MfogrZGj8HeKnWKcsDbmQa0o6Y6v8Rj4y8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1E7391D51C;
-	Mon,  9 Jun 2014 19:28:37 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 43A871D517;
-	Mon,  9 Jun 2014 19:28:33 -0400 (EDT)
-In-Reply-To: <CANWD=rVB249Vu1QMk64V+FxfCfJPzxqZgCfyEuixJJ_iKoTLPQ@mail.gmail.com>
-	(=?utf-8?Q?=22Pierre-Fran=C3=A7ois?= CLEMENT"'s message of "Tue, 10 Jun
- 2014 01:22:55
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C5BBE7A2-F02D-11E3-A0BA-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932990AbaFJAC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Jun 2014 20:02:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:40621 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751615AbaFJACZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Jun 2014 20:02:25 -0400
+Received: (qmail 18682 invoked by uid 102); 10 Jun 2014 00:02:25 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 09 Jun 2014 19:02:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 09 Jun 2014 20:02:24 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqbnu1emfa.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251146>
 
-Pierre-Fran=C3=A7ois CLEMENT <likeyn@gmail.com> writes:
+On Mon, Jun 09, 2014 at 03:40:57PM -0700, Junio C Hamano wrote:
 
-> Hm, I didn't think of "git apply --index"... Makes sense for this
-> special use, but I'm not sure about the other use cases.
+> Jeff King <peff@peff.net> writes:
+> 
+> > diff --git a/notes-merge.c b/notes-merge.c
+> > index 94a1a8a..7885ab2 100644
+> > --- a/notes-merge.c
+> > +++ b/notes-merge.c
+> > @@ -671,7 +671,8 @@ int notes_merge_commit(struct notes_merge_options *o,
+> >  	DIR *dir;
+> >  	struct dirent *e;
+> >  	struct strbuf path = STRBUF_INIT;
+> > -	char *msg = strstr(partial_commit->buffer, "\n\n");
+> > +	const char *buffer = get_commit_buffer(partial_commit);
+> > +	const char *msg = strstr(buffer, "\n\n");
+> 
+> This tightening causes...
+> 
+> >  	struct strbuf sb_msg = STRBUF_INIT;
+> >  	int baselen;
+> >  
+> > @@ -720,6 +721,7 @@ int notes_merge_commit(struct notes_merge_options *o,
+> >  	}
+> >  
+> >  	strbuf_attach(&sb_msg, msg, strlen(msg), strlen(msg) + 1);
+> 
+> ...a new error here:
+> 
+> notes-merge.c:723:2: error: passing argument 2 of 'strbuf_attach'
+> discards 'const' qualifier from pointer target type [-Werror]
+> strbuf.h:19:13: note: expected 'void *' but argument is of type
+> 'const char *'
 
-Try merging another branch that tracks a file your current branch
-does not know about and ending up with conflicts during that merge.
-Resetting the half-done result away must remove that new path from
-your working tree and the index.
+That's weird. I compile with -Wall -Werror, and my gcc doesn't complain.
+Hmph.
+
+I agree it's not right, though. I think the original is questionable,
+too. It takes a pointer into the middle of partial_commit->buffer and
+attaches it to a strbuf. That's wrong because:
+
+  1. It's pointing into the middle of an allocated buffer, not the
+     beginning.
+
+  2. We do not own partial_commit->buffer in the first place.
+
+So any call to strbuf_detach on the result would be disastrous. The
+compiler doesn't notice because of the const leak in strstr, and it
+doesn't cause a bug in practice because the only use of the strbuf is to
+pass it as a const to create_notes_commit.
+
+I feel like the most elegant solution is for create_notes_commit to take
+a buf/len pair rather than a strbuf, but it unfortunately is just
+feeding that to commit_tree. Adjusting that code path would affect quite
+a few other spots.
+
+The other obvious option is actually populating the strbuf, but it feels
+ugly to have to make a copy just to satisfy the function interface.
+
+Maybe a cast and a warning comment are the least evil thing, as below? I
+dunno, it feels pretty wrong.
+
+diff --git a/notes-merge.c b/notes-merge.c
+index 94a1a8a..1f3b309 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -671,7 +671,7 @@ int notes_merge_commit(struct notes_merge_options *o,
+ 	DIR *dir;
+ 	struct dirent *e;
+ 	struct strbuf path = STRBUF_INIT;
+-	char *msg = strstr(partial_commit->buffer, "\n\n");
++	const char *msg = strstr(partial_commit->buffer, "\n\n");
+ 	struct strbuf sb_msg = STRBUF_INIT;
+ 	int baselen;
+ 
+@@ -719,7 +719,15 @@ int notes_merge_commit(struct notes_merge_options *o,
+ 		strbuf_setlen(&path, baselen);
+ 	}
+ 
+-	strbuf_attach(&sb_msg, msg, strlen(msg), strlen(msg) + 1);
++	/*
++	 * This is a bit tricky. We should not be attaching msg, which
++	 * is not owned by us and is not even the start of a heap buffer, to a
++	 * strbuf. But the create_notes_commit interface really wants
++	 * a strbuf, even though it will only ever use it as a buf/len pair and
++	 * never modify it. So this is tentatively safe as long as nobody ever
++	 * modifies, detaches, or releases the strbuf.
++	 */
++	strbuf_attach(&sb_msg, (char *)msg, strlen(msg), strlen(msg) + 1);
+ 	create_notes_commit(partial_tree, partial_commit->parents, &sb_msg,
+ 			    result_sha1);
+ 	if (o->verbosity >= 4)
+
+I'm still confused and disturbed that my gcc is not noticing this
+obvious const violation. Hmm, shutting off ccache seems to make it work.
+Doubly disturbing.
+
+-Peff
