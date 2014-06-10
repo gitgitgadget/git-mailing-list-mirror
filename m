@@ -1,66 +1,64 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v1] config: Add hashtable for config parsing & retrival
-Date: Tue, 10 Jun 2014 19:30:23 -0400
-Message-ID: <CAPig+cQ13nATVpZFZhFLB0Bm9eBLQEyuZkao02ERNzkbGNLEGA@mail.gmail.com>
-References: <1402318146-5062-1-git-send-email-tanayabh@gmail.com>
-	<1402318146-5062-2-git-send-email-tanayabh@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v14 31/40] refs.c: make prune_ref use a transaction to
+ delete the ref
+Date: Tue, 10 Jun 2014 16:37:59 -0700
+Message-ID: <20140610233759.GF8557@google.com>
+References: <1402093758-3162-1-git-send-email-sahlberg@google.com>
+ <1402093758-3162-32-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, Torsten Bogershausen <tboegi@web.de>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 01:30:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 01:38:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuVUq-0004zk-IF
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 01:30:28 +0200
+	id 1WuVcH-0002fw-4C
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 01:38:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752568AbaFJXaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 19:30:24 -0400
-Received: from mail-yh0-f47.google.com ([209.85.213.47]:54920 "EHLO
-	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751504AbaFJXaY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 19:30:24 -0400
-Received: by mail-yh0-f47.google.com with SMTP id v1so2259797yhn.34
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 16:30:23 -0700 (PDT)
+	id S1753001AbaFJXiE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 19:38:04 -0400
+Received: from mail-pd0-f171.google.com ([209.85.192.171]:53146 "EHLO
+	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751504AbaFJXiD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 19:38:03 -0400
+Received: by mail-pd0-f171.google.com with SMTP id ft15so1306609pdb.2
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 16:38:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=1XHJshDJOhO2IxX1C9yJ9m+w2IC+J0II7N7Up5UWg7U=;
-        b=YTOZrTMvp1OeZlJ63RVXup6M3Q1cQcUKkZ+jS6oxcMPjSdHOgkGC2So8vNst0wXjp+
-         7NKtQgV9cPTwHuPDWQjpcfMFBp3+Hq7VgX2gwHe99CFcINno2buqkvOv/3Kc+FxKOnuh
-         +NSuKkZiGz8LaQnkKuV3x9FI7EsqJ2dGWNAXllnbdNzL9SmlBJBAXGNZA0fm0FdQNpLt
-         usjcn+uhL2dUaDAKxuQBwg/3K0LI3FqDf0ioHFLKxephHTbIxcxU7kMDqwUfb+Y2J97N
-         zxvfUCcOwoNENihRdVJ2zTbTn+EkwEe+3zQpWEH+cNtvD5h6jNuT0hZerASKpwZNZyPb
-         Gx3Q==
-X-Received: by 10.236.176.197 with SMTP id b45mr517395yhm.102.1402443023788;
- Tue, 10 Jun 2014 16:30:23 -0700 (PDT)
-Received: by 10.170.169.65 with HTTP; Tue, 10 Jun 2014 16:30:23 -0700 (PDT)
-In-Reply-To: <1402318146-5062-2-git-send-email-tanayabh@gmail.com>
-X-Google-Sender-Auth: 6XZAGV0oH_Oj-TE6vkSBmocGZzw
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=mtzlOcOcMfDO+qhxRAIiYQkGdEgxpiE6w1g+vVZ+0ZI=;
+        b=04XD3RNRH4q72eHVcb3GGZ20s3x1xv8H5kL8pNyEMx4Mctt6CYN+NszSiqV1oc38h+
+         5Un5+OXMskCJvorSYjCTyMxW0zHnPFNxiR0JB671mxYok8OxGKT6K61rMHaMuwdG8+Ze
+         udNwlwn/QROMwlLO6DA5sdRN1nyTROcAgTZl1PnsjyHBo4F1sUqE2yjjfFzNJNPsUARq
+         zrrDddE3hmocnuZP+FdtzEz/I+jAI05Y0JNuRgkuK5eRbFjzOuWkccEKnu0SlqmsDOpp
+         9jM7MLQkp9gLN1dCVuHYsxmG2GtG0xavuKBWY8X/2ulN9hUfS8/5W6BK267Y6fu1Nthe
+         9YlQ==
+X-Received: by 10.66.119.136 with SMTP id ku8mr8727110pab.121.1402443482073;
+        Tue, 10 Jun 2014 16:38:02 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id fv2sm71550000pbd.11.2014.06.10.16.38.01
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 10 Jun 2014 16:38:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1402093758-3162-32-git-send-email-sahlberg@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251325>
 
-One other minor point...
+Ronnie Sahlberg wrote:
 
-On Mon, Jun 9, 2014 at 8:49 AM, Tanay Abhra <tanayabh@gmail.com> wrote:
-> Subject: config: Add hashtable for config parsing & retrival
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  refs.c | 28 +++++++++++++++++++++-------
+>  refs.h | 11 ++++++++++-
+>  2 files changed, 31 insertions(+), 8 deletions(-)
 
-s/retrival/retrieval/
-
-> Add a hash table to cache all key-value pairs read from config files
-> (repo specific .git/config, user wide ~/.gitconfig and the global
-> /etc/gitconfig). Add two external functions `git_config_get_string` and
-> `git_config_get_string_multi` for querying in a non-callback manner from the
-> hash table.
->
-> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
