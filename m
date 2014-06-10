@@ -1,91 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 10/20] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
-Date: Tue, 10 Jun 2014 10:19:54 +0200
-Message-ID: <5396BFAA.3000003@viscovery.net>
-References: <1402066563-28519-1-git-send-email-gitter.spiros@gmail.com>	<1402066563-28519-11-git-send-email-gitter.spiros@gmail.com> <xmqqoay1d5vi.fsf@gitster.dls.corp.google.com> <5396AB10.8020603@viscovery.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Disk waste with packs and .keep files
+Date: Tue, 10 Jun 2014 10:21:03 +0200
+Message-ID: <vpqmwdljhu8.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jrnieder@gmail.com
-To: Junio C Hamano <gitster@pobox.com>,
-	Elia Pinto <gitter.spiros@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 10:20:14 2014
+Content-Type: text/plain
+Cc: Jeff King <peff@peff.net>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 10 10:21:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuHHy-0005RE-27
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 10:20:14 +0200
+	id 1WuHJ5-0006ZJ-RK
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 10:21:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936052AbaFJIUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 04:20:05 -0400
-Received: from so.liwest.at ([212.33.55.14]:36409 "EHLO so.liwest.at"
+	id S936053AbaFJIVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 04:21:17 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:42408 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932209AbaFJIT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 04:19:59 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WuHHe-0007xp-Ph; Tue, 10 Jun 2014 10:19:55 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 81BCF16613;
-	Tue, 10 Jun 2014 10:19:54 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <5396AB10.8020603@viscovery.net>
-X-Spam-Score: -1.0 (-)
+	id S932209AbaFJIVQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 04:21:16 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s5A8L2Fk022489
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 10 Jun 2014 10:21:02 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s5A8L3Hc024650;
+	Tue, 10 Jun 2014 10:21:03 +0200
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 10 Jun 2014 10:21:03 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s5A8L2Fk022489
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1402993266.30698@2zJxW77WD+SodQK2LNnx2g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251174>
 
-Am 6/10/2014 8:52, schrieb Johannes Sixt:
-> Am 6/10/2014 1:23, schrieb Junio C Hamano:
->> Elia Pinto <gitter.spiros@gmail.com> writes:
->>
->>> @@ -1059,13 +1059,17 @@ cmd_summary() {
->>>  		while read mod_src mod_dst sha1_src sha1_dst status sm_path
->>>  		do
->>>  			# Always show modules deleted or type-changed (blob<->module)
->>> -			test $status = D -o $status = T && echo "$sm_path" && continue
->>> +			case "$status" in
->>> +			[DT])
->>> +				printf '%s\n' "$sm_path" &&
->>> +				continue
->>> +			esac
->>
->> I think this conversion is wrong and causes parse error.  The
->> surrounding code cannot be seen in the context of thsi patch, but
->> looks somewhat like this:
->>
->> 	modules=$( ....
->>                    case "$status" in
->>                    [DT])
->>                            ...
->>                    esac
->>                    .... )
->>
->> Perhaps you would need to spell it with the extra opening
->> parenthesis, like so:
->>
->> 	case string in
->>         ([DT])
->>         	...
->> 	esac
->>
->> or something.
-> 
-> Do you just think that it causes parse errors or did you actually observe
-> them? Because I think that no parse error should occur.
+Hi,
 
-(I should not talk, but test...) bash and zsh get it wrong, dash and ksh
-get it right.
-http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_03
-item 5 does leave some leeway for interpretation. So it's better to adjust
-as you suggest.
+To minimize useless on-disk changes, I have a script that periodically
+creates .keep files for pack files greater than 10 Mb (so than tools
+like unison and incremental backup remain efficient). From time to time,
+I delete these .keep files and "git gc" each repo. This worked well for
+years.
 
--- Hannes
+Since a few weeks however, Git started wasting my disk space: instead of
+creating small .pack files next to the big .keep-ed pack files, it seems
+to create redundant, big .pack files (i.e. I get N pack files of similar
+size). "git verify-pack" confirms that, for example, the object
+corresponding to the root commit is contained in each of the .pack file.
+
+I don't have a reproducible way to get the situation so I didn't bisect,
+but "git log --grep .keep" points me to this which seems related:
+
+  commit ee34a2beadb94a9595f09af719e3c09b485ca797
+  Author: Jeff King <peff@peff.net>
+  Date:   Mon Mar 3 15:04:20 2014 -0500
+
+    repack: add `repack.packKeptObjects` config var
+
+Now, my questions:
+
+Is the behavior I observed actually the intended behavior? Should Git be
+fixed, or should I fix my flow (I guess, stop using .keep files and
+start using pack.packSizeLimit or so)?
+
+Or is my message not clear enough and do I need to investigate a bit
+more?
+
+Thanks,
+
 -- 
-"Atomic objects are neither active nor radioactive." --
-Programming Languages -- C++, Final Committee Draft (Doc.N3092)
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
