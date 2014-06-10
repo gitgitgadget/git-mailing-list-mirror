@@ -1,136 +1,140 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v15 37/48] refs.c: remove the update_ref_write function
-Date: Tue, 10 Jun 2014 15:29:25 -0700
-Message-ID: <1402439376-25839-38-git-send-email-sahlberg@google.com>
+Subject: [PATCH v15 06/48] lockfile.c: add a new public function unable_to_lock_message
+Date: Tue, 10 Jun 2014 15:28:54 -0700
+Message-ID: <1402439376-25839-7-git-send-email-sahlberg@google.com>
 References: <1402439376-25839-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 11 00:39:08 2014
+X-From: git-owner@vger.kernel.org Wed Jun 11 00:39:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuUZx-0006FL-CG
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 00:31:41 +0200
+	id 1WuUao-00073Y-Hb
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 00:32:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754151AbaFJWbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 18:31:36 -0400
-Received: from mail-oa0-f73.google.com ([209.85.219.73]:44505 "EHLO
+	id S1753154AbaFJWcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 18:32:12 -0400
+Received: from mail-oa0-f73.google.com ([209.85.219.73]:39371 "EHLO
 	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753638AbaFJW3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 18:29:42 -0400
-Received: by mail-oa0-f73.google.com with SMTP id eb12so132340oac.0
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
+	with ESMTP id S1753209AbaFJW3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 18:29:41 -0400
+Received: by mail-oa0-f73.google.com with SMTP id eb12so132368oac.2
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 15:29:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=X/cPYc2OSZJ1CLtrKP0p+qtjDOlSnwjCTzLkjezeLhA=;
-        b=S8k6Cko1mTvlUfQQv9hlI7EF2S6eJz3ALGAryA5TZ9Vs1kQdPtdx4HLxr5KG49cdL2
-         vzqVEKrPVfVeubHz2/DJJa2kXSGkPYFuBfiHM/b028VF/HrdqHvrnbRupk2KqjZgkYvt
-         f0HgtSBbGtmeueBSTPJvhWxy2b+BRUqdB5A/9zBe56dnt9jXkkRAiReBugGwFrtGZRzC
-         a/YURIllAwl4cNjUTG4cpmhfbtAoESV0ru+XSpznC+cbtL7huj15YfTU7P1HMxR/lTi7
-         ynGbsY46LI8+jU8FuuOldgGlYm9X1smJeaC6fYOY8X57PPB80ojrk5PYANbyt6j2q9vP
-         LTtQ==
+        bh=zmWrqKGT7OX9E0XJx9MkS5aiyjxrWSIspEP+D/GdptY=;
+        b=NyFRKYLkmbWVi1K14fTkROO/KKc01tSMFv3cU+d76098/e9R2kimJ564QKo3h1bkm6
+         xssQmsirOA7n4dhjBFCmPIlzSJN6lIg1Yh51oFxEqhIZDpKWp+xNP27BFgGrSZvqmTWi
+         qdVnXXB+IVfmlYwk6JgW02XTHyFehOOc46nSN/UJpZx6YUtQpdMJ1UC/f+4NLpFfNb3G
+         vn5l4UTqPw6gwi7s5KCPnit9KfFTIbZgXcqkCyi760wPM/Uo5SPasJ+odWO61nCQp1fw
+         ZV50SWclA3EzVOnrk/10Sxo/4HwuzDFgPiOfv42rkSihghe/b9HTDsBRdXo2SgdGxJPN
+         nhsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=X/cPYc2OSZJ1CLtrKP0p+qtjDOlSnwjCTzLkjezeLhA=;
-        b=N5XAsV8I0fYryeL+jZBCatQcVjzc1WAX7m5xnzb5cMTOsDeQuoG8DRp/ZarF74Y4Yv
-         tqAzsm5uz0PifUiuzpkPpQXJRtqHTH1TyQnE9GhoyM6E7YXGNkwhC/M8K6wfw+4mMSgW
-         Kfnf8apWYNO6+QcKmofmeBgUZAp9GUeYDdeu/ceER7zeMLjgsxAYlYBjLmVAmsov+PiI
-         vYJRj+JAU5yKjpAKZ0SYQ/BEAmK7bEapRcMtF+lgUedFCroAtoSpKSDdWX/whB0LzFw4
-         /Byyl97yu24RA2ZjpHdaphuwzunu5GIrXo2AlBSygrV1aOpEIWaEux7LKndvUIMo1up2
-         N9lg==
-X-Gm-Message-State: ALoCoQlNmgBFL8w7JI7oP/tb8WEYdtpsWPf6hOmlgrLYDiSVfIJHvx4kmXBDi2N7CJXBcpUlngrf
-X-Received: by 10.182.104.161 with SMTP id gf1mr17774850obb.45.1402439381661;
-        Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id y50si1395396yhk.4.2014.06.10.15.29.41
+        bh=zmWrqKGT7OX9E0XJx9MkS5aiyjxrWSIspEP+D/GdptY=;
+        b=AbkbyJefcXHkkOCq/UNJf5ObEykSpS/WwSaG8BZsuyJ5qqRRw38x/JqErqP4uYjCct
+         YnVSBLdAJpCEr0mRfTT7GGuc22MHerInH0DLxKcJTuOfViIf8VU+xEPR2VpBGGqTOl4U
+         UHyf6LHcvqF+VF4wO85ojghJpbGBAcTXL3e8GIEIP6+5nLZjbMD92MjBn2+0teVSuIuH
+         emZwtOjlk2jyOpDOR41lCXgi2W6AMnUplRmpZl3bKAPfasVHG3PVj0yawNAZFBQ7pu84
+         Kz2PEGasZ3MtZrXGAFevWjqLPSQqxcFHyuIKJXETZ6IJo8G5oB5ayvH4SzE/8KFrsK6P
+         e+ow==
+X-Gm-Message-State: ALoCoQmrzL/G0MxXQWl2gyKgdHyxSI468ciTkTgTvvohutcO4U3Q4DTn7SPlRLXqvi2oqKUTRWiP
+X-Received: by 10.182.128.166 with SMTP id np6mr1564533obb.16.1402439380518;
+        Tue, 10 Jun 2014 15:29:40 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id n68si1395559yhj.5.2014.06.10.15.29.40
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
+        Tue, 10 Jun 2014 15:29:40 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 8131931C746;
-	Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 5D0155A47F3;
+	Tue, 10 Jun 2014 15:29:40 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 5E68EE0BF1; Tue, 10 Jun 2014 15:29:41 -0700 (PDT)
+	id D9A33E0FEC; Tue, 10 Jun 2014 15:29:39 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.574.g30c2c5e
 In-Reply-To: <1402439376-25839-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251299>
 
-Since we only call update_ref_write from a single place and we only call it
-with onerr==QUIET_ON_ERR we can just as well get rid of it and just call
-write_ref_sha1 directly. This changes the return status for _commit from
-1 to -1 on failures when writing to the ref. Eventually we will want
-_commit to start returning more detailed error conditions than the current
-simple success/failure. For example if the commit failed due to name
-conflicts etc.
+Introducing a new unable_to_lock_message helper, which has nicer
+semantics than unable_to_lock_error and cleans up lockfile.c a little.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 35 +++++++++--------------------------
- 1 file changed, 9 insertions(+), 26 deletions(-)
+ cache.h    |  2 ++
+ lockfile.c | 22 ++++++++++++----------
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index c42472c..3e77cf8 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3330,25 +3330,6 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
- 	return retval;
+diff --git a/cache.h b/cache.h
+index cbe1935..8b12aa8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -559,6 +559,8 @@ struct lock_file {
+ #define LOCK_DIE_ON_ERROR 1
+ #define LOCK_NODEREF 2
+ extern int unable_to_lock_error(const char *path, int err);
++extern void unable_to_lock_message(const char *path, int err,
++				   struct strbuf *buf);
+ extern NORETURN void unable_to_lock_index_die(const char *path, int err);
+ extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
+ extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
+diff --git a/lockfile.c b/lockfile.c
+index 8fbcb6a..464031b 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -157,33 +157,35 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 	return lk->fd;
  }
  
--static int update_ref_write(const char *action, const char *refname,
--			    const unsigned char *sha1, struct ref_lock *lock,
--			    struct strbuf *err, enum action_on_err onerr)
--{
--	if (write_ref_sha1(lock, sha1, action) < 0) {
--		const char *str = "Cannot update the ref '%s'.";
--		if (err)
--			strbuf_addf(err, str, refname);
+-static char *unable_to_lock_message(const char *path, int err)
++void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
+ {
+-	struct strbuf buf = STRBUF_INIT;
 -
--		switch (onerr) {
--		case UPDATE_REFS_MSG_ON_ERR: error(str, refname); break;
--		case UPDATE_REFS_DIE_ON_ERR: die(str, refname); break;
--		case UPDATE_REFS_QUIET_ON_ERR: break;
--		}
--		return 1;
--	}
--	return 0;
--}
--
- /**
-  * Information needed for a single ref update.  Set new_sha1 to the
-  * new value or to zero to delete the ref.  To check the old value
-@@ -3599,14 +3580,16 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		struct ref_update *update = updates[i];
+ 	if (err == EEXIST) {
+-		strbuf_addf(&buf, "Unable to create '%s.lock': %s.\n\n"
++		strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
+ 		    "If no other git process is currently running, this probably means a\n"
+ 		    "git process crashed in this repository earlier. Make sure no other git\n"
+ 		    "process is running and remove the file manually to continue.",
+ 			    absolute_path(path), strerror(err));
+ 	} else
+-		strbuf_addf(&buf, "Unable to create '%s.lock': %s",
++		strbuf_addf(buf, "Unable to create '%s.lock': %s",
+ 			    absolute_path(path), strerror(err));
+-	return strbuf_detach(&buf, NULL);
+ }
  
- 		if (!is_null_sha1(update->new_sha1)) {
--			ret = update_ref_write(msg,
--					       update->refname,
--					       update->new_sha1,
--					       update->lock, err,
--					       UPDATE_REFS_QUIET_ON_ERR);
--			update->lock = NULL; /* freed by update_ref_write */
--			if (ret)
-+			ret = write_ref_sha1(update->lock, update->new_sha1,
-+					     msg);
-+			update->lock = NULL; /* freed by write_ref_sha1 */
-+			if (ret) {
-+				const char *str = "Cannot update the ref '%s'.";
+ int unable_to_lock_error(const char *path, int err)
+ {
+-	char *msg = unable_to_lock_message(path, err);
+-	error("%s", msg);
+-	free(msg);
++	struct strbuf buf = STRBUF_INIT;
 +
-+				if (err)
-+					strbuf_addf(err, str, update->refname);
- 				goto cleanup;
-+			}
- 		}
- 	}
++	unable_to_lock_message(path, err, &buf);
++	error("%s", buf.buf);
++	strbuf_release(&buf);
+ 	return -1;
+ }
  
+ NORETURN void unable_to_lock_index_die(const char *path, int err)
+ {
+-	die("%s", unable_to_lock_message(path, err));
++	struct strbuf buf = STRBUF_INIT;
++
++	unable_to_lock_message(path, err, &buf);
++	die("%s", buf.buf);
+ }
+ 
+ int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
 -- 
 2.0.0.574.g30c2c5e
