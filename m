@@ -1,116 +1,179 @@
-From: Maxime Coste <frrrwww@gmail.com>
-Subject: [PATCH] Fix git-p4 submit in non --prepare-p4-only mode
-Date: Tue, 10 Jun 2014 13:14:46 +0100
-Message-ID: <20140610121446.GA25634@nekage>
-References: <20140110181807.GA29164@nekage>
- <20140112222946.GA13519@padd.com>
- <20140113121011.GA9711@nekage>
- <20140114000613.GA11594@padd.com>
- <20140524013942.GA29751@nekage>
- <20140524135215.GA9386@padd.com>
- <20140524174034.GA7560@nekage>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Pete Wyckoff <pw@padd.com>
+From: Elia Pinto <gitter.spiros@gmail.com>
+Subject: [PATCH] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
+Date: Tue, 10 Jun 2014 05:28:33 -0700
+Message-ID: <1402403313-22468-1-git-send-email-gitter.spiros@gmail.com>
+Cc: jrnieder@gmail.com, gitster@pobox.com,
+	Elia Pinto <gitter.spiros@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 10 14:10:58 2014
+X-From: git-owner@vger.kernel.org Tue Jun 10 14:28:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuKtF-0006QW-La
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 14:10:57 +0200
+	id 1WuLAV-000549-A9
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 14:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316AbaFJMKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 08:10:54 -0400
-Received: from mail-we0-f169.google.com ([74.125.82.169]:48349 "EHLO
-	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751099AbaFJMKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 08:10:53 -0400
-Received: by mail-we0-f169.google.com with SMTP id t60so2116125wes.0
-        for <git@vger.kernel.org>; Tue, 10 Jun 2014 05:10:51 -0700 (PDT)
+	id S1751854AbaFJM2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Jun 2014 08:28:43 -0400
+Received: from mail-pa0-f47.google.com ([209.85.220.47]:37232 "EHLO
+	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750993AbaFJM2m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 08:28:42 -0400
+Received: by mail-pa0-f47.google.com with SMTP id fa1so652034pad.34
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 05:28:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=QFCFlZQlRCmZKTIGhRIMTKW9ZqqS3ONlgK/vERUqdXM=;
-        b=V09aHpbyie7+c/YIh9wIaik2a2Hcp8oZmXMAVM/dvMd9lKQlvlEOrtW1sQNTJXB02S
-         Zc8ltB7XOY0tCuuYfenMFV7MdGbIUAdZPVLciBPZjH6CP3WMTY5UMjvOeAXQlG77WPyZ
-         AlICC689oSA6aknqV2iL1HzycdtG17cavOa6ykZE6we6JniWBngLbPBzmNc+8I8xhB7m
-         TUmsLatlzVlaAThrAJJKWnJJvcNOeJER9kLAwkpphrMKh4emfpyfOlmNKLhtS4Gpg5aK
-         n/qg1mHKOfvd+cQCnrmK7GYIqP6hUHiTUAW836p73MHC+ffAd79sn8TMyD3HWf9mTlfF
-         VcXg==
-X-Received: by 10.194.190.42 with SMTP id gn10mr41418538wjc.9.1402402251688;
-        Tue, 10 Jun 2014 05:10:51 -0700 (PDT)
-Received: from localhost ([46.7.115.253])
-        by mx.google.com with ESMTPSA id cd1sm2641878wjc.19.2014.06.10.05.10.50
+        h=from:to:cc:subject:date:message-id;
+        bh=PEpI8T9OhsPkT6efRcJyUItLex8ZjK+YPxtaYx8Hg04=;
+        b=j6n5dttY0E7Ei1v/+T6BMhKzOyIfOR25j1qMjQEci1wiS4OCDBL8oXyL58TAXkNjzl
+         1/cTvaj+JTmKzLAFOPLjH0D6bS3JJMnIVKEw71imUs+hMiv9L69Hi1T0VOTZRg39/kfz
+         bx554zX2waOVjrwGfJWJvhDzE+Gd8ewhV3jbxJ6gPHsxwD8pR5yKNxubpuI5AuRhIJ+/
+         WARk9fWcTYD7I1CfPMH4YSWvE5mgFOV+aqQtEdbZVPUwc8xkobwkBlaX/xA9ZJZGurqA
+         ijBORD5WLFln6jcMinDoySmEzBGIrl6Jt4efDEqCIjBCLzdrvRCds+fzSXYbUVakTt0O
+         JLpw==
+X-Received: by 10.68.197.99 with SMTP id it3mr11277991pbc.37.1402403322451;
+        Tue, 10 Jun 2014 05:28:42 -0700 (PDT)
+Received: from devzero2000ubu.nephoscale.com (140.195.207.67.nephoscale.net. [67.207.195.140])
+        by mx.google.com with ESMTPSA id gg3sm69347190pbc.34.2014.06.10.05.28.41
         for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 10 Jun 2014 05:10:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20140524174034.GA7560@nekage>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 10 Jun 2014 05:28:41 -0700 (PDT)
+X-Mailer: git-send-email 1.7.10.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251182>
 
-b4073bb387ef303c9ac3c044f46d6a8ae6e190f0 broke git p4 submit, here
-is a proper fix, including proper handling for windows end of lines.
+The construct is error-prone; "test" being built-in in most modern
+shells, the reason to avoid "test <cond> && test <cond>" spawning
+one extra process by using a single "test <cond> -a <cond>" no
+longer exists.
 
-Signed-off-by: Maxime Coste <frrrwww@gmail.com>
+Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
 ---
- git-p4.py | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/git-p4.py b/git-p4.py
-index 7bb0f73..ff132b2 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1238,7 +1238,7 @@ class P4Submit(Command, P4UserMap):
-             if response == 'n':
-                 return False
+This is the fourth revision of this patch.
+
+Change based on Junio suggestions http://www.spinics.net/lists/git/msg233569.html
+
+ git-submodule.sh |   32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index e146b83..d6a1dea 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -393,7 +393,7 @@ cmd_add()
+ 			sed -e 's|/$||' -e 's|:*/*\.git$||' -e 's|.*[/:]||g')
+ 	fi
  
--    def get_diff_description(self, editedFiles):
-+    def get_diff_description(self, editedFiles, filesToAdd):
-         # diff
-         if os.environ.has_key("P4DIFF"):
-             del(os.environ["P4DIFF"])
-@@ -1258,7 +1258,7 @@ class P4Submit(Command, P4UserMap):
-                 newdiff += "+" + line
-             f.close()
+-	if test -z "$repo" -o -z "$sm_path"; then
++	if test -z "$repo" || test -z "$sm_path"; then
+ 		usage
+ 	fi
  
--        return diff + newdiff
-+        return (diff + newdiff).replace('\r\n', '\n')
+@@ -450,7 +450,7 @@ Use -f if you really want to add it." >&2
+ 	# perhaps the path exists and is already a git repo, else clone it
+ 	if test -e "$sm_path"
+ 	then
+-		if test -d "$sm_path"/.git -o -f "$sm_path"/.git
++		if test -d "$sm_path"/.git || test -f "$sm_path"/.git
+ 		then
+ 			eval_gettextln "Adding existing repo at '\$sm_path' to the index"
+ 		else
+@@ -832,7 +832,7 @@ Maybe you want to use 'update --init'?")"
+ 			continue
+ 		fi
  
-     def applyCommit(self, id):
-         """Apply one commit, return True if it succeeded."""
-@@ -1422,10 +1422,10 @@ class P4Submit(Command, P4UserMap):
-         separatorLine = "######## everything below this line is just the diff #######\n"
-         if not self.prepare_p4_only:
-             submitTemplate += separatorLine
--            submitTemplate += self.get_diff_description(editedFiles)
-+            submitTemplate += self.get_diff_description(editedFiles, filesToAdd)
+-		if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
++		if ! test -d "$sm_path"/.git || test -f "$sm_path"/.git
+ 		then
+ 			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exit
+ 			cloned_modules="$cloned_modules;$name"
+@@ -857,11 +857,11 @@ Maybe you want to use 'update --init'?")"
+ 			die "$(eval_gettext "Unable to find current ${remote_name}/${branch} revision in submodule path '\$sm_path'")"
+ 		fi
  
-         (handle, fileName) = tempfile.mkstemp()
--        tmpFile = os.fdopen(handle, "w+")
-+        tmpFile = os.fdopen(handle, "w+b")
-         if self.isWindows:
-             submitTemplate = submitTemplate.replace("\n", "\r\n")
-         tmpFile.write(submitTemplate)
-@@ -1475,9 +1475,9 @@ class P4Submit(Command, P4UserMap):
-             tmpFile = open(fileName, "rb")
-             message = tmpFile.read()
-             tmpFile.close()
--            submitTemplate = message[:message.index(separatorLine)]
-             if self.isWindows:
--                submitTemplate = submitTemplate.replace("\r\n", "\n")
-+                message = message.replace("\r\n", "\n")
-+            submitTemplate = message[:message.index(separatorLine)]
-             p4_write_pipe(['submit', '-i'], submitTemplate)
+-		if test "$subsha1" != "$sha1" -o -n "$force"
++		if test "$subsha1" != "$sha1" || test -n "$force"
+ 		then
+ 			subforce=$force
+ 			# If we don't already have a -f flag and the submodule has never been checked out
+-			if test -z "$subsha1" -a -z "$force"
++			if test -z "$subsha1" && test -z "$force"
+ 			then
+ 				subforce="-f"
+ 			fi
+@@ -1031,7 +1031,7 @@ cmd_summary() {
+ 	then
+ 		head=$rev
+ 		test $# = 0 || shift
+-	elif test -z "$1" -o "$1" = "HEAD"
++	elif test -z "$1" || test "$1" = "HEAD"
+ 	then
+ 		# before the first commit: compare with an empty tree
+ 		head=$(git hash-object -w -t tree --stdin </dev/null)
+@@ -1056,13 +1056,17 @@ cmd_summary() {
+ 		while read mod_src mod_dst sha1_src sha1_dst status sm_path
+ 		do
+ 			# Always show modules deleted or type-changed (blob<->module)
+-			test $status = D -o $status = T && echo "$sm_path" && continue
++			case "$status" in
++			([DT])
++				printf '%s\n' "$sm_path" &&
++				continue
++			esac
+ 			# Respect the ignore setting for --for-status.
+ 			if test -n "$for_status"
+ 			then
+ 				name=$(module_name "$sm_path")
+ 				ignore_config=$(get_submodule_config "$name" ignore none)
+-				test $status != A -a $ignore_config = all && continue
++				test $status != A && test $ignore_config = all && continue
+ 			fi
+ 			# Also show added or modified modules which are checked out
+ 			GIT_DIR="$sm_path/.git" git-rev-parse --git-dir >/dev/null 2>&1 &&
+@@ -1122,7 +1126,7 @@ cmd_summary() {
+ 		*)
+ 			errmsg=
+ 			total_commits=$(
+-			if test $mod_src = 160000 -a $mod_dst = 160000
++			if test $mod_src = 160000 && test $mod_dst = 160000
+ 			then
+ 				range="$sha1_src...$sha1_dst"
+ 			elif test $mod_src = 160000
+@@ -1159,7 +1163,7 @@ cmd_summary() {
+ 			# i.e. deleted or changed to blob
+ 			test $mod_dst = 160000 && echo "$errmsg"
+ 		else
+-			if test $mod_src = 160000 -a $mod_dst = 160000
++			if test $mod_src = 160000 && test $mod_dst = 160000
+ 			then
+ 				limit=
+ 				test $summary_limit -gt 0 && limit="-$summary_limit"
+@@ -1230,7 +1234,11 @@ cmd_status()
+ 			say "U$sha1 $displaypath"
+ 			continue
+ 		fi
+-		if test -z "$url" || ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
++		if test -z "$url" ||
++		{
++			! test -d "$sm_path"/.git &&
++			! test -f "$sm_path"/.git
++		}
+ 		then
+ 			say "-$sha1 $displaypath"
+ 			continue;
+@@ -1399,7 +1407,7 @@ then
+ fi
  
-             if self.preserveUser:
+ # "--cached" is accepted only by "status" and "summary"
+-if test -n "$cached" && test "$command" != status -a "$command" != summary
++if test -n "$cached" && test "$command" != status && test "$command" != summary
+ then
+ 	usage
+ fi
 -- 
-2.0.0
+1.7.10.4
