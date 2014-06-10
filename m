@@ -1,76 +1,142 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Git reset --hard with staged changes
-Date: Tue, 10 Jun 2014 17:27:26 +0200
-Message-ID: <871tuwss2p.fsf@fencepost.gnu.org>
-References: <CANWD=rWmzgAwTp=E_1=th0Myk-dh4m5Y9PE3=fpHeirsVVQKwQ@mail.gmail.com>
-	<CANWD=rX-MEiS4cNzDWr2wwkshz2zu8-L31UrKwbZrJSBcJX-nQ@mail.gmail.com>
-	<87vbsayy9w.fsf@fencepost.gnu.org>
-	<CANWD=rVB249Vu1QMk64V+FxfCfJPzxqZgCfyEuixJJ_iKoTLPQ@mail.gmail.com>
-	<xmqq61k9d5nk.fsf@gitster.dls.corp.google.com>
-	<CANWD=rUz9Wgoktp7-NkQMvWDmYOPv0kMqUNoe4FPJ9+Ax_UJBA@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-submodule.sh: avoid "test <cond> -a/-o <cond>"
+Date: Tue, 10 Jun 2014 08:23:55 -0700
+Message-ID: <xmqq38fcbxf8.fsf@gitster.dls.corp.google.com>
+References: <1402403313-22468-1-git-send-email-gitter.spiros@gmail.com>
+	<53971BBE.8030108@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Pierre-Fran=E7ois?= CLEMENT <likeyn@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 17:27:53 2014
+Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org,
+	jrnieder@gmail.com
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Jun 10 17:28:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuNxo-0007Fk-85
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 17:27:52 +0200
+	id 1WuNyI-0007j4-Bi
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 17:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751783AbaFJP1s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2014 11:27:48 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:43270 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750969AbaFJP1r convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2014 11:27:47 -0400
-Received: from localhost ([127.0.0.1]:42310 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1WuNxi-00088c-AO; Tue, 10 Jun 2014 11:27:46 -0400
-Received: by lola (Postfix, from userid 1000)
-	id BED43E09B2; Tue, 10 Jun 2014 17:27:26 +0200 (CEST)
-In-Reply-To: <CANWD=rUz9Wgoktp7-NkQMvWDmYOPv0kMqUNoe4FPJ9+Ax_UJBA@mail.gmail.com>
-	(=?iso-8859-1?Q?=22Pierre-Fran=E7ois?= CLEMENT"'s message of "Tue, 10 Jun
- 2014 16:59:19
-	+0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1751797AbaFJP2S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2014 11:28:18 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53620 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751110AbaFJP2S convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Jun 2014 11:28:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0FCEC1CEDD;
+	Tue, 10 Jun 2014 11:28:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=mWCYpmZDRl2j
+	7cCQ7xrDG5U0nmY=; b=id1O9LWvAfFG5W1CbxLfd9FNHVKL5+ImPkNR4f1Idqkd
+	wYa/ABBlIrRC3bJauapKWO3EoIWdsujU68eHJELtUBi5SsGy/IqZtDhZ8agLwP6v
+	EqyuXbpLEKvcY8WfhEZ0JXvczs+NHBz/MB7PNbOESloWBhWtFo2Id7tKSjNZAC8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LEQD2N
+	y7kHTEkwjX73NOJnxOlGugFp1I6fvensP24UnVKuXLcmV/zhrTpZh+WcIrz0vlT+
+	+QxRfTi7ab9KAGsPnTC7hEONs37A6lIbKVX/esaD+TabZoZuH/Pvbo2l/8eHF3CT
+	EGNhIzKIO3T3XELqAxJZUCB26dZ1c8ZtD0bpo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 05C361CEDC;
+	Tue, 10 Jun 2014 11:28:17 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9739B1CDC9;
+	Tue, 10 Jun 2014 11:23:57 -0400 (EDT)
+In-Reply-To: <53971BBE.8030108@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Tue, 10 Jun 2014 16:52:46 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 3DB532B0-F0B3-11E3-A2E8-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251198>
 
-Pierre-Fran=E7ois CLEMENT <likeyn@gmail.com> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-> 2014-06-10 1:28 GMT+02:00 Junio C Hamano <gitster@pobox.com>:
->> Pierre-Fran=E7ois CLEMENT <likeyn@gmail.com> writes:
->>
->>> Hm, I didn't think of "git apply --index"... Makes sense for this
->>> special use, but I'm not sure about the other use cases.
->>
->> Try merging another branch that tracks a file your current branch
->> does not know about and ending up with conflicts during that merge.
->> Resetting the half-done result away must remove that new path from
->> your working tree and the index.
->
-> Hm I see. Even though the documentation doesn't make it very clear
-> about what happens to such files, it turns out the scenario we
-> stumbled upon seems to be the special use case after all. Thanks for
-> shedding some light on this :) I wonder why does git-reset's hard mod=
-e
-> not always remove untracked files then?
+> On 2014-06-10 14.28, Elia Pinto wrote:
+> []
+>>  		# before the first commit: compare with an empty tree
+>>  		head=3D$(git hash-object -w -t tree --stdin </dev/null)
+>> @@ -1056,13 +1056,17 @@ cmd_summary() {
+>>  		while read mod_src mod_dst sha1_src sha1_dst status sm_path
+>>  		do
+>>  			# Always show modules deleted or type-changed (blob<->module)
+>> -			test $status =3D D -o $status =3D T && echo "$sm_path" && contin=
+ue
+>> +			case "$status" in
+>> +			([DT])
+> Does this look strange? ^
+> Should it be
+> case "$status" in
+> D|T)
 
-Because it never removes them?  Git only removes files once it tracks
-them.  This includes the operation of removing _and_ untracking them,
-like with git reset --hard.
+Actually POSIX allows matching parentheses for case arm labels
+(surprise!).
 
-The only command which explicitly messes with untracked files is
-git-clean.
+And some shells misparse
 
---=20
-David Kastrup
+	var=3D$( ... case arm) action ;; esac ... )
+
+as if the ')' after the arm label closes the whole command
+substitution.
+
+Having said that, I'd prefer to see the following squashed into that
+patch.
+
+The first hunk is purely a bugfix.  It used to be=20
+
+	if ! test -d "$sm_path"/.git -o -f "$sm_path"/.git
+
+that is: unless "$sm_path/.git" is directory or file, do this.
+And the rewrite broke that logic.
+
+The second hunk is to avoid "case" that confuses without helping
+readability that much.
+
+I would also have preferred to see the echo to printf substitution
+left out of this patch.  There are other places where $sm_path is
+echoed and fixing only one of them in an otherwise unrelated patch
+feels wrong---it should be a separate follow-up patch, I would
+think.
+
+ git-submodule.sh | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index d6a1dea..27ca7d5 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -832,7 +832,7 @@ Maybe you want to use 'update --init'?")"
+ 			continue
+ 		fi
+=20
+-		if ! test -d "$sm_path"/.git || test -f "$sm_path"/.git
++		if ! test -d "$sm_path"/.git && ! test -f "$sm_path"/.git
+ 		then
+ 			module_clone "$sm_path" "$name" "$url" "$reference" "$depth" || exi=
+t
+ 			cloned_modules=3D"$cloned_modules;$name"
+@@ -1056,11 +1056,11 @@ cmd_summary() {
+ 		while read mod_src mod_dst sha1_src sha1_dst status sm_path
+ 		do
+ 			# Always show modules deleted or type-changed (blob<->module)
+-			case "$status" in
+-			([DT])
+-				printf '%s\n' "$sm_path" &&
++			if test "$status" =3D D || test "$status" =3D T
++			then
++				printf '%s\n' "$sm_path"
+ 				continue
+-			esac
++			fi
+ 			# Respect the ignore setting for --for-status.
+ 			if test -n "$for_status"
+ 			then
