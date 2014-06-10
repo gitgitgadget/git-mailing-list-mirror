@@ -1,87 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC 1/3] sequencer: Signal failed ff as an aborted, not a conflicted merge
-Date: Tue, 10 Jun 2014 12:17:02 -0700
-Message-ID: <xmqqvbs88tht.fsf@gitster.dls.corp.google.com>
-References: <xmqqvbsrf4hd.fsf@gitster.dls.corp.google.com>
-	<5395CD04.2050303@gmail.com>
-	<xmqq8up4abs3.fsf@gitster.dls.corp.google.com>
-	<539753C3.2020101@cisco.com>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH 15/20] t/t5000-tar-tree.sh: avoid "test <cond> -a/-o
+ <cond>"
+Date: Tue, 10 Jun 2014 12:21:11 -0700
+Message-ID: <20140610192110.GA72977@gmail.com>
+References: <1402066563-28519-1-git-send-email-gitter.spiros@gmail.com>
+ <1402066563-28519-16-git-send-email-gitter.spiros@gmail.com>
+ <20140610184913.GD72751@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Fabian Ruch <bafain@gmail.com>, git@vger.kernel.org
-To: Phil Hord <hordp@cisco.com>
-X-From: git-owner@vger.kernel.org Tue Jun 10 21:17:20 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Elia Pinto <gitter.spiros@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Jun 10 21:21:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuRXm-0003uz-Oe
-	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 21:17:15 +0200
+	id 1WuRbq-0007Ph-OE
+	for gcvg-git-2@plane.gmane.org; Tue, 10 Jun 2014 21:21:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752132AbaFJTRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Jun 2014 15:17:10 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53782 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750908AbaFJTRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Jun 2014 15:17:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4A7D41D6B8;
-	Tue, 10 Jun 2014 15:17:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dujS4SFmMLCud2jxY+hip/XwS4Y=; b=qVnjTa
-	C3fbwXDrtS3Iv+ZE7FtGYkpkfAfgoG+SumMYGG8GYN7zRoc8obZVvpVNbLOa7nqa
-	wgmVZgo+lcgDrLIEjIE28ehXlaQMKJRDWiHdPc3VD33QwPaJsM1Q77iuZpVXkGdH
-	Uvk552ZVRru9EQgVZnLvKvQV4iBOVeaVYGNcA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NpcqHONzll0uHT2zC8n4txW6HIjElXxt
-	VKIhvEuK7UqzOFTsH/D2mKTzkVs0bCoF1HoVA0Aw5OF86PMvBaaZ7dwU3pSMm90U
-	xb8Z1URCff99qq9xgJLSo2gEvRuKAybYLcgdahYE8ko7j0TGT8zfS9Ojxy0wMloY
-	W9NkHg5ANFw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3F9F51D6B7;
-	Tue, 10 Jun 2014 15:17:08 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 33B731D6B3;
-	Tue, 10 Jun 2014 15:17:04 -0400 (EDT)
-In-Reply-To: <539753C3.2020101@cisco.com> (Phil Hord's message of "Tue, 10 Jun
-	2014 14:51:47 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CE5D83D8-F0D3-11E3-8F4D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752914AbaFJTVX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Jun 2014 15:21:23 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:53152 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750735AbaFJTVW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Jun 2014 15:21:22 -0400
+Received: by mail-pa0-f41.google.com with SMTP id kq14so1017378pab.14
+        for <git@vger.kernel.org>; Tue, 10 Jun 2014 12:21:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=n4OmIYf478y/nBIHf+GM+jFEUH3roflMTZrqkDRNFuw=;
+        b=VF8IgNd24XiTCjU/3++79UzWKQA0RAu7556Rq0H7jUmwEC/89p8U1l0wcY+D6MRwIQ
+         jH0dP0RTD/7LDtiPiXvX/QbrUkCKBqfujJiP0H3WSrJYvZ3gFDsjztbDGIlWb09CY4Hu
+         EoxskZTKcEa/Z5cmiBVJzfomv43GPFgDIyfZUK+A9ilqGTxM+KNaiDJOptXC1YRPNUz9
+         +19jvcsqSg6+KjEYkgcNSUdAxcfS7B4C+G1N7+jhnpxeXaSQjaT7i6reiPatPgz9rdG2
+         QJ4Urj2U5G8QdQjuyaUNKUFW7UCezDjbLBnko7wr6tOu8oiSxGCcwXwAG7A7xYvq98E7
+         EctQ==
+X-Received: by 10.66.188.5 with SMTP id fw5mr7400281pac.63.1402428081871;
+        Tue, 10 Jun 2014 12:21:21 -0700 (PDT)
+Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
+        by mx.google.com with ESMTPSA id kj1sm70917833pbd.20.2014.06.10.12.21.20
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 10 Jun 2014 12:21:21 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20140610184913.GD72751@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251220>
 
-Phil Hord <hordp@cisco.com> writes:
+On Tue, Jun 10, 2014 at 11:49:15AM -0700, David Aguilar wrote:
+> On Fri, Jun 06, 2014 at 07:55:58AM -0700, Elia Pinto wrote:
+> > The construct is error-prone; "test" being built-in in most modern
+> > shells, the reason to avoid "test <cond> && test <cond>" spawning
+> > one extra process by using a single "test <cond> -a <cond>" no
+> > longer exists.
+> >=20
+> > Signed-off-by: Elia Pinto <gitter.spiros@gmail.com>
+> > ---
+> >  t/t5000-tar-tree.sh |    2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/t/t5000-tar-tree.sh b/t/t5000-tar-tree.sh
+> > index 74fc5a8..ad6fa0d 100755
+> > --- a/t/t5000-tar-tree.sh
+> > +++ b/t/t5000-tar-tree.sh
+> > @@ -72,7 +72,7 @@ check_tar() {
+> >  			for header in *.paxheader
+> >  			do
+> >  				data=3D${header%.paxheader}.data &&
+> > -				if test -h $data -o -e $data
+> > +				if test -h $data || test -e $data
+> >  				then
+>=20
+> This looks okay, but it raises a question for the original author
+> (Ren=C3=A9, I think that's you so I've added you to the To: line).
 
->> In any case, I agree that exiting with 1 that signals "failed with
->> conflict" can be confusing to the caller.  Can we have a test to
->> demonstrate when this fix matters?
->
-> I think you are asking for a test and not for clarification.  But a test
-> was provided in 3/3 in this series.  Was it not related directly enough?
+Just following up -- I got a bounce from Ren=C3=A9's email address.
 
-X-<  Somehow I missed the "3" in "1/3" above and did not look beyond
-this first patch.
+>=20
+> Should that be "test -f" instead of "test -e"?
 
-> For clarification, this tri-state return value matters when the caller
-> is planning to do some cleanup and needs to handle the fallout
-> correctly.  Maybe changing this return value is not the correct way
-> forward, though.  It might be better if the caller could examine the
-> result after-the-fact instead.
+It does seem like this should be "test -f" nonetheless.
+Sorry for the noise.
 
-I am not sure about that.  For merge strategies "exit with 1 iff you
-left the conflict in the index" is the contract between "git merge"
-frontend and the strategies backend; if a similar contract is needed
-between the sequencer and its users, it is good to follow the same
-pattern for consistency.  The resulting index and/or the working
-tree may or may not match the contents recorded in the HEAD commit
-but without the backend telling the caller, the caller cannot tell
-if the difference was from before the operation or created by the
-operation.
+> This is a very minor note and should not block this patch.
+--=20
+David
