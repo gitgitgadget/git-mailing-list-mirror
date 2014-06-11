@@ -1,179 +1,141 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v5 11/11] git: add performance tracing for git's
- main() function to debug scripts
-Date: Wed, 11 Jun 2014 10:02:01 +0200
-Message-ID: <53980CF9.9080906@gmail.com>
-References: <53980B83.9050409@gmail.com>
+From: Fabian Ruch <bafain@gmail.com>
+Subject: Re: [PATCH 0/4] ack recoding in commit log
+Date: Wed, 11 Jun 2014 10:05:46 +0200
+Message-ID: <53980DDA.1040407@gmail.com>
+References: <1400447743-18513-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
- Jeff King <peff@peff.net>
-X-From: msysgit+bncBCH3XYXLXQDBB6UZ4COAKGQEGHA6XBA@googlegroups.com Wed Jun 11 10:02:05 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBB6UZ4COAKGQEGHA6XBA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f192.google.com ([74.125.82.192])
+Content-Transfer-Encoding: 7bit
+To: "Michael S. Tsirkin" <mst@redhat.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 11 10:06:03 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBB6UZ4COAKGQEGHA6XBA@googlegroups.com>)
-	id 1WudTw-00013G-7W
-	for gcvm-msysgit@m.gmane.org; Wed, 11 Jun 2014 10:02:04 +0200
-Received: by mail-we0-f192.google.com with SMTP id u57sf19398wes.9
-        for <gcvm-msysgit@m.gmane.org>; Wed, 11 Jun 2014 01:02:04 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WudXi-0004XV-UO
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 10:05:59 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755494AbaFKIFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2014 04:05:54 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:61639 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754060AbaFKIFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2014 04:05:50 -0400
+Received: by mail-wi0-f174.google.com with SMTP id bs8so1075661wib.7
+        for <git@vger.kernel.org>; Wed, 11 Jun 2014 01:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
+        d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=NUEHFrnrCVMS7zjbjq0XPZHLfqiJyB0NjpycSUNn8UA=;
-        b=Zrq1KrrdjrJaSutQe5yvvUyxKPL1KyVf7t0rJnRkRd1ToZ4ToGy5yFB9R5KdwN5s3W
-         3CdT2xuiDSTj3b0Uceq5EWRpOiTateRTZBhM76B4AOiQPoiiydL/UpCmXplPNUGnfboo
-         szsY3g5outU9sBbA6e1OldfZHjU2ziJlwHqcE/4Tf9EKUUM3kP8gMhR236F7scxcC30D
-         iZ9dMVD2NkpnnKn+bqGdQh6GqRnzRoNQIn5FTN+g41kWyNbvHDf7hq1+OFM+y4ULYWWE
-         NyH3Ca8tvFv2UzlknU8UK9rAI5OMXTJNIzEGQdH+Dsqklzp/4b3w1j1Wv+RfIjvVl4nG
-         qQDg==
-X-Received: by 10.152.43.16 with SMTP id s16mr4683lal.15.1402473723972;
-        Wed, 11 Jun 2014 01:02:03 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.241.37 with SMTP id wf5ls464549lac.53.gmail; Wed, 11 Jun
- 2014 01:02:01 -0700 (PDT)
-X-Received: by 10.112.149.162 with SMTP id ub2mr83512lbb.18.1402473721622;
-        Wed, 11 Jun 2014 01:02:01 -0700 (PDT)
-Received: from mail-we0-x233.google.com (mail-we0-x233.google.com [2a00:1450:400c:c03::233])
-        by gmr-mx.google.com with ESMTPS id eh2si1264397wib.2.2014.06.11.01.02.01
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 11 Jun 2014 01:02:01 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::233 as permitted sender) client-ip=2a00:1450:400c:c03::233;
-Received: by mail-we0-f179.google.com with SMTP id w62so4170583wes.38
-        for <msysgit@googlegroups.com>; Wed, 11 Jun 2014 01:02:01 -0700 (PDT)
-X-Received: by 10.194.80.161 with SMTP id s1mr49327865wjx.47.1402473721476;
-        Wed, 11 Jun 2014 01:02:01 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id l41sm57956636eew.8.2014.06.11.01.02.00
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=dA2bKavm3ocW1ZxCLVgt0u1zbrv1g2NbTKttQ57OOzA=;
+        b=mp5CLydZ4XXm114cww5i4FAqb1O/SHaAuOHLFn2bt4x8+YGXcz+cmF/nJ3Kj0q9MQr
+         2QVXmqSKXUOKK3B/KJNADdBg3kCkJr+t49hQ7ZB4tuwmFh4kcDLvK3XNwJR0CQnAr6nV
+         afyo7IWVSea3yMO/5iBhTOHta1+Vy7hQcQKcw2jrz38XiLwIOXjU3w2CEx761Ut/EtZj
+         9zj12VZZNuNTqDVdWxBEi586Q1/xFXG62sDuS3ORseHlxNgL5rTF6tvDUnDsVseGGylg
+         9gnx1zc9k+8740xZCG/CN6nn53TwRFflCulf2TaHCIMbjPu3OGmxMwvmIXrtJWvjZPNg
+         T7ew==
+X-Received: by 10.180.13.239 with SMTP id k15mr45356724wic.4.1402473948798;
+        Wed, 11 Jun 2014 01:05:48 -0700 (PDT)
+Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
+        by mx.google.com with ESMTPSA id 8sm57976041eea.10.2014.06.11.01.05.47
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 11 Jun 2014 01:02:00 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <53980B83.9050409@gmail.com>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::233
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251340>
+        Wed, 11 Jun 2014 01:05:47 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <1400447743-18513-1-git-send-email-mst@redhat.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251341>
 
-Use trace_performance to measure and print execution time and command line
-arguments of the entire main() function. In constrast to the shell's 'time'
-utility, which measures total time of the parent process, this logs all
-involved git commands recursively. This is particularly useful to debug
-performance issues of scripted commands (i.e. which git commands were
-called with which parameters, and how long did they execute).
+Hi Michael,
 
-Due to git's deliberate use of exit(), the implementation uses an atexit
-routine rather than just adding trace_performance_since() at the end of
-main().
+On 05/18/2014 11:17 PM, Michael S. Tsirkin wrote:
+> As a maintainer, I often get patches by mail, then
+> acked-by,reviewed-by etc responses are sent by separate
+> mail.
+> 
+> I like making acks commits,
+> this way they are easy to keep track of
+> as part of git history.
 
-Usage example: > GIT_TRACE_PERFORMANCE=~/git-trace.log git stash list
+In order to fully understand your additions, I think, I need some
+clarification on the term "ack commit". What is an ack commit exactly?
+Suppose our principal commit has the commit message
 
-Creates a log file like this:
-23:57:38.638765 trace.c:405 performance: 0.000310107 s: git command: 'git' 'rev-parse' '--git-dir'
-23:57:38.644387 trace.c:405 performance: 0.000261759 s: git command: 'git' 'rev-parse' '--show-toplevel'
-23:57:38.646207 trace.c:405 performance: 0.000304468 s: git command: 'git' 'config' '--get-colorbool' 'color.interactive'
-23:57:38.648491 trace.c:405 performance: 0.000241667 s: git command: 'git' 'config' '--get-color' 'color.interactive.help' 'red bold'
-23:57:38.650465 trace.c:405 performance: 0.000243063 s: git command: 'git' 'config' '--get-color' '' 'reset'
-23:57:38.654850 trace.c:405 performance: 0.025126313 s: git command: 'git' 'stash' 'list'
+    Some changes
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
- git.c   |  2 ++
- trace.c | 22 ++++++++++++++++++++++
- trace.h |  1 +
- 3 files changed, 25 insertions(+)
+    The changes are...
 
-diff --git a/git.c b/git.c
-index 7780572..d4daeb8 100644
---- a/git.c
-+++ b/git.c
-@@ -568,6 +568,8 @@ int main(int argc, char **av)
- 
- 	git_setup_gettext();
- 
-+	trace_command_performance(argv);
-+
- 	/*
- 	 * "git-xxxx" is the same as "git xxxx", but we obviously:
- 	 *
-diff --git a/trace.c b/trace.c
-index 0551509..9fc3921 100644
---- a/trace.c
-+++ b/trace.c
-@@ -395,3 +395,25 @@ inline uint64_t getnanotime(void)
- 		return now;
- 	}
- }
-+
-+static uint64_t command_start_time;
-+static struct strbuf command_line = STRBUF_INIT;
-+
-+static void print_command_performance_atexit(void)
-+{
-+	trace_performance_since(command_start_time, "git command:%s",
-+				command_line.buf);
-+}
-+
-+void trace_command_performance(const char **argv)
-+{
-+	if (!trace_want(GIT_TRACE_PERFORMANCE))
-+		return;
-+
-+	if (!command_start_time)
-+		atexit(print_command_performance_atexit);
-+
-+	strbuf_reset(&command_line);
-+	sq_quote_argv(&command_line, argv, 0);
-+	command_start_time = getnanotime();
-+}
-diff --git a/trace.h b/trace.h
-index 9687563..a51e731 100644
---- a/trace.h
-+++ b/trace.h
-@@ -7,6 +7,7 @@
- extern void trace_repo_setup(const char *prefix);
- extern int trace_want(const char *key);
- extern uint64_t getnanotime(void);
-+extern void trace_command_performance(const char **argv);
- 
- #ifndef HAVE_VARIADIC_MACROS
- 
--- 
-1.9.2.msysgit.0.501.gaeecf09
+    Signed-off-by: A U Thor <author@example.com>
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+and we receive an email from Somebody saying
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+    > Some changes
+    >
+    > The changes are...
+    >
+    > Signed-off-by: A U Thor <author@example.com>
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+    Reviewed-by: Somebody <somebody@example.com>
+
+. Now, if I understand correctly, we create an empty commit on top of
+the principal commit using the following commit message.
+
+    Some changes
+
+    Reviewed-by: Somebody <somebody@example.com>
+
+Is this commit then called an ack commit?
+
+Can an ack commit be non-empty?
+
+Is a commit still an ack if its description mentions additional text
+between the subject and the tag lines?
+
+Maybe the ack command for todo lists and ack commits have little to do
+with one another. If we stick to the term "ack commit", then the command
+name suggests that it takes the tags from some commit b and appends them
+to the list of tags in the previous commit's (a) message:
+
+    pick a A commit
+    ack  b The next commit
+
+However, this obviously does not work by just appending messages. For
+instance, there could be additional text before or after some tag line
+in either commit message. If we treat the workflow you described as a
+very specific use case of the ack command instead, it seems reasonable
+to add such a todo list functionality for melding commits by silently
+appending messages. However, we might consider parametrizing a single
+squash command instead of defining just another name that one has to
+keep in mind for melding commits:
+
+    pick             a A commit
+    squash --no-edit b The next commit
+
+> Since response mail happens to have appropriate
+> subject matching the patch, it's a natural fit to
+> then use git rebase mechanics if we want to smash
+> these acks into the original commit.
+> 
+> I have been using these patches without any problems
+> for a while now, and find the approach very convenient.
+> 
+> Included:
+> 	rebase: new ack! action to handle ack commits
+> 		this part seems ready for merge to me,
+> 		please review and comment
+> 
+> 	git-ack: new tool to record an ack
+> 		this does not have proper documentation
+> 		and tests yet, I definitely intend to
+> 		do this but wanted to see whether people
+> 		like the UI first.
+> 		posting for early review and feedback
+> 
+> [..]
+
+Thanks for your time,
+   Fabian
