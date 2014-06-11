@@ -1,68 +1,90 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v5] Add an explicit GIT_DIR to the list of excludes
-Date: Wed, 11 Jun 2014 17:48:31 +0700
-Message-ID: <CACsJy8Cgu792Tamej3+_9w=Krg8nezYYA6k604gikebHG=yVUg@mail.gmail.com>
-References: <1401912909-29654-1-git-send-email-pasha.bolokhov@gmail.com>
- <CACsJy8AyvkA20mD283=hWp7WFJXBu3-ViXHuS4jtMzz2hpBi2Q@mail.gmail.com> <CAKpPgveXen9sQefo8dva1Uy4YOyroT6cPXLzgUvxj93Zqw13zw@mail.gmail.com>
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: Potential bug in git client
+Date: Wed, 11 Jun 2014 12:55:23 +0200
+Message-ID: <5398359B.6060907@gmail.com>
+References: <CAKY5LXywixV3dWcCcVPTvyFrScJjLd8eoVs=RA1VRcrzUgtThQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 12:49:11 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?V29qY2llY2ggUHJ6eWJ5xYI=?= <przybylwojciech@gmail.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 11 12:55:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wug5d-0001kL-QN
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 12:49:10 +0200
+	id 1WugBk-0007lv-Tu
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 12:55:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754823AbaFKKtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2014 06:49:04 -0400
-Received: from mail-qa0-f43.google.com ([209.85.216.43]:55952 "EHLO
-	mail-qa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754402AbaFKKtC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2014 06:49:02 -0400
-Received: by mail-qa0-f43.google.com with SMTP id k15so2073165qaq.16
-        for <git@vger.kernel.org>; Wed, 11 Jun 2014 03:49:01 -0700 (PDT)
+	id S932176AbaFKKzZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jun 2014 06:55:25 -0400
+Received: from mail-we0-f182.google.com ([74.125.82.182]:56813 "EHLO
+	mail-we0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754908AbaFKKzY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2014 06:55:24 -0400
+Received: by mail-we0-f182.google.com with SMTP id q59so3541096wes.41
+        for <git@vger.kernel.org>; Wed, 11 Jun 2014 03:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=CflW3lpGW6nUMWh4aHo0zFWAdJRlhl7S59WZ4SX8KQ4=;
-        b=rNVa4LLgYFi/v8b5O5vN7hSeTELApZAIoUcSGFkI3dB3flYB49NoQAb8wmOIjgXQqs
-         L2WjdBzvrD5kkYdoXZgVl4vPNlCg23qK/EIKiJkdFGswSRazCh7R4eezqE1WPpdbM7dk
-         duxU0b+qpQD1YU1UT4SHvAeobfVWxgJZ0Io58eGmxqKilbdZVmwfgDUqQ1u1m4oVM0bK
-         3IdrQAqDN7DPd5CBt1r0Lqop+Sg11QeYYgmmOk8Ej+l4aSXJgPtRxdu8dUSG9pUvhzId
-         PIc+sSL0OuBO2R0DHL8NUKIHcauJC7leaQTpMdtr7fb5hWwjEFHH1g3ueZt82AgH+JC4
-         R88g==
-X-Received: by 10.229.93.133 with SMTP id v5mr13000302qcm.1.1402483741834;
- Wed, 11 Jun 2014 03:49:01 -0700 (PDT)
-Received: by 10.96.66.129 with HTTP; Wed, 11 Jun 2014 03:48:31 -0700 (PDT)
-In-Reply-To: <CAKpPgveXen9sQefo8dva1Uy4YOyroT6cPXLzgUvxj93Zqw13zw@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=xm9N8L/GBvpAVshCpqVQxi+3J+QsU17U3LKenmTUJhg=;
+        b=wj5dQNSPt2Zq/iVDdxHUzU5WXgGcfy3Ir6YayxyGKuV4237DQEgjQbwQTIkbgMBV8k
+         qbtj2W7RWLlpHQsaVpy2bkj+qMgc3ZDRd8hYFXBmYyn8Iw+ZVhSm54yX+x7e7OctBctk
+         nV1VV5fTs/mqxQLB18MtigdIwgshp5WAZfZOEAJ83v06pTrwN85Vw9qCHjYu0GEXDgT1
+         Y1hGJ7V6ykg0AvPEGS/MK4C+ImY7v/y3nBcJIGPR83N7rRXi6UFRmIHEpGx0xDnxlBYQ
+         1XFCyLxeW0Ac/jSWNV13vwDxzqoCoQ2+97YM6bFCOoC6ACP05QfpY4Qp0z4KNFGAgPye
+         L/4w==
+X-Received: by 10.180.12.33 with SMTP id v1mr32111092wib.0.1402484123256;
+        Wed, 11 Jun 2014 03:55:23 -0700 (PDT)
+Received: from [192.168.1.7] (ip-109-91-30-58.unitymediagroup.de. [109.91.30.58])
+        by mx.google.com with ESMTPSA id wk8sm33678648wjb.22.2014.06.11.03.55.22
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 11 Jun 2014 03:55:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <CAKY5LXywixV3dWcCcVPTvyFrScJjLd8eoVs=RA1VRcrzUgtThQ@mail.gmail.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251360>
 
-On Tue, Jun 10, 2014 at 10:18 AM, Pasha Bolokhov
-<pasha.bolokhov@gmail.com> wrote:
->> On Thu, Jun 5, 2014 at 3:15 AM, Pasha Bolokhov <pasha.bolokhov@gmail.com> wrote:
->>> +       /* only add it if GIT_DIR does not end with '.git' or '/.git' */
->>> +       if (len < 4 || strcmp(n_git + len - 4, ".git") ||
->>> +           (len > 4 && n_git[len - 5] != '/')) {
->>
->> Hmm.. should we exclude "foobar.git" as well?
->
->     Why wouldn't we? Everything that has basename ".git" is hard-wired
-> to be excluded, but everything else, including "foobar.git" should be
-> added to the excludes manually... How is it better than just "foobar"?
+On 11.06.2014 12:21, Wojciech Przyby=C5=82 wrote:
+> Hi All
+>=20
+> When I was tagging, I think I might have discovered a git client bug.
+>=20
+> HOW TO REPRODUCE:
+> - Clone a repo into 2 separate directories. Presume there is a tag
+> "v0.1" already in there and it is set on say 10 commits ago.
+>=20
+> - In first directory change the tag to a different place and push it
+> to the server:
+> git tag -d v0.1
+> git tag v0.1
+> git push --tags origin master
+>=20
+> - In second directory try to update the tag...
+> git pull --all --tags
+> git fetch -all --tags
+> THIS DOES NOT WORK, tag is still at old place, but it says "Already u=
+p-to-date".
+>=20
+> - I noticed when I use:
+> git fetch --tags
+> it works fine and updates the position of the tag, or if I remove tag
+> from local git manually (rm .git/refs/tags/v0.1) and update again.
+>=20
+> Is it a bug or I am doing something wrong? I use git version 1.7.9.5.
+>=20
+> Cheers
+> Wojciech
 
-Yes everything except ".git" should be excluded. And you do exactly
-that. I misread the code (probably better to write "if (!(<basename is
-".git>))", maybe)
--- 
-Duy
+Tags are intended to not change without the user knowing.
+To gain more understanding on that, maybe read the man page of
+git tag (see the discussion on retagging)
+https://github.com/gitster/git/blob/master/Documentation/git-tag.txt#L1=
+66
