@@ -1,92 +1,153 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Proposal for pruning tags
-Date: Wed, 11 Jun 2014 11:25:56 +0200
-Message-ID: <539820A4.6090708@alum.mit.edu>
-References: <CAHd499BLX3q2FHLfFpq_14w2mmosywfRqMHVjkke0BRhAAjx7g@mail.gmail.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: [PATCH 6/7] Win32: Unicode arguments (incoming)
+Date: Wed, 11 Jun 2014 11:37:45 +0200
+Message-ID: <1402479466-8500-7-git-send-email-kasal@ucw.cz>
+References: <1402479466-8500-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jun 11 11:26:08 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysGit <msysgit@googlegroups.com>,
+	Karsten Blees <blees@dcon.de>,
+	Stepan Kasal <kasal@ucw.cz>
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com Wed Jun 11 11:38:06 2014
+Return-path: <msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f62.google.com ([209.85.215.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WuenG-0001eO-Ew
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 11:26:06 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751683AbaFKJ0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2014 05:26:01 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:43874 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751287AbaFKJ0A (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2014 05:26:00 -0400
-X-AuditID: 12074413-f79bc6d000000b9e-0a-539820a7bf26
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id C7.30.02974.7A028935; Wed, 11 Jun 2014 05:25:59 -0400 (EDT)
-Received: from [10.1.225.95] ([178.19.210.162])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5B9Pvna004340
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 11 Jun 2014 05:25:58 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <CAHd499BLX3q2FHLfFpq_14w2mmosywfRqMHVjkke0BRhAAjx7g@mail.gmail.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprGKsWRmVeSWpSXmKPExsUixO6iqLtcYUawQddsfouuK91MFjPPPGVy
-	YPLYOesuu8fnTXIBTFHcNkmJJWXBmel5+nYJ3Bk3p3QxFUzkqfixrpOlgfEiZxcjJ4eEgInE
-	rbXXWCBsMYkL99azdTFycQgJXGaUeLR4N5Sznkli28ZWNpAqXgFtiWdt84A6ODhYBFQlDi9W
-	AAmzCehKLOppZgKxRQWCJGZ/nscOUS4ocXLmE7AFIgLuEkt+PwSzhQXUJK6fW84MYgsJBEh8
-	OPsbzOYUCJSYc+0KI8h4CQFxiZ7GIBCTWUBdYv08IZAKZgF5ie1v5zBPYBSYhWTBLISqWUiq
-	FjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdfLzSzRS00p3cQICVHhHYy7TsodYhTgYFTi
-	4a3YNT1YiDWxrLgy9xCjJAeTkijvV6kZwUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeHcKA+V4
-	UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK89fJAjYJFqempFWmZOSUI
-	aSYOTpDhXFIixal5KalFiaUlGfGgGI0vBkYpSIoHaG8DSDtvcUFiLlAUovUUozHHqTvH2pg4
-	PvSeaWMSYsnLz0uVEueVAikVACnNKM2DWwRLTq8YxYH+FubtAaniASY2uHmvgFYxAa167Tkd
-	ZFVJIkJKqoFx7exQITuv72k7ZeUszmXP2zNhUlHCiYi3Z/o5D3sIyOjfLlh4cZXGp1v7pI++
-	nea39tb5zdveO3if0maPu/X1OHuu2Sy5Rx/+LTGWWsyzucJiqZxzLZNNS/i1mTMK 
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251348>
+	(envelope-from <msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com>)
+	id 1Wueys-0004Jn-9i
+	for gcvm-msysgit@m.gmane.org; Wed, 11 Jun 2014 11:38:06 +0200
+Received: by mail-la0-f62.google.com with SMTP id pv20sf994794lab.7
+        for <gcvm-msysgit@m.gmane.org>; Wed, 11 Jun 2014 02:38:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=JuJ+khhKJEuOGzWFMWMVQ0umc5UE3+4+fBm6EixhJPo=;
+        b=NamF1ulFXNvhOfmGGC0b0Jbe/aPgjzaCyNvyTRzgZzf9ZTxAcO2z6sigHnO49VtPze
+         z3iEgYelTcEBon5dK8s7bcG3YGwAql6hcK5asvCwTKRhFS1FH7RAoPS/bMvtp5A7GiSJ
+         X3SlzQWrO5mPW5S2XM/LqjRbtU35Xc4O8NEHcchzS0GZHSarvimoXNoDBew/0VrkatJN
+         FolJqf1PO3cH/Pf7dNf2fgSLl0tQcSRadgV1Gnm85gxU18XdzyhxkLg3IMKvEIuCZMxl
+         jgPKpzIoCTOEfRc1d5sncLg9TEF52kQGUdrxB1skJS7CyuCVoVkyrVnh37W30Ct6ZG8R
+         4WaA==
+X-Received: by 10.152.203.193 with SMTP id ks1mr7719lac.29.1402479486159;
+        Wed, 11 Jun 2014 02:38:06 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.29.229 with SMTP id n5ls470416lah.2.gmail; Wed, 11 Jun
+ 2014 02:38:05 -0700 (PDT)
+X-Received: by 10.112.155.67 with SMTP id vu3mr1792251lbb.9.1402479484990;
+        Wed, 11 Jun 2014 02:38:04 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id s3si1183449wic.3.2014.06.11.02.38.04
+        for <msysgit@googlegroups.com>;
+        Wed, 11 Jun 2014 02:38:04 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
+	id A27AC1C00AF; Wed, 11 Jun 2014 11:38:04 +0200 (CEST)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <1402479466-8500-1-git-send-email-kasal@ucw.cz>
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251349>
 
-On 06/05/2014 04:51 PM, Robert Dailey wrote:
-> I've never contributed to the Git project before. I'm a Windows user,
-> so I use msysgit, but I'd be happy to install linux just so I can help
-> implement this feature if everyone feels it would be useful.
-> 
-> Right now AFAIK, there is no way to prune tags through Git. The way I
-> currently do it is like so:
-> 
-> $ git tag -l | xargs git tag -d
-> $ git fetch --all
+From: Karsten Blees <blees@dcon.de>
+Date: Sun, 16 Jan 2011 18:28:27 +0100
 
-Junio explained some limitations of tags (namely that there is only one
-tags namespace that is shared project-wide) that makes your wish
-impossible to implement the way it works for branches.
+Convert command line arguments from UTF-16 to UTF-8 on startup.
 
-Local tags are awkward for the same reason.  It is too easy to push them
-accidentally to a central repository and too hard to delete them after
-that has happened.  They kindof spread virally, as you have noticed.  I
-recommend against using local tags in general.
+Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Stepan Kasal <kasal@ucw.cz>
+---
+ compat/mingw.c | 42 ++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 40 insertions(+), 2 deletions(-)
 
-Recent Git does have a feature that might help you.  *If* you have a
-central repository that is "authoritative" WRT tags, then you can sync
-the tags in your local repository to the tags in the central repo using
-
-    git fetch --prune $REMOTE +refs/tags/*:refs/tags/*
-
-You might also be able to use a pre-receive hook on the central repo to
-prevent tags from being pushed by people who shouldn't be doing so, or
-to require that tags have an approved format (like
-refs/tags/release-\d+\.\d+\.\d+ or whatever) to try to prevent a
-recurrence of the problem.
-
-Michael
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 8a7b047..3baaa4d 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1943,10 +1943,48 @@ int xwcstoutf(char *utf, const wchar_t *wcs, size_t utflen)
+  */
+ int _CRT_glob = 0;
+ 
++typedef struct {
++	int newmode;
++} _startupinfo;
++
++extern int __wgetmainargs(int *argc, wchar_t ***argv, wchar_t ***env, int glob,
++		_startupinfo *si);
++
++static NORETURN void die_startup()
++{
++	fputs("fatal: not enough memory for initialization", stderr);
++	exit(128);
++}
++
+ void mingw_startup()
+ {
+-	/* copy executable name to argv[0] */
+-	__argv[0] = xstrdup(_pgmptr);
++	int i, len, maxlen, argc;
++	char *buffer;
++	wchar_t **wenv, **wargv;
++	_startupinfo si;
++
++	/* get wide char arguments and environment */
++	si.newmode = 0;
++	if (__wgetmainargs(&argc, &wargv, &wenv, _CRT_glob, &si) < 0)
++		die_startup();
++
++	/* determine size of argv and environ conversion buffer */
++	maxlen = wcslen(_wpgmptr);
++	for (i = 1; i < argc; i++)
++		maxlen = max(maxlen, wcslen(wargv[i]));
++
++	/* allocate buffer (wchar_t encodes to max 3 UTF-8 bytes) */
++	maxlen = 3 * maxlen + 1;
++	buffer = xmalloc(maxlen);
++
++	/* convert command line arguments and environment to UTF-8 */
++	len = xwcstoutf(buffer, _wpgmptr, maxlen);
++	__argv[0] = xmemdupz(buffer, len);
++	for (i = 1; i < argc; i++) {
++		len = xwcstoutf(buffer, wargv[i], maxlen);
++		__argv[i] = xmemdupz(buffer, len);
++	}
++	free(buffer);
+ 
+ 	/* initialize critical section for waitpid pinfo_t list */
+ 	InitializeCriticalSection(&pinfo_cs);
+-- 
+2.0.0.9635.g0be03cb
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
