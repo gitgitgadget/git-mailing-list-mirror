@@ -1,23 +1,24 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 1/7] Let mingw_execve() return an int
-Date: Wed, 11 Jun 2014 11:37:40 +0200
-Message-ID: <1402479466-8500-2-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 3/7] Win32: fix potential multi-threading issue
+Date: Wed, 11 Jun 2014 11:37:42 +0200
+Message-ID: <1402479466-8500-4-git-send-email-kasal@ucw.cz>
 References: <1402479466-8500-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: msysGit <msysgit@googlegroups.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Karsten Blees <blees@dcon.de>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
 	Stepan Kasal <kasal@ucw.cz>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com Wed Jun 11 11:38:09 2014
+X-From: msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com Wed Jun 11 11:38:07 2014
 Return-path: <msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f191.google.com ([209.85.212.191])
+Received: from mail-lb0-f190.google.com ([209.85.217.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com>)
-	id 1Wueys-0004Jr-HA
+	id 1Wueys-0004Jm-3F
 	for gcvm-msysgit@m.gmane.org; Wed, 11 Jun 2014 11:38:06 +0200
-Received: by mail-wi0-f191.google.com with SMTP id q5sf64563wiv.18
+Received: by mail-lb0-f190.google.com with SMTP id p9sf1016671lbv.27
         for <gcvm-msysgit@m.gmane.org>; Wed, 11 Jun 2014 02:38:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -25,27 +26,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=RLUReczeI39APufaUTDhX+CKVdaHBQEJr4x+KqPKBYg=;
-        b=vUYAIUER3dKmzZq/A+sTLer69sK4HzKJcdUcBdpDJ1P89K15yropWznuofDqKWTxL/
-         Wq6V7oyWTJW49I/UVC7duM53Cdb1YXX9M9XM7DVJRF1B5ZJBMNBPX7mKaVCT3GG1dxDJ
-         AFM2sbeoqvAAVRopBhxNQLYgZ0EoflZXtUfoH0kD8Bkzbn/4K2cbYPKbxKodRKL9YvC+
-         yPCNE+P4rktDihvMYS5DTUXsXYlcuXiTk9pHxaXOtbGDxmcBAlO6a61O68debWe4oEqU
-         6ssrRfzZvdLV+erw25TWaIujWJgOVNmVyiHQLfdscTPwzABXD1ReJCm3CapNNIecdchc
-         0a+g==
-X-Received: by 10.152.42.225 with SMTP id r1mr8061lal.13.1402479485917;
+        bh=desF9fuxkSREOug6vpOdb/xucQDytnqcQDrJvJMIdqg=;
+        b=PoIwT29r6LKxsTtDbg7/549wRubAf9U1p7J3m4QWLZuYE3Em4BrVX/S9cIgNhdw5ey
+         BO8wiM2mfJ4VFRxGzWi66mKFtTz1MgHweMUbbjdILoAUOkDEZfYvVtKqFpR7wxfg+Q/1
+         13YfZyJMF87bPZ7KZWUomn8i6p+2Bjoyt6CLo/4rKNtcOGxMORGIHNQwuwjCBQKe0Kqj
+         YS3PN0gVSBopyyrBQl3ZDdo0kubgt8zVr7URn5GuVXsjQZZkc3p/XEhMBpn9YcaGguct
+         9g8t/dXniWvOjwbnxo6httCur4e/4vE5QLitf/4aHJ77DRsNNfApYsDP7L8Zw7vHpt/N
+         WBgA==
+X-Received: by 10.180.149.211 with SMTP id uc19mr132154wib.1.1402479485939;
         Wed, 11 Jun 2014 02:38:05 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.37.169 with SMTP id z9ls396114laj.66.gmail; Wed, 11 Jun
+Received: by 10.180.186.8 with SMTP id fg8ls245945wic.7.gmail; Wed, 11 Jun
  2014 02:38:04 -0700 (PDT)
-X-Received: by 10.112.163.195 with SMTP id yk3mr20406lbb.20.1402479484797;
+X-Received: by 10.194.6.138 with SMTP id b10mr229368wja.0.1402479484793;
         Wed, 11 Jun 2014 02:38:04 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id pk3si877267wic.0.2014.06.11.02.38.04
+        by gmr-mx.google.com with ESMTP id eh2si1288589wib.2.2014.06.11.02.38.04
         for <msysgit@googlegroups.com>;
         Wed, 11 Jun 2014 02:38:04 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 8B2761C009E; Wed, 11 Jun 2014 11:38:04 +0200 (CEST)
+	id 939621C00A9; Wed, 11 Jun 2014 11:38:04 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1402479466-8500-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
@@ -61,46 +62,33 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251353>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Mon, 28 May 2012 21:21:39 -0500
+From: Karsten Blees <blees@dcon.de>
+Date: Fri, 7 Jan 2011 18:04:16 +0100
 
-This is in the great tradition of POSIX. Original fix by Olivier Refalo.
+...by removing a static buffer in do_stat_internal.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 Signed-off-by: Stepan Kasal <kasal@ucw.cz>
 ---
- compat/mingw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ compat/mingw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index d242557..7da73fa 100644
+index 1c0b153..6849815 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -1019,7 +1019,7 @@ static int try_shell_exec(const char *cmd, char *const *argv, char **env)
- 	return pid;
- }
- 
--static void mingw_execve(const char *cmd, char *const *argv, char *const *env)
-+static int mingw_execve(const char *cmd, char *const *argv, char *const *env)
+@@ -441,7 +441,7 @@ static int do_lstat(int follow, const char *file_name, struct stat *buf)
+ static int do_stat_internal(int follow, const char *file_name, struct stat *buf)
  {
- 	/* check if git_command is a shell script */
- 	if (!try_shell_exec(cmd, argv, (char **)env)) {
-@@ -1027,11 +1027,12 @@ static void mingw_execve(const char *cmd, char *const *argv, char *const *env)
+ 	int namelen;
+-	static char alt_name[PATH_MAX];
++	char alt_name[PATH_MAX];
  
- 		pid = mingw_spawnve(cmd, (const char **)argv, (char **)env, 0);
- 		if (pid < 0)
--			return;
-+			return -1;
- 		if (waitpid(pid, &status, 0) < 0)
- 			status = 255;
- 		exit(status);
- 	}
-+	return -1;
- }
- 
- int mingw_execvp(const char *cmd, char *const *argv)
+ 	if (!do_lstat(follow, file_name, buf))
+ 		return 0;
 -- 
 2.0.0.9635.g0be03cb
 
