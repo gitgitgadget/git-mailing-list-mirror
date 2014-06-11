@@ -1,195 +1,251 @@
-From: "" <caleb@calebthompson.io>
-Subject: [PATCH v4 4/4] commit: support commit.verbose and --no-verbose
-Date: Wed, 11 Jun 2014 13:24:39 -0500
-Message-ID: <1402511079-17735-5-git-send-email-caleb@calebthompson.io>
-References: <1402511079-17735-1-git-send-email-caleb@calebthompson.io>
-Cc: Jeff King <peff@peff.net>, Jeremiah Mahler <jmmahler@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	David Kastrup <dak@gnu.org>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 11 20:32:53 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v14 24/40] receive-pack.c: use a reference transaction for
+ updating the refs
+Date: Wed, 11 Jun 2014 11:44:41 -0700
+Message-ID: <CAL=YDWn8gFep1Hhp2gnQsd4PCuRT+vBb6wBcsbL9Sjriyf-ePw@mail.gmail.com>
+References: <1402093758-3162-1-git-send-email-sahlberg@google.com>
+	<1402093758-3162-25-git-send-email-sahlberg@google.com>
+	<20140610231841.GC8557@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 11 20:45:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WunKM-0003Zp-5n
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 20:32:50 +0200
+	id 1WunW6-0006tn-QY
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 20:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754516AbaFKScm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2014 14:32:42 -0400
-Received: from new1-smtp.messagingengine.com ([66.111.4.221]:54788 "EHLO
-	new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753781AbaFKSce (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2014 14:32:34 -0400
-Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8E8C263E;
-	Wed, 11 Jun 2014 14:25:12 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute5.internal (MEProxy); Wed, 11 Jun 2014 14:25:13 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=calebthompson.io;
-	 h=from:to:cc:subject:date:message-id:in-reply-to:references; s=
-	mesmtp; bh=I/n+XmE3Gq9IUYzw9mBScnI3Vfs=; b=ewD6TygWOoHaFjgfPxZe2
-	m2o6fHVAKpugbM4g/M4lh1iwkHTrdPKcALoPUmAT4VKDqpB6/htsl4AnyQUAKWSD
-	sCx0aa4XvAcV9CR8yduGU6LfuYsqjHTxxVFBsn4BFLHSxDBXku5U3a0iLfBLx6TO
-	dKlzLgxbg/yD4lRFeEMNPk=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=I/n+XmE3Gq9IUYzw9mBScnI3V
-	fs=; b=A18WuUb+TN2IV99UB0rqTG6a9OlwiUXf/ZROvUTlBrYFaA2r4xjV3YBzs
-	/KexfjZsV07YwtYeMSvRNphXTP6Wyfa8Yb3RLeNG+ctU5raJ7Jcl7rceggeEKfpG
-	YfToJimb8MEglWCKcAfc6uU47nVlCYiZq0t6g4OGHVQdRY2l1o=
-X-Sasl-enc: wOcdRtlb16BA3PFT95f9NOuot5bH+WIa6NKS7OBRg4fe 1402511112
-Received: from localhost.localdomain (unknown [67.78.97.126])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 877B768053D;
-	Wed, 11 Jun 2014 14:25:11 -0400 (EDT)
-X-Mailer: git-send-email 2.0.0
-In-Reply-To: <1402511079-17735-1-git-send-email-caleb@calebthompson.io>
+	id S1755707AbaFKSoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2014 14:44:44 -0400
+Received: from mail-ve0-f173.google.com ([209.85.128.173]:45177 "EHLO
+	mail-ve0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755677AbaFKSom (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Jun 2014 14:44:42 -0400
+Received: by mail-ve0-f173.google.com with SMTP id db11so347527veb.4
+        for <git@vger.kernel.org>; Wed, 11 Jun 2014 11:44:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=n7YCq2Y/Q13lNdtbFbiTydzWcmC8uOUBuf9NKMSHQNk=;
+        b=Ldni5z/U1XMLHzzDypAHumuGIGwW55BAiqzy6qrECC5KtWNLFewyqyiX80R7B22UTA
+         1N610gFme6Y+1ujw+QZdGmtOMisf2/2Q5Z8rgPOUxxd/MN1+vJ2jtPL3ktFWZUt35zjX
+         wOazzu+VtAUflf7+Wgwjwe2kWD7PJolD/AnXabDyvjPAk1YHJaovMEc/UkkmGehhmhSs
+         W3HwZNYZwXJOkqSlDgovKAQ1cXHgtjn5yiiFf8xXu1JAlPsVCLATn2/x8wujin4aOArV
+         E+claHFfJuwu6w9wO7TieSVIs9pncNCRaiE4B4dsAYoeeaWKZrR1re2Q/1JhzV7Rt4wD
+         x5bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=n7YCq2Y/Q13lNdtbFbiTydzWcmC8uOUBuf9NKMSHQNk=;
+        b=BGBM17yvazRZ2UsDtoPjJZiG5Gq78ohRJ0E3OnhnEcPvWGK8VbdWUGAIF3E5qgUhbJ
+         CrMioo/klB4zAjqwQfTnTWb88jCmK1ygJHkW65mlSDhfa2bofcdHVYnbs03ztvcq9+Rp
+         F5Go5jl57jIUlaN1mL6rEjNFWNj5XAFdCPIjJ3HiwFe5fI7cUGHGLx9fHSJqCLWUagPv
+         Xc6mJgzf4jY4D5KI2n0LppzP32JwKVnFdtRXK4QUK742M7ZzlCt3oycouv20NAK+Zxa8
+         GxYwis20f/9vuJDR6knKprYfnM7cf4W7aG/StN8bBRgen8CZfhf9Vyn3ukTBvJxnbgPH
+         oFlw==
+X-Gm-Message-State: ALoCoQm+cquvWeYajfy4o0futzQosfEEE/aNFG5iECwdCJ+L6PVWsSP+H52+HSor/AwQOpHEcQoW
+X-Received: by 10.52.164.70 with SMTP id yo6mr1657333vdb.67.1402512281707;
+ Wed, 11 Jun 2014 11:44:41 -0700 (PDT)
+Received: by 10.52.255.65 with HTTP; Wed, 11 Jun 2014 11:44:41 -0700 (PDT)
+In-Reply-To: <20140610231841.GC8557@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251381>
 
-Add a new configuration variable commit.verbose to implicitly pass
-`--verbose` to `git-commit`. Add `--no-verbose` to commit to negate that
-setting.
+Thanks.
 
-Signed-off-by: Caleb Thompson <caleb@calebthompson.io>
----
- Documentation/config.txt               |  5 +++++
- Documentation/git-commit.txt           |  8 +++++++-
- builtin/commit.c                       |  6 +++++-
- contrib/completion/git-completion.bash |  1 +
- t/t7507-commit-verbose.sh              | 36 ++++++++++++++++++++++++++++++++++
- 5 files changed, 54 insertions(+), 2 deletions(-)
+Done.
+I added a function to stop leaking commands too.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index cd2d651..ec51e1c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1017,6 +1017,11 @@ commit.template::
-	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
-	specified user's home directory.
-
-+commit.verbose::
-+	A boolean to enable/disable inclusion of diff information in the
-+	commit message template when using an editor to prepare the commit
-+	message.  Defaults to false.
-+
- credential.helper::
-	Specify an external helper to be called when a username or
-	password credential is needed; the helper may consult external
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 0bbc8f5..8cb3439 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -282,7 +282,13 @@ configuration variable documented in linkgit:git-config[1].
-	Show unified diff between the HEAD commit and what
-	would be committed at the bottom of the commit message
-	template.  Note that this diff output doesn't have its
--	lines prefixed with '#'.
-+	lines prefixed with '#'.  The `commit.verbose` configuration
-+	variable can be set to true to implicitly send this option.
-+
-+--no-verbose::
-+	Do not show the unified diff at the bottom of the commit message
-+	template.  This is the default behavior, but can be used to override
-+	the `commit.verbose` configuration variable.
-
- -q::
- --quiet::
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 99c2044..c5b20c6 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1489,6 +1489,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
-		sign_commit = git_config_bool(k, v) ? "" : NULL;
-		return 0;
-	}
-+	if (!strcmp(k, "commit.verbose")) {
-+		verbose = git_config_bool(k, v);
-+		return 0;
-+	}
-
-	status = git_gpg_config(k, v, NULL);
-	if (status)
-@@ -1556,7 +1560,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
-	static struct wt_status s;
-	static struct option builtin_commit_options[] = {
-		OPT__QUIET(&quiet, N_("suppress summary after successful commit")),
--		OPT__VERBOSE(&verbose, N_("show diff in commit message template")),
-+		OPT_BOOL('v', "verbose", &verbose, N_("show diff in commit message template")),
-
-		OPT_GROUP(N_("Commit message options")),
-		OPT_FILENAME('F', "file", &logfile, N_("read message from file")),
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 2c59a76..b8f4b94 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1976,6 +1976,7 @@ _git_config ()
-		color.ui
-		commit.status
-		commit.template
-+		commit.verbose
-		core.abbrev
-		core.askpass
-		core.attributesfile
-diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index 35a4d06..512eef3 100755
---- a/t/t7507-commit-verbose.sh
-+++ b/t/t7507-commit-verbose.sh
-@@ -7,6 +7,10 @@ write_script check-for-diff <<-'EOF'
-	exec grep '^diff --git' "$1"
- EOF
-
-+write_script check-for-no-diff <<-EOF
-+	exec grep -v '^diff --git' "\$1"
-+EOF
-+
- cat >message <<'EOF'
- subject
-
-@@ -48,6 +52,38 @@ test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
-	check_message message
- '
-
-+test_expect_success 'commit shows verbose diff with commit.verbose true' '
-+	echo morecontent >>file &&
-+	git add file &&
-+	test_config commit.verbose true &&
-+	test_set_editor "$PWD/check-for-diff" &&
-+	git commit --amend
-+'
-+
-+test_expect_success 'commit --verbose overrides commit.verbose false' '
-+	echo evenmorecontent >>file &&
-+	git add file &&
-+	test_config commit.verbose false  &&
-+	test_set_editor "$PWD/check-for-diff" &&
-+	git commit --amend --verbose
-+'
-+
-+test_expect_success 'commit does not show verbose diff with commit.verbose false' '
-+	echo evenmorecontent >>file &&
-+	git add file &&
-+	test_config commit.verbose false &&
-+	test_set_editor "$PWD/check-for-no-diff" &&
-+	git commit --amend
-+'
-+
-+test_expect_success 'commit --no-verbose overrides commit.verbose true' '
-+	echo evenmorecontent >>file &&
-+	git add file &&
-+	test_config commit.verbose true &&
-+	test_set_editor "$PWD/check-for-no-diff" &&
-+	git commit --amend --no-verbose
-+'
-+
- cat >diff <<'EOF'
- This is an example commit message that contains a diff.
-
---
-2.0.0
+On Tue, Jun 10, 2014 at 4:18 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
+>
+>> --- a/builtin/receive-pack.c
+>> +++ b/builtin/receive-pack.c
+>> @@ -46,6 +46,7 @@ static void *head_name_to_free;
+>>  static int sent_capabilities;
+>>  static int shallow_update;
+>>  static const char *alt_shallow_file;
+>> +static struct string_list error_strings = STRING_LIST_INIT_DUP;
+> [...]
+>> @@ -576,19 +576,31 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+> [...]
+>> +             transaction = ref_transaction_begin(&err);
+>> +             if (!transaction ||
+>> +                 ref_transaction_update(transaction, namespaced_name,
+>> +                                        new_sha1, old_sha1, 0, 1, &err) ||
+>> +                 ref_transaction_commit(transaction, "push", &err)) {
+>> +
+>> +                     const char *str;
+>> +                     string_list_append(&error_strings, err.buf);
+>> +                     str = error_strings.items[error_strings.nr - 1].string;
+> [...]
+>> +                     return str;
+> [...]
+>> @@ -1215,5 +1227,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+>>               packet_flush(1);
+>>       sha1_array_clear(&shallow);
+>>       sha1_array_clear(&ref);
+>> +     string_list_clear(&error_strings, 0);
+>>       return 0;
+>
+> I think it's okay to let error strings accumulate like this because
+> there will not be too many of them.  Still I wonder, would it work to
+> change the convention to transfer ownership of the string to the caller?
+>
+> Ultimately 'commands' is leaked so we could even avoid the strdups but
+> I'd rather leave it possible to clean up.
+>
+> Something like this:
+>
+> diff --git i/builtin/receive-pack.c w/builtin/receive-pack.c
+> index 13f4a63..d8ab7b2 100644
+> --- i/builtin/receive-pack.c
+> +++ w/builtin/receive-pack.c
+> @@ -46,7 +46,6 @@ static void *head_name_to_free;
+>  static int sent_capabilities;
+>  static int shallow_update;
+>  static const char *alt_shallow_file;
+> -static struct string_list error_strings = STRING_LIST_INIT_DUP;
+>
+>  static enum deny_action parse_deny_action(const char *var, const char *value)
+>  {
+> @@ -195,7 +194,7 @@ static void write_head_info(void)
+>
+>  struct command {
+>         struct command *next;
+> -       const char *error_string;
+> +       char *error_string;
+>         unsigned int skip_update:1,
+>                      did_not_exist:1;
+>         int index;
+> @@ -469,7 +468,7 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
+>         return 0;
+>  }
+>
+> -static const char *update(struct command *cmd, struct shallow_info *si)
+> +static char *update(struct command *cmd, struct shallow_info *si)
+>  {
+>         const char *name = cmd->ref_name;
+>         struct strbuf namespaced_name_buf = STRBUF_INIT;
+> @@ -589,12 +588,9 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+>                                            new_sha1, old_sha1, 0, 1, &err) ||
+>                     ref_transaction_commit(transaction, "push", &err)) {
+>
+> -                       const char *str;
+> -                       string_list_append(&error_strings, err.buf);
+> -                       str = error_strings.items[error_strings.nr - 1].string;
+> -                       strbuf_release(&err);
+> -
+> +                       char *str = strbuf_detach(&err, NULL);
+>                         ref_transaction_free(transaction);
+> +
+>                         rp_error("%s", str);
+>                         return str;
+>                 }
+> @@ -659,6 +655,9 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
+>         char cmd_oldh[41], cmd_newh[41], dst_oldh[41], dst_newh[41];
+>         int flag;
+>
+> +       if (cmd->error_string)
+> +               die("BUG: check_alised_update called with failed cmd");
+> +
+>         strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
+>         dst_name = resolve_ref_unsafe(buf.buf, sha1, 0, &flag);
+>         strbuf_release(&buf);
+> @@ -670,7 +669,7 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
+>         if (!dst_name) {
+>                 rp_error("refusing update to broken symref '%s'", cmd->ref_name);
+>                 cmd->skip_update = 1;
+> -               cmd->error_string = "broken symref";
+> +               cmd->error_string = xstrdup("broken symref");
+>                 return;
+>         }
+>
+> @@ -696,8 +695,9 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
+>                  cmd->ref_name, cmd_oldh, cmd_newh,
+>                  dst_cmd->ref_name, dst_oldh, dst_newh);
+>
+> -       cmd->error_string = dst_cmd->error_string =
+> -               "inconsistent aliased update";
+> +       cmd->error_string = xstrdup("inconsistent aliased update");
+> +       free(dst_cmd->error_string);
+> +       dst_cmd->error_string = xstrdup("inconsistent aliased update");
+>  }
+>
+>  static void check_aliased_updates(struct command *commands)
+> @@ -745,7 +745,9 @@ static void set_connectivity_errors(struct command *commands,
+>                 if (!check_everything_connected(command_singleton_iterator,
+>                                                 0, &singleton))
+>                         continue;
+> -               cmd->error_string = "missing necessary objects";
+> +               if (cmd->error_string)  /* can't happen */
+> +                       continue;
+> +               cmd->error_string = xstrdup("missing necessary objects");
+>         }
+>  }
+>
+> @@ -782,9 +784,9 @@ static void reject_updates_to_hidden(struct command *commands)
+>                 if (cmd->error_string || !ref_is_hidden(cmd->ref_name))
+>                         continue;
+>                 if (is_null_sha1(cmd->new_sha1))
+> -                       cmd->error_string = "deny deleting a hidden ref";
+> +                       cmd->error_string = xstrdup("deny deleting a hidden ref");
+>                 else
+> -                       cmd->error_string = "deny updating a hidden ref";
+> +                       cmd->error_string = xstrdup("deny updating a hidden ref");
+>         }
+>  }
+>
+> @@ -798,8 +800,11 @@ static void execute_commands(struct command *commands,
+>         struct iterate_data data;
+>
+>         if (unpacker_error) {
+> -               for (cmd = commands; cmd; cmd = cmd->next)
+> -                       cmd->error_string = "unpacker error";
+> +               for (cmd = commands; cmd; cmd = cmd->next) {
+> +                       if (cmd->error_string)  /* can't happen */
+> +                               continue;
+> +                       cmd->error_string = xstrdup("unpacker error");
+> +               }
+>                 return;
+>         }
+>
+> @@ -812,8 +817,9 @@ static void execute_commands(struct command *commands,
+>
+>         if (run_receive_hook(commands, "pre-receive", 0)) {
+>                 for (cmd = commands; cmd; cmd = cmd->next) {
+> -                       if (!cmd->error_string)
+> -                               cmd->error_string = "pre-receive hook declined";
+> +                       if (cmd->error_string)
+> +                               continue;
+> +                       cmd->error_string = xstrdup("pre-receive hook declined");
+>                 }
+>                 return;
+>         }
+> @@ -1091,7 +1097,8 @@ static void update_shallow_info(struct command *commands,
+>                 if (is_null_sha1(cmd->new_sha1))
+>                         continue;
+>                 if (ref_status[cmd->index]) {
+> -                       cmd->error_string = "shallow update not allowed";
+> +                       free(cmd->error_string);
+> +                       cmd->error_string = xstrdup("shallow update not allowed");
+>                         cmd->skip_update = 1;
+>                 }
+>         }
+> @@ -1227,6 +1234,5 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+>                 packet_flush(1);
+>         sha1_array_clear(&shallow);
+>         sha1_array_clear(&ref);
+> -       string_list_clear(&error_strings, 0);
+>         return 0;
+>  }
