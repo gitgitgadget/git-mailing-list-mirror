@@ -1,63 +1,63 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v5 10/11] trace: add trace_performance facility to
- debug performance issues
-Date: Wed, 11 Jun 2014 10:01:28 +0200
-Message-ID: <53980CD8.5090801@gmail.com>
+Subject: [PATCH v5 11/11] git: add performance tracing for git's
+ main() function to debug scripts
+Date: Wed, 11 Jun 2014 10:02:01 +0200
+Message-ID: <53980CF9.9080906@gmail.com>
 References: <53980B83.9050409@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
  Jeff King <peff@peff.net>
-X-From: msysgit+bncBCH3XYXLXQDBBWMZ4COAKGQEOVHWFVY@googlegroups.com Wed Jun 11 10:01:30 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBWMZ4COAKGQEOVHWFVY@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBB6UZ4COAKGQEGHA6XBA@googlegroups.com Wed Jun 11 10:02:05 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBB6UZ4COAKGQEGHA6XBA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f58.google.com ([209.85.215.58])
+Received: from mail-we0-f192.google.com ([74.125.82.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBWMZ4COAKGQEOVHWFVY@googlegroups.com>)
-	id 1WudTO-0000WA-9I
-	for gcvm-msysgit@m.gmane.org; Wed, 11 Jun 2014 10:01:30 +0200
-Received: by mail-la0-f58.google.com with SMTP id s18sf1001218lam.3
-        for <gcvm-msysgit@m.gmane.org>; Wed, 11 Jun 2014 01:01:30 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBB6UZ4COAKGQEGHA6XBA@googlegroups.com>)
+	id 1WudTw-00013G-7W
+	for gcvm-msysgit@m.gmane.org; Wed, 11 Jun 2014 10:02:04 +0200
+Received: by mail-we0-f192.google.com with SMTP id u57sf19398wes.9
+        for <gcvm-msysgit@m.gmane.org>; Wed, 11 Jun 2014 01:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
          :in-reply-to:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=S/BAos7ht0/76Ybmr8jQFyf4BEkbvbnBYcCq+vL/vqc=;
-        b=HN6CSon234YWOE2Y/6oDheFnpP6mrMvPoDap21bEt38SHl2H4vK0Qks35IE5+ZFGKY
-         o+UamUpxBlIhoWrMLNB816Kzi7MQ6ncrqZof6JXEgAA8KLJimHExBrx7gokYVf/Sj7u0
-         yjXPaOcSigIDuwgPF1C42PYFZMw4C2kCkeYcVu9y44Z3MpucRsqhATgOhdSWKfbS7qX/
-         5v0a7iEUXo0OFSN53+Ef/IpIc0hKVTKDpAupk5BlzDQWrsJD630HWqN+HlH+FA7+DfIv
-         OPEUcGjeNkpKwZlLNxXhJJQzjLLbWjgjrJNzcusIM7Lbvh+sjP9TMtvGjoWFY6fD0aNE
-         I0MA==
-X-Received: by 10.152.18.225 with SMTP id z1mr4720lad.10.1402473690122;
-        Wed, 11 Jun 2014 01:01:30 -0700 (PDT)
+        bh=NUEHFrnrCVMS7zjbjq0XPZHLfqiJyB0NjpycSUNn8UA=;
+        b=Zrq1KrrdjrJaSutQe5yvvUyxKPL1KyVf7t0rJnRkRd1ToZ4ToGy5yFB9R5KdwN5s3W
+         3CdT2xuiDSTj3b0Uceq5EWRpOiTateRTZBhM76B4AOiQPoiiydL/UpCmXplPNUGnfboo
+         szsY3g5outU9sBbA6e1OldfZHjU2ziJlwHqcE/4Tf9EKUUM3kP8gMhR236F7scxcC30D
+         iZ9dMVD2NkpnnKn+bqGdQh6GqRnzRoNQIn5FTN+g41kWyNbvHDf7hq1+OFM+y4ULYWWE
+         NyH3Ca8tvFv2UzlknU8UK9rAI5OMXTJNIzEGQdH+Dsqklzp/4b3w1j1Wv+RfIjvVl4nG
+         qQDg==
+X-Received: by 10.152.43.16 with SMTP id s16mr4683lal.15.1402473723972;
+        Wed, 11 Jun 2014 01:02:03 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.20.201 with SMTP id p9ls397818lae.46.gmail; Wed, 11 Jun
- 2014 01:01:28 -0700 (PDT)
-X-Received: by 10.152.43.3 with SMTP id s3mr869651lal.5.1402473688814;
-        Wed, 11 Jun 2014 01:01:28 -0700 (PDT)
-Received: from mail-wg0-x22f.google.com (mail-wg0-x22f.google.com [2a00:1450:400c:c00::22f])
-        by gmr-mx.google.com with ESMTPS id e12si1262647wiv.1.2014.06.11.01.01.28
+Received: by 10.152.241.37 with SMTP id wf5ls464549lac.53.gmail; Wed, 11 Jun
+ 2014 01:02:01 -0700 (PDT)
+X-Received: by 10.112.149.162 with SMTP id ub2mr83512lbb.18.1402473721622;
+        Wed, 11 Jun 2014 01:02:01 -0700 (PDT)
+Received: from mail-we0-x233.google.com (mail-we0-x233.google.com [2a00:1450:400c:c03::233])
+        by gmr-mx.google.com with ESMTPS id eh2si1264397wib.2.2014.06.11.01.02.01
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 11 Jun 2014 01:01:28 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22f as permitted sender) client-ip=2a00:1450:400c:c00::22f;
-Received: by mail-wg0-f47.google.com with SMTP id k14so7684624wgh.30
-        for <msysgit@googlegroups.com>; Wed, 11 Jun 2014 01:01:28 -0700 (PDT)
-X-Received: by 10.180.86.4 with SMTP id l4mr11408866wiz.61.1402473688704;
-        Wed, 11 Jun 2014 01:01:28 -0700 (PDT)
+        Wed, 11 Jun 2014 01:02:01 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::233 as permitted sender) client-ip=2a00:1450:400c:c03::233;
+Received: by mail-we0-f179.google.com with SMTP id w62so4170583wes.38
+        for <msysgit@googlegroups.com>; Wed, 11 Jun 2014 01:02:01 -0700 (PDT)
+X-Received: by 10.194.80.161 with SMTP id s1mr49327865wjx.47.1402473721476;
+        Wed, 11 Jun 2014 01:02:01 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id b44sm39222155eem.45.2014.06.11.01.01.27
+        by mx.google.com with ESMTPSA id l41sm57956636eew.8.2014.06.11.01.02.00
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 11 Jun 2014 01:01:28 -0700 (PDT)
+        Wed, 11 Jun 2014 01:02:00 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
 In-Reply-To: <53980B83.9050409@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22f
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::233
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -70,179 +70,90 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251340>
 
-Add trace_performance and trace_performance_since macros that print a
-duration and an optional printf-formatted text to the file specified in
-environment variable GIT_TRACE_PERFORMANCE.
+Use trace_performance to measure and print execution time and command line
+arguments of the entire main() function. In constrast to the shell's 'time'
+utility, which measures total time of the parent process, this logs all
+involved git commands recursively. This is particularly useful to debug
+performance issues of scripted commands (i.e. which git commands were
+called with which parameters, and how long did they execute).
 
-These macros, in conjunction with getnanotime(), are intended to simplify
-performance measurements from within the application (i.e. profiling via
-manual instrumentation, rather than using an external profiling tool).
+Due to git's deliberate use of exit(), the implementation uses an atexit
+routine rather than just adding trace_performance_since() at the end of
+main().
 
-Unless enabled via GIT_TRACE_PERFORMANCE, these macros have no noticeable
-impact on performance, so that test code for well known time killers may
-be shipped in release builds. Alternatively, a developer could provide an
-additional performance patch (not meant for master) that allows reviewers
-to reproduce performance tests more easily, e.g. on other platforms or
-using their own repositories.
+Usage example: > GIT_TRACE_PERFORMANCE=~/git-trace.log git stash list
 
-Usage examples:
-
-Simple use case (measure one code section):
-
-  uint64_t start = getnanotime();
-  /* code section to measure */
-  trace_performance_since(start, "foobar");
-
-Medium use case (measure consecutive code sections):
-
-  uint64_t start = getnanotime();
-  /* first code section to measure */
-  start = trace_performance_since(start, "first foobar");
-  /* second code section to measure */
-  trace_performance_since(start, "second foobar");
-
-Complex use case (measure repetitive code sections):
-
-  uint64_t t = 0;
-  for (;;) {
-    /* ignore */
-    t -= getnanotime();
-    /* code section to measure */
-    t += getnanotime();
-    /* ignore */
-  }
-  trace_performance(t, "frotz");
+Creates a log file like this:
+23:57:38.638765 trace.c:405 performance: 0.000310107 s: git command: 'git' 'rev-parse' '--git-dir'
+23:57:38.644387 trace.c:405 performance: 0.000261759 s: git command: 'git' 'rev-parse' '--show-toplevel'
+23:57:38.646207 trace.c:405 performance: 0.000304468 s: git command: 'git' 'config' '--get-colorbool' 'color.interactive'
+23:57:38.648491 trace.c:405 performance: 0.000241667 s: git command: 'git' 'config' '--get-color' 'color.interactive.help' 'red bold'
+23:57:38.650465 trace.c:405 performance: 0.000243063 s: git command: 'git' 'config' '--get-color' '' 'reset'
+23:57:38.654850 trace.c:405 performance: 0.025126313 s: git command: 'git' 'stash' 'list'
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
- trace.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- trace.h | 24 ++++++++++++++++++++++++
- 2 files changed, 73 insertions(+)
+ git.c   |  2 ++
+ trace.c | 22 ++++++++++++++++++++++
+ trace.h |  1 +
+ 3 files changed, 25 insertions(+)
 
+diff --git a/git.c b/git.c
+index 7780572..d4daeb8 100644
+--- a/git.c
++++ b/git.c
+@@ -568,6 +568,8 @@ int main(int argc, char **av)
+ 
+ 	git_setup_gettext();
+ 
++	trace_command_performance(argv);
++
+ 	/*
+ 	 * "git-xxxx" is the same as "git xxxx", but we obviously:
+ 	 *
 diff --git a/trace.c b/trace.c
-index 4bd52f2..0551509 100644
+index 0551509..9fc3921 100644
 --- a/trace.c
 +++ b/trace.c
-@@ -153,6 +153,27 @@ void trace_strbuf_fl(const char *file, int line, const char *key,
- 	print_trace_line(key, &buf);
+@@ -395,3 +395,25 @@ inline uint64_t getnanotime(void)
+ 		return now;
+ 	}
  }
- 
-+static const char *GIT_TRACE_PERFORMANCE = "GIT_TRACE_PERFORMANCE";
 +
-+static void trace_performance_vfl(const char *file, int line,
-+				      uint64_t nanos, const char *format,
-+				      va_list ap)
++static uint64_t command_start_time;
++static struct strbuf command_line = STRBUF_INIT;
++
++static void print_command_performance_atexit(void)
 +{
-+	struct strbuf buf = STRBUF_INIT;
++	trace_performance_since(command_start_time, "git command:%s",
++				command_line.buf);
++}
 +
-+	if (!prepare_trace_line(file, line, GIT_TRACE_PERFORMANCE, &buf))
++void trace_command_performance(const char **argv)
++{
++	if (!trace_want(GIT_TRACE_PERFORMANCE))
 +		return;
 +
-+	strbuf_addf(&buf, "performance: %.9f s", (double) nanos / 1000000000);
++	if (!command_start_time)
++		atexit(print_command_performance_atexit);
 +
-+	if (format && *format) {
-+		strbuf_addstr(&buf, ": ");
-+		strbuf_vaddf(&buf, format, ap);
-+	}
-+
-+	print_trace_line(GIT_TRACE_PERFORMANCE, &buf);
++	strbuf_reset(&command_line);
++	sq_quote_argv(&command_line, argv, 0);
++	command_start_time = getnanotime();
 +}
-+
- #ifndef HAVE_VARIADIC_MACROS
- 
- void trace_printf(const char *format, ...)
-@@ -184,6 +205,24 @@ void trace_strbuf(const char *key, const struct strbuf *data)
- 	trace_strbuf_fl(NULL, 0, key, data);
- }
- 
-+uint64_t trace_performance(uint64_t nanos, const char *format, ...)
-+{
-+	va_list ap;
-+	va_start(ap, format);
-+	trace_performance_vfl(NULL, 0, nanos, format, ap);
-+	va_end(ap);
-+	return getnanotime();
-+}
-+
-+uint64_t trace_performance_since(uint64_t start, const char *format, ...)
-+{
-+	va_list ap;
-+	va_start(ap, format);
-+	trace_performance_vfl(NULL, 0, getnanotime() - start, format, ap);
-+	va_end(ap);
-+	return getnanotime();
-+}
-+
- #else
- 
- void trace_printf_key_fl(const char *file, int line, const char *key,
-@@ -204,6 +243,16 @@ void trace_argv_printf_fl(const char *file, int line, const char **argv,
- 	va_end(ap);
- }
- 
-+uint64_t trace_performance_fl(const char *file, int line, uint64_t nanos,
-+			      const char *format, ...)
-+{
-+	va_list ap;
-+	va_start(ap, format);
-+	trace_performance_vfl(file, line, nanos, format, ap);
-+	va_end(ap);
-+	return getnanotime();
-+}
-+
- #endif /* HAVE_VARIADIC_MACROS */
- 
- 
 diff --git a/trace.h b/trace.h
-index c4964aa..9687563 100644
+index 9687563..a51e731 100644
 --- a/trace.h
 +++ b/trace.h
-@@ -21,6 +21,20 @@ extern void trace_argv_printf(const char **argv, const char *format, ...);
+@@ -7,6 +7,7 @@
+ extern void trace_repo_setup(const char *prefix);
+ extern int trace_want(const char *key);
+ extern uint64_t getnanotime(void);
++extern void trace_command_performance(const char **argv);
  
- extern void trace_strbuf(const char *key, const struct strbuf *data);
- 
-+/*
-+ * Prints specified time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled.
-+ * Returns current time in nanoseconds.
-+ */
-+__attribute__((format (printf, 2, 3)))
-+extern uint64_t trace_performance(uint64_t nanos, const char *format, ...);
-+
-+/*
-+ * Prints time since 'start' if GIT_TRACE_PERFORMANCE is enabled.
-+ * Returns current time in nanoseconds.
-+ */
-+__attribute__((format (printf, 2, 3)))
-+extern uint64_t trace_performance_since(uint64_t start, const char *format, ...);
-+
- #else
- 
- /*
-@@ -56,6 +70,13 @@ extern void trace_strbuf(const char *key, const struct strbuf *data);
- #define trace_strbuf(key, data) \
- 	trace_strbuf_fl(__FILE__, __LINE__, key, data)
- 
-+#define trace_performance(nanos, ...) \
-+	trace_performance_fl(__FILE__, __LINE__, nanos, __VA_ARGS__)
-+
-+#define trace_performance_since(start, ...) \
-+	trace_performance_fl(__FILE__, __LINE__, getnanotime() - (start), \
-+			     __VA_ARGS__)
-+
- /* backend functions, use non-*fl macros instead */
- __attribute__((format (printf, 4, 5)))
- extern void trace_printf_key_fl(const char *file, int line, const char *key,
-@@ -65,6 +86,9 @@ extern void trace_argv_printf_fl(const char *file, int line, const char **argv,
- 				 const char *format, ...);
- extern void trace_strbuf_fl(const char *file, int line, const char *key,
- 			    const struct strbuf *data);
-+__attribute__((format (printf, 4, 5)))
-+extern uint64_t trace_performance_fl(const char *file, int line,
-+				     uint64_t nanos, const char *fmt, ...);
- 
- #endif /* HAVE_VARIADIC_MACROS */
+ #ifndef HAVE_VARIADIC_MACROS
  
 -- 
 1.9.2.msysgit.0.501.gaeecf09
