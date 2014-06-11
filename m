@@ -1,116 +1,67 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: [PATCH] docs: Explain the purpose of fetch's and pull's <refspec> parameter.
-Date: Wed, 11 Jun 2014 10:24:04 -0400
-Message-ID: <1402496644-15633-1-git-send-email-marcnarc@xiplink.com>
-References: <xmqq61kfroow.fsf@gitster.dls.corp.google.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 11 16:23:46 2014
+From: Richard Hansen <rhansen@bbn.com>
+Subject: Re: [PATCH v2 00/11] Zsh prompt tests
+Date: Wed, 11 Jun 2014 11:27:23 -0400
+Message-ID: <5398755B.4050601@bbn.com>
+References: <1401176460-31564-1-git-send-email-rhansen@bbn.com> <1401915687-8602-1-git-send-email-rhansen@bbn.com> <53976563.5020905@web.de> <53976A7E.8010001@bbn.com> <20140611011617.GB368384@vauxhall.crustytoothpaste.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	git@vger.kernel.org
+To: sandals@crustytoothpaste.net
+X-From: git-owner@vger.kernel.org Wed Jun 11 17:27:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WujRH-0003gp-8V
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 16:23:43 +0200
+	id 1WukR6-0005mh-VX
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 17:27:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755519AbaFKOXj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2014 10:23:39 -0400
-Received: from domain.not.configured ([192.252.130.194]:60503 "EHLO
-	cubert.xiplink.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1755484AbaFKOXi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2014 10:23:38 -0400
-Received: from xiplink.com (rincewind.xiplink.com [10.10.1.32])
-	by cubert.xiplink.com (Postfix) with ESMTP id 22193617E2;
-	Wed, 11 Jun 2014 10:23:37 -0400 (EDT)
-X-Mailer: git-send-email 2.0.0.dirty
-In-Reply-To: <xmqq61kfroow.fsf@gitster.dls.corp.google.com>
+	id S932506AbaFKP1d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Jun 2014 11:27:33 -0400
+Received: from smtp.bbn.com ([128.33.1.81]:20424 "EHLO smtp.bbn.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932350AbaFKP1c convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2014 11:27:32 -0400
+Received: from socket.bbn.com ([192.1.120.102]:36889)
+	by smtp.bbn.com with esmtps (TLSv1:AES256-SHA:256)
+	(Exim 4.77 (FreeBSD))
+	(envelope-from <rhansen@bbn.com>)
+	id 1WukR6-0003EI-HT; Wed, 11 Jun 2014 11:27:36 -0400
+X-Submitted: to socket.bbn.com (Postfix) with ESMTPSA id 1F2FB3FE73
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <20140611011617.GB368384@vauxhall.crustytoothpaste.net>
+X-Enigmail-Version: 1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251371>
 
-Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
----
- Documentation/git-fetch.txt        |  4 ++--
- Documentation/pull-fetch-param.txt | 18 ++++++++++++++----
- 2 files changed, 16 insertions(+), 6 deletions(-)
+On 2014-06-10 21:16, brian m. carlson wrote:
+> On Tue, Jun 10, 2014 at 04:28:46PM -0400, Richard Hansen wrote:
+>> On 2014-06-10 16:06, Torsten B=C3=B6gershausen wrote:
+>>>  zsh --version
+>>> zsh 4.3.9 (i386-apple-darwin10.0)
+>>
+>> zsh 4.3.9 is over 5 years old (2008-11-03).  Is that young enough th=
+at
+>> we should still try to support it?
+>=20
+> zsh 4.3.10 is the version in RHEL/CentOS 6, and people are still usin=
+g
+> CentOS 5.  At $DAYJOB we build git on both, so it would be nice if at
+> least the tests didn't fail.
 
-On 14-06-05 06:12 PM, Junio C Hamano wrote:
-> 
->> +	<refspec> parameters are not normally specified on the command
->> +	line, but instead are read from `remote.<repository>.fetch`
-> 
-> I however am not sure if this is an improvement, especially the
-> "normally" part.  Those who respond to a git-pull-request output
-> might be fewer than those who send pull requests, but that does not
-> mean they are abnormal.
-> 
-> 	The command line often omit <refspec> parameters when
-> 	fetching or pulling from a remote you regularly interact
-> 	with, in which case `remote.<repository>.fetch` values are
-> 	used instead.
-> 
-> would be OK, though.
-> 
-> Later today I'll push out the series on 'pu' after amending them
-> with your comments so far.  It would be nice if you can reroll this
-> on top of the updated one ("git log --oneline --first-parent
-> master..pu" and find jc/fetch-pull-refmap in there).
+Looks like CentOS 5 has zsh 4.2.6, so when I rewrite the patch series
+I'll test zsh versions that are at least that old.
 
-Here's the reroll.  I used completely different phrasing but I think
-I still captured the gist of what you said.
+> Skipping them on older versions (maybe using is-at-least) would be
+> fine by me.
 
-(Apologies for the delay -- I was looking for jc/fetch-pull-refmap on pu,
-not jc/fetch-push-refmap on next!)
+I don't think we'll need to skip the tests on old zsh versions --
+running 'zsh -c' should still work even if 'emulate zsh -c' doesn't.
 
-		M.
-
-
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index 629a1cf..8deb614 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -51,8 +51,8 @@ include::pull-fetch-param.txt[]
- include::urls-remotes.txt[]
- 
- 
--CONFIGURED REMOTE-TRACKING BRANCHES
-------------------------------------
-+CONFIGURED REMOTE-TRACKING BRANCHES[[CRTB]]
-+-------------------------------------------
- 
- You often interact with the same remote repository by
- regularly and repeatedly fetching from it.  In order to keep track
-diff --git a/Documentation/pull-fetch-param.txt b/Documentation/pull-fetch-param.txt
-index 4bff65b..1ebbf1d 100644
---- a/Documentation/pull-fetch-param.txt
-+++ b/Documentation/pull-fetch-param.txt
-@@ -12,10 +12,20 @@ ifndef::git-pull[]
- endif::git-pull[]
- 
- <refspec>::
--	The format of a <refspec> parameter is an optional plus
--	`+`, followed by the source ref <src>, followed
--	by a colon `:`, followed by the destination ref <dst>.
--	The colon can be omitted when <dst> is empty.
-+	Specifies which refs to fetch and which local refs to update.
-+	When no <refspec>s appear on the command line, the refs to fetch
-+	are read from `remote.<repository>.fetch` variables instead
-+ifndef::git-pull[]
-+	(see <<CRTB,CONFIGURED REMOTE-TRACKING BRANCHES>> below).
-+endif::git-pull[]
-+ifdef::git-pull[]
-+	(see linkgit:git-fetch[1]).
-+endif::git-pull[]
-++
-+The format of a <refspec> parameter is an optional plus
-+`+`, followed by the source ref <src>, followed
-+by a colon `:`, followed by the destination ref <dst>.
-+The colon can be omitted when <dst> is empty.
- +
- `tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`;
- it requests fetching everything up to the given tag.
--- 
-2.0.0.dirty
+Thanks,
+Richard
