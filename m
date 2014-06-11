@@ -1,24 +1,23 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 4/7] MinGW: disable CRT command line globbing
-Date: Wed, 11 Jun 2014 11:37:43 +0200
-Message-ID: <1402479466-8500-5-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 5/7] Win32: Unicode arguments (outgoing)
+Date: Wed, 11 Jun 2014 11:37:44 +0200
+Message-ID: <1402479466-8500-6-git-send-email-kasal@ucw.cz>
 References: <1402479466-8500-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: msysGit <msysgit@googlegroups.com>,
 	Karsten Blees <blees@dcon.de>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
 	Stepan Kasal <kasal@ucw.cz>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRB7WG4COAKGQEYZ4OADI@googlegroups.com Wed Jun 11 11:38:08 2014
-Return-path: <msysgit+bncBCU63DXMWULRB7WG4COAKGQEYZ4OADI@googlegroups.com>
+X-From: msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com Wed Jun 11 11:38:11 2014
+Return-path: <msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f63.google.com ([74.125.82.63])
+Received: from mail-lb0-f190.google.com ([209.85.217.190])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRB7WG4COAKGQEYZ4OADI@googlegroups.com>)
-	id 1Wueyt-0004KU-6y
-	for gcvm-msysgit@m.gmane.org; Wed, 11 Jun 2014 11:38:07 +0200
-Received: by mail-wg0-f63.google.com with SMTP id x12sf659184wgg.8
+	(envelope-from <msysgit+bncBCU63DXMWULRB7OG4COAKGQEU5PATQQ@googlegroups.com>)
+	id 1Wueys-0004Js-EI
+	for gcvm-msysgit@m.gmane.org; Wed, 11 Jun 2014 11:38:06 +0200
+Received: by mail-lb0-f190.google.com with SMTP id p9sf993132lbv.17
         for <gcvm-msysgit@m.gmane.org>; Wed, 11 Jun 2014 02:38:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -26,27 +25,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=ZqwazruxtK7YEIqh5TsxPTj3Jxe3OWbjcK3R8bFCYqs=;
-        b=h969xsb2MJrOvw64KAt9u24Dn7EdLpuSma8lzjE6Q4vYDwx/LdO6uB8xn6P9xGWFXO
-         622SK8Kz1caGxWaG643B+nN8MIwvdsGAlrUcVVLsAkuSV/EBkE2v5peHOA1pQEnBvZ4F
-         Vfse+9w0pY/L5qkQhnhQPDYsht65QFbL8pNf2R8R9U6Hg54jff9LyUKEe6iHFyrcRQET
-         JDaL5/gKbmiP0BAp9BMOxePc/q4xIPm8SI8qqT+D780RvVGv4aUkKwmxFx/n3rXxVjzj
-         u5WkwDfjS5hJMFLCQ06TZ33++hgrqASeqA9gFI8TwfW8Oe61ZENDVyHl5w4fRUP6WohU
-         Y0vA==
-X-Received: by 10.180.89.231 with SMTP id br7mr7681wib.8.1402479486949;
+        bh=w62L2aI126u4zZOoUVM5nek/h91z8U5/zVyoJd80AoI=;
+        b=K6KvA2J1YPyHl+ErYF0i5KVzEvFlSW55n/WWvf5P/RZseQPC9PCjL3yrABUBEJlI14
+         YjwUqeeK8HEJkubwVhi1+KWZmBadmpVNRONolvrGFLJb+9GiEP9SGzdNUEPcK2UiK5M8
+         9MAjPCceN1/9UqEvL+MBkFKxH8tRERDcIU0chYOZTrafy86Wba5sGgJUnQaV9BTYrk2j
+         kY+7+10PmOI/W40FJd2Pyud4yoAcq2g7VNdu2af80Y9adM39wIa/3V+BJy1wG1SZNl4y
+         /POG9siUQNtTfABzuWs8ECaD+LSXvmnVQP1yZq1NZjWbXpG2iozc3hIdLw7f04H2RSm1
+         HgBw==
+X-Received: by 10.152.27.168 with SMTP id u8mr409166lag.0.1402479486306;
         Wed, 11 Jun 2014 02:38:06 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.101.132 with SMTP id fg4ls164640wib.28.canary; Wed, 11 Jun
- 2014 02:38:06 -0700 (PDT)
-X-Received: by 10.194.3.34 with SMTP id 2mr192110wjz.4.1402479486184;
-        Wed, 11 Jun 2014 02:38:06 -0700 (PDT)
+Received: by 10.152.28.136 with SMTP id b8ls431357lah.0.gmail; Wed, 11 Jun
+ 2014 02:38:05 -0700 (PDT)
+X-Received: by 10.112.13.36 with SMTP id e4mr1467794lbc.11.1402479484990;
+        Wed, 11 Jun 2014 02:38:04 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id e12si1287038wiv.1.2014.06.11.02.38.04
+        by gmr-mx.google.com with ESMTP id gz10si1289240wib.0.2014.06.11.02.38.04
         for <msysgit@googlegroups.com>;
-        Wed, 11 Jun 2014 02:38:05 -0700 (PDT)
+        Wed, 11 Jun 2014 02:38:04 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 98BA61C00AA; Wed, 11 Jun 2014 11:38:04 +0200 (CEST)
+	id 9D0FF1C00AB; Wed, 11 Jun 2014 11:38:04 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1402479466-8500-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
@@ -62,50 +61,75 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251355>
 
 From: Karsten Blees <blees@dcon.de>
-Date: Fri, 7 Jan 2011 19:52:20 +0100
+Date: Sun, 16 Jan 2011 18:27:53 +0100
 
-MingwRT listens to _CRT_glob to decide if __getmainargs should
-perform globbing, with the default being that it should.
-Unfortunately, __getmainargs globbing is sub-par; for instance
-patterns like "*.c" will only match c-sources in the current
-directory.
-
-Disable __getmainargs' command line wildcard expansion, so these
-patterns will be left untouched, and handled by Git's superior
-built-in globbing instead.
-
-MSVC defaults to no globbing, so we don't need to do anything
-in that case.
-
-This fixes t5505 and t7810.
+Convert command line arguments from UTF-8 to UTF-16 when creating other
+processes.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 Signed-off-by: Stepan Kasal <kasal@ucw.cz>
 ---
- compat/mingw.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ compat/mingw.c | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index 6849815..1140a13 100644
+index 1140a13..8a7b047 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -1927,6 +1927,12 @@ int xwcstoutf(char *utf, const wchar_t *wcs, size_t utflen)
- 	return -1;
- }
- 
-+/*
-+ * Disable MSVCRT command line wildcard expansion (__getmainargs called from
-+ * mingw startup code, see init.c in mingw runtime).
-+ */
-+int _CRT_glob = 0;
-+
- void mingw_startup()
+@@ -831,9 +831,10 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **env,
+ 			      const char *dir,
+ 			      int prepend_cmd, int fhin, int fhout, int fherr)
  {
- 	/* copy executable name to argv[0] */
+-	STARTUPINFO si;
++	STARTUPINFOW si;
+ 	PROCESS_INFORMATION pi;
+ 	struct strbuf envblk, args;
++	wchar_t wcmd[MAX_PATH], wdir[MAX_PATH], *wargs;
+ 	unsigned flags;
+ 	BOOL ret;
+ 
+@@ -869,6 +870,11 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **env,
+ 	si.hStdOutput = winansi_get_osfhandle(fhout);
+ 	si.hStdError = winansi_get_osfhandle(fherr);
+ 
++	if (xutftowcs_path(wcmd, cmd) < 0)
++		return -1;
++	if (dir && xutftowcs_path(wdir, dir) < 0)
++		return -1;
++
+ 	/* concatenate argv, quoting args as we go */
+ 	strbuf_init(&args, 0);
+ 	if (prepend_cmd) {
+@@ -886,6 +892,10 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **env,
+ 			free(quoted);
+ 	}
+ 
++	wargs = xmalloc((2 * args.len + 1) * sizeof(wchar_t));
++	xutftowcs(wargs, args.buf, 2 * args.len + 1);
++	strbuf_release(&args);
++
+ 	if (env) {
+ 		int count = 0;
+ 		char **e, **sorted_env;
+@@ -907,12 +917,12 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **env,
+ 	}
+ 
+ 	memset(&pi, 0, sizeof(pi));
+-	ret = CreateProcess(cmd, args.buf, NULL, NULL, TRUE, flags,
+-		env ? envblk.buf : NULL, dir, &si, &pi);
++	ret = CreateProcessW(wcmd, wargs, NULL, NULL, TRUE, flags,
++		env ? envblk.buf : NULL, dir ? wdir : NULL, &si, &pi);
+ 
+ 	if (env)
+ 		strbuf_release(&envblk);
+-	strbuf_release(&args);
++	free(wargs);
+ 
+ 	if (!ret) {
+ 		errno = ENOENT;
 -- 
 2.0.0.9635.g0be03cb
 
