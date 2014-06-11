@@ -1,107 +1,92 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH 1/5] hashmap: add enum for hashmap free_entries option
-Date: Wed, 11 Jun 2014 11:12:10 +0200
-Message-ID: <53981D6A.3090604@gmail.com>
-References: <20140605060425.GA23874@sandbox-ub> <20140605060640.GB23874@sandbox-ub> <5391FFC3.5010001@gmail.com> <20140610101744.GA23370@t2784.greatnet.de>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Proposal for pruning tags
+Date: Wed, 11 Jun 2014 11:25:56 +0200
+Message-ID: <539820A4.6090708@alum.mit.edu>
+References: <CAHd499BLX3q2FHLfFpq_14w2mmosywfRqMHVjkke0BRhAAjx7g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Jun 11 11:12:46 2014
+To: Robert Dailey <rcdailey.lists@gmail.com>, Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jun 11 11:26:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WueaK-0006Y4-E4
-	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 11:12:44 +0200
+	id 1WuenG-0001eO-Ew
+	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 11:26:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755303AbaFKJMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2014 05:12:40 -0400
-Received: from mail-wi0-f173.google.com ([209.85.212.173]:55190 "EHLO
-	mail-wi0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755432AbaFKJMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Jun 2014 05:12:12 -0400
-Received: by mail-wi0-f173.google.com with SMTP id cc10so3300287wib.6
-        for <git@vger.kernel.org>; Wed, 11 Jun 2014 02:12:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=DMF0feIJ9CyYQezUsl+66JpIeZe1zwc3RxSixssxi60=;
-        b=sQImteianc93uU5PjPAVHqB9J6gyvM/RayeKHB5arGhatSLhuTzwiRLdauxXyXuflQ
-         fcQhmuGE8GerO4kanCuJyIwnImc4kCiIcl0yKYFSpMmVweiB5tD45eORtO1zz7tlO7i4
-         fK9pXarSeZsSnDl68N5KFUHVYRO4zVPihO36tLZZDodyts/FSWfDonZzHd4KtN0l0zmY
-         Pu+e79kqRe5uMqkHngw1LeOxL2+EuAWuaG4aDh6jhxl7yvZ9Q9abQyqyKZNMLEUwlx+H
-         QJ7fRPxUkxrGAfgQHUmkyuAdDY6x7ItpVXdt3XXvk6l4vL0y0oGgdRMATNvSAGgfK/By
-         b3TQ==
-X-Received: by 10.180.11.9 with SMTP id m9mr37270497wib.51.1402477930415;
-        Wed, 11 Jun 2014 02:12:10 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id b44sm39575003eem.45.2014.06.11.02.12.09
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 11 Jun 2014 02:12:09 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140610101744.GA23370@t2784.greatnet.de>
+	id S1751683AbaFKJ0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2014 05:26:01 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:43874 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751287AbaFKJ0A (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2014 05:26:00 -0400
+X-AuditID: 12074413-f79bc6d000000b9e-0a-539820a7bf26
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id C7.30.02974.7A028935; Wed, 11 Jun 2014 05:25:59 -0400 (EDT)
+Received: from [10.1.225.95] ([178.19.210.162])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5B9Pvna004340
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 11 Jun 2014 05:25:58 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
+In-Reply-To: <CAHd499BLX3q2FHLfFpq_14w2mmosywfRqMHVjkke0BRhAAjx7g@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprGKsWRmVeSWpSXmKPExsUixO6iqLtcYUawQddsfouuK91MFjPPPGVy
+	YPLYOesuu8fnTXIBTFHcNkmJJWXBmel5+nYJ3Bk3p3QxFUzkqfixrpOlgfEiZxcjJ4eEgInE
+	rbXXWCBsMYkL99azdTFycQgJXGaUeLR4N5Sznkli28ZWNpAqXgFtiWdt84A6ODhYBFQlDi9W
+	AAmzCehKLOppZgKxRQWCJGZ/nscOUS4ocXLmE7AFIgLuEkt+PwSzhQXUJK6fW84MYgsJBEh8
+	OPsbzOYUCJSYc+0KI8h4CQFxiZ7GIBCTWUBdYv08IZAKZgF5ie1v5zBPYBSYhWTBLISqWUiq
+	FjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdfLzSzRS00p3cQICVHhHYy7TsodYhTgYFTi
+	4a3YNT1YiDWxrLgy9xCjJAeTkijvV6kZwUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeHcKA+V4
+	UxIrq1KL8mFS0hwsSuK8akvU/YQE0hNLUrNTUwtSi2CyMhwcShK89fJAjYJFqempFWmZOSUI
+	aSYOTpDhXFIixal5KalFiaUlGfGgGI0vBkYpSIoHaG8DSDtvcUFiLlAUovUUozHHqTvH2pg4
+	PvSeaWMSYsnLz0uVEueVAikVACnNKM2DWwRLTq8YxYH+FubtAaniASY2uHmvgFYxAa167Tkd
+	ZFVJIkJKqoFx7exQITuv72k7ZeUszmXP2zNhUlHCiYi3Z/o5D3sIyOjfLlh4cZXGp1v7pI++
+	nea39tb5zdveO3if0maPu/X1OHuu2Sy5Rx/+LTGWWsyzucJiqZxzLZNNS/i1mTMK 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251348>
 
-Am 10.06.2014 12:17, schrieb Heiko Voigt:
-> On Fri, Jun 06, 2014 at 07:52:03PM +0200, Karsten Blees wrote:
->> Am 05.06.2014 08:06, schrieb Heiko Voigt:
->>> This allows a reader to immediately know which options can be used and
->>> what this parameter is about.
->>>
->> [...]
->>> -void hashmap_free(struct hashmap *map, int free_entries)
->>> +void hashmap_free(struct hashmap *map, enum hashmap_free_options free_entries)
->> [...]
->>>  
->>> +enum hashmap_free_options {
->>> +	HASHMAP_NO_FREE_ENTRIES = 0,
->>> +	HASHMAP_FREE_ENTRIES = 1,
->>> +};
->>
->> This was meant as a boolean parameter. Would it make sense to have
->>
->> enum boolean {
->> 	false,
->> 	true
->> };
->>
->> or similar in some central place?
+On 06/05/2014 04:51 PM, Robert Dailey wrote:
+> I've never contributed to the Git project before. I'm a Windows user,
+> so I use msysgit, but I'd be happy to install linux just so I can help
+> implement this feature if everyone feels it would be useful.
 > 
-> The intention of Jonathans critique here[1] was that you do not see what
-> this parameter does on the callsite. I.e.:
+> Right now AFAIK, there is no way to prune tags through Git. The way I
+> currently do it is like so:
 > 
-> 	hashmap_free(&map, 1);
-> 
-> compared to
-> 
-> 	hashmap_free(&map, HASHMAP_FREE_ENTRIES);
-> 
-> A boolean basically transfers the same information and would not help
-> the reader here.
-> 
-> Cheers Heiko
-> 
-> [1] http://article.gmane.org/gmane.comp.version-control.git/243917
-> 
+> $ git tag -l | xargs git tag -d
+> $ git fetch --all
 
-There are languages where you can have e.g. 'hashmap_free(..., free_entries: true)'. In C, however, you do not see what a parameter does at the call site. This is a general language feature, reducing redundancy and keeping it short and concise. IMO there's no reason to treat boolean parameters differently.
+Junio explained some limitations of tags (namely that there is only one
+tags namespace that is shared project-wide) that makes your wish
+impossible to implement the way it works for branches.
 
-Using an enum suggests that there is more to the parameter than a simple yes/no decision, underpinned by naming it '...options' (plural). I find this rather confusing.
+Local tags are awkward for the same reason.  It is too easy to push them
+accidentally to a central repository and too hard to delete them after
+that has happened.  They kindof spread virally, as you have noticed.  I
+recommend against using local tags in general.
 
-Finally, enums share a global namespace, which means long identifiers, provoking additional line breaks and thus reducing readability. Not a problem with hashmap_free per se, but if you do the same for e.g. 'free_util' in string-list.[ch] or 'icase' in name-hash.c, I suspect it'll get pretty ugly.
+Recent Git does have a feature that might help you.  *If* you have a
+central repository that is "authoritative" WRT tags, then you can sync
+the tags in your local repository to the tags in the central repo using
 
-So please lets not spoil the global namespace with a thousand different names for 0/1. Using enums for >= tristate values and bit flags is fine, but inventing enums for every simple boolean in the system is bound to end in chaos.
+    git fetch --prune $REMOTE +refs/tags/*:refs/tags/*
 
-Just my 2c
-Karsten
+You might also be able to use a pre-receive hook on the central repo to
+prevent tags from being pushed by people who shouldn't be doing so, or
+to require that tags have an approved format (like
+refs/tags/release-\d+\.\d+\.\d+ or whatever) to try to prevent a
+recurrence of the problem.
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
