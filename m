@@ -1,7 +1,7 @@
 From: "" <caleb@calebthompson.io>
-Subject: [PATCH v4 3/4] commit test: test_set_editor in each test
-Date: Wed, 11 Jun 2014 13:24:38 -0500
-Message-ID: <1402511079-17735-4-git-send-email-caleb@calebthompson.io>
+Subject: [PATCH v4 4/4] commit: support commit.verbose and --no-verbose
+Date: Wed, 11 Jun 2014 13:24:39 -0500
+Message-ID: <1402511079-17735-5-git-send-email-caleb@calebthompson.io>
 References: <1402511079-17735-1-git-send-email-caleb@calebthompson.io>
 Cc: Jeff King <peff@peff.net>, Jeremiah Mahler <jmmahler@gmail.com>,
 	Duy Nguyen <pclouds@gmail.com>,
@@ -15,119 +15,181 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WunKL-0003Zp-Lp
+	id 1WunKM-0003Zp-5n
 	for gcvg-git-2@plane.gmane.org; Wed, 11 Jun 2014 20:32:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754096AbaFKScj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2014 14:32:39 -0400
-Received: from new1-smtp.messagingengine.com ([66.111.4.221]:38696 "EHLO
+	id S1754516AbaFKScm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Jun 2014 14:32:42 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:54788 "EHLO
 	new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753806AbaFKScf (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2014 14:32:35 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8E53D63C;
+	by vger.kernel.org with ESMTP id S1753781AbaFKSce (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2014 14:32:34 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 8E8C263E;
 	Wed, 11 Jun 2014 14:25:12 -0400 (EDT)
 Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Wed, 11 Jun 2014 14:25:13 -0400
+  by compute5.internal (MEProxy); Wed, 11 Jun 2014 14:25:13 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=calebthompson.io;
 	 h=from:to:cc:subject:date:message-id:in-reply-to:references; s=
-	mesmtp; bh=3+zo+dKYfiaGlWEgMulwSy2w+bc=; b=lQLIYskgAIshgiw+ThEQX
-	Mq7rNeEyOOmI/n0mw17pi2n2XNh+celYId1NNNtOcFiufS3QyRVP3PIqirKTb+Uq
-	zG/O7g7BTOLIp7wHuP4D3yOuSl4QTgwklZd5H6Wg9sTAEhGZ7DICmIzGvClo5cDm
-	Xg6NvUXrNxHWTTe1hW0bTM=
+	mesmtp; bh=I/n+XmE3Gq9IUYzw9mBScnI3Vfs=; b=ewD6TygWOoHaFjgfPxZe2
+	m2o6fHVAKpugbM4g/M4lh1iwkHTrdPKcALoPUmAT4VKDqpB6/htsl4AnyQUAKWSD
+	sCx0aa4XvAcV9CR8yduGU6LfuYsqjHTxxVFBsn4BFLHSxDBXku5U3a0iLfBLx6TO
+	dKlzLgxbg/yD4lRFeEMNPk=
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:in-reply-to:references; s=smtpout; bh=3+zo+dKYfiaGlWEgMulwSy2w+
-	bc=; b=A8Xa+lmVCx6XZBfa4+QH+PMG8wFWpd4yvmytopv4eBdgrluilaVHa3VPS
-	9SQLx0x1I5MNYgvQyUS+XSCxFGw/12Ah8UkRl2cSdkeNzD9wH2tf9VqlnHqaLiCF
-	Q05OCwXG+o/DnzgbV3onZIcuFWM0ump08YdIrq4XMFU4dHSAW4=
-X-Sasl-enc: ZT79yWKJGMM7UZV1CaqTV5mkSPUX26zKOXaJBL5vBdED 1402511111
+	:in-reply-to:references; s=smtpout; bh=I/n+XmE3Gq9IUYzw9mBScnI3V
+	fs=; b=A18WuUb+TN2IV99UB0rqTG6a9OlwiUXf/ZROvUTlBrYFaA2r4xjV3YBzs
+	/KexfjZsV07YwtYeMSvRNphXTP6Wyfa8Yb3RLeNG+ctU5raJ7Jcl7rceggeEKfpG
+	YfToJimb8MEglWCKcAfc6uU47nVlCYiZq0t6g4OGHVQdRY2l1o=
+X-Sasl-enc: wOcdRtlb16BA3PFT95f9NOuot5bH+WIa6NKS7OBRg4fe 1402511112
 Received: from localhost.localdomain (unknown [67.78.97.126])
-	by mail.messagingengine.com (Postfix) with ESMTPA id C3949680537;
-	Wed, 11 Jun 2014 14:25:10 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 877B768053D;
+	Wed, 11 Jun 2014 14:25:11 -0400 (EDT)
 X-Mailer: git-send-email 2.0.0
 In-Reply-To: <1402511079-17735-1-git-send-email-caleb@calebthompson.io>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251380>
 
-t/t7507-commit-verbose.sh was using a global test_set_editor call to
-build its environment.
-
-Improve robustness against global state changes by having only tests
-which intend to use the $EDITOR to check for presence of a diff in the
-editor set up the test-editor to use check-for-diff rather than relying
-upon the editor set once at script start.
-
-Besides being in line with current practices, it also allows the tests
-which set GIT_EDITOR=cat manually to avoid using a subshell and simplify
-their logic.
+Add a new configuration variable commit.verbose to implicitly pass
+`--verbose` to `git-commit`. Add `--no-verbose` to commit to negate that
+setting.
 
 Signed-off-by: Caleb Thompson <caleb@calebthompson.io>
 ---
- t/t7507-commit-verbose.sh | 18 +++++++-----------
- 1 file changed, 7 insertions(+), 11 deletions(-)
+ Documentation/config.txt               |  5 +++++
+ Documentation/git-commit.txt           |  8 +++++++-
+ builtin/commit.c                       |  6 +++++-
+ contrib/completion/git-completion.bash |  1 +
+ t/t7507-commit-verbose.sh              | 36 ++++++++++++++++++++++++++++++++++
+ 5 files changed, 54 insertions(+), 2 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index cd2d651..ec51e1c 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1017,6 +1017,11 @@ commit.template::
+	"`~/`" is expanded to the value of `$HOME` and "`~user/`" to the
+	specified user's home directory.
+
++commit.verbose::
++	A boolean to enable/disable inclusion of diff information in the
++	commit message template when using an editor to prepare the commit
++	message.  Defaults to false.
++
+ credential.helper::
+	Specify an external helper to be called when a username or
+	password credential is needed; the helper may consult external
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 0bbc8f5..8cb3439 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -282,7 +282,13 @@ configuration variable documented in linkgit:git-config[1].
+	Show unified diff between the HEAD commit and what
+	would be committed at the bottom of the commit message
+	template.  Note that this diff output doesn't have its
+-	lines prefixed with '#'.
++	lines prefixed with '#'.  The `commit.verbose` configuration
++	variable can be set to true to implicitly send this option.
++
++--no-verbose::
++	Do not show the unified diff at the bottom of the commit message
++	template.  This is the default behavior, but can be used to override
++	the `commit.verbose` configuration variable.
+
+ -q::
+ --quiet::
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 99c2044..c5b20c6 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1489,6 +1489,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+		sign_commit = git_config_bool(k, v) ? "" : NULL;
+		return 0;
+	}
++	if (!strcmp(k, "commit.verbose")) {
++		verbose = git_config_bool(k, v);
++		return 0;
++	}
+
+	status = git_gpg_config(k, v, NULL);
+	if (status)
+@@ -1556,7 +1560,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+	static struct wt_status s;
+	static struct option builtin_commit_options[] = {
+		OPT__QUIET(&quiet, N_("suppress summary after successful commit")),
+-		OPT__VERBOSE(&verbose, N_("show diff in commit message template")),
++		OPT_BOOL('v', "verbose", &verbose, N_("show diff in commit message template")),
+
+		OPT_GROUP(N_("Commit message options")),
+		OPT_FILENAME('F', "file", &logfile, N_("read message from file")),
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2c59a76..b8f4b94 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1976,6 +1976,7 @@ _git_config ()
+		color.ui
+		commit.status
+		commit.template
++		commit.verbose
+		core.abbrev
+		core.askpass
+		core.attributesfile
 diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
-index db09107..35a4d06 100755
+index 35a4d06..512eef3 100755
 --- a/t/t7507-commit-verbose.sh
 +++ b/t/t7507-commit-verbose.sh
-@@ -6,7 +6,6 @@ test_description='verbose commit template'
- write_script check-for-diff <<-'EOF'
+@@ -7,6 +7,10 @@ write_script check-for-diff <<-'EOF'
 	exec grep '^diff --git' "$1"
  EOF
--test_set_editor "$PWD/check-for-diff"
 
++write_script check-for-no-diff <<-EOF
++	exec grep -v '^diff --git' "\$1"
++EOF
++
  cat >message <<'EOF'
  subject
-@@ -21,6 +20,7 @@ test_expect_success 'setup' '
- '
 
- test_expect_success 'initial commit shows verbose diff' '
-+	test_set_editor "$PWD/check-for-diff" &&
-	git commit --amend -v
- '
-
-@@ -36,11 +36,13 @@ check_message() {
- }
-
- test_expect_success 'verbose diff is stripped out' '
-+	test_set_editor "$PWD/check-for-diff" &&
-	git commit --amend -v &&
+@@ -48,6 +52,38 @@ test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
 	check_message message
  '
 
- test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
++test_expect_success 'commit shows verbose diff with commit.verbose true' '
++	echo morecontent >>file &&
++	git add file &&
++	test_config commit.verbose true &&
 +	test_set_editor "$PWD/check-for-diff" &&
-	test_config diff.mnemonicprefix true &&
-	git commit --amend -v &&
-	check_message message
-@@ -77,20 +79,14 @@ test_expect_success 'submodule log is stripped out too with -v' '
-		echo "more" >>file &&
-		git commit -a -m "submodule commit"
-	) &&
--	(
--		GIT_EDITOR=cat &&
--		export GIT_EDITOR &&
--		test_must_fail git commit -a -v 2>err
--	) &&
-+	test_set_editor cat &&
-+	test_must_fail git commit -a -v 2>err &&
-	test_i18ngrep "Aborting commit due to empty commit message." err
- '
-
- test_expect_success 'verbose diff is stripped out with set core.commentChar' '
--	(
--		GIT_EDITOR=cat &&
--		export GIT_EDITOR &&
--		test_must_fail git -c core.commentchar=";" commit -a -v 2>err
--	) &&
-+	test_set_editor cat &&
-+	test_must_fail git -c core.commentchar=";" commit -a -v 2>err &&
-	test_i18ngrep "Aborting commit due to empty commit message." err
- '
++	git commit --amend
++'
++
++test_expect_success 'commit --verbose overrides commit.verbose false' '
++	echo evenmorecontent >>file &&
++	git add file &&
++	test_config commit.verbose false  &&
++	test_set_editor "$PWD/check-for-diff" &&
++	git commit --amend --verbose
++'
++
++test_expect_success 'commit does not show verbose diff with commit.verbose false' '
++	echo evenmorecontent >>file &&
++	git add file &&
++	test_config commit.verbose false &&
++	test_set_editor "$PWD/check-for-no-diff" &&
++	git commit --amend
++'
++
++test_expect_success 'commit --no-verbose overrides commit.verbose true' '
++	echo evenmorecontent >>file &&
++	git add file &&
++	test_config commit.verbose true &&
++	test_set_editor "$PWD/check-for-no-diff" &&
++	git commit --amend --no-verbose
++'
++
+ cat >diff <<'EOF'
+ This is an example commit message that contains a diff.
 
 --
 2.0.0
