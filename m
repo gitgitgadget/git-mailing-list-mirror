@@ -1,62 +1,63 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v5 08/11] trace: add 'file:line' to all trace output
-Date: Wed, 11 Jun 2014 10:00:36 +0200
-Message-ID: <53980CA4.9050101@gmail.com>
+Subject: [PATCH v5 09/11] trace: add high resolution timer function
+ to debug performance issues
+Date: Wed, 11 Jun 2014 10:01:03 +0200
+Message-ID: <53980CBF.2060400@gmail.com>
 References: <53980B83.9050409@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
  Jeff King <peff@peff.net>
-X-From: msysgit+bncBCH3XYXLXQDBBJMZ4COAKGQEUFIEQSQ@googlegroups.com Wed Jun 11 10:00:38 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBJMZ4COAKGQEUFIEQSQ@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBQEZ4COAKGQEDZBCOAA@googlegroups.com Wed Jun 11 10:01:05 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBQEZ4COAKGQEDZBCOAA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f184.google.com ([209.85.217.184])
+Received: from mail-we0-f183.google.com ([74.125.82.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBJMZ4COAKGQEUFIEQSQ@googlegroups.com>)
-	id 1WudSY-0008EZ-IA
-	for gcvm-msysgit@m.gmane.org; Wed, 11 Jun 2014 10:00:38 +0200
-Received: by mail-lb0-f184.google.com with SMTP id n15sf928351lbi.1
-        for <gcvm-msysgit@m.gmane.org>; Wed, 11 Jun 2014 01:00:38 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBQEZ4COAKGQEDZBCOAA@googlegroups.com>)
+	id 1WudSz-0000AI-7F
+	for gcvm-msysgit@m.gmane.org; Wed, 11 Jun 2014 10:01:05 +0200
+Received: by mail-we0-f183.google.com with SMTP id w61sf188758wes.10
+        for <gcvm-msysgit@m.gmane.org>; Wed, 11 Jun 2014 01:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
          :in-reply-to:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=KEyIfrYJ0i4TtFMCjLcs9Sjp2kTtQpE8kT76kRxtYsU=;
-        b=Xy2SHKV5bHaA7OsClRKGh6oOs0MtAmJC6LYke7uSaV/jywi9hCUMK59a3lEI5qlBZa
-         PmngrjIdeSHEY7b4D0seQoJRR9W2GmZL7oR585GHUM3pljzWXouAsPFqIkY7UfuexHJ4
-         DEU3U/7Abyxo8x4xrFQrPvrYIL/Ro2/kiAE5pOtM2+z3WIQ/0JeRChsAoq3aWjWMIZ7X
-         vkrnr12We9fPbY4ihFQLWerZK6+R8+5psNPel9KU0Dbe+8GdobxLLvJ5ND6DwLpWRu7y
-         Sck+eMdZ61GNl5xR6IzszbqwvmRR6u8RRSIgi0qAYNfh5+cRMopBWYKhL/ckKiy3FTvB
-         kDXQ==
-X-Received: by 10.152.23.165 with SMTP id n5mr141153laf.5.1402473638400;
-        Wed, 11 Jun 2014 01:00:38 -0700 (PDT)
+        bh=xgtT2VCZEajsitXVN0vX5JX3UqGTpFFq4gTrxKNCXsg=;
+        b=IsnkKyqidOYOQmbRgIsq+JOuEU5ePF8mcAJMQ6dlnYY+HaZ5kpCyE3+2i6uEK4HUQV
+         x85bez5LfleOTM74sB9k1rsO42a1t9fB4lRilD3lp2c9pv2i1qe3c4qCzzMJmhOJnlRz
+         SY+ozRSXjmQPcITJSYXGql7DBV+NSg9G2WdhVy3IejrThOn/zEKdAUutfQ2/Ck1w/0Wd
+         gQQaMjR2cTzYF8ImKMaX7t8WbK20OgJnz2H96eg4bjFfn1Ehb4brGkSUwk3H9ClG9+lI
+         gtRqem5+xR7SkohOr+z9f8WajSUFiSDT0LfviZNZrPevQjNyZC6hlik/WU2TANmWt3R0
+         wlCg==
+X-Received: by 10.152.20.194 with SMTP id p2mr4647lae.24.1402473664955;
+        Wed, 11 Jun 2014 01:01:04 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.22.131 with SMTP id d3ls398392laf.95.gmail; Wed, 11 Jun
- 2014 01:00:37 -0700 (PDT)
-X-Received: by 10.152.8.194 with SMTP id t2mr48384laa.7.1402473637280;
-        Wed, 11 Jun 2014 01:00:37 -0700 (PDT)
-Received: from mail-we0-x232.google.com (mail-we0-x232.google.com [2a00:1450:400c:c03::232])
-        by gmr-mx.google.com with ESMTPS id x7si1266773wiw.1.2014.06.11.01.00.37
+Received: by 10.152.4.67 with SMTP id i3ls426783lai.81.gmail; Wed, 11 Jun 2014
+ 01:01:03 -0700 (PDT)
+X-Received: by 10.152.8.194 with SMTP id t2mr49229laa.7.1402473663974;
+        Wed, 11 Jun 2014 01:01:03 -0700 (PDT)
+Received: from mail-wg0-x22d.google.com (mail-wg0-x22d.google.com [2a00:1450:400c:c00::22d])
+        by gmr-mx.google.com with ESMTPS id pk3si852764wic.0.2014.06.11.01.01.03
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 11 Jun 2014 01:00:37 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::232 as permitted sender) client-ip=2a00:1450:400c:c03::232;
-Received: by mail-we0-f178.google.com with SMTP id p10so6618560wes.9
-        for <msysgit@googlegroups.com>; Wed, 11 Jun 2014 01:00:37 -0700 (PDT)
-X-Received: by 10.194.190.42 with SMTP id gn10mr49391980wjc.9.1402473637107;
-        Wed, 11 Jun 2014 01:00:37 -0700 (PDT)
+        Wed, 11 Jun 2014 01:01:03 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22d as permitted sender) client-ip=2a00:1450:400c:c00::22d;
+Received: by mail-wg0-f45.google.com with SMTP id l18so2534469wgh.28
+        for <msysgit@googlegroups.com>; Wed, 11 Jun 2014 01:01:03 -0700 (PDT)
+X-Received: by 10.194.91.175 with SMTP id cf15mr49198947wjb.5.1402473663860;
+        Wed, 11 Jun 2014 01:01:03 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id cj41sm57955153eeb.34.2014.06.11.01.00.35
+        by mx.google.com with ESMTPSA id d2sm14423153eeo.12.2014.06.11.01.01.02
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 11 Jun 2014 01:00:36 -0700 (PDT)
+        Wed, 11 Jun 2014 01:01:03 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
 In-Reply-To: <53980B83.9050409@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::232
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22d
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -69,247 +70,186 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251338>
 
-This is useful to see where trace output came from.
+Add a getnanotime() function that returns nanoseconds since 01/01/1970 as
+unsigned 64-bit integer (i.e. overflows in july 2554). This is easier to
+work with than e.g. struct timeval or struct timespec. Basing the timer on
+the epoch allows using the results (div 10e9) with other time-related APIs.
 
-Add 'const char *file, int line' parameters to the printing functions and
-rename them to *_fl.
+To simplify adaption to different platforms, split the implementation into
+a common getnanotime() and a platform-specific highres_nanos() function.
 
-Add trace_printf* and trace_strbuf macros resolving to the *_fl functions
-and let the preprocessor fill in __FILE__ and __LINE__.
+The common getnanotime() function handles errors, falling back to
+gettimeofday() if highres_nanos() isn't implemented or doesn't work.
 
-As the trace_printf* functions take a variable number of arguments, this
-requires variadic macros (i.e. '#define foo(...) foo_impl(__VA_ARGS__)'.
-Though part of C99, it is unclear whether older compilers support this.
-Thus keep the old functions and only enable variadic macros for GNUC and
-MSVC 2005+ (_MSC_VER 1400). This has the nice side effect that the old
-C-style declarations serve as documentation how the macros are to be used.
+getnanotime() is also responsible for normalizing to the epoch. The offset
+to the system clock is calculated only once on initialization, i.e.
+manually setting the system clock has no impact on the timer (except if
+the fallback gettimeofday() is in use). Git processes are typically short
+lived, so we don't need to handle clock drift.
+
+The highres_nanos() function returns monotonically increasing nanoseconds
+relative to some arbitrary point in time (e.g. system boot), or 0 on
+failure. Providing platform-specific implementations should be relatively
+easy, e.g. adapting to clock_gettime() as defined by the POSIX realtime
+extensions is seven lines of code.
+
+This version includes highres_nanos() implementations for:
+ * Linux: using clock_gettime(CLOCK_MONOTONIC)
+ * Windows: using QueryPerformanceCounter()
+
+Todo:
+ * enable clock_gettime() on more platforms
+ * add Mac OSX version, e.g. using mach_absolute_time + mach_timebase_info
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
- git-compat-util.h |  4 ++++
- trace.c           | 69 +++++++++++++++++++++++++++++++++++++++++++++----------
- trace.h           | 49 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 110 insertions(+), 12 deletions(-)
+ Makefile         |  7 +++++
+ config.mak.uname |  1 +
+ trace.c          | 82 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ trace.h          |  1 +
+ 4 files changed, 91 insertions(+)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 7849d31..e5a773b 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -700,6 +700,10 @@ void git_qsort(void *base, size_t nmemb, size_t size,
- #endif
- #endif
+diff --git a/Makefile b/Makefile
+index 07ea105..80f4390 100644
+--- a/Makefile
++++ b/Makefile
+@@ -340,6 +340,8 @@ all::
+ #
+ # Define GMTIME_UNRELIABLE_ERRORS if your gmtime() function does not
+ # return NULL when it receives a bogus time_t.
++#
++# Define HAVE_CLOCK_GETTIME if your platform has clock_gettime in librt.
  
-+#if defined(__GNUC__) || (_MSC_VER >= 1400)
-+#define HAVE_VARIADIC_MACROS 1
-+#endif
+ GIT-VERSION-FILE: FORCE
+ 	@$(SHELL_PATH) ./GIT-VERSION-GEN
+@@ -1497,6 +1499,11 @@ ifdef GMTIME_UNRELIABLE_ERRORS
+ 	BASIC_CFLAGS += -DGMTIME_UNRELIABLE_ERRORS
+ endif
+ 
++ifdef HAVE_CLOCK_GETTIME
++	BASIC_CFLAGS += -DHAVE_CLOCK_GETTIME
++	EXTLIBS += -lrt
++endif
 +
- /*
-  * Preserves errno, prints a message, but gives no warning for ENOENT.
-  * Always returns the return value of unlink(2).
+ ifeq ($(TCLTK_PATH),)
+ NO_TCLTK = NoThanks
+ endif
+diff --git a/config.mak.uname b/config.mak.uname
+index 1ae675b..dad2618 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -34,6 +34,7 @@ ifeq ($(uname_S),Linux)
+ 	HAVE_PATHS_H = YesPlease
+ 	LIBC_CONTAINS_LIBINTL = YesPlease
+ 	HAVE_DEV_TTY = YesPlease
++	HAVE_CLOCK_GETTIME = YesPlease
+ endif
+ ifeq ($(uname_S),GNU/kFreeBSD)
+ 	HAVE_ALLOCA_H = YesPlease
 diff --git a/trace.c b/trace.c
-index c86d33c..231e24a 100644
+index 231e24a..4bd52f2 100644
 --- a/trace.c
 +++ b/trace.c
-@@ -77,7 +77,8 @@ static void do_trace_print(const char *key, const struct strbuf *buf)
- 		close(fd);
- }
- 
--static int prepare_trace_line(const char *key, struct strbuf *buf)
-+static int prepare_trace_line(const char *file, int line, const char *key,
-+			      struct strbuf *buf)
- {
- 	struct timeval tv;
- 	struct tm tm;
-@@ -95,6 +96,11 @@ static int prepare_trace_line(const char *key, struct strbuf *buf)
- 	strbuf_addf(buf, "%02d:%02d:%02d.%06ld ", tm.tm_hour, tm.tm_min,
- 		    tm.tm_sec, tv.tv_usec);
- 
-+#ifdef HAVE_VARIADIC_MACROS
-+	/* print file:line */
-+	strbuf_addf(buf, "%s:%d ", file, line);
-+#endif
-+
+@@ -264,3 +264,85 @@ int trace_want(const char *key)
+ 		return 0;
  	return 1;
  }
- 
-@@ -108,49 +114,52 @@ static void print_trace_line(const char *key, struct strbuf *buf)
- 	strbuf_release(buf);
- }
- 
--static void trace_vprintf(const char *key, const char *format, va_list ap)
-+static void trace_vprintf_fl(const char *file, int line, const char *key,
-+			     const char *format, va_list ap)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 
--	if (!prepare_trace_line(key, &buf))
-+	if (!prepare_trace_line(file, line, key, &buf))
- 		return;
- 
- 	strbuf_vaddf(&buf, format, ap);
- 	print_trace_line(key, &buf);
- }
- 
--void trace_argv_printf(const char **argv, const char *format, ...)
-+static void trace_argv_vprintf_fl(const char *file, int line,
-+				  const char **argv, const char *format,
-+				  va_list ap)
- {
- 	struct strbuf buf = STRBUF_INIT;
--	va_list ap;
- 
--	if (!prepare_trace_line("GIT_TRACE", &buf))
-+	if (!prepare_trace_line(file, line, "GIT_TRACE", &buf))
- 		return;
- 
--	va_start(ap, format);
- 	strbuf_vaddf(&buf, format, ap);
--	va_end(ap);
- 
- 	sq_quote_argv(&buf, argv, 0);
- 	print_trace_line("GIT_TRACE", &buf);
- }
- 
--void trace_strbuf(const char *key, const struct strbuf *data)
-+void trace_strbuf_fl(const char *file, int line, const char *key,
-+		     const struct strbuf *data)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 
--	if (!prepare_trace_line(key, &buf))
-+	if (!prepare_trace_line(file, line, key, &buf))
- 		return;
- 
- 	strbuf_addbuf(&buf, data);
- 	print_trace_line(key, &buf);
- }
- 
-+#ifndef HAVE_VARIADIC_MACROS
 +
- void trace_printf(const char *format, ...)
- {
- 	va_list ap;
- 	va_start(ap, format);
--	trace_vprintf("GIT_TRACE", format, ap);
-+	trace_vprintf_fl(NULL, 0, "GIT_TRACE", format, ap);
- 	va_end(ap);
- }
- 
-@@ -158,10 +167,46 @@ void trace_printf_key(const char *key, const char *format, ...)
- {
- 	va_list ap;
- 	va_start(ap, format);
--	trace_vprintf(key, format, ap);
-+	trace_vprintf_fl(NULL, 0, key, format, ap);
- 	va_end(ap);
- }
- 
-+void trace_argv_printf(const char **argv, const char *format, ...)
++#ifdef HAVE_CLOCK_GETTIME
++
++static inline uint64_t highres_nanos(void)
 +{
-+	va_list ap;
-+	va_start(ap, format);
-+	trace_argv_vprintf_fl(NULL, 0, argv, format, ap);
-+	va_end(ap);
++	struct timespec ts;
++	if (clock_gettime(CLOCK_MONOTONIC, &ts))
++		return 0;
++	return (uint64_t) ts.tv_sec * 1000000000 + ts.tv_nsec;
 +}
 +
-+void trace_strbuf(const char *key, const struct strbuf *data)
++#elif defined (GIT_WINDOWS_NATIVE)
++
++static inline uint64_t highres_nanos(void)
 +{
-+	trace_strbuf_fl(NULL, 0, key, data);
++	static uint64_t high_ns, scaled_low_ns;
++	static int scale;
++	LARGE_INTEGER cnt;
++
++	if (!scale) {
++		if (!QueryPerformanceFrequency(&cnt))
++			return 0;
++
++		/* high_ns = number of ns per cnt.HighPart */
++		high_ns = (1000000000LL << 32) / (uint64_t) cnt.QuadPart;
++
++		/*
++		 * Number of ns per cnt.LowPart is 10^9 / frequency (or
++		 * high_ns >> 32). For maximum precision, we scale this factor
++		 * so that it just fits within 32 bit (i.e. won't overflow if
++		 * multiplied with cnt.LowPart).
++		 */
++		scaled_low_ns = high_ns;
++		scale = 32;
++		while (scaled_low_ns >= 0x100000000LL) {
++			scaled_low_ns >>= 1;
++			scale--;
++		}
++	}
++
++	/* if QPF worked on initialization, we expect QPC to work as well */
++	QueryPerformanceCounter(&cnt);
++
++	return (high_ns * cnt.HighPart) +
++	       ((scaled_low_ns * cnt.LowPart) >> scale);
 +}
 +
 +#else
++# define highres_nanos() 0
++#endif
 +
-+void trace_printf_key_fl(const char *file, int line, const char *key,
-+			 const char *format, ...)
++static inline uint64_t gettimeofday_nanos(void)
 +{
-+	va_list ap;
-+	va_start(ap, format);
-+	trace_vprintf_fl(file, line, key, format, ap);
-+	va_end(ap);
++	struct timeval tv;
++	gettimeofday(&tv, NULL);
++	return (uint64_t) tv.tv_sec * 1000000000 + tv.tv_usec * 1000;
 +}
 +
-+void trace_argv_printf_fl(const char *file, int line, const char **argv,
-+			  const char *format, ...)
++/*
++ * Returns nanoseconds since the epoch (01/01/1970), for performance tracing
++ * (i.e. favoring high precision over wall clock time accuracy).
++ */
++inline uint64_t getnanotime(void)
 +{
-+	va_list ap;
-+	va_start(ap, format);
-+	trace_argv_vprintf_fl(file, line, argv, format, ap);
-+	va_end(ap);
++	static uint64_t offset;
++	if (offset > 1) {
++		/* initialization succeeded, return offset + high res time */
++		return offset + highres_nanos();
++	} else if (offset == 1) {
++		/* initialization failed, fall back to gettimeofday */
++		return gettimeofday_nanos();
++	} else {
++		/* initialize offset if high resolution timer works */
++		uint64_t now = gettimeofday_nanos();
++		uint64_t highres = highres_nanos();
++		if (highres)
++			offset = now - highres;
++		else
++			offset = 1;
++		return now;
++	}
 +}
-+
-+#endif /* HAVE_VARIADIC_MACROS */
-+
-+
- static const char *quote_crnl(const char *path)
- {
- 	static char new_path[PATH_MAX];
 diff --git a/trace.h b/trace.h
-index 5c7f2dc..916dc2b 100644
+index 916dc2b..c4964aa 100644
 --- a/trace.h
 +++ b/trace.h
-@@ -7,6 +7,8 @@
+@@ -6,6 +6,7 @@
+ 
  extern void trace_repo_setup(const char *prefix);
  extern int trace_want(const char *key);
++extern uint64_t getnanotime(void);
  
-+#ifndef HAVE_VARIADIC_MACROS
-+
- __attribute__((format (printf, 1, 2)))
- extern void trace_printf(const char *format, ...);
+ #ifndef HAVE_VARIADIC_MACROS
  
-@@ -18,4 +20,51 @@ extern void trace_argv_printf(const char **argv, const char *format, ...);
- 
- extern void trace_strbuf(const char *key, const struct strbuf *data);
- 
-+#else
-+
-+/*
-+ * Macros to add file:line - see above for C-style declarations of how these
-+ * should be used.
-+ */
-+
-+/*
-+ * Note: with C99 variadic macros, __VA_ARGS__ must include the last fixed
-+ * parameter ('format' in this case). Otherwise, a call without variable
-+ * arguments will have a surplus ','. E.g.:
-+ *
-+ *  #define foo(format, ...) bar(format, __VA_ARGS__)
-+ *  foo("test");
-+ *
-+ * will expand to
-+ *
-+ *  bar("test",);
-+ *
-+ * which is invalid (note the ',)'). With GNUC, '##__VA_ARGS__' drops the
-+ * comma, but this is non-standard.
-+ */
-+
-+#define trace_printf(...) \
-+	trace_printf_key_fl(__FILE__, __LINE__, "GIT_TRACE", __VA_ARGS__)
-+
-+#define trace_printf_key(key, ...) \
-+	trace_printf_key_fl(__FILE__, __LINE__, key, __VA_ARGS__)
-+
-+#define trace_argv_printf(argv, ...) \
-+	trace_argv_printf_fl(__FILE__, __LINE__, argv, __VA_ARGS__)
-+
-+#define trace_strbuf(key, data) \
-+	trace_strbuf_fl(__FILE__, __LINE__, key, data)
-+
-+/* backend functions, use non-*fl macros instead */
-+__attribute__((format (printf, 4, 5)))
-+extern void trace_printf_key_fl(const char *file, int line, const char *key,
-+				const char *format, ...);
-+__attribute__((format (printf, 4, 5)))
-+extern void trace_argv_printf_fl(const char *file, int line, const char **argv,
-+				 const char *format, ...);
-+extern void trace_strbuf_fl(const char *file, int line, const char *key,
-+			    const struct strbuf *data);
-+
-+#endif /* HAVE_VARIADIC_MACROS */
-+
- #endif /* TRACE_H */
 -- 
 1.9.2.msysgit.0.501.gaeecf09
 
