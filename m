@@ -1,89 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v15 00/48] Use ref transactions
-Date: Thu, 12 Jun 2014 15:15:30 -0700
-Message-ID: <xmqqoaxx4vwd.fsf@gitster.dls.corp.google.com>
-References: <1402439376-25839-1-git-send-email-sahlberg@google.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v3 1/2] add strbuf_set operations
+Date: Thu, 12 Jun 2014 16:14:17 -0700
+Message-ID: <20140612231417.GA17803@hudson.localdomain>
+References: <cover.1402557437.git.jmmahler@gmail.com>
+ <f4d043b7c1e00f9c967faff39244274fe40fd371.1402557437.git.jmmahler@gmail.com>
+ <539960B8.1080709@virtuell-zuhause.de>
+ <20140612082218.GA5419@hudson.localdomain>
+ <xmqqmwdi55co.fsf@gitster.dls.corp.google.com>
+ <20140612193642.GB17077@hudson.localdomain>
+ <CAPig+cT_StMkTgEd-RVpm=4e_A23zj+V5k83PhMtaN=tr4GBzA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 00:15:47 2014
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 01:14:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvDHY-0000Vq-SL
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 00:15:41 +0200
+	id 1WvECO-0003VX-S6
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 01:14:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751117AbaFLWPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 18:15:37 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51168 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750773AbaFLWPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 18:15:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C43D61E67E;
-	Thu, 12 Jun 2014 18:15:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Vcxfb50bV0Ox+HS8EFA9dfxq0PI=; b=gFkCm0
-	zhDihHMJMEyouBMs/MrShe0Qc2RyfcLw9t9uvBSrgUXBew3+E65UXWL0uObTNE7+
-	5Qmjr7PHcPBKVipn/UvS6xPc6kDi5dYrRUBN3Yet/lGNRgX4iz+sEOB5bDfj0dKA
-	2qfK2IM9gxmjPxZsk32GaK4IH5b4eQcE3BQRU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Vnh6+C7G+cca8ARpbRh+dVMapxZFXdmE
-	CYlHU2YxTvV4gzzOVextUpYNpTPG9JptXD74QP78Jm26m/RfKoyxfG0boRsYpful
-	1RNuROL8GRX6oEtF9hj3d/GmvLjILpub1MpGv44wctqCnuy1gUzlpRHUZeStwaSw
-	k0pG1rTi67M=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B9AD51E67D;
-	Thu, 12 Jun 2014 18:15:35 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C013F1E674;
-	Thu, 12 Jun 2014 18:15:31 -0400 (EDT)
-In-Reply-To: <1402439376-25839-1-git-send-email-sahlberg@google.com> (Ronnie
-	Sahlberg's message of "Tue, 10 Jun 2014 15:28:48 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1166D83A-F27F-11E3-91E2-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750867AbaFLXOV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 19:14:21 -0400
+Received: from mail-pb0-f52.google.com ([209.85.160.52]:37284 "EHLO
+	mail-pb0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750795AbaFLXOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 19:14:20 -0400
+Received: by mail-pb0-f52.google.com with SMTP id rr13so1495383pbb.25
+        for <git@vger.kernel.org>; Thu, 12 Jun 2014 16:14:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=kCIBsi4tqRdmA4wloDLllpWCL6199wzBeMBypRZoOpo=;
+        b=k5NZXh1wqEziiNKnJWDWpvn2MwW7O2bPUHmvmMMvyRpamizAPjK4aA1lLdzW3cw98L
+         fdvm5NbKbSDWL2eDfFecbXJgR6U5OJ1Xlx1RaTw6R+WjXyOnBucHlZyN5Ns6oxE5CwKN
+         yvczpxz4gHRTeA0my7W+ctawtMp5HjAsBrLhkEh9jWNCC5wvIHTJ/cjxL/0vFDgDCOOi
+         6mm2zee0HfpHiTT6yYnAC4DjL7a62XtOappPtKkeIV745dkCnXG1Pw2Z0YGOoripVo5z
+         2kTTVjBRmMHzdlP+2GP5nFRnZrKKOAFkQzJQxyn6r5dQrtF7YvfqOkmenC4LkHQ27SeC
+         3RDQ==
+X-Received: by 10.66.254.166 with SMTP id aj6mr24952915pad.11.1402614859876;
+        Thu, 12 Jun 2014 16:14:19 -0700 (PDT)
+Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id zc10sm11519609pac.46.2014.06.12.16.14.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Jun 2014 16:14:18 -0700 (PDT)
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT_StMkTgEd-RVpm=4e_A23zj+V5k83PhMtaN=tr4GBzA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251504>
 
-Ronnie Sahlberg <sahlberg@google.com> writes:
+On Thu, Jun 12, 2014 at 05:18:29PM -0400, Eric Sunshine wrote:
+> On Thu, Jun 12, 2014 at 3:36 PM, Jeremiah Mahler <jmmahler@gmail.com> wrote:
+> > On Thu, Jun 12, 2014 at 11:51:19AM -0700, Junio C Hamano wrote:
+> >> Jeremiah Mahler <jmmahler@gmail.com> writes:
+> >>
+> >> > Thomas,
+> >> >
+> >> > On Thu, Jun 12, 2014 at 10:11:36AM +0200, Thomas Braun wrote:
+> >> >> Am 12.06.2014 09:29, schrieb Jeremiah Mahler:
+> >> >> > A common use case with strubfs is to set the buffer to a new value.
+> >>
+> >> strubfs???
+> >>
+> > I was trying to make it plural.  Perhaps strbuf's?
+> 
+> Junio was pointing out your misspelling, not your intention to pluralize.
 
-> Final version.
->
-> This patch series can also be found at
-> https://github.com/rsahlberg/git/tree/ref-transactions
->
-> This patch series is based on next and expands on the transaction API. It
-> converts all ref updates, inside refs.c as well as external, to use the
-> transaction API for updates. This makes most of the ref updates to become
-> atomic when there are failures locking or writing to a ref.
->
-> This version completes the work to convert all ref updates to use transactions.
-> Now that all updates are through transactions I will start working on
-> cleaning up the reading of refs and to create an api for managing reflogs but
-> all that will go in a different patch series.
+OK, got it.
 
-As this seems to be based on the old 'next' before it got rewound,
-it was a bit painful to rebase it on top of 'master' (so that it
-won't have to wait for other topics if we wanted to graduate it
-earlier than others).  It also had interactions with various topics
-still in flight in 'pu'.  I managed to coax it on 'pu' somewhere
-above the commit that is equivalent to 'next', but I am reasonably
-sure there are mismerges, as the conflicts were many X-<.
-
-I'd appreciate it if you can eyeball the result with
-
-  $ git show --first-parent -m 'origin/pu^{/^Merge branch .rs/ref-transactions}'
-
-when I push it out.
-
-Thanks.
+-- 
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
