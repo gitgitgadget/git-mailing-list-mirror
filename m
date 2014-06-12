@@ -1,119 +1,147 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 01/19] add strbuf_set operations
-Date: Thu, 12 Jun 2014 12:21:48 +0200
-Message-ID: <53997F3C.9010608@alum.mit.edu>
-References: <cover.1402348696.git.jmmahler@gmail.com> <6fe33498512fc2ca1678517e51dc2e94a4260ff4.1402348696.git.jmmahler@gmail.com> <5398460F.3040900@alum.mit.edu> <20140612071045.GC25353@hudson.localdomain>
+From: Caleb Thompson <caleb@calebthompson.io>
+Subject: Re: [PATCH v4 1/4] commit test: Use test_config instead of git-config
+Date: Thu, 12 Jun 2014 08:51:31 -0500
+Message-ID: <20140612135051.GA35824@sirius.local>
+References: <1402511079-17735-1-git-send-email-caleb@calebthompson.io>
+ <1402511079-17735-2-git-send-email-caleb@calebthompson.io>
+ <20140612084152.GA6095@hudson.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qcHopEYAB45HaUaB"
 To: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 12:21:59 2014
+X-From: git-owner@vger.kernel.org Thu Jun 12 15:51:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wv28r-0005cS-JV
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 12:21:57 +0200
+	id 1Wv5Po-000239-8s
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 15:51:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932983AbaFLKVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 06:21:53 -0400
-Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:46929 "EHLO
-	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932894AbaFLKVw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jun 2014 06:21:52 -0400
-X-AuditID: 1207440f-f79536d000000bcf-05-53997f3f21d2
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id C8.7E.03023.F3F79935; Thu, 12 Jun 2014 06:21:51 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC964CF.dip0.t-ipconnect.de [79.201.100.207])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5CALnfc005241
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 12 Jun 2014 06:21:50 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <20140612071045.GC25353@hudson.localdomain>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprMKsWRmVeSWpSXmKPExsUixO6iqGtfPzPYYOF3dYuuK91MFm8e5Tow
-	eeycdZfd4/MmuQCmKG6bpMSSsuDM9Dx9uwTujNlr9jEWLBOo2NZ8nbmBsYu3i5GTQ0LARGJv
-	705WCFtM4sK99WxdjFwcQgKXGSX+NyxihHAuMElMfXOQBaSKV0BbYvPcbjYQm0VAVWLm941g
-	NpuArsSinmYmEFtUIEhi9ud57BD1ghInZz4B6xURsJX4erIRbJuwgLnEgeWfWSEWnGOUOLjj
-	CTNIglPAQmLpnGNAgziAThKX6GkMAgkzC+hIvOt7wAxhy0tsfzuHeQKjwCwkK2YhKZuFpGwB
-	I/MqRrnEnNJc3dzEzJzi1GTd4uTEvLzUIl0TvdzMEr3UlNJNjJBA5d/B2LVe5hCjAAejEg8v
-	Q+2MYCHWxLLiytxDjJIcTEqivHUVM4OF+JLyUyozEosz4otKc1KLDzFKcDArifB6pAHleFMS
-	K6tSi/JhUtIcLErivOpL1P2EBNITS1KzU1MLUotgsjIcHEoSvIdrgRoFi1LTUyvSMnNKENJM
-	HJwgw7mkRIpT81JSixJLSzLiQbEaXwyMVpAUD9Be9jqQvcUFiblAUYjWU4y6HKfuHGtjEmLJ
-	y89LlRLnPVwDVCQAUpRRmge3ApaWXjGKA30szHsN5BIeYEqDm/QKaAkT0JLXntNBlpQkIqSk
-	Ghjn/BBRXc4eeUUgK7b04PtLyo89pa/er10Y1eGyX9vniVrXg4Oblf7ZfXVyOJcTL2KzdUai
-	2eP3kW3lr5T4CpzvyfiF5a5LS2r4auTAdmfmL90XHtnHkzg/dc6ZYHT5RI5gkUrD 
+	id S933888AbaFLNvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 09:51:36 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:56647 "EHLO
+	new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933885AbaFLNvd (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jun 2014 09:51:33 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id DE8D163C
+	for <git@vger.kernel.org>; Thu, 12 Jun 2014 09:51:32 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 12 Jun 2014 09:51:32 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=calebthompson.io;
+	 h=date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=mesmtp; bh=v7RV/itSdYdhdALfseHSavNE
+	rXc=; b=imJpftDL8+4MOYojq5+SYfsf+AI6J5/NwowjSj2cOblA3kdwyT7n5po/
+	NjAKCPlDd+p97ttsvniuanswe85Kn7UOk2BdsukQucSl1ZGhcFl2QFprYwveTteb
+	oXQKZ54DMO5Ug5EAd8UwvUFNYS5axqtj0PmZ2nE3bM5n07Zp5kE=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=date:from:to:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=smtpout;
+	 bh=v7RV/itSdYdhdALfseHSavNErXc=; b=JLB/XjSZNfPg4kh9X7WW3vNmIua7
+	eYCY5UVoiaSc/LJzY+pv++S9bFGqlIGfR3x8IcFIVPoAakoOyF9GpQoCxAbMV22H
+	/wuAUDA+JpIn7p+vgCRnuNy99jvPBOlDFpjYDJRpg9FWXikf53uwEly71BiON1AH
+	5XFQ5n+halYNWVU=
+X-Sasl-enc: 62G/ltB/CG1dpGgcKlkegZMYwqWH9sGdRlN1nGOEZbnI 1402581092
+Received: from localhost (unknown [67.78.97.126])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 56DD4C007AA;
+	Thu, 12 Jun 2014 09:51:32 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20140612084152.GA6095@hudson.localdomain>
+X-PGP-Key: fp="B432 C068 2FD1 C2D0 6A8B 3951 1621 ADC2 A0AC E70A";
+ id="0xA0ACE70A"; get=<http://calebthompson.io/pubkey.asc>;
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251406>
 
-On 06/12/2014 09:10 AM, Jeremiah Mahler wrote:
-> On Wed, Jun 11, 2014 at 02:05:35PM +0200, Michael Haggerty wrote:
->> [...]
->> If there were a function like strbuf_grow_to(sb, len):
->>
->> void strbuf_grow_to(struct strbuf *sb, size_t len)
->> {
->> 	int new_buf = !sb->alloc;
->> 	if (unsigned_add_overflows(len, 1))
->> 		die("you want to use way too much memory");
->> 	if (new_buf)
->> 		sb->buf = NULL;
->> 	ALLOC_GROW(sb->buf, len + 1, sb->alloc);
->> 	if (new_buf)
->> 		sb->buf[0] = '\0';
->> }
->>
-> grow_to() which could reduce in size, interesting.
 
-I don't understand what you mean by "could reduce in size".  This
-function can only grow, never reduce, the size of the strbuf, because
-ALLOC_GROW doesn't do anything unless the requested size is larger than
-the currently-allocated size.
+--qcHopEYAB45HaUaB
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
->> (strbuf_grow() could call it:
->>
->> static inline void strbuf_grow(struct strbuf *sb, size_t extra)
->> {
->> 	if (unsigned_add_overflows(sb->len, extra))
->> 		die("you want to use way too much memory");
->> 	strbuf_grow_to(sb, sb->len + extra);
->> }
->>
->> ), then your function could be minimized to
->>
->> void strbuf_set(struct strbuf *sb, const void *data, size_t len)
->> {
->> 	strbuf_grow_to(sb, len);
->> 	memcpy(sb->buf, data, len);
->> 	strbuf_setlen(sb, len);
->> }
->>
->> I think strbuf_grow_to() would be useful in other situations too.
->>
->> This is just an idea; I'm not saying that you have to make this change.
->>
-> I like your idea.  I am leaning towards doing the un-optimized
-> strbuf_set operations first, then optimizing in a later patch.
+I assume that you're running it against master?
 
-That's a good plan.
+I rebased the branch yesterday, but I'll give it another shot. Obviously I
+didn't use git-am, but I can try that.
 
-In case you're interested, I sketched what the strbuf_grow_to() changes
-might look like, and also looked for other places in the code where
-strbuf_grow_to() could be used instead of strbuf_grow() [1].  This is
-only a sketch; I haven't even tested the result.  Feel free to use what
-you want from it.
+Caleb Thompson
 
-Michael
+On Thu, Jun 12, 2014 at 01:41:52AM -0700, Jeremiah Mahler wrote:
+> On Wed, Jun 11, 2014 at 01:24:36PM -0500, caleb@calebthompson.io wrote:
+> > Some of the tests in t/t7507-commit-verbose.sh were still using
+> > git-config to set configuration. Change them to use the test_config
+> > helper.
+> >
+> > Signed-off-by: Caleb Thompson <caleb@calebthompson.io>
+> > ---
+> >  t/t7507-commit-verbose.sh | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+> > index 2ddf28c..6d778ed 100755
+> > --- a/t/t7507-commit-verbose.sh
+> > +++ b/t/t7507-commit-verbose.sh
+> > @@ -43,7 +43,7 @@ test_expect_success 'verbose diff is stripped out' '
+> >  '
+> >
+> >  test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
+> > -	git config diff.mnemonicprefix true &&
+> > +	test_config diff.mnemonicprefix true &&
+> >	git commit --amend -v &&
+> >	check_message message
+> >  '
+> > @@ -71,7 +71,7 @@ test_expect_success 'diff in message is retained with -v' '
+> >  '
+> >
+> >  test_expect_success 'submodule log is stripped out too with -v' '
+> > -	git config diff.submodule log &&
+> > +	test_config diff.submodule log &&
+> >	git submodule add ./. sub &&
+> >	git commit -m "sub added" &&
+> >	(
+> > --
+> > 2.0.0
+> >
+>
+> It is probably something dumb on my part but for some reason I cannot
+> apply this patch using 'git am'.  After I save the patch to a Maildir
+> from Mutt and run git am...
+>
+>   jeri@hudson:~/git$ ./git-am ct1.patch
+>   Applying: commit test: Use test_config instead of git-config
+>   fatal: corrupt patch at line 15
+>   Patch failed at 0001 commit test: Use test_config instead of git-config
+>   The copy of the patch that failed is found in:
+>      /home/jeri/git/.git/rebase-apply/patch
+>   When you have resolved this problem, run "git am --continue".
+>   If you prefer to skip this patch, run "git am --skip" instead.
+>   To restore the original branch and stop patching, run "git am --abort".
+>   jeri@hudson:~/git$
+>
+> The second patch in the series applies fine.  And I have applied other
+> patches this way without issue.  Can anyone confirm this problem?
+>
+> --
+> Jeremiah Mahler
+> jmmahler@gmail.com
+> http://github.com/jmahler
 
-[1] Branch "strbuf-grow-to-sketch" on https://github.com/mhagger/git
+--qcHopEYAB45HaUaB
+Content-Type: application/pgp-signature
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJTmbBjAAoJEBYhrcKgrOcKYD0H/jd1Af03IN/u5RSqewji9kBK
+vMZ7UIXS/6YUdoIcEUATUUkujOhbdqf3ghKDa+Nv7E3g7Dq7O05bA5SF+DcB+Qps
+rib+Ick3UzEYXIdnwy7kX2Ma8LHyM5KFM7220c44LSwd1VWdy7i5aXM3Rh+ucVvR
+GvXSzverrSHtwpJtxXx3ap5qy3DvlFUL1WjhVeAm79r5ATkH552EAZwBPmn+NLtr
+n5UroMlH8HlvrHojBWcxu5WF0LpgNEuILrKY2oGnhphP0wQb0+X4rQzjCHQ6E74u
+FUHyTYg+9pt3WdKVtdSwSwd3O6lF2iE3XRWTAqGbV4FO2+j01HmeCpEySSapCjI=
+=X3Lr
+-----END PGP SIGNATURE-----
+
+--qcHopEYAB45HaUaB--
