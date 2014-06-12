@@ -1,112 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 15/17] commit-slab: provide a static initializer
-Date: Thu, 12 Jun 2014 11:15:49 -0700
-Message-ID: <xmqq7g4m6lka.fsf@gitster.dls.corp.google.com>
-References: <20140610213509.GA26979@sigill.intra.peff.net>
-	<20140610214251.GO19147@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 12 20:16:06 2014
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] l10n: de.po: improve message when switching branches
+Date: Thu, 12 Jun 2014 20:21:30 +0200
+Message-ID: <1402597290-9374-1-git-send-email-ralf.thielow@gmail.com>
+References: <5399EA72.7060609@gmail.com>
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
+	Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org, stefanbeller@gmail.com
+X-From: git-owner@vger.kernel.org Thu Jun 12 20:21:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wv9Xd-0003f0-Hg
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 20:16:01 +0200
+	id 1Wv9d5-00016d-EU
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 20:21:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750963AbaFLSP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 14:15:57 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64911 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750730AbaFLSP4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 14:15:56 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 933071DC12;
-	Thu, 12 Jun 2014 14:15:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=cGzhePJ3Z8BcU2RmBrJErfXxzbk=; b=nzm9Jc
-	uDxMhNryKPVCla5SY++WFQQBsMhktTAq2wTvsWdkcbipYSzWnqgO8cAj50ZbwRPn
-	HpUT2WySjihF0USGXZEoS8yw+c3G31DZuMRqEOnmRqhEL0li7q61Zfk4BgB2w4mI
-	xJj/+l5UFBmxayZCjoV66JevSN7+32JQMw+lk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=i+wgoj3kTG/BU0qI58oxdWbi830pMIKX
-	fJMEOhHQkxM1bB/0yyXRMDNwr/BQR8glifJ4NgehaU5Ax4QKs3I8R8EzCvDdd3o5
-	v7jL7nIYbt2crGsZAPEc9iUiI3KmfrSRCBAo43fbGUbiPreaiFRCocO7x3GBMzyx
-	3AM11hnKshk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 886C91DC11;
-	Thu, 12 Jun 2014 14:15:55 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 83EC71DC0C;
-	Thu, 12 Jun 2014 14:15:51 -0400 (EDT)
-In-Reply-To: <20140610214251.GO19147@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 10 Jun 2014 17:42:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 961C1D00-F25D-11E3-818E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750828AbaFLSVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 14:21:35 -0400
+Received: from mail-we0-f175.google.com ([74.125.82.175]:65190 "EHLO
+	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716AbaFLSVf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 14:21:35 -0400
+Received: by mail-we0-f175.google.com with SMTP id k48so962186wev.20
+        for <git@vger.kernel.org>; Thu, 12 Jun 2014 11:21:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=yug66s8mgIpV719NuOd2SKJp8iQn389x07PF0b6pWiM=;
+        b=fzvBMpcCS0cRzZP4dShKMUOF0GicjT+hNntfaIip7NgEKxfeBeohxUyZpcTOyroOPi
+         huuGUfxr5uGCHCJav1XN+iGsg6TWw/z+DD1GWeRDVocXYjO860oC0TelWBv/IjVQ2ozH
+         kiWy/y0yrnf4Nkpp4GwF76TvU2at7rc+76ccvcZvGdSSwdG74iYikL4LpaI0a5aPLK6M
+         zidCK0ZrywAlTPEytjqMrV/dCo0zrZAzHMaO9eRZ6P0YCpWo5PsjouVn0R8tThX/+EkN
+         USD9/ndu7rBAOvDIzrPqc/sWIW+hn1czG3PlVDlG72C29LqiG0hykl5piJpHWX9OuBvP
+         H3kg==
+X-Received: by 10.194.186.178 with SMTP id fl18mr36392863wjc.83.1402597293598;
+        Thu, 12 Jun 2014 11:21:33 -0700 (PDT)
+Received: from localhost (dslb-088-072-176-011.pools.arcor-ip.net. [88.72.176.11])
+        by mx.google.com with ESMTPSA id j44sm6248587eeg.30.2014.06.12.11.21.32
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 12 Jun 2014 11:21:33 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.415.g8cd8cf8
+In-Reply-To: <5399EA72.7060609@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251471>
 
-Jeff King <peff@peff.net> writes:
+Suggested-by: Stefan Beller <stefanbeller@gmail.com>
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
 
-> Callers currently must use init_foo_slab() at runtime before
-> accessing a slab. For global slabs, it's much nicer if we
-> can initialize them in BSS, so that each user does not have
-> to add code to check-and-initialize.
+Am 12. Juni 2014 19:59 schrieb Stefan Beller <stefanbeller@gmail.com>:
+> On 12.06.2014 18:12, Ralf Thielow wrote:
+>> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+>>  #, c-format
+>>  msgid "Switched to a new branch '%s'\n"
+>> -msgstr "Gewechselt zu einem neuem Branch '%s'\n"
+>> +msgstr "Gewechselt zu einem neuen Branch '%s'\n"
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> There was no comment on this one in v1. I'd be curious if anyone has
-> comments on what I wrote in:
->
->   http://article.gmane.org/gmane.comp.version-control.git/251099
+> How about ?
+> +msgstr "Zu neuem Branch '%s' gewechselt\n"
 
-Why do we need an initialiser at this point (in other words, how
-have other existing slab users coped without having one)?
+Much better. Thanks!
 
-I think they call init_*_slab() when the slab is needed/used the
-first time (e.g. it is not even worth initialising indegree slab
-unless we are sorting in topo order).
+ po/de.po | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Unlike the author-date and indegree slabs, there are too many entry
-points that may want access to the buffer slab (save_commit_buffer's
-default being on does not help us either), so it would be much less
-error prone to always initialise a static slab like this patch does,
-I guess.
-
-
->  commit-slab.h | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/commit-slab.h b/commit-slab.h
-> index cc114b5..375c9c7 100644
-> --- a/commit-slab.h
-> +++ b/commit-slab.h
-> @@ -117,4 +117,16 @@ static int stat_ ##slabname## realloc
->   * catch because GCC silently parses it by default.
->   */
->  
-> +/*
-> + * Statically initialize a commit slab named "var". Note that this
-> + * evaluates "stride" multiple times! Example:
-> + *
-> + *   struct indegree indegrees = COMMIT_SLAB_INIT(1, indegrees);
-> + *
-> + */
-> +#define COMMIT_SLAB_INIT(stride, var) { \
-> +	COMMIT_SLAB_SIZE / sizeof(**((var).slab)) / (stride), \
-> +	(stride), 0, NULL \
-> +}
-> +
->  #endif /* COMMIT_SLAB_H */
+diff --git a/po/de.po b/po/de.po
+index b777ef4..f7ecd1e 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -3498,17 +3498,17 @@ msgstr "Bereits auf '%s'\n"
+ #: builtin/checkout.c:646
+ #, c-format
+ msgid "Switched to and reset branch '%s'\n"
+-msgstr "Gewechselt zu umgesetzten Branch '%s'\n"
++msgstr "Zu umgesetztem Branch '%s' gewechselt\n"
+ 
+ #: builtin/checkout.c:648 builtin/checkout.c:1033
+ #, c-format
+ msgid "Switched to a new branch '%s'\n"
+-msgstr "Gewechselt zu einem neuem Branch '%s'\n"
++msgstr "Zu neuem Branch '%s' gewechselt\n"
+ 
+ #: builtin/checkout.c:650
+ #, c-format
+ msgid "Switched to branch '%s'\n"
+-msgstr "Gewechselt zu Branch '%s'\n"
++msgstr "Zu Branch '%s' gewechselt\n"
+ 
+ #: builtin/checkout.c:706
+ #, c-format
+-- 
+2.0.0.415.g8cd8cf8
