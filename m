@@ -1,120 +1,136 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH v4 1/4] commit test: Use test_config instead of git-config
-Date: Thu, 12 Jun 2014 11:46:37 -0700
-Message-ID: <20140612184637.GA16641@hudson.localdomain>
-References: <1402511079-17735-1-git-send-email-caleb@calebthompson.io>
- <1402511079-17735-2-git-send-email-caleb@calebthompson.io>
- <20140612084152.GA6095@hudson.localdomain>
- <20140612135051.GA35824@sirius.local>
- <20140612180459.GA15556@hudson.localdomain>
- <20140612180830.GB15556@hudson.localdomain>
- <20140612182341.GA42013@sirius.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Caleb Thompson <caleb@calebthompson.io>
-X-From: git-owner@vger.kernel.org Thu Jun 12 20:46:46 2014
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH v2] completion: Handle '!f() { ... }; f' and "!sh -c '...'" aliases
+Date: Thu, 12 Jun 2014 20:49:29 +0200
+Message-ID: <1402598969-31401-1-git-send-email-prohaska@zib.de>
+References: <62610ABB-4ED5-4CF1-B5B2-B89C9DD22FBD@zib.de>
+Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+	Steffen Prohaska <prohaska@zib.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 20:50:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvA1N-0001ou-1o
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 20:46:45 +0200
+	id 1WvA4f-0005NR-QU
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 20:50:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751163AbaFLSql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 14:46:41 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:52100 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750886AbaFLSqk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 14:46:40 -0400
-Received: by mail-pd0-f172.google.com with SMTP id fp1so1235913pdb.17
-        for <git@vger.kernel.org>; Thu, 12 Jun 2014 11:46:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=eTClG+RPUYAntmamqtfvbvu5JNuKv1yN3tt2bhnFgJ0=;
-        b=wb2EPo/Dz1mRJS+6H/QKhbQTDL7LlQqcL1vJ06enfBqY6ezGGNc9JBRocWOvv6zhda
-         d38p9Rn5Ivz/uafDbl4W/1FZIHbGoptGoh76y6AiXGyAVz2bXWk2mtUh0bmqPwW0krUB
-         zaoc7AK6no2bFIoWwH0a0zMv91IRsaYqirrSsELIei7gCMoTCn2AonZX3Bvu3GmbJu43
-         +kOU0jZ7GzT8dDae5K4+NYSvvIKzHOjMEVoUQKRRxlsHHp6RhwoXMpgMALlU7AVVd1Ym
-         KazI1utnUksrW33NUdHn/sRW4oMN4hj/4jfJPoSCs31LpfP33EBT4wWbRJGJGpZOngmw
-         vdSw==
-X-Received: by 10.66.153.80 with SMTP id ve16mr23213333pab.143.1402598800283;
-        Thu, 12 Jun 2014 11:46:40 -0700 (PDT)
-Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id xk3sm81670466pbb.65.2014.06.12.11.46.38
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Jun 2014 11:46:38 -0700 (PDT)
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Caleb Thompson <caleb@calebthompson.io>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20140612182341.GA42013@sirius.local>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752218AbaFLSuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 14:50:00 -0400
+Received: from mailer.zib.de ([130.73.108.11]:57690 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750998AbaFLSt7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 14:49:59 -0400
+Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
+	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s5CInsNk011803;
+	Thu, 12 Jun 2014 20:49:54 +0200 (CEST)
+Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s5CInsxr011788;
+	Thu, 12 Jun 2014 20:49:54 +0200 (CEST)
+X-Mailer: git-send-email 1.9.0.258.g00eda23
+In-Reply-To: <62610ABB-4ED5-4CF1-B5B2-B89C9DD22FBD@zib.de>
+X-Miltered: at mailer.zib.de with ID 5399F652.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
+X-j-chkmail-Enveloppe: 5399F652.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
+X-j-chkmail-Score: MSGID : 5399F652.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-j-chkmail-Status: Ham
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251477>
 
-Caleb,
+'!f() { ... }; f' and "!sh -c '....'" are recommended patterns for
+declaring more complex aliases (see git wiki [1]).  This commit teaches
+the completion to handle them.
 
-On Thu, Jun 12, 2014 at 01:23:41PM -0500, Caleb Thompson wrote:
-> Jeremiah,
-> 
-> On Thu, Jun 12, 2014 at 11:04:59AM -0700, Jeremiah Mahler wrote:
-> >
-...
-> >
-> > How are you preparing your patches.  'git format-patch' with a 'git
-> > send-email'?
-> 
-> I'm so glad you asked, because I've just been muddling through this.
-> 
-> I've been generating the cover page variously with request-pull or diff
-> --stat, then running a command like this, with --cc arguments added from
-> a list I've been keeping of people who respond to the threads:
-> 
->     git send-email --compose --to=git@vger.kernel.org --thread \
->         [--cc ...] --no-chain-reply origin/master...
-> 
-> Then I manually edit the subjects to add the version to the [PATCH N/M]
-> portions. I haven't been using format-patch.
-> 
-> It's interesting that only the first patch isn't applying. I'd love to
-> hear a better way.
-> 
-> Caleb
+When determining which completion to use for an alias, an opening brace
+or single quote is now skipped, and the search for a git command is
+continued.  For example, the aliases '!f() { git commit ... }' or "!sh
+-c 'git commit ...'" now trigger commit completion.  Previously, the
+search stopped on the opening brace or quote, and the completion tried
+it to determine how to complete, which obviously was useless.
 
-It sounds like you are doing too much work.
+The null command ':' is now skipped, so that it can be used as
+a workaround to declare the desired completion style.  For example, the
+aliases '!f() { : git commit ; if ...  ' and "!sh -c ': git commit; if
+...'" now trigger commit completion.
 
-After I make a series of commits I run format-patch.  This example has 2
-patches (-2).  I like --thread, although it seems to work fine without
-it.  And --reroll-count will automatically do your N/M numbering for
-you.  It also generates a cover letter which you can then edit by hand.
-All the patches will be named v3-* in this case.
+Shell function declarations now work with or without space before
+the parens, i.e. '!f() ...' and '!f () ...' both work.
 
-  git format-patch --reroll-count=3 --cover --thread -2
+[1] https://git.wiki.kernel.org/index.php/Aliases
 
-Then I can send the whole patch series using send-email.
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ contrib/completion/git-completion.bash | 10 ++++++++++
+ t/t9902-completion.sh                  | 27 +++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
 
-  git send-email --to=caleb --cc=git --cc=junio v3-*
-
-Felipe Contreras has a good writeup [1] on how to setup aliases with Mutt so
-you don't have to type the full email every time.
-
-[1]: http://felipec.wordpress.com/2009/10/25/git-send-email-tricks/
-
-I recently setup Mutt with Offlineimap [2] and Msmtp.  This is an
-awesome setup too.  Not patch related, but it makes the email part
-easier.
-
-[2]: https://wiki.archlinux.org/index.php/OfflineIMAP
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 2c59a76..575f8f7 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -21,6 +21,12 @@
+ #        source ~/.git-completion.sh
+ #    3) Consider changing your PS1 to also show the current branch,
+ #       see git-prompt.sh for details.
++#
++# If you use complex aliases of form '!f() { ... }; f', you can use the null
++# command ':' as the first command in the function body to declare the desired
++# completion style.  For example '!f() { : git commit ; ... }; f' will
++# tell the completion to use commit completion.  This also works with aliases
++# of form "!sh -c '...'".  For example, "!sh -c ': git commit ; ... '".
+ 
+ case "$COMP_WORDBREAKS" in
+ *:*) : great ;;
+@@ -781,6 +787,10 @@ __git_aliased_command ()
+ 		-*)	: option ;;
+ 		*=*)	: setting env ;;
+ 		git)	: git itself ;;
++		\(\))   : skip parens of shell function definition ;;
++		{)	: skip start of shell helper function ;;
++		:)	: skip null command ;;
++		\'*)	: skip opening quote after sh -c ;;
+ 		*)
+ 			echo "$word"
+ 			return
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 2d4beb5..1d1c106 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -550,6 +550,33 @@ test_expect_success 'complete files' '
+ 	test_completion "git add mom" "momified"
+ '
+ 
++test_expect_success "completion uses <cmd> completion for alias: !sh -c 'git <cmd> ...'" '
++	test_config alias.co "!sh -c '"'"'git checkout ...'"'"'" &&
++	test_completion "git co m" <<-\EOF
++	master Z
++	mybranch Z
++	mytag Z
++	EOF
++'
++
++test_expect_success 'completion uses <cmd> completion for alias: !f () { VAR=val git <cmd> ... }' '
++	test_config alias.co "!f () { VAR=val git checkout ... ; } f" &&
++	test_completion "git co m" <<-\EOF
++	master Z
++	mybranch Z
++	mytag Z
++	EOF
++'
++
++test_expect_success 'completion used <cmd> completion for alias: !f() { : git <cmd> ; ... }' '
++	test_config alias.co "!f() { : git checkout ; if ... } f" &&
++	test_completion "git co m" <<-\EOF
++	master Z
++	mybranch Z
++	mytag Z
++	EOF
++'
++
+ test_expect_failure 'complete with tilde expansion' '
+ 	git init tmp && cd tmp &&
+ 	test_when_finished "cd .. && rm -rf tmp" &&
 -- 
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+2.0.0.244.g4e8e734
