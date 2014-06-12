@@ -1,76 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/17] store length of commit->buffer
-Date: Thu, 12 Jun 2014 10:22:44 -0700
-Message-ID: <xmqqmwdi6o0r.fsf@gitster.dls.corp.google.com>
-References: <20140609180236.GA24644@sigill.intra.peff.net>
-	<20140610213509.GA26979@sigill.intra.peff.net>
-	<20140610214616.GA19107@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Jeff King <peff@peff.net>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v16 30/48] branch.c: use ref transaction for all ref updates
+Date: Thu, 12 Jun 2014 10:21:21 -0700
+Message-ID: <1402593699-13983-31-git-send-email-sahlberg@google.com>
+References: <1402593699-13983-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Jun 12 19:23:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wv8iL-0007rj-5t
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 19:23:01 +0200
+	id 1Wv8iL-0007rj-Nx
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 19:23:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933525AbaFLRWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 13:22:52 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62358 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933509AbaFLRWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 13:22:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFD9C1BD94;
-	Thu, 12 Jun 2014 13:22:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CPComO9CwuJdw31WAUa+dNM0BXc=; b=vhSzwy
-	UggWTogN3LgpLXqLESLvpRQft9hr/aNqcs1ooltpQhcjoraL1s6ajt0520PT/TaM
-	VHuQt1++1lDg5D7l9ipx7ch9shYeSq20tCDGr7L2/hHndv8UQ2dxVGrDxGPEgU9W
-	a+zKH3Fj4utIAlLBTV9lfimRZvk0ZwtkYqnig=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=m+7ge/kT1me0NKI5kcqgOouI1bNB6Mgd
-	IK7TvezBR8LMEMSnfsK4O0McTOIUdH6cTONee5GoVw5+RcEzB0h35NbEzijSkmiY
-	YvWXWd79+cqNs+Q9qu7NvJP0QfwCLhn3NbbH3kx+h+FtDEtOCX2gsWDddKj1B90S
-	MzrrtCub4Ng=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B21BA1BD93;
-	Thu, 12 Jun 2014 13:22:49 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A2EA01BD8B;
-	Thu, 12 Jun 2014 13:22:45 -0400 (EDT)
-In-Reply-To: <20140610214616.GA19107@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 10 Jun 2014 17:46:16 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2B2E2288-F256-11E3-AE73-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S933535AbaFLRW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 13:22:59 -0400
+Received: from mail-ve0-f202.google.com ([209.85.128.202]:61758 "EHLO
+	mail-ve0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756275AbaFLRVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 13:21:45 -0400
+Received: by mail-ve0-f202.google.com with SMTP id oz11so244614veb.5
+        for <git@vger.kernel.org>; Thu, 12 Jun 2014 10:21:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=cVshRznCgVXHUlnraXOO0ZZ5l00Bd5f7S8X+b3lp8FQ=;
+        b=Mhh1hWYg4pBc0dc7z0quS8zLw1q3Zt4nJ723XviNdaWoDelVDaAb0BraAK+LQsipdn
+         FiLy9sRZXyNI7HdeKnGdy7GFvA0rwPLTazItgY9OBIKaHjUPBQYZLzTIQaMWE4rShr65
+         CrhxXwLTALzfpbVkxOlq8zIYb9ktAI+n9Ntil1Acd7AhWLNY34d6MqAwq3156Hn91hVr
+         9xPQTiuT2/f/iMXEyFG9T9sL9g60zzO2h/GaQHsNKubR3RJNvvZ7/NUCo97VA85j3ro5
+         jUHhkBJdGdHESprlYnfZ2oM6BDe+VoA8hVl9L/75IB7627pHLYp0r//6+3TlEbNJ+wZt
+         cKCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=cVshRznCgVXHUlnraXOO0ZZ5l00Bd5f7S8X+b3lp8FQ=;
+        b=G/ePb8752CvVnbEtZlcXaKmkK005Yd1KjNnrWMKS0kPncHbL572kFeK4duzhR6O2up
+         EL+2IzELL/rUgFMcqoB1TA3Tvf4wmrlqBvNLuj01CsZr8TkHhzIYpGN6/142JszOaWgL
+         m8PHZZ0RTsMN7lu3CAyiO2An7Cxa6fg0Ye4aUW46s3NHZq1hTxXV/sm5WN3phcYG8rWc
+         aztx9JswQ77WdJxq8Fro0U9NkQJQ+V+mTuTi6ye7ba/rSC4RD3hHpbE+lNV+jB4PcQy2
+         nRjJuiSudKAthvFYdDYKcpMRJYn//pV00RJEH5MNg9VO9i7tkJtS4DYm1la0Q5+7z7Wy
+         VoEA==
+X-Gm-Message-State: ALoCoQmNTRE8hreciPTqq7yxAEOQrfl9bUvpcNPkXBbo0O+B5JwWU+LPba3oM/MGIwuaqWSJ5LWf
+X-Received: by 10.236.141.11 with SMTP id f11mr4047892yhj.54.1402593704472;
+        Thu, 12 Jun 2014 10:21:44 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id c22si113423yhe.1.2014.06.12.10.21.44
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 12 Jun 2014 10:21:44 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 55CBD5A4743;
+	Thu, 12 Jun 2014 10:21:44 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id 19194E0A7E; Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.599.g83ced0e
+In-Reply-To: <1402593699-13983-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251438>
 
-Jeff King <peff@peff.net> writes:
+Change create_branch to use a ref transaction when creating the new branch.
 
-> On Tue, Jun 10, 2014 at 05:35:09PM -0400, Jeff King wrote:
->
->> Here's a re-roll of the commit-slab series. It fixes the issues pointed
->> out by Eric and Christian (thanks, both).
->
-> Side note: I marked this as v2, but forgot to do so in each individual
-> patch (I write my cover letters first, and then issue format-patch as a
-> separate step, and I sometimes forget -v2 there). How big an
-> inconvenience is this?
+This also fixes a race condition in the old code where two concurrent
+create_branch could race since the lock_any_ref_for_update/write_ref_sha1
+did not protect against the ref already existing. I.e. one thread could end up
+overwriting a branch even if the forcing flag is false.
 
-Not an inconvenience to me (I do not speak for others, obviously),
-but they look a bit confusing to me in the thread list in my MUA
-(but not too annoying).
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ branch.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 660097b..c1eae00 100644
+--- a/branch.c
++++ b/branch.c
+@@ -226,7 +226,6 @@ void create_branch(const char *head,
+ 		   int force, int reflog, int clobber_head,
+ 		   int quiet, enum branch_track track)
+ {
+-	struct ref_lock *lock = NULL;
+ 	struct commit *commit;
+ 	unsigned char sha1[20];
+ 	char *real_ref, msg[PATH_MAX + 20];
+@@ -285,15 +284,6 @@ void create_branch(const char *head,
+ 		die(_("Not a valid branch point: '%s'."), start_name);
+ 	hashcpy(sha1, commit->object.sha1);
+ 
+-	if (!dont_change_ref) {
+-		lock = lock_any_ref_for_update(ref.buf, NULL, 0, NULL);
+-		if (!lock)
+-			die_errno(_("Failed to lock ref for update"));
+-	}
+-
+-	if (reflog)
+-		log_all_ref_updates = 1;
+-
+ 	if (forcing)
+ 		snprintf(msg, sizeof msg, "branch: Reset to %s",
+ 			 start_name);
+@@ -301,13 +291,25 @@ void create_branch(const char *head,
+ 		snprintf(msg, sizeof msg, "branch: Created from %s",
+ 			 start_name);
+ 
++	if (reflog)
++		log_all_ref_updates = 1;
++
++	if (!dont_change_ref) {
++		struct ref_transaction *transaction;
++		struct strbuf err = STRBUF_INIT;
++
++		transaction = ref_transaction_begin(&err);
++		if (!transaction ||
++		    ref_transaction_update(transaction, ref.buf, sha1,
++					   null_sha1, 0, !forcing, &err) ||
++		    ref_transaction_commit(transaction, msg, &err))
++			die("%s", err.buf);
++		ref_transaction_free(transaction);
++	}
++
+ 	if (real_ref && track)
+ 		setup_tracking(ref.buf + 11, real_ref, track, quiet);
+ 
+-	if (!dont_change_ref)
+-		if (write_ref_sha1(lock, sha1, msg) < 0)
+-			die_errno(_("Failed to write ref"));
+-
+ 	strbuf_release(&ref);
+ 	free(real_ref);
+ }
+-- 
+2.0.0.599.g83ced0e
