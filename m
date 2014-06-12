@@ -1,130 +1,83 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 1/2] add strbuf_set operations
-Date: Thu, 12 Jun 2014 17:48:52 -0400
-Message-ID: <CAPig+cTVLJQOsW7H4Ht2NNYkeiMb=EWT7BG3sNu0wNsTQ=oZNA@mail.gmail.com>
-References: <cover.1402557437.git.jmmahler@gmail.com>
-	<f4d043b7c1e00f9c967faff39244274fe40fd371.1402557437.git.jmmahler@gmail.com>
-	<xmqqr42u55dq.fsf@gitster.dls.corp.google.com>
-	<20140612193144.GA17077@hudson.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] implement submodule config cache for lookup of submodule names
+Date: Thu, 12 Jun 2014 14:58:20 -0700
+Message-ID: <xmqq38f96b9f.fsf@gitster.dls.corp.google.com>
+References: <20140605060425.GA23874@sandbox-ub>
+	<20140605060750.GC23874@sandbox-ub>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jun 12 23:49:21 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Thu Jun 12 23:58:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvCs2-0006is-S1
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 23:49:19 +0200
+	id 1WvD0x-0007jU-JW
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 23:58:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751981AbaFLVsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 17:48:54 -0400
-Received: from mail-yh0-f41.google.com ([209.85.213.41]:58179 "EHLO
-	mail-yh0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751655AbaFLVsw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 17:48:52 -0400
-Received: by mail-yh0-f41.google.com with SMTP id z6so1496798yhz.28
-        for <git@vger.kernel.org>; Thu, 12 Jun 2014 14:48:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:content-type;
-        bh=E9kUe82gKmADHXdxVZg1TNdiLDzGNEnnTwFxiAFM6sI=;
-        b=xFrAg4L7zdwbn0xzfwQ1DZVWY+ZKzGcuh9QoYtOCNibndXwFdmfoHt7WLE7u1tI06h
-         +sgRN03mTgJ1LlucaudydgTAJrVJmx3MSpb/TA+5STJ0udzAkAoyF1yqkU9LuWq77xNV
-         YyxMpq9FnJ9RlKuE+TzSri81ljr4bIF77q8mcfP3uHTxtWTkVNzF3h1EOm2zWzA1PWwS
-         oy3NliIRr1s2g3PV4iLWJ9xJAnPuuou80VWWvXK2eBjjVWgQoaTJUtRhbiQNnty86iU9
-         hwMvOYMY+PU2krUZIXTR1uBbQu/o1I/5AFXqcfo7vPhlIosZXZruSvUFoROBNeEeldPZ
-         zsEw==
-X-Received: by 10.236.101.198 with SMTP id b46mr19914036yhg.68.1402609732225;
- Thu, 12 Jun 2014 14:48:52 -0700 (PDT)
-Received: by 10.170.36.19 with HTTP; Thu, 12 Jun 2014 14:48:52 -0700 (PDT)
-In-Reply-To: <20140612193144.GA17077@hudson.localdomain>
-X-Google-Sender-Auth: u31gH-pEjekrybLa0pU2NlG8TNw
+	id S1750852AbaFLV61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 17:58:27 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57326 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750787AbaFLV61 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 17:58:27 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 66A281FE86;
+	Thu, 12 Jun 2014 17:58:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Bc8GfOJg+2WArE9YfzDCWP6HJNk=; b=ZELz+B
+	wIkMGnC8b+dABgh2j8oWnvYhrgk1hbgXA/gH69QfDyqIcoytjze29IRISJZXZ/G7
+	CknqZx0y2nyhlXmh/XgdTYwi2DDaGRFCrny+cqVkFgHFcZt5Kn7EJIHb1HIlKIX/
+	BqhJ/1br0YWH2KT3qcnSX9b13AklWQYKGRCTc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BesRrEb6A3tqXFjFt5igzyOQTesYsZQI
+	QNnbMM0Xha7lRqd8he0jOPfAtWYtH1pWcAub6eN/Nm0v6NE+7bhZ0aCqGp+loUg4
+	gFEvWs/JnAmxDde93drSvY6gqwSnxaNdbom1ptY5actd5RIuPVuHtNasVt2tAZwa
+	MiPBdcQcc7k=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B1BA1FE85;
+	Thu, 12 Jun 2014 17:58:26 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5400C1FE7C;
+	Thu, 12 Jun 2014 17:58:22 -0400 (EDT)
+In-Reply-To: <20140605060750.GC23874@sandbox-ub> (Heiko Voigt's message of
+	"Thu, 5 Jun 2014 08:07:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: ABCE8EFC-F27C-11E3-A60E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251498>
 
-On Thu, Jun 12, 2014 at 3:31 PM, Jeremiah Mahler <jmmahler@gmail.com> wrote:
-> On Thu, Jun 12, 2014 at 11:50:41AM -0700, Junio C Hamano wrote:
->> I am on the fence.
->>
->> I have this suspicion that the addition of strbuf_set() would *only*
->> help when the original written with reset-and-then-add sequence was
->> suboptimal to begin with, and it helps *only* how the code reads,
->> without correcting the fact that it is still doing unnecessary
->> "first set to a value to be discarded and then reset to set the
->> right value", sweeping the issue under the rug.
->>
-> It is certainly possible that builtin/remote.c (PATCH 2/2) saw the most
-> benefit from this operation because it is so badly designed.  But this
-> seems unlikely given the review process around here ;-)
->
-> The one case where it would be doing extra work is when a strbuf_set
-> replaces a strbuf_add that didn't previously have a strbuf_reset.
-> strbuf_set is not appropriate for all cases, as I mentioned in the
-> patch, but in some cases I think it makes it more readable.  And in this
-> case it would be doing a reset on an empty strbuf.  Is avoiding this
-> expense worth the reduction in readability?
->
-> Also, as Eric Sunshine pointed out, being able to easily re-order
-> operations can make the code easier to maintain.
->
->> Repeated reset-and-then-add on the same strbuf used to be something
->> that may indicate that the code is doing unnecessary work.  Now,
->> repeated uses of strbuf_set on the same strbuf replaced that pattern
->> to be watched for to spot wasteful code paths.
->>
-> If a reset followed by and add was a rare occurrence I would tend to
-> agree more.
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-When composing my review of the builtin/remote.c changes, I wrote
-something like this:
-
-    Although strbuf_set() does make the code a bit easier to read
-    when strbufs are repeatedly re-used, re-using a variable for
-    different purposes is generally considered poor programming
-    practice. It's likely that heavy re-use of strbufs has been
-    tolerated to avoid multiple heap allocations, but that may be a
-    case of premature (allocation) optimization, rather than good
-    programming. A different ("better") way to make the code more
-    readable and maintainable may be to ban re-use of strbufs for
-    different purposes.
-
-But I deleted it before sending because it's a somewhat tangential
-issue not introduced by your changes. However, I do see strbuf_set()
-as a Band-Aid for the problem described above, rather than as a useful
-feature on its own. If the practice of re-using strbufs (as a
-premature optimization) ever becomes taboo, then strbuf_set() loses
-its value.
-
->> I dunno...
->>
->> > Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
->> > ---
->> >  Documentation/technical/api-strbuf.txt | 18 ++++++++++++++++++
->> >  strbuf.c                               | 21 +++++++++++++++++++++
->> >  strbuf.h                               | 13 +++++++++++++
->> >  3 files changed, 52 insertions(+)
->> >
->> > diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
->> > index f9c06a7..ae9c9cc 100644
->> > --- a/Documentation/technical/api-strbuf.txt
->> > +++ b/Documentation/technical/api-strbuf.txt
->> > @@ -149,6 +149,24 @@ Functions
->> >     than zero if the first buffer is found, respectively, to be less than,
->> >     to match, or be greater than the second buffer.
->> >  /*----- add data in your buffer -----*/
 > ...
->> >  static inline void strbuf_addch(struct strbuf *sb, int c)
->> >  {
->
-> --
-> Jeremiah Mahler
-> jmmahler@gmail.com
-> http://github.com/jmahler
+> +static int is_cache_init = 0;
+
+Please don't initialise variables in the .bss to zero by hand.
+
+> + ...
+> +	warning("%s:.gitmodules, multiple configurations found for "
+> +			"submodule.%s.%s. Skipping second one!",
+> +			commit_string, name, option);
+> +}
+> + ...
+> +		if (strcmp(value, "untracked") && strcmp(value, "dirty") &&
+> +		    strcmp(value, "all") && strcmp(value, "none")) {
+> +			warning("Invalid parameter \"%s\" for config option "
+> +					"\"submodule.%s.ignore\"", value, var);
+> +			goto release_return;
+> +		}
+
+These two look inconsistent in different ways.  I think we typically
+quote the names like so:
+
+	warning("I have trouble with variable '%s' somehow", var);
