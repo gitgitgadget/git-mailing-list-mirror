@@ -1,79 +1,143 @@
-From: Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH] l10n: de.po: fix typo
-Date: Thu, 12 Jun 2014 19:59:14 +0200
-Message-ID: <5399EA72.7060609@gmail.com>
-References: <1402589551-3754-1-git-send-email-ralf.thielow@gmail.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v4 1/4] commit test: Use test_config instead of git-config
+Date: Thu, 12 Jun 2014 11:04:59 -0700
+Message-ID: <20140612180459.GA15556@hudson.localdomain>
+References: <1402511079-17735-1-git-send-email-caleb@calebthompson.io>
+ <1402511079-17735-2-git-send-email-caleb@calebthompson.io>
+ <20140612084152.GA6095@hudson.localdomain>
+ <20140612135051.GA35824@sirius.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de
-To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 19:59:43 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Caleb Thompson <caleb@calebthompson.io>
+X-From: git-owner@vger.kernel.org Thu Jun 12 20:05:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wv9Hq-0004CS-MB
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 19:59:43 +0200
+	id 1Wv9N9-0001Tw-PW
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 20:05:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419AbaFLR7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 13:59:19 -0400
-Received: from mail-wg0-f45.google.com ([74.125.82.45]:62487 "EHLO
-	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751141AbaFLR7S (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 13:59:18 -0400
-Received: by mail-wg0-f45.google.com with SMTP id l18so1670097wgh.16
-        for <git@vger.kernel.org>; Thu, 12 Jun 2014 10:59:17 -0700 (PDT)
+	id S1751889AbaFLSFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 14:05:05 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:57993 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751886AbaFLSFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 14:05:03 -0400
+Received: by mail-pb0-f48.google.com with SMTP id rr13so1248475pbb.7
+        for <git@vger.kernel.org>; Thu, 12 Jun 2014 11:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=Of+hMDiA4wqPFrsaeboJ7z6ssVKTUcq3/nlfXk9VvGI=;
-        b=sywslPVMtEvh0hruQs0rawF/FkTyMLgufzF8hMmlqxYSKqN6c7waWMALzmCtXntq1i
-         ja3UOmoxiWTH03aXKr0lIgYjRFnuHXZlFkyTZdF6xx9HpOs/5eO74UUl3/ksMCzXqQIb
-         7MBYkvZixivf1q6bWwy3/9rfzM3DV7rcWyS1qe/RurQI8Khms81+V2hyUsLNW6NVX4jA
-         gTgZ4RVTIbFRcoE3QO06fBHpaZ3kqMx6orffFyECfTT46slB/cHH2scz7gsfoWV2CQ/P
-         r10KIEmvN0+vjx9sCpNDXeRidDjIPkim8M5tBp2CIfisjxXCYml06Ha7q0fHrjbJbcP9
-         9EnQ==
-X-Received: by 10.194.10.130 with SMTP id i2mr18183056wjb.70.1402595957076;
-        Thu, 12 Jun 2014 10:59:17 -0700 (PDT)
-Received: from [192.168.1.7] (ip-109-91-30-58.unitymediagroup.de. [109.91.30.58])
-        by mx.google.com with ESMTPSA id r44sm6140182eeo.18.2014.06.12.10.59.15
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=auVA25Jkrk0OYJd3cRwBZv9uj0J06C+JyGQNGggpyZs=;
+        b=bbkj6JkcD1XSFm0tTxYF95gqZ+PjiVZ4D4UX/EyegPsROlQ4rsUA1VtxpUdvU3RhCj
+         ODFQvQ+84Y+zpWMQNN56bnprPGt+geg8p63qrpU4S+plXNCnhHxp2hbEw9MWZyaDBHy9
+         BFF1evJp1FUoUJ91cEEJvjdHUcFydhIbcyylPnDjEWnrE7QqgPPP4N0/jdAV7w7YGmAJ
+         r5Ss7mmbsO7xMIOsxXUvK0gSc1vGbJaRDH/yrbkPuk1zSHdvyP/NTdJz9wEkXFM4CWua
+         4YOiEoOPfVxDDafN6MsAMWOr5lP3sRpWljID3D6nsXj+eNoWYQSxS5z+UnV3J/gPlBim
+         Z/9A==
+X-Received: by 10.67.22.33 with SMTP id hp1mr22460800pad.134.1402596302316;
+        Thu, 12 Jun 2014 11:05:02 -0700 (PDT)
+Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id io6sm8405685pac.44.2014.06.12.11.05.00
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 12 Jun 2014 10:59:15 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <1402589551-3754-1-git-send-email-ralf.thielow@gmail.com>
-X-Enigmail-Version: 1.5.2
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Jun 2014 11:05:01 -0700 (PDT)
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Caleb Thompson <caleb@calebthompson.io>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20140612135051.GA35824@sirius.local>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251467>
 
-On 12.06.2014 18:12, Ralf Thielow wrote:
-> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
-> ---
->  po/de.po | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Caleb,
+
+On Thu, Jun 12, 2014 at 08:51:31AM -0500, Caleb Thompson wrote:
+> I assume that you're running it against master?
 > 
-> diff --git a/po/de.po b/po/de.po
-> index b777ef4..d7bc424 100644
-> --- a/po/de.po
-> +++ b/po/de.po
-> @@ -3503,7 +3503,7 @@ msgstr "Gewechselt zu umgesetzten Branch '%s'\n"
->  #: builtin/checkout.c:648 builtin/checkout.c:1033
->  #, c-format
->  msgid "Switched to a new branch '%s'\n"
-> -msgstr "Gewechselt zu einem neuem Branch '%s'\n"
-> +msgstr "Gewechselt zu einem neuen Branch '%s'\n"
-
-How about ?
-+msgstr "Zu neuem Branch '%s' gewechselt\n"
-
-
->  
->  #: builtin/checkout.c:650
->  #, c-format
+> I rebased the branch yesterday, but I'll give it another shot. Obviously I
+> didn't use git-am, but I can try that.
 > 
+> Caleb Thompson
+> 
+> On Thu, Jun 12, 2014 at 01:41:52AM -0700, Jeremiah Mahler wrote:
+> > On Wed, Jun 11, 2014 at 01:24:36PM -0500, caleb@calebthompson.io wrote:
+> > > Some of the tests in t/t7507-commit-verbose.sh were still using
+> > > git-config to set configuration. Change them to use the test_config
+> > > helper.
+> > >
+> > > Signed-off-by: Caleb Thompson <caleb@calebthompson.io>
+> > > ---
+> > >  t/t7507-commit-verbose.sh | 4 ++--
+> > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+> > > index 2ddf28c..6d778ed 100755
+> > > --- a/t/t7507-commit-verbose.sh
+> > > +++ b/t/t7507-commit-verbose.sh
+> > > @@ -43,7 +43,7 @@ test_expect_success 'verbose diff is stripped out' '
+> > >  '
+> > >
+> > >  test_expect_success 'verbose diff is stripped out (mnemonicprefix)' '
+> > > -	git config diff.mnemonicprefix true &&
+> > > +	test_config diff.mnemonicprefix true &&
+> > >	git commit --amend -v &&
+> > >	check_message message
+> > >  '
+> > > @@ -71,7 +71,7 @@ test_expect_success 'diff in message is retained with -v' '
+> > >  '
+> > >
+> > >  test_expect_success 'submodule log is stripped out too with -v' '
+> > > -	git config diff.submodule log &&
+> > > +	test_config diff.submodule log &&
+> > >	git submodule add ./. sub &&
+> > >	git commit -m "sub added" &&
+> > >	(
+> > > --
+> > > 2.0.0
+> > >
+> >
+> > It is probably something dumb on my part but for some reason I cannot
+> > apply this patch using 'git am'.  After I save the patch to a Maildir
+> > from Mutt and run git am...
+> >
+> >   jeri@hudson:~/git$ ./git-am ct1.patch
+> >   Applying: commit test: Use test_config instead of git-config
+> >   fatal: corrupt patch at line 15
+> >   Patch failed at 0001 commit test: Use test_config instead of git-config
+> >   The copy of the patch that failed is found in:
+> >      /home/jeri/git/.git/rebase-apply/patch
+> >   When you have resolved this problem, run "git am --continue".
+> >   If you prefer to skip this patch, run "git am --skip" instead.
+> >   To restore the original branch and stop patching, run "git am --abort".
+> >   jeri@hudson:~/git$
+> >
+> > The second patch in the series applies fine.  And I have applied other
+> > patches this way without issue.  Can anyone confirm this problem?
+> >
+> > --
+> > Jeremiah Mahler
+> > jmmahler@gmail.com
+> > http://github.com/jmahler
+
+Thanks for checking.  Unfortunately the problem persists for me.
+
+It seems to be related to there not being a space at the left most part
+of the patch.  It is just a tab with no space.  So 'git am' has a
+problem because it is expecting to remove a space and there isn't one.
+See the attached screenshots with tabs highlighted.
+
+How are you preparing your patches.  'git format-patch' with a 'git
+send-email'?
+
+-- 
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
