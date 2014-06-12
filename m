@@ -1,98 +1,184 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 00/11] Zsh prompt tests
-Date: Wed, 11 Jun 2014 23:46:21 +0000
-Message-ID: <20140611234620.GC368384@vauxhall.crustytoothpaste.net>
-References: <1401176460-31564-1-git-send-email-rhansen@bbn.com>
- <1401915687-8602-1-git-send-email-rhansen@bbn.com>
- <53976563.5020905@web.de>
- <53976A7E.8010001@bbn.com>
- <20140611011617.GB368384@vauxhall.crustytoothpaste.net>
- <5398755B.4050601@bbn.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v6] Add an explicit GIT_DIR to the list of excludes
+Date: Thu, 12 Jun 2014 08:19:19 +0200
+Message-ID: <53994667.90209@kdbg.org>
+References: <CACsJy8Cgu792Tamej3+_9w=Krg8nezYYA6k604gikebHG=yVUg@mail.gmail.com> <1402529308-3940-1-git-send-email-pasha.bolokhov@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NtwzykIc2mflq5ck"
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: pclouds@gmail.com, jrnieder@gmail.com, jnareb@gmail.com,
 	git@vger.kernel.org
-To: Richard Hansen <rhansen@bbn.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 01:46:34 2014
+To: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 08:19:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WusDw-0004gW-Ex
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 01:46:32 +0200
+	id 1WuyMB-0000nA-U0
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 08:19:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752377AbaFKXq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Jun 2014 19:46:28 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:48270 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751898AbaFKXq2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Jun 2014 19:46:28 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:897d:9e98:725a:bcd7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id A96DA2808E;
-	Wed, 11 Jun 2014 23:46:26 +0000 (UTC)
-Mail-Followup-To: Richard Hansen <rhansen@bbn.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <5398755B.4050601@bbn.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.15-rc5-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S932116AbaFLGTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 02:19:24 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:3961 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754123AbaFLGTY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 02:19:24 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 023EACDF9C;
+	Thu, 12 Jun 2014 08:19:20 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 34C5A19F3F1;
+	Thu, 12 Jun 2014 08:19:20 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <1402529308-3940-1-git-send-email-pasha.bolokhov@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251394>
 
+Am 12.06.2014 01:28, schrieb Pasha Bolokhov:
+> +test_expect_success "setup" '
+> +	mkdir repo-inside/ &&
+> +	(
+> +		cd repo-inside/ &&
+> +		for f in a b c d
+> +		do
+> +			echo "DATA" >"$f" || exit 1
+> +		done &&
+> +		mkdir dir1 dir1/meta &&
+> +		mkdir dir1/ssubdir dir1/ssubdir/meta &&
+> +		for f in e f g h
+> +		do
+> +			echo "MORE DATA" >"dir1/$f" || exit 1
+> +		done &&
+> +		echo "EVEN more Data" >dir1/meta/aa &&
+> +		echo "Data and BAIT" >dir1/ssubdir/meta/aaa &&
+> +		mkdir dir2
+> +		echo "Not a Metadata File" >dir2/meta
 
---NtwzykIc2mflq5ck
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+&&-chain broken twice.
 
-On Wed, Jun 11, 2014 at 11:27:23AM -0400, Richard Hansen wrote:
-> On 2014-06-10 21:16, brian m. carlson wrote:
-> > Skipping them on older versions (maybe using is-at-least) would be
-> > fine by me.
->=20
-> I don't think we'll need to skip the tests on old zsh versions --
-> running 'zsh -c' should still work even if 'emulate zsh -c' doesn't.
+We already use 'mkdir -p' elsewhere; you can use it here as well to
+contract several mkdir invocations.
 
-Okay.  I honestly don't support CentOS 5 in my personal projects because
-it's very old, so I didn't want you to have to do a lot of extra work if
-you felt that the age didn't justify it.  Most git users on CentOS 5
-already deal with some minor reduced functionality anyways.
+> +		git --git-dir=meta init
+> +	) &&
+> +	mkdir repo-outside/ repo-outside/external repo-outside/tree &&
+> +	(
+> +		cd repo-outside/tree &&
+> +		for f in n o p q
+> +		do
+> +			echo "Literal Data" >"$f" || exit 1
+> +		done &&
+> +		mkdir meta sub sub/meta &&
+> +		echo "Sample data" >meta/bb &&
+> +		echo "Stream of data" >sub/meta/bbb &&
+> +		git --git-dir=../external/meta init
+> +	)
+> +'
+> +
+> +
+> +#
+> +# The first set of tests (the repository is inside the work tree)
+> +#
+> +test_expect_success "'git status' ignores the repository directory" '
+> +	(
+> +		cd repo-inside &&
+> +		git --git-dir=meta --work-tree=. status --porcelain --untracked=all |
+> +			grep meta | sort >status.actual.2 &&
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+Please do not place a git invocation in a pipline such that it is not
+the last command; its exist status would be ignored:
 
---NtwzykIc2mflq5ck
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+		git --git-dir=meta --work-tree=. status --porcelain --untracked=all
+>status.actual.2+ &&
+		grep meta status.actual.2+ | sort >status.actual.2 &&
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+There are more cases like this later in the patch.
 
-iQIcBAEBCgAGBQJTmOpMAAoJEL9TXYEfUvaL7NgP/icuLpMVix3uxksYjdRM4qa1
-h+thUwimJst8xFLwegr2a7qTG40NqNujAD/I7g1napXKzuI1QSmCM/WOJAc6synG
-5790l9G2TcKZ104VTTj4faiCP/2IvdTFNA3HgXhEtQqKTuhLqSXaBCamYvmu147P
-sMuadmdCGaPfQUUytmwKLXfI3bqwBY9h29FugbKqraCLXW0JN/fRyOlijINXMA9/
-emWIWvN01Zo0RlMbvJwTyKHVANyfFdnij4Ai99fWlqMqm9F6p5mMOlzOscbIA0rG
-pkgI2Do89VwEuER8FInL58HIvexxRideUBawYlfwuU4kDkR6wypJ6AUbr5A3bte3
-RIWd9AjRNpugbistyBKs2EL1qFnE5dr7lPF4A1s3ct+ZtWwJJKlIBENvNWVvybpd
-HUu8QfyyijftGrq98zXf8LApmF/ia6YV0Ph7zwBLP5GMawsC/yhE+k9XgETXY1fL
-9+MF52G96db2NWoXukJoOA2u2Xj+TdV/Pxq4Lfyl1iByLHR6i6JvBdPDKTQuRuO5
-cjUF7rrXs5QBaVMVgIdcS0mvwxxO2maHg78m3EbjZ1pbvb7bBWIIBKdU7xZTkyJa
-/a4oBy4XNGj7k74aMokyVdcBEbhqQDORM1dRhDvHPwupw8vxLBC5lGxGktJwDOwF
-xBfXTf2M/l0HzH8qqFPP
-=qvDA
------END PGP SIGNATURE-----
+> +		cat >status.expect.2 <<-\EOF &&
+> +		?? dir1/meta/aa
+> +		?? dir1/ssubdir/meta/aaa
+> +		?? dir2/meta
+> +		EOF
+> +		test_cmp status.actual.2 status.expect.2
 
---NtwzykIc2mflq5ck--
+It is customary to call the files 'expect' and 'actual'. Furthermore,
+swap the order so that in case of a failure the diff shows how the
+actual text was changed from the expected text:
+
+		test_cmp status.expect.2 status.actual.2
+
+> +	)
+> +'
+> +
+> +test_expect_success "'git add -A' ignores the repository directory" '
+> +	(
+> +		cd repo-inside &&
+> +		git --git-dir=meta --work-tree=. add -A &&
+> +		git --git-dir=meta --work-tree=. status --porcelain | grep meta | sort >status.actual.3 &&
+> +		cat >status.expect.3 <<-\EOF &&
+> +		A  dir1/meta/aa
+> +		A  dir1/ssubdir/meta/aaa
+> +		A  dir2/meta
+> +		EOF
+> +		test_cmp status.actual.3 status.expect.3
+> +	)
+> +'
+> +
+> +test_expect_success "'git grep --exclude-standard' ignores the repository directory" '
+> +	(
+> +		cd repo-inside &&
+> +		test_might_fail git --git-dir=meta \
+> +			grep --no-index --exclude-standard BAIT >grep.actual.4 &&
+> +		cat >grep.expect.4 <<-\EOF &&
+> +		dir1/ssubdir/meta/aaa:Data and BAIT
+> +		EOF
+> +		test_cmp grep.actual.4 grep.expect.4
+> +	)
+> +'
+> +
+> +#
+> +# The second set of tests (the repository is outside of the work tree)
+> +#
+> +test_expect_success "'git status' acknowledges directories 'meta' \
+> +if repo is not within work tree" '
+> +	test_might_fail rm -rf meta/ &&
+
+How might this fail? Only if permissions are wrong, and then we do want
+this to fail.
+
+Moreover, test_*_fail helpers are intended to be used only with git
+commands; we don't expect system commands to fail in unexpected ways.
+
+> +	(
+> +		cd repo-outside/tree &&
+> +		git --git-dir=../external/meta init &&
+> +		git --git-dir=../external/meta --work-tree=. status --porcelain --untracked=all |
+> +			grep meta | sort >status.actual.5 &&
+> +		cat >status.expect.5 <<-\EOF &&
+> +		?? meta/bb
+> +		?? sub/meta/bbb
+> +		EOF
+> +		test_cmp status.actual.5 status.expect.5
+> +	)
+> +'
+> +
+> +test_expect_success "'git add -A' adds 'meta' if the repo is outside the work tree" '
+> +	(
+> +		cd repo-outside/tree &&
+> +		git --git-dir=../external/meta --work-tree=. add -A &&
+> +		git --git-dir=../external/meta --work-tree=. status --porcelain --untracked=all |
+> +			grep meta | sort >status.actual.6 &&
+> +		cat >status.expect.6 <<-\EOF &&
+> +		A  meta/bb
+> +		A  sub/meta/bbb
+> +		EOF
+> +		test_cmp status.actual.6 status.expect.6
+> +	)
+> +'
+> +
+> +test_done
+> 
