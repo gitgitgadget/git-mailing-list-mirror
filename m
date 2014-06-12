@@ -1,10 +1,8 @@
 From: Caleb Thompson <caleb@calebthompson.io>
-Subject: [PATCH v5 0/4] commit: Add commit.verbose configuration
-Date: Thu, 12 Jun 2014 14:38:58 -0500
-Message-ID: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [PATCH v5 2/4] commit test: Use write_script
+Date: Thu, 12 Jun 2014 14:39:00 -0500
+Message-ID: <1402601942-45553-3-git-send-email-caleb@calebthompson.io>
+References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
 Cc: Jeff King <peff@peff.net>, Jeremiah Mahler <jmmahler@gmail.com>,
 	Duy Nguyen <pclouds@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
@@ -13,89 +11,77 @@ Cc: Jeff King <peff@peff.net>, Jeremiah Mahler <jmmahler@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Mike Burns <mike@mike-burns.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 21:39:24 2014
+X-From: git-owner@vger.kernel.org Thu Jun 12 21:39:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvAqK-0006mt-0V
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 21:39:24 +0200
+	id 1WvAqR-0006wg-TQ
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 21:39:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007AbaFLTjT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jun 2014 15:39:19 -0400
-Received: from new1-smtp.messagingengine.com ([66.111.4.221]:45664 "EHLO
+	id S1752100AbaFLTjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 15:39:22 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:53413 "EHLO
 	new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751345AbaFLTjS (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Jun 2014 15:39:18 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C4EEB63F;
-	Thu, 12 Jun 2014 15:39:17 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1751345AbaFLTjU (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jun 2014 15:39:20 -0400
+Received: from compute5.internal (compute5.nyi.mail.srv.osa [10.202.2.45])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 15F36632;
+	Thu, 12 Jun 2014 15:39:20 -0400 (EDT)
 Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 12 Jun 2014 15:39:17 -0400
+  by compute5.internal (MEProxy); Thu, 12 Jun 2014 15:39:20 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=calebthompson.io;
-	 h=from:to:cc:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=mesmtp; bh=3GwCHyeauBHX5+NfLycChw5
-	bPZ0=; b=IuMkC94hjkKMhyBpXDZlydXytk9GuCqfocRbaS3LORhd6rt8t6CP+VS
-	cg4fRO2w5ackOXOry86pw6zc2h44/1Pk18gT57v332W0QmXkakEYvJOaPX9fdspX
-	hTgY2WI93vKZh2u+prHvn1YL5tqDBZklme7AP50TVTQSHL8eCZOY=
+	 h=from:to:cc:subject:date:message-id:in-reply-to:references; s=
+	mesmtp; bh=+fM+AD7KQtGQuWcP3jrmL7PET6w=; b=YWMPU61Hwal8eww6VeUvy
+	U24IunTv/ZaY3M6g7cApF4J/QC++7ohJk7XPuE2TjrZsEY4pXORVzdRxXqmJG7v0
+	KQqGEU4HKvZfeXC5ud3UnTK4DknWkptK0rIAhaIy9Ff3LOF0FycUJ8y5kGQLfViX
+	aWILXFI0MQI02IWnsrILao=
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=from:to:cc:subject:date:message-id
-	:mime-version:content-type:content-transfer-encoding; s=smtpout;
-	 bh=3GwCHyeauBHX5+NfLycChw5bPZ0=; b=j0M5Sz5dnBEQ4/IxfA4SbrZUHHtO
-	9ui4HMvIQM81cUBG1j36vK7JZKcvPAJzaa/PUtdwCX2BpaqV/Dwvu75ZDMyZljKU
-	5fDZUNtPZ3q49YhGew41aUhq4/V4XaVZt/b+UO9XHeFnUXXogr2j6sNgM2n0++zo
-	w2PQEkwuHzPWTRw=
-X-Sasl-enc: tKrgC/9LV3vzHm2mLKzdDwOsGB0kkPHzdRb6pF8L0RWa 1402601957
+	:in-reply-to:references; s=smtpout; bh=+fM+AD7KQtGQuWcP3jrmL7PET
+	6w=; b=B7W+yzlb4g0D0tYvtjqQLfuoaSrZIk24XkeD6tPUhdg2BIphCGLkcVWhh
+	zNJ+HQu9wlQzC0tnh1dPFNky0Jwa4OFF86Gk2a2JoF3+eV/UPjthh4zLv71jCyBD
+	RzqHYQGGU/KHBuN3ienD77P8Z0rSMGpbPvBMCqVbH13fhHCdSo=
+X-Sasl-enc: qbjVJo6Jxvm7e6TVfLhHkrWpLHaNHkCPuHxIaWZ8+pFg 1402601959
 Received: from localhost.localdomain (unknown [67.78.97.126])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 881E6680156;
-	Thu, 12 Jun 2014 15:39:16 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id E820E680156;
+	Thu, 12 Jun 2014 15:39:18 -0400 (EDT)
 X-Mailer: git-send-email 2.0.0
+In-Reply-To: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251487>
 
-This patch allows people to set commit.verbose to implicitly send
---verbose to git-commit.
+Use write_script from t/test-lib-functions.sh instead of cat, shebang,
+and chmod. This protects us from potential shell meta-characters in the
+name of our trash directory, which would be interpreted if we set
+$EDITOR directly.
 
-This version incorporates changes suggested by Eric Sunshine, Duy
-Nguyen, and Jeremiah Mahler.
+Signed-off-by: Caleb Thompson <caleb@calebthompson.io>
+---
+ t/t7507-commit-verbose.sh | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-It introduces several cleanup patches to t/t7505-commit-verbose.sh to
-bring it closer to the current state of the tests as Eric has explained
-them to me, then adds the verbose config and --no-verbose flag.
-
-Since the last version of this patch
-(http://marc.info/?l=3Dgit&m=3D140251155830422&w=3D2), I've made the fo=
-llowing
-changes:
-
-* Revert change to flags, as --no-verbose already existed and worked as
-  expected with the commit.verbose configuration. Thanks to  Ren=C3=A9 =
-Scharfe.
-* Fix <<-'EOS' style for check-for-no-diff script. Thanks to Mike Burns=
-=2E
-
-Additionally, this set of patches was generated by format-patch, so it
-should work correctly with git-am.
-
-------------------------------------------------------
-
-Caleb Thompson (4):
-  commit test: Use test_config instead of git-config
-  commit test: Use write_script
-  commit test: test_set_editor in each test
-  commit: add commit.verbose configuration
-
- Documentation/config.txt               |  5 +++
- Documentation/git-commit.txt           |  8 ++++-
- builtin/commit.c                       |  4 +++
- contrib/completion/git-completion.bash |  1 +
- t/t7507-commit-verbose.sh              | 64 +++++++++++++++++++++++++-=
---------
- 5 files changed, 64 insertions(+), 18 deletions(-)
-
---
+diff --git a/t/t7507-commit-verbose.sh b/t/t7507-commit-verbose.sh
+index 6d778ed..db09107 100755
+--- a/t/t7507-commit-verbose.sh
++++ b/t/t7507-commit-verbose.sh
+@@ -3,11 +3,9 @@
+ test_description='verbose commit template'
+ . ./test-lib.sh
+ 
+-cat >check-for-diff <<EOF
+-#!$SHELL_PATH
+-exec grep '^diff --git' "\$1"
++write_script check-for-diff <<-'EOF'
++	exec grep '^diff --git' "$1"
+ EOF
+-chmod +x check-for-diff
+ test_set_editor "$PWD/check-for-diff"
+ 
+ cat >message <<'EOF'
+-- 
 2.0.0
