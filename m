@@ -1,112 +1,76 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH v5 0/4] commit: Add commit.verbose configuration
-Date: Thu, 12 Jun 2014 13:30:10 -0700
-Message-ID: <20140612203010.GA17761@hudson.localdomain>
-References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: Re: git rebase --skip stuck in a loop
+Date: Thu, 12 Jun 2014 17:01:16 -0400
+Message-ID: <539A151C.50307@ubuntu.com>
+References: <5397551C.4030709@ubuntu.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Caleb Thompson <caleb@calebthompson.io>
-X-From: git-owner@vger.kernel.org Thu Jun 12 22:30:23 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 12 23:04:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvBdd-0001Cj-SY
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 22:30:22 +0200
+	id 1WvCAZ-0001Jw-JJ
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 23:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752134AbaFLUaP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jun 2014 16:30:15 -0400
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:58154 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751904AbaFLUaO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 16:30:14 -0400
-Received: by mail-pb0-f45.google.com with SMTP id um1so1381762pbc.32
-        for <git@vger.kernel.org>; Thu, 12 Jun 2014 13:30:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=k162s/a+D4gymEfIUU345sk5Vez88HaXqND3k71BehI=;
-        b=CZHdS4FmpNm36SOKNjnMFAtHnNx+4yoFPApI5bzuJlHyhsHxS6gAKL83AXeBwigB8I
-         4/PvIg+Qz0/yCW1SNn6k9Wj9qp1FZPKZD/wEfS3RIRY6k3Io7PchcGRTyagfWzpFvIuU
-         ix7AoNzXnFU+xK6gWysxl22rk7QRhQaN2y9W8Cy3Kq0EtmHDYXFAoJjBNIKLzsENal5k
-         sGlcqjYpkYQhPdpWpbA/c7CE+bgOkdaTU86k8Yqcv5zns0hYnHG2M1vIKMeOCAaYgg/m
-         7crq8VYlI2hwZ5PTHr3K6pV7trdidlVEasJQ7oHsN9Rnddwokm7BPPrxlhnbrKl383sr
-         2+Dg==
-X-Received: by 10.68.245.162 with SMTP id xp2mr15424716pbc.69.1402605014029;
-        Thu, 12 Jun 2014 13:30:14 -0700 (PDT)
-Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id uj3sm9999751pac.8.2014.06.12.13.30.11
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Jun 2014 13:30:12 -0700 (PDT)
-Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Caleb Thompson <caleb@calebthompson.io>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1752098AbaFLVET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 17:04:19 -0400
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.226]:18937 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751835AbaFLVET (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Jun 2014 17:04:19 -0400
+Received: from [67.78.168.186] ([67.78.168.186:51176] helo=[10.1.1.200])
+	by cdptpa-oedge01 (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id 98/EF-15059-D151A935; Thu, 12 Jun 2014 21:01:17 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <5397551C.4030709@ubuntu.com>
+X-Enigmail-Version: 1.6
+X-RR-Connecting-IP: 107.14.168.118:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251495>
 
-On Thu, Jun 12, 2014 at 02:38:58PM -0500, Caleb Thompson wrote:
-> This patch allows people to set commit.verbose to implicitly send
-> --verbose to git-commit.
->=20
-> This version incorporates changes suggested by Eric Sunshine, Duy
-> Nguyen, and Jeremiah Mahler.
->=20
-> It introduces several cleanup patches to t/t7505-commit-verbose.sh to
-> bring it closer to the current state of the tests as Eric has explain=
-ed
-> them to me, then adds the verbose config and --no-verbose flag.
->=20
-> Since the last version of this patch
-> (http://marc.info/?l=3Dgit&m=3D140251155830422&w=3D2), I've made the =
-following
-> changes:
->=20
-> * Revert change to flags, as --no-verbose already existed and worked =
-as
->   expected with the commit.verbose configuration. Thanks to  Ren=C3=A9=
- Scharfe.
-> * Fix <<-'EOS' style for check-for-no-diff script. Thanks to Mike Bur=
-ns.
->=20
-> Additionally, this set of patches was generated by format-patch, so i=
-t
-> should work correctly with git-am.
->=20
-> ------------------------------------------------------
->=20
-> Caleb Thompson (4):
->   commit test: Use test_config instead of git-config
->   commit test: Use write_script
->   commit test: test_set_editor in each test
->   commit: add commit.verbose configuration
->=20
->  Documentation/config.txt               |  5 +++
->  Documentation/git-commit.txt           |  8 ++++-
->  builtin/commit.c                       |  4 +++
->  contrib/completion/git-completion.bash |  1 +
->  t/t7507-commit-verbose.sh              | 64 ++++++++++++++++++++++++=
-+---------
->  5 files changed, 64 insertions(+), 18 deletions(-)
->=20
-> --
-> 2.0.0
->=20
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-The patches look good, they apply clean ('git am'), and all tests pass.
+So nobody has any ideas on what to check for or how to debug this?
 
-Reviewed-by: Jeremiah Mahler <jmmahler@gmail.com>
---=20
-Jeremiah Mahler
-jmmahler@gmail.com
-http://github.com/jmahler
+On 6/10/2014 2:57 PM, Phillip Susi wrote:
+> I'm in the middle of a long rebase and have had no trouble with
+> git rebase --skip several times, but now it has become stuck:
+> 
+> psusi@devserv:~/parted.git$ git rebase --skip Auto-merging
+> libparted/arch/linux.c CONFLICT (content): Merge conflict in
+> libparted/arch/linux.c
+> 
+> When you have resolved this problem, run "git rebase --continue". 
+> If you prefer to skip this patch, run "git rebase --skip" instead. 
+> To check out the original branch and stop rebasing, run "git
+> rebase --abort".
+> 
+> psusi@devserv:~/parted.git$ cat .git/rebase-merge/msgnum 17
+> 
+> Each time I try to skip, it just keeps trying to reapply this one 
+> patch.  Any ideas?
+> 
+> git version 1.9.1
+> 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (MingW32)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJTmhUcAAoJEI5FoCIzSKrwkjgIAKOclhuJPiNoWIEv1dBr4DBC
+IdwG9hY8lQPCN5Pg8th5CYk3ziX7iZ8+jaHEBaUYX2yehT1deg5WfsxU0uezWphH
+JyHMRX4kk7l1PW3/v3bEvZ0WYe77s4GB3m9XegjKwEL8xtGi7srEPsHgWB8gnFzE
+hswUMbq5mw9hoIpYnxEs18F2MOfP6i4J3gTilPrmq+hZCQyZrX/IsV5lR6kDXRES
+j7b3cr6n2EfUeWxKrwo+tMIBdGAgpMamWlzqM7gMND/YUswv84mD3b9lXjEfjqZf
+GfBXJSH/z0KLDKycYrDOZlryLEnx///N6STg2WGm0oo7ehAKn6Mtgi1rR5y/aYs=
+=bUQV
+-----END PGP SIGNATURE-----
