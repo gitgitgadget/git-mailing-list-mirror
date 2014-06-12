@@ -1,159 +1,137 @@
 From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: Re: [PATCH v3 1/2] add strbuf_set operations
-Date: Thu, 12 Jun 2014 16:46:37 -0700
-Message-ID: <20140612234637.GB17803@hudson.localdomain>
-References: <cover.1402557437.git.jmmahler@gmail.com>
- <f4d043b7c1e00f9c967faff39244274fe40fd371.1402557437.git.jmmahler@gmail.com>
- <xmqqr42u55dq.fsf@gitster.dls.corp.google.com>
- <20140612193144.GA17077@hudson.localdomain>
- <CAPig+cTVLJQOsW7H4Ht2NNYkeiMb=EWT7BG3sNu0wNsTQ=oZNA@mail.gmail.com>
+Subject: Re: [PATCH v2 01/19] add strbuf_set operations
+Date: Thu, 12 Jun 2014 16:59:53 -0700
+Message-ID: <20140612235953.GC17803@hudson.localdomain>
+References: <cover.1402348696.git.jmmahler@gmail.com>
+ <6fe33498512fc2ca1678517e51dc2e94a4260ff4.1402348696.git.jmmahler@gmail.com>
+ <5398460F.3040900@alum.mit.edu>
+ <20140612071045.GC25353@hudson.localdomain>
+ <53997F3C.9010608@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 01:46:47 2014
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jun 13 02:06:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvEhi-0003iH-34
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 01:46:46 +0200
+	id 1WvF13-0007sr-Jc
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 02:06:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298AbaFLXqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 19:46:42 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:58113 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750908AbaFLXql (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 19:46:41 -0400
-Received: by mail-pa0-f52.google.com with SMTP id eu11so1461373pac.25
-        for <git@vger.kernel.org>; Thu, 12 Jun 2014 16:46:41 -0700 (PDT)
+	id S1750907AbaFLX76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 19:59:58 -0400
+Received: from mail-pd0-f174.google.com ([209.85.192.174]:46250 "EHLO
+	mail-pd0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750764AbaFLX75 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 19:59:57 -0400
+Received: by mail-pd0-f174.google.com with SMTP id y10so1475887pdj.19
+        for <git@vger.kernel.org>; Thu, 12 Jun 2014 16:59:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:mail-followup-to:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=aWz+jDB3QjoHOG9dn78YXQ4kDd1UJkO9Z0lCttDHEeA=;
-        b=PRXTC/jAs3QIEkJLvA9uNXTveUGp15CQoX+BZEPXP+I0HJkaKvJx3cnCpBSmf3EuWq
-         42LEPPemDKP8NcZY9mw0QVAAZjOmM6P/Vyw0GOZfVdjwWubYUOB316EPQcvBdDabMG9c
-         Fh4n4nHnBrM+hmLGe4kESurgBR7dVvEkDlOGytQrlkKzMGMy4O3MUJmwZdbApGCWxbuR
-         0TkhdCLNXDgcMNb7D/6ctmO5kgBucWE73roOxXTn4kQNMBr4t/UntFfkzeyRiv77SygO
-         C57yKXvLmJiei4l1Kb/mnXRnxtyA2L7zhcIK12SPXPtwKqiq9RdundOLp8I+PsiIig+2
-         Wd9g==
-X-Received: by 10.68.193.100 with SMTP id hn4mr16173137pbc.50.1402616801069;
-        Thu, 12 Jun 2014 16:46:41 -0700 (PDT)
+        bh=M/CWfo6P8mp8QVB4LQtvHZSmDtZzaml1WzYkcQJOM+M=;
+        b=Ek3RL22jBHaj4PdTrR4k0j2APZR8rEfbT63vAw+1cGfYemqB5jsWrIdxDskzMurTVG
+         IdlBNABKtlxavYG3qjFPfzVreMHgcdUwoP8Dn0Xb5V9LY0ttsxvaUOhn7Km3f+rolUdv
+         9Xfk2h1MezPdYIlFG+PVSCydC4zC1Dfx2FgAgd2xWSIBMkKxHaHnzuUuKgbg0EXk8RmP
+         9ZNw+D+DgIOkUeAFmhhVBdA+TBZtmk2hwSL8yw30BVN8QiN9Zdzku8gfsUAInHy6KunV
+         LdL509QkKglY6hhYZEenRkkD3OgirXitt0eQbwnSMQTpfBftO0c44oirFoV/nlonTSQm
+         oWyg==
+X-Received: by 10.69.31.97 with SMTP id kl1mr16574625pbd.162.1402617597257;
+        Thu, 12 Jun 2014 16:59:57 -0700 (PDT)
 Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id qv3sm120187pbb.87.2014.06.12.16.46.38
+        by mx.google.com with ESMTPSA id ib5sm166280pbb.55.2014.06.12.16.59.55
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Jun 2014 16:46:39 -0700 (PDT)
+        Thu, 12 Jun 2014 16:59:55 -0700 (PDT)
 Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+	Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <CAPig+cTVLJQOsW7H4Ht2NNYkeiMb=EWT7BG3sNu0wNsTQ=oZNA@mail.gmail.com>
+In-Reply-To: <53997F3C.9010608@alum.mit.edu>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251507>
 
-Eric,
+Michael,
 
-On Thu, Jun 12, 2014 at 05:48:52PM -0400, Eric Sunshine wrote:
-> On Thu, Jun 12, 2014 at 3:31 PM, Jeremiah Mahler <jmmahler@gmail.com> wrote:
-> > On Thu, Jun 12, 2014 at 11:50:41AM -0700, Junio C Hamano wrote:
-> >> I am on the fence.
+On Thu, Jun 12, 2014 at 12:21:48PM +0200, Michael Haggerty wrote:
+> On 06/12/2014 09:10 AM, Jeremiah Mahler wrote:
+> > On Wed, Jun 11, 2014 at 02:05:35PM +0200, Michael Haggerty wrote:
+> >> [...]
+> >> If there were a function like strbuf_grow_to(sb, len):
 > >>
-> >> I have this suspicion that the addition of strbuf_set() would *only*
-> >> help when the original written with reset-and-then-add sequence was
-> >> suboptimal to begin with, and it helps *only* how the code reads,
-> >> without correcting the fact that it is still doing unnecessary
-> >> "first set to a value to be discarded and then reset to set the
-> >> right value", sweeping the issue under the rug.
+> >> void strbuf_grow_to(struct strbuf *sb, size_t len)
+> >> {
+> >> 	int new_buf = !sb->alloc;
+> >> 	if (unsigned_add_overflows(len, 1))
+> >> 		die("you want to use way too much memory");
+> >> 	if (new_buf)
+> >> 		sb->buf = NULL;
+> >> 	ALLOC_GROW(sb->buf, len + 1, sb->alloc);
+> >> 	if (new_buf)
+> >> 		sb->buf[0] = '\0';
+> >> }
 > >>
-> > It is certainly possible that builtin/remote.c (PATCH 2/2) saw the most
-> > benefit from this operation because it is so badly designed.  But this
-> > seems unlikely given the review process around here ;-)
-> >
-> > The one case where it would be doing extra work is when a strbuf_set
-> > replaces a strbuf_add that didn't previously have a strbuf_reset.
-> > strbuf_set is not appropriate for all cases, as I mentioned in the
-> > patch, but in some cases I think it makes it more readable.  And in this
-> > case it would be doing a reset on an empty strbuf.  Is avoiding this
-> > expense worth the reduction in readability?
-> >
-> > Also, as Eric Sunshine pointed out, being able to easily re-order
-> > operations can make the code easier to maintain.
-> >
-> >> Repeated reset-and-then-add on the same strbuf used to be something
-> >> that may indicate that the code is doing unnecessary work.  Now,
-> >> repeated uses of strbuf_set on the same strbuf replaced that pattern
-> >> to be watched for to spot wasteful code paths.
+> > grow_to() which could reduce in size, interesting.
+> 
+> I don't understand what you mean by "could reduce in size".  This
+> function can only grow, never reduce, the size of the strbuf, because
+> ALLOC_GROW doesn't do anything unless the requested size is larger than
+> the currently-allocated size.
+> 
+I got it now.  strbuf_grow() adds extra to the current buf.
+strbuf_grow_to() will add more if len is larger than the current length.
+
+> >> (strbuf_grow() could call it:
 > >>
-> > If a reset followed by and add was a rare occurrence I would tend to
-> > agree more.
-> 
-> When composing my review of the builtin/remote.c changes, I wrote
-> something like this:
-> 
->     Although strbuf_set() does make the code a bit easier to read
->     when strbufs are repeatedly re-used, re-using a variable for
->     different purposes is generally considered poor programming
->     practice. It's likely that heavy re-use of strbufs has been
->     tolerated to avoid multiple heap allocations, but that may be a
->     case of premature (allocation) optimization, rather than good
->     programming. A different ("better") way to make the code more
->     readable and maintainable may be to ban re-use of strbufs for
->     different purposes.
-> 
-> But I deleted it before sending because it's a somewhat tangential
-> issue not introduced by your changes. However, I do see strbuf_set()
-> as a Band-Aid for the problem described above, rather than as a useful
-> feature on its own. If the practice of re-using strbufs (as a
-> premature optimization) ever becomes taboo, then strbuf_set() loses
-> its value.
-> 
-
-I am getting the feeling that I have mis-understood the purpose of
-strbufs.  It is not just a library to use in place of char*.
-
-If strbufs should only be added to and never reset a good test would be
-to re-write builtin/remote.c without the use of strbuf_reset.
-
-builtin/remote.c does re-use the buffers.  But it seems if a buffer is
-used N times then to avoid a reset you would need N buffers.
-
-But on the other hand I agree with your comment that re-using a variable
-for different purposes is poor practice.
-
-Now I am not even sure if I want my own patch :-)
-
-> >> I dunno...
+> >> static inline void strbuf_grow(struct strbuf *sb, size_t extra)
+> >> {
+> >> 	if (unsigned_add_overflows(sb->len, extra))
+> >> 		die("you want to use way too much memory");
+> >> 	strbuf_grow_to(sb, sb->len + extra);
+> >> }
 > >>
-> >> > Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
-> >> > ---
-> >> >  Documentation/technical/api-strbuf.txt | 18 ++++++++++++++++++
-> >> >  strbuf.c                               | 21 +++++++++++++++++++++
-> >> >  strbuf.h                               | 13 +++++++++++++
-> >> >  3 files changed, 52 insertions(+)
-> >> >
-> >> > diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
-> >> > index f9c06a7..ae9c9cc 100644
-> >> > --- a/Documentation/technical/api-strbuf.txt
-> >> > +++ b/Documentation/technical/api-strbuf.txt
-> >> > @@ -149,6 +149,24 @@ Functions
-> >> >     than zero if the first buffer is found, respectively, to be less than,
-> >> >     to match, or be greater than the second buffer.
-> >> >  /*----- add data in your buffer -----*/
-> > ...
-> >> >  static inline void strbuf_addch(struct strbuf *sb, int c)
-> >> >  {
-> >
-> > --
-> > Jeremiah Mahler
-> > jmmahler@gmail.com
-> > http://github.com/jmahler
+> >> ), then your function could be minimized to
+> >>
+> >> void strbuf_set(struct strbuf *sb, const void *data, size_t len)
+> >> {
+> >> 	strbuf_grow_to(sb, len);
+> >> 	memcpy(sb->buf, data, len);
+> >> 	strbuf_setlen(sb, len);
+> >> }
+> >>
+> >> I think strbuf_grow_to() would be useful in other situations too.
+> >>
+> >> This is just an idea; I'm not saying that you have to make this change.
+> >>
+> > I like your idea.  I am leaning towards doing the un-optimized
+> > strbuf_set operations first, then optimizing in a later patch.
+> 
+> That's a good plan.
+> 
+> In case you're interested, I sketched what the strbuf_grow_to() changes
+> might look like, and also looked for other places in the code where
+> strbuf_grow_to() could be used instead of strbuf_grow() [1].  This is
+> only a sketch; I haven't even tested the result.  Feel free to use what
+> you want from it.
+> 
+I started looking at it.  I will let you know if I get something
+together.
+
+> Michael
+> 
+> [1] Branch "strbuf-grow-to-sketch" on https://github.com/mhagger/git
+> 
+> -- 
+> Michael Haggerty
+> mhagger@alum.mit.edu
+> http://softwareswirl.blogspot.com/
 
 -- 
 Jeremiah Mahler
