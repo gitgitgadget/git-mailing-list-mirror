@@ -1,68 +1,73 @@
-From: Ralf Thielow <ralf.thielow@gmail.com>
-Subject: [PATCH] l10n: de.po: fix typo
-Date: Thu, 12 Jun 2014 18:12:31 +0200
-Message-ID: <1402589551-3754-1-git-send-email-ralf.thielow@gmail.com>
-Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de,
-	Ralf Thielow <ralf.thielow@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 18:12:44 2014
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2014, #03; Tue, 10)
+Date: Thu, 12 Jun 2014 18:30:27 +0200
+Message-ID: <CAP8UFD0X0xVxJ5M-mtmFGii38HRkprFbm=JjK79mfwRVoS2LFQ@mail.gmail.com>
+References: <xmqq38fc8l23.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 18:30:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wv7cK-00037k-C9
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 18:12:44 +0200
+	id 1Wv7tZ-0004ZR-6X
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 18:30:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753088AbaFLQMk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 12:12:40 -0400
-Received: from mail-we0-f181.google.com ([74.125.82.181]:63319 "EHLO
-	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753049AbaFLQMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 12:12:40 -0400
-Received: by mail-we0-f181.google.com with SMTP id q59so1521584wes.40
-        for <git@vger.kernel.org>; Thu, 12 Jun 2014 09:12:36 -0700 (PDT)
+	id S1756072AbaFLQa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 12:30:29 -0400
+Received: from mail-vc0-f179.google.com ([209.85.220.179]:58884 "EHLO
+	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756014AbaFLQa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 12:30:28 -0400
+Received: by mail-vc0-f179.google.com with SMTP id id10so1078268vcb.10
+        for <git@vger.kernel.org>; Thu, 12 Jun 2014 09:30:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=NPrZMc8rD5AGMtrpzUHakPn5t95JV3mmUEHa9VFV7U0=;
-        b=r1vsPTmI66xoKYasPFTyJ5CuWAtmk5fJMPu3bBg2WGl4cQ7jUkjdygJ/sr3GR+4pyI
-         suclboQH8xR8iflLoesILVJM3t+k1NcRE6bFEaJDNwIZp1lILG9TDKfBwHOjkyz7VGXm
-         S1dF5u3xEDciEPmyjzTEFgy31eAFEbQCuFFb8weE2APH2B2wiBcAMy92JA16FknF9u1P
-         1/7qP7Z4SHzIr1cNEUml9PCnfzmKM0OSUj4JQc0i0/WXz12/KBjavVkaisCr4jnvugCI
-         iatILz+wbtr2CMozxOYLQE6vvJxu4ISimVh7i3Yw06RK6g/rF3dITL4kBdUc427ItkJP
-         ziDg==
-X-Received: by 10.180.99.40 with SMTP id en8mr7988041wib.24.1402589555279;
-        Thu, 12 Jun 2014 09:12:35 -0700 (PDT)
-Received: from localhost (dslb-088-072-176-011.pools.arcor-ip.net. [88.72.176.11])
-        by mx.google.com with ESMTPSA id f6sm603340wja.25.2014.06.12.09.12.33
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 12 Jun 2014 09:12:34 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.415.g8cd8cf8
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=mrmtoHiuwnyG6rIgCrQV6wgJs/faBloJX7D2mhsYBjU=;
+        b=wP73BSvXrb1u1kJ0B3dwp+dBWsUpfiMsDbQRg2h4rvdBrdwXVviMkIju3RySYhcSA7
+         x1OPlgRGespEEYNvrwlSI+FhQKQmRrQwdx7TYmEsLVsrYYfVFK4qprg4kmSc9a+OSjfv
+         eVv+dut7+xatQ3qZ5Vp1uTPLKdgdVpk4Gql+dR7mQJA/ooPnUC8OQF77ezpOfOnHMIYv
+         KvqSMWkZ6vYRIvfFiK/FmQKDvXdqU82hnk6gkwf2P2pZ3Xg16jPagQI3D4TDAZ5WWEOJ
+         spirc1sX6YKgHqi9vvhnso3gGZijggTgs2Mi/GvQqU67i1P4T+OPq8Jofz2AmfXbwPAE
+         sAyA==
+X-Received: by 10.52.93.201 with SMTP id cw9mr819798vdb.80.1402590627735; Thu,
+ 12 Jun 2014 09:30:27 -0700 (PDT)
+Received: by 10.58.134.107 with HTTP; Thu, 12 Jun 2014 09:30:27 -0700 (PDT)
+In-Reply-To: <xmqq38fc8l23.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251414>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
----
- po/de.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, Jun 11, 2014 at 12:19 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> * cc/interpret-trailers (2014-05-28) 11 commits
+>  - Documentation: add documentation for 'git interpret-trailers'
+>  - trailer: add tests for commands in config file
+>  - trailer: execute command from 'trailer.<name>.command'
+>  - trailer: add tests for "git interpret-trailers"
+>  - trailer: add interpret-trailers command
+>  - trailer: put all the processing together and print
+>  - trailer: parse trailers from file or stdin
+>  - trailer: process command line trailer arguments
+>  - trailer: read and process config information
+>  - trailer: process trailers from input message and arguments
+>  - trailer: add data structures and basic functions
+>
+>  A new filter to programatically edit the tail end of the commit log
+>  messages.
+>
+>  What is the status of this one?  I think I saw reviews by Michael
+>  but after that I do not recall seeing any updates.
 
-diff --git a/po/de.po b/po/de.po
-index b777ef4..d7bc424 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -3503,7 +3503,7 @@ msgstr "Gewechselt zu umgesetzten Branch '%s'\n"
- #: builtin/checkout.c:648 builtin/checkout.c:1033
- #, c-format
- msgid "Switched to a new branch '%s'\n"
--msgstr "Gewechselt zu einem neuem Branch '%s'\n"
-+msgstr "Gewechselt zu einem neuen Branch '%s'\n"
- 
- #: builtin/checkout.c:650
- #, c-format
--- 
-2.0.0.415.g8cd8cf8
+Yeah, I am very busy with other things these days, but I should have
+more time after next week.
+
+Thanks,
+Christian.
