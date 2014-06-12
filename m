@@ -1,177 +1,79 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v16 00/48] Use ref transactions
-Date: Thu, 12 Jun 2014 10:20:51 -0700
-Message-ID: <1402593699-13983-1-git-send-email-sahlberg@google.com>
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: fix typo
+Date: Thu, 12 Jun 2014 19:59:14 +0200
+Message-ID: <5399EA72.7060609@gmail.com>
+References: <1402589551-3754-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Ronnie Sahlberg <sahlberg@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 19:25:07 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de
+To: Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 12 19:59:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wv8kI-0001Xh-P0
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 19:25:03 +0200
+	id 1Wv9Hq-0004CS-MB
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 19:59:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756417AbaFLRYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 13:24:54 -0400
-Received: from mail-oa0-f73.google.com ([209.85.219.73]:51116 "EHLO
-	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756177AbaFLRVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 13:21:43 -0400
-Received: by mail-oa0-f73.google.com with SMTP id eb12so309951oac.0
-        for <git@vger.kernel.org>; Thu, 12 Jun 2014 10:21:42 -0700 (PDT)
+	id S1751419AbaFLR7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 13:59:19 -0400
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:62487 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751141AbaFLR7S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 13:59:18 -0400
+Received: by mail-wg0-f45.google.com with SMTP id l18so1670097wgh.16
+        for <git@vger.kernel.org>; Thu, 12 Jun 2014 10:59:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=DIycssfS7wuT+FS5vFAz7EeYkeqi/Fn7TZnqt8rcDXk=;
-        b=nhKzJPpbeEndTrvTPyhjCs007WAZqX2+GXMKiBfk43gD8d5MEdH8v3FwfqCtvdOKqH
-         NFJKS1g+L7Hg0SL6ewThvZ6xSoheCzOteIm1xMuA1qFIy19YdrNQ9Qk+qzWFGk619Ph7
-         6J5wybeRa8ZkrH7cslYtNSeRVaWgycS5y5muHGajWhoY6r3NDALuIK+oRJjd9+lHD/+O
-         d0IgPpMErqeoxq3PA3/uSSNYMQ1EZWyLhtjJDOml+NUAN37OHPGcQicy+zTvcpaIXouL
-         vnmLSKDlNOMaAl8UZ6hY/nHgYy+Tt/PlR/+8Cd+9+a+G5ER/bmGpFGekATUGjA+HCV9q
-         6eKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=DIycssfS7wuT+FS5vFAz7EeYkeqi/Fn7TZnqt8rcDXk=;
-        b=XNhy07xKynlBPavXIChMrttboLGuOx/byqO5U4VgY3ARSTckFoyLY65dfTTr+EPfot
-         IKbz47LHqw9YCCyTYOQxjEWyfDfJxhKDVeM4sE1qNVNkpTMRjhuMtVXpXFoSEyFO3jl2
-         Rdrhu9oKxsakY8er66j5qsPXbAeaN17FNHTeKCLl7eUx5Pbtu1+nUdIMN5XVyRgIjNsT
-         y5GULLn2daeFQ6bupRnax1Cqb20sN36BtzZvEhKUk9wbG5ZDX+ufElXzk6Ggyj/ghn+m
-         Ae0wuqlQJM7/VqRpgAzt40OjJk+lA9aPYJjJTH4IWlWiydmDJD1ce8UOKm7aAL4U4Ulm
-         gwsw==
-X-Gm-Message-State: ALoCoQnqMqJ0jEuZQ7D582d/uAt+eC233LZDQvEOanCjMcnVRRGCQFvwpk0XJgHv/kz25pyRgi+c
-X-Received: by 10.42.26.77 with SMTP id e13mr20427584icc.7.1402593702858;
-        Thu, 12 Jun 2014 10:21:42 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id o69si111885yhp.6.2014.06.12.10.21.42
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Of+hMDiA4wqPFrsaeboJ7z6ssVKTUcq3/nlfXk9VvGI=;
+        b=sywslPVMtEvh0hruQs0rawF/FkTyMLgufzF8hMmlqxYSKqN6c7waWMALzmCtXntq1i
+         ja3UOmoxiWTH03aXKr0lIgYjRFnuHXZlFkyTZdF6xx9HpOs/5eO74UUl3/ksMCzXqQIb
+         7MBYkvZixivf1q6bWwy3/9rfzM3DV7rcWyS1qe/RurQI8Khms81+V2hyUsLNW6NVX4jA
+         gTgZ4RVTIbFRcoE3QO06fBHpaZ3kqMx6orffFyECfTT46slB/cHH2scz7gsfoWV2CQ/P
+         r10KIEmvN0+vjx9sCpNDXeRidDjIPkim8M5tBp2CIfisjxXCYml06Ha7q0fHrjbJbcP9
+         9EnQ==
+X-Received: by 10.194.10.130 with SMTP id i2mr18183056wjb.70.1402595957076;
+        Thu, 12 Jun 2014 10:59:17 -0700 (PDT)
+Received: from [192.168.1.7] (ip-109-91-30-58.unitymediagroup.de. [109.91.30.58])
+        by mx.google.com with ESMTPSA id r44sm6140182eeo.18.2014.06.12.10.59.15
         for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 12 Jun 2014 10:21:42 -0700 (PDT)
-Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 8D00231C65C;
-	Thu, 12 Jun 2014 10:21:42 -0700 (PDT)
-Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 28DADE09AC; Thu, 12 Jun 2014 10:21:42 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.599.g83ced0e
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 12 Jun 2014 10:59:15 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <1402589551-3754-1-git-send-email-ralf.thielow@gmail.com>
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251466>
 
-Final Final version.
+On 12.06.2014 18:12, Ralf Thielow wrote:
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+>  po/de.po | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/po/de.po b/po/de.po
+> index b777ef4..d7bc424 100644
+> --- a/po/de.po
+> +++ b/po/de.po
+> @@ -3503,7 +3503,7 @@ msgstr "Gewechselt zu umgesetzten Branch '%s'\n"
+>  #: builtin/checkout.c:648 builtin/checkout.c:1033
+>  #, c-format
+>  msgid "Switched to a new branch '%s'\n"
+> -msgstr "Gewechselt zu einem neuem Branch '%s'\n"
+> +msgstr "Gewechselt zu einem neuen Branch '%s'\n"
 
-This patch series can also be found at
-https://github.com/rsahlberg/git/tree/ref-transactions
-
-This patch series is based on next and expands on the transaction API. It
-converts all ref updates, inside refs.c as well as external, to use the
-transaction API for updates. This makes most of the ref updates to become
-atomic when there are failures locking or writing to a ref.
-
-This version completes the work to convert all ref updates to use transactions.
-Now that all updates are through transactions I will start working on
-cleaning up the reading of refs and to create an api for managing reflogs but
-all that will go in a different patch series.
-
-Version 16:
- - Refactor some string code and fix an old old memory leak in recv-pack
-Version 15:
- - Break the errno updates out into smaller individual patches
-   as per JNs suggestion.
-Version 14:
- - Remove the patch to pack the refs before rename. We do not need this
-   with the reworked renames that will come 2 series later.
-   The rename_ref changes are thus no longer part of this series.
-Version 13:
- - This version should cover all of JNs suggestions on the previous series.
-   If I missed anything I appologize.
-...
+How about ?
++msgstr "Zu neuem Branch '%s' gewechselt\n"
 
 
-
-Ronnie Sahlberg (48):
-  refs.c: remove ref_transaction_rollback
-  refs.c: ref_transaction_commit should not free the transaction
-  refs.c: constify the sha arguments for
-    ref_transaction_create|delete|update
-  refs.c: allow passing NULL to ref_transaction_free
-  refs.c: add a strbuf argument to ref_transaction_commit for error
-    logging
-  lockfile.c: add a new public function unable_to_lock_message
-  lockfile.c: make lock_file return a meaningful errno on failurei
-  refs.c: add an err argument to repack_without_refs
-  refs.c: make sure log_ref_setup returns a meaningful errno
-  refs.c: verify_lock should set errno to something meaningful
-  refs.c: make remove_empty_directories alwasy set errno to something
-    sane
-  refs.c: commit_packed_refs to return a meaningful errno on failure
-  refs.c: make resolve_ref_unsafe set errno to something meaningful on
-    error
-  refs.c: log_ref_write should try to return meaningful errno
-  refs.c: make ref_update_reject_duplicates take a strbuf argument for
-    errors
-  refs.c: add an err argument to delete_ref_loose
-  refs.c: make update_ref_write update a strbuf on failure
-  update-ref: use err argument to get error from ref_transaction_commit
-  refs.c: remove the onerr argument to ref_transaction_commit
-  refs.c: change ref_transaction_update() to do error checking and
-    return status
-  refs.c: change ref_transaction_create to do error checking and return
-    status
-  refs.c: update ref_transaction_delete to check for error and return
-    status
-  refs.c: make ref_transaction_begin take an err argument
-  refs.c: add transaction.status and track OPEN/CLOSED/ERROR
-  tag.c: use ref transactions when doing updates
-  replace.c: use the ref transaction functions for updates
-  commit.c: use ref transactions for updates
-  sequencer.c: use ref transactions for all ref updates
-  fast-import.c: change update_branch to use ref transactions
-  branch.c: use ref transaction for all ref updates
-  refs.c: change update_ref to use a transaction
-  receive-pack.c: use a reference transaction for updating the refs
-  fast-import.c: use a ref transaction when dumping tags
-  walker.c: use ref transaction for ref updates
-  refs.c: make lock_ref_sha1 static
-  refs.c: remove the update_ref_lock function
-  refs.c: remove the update_ref_write function
-  refs.c: remove lock_ref_sha1
-  refs.c: make prune_ref use a transaction to delete the ref
-  refs.c: make delete_ref use a transaction
-  refs.c: pass the ref log message to _create/delete/update instead of
-    _commit
-  refs.c: pass NULL as *flags to read_ref_full
-  refs.c: move the check for valid refname to lock_ref_sha1_basic
-  refs.c: call lock_ref_sha1_basic directly from commit
-  refs.c: pass a skip list to name_conflict_fn
-  refs.c: propagate any errno==ENOTDIR from _commit back to the callers
-  fetch.c: change s_update_ref to use a ref transaction
-  refs.c: make write_ref_sha1 static
-
- branch.c               |  30 +--
- builtin/commit.c       |  24 ++-
- builtin/fetch.c        |  36 ++--
- builtin/receive-pack.c |  75 +++++---
- builtin/replace.c      |  15 +-
- builtin/tag.c          |  15 +-
- builtin/update-ref.c   |  34 ++--
- cache.h                |   4 +-
- fast-import.c          |  54 ++++--
- lockfile.c             |  39 ++--
- refs.c                 | 507 ++++++++++++++++++++++++++++++++-----------------
- refs.h                 | 128 +++++++++----
- sequencer.c            |  24 ++-
- walker.c               |  58 +++---
- wrapper.c              |  14 +-
- 15 files changed, 695 insertions(+), 362 deletions(-)
-
--- 
-2.0.0.599.g83ced0e
+>  
+>  #: builtin/checkout.c:650
+>  #, c-format
+> 
