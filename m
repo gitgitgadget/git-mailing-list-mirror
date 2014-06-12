@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v16 26/48] replace.c: use the ref transaction functions for updates
-Date: Thu, 12 Jun 2014 10:21:17 -0700
-Message-ID: <1402593699-13983-27-git-send-email-sahlberg@google.com>
+Subject: [PATCH v16 09/48] refs.c: make sure log_ref_setup returns a meaningful errno
+Date: Thu, 12 Jun 2014 10:21:00 -0700
+Message-ID: <1402593699-13983-10-git-send-email-sahlberg@google.com>
 References: <1402593699-13983-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,100 +11,138 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wv8jj-0000uD-2w
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 19:24:27 +0200
+	id 1Wv8jk-0000uD-43
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 19:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933725AbaFLRYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 13:24:20 -0400
-Received: from mail-ob0-f201.google.com ([209.85.214.201]:39343 "EHLO
-	mail-ob0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756242AbaFLRVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 13:21:44 -0400
-Received: by mail-ob0-f201.google.com with SMTP id nu7so310164obb.4
+	id S933750AbaFLRYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 13:24:24 -0400
+Received: from mail-oa0-f73.google.com ([209.85.219.73]:50733 "EHLO
+	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756190AbaFLRVn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 13:21:43 -0400
+Received: by mail-oa0-f73.google.com with SMTP id eb12so310410oac.2
         for <git@vger.kernel.org>; Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mIPPTR9QC7tGzfX8pVaR/V4CaYgNAAL2fvArr1Z1a84=;
-        b=SVHMr18xos0foXuLVRhFph2V++KGDpyCCH3W4TAhK8trJU8RNIDl21Jk0QgFIhzGTF
-         hwQvJ5MV/o/zUm1UZObn/qtL5bDiDo+O14UXDZMeyAhr0SbzWv16REiyXKckBVpEeIpC
-         V4s7iRmTxWhNcnfY3o7r6vk87JnZNmbkB/orwVNz4aIcytlvXe3qD6nafOmTb2eukNju
-         238P2YZirh3PGlECKiI70UnbhaWx2gCQuK7pR0/ZY4fzUqo7CQ0avtxL0D/os5uR/Q/o
-         NaZ2/fWV9VJRrr2coePqP8LXs6GA1vYAgYJwAktkn869Gavphg+3efJdru4WX0ERSXWS
-         MotQ==
+        bh=Gqv6rtkJvOg4m+Hz2PkLzdtY+lf6j4n1HrI0CaSApjs=;
+        b=QLQ0qZRkMG+HHV9G1EqQFBANM5hiKlXuwVkFGl9Nv+eo9DodmO7Di5EyH90qZagjxt
+         W3dsYafRrEHuB7ardHhGlq2CtlwfLERhE9o9YKzmleRi3isJmleWtKljd6U4SXilL5vM
+         sFENFFy/IXrpxajB1RQmv7In40z2djxDSJrzNVUlyRlvMhq8nJQ2wXc+H424nfTzI4IT
+         6ufhJOiUrJo1AeRU2pTao3xm9H4QA4gm+K7Sup+MZ+0wUyUyUdh4OP/Rsj/NH+jP7yZY
+         guJ3LpkSNB5LMWVlwc9t/WoamC1fYPbdSfCXQdY2CU5YrI+Z00gPRzrRAXbrc/kIcpnw
+         KEpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=mIPPTR9QC7tGzfX8pVaR/V4CaYgNAAL2fvArr1Z1a84=;
-        b=M49/ZtQupjsIYy9B5e97RMUBKZAprYZIp5naoZqku4i2CUI6iDJiTGUriTKLVtgBG9
-         QLSYSmwARKK39ZOz/vvFN3ecbZCjPIRU1bvALMg1O58CMNi5vYsjsGCU6c6JpAyKt1i/
-         agZrkHUvKYxle2QnQwxhj3ZO5uI6nvbcAEX0C4xgM+RTMdJYMva3AoPcMbkOG5Ifz6Oo
-         FdTCg4AcMmZ8v7S8wIqHg3P5kB99gN0yIgbMclJRvjU1Sks7mlPFHLqWxaQj0mFTq3Cg
-         5/biPKPvSwfMvrRQOKa8JKCZ1Ek+wOJeu4Aerl8g3bPicx5x5HiEV4T6lu31cfHBx61f
-         DWGw==
-X-Gm-Message-State: ALoCoQn1ygFOdHr8TwtOeh/4sPt743emdxIa1dzgzAnx8gQqdoSF+Ux1CfBub6vdMhetDAPHdRoL
-X-Received: by 10.182.29.1 with SMTP id f1mr7739199obh.23.1402593703804;
+        bh=Gqv6rtkJvOg4m+Hz2PkLzdtY+lf6j4n1HrI0CaSApjs=;
+        b=aQGHHrw+WYBm+CjddL2YelRxUDguCT9HRiIJ3gAfbmqGXKLtOk5JHXKglF8cwO7P+U
+         AtFUomPQpp+lkV3MjT1cAyoTbalaf6P7yMNwkQuX8CGi0YKyuLKPfCPHo9TFTLCrT2E+
+         arsbj9BJBE1Akt2XGW+AobruU4yBd0OEnRAJr/8l/tXU3ZxEbfIvrTMZWoDALU4EF+Rx
+         5rJAKG/YIgHoqIQKY3XdLhYMDRzrbcKmK1HTr22B4jYfE7g/2yhA9MaASCpYLT+WpSg6
+         8vXFqaBtv7wOC1gWu6db7ecfUTVyFhfPqaoSqrbINmp9Ld2UtmiNN3jagGnE0kaCzlYi
+         N9RA==
+X-Gm-Message-State: ALoCoQmWCPFpKqLGv9eMbw/7WMw6TSd0O3FTUTX5HExtXFte1j+Bl3poISrTt5u4yEVmvNwI4OVe
+X-Received: by 10.42.26.77 with SMTP id e13mr20427600icc.7.1402593703248;
         Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id y50si112563yhk.4.2014.06.12.10.21.43
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id t4si113766yhm.0.2014.06.12.10.21.43
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id A02365A47FA;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 1ADF431C65C;
 	Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 7C32BE0A0A; Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
+	id C9E92E09AC; Thu, 12 Jun 2014 10:21:42 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.599.g83ced0e
 In-Reply-To: <1402593699-13983-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251459>
 
-Update replace.c to use ref transactions for updates.
+Making errno when returning from log_ref_setup() meaningful,
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/replace.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ refs.c | 29 ++++++++++++++++++++---------
+ refs.h |  4 +++-
+ 2 files changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 4b3705d..cf92e5d 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -154,7 +154,8 @@ static int replace_object_sha1(const char *object_ref,
- 	unsigned char prev[20];
- 	enum object_type obj_type, repl_type;
- 	char ref[PATH_MAX];
--	struct ref_lock *lock;
-+	struct ref_transaction *transaction;
-+	struct strbuf err = STRBUF_INIT;
- 
- 	obj_type = sha1_object_info(object, NULL);
- 	repl_type = sha1_object_info(repl, NULL);
-@@ -167,12 +168,14 @@ static int replace_object_sha1(const char *object_ref,
- 
- 	check_ref_valid(object, prev, ref, sizeof(ref), force);
- 
--	lock = lock_any_ref_for_update(ref, prev, 0, NULL);
--	if (!lock)
--		die("%s: cannot lock the ref", ref);
--	if (write_ref_sha1(lock, repl, NULL) < 0)
--		die("%s: cannot update the ref", ref);
-+	transaction = ref_transaction_begin(&err);
-+	if (!transaction ||
-+	    ref_transaction_update(transaction, ref, repl, prev,
-+				   0, !is_null_sha1(prev), &err) ||
-+	    ref_transaction_commit(transaction, NULL, &err))
-+		die("%s", err.buf);
- 
-+	ref_transaction_free(transaction);
- 	return 0;
+diff --git a/refs.c b/refs.c
+index b4b05bd..6f85bd8 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2723,6 +2723,7 @@ static int copy_msg(char *buf, const char *msg)
+ 	return cp - buf;
  }
  
++/* This function must set a meaningful errno on failure */
+ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+ {
+ 	int logfd, oflags = O_APPEND | O_WRONLY;
+@@ -2733,9 +2734,12 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+ 	     starts_with(refname, "refs/remotes/") ||
+ 	     starts_with(refname, "refs/notes/") ||
+ 	     !strcmp(refname, "HEAD"))) {
+-		if (safe_create_leading_directories(logfile) < 0)
+-			return error("unable to create directory for %s",
+-				     logfile);
++		if (safe_create_leading_directories(logfile) < 0) {
++			int save_errno = errno;
++			error("unable to create directory for %s", logfile);
++			errno = save_errno;
++			return -1;
++		}
+ 		oflags |= O_CREAT;
+ 	}
+ 
+@@ -2746,15 +2750,22 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+ 
+ 		if ((oflags & O_CREAT) && errno == EISDIR) {
+ 			if (remove_empty_directories(logfile)) {
+-				return error("There are still logs under '%s'",
+-					     logfile);
+-			}
++				int save_errno = errno;
++				error("There are still logs under '%s'",
++				      logfile);
++				errno = save_errno;
++				return -1;
++ 			}
+ 			logfd = open(logfile, oflags, 0666);
+ 		}
+ 
+-		if (logfd < 0)
+-			return error("Unable to append to %s: %s",
+-				     logfile, strerror(errno));
++		if (logfd < 0) {
++			int save_errno = errno;
++			error("Unable to append to %s: %s", logfile,
++			      strerror(errno));
++			errno = save_errno;
++			return -1;
++		}
+ 	}
+ 
+ 	adjust_shared_perm(logfile);
+diff --git a/refs.h b/refs.h
+index 948cc53..979c12f 100644
+--- a/refs.h
++++ b/refs.h
+@@ -154,7 +154,9 @@ extern void unlock_ref(struct ref_lock *lock);
+ /** Writes sha1 into the ref specified by the lock. **/
+ extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, const char *msg);
+ 
+-/** Setup reflog before using. **/
++/*
++ * Setup reflog before using. Set errno to something meaningful on failure.
++ */
+ int log_ref_setup(const char *refname, char *logfile, int bufsize);
+ 
+ /** Reads log for the value of ref during at_time. **/
 -- 
 2.0.0.599.g83ced0e
