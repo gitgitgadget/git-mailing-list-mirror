@@ -1,105 +1,161 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v4 0/1] receive-pack: optionally deny case clone refs
-Date: Thu, 12 Jun 2014 19:30:35 -0400
-Organization: Twitter
-Message-ID: <1402615835.5629.34.camel@stross>
-References: <1402525838-31975-1-git-send-email-dturner@twitter.com>
-	 <xmqqa99h6hbh.fsf@gitster.dls.corp.google.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v3 1/2] add strbuf_set operations
+Date: Thu, 12 Jun 2014 16:46:37 -0700
+Message-ID: <20140612234637.GB17803@hudson.localdomain>
+References: <cover.1402557437.git.jmmahler@gmail.com>
+ <f4d043b7c1e00f9c967faff39244274fe40fd371.1402557437.git.jmmahler@gmail.com>
+ <xmqqr42u55dq.fsf@gitster.dls.corp.google.com>
+ <20140612193144.GA17077@hudson.localdomain>
+ <CAPig+cTVLJQOsW7H4Ht2NNYkeiMb=EWT7BG3sNu0wNsTQ=oZNA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Ronnie Sahlberg <sahlberg@google.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 01:30:45 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 01:46:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvESD-0003e8-1u
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 01:30:45 +0200
+	id 1WvEhi-0003iH-34
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 01:46:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790AbaFLXal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 19:30:41 -0400
-Received: from mail-qc0-f180.google.com ([209.85.216.180]:44248 "EHLO
-	mail-qc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751305AbaFLXaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 19:30:39 -0400
-Received: by mail-qc0-f180.google.com with SMTP id i17so3123997qcy.25
-        for <git@vger.kernel.org>; Thu, 12 Jun 2014 16:30:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=Wzn9grFw7H9PC7onwzkThZmrfeXzNX6/cJVrmc+YRqA=;
-        b=iVEZZP/4CM4B4L6O+t7SW0JIk+habq8o6klEZp+6UkS4E6VWHtrefVLOt4tInfkTos
-         KeUrkH/+JRSywp2xpVUAd/+AYgQUx5qx0n9/Vh3KkFrK0xYzRzwSCCXVw4252pjUjd6l
-         2KHM4M9MRPUA7R7aRduRHvW622WRbmdGhnN6wi9AK3gbpr8B+eKrk4+731hkaDg+fpDg
-         0xRzTOhl0aaxoljzZl+Sy11PPdiSFb5qMBwQkO9fC4ATaJvMnBfqRSPGVgUAWLeIKyoI
-         I8PfXey9NpGE4OhcJJ9rNaFTVuUluFrWDrlDazXI8b+hDq0BwRc5hQqlt9UvA+/tOUvL
-         aO1A==
-X-Gm-Message-State: ALoCoQkM6jBEgCgHbOfxmfamNe9L0VsRpxE43rbU1hnbjOtLD3TEyJeTkPc8UrtJtDrZV6Q8M/Uw
-X-Received: by 10.224.14.79 with SMTP id f15mr37775008qaa.96.1402615838308;
-        Thu, 12 Jun 2014 16:30:38 -0700 (PDT)
-Received: from [172.18.24.43] ([8.25.196.26])
-        by mx.google.com with ESMTPSA id 73sm66784qgw.5.2014.06.12.16.30.36
+	id S1751298AbaFLXqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 19:46:42 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:58113 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750908AbaFLXql (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 19:46:41 -0400
+Received: by mail-pa0-f52.google.com with SMTP id eu11so1461373pac.25
+        for <git@vger.kernel.org>; Thu, 12 Jun 2014 16:46:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=aWz+jDB3QjoHOG9dn78YXQ4kDd1UJkO9Z0lCttDHEeA=;
+        b=PRXTC/jAs3QIEkJLvA9uNXTveUGp15CQoX+BZEPXP+I0HJkaKvJx3cnCpBSmf3EuWq
+         42LEPPemDKP8NcZY9mw0QVAAZjOmM6P/Vyw0GOZfVdjwWubYUOB316EPQcvBdDabMG9c
+         Fh4n4nHnBrM+hmLGe4kESurgBR7dVvEkDlOGytQrlkKzMGMy4O3MUJmwZdbApGCWxbuR
+         0TkhdCLNXDgcMNb7D/6ctmO5kgBucWE73roOxXTn4kQNMBr4t/UntFfkzeyRiv77SygO
+         C57yKXvLmJiei4l1Kb/mnXRnxtyA2L7zhcIK12SPXPtwKqiq9RdundOLp8I+PsiIig+2
+         Wd9g==
+X-Received: by 10.68.193.100 with SMTP id hn4mr16173137pbc.50.1402616801069;
+        Thu, 12 Jun 2014 16:46:41 -0700 (PDT)
+Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id qv3sm120187pbb.87.2014.06.12.16.46.38
         for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 12 Jun 2014 16:30:37 -0700 (PDT)
-In-Reply-To: <xmqqa99h6hbh.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Jun 2014 16:46:39 -0700 (PDT)
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTVLJQOsW7H4Ht2NNYkeiMb=EWT7BG3sNu0wNsTQ=oZNA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251506>
 
-On Thu, 2014-06-12 at 12:47 -0700, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
-> 
-> > This issue bit us again recently.
+Eric,
+
+On Thu, Jun 12, 2014 at 05:48:52PM -0400, Eric Sunshine wrote:
+> On Thu, Jun 12, 2014 at 3:31 PM, Jeremiah Mahler <jmmahler@gmail.com> wrote:
+> > On Thu, Jun 12, 2014 at 11:50:41AM -0700, Junio C Hamano wrote:
+> >> I am on the fence.
+> >>
+> >> I have this suspicion that the addition of strbuf_set() would *only*
+> >> help when the original written with reset-and-then-add sequence was
+> >> suboptimal to begin with, and it helps *only* how the code reads,
+> >> without correcting the fact that it is still doing unnecessary
+> >> "first set to a value to be discarded and then reset to set the
+> >> right value", sweeping the issue under the rug.
+> >>
+> > It is certainly possible that builtin/remote.c (PATCH 2/2) saw the most
+> > benefit from this operation because it is so badly designed.  But this
+> > seems unlikely given the review process around here ;-)
 > >
-> > In talking with some colleagues, I realized that the previous version
-> > of this patch, in addition to being potentially slow, was incomplete.
-> > Specifically, it didn't handle the case of refs/heads/case/one vs
-> > refs/heads/CASE/two; these are case clones even though they strcasecmp
-> > different.
+> > The one case where it would be doing extra work is when a strbuf_set
+> > replaces a strbuf_add that didn't previously have a strbuf_reset.
+> > strbuf_set is not appropriate for all cases, as I mentioned in the
+> > patch, but in some cases I think it makes it more readable.  And in this
+> > case it would be doing a reset on an empty strbuf.  Is avoiding this
+> > expense worth the reduction in readability?
+> >
+> > Also, as Eric Sunshine pointed out, being able to easily re-order
+> > operations can make the code easier to maintain.
+> >
+> >> Repeated reset-and-then-add on the same strbuf used to be something
+> >> that may indicate that the code is doing unnecessary work.  Now,
+> >> repeated uses of strbuf_set on the same strbuf replaced that pattern
+> >> to be watched for to spot wasteful code paths.
+> >>
+> > If a reset followed by and add was a rare occurrence I would tend to
+> > agree more.
 > 
-> Good catch to realize that two refs that share leading paths that
-> are the same except for cases are also problematic, but that makes
-> this feature even less about "case clones", doesn't it?
+> When composing my review of the builtin/remote.c changes, I wrote
+> something like this:
+> 
+>     Although strbuf_set() does make the code a bit easier to read
+>     when strbufs are repeatedly re-used, re-using a variable for
+>     different purposes is generally considered poor programming
+>     practice. It's likely that heavy re-use of strbufs has been
+>     tolerated to avoid multiple heap allocations, but that may be a
+>     case of premature (allocation) optimization, rather than good
+>     programming. A different ("better") way to make the code more
+>     readable and maintainable may be to ban re-use of strbufs for
+>     different purposes.
+> 
+> But I deleted it before sending because it's a somewhat tangential
+> issue not introduced by your changes. However, I do see strbuf_set()
+> as a Band-Aid for the problem described above, rather than as a useful
+> feature on its own. If the practice of re-using strbufs (as a
+> premature optimization) ever becomes taboo, then strbuf_set() loses
+> its value.
+> 
 
-I agree: word "clone" is less good now.  Maybe "case conflicts"?
+I am getting the feeling that I have mis-understood the purpose of
+strbufs.  It is not just a library to use in place of char*.
 
-> Also it somehow feels that the patch attempts to solve the issue at
-> a wrong level.  On a platform that cannot represent two refs like
-> these (e.g. trying to create "FOO" when "foo" already exists, or
-> trying to create "a/c" when "A/b" already exists---ending up with
-> "A/c" instead, which is not what the user wanted to create), would
-> it be more sensible to fail the ref creation without touching the
-> users of ref API such as receive-pack?  That way, you would also
-> catch other uses of refs that are not supported on your system,
-> e.g. "git branch a/c" when there already is a branch called "A/b",
-> no?
+If strbufs should only be added to and never reset a good test would be
+to re-write builtin/remote.c without the use of strbuf_reset.
 
-So we would change is_refname_available?  And to do this, we would
-change the ref_dir functions to take case into account?
+builtin/remote.c does re-use the buffers.  But it seems if a buffer is
+used N times then to avoid a reset you would need N buffers.
 
-This might be somewhat complicated because we could be starting from a
-repo which already has case conflicts.  What should we do about that?  I
-think this is even possible on a case-insensitive filesystem with
-packed-refs, although I have not checked.  The simplest idea is probably
-to pretend that the first conflicting refname component we find is the
-one true one, and reject new refs containing versions which are case
-conflicting with this one until the user cleans up their repo.  In other
-words, if the user has A/b and a/c already, and we find A/b first, then
-we reject a/d but allow A/d.   This is arbitrary, but workable.  We
-could warn about this situation when we load up the refs, too.  
+But on the other hand I agree with your comment that re-using a variable
+for different purposes is poor practice.
 
-Does this match what you are suggesting? 
+Now I am not even sure if I want my own patch :-)
 
-If so, I think it is possible, and if I don't hear anything back from
-the other ref folks, I'll see if I have time to implement it.
+> >> I dunno...
+> >>
+> >> > Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
+> >> > ---
+> >> >  Documentation/technical/api-strbuf.txt | 18 ++++++++++++++++++
+> >> >  strbuf.c                               | 21 +++++++++++++++++++++
+> >> >  strbuf.h                               | 13 +++++++++++++
+> >> >  3 files changed, 52 insertions(+)
+> >> >
+> >> > diff --git a/Documentation/technical/api-strbuf.txt b/Documentation/technical/api-strbuf.txt
+> >> > index f9c06a7..ae9c9cc 100644
+> >> > --- a/Documentation/technical/api-strbuf.txt
+> >> > +++ b/Documentation/technical/api-strbuf.txt
+> >> > @@ -149,6 +149,24 @@ Functions
+> >> >     than zero if the first buffer is found, respectively, to be less than,
+> >> >     to match, or be greater than the second buffer.
+> >> >  /*----- add data in your buffer -----*/
+> > ...
+> >> >  static inline void strbuf_addch(struct strbuf *sb, int c)
+> >> >  {
+> >
+> > --
+> > Jeremiah Mahler
+> > jmmahler@gmail.com
+> > http://github.com/jmahler
+
+-- 
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
