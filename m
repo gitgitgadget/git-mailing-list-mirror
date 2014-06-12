@@ -1,60 +1,212 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] submodule config lookup API
-Date: Thu, 12 Jun 2014 15:04:41 -0700
-Message-ID: <xmqqtx7p4wee.fsf@gitster.dls.corp.google.com>
-References: <20140605060425.GA23874@sandbox-ub>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 08/17] provide a helper to free commit buffer
+Date: Thu, 12 Jun 2014 18:05:37 -0400
+Message-ID: <20140612220537.GA14445@sigill.intra.peff.net>
+References: <20140610213509.GA26979@sigill.intra.peff.net>
+ <20140610214005.GH19147@sigill.intra.peff.net>
+ <xmqqzjhi56oo.fsf@gitster.dls.corp.google.com>
+ <20140612200855.GB4468@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 00:05:00 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 00:05:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvD7A-0005yR-3O
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 00:04:56 +0200
+	id 1WvD7w-0006mj-Ej
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 00:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751188AbaFLWEt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 18:04:49 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60519 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750716AbaFLWEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 18:04:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1463C1E1A2;
-	Thu, 12 Jun 2014 18:04:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=sGr+vWGkXsUHeD0xk7f8wILhGJg=; b=DxrUtS
-	SAzmuCRF2wRmBZRvwuKhJSC9xJg/PNe4lgTr3TRVOefR4ISnj1hlnepqI6vcrc+7
-	kGMh7ijYeCpX4vdxIaCuHyez6GjA/VOj1B3bOnm1I4aCQ7BNG7+e73j/msUz6n7U
-	9xM+oHjzUM0WYrppJgCPrfbn2ZpkoeskxXGis=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DSGDrNwXF9MlTxHa+pHubuO82jNm71uv
-	ncUysN1YaW4bevdlmB8vUf4KM1NHDOhSDWnQNvui0t4aM+U/zfKf7NLgjc8utg5T
-	RaATcJAVyDNAAwtKOhV2yB0QX4puQi3C1fdNdbJIokD2f02W0wtML7XX2Zq6px9A
-	4REBifEYBUg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 080281E1A1;
-	Thu, 12 Jun 2014 18:04:47 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E2F611E199;
-	Thu, 12 Jun 2014 18:04:42 -0400 (EDT)
-In-Reply-To: <20140605060425.GA23874@sandbox-ub> (Heiko Voigt's message of
-	"Thu, 5 Jun 2014 08:04:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8EA780C6-F27D-11E3-9EDE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751021AbaFLWFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 18:05:41 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42968 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750811AbaFLWFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 18:05:40 -0400
+Received: (qmail 13360 invoked by uid 102); 12 Jun 2014 22:05:40 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Jun 2014 17:05:40 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jun 2014 18:05:37 -0400
+Content-Disposition: inline
+In-Reply-To: <20140612200855.GB4468@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251501>
 
-Hmph, this seems to conflict in a meaningful (and painful) way with
-Jens's "jl/submodule-recursive-checkout".
+On Thu, Jun 12, 2014 at 04:08:55PM -0400, Jeff King wrote:
+
+> So just putting in the safety check is probably the least-disruptive
+> thing. It doesn't automatically adapt to a change in the underlying
+> commit_buffer code, but it would at least notice it.
+
+Here is that commit with the check you suggested, and a better
+explanation in the commit message of what is going on.
+
+I don't know if it's easier for you to just replace patch 8 with this
+(there will be a minor textual conflict in the final commit then), or if
+you want me to re-post the whole 17-patch series.
+
+Arguably this could be broken into two commits (one to add the simple
+"free" and one for this more complicated "detach" case), but that makes
+it little more complicated for you to apply. We need some way of
+emailing patches coupled with rebase instructions. :)
+
+-- >8 --
+Subject: provide a helper to free commit buffer
+
+This converts two lines into one at each caller. But more
+importantly, it abstracts the concept of freeing the buffer,
+which will make it easier to change later.
+
+Note that we also need to provide a "detach" mechanism for a
+tricky case in index-pack. We are passed a buffer for the
+object generated by processing the incoming pack.. If we are
+not using --strict, we just calculate the sha1 on that
+buffer and return, leaving the caller to free it.  But if we
+are using --strict, we actually attach that buffer to an
+object, pass the object to the fsck functions, and then
+detach the buffer from the object again (so that the caller
+can free it as usual).  In this case, we don't want to free
+the buffer ourselves, but just make sure it is no longer
+associated with the commit.
+
+Note that we are making the assumption here that the
+attach/detach process does not impact the buffer at all
+(e.g., it is never reallocated or modified). That holds true
+now, and we have no plans to change that. However, as we
+abstract the commit_buffer code, this dependency becomes
+less obvious. So when we detach, let's also make sure that
+we get back the same buffer that we gave to the
+commit_buffer code.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/fsck.c       |  3 +--
+ builtin/index-pack.c |  3 ++-
+ builtin/log.c        |  6 ++----
+ builtin/rev-list.c   |  3 +--
+ commit.c             | 13 +++++++++++++
+ commit.h             | 11 +++++++++++
+ 6 files changed, 30 insertions(+), 9 deletions(-)
+
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index fc150c8..8aadca1 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -310,8 +310,7 @@ static int fsck_obj(struct object *obj)
+ 	if (obj->type == OBJ_COMMIT) {
+ 		struct commit *commit = (struct commit *) obj;
+ 
+-		free(commit->buffer);
+-		commit->buffer = NULL;
++		free_commit_buffer(commit);
+ 
+ 		if (!commit->parents && show_root)
+ 			printf("root %s\n", sha1_to_hex(commit->object.sha1));
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 18f57de..3f88b12 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -786,7 +786,8 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 			}
+ 			if (obj->type == OBJ_COMMIT) {
+ 				struct commit *commit = (struct commit *) obj;
+-				commit->buffer = NULL;
++				if (detach_commit_buffer(commit) != data)
++					die("BUG: parse_object_buffer transmogrified our buffer");
+ 			}
+ 			obj->flags |= FLAG_CHECKED;
+ 		}
+diff --git a/builtin/log.c b/builtin/log.c
+index 39e8836..226f8f2 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -349,8 +349,7 @@ static int cmd_log_walk(struct rev_info *rev)
+ 			rev->max_count++;
+ 		if (!rev->reflog_info) {
+ 			/* we allow cycles in reflog ancestry */
+-			free(commit->buffer);
+-			commit->buffer = NULL;
++			free_commit_buffer(commit);
+ 		}
+ 		free_commit_list(commit->parents);
+ 		commit->parents = NULL;
+@@ -1508,8 +1507,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		    reopen_stdout(rev.numbered_files ? NULL : commit, NULL, &rev, quiet))
+ 			die(_("Failed to create output files"));
+ 		shown = log_tree_commit(&rev, commit);
+-		free(commit->buffer);
+-		commit->buffer = NULL;
++		free_commit_buffer(commit);
+ 
+ 		/* We put one extra blank line between formatted
+ 		 * patches and this flag is used by log-tree code
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 9f92905..e012ebe 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -173,8 +173,7 @@ static void finish_commit(struct commit *commit, void *data)
+ 		free_commit_list(commit->parents);
+ 		commit->parents = NULL;
+ 	}
+-	free(commit->buffer);
+-	commit->buffer = NULL;
++	free_commit_buffer(commit);
+ }
+ 
+ static void finish_object(struct object *obj,
+diff --git a/commit.c b/commit.c
+index fbdc480..11a05c1 100644
+--- a/commit.c
++++ b/commit.c
+@@ -245,6 +245,19 @@ int unregister_shallow(const unsigned char *sha1)
+ 	return 0;
+ }
+ 
++void free_commit_buffer(struct commit *commit)
++{
++	free(commit->buffer);
++	commit->buffer = NULL;
++}
++
++const void *detach_commit_buffer(struct commit *commit)
++{
++	void *ret = commit->buffer;
++	commit->buffer = NULL;
++	return ret;
++}
++
+ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long size)
+ {
+ 	const char *tail = buffer;
+diff --git a/commit.h b/commit.h
+index 4df48cb..d72ed43 100644
+--- a/commit.h
++++ b/commit.h
+@@ -51,6 +51,17 @@ int parse_commit_buffer(struct commit *item, const void *buffer, unsigned long s
+ int parse_commit(struct commit *item);
+ void parse_commit_or_die(struct commit *item);
+ 
++/*
++ * Free any cached object buffer associated with the commit.
++ */
++void free_commit_buffer(struct commit *);
++
++/*
++ * Disassociate any cached object buffer from the commit, but do not free it.
++ * The buffer (or NULL, if none) is returned.
++ */
++const void *detach_commit_buffer(struct commit *);
++
+ /* Find beginning and length of commit subject. */
+ int find_commit_subject(const char *commit_buffer, const char **subject);
+ 
+-- 
+2.0.0.566.gfe3e6b2
