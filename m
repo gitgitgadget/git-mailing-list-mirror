@@ -1,106 +1,103 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/2] add strbuf_set operations
-Date: Thu, 12 Jun 2014 11:51:19 -0700
-Message-ID: <xmqqmwdi55co.fsf@gitster.dls.corp.google.com>
-References: <cover.1402557437.git.jmmahler@gmail.com>
-	<f4d043b7c1e00f9c967faff39244274fe40fd371.1402557437.git.jmmahler@gmail.com>
-	<539960B8.1080709@virtuell-zuhause.de>
-	<20140612082218.GA5419@hudson.localdomain>
+Subject: Re: [PATCH RFC] git-am: support any number of signatures
+Date: Thu, 12 Jun 2014 12:07:03 -0700
+Message-ID: <xmqqioo654mg.fsf@gitster.dls.corp.google.com>
+References: <1402589505-27632-1-git-send-email-mst@redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Braun <thomas.braun@virtuell-zuhause.de>,
-	git@vger.kernel.org
-To: Jeremiah Mahler <jmmahler@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 20:51:34 2014
+Cc: git@vger.kernel.org
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Jun 12 21:07:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvA61-0006rT-7L
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 20:51:33 +0200
+	id 1WvALH-0006oQ-6P
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 21:07:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752390AbaFLSv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 14:51:28 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62543 "EHLO smtp.pobox.com"
+	id S1751961AbaFLTHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 15:07:12 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63456 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752371AbaFLSvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 14:51:25 -0400
+	id S1751896AbaFLTHK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 15:07:10 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7ADCF1E5FB;
-	Thu, 12 Jun 2014 14:51:25 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D05181EBEF;
+	Thu, 12 Jun 2014 15:07:09 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=duubJfQsfX0PuLwxdQFjesasx+I=; b=NYT1ny
-	hHpvFy506E59Gp6o/wTaaoSFbNd4EgdbvtXDi73FnYi5PYbfrodWg6XmkiRhaAWJ
-	IkKMnouTJplSorEauUJRutfs5L9dYsNTQKIOHUrkOMpZZXIixuPjxVORHRJdUHls
-	Z6R7DB9Xr1HQl998G+Z0Q4c7ds58uzmO88PCA=
+	:content-type; s=sasl; bh=LctHeUhHTMoqWcwY7Cg/GcHe6E8=; b=K94wee
+	YWWPO4j/CWsC3Vm2xP8mEf8h6EsImVBiCRBvK7XhThHzaT/iiUzGg9VD4218KEUW
+	gdAYTAjfA0AOOiRPuNyWetlRyrbDD99Yc7EQ3oZw2a9AStuFSaoc/EK4W6TOSvxm
+	5QsihiV5gDpoiPQMKt/d5KPMIycvqZLEt5eO0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=H3YkxRYydtH6FzPdBfli13k7UByGFAnx
-	/eDclQ5kQ4OZjLdIIVTBn1DfBn9wSKopdHn1DCkMGpVjejDwWrWbvgSxi8FnMJWb
-	z6kMKlxLxASnGY5D5XPpZtMYH2wflA7RMy0BPfqRAFoGiic1HOJkL9ujySqkuF+y
-	3Dsje/MQwK4=
+	:content-type; q=dns; s=sasl; b=JvFaALJOALqNzWzzesSciBJrIO4VQbFw
+	BmrrkdAqA8E1FJaFn2VByW5mZkPJf828qClLikVSgu9kr2YEbuKNUbKJogVZrCgv
+	PuP/Jz4fRC1PoiREAvW1HZxgB+ocMPrGSl7Hu9a7oVyDqtb9V5puHV6lWkg4UWFq
+	VHDbmdi18XU=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6EF3B1E5F9;
-	Thu, 12 Jun 2014 14:51:25 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C3B1B1EBEE;
+	Thu, 12 Jun 2014 15:07:09 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7373C1E5EE;
-	Thu, 12 Jun 2014 14:51:21 -0400 (EDT)
-In-Reply-To: <20140612082218.GA5419@hudson.localdomain> (Jeremiah Mahler's
-	message of "Thu, 12 Jun 2014 01:22:18 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DC60A1EBE6;
+	Thu, 12 Jun 2014 15:07:04 -0400 (EDT)
+In-Reply-To: <1402589505-27632-1-git-send-email-mst@redhat.com> (Michael
+	S. Tsirkin's message of "Thu, 12 Jun 2014 19:12:35 +0300")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8BA59B1C-F262-11E3-BCB1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: BDF942CE-F264-11E3-A216-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251480>
 
-Jeremiah Mahler <jmmahler@gmail.com> writes:
+"Michael S. Tsirkin" <mst@redhat.com> writes:
 
-> Thomas,
+> I'm using different signature tags for git am depending on the patch,
+> project and other factors.
 >
-> On Thu, Jun 12, 2014 at 10:11:36AM +0200, Thomas Braun wrote:
->> Am 12.06.2014 09:29, schrieb Jeremiah Mahler:
->> > A common use case with strubfs is to set the buffer to a new value.
-
-strubfs???
-
->> > This must be done in two steps: a reset followed by an add.
->> > 
->> >   strbuf_reset(buf);
->> >   strbuf_add(buf, new_buf, len);
->> > 
->> > In cases where the buffer is being built up in steps, these operations
->> > make sense and correctly convey what is being performed.
->> > 
->> >   strbuf_reset(buf);
->> >   strbuf_add(buf, data1, len1);
->> >   strbuf_add(buf, data2, len2);
->> >   strbuf_add(buf, data3, len3);
->> > 
->> > However, in other cases, it can be confusing and is not very concise.
->> > 
->> >   strbuf_reset(buf);
->> >   strbuf_add(buf, default, len1);
->> > 
->> >   if (cond1) {
->> >     strbuf_reset(buf);
->> >     strbuf_add(buf, data2, len2);
->> >   }
->> > 
->> >   if (cond2) {
->> >     strbuf_reset(buf);
->> >     strbuf_add(buf, data3, len3);
->> >   }
->> > 
->> > Add strbuf_set operations so that it can be re-written in a clear and
->> > concise way.
->> > 
->> >   strbuf_set(buf, default len1);
->> very minor nit: missing comma between default and len1.
+> Sometimes I add multiple tags as well, e.g. QEMU
+> wants both Reviewed-by and Signed-off-by tags.
 >
-> I can't believe I missed that.  Good catch ;-)
+> This patch makes it easy to do so:
+> 1.  new parameter am.signoff can be used any number
+> 	of times:
+>
+> [am]
+> 	signoff = "Reviewed-by: Michael S. Tsirkin <mst@redhat.com>"
+> 	signoff = "Signed-off-by: Michael S. Tsirkin <mst@redhat.com>"
+>
+> 	if set all signatures are picked up when git am -s is used.
+
+How does this interact with the logic to avoid appending the same
+Signed-off-by: line as the last one the incoming message already
+has?
+
+> 2.  Any number of alternative signatures
+>
+> [am "a"]
+> 	signoff = "Acked-by: Michael S. Tsirkin <mst@redhat.com>"
+>
+> 	if set the signature type can be specified by passing
+> 	a parameter to the -s flag:
+>
+> 	git am -sa
+>
+> No docs or tests, sorry, so not yet ready for master, but I'm using this
+> all the time without any issues so maybe ok for pu.
+> Early flames/feedback/help welcome.
+
+How does that "a" in [am "a"] work?  If it defines some kind of
+scope (i.e. use am.a.* instead of am.* when I specify I am using "a"
+set somehow), that might be something interesting, but if it applies
+only to sign-off and other things, then I am not sure if I like it,
+as that would invite confusions from end users.
+
+> +		signoffs=("${signoffs[@]}" "${s[@]}") ;;
+
+Is this a shell array?  It won't fly in our codebase if that is the
+case.
