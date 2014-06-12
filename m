@@ -1,160 +1,177 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v16 07/48] lockfile.c: make lock_file return a meaningful errno on failurei
-Date: Thu, 12 Jun 2014 10:20:58 -0700
-Message-ID: <1402593699-13983-8-git-send-email-sahlberg@google.com>
+Subject: [PATCH v16 16/48] refs.c: add an err argument to delete_ref_loose
+Date: Thu, 12 Jun 2014 10:21:07 -0700
+Message-ID: <1402593699-13983-17-git-send-email-sahlberg@google.com>
 References: <1402593699-13983-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 12 19:22:09 2014
+X-From: git-owner@vger.kernel.org Thu Jun 12 19:22:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wv8hP-0006vy-Vw
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 19:22:04 +0200
+	id 1Wv8hO-0006vy-P7
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 19:22:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756339AbaFLRV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 13:21:56 -0400
-Received: from mail-ob0-f202.google.com ([209.85.214.202]:35536 "EHLO
-	mail-ob0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756195AbaFLRVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 13:21:43 -0400
-Received: by mail-ob0-f202.google.com with SMTP id va2so310478obc.1
+	id S1756312AbaFLRVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 13:21:50 -0400
+Received: from mail-ob0-f201.google.com ([209.85.214.201]:36645 "EHLO
+	mail-ob0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756203AbaFLRVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 13:21:44 -0400
+Received: by mail-ob0-f201.google.com with SMTP id nu7so310162obb.4
         for <git@vger.kernel.org>; Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=LH+nPDhANAWO1oHp5t22PJ0Mzk9DYVejKR7AcyDqRPg=;
-        b=inKx5EqibgfzmfOUJzLMsruSWqkj5P9lI39S44LthtH0T1Tv7tp6pGRDgPR2VkB94i
-         37Vh02CIaiqAsalJBypQiGrbRoCsjU0wLLS4YF3ecQulNwW0xRe7JHt/KVyiC7dvp6pD
-         KGRtK+6gyxB4F5i3C2g9ClyBp0CES+Vq/3yM5IrWQJ1g76cPQaphawBHSRvlQmdC3Ggs
-         5lX7Yx7L7VVmPR20dCPcWU/dpTAmUsQhOVbFj6p94iI/F2WO8G0NBm7o/9wcMgoHNhGI
-         6GhsfmqrlEjyaZMJ8tWGm1KFsEnPaNCGLQ+OyS2EEoyDa4afnCnhotQZSmgEmbDicjEL
-         DqGQ==
+        bh=X9HHcv+nzoYsURnszJvM8LF8tcjN8wIZdYzJvff9DCs=;
+        b=aXHxqU/u9C+W45bNkPhASaaHC/TsLsgIkaUamZDmaqcUAs1DNa0YXHy/Evw3l9Rgvl
+         J7SrxGjVcR6hs2z6odNfmNNfPRPLWK1pLBqdLOH//F8/wyUdalpxu0w3vyQxO58EVFsQ
+         yRpAWIunzcNZaPK6cQFDIEOw/nt71Xyth1tY6rO1FaYJewpCFhwlPGt9AdqNJYrGlo62
+         tWNCy6QJCTcaWhrz4MXuN4YOnOtu9XutrfbdIrBbhDjU72FJzqgDRv30AEXwWTrvQwJz
+         ZlGcww3fwu9MK+p0YWwaArRQMzTzc2Q56ZSw1UUHPhkP1ExGeNcP8bx0aIDFstF9aCSe
+         Tm8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=LH+nPDhANAWO1oHp5t22PJ0Mzk9DYVejKR7AcyDqRPg=;
-        b=L/MGef1LDKgSPd1glsWE0f6AIPwGrMjFW27LaFcmG4gWYcgZ8+fX15ljC1lb6HPhBn
-         Lv0zBufOzaeXI9WRzl/qaRV483CpFoxtEeNp73sVefRFQEmwTik4KXiNLv/sESCeuo1E
-         4vyq77GyL+yMZcYyWNxVSflMUk8jH5VolTEPo0Y46fRRGH3oZWoXN9efrhwde3quE1W2
-         S67TSSRFMMIdnxwTJIcGky9zbXfc4lC+yOyr987GUrDj0Qg0YC4PkV0U0s5FiVeD9Rbb
-         lH7QEgFX3EJHzdN61/CGktRsMMVRzrZKg2iFcLPQTrqBxm+s2R6Rf9qgpWYnn1ERNpsd
-         7+mg==
-X-Gm-Message-State: ALoCoQmJrFORdKjleIGffEKqy8eAc0frKP4/Zl95yP7FGb7lMDH+sid7z9iGXxWjUp/XfPYJiVnA
-X-Received: by 10.182.29.1 with SMTP id f1mr7739183obh.23.1402593703195;
+        bh=X9HHcv+nzoYsURnszJvM8LF8tcjN8wIZdYzJvff9DCs=;
+        b=TRnUiVcFPg7UiWpJ9NrYWDkujP3YXgE2yA/AGMJrjxPJv55XBCVbnyD6rwRRjUNykH
+         JfolluXTZVyJbsAHYtkMltZo9u61QfVFR1R49pM+Mp0tvFT+J6Gp14vhhS7Vf5v8f2cb
+         82qsQNGhAVYTM4en0U57Fs0cLlkK328selTnMdod3gatqsfe/Mkis85QMmEYCcjIedUH
+         OJ96Gyu72QTBjTX0SgjklRp1h6BQcZ+zQOXSelUFd2Fi/D5C8lgDWHf/o6PvmwFPI/nL
+         Ktxv/HA+ui8nLpSIzwHlKDtJXsoqPS/tY09tdl1oJ72mfme8avXHgtT4i2zPTlDqIyZv
+         K0zA==
+X-Gm-Message-State: ALoCoQlCdYNKlbPzBSWril+HcL/K+Fub42ZY2rrlgd011JrcGUK2Fy6Pou38fDtjT0TiQ/+58Wkm
+X-Received: by 10.50.12.106 with SMTP id x10mr1634846igb.1.1402593703402;
         Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id c50si111180yhl.7.2014.06.12.10.21.43
+        by gmr-mx.google.com with ESMTPS id i65si113144yhg.2.2014.06.12.10.21.43
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 0B0725A47FA;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 380B15A4822;
 	Thu, 12 Jun 2014 10:21:43 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id B118EE0A87; Thu, 12 Jun 2014 10:21:42 -0700 (PDT)
+	id 0B8A6E0D39; Thu, 12 Jun 2014 10:21:42 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.599.g83ced0e
 In-Reply-To: <1402593699-13983-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251421>
 
-Making errno when returning from lock_file() meaningful, which should
-fix
+Add an err argument to delete_loose_ref so that we can pass a descriptive
+error string back to the caller. Pass the err argument from transaction
+commit to this function so that transaction users will have a nice error
+string if the transaction failed due to delete_loose_ref.
 
- * an existing almost-bug in lock_ref_sha1_basic where it assumes
-   errno==ENOENT is meaningful and could waste some work on retries
+Add a new function unlink_or_err that we can call from delete_ref_loose. This
+function is similar to unlink_or_warn except that we can pass it an err
+argument. If err is non-NULL the function will populate err instead of
+printing a warning().
 
- * an existing bug in repack_without_refs where it prints
-   strerror(errno) and picks advice based on errno, despite errno
-   potentially being zero and potentially having been clobbered by
-   that point
+Simplify warn_if_unremovable.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- lockfile.c | 17 ++++++++++++-----
- refs.c     |  1 +
- refs.h     |  1 +
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ refs.c    | 35 +++++++++++++++++++++++++++++------
+ wrapper.c | 14 ++++++--------
+ 2 files changed, 35 insertions(+), 14 deletions(-)
 
-diff --git a/lockfile.c b/lockfile.c
-index 464031b..a921d77 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -121,7 +121,7 @@ static char *resolve_symlink(char *p, size_t s)
- 	return p;
- }
- 
--
-+/* Make sure errno contains a meaningful value on error */
- static int lock_file(struct lock_file *lk, const char *path, int flags)
- {
- 	/*
-@@ -130,8 +130,10 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 	 */
- 	static const size_t max_path_len = sizeof(lk->filename) - 5;
- 
--	if (strlen(path) >= max_path_len)
-+	if (strlen(path) >= max_path_len) {
-+		errno = ENAMETOOLONG;
- 		return -1;
-+	}
- 	strcpy(lk->filename, path);
- 	if (!(flags & LOCK_NODEREF))
- 		resolve_symlink(lk->filename, max_path_len);
-@@ -148,9 +150,13 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 			lock_file_list = lk;
- 			lk->on_list = 1;
- 		}
--		if (adjust_shared_perm(lk->filename))
--			return error("cannot fix permission bits on %s",
--				     lk->filename);
-+		if (adjust_shared_perm(lk->filename)) {
-+			int save_errno = errno;
-+			error("cannot fix permission bits on %s",
-+			      lk->filename);
-+			errno = save_errno;
-+			return -1;
-+		}
- 	}
- 	else
- 		lk->filename[0] = 0;
-@@ -188,6 +194,7 @@ NORETURN void unable_to_lock_index_die(const char *path, int err)
- 	die("%s", buf.buf);
- }
- 
-+/* This should return a meaningful errno on failure */
- int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
- {
- 	int fd = lock_file(lk, path, flags);
 diff --git a/refs.c b/refs.c
-index 25c3a93..1e8f293 100644
+index 81d3605..162dc6c 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2184,6 +2184,7 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
- 	return 0;
+@@ -2515,16 +2515,38 @@ static int repack_without_ref(const char *refname)
+ 	return repack_without_refs(&refname, 1, NULL);
  }
  
-+/* This should return a meaningful errno on failure */
- int lock_packed_refs(int flags)
+-static int delete_ref_loose(struct ref_lock *lock, int flag)
++static int add_err_if_unremovable(const char *op, const char *file,
++				  struct strbuf *e, int rc)
++{
++	int err = errno;
++	if (rc < 0  && errno != ENOENT) {
++		strbuf_addf(e, "unable to %s %s: %s",
++			    op, file, strerror(errno));
++		errno = err;
++		return -1;
++	}
++	return 0;
++}
++
++static int unlink_or_err(const char *file, struct strbuf *err)
++{
++	if (err)
++		return add_err_if_unremovable("unlink", file, err,
++					      unlink(file));
++	else
++		return unlink_or_warn(file);
++}
++
++static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
  {
- 	struct packed_ref_cache *packed_ref_cache;
-diff --git a/refs.h b/refs.h
-index 94d4cd4..948cc53 100644
---- a/refs.h
-+++ b/refs.h
-@@ -81,6 +81,7 @@ extern void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refn
- /*
-  * Lock the packed-refs file for writing.  Flags is passed to
-  * hold_lock_file_for_update().  Return 0 on success.
-+ * Errno is set to something meaningful on error.
-  */
- extern int lock_packed_refs(int flags);
+ 	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+ 		/* loose */
+-		int err, i = strlen(lock->lk->filename) - 5; /* .lock */
++		int res, i = strlen(lock->lk->filename) - 5; /* .lock */
+ 
+ 		lock->lk->filename[i] = 0;
+-		err = unlink_or_warn(lock->lk->filename);
++		res = unlink_or_err(lock->lk->filename, err);
+ 		lock->lk->filename[i] = '.';
+-		if (err && errno != ENOENT)
++		if (res)
+ 			return 1;
+ 	}
+ 	return 0;
+@@ -2538,7 +2560,7 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+ 	lock = lock_ref_sha1_basic(refname, sha1, delopt, &flag);
+ 	if (!lock)
+ 		return 1;
+-	ret |= delete_ref_loose(lock, flag);
++	ret |= delete_ref_loose(lock, flag, NULL);
+ 
+ 	/* removing the loose one could have resurrected an earlier
+ 	 * packed one.  Also, if it was not loose we need to repack
+@@ -3547,7 +3569,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 
+ 		if (update->lock) {
+ 			delnames[delnum++] = update->lock->ref_name;
+-			ret |= delete_ref_loose(update->lock, update->type);
++			ret |= delete_ref_loose(update->lock, update->type,
++						err);
+ 		}
+ 	}
+ 
+diff --git a/wrapper.c b/wrapper.c
+index bc1bfb8..c9605cd 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -429,14 +429,12 @@ int xmkstemp_mode(char *template, int mode)
+ 
+ static int warn_if_unremovable(const char *op, const char *file, int rc)
+ {
+-	if (rc < 0) {
+-		int err = errno;
+-		if (ENOENT != err) {
+-			warning("unable to %s %s: %s",
+-				op, file, strerror(errno));
+-			errno = err;
+-		}
+-	}
++	int err;
++	if (!rc || errno == ENOENT)
++		return 0;
++	err = errno;
++	warning("unable to %s %s: %s", op, file, strerror(errno));
++	errno = err;
+ 	return rc;
+ }
  
 -- 
 2.0.0.599.g83ced0e
