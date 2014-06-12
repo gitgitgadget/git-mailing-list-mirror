@@ -1,111 +1,112 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 08/17] provide a helper to free commit buffer
-Date: Thu, 12 Jun 2014 16:08:55 -0400
-Message-ID: <20140612200855.GB4468@sigill.intra.peff.net>
-References: <20140610213509.GA26979@sigill.intra.peff.net>
- <20140610214005.GH19147@sigill.intra.peff.net>
- <xmqqzjhi56oo.fsf@gitster.dls.corp.google.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v5 0/4] commit: Add commit.verbose configuration
+Date: Thu, 12 Jun 2014 13:30:10 -0700
+Message-ID: <20140612203010.GA17761@hudson.localdomain>
+References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 12 22:09:02 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Caleb Thompson <caleb@calebthompson.io>
+X-From: git-owner@vger.kernel.org Thu Jun 12 22:30:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvBIz-0004GA-QX
-	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 22:09:02 +0200
+	id 1WvBdd-0001Cj-SY
+	for gcvg-git-2@plane.gmane.org; Thu, 12 Jun 2014 22:30:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752198AbaFLUI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 16:08:58 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42887 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752111AbaFLUI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 16:08:57 -0400
-Received: (qmail 2605 invoked by uid 102); 12 Jun 2014 20:08:57 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 12 Jun 2014 15:08:57 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 12 Jun 2014 16:08:55 -0400
+	id S1752134AbaFLUaP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Jun 2014 16:30:15 -0400
+Received: from mail-pb0-f45.google.com ([209.85.160.45]:58154 "EHLO
+	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751904AbaFLUaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 16:30:14 -0400
+Received: by mail-pb0-f45.google.com with SMTP id um1so1381762pbc.32
+        for <git@vger.kernel.org>; Thu, 12 Jun 2014 13:30:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=k162s/a+D4gymEfIUU345sk5Vez88HaXqND3k71BehI=;
+        b=CZHdS4FmpNm36SOKNjnMFAtHnNx+4yoFPApI5bzuJlHyhsHxS6gAKL83AXeBwigB8I
+         4/PvIg+Qz0/yCW1SNn6k9Wj9qp1FZPKZD/wEfS3RIRY6k3Io7PchcGRTyagfWzpFvIuU
+         ix7AoNzXnFU+xK6gWysxl22rk7QRhQaN2y9W8Cy3Kq0EtmHDYXFAoJjBNIKLzsENal5k
+         sGlcqjYpkYQhPdpWpbA/c7CE+bgOkdaTU86k8Yqcv5zns0hYnHG2M1vIKMeOCAaYgg/m
+         7crq8VYlI2hwZ5PTHr3K6pV7trdidlVEasJQ7oHsN9Rnddwokm7BPPrxlhnbrKl383sr
+         2+Dg==
+X-Received: by 10.68.245.162 with SMTP id xp2mr15424716pbc.69.1402605014029;
+        Thu, 12 Jun 2014 13:30:14 -0700 (PDT)
+Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id uj3sm9999751pac.8.2014.06.12.13.30.11
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 12 Jun 2014 13:30:12 -0700 (PDT)
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Caleb Thompson <caleb@calebthompson.io>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <xmqqzjhi56oo.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251494>
 
-On Thu, Jun 12, 2014 at 11:22:31AM -0700, Junio C Hamano wrote:
+On Thu, Jun 12, 2014 at 02:38:58PM -0500, Caleb Thompson wrote:
+> This patch allows people to set commit.verbose to implicitly send
+> --verbose to git-commit.
+>=20
+> This version incorporates changes suggested by Eric Sunshine, Duy
+> Nguyen, and Jeremiah Mahler.
+>=20
+> It introduces several cleanup patches to t/t7505-commit-verbose.sh to
+> bring it closer to the current state of the tests as Eric has explain=
+ed
+> them to me, then adds the verbose config and --no-verbose flag.
+>=20
+> Since the last version of this patch
+> (http://marc.info/?l=3Dgit&m=3D140251155830422&w=3D2), I've made the =
+following
+> changes:
+>=20
+> * Revert change to flags, as --no-verbose already existed and worked =
+as
+>   expected with the commit.verbose configuration. Thanks to  Ren=C3=A9=
+ Scharfe.
+> * Fix <<-'EOS' style for check-for-no-diff script. Thanks to Mike Bur=
+ns.
+>=20
+> Additionally, this set of patches was generated by format-patch, so i=
+t
+> should work correctly with git-am.
+>=20
+> ------------------------------------------------------
+>=20
+> Caleb Thompson (4):
+>   commit test: Use test_config instead of git-config
+>   commit test: Use write_script
+>   commit test: test_set_editor in each test
+>   commit: add commit.verbose configuration
+>=20
+>  Documentation/config.txt               |  5 +++
+>  Documentation/git-commit.txt           |  8 ++++-
+>  builtin/commit.c                       |  4 +++
+>  contrib/completion/git-completion.bash |  1 +
+>  t/t7507-commit-verbose.sh              | 64 ++++++++++++++++++++++++=
++---------
+>  5 files changed, 64 insertions(+), 18 deletions(-)
+>=20
+> --
+> 2.0.0
+>=20
 
-> > Note that we also need to provide a "detach" mechanism for
-> > the weird case in fsck which passes the buffer back to be
-> > freed.
-> 
-> I find that last sentence a bit of white lie ;-).
-> 
-> The sole caller of "detach" is in index-pack, and discards the
-> return value, which is not wrong per-se because it still has the
-> pointer to the piece of memory it fed to parse_object_buffer(),
-> knows and/or assumes that the return value must be the same as the
-> one it already has, and it handles the freeing of that memory
-> without relying on the object layer at all.
-> 
-> But that is an even more weird special case than the white-lie
-> version.  As an API, "detach" that returns the buffer to be freed
-> looks much less weird than what is really going on in the current
-> caller.
-> 
-> I however have to wonder if
-> 
-> 	if (detach_commit_buffer(commit) != data)
->         	die("BUG");
-> 
-> might want to be there.
+The patches look good, they apply clean ('git am'), and all tests pass.
 
-Yeah, it is a tricky site. It knows that parse_object_buffer may attach
-the buffer we hand it to "commit->buffer", even though we would prefer
-to keep the buffer ourselves. So the existing code really just wants to
-say "erase that attachment". And of course I started with:
-
-  void detach_commit_buffer(struct commit *commit)
-  {
-	commit->buffer = NULL;
-  }
-
-Both before and after it's a bit of a layering violation; we know how
-the internals of buffer attaching work, and that we can detach to get
-our original.
-
-I then expanded it to the strbuf-inspired detach you see, even though
-there are no callers who actually care about the return value. That
-makes more sense to me as a general API. I don't think it actually makes
-the layering violation worse (we are still making the exact same
-assumption), but I think it _seems_ worse, because the API now seems
-more fully formed. And note that we make the exact same assumptions
-abotu "struct tree" a few lines above.
-
-The safety check you mention above makes sense to me. There are two
-things I'd _rather_ do, but they end up more complicated:
-
-  1. It would be nice to ask parse_object_buffer not to attach the
-     buffer in the first place; then we could get rid of the detach
-     function entirely. But that attachment is necessary for all of the
-     fsck sub-functions we call. Factoring those to take a separate
-     buffer would be rather disruptive.
-
-  2. Instead of confirming that detach returns the same buffer, just
-     assume our buffer was eaten (as promised by set_commit_buffer),
-     and continue on with whatever detach_commit_buffer returns.
-     But it is not _our_ buffer in the first place. It is passed in by
-     the caller, so this replacement would have to bubble back up to the
-     original allocator.
-
-So just putting in the safety check is probably the least-disruptive
-thing. It doesn't automatically adapt to a change in the underlying
-commit_buffer code, but it would at least notice it.
-
--Peff
+Reviewed-by: Jeremiah Mahler <jmmahler@gmail.com>
+--=20
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
