@@ -1,54 +1,52 @@
 From: Caleb Thompson <caleb@calebthompson.io>
-Subject: Re: [PATCH v5 3/4] commit test: test_set_editor in each test
-Date: Fri, 13 Jun 2014 11:36:44 -0500
-Message-ID: <20140613163644.GB85151@sirius.local>
+Subject: Re: [PATCH v5 0/4] commit: Add commit.verbose configuration
+Date: Fri, 13 Jun 2014 11:49:10 -0500
+Message-ID: <20140613164910.GA87252@sirius.local>
 References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
- <1402601942-45553-4-git-send-email-caleb@calebthompson.io>
- <20140613065942.GB7908@sigill.intra.peff.net>
+ <20140612203010.GA17761@hudson.localdomain>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Bn2rw/3z4jIqBvZU"
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 18:37:00 2014
+	protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
+To: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 13 18:49:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvUTD-0000es-Fc
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 18:36:51 +0200
+	id 1WvUfO-0002mm-KB
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 18:49:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753282AbaFMQgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 12:36:47 -0400
-Received: from new1-smtp.messagingengine.com ([66.111.4.221]:32800 "EHLO
+	id S1753641AbaFMQtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 12:49:23 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:35572 "EHLO
 	new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751138AbaFMQgq (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 12:36:46 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id C79165FE;
-	Fri, 13 Jun 2014 12:36:45 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1753615AbaFMQtV (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 12:49:21 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 7E031631;
+	Fri, 13 Jun 2014 12:49:13 -0400 (EDT)
 Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Fri, 13 Jun 2014 12:36:45 -0400
+  by compute4.internal (MEProxy); Fri, 13 Jun 2014 12:49:14 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=calebthompson.io;
-	 h=date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=mesmtp; bh=H3RaA9KxkyJfSVo5TOzWrEcC
-	F/0=; b=SEXi3OhG3XH6/O0GuL7BcuV7ndzRFKwwUDC/CVcutak9U2w0mNqVWzJ1
-	sHZioaLOXeikGjPauVv5qrbcboMRjxYjfO1H4NhN5mGycC4JvgW1Ofxe9J3DwV4j
-	GzaeR3vguuJdXXfnzOIkJ1hi5Ll/h826N9Ho/OspO27F0SDBYoc=
+	 h=date:from:to:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=mesmtp; bh=9+dhK3TsLNdSrk3bbYWZQvc4
+	Aoc=; b=i5lWPWZaxhKuhUPQugnBCi8nvCBa+kNxPCrgt6J6ybmMjkRcaXey0w4f
+	3dHfTQNTQGgW07H/S/SK9gFPsxyD4mZQ+WN7l/liIaiTDXcFmDTikw0a1e/xR19I
+	MWY08fJsTP4QySRQNKMWvszabyPsPPK7C4bFBb918SrN7xT7PNE=
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=date:from:to:cc:subject:message-id
+	messagingengine.com; h=date:from:to:subject:message-id
 	:references:mime-version:content-type:in-reply-to; s=smtpout;
-	 bh=H3RaA9KxkyJfSVo5TOzWrEcCF/0=; b=QakSubqJZPrqK+n47X8d4TM9EdjC
-	KKk0P0/Y6WzQ9uEJKLVo6iIFhZnpPgoXt6qttQYMW5fyGHR0Vf2P+3NgmrCqJfwT
-	zEtdlYcIKjQU1OKGE0oGo6+i16ISkCeZnqQG83/kC9GjYZ2iH4NSv5R7hJSG5DjI
-	nfpSMNTCN5IVKq0=
-X-Sasl-enc: mXHZvLGp6dPELaSN1lQ6wPXVAPdQKt8JJ2awZFryOuAs 1402677405
+	 bh=9+dhK3TsLNdSrk3bbYWZQvc4Aoc=; b=qm338C3saOu2LaEdoVuv/e1077F7
+	FM4nfNVG7jF9l6XqRBTWzrlE8is6BBnHNt2eYpcEFJxhVK+jc/7B8Sp+h+7pLM9c
+	oYBahPP1YwfbxUwwjsfUjDIwvsuY19cb3dSj3sUeRkUIxZ/LvbNkwMWJ+jcN6dau
+	4sY8r14GNWDyslM=
+X-Sasl-enc: Q7fAgTuS2QnELap81zsE+Iz9ZqJ0FdiFZZKbIBdJf29T 1402678152
 Received: from localhost (unknown [67.78.97.126])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 5C252680101;
-	Fri, 13 Jun 2014 12:36:45 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 8F99B68016B;
+	Fri, 13 Jun 2014 12:49:12 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20140613065942.GB7908@sigill.intra.peff.net>
+In-Reply-To: <20140612203010.GA17761@hudson.localdomain>
 X-PGP-Key: fp="B432 C068 2FD1 C2D0 6A8B 3951 1621 ADC2 A0AC E70A";
  id="0xA0ACE70A"; get=<http://calebthompson.io/pubkey.asc>;
 User-Agent: Mutt/1.5.23 (2014-03-12)
@@ -56,89 +54,85 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251611>
 
 
---Bn2rw/3z4jIqBvZU
-Content-Type: text/plain; charset=us-ascii
+--tThc/1wpZn/ma/RB
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 13, 2014 at 02:59:42AM -0400, Jeff King wrote:
-> On Thu, Jun 12, 2014 at 02:39:01PM -0500, Caleb Thompson wrote:
->
-> > t/t7507-commit-verbose.sh was using a global test_set_editor call to
-> > build its environment.
+On Thu, Jun 12, 2014 at 01:30:10PM -0700, Jeremiah Mahler wrote:
+> On Thu, Jun 12, 2014 at 02:38:58PM -0500, Caleb Thompson wrote:
+> > This patch allows people to set commit.verbose to implicitly send
+> > --verbose to git-commit.
 > >
-> > Improve robustness against global state changes by having only tests
-> > which intend to use the $EDITOR to check for presence of a diff in the
-> > editor set up the test-editor to use check-for-diff rather than relying
-> > upon the editor set once at script start.
+> > This version incorporates changes suggested by Eric Sunshine, Duy
+> > Nguyen, and Jeremiah Mahler.
+> >
+> > It introduces several cleanup patches to t/t7505-commit-verbose.sh to
+> > bring it closer to the current state of the tests as Eric has explained
+> > them to me, then adds the verbose config and --no-verbose flag.
+> >
+> > Since the last version of this patch
+> > (http://marc.info/?l=3Dgit&m=3D140251155830422&w=3D2), I've made the fo=
+llowing
+> > changes:
+> >
+> > * Revert change to flags, as --no-verbose already existed and worked as
+> >   expected with the commit.verbose configuration. Thanks to  Ren=E9 Sch=
+arfe.
+> > * Fix <<-'EOS' style for check-for-no-diff script. Thanks to Mike Burns.
+> >
+> > Additionally, this set of patches was generated by format-patch, so it
+> > should work correctly with git-am.
+> >
+> > ------------------------------------------------------
+> >
+> > Caleb Thompson (4):
+> >   commit test: Use test_config instead of git-config
+> >   commit test: Use write_script
+> >   commit test: test_set_editor in each test
+> >   commit: add commit.verbose configuration
+> >
+> >  Documentation/config.txt               |  5 +++
+> >  Documentation/git-commit.txt           |  8 ++++-
+> >  builtin/commit.c                       |  4 +++
+> >  contrib/completion/git-completion.bash |  1 +
+> >  t/t7507-commit-verbose.sh              | 64 +++++++++++++++++++++++++-=
+--------
+> >  5 files changed, 64 insertions(+), 18 deletions(-)
+> >
+> > --
+> > 2.0.0
+> >
 >
-> This implies to me that EDITOR is unset after leaving these tests. I
-> don't think that is how it works, though.  The tests themselves run in
-> the main environment of the test script. A call to test_set_editor from
-> one of them will still affect the other tests[1].
+> The patches look good, they apply clean ('git am'), and all tests pass.
 >
-> I think it works anyway because every subsequent test that cares
-> actually sets the editor itself.
->
-> Or did you just mean that the new rule is "every test sets the editor as
-> they need", which means that we do not have to worry anymore about
-> polluting the environment for other tests?
+> Reviewed-by: Jeremiah Mahler <jmmahler@gmail.com>
 
-That's exactly what I meant. We can stop relying on the global state *as
-it is initially set* and instead move the setup into the tests which
-rely on it.
+So that I'm clear on the etiquitte, is it appropriate for me to add this
+Reviewed-by line to the commit messages at this point, provided that the
+patches don't change?
 
->
-> -Peff
->
-> [1] It might make sense for test_set_editor, when run from within a
->     test, to behave more like test_config, and do:
->
->       test_when_finished '
->         sane_unset FAKE_EDITOR &&
->         sane_unset EDITOR
->       '
+> --
+> Jeremiah Mahler
+> jmmahler@gmail.com
+> http://github.com/jmahler
 
-It might, but it's a little out of scope in addition to your concern
-about other test scripts.
-
->
->     I don't know if there would be fallouts with other test scripts,
->     though.
-
-How is this for a reword of that commit description:
-
-    t/t7507-commit-verbose.sh was using a global test_set_editor call to
-    build its environment. The $EDITOR being used was not necessary for
-    all tests, and was in fact circumvented using subshells in some
-    cases.
-
-    To improve robustness against global state changes and avoid the
-    use of subshells to temporarily switch the editor, set the editor
-    explicitly wherever it will be important.
-
-    Specifically, in tests that need to check for the presence of a diff in the
-    editor, make calls to set_test_editor to set $EDITOR to check-for-diff
-    rather than relying on that editor being configured globally. This also
-    helps readers grok the tests as the setup is closer to the verification.
-
-Caleb Thompson
-
---Bn2rw/3z4jIqBvZU
+--tThc/1wpZn/ma/RB
 Content-Type: application/pgp-signature
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1
 
-iQEcBAEBAgAGBQJTmyicAAoJEBYhrcKgrOcK5YoIAJTkhO4zeawz6e/AIyMW8H+U
-TAVFJoAFjOGZcaldF06VI+9rCd+/5uC07nc9SB1RuPELI1XaDj0FeDlulPuZW3ZW
-gaGaeAKlsVY3nQ61xJNIXBLFEGrttHzJSTHzmNlBc2CUwAsPvCMuyLyV47jI/qvb
-/rFm7MaEnX18/FCsIHavyuQN2b8hIMMJqZE+XnikDO8HMmWxSFDXav8H4rBQ076y
-x7gnVsagFQcU1j0748KomdEt4Be1e9OsZX28exvEZXWD5/HzoRNWzlknJ+R1kmp2
-QIFOTyWl+UHS3cwxWnFeZIv0k0PDLD2Mt5EsuzjeGKJQ9mWMyeGYuC8BT6g+RoY=
-=Hngu
+iQEcBAEBAgAGBQJTmyuGAAoJEBYhrcKgrOcKpeIH+QFkDKDIwH+D7BwxSnEuI2+5
+N9YU5SLj7mOmfPyOGJl+lnBl3G6FDWAHiIp1TbDs9+nL9OcbwtGgvYCs+s1ZjdYI
+3Cmsi8ssTTfMd0IUi11yJp9061ZKZMlWW6MiKTsS5SKpHkf+Jp8koxv5xTf8QbBo
+bhAdaYOYe3wooS8VIyCk9jIGl6rhyH2mKeVCBX+gpOPS8EUiUl/zJJGcUFCCbY+B
+asSmkSZy5Lk7AJyetEwR3Wm4jIpcl0B4ZHNW2ohjmN00xHg9sS7EyzUUTDto+Om4
+AEysl4Jo0JeSn4Xxv/+5vlGixTbMqX3w5SvCKpNWZbZirnIOHC2tQEgXx9EPfmc=
+=IZx2
 -----END PGP SIGNATURE-----
 
---Bn2rw/3z4jIqBvZU--
+--tThc/1wpZn/ma/RB--
