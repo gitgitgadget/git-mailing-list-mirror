@@ -1,104 +1,112 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v15 00/48] Use ref transactions
-Date: Fri, 13 Jun 2014 08:52:40 -0700
-Message-ID: <CAL=YDW=MUURDOxV5q0Tg8AmwJ4Z0d16bYmw5YiKhVDrJxfWFSg@mail.gmail.com>
-References: <1402439376-25839-1-git-send-email-sahlberg@google.com>
-	<xmqqoaxx4vwd.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: Our merge bases sometimes suck
+Date: Fri, 13 Jun 2014 17:52:57 +0200
+Message-ID: <539B1E59.1030604@gmail.com>
+References: <539A25BF.4060501@alum.mit.edu> <539AC690.6000906@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 17:52:56 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Michael J Gruber <git@drmicha.warpmail.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 13 17:53:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvTmf-00058v-Ns
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 17:52:54 +0200
+	id 1WvTn0-0005Pv-M3
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 17:53:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753030AbaFMPwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 11:52:43 -0400
-Received: from mail-vc0-f180.google.com ([209.85.220.180]:54949 "EHLO
-	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750901AbaFMPwl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 11:52:41 -0400
-Received: by mail-vc0-f180.google.com with SMTP id im17so2411863vcb.25
-        for <git@vger.kernel.org>; Fri, 13 Jun 2014 08:52:40 -0700 (PDT)
+	id S1753191AbaFMPxG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2014 11:53:06 -0400
+Received: from mail-wg0-f48.google.com ([74.125.82.48]:58099 "EHLO
+	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753176AbaFMPxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 11:53:03 -0400
+Received: by mail-wg0-f48.google.com with SMTP id n12so2852306wgh.31
+        for <git@vger.kernel.org>; Fri, 13 Jun 2014 08:53:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=+unasLQyyTwvWHX14W0d28FJYvO4fQL1Cqgzn6bOHt0=;
-        b=VoLrTRSd+7CCIcK9rSrHd1Ezg6HJL2NaGl2pRNJldlG0lzec+/2FlTeSAFOvAiS/LZ
-         tQcBec0HXRLNA7GrAKJf5gRCAw/22uZo+nHXtwV/ttQ+gSKkNymEURzLzhhccTycPkQQ
-         NUtj55egCCyTiWuOp1IakTYCgi2funA/dv4VGamoElpLFGpB8/lqUoPFWB/AFsk2Vz+/
-         ZJjt24Sklez/qpvof6N+d9IjSnrqa8WKZ9lDbuG3G0Pxd7sEmCi1VuhV2zYl/YXRib97
-         mOAuOIF8OxJQquJ3Cc1jK7mQ1rxXlCL8PMuM0WhohFLpeOX/yjYNji3NalyQVFCnpZOd
-         aOFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=+unasLQyyTwvWHX14W0d28FJYvO4fQL1Cqgzn6bOHt0=;
-        b=a8BN//T3zTrLlugJDkrR8eUO82VITPrTJGVFU54pmn1qLdZUnODm1/DQjmknULt10y
-         2AeTD73YtKVh+/Wt6aKZN27v3miY315nPYrEENMgha+XgB7Hcp7GUbQmWKwaEpv1IMRi
-         3Vp+Q0+rTbYHrXg8ZZQS9zlXKL7Rvb9NRzVZcPNIfQWh6l12SaRnQuX/qN++VLwfpG0T
-         DqGlq08KT4L50p09U+2AkYjlmQtqQ3G1b4LPGNU1HswV/NB+q3kTtXiDNFOBSq4ZN4++
-         X/DAs3bTcrkiSlq/3JaZfRpIQ5pJe1ffF83D1njkcx8IW9KtMZ+vmKHwL5LTFQTrJXmD
-         JXhw==
-X-Gm-Message-State: ALoCoQncpirMtBFFduU/K5DIfjvhRpNEWcz9PDeC5AW/Ut2wltoIeezaj+c/sQi/rhGBgOX2LxK+
-X-Received: by 10.52.14.9 with SMTP id l9mr1288780vdc.41.1402674760378; Fri,
- 13 Jun 2014 08:52:40 -0700 (PDT)
-Received: by 10.52.255.65 with HTTP; Fri, 13 Jun 2014 08:52:40 -0700 (PDT)
-In-Reply-To: <xmqqoaxx4vwd.fsf@gitster.dls.corp.google.com>
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        bh=CtKEmVjHmRkrepFU2CnuK3zpFq1ASwAi/gaoLAFOhPo=;
+        b=xxr+RguEY6hr0gk4jqJoD1291xZ8T9SgLtdiZFsd+HGQAzwaYeNh/9P78wlFtikv7I
+         z1DwJv2HVUpIqvJhtEumjyhZAn+3SJlCJ9ijnzGo2YPeHMXelwCBF09ewMD/sC74q45O
+         Uskk6yU0RXhrQ+J6R+hf/jjtcrARodl1l/KCqoQi1akQoKRd03OmCTHIUiwK0uz110a6
+         oMrQ7FSYiQ9t/eg3Cbhlww4t9RKWP+HY/ZH/r8gwtxuIWQiQv+in2njj4GO3BrCckQFU
+         ZPxmRsPDirN3SdykfSa3hcTCodEOwoIQm4ctcJOdCLAgjYZFUtT+aQiMqndcY9jqQzLd
+         TE6w==
+X-Received: by 10.194.161.168 with SMTP id xt8mr5673174wjb.35.1402674781502;
+        Fri, 13 Jun 2014 08:53:01 -0700 (PDT)
+Received: from [192.168.130.241] ([158.75.2.130])
+        by mx.google.com with ESMTPSA id 8sm12636491eea.10.2014.06.13.08.52.59
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 13 Jun 2014 08:53:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <539AC690.6000906@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251605>
 
-Looking at it, thanks!
-
-I found two issues, I have just sent patches to the list for them.
-You can just "fixup" these two patches in origin/pu?
-Or do you want me to re-send the series?
-
-
-regards
-ronnie sahlberg
-
-
-On Thu, Jun 12, 2014 at 3:15 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
->
->> Final version.
+W dniu 2014-06-13 11:38, Michael J Gruber pisze:
+> Michael Haggerty venit, vidit, dixit 13.06.2014 00:12:
+>> I've been thinking a lot about merge bases lately and think I have
+>> discovered something interesting.
 >>
->> This patch series can also be found at
->> https://github.com/rsahlberg/git/tree/ref-transactions
+>> tl;dr:
 >>
->> This patch series is based on next and expands on the transaction API. It
->> converts all ref updates, inside refs.c as well as external, to use the
->> transaction API for updates. This makes most of the ref updates to become
->> atomic when there are failures locking or writing to a ref.
+>> When two branches have multiple merge bases,
 >>
->> This version completes the work to convert all ref updates to use transactions.
->> Now that all updates are through transactions I will start working on
->> cleaning up the reading of refs and to create an api for managing reflogs but
->> all that will go in a different patch series.
+>>      git merge-base $master $branch
+>>
+>> picks one merge base more or less arbitrarily.  Here I describe a
+>> criterion for picking a "best" merge base.  When the best merge base
+>> is used, the diff output by
+>>
+>>      git diff $master...$branch
+>>
+>> becomes shorter and simpler--sometimes dramatically so.  I have
+>> quantified the improvement by analyzing historical merges from the G=
+it
+>> project (see attached image).  Best merge bases might also help redu=
+ce
+>> conflicts when conducting merges.
+>>
 >
-> As this seems to be based on the old 'next' before it got rewound,
-> it was a bit painful to rebase it on top of 'master' (so that it
-> won't have to wait for other topics if we wanted to graduate it
-> earlier than others).  It also had interactions with various topics
-> still in flight in 'pu'.  I managed to coax it on 'pu' somewhere
-> above the commit that is equivalent to 'next', but I am reasonably
-> sure there are mismerges, as the conflicts were many X-<.
+> Everytime I looked at our merge base code, my head started spinning. =
+So
+> it's admirable you even started this endeavor :)
 >
-> I'd appreciate it if you can eyeball the result with
+> We use merge bases for several things:
 >
->   $ git show --first-parent -m 'origin/pu^{/^Merge branch .rs/ref-transactions}'
->
-> when I push it out.
->
-> Thanks.
+> - merging
+> - resolving "A...B" rev notation (rev-list and friends), aka symmetri=
+c
+> difference
+> - left/right selection/annotation of commits (rev-list/log)
+> - resolving "diff A...B", which may be a handy notation, but is horri=
+bly
+> misleading because it is a very unsymmetric form of diff
+
+I don't know if it has been fixed, but there is a difference
+between "git diff A...B" when A and B have one merge base, and
+"git diff A...B" when there are more than one merge base.
+
+When there is one merge base, "git diff A...B" returns simple
+unified diff equivalent to "git diff $(git merge-base A B) B".
+It is unsymmetric.
+
+But where there are more than one merge base, by design or by
+accident for "git diff A...B" git 1.9.2 / 1.7.4 returns
+
+    git diff --cc $(git merge-base --all A B) A B
+
+which is *symmetric*, and is combined not unified diff.
+
+--=20
+Jakub Nar=C4=99bski
