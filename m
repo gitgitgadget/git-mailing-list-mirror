@@ -1,72 +1,114 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-Subject: Re: [PATCH v6] Add an explicit GIT_DIR to the list of excludes
-Date: Fri, 13 Jun 2014 09:10:22 -0700
-Message-ID: <CAKpPgvf=OGRHFv81x2b_PVqzALbSWHaJvejyy5w7aS_P+QFA6w@mail.gmail.com>
-References: <CACsJy8Cgu792Tamej3+_9w=Krg8nezYYA6k604gikebHG=yVUg@mail.gmail.com>
- <1402529308-3940-1-git-send-email-pasha.bolokhov@gmail.com> <53994667.90209@kdbg.org>
+From: Caleb Thompson <caleb@calebthompson.io>
+Subject: Re: [PATCH v5 2/4] commit test: Use write_script
+Date: Fri, 13 Jun 2014 11:26:07 -0500
+Message-ID: <20140613162607.GA85151@sirius.local>
+References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
+ <1402601942-45553-3-git-send-email-caleb@calebthompson.io>
+ <20140613065037.GA7908@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Jun 13 18:11:00 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="sm4nu43k4a2Rpi4c"
+Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	David Kastrup <dak@gnu.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Mike Burns <mike@mike-burns.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 13 18:26:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvU48-0003ap-LM
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 18:10:57 +0200
+	id 1WvUIy-0008Kv-AM
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 18:26:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752235AbaFMQKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 12:10:54 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:60421 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753347AbaFMQKo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 12:10:44 -0400
-Received: by mail-ob0-f175.google.com with SMTP id wm4so2254093obc.34
-        for <git@vger.kernel.org>; Fri, 13 Jun 2014 09:10:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=O4TP9yCKxMtJEZ0ea3fuidbHBmgfl5w8G4bR/PENTUw=;
-        b=gmPKD54qb/R08KTccUlFJGOAw9aOJoLKiAiqdBy+c2gnkNxuYCmNi5qzJUdCYHbNuW
-         iTsAdkVVTT2iBxv4QaFmKrn5HDbyIxarRDlhOY9sD6Q2Bp7yiMcuBgoUZKq7Mng9EINo
-         g61C9ehyFy9B4VZFVbl+DqJcYVyGnCTt+ZO5lRgurGr8rRoPev0rUfLR8bXo6C5iJORN
-         vsvihhuQjApRV1ShWgeE5wzG1MlD+BT4Tmx1qi7B5iJhPBNVhpOrjbQV6isevqHo2kVb
-         L44Qln4Ie5Gm4ZE/KcD5G1C/iLN5OMk5ng3tZHEhB29eEfb+bvg/EtRKzOfqW/WylBxB
-         9FZA==
-X-Received: by 10.60.176.73 with SMTP id cg9mr3761162oec.76.1402675843818;
- Fri, 13 Jun 2014 09:10:43 -0700 (PDT)
-Received: by 10.60.16.8 with HTTP; Fri, 13 Jun 2014 09:10:22 -0700 (PDT)
-In-Reply-To: <53994667.90209@kdbg.org>
+	id S1753160AbaFMQ0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 12:26:12 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:50381 "EHLO
+	new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751520AbaFMQ0M (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 12:26:12 -0400
+Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 57D1D5ED;
+	Fri, 13 Jun 2014 12:26:09 -0400 (EDT)
+Received: from frontend2 ([10.202.2.161])
+  by compute4.internal (MEProxy); Fri, 13 Jun 2014 12:26:09 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=calebthompson.io;
+	 h=date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=mesmtp; bh=9UplZay8pdVXQq1BVxzfUsgy
+	BoY=; b=SoY1i8zLn/O+eDonDfvosyXM0fBYDrtH4hG3iGWiI7a2yJAAqDhF4xgK
+	KtFt1Ddy/OOkI5sc7jNE63UKMhhQuNJBoVs5hkiVlTO0sYrIRJAkhFXn+mGyWZql
+	MzPCQ+3BX+JWY0jEnvQkgQLTnDao1Qtl6RN/Kc3lm4BGhSGO1CM=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=smtpout;
+	 bh=9UplZay8pdVXQq1BVxzfUsgyBoY=; b=kTnLxR+6LyGTs2AUQvqY/zJjXNtF
+	N6M1g/PMXuEHerekwXPgXfy+cUw8u7gb2Kk29FICD0QEIUITqJ8pcBZeZcp7ckJ7
+	5CT9anX91tEvpdJ/gvQD1KbO0auYZEE/AS0GS7Nen7GMf5IJMh2WEsaygCOo+aXO
+	AJaNh/0DUdKGTr8=
+X-Sasl-enc: WVD/nDbJXWiYGBn4HBg93HIX9csjxIWImGWYZwsbHIOP 1402676768
+Received: from localhost (unknown [67.78.97.126])
+	by mail.messagingengine.com (Postfix) with ESMTPA id BD69C68016B;
+	Fri, 13 Jun 2014 12:26:08 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20140613065037.GA7908@sigill.intra.peff.net>
+X-PGP-Key: fp="B432 C068 2FD1 C2D0 6A8B 3951 1621 ADC2 A0AC E70A";
+ id="0xA0ACE70A"; get=<http://calebthompson.io/pubkey.asc>;
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251607>
 
->> +             test_cmp status.actual.2 status.expect.2
+
+--sm4nu43k4a2Rpi4c
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+You're very right - I may have confused this commit message and the one
+to switch to test_set_editor. I'll rewrite this commit message.
+
+What do you think of something like this for the description:
+
+    Use write_script from t/test-lib-functions.sh instead of cat,
+    shebang, and chmod. This aids in readability for creating the script
+    by using the named function and allows us to turn off interpolation
+    in the heredoc of the script body to avoid extra escaping, since
+    $SHELL_PATH is handled for us.
+
+On Fri, Jun 13, 2014 at 02:50:37AM -0400, Jeff King wrote:
+> On Thu, Jun 12, 2014 at 02:39:00PM -0500, Caleb Thompson wrote:
 >
-> It is customary to call the files 'expect' and 'actual'. Furthermore,
-> swap the order so that in case of a failure the diff shows how the
-> actual text was changed from the expected text:
+> > Use write_script from t/test-lib-functions.sh instead of cat, shebang,
+> > and chmod. This protects us from potential shell meta-characters in the
+> > name of our trash directory, which would be interpreted if we set
+> > $EDITOR directly.
 >
->                 test_cmp status.expect.2 status.actual.2
-
-So, is naming the files "status.expect.2" instead of just
-"expect"/"actual" ok or not?
-Those prefixes "status" etc just help sorting out where the problem
-lies that causes the test to fail. But let me know if this is too
-"detailed"
-
+> I'm not sure about this last sentence; isn't that what test_set_editor
+> is doing, which was already there? I think the real rationale is
+> readability: since $SHELL_PATH is handled for us, you can turn off
+> interpolation in the here-doc containing the helper script. That avoids
+> an extra layer of quoting.
 >
-> Moreover, test_*_fail helpers are intended to be used only with git
-> commands; we don't expect system commands to fail in unexpected ways.
+> -Peff
 
-Ok, no problem, will change that. The only thing, I saw this in other
-tests, so decided to use it too. Those tests use "test_mighf_fail rm"
-and "ls" seemingly without invocation of git
+--sm4nu43k4a2Rpi4c
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQEcBAEBAgAGBQJTmyYfAAoJEBYhrcKgrOcKgQ0H/iypNcuesxRv85aeTmuLChZn
+N6QaUnKkeftP06mEmuv1G2OKPFHFBCmdtEJHzF8Fpwc0T2trIIwyAYZTP2NHkJgv
+60hg0M6J6v4IXgMFVOYnh7vFpC6Hcf/runFyqi68TmyLwt4ZqB8TN/qpauhWZZhe
+2DHzg/27QbD1h/DWdTzfro2vFxYL6F8yPWeyeGrA+I0WrftSpuLQVR1B9HcBMeSg
+d36BWLXDJCC4RkgI73LOCt1huL9UTmK3dTVG4aqAyShHljRGqGHs3a6ID1u/wwmk
+4N7Igko1hHI7epAaBHky+vN+Z7aTOHrShJfa1n66lxw1f7yu9E1jtw1k9PWvPgQ=
+=0kE1
+-----END PGP SIGNATURE-----
+
+--sm4nu43k4a2Rpi4c--
