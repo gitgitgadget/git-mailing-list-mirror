@@ -1,120 +1,134 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v7 0/1] refs.c: SSE4.2 optimizations for
- check_refname_component
-Date: Thu, 12 Jun 2014 21:18:33 -0400
-Organization: Twitter
-Message-ID: <1402622313.5629.45.camel@stross>
-References: <1402012575-16546-1-git-send-email-dturner@twitter.com>
-		<xmqqfvjdenk5.fsf@gitster.dls.corp.google.com>
-	 <xmqqvbs9d6qn.fsf@gitster.dls.corp.google.com>
-	 <53969FDF.3050506@viscovery.net>
+From: Joey Hess <joey@kitenet.net>
+Subject: bug: git merge --no-commit loses track of file modes in the index
+Date: Thu, 12 Jun 2014 21:38:58 -0400
+Message-ID: <20140613013858.GA28485@kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	mhagger@alum.mit.edu
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 03:18:42 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vtzGhvizbBRQ85DL"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 13 03:47:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvG8f-0003WY-Df
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 03:18:41 +0200
+	id 1WvGa7-0008J3-5b
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 03:47:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbaFMBSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Jun 2014 21:18:37 -0400
-Received: from mail-qc0-f173.google.com ([209.85.216.173]:49728 "EHLO
-	mail-qc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751181AbaFMBSh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Jun 2014 21:18:37 -0400
-Received: by mail-qc0-f173.google.com with SMTP id l6so3247989qcy.32
-        for <git@vger.kernel.org>; Thu, 12 Jun 2014 18:18:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=fAW17Vp+UEGBTM+BYd3M+uWKEYCN7WI32LwKU93mh6g=;
-        b=aWAyFWDlb8B3D6cfzZBj7uQRiSGk4VDKegXtJKAlYyLBH5P89vfu/1ysUm36kdHCFH
-         riNOoAiAl4PI+6CywcHv3rUHQfKC+PpF5kiwxnB0B6Gyi8Tr1MJHfAQ2xKx9xAD6m1Y7
-         Ny8QIrRN8/VJj95TWRB/hZr5fNvprgciSCk/PzgSvLHaWqS+Y08r56+AnfvFl4p+aZSZ
-         c5c+BWnF642GhiGGqeNgzNxoLCNSHt3glkjQIARkpcsNX4H3eQBqjWjdSCboDsJ2XQ3v
-         3HNXJGMPdxlZyhlYMAMLZOLM4nCB+lGevv5jB+rHuyYZLyFQay0hcAsG7vau4TVdkqzW
-         HobQ==
-X-Gm-Message-State: ALoCoQnmvkshG55wH74xAb3rhMhCeepPNqE8F5DpKCMH4sInHK6Gw/XWGvJQPe2kfyJg0VKy3MVx
-X-Received: by 10.224.55.130 with SMTP id u2mr66325211qag.67.1402622316224;
-        Thu, 12 Jun 2014 18:18:36 -0700 (PDT)
-Received: from [172.18.24.43] ([8.25.196.26])
-        by mx.google.com with ESMTPSA id 8sm4108381qak.16.2014.06.12.18.18.34
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 12 Jun 2014 18:18:35 -0700 (PDT)
-In-Reply-To: <53969FDF.3050506@viscovery.net>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+	id S1751288AbaFMBq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Jun 2014 21:46:59 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:33733 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751078AbaFMBq6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Jun 2014 21:46:58 -0400
+X-Greylist: delayed 471 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Jun 2014 21:46:58 EDT
+Received: by darkstar.kitenet.net (Postfix, from userid 1000)
+	id D201C3071BA; Thu, 12 Jun 2014 22:38:58 -0300 (BRT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251511>
 
-On Tue, 2014-06-10 at 08:04 +0200, Johannes Sixt wrote:
-> Am 6/10/2014 1:05, schrieb Junio C Hamano:
-> > Junio C Hamano <gitster@pobox.com> writes:
-> > 
-> >> David Turner <dturner@twopensource.com> writes:
-> >>
-> >>> Since Junio has picked up the first patch from previous versions of
-> >>> this series, I'm just going to send the second (SSE) one.  I decided
-> >>> not to s/NO_SSE42/!HAVE_SSE42/ because it looks like git mostly uses
-> >>> the former convention (for instance, that's what GIT_PARSE_WITH
-> >>> generates).
-> >>
-> >> Yeah but NO_FROTZ is used only when FROTZ is something everybody is
-> >> expected to have (e.g. it's in posix, people ought to have it, but
-> >> we do support those who don't), isn't it?  For a very arch specific
-> >> stuff like sse42, I'd feel better to make it purely opt-in by
-> >> forcing people to explicitly say HAVE_SSE42 to enable it.
-> > 
-> > Just FYI: I am getting
-> > 
-> > compat/cpuid.h:8:12: error: 'processor_supports_sse42' defined but
-> > not used [-Werror=unused-function]
-> > cc1: all warnings being treated as errors
-> > 
-> > while building 'pu'; I'll have to rebuild 'pu' without this patch
-> > before I can push the day's result out.
-> 
-> And I get this when I compile on Windows with msysgit:
-> 
->     CC abspath.o
-> In file included from git-compat-util.h:694,
->                  from cache.h:4,
->                  from abspath.c:1:
-> compat/cpuid.h: In function 'processor_supports_sse42':
-> compat/cpuid.h:11: warning: implicit declaration of function '__cpuid'
-> abspath.c: At top level:
-> compat/cpuid.h:8: warning: 'processor_supports_sse42' defined but not used
-> abspath.c: In function 'processor_supports_sse42':
-> compat/cpuid.h:11: warning: 'eax' is used uninitialized in this function
-> compat/cpuid.h:11: warning: 'ebx' is used uninitialized in this function
-> compat/cpuid.h:11: warning: 'ecx' is used uninitialized in this function
-> compat/cpuid.h:11: warning: 'edx' is used uninitialized in this function
-> 
-> Perhaps our gcc is too old?
 
-It is too old for my patch because it doesn't support ifunc (and I
-suspect that no version of GCC for Windows supports ifunc).  But that
-does not seem to be what is going on in your error message.  Instead,
-when we #include <cpuid.h>, we get compat/cpuid.h rather than the
-system's cpuid.h.  When I rename compat/cpuid.h to something else (and
-adjust the code accordingly), and add a check for gcc 4.5+ and for
-Windows before using ifunc, then everything works.
+--vtzGhvizbBRQ85DL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So tomorrow, I'm going to send a new patch (which also fixes the
-warnings Junio reported) which I've tested on Windows, GNU/Linux, and
-Mac OS X. 
+If git merge --no-commit is used to merge a commit adding a=20
+file with an unusual mode -- specifically a symlink which has "mode" 120000,
+it fails to stage the right mode into the index.
 
-I'm testing on a Windows 8 VM from modern.ie with msysgit's
-"netinstaller" -- is that a reasonable test environment?
+This only happens when core.symlinks=3Dfalse. I noticed it on FAT, but
+have managed to reproduce it on ext4.
+
+Here's an example of the bug:
+
+joey@darkstar:~>git clone r1 r2
+Cloning into 'r2'...
+done.
+joey@darkstar:~>cd r1
+joey@darkstar:~/r1>ls -l
+total 0
+lrwxrwxrwx 1 joey joey 11 Jun 12 21:23 foo -> /etc/passwd
+joey@darkstar:~/r1>git mv foo bar
+joey@darkstar:~/r1>git commit -m moved
+[master 516a53c] moved
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename foo =3D> bar (100%)
+joey@darkstar:~/r1>cd ..
+joey@darkstar:~>cd r2
+joey@darkstar:~/r2>git config core.symlinks false
+joey@darkstar:~/r2>git fetch origin
+remote: Counting objects: 2, done.
+remote: Total 2 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (2/2), done.
+=46rom /home/joey/r1
+   7ab8102..516a53c  master     -> origin/master
+joey@darkstar:~/r2>git merge origin/master --no-commit --no-ff
+Automatic merge went well; stopped before committing as requested
+joey@darkstar:~/r2>git diff --cached
+diff --git a/bar b/bar
+new file mode 100644
+index 0000000..3594e94
+--- /dev/null
++++ b/bar
+@@ -0,0 +1 @@
++/etc/passwd
+\ No newline at end of file
+diff --git a/foo b/foo
+deleted file mode 120000
+index 3594e94..0000000
+--- a/foo
++++ /dev/null
+@@ -1 +0,0 @@
+-/etc/passwd
+\ No newline at end of file
+joey@darkstar:~/r2>git commit -m oops
+[master 63bd960] oops
+joey@darkstar:~/r2>git show
+commit 63bd9608c96a91582b27c5853ff58053bab6c71c
+Merge: 7ab8102 516a53c
+Author: Joey Hess <joey@kitenet.net>
+Date:   Thu Jun 12 21:37:35 2014 -0400
+
+    oops
+
+diff --cc bar
+index 0000000,3594e94..3594e94
+mode 000000,120000..100644
+--- a/bar
++++ b/bar
+
+joey@darkstar:~/r2>git version
+git version 2.0.0
+
+--=20
+see shy jo
+
+--vtzGhvizbBRQ85DL
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIVAwUBU5pWMMkQ2SIlEuPHAQJn6Q/+KjHkjm4wkSX/SYd78kdY0ztVr2+Wfs4L
+ZY2knPUb+rjyvkyq+lYTlSEb3aQR7Te+Y9aupeU8CloDKhULSE4MzJee1AAaJDeB
+B5iuFCiPSpDpVjaMPLnPPvWL9P/a8AdVlzPxAwJGEbnj8lZXBlYoYJQkb8+iBO95
+1yCb+Q7Hd0AIxgHVPmnY8cfl7wkz493Bcs+PnECWfATTZ3CCZJ7rpz1VstHk583C
+yWazGGNYYN9rmywe3DqwfV2MgXlpnA7VlCqY69ITOtGHFUEsKvVjoBle3Se1nvU+
+bkcrXqNr3WX+NJ4ABfrjy1NTFz/SsTR86dF/yyfViF5K2URKbm2r2umYsPo5Barf
+YYuSv68rJy137dWz7zfYfFd/PwGUuoshfEZaWbMXgCNQDHq2MsyNHz0vd0VGL36L
+OZUTmOEYxwlbZwv0+D7T8W6V5Jy9q3Lj/FVaKaD86KgxzGXi8dcHyhVscuuqOu0p
+p7lhm1294NLltCBt/jESOzS8i7wU9q+44uQp7VX15HJGxE04xDd2KGZEJX9lAaF6
+eALqlLHi7fj9lIMQ+Go8m/SNhL/pQ0lqWtu9pTDGu8ybaJk00cnirbKYKoFVBSpL
+kseB0VHwPpoYgMK/W+YvVhIBbSnpR+lVAVqhieaFj++kwmGkLYu6SkiobcoH0t+8
+RxXpmXcjQXc=
+=JqHE
+-----END PGP SIGNATURE-----
+
+--vtzGhvizbBRQ85DL--
