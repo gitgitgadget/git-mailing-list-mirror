@@ -1,103 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2 3/6] verify-commit: scriptable commit signature verification
-Date: Fri, 13 Jun 2014 13:45:58 +0200
-Message-ID: <539AE476.4030205@drmicha.warpmail.net>
-References: <cover.1402655838.git.git@drmicha.warpmail.net> <48984553eb1d9ac53dd4b9604af568e22c735109.1402655839.git.git@drmicha.warpmail.net> <20140613111945.GC14066@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2 4/6] t7510: exit for loop with test result
+Date: Fri, 13 Jun 2014 07:46:15 -0400
+Message-ID: <20140613114615.GE14066@sigill.intra.peff.net>
+References: <cover.1402655838.git.git@drmicha.warpmail.net>
+ <99893263f1819646a3a324b2fff0bcd0d56f3818.1402655839.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 13:46:08 2014
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jun 13 13:46:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvPvr-0002Uf-2W
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 13:46:07 +0200
+	id 1WvPw5-0002jO-HX
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 13:46:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751517AbaFMLqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 07:46:01 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:48910 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751082AbaFMLqA (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 07:46:00 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 17105209C1;
-	Fri, 13 Jun 2014 07:46:00 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Fri, 13 Jun 2014 07:46:00 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=E0nsx5MyVNY2dY8yEqhBo9
-	AEuU4=; b=YnLr14ExKSDCaSCttodUZBvwMgSVmsow/8qDJyQaSNKyr+M91hijhP
-	24iNkDX/WaI1r+8pUpDI0fuTwzBs5wxsClfs3nqgicwJBjc058o+oK/tlosC9Ywc
-	iqQaRvGAK8xKTvAQv6gWvh6xJtmThY3Vz9H0qAN1pCEYYPVcgGDrc=
-X-Sasl-enc: e8LKbhJx0cwC6acwrokigvH2m+kx7znmsjFT1pynpBFQ 1402659959
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 6502E6800F8;
-	Fri, 13 Jun 2014 07:45:59 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <20140613111945.GC14066@sigill.intra.peff.net>
+	id S1751561AbaFMLqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 07:46:17 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43410 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751256AbaFMLqR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 07:46:17 -0400
+Received: (qmail 23258 invoked by uid 102); 13 Jun 2014 11:46:16 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Jun 2014 06:46:16 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2014 07:46:15 -0400
+Content-Disposition: inline
+In-Reply-To: <99893263f1819646a3a324b2fff0bcd0d56f3818.1402655839.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251550>
 
-Jeff King venit, vidit, dixit 13.06.2014 13:19:
-> On Fri, Jun 13, 2014 at 12:42:45PM +0200, Michael J Gruber wrote:
-> 
->> +
->> +	free(signature_check.gpg_output);
->> +	free(signature_check.gpg_status);
->> +	free(signature_check.signer);
->> +	free(signature_check.key);
->> +	return signature_check.result != 'G';
->> +}
-> 
-> How about .payload here?
+On Fri, Jun 13, 2014 at 12:42:46PM +0200, Michael J Gruber wrote:
 
-I sneekily fix this in 6/6... I thought 3/6 is on next already, too late
-for a real v2. Otherwise I would put 6/6 before everything else.
-
->> +	type = sha1_object_info(sha1, NULL);
->> +	if (type != OBJ_COMMIT)
->> +		return error("%s: cannot verify a non-commit object of type %s.",
->> +				name, typename(type));
->> +
->> +	buf = read_sha1_file(sha1, &type, &size);
->> +	if (!buf)
->> +		return error("%s: unable to read file.", name);
+> When t7510 was introduced, the author made sure that a for loop in
+> a subshell would return with the appropriate error code.
 > 
-> I think you can drop the sha1_object_info call and just check "type"
-> from read_sha1_file (they _should_ agree, but if they do not, I'd rather
-> pay attention to the one that came along with the buffer). And this is
-> the uncommon error path, so expanding the object into memory before we
-> die is not a big deal.
+> Make sure this is true also the for the first line in each loop, which
+> was missed.
 > 
-> Should this peel to a commit if given a tag? I'd say probably. I know
-> you raised the issue elsewhere of keeping things simple, but I think if
-> you are calling verify-commit, you know you want a commit, and we should
-> treat the argument as a commit-ish. Anyway, if you go that route, then
-> lookup_commit_or_die is probably what you want.
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+>  t/t7510-signed-commit.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> Also, minor nit, but we typically do not end the error messages with a
-> full stop (we've been rather inconsistent in the past, but these days
-> seem to mostly settle on no punctuation).
-> 
-> -Peff
+> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+> index 5ddac1a..a5ba48e 100755
+> --- a/t/t7510-signed-commit.sh
+> +++ b/t/t7510-signed-commit.sh
+> @@ -49,7 +49,7 @@ test_expect_success GPG 'show signatures' '
+>  	(
+>  		for commit in initial second merge fourth-signed fifth-signed sixth-signed master
+>  		do
+> -			git show --pretty=short --show-signature $commit >actual &&
+> +			git show --pretty=short --show-signature $commit >actual || exit 1
+>  			grep "Good signature from" actual || exit 1
 
-Both of these issues actually come for following verify-tag as closely
-as possible. If 3 is not applied already, I should do away with
-sha1_object_info.
+Hrm. The original is:
 
-About the peeling I'm not so sure, since there's a difference between a
-signed tag pointing to a commit and a signed commit. Since
-verify-{tag,commit} are bare metal plumbing, I would expect callers to
-use <rev>^{commit} explicitly if they don't care how <rev> peels to a
-commit.
+  X &&
+  Y || exit 1
 
-Michael
+Won't that still exit (i.e., it is already correct)? Doing:
+
+  for X in true false; do
+    for Y in true false; do
+      ($X && $Y || exit 1)
+      echo "$X/$Y: $?"
+    done
+  done
+
+yields:
+
+  true/true: 0
+  true/false: 1
+  false/true: 1
+  false/false: 1
+
+(and should still short-circuit Y, because we go from left-to-right).
+
+I do not mind changing it to keep the style of each line consistent,
+though. I would have written it as a series of "&&"-chains, with a
+single exit at the end, but I think that is just a matter of preference.
+
+-Peff
