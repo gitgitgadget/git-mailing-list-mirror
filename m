@@ -1,87 +1,95 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: show staged submodules regardless of ignore config
-Date: Fri, 13 Jun 2014 18:36:32 +0100
-Message-ID: <87k38k66j8.fsf@red.patthoyts.tk>
-References: <xmqqppilpwwe.fsf@gitster.dls.corp.google.com>
-Reply-To: patthoyts@users.sourceforge.net
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 5/6] t7510: test verify-commit
+Date: Fri, 13 Jun 2014 11:16:25 -0700
+Message-ID: <xmqqha3o3cau.fsf@gitster.dls.corp.google.com>
+References: <cover.1402655838.git.git@drmicha.warpmail.net>
+	<3aaf65288733117909150771cc62508f3236d107.1402655839.git.git@drmicha.warpmail.net>
+	<20140613115125.GG14066@sigill.intra.peff.net>
+	<539AEB41.6090306@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Jens Lehmann <Jens.Lehmann@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 19:52:52 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jun 13 20:16:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvVem-00074M-Dx
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 19:52:52 +0200
+	id 1WvW1l-0002Zy-4z
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 20:16:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753388AbaFMRws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 13:52:48 -0400
-Received: from know-smtprelay-omc-9.server.virginmedia.net ([80.0.253.73]:58386
-	"EHLO know-smtprelay-omc-9.server.virginmedia.net"
+	id S1751602AbaFMSQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 14:16:33 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65096 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753225AbaFMRws (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 13:52:48 -0400
-Received: from red.patthoyts.tk ([82.34.175.55])
-	by know-smtprelay-9-imp with bizsmtp
-	id Dtsj1o0281C56nm01tskuu; Fri, 13 Jun 2014 18:52:44 +0100
-X-Originating-IP: [82.34.175.55]
-X-Spam: 0
-X-Authority: v=2.1 cv=bdnlUY/B c=1 sm=1 tr=0 a=g1XlTrwDEGH9N8TSFs8Bjw==:117
- a=g1XlTrwDEGH9N8TSFs8Bjw==:17 a=6gpmbu8EOFEA:10 a=au0hL0heDXEA:10
- a=CtgcEeagiGAA:10 a=xqWC_Br6kY4A:10 a=FP58Ms26AAAA:8 a=ybZZDoGAAAAA:8
- a=Rf460ibiAAAA:8 a=Z07G6e2n9i0R4G7UIY8A:9 a=qIVjreYYsbEA:10 a=5KVauyKsRKMA:10
- a=AkUkIWUyXwcA:10 a=NWVoK91CQyQA:10
-Received: from red.patthoyts.tk (localhost [IPv6:::1])
-	(using TLSv1.2 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1751228AbaFMSQc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 14:16:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CDF121F252;
+	Fri, 13 Jun 2014 14:16:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EnrNJlI4mg1PIqRtMYqqNc5qzQ4=; b=eoAgKY
+	MiDOOjr3bDGN9+hXKKWf3SeGmJRqCUgqZ8yhl0ViEerdZnGdvvdhp1+bUBn29Bh1
+	Wun1SPIFixH/+kmwIyI660mkKTf+PXsScyJhh58ejNpFHy0Oi/+tBRPcA6BcPanB
+	Y5L2kMUkVYiBWF23nSFbOhMQvWhFys4YIqS3I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WgE1YqHbYo0DeG6Pz0xjp120OdTmDNcN
+	DWCDpWhUaJYA9rfsH67Rc67Z4+n/7l0/IsuYZTPzEGZ0BylhyAHVT6Il9UkOz/WC
+	0oFR+fZweUUjMcg+/rj3HunVtFiCCnI37zRk+DpgpP+KDoNtcfypMELf7/+ewTFb
+	ruhajFq9TPo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C4C2C1F251;
+	Fri, 13 Jun 2014 14:16:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by red.patthoyts.tk (Postfix) with ESMTPS id ADD331960E8A;
-	Fri, 13 Jun 2014 18:52:43 +0100 (BST)
-In-Reply-To: <xmqqppilpwwe.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 06 Jun 2014 14:10:09 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-CC: Git Mailing List <git@vger.kernel.org>
-X-Url: http://www.patthoyts.tk/
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id ADEB61F242;
+	Fri, 13 Jun 2014 14:16:27 -0400 (EDT)
+In-Reply-To: <539AEB41.6090306@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Fri, 13 Jun 2014 14:14:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D614FB56-F326-11E3-9BDA-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251625>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
->From: Jens Lehmann <Jens.Lehmann@web.de>
->Date: Tue, 8 Apr 2014 21:30:51 +0200
+> Jeff King venit, vidit, dixit 13.06.2014 13:51:
+>> On Fri, Jun 13, 2014 at 12:42:47PM +0200, Michael J Gruber wrote:
+>> 
+>>>  test_expect_success GPG 'detect fudged signature' '
+>>>  	git cat-file commit master >raw &&
+>>>  
+>>>  	sed -e "s/seventh/7th forged/" raw >forged1 &&
+>>>  	git hash-object -w -t commit forged1 >forged1.commit &&
+>>> +	! git verify-commit $(cat forged1.commit) &&
+>> 
+>> Please use test_must_fail here (and further down), which will catch
+>> things like signal death.
 >
->Currently setting submodule.<name>.ignore and/or diff.ignoreSubmodules to
->"all" suppresses all output of submodule changes for git-gui. This is
->really confusing, as even when the user chooses to record a new commit for
->an ignored submodule by adding it manually this change won't show up under
->"Staged Changes (Will Commit)".
->
->Fix that by using the '--ignore-submodules=dirty' option for both callers
->of "git diff-index --cached" when the underlying git version supports that
->option.
->
->Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
->Signed-off-by: Junio C Hamano <gitster@pobox.com>
->---
->
-> * Pat, I've been carrying this in my 'pu' but I would prefer
->   changes to git-gui fed to me through you.  Could you apply this
->   so that I can drop my tentative copy?
->
+> Again, that is an issue of keeping the style of the surrounding code
+> (which is relatively new) vs. doing it differently. I don't mind
+> changing t7510 to a different style, though.
 
-OK - Applied.
+We do not have any "! git anything" in that script, don't we?  We do
+not expect "grep" supplied by the platform to lie, and that is why
+we should never use test_must_fail on them, but we do want to notice
+when git starts segfaulting, and that is what test_must_fail is for.
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+We tell novices and cluelesses who do not know better to try to
+follow and match the surrounding style.  This is because it would at
+least not make things worse than if we let them run loose on our
+codebase.  It is not about "if we have a bad style, it is better to
+match that existing bad style to spread the badness than making it
+partly better".  But you have been here long enough and know what is
+preferred and and what is to be avoided---more importantly, Peff has
+been here long enough to know and has given such an advice, so...
+
+In any case, I do not offhand see anything wrong style-wise in 7510,
+so please do not change anything in it for the sake of styles.
