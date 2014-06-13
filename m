@@ -1,138 +1,98 @@
-From: Caleb Thompson <caleb@calebthompson.io>
-Subject: Re: [PATCH v5 0/4] commit: Add commit.verbose configuration
-Date: Fri, 13 Jun 2014 11:49:10 -0500
-Message-ID: <20140613164910.GA87252@sirius.local>
-References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
- <20140612203010.GA17761@hudson.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6] Add an explicit GIT_DIR to the list of excludes
+Date: Fri, 13 Jun 2014 09:50:33 -0700
+Message-ID: <xmqqfvj84uue.fsf@gitster.dls.corp.google.com>
+References: <CACsJy8Cgu792Tamej3+_9w=Krg8nezYYA6k604gikebHG=yVUg@mail.gmail.com>
+	<1402529308-3940-1-git-send-email-pasha.bolokhov@gmail.com>
+	<53994667.90209@kdbg.org>
+	<CAKpPgvf=OGRHFv81x2b_PVqzALbSWHaJvejyy5w7aS_P+QFA6w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="tThc/1wpZn/ma/RB"
-To: Jeremiah Mahler <jmmahler@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 13 18:49:31 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Pasha Bolokhov <pasha.bolokhov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 18:50:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvUfO-0002mm-KB
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 18:49:26 +0200
+	id 1WvUge-0003sO-L6
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 18:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753641AbaFMQtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 12:49:23 -0400
-Received: from new1-smtp.messagingengine.com ([66.111.4.221]:35572 "EHLO
-	new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753615AbaFMQtV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 12:49:21 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 7E031631;
-	Fri, 13 Jun 2014 12:49:13 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Fri, 13 Jun 2014 12:49:14 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=calebthompson.io;
-	 h=date:from:to:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=mesmtp; bh=9+dhK3TsLNdSrk3bbYWZQvc4
-	Aoc=; b=i5lWPWZaxhKuhUPQugnBCi8nvCBa+kNxPCrgt6J6ybmMjkRcaXey0w4f
-	3dHfTQNTQGgW07H/S/SK9gFPsxyD4mZQ+WN7l/liIaiTDXcFmDTikw0a1e/xR19I
-	MWY08fJsTP4QySRQNKMWvszabyPsPPK7C4bFBb918SrN7xT7PNE=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=date:from:to:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=smtpout;
-	 bh=9+dhK3TsLNdSrk3bbYWZQvc4Aoc=; b=qm338C3saOu2LaEdoVuv/e1077F7
-	FM4nfNVG7jF9l6XqRBTWzrlE8is6BBnHNt2eYpcEFJxhVK+jc/7B8Sp+h+7pLM9c
-	oYBahPP1YwfbxUwwjsfUjDIwvsuY19cb3dSj3sUeRkUIxZ/LvbNkwMWJ+jcN6dau
-	4sY8r14GNWDyslM=
-X-Sasl-enc: Q7fAgTuS2QnELap81zsE+Iz9ZqJ0FdiFZZKbIBdJf29T 1402678152
-Received: from localhost (unknown [67.78.97.126])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 8F99B68016B;
-	Fri, 13 Jun 2014 12:49:12 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20140612203010.GA17761@hudson.localdomain>
-X-PGP-Key: fp="B432 C068 2FD1 C2D0 6A8B 3951 1621 ADC2 A0AC E70A";
- id="0xA0ACE70A"; get=<http://calebthompson.io/pubkey.asc>;
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1753408AbaFMQul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 12:50:41 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51678 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752507AbaFMQuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 12:50:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 87A211E510;
+	Fri, 13 Jun 2014 12:50:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=shaiAB2/DMhl66V8GNKr9t5ZPC0=; b=Pd0wgq
+	2uwdJf6dFvIjVyt9Kp20g/L+jYWboOFkB172QlFRmE2v/ZU63dnfl+mdXVWNUuVK
+	y5Agwt6ZL3/p/wezFZ36erV3YnehfDOfdaKX44lKheBcso3p9DlMalR698XZS04B
+	roQILZgckcQ4CroZKE3HFo2bWYE0EQnjuzjis=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=If0bg4YjobUvTgw9yD1xGzXaoHYMFRq9
+	6yG3QQ4wF8mI28xthruzKn2Qfa1DszirwpswQ7ixqGTJ1g6OKK2quopS7VOF5d8z
+	SfrssH1vE/pA2LVL9DFGoYEYAPmufpPdFY2wB2OPd6hHMIyThXtLzegcLjLVFpf4
+	w//IY7lsOeY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7CA011E50F;
+	Fri, 13 Jun 2014 12:50:39 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 504061E50C;
+	Fri, 13 Jun 2014 12:50:35 -0400 (EDT)
+In-Reply-To: <CAKpPgvf=OGRHFv81x2b_PVqzALbSWHaJvejyy5w7aS_P+QFA6w@mail.gmail.com>
+	(Pasha Bolokhov's message of "Fri, 13 Jun 2014 09:10:22 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D70F4964-F31A-11E3-ADFC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251612>
 
+Pasha Bolokhov <pasha.bolokhov@gmail.com> writes:
 
---tThc/1wpZn/ma/RB
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Jun 12, 2014 at 01:30:10PM -0700, Jeremiah Mahler wrote:
-> On Thu, Jun 12, 2014 at 02:38:58PM -0500, Caleb Thompson wrote:
-> > This patch allows people to set commit.verbose to implicitly send
-> > --verbose to git-commit.
-> >
-> > This version incorporates changes suggested by Eric Sunshine, Duy
-> > Nguyen, and Jeremiah Mahler.
-> >
-> > It introduces several cleanup patches to t/t7505-commit-verbose.sh to
-> > bring it closer to the current state of the tests as Eric has explained
-> > them to me, then adds the verbose config and --no-verbose flag.
-> >
-> > Since the last version of this patch
-> > (http://marc.info/?l=3Dgit&m=3D140251155830422&w=3D2), I've made the fo=
-llowing
-> > changes:
-> >
-> > * Revert change to flags, as --no-verbose already existed and worked as
-> >   expected with the commit.verbose configuration. Thanks to  Ren=E9 Sch=
-arfe.
-> > * Fix <<-'EOS' style for check-for-no-diff script. Thanks to Mike Burns.
-> >
-> > Additionally, this set of patches was generated by format-patch, so it
-> > should work correctly with git-am.
-> >
-> > ------------------------------------------------------
-> >
-> > Caleb Thompson (4):
-> >   commit test: Use test_config instead of git-config
-> >   commit test: Use write_script
-> >   commit test: test_set_editor in each test
-> >   commit: add commit.verbose configuration
-> >
-> >  Documentation/config.txt               |  5 +++
-> >  Documentation/git-commit.txt           |  8 ++++-
-> >  builtin/commit.c                       |  4 +++
-> >  contrib/completion/git-completion.bash |  1 +
-> >  t/t7507-commit-verbose.sh              | 64 +++++++++++++++++++++++++-=
---------
-> >  5 files changed, 64 insertions(+), 18 deletions(-)
-> >
-> > --
-> > 2.0.0
-> >
+>>> +             test_cmp status.actual.2 status.expect.2
+>>
+>> It is customary to call the files 'expect' and 'actual'. Furthermore,
+>> swap the order so that in case of a failure the diff shows how the
+>> actual text was changed from the expected text:
+>>
+>>                 test_cmp status.expect.2 status.actual.2
 >
-> The patches look good, they apply clean ('git am'), and all tests pass.
->
-> Reviewed-by: Jeremiah Mahler <jmmahler@gmail.com>
+> So, is naming the files "status.expect.2" instead of just
+> "expect"/"actual" ok or not?
 
-So that I'm clear on the etiquitte, is it appropriate for me to add this
-Reviewed-by line to the commit messages at this point, provided that the
-patches don't change?
+Unless there is a compelling reason not to, just use expect/actual,
+without "status." or ".<number>".  When debugging, people pass the
+"-i" (and often "-v") to the script which would stop at the first
+breakage.  If they can inspect the result in "actual", that is far
+more pleasant than having to know that it is status.actual.43 they
+have to inspect while ignoring clutters in status.actual.{1-42} that
+have nothing to do with the breakage they are dealing with.
 
-> --
-> Jeremiah Mahler
-> jmmahler@gmail.com
-> http://github.com/jmahler
+> Ok, no problem, will change that. The only thing, I saw this in other
+> tests, so decided to use it too. Those tests use "test_mighf_fail rm"
 
---tThc/1wpZn/ma/RB
-Content-Type: application/pgp-signature
+"might_fail" and "must_fail" are totally different beasts.
+"must_fail" is about controlled failure exit (i.e. no segfaulting
+allowed) and we avoid using it on non-git things.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAEBAgAGBQJTmyuGAAoJEBYhrcKgrOcKpeIH+QFkDKDIwH+D7BwxSnEuI2+5
-N9YU5SLj7mOmfPyOGJl+lnBl3G6FDWAHiIp1TbDs9+nL9OcbwtGgvYCs+s1ZjdYI
-3Cmsi8ssTTfMd0IUi11yJp9061ZKZMlWW6MiKTsS5SKpHkf+Jp8koxv5xTf8QbBo
-bhAdaYOYe3wooS8VIyCk9jIGl6rhyH2mKeVCBX+gpOPS8EUiUl/zJJGcUFCCbY+B
-asSmkSZy5Lk7AJyetEwR3Wm4jIpcl0B4ZHNW2ohjmN00xHg9sS7EyzUUTDto+Om4
-AEysl4Jo0JeSn4Xxv/+5vlGixTbMqX3w5SvCKpNWZbZirnIOHC2tQEgXx9EPfmc=
-=IZx2
------END PGP SIGNATURE-----
-
---tThc/1wpZn/ma/RB--
+When you run clean-up commands without knowing if there is anythning
+to clean-up, e.g. you may or may not have successfully created a
+junk file and you want to make sure that file does not exist.  It
+happens that "rm junk" has a convenient option "-f" to make it not
+barf upon missing "junk", so you can do so with "rm -f junk" instead
+of saying "test_might_fail rm junk", but "might_fail" is designed to
+be useful for commands that do not have such a convenient option.
