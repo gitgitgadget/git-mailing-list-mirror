@@ -1,78 +1,48 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v5 3/4] commit test: test_set_editor in each test
-Date: Fri, 13 Jun 2014 02:59:42 -0400
-Message-ID: <20140613065942.GB7908@sigill.intra.peff.net>
-References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
- <1402601942-45553-4-git-send-email-caleb@calebthompson.io>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 0/5] submodule config lookup API
+Date: Fri, 13 Jun 2014 09:13:23 +0200
+Message-ID: <539AA493.5030106@web.de>
+References: <20140605060425.GA23874@sandbox-ub> <xmqqtx7p4wee.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	David Kastrup <dak@gnu.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Mike Burns <mike@mike-burns.com>
-To: Caleb Thompson <caleb@calebthompson.io>
-X-From: git-owner@vger.kernel.org Fri Jun 13 08:59:52 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>, Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Fri Jun 13 09:13:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvLSm-0001m2-Nl
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 08:59:49 +0200
+	id 1WvLgB-0007zH-0D
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 09:13:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075AbaFMG7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 02:59:45 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43208 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750862AbaFMG7o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 02:59:44 -0400
-Received: (qmail 7848 invoked by uid 102); 13 Jun 2014 06:59:45 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Jun 2014 01:59:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2014 02:59:42 -0400
-Content-Disposition: inline
-In-Reply-To: <1402601942-45553-4-git-send-email-caleb@calebthompson.io>
+	id S1751082AbaFMHNe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 03:13:34 -0400
+Received: from mout.web.de ([212.227.15.14]:64610 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750784AbaFMHNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 03:13:34 -0400
+Received: from [192.168.178.41] ([79.193.74.201]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0MUF4Q-1XLEYy0Nvu-00QyOB; Fri, 13 Jun 2014 09:13:30
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqtx7p4wee.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:4tNo7H3ROAYVHfQwtmsjnv7iXUDML9SOR+7AEZGTilwDanT9y0+
+ PGn44pBYft1YeqosrnjaH6tlNfOI6PBvtsh5hzGJV3YLsiITZOfBco4Ywm5vPBMBP+yVsBv
+ IkYHlJYfLo24+SYmS2SLtyd3E50sjp/nSFsNi3kRBsPv3MUNoc7vPpQkb2OaFortzEwa+s7
+ /4rD2FDcrln5W6lIhjWig==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251521>
 
-On Thu, Jun 12, 2014 at 02:39:01PM -0500, Caleb Thompson wrote:
+Am 13.06.2014 00:04, schrieb Junio C Hamano:
+> Hmph, this seems to conflict in a meaningful (and painful) way with
+> Jens's "jl/submodule-recursive-checkout".
 
-> t/t7507-commit-verbose.sh was using a global test_set_editor call to
-> build its environment.
-> 
-> Improve robustness against global state changes by having only tests
-> which intend to use the $EDITOR to check for presence of a diff in the
-> editor set up the test-editor to use check-for-diff rather than relying
-> upon the editor set once at script start.
-
-This implies to me that EDITOR is unset after leaving these tests. I
-don't think that is how it works, though.  The tests themselves run in
-the main environment of the test script. A call to test_set_editor from
-one of them will still affect the other tests[1].
-
-I think it works anyway because every subsequent test that cares
-actually sets the editor itself.
-
-Or did you just mean that the new rule is "every test sets the editor as
-they need", which means that we do not have to worry anymore about
-polluting the environment for other tests?
-
--Peff
-
-[1] It might make sense for test_set_editor, when run from within a
-    test, to behave more like test_config, and do:
-
-      test_when_finished '
-        sane_unset FAKE_EDITOR &&
-        sane_unset EDITOR
-      '
-
-    I don't know if there would be fallouts with other test scripts,
-    though.
+Then you might wanna drop my series for now, I need to rebase it
+above Heiko's series myself to make new submodules work anyway.
