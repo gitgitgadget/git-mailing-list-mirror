@@ -1,120 +1,118 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2 4/6] t7510: exit for loop with test result
-Date: Fri, 13 Jun 2014 14:22:36 +0200
-Message-ID: <539AED0C.8050107@drmicha.warpmail.net>
-References: <cover.1402655838.git.git@drmicha.warpmail.net> <99893263f1819646a3a324b2fff0bcd0d56f3818.1402655839.git.git@drmicha.warpmail.net> <20140613114615.GE14066@sigill.intra.peff.net> <539AE8CA.50009@drmicha.warpmail.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 27/32] rev-parse: add --shared-index-path to get shared index path
+Date: Fri, 13 Jun 2014 19:19:46 +0700
+Message-ID: <1402661991-14977-28-git-send-email-pclouds@gmail.com>
+References: <1402661991-14977-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 14:22:44 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 13 14:22:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvQVI-0004h7-DA
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 14:22:44 +0200
+	id 1WvQVI-0004h7-Tt
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 14:22:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752580AbaFMMWj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 08:22:39 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:43873 "EHLO
-	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752570AbaFMMWj (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 08:22:39 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id F334320EC0;
-	Fri, 13 Jun 2014 08:22:37 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Fri, 13 Jun 2014 08:22:38 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=3nDGL9ZIkJFX00t/czAsVV
-	gMd7E=; b=bBhZanvkU2U29wbVbRlkVGEvmyr76uPgdbwPef6AIE+4xf50DJ5lMH
-	ONJl8VDH3CBQI5G1WltYLijCGww7r4FYt+jyx2LNF9bAYoiNZ73v8npkJLKRbnED
-	Y+do3o+/LLHWZ7wouU0BizTq1lAvMNOjXR1lsUWfvZPcCfqMQAc54=
-X-Sasl-enc: rrudT5mT5gjetfO2cv+9waqL/1HDz2Qoz4xSNK3eezyh 1402662157
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 391A668016B;
-	Fri, 13 Jun 2014 08:22:37 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <539AE8CA.50009@drmicha.warpmail.net>
+	id S1752589AbaFMMWl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2014 08:22:41 -0400
+Received: from mail-pa0-f43.google.com ([209.85.220.43]:50622 "EHLO
+	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752581AbaFMMWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 08:22:40 -0400
+Received: by mail-pa0-f43.google.com with SMTP id lf10so2100915pab.30
+        for <git@vger.kernel.org>; Fri, 13 Jun 2014 05:22:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=o7kDzqEeb2INA6NkvSzPL/lUbKTkS+S9XQ9HtaBJGig=;
+        b=oXmACzcelK6S7oNpsGacTjkOI0pWbyV+JBWdDgfeLPJtaPloPQYuUZj7smV/0k5ogl
+         5ko1/yrTzgNI/YgAT4rAOiis4irSSKnzHWY75pXdxgS39b9I9jnECFQ9/ZTx5fNBQHxw
+         CQS5MAv6TY90EoU2gNTD+Xra6nhBBVPWiNSTfqAz8GNaRfxOvH7EzFyTd5WrP2Ogl0x8
+         3TJfGdLGGS1Yo1kNRFnSX4YAJJZAeU6ZLt7NNqUtZD6IfzwD4K203HMabV2b25qcZ1kP
+         HGytFlgNQIGkoKWZQMQ+0gcr5//DxheTNGz0mHY3DACeWkgMkn1iom46VyVRjT3OLI1L
+         H8IQ==
+X-Received: by 10.69.19.139 with SMTP id gu11mr3001754pbd.36.1402662159848;
+        Fri, 13 Jun 2014 05:22:39 -0700 (PDT)
+Received: from lanh ([115.73.228.145])
+        by mx.google.com with ESMTPSA id vc5sm20772409pac.19.2014.06.13.05.22.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Jun 2014 05:22:39 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Fri, 13 Jun 2014 19:22:39 +0700
+X-Mailer: git-send-email 1.9.1.346.ga2b5940
+In-Reply-To: <1402661991-14977-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251583>
 
-Michael J Gruber venit, vidit, dixit 13.06.2014 14:04:
-> Jeff King venit, vidit, dixit 13.06.2014 13:46:
->> On Fri, Jun 13, 2014 at 12:42:46PM +0200, Michael J Gruber wrote:
->>
->>> When t7510 was introduced, the author made sure that a for loop in
->>> a subshell would return with the appropriate error code.
->>>
->>> Make sure this is true also the for the first line in each loop, which
->>> was missed.
->>>
->>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->>> ---
->>>  t/t7510-signed-commit.sh | 4 ++--
->>>  1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
->>> index 5ddac1a..a5ba48e 100755
->>> --- a/t/t7510-signed-commit.sh
->>> +++ b/t/t7510-signed-commit.sh
->>> @@ -49,7 +49,7 @@ test_expect_success GPG 'show signatures' '
->>>  	(
->>>  		for commit in initial second merge fourth-signed fifth-signed sixth-signed master
->>>  		do
->>> -			git show --pretty=short --show-signature $commit >actual &&
->>> +			git show --pretty=short --show-signature $commit >actual || exit 1
->>>  			grep "Good signature from" actual || exit 1
->>
->> Hrm. The original is:
->>
->>   X &&
->>   Y || exit 1
->>
->> Won't that still exit (i.e., it is already correct)? Doing:
->>
->>   for X in true false; do
->>     for Y in true false; do
->>       ($X && $Y || exit 1)
->>       echo "$X/$Y: $?"
->>     done
->>   done
->>
->> yields:
->>
->>   true/true: 0
->>   true/false: 1
->>   false/true: 1
->>   false/false: 1
->>
->> (and should still short-circuit Y, because we go from left-to-right).
->>
->> I do not mind changing it to keep the style of each line consistent,
->> though. I would have written it as a series of "&&"-chains, with a
->> single exit at the end, but I think that is just a matter of preference.
-> 
-> If I remember correctly, I put something failing on the first line of
-> the original version, and the test succeeded. I think the point is that
-> we have a for loop in a subshell, and we need to make sure that the
-> false of one iteration is not overwritten by the true of the next one -
-> "exit 1" makes sure to "break" the for loop and exit the subshell.
-> (The chain should do that as well, I'll recheck.)
+Normally scripts do not have to be aware about split indexes because
+all shared indexes are in $GIT_DIR. A simple "mv $tmp_index
+$GIT_DIR/somewhere" is enough. Scripts that generate temporary indexes
+and move them across repos must be aware about split index and copy
+the shared file as well. This option enables that.
 
-... the chain does not, which is the point :)
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Documentation/git-rev-parse.txt |  4 ++++
+ builtin/rev-parse.c             | 10 ++++++++++
+ 2 files changed, 14 insertions(+)
 
-With X && Y || exit 1 inside the loop, the loop statement will return
-false, but the loop will continue (if X returns false), which is exactly
-the problem that the exit avoids.
-
-Make your example iterate over false true instead in the inner loop and
-you'll see ;)
-
-Michael
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-pa=
+rse.txt
+index 987395d..9bd76a5 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -245,6 +245,10 @@ print a message to stderr and exit with nonzero st=
+atus.
+ --show-toplevel::
+ 	Show the absolute path of the top-level directory.
+=20
++--shared-index-path::
++	Show the path to the shared index file in split index mode, or
++	empty if not in split-index mode.
++
+ Other Options
+ ~~~~~~~~~~~~~
+=20
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 1a6122d..8102aaa 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -11,6 +11,7 @@
+ #include "parse-options.h"
+ #include "diff.h"
+ #include "revision.h"
++#include "split-index.h"
+=20
+ #define DO_REVS		1
+ #define DO_NOREV	2
+@@ -775,6 +776,15 @@ int cmd_rev_parse(int argc, const char **argv, con=
+st char *prefix)
+ 						: "false");
+ 				continue;
+ 			}
++			if (!strcmp(arg, "--shared-index-path")) {
++				if (read_cache() < 0)
++					die(_("Could not read the index"));
++				if (the_index.split_index) {
++					const unsigned char *sha1 =3D the_index.split_index->base_sha1;
++					puts(git_path("sharedindex.%s", sha1_to_hex(sha1)));
++				}
++				continue;
++			}
+ 			if (starts_with(arg, "--since=3D")) {
+ 				show_datestring("--max-age=3D", arg+8);
+ 				continue;
+--=20
+1.9.1.346.ga2b5940
