@@ -1,92 +1,82 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v4 0/1] receive-pack: optionally deny case clone refs
-Date: Fri, 13 Jun 2014 15:24:52 -0700
-Message-ID: <CAL=YDWnGBrgHFamc0ZmmGJSFL3Z_6ZaWn4AWOMhJTPQ5UCKD_A@mail.gmail.com>
-References: <1402525838-31975-1-git-send-email-dturner@twitter.com>
-	<xmqqa99h6hbh.fsf@gitster.dls.corp.google.com>
-	<CAL=YDW=xn0OG5vu=9fnP0nycKV0F9bDJLrkYiwmL9P9q79LJSw@mail.gmail.com>
-	<CAL=YDWnHubbC3eOUjHtbiddG0HiaNUW13=GRMXKfyxB+Yomq_g@mail.gmail.com>
-	<xmqqk38k1pmv.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Our merge bases sometimes suck
+Date: Fri, 13 Jun 2014 15:35:18 -0700
+Message-ID: <xmqqbntw1lqx.fsf@gitster.dls.corp.google.com>
+References: <539A25BF.4060501@alum.mit.edu>
+	<539AC690.6000906@drmicha.warpmail.net> <539B1E59.1030604@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Turner <dturner@twopensource.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 00:25:01 2014
+	git discussion list <git@vger.kernel.org>
+To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 14 00:35:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvZu5-0005D5-U6
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jun 2014 00:24:58 +0200
+	id 1Wva4L-0004zG-HO
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jun 2014 00:35:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753825AbaFMWYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 18:24:54 -0400
-Received: from mail-vc0-f175.google.com ([209.85.220.175]:57992 "EHLO
-	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753196AbaFMWYx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 18:24:53 -0400
-Received: by mail-vc0-f175.google.com with SMTP id hy4so2877564vcb.20
-        for <git@vger.kernel.org>; Fri, 13 Jun 2014 15:24:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=0+1va79QDHHjKQZykpVqfLQTOJb9qMq1ZmMuqSXQo7A=;
-        b=Ye5/Ka9upQUmeIqnjBGh17ipeL9Vnu5jc+m+SH5K1n2K9sBFM4Fr1sW0XuInvQeI0f
-         gqrViwVzBAshvyXvJZvV+Q1/rCKvHPsUQuJLIv/rLVYIcIT0ggO4r2MBSoQkZDdMguVz
-         hVVa8WLdINb7Vbn8MQKM46Q5RkogR872j9cK2kInGTkfY17epbWSKWDOYEi4jyufYx7H
-         Mzvsr/Oq73DPLzFBCge7kukRa2t5mHuVYXA3F/Ua7jm7clOhKOhD0wsAuePzMyWwNimN
-         crk2T1xsE4CvQG9J98Y537o9pz2aUlB5s9WWHesSTTw+W2EwP+TYFP/0qer2Jt6TfwMj
-         MPsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=0+1va79QDHHjKQZykpVqfLQTOJb9qMq1ZmMuqSXQo7A=;
-        b=b/HgdH5xVS/NESGyB11kLdqIfKA+4SDs13NNEWP6lCFHPR9DIEeY08qIgyArIKjhK2
-         0vO8sYfi1e87+2AwULKANfEfpOoBZn0WUOM2osJX31nUiqe2Hm75xaAOHDusFrI7srSx
-         KHlaVnTUeLwUgDDwFDB7TZOHhItPnAknBqImgkSj1L7KKu9Dl5rrnyTUxweimOwW0gD8
-         akkeGySaO3BQsBmUHLhvhscfQky+eqR9RcDR02hYgC1f8fEvzmA2F2lQSDMNaTVLmRKx
-         9qdsLEOpoQDD3nWraS5H7tlZdvf+/iYLx1or9oUd3bRtn/sC8VQorbyFoLFYBAGhLzO3
-         4Gtg==
-X-Gm-Message-State: ALoCoQmWRlMvRqngJkGfx25q5whWlNDEmnX+qsyAfFc+5cZZklwNExDlWbT39jtJXLPcd07gyqRB
-X-Received: by 10.58.133.6 with SMTP id oy6mr3602850veb.25.1402698292508; Fri,
- 13 Jun 2014 15:24:52 -0700 (PDT)
-Received: by 10.52.255.65 with HTTP; Fri, 13 Jun 2014 15:24:52 -0700 (PDT)
-In-Reply-To: <xmqqk38k1pmv.fsf@gitster.dls.corp.google.com>
+	id S1753365AbaFMWfZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2014 18:35:25 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55616 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751262AbaFMWfZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 18:35:25 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4B3211FFE2;
+	Fri, 13 Jun 2014 18:35:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=dc1JEeoFpo14
+	8/zzrBE705UCWK4=; b=UKyTMSp6l1jju26UTcdXIqcJoNlA0zgp9gc5vtD0VxXR
+	jR8+lJCRXoY4E7447m9kWz8dfxJFN/YsQiNPDbOehp5C20WuBpGWkbTrrDUILGVz
+	5DzAdYdwtaXJYbcg7dojivU0XUBeFIQxtjkV1DuEzCjbBPPNuh9iQwvsXHKiFLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JVCRDd
+	XTDH9hdD7VV/Hy61Kt21zKWPg+tff7Fju8eMMYNNbA2t1wDw8Yxt0ZVHCiOUnJ2Q
+	POcEvRTPQYOcvCasvrH2h3ehemjCQGhVNAzzKtbpqWZSzLpqxZfzgFziT8KJ8L31
+	rFsAkHmrIxTJeIvZGqO1PEeFv34vir+hWq2Qw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 427781FFE1;
+	Fri, 13 Jun 2014 18:35:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 47FB41FFDD;
+	Fri, 13 Jun 2014 18:35:20 -0400 (EDT)
+In-Reply-To: <539B1E59.1030604@gmail.com> ("Jakub =?utf-8?Q?Nar=C4=99bski?=
+ =?utf-8?Q?=22's?= message of "Fri,
+	13 Jun 2014 17:52:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0038954A-F34B-11E3-A4FE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251646>
 
-On Fri, Jun 13, 2014 at 2:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
->
->> ... The first
->> backend will be the current files based structure but I also will add
->> an optional backend using a TDB database.
->
-> I am assuming that as part of the transactions work, accesses to
-> reflogs will also have their own backends?
+Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
 
-Yes. They will be stored in the same database so that updates to refs
-and reflogs will become truly atomic.
+> I don't know if it has been fixed, but there is a difference
+> between "git diff A...B" when A and B have one merge base, and
+> "git diff A...B" when there are more than one merge base.
+>
+> When there is one merge base, "git diff A...B" returns simple
+> unified diff equivalent to "git diff $(git merge-base A B) B".
+> It is unsymmetric.
+>
+> But where there are more than one merge base, by design or by
+> accident for "git diff A...B" git 1.9.2 / 1.7.4 returns
+>
+>    git diff --cc $(git merge-base --all A B) A B
+>
+> which is *symmetric*, and is combined not unified diff.
 
->
->> You could then very easily create a new backend, say 'struct refs_be
->> refs_files_case_insensitive' where the methods would just convert any
->> refnames to/from a case insensitive encoding before invoking the
->> default methods from the files backend.
->> Perhaps something as simple as converting any upper case characters
->> to/from '%xx' representation when accessing the actual files.
->
-> Hmm... that would work only when the new implementation of Git is
-> the only one that accesses the repository.  Other implementations
-> (e.g. Eclipse via egit, Gerrit via jgit, etc.)  peeking into the
-> same repository wouldn't know what to do with these encoded
-> refnames.
+Hmph, the relevant code has not changed very much since c008c0ff
+(diff A...B: give one possible diff when there are more than one
+merge-base, 2010-07-12) which has been with us since v1.7.2.
