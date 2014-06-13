@@ -1,74 +1,96 @@
-From: Peter Krefting <peter@softwolves.pp.se>
+From: Jeff King <peff@peff.net>
 Subject: Re: Confusing error message in rebase when commit becomes empty
-Date: Fri, 13 Jun 2014 08:25:43 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1406130823251.27436@ds9.cixit.se>
-References: <alpine.DEB.2.00.1406111321090.6307@ds9.cixit.se> <CABURp0rC3yktDiRVQwo9E+x5_wKLnLVRx87ej+m+TyUdBkMpOA@mail.gmail.com> <alpine.DEB.2.00.1406111854180.21431@ds9.cixit.se> <CABURp0q1c+75VzMfttDWVXhTFma3g=Tj938J_9i9xhG1yuMpdQ@mail.gmail.com>
+Date: Fri, 13 Jun 2014 03:27:50 -0400
+Message-ID: <20140613072749.GD7908@sigill.intra.peff.net>
+References: <alpine.DEB.2.00.1406111321090.6307@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Fabian Ruch <bafain@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Phil Hord <phil.hord@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 09:25:59 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Fri Jun 13 09:28:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvLs5-000412-8B
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 09:25:57 +0200
+	id 1WvLtz-00067I-UW
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 09:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752733AbaFMHZx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 03:25:53 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:42686 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752591AbaFMHZw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 03:25:52 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s5D7PhR5004804
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 13 Jun 2014 09:25:44 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s5D7PhGv004800;
-	Fri, 13 Jun 2014 09:25:43 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <CABURp0q1c+75VzMfttDWVXhTFma3g=Tj938J_9i9xhG1yuMpdQ@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Fri, 13 Jun 2014 09:25:44 +0200 (CEST)
+	id S1752857AbaFMH1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 03:27:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43233 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752491AbaFMH1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 03:27:51 -0400
+Received: (qmail 9316 invoked by uid 102); 13 Jun 2014 07:27:51 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Jun 2014 02:27:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2014 03:27:50 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.00.1406111321090.6307@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251524>
 
-Phil Hord:
+On Wed, Jun 11, 2014 at 01:49:04PM +0100, Peter Krefting wrote:
 
-> Did you have a series of three commits being squashed in your to-do
-> list?  I mean, did you have a list like this:
->
->   pick ...  do foo
->   squash ...  revert "do foo"
->   squash ...  What I really meant to do.
+> Hi!
+> 
+> I am rebasing a branch to combine a couple of commits. One is a revert of a
+> previous commit. Since there are commits in-between, I do "squash" to make
+> sure I get everything, and then add the actual change on top of that. The
+> problem is that rebase stops with a confusing error message (from commit,
+> presumably):
+> 
+>   $ git rebase --interactive
+>   [...]
+>   You asked to amend the most recent commit, but doing so would make
+>   it empty. You can repeat your command with --allow-empty, or you can
+>   remove the commit entirely with "git reset HEAD^".
+>   rebase in progress; onto 342b22f
+>   You are currently rebasing branch 'mybranch' on '342b22f'.
+> 
+>   No changes
+> 
+>   Could not apply 4682a1f20f6ac29546536921bc6ea0386441e23e... Revert "something"
+> 
+> OK, so I should retry the command with --allow-empty, then:
+> 
+>   $ git rebase --interactive --allow-empty
+>   error: unknown option `allow-empty'
+> 
+> Nope, that's not quite right.
 
-Yes, that is exactly what I had. Plus an extra commit that I moved to 
-the end, which was originally placed between the "do foo" and "revert 
-do foo" commits (which is why I wasn't 110% sure the combination of 
-the two would produce an empty commit).
+Yeah, that message comes from "commit --amend", which is called by
+rebase to handle the squash. The "repeat your command" part is
+confusing. The right thing to do here is:
 
-> Yes, but empty commits are discouraged on some projects.  If you 
-> want your "change + revert = empty" commit to appear after the 
-> squash, I would expect you would want to use --keep-empty on your 
-> inital rebase command.  But I'm not sure that will do what you 
-> expected either; it may only keep previously-empty commits during 
-> the rebase.
+  git commit --amend --allow-empty
 
-The thing is that I wasn't expecting it to come out empty, as I had 
-another commit to squash into it. That the interim throw-away squashed 
-commit was empty should have been an internal matter to rebase, IMHO.
+if you want to have an empty commit, or:
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+  git reset HEAD^
+
+if you want to have nothing.
+
+Of course the first one would never occur to you, because it is not
+"your command" in the first place. :)
+
+We could change it to say "use git commit --amend --allow-empty", though
+that is slightly incomplete for other cases (e.g., you might have
+actually said "git commit --amend -a", and the right advice is to
+include that "-a".
+
+Commit understands a "whence" flag that could let it customize the
+message for the case of rebase. But I think you would have to teach
+determine_whence to figure out that we are in a rebase.
+
+> Running "git rebase --continue" does work as expected, but perhaps it just
+> shouldn't stop in this case?
+
+As you noticed later in the thread, doing "--continue" omits the revert.
+That's because it is telling rebase "OK, I've fixed this up, we can keep
+going". But of course it wasn't fixed.
