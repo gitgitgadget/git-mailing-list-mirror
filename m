@@ -1,97 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 4/6] t7510: exit for loop with test result
-Date: Fri, 13 Jun 2014 11:23:33 -0700
-Message-ID: <xmqqd2ec3byy.fsf@gitster.dls.corp.google.com>
-References: <cover.1402655838.git.git@drmicha.warpmail.net>
-	<99893263f1819646a3a324b2fff0bcd0d56f3818.1402655839.git.git@drmicha.warpmail.net>
-	<20140613114615.GE14066@sigill.intra.peff.net>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: [PATCH v5 3/4] commit test: test_set_editor in each test
+Date: Fri, 13 Jun 2014 20:52:47 +0200
+Message-ID: <539B487F.4030104@gmail.com>
+References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io> <1402601942-45553-4-git-send-email-caleb@calebthompson.io> <20140613065942.GB7908@sigill.intra.peff.net> <20140613163644.GB85151@sirius.local> <539B3205.5010208@gmail.com> <20140613174745.GA88614@sirius.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 20:23:44 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Caleb Thompson <caleb@calebthompson.io>
+X-From: git-owner@vger.kernel.org Fri Jun 13 20:52:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvW8e-0000Qi-0L
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 20:23:44 +0200
+	id 1WvWav-0000OT-Lw
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 20:52:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752956AbaFMSXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 14:23:40 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62800 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752056AbaFMSXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 14:23:39 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DBFEA1F5D7;
-	Fri, 13 Jun 2014 14:23:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eK1Cm1Jgxjy9kPuzN/bVfiwwddA=; b=TFiwQl
-	dCpKK1S+i2Y/3wYv/fu1QRFe7tIlQFJkvEm8egZnzIAUpQfJ6x9wC8M7G0NDn5ob
-	OCji5+C9RFhiItwM1pSvX9y7BCAmtQznxX4PHR6vnQtOlYDfBZ0vMUOpeFBjsSJw
-	ryBkabLBaKVc0C2dA3kPxskZ5GQpjf9frdx7o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eAUgwXKa+TCgsTw7cey+LG+76kNXm4Du
-	X5D5ahbGyi1mutu0Yf7wTAJ6EaX/D9hC4NjHI1niRW/mJkCJ7SKcU/C8EC396hL+
-	fqNzk70l07FazmYIb9uJpR9tK09ge/xd9I08lZS2PxRHMUBnDExoHDcvEy28asYr
-	W5bqqpSs/0s=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D293B1F5D6;
-	Fri, 13 Jun 2014 14:23:38 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7FBDE1F5C9;
-	Fri, 13 Jun 2014 14:23:34 -0400 (EDT)
-In-Reply-To: <20140613114615.GE14066@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 13 Jun 2014 07:46:15 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D47B2440-F327-11E3-849E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751262AbaFMSwx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2014 14:52:53 -0400
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:46684 "EHLO
+	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751082AbaFMSwx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 14:52:53 -0400
+Received: by mail-wg0-f43.google.com with SMTP id b13so3153273wgh.14
+        for <git@vger.kernel.org>; Fri, 13 Jun 2014 11:52:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=LCSfjml0up1tR+QSq6UjYqIIBoqapU3CGglTLOxpToo=;
+        b=pjQXHQZRjc7tIhJfyBtU3A1uLK9uzm5SWrG5JynKSMLRdZrTxqKsxDNQOGo1VFXlq/
+         4Jas/rfVK6CMo+MroZcBvJ3pSM0W+JosxGiZJ3vJZStfKLDxoV8aWleSj/Pfxhauxtmu
+         Uz0Xr5AXPOWJgrzZv8+cXzrCyCxfvGT+1+R/3N/odfn1HE26RqmTWfM+ZUew5JBhnipf
+         VBJLboNmuOzjanU6nzWhJJ+aOPIqo9njLseoYX1If02pL/XWmG1taMoucFyiHazctFEk
+         DZzZByzZEdFngG2YPSZYw/H2kUC6g8IC+6xKW3glAeNapZESOy8tM9ItA89a8S8DFJSq
+         rZsQ==
+X-Received: by 10.194.246.234 with SMTP id xz10mr6779413wjc.77.1402685571878;
+        Fri, 13 Jun 2014 11:52:51 -0700 (PDT)
+Received: from [192.168.130.241] ([158.75.2.130])
+        by mx.google.com with ESMTPSA id e6sm13558537eem.44.2014.06.13.11.52.49
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 13 Jun 2014 11:52:50 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20140613174745.GA88614@sirius.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251628>
 
-Jeff King <peff@peff.net> writes:
+W dniu 2014-06-13 19:47, Caleb Thompson pisze:
+> On Fri, Jun 13, 2014 at 07:16:53PM +0200, Jakub Nar=C4=99bski wrote:
+>> W dniu 2014-06-13 18:36, Caleb Thompson pisze:
 
->>  	(
->>  		for commit in initial second merge fourth-signed fifth-signed sixth-signed master
->>  		do
->> -			git show --pretty=short --show-signature $commit >actual &&
->> +			git show --pretty=short --show-signature $commit >actual || exit 1
->>  			grep "Good signature from" actual || exit 1
+>>>      t/t7507-commit-verbose.sh was using a global test_set_editor c=
+all to
+>>>      build its environment. The $EDITOR being used was not necessar=
+y for
+>>>      all tests, and was in fact circumvented using subshells in som=
+e
+>>>      cases.
+>>>
+>>>      To improve robustness against global state changes and avoid t=
+he
+>>>      use of subshells to temporarily switch the editor, set the edi=
+tor
+>>>      explicitly wherever it will be important.
+>>>
+>>>      Specifically, in tests that need to check for the presence of =
+a diff in the
+>>>      editor, make calls to set_test_editor to set $EDITOR to check-=
+for-diff
+>>>      rather than relying on that editor being configured globally. =
+This also
+>>>      helps readers grok the tests as the setup is closer to the ver=
+ification.
+>>
+>> This also allows to run only specified subset of tests
+>> with TEST_SKIP without requiring to remember which tests
+>> are setup tests and have to be not skipped, isn't it?
 >
-> Hrm. The original is:
->
->   X &&
->   Y || exit 1
->
-> Won't that still exit (i.e., it is already correct)? Doing:
->
->   for X in true false; do
->     for Y in true false; do
->       ($X && $Y || exit 1)
->       echo "$X/$Y: $?"
->     done
->   done
->
-> yields:
->
->   true/true: 0
->   true/false: 1
->   false/true: 1
->   false/false: 1
->
-> (and should still short-circuit Y, because we go from left-to-right).
->
-> I do not mind changing it to keep the style of each line consistent,
-> though. I would have written it as a series of "&&"-chains, with a
-> single exit at the end, but I think that is just a matter of preference.
+> I don't see any references to TEST_SKIP in the code. Do you mean
+> test_skip() from t/test_lib.sh? If so, it isn't clear to me what the =
+use
+> case would be for that, so I'd have to take your word.
 
-Yeah, series of && chain with a single exit at the end is good, and
-the subshell is there only to allow us to do that "exit at the end".
+I meant here GIT_SKIP_TESTS, but I see that test_set_editor was not in=20
+first test i.e. test_expect_success 'setup', so it wouldn't matter.
+Before and after both work correctly with GIT_SKIP_TESTS, before becaus=
+e
+of global setup.
+
+I'm sorry for the noise, then.
+
+--=20
+Jakub Nar=C4=99bski
