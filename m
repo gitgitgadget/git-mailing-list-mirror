@@ -1,57 +1,56 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v7 0/1] refs.c: SSE4.2 optimizations for check_refname_component
-Date: Fri, 13 Jun 2014 06:11:34 +0200
-Message-ID: <539A79F6.9020905@web.de>
-References: <1402012575-16546-1-git-send-email-dturner@twitter.com>		<xmqqfvjdenk5.fsf@gitster.dls.corp.google.com>	 <xmqqvbs9d6qn.fsf@gitster.dls.corp.google.com>	 <53969FDF.3050506@viscovery.net> <1402622313.5629.45.camel@stross>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	mhagger@alum.mit.edu
-To: David Turner <dturner@twopensource.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 06:11:52 2014
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: bug: git merge --no-commit loses track of file modes in the index
+Date: Fri, 13 Jun 2014 07:52:19 +0200
+Message-ID: <1ln65kj.xi5xs1rn4dkiM%lists@haller-berlin.de>
+References: <20140613013858.GA28485@kitenet.net>
+To: joey@kitenet.net (Joey Hess), git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jun 13 08:01:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvIqF-0000ug-LF
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 06:11:51 +0200
+	id 1WvKY3-0007eV-J6
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 08:01:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113AbaFMELo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 00:11:44 -0400
-Received: from mout.web.de ([212.227.17.11]:54007 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750855AbaFMELo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 00:11:44 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0MGiUP-1WzvOT0VqT-00DVLS; Fri, 13 Jun 2014 06:11:36
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <1402622313.5629.45.camel@stross>
-X-Provags-ID: V03:K0:Lio2j2wGCN/VxFA3iMT0q9EaaJgpYC6YIWyQ9CiCnl0xmYGtZHi
- O3hGjmxEBHo7YqfXH8vfhf+HVCJOCv8J1g9M1oLnQWwpRiw8o/HdLdDui8ZMriXYv5tq/wF
- CYklVGKeayq1hljjOke0dqU0GUbxiE3333BVlK85RtgCdqh6Q8kxSu9nMDR4/X7cyPYnLBn
- xbzZkK62hsxWjstih+mZA==
+	id S1751810AbaFMGBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 02:01:07 -0400
+Received: from server90.greatnet.de ([83.133.96.186]:37148 "EHLO
+	server90.greatnet.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751517AbaFMGBG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 02:01:06 -0400
+X-Greylist: delayed 523 seconds by postgrey-1.27 at vger.kernel.org; Fri, 13 Jun 2014 02:01:05 EDT
+Received: from [10.1.15.231] (nat1.ableton.net [217.110.199.117])
+	by server90.greatnet.de (Postfix) with ESMTPA id DAD7A3B12BD;
+	Fri, 13 Jun 2014 07:52:19 +0200 (CEST)
+In-Reply-To: <20140613013858.GA28485@kitenet.net>
+User-Agent: MacSOUP/2.8.4 (Mac OS X version 10.9.3 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251515>
 
-On 2014-06-13 03.18, David Turner wrote:
-[]
+Joey Hess <joey@kitenet.net> wrote:
+
+> If git merge --no-commit is used to merge a commit adding a 
+> file with an unusual mode -- specifically a symlink which has "mode" 120000,
+> it fails to stage the right mode into the index.
 > 
-> It is too old for my patch because it doesn't support ifunc (and I
-> suspect that no version of GCC for Windows supports ifunc).  But that
-> does not seem to be what is going on in your error message.  Instead,
-> when we #include <cpuid.h>, we get compat/cpuid.h rather than the
-> system's cpuid.h. When I rename compat/cpuid.h to something else 
-compat/git_cpuid.h ?
+> This only happens when core.symlinks=false. I noticed it on FAT, but
+> have managed to reproduce it on ext4.
 
-> I'm testing on a Windows 8 VM from modern.ie with msysgit's
-> "netinstaller" -- is that a reasonable test environment?
+This sounds familiar; I wonder if it is related to the problem that git
+can lose the executable bit when core.filemode is false.
 
-Many people are using Windows 7,
-and we shouldn't break for things for Windows XP.
+   <http://thread.gmane.org/gmane.comp.version-control.git/159716>
+
+I had planned to look into fixing this for years now, as we still run
+into it once in a while, and it's pretty annoying; but I still didn't
+get around to it yet.
+
+
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
