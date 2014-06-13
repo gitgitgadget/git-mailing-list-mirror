@@ -1,91 +1,87 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH] refs.c: fix delete_ref_loose
-Date: Fri, 13 Jun 2014 10:02:54 -0700
-Message-ID: <1402678974-21799-1-git-send-email-sahlberg@google.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 13 19:03:13 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] verify-commit: scriptable commit signature verification
+Date: Fri, 13 Jun 2014 10:06:10 -0700
+Message-ID: <xmqqbntw4u4d.fsf@gitster.dls.corp.google.com>
+References: <cover.1402063795.git.git@drmicha.warpmail.net>
+	<cc5fd1d554e0357dfb514e3f9ad100d98c16d4d5.1402063796.git.git@drmicha.warpmail.net>
+	<20140613080229.GJ7908@sigill.intra.peff.net>
+	<539ACA8A.90108@drmicha.warpmail.net>
+	<20140613110901.GB14066@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 13 19:06:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvUsd-00067f-21
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 19:03:07 +0200
+	id 1WvUvl-0000SX-Kh
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 19:06:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753942AbaFMRDA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 13:03:00 -0400
-Received: from mail-ig0-f202.google.com ([209.85.213.202]:58063 "EHLO
-	mail-ig0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753388AbaFMRC5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 13:02:57 -0400
-Received: by mail-ig0-f202.google.com with SMTP id r2so55506igi.5
-        for <git@vger.kernel.org>; Fri, 13 Jun 2014 10:02:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=6+OJwLobirqTiKx2md1O5jJ8Xuy6QwiFDybR7Ugn6VQ=;
-        b=nNZIlHTtxEn8yk4REAjAjH/GbvPOxlHObEHB5XoZarTpogXJAc/zpZVE7Po5JH8Q+O
-         J1N2W5WOC81HgiQc1doV5WMGa+dFfTrrFkpCgsKUxICdQ+d1mP0CtiIrTMjtWQQCDv1u
-         nWFxfoKhrPlzuj6kVLpjt0mQtg7XsI+v6qrwC42tFFS7g+HaDY3Kk+W93ZfExcRXRKqG
-         0KkPR2/o9xu2zl66xqrY4IDLtwecYSU+Bh5jDk+O1uSsiLhA4zWGT7SjwU/c6t6B2wGB
-         Ka0LUdkd4CGg6+1V+uFuuGd5MhKDlg03zJ9Uf0/sTL6ycu1RdVrg2Nf0xBJvIQSMP2Um
-         j2ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=6+OJwLobirqTiKx2md1O5jJ8Xuy6QwiFDybR7Ugn6VQ=;
-        b=CpdCXW4mcVY3dNrvoFFqu1IYhCEdBo4e6BzPJh8uTIqygP8hVry+s73+K1l18QPU6D
-         B+A2vUa3+lrufta5jyuAF4NbviNu5swtzYqxoxBrjojPY176TkNNU5RIxArj8CLWH+B9
-         UTgZ3uihCdFAaYL9QzrjdZ4yl2hVX4TRD/C6k4pibH/7NHgjXbwEefJk2y3YuN5WPMsw
-         cozHbuG4jHlASuz93Xh+S9xLhe/E2aEMbHkSdBSKHbqk8ol6kaVOHHTVLdiXEAkXbnIl
-         LbHAFUTBrez3/1cF8frTWMlt49uX3hJ8X8qiqdJq51KofvrJ2rzykDyaUkeRqviUXHvU
-         C/JA==
-X-Gm-Message-State: ALoCoQkHOeLTocVM1VyQeI4cYruhNj7tAwpuHFbeJZlVeiCvKxKwueOuuFSJw+usI9oVOKG0NSEe
-X-Received: by 10.182.91.79 with SMTP id cc15mr1634919obb.13.1402678977375;
-        Fri, 13 Jun 2014 10:02:57 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id o69si347039yhp.6.2014.06.13.10.02.57
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 13 Jun 2014 10:02:57 -0700 (PDT)
-Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 3C6C05A4A7F;
-	Fri, 13 Jun 2014 10:02:57 -0700 (PDT)
-Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id CB1B3E0BC7; Fri, 13 Jun 2014 10:02:56 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.415.g8cd8cf8
+	id S1753840AbaFMRGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 13:06:17 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54902 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753746AbaFMRGR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 13:06:17 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E0F91ED48;
+	Fri, 13 Jun 2014 13:06:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Rds3h0HPrp1KDIYCDQWecoS/02I=; b=ZGp5HY
+	BzOU87q9LkEF4LJY0TlGoYB+UOXWTf5U50/4DbC+qb1Lp7o7werYrGXd+cYoMkiz
+	vfcOEs54SNeo/U40m9ixfv2cROT+AyDCLC7sNib6aJe64Os5vvvjTt+eBjBBpscV
+	zMONMWl24eCMcBYa3QSo5zBAFrpTR2T4J8zJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UdR8oL65T/4zALUhcPGwqut14XLnEFts
+	TBa4uYsmoR25bCPXms4IDpNmEvddkJRhOpMNQ1Hq3CL1Iwggzj1I/9vTn0KDtFsT
+	70R0afj6wup4hcCz/SdP67JdMduskIelpVVzbmSVMYdl0Fkb5pufdEBg/QYqcLC7
+	h7pSiRPVFUk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 625F91ED46;
+	Fri, 13 Jun 2014 13:06:16 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 382BB1ED3F;
+	Fri, 13 Jun 2014 13:06:12 -0400 (EDT)
+In-Reply-To: <20140613110901.GB14066@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 13 Jun 2014 07:09:01 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 05755878-F31D-11E3-BBB3-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251614>
 
-Please use this to fixup the patch:
-refs.c: add an err argument to delete_ref_loose
+Jeff King <peff@peff.net> writes:
 
-With this fix and the two previous ones the ref-transactions support in
-origin/pu passes all tests.
+> I realize this isn't really your itch to scratch. It's just that when I
+> see a description like "verify a commit", I wonder what exactly "verify"
+> means.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- wrapper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I think that is an important point.  If a tool only verifies the
+signature of the commit when conceivably other aspect of it could
+also be verified but we cannot decide how or we decide we should not
+dictate one-way-fits-all, using a generic name "verify-commit" or
+"verify" without marking that it is currently only on the signature
+clearly somewhere might close the door to the future.
 
-diff --git a/wrapper.c b/wrapper.c
-index c9605cd..740e193 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -430,8 +430,8 @@ int xmkstemp_mode(char *template, int mode)
- static int warn_if_unremovable(const char *op, const char *file, int rc)
- {
- 	int err;
--	if (!rc || errno == ENOENT)
--		return 0;
-+	if (rc >= 0 || errno == ENOENT)
-+		return rc;
- 	err = errno;
- 	warning("unable to %s %s: %s", op, file, strerror(errno));
- 	errno = err;
--- 
-2.0.0.415.g8cd8cf8
+    git verify <object>::
+        Verify whatever we currently deem is appropriate for the
+        given type of object.
+
+    git verify --gpg-signature::
+	Verify the GPG signature for a signed tag, a signed commit,
+        or a merge with signed tags.
+
+    git verify --commit-author <committish>::
+	Verify the GPG signer matches the "author " header of the
+	commit.
+
+and more, perhaps?
