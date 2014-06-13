@@ -1,61 +1,68 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCHv2 4/6] t7510: exit for loop with test result
-Date: Fri, 13 Jun 2014 15:42:47 +0200
-Message-ID: <539AFFD7.6010908@viscovery.net>
-References: <cover.1402655838.git.git@drmicha.warpmail.net> <99893263f1819646a3a324b2fff0bcd0d56f3818.1402655839.git.git@drmicha.warpmail.net> <20140613114615.GE14066@sigill.intra.peff.net> <539AE8CA.50009@drmicha.warpmail.net> <539AED0C.8050107@drmicha.warpmail.net> <539AEF7E.1050402@drmicha.warpmail.net> <539AF49F.3010309@viscovery.net> <539AF748.3000901@drmicha.warpmail.net> <539AFAF3.9040707@viscovery.net> <539AFD3D.8090407@drmicha.warpmail.net>
+From: Phillip Susi <psusi@ubuntu.com>
+Subject: Re: git rebase --skip stuck in a loop
+Date: Fri, 13 Jun 2014 10:15:49 -0400
+Message-ID: <539B0795.70907@ubuntu.com>
+References: <5397551C.4030709@ubuntu.com> <539A151C.50307@ubuntu.com> <20140613010256.GD368384@vauxhall.crustytoothpaste.net> <539A50F2.40206@ubuntu.com> <20140613073446.GF7908@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 13 15:42:57 2014
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jun 13 16:15:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvRkv-0006ae-1U
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 15:42:57 +0200
+	id 1WvSGp-00042t-Jl
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 16:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218AbaFMNmx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 09:42:53 -0400
-Received: from so.liwest.at ([212.33.55.14]:46137 "EHLO so.liwest.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750901AbaFMNmw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 09:42:52 -0400
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by so.liwest.at with esmtpa (Exim 4.80.1)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1WvRkm-000735-7q; Fri, 13 Jun 2014 15:42:48 +0200
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id F19DF16613;
-	Fri, 13 Jun 2014 15:42:47 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.1.0
-In-Reply-To: <539AFD3D.8090407@drmicha.warpmail.net>
+	id S1751305AbaFMOPv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 10:15:51 -0400
+Received: from cdptpa-outbound-snat.email.rr.com ([107.14.166.229]:17590 "EHLO
+	cdptpa-oedge-vip.email.rr.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750901AbaFMOPv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 10:15:51 -0400
+Received: from [67.78.168.186] ([67.78.168.186:58987] helo=[10.1.1.200])
+	by cdptpa-oedge03 (envelope-from <psusi@ubuntu.com>)
+	(ecelerity 3.5.0.35861 r(Momo-dev:tip)) with ESMTP
+	id E4/9D-16046-5970B935; Fri, 13 Jun 2014 14:15:50 +0000
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140613073446.GF7908@sigill.intra.peff.net>
 X-Enigmail-Version: 1.6
-X-Spam-Score: -1.0 (-)
+X-RR-Connecting-IP: 107.14.168.142:25
+X-Cloudmark-Score: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251599>
 
-Am 6/13/2014 15:31, schrieb Michael J Gruber:
-> rewrite of the form
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+On 6/13/2014 3:34 AM, Jeff King wrote:
+> Thanks for saving the stuck state.
 > 
-> a &&
-> b &&
-> test_must_fail c &&
-> d || exit 1
-> 
-> hoping that will make things both readable (by avoiding !) and concise
-> (by avoiding repeated exits).
+> If it's possible to share the whole repo, it might be worth seeing
+> (then we can all just run "git rebase --continue" ourselves). If
+> it's too big or is confidential, just tarring up .git/rebase-apply
+> and making it available is probably a good first step.
 
-Thanks!
+It's the debian parted repo, so nothing confidential.  Here it is:
 
-Please note that we use 'test_must_fail' only for git invocations, but we
-do write '!' in front of system commands that we expect to fail, e.g.,
-'! grep'.
+https://drive.google.com/file/d/0ByOQJBpP4bDXXy13YlN0aE5Fcnc/edit?usp=sharing
 
--- Hannes
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.17 (MingW32)
+Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
+
+iQEcBAEBAgAGBQJTmweVAAoJEI5FoCIzSKrwI84H/2Di1d5MeQpcg/I02nF7sd/f
+gICGclFE8MPuTnKYfpYf4/SbSnB9+Znp+9OhQA0frYIblWHWEnUzwhINrDHvqApK
+hCsuNGb5iHgy8ohZVGqH8B4ew8x4Ru3pwy9VYV2Wc1Z33curDIohx6qi4LCIrlaB
+StzWgq3h8hV+3QB5zcD9MfAfdKkz1u5bIMlT9VYofYwctYERVk2DyaAj8eKBGyWo
+6dWYuZDoQfO3Hnd/uGqWbdHrPiDoSQqYPbHNWNOnX24w+IKDv2Xe9bcHro+9A+Jg
+PF+QXo4IS1E7CwevExe7gGKK3KdrD9SMixW7hHAbVVnpDIsvw485EL0xsZfmFJk=
+=ncor
+-----END PGP SIGNATURE-----
