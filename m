@@ -1,60 +1,72 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/7] test: turn USR_BIN_TIME into a lazy prerequisite
-Date: Fri, 13 Jun 2014 03:45:12 -0400
-Message-ID: <20140613074512.GG7908@sigill.intra.peff.net>
-References: <1402356175-7249-1-git-send-email-gitster@pobox.com>
- <1402356175-7249-3-git-send-email-gitster@pobox.com>
+Subject: Re: Why doesn't git-fetch obey -c "remote.origin.url" on the
+ command-line?
+Date: Fri, 13 Jun 2014 03:51:11 -0400
+Message-ID: <20140613075110.GH7908@sigill.intra.peff.net>
+References: <CACBZZX4MyaOKkCvTSKhZtyRMFvpBMiMGz2ix3OxMz_s=P-=p=w@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 13 09:45:45 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Alex Riesen <raa.lkml@gmail.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 09:51:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvMBD-0007jT-MJ
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 09:45:44 +0200
+	id 1WvMGd-00058p-QV
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 09:51:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886AbaFMHpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 03:45:16 -0400
-Received: from cloud.peff.net ([50.56.180.127]:43252 "HELO peff.net"
+	id S1752664AbaFMHvO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2014 03:51:14 -0400
+Received: from cloud.peff.net ([50.56.180.127]:43255 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752879AbaFMHpO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 03:45:14 -0400
-Received: (qmail 10227 invoked by uid 102); 13 Jun 2014 07:45:14 -0000
+	id S1751536AbaFMHvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 03:51:12 -0400
+Received: (qmail 10623 invoked by uid 102); 13 Jun 2014 07:51:13 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Jun 2014 02:45:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2014 03:45:12 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 13 Jun 2014 02:51:13 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 13 Jun 2014 03:51:11 -0400
 Content-Disposition: inline
-In-Reply-To: <1402356175-7249-3-git-send-email-gitster@pobox.com>
+In-Reply-To: <CACBZZX4MyaOKkCvTSKhZtyRMFvpBMiMGz2ix3OxMz_s=P-=p=w@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251529>
 
-On Mon, Jun 09, 2014 at 04:22:50PM -0700, Junio C Hamano wrote:
+On Fri, Jun 13, 2014 at 09:37:07AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> Two test scripts (t3302 and t3419) had copy & paste code to set
-> USR_BIN_TIME prerequisite.  Use the test_lazy_prereq helper to define
-> them in the common t/test-lib.sh.
+> On a git built from the master branch just now:
+>=20
+>  $ ./git config remote.origin.url
+> https://code.google.com/p/git-core/
+> $ ./git -c remote.origin.url=3Dgit://git.sourceforge.jp/gitroot/git-c=
+ore/git.git
+> config remote.origin.url
+> git://git.sourceforge.jp/gitroot/git-core/git.git
+> $ GIT_TRACE=3D1 ./git -c
+> remote.origin.url=3Dgit://git.sourceforge.jp/gitroot/git-core/git.git
+> fetch 2>&1 | head -n 2
+> trace: built-in: git 'fetch'
+> trace: run_command: 'git-remote-https' 'origin'
+> 'https://code.google.com/p/git-core/'
+>=20
+> I'd expect this to try to fetch from the remote.origin.url I specifie=
+d
+> on the command-line, but for some reason fetch doesn't pick that up.
+> Isn't this a bug?
 
-I have to wonder why we even have such a prereq in the first place.
+I think this is an alternate version of the report in [1].
 
-Many tests which use EXPENSIVE are sensible; we used to do something bad
-with large values, we fixed it, and want to be able to test the
-correctness of the fix. The use in t0021 looks like that.
-
-However, the tests in t3302 and t3419, which use both EXPENSIVE and
-USR_BIN_TIME, seem like they are really interested in performance
-testing. I think they probably should be in t/perf in the first place
-(the reason they are not is presumably because they predate it).
-
-Other than that, your series looks fine.
+The short answer is: remote.*.url is a multi-valued config option, and
+you can only append to (not override) such options with "git -c". Try
+using insteadOf.
 
 -Peff
 
-PS s/expesive/expensive/ in the commit message of 7/7
+[1] http://article.gmane.org/gmane.comp.version-control.git/250427
