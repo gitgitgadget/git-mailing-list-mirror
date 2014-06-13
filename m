@@ -1,87 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] blame: factor out get_next_line()
-Date: Fri, 13 Jun 2014 14:05:42 -0700
-Message-ID: <20140613210542.GK8557@google.com>
-References: <539B569F.1090800@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 0/1] receive-pack: optionally deny case clone refs
+Date: Fri, 13 Jun 2014 14:11:20 -0700
+Message-ID: <xmqqk38k1pmv.fsf@gitster.dls.corp.google.com>
+References: <1402525838-31975-1-git-send-email-dturner@twitter.com>
+	<xmqqa99h6hbh.fsf@gitster.dls.corp.google.com>
+	<CAL=YDW=xn0OG5vu=9fnP0nycKV0F9bDJLrkYiwmL9P9q79LJSw@mail.gmail.com>
+	<CAL=YDWnHubbC3eOUjHtbiddG0HiaNUW13=GRMXKfyxB+Yomq_g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	David Kastrup <dak@gnu.org>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Fri Jun 13 23:08:18 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: David Turner <dturner@twopensource.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Fri Jun 13 23:11:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvYht-0004WL-LN
-	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 23:08:17 +0200
+	id 1WvYl1-00074m-Ka
+	for gcvg-git-2@plane.gmane.org; Fri, 13 Jun 2014 23:11:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753190AbaFMVFq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2014 17:05:46 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:47499 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836AbaFMVFp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 17:05:45 -0400
-Received: by mail-pd0-f169.google.com with SMTP id w10so2503507pde.0
-        for <git@vger.kernel.org>; Fri, 13 Jun 2014 14:05:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=w0rT5dkf+w1y4XscfaI08VIMtoFmIrFOpAgnuLuWQR4=;
-        b=gmk3yZ0BDiWdhgzzou9O8a0c8I+uaL7t2jbrxfDVt+AWMrpFDd9GBzW0i2T978avBV
-         OPu7qpL3wLrOLtgPXc68otw13dfb6M+Z+Md/Xm6XvAefEYFHgHXw8ZT+T7Ixw+wzxdDp
-         ic0oTa6JmGzRlneyFc2OBgmQtiXrXm+ja4tRwwJxqWymdQcTdeirdERh1qarTCquzSp2
-         FPRMEZIKRoWSj2049+K3oIguNf3VSl+GeVQ4vRh8NG5Xe1pdOj6MEjsqu8ToZS1/oK34
-         ZbVT2rZ/1n2zKBvtOGJ1LwP2RruCKEUutI8n6wiQ03B82MI0OKirVKpBwLVGjU14LjWG
-         h4Jg==
-X-Received: by 10.68.95.225 with SMTP id dn1mr6243738pbb.126.1402693545443;
-        Fri, 13 Jun 2014 14:05:45 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
-        by mx.google.com with ESMTPSA id sv10sm26476836pab.32.2014.06.13.14.05.44
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 13 Jun 2014 14:05:44 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <539B569F.1090800@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752774AbaFMVL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 17:11:27 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51942 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751811AbaFMVL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 17:11:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 23314208BF;
+	Fri, 13 Jun 2014 17:11:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=lpbuRajw10urwS+FgxT0r0aC7+c=; b=wwt1v3
+	IkTcIJz17zO+vkgK8TSpp3fHsxujDbRZFJOs5iTNKaKeWpOynSEhdxksjyL1FRZk
+	K01jTjscrv0rLugL9RgnnePcYZf4UjMMsSnEiXfigVi9NlbFV++2lK4zwtrxwku8
+	P0b7FKDw+zhh5YtyTpd1LxA1Yi6ot6IfhC+B8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SDAu1nXH+vsFDC1HwzYC5LDFVfMCRTBE
+	oouCtSPx8msIse7SUtVosFqNfnb0q7ZMgnal+FwtLlAehtuBnjgzDWsXVnTjJCBN
+	ouulFJf5ZLA5vz2W/A2GMDgRR4ZbDUBQwFSHxlUxFXR4n9BwVzgzADbJRICr7R3Q
+	iZrxQzoxqsM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1882A208B8;
+	Fri, 13 Jun 2014 17:11:26 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E8D67208AF;
+	Fri, 13 Jun 2014 17:11:21 -0400 (EDT)
+In-Reply-To: <CAL=YDWnHubbC3eOUjHtbiddG0HiaNUW13=GRMXKfyxB+Yomq_g@mail.gmail.com>
+	(Ronnie Sahlberg's message of "Fri, 13 Jun 2014 12:05:09 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4524B758-F33F-11E3-91E6-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251636>
 
-Ren=E9 Scharfe wrote:
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  builtin/blame.c | 28 ++++++++++------------------
->  1 file changed, 10 insertions(+), 18 deletions(-)
+> ... The first
+> backend will be the current files based structure but I also will add
+> an optional backend using a TDB database.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+I am assuming that as part of the transactions work, accesses to
+reflogs will also have their own backends?
 
-[...]
-> +	for (p =3D get_next_line(buf, end); p; p =3D get_next_line(p, end))
-> +		num++;
+> You could then very easily create a new backend, say 'struct refs_be
+> refs_files_case_insensitive' where the methods would just convert any
+> refnames to/from a case insensitive encoding before invoking the
+> default methods from the files backend.
+> Perhaps something as simple as converting any upper case characters
+> to/from '%xx' representation when accessing the actual files.
 
-This could say something like
-
-	for (p =3D buf; p =3D get_next_line(buf, end); ) {
-		num++;
-
-or
-
-	p =3D buf;
-	while ((p =3D memchr(p, '\n', end - p))) {
-		p++;
-		num++;
-	}
-
-but what you have seems more readable.
-
-Thanks,
-Jonathan
+Hmm... that would work only when the new implementation of Git is
+the only one that accesses the repository.  Other implementations
+(e.g. Eclipse via egit, Gerrit via jgit, etc.)  peeking into the
+same repository wouldn't know what to do with these encoded
+refnames.
