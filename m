@@ -1,144 +1,110 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH 7/6] Win32: reliably detect console pipe handles
-Date: Sat, 14 Jun 2014 00:09:06 +0200
-Message-ID: <539B7682.7070308@gmail.com>
-References: <20140606183935.GA4197@camelia.ucw.cz> <1402127845-4862-1-git-send-email-kasal@ucw.cz> <1402127845-4862-6-git-send-email-kasal@ucw.cz> <539A95F1.9030900@kdbg.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Our merge bases sometimes suck
+Date: Sat, 14 Jun 2014 00:14:42 +0200
+Message-ID: <539B77D2.3020307@alum.mit.edu>
+References: <539A25BF.4060501@alum.mit.edu> <539AC690.6000906@drmicha.warpmail.net> <539B1E59.1030604@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>, Karsten Blees <blees@dcon.de>
-To: Johannes Sixt <j6t@kdbg.org>, Stepan Kasal <kasal@ucw.cz>
-X-From: git-owner@vger.kernel.org Sat Jun 14 00:09:12 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 14 00:14:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WvZep-0001NU-RU
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jun 2014 00:09:12 +0200
+	id 1WvZkH-0005jN-L3
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jun 2014 00:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753924AbaFMWJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 18:09:07 -0400
-Received: from mail-we0-f181.google.com ([74.125.82.181]:44763 "EHLO
-	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753825AbaFMWJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 18:09:06 -0400
-Received: by mail-we0-f181.google.com with SMTP id q59so3431195wes.12
-        for <git@vger.kernel.org>; Fri, 13 Jun 2014 15:09:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=IBOFxOdEmpzjsWuVSrcrdCe4/SSTj9OQnHTswmgaiMw=;
-        b=ZG2N0WGnbw/rP05LgobnUQpWWwcKRUfoJ3lPmMyg9IFazxxkYfhx8HoyaV9RbtCzwx
-         zM7l1gBxelQzo0W6zR9x07hZTBdM1Zm9iZ5s3l/2SUI9YLoLqZH0Mh2LEr8x91kvjq4f
-         3k6c6KzDw+uWgQb3IK3OwyVDgli4N0fBOBMUcC396iIeucuT9B14hUj0+2GjhRyowTIL
-         N9U5TCiNKpKRu4eyUYTbCm9nA289uM2LZ0k12Q0YGeNwSJlcK/1Wh3YlnORInyo/h6Rc
-         xxEcSG3y1EvWKFQiQfjNsQfwkKRPM7bLZCkPZM4+zLxHEbWIxPo1YphE26c/eiBzMued
-         IAaQ==
-X-Received: by 10.180.72.201 with SMTP id f9mr8244390wiv.41.1402697344901;
-        Fri, 13 Jun 2014 15:09:04 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id v7sm14547524eew.37.2014.06.13.15.09.03
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 13 Jun 2014 15:09:04 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <539A95F1.9030900@kdbg.org>
+	id S1753697AbaFMWOp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2014 18:14:45 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:58559 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751741AbaFMWOo (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 18:14:44 -0400
+X-AuditID: 12074413-f79bc6d000000b9e-a5-539b77d45f36
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id BD.85.02974.4D77B935; Fri, 13 Jun 2014 18:14:44 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB39AE.dip0.t-ipconnect.de [93.219.57.174])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5DMEgTr000683
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 13 Jun 2014 18:14:43 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
+In-Reply-To: <539B1E59.1030604@gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprNKsWRmVeSWpSXmKPExsUixO6iqHulfHawwbrVnBZrXpxmtui60s1k
+	seLqHGYHZo/WyZOYPXbOusvu8XmTXABzFLdNUmJJWXBmep6+XQJ3xuSJv5kKFvJXrFp1k6mB
+	cSNPFyMnh4SAicTv8zdYIGwxiQv31rN1MXJxCAlcZpQ40PcRyjnPJLHx9nYmkCpeAW2J9d+P
+	sIPYLAKqEq1/7zKC2GwCuhKLeprBakQFgiRmf57HDlEvKHFy5hMWkEEiAgsZJba8nsUMkhAG
+	GrTgxV+wBiGBAolfZ3qA4hwcnAKaEp090iCmhIC4RE9jEIjJLKAusX6eEEgxs4C8RPPW2cwT
+	GAVmIVkwC6FqFpKqBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0zfVyM0v0UlNKNzFCAld4
+	B+Ouk3KHGAU4GJV4eBkUZgcLsSaWFVfmHmKU5GBSEuWdmAsU4kvKT6nMSCzOiC8qzUktPsQo
+	wcGsJML7JBsox5uSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4GUHRqiQ
+	YFFqempFWmZOCUKaiYMTZDiXlEhxal5KalFiaUlGPChK44uBcQqS4gHae6IMZG9xQWIuUBSi
+	9RSjLseJJyfbmIRY8vLzUqXEeQtAigRAijJK8+BWwNLUK0ZxoI+FeVlALuEBpji4Sa+AljAB
+	Lbm5eBbIkpJEhJRUAyOfyqy0y6kh722zFm79I3d20uXV1yQ2rVDsC+6sC817WxsoHsQnJWuf
+	FvRs3rTt4mXBJ1m38n1vZ/tz4dtZg09WdhYyMiLXDu2TalnLbWpz1HnnzdVl+wPu 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251644>
 
-As of "Win32: Thread-safe windows console output", child processes may
-print to the console even if stdout has been redirected to a file. E.g.:
+On 06/13/2014 05:52 PM, Jakub Nar=C4=99bski wrote:
+> I don't know if it has been fixed, but there is a difference
+> between "git diff A...B" when A and B have one merge base, and
+> "git diff A...B" when there are more than one merge base.
+>=20
+> When there is one merge base, "git diff A...B" returns simple
+> unified diff equivalent to "git diff $(git merge-base A B) B".
+> It is unsymmetric.
+>=20
+> But where there are more than one merge base, by design or by
+> accident for "git diff A...B" git 1.9.2 / 1.7.4 returns
+>=20
+>    git diff --cc $(git merge-base --all A B) A B
+>=20
+> which is *symmetric*, and is combined not unified diff.
 
- git config tar.cat.command "cat"
- git archive -o test.cat HEAD
+Thanks for the information.  This doesn't seem to be the case in git
+2.0.0.  For example, commit 8c0db2f519 in the git project is a merge
+with two merge bases:
 
-Detecting whether stdout / stderr point to our console pipe is currently
-based on the assumption that OS HANDLE values are never reused. This is
-apparently not true if stdout / stderr is replaced via dup2() (as in
-builtin/archive.c:17).
+$ git --version
+git version 2.0.0
+$ c=3D8c0db2f5193153ea8a51bb45b0512c5a3889023b
+$ git merge-base --all $c^1 $c^2
+a15f43312f6962959e8daa33df0cf5357852a4b8
+9a0e6731c632c841cd2de9dec0b9091b2f10c6fd
+$ git diff $c^1...$c^2 | head -20
+diff --git a/Documentation/git-rev-parse.txt
+b/Documentation/git-rev-parse.txt
+index d638bfc..29b5789 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -77,6 +77,14 @@ OPTIONS
+ 	path of the top-level directory relative to the current
+ 	directory (typically a sequence of "../", or an empty string).
 
-Instead of comparing handle values, check if the file descriptor isatty()
-backed by a pipe OS handle. This is only possible by swapping the handles
-in MSVCRT's internal data structures, as we do in winansi_init().
++--git-dir::
++	Show `$GIT_DIR` if defined else show the path to the .git directory.
++
++--short, --short=3Dnumber::
++	Instead of outputting the full SHA1 values of object names try to
++	abbriviate them to a shorter unique name. When no length is specified
++	7 is used. The minimum length is 4.
++
+ --since=3Ddatestring, --after=3Ddatestring::
+ 	Parses the date string, and outputs corresponding
+ 	--max-age=3D parameter for git-rev-list command.
+diff --git a/git-archimport.perl b/git-archimport.perl
 
-Reported-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
+Michael
 
-Thanks for reporting this.
-
-The fix applies on top of [6/6] Win32: fix broken pipe detection (should
-probably not be squashed, as its obviously not as well tested as the
-rest of the series).
-
-Cheers,
-Karsten
-
-
- compat/winansi.c | 25 +++++++------------------
- 1 file changed, 7 insertions(+), 18 deletions(-)
-
-diff --git a/compat/winansi.c b/compat/winansi.c
-index f96d5c2..efc5bb3 100644
---- a/compat/winansi.c
-+++ b/compat/winansi.c
-@@ -20,7 +20,6 @@ static WORD attr;
- static int negative;
- static int non_ascii_used = 0;
- static HANDLE hthread, hread, hwrite;
--static HANDLE hwrite1 = INVALID_HANDLE_VALUE, hwrite2 = INVALID_HANDLE_VALUE;
- static HANDLE hconsole1, hconsole2;
- 
- #ifdef __MINGW32__
-@@ -435,10 +434,6 @@ static void winansi_exit(void)
- 	WaitForSingleObject(hthread, INFINITE);
- 
- 	/* cleanup handles... */
--	if (hwrite1 != INVALID_HANDLE_VALUE)
--		CloseHandle(hwrite1);
--	if (hwrite2 != INVALID_HANDLE_VALUE)
--		CloseHandle(hwrite2);
- 	CloseHandle(hwrite);
- 	CloseHandle(hthread);
- }
-@@ -565,14 +560,9 @@ void winansi_init(void)
- 
- 	/* redirect stdout / stderr to the pipe */
- 	if (con1)
--		hconsole1 = swap_osfhnd(1, hwrite1 = duplicate_handle(hwrite));
-+		hconsole1 = swap_osfhnd(1, duplicate_handle(hwrite));
- 	if (con2)
--		hconsole2 = swap_osfhnd(2, hwrite2 = duplicate_handle(hwrite));
--}
--
--static int is_same_handle(HANDLE hnd, int fd)
--{
--	return hnd != INVALID_HANDLE_VALUE && hnd == (HANDLE) _get_osfhandle(fd);
-+		hconsole2 = swap_osfhnd(2, duplicate_handle(hwrite));
- }
- 
- /*
-@@ -581,10 +571,9 @@ static int is_same_handle(HANDLE hnd, int fd)
-  */
- HANDLE winansi_get_osfhandle(int fd)
- {
--	if (fd == 1 && is_same_handle(hwrite1, 1))
--		return hconsole1;
--	else if (fd == 2 && is_same_handle(hwrite2, 2))
--		return hconsole2;
--	else
--		return (HANDLE) _get_osfhandle(fd);
-+	HANDLE hnd = (HANDLE) _get_osfhandle(fd);
-+	if ((fd == 1 || fd == 2) && isatty(fd)
-+	    && GetFileType(hnd) == FILE_TYPE_PIPE)
-+		return (fd == 1) ? hconsole1 : hconsole2;
-+	return hnd;
- }
--- 
-1.9.3.10.ge3256ea
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
