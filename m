@@ -1,82 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Our merge bases sometimes suck
-Date: Fri, 13 Jun 2014 15:35:18 -0700
-Message-ID: <xmqqbntw1lqx.fsf@gitster.dls.corp.google.com>
-References: <539A25BF.4060501@alum.mit.edu>
-	<539AC690.6000906@drmicha.warpmail.net> <539B1E59.1030604@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [PATCH 2/5] implement submodule config cache for lookup of
+ submodule names
+Date: Sat, 14 Jun 2014 00:37:12 +0200
+Message-ID: <20140613223701.GA3799@sandbox-ub>
+References: <20140605060425.GA23874@sandbox-ub>
+ <20140605060750.GC23874@sandbox-ub>
+ <xmqq38f96b9f.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	git discussion list <git@vger.kernel.org>
-To: Jakub =?utf-8?Q?Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 14 00:35:34 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 14 00:38:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wva4L-0004zG-HO
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jun 2014 00:35:33 +0200
+	id 1Wva6x-000748-F0
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jun 2014 00:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365AbaFMWfZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Jun 2014 18:35:25 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55616 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751262AbaFMWfZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Jun 2014 18:35:25 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4B3211FFE2;
-	Fri, 13 Jun 2014 18:35:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=dc1JEeoFpo14
-	8/zzrBE705UCWK4=; b=UKyTMSp6l1jju26UTcdXIqcJoNlA0zgp9gc5vtD0VxXR
-	jR8+lJCRXoY4E7447m9kWz8dfxJFN/YsQiNPDbOehp5C20WuBpGWkbTrrDUILGVz
-	5DzAdYdwtaXJYbcg7dojivU0XUBeFIQxtjkV1DuEzCjbBPPNuh9iQwvsXHKiFLs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JVCRDd
-	XTDH9hdD7VV/Hy61Kt21zKWPg+tff7Fju8eMMYNNbA2t1wDw8Yxt0ZVHCiOUnJ2Q
-	POcEvRTPQYOcvCasvrH2h3ehemjCQGhVNAzzKtbpqWZSzLpqxZfzgFziT8KJ8L31
-	rFsAkHmrIxTJeIvZGqO1PEeFv34vir+hWq2Qw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 427781FFE1;
-	Fri, 13 Jun 2014 18:35:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 47FB41FFDD;
-	Fri, 13 Jun 2014 18:35:20 -0400 (EDT)
-In-Reply-To: <539B1E59.1030604@gmail.com> ("Jakub =?utf-8?Q?Nar=C4=99bski?=
- =?utf-8?Q?=22's?= message of "Fri,
-	13 Jun 2014 17:52:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0038954A-F34B-11E3-A4FE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752154AbaFMWiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Jun 2014 18:38:11 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.41]:48323 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751357AbaFMWiK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Jun 2014 18:38:10 -0400
+Received: from [77.21.74.130] (helo=sandbox-ub)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1Wva61-00076s-3X; Sat, 14 Jun 2014 00:37:17 +0200
+Content-Disposition: inline
+In-Reply-To: <xmqq38f96b9f.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251647>
 
-Jakub Nar=C4=99bski <jnareb@gmail.com> writes:
+On Thu, Jun 12, 2014 at 02:58:20PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> > ...
+> > +static int is_cache_init = 0;
+> 
+> Please don't initialise variables in the .bss to zero by hand.
 
-> I don't know if it has been fixed, but there is a difference
-> between "git diff A...B" when A and B have one merge base, and
-> "git diff A...B" when there are more than one merge base.
->
-> When there is one merge base, "git diff A...B" returns simple
-> unified diff equivalent to "git diff $(git merge-base A B) B".
-> It is unsymmetric.
->
-> But where there are more than one merge base, by design or by
-> accident for "git diff A...B" git 1.9.2 / 1.7.4 returns
->
->    git diff --cc $(git merge-base --all A B) A B
->
-> which is *symmetric*, and is combined not unified diff.
+Ok will remove that.
 
-Hmph, the relevant code has not changed very much since c008c0ff
-(diff A...B: give one possible diff when there are more than one
-merge-base, 2010-07-12) which has been with us since v1.7.2.
+> > + ...
+> > +	warning("%s:.gitmodules, multiple configurations found for "
+> > +			"submodule.%s.%s. Skipping second one!",
+> > +			commit_string, name, option);
+> > +}
+> > + ...
+> > +		if (strcmp(value, "untracked") && strcmp(value, "dirty") &&
+> > +		    strcmp(value, "all") && strcmp(value, "none")) {
+> > +			warning("Invalid parameter \"%s\" for config option "
+> > +					"\"submodule.%s.ignore\"", value, var);
+> > +			goto release_return;
+> > +		}
+> 
+> These two look inconsistent in different ways.  I think we typically
+> quote the names like so:
+> 
+> 	warning("I have trouble with variable '%s' somehow", var);
+
+Ok will change the quotation for the variable and parameter names.
+
+Here is the fixup[1] I will queue in my branch.
+
+Cheers Heiko
+
+[1] ---8<----
+Subject: [PATCH] fixup! implement submodule config cache for lookup of
+ submodule names
+
+---
+ submodule-config.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/submodule-config.c b/submodule-config.c
+index 437fbdb..f330ccc 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -26,7 +26,7 @@ struct submodule_entry {
+ };
+ 
+ static struct submodule_cache cache;
+-static int is_cache_init = 0;
++static int is_cache_init;
+ 
+ static int config_path_cmp(const struct submodule_entry *a,
+ 			   const struct submodule_entry *b,
+@@ -230,7 +230,7 @@ static void warn_multiple_config(const unsigned char *commit_sha1,
+ 	if (commit_sha1)
+ 		commit_string = sha1_to_hex(commit_sha1);
+ 	warning("%s:.gitmodules, multiple configurations found for "
+-			"submodule.%s.%s. Skipping second one!",
++			"'submodule.%s.%s'. Skipping second one!",
+ 			commit_string, name, option);
+ }
+ 
+@@ -298,8 +298,8 @@ static int parse_config(const char *var, const char *value, void *data)
+ 		}
+ 		if (strcmp(value, "untracked") && strcmp(value, "dirty") &&
+ 		    strcmp(value, "all") && strcmp(value, "none")) {
+-			warning("Invalid parameter \"%s\" for config option "
+-					"\"submodule.%s.ignore\"", value, var);
++			warning("Invalid parameter '%s' for config option "
++					"'submodule.%s.ignore'", value, var);
+ 			goto release_return;
+ 		}
+ 
+-- 
+2.0.0
