@@ -1,90 +1,130 @@
-From: Pasha Bolokhov <pasha.bolokhov@gmail.com>
-Subject: Re: [PATCH alt-v3] Improve function dir.c:trim_trailing_spaces()
-Date: Fri, 13 Jun 2014 19:45:41 -0700
-Message-ID: <CAKpPgvcwV_Zbd1W0gAGcy_A-bE6XZagXD-u4aMwOqhXMktUgWQ@mail.gmail.com>
-References: <1401748616-14632-1-git-send-email-pasha.bolokhov@gmail.com>
- <xmqqoaxw1ru4.fsf@gitster.dls.corp.google.com> <20140613232537.GB23078@sigill>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v5 0/4] commit: Add commit.verbose configuration
+Date: Fri, 13 Jun 2014 21:14:52 -0700
+Message-ID: <20140614041452.GA1375@hudson.localdomain>
+References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
+ <20140612203010.GA17761@hudson.localdomain>
+ <20140613164910.GA87252@sirius.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Duy Nguyen <pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jun 14 04:46:12 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Caleb Thompson <caleb@calebthompson.io>
+X-From: git-owner@vger.kernel.org Sat Jun 14 06:16:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wvdyr-0004Li-L0
-	for gcvg-git-2@plane.gmane.org; Sat, 14 Jun 2014 04:46:09 +0200
+	id 1WvfO1-0007zD-Q7
+	for gcvg-git-2@plane.gmane.org; Sat, 14 Jun 2014 06:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754390AbaFNCqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Jun 2014 22:46:04 -0400
-Received: from mail-oa0-f51.google.com ([209.85.219.51]:58162 "EHLO
-	mail-oa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754379AbaFNCqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Jun 2014 22:46:03 -0400
-Received: by mail-oa0-f51.google.com with SMTP id j17so3710753oag.24
-        for <git@vger.kernel.org>; Fri, 13 Jun 2014 19:46:02 -0700 (PDT)
+	id S1750880AbaFNEO5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Jun 2014 00:14:57 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:65384 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772AbaFNEO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Jun 2014 00:14:56 -0400
+Received: by mail-pd0-f176.google.com with SMTP id p10so2712134pdj.21
+        for <git@vger.kernel.org>; Fri, 13 Jun 2014 21:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=XprYGiWidiBMWxFfjv5Fizzoj8smydAqAEZaz2gTc0g=;
-        b=greqHNkDT2zfFEiK74eoSGmHJ9PV8tzAfsDOoImeKSgJ4Y4jm5FHf8X+TZT0vmfPC/
-         JFaLP4dOKdrVLB3xW7fSF6VKVkaQKLKgPURUT+X8QDJFiIWQQXZR3ew6YIGYZAmqEGva
-         fLIB//vTowNHATUHvyReLf+IPYHRSK4ERUlPP5Kx0deGYkVwS267u99aBT7h4SiP66BR
-         erJ+RJBJ8VZqzxhCmbL5TWGa3Zi9H9pLq0fpVxN8+awzXvXZVRfabqU5woE1ciM+dmsC
-         97i+DOYTT2z45QtzJNzbo96DQq3MaWyzNTSWuiaFWSMk8LX2G4oXMrK61um9kUtohVwY
-         zt9A==
-X-Received: by 10.60.74.67 with SMTP id r3mr6691938oev.9.1402713962479; Fri,
- 13 Jun 2014 19:46:02 -0700 (PDT)
-Received: by 10.60.16.8 with HTTP; Fri, 13 Jun 2014 19:45:41 -0700 (PDT)
-In-Reply-To: <20140613232537.GB23078@sigill>
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=FBVz3H6yIzdMcDcSemPRMFiLhUiRZC5WCsklszLt3To=;
+        b=NzqyXfxjF0TAEkPARFzKSYOzNjxasmV0MY64ne7pFoAJHZdMXDH5h9AwJpVVt654WN
+         9F1MYxLzMUhsR65G2eyGZDtnojR4zF1vSPdIuMr/bP+psUv07kM/Mnf1hSqvkw6vPnOZ
+         Q9DvES1X1rQgiMDfphv2uGGGhl/OuXjx2qn2oZwr/jesWEF86plRoLrCyePg9PcYMo9A
+         3To3ajexPJJz60PjVIhFuYVGFrCZg/8CRcNuRn9wui0zrG3zX9ZalaRlg/lgJjFjjV/+
+         0kJMSbm955Xqem0hJnl2xthfX8btdTcFUJ75/jqSIBonwjHgb5TPEakixCmL6fYp+9N4
+         9zuA==
+X-Received: by 10.67.13.134 with SMTP id ey6mr8214076pad.44.1402719295599;
+        Fri, 13 Jun 2014 21:14:55 -0700 (PDT)
+Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id xs2sm30927943pab.0.2014.06.13.21.14.53
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 13 Jun 2014 21:14:54 -0700 (PDT)
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Caleb Thompson <caleb@calebthompson.io>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20140613164910.GA87252@sirius.local>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251655>
 
-Thanks for the fix. I knew these backslashes could cause trouble. No
-doubt the fixed version reads better than a hundred backslashes
+On Fri, Jun 13, 2014 at 11:49:10AM -0500, Caleb Thompson wrote:
+> On Thu, Jun 12, 2014 at 01:30:10PM -0700, Jeremiah Mahler wrote:
+> > On Thu, Jun 12, 2014 at 02:38:58PM -0500, Caleb Thompson wrote:
+> > > This patch allows people to set commit.verbose to implicitly send
+> > > --verbose to git-commit.
+> > >
+> > > This version incorporates changes suggested by Eric Sunshine, Duy
+> > > Nguyen, and Jeremiah Mahler.
+> > >
+> > > It introduces several cleanup patches to t/t7505-commit-verbose.s=
+h to
+> > > bring it closer to the current state of the tests as Eric has exp=
+lained
+> > > them to me, then adds the verbose config and --no-verbose flag.
+> > >
+> > > Since the last version of this patch
+> > > (http://marc.info/?l=3Dgit&m=3D140251155830422&w=3D2), I've made =
+the following
+> > > changes:
+> > >
+> > > * Revert change to flags, as --no-verbose already existed and wor=
+ked as
+> > >   expected with the commit.verbose configuration. Thanks to  Ren=C3=
+=A9 Scharfe.
+> > > * Fix <<-'EOS' style for check-for-no-diff script. Thanks to Mike=
+ Burns.
+> > >
+> > > Additionally, this set of patches was generated by format-patch, =
+so it
+> > > should work correctly with git-am.
+> > >
+> > > ------------------------------------------------------
+> > >
+> > > Caleb Thompson (4):
+> > >   commit test: Use test_config instead of git-config
+> > >   commit test: Use write_script
+> > >   commit test: test_set_editor in each test
+> > >   commit: add commit.verbose configuration
+> > >
+> > >  Documentation/config.txt               |  5 +++
+> > >  Documentation/git-commit.txt           |  8 ++++-
+> > >  builtin/commit.c                       |  4 +++
+> > >  contrib/completion/git-completion.bash |  1 +
+> > >  t/t7507-commit-verbose.sh              | 64 ++++++++++++++++++++=
++++++---------
+> > >  5 files changed, 64 insertions(+), 18 deletions(-)
+> > >
+> > > --
+> > > 2.0.0
+> > >
+> >
+> > The patches look good, they apply clean ('git am'), and all tests p=
+ass.
+> >
+> > Reviewed-by: Jeremiah Mahler <jmmahler@gmail.com>
+>=20
+> So that I'm clear on the etiquitte, is it appropriate for me to add t=
+his
+> Reviewed-by line to the commit messages at this point, provided that =
+the
+> patches don't change?
+>=20
 
+I am not sure of the etiquette either.  But personally, since I hardly
+contributed anything, I don't think it is necessary to put my tag in
+your patches.
 
-On Fri, Jun 13, 2014 at 4:25 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jun 13, 2014 at 01:23:47PM -0700, Junio C Hamano wrote:
->
->> This passes with your shell set to dash but fails with bash.
->>
->> Let's fix it up like so.
->
-> Thanks, I should have been more suspicious of the combination of backslashes
-> and echo during review. :)
->
->> diff --git a/t/t0008-ignores.sh b/t/t0008-ignores.sh
->> index 5ef5ad3..39e55a1 100755
->> --- a/t/t0008-ignores.sh
->> +++ b/t/t0008-ignores.sh
->> @@ -816,12 +816,14 @@ test_expect_success NOT_MINGW,NOT_CYGWIN 'correct handling of backslashes' '
->>       >"whitespace/trailing 5 \\ \\ " &&
->>       >"whitespace/trailing 6 \\a\\" &&
->>       >whitespace/untracked &&
->> -     echo "whitespace/trailing 1 \\    " >ignore  &&
->> -     echo "whitespace/trailing 2 \\\\\\\\\\\\\\\\" >>ignore &&
->> -     echo "whitespace/trailing 3 \\\\\\\\\\\\\\\\ " >>ignore &&
->> -     echo "whitespace/trailing 4   \\\\\\\\\\\\    " >>ignore &&
->> -     echo "whitespace/trailing 5 \\\\\\\\ \\\\\\\\\\\\   " >>ignore &&
->> -     echo "whitespace/trailing 6 \\\\\\\\a\\\\\\\\" >>ignore &&
->> +     sed -e "s/Z$//" >ignore <<-\EOF &&
->> +     whitespace/trailing 1 \    Z
->> +     whitespace/trailing 2 \\\\Z
->> +     whitespace/trailing 3 \\\\ Z
->> +     whitespace/trailing 4   \\\    Z
->> +     whitespace/trailing 5 \\ \\\   Z
->> +     whitespace/trailing 6 \\a\\Z
->> +     EOF
->
-> The end result is much more readable, too, IMHO.
->
-> -Peff
+--=20
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
