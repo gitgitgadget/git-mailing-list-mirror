@@ -1,125 +1,91 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH RFC] git-am: support any number of signatures
-Date: Sun, 15 Jun 2014 13:27:36 +0300
-Message-ID: <20140615102736.GA11798@redhat.com>
-References: <1402589505-27632-1-git-send-email-mst@redhat.com>
- <xmqqioo654mg.fsf@gitster.dls.corp.google.com>
- <20140613080036.GA2117@redhat.com>
- <xmqqy4x03ecm.fsf@gitster.dls.corp.google.com>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: Is there a reason the credential cache server cowardly refuses to delete/reuse the socket file?
+Date: Sun, 15 Jun 2014 09:48:24 -0400
+Organization: PD Inc
+Message-ID: <1EFC4B213D584B1EBAE78E6882705B6D@black>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 15 12:30:17 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 15 15:48:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ww7hY-0003Hm-P9
-	for gcvg-git-2@plane.gmane.org; Sun, 15 Jun 2014 12:30:17 +0200
+	id 1WwAnR-0007ou-Ci
+	for gcvg-git-2@plane.gmane.org; Sun, 15 Jun 2014 15:48:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751085AbaFOK1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2014 06:27:12 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:50438 "EHLO mx1.redhat.com"
+	id S1751067AbaFONs0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2014 09:48:26 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:47076 "EHLO mail.pdinc.us"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750999AbaFOK1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Jun 2014 06:27:11 -0400
-Received: from int-mx13.intmail.prod.int.phx2.redhat.com (int-mx13.intmail.prod.int.phx2.redhat.com [10.5.11.26])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s5FAR88U012599
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sun, 15 Jun 2014 06:27:08 -0400
-Received: from redhat.com (ovpn-116-16.ams2.redhat.com [10.36.116.16])
-	by int-mx13.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s5FAR6d9012567;
-	Sun, 15 Jun 2014 06:27:07 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqy4x03ecm.fsf@gitster.dls.corp.google.com>
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.26
+	id S1751014AbaFONs0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Jun 2014 09:48:26 -0400
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s5FDmOgJ004850
+	for <git@vger.kernel.org>; Sun, 15 Jun 2014 09:48:24 -0400
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+Thread-Index: Ac+IoHowEJrflLwqQHypZYhosO2u/Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251674>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251675>
 
-On Fri, Jun 13, 2014 at 10:32:09AM -0700, Junio C Hamano wrote:
-> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> 
-> > On Thu, Jun 12, 2014 at 12:07:03PM -0700, Junio C Hamano wrote:
-> >> "Michael S. Tsirkin" <mst@redhat.com> writes:
-> >> ...
-> >> > 1.  new parameter am.signoff can be used any number
-> >> > 	of times:
-> >> >
-> >> > [am]
-> >> > 	signoff = "Reviewed-by: Michael S. Tsirkin <mst@redhat.com>"
-> >> > 	signoff = "Signed-off-by: Michael S. Tsirkin <mst@redhat.com>"
-> >> >
-> >> > 	if set all signatures are picked up when git am -s is used.
-> >> 
-> >> How does this interact with the logic to avoid appending the same
-> >> Signed-off-by: line as the last one the incoming message already
-> >> has?
-> >
-> > Not handled if you have multiple signatures.
-> > That will have to be fixed.
-> > Do we only care about the last line?
-> >
-> > Signed-off-by: A
-> > Signed-off-by: B
-> >
-> > do we want to add
-> >
-> > Signed-off-by: A
-> >
-> > or would it be better to replace with
-> > Signed-off-by: B
-> > Signed-off-by: A
-> >
-> > ?
-> >
-> > Current git am will add A twice, I wonder if this is
-> > a feature or a bug.
-> 
-> This is very much deliberate.
-> 
-> Appending A after existing A and B is meant to record that the patch
-> originated from A, passed thru B possibly with changes by B, came
-> back to A who wants to assert that the result is still under DCO.
-> 
-> The only case we can safely omit appending A's sign-off is when the
-> last one in the chain is by A.  Imagine that you had a patch signed
-> off by B, which A may have tweaked and forwarded under DCO with A's
-> sign-off.  Such a patch would have sign-off chain B-A.
-> 
-> Now A makes further changes to the patch and says "the further
-> change is also something I am authorized to release as open source"
-> with the "-s" option or some other way.  It would not change that A
-> can contribute under DCO if we did not add an extra A after existing
-> B-A sign-off chain in that case.
+Whenever my computer crashes, I am left with a socket file. On next git
+invocation it tries to conenct to the file, but the daemon is not running so it
+barfs until I delete the file.
 
-OK imagine we have signatures:
-A
-B
+jpyeron@black /projects/dcarr/saar
+$ git push
+fatal: unable to connect to cache daemon: No error
+Username for xxxxxxxxxxxxxxxxxx
+^C
 
-Now A wants to sign this patch.
+jpyeron@black /projects/dcarr/saar
+$ ls -al ~/.git-credential-cache/
+total 1
+drwx------+ 1 jpyeron Domain Users 0 Jun  9 14:09 .
+drwxr-xr-x+ 1 jpyeron root         0 Jun  8 22:45 ..
+srwxr-xr-x  1 jpyeron Domain Users 0 Jun  9 14:09 socket
 
-I think there are two reasonable ways to behave:
-1. What you describe above:
-A
-B
-A
+jpyeron@black /projects/dcarr/saar
+$ rm -f ~/.git-credential-cache/socket
 
-2. For things like Tested-by: tags, removing tag from
-where it was and adding it at the bottom:
+jpyeron@black /projects/dcarr/saar
+$ git push
+Username for xxxxxxxxxx
+Password for xxxxxxxxxxx
+Counting objects: 27, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (9/9), done.
+Writing objects: 100% (14/14), 2.09 KiB, done.
+Total 14 (delta 6), reused 0 (delta 0)
+To xxxxxxxxxxxxxxxxx
+   345112c..48909da  master -> master
 
-B
-A
+jpyeron@black /projects/dcarr/saar
+$ git --version
+git version 1.7.9
+
+jpyeron@black /projects/dcarr/saar
+$ cygcheck.exe -V
+cygcheck (cygwin) 1.7.30
+...
+
+-Jason
 
 
-This probably calls for a separate feature:
-maybe adding "acks" along with "signoffs"?
-acks would be unique, re-adding ack removes it from
-the message and adds at the bottom.
-
--- 
-MST
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
