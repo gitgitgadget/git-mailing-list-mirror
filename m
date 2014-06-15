@@ -1,9 +1,8 @@
 From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: use mktemp -d to avoid predictable temporary
- directories
-Date: Sun, 15 Jun 2014 14:57:52 +1000
-Message-ID: <20140615045752.GF21978@iris.ozlabs.ibm.com>
-References: <1402695828-91537-1-git-send-email-davvid@gmail.com>
+Subject: Re: [PATCH] gitk: honor TMPDIR when viewing external diffs
+Date: Sun, 15 Jun 2014 14:57:34 +1000
+Message-ID: <20140615045734.GE21978@iris.ozlabs.ibm.com>
+References: <1402694017-91249-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
@@ -14,32 +13,34 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ww2WH-0002wx-OL
+	id 1Ww2WI-0002wx-8X
 	for gcvg-git-2@plane.gmane.org; Sun, 15 Jun 2014 06:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751958AbaFOE6A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2014 00:58:00 -0400
-Received: from ozlabs.org ([103.22.144.67]:49820 "EHLO ozlabs.org"
+	id S1752120AbaFOE6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Jun 2014 00:58:14 -0400
+Received: from ozlabs.org ([103.22.144.67]:50066 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751153AbaFOE56 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751250AbaFOE56 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 15 Jun 2014 00:57:58 -0400
 Received: by ozlabs.org (Postfix, from userid 1003)
-	id 9BB4E140091; Sun, 15 Jun 2014 14:57:55 +1000 (EST)
+	id A1EFE140097; Sun, 15 Jun 2014 14:57:55 +1000 (EST)
 Content-Disposition: inline
-In-Reply-To: <1402695828-91537-1-git-send-email-davvid@gmail.com>
+In-Reply-To: <1402694017-91249-1-git-send-email-davvid@gmail.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251666>
 
-On Fri, Jun 13, 2014 at 02:43:48PM -0700, David Aguilar wrote:
-> gitk uses a predictable ".gitk-tmp.$PID" pattern when generating
-> a temporary directory.
+On Fri, Jun 13, 2014 at 02:13:37PM -0700, David Aguilar wrote:
+> gitk fails to show diffs when browsing a read-only repository.
+> This is due to gitk's assumption that the current directory is always
+> writable.
 > 
-> Use "mktemp -d .gitk-tmp.XXXXXX" to harden gitk against someone
-> seeding /tmp with files matching the pid pattern.
+> Teach gitk to honor either the GITK_TMPDIR or TMPDIR environment
+> variables.  This allows users to override the default location
+> used when writing temporary files.
 > 
 > Signed-off-by: David Aguilar <davvid@gmail.com>
 
