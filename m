@@ -1,123 +1,129 @@
-From: Caleb Thompson <caleb@calebthompson.io>
-Subject: Re: [PATCH v5 3/4] commit test: test_set_editor in each test
-Date: Mon, 16 Jun 2014 12:46:40 -0500
-Message-ID: <20140616174640.GA28126@sirius.local>
-References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
- <1402601942-45553-4-git-send-email-caleb@calebthompson.io>
- <20140613065942.GB7908@sigill.intra.peff.net>
- <xmqqtx7o3dvh.fsf@gitster.dls.corp.google.com>
- <20140613234128.GE23078@sigill>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [PATCH/RFC] branch.c: Replace `git_config` with `git_config_get_string`
+Date: Mon, 16 Jun 2014 10:49:19 -0700
+Message-ID: <539F2E1F.7010604@gmail.com>
+References: <1402908750-24851-1-git-send-email-tanayabh@gmail.com> <vpqfvj4226o.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="T4sUOijqQbZv57TR"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeremiah Mahler <jmmahler@gmail.com>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	David Kastrup <dak@gnu.org>, Mike Burns <mike@mike-burns.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 16 19:46:54 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Jun 16 19:49:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwazd-0007fM-NP
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 19:46:54 +0200
+	id 1Wwb2E-0002Kt-EF
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 19:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755675AbaFPRqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 13:46:49 -0400
-Received: from new1-smtp.messagingengine.com ([66.111.4.221]:51518 "EHLO
-	new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755622AbaFPRqt (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jun 2014 13:46:49 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 02FD1660
-	for <git@vger.kernel.org>; Mon, 16 Jun 2014 13:46:42 -0400 (EDT)
-Received: from frontend1 ([10.202.2.160])
-  by compute3.internal (MEProxy); Mon, 16 Jun 2014 13:46:43 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=calebthompson.io;
-	 h=date:from:to:cc:subject:message-id:references:mime-version
-	:content-type:in-reply-to; s=mesmtp; bh=FisHabQgFGBL6gUDIeC5FnOI
-	HH4=; b=ZkHqQvIe4oLUuweBSY9KDiZxpyRntxoe7ex8q6fmBsB5wmFRVLgwoyJp
-	aDvG1BJLFqRs1kOviH77+3dgTPCXIDXj4uJvFkACHM+/6UJU1mD7pv8EF3RcfX+e
-	pAemrFS/ovB4G2g0cUYoixsztbhFfHz82tWL8+PJmt6dleFpSdI=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=smtpout;
-	 bh=FisHabQgFGBL6gUDIeC5FnOIHH4=; b=sbG1dH8W2Y1UPvKbK0zU6aAO0jrK
-	090Feman7exWebycQu9rEfXmLTQgughqG96+VCjDyN4zMTi4S7kGqprqmsbFxlzG
-	cnFAcZULwsV7+4sv/JROlhX0V1z9mjikI+hjnInHNq2TxCuGKPrn2fyWnWwe9wlv
-	2ONxTmf1jMXweFM=
-X-Sasl-enc: K5hLPXMrrpUhRAmcrEepnxOFPqI3hjkkZc+h+OBUYnzb 1402940802
-Received: from localhost (unknown [67.78.97.126])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 495ADC007B4;
-	Mon, 16 Jun 2014 13:46:42 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20140613234128.GE23078@sigill>
-X-PGP-Key: fp="B432 C068 2FD1 C2D0 6A8B 3951 1621 ADC2 A0AC E70A";
- id="0xA0ACE70A"; get=<http://calebthompson.io/pubkey.asc>;
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S932196AbaFPRt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 13:49:26 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:37967 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754702AbaFPRtZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 13:49:25 -0400
+Received: by mail-pa0-f49.google.com with SMTP id lj1so4733561pab.36
+        for <git@vger.kernel.org>; Mon, 16 Jun 2014 10:49:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=KRWLOLe42Idj42pB+OkQRXB50axQDwR7Jb9s8a5jOpk=;
+        b=gebjbf0FuFHOoCXHw4OiL5b5tyHdcwPsogD+crCaHqpSXoYEKykZ5UWf8ggs3zqd21
+         Z3R3p45/KJY+kCfZFGINUrnE+4GeN8A5YjKRKYefDW6LI9vLk6J8o6irjNG6/QdvAuQR
+         Ei/ubvMexZf0lslU7nnUpWXqdcvoSEjvuA47Z1IoS22EDFuMg76Kai0BU11DvblZIG2v
+         IR0sTEo2WnaBQNCXBWopU8tZmWpRSsomyYZ5/HL6O8wEvjgU3aJVv/o/+mvOh1dlL6eX
+         bLYsm2KS0aK8ppRJBapNf15o0VAtppnizXM3eIbJj+UXxIfOvSlp0Z487xnqDLOrms5t
+         HUKQ==
+X-Received: by 10.68.192.106 with SMTP id hf10mr26119542pbc.30.1402940964539;
+        Mon, 16 Jun 2014 10:49:24 -0700 (PDT)
+Received: from [192.168.52.163] ([117.254.222.96])
+        by mx.google.com with ESMTPSA id be7sm72000004pad.9.2014.06.16.10.49.21
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 16 Jun 2014 10:49:24 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <vpqfvj4226o.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251740>
 
+On 06/16/2014 10:29 AM, Matthieu Moy wrote:
+>> Subject: Re: [PATCH/RFC] branch.c: Replace `git_config` with `git_config_get_string`
+> 
+> Here and elsewhere: usually, no capital after :.
+> 
 
---T4sUOijqQbZv57TR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Noted.
 
-On Fri, Jun 13, 2014 at 07:41:29PM -0400, Jeff King wrote:
-> On Fri, Jun 13, 2014 at 10:42:26AM -0700, Junio C Hamano wrote:
->
-> > Jeff King <peff@peff.net> writes:
-> >
-> > > [1] It might make sense for test_set_editor, when run from within a
-> > >     test, to behave more like test_config, and do:
-> > >
-> > >       test_when_finished '
-> > >         sane_unset FAKE_EDITOR &&
-> > >         sane_unset EDITOR
-> > >       '
-> > >
-> > >     I don't know if there would be fallouts with other test scripts,
-> > >     though.
-> >
-> > The default environment for tests is to set EDITOR=: to avoid
-> > accidentally triggering interactive cruft and interfering with
-> > automated tests, I thought.
->
-> Ah, yeah, that would make more sense.
->
-> > If the above sane-unset is changed to EDITOR=: then I think that is
-> > probably sensible.
->
-> I think the trick is that other scripts may be relying on the global
-> side-effect, and would need to be fixed up (and it is not always obvious
-> which spots will need it; they might fail the tests, or they might start
-> silently passing for the wrong reason).
+> Tanay Abhra <tanayabh@gmail.com> writes:
+> 
+>> Original implementation uses a callback based approach which has some
+>> deficiencies like a convoluted control flow and redundant variables.
+> 
+> "deficiencies" might be a bit strong (the code did work).
+> 
 
-For this reason, and that the scope of this change has already ballooned, I'd
-rather not make this change in this patch if that's alright.
+Hehe, I did spell out what the "deficiencies" were, nevertheless will revise it in
+next iteration.
 
-Caleb Thompson
+>> There are total 111 calls in total in all of git codebase. How should I send
+>> the patches, alphabetically or otherwise?
+> 
+> My advice would be: try as much as possible to split according to the
+> complexity of the patch.
+> 
+> As a reviewer, I find it rather easy to review a large number of trivial
+> and similar changes, but I hate having to switch back to "wow, the
+> author did something tricky, let's try to understand this" in the middle
+> of a trivial series.
+> 
+> (we had this discussion about `...` Vs $(...) and test -a Vs test ... &&
+> series, which were essentially very trivial changes, but with subtle
+> bugs introduced and hidden by the volume of trivial changes).
+> 
 
---T4sUOijqQbZv57TR
-Content-Type: application/pgp-signature
+Noted.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
+>>  branch.c | 25 +++++++++----------------
+>>  1 file changed, 9 insertions(+), 16 deletions(-)
+> 
+> Removing more lines than it adds. I like the patch already ;-).
+> 
+>> diff --git a/branch.c b/branch.c
+>> index 660097b..257b1bf 100644
+>> --- a/branch.c
+>> +++ b/branch.c
+> [...]
+>>  int read_branch_desc(struct strbuf *buf, const char *branch_name)
+>>  {
+>> -	struct branch_desc_cb cb;
+>> +	const char *value;
+>> +	struct branch_desc desc;
+>>  	struct strbuf name = STRBUF_INIT;
+>>  	strbuf_addf(&name, "branch.%s.description", branch_name);
+>> -	cb.config_name = name.buf;
+>> -	cb.value = NULL;
+>> -	if (git_config(read_branch_desc_cb, &cb) < 0) {
+>> +	desc.config_name = name.buf;
+>> +	desc.value = NULL;
+>> +	value = git_config_get_string(desc.config_name);
+>> +	git_config_string(&desc.value, desc.config_name, value);
+> 
+> You're ignoring the return value of git_config_string, which is an error
+> code. It shouldn't harm, because the code is non-zero iff desc.value is
+> set to non-NULL, but you may want to write the code as
+> 
+> if (git_config_string(...)) {
+> 	strbuf_release(...);
+> 	return -1;
+> }
+> 
+> In any case, the patch sounds good to me.
+> 
 
-iQEcBAEBAgAGBQJTny2AAAoJEBYhrcKgrOcKHrMIAKk+1t1+nTvGoOesEbuJwP1X
-BiO8Mg5zHBYGTUn/X/c+qSOXRcG2n4QZHpXs3SgZPz/cLZ22BuhJof1LKQHaJEuV
-KQCe2mSRJe0ixBZMNDxv9jtA/AcPTELoLLLUFETDbwK5NivH3GgUFysaL5PYtf/z
-kpmHYI+E9iboPRVAHYD02d9csIRnR+6XbgO/jzbeKCThvZ4tZoOYHP5uOLc16tJI
-6Ag5nxpgSRV02woNj5B2Q0z4QQu6V+02ssCoXu1nb2e72j6hGqis5PEAehgYskLy
-Z5NVUHhladrpZwexTtMsXFmeEdd6wNMB7hNhGaBrzr+ja7wBK+j+lr/4rAdYckU=
-=m4n+
------END PGP SIGNATURE-----
-
---T4sUOijqQbZv57TR--
+Yes, for clarity sake, will rewrite the section like that.
+Thanks for the review.
