@@ -1,134 +1,92 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH/RFC] alias.c: Replace git_config with git_config_get_string
-Date: Mon, 16 Jun 2014 02:15:54 -0700
-Message-ID: <1402910154-417-1-git-send-email-tanayabh@gmail.com>
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 11:17:12 2014
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 3/3] verify-commit: scriptable commit signature verification
+Date: Mon, 16 Jun 2014 11:21:38 +0200
+Message-ID: <539EB722.8@drmicha.warpmail.net>
+References: <cover.1402063795.git.git@drmicha.warpmail.net>	<cc5fd1d554e0357dfb514e3f9ad100d98c16d4d5.1402063796.git.git@drmicha.warpmail.net>	<20140613080229.GJ7908@sigill.intra.peff.net>	<539ACA8A.90108@drmicha.warpmail.net>	<20140613110901.GB14066@sigill.intra.peff.net> <xmqqbntw4u4d.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 16 11:21:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwT2M-0000GZ-Fd
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 11:17:10 +0200
+	id 1WwT6z-0005qw-Pv
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 11:21:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754986AbaFPJRF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 05:17:05 -0400
-Received: from mail-pb0-f42.google.com ([209.85.160.42]:60896 "EHLO
-	mail-pb0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754667AbaFPJRB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 05:17:01 -0400
-Received: by mail-pb0-f42.google.com with SMTP id ma3so4008609pbc.15
-        for <git@vger.kernel.org>; Mon, 16 Jun 2014 02:17:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=2Lboj91YMPtnMd+MSRHilAd+LfIqOxZa9SOt95khjSI=;
-        b=Ly1KEZDZOi9Pg7B/e6OR0xSftfUD1uqDiJcMOj0Gfw5kWNBM9uoFIxDtWHpw/a4Au5
-         AMRbPrYrxlGtOAfPc/HDtTUzareqHgEcACXpj4JYNzL9NgjV6TfzVgT7TJ+NCLI3n9oa
-         cM4ei+AoaKP0T/gU7w4P3wyckQbVE3c7/K6y2Cs+WuBYFHv2at0YmOX7JKWePQTdy7rs
-         uj67Z5VSXdTbja5GueIbnl85RuFc3sQVmVGqyA4nj0iEtBgo/Htd1P72yFWuK1IWYCTP
-         GmU6XHj+XKNTCy0JSFL5VHhuQJQ1YV0tFCpd/gz/1joxhYBB+GRrOt00huJFW2RlWcki
-         QcvQ==
-X-Received: by 10.66.138.48 with SMTP id qn16mr3078690pab.152.1402910221060;
-        Mon, 16 Jun 2014 02:17:01 -0700 (PDT)
-Received: from localhost.localdomain ([117.254.222.96])
-        by mx.google.com with ESMTPSA id og3sm17548111pbc.48.2014.06.16.02.16.51
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 16 Jun 2014 02:17:00 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0.GIT
+	id S1754816AbaFPJVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 05:21:54 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:59676 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754733AbaFPJVx (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jun 2014 05:21:53 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id EF52520E32
+	for <git@vger.kernel.org>; Mon, 16 Jun 2014 05:21:51 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Mon, 16 Jun 2014 05:21:51 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to:cc
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=LZ3flZtJVKx2SAyQNf9Jl1
+	cVUeQ=; b=OGMhT0LVemnzjSrG+yVyH3E1fvcnYXtP8y4aGm5CnfkDrHOVvg0jbv
+	CXjw1uxjoaA1ITb7+3csDkG4kMsF+CGcKa44rIqUvoCnBLTnPZWLAc8nB4h5m+jw
+	cALhS/O15cYVn3gYfUE7nvUXaXdKeyXEZp5LbrsW8TA4R/oJnCadI=
+X-Sasl-enc: +DNKlus1ybFp7oiDKd5dBAEC7jYQDO5KkcUDp8sFDJrc 1402910511
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 635F1C007AD;
+	Mon, 16 Jun 2014 05:21:50 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqbntw4u4d.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251709>
 
-Original implementation uses a callback based approach which has some
-deficiencies like a convoluted control flow and redundant variables.
-Use git_config_get_string instead of git_config to take advantage of
-the config hash-table.
+Junio C Hamano venit, vidit, dixit 13.06.2014 19:06:
+> Jeff King <peff@peff.net> writes:
+> 
+>> I realize this isn't really your itch to scratch. It's just that when I
+>> see a description like "verify a commit", I wonder what exactly "verify"
+>> means.
+> 
+> I think that is an important point.  If a tool only verifies the
+> signature of the commit when conceivably other aspect of it could
+> also be verified but we cannot decide how or we decide we should not
+> dictate one-way-fits-all, using a generic name "verify-commit" or
+> "verify" without marking that it is currently only on the signature
+> clearly somewhere might close the door to the future.
+> 
+>     git verify <object>::
+>         Verify whatever we currently deem is appropriate for the
+>         given type of object.
+> 
+>     git verify --gpg-signature::
+> 	Verify the GPG signature for a signed tag, a signed commit,
+>         or a merge with signed tags.
+> 
+>     git verify --commit-author <committish>::
+> 	Verify the GPG signer matches the "author " header of the
+> 	commit.
+> 
+> and more, perhaps?
+> 
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
+So what does that mean? And what does it mean for verify-tag, which does
+nothing but checking the return code from gpg, just like the proposed
+verify-commit?
 
-**DOUBT**
-This patch builds on top of patch series[1]. The first patch in the 
-replace `git_config` series is [2], which passed all the tests.
+As pointed out, strict verification is a matter of policy, very much
+like accepting certain ref updates etc. is. Do we want a signature
+verification hook?
 
-But this patch falters at this test in t1300-repo-config.sh,
+We currently don't have a scriptable commit signature verification in
+the same way we have one for tag signatures. That's the gap that I
+wanted to fill in in response to a blog post about commit signatures in
+git. But it's not my itch, I don't use signatures.
 
-git config alias.checkconfig "-c foo.check=bar config foo.check" &&
-		echo bar >expect &&
-		git checkconfig >actual &&
-		test_cmp expect actual
-
-I hand tested this case and the outputs match. But I don't know why the tests
-are failing.
-
-In t1300-repo-config this test also fails,
-
-#		git config alias.split-cmdline-fix 'echo "' &&
-#		test_must_fail git split-cmdline-fix &&
-#		echo foo > foo &&
-#		git add foo &&
-#		git commit -m 'initial commit' &&
-#		git config branch.master.mergeoptions 'echo "' &&
-#		test_must_fail git merge master
-
-Can anybody help me with this one?
-Thanks.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/251704
-[2] http://thread.gmane.org/gmane.comp.version-control.git/251707
-
-Cheers,
-Tanay Abhra.
-
- alias.c | 27 ++++++++++-----------------
- 1 file changed, 10 insertions(+), 17 deletions(-)
-
-diff --git a/alias.c b/alias.c
-index 5efc3d6..fffad73 100644
---- a/alias.c
-+++ b/alias.c
-@@ -1,24 +1,17 @@
- #include "cache.h"
- 
--static const char *alias_key;
--static char *alias_val;
--
--static int alias_lookup_cb(const char *k, const char *v, void *cb)
--{
--	if (starts_with(k, "alias.") && !strcmp(k + 6, alias_key)) {
--		if (!v)
--			return config_error_nonbool(k);
--		alias_val = xstrdup(v);
--		return 0;
--	}
--	return 0;
--}
--
- char *alias_lookup(const char *alias)
- {
--	alias_key = alias;
--	alias_val = NULL;
--	git_config(alias_lookup_cb, NULL);
-+	char *alias_key, *alias_val;
-+	const char *v;
-+	alias_key = xmalloc(7+strlen(alias));
-+	strcpy(alias_key, "alias.");
-+	strcat(alias_key, alias);
-+	v = git_config_get_string(alias_key);
-+	if (!v)
-+		config_error_nonbool(alias_key);
-+	alias_val = xstrdup(v);
-+	free(alias_key);
- 	return alias_val;
- }
- 
--- 
-1.9.0.GIT
+Michael
