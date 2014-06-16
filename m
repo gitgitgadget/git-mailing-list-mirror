@@ -1,112 +1,106 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] rebase--merge: fix --skip with two conflicts in a row
-Date: Mon, 16 Jun 2014 00:01:25 +0000
-Message-ID: <ea5a46c7605a181b6726093e04bc882b013fd504.1402876855.git.sandals@crustytoothpaste.net>
-References: <20140615223913.GI368384@vauxhall.crustytoothpaste.net>
-Cc: Phillip Susi <psusi@ubuntu.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH v2 0/2] Git config cache & special querying api utilizing the cache
+Date: Mon, 16 Jun 2014 01:27:10 -0700
+Message-ID: <1402907232-24629-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 02:01:45 2014
+X-From: git-owner@vger.kernel.org Mon Jun 16 10:28:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwKMq-0004Ws-7w
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 02:01:44 +0200
+	id 1WwSHY-00052Q-4w
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 10:28:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752322AbaFPABk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Jun 2014 20:01:40 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:48364 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752308AbaFPABj (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Jun 2014 20:01:39 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [172.16.2.247])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 7D9362808E;
-	Mon, 16 Jun 2014 00:01:37 +0000 (UTC)
-X-Mailer: git-send-email 2.0.0
-In-Reply-To: <20140615223913.GI368384@vauxhall.crustytoothpaste.net>
-X-Spam-Score: -2.5 () ALL_TRUSTED,BAYES_00
+	id S1754409AbaFPI2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 04:28:44 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:45908 "EHLO
+	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754226AbaFPI2n (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 04:28:43 -0400
+Received: by mail-pd0-f178.google.com with SMTP id r10so4222256pdi.9
+        for <git@vger.kernel.org>; Mon, 16 Jun 2014 01:28:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=mlTfPgR/YvA+VDCJ8Vvl5M/5BoMvrG/L8T7LlZtWGQM=;
+        b=NwQDGL/1b5YiqsA4/Cp242laQ4wW8y3ZqcY4gM9Q8UMefzbk3aaQpe3Tij7Pna3RNC
+         pnG7rRlBvolGUW9rmIrho8JFEJQo306UwYfY1lhaCRlwRaZmTZHsOblzLQ6GRKZbWJQS
+         LjngeX0wBOT+6Wi33DLxF8HRyeEheXmZm7bCk7we1UZtpL9CH7Q+gkuXccrGdZNy+x1k
+         tk9uXuJ9J6tpGNUw2EX4Y98TLxjDTWzJ7/DM6+Wq3D/ykHkVL0dK+As7cb6ItLmkbfXy
+         gmLF9sLtMavaxImhVrn+LCKSXLrKgMr346bk/7C9tGLHZbQg1v9zMUShnJw9pRie8Bvm
+         cRgw==
+X-Received: by 10.66.219.6 with SMTP id pk6mr22620487pac.9.1402907322738;
+        Mon, 16 Jun 2014 01:28:42 -0700 (PDT)
+Received: from localhost.localdomain ([117.254.222.96])
+        by mx.google.com with ESMTPSA id ja8sm17290853pbd.3.2014.06.16.01.28.22
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 16 Jun 2014 01:28:42 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251704>
 
-If git rebase --merge encountered a conflict, --skip would not work if the
-next commit also conflicted.  The msgnum file would never be updated with
-the new patch number, so no patch would actually be skipped, resulting in an
-inescapable loop.
+Hi,
 
-Update the msgnum file's value as the first thing in call_merge.  This also
-avoids an "Already applied" message when skipping a commit.  There is no
-visible change for the other contexts in which call_merge is invoked, as the
-msgnum file's value remains unchanged in those situations.
+[PATCH v2]:Changed the string_list to a struct instead of pointer to a struct.
+	Added string-list initilization functions.
+	Minor mistakes corrected acoording to review comments[4]. Thanks to
+	Eric and Matthieu for their review.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- git-rebase--merge.sh    |  5 +++--
- t/t3402-rebase-merge.sh | 15 +++++++++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+[PATCH V1]:Most of the invaluable suggestions by Eric Sunshine, Torsten Bogershausen and
+	Jeff King has been implemented[1]. Complete rewrite of config_cache*() family
+	using git_config() as hook as suggested by Jeff. Thanks for the review.
 
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index 6d77b3c..d3fb67d 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -53,11 +53,12 @@ continue_merge () {
- }
- 
- call_merge () {
--	cmt="$(cat "$state_dir/cmt.$1")"
-+	msgnum="$1"
-+	echo "$msgnum" >"$state_dir/msgnum"
-+	cmt="$(cat "$state_dir/cmt.$msgnum")"
- 	echo "$cmt" > "$state_dir/current"
- 	hd=$(git rev-parse --verify HEAD)
- 	cmt_name=$(git symbolic-ref HEAD 2> /dev/null || echo HEAD)
--	msgnum=$(cat "$state_dir/msgnum")
- 	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
- 	eval GITHEAD_$hd='$onto_name'
- 	export GITHEAD_$cmt GITHEAD_$hd
-diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
-index be8c1d5..5a27ec9 100755
---- a/t/t3402-rebase-merge.sh
-+++ b/t/t3402-rebase-merge.sh
-@@ -33,6 +33,7 @@ test_expect_success setup '
- 	tr "[a-z]" "[A-Z]" <original >newfile &&
- 	git add newfile &&
- 	git commit -a -m"side edits further." &&
-+	git branch second-side &&
- 
- 	tr "[a-m]" "[A-M]" <original >newfile &&
- 	rm -f original &&
-@@ -41,6 +42,7 @@ test_expect_success setup '
- 	git branch test-rebase side &&
- 	git branch test-rebase-pick side &&
- 	git branch test-reference-pick side &&
-+	git branch test-conflicts side &&
- 	git checkout -b test-merge side
- '
- 
-@@ -138,4 +140,17 @@ test_expect_success 'rebase -s funny -Xopt' '
- 	test -f funny.was.run
- '
- 
-+test_expect_success 'rebase --skip works with two conflicts in a row' '
-+	git checkout second-side  &&
-+	tr "[A-Z]" "[a-z]" <newfile >tmp &&
-+	mv tmp newfile &&
-+	git commit -a -m"edit conflicting with side" &&
-+	tr "[d-f]" "[D-F]" <newfile >tmp &&
-+	mv tmp newfile &&
-+	git commit -a -m"another edit conflicting with side" &&
-+	test_must_fail git rebase --merge test-conflicts &&
-+	test_must_fail git rebase --skip &&
-+	git rebase --skip
-+'
-+
- test_done
+[RFC V2]: Improved according to the suggestions by Eric Sunshine and Torsten Bogershausen.
+	Added cache invalidation when config file is changed.[2]
+	I am using git_config_set_multivar_in_file() as an update hook.
+
+This is my first patch for this year's GSoC. My project is
+"Git Config API improvements". The link of my proposal is appended below [3].
+
+The aim of this patch series is to generate a cache for querying values from
+the config files in a non-callback manner as the current method reads and
+parses the config files every time a value is queried for.
+
+The cache is generated from hooking the update_cache function to the current
+parsing and callback mechanism in config.c. It is implemented as an hashmap
+using the hashmap-api with variables and its corresponding values list as
+its members. The values in the list are sorted in order of increasing priority.
+The cache is initialised the first time when any of the new query functions is
+called. It is invalidated by using git_config_set_multivar_in_file() as an
+update hook.
+
+We add two new functions to the config-api, git_config_get_string() and
+git_config_get_string_multi() for querying in a non callback manner from
+the cache.
+
+[1] http://marc.info/?t=140172066200006&r=1&w=2
+[2] http://git.661346.n2.nabble.com/RFC-PATCH-0-2-Git-config-cache-amp-special-querying-api-utilizing-the-cache-td7611691.html
+[3] https://drive.google.com/file/d/0B4suZ-aHqDcnSUZJRXVTTnZUN1E/edit?usp=sharing
+[4] http://thread.gmane.org/gmane.comp.version-control.git/251073/focus=251369
+
+Cheers,
+Tanay Abhra.
+
+
+Tanay Abhra (2):
+  string-list: Add string_list initializer helper functions
+  config: Add hashtable for config parsing & retrieval
+
+ Documentation/technical/api-config.txt |  17 +++++
+ cache.h                                |   2 +
+ config.c                               | 123 +++++++++++++++++++++++++++++++++
+ string-list.c                          |  18 +++++
+ string-list.h                          |   3 +
+ 5 files changed, 163 insertions(+)
+
 -- 
-2.0.0
+1.9.0.GIT
