@@ -1,140 +1,161 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v17 06/48] lockfile.c: add a new public function unable_to_lock_message
-Date: Mon, 16 Jun 2014 11:03:37 -0700
-Message-ID: <1402941859-29354-7-git-send-email-sahlberg@google.com>
+Subject: [PATCH v17 13/48] refs.c: make resolve_ref_unsafe set errno to something meaningful on error
+Date: Mon, 16 Jun 2014 11:03:44 -0700
+Message-ID: <1402941859-29354-14-git-send-email-sahlberg@google.com>
 References: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 20:07:29 2014
+X-From: git-owner@vger.kernel.org Mon Jun 16 20:07:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwbJY-0006Ud-Ls
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:07:29 +0200
+	id 1WwbJd-0006ak-KH
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:07:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932796AbaFPSHX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 14:07:23 -0400
-Received: from mail-vc0-f201.google.com ([209.85.220.201]:64778 "EHLO
-	mail-vc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932636AbaFPSEY (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932798AbaFPSHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 14:07:25 -0400
+Received: from mail-oa0-f74.google.com ([209.85.219.74]:36008 "EHLO
+	mail-oa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932447AbaFPSEY (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 16 Jun 2014 14:04:24 -0400
-Received: by mail-vc0-f201.google.com with SMTP id ij19so766256vcb.4
+Received: by mail-oa0-f74.google.com with SMTP id i7so1126944oag.5
         for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=yRowO27PNpGExWalJoFCVT21Rc0RDtlvIWTcLMRqHtg=;
-        b=BLUwQJN1ktygl5Yeym4W8hCGOHHQPFw3QzWMoR3k3enw5W8UwbwfR9blp5I2rUdXud
-         RNJyqOIFtJiKXh+KC2ynGE2JfArp03p4lUBpRqkozJwJiDHjE/oKaYRn+vvbEYDOO4EA
-         W5rGVR4bJvTm/V0d+QthOesN/MTqZ91kl32rt/nH8W9pbWysgBoPSkj64qw4sufAM2Xh
-         ifrWP6LWSaO27Dr1VK1QvTRmqI9CE7SYDG5NbB7e/VcSmHq4TWRGCWZmo+5QgX8GCLK9
-         TV1bU+qKbHP1L7FUOECEBp8WKvkCTzKohZ4W9yMF4k+JQ819/bpbQR5ox4IZJpXc4TG6
-         2Lpw==
+        bh=5wxrLGnMtF2/Eai/VhhBadPUgzBh2YQyPt7Mz6PNno8=;
+        b=ZFTvU8/6Gl3PqRNvKGVB+THlUv3pBjryDire3Q6b/FFo5sjtS25j0OqGaJpyU7ydqN
+         8/6BQgChx6BDOUr2SBzUQRxdOJ3L4S2eqLLVFDjSq6IBn0jUIlIRDKFrI0GpW/E8B6pT
+         hF1q18UOHfnuRiy2iTcsTnxn5XAToiHErXZkg+OM5sRURvpUKFdfDiJaEb1s08k28+X2
+         2EPdddJsu0aBuDBvIOPCp9cBCmoq/etspwhA+cRGj94E+fsAy2qox/8OjSTE8BkaK9On
+         G7HgB+GsPHDtY3+JG1ESGK1O0i0RrpgYdhVR0afzO1L5BzGnsZ7hfr3ZnSZgrcS/+zNo
+         wM6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=yRowO27PNpGExWalJoFCVT21Rc0RDtlvIWTcLMRqHtg=;
-        b=HcWaFck+Qe/ipH5jXUS5eWufWm8Wj/Bhrvj3HBy97e97lXTXUPEc22sKf4wsQ4hPZy
-         AA+Yq1rwNqGoGQgV2+JZyBTb+/pK/jZzuIhMOItS6lz7FMvy5AMtTg+TKG7s7EdD+EiW
-         f4O+SGUDUAW6arEvz/Fn43IYa4oc1+QRmM3g3fUJE3tY75JLtuutWrKwnCIFVUrvS4Mc
-         emhr9o0WiRwPZSl7FPz8fviGZuARdw1OcwiRqvt/ftR9G878yipmeUjOFouoYSZdmnAd
-         zHtt9EItFvOLxOm9JwvANPSPPPUzYTjmvmJIDVkP9plyJFxZh+ffhxg0krAl3Nq9SDge
-         zV1A==
-X-Gm-Message-State: ALoCoQkKA+OtsUHVnzkSoW4r4J/F2XOUb8+tzJmssrHYqGTvdaI9aoMkyE00CWJNzJCZM+YSrlhW
-X-Received: by 10.58.29.67 with SMTP id i3mr1251104veh.3.1402941862624;
+        bh=5wxrLGnMtF2/Eai/VhhBadPUgzBh2YQyPt7Mz6PNno8=;
+        b=OSSCHf858DV9Er+/Q6t1GdkaovUfMH8A821Du5pNtoblmuIFcIiR6j7fn4Ku1wXV+G
+         CuNlrOj6CPEnENRiQ1AoOxLNyi/FJXvaodlMxJVb1ff0vvZmo5WrZDpiIHXWScbOtXfr
+         p45zagsozRC4ntkbnqbaFpk2o1E6ul1dQwnbbG0ksXNs9wV9/Zq0CdxyjgDXp5kJkXlz
+         YJldV75tbZs+qCbWRZidruVcQdp3M9Rw4VKsNtmHoaLumLk2FMScsCP3ckXVbz0aNdkH
+         NJYw/Kce1EEPYGurkr6TlBf3kv9Lj4Hh8dmGyN+EfEKqpFjzcMMYE5R5pesrBP1s02tf
+         HsHw==
+X-Gm-Message-State: ALoCoQkzWXigd8Bm7z5CX14+tb2VRD7fz3sx8irM9NXgOyxDXDlKIi8Cg70Pc8NYT+zSU/E05Nu+
+X-Received: by 10.182.226.166 with SMTP id rt6mr2679568obc.47.1402941862824;
         Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id t4si998547yhm.0.2014.06.16.11.04.22
+        by gmr-mx.google.com with ESMTPS id i65si998063yhg.2.2014.06.16.11.04.22
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 78F025A490D;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id AA23C5A4911;
 	Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 0F16BE0D03; Mon, 16 Jun 2014 11:04:21 -0700 (PDT)
+	id 85439E05EA; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.282.g3799eda.dirty
 In-Reply-To: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251768>
 
-Introducing a new unable_to_lock_message helper, which has nicer
-semantics than unable_to_lock_error and cleans up lockfile.c a little.
+Making errno when returning from resolve_ref_unsafe() meaningful,
+which should fix
+
+ * a bug in lock_ref_sha1_basic, where it assumes EISDIR
+   means it failed due to a directory being in the way
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- cache.h    |  2 ++
- lockfile.c | 22 ++++++++++++----------
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ cache.h |  2 +-
+ refs.c  | 19 +++++++++++++++----
+ 2 files changed, 16 insertions(+), 5 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 1e4b4f0..19b0963 100644
+index 19b0963..0c2a9aa 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -559,6 +559,8 @@ struct lock_file {
- #define LOCK_DIE_ON_ERROR 1
- #define LOCK_NODEREF 2
- extern int unable_to_lock_error(const char *path, int err);
-+extern void unable_to_lock_message(const char *path, int err,
-+				   struct strbuf *buf);
- extern NORETURN void unable_to_lock_index_die(const char *path, int err);
- extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
- extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
-diff --git a/lockfile.c b/lockfile.c
-index 8fbcb6a..464031b 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -157,33 +157,35 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 	return lk->fd;
+@@ -980,7 +980,7 @@ extern int read_ref(const char *refname, unsigned char *sha1);
+  * NULL.  If more than MAXDEPTH recursive symbolic lookups are needed,
+  * give up and return NULL.
+  *
+- * errno is sometimes set on errors, but not always.
++ * errno is set to something meaningful on error.
+  */
+ extern const char *resolve_ref_unsafe(const char *ref, unsigned char *sha1, int reading, int *flag);
+ extern char *resolve_refdup(const char *ref, unsigned char *sha1, int reading, int *flag);
+diff --git a/refs.c b/refs.c
+index dc9de2c..a4c728c 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1323,6 +1323,7 @@ static const char *handle_missing_loose_ref(const char *refname,
+ 	}
  }
  
--static char *unable_to_lock_message(const char *path, int err)
-+void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
++/* This function needs to return a meaningful errno on failure */
+ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int reading, int *flag)
  {
--	struct strbuf buf = STRBUF_INIT;
--
- 	if (err == EEXIST) {
--		strbuf_addf(&buf, "Unable to create '%s.lock': %s.\n\n"
-+		strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
- 		    "If no other git process is currently running, this probably means a\n"
- 		    "git process crashed in this repository earlier. Make sure no other git\n"
- 		    "process is running and remove the file manually to continue.",
- 			    absolute_path(path), strerror(err));
- 	} else
--		strbuf_addf(&buf, "Unable to create '%s.lock': %s",
-+		strbuf_addf(buf, "Unable to create '%s.lock': %s",
- 			    absolute_path(path), strerror(err));
--	return strbuf_detach(&buf, NULL);
- }
+ 	int depth = MAXDEPTH;
+@@ -1333,8 +1334,10 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
+ 	if (flag)
+ 		*flag = 0;
  
- int unable_to_lock_error(const char *path, int err)
- {
--	char *msg = unable_to_lock_message(path, err);
--	error("%s", msg);
--	free(msg);
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	unable_to_lock_message(path, err, &buf);
-+	error("%s", buf.buf);
-+	strbuf_release(&buf);
- 	return -1;
- }
+-	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
++	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
++		errno = EINVAL;
+ 		return NULL;
++	}
  
- NORETURN void unable_to_lock_index_die(const char *path, int err)
- {
--	die("%s", unable_to_lock_message(path, err));
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	unable_to_lock_message(path, err, &buf);
-+	die("%s", buf.buf);
- }
+ 	for (;;) {
+ 		char path[PATH_MAX];
+@@ -1342,8 +1345,10 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
+ 		char *buf;
+ 		int fd;
  
- int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
+-		if (--depth < 0)
++		if (--depth < 0) {
++			errno = ELOOP;
+ 			return NULL;
++		}
+ 
+ 		git_snpath(path, sizeof(path), "%s", refname);
+ 
+@@ -1405,9 +1410,13 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
+ 				return NULL;
+ 		}
+ 		len = read_in_full(fd, buffer, sizeof(buffer)-1);
++		if (len < 0) {
++			int save_errno = errno;
++			close(fd);
++			errno = save_errno;
++ 			return NULL;
++		}
+ 		close(fd);
+-		if (len < 0)
+-			return NULL;
+ 		while (len && isspace(buffer[len-1]))
+ 			len--;
+ 		buffer[len] = '\0';
+@@ -1424,6 +1433,7 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
+ 			    (buffer[40] != '\0' && !isspace(buffer[40]))) {
+ 				if (flag)
+ 					*flag |= REF_ISBROKEN;
++				errno = EINVAL;
+ 				return NULL;
+ 			}
+ 			return refname;
+@@ -1436,6 +1446,7 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
+ 		if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)) {
+ 			if (flag)
+ 				*flag |= REF_ISBROKEN;
++			errno = EINVAL;
+ 			return NULL;
+ 		}
+ 		refname = strcpy(refname_buffer, buf);
 -- 
 2.0.0.282.g3799eda.dirty
