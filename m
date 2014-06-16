@@ -1,80 +1,111 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [PATCH] doc git: multivar configuration parameters append to
- existing values
-Date: Mon, 16 Jun 2014 11:35:11 -0700
-Message-ID: <539F38DF.3090004@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] doc git: multivar configuration parameters append to existing values
+Date: Mon, 16 Jun 2014 11:43:32 -0700
+Message-ID: <xmqqd2e8r8yz.fsf@gitster.dls.corp.google.com>
 References: <1402922952-172-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: GitList <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
 	Robert Clausecker <fuz@fuz.su>,
 	Alex Riesen <raa.lkml@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+	Tanay Abhra <tanayabh@gmail.com>
 To: Philip Oakley <philipoakley@iee.org>
-X-From: git-owner@vger.kernel.org Mon Jun 16 20:35:27 2014
+X-From: git-owner@vger.kernel.org Mon Jun 16 20:43:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwbkb-0005KX-3n
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:35:25 +0200
+	id 1Wwbse-0006qq-1R
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932349AbaFPSfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 14:35:20 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:63965 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932195AbaFPSfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 14:35:20 -0400
-Received: by mail-pa0-f50.google.com with SMTP id bj1so3014802pad.9
-        for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:35:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=+Iqh4cZNB4QUfqY/VCAxnUri7w7umJYjyVJkBkSeeag=;
-        b=nZK4T6sR5TlEvEQ6dvuCyyCDOGvmvUaqCTVW2XXTDCX12O9ROXokyXU3mw0OkJt/C2
-         nmwXczrxBWeNiHCwNx31Vtc3tJ9bzoSnISavpNz/siyrupKOr/iQKJ+ZufDLeO1mFPrY
-         C3Pl+HjEnf2ZRvYaY7NQiCXaCH0orECM85RRWCPU7S6Q7iWQ+4xKgHa8O7TLHPbro5lu
-         LbESUoWow2qUx/6ejWGZMEjrk7x4xf+g9KdSAezVvyl9m2dy7qJvz/JKChMixU7mIswt
-         s8ImrIYBTh4rbFttQ2Yxsg834IkVNMOWt/eeswK0749yXld5byxp66YSe5bC4RRm94y2
-         blYQ==
-X-Received: by 10.68.226.105 with SMTP id rr9mr6687987pbc.161.1402943719465;
-        Mon, 16 Jun 2014 11:35:19 -0700 (PDT)
-Received: from [192.168.52.163] ([117.254.222.96])
-        by mx.google.com with ESMTPSA id gr10sm20000906pbc.84.2014.06.16.11.35.14
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 16 Jun 2014 11:35:18 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <1402922952-172-1-git-send-email-philipoakley@iee.org>
+	id S932243AbaFPSnk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 14:43:40 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54149 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755369AbaFPSnj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 14:43:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B1192206E5;
+	Mon, 16 Jun 2014 14:43:36 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=c/AkoP5RjgjaBSi3Zj0RN5gNtqI=; b=fXnwFl
+	wmcf2Qq/k/fZp7W2JTPxQmRQKwCNkA3NygBfito+oGLtDaC6jkurwi2lxFE+8jZv
+	PiXCBmG73bEqvnfRBVNDQvKzd9cuKKVd9tVXvEPpIctRBfE6wRGulWy93qxM+8oS
+	G+j6t9p5J8m0r07Ppb6tvEKi/BZDp20Qm9x+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=L6ALf/N5ElM/LmV1XkS/KEk5znu6hOVe
+	x7ZrSqOLDcHbXom5zThAQG2qnPvO/1kDS2nEBccbSlUQBynl+cv0lyYAAfXHzyvP
+	5x6cq+xVN4ugrT62EBwbU1kQSMJRCXQKm0hQP+QhqnsgNJDUHZZt6WB5IlZrZOfO
+	BwHVFue4+do=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A58C5206E4;
+	Mon, 16 Jun 2014 14:43:36 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5C0F9206DD;
+	Mon, 16 Jun 2014 14:43:32 -0400 (EDT)
+In-Reply-To: <1402922952-172-1-git-send-email-philipoakley@iee.org> (Philip
+	Oakley's message of "Mon, 16 Jun 2014 13:49:12 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1DBC2F40-F586-11E3-AE16-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251797>
 
-On 06/16/2014 05:49 AM, Philip Oakley wrote:
+Philip Oakley <philipoakley@iee.org> writes:
 
+> When the '-c' option is used to pass alternate URLs or similar
+> multivar parameters to git commands the effect is not what the user
+> expected [1,2].
+>
+> Clarify that multivar configuration parameters do not supercede
+> previous values. Suggest an alternative style parameter.
+>
+> [1] http://article.gmane.org/gmane.comp.version-control.git/250427
+> [2] http://article.gmane.org/gmane.comp.version-control.git/251529
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> ---
+>  Documentation/git.txt | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 3bd68b0..bedbd76 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -440,7 +440,10 @@ example the following invocations are equivalent:
+>  
+>  -c <name>=<value>::
 >  	Pass a configuration parameter to the command. The value
 > -	given will override values from configuration files.
 > +	given will override single valued variables from configuration
 > +	files, and append to multivar variables. Previous multivar values
-
-Nit: Forgive me if I am wrong, but `, and` is used for joining two independent
-clauses. It would be better to drop the comma.
-
 > +	remain in effect. Use "insteadOf" style config variables when an
 > +	over-ride is needed.
 >  	The <name> is expected in the same format as listed by
 >  	'git config' (subkeys separated by dots).
->  
-> 
 
-'insteadOf' is a very specific approach for a general suggestion because it is only
-used in url.*.insteadof in the whole codebase. Also, it has a variation described in
-urls.txt as "pushinsteadof". So, if a problem such as mentioned above arises in
-a different scenario 'insteadOf' cannot be used in it.
+I have two doubts, while appreciating the overall direction to
+clarify things very much.
+
+ * "single overrides, multiple appends" is not a wrong explanation
+   per-se, but sounds like an arbitrary rule that forces people to
+   memorize.  I wonder if it makes it less burdensome for readers if
+   we just said "Git acts as if the given configuration is specified
+   at the very end of the configuration files"---once the reader
+   understands that Git reads all configuration varilables of the
+   same name and the code paths that *use* one of them pick the one
+   defined the last, it is easy to realize that "single overrides"
+   is merely a natural consequence of the appending nature of "-c".
+
+ * The last sentence added, i.e. "insteadof"-style, will not be
+   understood by any reader other than those who tried to use "-c"
+   on remote.*.url variables and does not belong here.  A better
+   way/place to give that information is needed.
