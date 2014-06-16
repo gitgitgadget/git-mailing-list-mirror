@@ -1,84 +1,123 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 2/2] config: Add hashtable for config parsing & retrieval
-Date: Mon, 16 Jun 2014 19:35:35 +0200
-Message-ID: <vpqlhswzriw.fsf@anie.imag.fr>
-References: <1402907232-24629-1-git-send-email-tanayabh@gmail.com>
-	<1402907232-24629-3-git-send-email-tanayabh@gmail.com>
-	<vpqy4ww230l.fsf@anie.imag.fr> <539F293D.9000602@gmail.com>
+From: Caleb Thompson <caleb@calebthompson.io>
+Subject: Re: [PATCH v5 3/4] commit test: test_set_editor in each test
+Date: Mon, 16 Jun 2014 12:46:40 -0500
+Message-ID: <20140616174640.GA28126@sirius.local>
+References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
+ <1402601942-45553-4-git-send-email-caleb@calebthompson.io>
+ <20140613065942.GB7908@sigill.intra.peff.net>
+ <xmqqtx7o3dvh.fsf@gitster.dls.corp.google.com>
+ <20140613234128.GE23078@sigill>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 19:35:45 2014
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="T4sUOijqQbZv57TR"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeremiah Mahler <jmmahler@gmail.com>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	David Kastrup <dak@gnu.org>, Mike Burns <mike@mike-burns.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 16 19:46:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwaoq-0002sp-Ll
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 19:35:45 +0200
+	id 1Wwazd-0007fM-NP
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 19:46:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754473AbaFPRfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 13:35:40 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46739 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752171AbaFPRfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 13:35:39 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s5GHZXU8015172
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 16 Jun 2014 19:35:33 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s5GHZZlB026712;
-	Mon, 16 Jun 2014 19:35:35 +0200
-In-Reply-To: <539F293D.9000602@gmail.com> (Tanay Abhra's message of "Mon, 16
-	Jun 2014 10:28:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 16 Jun 2014 19:35:33 +0200 (CEST)
+	id S1755675AbaFPRqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 13:46:49 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:51518 "EHLO
+	new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755622AbaFPRqt (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jun 2014 13:46:49 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 02FD1660
+	for <git@vger.kernel.org>; Mon, 16 Jun 2014 13:46:42 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute3.internal (MEProxy); Mon, 16 Jun 2014 13:46:43 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=calebthompson.io;
+	 h=date:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=mesmtp; bh=FisHabQgFGBL6gUDIeC5FnOI
+	HH4=; b=ZkHqQvIe4oLUuweBSY9KDiZxpyRntxoe7ex8q6fmBsB5wmFRVLgwoyJp
+	aDvG1BJLFqRs1kOviH77+3dgTPCXIDXj4uJvFkACHM+/6UJU1mD7pv8EF3RcfX+e
+	pAemrFS/ovB4G2g0cUYoixsztbhFfHz82tWL8+PJmt6dleFpSdI=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=smtpout;
+	 bh=FisHabQgFGBL6gUDIeC5FnOIHH4=; b=sbG1dH8W2Y1UPvKbK0zU6aAO0jrK
+	090Feman7exWebycQu9rEfXmLTQgughqG96+VCjDyN4zMTi4S7kGqprqmsbFxlzG
+	cnFAcZULwsV7+4sv/JROlhX0V1z9mjikI+hjnInHNq2TxCuGKPrn2fyWnWwe9wlv
+	2ONxTmf1jMXweFM=
+X-Sasl-enc: K5hLPXMrrpUhRAmcrEepnxOFPqI3hjkkZc+h+OBUYnzb 1402940802
+Received: from localhost (unknown [67.78.97.126])
+	by mail.messagingengine.com (Postfix) with ESMTPA id 495ADC007B4;
+	Mon, 16 Jun 2014 13:46:42 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20140613234128.GE23078@sigill>
+X-PGP-Key: fp="B432 C068 2FD1 C2D0 6A8B 3951 1621 ADC2 A0AC E70A";
+ id="0xA0ACE70A"; get=<http://calebthompson.io/pubkey.asc>;
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251739>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
 
-> On 06/16/2014 10:11 AM, Matthieu Moy wrote:
->> Tanay Abhra <tanayabh@gmail.com> writes:
->> 
->>> Add a hash table to cache all key-value pairs read from config files
->>> (repo specific .git/config, user wide ~/.gitconfig and the global
->>> /etc/gitconfig). Add two external functions `git_config_get_string` and
->>> `git_config_get_string_multi` for querying in a non-callback manner from the
->>> hash table.
->> 
->> This describes rather well _what_ your patch does, but the most
->> important part of a commit message is to justify _why_ the change is
->> good, and why the way you implemented it is good.
->> 
->> Think of it as an way to convince reviewers to accept your patch.
+--T4sUOijqQbZv57TR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Fri, Jun 13, 2014 at 07:41:29PM -0400, Jeff King wrote:
+> On Fri, Jun 13, 2014 at 10:42:26AM -0700, Junio C Hamano wrote:
 >
-> Okay, but isn't the content of the cover letter is doing that for now.
+> > Jeff King <peff@peff.net> writes:
+> >
+> > > [1] It might make sense for test_set_editor, when run from within a
+> > >     test, to behave more like test_config, and do:
+> > >
+> > >       test_when_finished '
+> > >         sane_unset FAKE_EDITOR &&
+> > >         sane_unset EDITOR
+> > >       '
+> > >
+> > >     I don't know if there would be fallouts with other test scripts,
+> > >     though.
+> >
+> > The default environment for tests is to set EDITOR=: to avoid
+> > accidentally triggering interactive cruft and interfering with
+> > automated tests, I thought.
+>
+> Ah, yeah, that would make more sense.
+>
+> > If the above sane-unset is changed to EDITOR=: then I think that is
+> > probably sensible.
+>
+> I think the trick is that other scripts may be relying on the global
+> side-effect, and would need to be fixed up (and it is not always obvious
+> which spots will need it; they might fail the tests, or they might start
+> silently passing for the wrong reason).
 
-The cover letter won't be part of the Git history, while the commit
-messages are.
+For this reason, and that the scope of this change has already ballooned, I'd
+rather not make this change in this patch if that's alright.
 
-Imagine someone finding your functions in the code and wondering "wtf
-is this code doing here?". "git blame" will point this person to your
-commit message, but digging the mail archives is one big extra step
-(that essentially no one will make).
+Caleb Thompson
 
-> Yeah, I have run the experiments. I will add a test file for it. I should have
-> appended it to this series only, my fault. :) A stray observation, Git has very less
-> unit tests, compared to the comprehensive test directory for commands.
+--T4sUOijqQbZv57TR
+Content-Type: application/pgp-signature
 
-Yes. But in most cases, code written in a commit is directly reachable
-from the command-line UI, and can be tested this way.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-(I do believe that Git would benefit from more unit-testing, but that's
-another topic).
+iQEcBAEBAgAGBQJTny2AAAoJEBYhrcKgrOcKHrMIAKk+1t1+nTvGoOesEbuJwP1X
+BiO8Mg5zHBYGTUn/X/c+qSOXRcG2n4QZHpXs3SgZPz/cLZ22BuhJof1LKQHaJEuV
+KQCe2mSRJe0ixBZMNDxv9jtA/AcPTELoLLLUFETDbwK5NivH3GgUFysaL5PYtf/z
+kpmHYI+E9iboPRVAHYD02d9csIRnR+6XbgO/jzbeKCThvZ4tZoOYHP5uOLc16tJI
+6Ag5nxpgSRV02woNj5B2Q0z4QQu6V+02ssCoXu1nb2e72j6hGqis5PEAehgYskLy
+Z5NVUHhladrpZwexTtMsXFmeEdd6wNMB7hNhGaBrzr+ja7wBK+j+lr/4rAdYckU=
+=m4n+
+-----END PGP SIGNATURE-----
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--T4sUOijqQbZv57TR--
