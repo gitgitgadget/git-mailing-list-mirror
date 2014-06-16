@@ -1,107 +1,205 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC] git-am: support any number of signatures
-Date: Mon, 16 Jun 2014 11:06:20 -0700
-Message-ID: <xmqqy4wwraoz.fsf@gitster.dls.corp.google.com>
-References: <1402589505-27632-1-git-send-email-mst@redhat.com>
-	<xmqqioo654mg.fsf@gitster.dls.corp.google.com>
-	<20140613080036.GA2117@redhat.com>
-	<xmqqy4x03ecm.fsf@gitster.dls.corp.google.com>
-	<20140615102736.GA11798@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 20:06:40 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v17 45/48] refs.c: pass a skip list to name_conflict_fn
+Date: Mon, 16 Jun 2014 11:04:16 -0700
+Message-ID: <1402941859-29354-46-git-send-email-sahlberg@google.com>
+References: <1402941859-29354-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 16 20:06:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwbIk-0005V4-Vw
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:06:39 +0200
+	id 1WwbIv-0005mc-Dj
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932460AbaFPSG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 14:06:29 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65306 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932408AbaFPSG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 14:06:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1AB131FD89;
-	Mon, 16 Jun 2014 14:06:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=L4Ex2WYdMoghQ/ctq9pfShA3a8E=; b=Ee4UQh
-	MIzC6zF1IpnjR3Rv5Gt7zO155LCmoOARxt9LTuTdIo+SrNszsfS/YT0tL39SwVz4
-	MmF04FQ/rlakJiPXegvSbXwfsM7Ptfp+BaM4jjIbU0rDgcBjQk7fKnC2yCoH5+CP
-	e9xxSmYVYfm7HIGYI5pDrITzIoWLElkKtWBW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=R8yvJ2Ut6fqK6u7+Ggb3X22gNQWjz/Mh
-	fqcKkhz5LtBMzlanhwipZfQclsqFu0zdSFLW+9LIyN0aGYNqi2bfneHsD9mejXvo
-	ZunezlK6gWlISYLVqB0FzOmoI9JKB3D8TW5NC1WfHOufR9ds1uFytRqjwqxa6tGt
-	4EiCsCKxsBg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 105411FD88;
-	Mon, 16 Jun 2014 14:06:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A62141FD87;
-	Mon, 16 Jun 2014 14:06:19 -0400 (EDT)
-In-Reply-To: <20140615102736.GA11798@redhat.com> (Michael S. Tsirkin's message
-	of "Sun, 15 Jun 2014 13:27:36 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EAE89F40-F580-11E3-AEFF-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932723AbaFPSFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 14:05:17 -0400
+Received: from mail-qa0-f73.google.com ([209.85.216.73]:37805 "EHLO
+	mail-qa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932669AbaFPSE0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 14:04:26 -0400
+Received: by mail-qa0-f73.google.com with SMTP id m5so851648qaj.2
+        for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:04:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=OsjMi6IQD6HiJD7NkOvgpb9TNTAlRhlfHbXsFI3sOZU=;
+        b=ZGnvuwmZbEEAfrRtku1gUS4C7TwfhhvtPYvNGHbaPiIqg+nEU8S4pMaDyBh5baHM6S
+         xHvmaTATHTBBAjkXMZOlZ0us98YJ53ahG6rGZY0mFrm/5wolGY6eYolc7FADfqfQaDMy
+         5pXgH8tx3ux33lyoPylnu9OYN/QyqeWtKNSYf7VpJ6eofR0I0cxT+kzkhmh3t0PJ3+S4
+         Thn8DOkpkHdGamomPHhm9Cts67cUj1TYD8V/jh52mqcUFV61rko2e/NVMuqTV56JesjW
+         BN9i2bWiFtyrbbGol8ee326kagCfydIoNvatHOjgTY0XpVpFxL3xVh3z8yTf/7vg4nwI
+         MQIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=OsjMi6IQD6HiJD7NkOvgpb9TNTAlRhlfHbXsFI3sOZU=;
+        b=kBJyAFE6idE2PL5iTgO6t5QkA9KzHNtqU+3/5zGqerS1p3gg+PvgqnOVwQMOFq3jgd
+         iQWDQE+q1I/K9S7IkI6M4QntvTfRDeqmyN/hsxG/0g7z1+3LhpDuIYMcoONWagbTAPoQ
+         k+WI5zjnmLsmlApRRkfP5QM8cnjN9Sq07tXI85kAjyUoCyWbrsqtvWvpEUcwC6/UxfzN
+         vPlpCQFl9ocP0Ri8E0Wi0sD9j9TiIIwCRTal8XSgGEKY2Q5e1ztNvpyEu8/24A/xrXMI
+         ihJWc4C4jJYEBAlWI7L6ObTFlSUpoeByWZGSJY528M9MvIEcDJXZpk6g0gK/fPiKGBr+
+         Z4Ew==
+X-Gm-Message-State: ALoCoQnX/KpvBPg2GTUiSsDXdY2iWff7tzZlufpZD+fESN8FZq09FL8TgXIleAZz2JN/HkAzBx2B
+X-Received: by 10.58.8.50 with SMTP id o18mr1169186vea.13.1402941864253;
+        Mon, 16 Jun 2014 11:04:24 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id i65si998072yhg.2.2014.06.16.11.04.24
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 16 Jun 2014 11:04:24 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 0F19431C8AA;
+	Mon, 16 Jun 2014 11:04:24 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id E5C2EE0F37; Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.282.g3799eda.dirty
+In-Reply-To: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251761>
 
-"Michael S. Tsirkin" <mst@redhat.com> writes:
+Allow passing a list of refs to skip checking to name_conflict_fn.
+There are some conditions where we want to allow a temporary conflict and skip
+checking those refs. For example if we have a transaction that
+1, guarantees that m is a packed refs and there is no loose ref for m
+2, the transaction will delete m from the packed ref
+3, the transaction will create conflicting m/m
 
-> Now A wants to sign this patch.
->
-> I think there are two reasonable ways to behave:
-> 1. What you describe above:
-> A
-> B
-> A
+For this case we want to be able to lock and create m/m since we know that the
+conflict is only transient. I.e. the conflict will be automatically resolved
+by the transaction when it deletes m.
 
-That is the only sensible thing to do for Signed-off-by footers.
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ refs.c | 41 ++++++++++++++++++++++++++---------------
+ 1 file changed, 26 insertions(+), 15 deletions(-)
 
-> 2. For things like Tested-by: tags, removing tag from
-> where it was and adding it at the bottom:
->
-> B
-> A
-
-You can make it arbitrarily more complex.  A sends with sign-off, B
-tweaks and tests *that* version and forwards with sign-off, A
-further tweaks, which may invalidate the earlier tests, so A asks B
-to retest and then forward it to Linus when everything checks out.
-
-What should the end result look like?
-
-	SoB: A
-	SoB: B
-        Tested-by: B
-        SoB: A
-        Tested-by: B
-	SoB: B
-
-perhaps?
-
-> This probably calls for a separate feature:
-> maybe adding "acks" along with "signoffs"?
-> acks would be unique, re-adding ack removes it from
-> the message and adds at the bottom.
-
-This kind of complication is mostly up to the policies of the
-projects that are users of Git, and not something we as the Git
-project want to set in stone inside "git am" implementation.
-
-Perhaps consult what has been discussed on Christian's "trailer"
-series in the list archive and then think about how to integrate /
-make use of it inside "am"?
+diff --git a/refs.c b/refs.c
+index d67479e..be6b4b6 100644
+--- a/refs.c
++++ b/refs.c
+@@ -791,15 +791,18 @@ static int names_conflict(const char *refname1, const char *refname2)
+ 
+ struct name_conflict_cb {
+ 	const char *refname;
+-	const char *oldrefname;
+ 	const char *conflicting_refname;
++	const char **skip;
++	int skipnum;
+ };
+ 
+ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
+ {
+ 	struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
+-	if (data->oldrefname && !strcmp(data->oldrefname, entry->name))
+-		return 0;
++	int i;
++	for (i = 0; i < data->skipnum; i++)
++		if (!strcmp(entry->name, data->skip[i]))
++			return 0;
+ 	if (names_conflict(data->refname, entry->name)) {
+ 		data->conflicting_refname = entry->name;
+ 		return 1;
+@@ -812,15 +815,18 @@ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
+  * conflicting with the name of an existing reference in dir.  If
+  * oldrefname is non-NULL, ignore potential conflicts with oldrefname
+  * (e.g., because oldrefname is scheduled for deletion in the same
+- * operation).
++ * operation). skip contains a list of refs we want to skip checking for
++ * conflicts with.
+  */
+-static int is_refname_available(const char *refname, const char *oldrefname,
+-				struct ref_dir *dir)
++static int is_refname_available(const char *refname,
++				struct ref_dir *dir,
++				const char **skip, int skipnum)
+ {
+ 	struct name_conflict_cb data;
+ 	data.refname = refname;
+-	data.oldrefname = oldrefname;
+ 	data.conflicting_refname = NULL;
++	data.skip = skip;
++	data.skipnum = skipnum;
+ 
+ 	sort_ref_dir(dir);
+ 	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
+@@ -2051,7 +2057,8 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ /* This function should make sure errno is meaningful on error */
+ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 					    const unsigned char *old_sha1,
+-					    int flags, int *type_p)
++					    int flags, int *type_p,
++					    const char **skip, int skipnum)
+ {
+ 	char *ref_file;
+ 	const char *orig_refname = refname;
+@@ -2100,7 +2107,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	 * name is a proper prefix of our refname.
+ 	 */
+ 	if (missing &&
+-	     !is_refname_available(refname, NULL, get_packed_refs(&ref_cache))) {
++	     !is_refname_available(refname, get_packed_refs(&ref_cache),
++				   skip, skipnum)) {
+ 		last_errno = ENOTDIR;
+ 		goto error_return;
+ 	}
+@@ -2158,7 +2166,7 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
+ 					 const unsigned char *old_sha1,
+ 					 int flags, int *type_p)
+ {
+-	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p);
++	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p, NULL, 0);
+ }
+ 
+ /*
+@@ -2650,10 +2658,12 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	if (!symref)
+ 		return error("refname %s not found", oldrefname);
+ 
+-	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(&ref_cache)))
++	if (!is_refname_available(newrefname, get_packed_refs(&ref_cache),
++				  &oldrefname, 1))
+ 		return 1;
+ 
+-	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(&ref_cache)))
++	if (!is_refname_available(newrefname, get_loose_refs(&ref_cache),
++				  &oldrefname, 1))
+ 		return 1;
+ 
+ 	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
+@@ -2683,7 +2693,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 
+ 	logmoved = log;
+ 
+-	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL);
++	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL, NULL, 0);
+ 	if (!lock) {
+ 		error("unable to lock %s for update", newrefname);
+ 		goto rollback;
+@@ -2698,7 +2708,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	return 0;
+ 
+  rollback:
+-	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL);
++	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL, NULL, 0);
+ 	if (!lock) {
+ 		error("unable to lock %s for rollback", oldrefname);
+ 		goto rollbacklog;
+@@ -3576,7 +3586,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 						    update->old_sha1 :
+ 						    NULL),
+ 						   update->flags,
+-						   &update->type);
++						   &update->type,
++						   delnames, delnum);
+ 		if (!update->lock) {
+ 			if (err)
+ 				strbuf_addf(err, "Cannot lock the ref '%s'.",
+-- 
+2.0.0.282.g3799eda.dirty
