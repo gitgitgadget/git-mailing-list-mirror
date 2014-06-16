@@ -1,117 +1,178 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v17 33/48] fast-import.c: use a ref transaction when dumping tags
-Date: Mon, 16 Jun 2014 11:04:04 -0700
-Message-ID: <1402941859-29354-34-git-send-email-sahlberg@google.com>
-References: <1402941859-29354-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH v17 00/48] Use ref transactions
+Date: Mon, 16 Jun 2014 11:03:31 -0700
+Message-ID: <1402941859-29354-1-git-send-email-sahlberg@google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 20:06:57 2014
+X-From: git-owner@vger.kernel.org Mon Jun 16 20:07:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwbJ2-0005sy-I6
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:06:56 +0200
+	id 1WwbJC-000656-LY
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:07:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932773AbaFPSGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 14:06:52 -0400
-Received: from mail-oa0-f73.google.com ([209.85.219.73]:50852 "EHLO
-	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932653AbaFPSEZ (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932657AbaFPSEZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 16 Jun 2014 14:04:25 -0400
-Received: by mail-oa0-f73.google.com with SMTP id eb12so1129936oac.0
-        for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
+Received: from mail-yh0-f74.google.com ([209.85.213.74]:64112 "EHLO
+	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932360AbaFPSEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 14:04:22 -0400
+Received: by mail-yh0-f74.google.com with SMTP id b6so854835yha.1
+        for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8G2KR4w1h9xEyzqA1mmIrktQn7mqjJObaUgeX1TdJp0=;
-        b=fGrcCTLf/X7zuLzvflOxhMOvNgu/T4onpiYpN97ZcQ2453uTEH+V6e25vJUR/PjYZR
-         sSHQe6NVh5T7dDzx1xtcO8Eg8vqTNleuICZSJIYqSxpbIS27iYw1sHAT5FFaWfvbOSeC
-         CZdKr4Gg/VPkbiMsOyyhaTh4Fj5kU/jfkp+NjLHbd9x35l6ZIuF2uU7nrKpwFn6xcLBx
-         DF4zHo1tP4HdBF1UM5LkCycYkr8EnTJZgFxmpeKnEU+HOe+GuUVH8IWRikkqJZxs6kMW
-         5yrt/PTq5bvd2sQGOL+LcGBlVHRR4hlv6tVgHpyKGMSI4iLtNYISdb7f5EF4hWrKGWFg
-         FJ2g==
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=5z0mU/q7ULD22ziLn43TCbSUJn7GrSuFpnl9vzaEQi0=;
+        b=DmQXlMm8ww/Gxp6HxcjlLBBpw51Q9P2hc1Op+UqREa4VeCshOgeGy4aX+sjUud5FT7
+         WUTLmaY7XDLDOY7m/9dpOaEt/D0qe9so+wpGu2pKNw6pMhTae8V9sHabWLltbqLJQVyF
+         rJhOIohrLHODVtZarXN2ckpQX84vUvSTF/8NRafTRBCqo+yhmaFXAQmnEdxiCk51ygqc
+         gFWposVP+VNIE2rIChmNxzP9hmtuOBrlj+RtiEWrZ4Ye1A/eN1fvY6ybfqPd3A7ri0zU
+         2czCvwj1iMDZaSE6p6Mpe0bPJP5V3UJBqNlcUacutbDh7smMdygG/rp009qj7+BqHqSd
+         RRZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=8G2KR4w1h9xEyzqA1mmIrktQn7mqjJObaUgeX1TdJp0=;
-        b=fedW35i5c/MVN+eKqr4+EPsDn0qIUgPx5l2RCer0aA5R9UYIuViUNUa7flK0RvCycR
-         u0RUKgT7GyDcPMFasQcRjv9EAv6EZWkDQhbB+XsZlLaIUEBG95vCn6NHYp5Q0r8gTRvm
-         XNEAxaRrDYi3QuGykJ5vuKMHh3FfyrYIupH/As02lXLWRlvaEy0PI93DOen3MhyslWnf
-         Mtq4dHPxGOFcl76StkQWTq9GuP7ra1hqUYcBGvp9pBQwKIPWvAsM0IM8dPHkfCs0YuWB
-         /UY9E1lpnFg8g0lrT14hxTqZ8Jq/Pva3nzDIev/wJ06Jlbj9/PUV5ynyqDBiCARzNReJ
-         8BcA==
-X-Gm-Message-State: ALoCoQlU+hX10Z5aCr1FJH6oZQHfRoXgztWDqXK8/xlFmTNE9/2/3BGO68+xVSqz8SoB7BZn7HGG
-X-Received: by 10.182.66.166 with SMTP id g6mr160505obt.12.1402941863676;
-        Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=5z0mU/q7ULD22ziLn43TCbSUJn7GrSuFpnl9vzaEQi0=;
+        b=E5dlSFh/VPGMMutPAcB3EPyNW8Q1G6O2Sd7u4hu9u8+MHqTFB9IXzVS8fhv20G/num
+         no/+1bQT7cmBmHdT3hWfSbPp2bJ2LMkSrQ0Gu0SwSKFpNM8KFBmU+ETj9kdYI3DaYgkI
+         Xq4F9tXQXPBgVaGTVGuiNJQEzsMWQSOloIcMN3XCnfCfMCfZHfkg45aP1EPBPFkHzuBz
+         RA4uMvMwkJdXK8doLTPWazQxjbDDsdGfR4dlue9azHr5JkxHCWIgHBE5oQOoCEd2kDUv
+         epib3pejnHOroywe2HUdxR9No61xQECn73udRRptN2o8x7+qbugYiCI0nlWymu30DvYP
+         midg==
+X-Gm-Message-State: ALoCoQl9lX6WGfHXxK9ghO3Y52I6uvspkeW60kkv0wvpL3nXGjVRwPLp2+MP80RG8ioEGiOxue45
+X-Received: by 10.236.149.230 with SMTP id x66mr764339yhj.24.1402941862270;
+        Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id c22si998238yhe.1.2014.06.16.11.04.23
+        by gmr-mx.google.com with ESMTPS id y50si997320yhk.4.2014.06.16.11.04.22
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
+        Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 865DA31C8AA;
-	Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 0ACD531C8AA;
+	Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 65033E0D03; Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
+	id 970E1E0961; Mon, 16 Jun 2014 11:04:21 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.282.g3799eda.dirty
-In-Reply-To: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251765>
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- fast-import.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+This patch series can also be found at
+https://github.com/rsahlberg/git/tree/ref-transactions
 
-diff --git a/fast-import.c b/fast-import.c
-index 0752f0a..42a607d 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1730,15 +1730,32 @@ static void dump_tags(void)
- {
- 	static const char *msg = "fast-import";
- 	struct tag *t;
--	struct ref_lock *lock;
--	char ref_name[PATH_MAX];
-+	struct strbuf ref_name = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_transaction *transaction;
- 
-+	transaction = ref_transaction_begin(&err);
-+	if (!transaction) {
-+		failure |= error("%s", err.buf);
-+		goto cleanup;
-+	}
- 	for (t = first_tag; t; t = t->next_tag) {
--		sprintf(ref_name, "tags/%s", t->name);
--		lock = lock_ref_sha1(ref_name, NULL);
--		if (!lock || write_ref_sha1(lock, t->sha1, msg) < 0)
--			failure |= error("Unable to update %s", ref_name);
-+		strbuf_reset(&ref_name);
-+		strbuf_addf(&ref_name, "refs/tags/%s", t->name);
-+
-+		if (ref_transaction_update(transaction, ref_name.buf, t->sha1,
-+					   NULL, 0, 0, &err)) {
-+			failure |= error("%s", err.buf);
-+			goto cleanup;
-+		}
- 	}
-+	if (ref_transaction_commit(transaction, msg, &err))
-+		failure |= error("%s", err.buf);
-+
-+ cleanup:
-+	ref_transaction_free(transaction);
-+	strbuf_release(&ref_name);
-+	strbuf_release(&err);
- }
- 
- static void dump_marks_helper(FILE *f,
+This patch series is based on next and expands on the transaction API. It
+converts all ref updates, inside refs.c as well as external, to use the
+transaction API for updates. This makes most of the ref updates to become
+atomic when there are failures locking or writing to a ref.
+
+This version completes the work to convert all ref updates to use transactions.
+Now that all updates are through transactions I will start working on
+cleaning up the reading of refs and to create an api for managing reflogs but
+all that will go in a different patch series.
+
+Version 17:
+ - Rebase ontop of origin/master and resolve the conflicts.
+Version 16:
+ - Refactor some string code and fix an old old memory leak in recv-pack
+Version 15:
+ - Break the errno updates out into smaller individual patches
+   as per JNs suggestion.
+Version 14:
+ - Remove the patch to pack the refs before rename. We do not need this
+   with the reworked renames that will come 2 series later.
+   The rename_ref changes are thus no longer part of this series.
+Version 13:
+ - This version should cover all of JNs suggestions on the previous series.
+   If I missed anything I appologize.
+...
+
+
+*** BLURB HERE ***
+
+Ronnie Sahlberg (48):
+  refs.c: remove ref_transaction_rollback
+  refs.c: ref_transaction_commit should not free the transaction
+  refs.c: constify the sha arguments for
+    ref_transaction_create|delete|update
+  refs.c: allow passing NULL to ref_transaction_free
+  refs.c: add a strbuf argument to ref_transaction_commit for error
+    logging
+  lockfile.c: add a new public function unable_to_lock_message
+  lockfile.c: make lock_file return a meaningful errno on failurei
+  refs.c: add an err argument to repack_without_refs
+  refs.c: make sure log_ref_setup returns a meaningful errno
+  refs.c: verify_lock should set errno to something meaningful
+  refs.c: make remove_empty_directories alwasy set errno to something
+    sane
+  refs.c: commit_packed_refs to return a meaningful errno on failure
+  refs.c: make resolve_ref_unsafe set errno to something meaningful on
+    error
+  refs.c: log_ref_write should try to return meaningful errno
+  refs.c: make ref_update_reject_duplicates take a strbuf argument for
+    errors
+  refs.c: add an err argument to delete_ref_loose
+  refs.c: make update_ref_write update a strbuf on failure
+  update-ref: use err argument to get error from ref_transaction_commit
+  refs.c: remove the onerr argument to ref_transaction_commit
+  refs.c: change ref_transaction_update() to do error checking and
+    return status
+  refs.c: change ref_transaction_create to do error checking and return
+    status
+  refs.c: update ref_transaction_delete to check for error and return
+    status
+  refs.c: make ref_transaction_begin take an err argument
+  refs.c: add transaction.status and track OPEN/CLOSED/ERROR
+  tag.c: use ref transactions when doing updates
+  replace.c: use the ref transaction functions for updates
+  commit.c: use ref transactions for updates
+  sequencer.c: use ref transactions for all ref updates
+  fast-import.c: change update_branch to use ref transactions
+  branch.c: use ref transaction for all ref updates
+  refs.c: change update_ref to use a transaction
+  receive-pack.c: use a reference transaction for updating the refs
+  fast-import.c: use a ref transaction when dumping tags
+  walker.c: use ref transaction for ref updates
+  refs.c: make lock_ref_sha1 static
+  refs.c: remove the update_ref_lock function
+  refs.c: remove the update_ref_write function
+  refs.c: remove lock_ref_sha1
+  refs.c: make prune_ref use a transaction to delete the ref
+  refs.c: make delete_ref use a transaction
+  refs.c: pass the ref log message to _create/delete/update instead of
+    _commit
+  refs.c: pass NULL as *flags to read_ref_full
+  refs.c: move the check for valid refname to lock_ref_sha1_basic
+  refs.c: call lock_ref_sha1_basic directly from commit
+  refs.c: pass a skip list to name_conflict_fn
+  refs.c: propagate any errno==ENOTDIR from _commit back to the callers
+  fetch.c: change s_update_ref to use a ref transaction
+  refs.c: make write_ref_sha1 static
+
+ branch.c               |  30 +--
+ builtin/commit.c       |  24 ++-
+ builtin/fetch.c        |  36 ++--
+ builtin/receive-pack.c |  97 ++++++----
+ builtin/replace.c      |  15 +-
+ builtin/tag.c          |  15 +-
+ builtin/update-ref.c   |  34 ++--
+ cache.h                |   4 +-
+ fast-import.c          |  53 ++++--
+ lockfile.c             |  39 ++--
+ refs.c                 | 507 ++++++++++++++++++++++++++++++++-----------------
+ refs.h                 | 128 +++++++++----
+ sequencer.c            |  24 ++-
+ walker.c               |  58 +++---
+ wrapper.c              |  14 +-
+ 15 files changed, 705 insertions(+), 373 deletions(-)
+
 -- 
 2.0.0.282.g3799eda.dirty
