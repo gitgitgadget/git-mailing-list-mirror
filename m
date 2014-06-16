@@ -1,148 +1,151 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v17 09/48] refs.c: make sure log_ref_setup returns a meaningful errno
-Date: Mon, 16 Jun 2014 11:03:40 -0700
-Message-ID: <1402941859-29354-10-git-send-email-sahlberg@google.com>
+Subject: [PATCH v17 01/48] refs.c: remove ref_transaction_rollback
+Date: Mon, 16 Jun 2014 11:03:32 -0700
+Message-ID: <1402941859-29354-2-git-send-email-sahlberg@google.com>
 References: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 20:08:46 2014
+X-From: git-owner@vger.kernel.org Mon Jun 16 20:08:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwbKf-0007ix-EF
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:08:37 +0200
+	id 1WwbKg-0007ix-Fd
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:08:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932629AbaFPSI2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 14:08:28 -0400
-Received: from mail-pd0-f202.google.com ([209.85.192.202]:39019 "EHLO
-	mail-pd0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932627AbaFPSEX (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932653AbaFPSIb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 14:08:31 -0400
+Received: from mail-ve0-f201.google.com ([209.85.128.201]:50873 "EHLO
+	mail-ve0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932545AbaFPSEX (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 16 Jun 2014 14:04:23 -0400
-Received: by mail-pd0-f202.google.com with SMTP id r10so262109pdi.5
+Received: by mail-ve0-f201.google.com with SMTP id jz11so869750veb.0
         for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=md2qT65fvr+Q+dIa5es/HAnp9egAEykSQO7W8Iiuckk=;
-        b=kUB1gl2dWSekOZ9lhd5kOkgwfTm6gE+Gg27q8LgYjXiNpi5Ci4B1axOISUJqKr9Wm7
-         piv2QRtyExzIe63yIUMzy9A6uiIrk5ybXEmPxjRGFyYx5gAZxySDq1WQprn21Gay7Bu6
-         MO0Alg8rx6qE2xZMoDvVpBMdRw9iGX7g1BkWBDQsnIcHRBgwflMsPOBnV9j8ENP1D8xm
-         VxDtixeDZr02P3wxSWyHA3b4i+10e6mJoghbOn1keKj2FJW/l7rZKvU7AsCw5ZTUlRy8
-         gcWMF+Ohrp9qbAnz2bM2FiRwy9XoA3Wo7Tm0yTQ2QzBMUL5v+Q8Vit15zFmnyxSwHzU3
-         A/GQ==
+        bh=qzczTE0mf5+4O1aLGDhcCaJX4d4sAkMK8OrBRsIpfrs=;
+        b=l95xZKWh9Ug2sh7DVhO+YvxgJLDxJFLODkB7GXUP88L0phB3EJlmnL2Fos65DsxsHr
+         hUAxypo0/bR1G54JYYy44N9AvmBySGA3E8hKA+Na6yXGK4tnFA7CdODABwn5R1c7ksHC
+         5kqfv5U/VTEoCbl5nuHYTL3AI9NBO/jab+5sxDm+lPzWltP3I776cOcIGUa443rNaaTZ
+         IwAqdFeWk718JS2BYPgaHxCQSURbnP6zffPfrQifMvl7M7sSmRDuSEKQLzqlaGzf29aN
+         v6+v7lb5/0dDiEEdE8H214XWSbj8RuDJzu4e0sJ8GhWyoHwSqIMQ8rEyPah8e3SAnFwE
+         mPdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=md2qT65fvr+Q+dIa5es/HAnp9egAEykSQO7W8Iiuckk=;
-        b=BI1F5cQ/cMIlpNo2VjVQ1hj/0jVh2bV6LSOAYsO2bFRz+EHJHRiaCde4xnQdj8PJud
-         O6tBV8L3BC/FZCRhq7qOSDhJ+Ewve1yY3Zt8F7UHqo4fd2bURJ0kH8GuYJgINCpDLoyb
-         1yzDQ3u8qwpJMwoxa0xA8Zcr1v4+WZkAI05JFsAnVXenrEI6LNHql+NybOtCHomlbcS5
-         edB6UVk+2pRIEwlmsp9SfqLgLig1zBJ2mzOlms6MEDp1GiAegsUAQx9Ku6MP5HfHlt0Y
-         tkY5snPHehJrgozzP0FezXhZx6bkDNpOZgx+o/NUPTrrZvKMhlfjdIUM2NnxCNkSrLVN
-         MEpA==
-X-Gm-Message-State: ALoCoQmnFBd2zbquThUH6FZmWtgqHZerrAcEs+KIducmfoEx60ugYmuNSutwZ2s8n8me7cmgnBzN
-X-Received: by 10.66.142.9 with SMTP id rs9mr2514361pab.47.1402941862796;
+        bh=qzczTE0mf5+4O1aLGDhcCaJX4d4sAkMK8OrBRsIpfrs=;
+        b=UOXfPFIcyxpwRMpCzfHsMWgIeDq8AUH5lakjepnoNFa/TfI+XXThfaCurkb+OUgDZn
+         +fbASeXKKQFfqNu0zH+OXi2XEkPxVyY6DFC/Cs5BQUu08t8VVRdNOwvK0LkkHDpromhO
+         U5AGgCtkUo9MohHqsrYzEJAGasYILRLcWdKBpgF0RxVcd2nmU5+RFI3mwi0SlifEctxf
+         tMkLkOAwR1o8lpdEjnFr5wKx4tIJwMV9MTN8QslSTzUPinQCElLLGfrxQzIzXe6rJcEt
+         ixgF5t3df5UYI2be6hRsN7DE/a/TSY/Z1SG+gbLIy+hPAKpumGhig1lB829tVBYb5uJn
+         8DPQ==
+X-Gm-Message-State: ALoCoQkQvAiH6zyIZzsjejPc3K8OdJgeRKSrKc9CYlEViv8Bk9t0Cp1XzvTd0CCGGIZ4R3hyxFDF
+X-Received: by 10.58.187.44 with SMTP id fp12mr201670vec.24.1402941862317;
         Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id z50si997791yhb.3.2014.06.16.11.04.22
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id c50si996126yhl.7.2014.06.16.11.04.22
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 9AB2C31C8AC;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 2E9765A4911;
 	Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 5568DE16B4; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
+	id D3B90E0CFF; Mon, 16 Jun 2014 11:04:21 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.282.g3799eda.dirty
 In-Reply-To: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251783>
 
-Making errno when returning from log_ref_setup() meaningful,
+We do not yet need both a rollback and a free function for transactions.
+Remove ref_transaction_rollback and use ref_transaction_free instead.
 
+At a later stage we may reintroduce a rollback function if we want to start
+adding reusable transactions and similar.
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 29 ++++++++++++++++++++---------
- refs.h |  4 +++-
- 2 files changed, 23 insertions(+), 10 deletions(-)
+ refs.c |  7 +------
+ refs.h | 16 +++++++---------
+ 2 files changed, 8 insertions(+), 15 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index b4b05bd..6f85bd8 100644
+index 6898263..48573e3 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2723,6 +2723,7 @@ static int copy_msg(char *buf, const char *msg)
- 	return cp - buf;
+@@ -3308,7 +3308,7 @@ struct ref_transaction *ref_transaction_begin(void)
+ 	return xcalloc(1, sizeof(struct ref_transaction));
  }
  
-+/* This function must set a meaningful errno on failure */
- int log_ref_setup(const char *refname, char *logfile, int bufsize)
+-static void ref_transaction_free(struct ref_transaction *transaction)
++void ref_transaction_free(struct ref_transaction *transaction)
  {
- 	int logfd, oflags = O_APPEND | O_WRONLY;
-@@ -2733,9 +2734,12 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
- 	     starts_with(refname, "refs/remotes/") ||
- 	     starts_with(refname, "refs/notes/") ||
- 	     !strcmp(refname, "HEAD"))) {
--		if (safe_create_leading_directories(logfile) < 0)
--			return error("unable to create directory for %s",
--				     logfile);
-+		if (safe_create_leading_directories(logfile) < 0) {
-+			int save_errno = errno;
-+			error("unable to create directory for %s", logfile);
-+			errno = save_errno;
-+			return -1;
-+		}
- 		oflags |= O_CREAT;
- 	}
+ 	int i;
  
-@@ -2746,15 +2750,22 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+@@ -3319,11 +3319,6 @@ static void ref_transaction_free(struct ref_transaction *transaction)
+ 	free(transaction);
+ }
  
- 		if ((oflags & O_CREAT) && errno == EISDIR) {
- 			if (remove_empty_directories(logfile)) {
--				return error("There are still logs under '%s'",
--					     logfile);
--			}
-+				int save_errno = errno;
-+				error("There are still logs under '%s'",
-+				      logfile);
-+				errno = save_errno;
-+				return -1;
-+ 			}
- 			logfd = open(logfile, oflags, 0666);
- 		}
- 
--		if (logfd < 0)
--			return error("Unable to append to %s: %s",
--				     logfile, strerror(errno));
-+		if (logfd < 0) {
-+			int save_errno = errno;
-+			error("Unable to append to %s: %s", logfile,
-+			      strerror(errno));
-+			errno = save_errno;
-+			return -1;
-+		}
- 	}
- 
- 	adjust_shared_perm(logfile);
+-void ref_transaction_rollback(struct ref_transaction *transaction)
+-{
+-	ref_transaction_free(transaction);
+-}
+-
+ static struct ref_update *add_update(struct ref_transaction *transaction,
+ 				     const char *refname)
+ {
 diff --git a/refs.h b/refs.h
-index 948cc53..979c12f 100644
+index 09ff483..a07a5d0 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -154,7 +154,9 @@ extern void unlock_ref(struct ref_lock *lock);
- /** Writes sha1 into the ref specified by the lock. **/
- extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, const char *msg);
+@@ -216,18 +216,12 @@ enum action_on_err {
  
--/** Setup reflog before using. **/
+ /*
+  * Begin a reference transaction.  The reference transaction must
+- * eventually be commited using ref_transaction_commit() or rolled
+- * back using ref_transaction_rollback().
++ * eventually be commited using ref_transaction_commit() or freed by
++ * calling ref_transaction_free().
+  */
+ struct ref_transaction *ref_transaction_begin(void);
+ 
+ /*
+- * Roll back a ref_transaction and free all associated data.
+- */
+-void ref_transaction_rollback(struct ref_transaction *transaction);
+-
+-
+-/*
+  * The following functions add a reference check or update to a
+  * ref_transaction.  In all of them, refname is the name of the
+  * reference to be affected.  The functions make internal copies of
+@@ -235,7 +229,6 @@ void ref_transaction_rollback(struct ref_transaction *transaction);
+  * can be REF_NODEREF; it is passed to update_ref_lock().
+  */
+ 
+-
+ /*
+  * Add a reference update to transaction.  new_sha1 is the value that
+  * the reference should have after the update, or zeros if it should
+@@ -277,6 +270,11 @@ void ref_transaction_delete(struct ref_transaction *transaction,
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   const char *msg, enum action_on_err onerr);
+ 
 +/*
-+ * Setup reflog before using. Set errno to something meaningful on failure.
++ * Free an existing transaction and all associated data.
 + */
- int log_ref_setup(const char *refname, char *logfile, int bufsize);
- 
- /** Reads log for the value of ref during at_time. **/
++void ref_transaction_free(struct ref_transaction *transaction);
++
+ /** Lock a ref and then write its file */
+ int update_ref(const char *action, const char *refname,
+ 		const unsigned char *sha1, const unsigned char *oldval,
 -- 
 2.0.0.282.g3799eda.dirty
