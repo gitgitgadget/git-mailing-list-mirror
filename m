@@ -1,76 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] submodule config lookup API
-Date: Mon, 16 Jun 2014 10:58:25 -0700
-Message-ID: <xmqq38f4spmm.fsf@gitster.dls.corp.google.com>
-References: <20140605060425.GA23874@sandbox-ub>
-	<xmqqy4x14wn8.fsf@gitster.dls.corp.google.com>
-	<20140613224156.GA4345@sandbox-ub>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon Jun 16 19:58:42 2014
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH v17 04/48] refs.c: allow passing NULL to ref_transaction_free
+Date: Mon, 16 Jun 2014 11:03:35 -0700
+Message-ID: <1402941859-29354-5-git-send-email-sahlberg@google.com>
+References: <1402941859-29354-1-git-send-email-sahlberg@google.com>
+Cc: Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 16 20:04:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwbB3-0004jk-Vy
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 19:58:42 +0200
+	id 1WwbGo-0003Ju-Vi
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:04:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932352AbaFPR6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 13:58:38 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57814 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752171AbaFPR6h (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 13:58:37 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A959E1FB9B;
-	Mon, 16 Jun 2014 13:58:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EaaMqRO4fhIxiI7MVdmvpFOT8ac=; b=Gz821D
-	LO+vzlUhgHjz9EsMmuxmGO+2uj4tqIF8EUVvHP0GnWtIi4+zKhzFVHLdfuHeyjNK
-	QgDhqSsvpTA0g1yPYu7cPzeVHPw8NtERRXh91Aa01KjjUUqbiaMjvyTDm3RScz3u
-	HtDT8jruKsNhlHIphaxXuueyfdm24tv1emj1U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=k/685/IRPhqrPKJeQdT4OFkUqcoLfTbS
-	D227aBaTWRiBBxf6y9huC5EdXfOV5J5ShRWK9GnkV5sTgi+QG5Wr5FybOTrwK8hD
-	6CuyKCOZwXtBBBdbhFXZJyQX1JC9GSejQ9iWg7yYsv1v02iwUi/qGgmG4EB+9WSZ
-	Cqx+QoRlZOA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9E41D1FB99;
-	Mon, 16 Jun 2014 13:58:29 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 12E731FB96;
-	Mon, 16 Jun 2014 13:58:25 -0400 (EDT)
-In-Reply-To: <20140613224156.GA4345@sandbox-ub> (Heiko Voigt's message of
-	"Sat, 14 Jun 2014 00:41:57 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D0052AB4-F57F-11E3-B2B7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932685AbaFPSE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 14:04:27 -0400
+Received: from mail-oa0-f73.google.com ([209.85.219.73]:42675 "EHLO
+	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932442AbaFPSEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 14:04:22 -0400
+Received: by mail-oa0-f73.google.com with SMTP id eb12so1129910oac.2
+        for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=mwIt+rYXc3LXr419b0k7Igh+hYHbrbGyNqZrh2WE0A0=;
+        b=hNF2eHjI5BZJN6rCCk2h8o8Qn9Z/16k1RLDi6VUuB78QMbe1zE6Zi1mBuSK6bNztXL
+         VL9y1pJ0ylMxpEhtrjmCu7kTv5OzMdc5Iy9ZmpRg6mcj7lDyoZPvw6kx7J93QatizKnq
+         setd3Cf6docbH03BAyeWMjoK4AeuK/tvRQxA9TAPOWNPmAxNs1R0bZDTNarQocE24dYi
+         91TYSLdg9ttKedygWPE351Tb8DAVg7jcZZoZmzI5K/sAkuEkMTHaoKFFamn/h93csL7p
+         h/FaaDLv+NPagk1zEMmouDwGj882h6eY7lLnp65SH6YsEzbi0fRj1Bs60LqDiS9PcddB
+         edcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=mwIt+rYXc3LXr419b0k7Igh+hYHbrbGyNqZrh2WE0A0=;
+        b=GoFOrrdfVnVbyG5paI29HqDDq9Si+svPj2ye5t64IwXuSqMyT7U9B3/u5vEVT/og+Y
+         +DBNHrj6B/NyjGAEn1bUHUTsFbdz+iaTrYqaSRCOYKJ4EZAhYWJ8SCbP6BerftkTImRX
+         b5wSJdkXUvWmZPqJhObkfzeSF4E3Yel4ZOloNswFLA1FUoWiCW04SZwskUDLxgtKQ/h5
+         a4rg8oVOUHj4UH0aDfQ3gpeaWktur9ORsLsGPHB7OVsNLWPVMN5R+e9r5mCRlx2qqx81
+         jP1fjm4fYBrJ6azDOKTcfb1zuo0lnGKkR51RrklDN2xZ2fl3qyI2vJhfzHMAIZpBJUKW
+         Y98Q==
+X-Gm-Message-State: ALoCoQmtEizxWpn3NkZERDoSg0HezXy4BkpKDjhdwU+GeCtCf6ityTAfcxjjCmhSLXR2co6P+2Wh
+X-Received: by 10.182.118.230 with SMTP id kp6mr108456obb.42.1402941862260;
+        Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id c50si996124yhl.7.2014.06.16.11.04.22
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 209355A490D;
+	Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id C9551E05A0; Mon, 16 Jun 2014 11:04:21 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0.282.g3799eda.dirty
+In-Reply-To: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251742>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+Allow ref_transaction_free(NULL) as a no-op. This makes ref_transaction_free
+easier to use and more similar to plain 'free'.
 
-> On Thu, Jun 12, 2014 at 02:59:23PM -0700, Junio C Hamano wrote:
->> Heiko Voigt <hvoigt@hvoigt.net> writes:
->> 
->> >  t/t7410-submodule-config.sh                      | 141 ++++++++
->> 
->> We already use 7410 for something else in 'pu'; please avoid dups
->> waiting to happen.
->
-> Sorry about that. Should I use 7411 even though that other series is
-> still work in progress?
+In particular, it lets us rollback unconditionally as part of cleanup code
+after setting 'transaction = NULL' if a transaction has been committed or
+rolled back already.
 
-Surely.
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ refs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-What would be an alternative?  Tell the other series to rename?  ;-)
+diff --git a/refs.c b/refs.c
+index a767ef6..0faed29 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3312,6 +3312,9 @@ void ref_transaction_free(struct ref_transaction *transaction)
+ {
+ 	int i;
+ 
++	if (!transaction)
++		return;
++
+ 	for (i = 0; i < transaction->nr; i++)
+ 		free(transaction->updates[i]);
+ 
+-- 
+2.0.0.282.g3799eda.dirty
