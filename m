@@ -1,86 +1,86 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] doc git: multivar configuration parameters append to existing values
-Date: Mon, 16 Jun 2014 20:42:42 +0100
-Organization: OPDS
-Message-ID: <3757CE4412D345B6BE1E515F8764747D@PhilipOakley>
-References: <1402922952-172-1-git-send-email-philipoakley@iee.org> <539F38DF.3090004@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] doc git: multivar configuration parameters append to
+ existing values
+Date: Mon, 16 Jun 2014 15:48:49 -0400
+Message-ID: <20140616194849.GA24376@sigill.intra.peff.net>
+References: <1402922952-172-1-git-send-email-philipoakley@iee.org>
+ <xmqqd2e8r8yz.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	"Robert Clausecker" <fuz@fuz.su>,
-	"Alex Riesen" <raa.lkml@gmail.com>,
-	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>
-To: "Tanay Abhra" <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 21:42:46 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Philip Oakley <philipoakley@iee.org>,
+	GitList <git@vger.kernel.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Robert Clausecker <fuz@fuz.su>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Tanay Abhra <tanayabh@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jun 16 21:49:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwcnl-0008P5-BJ
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 21:42:45 +0200
+	id 1Wwcty-0007bU-IQ
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 21:49:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755333AbaFPTml (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 15:42:41 -0400
-Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:33205 "EHLO
-	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752199AbaFPTml (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jun 2014 15:42:41 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: An8XAHASn1NZ8Y0l/2dsb2JhbABagw2JU7puBQECAQGBERd1g34FAQEFCAEBLh4BASELAgMFAgEDFQMJJRQBBAgSBgcXBhMIAgECAwGIHQMVuCyREQ2FYReMU4IjgzSBFgSKBYZah2uPUYYAg0E8
-X-IPAS-Result: An8XAHASn1NZ8Y0l/2dsb2JhbABagw2JU7puBQECAQGBERd1g34FAQEFCAEBLh4BASELAgMFAgEDFQMJJRQBBAgSBgcXBhMIAgECAwGIHQMVuCyREQ2FYReMU4IjgzSBFgSKBYZah2uPUYYAg0E8
-X-IronPort-AV: E=Sophos;i="5.01,489,1400022000"; 
-   d="scan'208";a="462760301"
-Received: from host-89-241-141-37.as13285.net (HELO PhilipOakley) ([89.241.141.37])
-  by out1.ip04ir2.opaltelecom.net with SMTP; 16 Jun 2014 20:42:39 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1755844AbaFPTtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 15:49:05 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45447 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755719AbaFPTsv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 15:48:51 -0400
+Received: (qmail 12640 invoked by uid 102); 16 Jun 2014 19:48:50 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Jun 2014 14:48:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jun 2014 15:48:49 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqd2e8r8yz.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251808>
 
-From: "Tanay Abhra" <tanayabh@gmail.com>
-> On 06/16/2014 05:49 AM, Philip Oakley wrote:
->
->>  Pass a configuration parameter to the command. The value
->> - given will override values from configuration files.
->> + given will override single valued variables from configuration
->> + files, and append to multivar variables. Previous multivar values
->
-> Nit: Forgive me if I am wrong, but `, and` is used for joining two 
-> independent
-> clauses. It would be better to drop the comma.
-I just wrote it in my local style ;-)  I was sort of treating them as 
-independent, but see Junio's comments in a similar vein.
+On Mon, Jun 16, 2014 at 11:43:32AM -0700, Junio C Hamano wrote:
 
->
->> + remain in effect. Use "insteadOf" style config variables when an
->> + over-ride is needed.
->>  The <name> is expected in the same format as listed by
->>  'git config' (subkeys separated by dots).
->>
->>
->
-> 'insteadOf' is a very specific approach for a general suggestion 
-> because it is only
-> used in url.*.insteadof in the whole codebase. Also, it has a 
-> variation described in
-> urls.txt as "pushinsteadof". So, if a problem such as mentioned above 
-> arises in
-> a different scenario 'insteadOf' cannot be used in it.
-I was using it as a suggestion for the user's 'go look for an 
-alternative' step (i.e. that there may be an alternative!)
+> I have two doubts, while appreciating the overall direction to
+> clarify things very much.
+> 
+>  * "single overrides, multiple appends" is not a wrong explanation
+>    per-se, but sounds like an arbitrary rule that forces people to
+>    memorize.  I wonder if it makes it less burdensome for readers if
+>    we just said "Git acts as if the given configuration is specified
+>    at the very end of the configuration files"---once the reader
+>    understands that Git reads all configuration varilables of the
+>    same name and the code paths that *use* one of them pick the one
+>    defined the last, it is easy to realize that "single overrides"
+>    is merely a natural consequence of the appending nature of "-c".
 
---
-Philip 
+Yeah, I think the problem is really not one of "-c" in particular. If
+you did:
+
+  git config --system remote.magic.url some-default
+
+to provide a universal alias for the "magic" remote, you could not
+override it via ~/.gitconfig or .git/config, for the same reasons.
+
+I think we need a better discussion of multivar versus "normal"
+overridable variables in config.txt, and then "-c" can make a note that
+this is a potential issue, and refer readers to the right section.
+
+I also think it would be nice to have a syntax to "reset" multivars to
+their initial state (both from config files and from "-c"). Their
+inability to be overridden is one of the reasons we have so few of them.
+
+>  * The last sentence added, i.e. "insteadof"-style, will not be
+>    understood by any reader other than those who tried to use "-c"
+>    on remote.*.url variables and does not belong here.  A better
+>    way/place to give that information is needed.
+
+Agreed. I think that could go in the discussion I mentioned above (as
+"some variables have other mechanisms to accomplish the same thing,
+like..."). But if we learned a mechanism for resetting multivars, such
+workarounds would not be needed at all.
+
+-Peff
