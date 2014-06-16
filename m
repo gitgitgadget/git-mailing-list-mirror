@@ -1,137 +1,220 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v17 08/48] refs.c: add an err argument to repack_without_refs
-Date: Mon, 16 Jun 2014 11:03:39 -0700
-Message-ID: <1402941859-29354-9-git-send-email-sahlberg@google.com>
+Subject: [PATCH v17 21/48] refs.c: change ref_transaction_create to do error checking and return status
+Date: Mon, 16 Jun 2014 11:03:52 -0700
+Message-ID: <1402941859-29354-22-git-send-email-sahlberg@google.com>
 References: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 20:08:05 2014
+X-From: git-owner@vger.kernel.org Mon Jun 16 20:08:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwbK9-0007AQ-DX
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:08:05 +0200
+	id 1WwbKI-0007JM-1L
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:08:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932790AbaFPSHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 14:07:21 -0400
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:39256 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932638AbaFPSEY (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932786AbaFPSHR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 14:07:17 -0400
+Received: from mail-ie0-f202.google.com ([209.85.223.202]:54776 "EHLO
+	mail-ie0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932642AbaFPSEY (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 16 Jun 2014 14:04:24 -0400
-Received: by mail-vc0-f202.google.com with SMTP id id10so765321vcb.3
-        for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
+Received: by mail-ie0-f202.google.com with SMTP id tr6so1154712ieb.3
+        for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=eGRnIzjywS0zq4A80+J7oKZ+Bkw5D9/30XD6IlBy0Hw=;
-        b=ivZSuWqMIlb34c2kj8E3Ah7M/POzmXsoA9zrb1HnS/9f4JHRtRw0diDlomOgdY0/rx
-         DiKSJ3O5KtGNKsoZoqMxIBCVcdX/jdqlhhqBpb3Iv3ZM7CG5wHN8g4++HZPfJ2coYlql
-         j6zXjDTgBP7rcl9Ulze3vnRu766e83UsTjDd/NNDKOUyMCs58bvmNQcA4Updfu3gygnD
-         GH43CSbHx1yM8NajTcp5xnIETex8jFmMaphoIKqOt0ZgYcqJKdAWFcaC1toEU4A8N5i7
-         rZn0mqM1YuiaWJmd8NWfFi0HejfTg5C3rJ4BEhpD2ULd/y58M4nN5jsgi3pcWjBE0JF4
-         rouQ==
+        bh=CyBgMKncgS7DlfAmfGTJXOou9BC2VdLEuaeK3XUUBzI=;
+        b=kwlKz4JHUTt7fPcx1EONsuw/do4ZJ8pGCW4qK6Jh1mAylaKa31F7+6VXrnTSlWvE2y
+         X7IpW0NDd4/KZTYjGIu+464W9oDGUE+zpDqgOGpWAsq09NbaCGY/hFV7GmJCAjN54/Rg
+         jx640cEI3LUI6bfeNOZRT/erTjWqhHFDvap++IoElgQEPd42YZOer0s7wgtEnpE2iLCL
+         YTBmQMJfIvehoXffC8+lWrEXijusgyOmR4w/Gm2ZCvwY/MbHjqs5WDquXPzobSGhi5ap
+         qYl88A2FvDKWCeCrlUuTAKREQGs3eITb2NgnnoCvRWh4CK1RHjHE2hSNMig9kdDt8cfq
+         0P0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=eGRnIzjywS0zq4A80+J7oKZ+Bkw5D9/30XD6IlBy0Hw=;
-        b=BQkkTxbG3rZ0uj/BKJqHw+mgBqZlNw/qDNqlZlihbOzSixQCEb5j04GfD+mbDKgfI2
-         dhlB6FlgoWC8lxsVEJfSKlahGVpx8ejcV8txzK8QYUa2qq+SLTpO6Clv+2O0RkYP+sQu
-         TdBpXCG4IEx4B6yM9Cj5d2fTDMQ0kJOznjWgxGuN/B1qZqsXfoRZeEfeyb4yzy2/Md/6
-         X0izoNhTKq8aYJznaTKxQUtN+6wRtWoZJgViR84gdGg6/mpSiY8oD9h5VlYhB7VCP5yI
-         Sqr3VAy/n1hiRAyF3urt92TRF3WSucHHWvXDu+GzGiF2WNuVMkykQTKv7aK42SWcjLyF
-         S6Tw==
-X-Gm-Message-State: ALoCoQnMSoUCOHCG2XLdUDmqBk0CQRs7IHG77d4sAvUMy0D6YWu0MBKxyXFF4H5cAaoGNagOn5u+
-X-Received: by 10.58.187.68 with SMTP id fq4mr4416009vec.0.1402941862667;
-        Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id z50si997790yhb.3.2014.06.16.11.04.22
+        bh=CyBgMKncgS7DlfAmfGTJXOou9BC2VdLEuaeK3XUUBzI=;
+        b=bFE4zGtvu3nx6Rgpuf/3+JXewP0bvE8NNvIgLd2/QtCUXU/RJKPgoLiwaHzjJD5prp
+         Npv71LhAOH4HbmCHsbUcxyIEs2BSWoB3Z7Qs5pFJzEPLjifzfDBdlawZAxfhrlfj3q19
+         nTw4iBPXHSvcaHgO6LdE0G4L7/BjyXudBKf4LK/aFvd86SlKcY+Oh/q6q3zJyIMziqIB
+         asvtvFYGAdgaGRmjHGM6753X2vMkBuH30PSW6O6ZCHEoDDeV2NIwOZqGS0lZWI2MiRGO
+         v8UterO+2MJDVd47jqUf4JV6VS1uP9eZhRT2/rRVYOSVodetDfaYAW/sjoGx5T8JPBdB
+         MU2g==
+X-Gm-Message-State: ALoCoQlYuO4Bp4eEdk/qFrxCf2LZ4zlIyZRNBvhXm4uk3JPHcs8sQCALBwtKxguqebkeKiYop2Pb
+X-Received: by 10.50.50.243 with SMTP id f19mr1801243igo.3.1402941863119;
+        Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id o69si996725yhp.6.2014.06.16.11.04.23
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
+        Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 7B0655A4913;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id E169631C8AA;
 	Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 27D33E0F37; Mon, 16 Jun 2014 11:04:21 -0700 (PDT)
+	id BF581E13D6; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.282.g3799eda.dirty
 In-Reply-To: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251774>
 
-Update repack_without_refs to take an err argument and update it if there
-is a failure. Pass the err variable from ref_transaction_commit to this
-function so that callers can print a meaningful error message if _commit
-fails due to this function.
+Do basic error checking in ref_transaction_create() and make it return
+non-zero on error. Update all callers to check the result of
+ref_transaction_create(). There are currently no conditions in _create that
+will return error but there will be in the future. Add an err argument that
+will be updated on failure.
 
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ builtin/update-ref.c |  4 +++-
+ refs.c               | 18 +++++++++++------
+ refs.h               | 55 +++++++++++++++++++++++++++++++++++++++++++++-------
+ 3 files changed, 63 insertions(+), 14 deletions(-)
 
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 3067b11..41121fa 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -226,7 +226,9 @@ static const char *parse_cmd_create(struct strbuf *input, const char *next)
+ 	if (*next != line_termination)
+ 		die("create %s: extra input: %s", refname, next);
+ 
+-	ref_transaction_create(transaction, refname, new_sha1, update_flags);
++	if (ref_transaction_create(transaction, refname, new_sha1,
++				   update_flags, &err))
++		die("%s", err.buf);
+ 
+ 	update_flags = 0;
+ 	free(refname);
 diff --git a/refs.c b/refs.c
-index 1e8f293..b4b05bd 100644
+index 9c02687..3dab75c 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2428,12 +2428,12 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
+@@ -3446,18 +3446,24 @@ int ref_transaction_update(struct ref_transaction *transaction,
  	return 0;
  }
  
--static int repack_without_refs(const char **refnames, int n)
-+static int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+-void ref_transaction_create(struct ref_transaction *transaction,
+-			    const char *refname,
+-			    const unsigned char *new_sha1,
+-			    int flags)
++int ref_transaction_create(struct ref_transaction *transaction,
++			   const char *refname,
++			   const unsigned char *new_sha1,
++			   int flags,
++			   struct strbuf *err)
  {
- 	struct ref_dir *packed;
- 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
- 	struct string_list_item *ref_to_delete;
--	int i, removed = 0;
-+	int i, ret, removed = 0;
+-	struct ref_update *update = add_update(transaction, refname);
++	struct ref_update *update;
++
++	if (!new_sha1 || is_null_sha1(new_sha1))
++		die("BUG: create ref with null new_sha1");
++
++	update = add_update(transaction, refname);
  
- 	/* Look for a packed ref */
- 	for (i = 0; i < n; i++)
-@@ -2445,6 +2445,11 @@ static int repack_without_refs(const char **refnames, int n)
- 		return 0; /* no refname exists in packed refs */
- 
- 	if (lock_packed_refs(0)) {
-+		if (err) {
-+			unable_to_lock_message(git_path("packed-refs"), errno,
-+					       err);
-+			return -1;
-+		}
- 		unable_to_lock_error(git_path("packed-refs"), errno);
- 		return error("cannot delete '%s' from packed refs", refnames[i]);
- 	}
-@@ -2471,12 +2476,16 @@ static int repack_without_refs(const char **refnames, int n)
- 	}
- 
- 	/* Write what remains */
--	return commit_packed_refs();
-+	ret = commit_packed_refs();
-+	if (ret && err)
-+		strbuf_addf(err, "unable to overwrite old ref-pack file: %s",
-+			    strerror(errno));
-+	return ret;
+-	assert(!is_null_sha1(new_sha1));
+ 	hashcpy(update->new_sha1, new_sha1);
+ 	hashclr(update->old_sha1);
+ 	update->flags = flags;
+ 	update->have_old = 1;
++	return 0;
  }
  
- static int repack_without_ref(const char *refname)
- {
--	return repack_without_refs(&refname, 1);
-+	return repack_without_refs(&refname, 1, NULL);
- }
+ void ref_transaction_delete(struct ref_transaction *transaction,
+diff --git a/refs.h b/refs.h
+index f7a5e42..27c470c 100644
+--- a/refs.h
++++ b/refs.h
+@@ -10,6 +10,45 @@ struct ref_lock {
+ 	int force_write;
+ };
  
- static int delete_ref_loose(struct ref_lock *lock, int flag)
-@@ -3482,7 +3491,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		}
- 	}
++/*
++ * A ref_transaction represents a collection of ref updates
++ * that should succeed or fail together.
++ *
++ * Calling sequence
++ * ----------------
++ * - Allocate and initialize a `struct ref_transaction` by calling
++ *   `ref_transaction_begin()`.
++ *
++ * - List intended ref updates by calling functions like
++ *   `ref_transaction_update()` and `ref_transaction_create()`.
++ *
++ * - Call `ref_transaction_commit()` to execute the transaction.
++ *   If this succeeds, the ref updates will have taken place and
++ *   the transaction cannot be rolled back.
++ *
++ * - At any time call `ref_transaction_free()` to discard the
++ *   transaction and free associated resources.  In particular,
++ *   this rolls back the transaction if it has not been
++ *   successfully committed.
++ *
++ * Error handling
++ * --------------
++ *
++ * On error, transaction functions append a message about what
++ * went wrong to the 'err' argument.  The message mentions what
++ * ref was being updated (if any) when the error occurred so it
++ * can be passed to 'die' or 'error' as-is.
++ *
++ * The message is appended to err without first clearing err.
++ * This allows the caller to prepare preamble text to the generated
++ * error message:
++ *
++ *     strbuf_addf(&err, "Error while doing foo-bar: ");
++ *     if (ref_transaction_update(..., &err)) {
++ *         ret = error("%s", err.buf);
++ *         goto cleanup;
++ *     }
++ */
+ struct ref_transaction;
  
--	ret |= repack_without_refs(delnames, delnum);
-+	ret |= repack_without_refs(delnames, delnum, err);
- 	for (i = 0; i < delnum; i++)
- 		unlink_or_warn(git_path("logs/%s", delnames[i]));
- 	clear_loose_ref_cache(&ref_cache);
+ /*
+@@ -244,7 +283,7 @@ struct ref_transaction *ref_transaction_begin(void);
+  * it must not have existed beforehand.
+  * Function returns 0 on success and non-zero on failure. A failure to update
+  * means that the transaction as a whole has failed and will need to be
+- * rolled back. On failure the err buffer will be updated.
++ * rolled back.
+  */
+ int ref_transaction_update(struct ref_transaction *transaction,
+ 			   const char *refname,
+@@ -258,11 +297,15 @@ int ref_transaction_update(struct ref_transaction *transaction,
+  * that the reference should have after the update; it must not be the
+  * null SHA-1.  It is verified that the reference does not exist
+  * already.
++ * Function returns 0 on success and non-zero on failure. A failure to create
++ * means that the transaction as a whole has failed and will need to be
++ * rolled back.
+  */
+-void ref_transaction_create(struct ref_transaction *transaction,
+-			    const char *refname,
+-			    const unsigned char *new_sha1,
+-			    int flags);
++int ref_transaction_create(struct ref_transaction *transaction,
++			   const char *refname,
++			   const unsigned char *new_sha1,
++			   int flags,
++			   struct strbuf *err);
+ 
+ /*
+  * Add a reference deletion to transaction.  If have_old is true, then
+@@ -278,8 +321,6 @@ void ref_transaction_delete(struct ref_transaction *transaction,
+  * Commit all of the changes that have been queued in transaction, as
+  * atomically as possible.  Return a nonzero value if there is a
+  * problem.
+- * If err is non-NULL we will add an error string to it to explain why
+- * the transaction failed. The string does not end in newline.
+  */
+ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			   const char *msg, struct strbuf *err);
 -- 
 2.0.0.282.g3799eda.dirty
