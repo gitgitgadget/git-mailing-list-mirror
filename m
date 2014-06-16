@@ -1,171 +1,175 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v17 24/48] refs.c: add transaction.status and track OPEN/CLOSED/ERROR
-Date: Mon, 16 Jun 2014 11:03:55 -0700
-Message-ID: <1402941859-29354-25-git-send-email-sahlberg@google.com>
+Subject: [PATCH v17 19/48] refs.c: remove the onerr argument to ref_transaction_commit
+Date: Mon, 16 Jun 2014 11:03:50 -0700
+Message-ID: <1402941859-29354-20-git-send-email-sahlberg@google.com>
 References: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 20:08:18 2014
+X-From: git-owner@vger.kernel.org Mon Jun 16 20:08:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwbKG-0007JM-SB
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:08:13 +0200
+	id 1WwbKR-0007V4-Kb
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:08:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932782AbaFPSHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 14:07:14 -0400
-Received: from mail-yh0-f74.google.com ([209.85.213.74]:44826 "EHLO
-	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932645AbaFPSEY (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932648AbaFPSHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 14:07:11 -0400
+Received: from mail-ie0-f201.google.com ([209.85.223.201]:37481 "EHLO
+	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932643AbaFPSEY (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 16 Jun 2014 14:04:24 -0400
-Received: by mail-yh0-f74.google.com with SMTP id b6so854680yha.3
+Received: by mail-ie0-f201.google.com with SMTP id lx4so1153577iec.2
         for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=EgHGYAPhEyQasR26YgQukCBPFjKJvCWmEotEzQNwJts=;
-        b=F9cQ6W34Butz2bWO5hDAX1cMaV9jrW49HqW/tOJYxl54mFIMCWGowhkBbWWQUhLI7S
-         9weYA2DJEFZGiiJzMxWDWNZsqWOC9eZWN6NUdNza5KKQJ6oCL6dvIYKQLhqDYg4JA2AG
-         DD7rACUmVecEOQNye/99k6H/qUhbgTWYBV/785ctUdt7OHZZ/wEmdPYisgzuvfawJaZ8
-         By0xSreWlhjn6tujdjZ2XafEdRy6ltNFjrns2Oq5IHGJE5ehBepLBL/hUnmcCmwUWw1y
-         EPqStbZiXCsAC/bZOFboBRDcvejERlmAo1VNUdmay0vwMrqS36rJoYso5RdlMq1ZjYti
-         M+6A==
+        bh=4UBgP26XirI2Mdbk8bLkdYXr/2uNsC93grarbfiA6P0=;
+        b=XJT39NjPiBrKGZpaL4fPhbqnGs9XQiPBF+X/3Mybdxm759AMzl5eO0w6g5yNpSDemz
+         +BopKTA3IBCHA2TbnQfrxMK25lHiEvqs6ewkAP7iV3fKN+nmrCKGS3fWBb5OpQGbyHLV
+         5XWkcOp79N0zWHNNI3ZxWwN8Eij7RB74UJc6bokjbUcRtQ/ngkg792hRwlgpbJyrhQ0e
+         io5Of5Ar/sYZChCVb8538xn59/wrrt89iUXx90jTBCp4jKNGKgJAacQI/VmhBe1n7l1q
+         0stVBTnsTJGD3/nMk5cm/O6ke0w4rqRSzLSYV1hdVu1kbEGi8v+1BqwUgyRLIIWDydxh
+         20+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=EgHGYAPhEyQasR26YgQukCBPFjKJvCWmEotEzQNwJts=;
-        b=dCXx6nDye4N7r1PHlH0wbWmzXwqT8WlDteAmcb+QyS7s0p+SYF2ewSTiDYvjIkzDjt
-         VMQrlfEVRDOHaT+ZHwLuAnUol12lwzj2ZtwyJ9g/y2dlOh8OZQ7Wbwo3hAgCOovOWhma
-         d+N+XeDw02abL9PoZrCteKr9c6cUcMzxRy/kmEjZuuDn+aL5P/Wb2UmE7raoCTIWK3wv
-         PTgMSVcWowVYtHtIJiFCmVXtcnlGalAOFVjG2YAmZ7nAS+3ufBPfUwYGzEZj2CPdiNRM
-         yqSJ39AemzOiBMIvlI3PM4grmVSDrWPUfBRQRHQgNUp5Uv4f1PSH+3oS8dUjjysG6YPE
-         n/Xw==
-X-Gm-Message-State: ALoCoQn+JaHZd+TS1tVIhzfeAlBxQ9qX/Qr5BKSEfuAlDl9oEvRhSjd/NMnJ4LA4ZREMMuSGgRaO
-X-Received: by 10.52.175.3 with SMTP id bw3mr1327755vdc.5.1402941863230;
+        bh=4UBgP26XirI2Mdbk8bLkdYXr/2uNsC93grarbfiA6P0=;
+        b=jZ/GgkJiXwg/tSBTlQQkUWIeoawF8xpXhDsBOBjpBleXUM42JXidpJvzqQkZ1740UK
+         2IaVR//OB2QuKe/K5l5Qq4UmrcLUSV304RmEReQjCWNCB3lW7B3TNPdrpy9XMkkApNtG
+         ZdmvVr/Kl9fvZSgzpYG3Lff2AU9ZxbwWtwCobqErvRS6GIMA00dlgNRgDzKWFL64JIpw
+         L+e6DkMyjurWs8oMKoxRZVanjrO+ncqdEc31XheennTCtfrtlCQbqCyY457chqF7w2Rd
+         6ca5TmAdaWYLVVQK7D52VY4+sfWqADrB9ypzugggXnF2QhPAAgRTR8ZDaDeJ4caEb01u
+         YYrg==
+X-Gm-Message-State: ALoCoQnHxs/fugPMSWXzXH+0OeRJ0CvikSn7tG1xgqd0x+YqqpLySt4Gcs3GlEsJJSPZwb1usqYI
+X-Received: by 10.42.94.8 with SMTP id z8mr2194icm.3.1402941863156;
         Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id z50si997795yhb.3.2014.06.16.11.04.23
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id y50si997324yhk.4.2014.06.16.11.04.23
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 03AF131C8AD;
-	Mon, 16 Jun 2014 11:04:23 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id D672E5A490D;
+	Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id D463BE0961; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
+	id B2E51E0F37; Mon, 16 Jun 2014 11:04:22 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.282.g3799eda.dirty
 In-Reply-To: <1402941859-29354-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251778>
 
-Track the status of a transaction in a new status field. Check the field for
-sanity, i.e. that status must be OPEN when _commit/_create/_delete or
-_update is called or else die(BUG:...)
+Since all callers now use QUIET_ON_ERR we no longer need to provide an onerr
+argument any more. Remove the onerr argument from the ref_transaction_commit
+signature.
 
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 40 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ builtin/update-ref.c |  3 +--
+ refs.c               | 22 +++++++---------------
+ refs.h               |  3 +--
+ 3 files changed, 9 insertions(+), 19 deletions(-)
 
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index aec9004..88ab785 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -366,8 +366,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 		if (end_null)
+ 			line_termination = '\0';
+ 		update_refs_stdin();
+-		if (ref_transaction_commit(transaction, msg, &err,
+-					   UPDATE_REFS_QUIET_ON_ERR))
++		if (ref_transaction_commit(transaction, msg, &err))
+ 			die("%s", err.buf);
+ 		ref_transaction_free(transaction);
+ 		return 0;
 diff --git a/refs.c b/refs.c
-index 4937754..b75523f 100644
+index 59992bc..fdbd107 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3384,6 +3384,25 @@ struct ref_update {
- };
+@@ -3488,8 +3488,7 @@ static int ref_update_compare(const void *r1, const void *r2)
+ }
+ 
+ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+-					struct strbuf *err,
+-					enum action_on_err onerr)
++					struct strbuf *err)
+ {
+ 	int i;
+ 	for (i = 1; i < n; i++)
+@@ -3499,22 +3498,13 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ 			if (err)
+ 				strbuf_addf(err, str, updates[i]->refname);
+ 
+-			switch (onerr) {
+-			case UPDATE_REFS_MSG_ON_ERR:
+-				error(str, updates[i]->refname); break;
+-			case UPDATE_REFS_DIE_ON_ERR:
+-				die(str, updates[i]->refname); break;
+-			case UPDATE_REFS_QUIET_ON_ERR:
+-				break;
+-			}
+ 			return 1;
+ 		}
+ 	return 0;
+ }
+ 
+ int ref_transaction_commit(struct ref_transaction *transaction,
+-			   const char *msg, struct strbuf *err,
+-			   enum action_on_err onerr)
++			   const char *msg, struct strbuf *err)
+ {
+ 	int ret = 0, delnum = 0, i;
+ 	const char **delnames;
+@@ -3529,7 +3519,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 
+ 	/* Copy, sort, and reject duplicate refs */
+ 	qsort(updates, n, sizeof(*updates), ref_update_compare);
+-	ret = ref_update_reject_duplicates(updates, n, err, onerr);
++	ret = ref_update_reject_duplicates(updates, n, err);
+ 	if (ret)
+ 		goto cleanup;
+ 
+@@ -3541,7 +3531,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 					       (update->have_old ?
+ 						update->old_sha1 : NULL),
+ 					       update->flags,
+-					       &update->type, onerr);
++					       &update->type,
++					       UPDATE_REFS_QUIET_ON_ERR);
+ 		if (!update->lock) {
+ 			if (err)
+ 				strbuf_addf(err, "Cannot lock the ref '%s'.",
+@@ -3559,7 +3550,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			ret = update_ref_write(msg,
+ 					       update->refname,
+ 					       update->new_sha1,
+-					       update->lock, err, onerr);
++					       update->lock, err,
++					       UPDATE_REFS_QUIET_ON_ERR);
+ 			update->lock = NULL; /* freed by update_ref_write */
+ 			if (ret)
+ 				goto cleanup;
+diff --git a/refs.h b/refs.h
+index 86f0984..1eb447d 100644
+--- a/refs.h
++++ b/refs.h
+@@ -278,8 +278,7 @@ void ref_transaction_delete(struct ref_transaction *transaction,
+  * the transaction failed. The string does not end in newline.
+  */
+ int ref_transaction_commit(struct ref_transaction *transaction,
+-			   const char *msg, struct strbuf *err,
+-			   enum action_on_err onerr);
++			   const char *msg, struct strbuf *err);
  
  /*
-+ * Transaction states.
-+ * OPEN:   The transaction is in a valid state and can accept new updates.
-+ *         An OPEN transaction can be committed.
-+ * CLOSED: If an open transaction is successfully committed the state will
-+ *         change to CLOSED. No further changes can be made to a CLOSED
-+ *         transaction.
-+ *         CLOSED means that all updates have been successfully committed and
-+ *         the only thing that remains is to free the completed transaction.
-+ * ERROR:  The transaction has failed and is no longer committable.
-+ *         No further changes can be made to a CLOSED transaction and it must
-+ *         be rolled back using transaction_free.
-+ */
-+enum ref_transaction_state {
-+	REF_TRANSACTION_OPEN   = 0,
-+	REF_TRANSACTION_CLOSED = 1,
-+	REF_TRANSACTION_ERROR  = 2,
-+};
-+
-+/*
-  * Data structure for holding a reference transaction, which can
-  * consist of checks and updates to multiple references, carried out
-  * as atomically as possible.  This structure is opaque to callers.
-@@ -3392,6 +3411,8 @@ struct ref_transaction {
- 	struct ref_update **updates;
- 	size_t alloc;
- 	size_t nr;
-+	enum ref_transaction_state state;
-+	int status;
- };
- 
- struct ref_transaction *ref_transaction_begin(struct strbuf *err)
-@@ -3434,6 +3455,9 @@ int ref_transaction_update(struct ref_transaction *transaction,
- {
- 	struct ref_update *update;
- 
-+	if (transaction->state != REF_TRANSACTION_OPEN)
-+		die("BUG: update called for transaction that is not open");
-+
- 	if (have_old && !old_sha1)
- 		die("BUG: have_old is true but old_sha1 is NULL");
- 
-@@ -3454,6 +3478,9 @@ int ref_transaction_create(struct ref_transaction *transaction,
- {
- 	struct ref_update *update;
- 
-+	if (transaction->state != REF_TRANSACTION_OPEN)
-+		die("BUG: create called for transaction that is not open");
-+
- 	if (!new_sha1 || is_null_sha1(new_sha1))
- 		die("BUG: create ref with null new_sha1");
- 
-@@ -3474,6 +3501,9 @@ int ref_transaction_delete(struct ref_transaction *transaction,
- {
- 	struct ref_update *update;
- 
-+	if (transaction->state != REF_TRANSACTION_OPEN)
-+		die("BUG: delete called for transaction that is not open");
-+
- 	if (have_old && !old_sha1)
- 		die("BUG: have_old is true but old_sha1 is NULL");
- 
-@@ -3529,8 +3559,13 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
- 
--	if (!n)
-+	if (transaction->state != REF_TRANSACTION_OPEN)
-+		die("BUG: commit called for transaction that is not open");
-+
-+	if (!n) {
-+		transaction->state = REF_TRANSACTION_CLOSED;
- 		return 0;
-+	}
- 
- 	/* Allocate work space */
- 	delnames = xmalloc(sizeof(*delnames) * n);
-@@ -3593,6 +3628,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 	clear_loose_ref_cache(&ref_cache);
- 
- cleanup:
-+	transaction->state = ret ? REF_TRANSACTION_ERROR
-+		: REF_TRANSACTION_CLOSED;
-+
- 	for (i = 0; i < n; i++)
- 		if (updates[i]->lock)
- 			unlock_ref(updates[i]->lock);
+  * Free an existing transaction and all associated data.
 -- 
 2.0.0.282.g3799eda.dirty
