@@ -1,88 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] http: fix charset detection of extract_content_type()
-Date: Mon, 16 Jun 2014 11:29:39 -0700
-Message-ID: <xmqqha3kr9m4.fsf@gitster.dls.corp.google.com>
-References: <539caff7.e7bc420a.76b9.fffff853@mx.google.com>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [PATCH] doc git: multivar configuration parameters append to
+ existing values
+Date: Mon, 16 Jun 2014 11:35:11 -0700
+Message-ID: <539F38DF.3090004@gmail.com>
+References: <1402922952-172-1-git-send-email-philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: nori <semtlenori@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 16 20:29:52 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Robert Clausecker <fuz@fuz.su>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Mon Jun 16 20:35:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwbfC-00078Z-N5
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:29:51 +0200
+	id 1Wwbkb-0005KX-3n
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 20:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932333AbaFPS3r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 14:29:47 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51237 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932105AbaFPS3q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 14:29:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4D14F203A9;
-	Mon, 16 Jun 2014 14:29:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VzNwBqplfhAw52VROl06URE9ZIE=; b=ZH6VjN
-	UlDQu5MeF82psBMZU9UTSvkSzF3lonczR6twTXFV1V72jwNUM+24nWxMMkoQ6Kps
-	tJsjybGGmgkGGrdyCXng4x0R+r2eMxMdCJQUvk2Ym2+olpOBRowW0feNUiWxNbwW
-	JLe4laayUhk62wTxdDfEKix+w2J/FA4xpHias=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TpArhyPNvBI+a+uFQ+PEJxpe9hsqg7pu
-	OHUqX24vASA6cBd9MGWsk6B4mhSsiuiO1goH3UXD7F4GPXBAkhEHFiSECFyCT7uP
-	Q1ZkquIIYzemNC1nDQ1cnKH+x/FEXrLj+2sXx3yDOXvzSyd5TMHVfdFLL1efl4sl
-	CFATAYVMDPU=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 43863203A8;
-	Mon, 16 Jun 2014 14:29:43 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0025D203A0;
-	Mon, 16 Jun 2014 14:29:38 -0400 (EDT)
-In-Reply-To: <539caff7.e7bc420a.76b9.fffff853@mx.google.com> (nori's message
-	of "Sun, 15 Jun 2014 03:49:34 +0900")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2CF728AE-F584-11E3-806D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932349AbaFPSfU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 14:35:20 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:63965 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932195AbaFPSfU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 14:35:20 -0400
+Received: by mail-pa0-f50.google.com with SMTP id bj1so3014802pad.9
+        for <git@vger.kernel.org>; Mon, 16 Jun 2014 11:35:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=+Iqh4cZNB4QUfqY/VCAxnUri7w7umJYjyVJkBkSeeag=;
+        b=nZK4T6sR5TlEvEQ6dvuCyyCDOGvmvUaqCTVW2XXTDCX12O9ROXokyXU3mw0OkJt/C2
+         nmwXczrxBWeNiHCwNx31Vtc3tJ9bzoSnISavpNz/siyrupKOr/iQKJ+ZufDLeO1mFPrY
+         C3Pl+HjEnf2ZRvYaY7NQiCXaCH0orECM85RRWCPU7S6Q7iWQ+4xKgHa8O7TLHPbro5lu
+         LbESUoWow2qUx/6ejWGZMEjrk7x4xf+g9KdSAezVvyl9m2dy7qJvz/JKChMixU7mIswt
+         s8ImrIYBTh4rbFttQ2Yxsg834IkVNMOWt/eeswK0749yXld5byxp66YSe5bC4RRm94y2
+         blYQ==
+X-Received: by 10.68.226.105 with SMTP id rr9mr6687987pbc.161.1402943719465;
+        Mon, 16 Jun 2014 11:35:19 -0700 (PDT)
+Received: from [192.168.52.163] ([117.254.222.96])
+        by mx.google.com with ESMTPSA id gr10sm20000906pbc.84.2014.06.16.11.35.14
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 16 Jun 2014 11:35:18 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
+In-Reply-To: <1402922952-172-1-git-send-email-philipoakley@iee.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251796>
 
-nori <semtlenori@gmail.com> writes:
+On 06/16/2014 05:49 AM, Philip Oakley wrote:
 
-> extract_content_type() could not extract a charset parameter if the
-> parameter is not the first one and there is a whitespace and a following
-> semicolon just before the parameter. For example:
->
->     text/plain; format=fixed ;charset=utf-8
->
-> Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
-> ---
+>  	Pass a configuration parameter to the command. The value
+> -	given will override values from configuration files.
+> +	given will override single valued variables from configuration
+> +	files, and append to multivar variables. Previous multivar values
 
-Peff, doesn't this look somehow familiar?  Perhaps with e3131626
-(http: optionally extract charset parameter from content-type,
-2014-05-22), this patch is unnecessary?
+Nit: Forgive me if I am wrong, but `, and` is used for joining two independent
+clauses. It would be better to drop the comma.
 
->  http.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/http.c b/http.c
-> index 2b4f6a3..05e8b91 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -971,7 +971,7 @@ static void extract_content_type(struct strbuf *raw, struct strbuf *type,
+> +	remain in effect. Use "insteadOf" style config variables when an
+> +	over-ride is needed.
+>  	The <name> is expected in the same format as listed by
+>  	'git config' (subkeys separated by dots).
 >  
->  	strbuf_reset(charset);
->  	while (*p) {
-> -		while (isspace(*p))
-> +		while (isspace(*p) || *p == ';')
->  			p++;
->  		if (!extract_param(p, "charset", charset))
->  			return;
+> 
+
+'insteadOf' is a very specific approach for a general suggestion because it is only
+used in url.*.insteadof in the whole codebase. Also, it has a variation described in
+urls.txt as "pushinsteadof". So, if a problem such as mentioned above arises in
+a different scenario 'insteadOf' cannot be used in it.
