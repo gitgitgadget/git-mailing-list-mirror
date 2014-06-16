@@ -1,69 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] pretty: avoid reading past end-of-string with "%G"
-Date: Mon, 16 Jun 2014 16:13:11 -0400
-Message-ID: <20140616201311.GA26829@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/3] add strnncmp() function
+Date: Mon, 16 Jun 2014 13:16:44 -0700
+Message-ID: <20140616201644.GN8557@google.com>
+References: <cover.1402945507.git.jmmahler@gmail.com>
+ <58e0ac866bdeb8cc6e06cf553a459af351ccfd1b.1402945507.git.jmmahler@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Michael J Gruber <git@drmicha.warpmail.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 22:13:25 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeremiah Mahler <jmmahler@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 16 22:16:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwdHK-0002X2-FC
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 22:13:18 +0200
+	id 1WwdKm-0006hg-4E
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 22:16:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756016AbaFPUNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 16:13:14 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45478 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755298AbaFPUNN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 16:13:13 -0400
-Received: (qmail 14041 invoked by uid 102); 16 Jun 2014 20:13:12 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 16 Jun 2014 15:13:12 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 16 Jun 2014 16:13:11 -0400
+	id S1755876AbaFPUQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 16:16:48 -0400
+Received: from mail-pa0-f52.google.com ([209.85.220.52]:61769 "EHLO
+	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752310AbaFPUQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 16:16:47 -0400
+Received: by mail-pa0-f52.google.com with SMTP id eu11so4873868pac.39
+        for <git@vger.kernel.org>; Mon, 16 Jun 2014 13:16:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=NXzuUbaLl4WqlW/5t4lEhPSPhQpU4TfuOMtN6VubNt8=;
+        b=Z6VoCFOxPxn1KGX4qBtkgfOztcn+QmhU0pD8sjucXJPKkVDwZGOkq20Sy0F//qGKR2
+         03D1hNxUY+OP6idjeZe60rZxjebnXlBpC5Fim/1LGI3Uo20DUtLEHc0btAGpmQ9EU2lO
+         Q9E+LYCrxyIrpmKkoUFhhA7TaCAez61zR+Yf+sj4uuAtuBQLvBcA5wHPkG3iIMERvPeg
+         SOIzPHbq2ic+Rzjh/KoJx2/iNwcrSqq7nj4nga3hCZM4Hszt7sVLM/8mA352XR6OtRSx
+         h8HpkV9iozaoSLCKUUmA1BrVw+MVl14lnXD+tJcjfCK5dXdaSSJk/OA5oE2ejy0gdh2J
+         ZDuw==
+X-Received: by 10.66.132.70 with SMTP id os6mr26586655pab.110.1402949807409;
+        Mon, 16 Jun 2014 13:16:47 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id or4sm20303547pbb.17.2014.06.16.13.16.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Mon, 16 Jun 2014 13:16:46 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <58e0ac866bdeb8cc6e06cf553a459af351ccfd1b.1402945507.git.jmmahler@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251816>
 
-If the user asks for --format=%G with nothing else, we
-correctly realize that "%G" is not a valid placeholder (it
-should be "%G?", "%GK", etc). But we still tell the
-strbuf_expand code that we consumed 2 characters, causing it
-to jump over the trailing NUL and output garbage.
+Jeremiah Mahler wrote:
 
-This also fixes the case where "%GX" would be consumed (and
-produce no output). In other cases, we pass unrecognized
-placeholders through to the final string.
+> Add a strnncmp() function which behaves like strncmp() except it uses
+> the length of both strings instead of just one.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Noticed while experimenting with "%G" placeholders in the nearby thread.
+The above description isn't very clear to me.  Problems:
 
-It doesn't look like we have any tests of "%G*" and friends at all. :(
+ - strncmp compares prefixes of \0-terminated strings.  This function
+   compares two binary buffers which can contain \0
 
- pretty.c | 2 ++
- 1 file changed, 2 insertions(+)
+ - strncmp is a comparison function and can even be used with functions
+   like qsort (for operations like "sort on the first two characters").
+   This function returns 0 or nonzero.
 
-diff --git a/pretty.c b/pretty.c
-index e1e2cad..70d8776 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1267,6 +1267,8 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 			if (c->signature_check.key)
- 				strbuf_addstr(sb, c->signature_check.key);
- 			break;
-+		default:
-+			return 0;
- 		}
- 		return 2;
- 	}
--- 
-2.0.0.566.gfe3e6b2
+Would something like
+
+  /* true if buffers have the same length and are byte-for-byte identical */
+  int bufeq(const char *, int, const char *, int);
+
+(or buf_equal, array_equal etc) make sense?
