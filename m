@@ -1,97 +1,115 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 01/14] test-lib: add test_dir_is_empty()
-Date: Mon, 16 Jun 2014 15:05:47 -0700
-Message-ID: <xmqq7g4gpl1g.fsf@gitster.dls.corp.google.com>
-References: <539DD029.4030506@web.de> <539DD068.6020301@web.de>
+Subject: Re: [PATCH v5 4/4] commit: Add commit.verbose configuration
+Date: Mon, 16 Jun 2014 15:25:22 -0700
+Message-ID: <xmqq38f4pk4t.fsf@gitster.dls.corp.google.com>
+References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
+	<1402603225-46240-1-git-send-email-caleb@calebthompson.io>
+	<xmqqppic3dko.fsf@gitster.dls.corp.google.com>
+	<20140616195057.GB28126@sirius.local>
+	<xmqqzjhcpqju.fsf@gitster.dls.corp.google.com>
+	<20140616201037.GA37953@sirius.local>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Jun 17 00:05:59 2014
+Cc: git@vger.kernel.org
+To: Caleb Thompson <caleb@calebthompson.io>
+X-From: git-owner@vger.kernel.org Tue Jun 17 00:25:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwf2M-0000iD-Oh
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 00:05:59 +0200
+	id 1WwfLK-000705-8B
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 00:25:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755519AbaFPWFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 18:05:55 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54762 "EHLO smtp.pobox.com"
+	id S932449AbaFPWZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 18:25:30 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64451 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752310AbaFPWFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 18:05:54 -0400
+	id S932396AbaFPWZ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 18:25:29 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8F87320E33;
-	Mon, 16 Jun 2014 18:05:51 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B5AF021386;
+	Mon, 16 Jun 2014 18:25:26 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kkzDcb7yr8PfwMmnuT9tuJOT3Dw=; b=ZWDWol
-	i+dmlclWeyiRvEvcgOPYZCzc4up/9gpm/zPi5g/l0k4lPMzZyjIf/TLjQvZRWol3
-	6SUS15ckt9o17PfUtqHHFmGqFu9TFsqUWjXAPvlWjAJyUd3FhrnIy6pTOPn2m8IC
-	1hXoGYPB5QL3TeDmzMs6setzwuXOqNvPLEuDA=
+	:content-type; s=sasl; bh=SbcWlVlaVZe13IXxzonV/3EHFz0=; b=VFA/is
+	EG4b57uGYvfiqFdQTrjjQ2mJHLQ8SrFPO8lZbmnI5wLywQAZ9OgqfHxY6biQbIUR
+	/RcxnfxVotFo2s/LIPtcNb59P337FOMqP/B4YITOIBasBzxPLaIXf/bRUE0rrt8d
+	sQj/ro1e9fHi2Bl/v7+UpYegNw/baTF9JZ2Z0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LZOKd6eS28D0Qu/T9yPl0IOBR/4UrEdT
-	ka/M3jx/oRPp46ERiyfT/50vBae2DPMO8F1abNCMiSPDV4mqtj+cEWBR03OW/eoy
-	vIuFh+QcumWvgSl9xeNBagW9F6kw33PvHvKXDXyhxyI8YfyW3H0CjWMw5sN0OPfN
-	fNresqhMXoM=
+	:content-type; q=dns; s=sasl; b=FMT3zrgZiiU3XKbjWT5UmH564aWEiLB9
+	J1VVMnShZLe7+y8V1GSCEX2GDGqwY3sHWBPOQ2EiRTtBN0xMyQk4yaE4VEMIHUib
+	iOAzpRlDzF0Win94kWjiaX4F17OaCvHfOrJpqdXRQH+4c+/Tr+uaOunmf+5/a73/
+	D26p+AZjx58=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 857AD20E32;
-	Mon, 16 Jun 2014 18:05:51 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2B45221385;
+	Mon, 16 Jun 2014 18:25:26 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2767520E2A;
-	Mon, 16 Jun 2014 18:05:47 -0400 (EDT)
-In-Reply-To: <539DD068.6020301@web.de> (Jens Lehmann's message of "Sun, 15 Jun
-	2014 18:57:12 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8273321382;
+	Mon, 16 Jun 2014 18:25:21 -0400 (EDT)
+In-Reply-To: <20140616201037.GA37953@sirius.local> (Caleb Thompson's message
+	of "Mon, 16 Jun 2014 15:10:37 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5E976B58-F5A2-11E3-8135-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 1A92058C-F5A5-11E3-AE41-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251827>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Caleb Thompson <caleb@calebthompson.io> writes:
 
-> For the upcoming submodule test framework we often need to assert that an
-> empty directory exists in the work tree. Add the test_dir_is_empty()
-> function which asserts that the given argument is an empty directory.
+>> Again, what are we testing, exactly?
+>>
+>> We do not want to see "^diff --git" in the output file, in other
+>> words, we want to make sure "^diff --git" does not appear in the
+>> output.
+>>
+>> So
+>>
+>>         write_script check-for-no-diff <<-\EOF
+>>         ! grep '^diff --git' "$@"
+>>	EOF
+>>
+>> should be the most natural way to express what we are testing, no?
 >
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
->  t/test-lib-functions.sh | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+> I did consider that. The reason I didn't propose that is that it doesn't catch
+> the unlikely case that the $1 only contains a "diff --git" line or that $1 is
+> empty.
 >
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 158e10a..546f0a6 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -489,6 +489,17 @@ test_path_is_dir () {
->  	fi
->  }
->
-> +# Check if the directory exists and is empty as expected, barf otherwise.
-> +test_dir_is_empty () {
-> +	test_path_is_dir "$1" &&
-> +	if test "$(ls -a1 "$1" | egrep -v '^\.\.?$')"
+> Those are rather unreasonable concerns, so I'm happy to use the much more
+> readable version as you propose.
 
-It is safer to say "test -n" when testing an emptyness of a string
-whose contents you do not know or control (e.g. the string may begin
-with "-something").
+If it only has "diff --git", then the grep will find a hit, exits
+with success, the script yields the opposite and "git commit" will
+fail, which is what we want, so that is OK.  "$1 is empty" may or
+may not be an error, depending on your settings, I guess (i.e. can't
+we squelch the "# helpful instruction" lines altogether?)?
 
-> +	then
-> +		echo "Directory '$1' is not empty, it contains:"
-> +		ls -la "$1"
-> +		return 1
-> +	fi
-> +}
-> +
->  test_path_is_missing () {
->  	if [ -e "$1" ]
->  	then
+If the editor input is expected to be very stable, we could even do
+something like:
+
+	write_script check-editor-input <<-\EOF
+	diff expect "$1" >&2
+        EOF
+
+and then catch any deviation from the norm with something like:
+
+	cat >expect <<-\EOF &&
+        ... expected editor input comes here ...
+        EOF
+        test_set_editor "$PWD/check-editor-input &&
+	git commit --amend
+
+but if the editor input may easily be affected by volatile things
+like blob object names given in the diff output by "commit -v" or
+untracked cruft in the working tree listed in the status output,
+then it would add unnecessary maintenance burden (every time earlier
+parts of the test scripts are updated, the expected output may have
+to change to adjust to these non-essential details), so it is a
+judgment call.
+
+Thanks.
