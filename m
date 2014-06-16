@@ -1,161 +1,106 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [PATCH v2 2/2] config: Add hashtable for config parsing & retrieval
-Date: Mon, 16 Jun 2014 10:28:29 -0700
-Message-ID: <539F293D.9000602@gmail.com>
-References: <1402907232-24629-1-git-send-email-tanayabh@gmail.com> <1402907232-24629-3-git-send-email-tanayabh@gmail.com> <vpqy4ww230l.fsf@anie.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC] branch.c: Replace `git_config` with `git_config_get_string`
+Date: Mon, 16 Jun 2014 19:29:19 +0200
+Message-ID: <vpqfvj4226o.fsf@anie.imag.fr>
+References: <1402908750-24851-1-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jun 16 19:28:43 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 16 19:29:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwai1-0002xC-3g
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 19:28:41 +0200
+	id 1Wwaik-0003pd-HM
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 19:29:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932414AbaFPR2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 13:28:37 -0400
-Received: from mail-pb0-f46.google.com ([209.85.160.46]:49297 "EHLO
-	mail-pb0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932194AbaFPR2g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 13:28:36 -0400
-Received: by mail-pb0-f46.google.com with SMTP id md12so3843033pbc.5
-        for <git@vger.kernel.org>; Mon, 16 Jun 2014 10:28:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=XDeL0mVVWiuaLkDPsQmB2G/tWj96HVXmoQaCAxb/VjU=;
-        b=zd1G5EZvasg1V3VTSYovKH/WZSwEHQSwcWbYXsgFmhZJi1PaWZd8ueHk7TjheHU9wP
-         uCNNZos8fCTSRIHVtPDtv2Cg54arMuIjSTbKsU+qKN/QGjYKpuopoUnDR7FzhNBEqzv0
-         ZdXxaB9QmsErk5lAzFVoScU7+2DUA8xnQQ+fpXSV+HeOc+rRnhSH0SgNKiekCXHvH6NI
-         tD8hYyYdtpAvUU3iUdUuoG/VhLe+quxCxCEMeHxhNiEaV0cWoVaUMgjyhiVYxyXgVjhb
-         +sXQIM+6CkUmsCrFatHpYSDUyzPkYXvkWlX4NNN06wEkXtdorT81TFnqPYsdt4LtiM5i
-         r1Uw==
-X-Received: by 10.66.66.202 with SMTP id h10mr25935107pat.70.1402939716285;
-        Mon, 16 Jun 2014 10:28:36 -0700 (PDT)
-Received: from [192.168.52.163] ([117.254.222.96])
-        by mx.google.com with ESMTPSA id hb10sm19790324pbd.75.2014.06.16.10.28.32
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 16 Jun 2014 10:28:35 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <vpqy4ww230l.fsf@anie.imag.fr>
+	id S1755571AbaFPR3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 13:29:22 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46575 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755351AbaFPR3V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 13:29:21 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s5GHTHoM012976
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 16 Jun 2014 19:29:17 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s5GHTJrB026605;
+	Mon, 16 Jun 2014 19:29:19 +0200
+In-Reply-To: <1402908750-24851-1-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Mon, 16 Jun 2014 01:52:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 16 Jun 2014 19:29:17 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251737>
 
-On 06/16/2014 10:11 AM, Matthieu Moy wrote:
-> Tanay Abhra <tanayabh@gmail.com> writes:
-> 
->> Add a hash table to cache all key-value pairs read from config files
->> (repo specific .git/config, user wide ~/.gitconfig and the global
->> /etc/gitconfig). Add two external functions `git_config_get_string` and
->> `git_config_get_string_multi` for querying in a non-callback manner from the
->> hash table.
-> 
-> This describes rather well _what_ your patch does, but the most
-> important part of a commit message is to justify _why_ the change is
-> good, and why the way you implemented it is good.
-> 
-> Think of it as an way to convince reviewers to accept your patch.
+> Subject: Re: [PATCH/RFC] branch.c: Replace `git_config` with `git_config_get_string`
 
-Okay, but isn't the content of the cover letter is doing that for now.
-Should I put some part of it in here?
+Here and elsewhere: usually, no capital after :.
 
->> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
->> ---
->>  Documentation/technical/api-config.txt |  17 +++++
->>  cache.h                                |   2 +
->>  config.c                               | 123 +++++++++++++++++++++++++++++++++
->>  3 files changed, 142 insertions(+)
-> 
-> I'm still concerned about the fact that there is no test. At this point,
-> git_config_get_string_multi and git_config_get_string are basically dead
-> code.
-> 
-> I'm sure you did experiments to test these functions, run them through
-> valgrind, ... Now, you need to let other people reproduce these
-> experiments. "other people" can be reviewers, now, or anyone looking for
-> bugs or regressions in the future.
->
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-Yeah, I have run the experiments. I will add a test file for it. I should have
-appended it to this series only, my fault. :) A stray observation, Git has very less
-unit tests, compared to the comprehensive test directory for commands.
+> Original implementation uses a callback based approach which has some
+> deficiencies like a convoluted control flow and redundant variables.
 
->> +static struct config_cache_entry *config_cache_find_entry(const char *key)
->> +{
->> +	struct hashmap *config_cache;
->> +	struct config_cache_entry k;
->> +	struct config_cache_entry *found_entry;
->> +	char *normalized_key;
->> +	int ret;
->> +	config_cache = get_config_cache();
->> +	ret = git_config_parse_key(key, &normalized_key, NULL);
->> +
->> +	if (ret)
->> +		return NULL;
->> +
->> +	hashmap_entry_init(&k, strhash(normalized_key));
->> +	k.key = (char *)normalized_key;
-> 
-> No need to cast.
-> 
+"deficiencies" might be a bit strong (the code did work).
 
-Noted.
+> There are total 111 calls in total in all of git codebase. How should I send
+> the patches, alphabetically or otherwise?
 
->> +static int config_cache_set_value(const char *key, const char *value)
->> +{
->> +	struct hashmap *config_cache;
->> +	struct config_cache_entry *e;
->> +
->> +	config_cache = get_config_cache();
->> +	e = config_cache_find_entry(key);
->> +	if (!e) {
->> +		e = xmalloc(sizeof(*e));
->> +		hashmap_entry_init(e, strhash(key));
->> +		e->key = xstrdup(key);
->> +		string_list_init_dup(&e->value_list);
->> +		string_list_append(&e->value_list, value);
->> +		hashmap_add(config_cache, e);
->> +	} else {
->> +		string_list_append(&e->value_list, value);
->> +	}
->> +	return 0;
->> +}
-> 
-> I find the function name a bit confusing, as it does not "set" in the
-> sense "override any previous value". Wouldn't this be better named
-> config_cache_add_value? Or perhaps a comment would help.
->
+My advice would be: try as much as possible to split according to the
+complexity of the patch.
 
-Noted.
+As a reviewer, I find it rather easy to review a large number of trivial
+and similar changes, but I hate having to switch back to "wow, the
+author did something tricky, let's try to understand this" in the middle
+of a trivial series.
 
->> @@ -1714,6 +1830,13 @@ int git_config_set_multivar_in_file(const char *config_filename,
->>  	lock = NULL;
->>  	ret = 0;
->>  
->> +	/*
->> +	 *contents of config file has changed, so invalidate the
->> +	 *config cache used by non-callback based query functions.
->> +	 */
-> 
-> Spaces after stars:
-> 
-> /*
->  * Contents of config file has changed, so invalidate the
->  * config cache used by non-callback based query functions.
->  */
-> 
-> (I think the "s" of "contents" should be dropped too).
-> 
+(we had this discussion about `...` Vs $(...) and test -a Vs test ... &&
+series, which were essentially very trivial changes, but with subtle
+bugs introduced and hidden by the volume of trivial changes).
 
-Noted. Thanks for the review.
+>  branch.c | 25 +++++++++----------------
+>  1 file changed, 9 insertions(+), 16 deletions(-)
+
+Removing more lines than it adds. I like the patch already ;-).
+
+> diff --git a/branch.c b/branch.c
+> index 660097b..257b1bf 100644
+> --- a/branch.c
+> +++ b/branch.c
+[...]
+>  int read_branch_desc(struct strbuf *buf, const char *branch_name)
+>  {
+> -	struct branch_desc_cb cb;
+> +	const char *value;
+> +	struct branch_desc desc;
+>  	struct strbuf name = STRBUF_INIT;
+>  	strbuf_addf(&name, "branch.%s.description", branch_name);
+> -	cb.config_name = name.buf;
+> -	cb.value = NULL;
+> -	if (git_config(read_branch_desc_cb, &cb) < 0) {
+> +	desc.config_name = name.buf;
+> +	desc.value = NULL;
+> +	value = git_config_get_string(desc.config_name);
+> +	git_config_string(&desc.value, desc.config_name, value);
+
+You're ignoring the return value of git_config_string, which is an error
+code. It shouldn't harm, because the code is non-zero iff desc.value is
+set to non-NULL, but you may want to write the code as
+
+if (git_config_string(...)) {
+	strbuf_release(...);
+	return -1;
+}
+
+In any case, the patch sounds good to me.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
