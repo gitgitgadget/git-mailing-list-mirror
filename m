@@ -1,85 +1,112 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: [PATCH] gitk: use mktemp -d to avoid predictable temporary directories
-Date: Mon, 16 Jun 2014 13:40:03 +0200
-Message-ID: <539ED793.7050409@virtuell-zuhause.de>
-References: <1402695828-91537-1-git-send-email-davvid@gmail.com> <87k38ir4p0.fsf@red.patthoyts.tk>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: Why doesn't git-fetch obey -c "remote.origin.url" on the command-line?
+Date: Mon, 16 Jun 2014 13:48:02 +0100
+Organization: OPDS
+Message-ID: <24CCEC485B8B4C65B7785462369CBFF0@PhilipOakley>
+References: <CACBZZX4MyaOKkCvTSKhZtyRMFvpBMiMGz2ix3OxMz_s=P-=p=w@mail.gmail.com> <20140613075110.GH7908@sigill.intra.peff.net>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: patthoyts@users.sourceforge.net, David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 13:40:14 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed	reply-type=original
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Alex Riesen" <raa.lkml@gmail.com>,
+	"Tanay Abhra" <tanayabh@gmail.com>
+To: "Jeff King" <peff@peff.net>,
+	=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>, "Robert Clausecker" <fuz@fuz.su>
+X-From: git-owner@vger.kernel.org Mon Jun 16 14:48:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwVGn-00040A-RM
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 13:40:14 +0200
+	id 1WwWKo-0000Tc-BS
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 14:48:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986AbaFPLkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 07:40:07 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:53735 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751282AbaFPLkG (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 16 Jun 2014 07:40:06 -0400
-Received: from p5ddc3c66.dip0.t-ipconnect.de ([93.220.60.102] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1WwVGd-00032p-Hr; Mon, 16 Jun 2014 13:40:03 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <87k38ir4p0.fsf@red.patthoyts.tk>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1402918806;d1f7fc50;
+	id S1752591AbaFPMsU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Jun 2014 08:48:20 -0400
+Received: from out1.ip04ir2.opaltelecom.net ([62.24.128.240]:48098 "EHLO
+	out1.ip04ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752558AbaFPMsT (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jun 2014 08:48:19 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AjEsABbnnlMCYJ7h/2dsb2JhbABagw1SEQOCaUmFO7psAQECAQEMgQUXdYN+BQEBBAEIAQECFw8BBR4BASELAgMFAgEBAg4HAwICBSECAhQBBBoGBxcGARIIAgECAwGIKQwJlHScJIZ+lyiBKo1MNYJJNoEWBIRjAot6hVWFUpIVg0E8LwEB
+X-IPAS-Result: AjEsABbnnlMCYJ7h/2dsb2JhbABagw1SEQOCaUmFO7psAQECAQEMgQUXdYN+BQEBBAEIAQECFw8BBR4BASELAgMFAgEBAg4HAwICBSECAhQBBBoGBxcGARIIAgECAwGIKQwJlHScJIZ+lyiBKo1MNYJJNoEWBIRjAot6hVWFUpIVg0E8LwEB
+X-IronPort-AV: E=Sophos;i="5.01,486,1400022000"; 
+   d="scan'208";a="462723050"
+Received: from host-2-96-158-225.as13285.net (HELO PhilipOakley) ([2.96.158.225])
+  by out1.ip04ir2.opaltelecom.net with SMTP; 16 Jun 2014 13:47:52 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251713>
 
-Am 15.06.2014 09:51, schrieb Pat Thoyts:
-> David Aguilar <davvid@gmail.com> writes:
-> 
->> gitk uses a predictable ".gitk-tmp.$PID" pattern when generating
->> a temporary directory.
+=46rom: "Jeff King" <peff@peff.net>
+> On Fri, Jun 13, 2014 at 09:37:07AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason
+> wrote:
+>
+>> On a git built from the master branch just now:
 >>
->> Use "mktemp -d .gitk-tmp.XXXXXX" to harden gitk against someone
->> seeding /tmp with files matching the pid pattern.
+>>  $ ./git config remote.origin.url
+>> https://code.google.com/p/git-core/
+>> $ ./git -c
+>> remote.origin.url=3Dgit://git.sourceforge.jp/gitroot/git-core/git.gi=
+t
+>> config remote.origin.url
+>> git://git.sourceforge.jp/gitroot/git-core/git.git
+>> $ GIT_TRACE=3D1 ./git -c
+>> remote.origin.url=3Dgit://git.sourceforge.jp/gitroot/git-core/git.gi=
+t
+>> fetch 2>&1 | head -n 2
+>> trace: built-in: git 'fetch'
+>> trace: run_command: 'git-remote-https' 'origin'
+>> 'https://code.google.com/p/git-core/'
 >>
->> Signed-off-by: David Aguilar <davvid@gmail.com>
->> ---
->> This issue was brought up during the first review of the previous patch
->> back in 2009.
->>
->> http://thread.gmane.org/gmane.comp.version-control.git/132609/focus=132748
->>
->> This is really [PATCH 2/2] and should be applied on top of my previous
->> gitk patch.
->>
->> gitk | 3 ++-
->> 1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/gitk b/gitk
->> index 82293dd..dd2ff63 100755
->> --- a/gitk
->> +++ b/gitk
->> @@ -3502,7 +3502,8 @@ proc gitknewtmpdir {} {
->> 	} else {
->> 	    set tmpdir $gitdir
->> 	}
->> -	set gitktmpdir [file join $tmpdir [format ".gitk-tmp.%s" [pid]]]
->> +	set gitktmpformat [file join $tmpdir ".gitk-tmp.XXXXXX"]
->> +	set gitktmpdir [exec mktemp -d $gitktmpformat]
->> 	if {[catch {file mkdir $gitktmpdir} err]} {
->> 	    error_popup "[mc "Error creating temporary directory %s:" $gitktmpdir] $err"
->> 	    unset gitktmpdir
-> 
-> This is a problem on Windows where we will not have mktemp. In Tcl 8.6
-> the file command acquired a "file tempfile" command to help with this
-> kind of issue (https://www.tcl.tk/man/tcl8.6/TclCmd/file.htm#M39) but
-> for older versions we should probably stick with the existing pattern at
-> least on Windows.
+>> I'd expect this to try to fetch from the remote.origin.url I
+>> specified
+>> on the command-line, but for some reason fetch doesn't pick that up.
+>> Isn't this a bug?
 
-We could of course add mktemp from http://www.mktemp.org to msysgit.
-I can do that if required.
+If anything, given Peff's clarification below, it's a bug in the way th=
+e
+documentation has (not) communicated this trap for the unwary.
 
-In mingwgitDevEnv we already have the the need for mktemp, and a msys
-package, so this is also not a problem.
+The question would then become "What warning should be given and where
+should it/they be placed?" It should go within the documentation where=20
+folk
+look to check that the command innvocations were as expected. (It may
+also be a 'common knowledge' issue [2]).
+
+I already see that the git(1) man page for the '-c' option doesn't cove=
+r
+the mult-value config option case.
+
+The config-api suggests the common priority order where later values
+override newer values.
+
+I've done a little documentation patch to cover the current situation.
+
+I've also copied in Robert (fuz) (from [1]) and Tanay (updating the
+reading of config files).
+
+>
+> I think this is an alternate version of the report in [1].
+>
+> The short answer is: remote.*.url is a multi-valued config option, an=
+d
+> you can only append to (not override) such options with "git -c". Try
+> using insteadOf.
+>
+> -Peff
+>
+> [1] http://article.gmane.org/gmane.comp.version-control.git/250427
+> --
+[2] "It ain't what you don't know that gets you into trouble. It's what
+you know for sure that just ain't so." Mark Twain=20
