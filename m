@@ -1,118 +1,137 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 0/4] commit: Add commit.verbose configuration
-Date: Mon, 16 Jun 2014 13:28:19 -0700
-Message-ID: <xmqqsin4ppjw.fsf@gitster.dls.corp.google.com>
-References: <1402601942-45553-1-git-send-email-caleb@calebthompson.io>
-	<20140612203010.GA17761@hudson.localdomain>
-	<20140613164910.GA87252@sirius.local>
-	<20140614041452.GA1375@hudson.localdomain>
+Subject: Re: [PATCH] rebase--merge: fix --skip with two conflicts in a row
+Date: Mon, 16 Jun 2014 13:31:59 -0700
+Message-ID: <xmqqoaxsppds.fsf@gitster.dls.corp.google.com>
+References: <20140615223913.GI368384@vauxhall.crustytoothpaste.net>
+	<ea5a46c7605a181b6726093e04bc882b013fd504.1402876855.git.sandals@crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Caleb Thompson <caleb@calebthompson.io>, git@vger.kernel.org
-To: Jeremiah Mahler <jmmahler@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 16 22:28:37 2014
+Cc: git@vger.kernel.org, Phillip Susi <psusi@ubuntu.com>,
+	Jeff King <peff@peff.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Mon Jun 16 22:32:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwdW7-00040q-Qk
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 22:28:36 +0200
+	id 1WwdZc-0008MQ-H0
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 22:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755685AbaFPU21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 16:28:27 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50941 "EHLO smtp.pobox.com"
+	id S1755841AbaFPUcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 16:32:08 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53054 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755298AbaFPU20 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 16:28:26 -0400
+	id S1755193AbaFPUcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 16:32:07 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4A0FE205E6;
-	Mon, 16 Jun 2014 16:28:23 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4BC3220750;
+	Mon, 16 Jun 2014 16:32:04 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tUqprRAxAMMmKYbInJuSWJUi/vY=; b=VHkFay
-	gEJ0kXK3uoPGnJjgpTwR72dR+El/+Jkpp4E/ae7obptfLBo9dXg4RlHwEuKJo8iu
-	EcQMihyIpQxwjdAN5ApU8PM9VuoaB7hc7iM6/CF6/zSHVYaykQLUvU57GS8hyLjh
-	Biu5CwZOCiqCDVM+2Q9eNZS281Uw2eDYmbtSg=
+	:content-type; s=sasl; bh=xiETJgcWK4vp+DAa19d8AnPOcmQ=; b=IIpdxn
+	HwSin0lxu32Az2yacuGqd3uDTnEYw9oRlLipmRd1cKNWdmx0SF5iJeByqCe+AV/o
+	UJ64g6RSihP6FOvcGwyI6Xtwc/C82Zl1kgte2A0g51Rv4mFS8hvytHfsqFGiK9K4
+	l5oTCYjc6r4romZyUqxrhSOVZv0sY1m2Wh0zc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Uun3u68yqFDKlZ6EFEJi3j+u+P4i79a2
-	DqdDOHQzK3GWKohvYRefAjrr8GwdLJGSkJnk/u2PSRT3hEWhBYj4fEqZX820C9uf
-	59SQhfyhelgTpHOSUpGXyXODrR30gB1fv/rlIFApIAE+HpYXO1Pp+ZBIQcsg4+aW
-	0t3E6N15Piw=
+	:content-type; q=dns; s=sasl; b=cCB4QPP1BJjgW7/JTi9ZWjHtbIe9N3MN
+	xZ5yHcY9ZCkdKWb2m8jKtSHU7zsq4bz4FZmqoEbIHt9199rvJ6aXgrLiB93fpnhg
+	S5gy9gZG0rus1dNCSEEGYLQ/j0bkh3tt0sSCIirND8DycQyHkFvPaTomtibptWg+
+	XMxvVzhnOG4=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3DC0D205E5;
-	Mon, 16 Jun 2014 16:28:23 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 421FA2074F;
+	Mon, 16 Jun 2014 16:32:04 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C77E205E0;
-	Mon, 16 Jun 2014 16:28:18 -0400 (EDT)
-In-Reply-To: <20140614041452.GA1375@hudson.localdomain> (Jeremiah Mahler's
-	message of "Fri, 13 Jun 2014 21:14:52 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 663FE20743;
+	Mon, 16 Jun 2014 16:31:59 -0400 (EDT)
+In-Reply-To: <ea5a46c7605a181b6726093e04bc882b013fd504.1402876855.git.sandals@crustytoothpaste.net>
+	(brian m. carlson's message of "Mon, 16 Jun 2014 00:01:25 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C0D861AE-F594-11E3-B7B9-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 4431C496-F595-11E3-A579-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251821>
 
-Jeremiah Mahler <jmmahler@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On Fri, Jun 13, 2014 at 11:49:10AM -0500, Caleb Thompson wrote:
-> ...
->> > The patches look good, they apply clean ('git am'), and all tests pass.
->> >
->> > Reviewed-by: Jeremiah Mahler <jmmahler@gmail.com>
->> 
->> So that I'm clear on the etiquitte, is it appropriate for me to add this
->> Reviewed-by line to the commit messages at this point, provided that the
->> patches don't change?
+> If git rebase --merge encountered a conflict, --skip would not work if the
+> next commit also conflicted.  The msgnum file would never be updated with
+> the new patch number, so no patch would actually be skipped, resulting in an
+> inescapable loop.
 >
-> I am not sure of the etiquette either.  But personally, since I hardly
-> contributed anything, I don't think it is necessary to put my tag in
-> your patches.
+> Update the msgnum file's value as the first thing in call_merge.  This also
+> avoids an "Already applied" message when skipping a commit.  There is no
+> visible change for the other contexts in which call_merge is invoked, as the
+> msgnum file's value remains unchanged in those situations.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
 
-It is correct that it is not necessary for Caleb to resend these
-patches if it is done only to add "Reviewed-by:" from you (but it
-does not hurt to do so, either).
+Sounds good to me.  Thanks.
 
-In the review process, "Reviewed-by:" sent for a patch by one of the
-trusted reviewers will reduce workload from other reviewers because
-there will be one less reason to read such a patch [*1*].  A
-corollary to this is that other reviewers will ignore an extra
-"Reviewed-by:" by somebody whose review quality is still unknown, so
-it will not hurt.
-
-Your reading others patches and commenting on is appreciated very
-much, and sending a "Reviewed-by:" is perfectly fine.  As you gain
-experience and as others see your review comments more and more,
-people will start trusting your reviews.  Everybody begins at a
-"novice" state, after all ;-)
-
-By the way, speaking of netiquette, please refrain from using
-"Mail-Followup-To:" while working on this list [*2*].
-
-Thanks.
-
-[Footnotes]
-
-*1* We usually read a patch for one of the two reasons: either the
-reviewer personally finds what the patch wants to do interesting and
-worthwhile, and wants to make sure it is done in the right way.  Or
-the reviewer thinks that applying the patch is detrimental to the
-overall project, perhaps the design and/or the implementation is
-wrong, and point the problems out.  A "Reviewed-by" from a trusted
-reviewer will allow other reviewers to simply skip/ignore the patch
-if what it does is "Meh" to them, saying "I am not particularly
-interested, but as long as it does not hurt, I would not be opposed,
-and the other guy reviewed and says it would not hurt, and I tend to
-trust his judgment."  The maintainer does not have the luxury of
-skip/ignore such a patch because he needs to at least apply and test
-the integration result, though ;-).
-
-Now, who are the "trusted reviewers"?  Anybody who is knows s/he is
-one of them ;-)
-
-*2* http://thread.gmane.org/gmane.comp.version-control.git/165477/focus=165549
+>  git-rebase--merge.sh    |  5 +++--
+>  t/t3402-rebase-merge.sh | 15 +++++++++++++++
+>  2 files changed, 18 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+> index 6d77b3c..d3fb67d 100644
+> --- a/git-rebase--merge.sh
+> +++ b/git-rebase--merge.sh
+> @@ -53,11 +53,12 @@ continue_merge () {
+>  }
+>  
+>  call_merge () {
+> -	cmt="$(cat "$state_dir/cmt.$1")"
+> +	msgnum="$1"
+> +	echo "$msgnum" >"$state_dir/msgnum"
+> +	cmt="$(cat "$state_dir/cmt.$msgnum")"
+>  	echo "$cmt" > "$state_dir/current"
+>  	hd=$(git rev-parse --verify HEAD)
+>  	cmt_name=$(git symbolic-ref HEAD 2> /dev/null || echo HEAD)
+> -	msgnum=$(cat "$state_dir/msgnum")
+>  	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
+>  	eval GITHEAD_$hd='$onto_name'
+>  	export GITHEAD_$cmt GITHEAD_$hd
+> diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
+> index be8c1d5..5a27ec9 100755
+> --- a/t/t3402-rebase-merge.sh
+> +++ b/t/t3402-rebase-merge.sh
+> @@ -33,6 +33,7 @@ test_expect_success setup '
+>  	tr "[a-z]" "[A-Z]" <original >newfile &&
+>  	git add newfile &&
+>  	git commit -a -m"side edits further." &&
+> +	git branch second-side &&
+>  
+>  	tr "[a-m]" "[A-M]" <original >newfile &&
+>  	rm -f original &&
+> @@ -41,6 +42,7 @@ test_expect_success setup '
+>  	git branch test-rebase side &&
+>  	git branch test-rebase-pick side &&
+>  	git branch test-reference-pick side &&
+> +	git branch test-conflicts side &&
+>  	git checkout -b test-merge side
+>  '
+>  
+> @@ -138,4 +140,17 @@ test_expect_success 'rebase -s funny -Xopt' '
+>  	test -f funny.was.run
+>  '
+>  
+> +test_expect_success 'rebase --skip works with two conflicts in a row' '
+> +	git checkout second-side  &&
+> +	tr "[A-Z]" "[a-z]" <newfile >tmp &&
+> +	mv tmp newfile &&
+> +	git commit -a -m"edit conflicting with side" &&
+> +	tr "[d-f]" "[D-F]" <newfile >tmp &&
+> +	mv tmp newfile &&
+> +	git commit -a -m"another edit conflicting with side" &&
+> +	test_must_fail git rebase --merge test-conflicts &&
+> +	test_must_fail git rebase --skip &&
+> +	git rebase --skip
+> +'
+> +
+>  test_done
