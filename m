@@ -1,126 +1,85 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 09/14] rebase: add t3426 for submodule updates
-Date: Mon, 16 Jun 2014 05:57:50 -0400
-Message-ID: <CAPig+cSU_8USZu3cr=aaOun07jE2BhgLt7yu9ix_AikUpK+pJQ@mail.gmail.com>
-References: <539DD029.4030506@web.de>
-	<539DD19B.6000504@web.de>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: [PATCH] gitk: use mktemp -d to avoid predictable temporary directories
+Date: Mon, 16 Jun 2014 13:40:03 +0200
+Message-ID: <539ED793.7050409@virtuell-zuhause.de>
+References: <1402695828-91537-1-git-send-email-davvid@gmail.com> <87k38ir4p0.fsf@red.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jun 16 11:57:57 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: patthoyts@users.sourceforge.net, David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 16 13:40:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwTfn-0005jJ-Mm
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 11:57:56 +0200
+	id 1WwVGn-00040A-RM
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 13:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755265AbaFPJ5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 05:57:51 -0400
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:59623 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754908AbaFPJ5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 05:57:51 -0400
-Received: by mail-yk0-f172.google.com with SMTP id 142so3920783ykq.31
-        for <git@vger.kernel.org>; Mon, 16 Jun 2014 02:57:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=7DCTobJVZBL4zM88HkLkjV6Frzco/PC9ipg7SepqomU=;
-        b=x+yqUU//bYD79txKcBUaJZo9UmUG2SDQZc04b+Psy+2qFDXOqOYIS57gBT4cYxuM4k
-         F+H6dbcGS0H4VzMIkrA7VCxc3zaEB2IRXMVnNIWCmFqz/ZWNTN/enmI99KYRwC5f0UJR
-         UBAbQenMLoAcmnkoHRWeywcJRHSFi72YflKX2aDNmF2hC79Jcjqswrcaurdl4dV5hm4E
-         fNh+Pvpg4f/w4bp8Sf9WIXkmhlplFMa7twT3XZqtrNq7O0W4NNH+KY0nWtIRKJ/l3Opr
-         FxVkmtzwFuMnVjFMRrgAVSRg8H5EaOsTsI8BtunwYHUGgWU2tafGX742UkwVPgxMZlKH
-         FLHw==
-X-Received: by 10.236.134.169 with SMTP id s29mr32092589yhi.4.1402912670524;
- Mon, 16 Jun 2014 02:57:50 -0700 (PDT)
-Received: by 10.170.36.19 with HTTP; Mon, 16 Jun 2014 02:57:50 -0700 (PDT)
-In-Reply-To: <539DD19B.6000504@web.de>
-X-Google-Sender-Auth: tBeN5qxEx3gh4vPyOcQRHqjX6M8
+	id S1751986AbaFPLkH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 07:40:07 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:53735 "EHLO
+	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751282AbaFPLkG (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Jun 2014 07:40:06 -0400
+Received: from p5ddc3c66.dip0.t-ipconnect.de ([93.220.60.102] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1WwVGd-00032p-Hr; Mon, 16 Jun 2014 13:40:03 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <87k38ir4p0.fsf@red.patthoyts.tk>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1402918806;d1f7fc50;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251710>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251712>
 
-On Sun, Jun 15, 2014 at 1:02 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
-> Test that the rebase command updates the work tree as expected for
-> changes which don't result in conflicts. To make that work add two
-> helper functions that add a commit only touching files and then
-> revert it. This allows to rebase the target commit over these two
-> and to compare the result.
->
-> Set KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR to
-> document that "replace directory with submodule" fails for an
-> interactive rebase because a directory "sub1" already exists.
->
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
->  t/t3426-rebase-submodule.sh | 46 +++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 46 insertions(+)
->  create mode 100755 t/t3426-rebase-submodule.sh
->
-> diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
-> new file mode 100755
-> index 0000000..019ce52
-> --- /dev/null
-> +++ b/t/t3426-rebase-submodule.sh
-> @@ -0,0 +1,46 @@
-> +#!/bin/sh
-> +
-> +test_description='rebase can handle submodules'
-> +
-> +. ./test-lib.sh
-> +. "$TEST_DIRECTORY"/lib-submodule-update.sh
-> +. "$TEST_DIRECTORY"/lib-rebase.sh
-> +
-> +git_rebase () {
-> +       git status -su >expected &&
-> +       ls -1pR * >>expected &&
-> +       git checkout -b ours HEAD &&
-> +       echo x >>file1 &&
-> +       git add file1 &&
-> +       git commit -m add_x &&
-> +       git revert HEAD &&
-> +       git status -su >actual &&
-> +       ls -1pR * >>actual &&
-> +       test_cmp expected actual &&
-> +       git rebase "$1"
-> +}
-> +
-> +test_submodule_switch "git_rebase"
-> +
-> +git_rebase_interactive () {
-> +       git status -su >expected &&
-> +       ls -1pR * >>expected &&
-> +       git checkout -b ours HEAD &&
-> +       echo x >>file1 &&
-> +       git add file1 &&
-> +       git commit -m add_x &&
-> +       git revert HEAD &&
-> +       git status -su >actual &&
-> +       ls -1pR * >>actual &&
-> +       test_cmp expected actual &&
-> +       set_fake_editor &&
-> +       echo "fake-editor.sh" >.git/info/exclude
+Am 15.06.2014 09:51, schrieb Pat Thoyts:
+> David Aguilar <davvid@gmail.com> writes:
+> 
+>> gitk uses a predictable ".gitk-tmp.$PID" pattern when generating
+>> a temporary directory.
+>>
+>> Use "mktemp -d .gitk-tmp.XXXXXX" to harden gitk against someone
+>> seeding /tmp with files matching the pid pattern.
+>>
+>> Signed-off-by: David Aguilar <davvid@gmail.com>
+>> ---
+>> This issue was brought up during the first review of the previous patch
+>> back in 2009.
+>>
+>> http://thread.gmane.org/gmane.comp.version-control.git/132609/focus=132748
+>>
+>> This is really [PATCH 2/2] and should be applied on top of my previous
+>> gitk patch.
+>>
+>> gitk | 3 ++-
+>> 1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/gitk b/gitk
+>> index 82293dd..dd2ff63 100755
+>> --- a/gitk
+>> +++ b/gitk
+>> @@ -3502,7 +3502,8 @@ proc gitknewtmpdir {} {
+>> 	} else {
+>> 	    set tmpdir $gitdir
+>> 	}
+>> -	set gitktmpdir [file join $tmpdir [format ".gitk-tmp.%s" [pid]]]
+>> +	set gitktmpformat [file join $tmpdir ".gitk-tmp.XXXXXX"]
+>> +	set gitktmpdir [exec mktemp -d $gitktmpformat]
+>> 	if {[catch {file mkdir $gitktmpdir} err]} {
+>> 	    error_popup "[mc "Error creating temporary directory %s:" $gitktmpdir] $err"
+>> 	    unset gitktmpdir
+> 
+> This is a problem on Windows where we will not have mktemp. In Tcl 8.6
+> the file command acquired a "file tempfile" command to help with this
+> kind of issue (https://www.tcl.tk/man/tcl8.6/TclCmd/file.htm#M39) but
+> for older versions we should probably stick with the existing pattern at
+> least on Windows.
 
-Broken &&-chain.
+We could of course add mktemp from http://www.mktemp.org to msysgit.
+I can do that if required.
 
-> +       git rebase -i "$1"
-> +}
-> +
-> +KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
-> +# The real reason "replace directory with submodule" fails is because a
-> +# directory "sub1" exists, but we reuse the suppression added for merge here
-> +test_submodule_switch "git_rebase_interactive"
-> +
-> +test_done
-> --
-> 2.0.0.275.gc479268
+In mingwgitDevEnv we already have the the need for mktemp, and a msys
+package, so this is also not a problem.
