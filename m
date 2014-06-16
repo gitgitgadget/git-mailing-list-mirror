@@ -1,256 +1,121 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v2 2/2] config: Add hashtable for config parsing & retrieval
-Date: Mon, 16 Jun 2014 01:27:12 -0700
-Message-ID: <1402907232-24629-3-git-send-email-tanayabh@gmail.com>
-References: <1402907232-24629-1-git-send-email-tanayabh@gmail.com>
+Subject: [PATCH/RFC] branch.c: Replace `git_config` with `git_config_get_string`
+Date: Mon, 16 Jun 2014 01:52:30 -0700
+Message-ID: <1402908750-24851-1-git-send-email-tanayabh@gmail.com>
 Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 16 10:29:48 2014
+X-From: git-owner@vger.kernel.org Mon Jun 16 10:53:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwSIV-00069w-1y
-	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 10:29:47 +0200
+	id 1WwSfI-00089G-HH
+	for gcvg-git-2@plane.gmane.org; Mon, 16 Jun 2014 10:53:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754603AbaFPI3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Jun 2014 04:29:43 -0400
-Received: from mail-pd0-f169.google.com ([209.85.192.169]:43887 "EHLO
-	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754525AbaFPI3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Jun 2014 04:29:42 -0400
-Received: by mail-pd0-f169.google.com with SMTP id g10so1569327pdj.14
-        for <git@vger.kernel.org>; Mon, 16 Jun 2014 01:29:42 -0700 (PDT)
+	id S1754726AbaFPIxQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Jun 2014 04:53:16 -0400
+Received: from mail-pb0-f53.google.com ([209.85.160.53]:49362 "EHLO
+	mail-pb0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754461AbaFPIxP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Jun 2014 04:53:15 -0400
+Received: by mail-pb0-f53.google.com with SMTP id uo5so3990640pbc.12
+        for <git@vger.kernel.org>; Mon, 16 Jun 2014 01:53:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=E3alZ1Xw8Ic8BuYaHKCUtn1+aDDxAhEo8rr9hkHvh5w=;
-        b=EkZf+X5dTixmSyfHK9ZEwD2Eo3ESJbYDOrZXusVxd59y7Z/eKNEdewRAS5CPXMuNng
-         HHX0KVlXC2mODmJYX+d65ixNZRcH14kCFjQWJy4lwt7peCJK6OPBZ6JrBGrmKzxoZ8F2
-         4a3fvCidsUjcILUQseXhIBqpr+7Lq5nIAPXkLRWnSYJUU6RBjDrRnPGZHslqNdn7IbgT
-         T5BtJY4CtLeIrzLT9GqrcOYiOcwkl55eXpFPbmYnQ3pULcEZfEvb9WWpki8Ip2rgeiCv
-         BzbUezsXgC20p54dpjaIq5kf86G48J+JTXTjepvITYkfILmDaSTb7VFJq02D3Ag3kRaA
-         f5Yw==
-X-Received: by 10.66.163.164 with SMTP id yj4mr22170973pab.91.1402907382084;
-        Mon, 16 Jun 2014 01:29:42 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=OsHRSIk/AAT+agT+8r6T30X9uGvhXocTvwgV8gDFV4s=;
+        b=yvsIQ97wjo1sC0Lu5P56MheHPbjCUAWuNKfxwqfjveE+0bzLLXXOr3SQ+CjQWcGh36
+         DtOgcnEoBtVhBvwn31bHb/3WSByEA6Jc6AXsycDa0FfIu/qFC4odz136mdly7oeVsZ8w
+         zizwkpNjqRdP3ojVuDOGzYdFVHDG4WW0RM2SWVrHEBVxJ+DxsC7kgj0jsFTjwgh6hMym
+         XqZJo0AThgQmLY5TEyrrHg7IdAu9e6b7G6WsBBUmQvdil5ud3qaOoYFlkTCxwVH5h/eQ
+         sFCUXuXj8fc8MuD5RfvWh3ShSpePSzzTJmVjM9I2ccOMpPX5xwL1T3c9C1GAl44Yh4aL
+         A5RA==
+X-Received: by 10.68.247.65 with SMTP id yc1mr22256489pbc.68.1402908795525;
+        Mon, 16 Jun 2014 01:53:15 -0700 (PDT)
 Received: from localhost.localdomain ([117.254.222.96])
-        by mx.google.com with ESMTPSA id ja8sm17290853pbd.3.2014.06.16.01.29.34
+        by mx.google.com with ESMTPSA id jd5sm17423517pbb.18.2014.06.16.01.53.11
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 16 Jun 2014 01:29:41 -0700 (PDT)
+        Mon, 16 Jun 2014 01:53:14 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.GIT
-In-Reply-To: <1402907232-24629-1-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251707>
 
-Add a hash table to cache all key-value pairs read from config files
-(repo specific .git/config, user wide ~/.gitconfig and the global
-/etc/gitconfig). Add two external functions `git_config_get_string` and
-`git_config_get_string_multi` for querying in a non-callback manner from the
-hash table.
+Original implementation uses a callback based approach which has some
+deficiencies like a convoluted control flow and redundant variables.
+Use git_config_get_string instead of git_config to take advantage of
+the config hash-table.
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- Documentation/technical/api-config.txt |  17 +++++
- cache.h                                |   2 +
- config.c                               | 123 +++++++++++++++++++++++++++++++++
- 3 files changed, 142 insertions(+)
 
-diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
-index 230b3a0..23e8ae3 100644
---- a/Documentation/technical/api-config.txt
-+++ b/Documentation/technical/api-config.txt
-@@ -77,6 +77,23 @@ To read a specific file in git-config format, use
- `git_config_from_file`. This takes the same callback and data parameters
- as `git_config`.
+This patch builds on top of patch series[1]. It passes all the tests, and
+this in first of series of patches that aim to replace all git_config
+calls scattered arund the code base with appropriate non-callback based
+calls.
+
+There are total 111 calls in total in all of git codebase. How should I send
+the patches, alphabetically or otherwise?
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/251704
+
+Cheers,
+Tanay Abhra.
+
+ branch.c | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 660097b..257b1bf 100644
+--- a/branch.c
++++ b/branch.c
+@@ -140,33 +140,26 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
+ 	return 0;
+ }
  
-+Querying For Specific Variables
-+-------------------------------
-+
-+For programs wanting to query for specific variables in a non-callback
-+manner, the config API provides two functions `git_config_get_string`
-+and `git_config_get_string_multi`. They both take a single parameter,
-+a key string in canonical flat form for which the corresponding values
-+will be retrieved and returned.
-+
-+They both read values from an internal cache generated previously from
-+reading the config files. `git_config_get_string` returns the value with
-+the highest priority (i.e. value in the repo config will be preferred over
-+value in user wide config for the same variable).
-+
-+`git_config_get_string_multi` returns a `string_list` containing all the
-+values for that particular key, sorted in order of increasing priority.
-+
- Value Parsing Helpers
- ---------------------
+-struct branch_desc_cb {
++struct branch_desc {
+ 	const char *config_name;
+ 	const char *value;
+ };
  
-diff --git a/cache.h b/cache.h
-index 1e4b4f0..7343692 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1295,6 +1295,8 @@ extern int check_repository_format_version(const char *var, const char *value, v
- extern int git_env_bool(const char *, int);
- extern int git_config_system(void);
- extern int config_error_nonbool(const char *);
-+extern const char *git_config_get_string(const char *);
-+extern const struct string_list *git_config_get_string_multi(const char *);
- #if defined(__GNUC__)
- #define config_error_nonbool(s) (config_error_nonbool(s), const_error())
- #endif
-diff --git a/config.c b/config.c
-index 3c3e314..2fd3656 100644
---- a/config.c
-+++ b/config.c
-@@ -9,6 +9,8 @@
- #include "exec_cmd.h"
- #include "strbuf.h"
- #include "quote.h"
-+#include "hashmap.h"
-+#include "string-list.h"
- 
- struct config_source {
- 	struct config_source *prev;
-@@ -37,6 +39,120 @@ static struct config_source *cf;
- 
- static int zlib_compression_seen;
- 
-+struct config_cache_entry {
-+	struct hashmap_entry ent;
-+	char *key;
-+	struct string_list value_list;
-+};
-+
-+static int hashmap_initialized;
-+
-+static int config_cache_set_value(const char *key, const char *value);
-+
-+static int config_cache_entry_cmp(const struct config_cache_entry *e1,
-+				 const struct config_cache_entry *e2, const void *unused)
-+{
-+	return strcmp(e1->key, e2->key);
-+}
-+
-+static void config_cache_init(struct hashmap *config_cache)
-+{
-+	hashmap_init(config_cache, (hashmap_cmp_fn)config_cache_entry_cmp, 0);
-+}
-+
-+static int config_cache_callback(const char *key, const char *value, void *unused)
-+{
-+	config_cache_set_value(key, value);
-+	return 0;
-+}
-+
-+static struct hashmap *get_config_cache(void)
-+{
-+	static struct hashmap config_cache;
-+	if (!hashmap_initialized) {
-+		config_cache_init(&config_cache);
-+		hashmap_initialized = 1;
-+		git_config(config_cache_callback, NULL);
-+	}
-+	return &config_cache;
-+}
-+
-+static void config_cache_free(void)
-+{
-+	struct hashmap *config_cache;
-+	struct config_cache_entry *entry;
-+	struct hashmap_iter iter;
-+	config_cache = get_config_cache();
-+	hashmap_iter_init(config_cache, &iter);
-+	while ((entry = hashmap_iter_next(&iter))) {
-+		free(entry->key);
-+		string_list_clear(&entry->value_list, 0);
-+	}
-+	hashmap_free(config_cache, 1);
-+	hashmap_initialized = 0;
-+}
-+
-+static struct config_cache_entry *config_cache_find_entry(const char *key)
-+{
-+	struct hashmap *config_cache;
-+	struct config_cache_entry k;
-+	struct config_cache_entry *found_entry;
-+	char *normalized_key;
-+	int ret;
-+	config_cache = get_config_cache();
-+	ret = git_config_parse_key(key, &normalized_key, NULL);
-+
-+	if (ret)
-+		return NULL;
-+
-+	hashmap_entry_init(&k, strhash(normalized_key));
-+	k.key = (char *)normalized_key;
-+	found_entry = hashmap_get(config_cache, &k, NULL);
-+	free(normalized_key);
-+	return found_entry;
-+}
-+
-+static struct string_list *config_cache_get_value(const char *key)
-+{
-+	struct config_cache_entry *e = config_cache_find_entry(key);
-+	return e ? &e->value_list : NULL;
-+}
-+
-+static int config_cache_set_value(const char *key, const char *value)
-+{
-+	struct hashmap *config_cache;
-+	struct config_cache_entry *e;
-+
-+	config_cache = get_config_cache();
-+	e = config_cache_find_entry(key);
-+	if (!e) {
-+		e = xmalloc(sizeof(*e));
-+		hashmap_entry_init(e, strhash(key));
-+		e->key = xstrdup(key);
-+		string_list_init_dup(&e->value_list);
-+		string_list_append(&e->value_list, value);
-+		hashmap_add(config_cache, e);
-+	} else {
-+		string_list_append(&e->value_list, value);
-+	}
-+	return 0;
-+}
-+
-+const char *git_config_get_string(const char *key)
-+{
-+	struct string_list *values;
-+	values = config_cache_get_value(key);
-+	if (!values)
-+		return NULL;
-+	assert(values->nr > 0);
-+	return values->items[values->nr - 1].string;
-+}
-+
-+const struct string_list *git_config_get_string_multi(const char *key)
-+{
-+	return config_cache_get_value(key);
-+}
-+
- static int config_file_fgetc(struct config_source *conf)
+-static int read_branch_desc_cb(const char *var, const char *value, void *cb)
+-{
+-	struct branch_desc_cb *desc = cb;
+-	if (strcmp(desc->config_name, var))
+-		return 0;
+-	free((char *)desc->value);
+-	return git_config_string(&desc->value, var, value);
+-}
+-
+ int read_branch_desc(struct strbuf *buf, const char *branch_name)
  {
- 	return fgetc(conf->u.file);
-@@ -1714,6 +1830,13 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 	lock = NULL;
- 	ret = 0;
- 
-+	/*
-+	 *contents of config file has changed, so invalidate the
-+	 *config cache used by non-callback based query functions.
-+	 */
-+	if (hashmap_initialized)
-+		config_cache_free();
-+
- out_free:
- 	if (lock)
- 		rollback_lock_file(lock);
+-	struct branch_desc_cb cb;
++	const char *value;
++	struct branch_desc desc;
+ 	struct strbuf name = STRBUF_INIT;
+ 	strbuf_addf(&name, "branch.%s.description", branch_name);
+-	cb.config_name = name.buf;
+-	cb.value = NULL;
+-	if (git_config(read_branch_desc_cb, &cb) < 0) {
++	desc.config_name = name.buf;
++	desc.value = NULL;
++	value = git_config_get_string(desc.config_name);
++	git_config_string(&desc.value, desc.config_name, value);
++	if (!desc.value) {
+ 		strbuf_release(&name);
+ 		return -1;
+ 	}
+-	if (cb.value)
+-		strbuf_addstr(buf, cb.value);
++	strbuf_addstr(buf, desc.value);
+ 	strbuf_release(&name);
+ 	return 0;
+ }
 -- 
 1.9.0.GIT
