@@ -1,100 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Our merge bases sometimes suck
-Date: Tue, 17 Jun 2014 08:08:17 -0700
-Message-ID: <xmqq8uovo9pa.fsf@gitster.dls.corp.google.com>
-References: <539A25BF.4060501@alum.mit.edu>
+From: "Yi, EungJun" <semtlenori@gmail.com>
+Subject: [PATCH v3] http: fix charset detection of extract_content_type()
+Date: Wed, 18 Jun 2014 00:29:59 +0900
+Message-ID: <CAFT+Tg-d6hBact67bjnc2NFghtmBtr7tyuBvA4_QWgz71eJv_g@mail.gmail.com>
+Reply-To: semtlenori@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git discussion list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Jun 17 17:08:29 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jun 17 17:30:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwuzs-0003GN-5c
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:08:28 +0200
+	id 1WwvKo-0005Q2-W5
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:30:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933045AbaFQPIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 11:08:24 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53181 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933031AbaFQPIX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 11:08:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DAC6F1FE1E;
-	Tue, 17 Jun 2014 11:08:20 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4yyuWEuwdAPKEnBj2Xqx+kShc6w=; b=LuTeLr
-	CnO1MuOSuNC9kJo80MUsnVz4BbwqME4zS32UjrWSzrSbw0HafXBFoDH/hPtGW0dX
-	4bQiHAqt3OXauPR1U81MGMGC/vm/fBHvur0ZyYmzhWMTaU12cpRiUdoKe98aiaPI
-	z3aHKOrSPDEn8O8xKKHKy06v4xY09lp7YPxkQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Xjxqf4hfH9vaLvPzlo247OSClBiYoooF
-	Wm6ru1t/ydEnruLY7TUoxfAVKpwnst4JU3LJJpvIFY1PZA3fo63LGjwcPdAcoV4z
-	LMVgHhOrZfO+Hl7xduRkJYNdt64zR+PhlaBVChmxiFdmz/YXKs5jpF6L0yX0zUIU
-	ehktEdLOyEg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D0F371FE1D;
-	Tue, 17 Jun 2014 11:08:20 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 90F8A1FE18;
-	Tue, 17 Jun 2014 11:08:16 -0400 (EDT)
-In-Reply-To: <539A25BF.4060501@alum.mit.edu> (Michael Haggerty's message of
-	"Fri, 13 Jun 2014 00:12:15 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 35B36482-F631-11E3-B0CC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S933051AbaFQPaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 11:30:00 -0400
+Received: from mail-ig0-f175.google.com ([209.85.213.175]:65455 "EHLO
+	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932869AbaFQP37 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 11:29:59 -0400
+Received: by mail-ig0-f175.google.com with SMTP id uq10so4289431igb.2
+        for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:29:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=oqTP5bjDWVQo8jigUx3+a2h3sjRskxs4BDubQ6QMXCc=;
+        b=1BQNf62XZD2MUbDAoLIdpoYDWEF7UJcHjKQ6EYfKe2Jv0EHdo64l65kByvn/YULKf+
+         tmpgkWQRMwlKsDxwLZRCWV2BV92cIYl8Ow/xFmNGNSMAzydYyyS45im06D2O4VvYPV9r
+         czGTJR+PeSJaFUb4gTCQS+uQ6xFVT2sKJaDCXXK1hRhiztSVtVnZSHrt9F7p66gnjW0R
+         u8RcNx86gcypzDaohWnLRMs6DKhKSyRQZlbPqid4IdEIhvTyoxi3zLIpG3bhbeywBgZl
+         n/oIBJ71HXipQydcvX069dKCKe9hnrHMqBYfcOs5ikEyeZ+Gca492vHOXk3IQlYThpub
+         7A0A==
+X-Received: by 10.50.178.196 with SMTP id da4mr21323490igc.6.1403018999166;
+ Tue, 17 Jun 2014 08:29:59 -0700 (PDT)
+Received: by 10.50.153.110 with HTTP; Tue, 17 Jun 2014 08:29:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251864>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+From: Yi EungJun <eungjun.yi@navercorp.com>
 
-> The "best" merge base
-> =====================
->
-> But not all merge bases are created equal.  It is possible to define a
-> "best" merge base that has some nice properties.
->
-> Let's focus on the command
->
->     git diff $master...$branch
->
-> which is equivalent to
->
->     git diff $(git merge-base $master $branch)..$branch
-> ...
-> I propose that the best merge base is the merge base "candidate" that
-> minimizes the number of non-merge commits that are in
->
->     git rev-list --no-merges $candidate..$branch
->
-> but are already in master:
->
->     git rev-list --no-merges $master
+extract_content_type() could not extract a charset parameter if the
+parameter is not the first one and there is a whitespace and a following
+semicolon just before the parameter. For example:
 
-I welcome this line of thought very much.
+    text/plain; format=fixed ;charset=utf-8
 
-There is one niggle I find somewhat curious but am either too lazy
-or too stupid to think it through myself ;-)
+And it also could not handle correctly some other cases, such as:
 
-The "merge-base" is a symmetric operation, because the three-way
-merge, which is the primary customer of its result, fundamentally
-is.  From your description, it sounds like the "best" merge base
-however may not be symmetric at all.  The merge-base between A and B
-that makes "git diff A...B" the easiest to read by minimizing the
-distance between it and B may be different from the merge-base
-between A and B that makes the other diff "git diff B...A" the
-easiest to read.
+    text/plain; charset=utf-8; format=fixed
+    text/plain; some-param="a long value with ;semicolons;"; charset=utf-8
 
-Or it may not be assymmetric---that is why I said I didn't think it
-through.  I am not saying that it is bad if the "best" merge-base is
-an asymmetric concept; I am curious if it is asymmetric, and if so
-if that is fundamental.
+Thanks-to: Jeff King <peff@peff.net>
+Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
+---
+ http.c                     | 4 ++--
+ t/lib-httpd/error.sh       | 4 ++++
+ t/t5550-http-fetch-dumb.sh | 5 +++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/http.c b/http.c
+index 2b4f6a3..3a28b21 100644
+--- a/http.c
++++ b/http.c
+@@ -927,7 +927,7 @@ static int extract_param(const char *raw, const char *name,
+  return -1;
+  raw++;
+
+- while (*raw && !isspace(*raw))
++ while (*raw && !isspace(*raw) && *raw != ';')
+  strbuf_addch(out, *raw++);
+  return 0;
+ }
+@@ -971,7 +971,7 @@ static void extract_content_type(struct strbuf
+*raw, struct strbuf *type,
+
+  strbuf_reset(charset);
+  while (*p) {
+- while (isspace(*p))
++ while (isspace(*p) || *p == ';')
+  p++;
+  if (!extract_param(p, "charset", charset))
+  return;
+diff --git a/t/lib-httpd/error.sh b/t/lib-httpd/error.sh
+index eafc9d2..a77b8e5 100755
+--- a/t/lib-httpd/error.sh
++++ b/t/lib-httpd/error.sh
+@@ -19,6 +19,10 @@ case "$PATH_INFO" in
+  printf "text/plain; charset=utf-16"
+  charset=utf-16
+  ;;
++*odd-spacing*)
++ printf "text/plain; foo=bar ;charset=utf-16; other=nonsense"
++ charset=utf-16
++ ;;
+ esac
+ printf "\n"
+
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 01b8aae..ac71418 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -191,5 +191,10 @@ test_expect_success 'http error messages are reencoded' '
+  grep "this is the error message" stderr
+ '
+
++test_expect_success 'reencoding is robust to whitespace oddities' '
++ test_must_fail git clone "$HTTPD_URL/error/odd-spacing" 2>stderr &&
++ grep "this is the error message" stderr
++'
++
+ stop_httpd
+ test_done
+-- 
+2.0.0.422.gb6302de
+
+I have squashed Jeff King's patch. How can I credit him in this commit message?
