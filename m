@@ -1,139 +1,147 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v18 05/48] refs.c: add a strbuf argument to ref_transaction_commit for error logging
-Date: Tue, 17 Jun 2014 08:53:19 -0700
-Message-ID: <1403020442-31049-6-git-send-email-sahlberg@google.com>
+Subject: [PATCH v18 03/48] refs.c: constify the sha arguments for ref_transaction_create|delete|update
+Date: Tue, 17 Jun 2014 08:53:17 -0700
+Message-ID: <1403020442-31049-4-git-send-email-sahlberg@google.com>
 References: <1403020442-31049-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 17:58:11 2014
+X-From: git-owner@vger.kernel.org Tue Jun 17 17:58:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwvlz-0008RR-16
+	id 1Wwvlz-0008RR-I7
 	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:58:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933626AbaFQP6D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 11:58:03 -0400
-Received: from mail-oa0-f73.google.com ([209.85.219.73]:37980 "EHLO
-	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756224AbaFQPyF (ORCPT <rfc822;git@vger.kernel.org>);
+	id S933628AbaFQP6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 11:58:05 -0400
+Received: from mail-qc0-f201.google.com ([209.85.216.201]:37081 "EHLO
+	mail-qc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756164AbaFQPyF (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 17 Jun 2014 11:54:05 -0400
-Received: by mail-oa0-f73.google.com with SMTP id eb12so1489268oac.4
+Received: by mail-qc0-f201.google.com with SMTP id c9so1026714qcz.4
         for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pPY7YsXXznfFi8am5hU0xC7hoojJFdK1FCrwM8gJS4c=;
-        b=lAl3v72PmTreMNYc1dWPv2n/h31h1hGgkFQQXo1Vms+qmfqzjouNm7LGY6FU+pkiXM
-         Q53j+2tcV9feHOQwyWenGiUcCc/cTAAfk7wdAu+hqPIXpsnlAiQl/mJmaPtUZlhxvCOZ
-         C68x+2ENnEUvOT/9n2raHxdKhk2lXAStAKTw0EVXJsYTLRcMUt5b8Xi0BJl9llTWLjKZ
-         iWVIpD5URh7E0x12VR+p6V+L3Z7UdbxPqMteVUz8eTcnwm7648sgCCB34BbnhMvVlZ8e
-         lAvis2S6pdSFVR55+5exHm4F68BaGUwjO+CFmDuJxdEv+uV4eOvwnS9mo7po7uGlsBNC
-         ZIoA==
+        bh=+X7PnZ9zfORPEv80A5adDDnegFL90sY+Gk8TBRe832Y=;
+        b=WwhI+2DjpP1gys6C9NDyfL4IVjeVAUDy97KYUo8SQJ9+Zfu8kUfQVlrI+E79q3DWiV
+         HEnDfwZhaLTKcFH74xSNaHZWmvWB0/CHGoKUb6OSyVazJ4tafnrUj/wYDK2E8N8elz4t
+         I8aNdeVXxbFxhjEpKdS4KikaFmFRP0g/W3bizU6ihpjm7K+Br03STp3vkkzNVEyz+D03
+         h054MyN9mQuqpHOOrbR6+N8Jf5KBNm941cYVXmSalqPQeKFWfnOBpfhO+h6gZ+Zk0F64
+         jKpZ863zbbUTekg2REmBBO92cRoZ6jirfsdRG0TD5MUsUDVmGsqXSlK53kTihgIQwjqb
+         S+Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=pPY7YsXXznfFi8am5hU0xC7hoojJFdK1FCrwM8gJS4c=;
-        b=Wf5eOemZt7azPZ+MyQ3y+ECK3BcT5tDkS8rCsh9ZfgzQc3GdYTre4v6juIw4fjT4h1
-         coelT4f5YDDfPPlrxGMwzWLobitpfmH1xADveLFchPYr0+Q3NPRbxkgVgOSqLQtyR2Ar
-         lpgzwYQFyFzFQYSyLBbdb5/l/j8WCbPuXNjNblNzcr7txbtXOZVEp5tcI0t0TVAErGDE
-         YFOcyN+Y055Sk4wsKIMKUnDQt+6Dizx69K5aDhVZibvraqz3eUFyoSVqhat3iFhApDqq
-         /KNiH1g+qfoHivm3Lt0U4hQKmjxI/7meZUv/kyBpY/9d6jX1Tz44G0iJIYhCDbaJ8H/3
-         0XBA==
-X-Gm-Message-State: ALoCoQmyLed8fhRqRLxLWStS9/p70Je5JiTq8UcXA5mowAiyB3+zhpwNndAEYR+TP+vxXPRUV60f
-X-Received: by 10.42.208.1 with SMTP id ga1mr2472998icb.34.1403020444681;
+        bh=+X7PnZ9zfORPEv80A5adDDnegFL90sY+Gk8TBRe832Y=;
+        b=AG4J7cBD0bGKjBYlIqUc/akJSU6ZEZ60syZgFlONOQDjfBCXkL9uPb8WCSa0Bjaf3U
+         2NzV3JnoQAcSoXdA9THviKKLGpS/vuxxmXGwoij5qFHgswNWwMijx3MJOwYJmoXBwLeV
+         ebu4wNucLxFEz6RvdkQh2CGk6OBtUKrmuxVsHya4WHwkT4zIT5nnCseCafnLK3d91TqF
+         X8/6Xsts9Pxk73c6yD/2555yzJ7PoP3UXk+fQYksNpYumIkmwJ28Fd8E5GuLitVZWSqS
+         IQOdAh/0PCXLb8x7HcyKBObHJ+dbotwKfT9Fq4avD94AAYRejvh6PqW03AKiPBhLbstp
+         t2iw==
+X-Gm-Message-State: ALoCoQnLR2tLcvdCKvAwHi9LEKz8PoUhxwJHwYWW1l+ojpgTctFQgiy8pkcLjJKA5MClxKKQfV6r
+X-Received: by 10.224.70.10 with SMTP id b10mr68078qaj.8.1403020444463;
         Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id j5si69089yhi.1.2014.06.17.08.54.04
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id z50si1209152yhb.3.2014.06.17.08.54.04
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 7C79E5A45BD;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 4CD1D31C76B;
 	Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 0F48BE1354; Tue, 17 Jun 2014 08:54:03 -0700 (PDT)
+	id DE376E10DE; Tue, 17 Jun 2014 08:54:03 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.438.gec92e5c
 In-Reply-To: <1403020442-31049-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251916>
 
-Add a strbuf argument to _commit so that we can pass an error string back to
-the caller. So that we can do error logging from the caller instead of from
-_commit.
+ref_transaction_create|delete|update has no need to modify the sha1
+arguments passed to it so it should use const unsigned char* instead
+of unsigned char*.
 
-Longer term plan is to first convert all callers to use onerr==QUIET_ON_ERR
-and craft any log messages from the callers themselves and finally remove the
-onerr argument completely.
+Some functions, such as fast_forward_to(), already have its old/new
+sha1 arguments as consts. This function will at some point need to
+use ref_transaction_update() in which case this change is required.
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/update-ref.c | 2 +-
- refs.c               | 6 +++++-
- refs.h               | 5 ++++-
- 3 files changed, 10 insertions(+), 3 deletions(-)
+ refs.c | 7 ++++---
+ refs.h | 7 ++++---
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 1fd7a89..22617af 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -367,7 +367,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
- 		if (end_null)
- 			line_termination = '\0';
- 		update_refs_stdin();
--		ret = ref_transaction_commit(transaction, msg,
-+		ret = ref_transaction_commit(transaction, msg, NULL,
- 					     UPDATE_REFS_DIE_ON_ERR);
- 		ref_transaction_free(transaction);
- 		return ret;
 diff --git a/refs.c b/refs.c
-index 1d6dece..db05602 100644
+index d9cac6d..21ed465 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3444,7 +3444,8 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
- }
+@@ -3359,7 +3359,8 @@ static struct ref_update *add_update(struct ref_transaction *transaction,
  
- int ref_transaction_commit(struct ref_transaction *transaction,
--			   const char *msg, enum action_on_err onerr)
-+			   const char *msg, struct strbuf *err,
-+			   enum action_on_err onerr)
+ void ref_transaction_update(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *new_sha1, unsigned char *old_sha1,
++			    const unsigned char *new_sha1,
++			    const unsigned char *old_sha1,
+ 			    int flags, int have_old)
  {
- 	int ret = 0, delnum = 0, i;
- 	const char **delnames;
-@@ -3473,6 +3474,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 					       update->flags,
- 					       &update->type, onerr);
- 		if (!update->lock) {
-+			if (err)
-+				strbuf_addf(err, "Cannot lock the ref '%s'.",
-+					    update->refname);
- 			ret = 1;
- 			goto cleanup;
- 		}
+ 	struct ref_update *update = add_update(transaction, refname);
+@@ -3373,7 +3374,7 @@ void ref_transaction_update(struct ref_transaction *transaction,
+ 
+ void ref_transaction_create(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *new_sha1,
++			    const unsigned char *new_sha1,
+ 			    int flags)
+ {
+ 	struct ref_update *update = add_update(transaction, refname);
+@@ -3387,7 +3388,7 @@ void ref_transaction_create(struct ref_transaction *transaction,
+ 
+ void ref_transaction_delete(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *old_sha1,
++			    const unsigned char *old_sha1,
+ 			    int flags, int have_old)
+ {
+ 	struct ref_update *update = add_update(transaction, refname);
 diff --git a/refs.h b/refs.h
-index 8c7f9c4..09d3564 100644
+index 7d946f6..8c7f9c4 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -269,9 +269,12 @@ void ref_transaction_delete(struct ref_transaction *transaction,
-  * Commit all of the changes that have been queued in transaction, as
-  * atomically as possible.  Return a nonzero value if there is a
-  * problem.
-+ * If err is non-NULL we will add an error string to it to explain why
-+ * the transaction failed. The string does not end in newline.
+@@ -240,7 +240,8 @@ struct ref_transaction *ref_transaction_begin(void);
   */
- int ref_transaction_commit(struct ref_transaction *transaction,
--			   const char *msg, enum action_on_err onerr);
-+			   const char *msg, struct strbuf *err,
-+			   enum action_on_err onerr);
+ void ref_transaction_update(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *new_sha1, unsigned char *old_sha1,
++			    const unsigned char *new_sha1,
++			    const unsigned char *old_sha1,
+ 			    int flags, int have_old);
  
  /*
-  * Free an existing transaction and all associated data.
+@@ -251,7 +252,7 @@ void ref_transaction_update(struct ref_transaction *transaction,
+  */
+ void ref_transaction_create(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *new_sha1,
++			    const unsigned char *new_sha1,
+ 			    int flags);
+ 
+ /*
+@@ -261,7 +262,7 @@ void ref_transaction_create(struct ref_transaction *transaction,
+  */
+ void ref_transaction_delete(struct ref_transaction *transaction,
+ 			    const char *refname,
+-			    unsigned char *old_sha1,
++			    const unsigned char *old_sha1,
+ 			    int flags, int have_old);
+ 
+ /*
 -- 
 2.0.0.438.gec92e5c
