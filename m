@@ -1,220 +1,110 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v18 21/48] refs.c: change ref_transaction_create to do error checking and return status
-Date: Tue, 17 Jun 2014 08:53:35 -0700
-Message-ID: <1403020442-31049-22-git-send-email-sahlberg@google.com>
-References: <1403020442-31049-1-git-send-email-sahlberg@google.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 17:58:28 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 09/11] trace: add high resolution timer
+ function to debug performance issues
+Date: Tue, 17 Jun 2014 09:44:34 -0700
+Message-ID: <xmqq4mzjo58t.fsf@gitster.dls.corp.google.com>
+References: <53980B83.9050409@gmail.com> <53980CBF.2060400@gmail.com>
+	<53980F68.7050009@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>,  Jeff King <peff@peff.net>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRB6HAQGOQKGQEPMGIHBA@googlegroups.com Tue Jun 17 18:44:42 2014
+Return-path: <msysgit+bncBCG77UMM3EJRB6HAQGOQKGQEPMGIHBA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pb0-f61.google.com ([209.85.160.61])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwvmD-0000KR-KJ
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:58:26 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933610AbaFQP54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 11:57:56 -0400
-Received: from mail-pd0-f201.google.com ([209.85.192.201]:42906 "EHLO
-	mail-pd0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756244AbaFQPyG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 11:54:06 -0400
-Received: by mail-pd0-f201.google.com with SMTP id v10so601254pde.0
-        for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:54:05 -0700 (PDT)
+	(envelope-from <msysgit+bncBCG77UMM3EJRB6HAQGOQKGQEPMGIHBA@googlegroups.com>)
+	id 1WwwV0-00085X-HY
+	for gcvm-msysgit@m.gmane.org; Tue, 17 Jun 2014 18:44:42 +0200
+Received: by mail-pb0-f61.google.com with SMTP id md12sf1498655pbc.16
+        for <gcvm-msysgit@m.gmane.org>; Tue, 17 Jun 2014 09:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=P3gIA05E5q5gaq8BQDjaMqPYkj03w5X8H1/t1q7vdxs=;
-        b=FlkgFjFkl+prbiSpCNf4oPl0f+7dwKZYmKv7oRg/3uX5Mqd/kZeSO8tNiQSUtKoH6b
-         zCkmLYvGfQRLM2T4IJ0gpmCoOn/sRZiYLATMtRV1gRT6ixmwJirvhbTg9Ev900PtPUm1
-         7M86iyjhnJ/OFXpnL9DYO91lCIkfqyhapHSSDuVdgPBpykgVD5vTKTGwbQKGWSV1+K7a
-         t/Hw7toRD+dnoAYyvFT3qpqNtmUmoasQBRC3DVwRjYbFJwgd1u9O2f1L3NURlt7m9NRb
-         F2VgxqFsSMz6qw0UUz0Zcsal5dv23TQWaWW+bmfw5Meh+hbF3Gls1oFHlv6jE5XJMEtP
-         sSIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=P3gIA05E5q5gaq8BQDjaMqPYkj03w5X8H1/t1q7vdxs=;
-        b=BsDG3PR4h0oiqspBgbDlKOomLGd/T/4XJJPOmHmUPqF+Srt67UnJQYDv8zz30cJSA/
-         Qk96lbGIwPYfARaf+qGCAAQMHjcibgMXceak23V5eT9H3WbaS2teC8PTxP9qV+uLQY2Y
-         Z6WjfSqOfHOIDyvpPm5LG+grRMZwPny1xpfTCpkZDtQZkMM0PcIqkIHeZYZwsTcFvHaB
-         oVBklLsWTDF5J+gbDv521LqKO+C+6SMM/Qy9p2WWk4uX26KF7Te14LPlLjR/fAHH8W7w
-         ETcqrw6PX4YG30BeqvXtv2Sgnm0FlqdegllUuVQOyvi5BZ40jMj0IKiVP24M2yAU4Bje
-         QTPg==
-X-Gm-Message-State: ALoCoQnbSPIg/sEyvNeQy13m53lFeLJL/UdCXTx/fdR7x2Ys7B1Zich4OEiJL52fGG7OjVUo/6ey
-X-Received: by 10.66.138.17 with SMTP id qm17mr3707586pab.34.1403020445140;
-        Tue, 17 Jun 2014 08:54:05 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id c50si1207437yhl.7.2014.06.17.08.54.05
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 17 Jun 2014 08:54:05 -0700 (PDT)
-Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id DF97A31C76D;
-	Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
-Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id BBEB4E1158; Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.438.gec92e5c
-In-Reply-To: <1403020442-31049-1-git-send-email-sahlberg@google.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251919>
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=Te+PUfLc2aOJPrHgn0UbPiQBqmGjmHrtvKZflCE0UVY=;
+        b=vj42n5bwYtinFEzVuaOhQJmISwXsk/kUmwWK8hsPPwTutqz98ckihcxOjC1a+25mgT
+         LEl+Yladn/dv301nMDAWzQTZjjqd7g+J503GRzHvjgAH8g5yF7rvBML4pi+iRZmJfDsR
+         0vjT8pxbU1vUdMDo5Hb/bCjFig3+WNw2hXFDbhjzOLGpfsHJ12qSL1Gv7VoEhr59+oYf
+         kQCOjh7cviMKIgK+/sNF/QBExj5xtuttRAH+6RmvCAUg3AWvjEKQqTpZNoOdx1CMaqiH
+         VJoWbeFyueUhu0R4Ax83eDKgNEOTKL4Ygf2w5IY3a40xnVlUFgqp4MZoZFwdZIhSAW28
+         xRZQ==
+X-Received: by 10.50.79.137 with SMTP id j9mr646725igx.6.1403023481141;
+        Tue, 17 Jun 2014 09:44:41 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.3.7 with SMTP id 7ls1645138igy.19.canary; Tue, 17 Jun 2014
+ 09:44:40 -0700 (PDT)
+X-Received: by 10.43.126.130 with SMTP id gw2mr2479435icc.15.1403023480348;
+        Tue, 17 Jun 2014 09:44:40 -0700 (PDT)
+Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id ci7si3282192qcb.1.2014.06.17.09.44.40
+        for <msysgit@googlegroups.com>;
+        Tue, 17 Jun 2014 09:44:40 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E582020757;
+	Tue, 17 Jun 2014 12:44:37 -0400 (EDT)
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA26D20756;
+	Tue, 17 Jun 2014 12:44:37 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9685D20752;
+	Tue, 17 Jun 2014 12:44:33 -0400 (EDT)
+In-Reply-To: <53980F68.7050009@gmail.com> (Karsten Blees's message of "Wed, 11
+	Jun 2014 10:12:24 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A9139912-F63E-11E3-A1AE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251920>
 
-Do basic error checking in ref_transaction_create() and make it return
-non-zero on error. Update all callers to check the result of
-ref_transaction_create(). There are currently no conditions in _create that
-will return error but there will be in the future. Add an err argument that
-will be updated on failure.
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- builtin/update-ref.c |  4 +++-
- refs.c               | 18 +++++++++++------
- refs.h               | 55 +++++++++++++++++++++++++++++++++++++++++++++-------
- 3 files changed, 63 insertions(+), 14 deletions(-)
+> Am 11.06.2014 10:01, schrieb Karsten Blees:
+>> the epoch allows using the results (div 10e9) with other time-related APIs.
+>
+> s/10e9/1e9/
 
-diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-index 3067b11..41121fa 100644
---- a/builtin/update-ref.c
-+++ b/builtin/update-ref.c
-@@ -226,7 +226,9 @@ static const char *parse_cmd_create(struct strbuf *input, const char *next)
- 	if (*next != line_termination)
- 		die("create %s: extra input: %s", refname, next);
- 
--	ref_transaction_create(transaction, refname, new_sha1, update_flags);
-+	if (ref_transaction_create(transaction, refname, new_sha1,
-+				   update_flags, &err))
-+		die("%s", err.buf);
- 
- 	update_flags = 0;
- 	free(refname);
-diff --git a/refs.c b/refs.c
-index 88d2df4..78ae4f0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3472,18 +3472,24 @@ int ref_transaction_update(struct ref_transaction *transaction,
- 	return 0;
- }
- 
--void ref_transaction_create(struct ref_transaction *transaction,
--			    const char *refname,
--			    const unsigned char *new_sha1,
--			    int flags)
-+int ref_transaction_create(struct ref_transaction *transaction,
-+			   const char *refname,
-+			   const unsigned char *new_sha1,
-+			   int flags,
-+			   struct strbuf *err)
- {
--	struct ref_update *update = add_update(transaction, refname);
-+	struct ref_update *update;
-+
-+	if (!new_sha1 || is_null_sha1(new_sha1))
-+		die("BUG: create ref with null new_sha1");
-+
-+	update = add_update(transaction, refname);
- 
--	assert(!is_null_sha1(new_sha1));
- 	hashcpy(update->new_sha1, new_sha1);
- 	hashclr(update->old_sha1);
- 	update->flags = flags;
- 	update->have_old = 1;
-+	return 0;
- }
- 
- void ref_transaction_delete(struct ref_transaction *transaction,
-diff --git a/refs.h b/refs.h
-index 6c99ccf..d1ba4e8 100644
---- a/refs.h
-+++ b/refs.h
-@@ -10,6 +10,45 @@ struct ref_lock {
- 	int force_write;
- };
- 
-+/*
-+ * A ref_transaction represents a collection of ref updates
-+ * that should succeed or fail together.
-+ *
-+ * Calling sequence
-+ * ----------------
-+ * - Allocate and initialize a `struct ref_transaction` by calling
-+ *   `ref_transaction_begin()`.
-+ *
-+ * - List intended ref updates by calling functions like
-+ *   `ref_transaction_update()` and `ref_transaction_create()`.
-+ *
-+ * - Call `ref_transaction_commit()` to execute the transaction.
-+ *   If this succeeds, the ref updates will have taken place and
-+ *   the transaction cannot be rolled back.
-+ *
-+ * - At any time call `ref_transaction_free()` to discard the
-+ *   transaction and free associated resources.  In particular,
-+ *   this rolls back the transaction if it has not been
-+ *   successfully committed.
-+ *
-+ * Error handling
-+ * --------------
-+ *
-+ * On error, transaction functions append a message about what
-+ * went wrong to the 'err' argument.  The message mentions what
-+ * ref was being updated (if any) when the error occurred so it
-+ * can be passed to 'die' or 'error' as-is.
-+ *
-+ * The message is appended to err without first clearing err.
-+ * This allows the caller to prepare preamble text to the generated
-+ * error message:
-+ *
-+ *     strbuf_addf(&err, "Error while doing foo-bar: ");
-+ *     if (ref_transaction_update(..., &err)) {
-+ *         ret = error("%s", err.buf);
-+ *         goto cleanup;
-+ *     }
-+ */
- struct ref_transaction;
- 
- /*
-@@ -248,7 +287,7 @@ struct ref_transaction *ref_transaction_begin(void);
-  * it must not have existed beforehand.
-  * Function returns 0 on success and non-zero on failure. A failure to update
-  * means that the transaction as a whole has failed and will need to be
-- * rolled back. On failure the err buffer will be updated.
-+ * rolled back.
-  */
- int ref_transaction_update(struct ref_transaction *transaction,
- 			   const char *refname,
-@@ -262,11 +301,15 @@ int ref_transaction_update(struct ref_transaction *transaction,
-  * that the reference should have after the update; it must not be the
-  * null SHA-1.  It is verified that the reference does not exist
-  * already.
-+ * Function returns 0 on success and non-zero on failure. A failure to create
-+ * means that the transaction as a whole has failed and will need to be
-+ * rolled back.
-  */
--void ref_transaction_create(struct ref_transaction *transaction,
--			    const char *refname,
--			    const unsigned char *new_sha1,
--			    int flags);
-+int ref_transaction_create(struct ref_transaction *transaction,
-+			   const char *refname,
-+			   const unsigned char *new_sha1,
-+			   int flags,
-+			   struct strbuf *err);
- 
- /*
-  * Add a reference deletion to transaction.  If have_old is true, then
-@@ -282,8 +325,6 @@ void ref_transaction_delete(struct ref_transaction *transaction,
-  * Commit all of the changes that have been queued in transaction, as
-  * atomically as possible.  Return a nonzero value if there is a
-  * problem.
-- * If err is non-NULL we will add an error string to it to explain why
-- * the transaction failed. The string does not end in newline.
-  */
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   const char *msg, struct strbuf *err);
+That replacement is fine but the "(div 1e9)" still wants to be
+clarified.  What did you exactly mean by that?  If the result is
+divided by 10^9 then it yields the number of seconds?
+
+Thanks.
+
 -- 
-2.0.0.438.gec92e5c
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
