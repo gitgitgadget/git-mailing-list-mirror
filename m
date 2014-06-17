@@ -1,116 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] string-list: Add string_list initializer helper functions
-Date: Tue, 17 Jun 2014 15:10:26 -0700
-Message-ID: <xmqqr42njigd.fsf@gitster.dls.corp.google.com>
-References: <1402907232-24629-1-git-send-email-tanayabh@gmail.com>
-	<1402907232-24629-2-git-send-email-tanayabh@gmail.com>
-	<xmqqsin4o406.fsf@gitster.dls.corp.google.com>
-	<53A09192.2030008@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 18 00:10:44 2014
+From: Yi EungJun <semtlenori@gmail.com>
+Subject: [PATCH v4] http: fix charset detection of extract_content_type()
+Date: Wed, 18 Jun 2014 07:11:53 +0900
+Message-ID: <1403043113-12579-1-git-send-email-eungjun.yi@navercorp.com>
+Cc: Yi EungJun <eungjun.yi@navercorp.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 18 00:12:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wx1aW-0002Pb-0r
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 00:10:44 +0200
+	id 1Wx1c6-0004ZO-VA
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 00:12:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967269AbaFQWKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 18:10:38 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62686 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S967130AbaFQWKe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 18:10:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0F2F221283;
-	Tue, 17 Jun 2014 18:10:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=W1T5RYtQVXwd1yrMKC+zb7yU84M=; b=Y4NS2E
-	3tKdwwFhzrIIDwpAOSpKDhz9BpNTLWV+StKvWzxthhLmO/688dVmspBPg+v+Tac6
-	hzs3NZZVPj2wKLmVLNE6nd+02qXbbiDYQnEhZvgs0FCNWjOqON6MXANgV26GqiRu
-	HI3eQDdkucIyy0ClyQdwIdNJpY+qR2RlVQGaE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M7CvOtDRhASNzDbEtsio0J4mOUexfR8A
-	aIP0AuFLwL1GqrNcyPlBrX13dKsHmsEYEzljU3sfhGpKkuzv2g0gzzEJVaxCocox
-	3+WIo8NlHv2IhzRCCfTtYS9Vz2B217t19arzkhHrkynYinnbPkei9srBRXEyaz6E
-	4z7hM6KXetg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D3F821282;
-	Tue, 17 Jun 2014 18:10:30 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D55D12127F;
-	Tue, 17 Jun 2014 18:10:25 -0400 (EDT)
-In-Reply-To: <53A09192.2030008@gmail.com> (Tanay Abhra's message of "Tue, 17
-	Jun 2014 12:05:54 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2F21AEAE-F66C-11E3-BDCC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S965437AbaFQWMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 18:12:12 -0400
+Received: from mail-pb0-f47.google.com ([209.85.160.47]:48401 "EHLO
+	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965329AbaFQWMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 18:12:09 -0400
+Received: by mail-pb0-f47.google.com with SMTP id up15so3167302pbc.6
+        for <git@vger.kernel.org>; Tue, 17 Jun 2014 15:12:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=vqQZth3ZPa9s8TzKhMD8FT2jr/tgl7lk2UR2AcsY1fo=;
+        b=bnAA1gdnKpoGCSgTEWB+NhMpi719GiLOLyaXPH5oN2vdbo67ghIF5+t8J2+ShYslDa
+         3JGTZ+AhV+tGiYYFvkinKmRvE4IYTr5yGlL5L4NW71A5PR69DzQV39EIAlDZ4vmp3J9a
+         8rElzsM8KtugAEY+JjjuhOMM6BV9i8fNDaHNfCCGrii2UPLqilqv4pBixU7NqYOIzUPt
+         88/FIz+/28HlpMRVEslVdWVPGTFV4KyqsYf6EisltzpmDJVEeLcL1DoSU59TO6PhaTnZ
+         CA5yO1R0wIacidgN7Ev6Rmyz4ynTJdG3RlRskkKYSFfIhuMwBGCvdQEkziCkcKu6h5Vn
+         Tiag==
+X-Received: by 10.66.254.136 with SMTP id ai8mr35494417pad.37.1403043129039;
+        Tue, 17 Jun 2014 15:12:09 -0700 (PDT)
+Received: from gmail.com ([222.234.94.10])
+        by mx.google.com with ESMTPSA id zn9sm90906391pac.31.2014.06.17.15.12.07
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 17 Jun 2014 15:12:08 -0700 (PDT)
+X-Google-Original-From: Yi EungJun <eungjun.yi@navercorp.com>
+X-Mailer: git-send-email 2.0.0.422.gb6302de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251961>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+From: Yi EungJun <eungjun.yi@navercorp.com>
 
-> On 06/16/2014 03:59 PM, Junio C Hamano wrote:
->> Tanay Abhra <tanayabh@gmail.com> writes:
->> 
->>> When a compound construct like a string_list within another
->>> struct is used, the default initializer macros are useless.
->>> For such cases add helper functions for string_list
->>> initialization for both DUP and NODUP modes.
->>>
->>> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
->>> ---
->> 
->> 
->> Sorry, but I do not understand the above "useless".  Do you mean to
->> say that xyzzy below cannot be initialized that way?
->>  ...
-> I was actually explaining for cases like below,
-> ...
-> +		string_list_init_dup(&e->value_list);
+extract_content_type() could not extract a charset parameter if the
+parameter is not the first one and there is a whitespace and a following
+semicolon just before the parameter. For example:
 
-If that is what you wanted to refer to, I would have to say
-"useless" is placing a stress on a wrong place.  (I do not see
-anything wrong with your new code; it was just the way it was
-explained in the proposed log message was misleading).
+    text/plain; format=fixed ;charset=utf-8
 
-Structure initialisers are not something you can assign to a
-variable anyway, and calling them "useless" is like complaining how
-unwieldty hammers are on screws.  "Hammers are useless on screws"
-may not be technically wrong per-se, but the readers won't be helped
-by hearing it very much.
+And it also could not handle correctly some other cases, such as:
 
-Instead, you would want to explain what your new invention, a
-screwdriver, is and how it is intended to be used.
+    text/plain; charset=utf-8; format=fixed
+    text/plain; some-param="a long value with ;semicolons;"; charset=utf-8
 
-We of course have precedences for this kind of thing.  STRBUF_INIT
-is for definition-time initialisation and strbuf_init() is to
-initialise an uninitialised piece of memory to be used as a strbuf.
+Thanks-to: Jeff King <peff@peff.net>
+Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
+---
+ http.c                     | 4 ++--
+ t/lib-httpd/error.sh       | 4 ++++
+ t/t5550-http-fetch-dumb.sh | 5 +++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
-I tend to think it was a long-time misdesign of string-list API to
-have the STRING_LIST_INIT* definition-time initialisers without
-having runtime string_list_init*() initialisers, and it is a good
-idea to add them to complete the API.
+diff --git a/http.c b/http.c
+index 2b4f6a3..3a28b21 100644
+--- a/http.c
++++ b/http.c
+@@ -927,7 +927,7 @@ static int extract_param(const char *raw, const char *name,
+ 		return -1;
+ 	raw++;
+ 
+-	while (*raw && !isspace(*raw))
++	while (*raw && !isspace(*raw) && *raw != ';')
+ 		strbuf_addch(out, *raw++);
+ 	return 0;
+ }
+@@ -971,7 +971,7 @@ static void extract_content_type(struct strbuf *raw, struct strbuf *type,
+ 
+ 	strbuf_reset(charset);
+ 	while (*p) {
+-		while (isspace(*p))
++		while (isspace(*p) || *p == ';')
+ 			p++;
+ 		if (!extract_param(p, "charset", charset))
+ 			return;
+diff --git a/t/lib-httpd/error.sh b/t/lib-httpd/error.sh
+index eafc9d2..a77b8e5 100755
+--- a/t/lib-httpd/error.sh
++++ b/t/lib-httpd/error.sh
+@@ -19,6 +19,10 @@ case "$PATH_INFO" in
+ 	printf "text/plain; charset=utf-16"
+ 	charset=utf-16
+ 	;;
++*odd-spacing*)
++	printf "text/plain; foo=bar ;charset=utf-16; other=nonsense"
++	charset=utf-16
++	;;
+ esac
+ printf "\n"
+ 
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 01b8aae..ac71418 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -191,5 +191,10 @@ test_expect_success 'http error messages are reencoded' '
+ 	grep "this is the error message" stderr
+ '
+ 
++test_expect_success 'reencoding is robust to whitespace oddities' '
++	test_must_fail git clone "$HTTPD_URL/error/odd-spacing" 2>stderr &&
++	grep "this is the error message" stderr
++'
++
+ stop_httpd
+ test_done
+-- 
+2.0.0.422.gb6302de
 
-If I were writing the log message for this, I would just say:
-
-	The string-list API has STRING_LIST_INIT_* macros to be used
-	to define variables with initialisers, but lacks functions
-	to initialise an uninitialised piece of memory to be used as
-	a string-list at the run-time.
-
-        Introduce string_list_init_{dup,nodup}() functions for that.
-
-or something.
+Oops, I fixed the whitespace error.
