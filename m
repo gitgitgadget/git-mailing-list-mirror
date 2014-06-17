@@ -1,93 +1,87 @@
-From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v2 3/3] unpack-trees: simplify via strnncmp()
-Date: Tue, 17 Jun 2014 00:34:39 -0700
-Message-ID: <38ee9a9fac6aa861d18d6f756f48dc9df1ac19b1.1402990051.git.jmmahler@gmail.com>
-References: <cover.1402990051.git.jmmahler@gmail.com>
-Cc: git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 17 09:35:35 2014
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v2 1/3] add strnncmp() function
+Date: Tue, 17 Jun 2014 10:23:14 +0200
+Message-ID: <539FFAF2.3070002@web.de>
+References: <cover.1402990051.git.jmmahler@gmail.com> <50de63f47ded2337adcd8bce151190fb99b38d64.1402990051.git.jmmahler@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 10:23:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwnvZ-0004Gd-G1
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 09:35:33 +0200
+	id 1Wwofx-00083l-N7
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 10:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754202AbaFQHfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 03:35:25 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:38535 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753879AbaFQHfY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 03:35:24 -0400
-Received: by mail-pa0-f53.google.com with SMTP id ey11so1936121pad.26
-        for <git@vger.kernel.org>; Tue, 17 Jun 2014 00:35:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :in-reply-to:references;
-        bh=W7VYs2noInD77CMm1eeXosC2UY/3P82hR3BrhXeYMdE=;
-        b=xrOyrSrTomOHRIjY6FviKvqlEYeJFv0Z7N4P7C5aEerRfN7bq/Ua3llV141ASzbUQm
-         RXOOX6PdLpzgYr6VPe1OcGVLr1U4xUhvPpT5WUx3Wxdvc9f6alGQKQHLuNDQ0PPHjfom
-         AM5Gb9w9U2YeKnaaYl1bXw70NArfdbaYF1oP2ZbAopCmEjLNSPp0nF3yLh+yveXYBEYN
-         wRkspTLoILAFR06knY+Dvqh+9AgdgESF39tfaybW0BE9ZjvO1zejO5IBIUqjVDxXyhFq
-         0m5TscGYpij1yMre8Cv6A+/dszGbKZOQMK/81+36ph5JDo9JJ8WZV8WAi+G/QrOWbVpL
-         jLAg==
-X-Received: by 10.66.120.99 with SMTP id lb3mr30768818pab.2.1402990523962;
-        Tue, 17 Jun 2014 00:35:23 -0700 (PDT)
-Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id dz4sm80834221pab.47.2014.06.17.00.35.22
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Jun 2014 00:35:22 -0700 (PDT)
-X-Mailer: git-send-email 2.0.0.695.g38ee9a9
-In-Reply-To: <cover.1402990051.git.jmmahler@gmail.com>
-In-Reply-To: <cover.1402990051.git.jmmahler@gmail.com>
-References: <cover.1402990051.git.jmmahler@gmail.com>
+	id S932489AbaFQIXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 04:23:23 -0400
+Received: from mout.web.de ([212.227.15.14]:57870 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932480AbaFQIXV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 04:23:21 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0M5wrF-1WY6ww2HRR-00xvmY; Tue, 17 Jun 2014 10:23:19
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <50de63f47ded2337adcd8bce151190fb99b38d64.1402990051.git.jmmahler@gmail.com>
+X-Provags-ID: V03:K0:7jgu8PsJi3VXuK/rCjHq3X5f9ZqGHaFVDLLfuEGu1Q9o+kRH28g
+ J6FROyfODkVNA7eFtMw914bcQjBviChGQ1ieCn09subZwh9w+FUMPQC+xL6tkm6eKtfqbg6
+ 1AurMpkdQJ+MsWbqWmQuokDEG+MRw8EnKDY4ota7wLQkySPUuAZLmATnvXJ9N9Tw5Kmylu3
+ sU6cgiONlSvQPu+EuQK/g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251851>
 
-Simplify unpack-trees.c using the strnncmp() function and remove the
-name_compare() function.
+On 2014-06-17 09.34, Jeremiah Mahler wrote:
+> Add a strnncmp() function which behaves like strncmp() except it takes
+> the length of both strings instead of just one.  It behaves the same as
+> strncmp() up to the minimum common length between the strings.  When the
+minimum common length? Isn'n t that 0?
+Using the word "common", I think we could call it "common length".
+(And more places below)
 
-Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
----
- unpack-trees.c | 13 +------------
- 1 file changed, 1 insertion(+), 12 deletions(-)
+> strings are identical up to this minimum common length, the length
+> difference is returned.
+> 
+> Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
+> ---
+>  strbuf.c | 9 +++++++++
+>  strbuf.h | 2 ++
+>  2 files changed, 11 insertions(+)
+> 
+> diff --git a/strbuf.c b/strbuf.c
+> index ac62982..4eb7954 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -600,3 +600,12 @@ char *xstrdup_tolower(const char *string)
+>  	result[i] = '\0';
+>  	return result;
+>  }
+> +
+strncmp uses size_t, not int:
+int strncmp(const char *s1, const char *s2, size_t n);
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 4a9cdf2..9a71b5a 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -629,17 +629,6 @@ static int unpack_failed(struct unpack_trees_options *o, const char *message)
- 	return -1;
- }
- 
--/* NEEDSWORK: give this a better name and share with tree-walk.c */
--static int name_compare(const char *a, int a_len,
--			const char *b, int b_len)
--{
--	int len = (a_len < b_len) ? a_len : b_len;
--	int cmp = memcmp(a, b, len);
--	if (cmp)
--		return cmp;
--	return (a_len - b_len);
--}
--
- /*
-  * The tree traversal is looking at name p.  If we have a matching entry,
-  * return it.  If name p is a directory in the index, do not return
-@@ -678,7 +667,7 @@ static int find_cache_pos(struct traverse_info *info,
- 			ce_len = ce_slash - ce_name;
- 		else
- 			ce_len = ce_namelen(ce) - pfxlen;
--		cmp = name_compare(p->path, p_len, ce_name, ce_len);
-+		cmp = strnncmp(p->path, p_len, ce_name, ce_len);
- 		/*
- 		 * Exact match; if we have a directory we need to
- 		 * delay returning it.
--- 
-2.0.0.695.g38ee9a9
+Is there a special reason to allow negative string length?
+Some call sites use int when calling strncmp() or others,
+that is one thing.
+But when writing a generic strnncmp() function, I think
+it should use size_t, unless negative values have a meaning and
+are handled in the code.
+
+
+> +int strnncmp(const char *a, int len_a, const char *b, int len_b)
+> +{
+> +	int min_len = (len_a < len_b) ? len_a : len_b;
+> +	int cmp = strncmp(a, b, min_len);
+
+> +	if (cmp)
+> +		return cmp;
+> +	return (len_a - len_b);
+> +}
