@@ -1,125 +1,71 @@
-From: Yi EungJun <semtlenori@gmail.com>
-Subject: [PATCH v4] http: fix charset detection of extract_content_type()
-Date: Wed, 18 Jun 2014 07:11:53 +0900
-Message-ID: <1403043113-12579-1-git-send-email-eungjun.yi@navercorp.com>
-Cc: Yi EungJun <eungjun.yi@navercorp.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 18 00:12:26 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] hashmap: add enum for hashmap free_entries option
+Date: Tue, 17 Jun 2014 15:19:04 -0700
+Message-ID: <xmqqmwdbji1z.fsf@gitster.dls.corp.google.com>
+References: <20140605060425.GA23874@sandbox-ub>
+	<20140605060640.GB23874@sandbox-ub> <5391FFC3.5010001@gmail.com>
+	<20140610101744.GA23370@t2784.greatnet.de>
+	<53981D6A.3090604@gmail.com>
+	<xmqqegyu54cl.fsf@gitster.dls.corp.google.com>
+	<539FFCAB.4060908@gmail.com> <20140617190425.GB2982@sandbox-ub>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Karsten Blees <karsten.blees@gmail.com>, git@vger.kernel.org,
+	Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Jun 18 00:19:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wx1c6-0004ZO-VA
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 00:12:23 +0200
+	id 1Wx1j3-0005z8-Ad
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 00:19:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965437AbaFQWMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 18:12:12 -0400
-Received: from mail-pb0-f47.google.com ([209.85.160.47]:48401 "EHLO
-	mail-pb0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S965329AbaFQWMJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 18:12:09 -0400
-Received: by mail-pb0-f47.google.com with SMTP id up15so3167302pbc.6
-        for <git@vger.kernel.org>; Tue, 17 Jun 2014 15:12:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=vqQZth3ZPa9s8TzKhMD8FT2jr/tgl7lk2UR2AcsY1fo=;
-        b=bnAA1gdnKpoGCSgTEWB+NhMpi719GiLOLyaXPH5oN2vdbo67ghIF5+t8J2+ShYslDa
-         3JGTZ+AhV+tGiYYFvkinKmRvE4IYTr5yGlL5L4NW71A5PR69DzQV39EIAlDZ4vmp3J9a
-         8rElzsM8KtugAEY+JjjuhOMM6BV9i8fNDaHNfCCGrii2UPLqilqv4pBixU7NqYOIzUPt
-         88/FIz+/28HlpMRVEslVdWVPGTFV4KyqsYf6EisltzpmDJVEeLcL1DoSU59TO6PhaTnZ
-         CA5yO1R0wIacidgN7Ev6Rmyz4ynTJdG3RlRskkKYSFfIhuMwBGCvdQEkziCkcKu6h5Vn
-         Tiag==
-X-Received: by 10.66.254.136 with SMTP id ai8mr35494417pad.37.1403043129039;
-        Tue, 17 Jun 2014 15:12:09 -0700 (PDT)
-Received: from gmail.com ([222.234.94.10])
-        by mx.google.com with ESMTPSA id zn9sm90906391pac.31.2014.06.17.15.12.07
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 17 Jun 2014 15:12:08 -0700 (PDT)
-X-Google-Original-From: Yi EungJun <eungjun.yi@navercorp.com>
-X-Mailer: git-send-email 2.0.0.422.gb6302de
+	id S967140AbaFQWTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 18:19:14 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53545 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965502AbaFQWTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 18:19:11 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1DA8A214AF;
+	Tue, 17 Jun 2014 18:19:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TbDQdmoAElTl6kusXgLQc5R2YXg=; b=Vb/PHa
+	DLvAMG+hs1NKHMPfgSwV3ILSv7LmntWJi9CbQ6WiusD1rZZRJwu0xGgjHMK67PFY
+	RnznIK5aghM23e3B9ZZxQxAqRvq20E43XlMJdBXSDJo7T5MPYWqeyp1PG7IWmkL1
+	zMyn4uc4nveOeF2ElgxTF1kMpEmp/MFJjY+pM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bwuS6pFWqXAcNFfc6VwtDX/DHgwJ6kaW
+	66cwY8UcRtgsApZlLzKK/vVMETUgrkMeVHLHKC/YQet8zIK0/YsenizWXSU3YZzS
+	3d1lwOx7rhPj3yo9ayFEZ3HZU4D23fcmEc9jTxNo8fodd76LVn8YMRocUbihd5n9
+	AEDq+2AOuxo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 119D2214AE;
+	Tue, 17 Jun 2014 18:19:09 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 929A1214A6;
+	Tue, 17 Jun 2014 18:19:03 -0400 (EDT)
+In-Reply-To: <20140617190425.GB2982@sandbox-ub> (Heiko Voigt's message of
+	"Tue, 17 Jun 2014 21:04:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 63B83268-F66D-11E3-921B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251962>
 
-From: Yi EungJun <eungjun.yi@navercorp.com>
+Heiko Voigt <hvoigt@hvoigt.net> writes:
 
-extract_content_type() could not extract a charset parameter if the
-parameter is not the first one and there is a whitespace and a following
-semicolon just before the parameter. For example:
+> If this is such a controversial change for you I will drop this patch in
+> the next round. I think it would make the callsite more readable without
+> adding much clutter but I am fine with it either way.
 
-    text/plain; format=fixed ;charset=utf-8
-
-And it also could not handle correctly some other cases, such as:
-
-    text/plain; charset=utf-8; format=fixed
-    text/plain; some-param="a long value with ;semicolons;"; charset=utf-8
-
-Thanks-to: Jeff King <peff@peff.net>
-Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
----
- http.c                     | 4 ++--
- t/lib-httpd/error.sh       | 4 ++++
- t/t5550-http-fetch-dumb.sh | 5 +++++
- 3 files changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/http.c b/http.c
-index 2b4f6a3..3a28b21 100644
---- a/http.c
-+++ b/http.c
-@@ -927,7 +927,7 @@ static int extract_param(const char *raw, const char *name,
- 		return -1;
- 	raw++;
- 
--	while (*raw && !isspace(*raw))
-+	while (*raw && !isspace(*raw) && *raw != ';')
- 		strbuf_addch(out, *raw++);
- 	return 0;
- }
-@@ -971,7 +971,7 @@ static void extract_content_type(struct strbuf *raw, struct strbuf *type,
- 
- 	strbuf_reset(charset);
- 	while (*p) {
--		while (isspace(*p))
-+		while (isspace(*p) || *p == ';')
- 			p++;
- 		if (!extract_param(p, "charset", charset))
- 			return;
-diff --git a/t/lib-httpd/error.sh b/t/lib-httpd/error.sh
-index eafc9d2..a77b8e5 100755
---- a/t/lib-httpd/error.sh
-+++ b/t/lib-httpd/error.sh
-@@ -19,6 +19,10 @@ case "$PATH_INFO" in
- 	printf "text/plain; charset=utf-16"
- 	charset=utf-16
- 	;;
-+*odd-spacing*)
-+	printf "text/plain; foo=bar ;charset=utf-16; other=nonsense"
-+	charset=utf-16
-+	;;
- esac
- printf "\n"
- 
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 01b8aae..ac71418 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -191,5 +191,10 @@ test_expect_success 'http error messages are reencoded' '
- 	grep "this is the error message" stderr
- '
- 
-+test_expect_success 'reencoding is robust to whitespace oddities' '
-+	test_must_fail git clone "$HTTPD_URL/error/odd-spacing" 2>stderr &&
-+	grep "this is the error message" stderr
-+'
-+
- stop_httpd
- test_done
--- 
-2.0.0.422.gb6302de
-
-Oops, I fixed the whitespace error.
+OK, let's do that.
