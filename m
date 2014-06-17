@@ -1,142 +1,115 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Potential bug in git client
-Date: Tue, 17 Jun 2014 11:17:15 +0200
-Message-ID: <53A0079B.1030602@alum.mit.edu>
-References: <CAKY5LXywixV3dWcCcVPTvyFrScJjLd8eoVs=RA1VRcrzUgtThQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] http: fix charset detection of extract_content_type()
+Date: Tue, 17 Jun 2014 05:31:07 -0400
+Message-ID: <20140617093106.GA5922@sigill.intra.peff.net>
+References: <539caff7.e7bc420a.76b9.fffff853@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?B?V29qY2llY2ggUHJ6eWJ5xYI=?= <przybylwojciech@gmail.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 11:24:26 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: nori <semtlenori@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 11:31:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwpcv-0006Cc-2y
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 11:24:25 +0200
+	id 1WwpjV-0006zS-Ep
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 11:31:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932636AbaFQJYV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jun 2014 05:24:21 -0400
-Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:62176 "EHLO
-	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932603AbaFQJYU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jun 2014 05:24:20 -0400
-X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Jun 2014 05:24:20 EDT
-X-AuditID: 12074411-f794c6d000000b6d-6d-53a0079d35d2
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id 1A.3D.02925.D9700A35; Tue, 17 Jun 2014 05:17:17 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB2181.dip0.t-ipconnect.de [93.219.33.129])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5H9HGuF001119
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 17 Jun 2014 05:17:17 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <CAKY5LXywixV3dWcCcVPTvyFrScJjLd8eoVs=RA1VRcrzUgtThQ@mail.gmail.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpkleLIzCtJLcpLzFFi42IRYndR1J3LviDY4FGHkUXXlW4mizO/m9gc
-	mDx2zrrL7vF5k1wAUxS3TVJiSVlwZnqevl0Cd8bh78uZCg4LVzxZd569gbGPv4uRk0NCwERi
-	846P7BC2mMSFe+vZuhi5OIQELjNKTHl5hQnCOc8k8amzn7GLkYODV0BboqsvE8RkEVCV+L6o
-	AKSXTUBXYlFPMxOILSoQJDH78zywmbwCghInZz5hASkXEUiS+PqRESQsLKAhsWXNRrCBQgIB
-	Eue22YCEOQUCJRp/vmEFCUsIiEv0NAaBmMwC6hLr5wmBVDALyEs0b53NPIFRYBaS8bMQqmYh
-	qVrAyLyKUS4xpzRXNzcxM6c4NVm3ODkxLy+1SNdULzezRC81pXQTIyQ4BXcwzjgpd4hRgINR
-	iYf3gez8YCHWxLLiytxDjJIcTEqivJE/gUJ8SfkplRmJxRnxRaU5qcWHGCU4mJVEeIVeAeV4
-	UxIrq1KL8mFS0hwsSuK8fEvU/YQE0hNLUrNTUwtSi2CyMhwcShK8QsAoFBIsSk1PrUjLzClB
-	SDNxcIIM55ISKU7NS0ktSiwtyYgHRWd8MTA+QVI8QHuPsgK18xYXJOYCRSFaTzEqSonz9oEk
-	BEASGaV5cGNhKecVozjQl8K839iAqniA6Qqu+xXQYCagwSoT54EMLklESEk1MNrFrA5z/FVQ
-	O2+OqALzjEUv+IrOOy1WsduywyNiXueU1a8qj00SENF/f1lw9m+T5Lq7Ly91GM2a/UZW/QdX
-	1pstG1YY2LtsWpm6Q+Kke/2V6j9d31KPuslwLypr68taePvsW0999wdi5jtuW3Gs 
+	id S932571AbaFQJbI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 05:31:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45912 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932240AbaFQJbH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 05:31:07 -0400
+Received: (qmail 22455 invoked by uid 102); 17 Jun 2014 09:31:08 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Jun 2014 04:31:08 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jun 2014 05:31:07 -0400
+Content-Disposition: inline
+In-Reply-To: <539caff7.e7bc420a.76b9.fffff853@mx.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251856>
 
-On 06/11/2014 12:21 PM, Wojciech Przyby=C5=82 wrote:
-> When I was tagging, I think I might have discovered a git client bug.
-> [...]
-> HOW TO REPRODUCE:
-> - Clone a repo into 2 separate directories. Presume there is a tag
-> "v0.1" already in there and it is set on say 10 commits ago.
->=20
-> - In first directory change the tag to a different place and push it
-> to the server:
-> git tag -d v0.1
-> git tag v0.1
-> git push --tags origin master
->=20
-> - In second directory try to update the tag...
-> git pull --all --tags
-> git fetch -all --tags
-> THIS DOES NOT WORK, tag is still at old place, but it says "Already u=
-p-to-date".
->=20
-> - I noticed when I use:
-> git fetch --tags
-> it works fine and updates the position of the tag, or if I remove tag
-> from local git manually (rm .git/refs/tags/v0.1) and update again.
->=20
-> Is it a bug or I am doing something wrong? I use git version 1.7.9.5.
+On Sun, Jun 15, 2014 at 03:49:34AM +0900, nori wrote:
 
-Tag fetching changed quite a bit in v1.9.0.  Here is a similar test
-using Git 2.0.0:
+> extract_content_type() could not extract a charset parameter if the
+> parameter is not the first one and there is a whitespace and a following
+> semicolon just before the parameter. For example:
+> 
+>     text/plain; format=fixed ;charset=utf-8
 
-$ git init main
-Initialized empty Git repository in /home/mhagger/tmp/tagexp/main/.git/
-$ cd main
-$ git commit --allow-empty -m Initial
-[master (root-commit) fdcd35b] Initial
-$ git tag t
-$ git commit --allow-empty -m Second
-[master 88f7d4a] Second
-$ cd ..
-$ git clone main clone1
-Cloning into 'clone1'...
-done.
-$ git clone main clone2
-Cloning into 'clone2'...
-done.
-$ cd clone1
-$ git tag -d t
-Deleted tag 't' (was fdcd35b)
-$ git tag t
-$ git push --tags origin master
-To /home/mhagger/tmp/tagexp/main
- ! [rejected]        t -> t (already exists)
-error: failed to push some refs to '/home/mhagger/tmp/tagexp/main'
-hint: Updates were rejected because the tag already exists in the remot=
-e.
+Thanks, I think your patch does the right thing. We also have a similar
+situation going the other way. If we have:
 
-So, it is impossible to overwrite tags on the server by pushing with th=
-e
---tags option.  But we can use a force push:
+   text/plain; charset=utf-8; format=fixed
 
-$ git push origin +refs/tags/t
-Total 0 (delta 0), reused 0 (delta 0)
-To /home/mhagger/tmp/tagexp/main
- + fdcd35b...88f7d4a t -> t (forced update)
-$ cd ../clone2
-$ git pull --all --tags
-=46etching origin
-=46rom /home/mhagger/tmp/tagexp/main
- - [tag update]      t          -> t
-Already up-to-date.
+we will parse the charset as "utf-8;". My version of iconv actually
+seems to accept that, but we should probably be more careful.
 
-So, the tag is now updated but with a visible display of what happened.
- Similarly with fetch:
+I think parameter values can actually be fully quoted. So you could
+have something as nasty as:
 
-$ git update-ref refs/tags/t HEAD^
-$ git fetch --all --tags
-=46etching origin
-=46rom /home/mhagger/tmp/tagexp/main
- - [tag update]      t          -> t
+  text/plain; some-param="a long value with ;semicolons;"; charset=utf-8
 
-Is this closer to the behavior that you want?
+I'd rather not get into parsing that level, as I don't expect it to
+happen in the real world. And besides, we actually _would_ find the
+charset here with the current code; the only thing we might do wrong is
+to parse:
 
-Michael
+  text/plain; tricky="param; charset=foo"; charset=bar
 
---=20
-Michael Haggerty
-mhagger@alum.mit.edu
+with charset "foo" rather than "bar". But that's highly unlikely, and
+the stakes are fairly low (we just show the error message in the wrong
+charset).
+
+Anyway, when you re-roll with the correct "From:" header, do you mind
+squashing in the extra change and the tests below?
+
+diff --git a/http.c b/http.c
+index 05e8b91..3a28b21 100644
+--- a/http.c
++++ b/http.c
+@@ -927,7 +927,7 @@ static int extract_param(const char *raw, const char *name,
+ 		return -1;
+ 	raw++;
+ 
+-	while (*raw && !isspace(*raw))
++	while (*raw && !isspace(*raw) && *raw != ';')
+ 		strbuf_addch(out, *raw++);
+ 	return 0;
+ }
+diff --git a/t/lib-httpd/error.sh b/t/lib-httpd/error.sh
+index eafc9d2..a77b8e5 100755
+--- a/t/lib-httpd/error.sh
++++ b/t/lib-httpd/error.sh
+@@ -19,6 +19,10 @@ case "$PATH_INFO" in
+ 	printf "text/plain; charset=utf-16"
+ 	charset=utf-16
+ 	;;
++*odd-spacing*)
++	printf "text/plain; foo=bar ;charset=utf-16; other=nonsense"
++	charset=utf-16
++	;;
+ esac
+ printf "\n"
+ 
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index 01b8aae..ac71418 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -191,5 +191,10 @@ test_expect_success 'http error messages are reencoded' '
+ 	grep "this is the error message" stderr
+ '
+ 
++test_expect_success 'reencoding is robust to whitespace oddities' '
++	test_must_fail git clone "$HTTPD_URL/error/odd-spacing" 2>stderr &&
++	grep "this is the error message" stderr
++'
++
+ stop_httpd
+ test_done
