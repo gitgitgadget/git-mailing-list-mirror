@@ -1,124 +1,113 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: [PATCH v3] http: fix charset detection of extract_content_type()
-Date: Wed, 18 Jun 2014 00:29:59 +0900
-Message-ID: <CAFT+Tg-d6hBact67bjnc2NFghtmBtr7tyuBvA4_QWgz71eJv_g@mail.gmail.com>
-Reply-To: semtlenori@gmail.com
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: ISO 13485
+Date: Tue, 17 Jun 2014 11:30:17 -0400
+Organization: PD Inc
+Message-ID: <0368137BF4DA4E798A17D74DAFE30FEF@black>
+References: <539F09B9.3050200@omixon.com> <9738CF1519014998B579C405EB4FA22B@black> <53A05766.7060502@omixon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jun 17 17:30:10 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'agi'" <agnes.pasztor@omixon.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jun 17 17:31:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwvKo-0005Q2-W5
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:30:07 +0200
+	id 1WwvLf-0006Vq-5n
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:30:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933051AbaFQPaA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 11:30:00 -0400
-Received: from mail-ig0-f175.google.com ([209.85.213.175]:65455 "EHLO
-	mail-ig0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932869AbaFQP37 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 11:29:59 -0400
-Received: by mail-ig0-f175.google.com with SMTP id uq10so4289431igb.2
-        for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:29:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=oqTP5bjDWVQo8jigUx3+a2h3sjRskxs4BDubQ6QMXCc=;
-        b=1BQNf62XZD2MUbDAoLIdpoYDWEF7UJcHjKQ6EYfKe2Jv0EHdo64l65kByvn/YULKf+
-         tmpgkWQRMwlKsDxwLZRCWV2BV92cIYl8Ow/xFmNGNSMAzydYyyS45im06D2O4VvYPV9r
-         czGTJR+PeSJaFUb4gTCQS+uQ6xFVT2sKJaDCXXK1hRhiztSVtVnZSHrt9F7p66gnjW0R
-         u8RcNx86gcypzDaohWnLRMs6DKhKSyRQZlbPqid4IdEIhvTyoxi3zLIpG3bhbeywBgZl
-         n/oIBJ71HXipQydcvX069dKCKe9hnrHMqBYfcOs5ikEyeZ+Gca492vHOXk3IQlYThpub
-         7A0A==
-X-Received: by 10.50.178.196 with SMTP id da4mr21323490igc.6.1403018999166;
- Tue, 17 Jun 2014 08:29:59 -0700 (PDT)
-Received: by 10.50.153.110 with HTTP; Tue, 17 Jun 2014 08:29:59 -0700 (PDT)
+	id S933491AbaFQPay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 11:30:54 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:47335 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933344AbaFQPaT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 11:30:19 -0400
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s5HFUHFx014099;
+	Tue, 17 Jun 2014 11:30:17 -0400
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <53A05766.7060502@omixon.com>
+Thread-Index: Ac+KPIiD9cY3JAoiSsCxTO+TwCH9LgAArLxw
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251865>
 
-From: Yi EungJun <eungjun.yi@navercorp.com>
+> -----Original Message-----
+> From: agi
+> Sent: Tuesday, June 17, 2014 10:58
+> 
+> Hi Jason,
+> 
+> Thanks for the speedy reply. We are in the process of trying 
+> to make our 
+> software product ISO13485 compatible and we are assessing all systems 
+> that we use.
+> Do you have a validation document for git that could provide 
+> information 
+> on how to use it in order to comply with ISO legislations?
 
-extract_content_type() could not extract a charset parameter if the
-parameter is not the first one and there is a whitespace and a following
-semicolon just before the parameter. For example:
+That would be customized to your QA process. A generalized document would be too
+vague. I am sure any process consultant could draft that up for you.
+(disclaimer: I have been paid to do things like this before)
 
-    text/plain; format=fixed ;charset=utf-8
+Maybe you could start by searching with things like
+https://www.google.com/search?q=using+QA+with+Git or contacting Atlassian about
+their QA product suite integration with Git.
 
-And it also could not handle correctly some other cases, such as:
+Maybe you could find a process consultant to do it cheaper if you release it out
+to the FOSS community?
 
-    text/plain; charset=utf-8; format=fixed
-    text/plain; some-param="a long value with ;semicolons;"; charset=utf-8
+The "nice" (read as less effort) thing about ISO 13485 is it does not have a
+continual improvement requirement so as long as "defects" are detected and
+remediated you are good. Please note git does not detect defects, git does not
+remediate defects. What git does is ensure the approved artifact is unchanged in
+any attribute to maintain the exact level of quality from first inspection of
+that artifact for an unlimited amount of iterations. Git has built in "digital
+signatures" on the artifacts stored in its repository.
 
-Thanks-to: Jeff King <peff@peff.net>
-Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
----
- http.c                     | 4 ++--
- t/lib-httpd/error.sh       | 4 ++++
- t/t5550-http-fetch-dumb.sh | 5 +++++
- 3 files changed, 11 insertions(+), 2 deletions(-)
+> Any additional information or material you can think of is more than 
+> welcome.
+> 
+> Thanks in advance for your help!
+> 
+> 
+> Best Regards,
+> Agnes Pasztor
+> 
+> Senior Test Engineer
+> Omixon Biocomputing Ltd.
+> 
+> 
+> On 06/16/2014 05:20 PM, Jason Pyeron wrote:
+> >> -----Original Message-----
+> >> From: agi
+> >> Sent: Monday, June 16, 2014 11:14
+> >>
+> >> Hello,
+> >>
+> >> I would like to ask a question about GIT v. 1.7
+> >>
+> >> Is it compatible with ISO 13485 (quality management system)?
+> >> Can it be
+> >> used for developing a medical diagnostic software?
+> > Yes.
+> >
+> > Now, do you have a specific question about how to use Git 
+> in your QA process?
 
-diff --git a/http.c b/http.c
-index 2b4f6a3..3a28b21 100644
---- a/http.c
-+++ b/http.c
-@@ -927,7 +927,7 @@ static int extract_param(const char *raw, const char *name,
-  return -1;
-  raw++;
-
-- while (*raw && !isspace(*raw))
-+ while (*raw && !isspace(*raw) && *raw != ';')
-  strbuf_addch(out, *raw++);
-  return 0;
- }
-@@ -971,7 +971,7 @@ static void extract_content_type(struct strbuf
-*raw, struct strbuf *type,
-
-  strbuf_reset(charset);
-  while (*p) {
-- while (isspace(*p))
-+ while (isspace(*p) || *p == ';')
-  p++;
-  if (!extract_param(p, "charset", charset))
-  return;
-diff --git a/t/lib-httpd/error.sh b/t/lib-httpd/error.sh
-index eafc9d2..a77b8e5 100755
---- a/t/lib-httpd/error.sh
-+++ b/t/lib-httpd/error.sh
-@@ -19,6 +19,10 @@ case "$PATH_INFO" in
-  printf "text/plain; charset=utf-16"
-  charset=utf-16
-  ;;
-+*odd-spacing*)
-+ printf "text/plain; foo=bar ;charset=utf-16; other=nonsense"
-+ charset=utf-16
-+ ;;
- esac
- printf "\n"
-
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index 01b8aae..ac71418 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -191,5 +191,10 @@ test_expect_success 'http error messages are reencoded' '
-  grep "this is the error message" stderr
- '
-
-+test_expect_success 'reencoding is robust to whitespace oddities' '
-+ test_must_fail git clone "$HTTPD_URL/error/odd-spacing" 2>stderr &&
-+ grep "this is the error message" stderr
-+'
-+
- stop_httpd
- test_done
--- 
-2.0.0.422.gb6302de
-
-I have squashed Jeff King's patch. How can I credit him in this commit message?
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
