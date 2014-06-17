@@ -1,71 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/14] submodules: Add the lib-submodule-update.sh test library
-Date: Tue, 17 Jun 2014 14:05:34 -0700
-Message-ID: <xmqqlhsvl00x.fsf@gitster.dls.corp.google.com>
-References: <539DD029.4030506@web.de> <539DD09A.7010200@web.de>
-	<xmqqwqcgo4gc.fsf@gitster.dls.corp.google.com>
-	<53A07BCE.5010100@web.de>
-	<xmqqwqcfl6jh.fsf@gitster.dls.corp.google.com>
-	<53A0A93A.9050305@web.de>
+Subject: Re: Annotated tags by default?
+Date: Tue, 17 Jun 2014 14:02:37 -0700
+Message-ID: <xmqqppi7l05u.fsf@gitster.dls.corp.google.com>
+References: <CAHd499Bszq1nw=cu9UZpnodR1ZzmX2Bw2kJr8X13_mEUd7ombA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Jun 17 23:20:55 2014
+Cc: Git <git@vger.kernel.org>
+To: Robert Dailey <rcdailey.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 23:20:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wx0o7-0002VM-Vo
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 23:20:44 +0200
+	id 1Wx0o6-0002VM-Dl
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 23:20:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965121AbaFQVFm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 17:05:42 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63483 "EHLO smtp.pobox.com"
+	id S965088AbaFQVCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 17:02:44 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54497 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965116AbaFQVFl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 17:05:41 -0400
+	id S965083AbaFQVCo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 17:02:44 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B32B81F101;
-	Tue, 17 Jun 2014 17:05:38 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 398C81F03E;
+	Tue, 17 Jun 2014 17:02:41 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HZ8n6wXV4iC64ozKHPGoKPdxYwE=; b=vO3SVp
-	nCjW6idZBz9ZbADhY3jFn3abWJJWDPjcYqGknf8HSDlKpQRL6h7b5TScfZEn79ZZ
-	FW/+h8fv3JAIEuSvuE0ZDI7+XDzJi46qL9WYl3oHkFiQ2hLbSdsLhMIE44UQR5DC
-	ib7zKd/YCuXMc7f4a47/dXv86QeEnsvxFFwwU=
+	:content-type; s=sasl; bh=6wzEVmPtJ+VJ8Fg5rlESHNQAiGw=; b=bjij72
+	1xQop2yKqs0GwHO4Eg6rC3p8yphCJJkGlbITwVKHDNQc01C8tCmbXRdL27Yd+/39
+	/TBRDQsh+5V06gc8w9ZC408QNVYWpSTW25LILZK8yQp+J6efCI0l/vP+ZUqi+/ym
+	jmNwfT4gWnFCFKCj2sAIqYbF4E7o3Bh2dPGhM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xMzO+CATYzNqotLIPGOATbftBf0XuLyt
-	UfAVFczYbqLSMzT541BiQuao4GemR0WtUPAzlFncEW+DPWkeSBmMdPdl6na01Rob
-	s/l97Bps/WpJNuTAAA+FvnUT3E8DwjUTDZJHMXRmvoJxhGM2RVcqe2eUNXWrKo0/
-	eerdMYo+1BE=
+	:content-type; q=dns; s=sasl; b=KbSYlRBCH0t2lB6lA6BBpkXCMGODtQeQ
+	P/RPANZk64ShaQWu9XhKMY3eAOsauumSzwMMoOapSKB2bLvjmqZNOdVJjVAj72dG
+	XO5eAm4brv4PY2P2/Dq1pb9YRZiPPtkuxFfEs4SsoxAdUsp3+GWWlbNrLerPNAjY
+	NRBvf14WRP4=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 340D01F100;
-	Tue, 17 Jun 2014 17:05:38 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2EB6E1F03D;
+	Tue, 17 Jun 2014 17:02:41 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 661841F0FF;
-	Tue, 17 Jun 2014 17:05:33 -0400 (EDT)
-In-Reply-To: <53A0A93A.9050305@web.de> (Jens Lehmann's message of "Tue, 17 Jun
-	2014 22:46:50 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E4B501F036;
+	Tue, 17 Jun 2014 17:02:36 -0400 (EDT)
+In-Reply-To: <CAHd499Bszq1nw=cu9UZpnodR1ZzmX2Bw2kJr8X13_mEUd7ombA@mail.gmail.com>
+	(Robert Dailey's message of "Tue, 17 Jun 2014 15:04:01 -0500")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1F0BCCE2-F663-11E3-9C8E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: B5DAB18E-F662-11E3-9FB1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251951>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Robert Dailey <rcdailey.lists@gmail.com> writes:
 
-> Oh, I forgot to add a smiley there, I haven't been serious about
-> that statement. I don't care too deeply about it but feel a bit
-> more confident with the two explicit tests. Do you want me to
-> change them to a single "test -e"?
+> Is there a config option or some way for `git tag -a` to be the
+> default? I could create an alias but would make more sense to have a
+> config:
+>
+> git config --global tag.alwaysannotate true
 
-I have no strong preference.
+If you really wanted to, you could do the following (and you must to
+do all of the following):
+
+ * Introduce "git tag --no-annotate" option, that defeats the effect
+   of such a configuration variable.
+
+ * Devise some way to reliably catch scripts that use "git tag"
+   without saying what kind of tag they want to create.  Add new
+   code to issue a warning message saying that the script will be
+   horribly broken when user starts using the configuration variable
+   that will be introduced in the future.  This will force them to
+   be updated to pass the "--no-annotate" option.
+
+ * Wait for several releases to make sure that no script that want
+   to use light-weight tags use "git tag" without "--no-annotate"
+   option.
+
+ * Introduce the configuration variable.
+
+I personally do not think it is worth it, and also I do not know what
+that "some way to reliably catch" would look like.
+
+We gave short-and-sweet "-a" and "-s" options exactly because we
+wanted to make it easy to type them.  Also, "tag -m msg" will DWIM
+to "-a".
