@@ -1,126 +1,69 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 09/14] rebase: add t3426 for submodule updates
-Date: Tue, 17 Jun 2014 19:41:26 +0200
-Message-ID: <53A07DC6.3080406@web.de>
-References: <539DD029.4030506@web.de>	<539DD19B.6000504@web.de> <CAPig+cSU_8USZu3cr=aaOun07jE2BhgLt7yu9ix_AikUpK+pJQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 0/3] add strnncmp() function
+Date: Tue, 17 Jun 2014 10:48:17 -0700
+Message-ID: <20140617174817.GQ8557@google.com>
+References: <cover.1402990051.git.jmmahler@gmail.com>
+ <53A02195.8080202@web.de>
+ <20140617154953.GC5162@hudson.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Heiko Voigt <hvoigt@hvoigt.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Tue Jun 17 19:41:43 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Jeremiah Mahler <jmmahler@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 19:48:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwxO9-0002ry-S8
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 19:41:42 +0200
+	id 1WwxUy-0007Rs-8V
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 19:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755454AbaFQRli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 13:41:38 -0400
-Received: from mout.web.de ([212.227.17.12]:55425 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755296AbaFQRlh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 13:41:37 -0400
-Received: from [192.168.178.41] ([84.132.188.209]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MTuQz-1X5vWw1wET-00QgeK; Tue, 17 Jun 2014 19:41:27
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CAPig+cSU_8USZu3cr=aaOun07jE2BhgLt7yu9ix_AikUpK+pJQ@mail.gmail.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:LdOD7AjSikm4uivDqmxHx/XYPtC7trmlqCbwRTqgmUplegSstu4
- 2ubOo6FTswK5d92eliRLu98y3l7ds2BjbH8G44U4yyTlk/G0I9kIQmgSFLEGb9CxF1z6cr8
- 6dLiuJgBRhonQ/3DvdiO0fVQa+l3bHiNVyx7W0nTPfZHNqNwbYWnN9YjwFBgFei9BEfoHOt
- vUdMRBpgAWssGgk3NatCQ==
+	id S932444AbaFQRsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 13:48:21 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:54842 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754764AbaFQRsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 13:48:20 -0400
+Received: by mail-pa0-f49.google.com with SMTP id lj1so5932902pab.36
+        for <git@vger.kernel.org>; Tue, 17 Jun 2014 10:48:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=KGmIyrN0spB1Fjx1tbh4Rkya2k9LYOP6gQ5FRZ2gAZg=;
+        b=lM6DnJu1GXn1l6KmS/HZc1+CjfYoViDk2zy2+24Z3f1FGm2WLaywVRzLd5LUOUp+F4
+         0Cyd/blQ5tc3Y4A9SYnT/XpAD50lQwtf5UqwvTuritDM/Jidr71aJrymBPmMFQDmUEOW
+         nNL7O3Tjx/CElK/rAA7kBsTKJbC5SDmT59OQzODVQdqmlmG6PkkDvZhtSTAjmbWzGpir
+         7mvF+bKPf12lQ4lNUIOMEDzhFgoGAGeucBc4Z50SWRPGSn2vsUCHwHFYExRH7g6BeMa7
+         UgcGAT2id3eCa/pJ33FAfGiBfHNLX99szum6RaR09VHiwf/vF62vkVmTwRxrxYxVx+vQ
+         SQuA==
+X-Received: by 10.66.65.225 with SMTP id a1mr34793141pat.139.1403027300298;
+        Tue, 17 Jun 2014 10:48:20 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b6b5:2fff:fec3:b50d])
+        by mx.google.com with ESMTPSA id ja8sm25057894pbd.3.2014.06.17.10.48.19
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 17 Jun 2014 10:48:19 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20140617154953.GC5162@hudson.localdomain>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251929>
 
-Am 16.06.2014 11:57, schrieb Eric Sunshine:
-> On Sun, Jun 15, 2014 at 1:02 PM, Jens Lehmann <Jens.Lehmann@web.de> wrote:
->> Test that the rebase command updates the work tree as expected for
->> changes which don't result in conflicts. To make that work add two
->> helper functions that add a commit only touching files and then
->> revert it. This allows to rebase the target commit over these two
->> and to compare the result.
->>
->> Set KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR to
->> document that "replace directory with submodule" fails for an
->> interactive rebase because a directory "sub1" already exists.
->>
->> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
->> ---
->>  t/t3426-rebase-submodule.sh | 46 +++++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 46 insertions(+)
->>  create mode 100755 t/t3426-rebase-submodule.sh
->>
->> diff --git a/t/t3426-rebase-submodule.sh b/t/t3426-rebase-submodule.sh
->> new file mode 100755
->> index 0000000..019ce52
->> --- /dev/null
->> +++ b/t/t3426-rebase-submodule.sh
->> @@ -0,0 +1,46 @@
->> +#!/bin/sh
->> +
->> +test_description='rebase can handle submodules'
->> +
->> +. ./test-lib.sh
->> +. "$TEST_DIRECTORY"/lib-submodule-update.sh
->> +. "$TEST_DIRECTORY"/lib-rebase.sh
->> +
->> +git_rebase () {
->> +       git status -su >expected &&
->> +       ls -1pR * >>expected &&
->> +       git checkout -b ours HEAD &&
->> +       echo x >>file1 &&
->> +       git add file1 &&
->> +       git commit -m add_x &&
->> +       git revert HEAD &&
->> +       git status -su >actual &&
->> +       ls -1pR * >>actual &&
->> +       test_cmp expected actual &&
->> +       git rebase "$1"
->> +}
->> +
->> +test_submodule_switch "git_rebase"
->> +
->> +git_rebase_interactive () {
->> +       git status -su >expected &&
->> +       ls -1pR * >>expected &&
->> +       git checkout -b ours HEAD &&
->> +       echo x >>file1 &&
->> +       git add file1 &&
->> +       git commit -m add_x &&
->> +       git revert HEAD &&
->> +       git status -su >actual &&
->> +       ls -1pR * >>actual &&
->> +       test_cmp expected actual &&
->> +       set_fake_editor &&
->> +       echo "fake-editor.sh" >.git/info/exclude
-> 
-> Broken &&-chain.
+>> On 2014-06-17 09.34, Jeremiah Mahler wrote:
 
-Thanks for spotting!
+>>> Also, strnncmp() was switched from using memcmp() to strncmp()
+>>> internally to make it clear that this is meant for strings, not
+>>> general buffers.
 
->> +       git rebase -i "$1"
->> +}
->> +
->> +KNOWN_FAILURE_NOFF_MERGE_DOESNT_CREATE_EMPTY_SUBMODULE_DIR=1
->> +# The real reason "replace directory with submodule" fails is because a
->> +# directory "sub1" exists, but we reuse the suppression added for merge here
->> +test_submodule_switch "git_rebase_interactive"
->> +
->> +test_done
->> --
->> 2.0.0.275.gc479268
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+Why shouldn't I want to use this helper on arbitrary data?  One of the
+advantages of other helpers in git that take a pointer and a length
+(e.g., the strbuf library) are that they are 8-bit clean and can work
+on binary data when it's useful.
+
+Thanks,
+Jonathan
