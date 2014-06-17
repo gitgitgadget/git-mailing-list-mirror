@@ -1,123 +1,109 @@
 From: Jeremiah Mahler <jmmahler@gmail.com>
 Subject: Re: [PATCH v2 1/3] add strnncmp() function
-Date: Tue, 17 Jun 2014 08:48:41 -0700
-Message-ID: <20140617154841.GA5162@hudson.localdomain>
+Date: Tue, 17 Jun 2014 08:49:26 -0700
+Message-ID: <20140617154926.GB5162@hudson.localdomain>
 References: <cover.1402990051.git.jmmahler@gmail.com>
  <50de63f47ded2337adcd8bce151190fb99b38d64.1402990051.git.jmmahler@gmail.com>
- <539FFAF2.3070002@web.de>
+ <CABPQNSZ7Vhn1Pz4j0R5twg+P-UzOG6xfw7fNqp0JO_Sh5t3CiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Tue Jun 17 17:48:50 2014
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 17:49:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwvcv-0004k8-Ur
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:48:50 +0200
+	id 1Wwvde-0005gG-Iy
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:49:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756327AbaFQPsq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jun 2014 11:48:46 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:63961 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756320AbaFQPsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 11:48:45 -0400
-Received: by mail-pd0-f181.google.com with SMTP id v10so4831171pde.40
-        for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:48:45 -0700 (PDT)
+	id S933112AbaFQPtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 11:49:31 -0400
+Received: from mail-pd0-f172.google.com ([209.85.192.172]:63312 "EHLO
+	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933084AbaFQPta (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 11:49:30 -0400
+Received: by mail-pd0-f172.google.com with SMTP id w10so3099183pde.31
+        for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:49:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=SR4VhrT8howf6iHCCr6qt96F3bgpyA6IwhZ3aOkQhVw=;
-        b=RhH+/eLEnHqxN9xvCob7hmlc/9nzdpaDDGdE1Y9/3H9LZus0+gqiNQSea/7ImLkcX8
-         hnmNWV96BL279pkzS8Uu7hRYyAp1vE3qBvUNPltRGMHJ5KhMbFsRVJ/FzMGi9Rp7Qsp0
-         f5nfmQjT5nteUdUaoO8u+QWWgGuFlPJ1gd6Z5VC/gmZTChTZEtOk2fuNgUZ5WvLXffcR
-         jFgLO80C0slqoqRHbUAJP5JTAoeQn4qboynrPPtHSIspkFXMN4HB0OA++5/NZUeoo8MH
-         zd/YKVJ/iqE7WsJM5r4e3noOQeFjArEdYvIZ1cBe3pmTn+GWp1luFpt28zh2GCee6TeA
-         Y2Lg==
-X-Received: by 10.66.163.164 with SMTP id yj4mr33453347pab.91.1403020125128;
-        Tue, 17 Jun 2014 08:48:45 -0700 (PDT)
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=6/SABvm+AdOtxu3n5zIo0NeZ7PHVVgKGPzn/GOI4ELg=;
+        b=I6eTcwInDnQIWfAGFThUUAJ1M8Mpu79uqRnOY7Cd5rkiqSllzDnoyzXhJ/nRhquJII
+         gJ87owk9+z60Cipy/xBM+a3VZabx6Psyy9Ue4p5egg5Z7KR8/TcXgI4t+xG5UpHqCsKT
+         WREEcrt0z5buc7T138P7HmsmpMyLzHRQqKNkGq+Nh2Gh+ImjgZjwQfZHo71xOEKsPf7P
+         7phbIgKBop6br3QiX3K6+ETh855bcRDSZ2rg0kC94XNc2I3RYmlex4rzUfLOfYKS1Mj5
+         OF5nK+X+2JlrT4OCLI8tFGFoB6J/Dt6VtmXZSKlnejyYG+JtSrLqb04MDnZ/NQxCwpmQ
+         9l2Q==
+X-Received: by 10.66.163.38 with SMTP id yf6mr34501872pab.46.1403020169859;
+        Tue, 17 Jun 2014 08:49:29 -0700 (PDT)
 Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id is5sm24659401pbb.8.2014.06.17.08.48.42
+        by mx.google.com with ESMTPSA id ha10sm24665464pbd.1.2014.06.17.08.49.27
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 17 Jun 2014 08:48:43 -0700 (PDT)
+        Tue, 17 Jun 2014 08:49:28 -0700 (PDT)
 Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
+	Erik Faye-Lund <kusmabite@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <539FFAF2.3070002@web.de>
+In-Reply-To: <CABPQNSZ7Vhn1Pz4j0R5twg+P-UzOG6xfw7fNqp0JO_Sh5t3CiA@mail.gmail.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251868>
 
-Torsten,
+Erik,
 
-On Tue, Jun 17, 2014 at 10:23:14AM +0200, Torsten B=C3=B6gershausen wro=
-te:
-> On 2014-06-17 09.34, Jeremiah Mahler wrote:
-> > Add a strnncmp() function which behaves like strncmp() except it ta=
-kes
-> > the length of both strings instead of just one.  It behaves the sam=
-e as
-> > strncmp() up to the minimum common length between the strings.  Whe=
-n the
-> minimum common length? Isn'n t that 0?
-> Using the word "common", I think we could call it "common length".
-> (And more places below)
->=20
-Yes, "minimum" doesn't make sense.  "common length" sounds better.
-
+On Tue, Jun 17, 2014 at 11:09:59AM +0200, Erik Faye-Lund wrote:
+> On Tue, Jun 17, 2014 at 9:34 AM, Jeremiah Mahler <jmmahler@gmail.com> wrote:
+> > Add a strnncmp() function which behaves like strncmp() except it takes
+> > the length of both strings instead of just one.  It behaves the same as
+> > strncmp() up to the minimum common length between the strings.  When the
 > > strings are identical up to this minimum common length, the length
 > > difference is returned.
-> >=20
+> >
 > > Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
 > > ---
 > >  strbuf.c | 9 +++++++++
 > >  strbuf.h | 2 ++
 > >  2 files changed, 11 insertions(+)
-> >=20
+> >
 > > diff --git a/strbuf.c b/strbuf.c
 > > index ac62982..4eb7954 100644
 > > --- a/strbuf.c
 > > +++ b/strbuf.c
 > > @@ -600,3 +600,12 @@ char *xstrdup_tolower(const char *string)
-> >  	result[i] =3D '\0';
-> >  	return result;
+> >         result[i] = '\0';
+> >         return result;
 > >  }
 > > +
-> strncmp uses size_t, not int:
-> int strncmp(const char *s1, const char *s2, size_t n);
->=20
-> Is there a special reason to allow negative string length?
-> Some call sites use int when calling strncmp() or others,
-> that is one thing.
-> But when writing a generic strnncmp() function, I think
-> it should use size_t, unless negative values have a meaning and
-> are handled in the code.
->=20
-Don't need negatives, size_t is more appropriate.  Fixed.
-
->=20
 > > +int strnncmp(const char *a, int len_a, const char *b, int len_b)
 > > +{
-> > +	int min_len =3D (len_a < len_b) ? len_a : len_b;
-> > +	int cmp =3D strncmp(a, b, min_len);
->=20
-> > +	if (cmp)
-> > +		return cmp;
-> > +	return (len_a - len_b);
+> > +       int min_len = (len_a < len_b) ? len_a : len_b;
+> > +       int cmp = strncmp(a, b, min_len);
+> > +       if (cmp)
+> > +               return cmp;
+> > +       return (len_a - len_b);
 > > +}
+> 
+> Using a name that sounds like it's from the stdlib makes me cringe a
+> little bit. Names that start with "str" reserved for stdlib[1][2], but
+> we already ignore this for strbuf (and perhaps some other functions).
+> However, in this case it doesn't seem *that* unlikely that we might
+> collide with some stdlib-extensions.
+> 
+> [1]: http://pubs.opengroup.org/onlinepubs/007904975/functions/xsh_chap02_02.html#tag_02_02_02
+> [2]: http://www.gnu.org/software/libc/manual/html_node/Reserved-Names.html
 
-Thanks,
---=20
+I chose strnncmp() to try and emphasize its similarity to strncmp().
+But you have a good point about potential name conflicts.  That could be
+a problem.  I will change the name.
+
+-- 
 Jeremiah Mahler
 jmmahler@gmail.com
 http://github.com/jmahler
