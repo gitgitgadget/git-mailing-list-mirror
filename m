@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v18 11/48] refs.c: make remove_empty_directories alwasy set errno to something sane
-Date: Tue, 17 Jun 2014 08:53:25 -0700
-Message-ID: <1403020442-31049-12-git-send-email-sahlberg@google.com>
+Subject: [PATCH v18 06/48] lockfile.c: add a new public function unable_to_lock_message
+Date: Tue, 17 Jun 2014 08:53:20 -0700
+Message-ID: <1403020442-31049-7-git-send-email-sahlberg@google.com>
 References: <1403020442-31049-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,97 +11,130 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwvkS-0006Pc-P6
+	id 1WwvkT-0006Pc-98
 	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:56:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964837AbaFQP43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 11:56:29 -0400
-Received: from mail-yh0-f73.google.com ([209.85.213.73]:38195 "EHLO
-	mail-yh0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756281AbaFQPyG (ORCPT <rfc822;git@vger.kernel.org>);
+	id S964841AbaFQP4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 11:56:32 -0400
+Received: from mail-yh0-f74.google.com ([209.85.213.74]:56626 "EHLO
+	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756264AbaFQPyG (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 17 Jun 2014 11:54:06 -0400
-Received: by mail-yh0-f73.google.com with SMTP id f10so1052126yha.4
+Received: by mail-yh0-f74.google.com with SMTP id b6so1052273yha.3
         for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=J992xH4mNC6DVLIFVWtfMo48bwAucsHuDLb4hmEKKJc=;
-        b=hnQd9yxtac6nIyLWiR7o3uc9u3DflR91yuQ6daYtMQL+tSaPepwyDIPpML+kVrfKCQ
-         Ze6Z80lUlXbvR5k7iMkQaHPg+3VJ580/KIZyuTkWAVL/ylxHaf+IGGFIPqqE2JFXM/qT
-         maONCbFVkZRaIVGj9Zcx11YB0Ii7yiIDpEnrDqVsHEkb+KfaMP/gwHXOTIfTuk5xS7CK
-         ix6aDlKyp6Ac6lUmsK1vt9GTPmDzk6Q7y1xkpgVMOnjkbxIyR6cA9cW1Ep+3QJfH40kp
-         VJmWjOZBkL/u2jnnSm/e4xpKxKIIaCsY+JWNvao6Syx2OW7GQues1McgNiB9QNIcX5bL
-         wQBg==
+        bh=GUwLyJBoqqwdYnhv04N4O/ArjYT7M6X8HSP/NJjOQ8o=;
+        b=MLOVht5fmRTCzOkM7Awh1keEm6DL1ir9i8EDlQNzDBENr+u7ry/4m95SbzEghu4ECX
+         dO9CIRs7TbdLmUeZYXIwoaHMNK/FRlA29xVXGGvepnJGwzksxj2Apz+5mnTwMzcLRElT
+         Dm+vrc+FuSCAFD3XhaDnNNSWVZnFoPIlBAXGPUQelA8xVO3MLdkUcJjzP9emE7hkZwcX
+         /7UQmfTk2fF2ze6kqC8LN7cpcljvIRxdqCGZHRaNHwSEzzcF+gJo0c7vVqMuUsDzUbOx
+         m0rfXVO4XF3U9otk8qo+bcCzJaG8SCftLFxUYiZRjo/Q/k9/4VcqUutiWb44Tvh/E+cG
+         YLEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=J992xH4mNC6DVLIFVWtfMo48bwAucsHuDLb4hmEKKJc=;
-        b=Bj7Q1PVI1AS3qN/cbvSxeQyuDRf5P/7odIea8ETQZjCzOzXX4R049reqmZopg4gPRw
-         Qnk8xfSHBIapgS8393Y4r0oixC5ai3D8kRa0EVFyac6lOO4sShLm7QxiIJiPtYIXmv9S
-         FgVzc+DlSMZYovIhytYxaxCC/+4Xcyvw0IBuK4730kFDuEW1ue3KYjtUBkAgKAZ7nyS1
-         VnexhWNvIn69nNAz0A7PFx4PcI0t69hMe1fMpoqxeUs4yx6WZj0HDTYnrrqzOMNuTAX7
-         Lujsv56yPnwseMICY62uwxoiX7tpLtVO+Jk9//4PSXcTSW+HcwrMpN8UpGQi9tz3koWi
-         ACDw==
-X-Gm-Message-State: ALoCoQn0HPzQZsTYRSGQrXk4JCwQ+d1CwBycu/RFIatJ1OpMbpgOag2QroA3AIYHxdMzTnzUUxd2
-X-Received: by 10.58.182.137 with SMTP id ee9mr2034435vec.37.1403020444743;
+        bh=GUwLyJBoqqwdYnhv04N4O/ArjYT7M6X8HSP/NJjOQ8o=;
+        b=QOpUAZq2phvg+nD0YW4JAIPDPqW42Ol0hYuQAvsaoHGdZqaozQnnPkh0Fgl5Rmp5LJ
+         ZhvSDTYpDCZgCTos5QrhME9BDC+3VFkuVAxzrQOAL3/nVpzemnE4OooNyVafQiojHoWm
+         Ls+TGuILTJP4ql12muzX6NRHIrq5WF+JgBMGCe9rdIacxyvdNjKCznv5kfhDTrmMdyeM
+         YYI27/OP1TsQSv0tc8F9VJwZnAOfDfZHAC/69ul4spEub/HuIfbS7scM6N6Pnq+uqQiw
+         YKEFboGNUzh4T66IYN3z9ADV+QvdHaHvuodEWqnpCLdk5CO4oeEv+pfrvBwvUrzKHNvM
+         m7FQ==
+X-Gm-Message-State: ALoCoQnEPueYSLCYgG815W7WNV0iq4/Tx1c4OfKtgomVMHFHMIi1Sfmi4danGqe7WTd3Vx8KBHVS
+X-Received: by 10.236.26.105 with SMTP id b69mr404417yha.55.1403020444629;
         Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id z50si1209153yhb.3.2014.06.17.08.54.04
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id i65si1209457yhg.2.2014.06.17.08.54.04
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 9318F31C76D;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 7B73D5A4367;
 	Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 32C5EE1797; Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
+	id EA9DDE106F; Tue, 17 Jun 2014 08:54:03 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.438.gec92e5c
 In-Reply-To: <1403020442-31049-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251905>
 
-Making errno when returning from remove_empty_directories() more
-obviously meaningful, which should provide some peace of mind for
-people auditing lock_ref_sha1_basic.
+Introducing a new unable_to_lock_message helper, which has nicer
+semantics than unable_to_lock_error and cleans up lockfile.c a little.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ cache.h    |  2 ++
+ lockfile.c | 22 ++++++++++++----------
+ 2 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index a48f805..cc69581 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1960,14 +1960,16 @@ static int remove_empty_directories(const char *file)
- 	 * only empty directories), remove them.
- 	 */
- 	struct strbuf path;
--	int result;
-+	int result, save_errno;
- 
- 	strbuf_init(&path, 20);
- 	strbuf_addstr(&path, file);
- 
- 	result = remove_dir_recursively(&path, REMOVE_DIR_EMPTY_ONLY);
-+	save_errno = errno;
- 
- 	strbuf_release(&path);
-+	errno = save_errno;
- 
- 	return result;
- }
-@@ -2056,6 +2058,7 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 	return logs_found;
+diff --git a/cache.h b/cache.h
+index cbe1935..8b12aa8 100644
+--- a/cache.h
++++ b/cache.h
+@@ -559,6 +559,8 @@ struct lock_file {
+ #define LOCK_DIE_ON_ERROR 1
+ #define LOCK_NODEREF 2
+ extern int unable_to_lock_error(const char *path, int err);
++extern void unable_to_lock_message(const char *path, int err,
++				   struct strbuf *buf);
+ extern NORETURN void unable_to_lock_index_die(const char *path, int err);
+ extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
+ extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
+diff --git a/lockfile.c b/lockfile.c
+index 8fbcb6a..464031b 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -157,33 +157,35 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 	return lk->fd;
  }
  
-+/* This function should make sure errno is meaningful on error */
- static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 					    const unsigned char *old_sha1,
- 					    int flags, int *type_p)
+-static char *unable_to_lock_message(const char *path, int err)
++void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+-
+ 	if (err == EEXIST) {
+-		strbuf_addf(&buf, "Unable to create '%s.lock': %s.\n\n"
++		strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
+ 		    "If no other git process is currently running, this probably means a\n"
+ 		    "git process crashed in this repository earlier. Make sure no other git\n"
+ 		    "process is running and remove the file manually to continue.",
+ 			    absolute_path(path), strerror(err));
+ 	} else
+-		strbuf_addf(&buf, "Unable to create '%s.lock': %s",
++		strbuf_addf(buf, "Unable to create '%s.lock': %s",
+ 			    absolute_path(path), strerror(err));
+-	return strbuf_detach(&buf, NULL);
+ }
+ 
+ int unable_to_lock_error(const char *path, int err)
+ {
+-	char *msg = unable_to_lock_message(path, err);
+-	error("%s", msg);
+-	free(msg);
++	struct strbuf buf = STRBUF_INIT;
++
++	unable_to_lock_message(path, err, &buf);
++	error("%s", buf.buf);
++	strbuf_release(&buf);
+ 	return -1;
+ }
+ 
+ NORETURN void unable_to_lock_index_die(const char *path, int err)
+ {
+-	die("%s", unable_to_lock_message(path, err));
++	struct strbuf buf = STRBUF_INIT;
++
++	unable_to_lock_message(path, err, &buf);
++	die("%s", buf.buf);
+ }
+ 
+ int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
 -- 
 2.0.0.438.gec92e5c
