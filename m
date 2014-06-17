@@ -1,50 +1,120 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Annotated tags by default?
-Date: Tue, 17 Jun 2014 15:04:01 -0500
-Message-ID: <CAHd499Bszq1nw=cu9UZpnodR1ZzmX2Bw2kJr8X13_mEUd7ombA@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 02/14] submodules: Add the lib-submodule-update.sh test
+ library
+Date: Tue, 17 Jun 2014 22:46:50 +0200
+Message-ID: <53A0A93A.9050305@web.de>
+References: <539DD029.4030506@web.de> <539DD09A.7010200@web.de>	<xmqqwqcgo4gc.fsf@gitster.dls.corp.google.com>	<53A07BCE.5010100@web.de> <xmqqwqcfl6jh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 17 22:04:09 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Heiko Voigt <hvoigt@hvoigt.net>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 22:47:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wwzc1-0007GK-0R
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 22:04:09 +0200
+	id 1Wx0He-0006Hw-Fq
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 22:47:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933376AbaFQUEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 16:04:04 -0400
-Received: from mail-vc0-f179.google.com ([209.85.220.179]:65182 "EHLO
-	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932927AbaFQUED (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 16:04:03 -0400
-Received: by mail-vc0-f179.google.com with SMTP id id10so6831770vcb.24
-        for <git@vger.kernel.org>; Tue, 17 Jun 2014 13:04:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=2G8CaIrkfgpYTEB9lTaKSfR39G6cRMMVu8/6D+LWbRg=;
-        b=zmFASIYZvYMwQGIxNJKG/yx12TpzVXtQybANYW8lrUK6gSzBemNd5nWHfJNxVIn+MF
-         kg3VQe199tESFM3eVeqO1FNIs3qjMQGlMoz8v9cYcCIuguZhD9onfFeKhsBGovxXLj8q
-         I/kWCUiTFA0n31/MJnixOnKWhG46V1aeic25OB+KIFW/tTbZTIZUVPeBZMr8KG2E8guD
-         sfFU8qHWuMOvM8a9YyZ61kOnCvAVYMRBRXwFFwYdqQxNe4pdbD8PrgS1B8j0pbetkvL7
-         tmBVOBXoD0bDxXRj45L3iuQzfA/c4f220eAKk19KqrFj7a/McZnK7S1rPa7Y80UbZJaf
-         rVsg==
-X-Received: by 10.58.248.2 with SMTP id yi2mr2083823vec.48.1403035441567; Tue,
- 17 Jun 2014 13:04:01 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.220.102.204 with HTTP; Tue, 17 Jun 2014 13:04:01 -0700 (PDT)
-X-Google-Sender-Auth: s7liJVD2PBUlVVhdGT9FHb8Z8S8
+	id S964801AbaFQUrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 16:47:06 -0400
+Received: from mout.web.de ([212.227.17.12]:58052 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933428AbaFQUrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 16:47:04 -0400
+Received: from [192.168.178.41] ([84.132.188.209]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0M57Vi-1WnbKX1o0U-00zFb5; Tue, 17 Jun 2014 22:46:51
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqwqcfl6jh.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:/PL/smWDQV1hwz61frwYMnQeApDwTmFtsQCfIxE8ZQqk3nkzmD4
+ n5QrSQGJfoBN3MiYeDpL5PQsyD1aTvfIowTKxn0T1BANnIkD5qNmGTbUT+X80mCY9pZuR2t
+ UL78C40dYU1EQzyWL54xRuXSKkSWmpx0bPqY7LoIDhYSVJ/+bBpRQt0u26ucKzwqSuXqBVL
+ VgF9cRPz+VSHNVct11F8g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251949>
 
-Is there a config option or some way for `git tag -a` to be the
-default? I could create an alias but would make more sense to have a
-config:
+Am 17.06.2014 20:44, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> Am 17.06.2014 00:49, schrieb Junio C Hamano:
+>>> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>>>> +		GIT_WORK_TREE=. git config --unset core.worktree
+>>>
+>>> Hmph.  What does GIT_WORK_TREE=. alone without GIT_DIR=<somewhere>
+>>> do?  It's not like it is a workaround for "git config" that complains
+>>> when you do not have a working tree, right?  Puzzled...
+>>
+>> It is, it overrides the core.worktree config that would stop us
+>> from unsetting the core.worktree config with this error message:
+>>
+>>   fatal: Could not chdir to '../../../sub1': No such file or directory
+>>
+>> (We use the same pattern in git-submodule.sh and some other tests)
+> 
+> Is this a work-around for a bug in "git config"?  Or is this an
+> expected failure and it is unusual and not realistic outside of test
+> setup to want to unset core.worktree?  I am inclined to think it is
+> the latter, but I dunno.
 
-git config --global tag.alwaysannotate true
+I didn't think deeply about that, but when I first encountered
+this behavior it felt a bit strange that config does a chdir into
+the work tree. I somehow expected it only to access the config
+file in GIT_DIR and not the work tree, but I didn't care enough
+to investigate further after I found this solution.
+
+>>>> +		sha1=$(git ls-tree HEAD "sub1" 2>/dev/null | grep 160000 | tr '\t' ' ' | cut -d ' ' -f3) &&
+>>>
+>>> Why discard the standard error stream?
+>>
+>> Because we sometimes reset to commits where "sub1" isn't present:
+>>
+>>   fatal: Path 'sub1' does not exist in 'HEAD'
+> 
+> Huh?  We shouldn't.
+> 
+> 	$ git ls-tree HEAD no-such; echo $?
+>         0
+
+You are correct, it looks like I used rev-parse instead of
+ls-files when producing that error.
+
+> It discards errors that may happen in other situations, too---is
+> that something we do not have to worry about?
+
+I'll look deeper into that tomorrow. After all in some tests
+"sub1" will be a file and not a submodule, and then we should
+not try to populate it ...
+
+>>>> +# Test that the given submodule at path "$1" contains the content according
+>>>> +# to the submodule commit recorded in the superproject's commit "$2"
+>>>> +test_submodule_content () {
+>>>> +	if test $# != 2
+>>>> +	then
+>>>> +		echo "test_submodule_content needs two arguments"
+>>>> +		return 1
+>>>> +	fi &&
+>>>> +	submodule="$1" &&
+>>>> +	commit="$2" &&
+>>>> +	test -d "$submodule"/ &&
+>>>> +	if ! test -f "$submodule"/.git && ! test -d "$submodule"/.git
+>>>
+>>> I wonder if we can get away with a single "test -e" (we do not
+>>> expect us to be creating device nodes or fifos there, do we?).
+>>
+>> But a symbolic link maybe?
+> 
+> Symlinks should pose no problems, ...
+
+Oh, I forgot to add a smiley there, I haven't been serious about
+that statement. I don't care too deeply about it but feel a bit
+more confident with the two explicit tests. Do you want me to
+change them to a single "test -e"?
