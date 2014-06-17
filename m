@@ -1,142 +1,116 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] doc git: multivar configuration parameters append to existing values
-Date: Tue, 17 Jun 2014 23:03:14 +0100
-Organization: OPDS
-Message-ID: <E9A1113CB95B406FA3C16ED2AA5B111D@PhilipOakley>
-References: <1402922952-172-1-git-send-email-philipoakley@iee.org><xmqqd2e8r8yz.fsf@gitster.dls.corp.google.com><708AD97F308249A1B61D9348AFE59182@PhilipOakley> <xmqqfvj4pnl1.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] string-list: Add string_list initializer helper functions
+Date: Tue, 17 Jun 2014 15:10:26 -0700
+Message-ID: <xmqqr42njigd.fsf@gitster.dls.corp.google.com>
+References: <1402907232-24629-1-git-send-email-tanayabh@gmail.com>
+	<1402907232-24629-2-git-send-email-tanayabh@gmail.com>
+	<xmqqsin4o406.fsf@gitster.dls.corp.google.com>
+	<53A09192.2030008@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>, "Jeff King" <peff@peff.net>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	"Robert Clausecker" <fuz@fuz.su>,
-	"Alex Riesen" <raa.lkml@gmail.com>,
-	"Tanay Abhra" <tanayabh@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 18 00:03:37 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 18 00:10:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wx1Ta-0001CR-Oc
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 00:03:35 +0200
+	id 1Wx1aW-0002Pb-0r
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 00:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966458AbaFQWDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 18:03:30 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:47027 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S966399AbaFQWD1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Jun 2014 18:03:27 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah0kAKe6oFMCYJLo/2dsb2JhbABagw1miG27CAUBAgEBDIEDF3WDfgUBAQQBCAEBLh4BASEFBgIDBQIBAxUMJRQBBBoGBxcGEwgCAQIDAYgpDLJQmCQXiUOFMzWCf4EWBIoFhlqdPINBPIExJA
-X-IPAS-Result: Ah0kAKe6oFMCYJLo/2dsb2JhbABagw1miG27CAUBAgEBDIEDF3WDfgUBAQQBCAEBLh4BASEFBgIDBQIBAxUMJRQBBBoGBxcGEwgCAQIDAYgpDLJQmCQXiUOFMzWCf4EWBIoFhlqdPINBPIExJA
-X-IronPort-AV: E=Sophos;i="5.01,497,1400022000"; 
-   d="scan'208";a="498984234"
-Received: from host-2-96-146-232.as13285.net (HELO PhilipOakley) ([2.96.146.232])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 17 Jun 2014 23:03:09 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S967269AbaFQWKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 18:10:38 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62686 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S967130AbaFQWKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 18:10:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0F2F221283;
+	Tue, 17 Jun 2014 18:10:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=W1T5RYtQVXwd1yrMKC+zb7yU84M=; b=Y4NS2E
+	3tKdwwFhzrIIDwpAOSpKDhz9BpNTLWV+StKvWzxthhLmO/688dVmspBPg+v+Tac6
+	hzs3NZZVPj2wKLmVLNE6nd+02qXbbiDYQnEhZvgs0FCNWjOqON6MXANgV26GqiRu
+	HI3eQDdkucIyy0ClyQdwIdNJpY+qR2RlVQGaE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M7CvOtDRhASNzDbEtsio0J4mOUexfR8A
+	aIP0AuFLwL1GqrNcyPlBrX13dKsHmsEYEzljU3sfhGpKkuzv2g0gzzEJVaxCocox
+	3+WIo8NlHv2IhzRCCfTtYS9Vz2B217t19arzkhHrkynYinnbPkei9srBRXEyaz6E
+	4z7hM6KXetg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D3F821282;
+	Tue, 17 Jun 2014 18:10:30 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D55D12127F;
+	Tue, 17 Jun 2014 18:10:25 -0400 (EDT)
+In-Reply-To: <53A09192.2030008@gmail.com> (Tanay Abhra's message of "Tue, 17
+	Jun 2014 12:05:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 2F21AEAE-F66C-11E3-BDCC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251960>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> "Philip Oakley" <philipoakley@iee.org> writes:
->
->>>                                                                   ---once
->>> the reader
->>>   understands that Git reads all configuration varilables of the
->>>   same name and the code paths that *use* one of them pick the one
->>>   defined the last,
->> It's this step that's a concern. We shouldn't be forcing the reader
->> to
->> implicitly grok that, especially as we don't actually say it
->> elsewhere
->> (in the regular documentation).
->
-> I think that is what I was driving at.  If we do not tell the reader
-> that, perhaps we should and everything else will fall as natural
-> consequence of that understanding.
->
->>> * The last sentence added, i.e. "insteadof"-style, will not be
->>>   understood by any reader other than those who tried to use "-c"
->>>   on remote.*.url variables and does not belong here.  A better
->>>   way/place to give that information is needed.
->>
->> I just wanted to indicate that some multivars do have get-out
->> [override]
->> config parameters, though we aren't consistent about their names yet,
->> while giving a clue as to a typical name style.
->
-> I think those who tried "-c remote.*.url" would be helped better by
-> having a see-also in the documentation on "remote.*.url" that refers
-> them to "insteadOf" noting that "remote.*.url" is a multi-value
-> variable and appending different definition will not make "the last
-> one wins".  After all "-c" is merely *one* way to append.
->
-> The next person who gets confused may say "I added remote.origin.url
-> at the end of my $repo/.git/config expecting that the value to be
-> used"; the answer would be the same "the variable is multi-valued;
-> adding a new value is not the right way to futz with it.  You either
-> need to replace, or if you do not want to replace, use insteadOf".
->
-> That is the second reason why the mention of insteadOf does not
-> belong to the description of "-c var=value".
->
-> Perhaps something like this as a starting point?
->
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-Yes, that's a good start, but we still need the correction to the git(1)
-'-c' option text.
+> On 06/16/2014 03:59 PM, Junio C Hamano wrote:
+>> Tanay Abhra <tanayabh@gmail.com> writes:
+>> 
+>>> When a compound construct like a string_list within another
+>>> struct is used, the default initializer macros are useless.
+>>> For such cases add helper functions for string_list
+>>> initialization for both DUP and NODUP modes.
+>>>
+>>> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+>>> ---
+>> 
+>> 
+>> Sorry, but I do not understand the above "useless".  Do you mean to
+>> say that xyzzy below cannot be initialized that way?
+>>  ...
+> I was actually explaining for cases like below,
+> ...
+> +		string_list_init_dup(&e->value_list);
 
-It'll be a few days before I can get back to this.
+If that is what you wanted to refer to, I would have to say
+"useless" is placing a stress on a wrong place.  (I do not see
+anything wrong with your new code; it was just the way it was
+explained in the proposed log message was misleading).
 
-> Documentation/config.txt | 11 +++++++++++
-> 1 file changed, 11 insertions(+)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 1d718bd..357cc02 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -2108,6 +2108,13 @@ remote.pushdefault::
-> remote.<name>.url::
->  The URL of a remote repository.  See linkgit:git-fetch[1] or
->  linkgit:git-push[1].
-> ++
-> +Note that this variable is multi-valued (e.g. "git push there" with
-> +multiple `remote.there.url` will push to all the named repositories),
-> +and does not follow the "last-one-survives" rule.  When you want to
-> +temporarily redirect a push to somewhere else, see
-> `url.<base>.insteadOf`;
-> +you cannot use "git -c remote.<name>.url=<temporary URL> push",
-> because
-> +you will be pushing to both the configured place and the temporary
-> place.
->
-> remote.<name>.pushurl::
->  The push URL of a remote repository.  See linkgit:git-push[1].
-> @@ -2419,6 +2426,10 @@ url.<base>.insteadOf::
->  the best alternative for the particular user, even for a
->  never-before-seen repository on the site.  When more than one
->  insteadOf strings match a given URL, the longest match is used.
-> ++
-> +When you want to redirect a push to `$URL` (e.g. `site.xz:myrepo`)
-> +temporarily to somewhere else (e.g. `othersite.xz:myrepo`), you can
-> +use "git -c url.othersite.xz:myrepo.insteadOf=site.xz:myrepo push
-> ..."
->
-> url.<base>.pushInsteadOf::
->  Any URL that starts with this value will not be pushed to;
->
->
---
-Philip
+Structure initialisers are not something you can assign to a
+variable anyway, and calling them "useless" is like complaining how
+unwieldty hammers are on screws.  "Hammers are useless on screws"
+may not be technically wrong per-se, but the readers won't be helped
+by hearing it very much.
+
+Instead, you would want to explain what your new invention, a
+screwdriver, is and how it is intended to be used.
+
+We of course have precedences for this kind of thing.  STRBUF_INIT
+is for definition-time initialisation and strbuf_init() is to
+initialise an uninitialised piece of memory to be used as a strbuf.
+
+I tend to think it was a long-time misdesign of string-list API to
+have the STRING_LIST_INIT* definition-time initialisers without
+having runtime string_list_init*() initialisers, and it is a good
+idea to add them to complete the API.
+
+If I were writing the log message for this, I would just say:
+
+	The string-list API has STRING_LIST_INIT_* macros to be used
+	to define variables with initialisers, but lacks functions
+	to initialise an uninitialised piece of memory to be used as
+	a string-list at the run-time.
+
+        Introduce string_list_init_{dup,nodup}() functions for that.
+
+or something.
