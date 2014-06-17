@@ -1,160 +1,205 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v18 07/48] lockfile.c: make lock_file return a meaningful errno on failurei
-Date: Tue, 17 Jun 2014 08:53:21 -0700
-Message-ID: <1403020442-31049-8-git-send-email-sahlberg@google.com>
+Subject: [PATCH v18 45/48] refs.c: pass a skip list to name_conflict_fn
+Date: Tue, 17 Jun 2014 08:53:59 -0700
+Message-ID: <1403020442-31049-46-git-send-email-sahlberg@google.com>
 References: <1403020442-31049-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 17:54:32 2014
+X-From: git-owner@vger.kernel.org Tue Jun 17 17:54:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwviS-0003mk-84
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:54:32 +0200
+	id 1WwviW-0003rn-SZ
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:54:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756379AbaFQPyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 11:54:18 -0400
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:48283 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756319AbaFQPyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 11:54:07 -0400
-Received: by mail-vc0-f202.google.com with SMTP id id10so962401vcb.1
-        for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
+	id S964774AbaFQPyc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 11:54:32 -0400
+Received: from mail-pb0-f73.google.com ([209.85.160.73]:40408 "EHLO
+	mail-pb0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756354AbaFQPyI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 11:54:08 -0400
+Received: by mail-pb0-f73.google.com with SMTP id ma3so782856pbc.0
+        for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:54:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HAl5vqZ6NnpNsRkzCwmuyN5bhrjx+Z9auKpl3q19vUo=;
-        b=RLjiRqTLQnyxfjMKqd9j5fshDLa3gyBaggED931AvZTerSt2ybKFUlOhCEKprqAM84
-         EbF7z+xXnEJ620eaUVu8ODmtAOrFttdRIYdF0l4m2juuW3NP91StwOdF0DNZSiSNrxnp
-         NfEKm6kB+FLwZCp8P4ce98i5QuzLwm+dYlPGBKb5APK+biEZqPt37Wl5gwcnMaPt6u4s
-         FSM7+uRnL4GXJc5KmhbzeR0ZFvQJRxeKN8PnVSDowwuzcl6cJ1uewbBR9QxzrGmrH11I
-         RkUuwpnD0ZbSmn68AZ+y2folZvfTf/V1/HffpqkpO3WumHiQBO21v2vpiZCGxEeckTfy
-         vnqQ==
+        bh=McVkQ22goasnCPqamgTxoqUeQITvytbIpqxkBZv16cQ=;
+        b=hTqaDNFP/TNKYErQt3DJEWm4g2m2Wmld5wTYpG1Ayhq3UN0OkdRPX4H/5tbRKynHa5
+         PgvBQ16KDT/PjnYNPV9NekCWgcLAA8TxlzwwNCebBdMFXkKMiI/k3heQAhzAejxEDQ8p
+         wh1x2mumrm4Rg0MmTg/LG5hbQHa+SAaQ1OMuwFpIuGxmkmoBI9ArQDeXuqy5hkO6tqmc
+         VnZOu2CP4qVA0qKE6cr6FkKW9HX43xRo0Lhr+z/l4JhhDmlsY5joh4RQLrZTxViUNUW4
+         0fOYiKUKrP58CUatpWu8qPdkMq7fYgUCpzm6+zFbE9hiWbteSWV4Q5NJgaioe8FwqZcp
+         TFhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=HAl5vqZ6NnpNsRkzCwmuyN5bhrjx+Z9auKpl3q19vUo=;
-        b=CZhu4ODSLY9uTocwqlP9yuzOD9EsXvvIgnomD2uOpLkj+IyXq4qN3k4j5J4gMtxHy4
-         dPlW7ogwtvYWIhx3uoSTkxyO2x6oxlSqFFw8X3O5L3+VMqV6qvxycPQqpoOr/b8ObsLL
-         P4EkUTNyFBkBLAG+FkVE04/VVjlCvegDMYe67alJ3bkgJwT+fwwD6roJw8OVOdJBq7cZ
-         fBdDqHkiHzTtVzH1sgV3TyDj2TxWIAQafXBKs6cnLPOaoSa421g2LUNUkvLzUy+YucPF
-         2OSdmtBQgCcx9tRpktiMvi/zCiK8iShplYCtRp6+zP2fmF9LyZTqRPzhVtce7U98WlNC
-         X1nQ==
-X-Gm-Message-State: ALoCoQn1dHHaArrvFWzF3GJuYXWQgxgethBAe9e6Gqm90U+ew83Rfww494bFT+JfswtwgD2qUdKj
-X-Received: by 10.58.69.49 with SMTP id b17mr52483veu.26.1403020444635;
-        Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id i65si1209458yhg.2.2014.06.17.08.54.04
+        bh=McVkQ22goasnCPqamgTxoqUeQITvytbIpqxkBZv16cQ=;
+        b=BL/E20JxnKtWisZ8NKCe1mTgir2nghxQ4GhYOFOapqROyM3KSyVr7XPzVLhRnCnY0k
+         jx+j3TgSISvG2TdHnPY0RPLD4AV2QV8isja4mt2ICpQErTStX7GW+D0Crkxyf9+5p8kj
+         hzOPMRY7ZQ390WdV9e3fIm96N64fQcIw+4/SykTE7sq4beO0N628BJ3hdnZ+Coea2cLr
+         XxISVy+9nr5EXjKt+2kesjB9Q6V5hQwxJPHc7aZ0M2kUthNaKtV72OR8Q4kxzV/E1Hgh
+         8Zp6MNgoArfwJ8HnfbKWGUQJYe0QJOCebbWFvEm6p/QQGgoY9ttPI+YxPAU+XXYz5q3/
+         2FHQ==
+X-Gm-Message-State: ALoCoQn2X3a81tAbWIX5QYnUSSs6/CZ7NOZTXfHVD0VrLj1wjIkCL/ItWZuTzcVkTQQtqUUAkUSf
+X-Received: by 10.66.228.162 with SMTP id sj2mr2411479pac.11.1403020446319;
+        Tue, 17 Jun 2014 08:54:06 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id o69si1208009yhp.6.2014.06.17.08.54.06
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
+        Tue, 17 Jun 2014 08:54:06 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 7BC8A5A45B3;
-	Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 175E931C76C;
+	Tue, 17 Jun 2014 08:54:06 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 00F4AE1158; Tue, 17 Jun 2014 08:54:03 -0700 (PDT)
+	id EC860E1354; Tue, 17 Jun 2014 08:54:05 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.438.gec92e5c
 In-Reply-To: <1403020442-31049-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251877>
 
-Making errno when returning from lock_file() meaningful, which should
-fix
+Allow passing a list of refs to skip checking to name_conflict_fn.
+There are some conditions where we want to allow a temporary conflict and skip
+checking those refs. For example if we have a transaction that
+1, guarantees that m is a packed refs and there is no loose ref for m
+2, the transaction will delete m from the packed ref
+3, the transaction will create conflicting m/m
 
- * an existing almost-bug in lock_ref_sha1_basic where it assumes
-   errno==ENOENT is meaningful and could waste some work on retries
-
- * an existing bug in repack_without_refs where it prints
-   strerror(errno) and picks advice based on errno, despite errno
-   potentially being zero and potentially having been clobbered by
-   that point
+For this case we want to be able to lock and create m/m since we know that the
+conflict is only transient. I.e. the conflict will be automatically resolved
+by the transaction when it deletes m.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- lockfile.c | 17 ++++++++++++-----
- refs.c     |  1 +
- refs.h     |  1 +
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ refs.c | 41 ++++++++++++++++++++++++++---------------
+ 1 file changed, 26 insertions(+), 15 deletions(-)
 
-diff --git a/lockfile.c b/lockfile.c
-index 464031b..a921d77 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -121,7 +121,7 @@ static char *resolve_symlink(char *p, size_t s)
- 	return p;
- }
- 
--
-+/* Make sure errno contains a meaningful value on error */
- static int lock_file(struct lock_file *lk, const char *path, int flags)
- {
- 	/*
-@@ -130,8 +130,10 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 	 */
- 	static const size_t max_path_len = sizeof(lk->filename) - 5;
- 
--	if (strlen(path) >= max_path_len)
-+	if (strlen(path) >= max_path_len) {
-+		errno = ENAMETOOLONG;
- 		return -1;
-+	}
- 	strcpy(lk->filename, path);
- 	if (!(flags & LOCK_NODEREF))
- 		resolve_symlink(lk->filename, max_path_len);
-@@ -148,9 +150,13 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 			lock_file_list = lk;
- 			lk->on_list = 1;
- 		}
--		if (adjust_shared_perm(lk->filename))
--			return error("cannot fix permission bits on %s",
--				     lk->filename);
-+		if (adjust_shared_perm(lk->filename)) {
-+			int save_errno = errno;
-+			error("cannot fix permission bits on %s",
-+			      lk->filename);
-+			errno = save_errno;
-+			return -1;
-+		}
- 	}
- 	else
- 		lk->filename[0] = 0;
-@@ -188,6 +194,7 @@ NORETURN void unable_to_lock_index_die(const char *path, int err)
- 	die("%s", buf.buf);
- }
- 
-+/* This should return a meaningful errno on failure */
- int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
- {
- 	int fd = lock_file(lk, path, flags);
 diff --git a/refs.c b/refs.c
-index db05602..e9d53e4 100644
+index 610e063..0e29fb4 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2212,6 +2212,7 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
- 	return 0;
+@@ -801,15 +801,18 @@ static int names_conflict(const char *refname1, const char *refname2)
+ 
+ struct name_conflict_cb {
+ 	const char *refname;
+-	const char *oldrefname;
+ 	const char *conflicting_refname;
++	const char **skip;
++	int skipnum;
+ };
+ 
+ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
+ {
+ 	struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
+-	if (data->oldrefname && !strcmp(data->oldrefname, entry->name))
+-		return 0;
++	int i;
++	for (i = 0; i < data->skipnum; i++)
++		if (!strcmp(entry->name, data->skip[i]))
++			return 0;
+ 	if (names_conflict(data->refname, entry->name)) {
+ 		data->conflicting_refname = entry->name;
+ 		return 1;
+@@ -822,15 +825,18 @@ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
+  * conflicting with the name of an existing reference in dir.  If
+  * oldrefname is non-NULL, ignore potential conflicts with oldrefname
+  * (e.g., because oldrefname is scheduled for deletion in the same
+- * operation).
++ * operation). skip contains a list of refs we want to skip checking for
++ * conflicts with.
+  */
+-static int is_refname_available(const char *refname, const char *oldrefname,
+-				struct ref_dir *dir)
++static int is_refname_available(const char *refname,
++				struct ref_dir *dir,
++				const char **skip, int skipnum)
+ {
+ 	struct name_conflict_cb data;
+ 	data.refname = refname;
+-	data.oldrefname = oldrefname;
+ 	data.conflicting_refname = NULL;
++	data.skip = skip;
++	data.skipnum = skipnum;
+ 
+ 	sort_ref_dir(dir);
+ 	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
+@@ -2078,7 +2084,8 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ /* This function should make sure errno is meaningful on error */
+ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 					    const unsigned char *old_sha1,
+-					    int flags, int *type_p)
++					    int flags, int *type_p,
++					    const char **skip, int skipnum)
+ {
+ 	char *ref_file;
+ 	const char *orig_refname = refname;
+@@ -2127,7 +2134,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	 * name is a proper prefix of our refname.
+ 	 */
+ 	if (missing &&
+-	     !is_refname_available(refname, NULL, get_packed_refs(&ref_cache))) {
++	     !is_refname_available(refname, get_packed_refs(&ref_cache),
++				   skip, skipnum)) {
+ 		last_errno = ENOTDIR;
+ 		goto error_return;
+ 	}
+@@ -2185,7 +2193,7 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
+ 					 const unsigned char *old_sha1,
+ 					 int flags, int *type_p)
+ {
+-	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p);
++	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p, NULL, 0);
  }
  
-+/* This should return a meaningful errno on failure */
- int lock_packed_refs(int flags)
- {
- 	struct packed_ref_cache *packed_ref_cache;
-diff --git a/refs.h b/refs.h
-index 09d3564..64f25d9 100644
---- a/refs.h
-+++ b/refs.h
-@@ -82,6 +82,7 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
  /*
-  * Lock the packed-refs file for writing.  Flags is passed to
-  * hold_lock_file_for_update().  Return 0 on success.
-+ * Errno is set to something meaningful on error.
-  */
- extern int lock_packed_refs(int flags);
+@@ -2677,10 +2685,12 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	if (!symref)
+ 		return error("refname %s not found", oldrefname);
  
+-	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(&ref_cache)))
++	if (!is_refname_available(newrefname, get_packed_refs(&ref_cache),
++				  &oldrefname, 1))
+ 		return 1;
+ 
+-	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(&ref_cache)))
++	if (!is_refname_available(newrefname, get_loose_refs(&ref_cache),
++				  &oldrefname, 1))
+ 		return 1;
+ 
+ 	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
+@@ -2710,7 +2720,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 
+ 	logmoved = log;
+ 
+-	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL);
++	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL, NULL, 0);
+ 	if (!lock) {
+ 		error("unable to lock %s for update", newrefname);
+ 		goto rollback;
+@@ -2725,7 +2735,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	return 0;
+ 
+  rollback:
+-	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL);
++	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL, NULL, 0);
+ 	if (!lock) {
+ 		error("unable to lock %s for rollback", oldrefname);
+ 		goto rollbacklog;
+@@ -3601,7 +3611,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 						    update->old_sha1 :
+ 						    NULL),
+ 						   update->flags,
+-						   &update->type);
++						   &update->type,
++						   delnames, delnum);
+ 		if (!update->lock) {
+ 			if (err)
+ 				strbuf_addf(err, "Cannot lock the ref '%s'.",
 -- 
 2.0.0.438.gec92e5c
