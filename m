@@ -1,113 +1,141 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: ISO 13485
-Date: Tue, 17 Jun 2014 11:30:17 -0400
-Organization: PD Inc
-Message-ID: <0368137BF4DA4E798A17D74DAFE30FEF@black>
-References: <539F09B9.3050200@omixon.com> <9738CF1519014998B579C405EB4FA22B@black> <53A05766.7060502@omixon.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Our merge bases sometimes suck
+Date: Tue, 17 Jun 2014 17:44:36 +0200
+Message-ID: <53A06264.9080205@alum.mit.edu>
+References: <539A25BF.4060501@alum.mit.edu> <xmqq8uovo9pa.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'agi'" <agnes.pasztor@omixon.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 17 17:31:11 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 17:44:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwvLf-0006Vq-5n
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:30:59 +0200
+	id 1WwvYy-0007lh-62
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:44:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933491AbaFQPay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 11:30:54 -0400
-Received: from mail.pdinc.us ([67.90.184.27]:47335 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933344AbaFQPaT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 11:30:19 -0400
-Received: from black (nsa1.pdinc.us [67.90.184.2])
+	id S933445AbaFQPok convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Jun 2014 11:44:40 -0400
+Received: from alum-mailsec-scanner-4.mit.edu ([18.7.68.15]:50792 "EHLO
+	alum-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932989AbaFQPoj (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Jun 2014 11:44:39 -0400
+X-AuditID: 1207440f-f79536d000000bcf-7d-53a0626688ac
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-4.mit.edu (Symantec Messaging Gateway) with SMTP id BB.76.03023.66260A35; Tue, 17 Jun 2014 11:44:38 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB2181.dip0.t-ipconnect.de [93.219.33.129])
 	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s5HFUHFx014099;
-	Tue, 17 Jun 2014 11:30:17 -0400
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <53A05766.7060502@omixon.com>
-Thread-Index: Ac+KPIiD9cY3JAoiSsCxTO+TwCH9LgAArLxw
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5HFiabs017383
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 17 Jun 2014 11:44:37 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
+In-Reply-To: <xmqq8uovo9pa.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAKsWRmVeSWpSXmKPExsUixO6iqJuWtCDYYO0efouuK91MFg29V5gd
+	mDwuXlL2+LxJLoApitsmKbGkLDgzPU/fLoE7o21SI3vBUrGK6Wu3sTYwbhXsYuTkkBAwkZj4
+	4RYThC0mceHeerYuRi4OIYHLjBJf1yxmh3DOM0n8+d7JAlLFK6AtcfN3HzOIzSKgKrG0fSYb
+	iM0moCuxqKcZbJKoQJDE7M/z2CHqBSVOznwC1isioCYxse0QkM3BwQxU//BNIkhYGGjkghd/
+	mUDCQgJREhPfWYCEOQWsJd6sW8UKEpYQEJfoaQyCaFSXWD9PCKSCWUBeonnrbOYJjIKzkKya
+	hVA1C0nVAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6Jnq5mSV6qSmlmxghYcu/g7Frvcwh
+	RgEORiUe3gey84OFWBPLiitzDzFKcjApifI+il8QLMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE
+	t0QcKMebklhZlVqUD5OS5mBREudVX6LuJySQnliSmp2aWpBaBJOV4eBQkuB9mwDUKFiUmp5a
+	kZaZU4KQZuLgBBnOJSVSnJqXklqUWFqSEQ+K3PhiYOyCpHiA9uokguwtLkjMBYpCtJ5iNOY4
+	dedYGxPHiScn25iEWPLy81KlxHmDQUoFQEozSvPgFsES1itGcaC/hXl1Qap4gMkObt4roFVM
+	QKtUJs4DWVWSiJCSamDUUVznfe/rn/9HPRpW8y3ZwOHsNNP/au0D9SfGbWHXZVT3Wk7ZdzVZ
+	0XiO14wtj3903Ln6+ead+z/UC7+90l4469uvXXeswz6fsnyU8r3r4wItLac9Ob9P 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251865>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251866>
 
-> -----Original Message-----
-> From: agi
-> Sent: Tuesday, June 17, 2014 10:58
-> 
-> Hi Jason,
-> 
-> Thanks for the speedy reply. We are in the process of trying 
-> to make our 
-> software product ISO13485 compatible and we are assessing all systems 
-> that we use.
-> Do you have a validation document for git that could provide 
-> information 
-> on how to use it in order to comply with ISO legislations?
+On 06/17/2014 05:08 PM, Junio C Hamano wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
+>=20
+>> The "best" merge base
+>> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>>
+>> But not all merge bases are created equal.  It is possible to define=
+ a
+>> "best" merge base that has some nice properties.
+>>
+>> Let's focus on the command
+>>
+>>     git diff $master...$branch
+>>
+>> which is equivalent to
+>>
+>>     git diff $(git merge-base $master $branch)..$branch
+>> ...
+>> I propose that the best merge base is the merge base "candidate" tha=
+t
+>> minimizes the number of non-merge commits that are in
+>>
+>>     git rev-list --no-merges $candidate..$branch
+>>
+>> but are already in master:
+>>
+>>     git rev-list --no-merges $master
+>=20
+> I welcome this line of thought very much.
+>=20
+> There is one niggle I find somewhat curious but am either too lazy
+> or too stupid to think it through myself ;-)
+>=20
+> The "merge-base" is a symmetric operation, because the three-way
+> merge, which is the primary customer of its result, fundamentally
+> is.  From your description, it sounds like the "best" merge base
+> however may not be symmetric at all.  The merge-base between A and B
+> that makes "git diff A...B" the easiest to read by minimizing the
+> distance between it and B may be different from the merge-base
+> between A and B that makes the other diff "git diff B...A" the
+> easiest to read.
+>=20
+> Or it may not be assymmetric---that is why I said I didn't think it
+> through.  I am not saying that it is bad if the "best" merge-base is
+> an asymmetric concept; I am curious if it is asymmetric, and if so
+> if that is fundamental.
 
-That would be customized to your QA process. A generalized document would be too
-vague. I am sure any process consultant could draft that up for you.
-(disclaimer: I have been paid to do things like this before)
+It just looks asymmetric, but actually it is symmetric, which was kindo=
+f
+surprising when I realized it.  The argument is in the next section
+"Symmetry; generalization to more than two branches".  Michael Gruber
+showed the same thing upthread using set notation, which is easier to
+follow.  Here is his argument in symbolic notation.  We want to minimiz=
+e
 
-Maybe you could start by searching with things like
-https://www.google.com/search?q=using+QA+with+Git or contacting Atlassian about
-their QA product suite integration with Git.
+    N =3D |(branch - candidate) =E2=88=A7 master|
 
-Maybe you could find a process consultant to do it cheaper if you release it out
-to the FOSS community?
+where "branch" represents the set of all commits in "branch" etc, "|x|"
+represents the number of elements in set "x", and "=E2=88=A7" is set
+intersection, and candidate is a merge base of branch and master.
 
-The "nice" (read as less effort) thing about ISO 13485 is it does not have a
-continual improvement requirement so as long as "defects" are detected and
-remediated you are good. Please note git does not detect defects, git does not
-remediate defects. What git does is ensure the approved artifact is unchanged in
-any attribute to maintain the exact level of quality from first inspection of
-that artifact for an unlimited amount of iterations. Git has built in "digital
-signatures" on the artifacts stored in its repository.
+    N =3D |(branch =E2=88=A7 =E2=88=BCcandidate) =E2=88=A7 master|
+      =3D |(branch =E2=88=A7 master) =E2=88=A7 =E2=88=BCcandidate|
 
-> Any additional information or material you can think of is more than 
-> welcome.
-> 
-> Thanks in advance for your help!
-> 
-> 
-> Best Regards,
-> Agnes Pasztor
-> 
-> Senior Test Engineer
-> Omixon Biocomputing Ltd.
-> 
-> 
-> On 06/16/2014 05:20 PM, Jason Pyeron wrote:
-> >> -----Original Message-----
-> >> From: agi
-> >> Sent: Monday, June 16, 2014 11:14
-> >>
-> >> Hello,
-> >>
-> >> I would like to ask a question about GIT v. 1.7
-> >>
-> >> Is it compatible with ISO 13485 (quality management system)?
-> >> Can it be
-> >> used for developing a medical diagnostic software?
-> > Yes.
-> >
-> > Now, do you have a specific question about how to use Git 
-> in your QA process?
+Since candidate is a common ancestor of branch and master,
 
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00.
+    candidate =E2=8A=86 branch =E2=88=A7 master
+
+so we have
+
+    N =3D |branch =E2=88=A7 master| - |candidate|
+
+Since "|branch =E2=88=A7 master|" is the same for all candidates, minim=
+izing N
+is the same as maximizing |candidate|, which is the same as
+
+    git rev-list --count --no-merges $candidate
+
+=2E  This is clearly symmetric in master vs. base.
+
+Michael
+
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
