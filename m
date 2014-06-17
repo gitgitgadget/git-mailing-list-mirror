@@ -1,90 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Annotated tags by default?
-Date: Tue, 17 Jun 2014 14:02:37 -0700
-Message-ID: <xmqqppi7l05u.fsf@gitster.dls.corp.google.com>
-References: <CAHd499Bszq1nw=cu9UZpnodR1ZzmX2Bw2kJr8X13_mEUd7ombA@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC] alias.c: Replace git_config with
+ git_config_get_string
+Date: Tue, 17 Jun 2014 17:14:23 -0400
+Message-ID: <20140617211423.GB13848@sigill.intra.peff.net>
+References: <1402910154-417-1-git-send-email-tanayabh@gmail.com>
+ <20140617054357.GC29957@sigill.intra.peff.net>
+ <53A08E37.1040104@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 17 23:20:56 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 17 23:21:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wx0o6-0002VM-Dl
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 23:20:42 +0200
+	id 1Wx0oI-0002VM-IW
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 23:20:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965088AbaFQVCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 17:02:44 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54497 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965083AbaFQVCo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Jun 2014 17:02:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 398C81F03E;
-	Tue, 17 Jun 2014 17:02:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6wzEVmPtJ+VJ8Fg5rlESHNQAiGw=; b=bjij72
-	1xQop2yKqs0GwHO4Eg6rC3p8yphCJJkGlbITwVKHDNQc01C8tCmbXRdL27Yd+/39
-	/TBRDQsh+5V06gc8w9ZC408QNVYWpSTW25LILZK8yQp+J6efCI0l/vP+ZUqi+/ym
-	jmNwfT4gWnFCFKCj2sAIqYbF4E7o3Bh2dPGhM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KbSYlRBCH0t2lB6lA6BBpkXCMGODtQeQ
-	P/RPANZk64ShaQWu9XhKMY3eAOsauumSzwMMoOapSKB2bLvjmqZNOdVJjVAj72dG
-	XO5eAm4brv4PY2P2/Dq1pb9YRZiPPtkuxFfEs4SsoxAdUsp3+GWWlbNrLerPNAjY
-	NRBvf14WRP4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2EB6E1F03D;
-	Tue, 17 Jun 2014 17:02:41 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E4B501F036;
-	Tue, 17 Jun 2014 17:02:36 -0400 (EDT)
-In-Reply-To: <CAHd499Bszq1nw=cu9UZpnodR1ZzmX2Bw2kJr8X13_mEUd7ombA@mail.gmail.com>
-	(Robert Dailey's message of "Tue, 17 Jun 2014 15:04:01 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B5DAB18E-F662-11E3-9FB1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S965280AbaFQVO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 17:14:26 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46355 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S964907AbaFQVOZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Jun 2014 17:14:25 -0400
+Received: (qmail 27931 invoked by uid 102); 17 Jun 2014 21:14:25 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 17 Jun 2014 16:14:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 17 Jun 2014 17:14:23 -0400
+Content-Disposition: inline
+In-Reply-To: <53A08E37.1040104@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251952>
 
-Robert Dailey <rcdailey.lists@gmail.com> writes:
+On Tue, Jun 17, 2014 at 11:51:35AM -0700, Tanay Abhra wrote:
 
-> Is there a config option or some way for `git tag -a` to be the
-> default? I could create an alias but would make more sense to have a
-> config:
->
-> git config --global tag.alwaysannotate true
+> I have read your other two replies related to it. I suggest the following approach
+> for git_config_get_string(), it will return,
+> 
+> 1. Return null if no value was found for the entered key.
+> 
+> 2. Empty string (""), returned for NULL values denoting boolean true in some cases.
+>    I think it would be much better than converting NULL to "true" or something else
+>    internally in the function.
+>    We can easily handle such cases as the above with a strcmp like,
+> 
+> +	v = git_config_get_string(alias_key);
+> +	if (!strcmp(v, ""))
+> +		config_error_nonbool(alias_key);
+> 
+> What do you think about this approach?
 
-If you really wanted to, you could do the following (and you must to
-do all of the following):
+Hmm. Then we can't distinguish between:
 
- * Introduce "git tag --no-annotate" option, that defeats the effect
-   of such a configuration variable.
+  [alias]
+  foo
 
- * Devise some way to reliably catch scripts that use "git tag"
-   without saying what kind of tag they want to create.  Add new
-   code to issue a warning message saying that the script will be
-   horribly broken when user starts using the configuration variable
-   that will be introduced in the future.  This will force them to
-   be updated to pass the "--no-annotate" option.
+and
 
- * Wait for several releases to make sure that no script that want
-   to use light-weight tags use "git tag" without "--no-annotate"
-   option.
+  [alias]
+  foo =
 
- * Introduce the configuration variable.
+I cannot think of a good reason to do the latter with aliases, but I
+wonder if there are other config values for which "the empty string" is
+a useful value.
 
-I personally do not think it is worth it, and also I do not know what
-that "some way to reliably catch" would look like.
+I think I'd lean towards an interface which can actually express the
+difference between "key not found" (1), "key present but no value" (2), and "key
+present with some string" (3).
 
-We gave short-and-sweet "-a" and "-s" options exactly because we
-wanted to make it easy to type them.  Also, "tag -m msg" will DWIM
-to "-a".
+You could express (2) with a special pointer value, like:
+
+  v = git_config_get_string(key);
+  if (!v)
+	return NULL; /* no key */
+  else if (v == CONFIG_EMPTY_VALUE) {
+	config_error_nonbool(key);
+	return NULL;
+  } else
+	return xstrdup(v); /* actual value */
+
+It's reasonably concise, but it's a little ugly that if you dereference
+CONFIG_EMPTY_VALUE, you get random memory (on the other hand, we could
+point it at 0x1, which would make it no different than NULL; you'd get a
+segfault in either case).
+
+Another option is to indicate (1) with a return value, and use a
+separate parameter for the value. Like:
+
+  if (git_config_get_string(key, &v) < 0)
+	return NULL; /* no key */
+  else if (!v) {
+	config_error_nonbool(key); /* no value */
+	return NULL;
+  } else
+	return xstrdup(v); /* actual value */
+
+> Thanks for the suggestion, I was pulling my hair out due this bug for last two days.
+
+You're welcome. This is exactly why we encourage students to get their
+patches onto the list early for review. There is a lot of git expertise
+available on the list. :)
+
+-Peff
