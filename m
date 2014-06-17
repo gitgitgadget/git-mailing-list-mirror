@@ -1,140 +1,110 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v18 06/48] lockfile.c: add a new public function unable_to_lock_message
-Date: Tue, 17 Jun 2014 08:53:20 -0700
-Message-ID: <1403020442-31049-7-git-send-email-sahlberg@google.com>
+Subject: [PATCH v18 15/48] refs.c: make ref_update_reject_duplicates take a strbuf argument for errors
+Date: Tue, 17 Jun 2014 08:53:29 -0700
+Message-ID: <1403020442-31049-16-git-send-email-sahlberg@google.com>
 References: <1403020442-31049-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 17 17:56:38 2014
+X-From: git-owner@vger.kernel.org Tue Jun 17 17:56:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WwvkT-0006Pc-98
-	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:56:37 +0200
+	id 1WwvkT-0006Pc-PP
+	for gcvg-git-2@plane.gmane.org; Tue, 17 Jun 2014 17:56:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964841AbaFQP4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Jun 2014 11:56:32 -0400
-Received: from mail-yh0-f74.google.com ([209.85.213.74]:56626 "EHLO
-	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756264AbaFQPyG (ORCPT <rfc822;git@vger.kernel.org>);
+	id S964840AbaFQP4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Jun 2014 11:56:30 -0400
+Received: from mail-yh0-f73.google.com ([209.85.213.73]:41806 "EHLO
+	mail-yh0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756280AbaFQPyG (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 17 Jun 2014 11:54:06 -0400
-Received: by mail-yh0-f74.google.com with SMTP id b6so1052273yha.3
+Received: by mail-yh0-f73.google.com with SMTP id f10so1051929yha.0
         for <git@vger.kernel.org>; Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=GUwLyJBoqqwdYnhv04N4O/ArjYT7M6X8HSP/NJjOQ8o=;
-        b=MLOVht5fmRTCzOkM7Awh1keEm6DL1ir9i8EDlQNzDBENr+u7ry/4m95SbzEghu4ECX
-         dO9CIRs7TbdLmUeZYXIwoaHMNK/FRlA29xVXGGvepnJGwzksxj2Apz+5mnTwMzcLRElT
-         Dm+vrc+FuSCAFD3XhaDnNNSWVZnFoPIlBAXGPUQelA8xVO3MLdkUcJjzP9emE7hkZwcX
-         /7UQmfTk2fF2ze6kqC8LN7cpcljvIRxdqCGZHRaNHwSEzzcF+gJo0c7vVqMuUsDzUbOx
-         m0rfXVO4XF3U9otk8qo+bcCzJaG8SCftLFxUYiZRjo/Q/k9/4VcqUutiWb44Tvh/E+cG
-         YLEQ==
+        bh=2862IeVOXR954TV0mGh3lmmMlHdeOWXWJAQCGRPL0+E=;
+        b=bAjcEhZgVmhrqWo8NThUneyFDRDog0O/pPT8paE/CaQDfHvqNy6jRV8HaIpIb4B1dp
+         uF5yT5sa7PoqA1+dDvE3soGP0hL53MOZybCoC15KuGss82aquK/TnbuEEB9IbZHy8rfc
+         yTJ08Vkr2YBW7RU6fyeJ2gXV5KY1Pl9ucvJJCZRdrCqIYjTrJ0NbyghPt+g1S5izfxTK
+         KKXFXk+ZJrnRQTyFo84xEy/1rQTnTONbJgTJTt6KAR3Qbx/66+3V+TXhzBSOSPHpbIAq
+         f56IxsSGGzPR7htMwGXv86bM0cFcJ7xGyIi40hVchGoarP3aNHd2ZWOBAQnV0cTY8Lbf
+         wb9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=GUwLyJBoqqwdYnhv04N4O/ArjYT7M6X8HSP/NJjOQ8o=;
-        b=QOpUAZq2phvg+nD0YW4JAIPDPqW42Ol0hYuQAvsaoHGdZqaozQnnPkh0Fgl5Rmp5LJ
-         ZhvSDTYpDCZgCTos5QrhME9BDC+3VFkuVAxzrQOAL3/nVpzemnE4OooNyVafQiojHoWm
-         Ls+TGuILTJP4ql12muzX6NRHIrq5WF+JgBMGCe9rdIacxyvdNjKCznv5kfhDTrmMdyeM
-         YYI27/OP1TsQSv0tc8F9VJwZnAOfDfZHAC/69ul4spEub/HuIfbS7scM6N6Pnq+uqQiw
-         YKEFboGNUzh4T66IYN3z9ADV+QvdHaHvuodEWqnpCLdk5CO4oeEv+pfrvBwvUrzKHNvM
-         m7FQ==
-X-Gm-Message-State: ALoCoQnEPueYSLCYgG815W7WNV0iq4/Tx1c4OfKtgomVMHFHMIi1Sfmi4danGqe7WTd3Vx8KBHVS
-X-Received: by 10.236.26.105 with SMTP id b69mr404417yha.55.1403020444629;
+        bh=2862IeVOXR954TV0mGh3lmmMlHdeOWXWJAQCGRPL0+E=;
+        b=E70zgxJQ1QHh1Cj2ALCIDPjMWtnjHVprRDTwK5FSyA58grvZxy8B9fDviAR0UroqZz
+         MJZRhQTNcyhQnN1t59j54BIefK/imOyCTHBu3L/ZRvTcpSxK2WMj6Jx879ZsOK2xYvCM
+         IhynSEHeSZvfvQSOyVNgvfA3aAVRS+rjYEm8WANRRlECYDsGCLe64gnB4wHRfTZ07SPZ
+         UAAMnSpd/FPuA2m9hHKP20EGziFsybQJRKKSWVDuJaUWCiwSbbqRqqEj+8CflNzYMzWx
+         kRMHUf13QkZTGcgKEUfGyCfCu9eYoJLn0PQSXUWCCIkmx8N28zfCx5N0S+70dMl5cvtl
+         CsOg==
+X-Gm-Message-State: ALoCoQluD3fsewec63KYB2eZKQS6imZstDTzhz8LzNmpI/KkW0535jbBuwAKoobKu/9pGrU3EiEq
+X-Received: by 10.58.209.227 with SMTP id mp3mr1412400vec.29.1403020444846;
         Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id i65si1209457yhg.2.2014.06.17.08.54.04
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id i65si1209461yhg.2.2014.06.17.08.54.04
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 7B73D5A4367;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id A690931C770;
 	Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id EA9DDE106F; Tue, 17 Jun 2014 08:54:03 -0700 (PDT)
+	id 55E3CE1648; Tue, 17 Jun 2014 08:54:04 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.438.gec92e5c
 In-Reply-To: <1403020442-31049-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251906>
 
-Introducing a new unable_to_lock_message helper, which has nicer
-semantics than unable_to_lock_error and cleans up lockfile.c a little.
+Make ref_update_reject_duplicates return any error that occurs through a
+new strbuf argument. This means that when a transaction commit fails in
+this function we will now be able to pass a helpful error message back to the
+caller.
 
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- cache.h    |  2 ++
- lockfile.c | 22 ++++++++++++----------
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ refs.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index cbe1935..8b12aa8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -559,6 +559,8 @@ struct lock_file {
- #define LOCK_DIE_ON_ERROR 1
- #define LOCK_NODEREF 2
- extern int unable_to_lock_error(const char *path, int err);
-+extern void unable_to_lock_message(const char *path, int err,
-+				   struct strbuf *buf);
- extern NORETURN void unable_to_lock_index_die(const char *path, int err);
- extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
- extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
-diff --git a/lockfile.c b/lockfile.c
-index 8fbcb6a..464031b 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -157,33 +157,35 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 	return lk->fd;
+diff --git a/refs.c b/refs.c
+index 1f2eb24..4c1612a 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3489,6 +3489,7 @@ static int ref_update_compare(const void *r1, const void *r2)
  }
  
--static char *unable_to_lock_message(const char *path, int err)
-+void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
+ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
++					struct strbuf *err,
+ 					enum action_on_err onerr)
  {
--	struct strbuf buf = STRBUF_INIT;
--
- 	if (err == EEXIST) {
--		strbuf_addf(&buf, "Unable to create '%s.lock': %s.\n\n"
-+		strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
- 		    "If no other git process is currently running, this probably means a\n"
- 		    "git process crashed in this repository earlier. Make sure no other git\n"
- 		    "process is running and remove the file manually to continue.",
- 			    absolute_path(path), strerror(err));
- 	} else
--		strbuf_addf(&buf, "Unable to create '%s.lock': %s",
-+		strbuf_addf(buf, "Unable to create '%s.lock': %s",
- 			    absolute_path(path), strerror(err));
--	return strbuf_detach(&buf, NULL);
- }
- 
- int unable_to_lock_error(const char *path, int err)
- {
--	char *msg = unable_to_lock_message(path, err);
--	error("%s", msg);
--	free(msg);
-+	struct strbuf buf = STRBUF_INIT;
+ 	int i;
+@@ -3496,6 +3497,9 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ 		if (!strcmp(updates[i - 1]->refname, updates[i]->refname)) {
+ 			const char *str =
+ 				"Multiple updates for ref '%s' not allowed.";
++			if (err)
++				strbuf_addf(err, str, updates[i]->refname);
 +
-+	unable_to_lock_message(path, err, &buf);
-+	error("%s", buf.buf);
-+	strbuf_release(&buf);
- 	return -1;
- }
+ 			switch (onerr) {
+ 			case UPDATE_REFS_MSG_ON_ERR:
+ 				error(str, updates[i]->refname); break;
+@@ -3526,7 +3530,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
  
- NORETURN void unable_to_lock_index_die(const char *path, int err)
- {
--	die("%s", unable_to_lock_message(path, err));
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	unable_to_lock_message(path, err, &buf);
-+	die("%s", buf.buf);
- }
+ 	/* Copy, sort, and reject duplicate refs */
+ 	qsort(updates, n, sizeof(*updates), ref_update_compare);
+-	ret = ref_update_reject_duplicates(updates, n, onerr);
++	ret = ref_update_reject_duplicates(updates, n, err, onerr);
+ 	if (ret)
+ 		goto cleanup;
  
- int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
 -- 
 2.0.0.438.gec92e5c
