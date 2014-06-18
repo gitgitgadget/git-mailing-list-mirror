@@ -1,368 +1,124 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/7] use strbufs in date functions
-Date: Wed, 18 Jun 2014 16:32:41 -0400
-Message-ID: <20140618203241.GE23896@sigill.intra.peff.net>
-References: <20140618201944.GA23238@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 01/14] refs.c make ref_transaction_create a wrapper to ref_transaction_update
+Date: Wed, 18 Jun 2014 13:34:41 -0700
+Message-ID: <xmqqha3ihs7y.fsf@gitster.dls.corp.google.com>
+References: <1403111346-18466-1-git-send-email-sahlberg@google.com>
+	<1403111346-18466-2-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 18 22:32:53 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, mhagger@alum.mit.edu
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed Jun 18 22:34:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxMXM-0002fw-C4
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 22:32:52 +0200
+	id 1WxMZI-00052c-PO
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 22:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755508AbaFRUcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 16:32:45 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47011 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754564AbaFRUcn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 16:32:43 -0400
-Received: (qmail 860 invoked by uid 102); 18 Jun 2014 20:32:43 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jun 2014 15:32:43 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jun 2014 16:32:41 -0400
-Content-Disposition: inline
-In-Reply-To: <20140618201944.GA23238@sigill.intra.peff.net>
+	id S1755208AbaFRUet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 16:34:49 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62964 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754993AbaFRUes (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 16:34:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B57A31E60A;
+	Wed, 18 Jun 2014 16:34:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8tkwj6Ycr/OPWoJvP4kK/9pYevk=; b=NFjn1T
+	DjqZ1cpaNdk5X8S6stksxfjclxKY6lYIn1TOdP4I+K6FEfpi4op/zNK3WR1zwxWj
+	BmkWxPDJHiTjJpBUcAfKU611H+AUJHDkBc6cyauyo3zE8JZD0M6dQ2C9hvaKQXRK
+	LvCxCRxQwACHFSsCAHJ9BnHizOfYdRvyhIUco=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=X4k5XWUzLHYUZGvgKocsBqsyeA2BaD8S
+	xTqHBcBydnnRJlOdMe1bVStcGc4GMe4x2elvFklSI5Awyyqx2UOlPBz6QCW+nIZk
+	IsFYdI4AQadsdeQsuVa9taW29lv38M6nI8MDCrs2oJ7kaFShX7GIGOoI7j0M0wBb
+	amEfidwi8kA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AA93E1E609;
+	Wed, 18 Jun 2014 16:34:45 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E2C931E602;
+	Wed, 18 Jun 2014 16:34:40 -0400 (EDT)
+In-Reply-To: <1403111346-18466-2-git-send-email-sahlberg@google.com> (Ronnie
+	Sahlberg's message of "Wed, 18 Jun 2014 10:08:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F949D650-F727-11E3-9F5D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252062>
 
-Many of the date functions write into fixed-size buffers.
-This is a minor pain, as we have to take special
-precautions, and frequently end up copying the result into a
-strbuf or heap-allocated buffer anyway (for which we
-sometimes use strcpy!).
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-Let's instead teach parse_date, datestamp, etc to write to a
-strbuf. The obvious downside is that we might need to
-perform a heap allocation where we otherwise would not need
-to. However, it turns out that the only two new allocations
-required are:
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  refs.c | 13 ++-----------
+>  refs.h |  7 ++++---
+>  2 files changed, 6 insertions(+), 14 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index dfbf003..a9f91ab 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -3487,23 +3487,14 @@ int ref_transaction_create(struct ref_transaction *transaction,
+>  			   int flags, const char *msg,
+>  			   struct strbuf *err)
+>  {
+> -	struct ref_update *update;
+> -
+>  	if (transaction->state != REF_TRANSACTION_OPEN)
+>  		die("BUG: create called for transaction that is not open");
+>  
+>  	if (!new_sha1 || is_null_sha1(new_sha1))
+>  		die("BUG: create ref with null new_sha1");
+>  
+> -	update = add_update(transaction, refname);
+> -
+> -	hashcpy(update->new_sha1, new_sha1);
+> -	hashclr(update->old_sha1);
+> -	update->flags = flags;
+> -	update->have_old = 1;
+> -	if (msg)
+> -		update->msg = xstrdup(msg);
+> -	return 0;
+> +	return ref_transaction_update(transaction, refname, new_sha1,
+> +				      null_sha1, flags, 1, msg, err);
+>  }
 
-  1. In test-date.c, where we don't care about efficiency.
+Hmmm.
 
-  2. In determine_author_info, which is not performance
-     critical (and where the use of a strbuf will help later
-     refactoring).
+This probably logically belongs to the end of the previous series
+and not necessarily tied to reflog transaction, no?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I don't think the strcpys are a problem in practice, because we're
-typically writing fixed-size output generated by parse_date. But I
-didn't analyze it too deeply, so you might be able to cause shenanigans
-if you can impact GIT_AUTHOR_DATE or something.
+At the beginning of ref_transaction_update() there also is the same
+guard on transaction->state, and having both feels somewhat iffy.
+Of course it will give a wrong BUG message if we removed the check
+from this function, so perhaps the code is OK as-is.
 
- builtin/commit.c | 20 ++++++++++----------
- cache.h          |  4 ++--
- date.c           | 13 +++++++------
- fast-import.c    | 20 +++++++++-----------
- ident.c          | 26 +++++++++++---------------
- test-date.c      | 10 ++++++----
- 6 files changed, 45 insertions(+), 48 deletions(-)
-
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 047cc76..bf770cf 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -526,19 +526,16 @@ static int sane_ident_split(struct ident_split *person)
- 	return 1;
- }
- 
--static int parse_force_date(const char *in, char *out, int len)
-+static int parse_force_date(const char *in, struct strbuf *out)
- {
--	if (len < 1)
--		return -1;
--	*out++ = '@';
--	len--;
-+	strbuf_addch(out, '@');
- 
--	if (parse_date(in, out, len) < 0) {
-+	if (parse_date(in, out) < 0) {
- 		int errors = 0;
- 		unsigned long t = approxidate_careful(in, &errors);
- 		if (errors)
- 			return -1;
--		snprintf(out, len, "%lu", t);
-+		strbuf_addf(out, "%lu", t);
- 	}
- 
- 	return 0;
-@@ -548,7 +545,7 @@ static void determine_author_info(struct strbuf *author_ident)
- {
- 	char *name, *email, *date;
- 	struct ident_split author;
--	char date_buf[64];
-+	struct strbuf date_buf = STRBUF_INIT;
- 
- 	name = getenv("GIT_AUTHOR_NAME");
- 	email = getenv("GIT_AUTHOR_EMAIL");
-@@ -594,9 +591,10 @@ static void determine_author_info(struct strbuf *author_ident)
- 	}
- 
- 	if (force_date) {
--		if (parse_force_date(force_date, date_buf, sizeof(date_buf)))
-+		strbuf_reset(&date_buf);
-+		if (parse_force_date(force_date, &date_buf))
- 			die(_("invalid date format: %s"), force_date);
--		date = date_buf;
-+		date = date_buf.buf;
- 	}
- 
- 	strbuf_addstr(author_ident, fmt_ident(name, email, date, IDENT_STRICT));
-@@ -606,6 +604,8 @@ static void determine_author_info(struct strbuf *author_ident)
- 		export_one("GIT_AUTHOR_EMAIL", author.mail.begin, author.mail.end, 0);
- 		export_one("GIT_AUTHOR_DATE", author.date.begin, author.tz.end, '@');
- 	}
-+
-+	strbuf_release(&date_buf);
- }
- 
- static void split_ident_or_die(struct ident_split *id, const struct strbuf *buf)
-diff --git a/cache.h b/cache.h
-index 5255661..c7740a8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1023,10 +1023,10 @@ enum date_mode {
- const char *show_date(unsigned long time, int timezone, enum date_mode mode);
- void show_date_relative(unsigned long time, int tz, const struct timeval *now,
- 			struct strbuf *timebuf);
--int parse_date(const char *date, char *buf, int bufsize);
-+int parse_date(const char *date, struct strbuf *out);
- int parse_date_basic(const char *date, unsigned long *timestamp, int *offset);
- int parse_expiry_date(const char *date, unsigned long *timestamp);
--void datestamp(char *buf, int bufsize);
-+void datestamp(struct strbuf *out);
- #define approxidate(s) approxidate_careful((s), NULL)
- unsigned long approxidate_careful(const char *, int *);
- unsigned long approxidate_relative(const char *date, const struct timeval *now);
-diff --git a/date.c b/date.c
-index 782de95..2c33468 100644
---- a/date.c
-+++ b/date.c
-@@ -605,7 +605,7 @@ static int match_tz(const char *date, int *offp)
- 	return end - date;
- }
- 
--static int date_string(unsigned long date, int offset, char *buf, int len)
-+static void date_string(unsigned long date, int offset, struct strbuf *buf)
- {
- 	int sign = '+';
- 
-@@ -613,7 +613,7 @@ static int date_string(unsigned long date, int offset, char *buf, int len)
- 		offset = -offset;
- 		sign = '-';
- 	}
--	return snprintf(buf, len, "%lu %c%02d%02d", date, sign, offset / 60, offset % 60);
-+	strbuf_addf(buf, "%lu %c%02d%02d", date, sign, offset / 60, offset % 60);
- }
- 
- /*
-@@ -735,13 +735,14 @@ int parse_expiry_date(const char *date, unsigned long *timestamp)
- 	return errors;
- }
- 
--int parse_date(const char *date, char *result, int maxlen)
-+int parse_date(const char *date, struct strbuf *result)
- {
- 	unsigned long timestamp;
- 	int offset;
- 	if (parse_date_basic(date, &timestamp, &offset))
- 		return -1;
--	return date_string(timestamp, offset, result, maxlen);
-+	date_string(timestamp, offset, result);
-+	return 0;
- }
- 
- enum date_mode parse_date_format(const char *format)
-@@ -766,7 +767,7 @@ enum date_mode parse_date_format(const char *format)
- 		die("unknown date format %s", format);
- }
- 
--void datestamp(char *buf, int bufsize)
-+void datestamp(struct strbuf *out)
- {
- 	time_t now;
- 	int offset;
-@@ -776,7 +777,7 @@ void datestamp(char *buf, int bufsize)
- 	offset = tm_to_time_t(localtime(&now)) - now;
- 	offset /= 60;
- 
--	date_string(now, offset, buf, bufsize);
-+	date_string(now, offset, out);
- }
- 
- /*
-diff --git a/fast-import.c b/fast-import.c
-index 6707a66..122b916 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1967,7 +1967,7 @@ static int parse_data(struct strbuf *sb, uintmax_t limit, uintmax_t *len_res)
- 	return 1;
- }
- 
--static int validate_raw_date(const char *src, char *result, int maxlen)
-+static int validate_raw_date(const char *src, struct strbuf *result)
- {
- 	const char *orig_src = src;
- 	char *endp;
-@@ -1985,11 +1985,10 @@ static int validate_raw_date(const char *src, char *result, int maxlen)
- 		return -1;
- 
- 	num = strtoul(src + 1, &endp, 10);
--	if (errno || endp == src + 1 || *endp || (endp - orig_src) >= maxlen ||
--	    1400 < num)
-+	if (errno || endp == src + 1 || *endp || 1400 < num)
- 		return -1;
- 
--	strcpy(result, orig_src);
-+	strbuf_addstr(result, orig_src);
- 	return 0;
- }
- 
-@@ -1997,7 +1996,7 @@ static char *parse_ident(const char *buf)
- {
- 	const char *ltgt;
- 	size_t name_len;
--	char *ident;
-+	struct strbuf ident = STRBUF_INIT;
- 
- 	/* ensure there is a space delimiter even if there is no name */
- 	if (*buf == '<')
-@@ -2016,26 +2015,25 @@ static char *parse_ident(const char *buf)
- 		die("Missing space after > in ident string: %s", buf);
- 	ltgt++;
- 	name_len = ltgt - buf;
--	ident = xmalloc(name_len + 24);
--	strncpy(ident, buf, name_len);
-+	strbuf_add(&ident, buf, name_len);
- 
- 	switch (whenspec) {
- 	case WHENSPEC_RAW:
--		if (validate_raw_date(ltgt, ident + name_len, 24) < 0)
-+		if (validate_raw_date(ltgt, &ident) < 0)
- 			die("Invalid raw date \"%s\" in ident: %s", ltgt, buf);
- 		break;
- 	case WHENSPEC_RFC2822:
--		if (parse_date(ltgt, ident + name_len, 24) < 0)
-+		if (parse_date(ltgt, &ident) < 0)
- 			die("Invalid rfc2822 date \"%s\" in ident: %s", ltgt, buf);
- 		break;
- 	case WHENSPEC_NOW:
- 		if (strcmp("now", ltgt))
- 			die("Date in ident must be 'now': %s", buf);
--		datestamp(ident + name_len, 24);
-+		datestamp(&ident);
- 		break;
- 	}
- 
--	return ident;
-+	return strbuf_detach(&ident, NULL);
- }
- 
- static void parse_and_store_blob(
-diff --git a/ident.c b/ident.c
-index 570fda7..f4fac4a 100644
---- a/ident.c
-+++ b/ident.c
-@@ -9,7 +9,7 @@
- 
- static struct strbuf git_default_name = STRBUF_INIT;
- static struct strbuf git_default_email = STRBUF_INIT;
--static char git_default_date[50];
-+static struct strbuf git_default_date = STRBUF_INIT;
- 
- #define IDENT_NAME_GIVEN 01
- #define IDENT_MAIL_GIVEN 02
-@@ -129,9 +129,9 @@ const char *ident_default_email(void)
- 
- static const char *ident_default_date(void)
- {
--	if (!git_default_date[0])
--		datestamp(git_default_date, sizeof(git_default_date));
--	return git_default_date;
-+	if (!git_default_date.len)
-+		datestamp(&git_default_date);
-+	return git_default_date.buf;
- }
- 
- static int crud(unsigned char c)
-@@ -292,7 +292,6 @@ const char *fmt_ident(const char *name, const char *email,
- 		      const char *date_str, int flag)
- {
- 	static struct strbuf ident = STRBUF_INIT;
--	char date[50];
- 	int strict = (flag & IDENT_STRICT);
- 	int want_date = !(flag & IDENT_NO_DATE);
- 	int want_name = !(flag & IDENT_NO_NAME);
-@@ -320,15 +319,6 @@ const char *fmt_ident(const char *name, const char *email,
- 		die("unable to auto-detect email address (got '%s')", email);
- 	}
- 
--	if (want_date) {
--		if (date_str && date_str[0]) {
--			if (parse_date(date_str, date, sizeof(date)) < 0)
--				die("invalid date format: %s", date_str);
--		}
--		else
--			strcpy(date, ident_default_date());
--	}
--
- 	strbuf_reset(&ident);
- 	if (want_name) {
- 		strbuf_addstr_without_crud(&ident, name);
-@@ -339,8 +329,14 @@ const char *fmt_ident(const char *name, const char *email,
- 			strbuf_addch(&ident, '>');
- 	if (want_date) {
- 		strbuf_addch(&ident, ' ');
--		strbuf_addstr_without_crud(&ident, date);
-+		if (date_str && date_str[0]) {
-+			if (parse_date(date_str, &ident) < 0)
-+				die("invalid date format: %s", date_str);
-+		}
-+		else
-+			strbuf_addstr(&ident, ident_default_date());
- 	}
-+
- 	return ident.buf;
- }
- 
-diff --git a/test-date.c b/test-date.c
-index 10afaab..94a6997 100644
---- a/test-date.c
-+++ b/test-date.c
-@@ -19,19 +19,21 @@ static void show_dates(char **argv, struct timeval *now)
- 
- static void parse_dates(char **argv, struct timeval *now)
- {
-+	struct strbuf result = STRBUF_INIT;
-+
- 	for (; *argv; argv++) {
--		char result[100];
- 		unsigned long t;
- 		int tz;
- 
--		result[0] = 0;
--		parse_date(*argv, result, sizeof(result));
--		if (sscanf(result, "%lu %d", &t, &tz) == 2)
-+		strbuf_reset(&result);
-+		parse_date(*argv, &result);
-+		if (sscanf(result.buf, "%lu %d", &t, &tz) == 2)
- 			printf("%s -> %s\n",
- 			       *argv, show_date(t, tz, DATE_ISO8601));
- 		else
- 			printf("%s -> bad\n", *argv);
- 	}
-+	strbuf_release(&result);
- }
- 
- static void parse_approxidate(char **argv, struct timeval *now)
--- 
-2.0.0.566.gfe3e6b2
+>  int ref_transaction_delete(struct ref_transaction *transaction,
+> diff --git a/refs.h b/refs.h
+> index db463d0..495740d 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -283,9 +283,10 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
+>  /*
+>   * Add a reference update to transaction.  new_sha1 is the value that
+>   * the reference should have after the update, or zeros if it should
+> - * be deleted.  If have_old is true, then old_sha1 holds the value
+> - * that the reference should have had before the update, or zeros if
+> - * it must not have existed beforehand.
+> + * be deleted.  If have_old is true and old_sha is not the null_sha1
+> + * then the previous value of the ref must match or the update will fail.
+> + * If have_old is true and old_sha1 is the null_sha1 then the ref must not
+> + * already exist and a new ref will be created with new_sha1.
+>   * Function returns 0 on success and non-zero on failure. A failure to update
+>   * means that the transaction as a whole has failed and will need to be
+>   * rolled back.
