@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v3 02/14] refs.c: make ref_transaction_delete a wrapper for ref_transaction_update
-Date: Wed, 18 Jun 2014 10:08:54 -0700
-Message-ID: <1403111346-18466-3-git-send-email-sahlberg@google.com>
+Subject: [PATCH v3 05/14] refs.c: add a function to append a reflog entry to a fd
+Date: Wed, 18 Jun 2014 10:08:57 -0700
+Message-ID: <1403111346-18466-6-git-send-email-sahlberg@google.com>
 References: <1403111346-18466-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,111 +11,140 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxJMS-0006uT-Bt
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 19:09:24 +0200
+	id 1WxJMT-0006uT-66
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 19:09:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753343AbaFRRJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 13:09:13 -0400
-Received: from mail-ve0-f202.google.com ([209.85.128.202]:40671 "EHLO
-	mail-ve0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752357AbaFRRJK (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753361AbaFRRJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 13:09:14 -0400
+Received: from mail-ie0-f202.google.com ([209.85.223.202]:54594 "EHLO
+	mail-ie0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752429AbaFRRJK (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 18 Jun 2014 13:09:10 -0400
-Received: by mail-ve0-f202.google.com with SMTP id oy12so143164veb.3
-        for <git@vger.kernel.org>; Wed, 18 Jun 2014 10:09:09 -0700 (PDT)
+Received: by mail-ie0-f202.google.com with SMTP id tr6so300250ieb.5
+        for <git@vger.kernel.org>; Wed, 18 Jun 2014 10:09:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=pYJChcNv9kTyyBBWQRc9Z4CvYs6BEoOTslFgIRk9Lj8=;
-        b=nUT6m3CR41C4R6NsId74ea8e3YoGQwb/g+7E5NtNqawz+MEPXkLP0lQd7qi9v70tVJ
-         A96DjLfgjJhT1TkQjJKFAd6rCngCokKdsfKekqGjB2V17nGugJUB9nQg0KedyigbKi6g
-         xWpTlAHAdpPv1B35iki2ryfC7cymh5uzo05Kq9V+Xjea+UZ8CBqBBcGSY9nKwsx5zHbi
-         vEKBMGQ6vlSNJPDaMbLqRZDotE0RG953rM8rMnyrwGXexJ033CNfsRT8Zh5hOUkZRtqI
-         8nI9n1xaIAhBU4DkrmRS7x1bEo73+kv15q3N7LHZOlSCzLJinRCesysLDdeGgBGjXuCF
-         cuBQ==
+        bh=CqKBzOVHkUj7n9msfExAKLSGzSjATZmk1wHAYU7Exlk=;
+        b=FgAVvfKAJTxoIMSC6xSZ/zT99hJC0vhAqNvOHFvPkaZMuy4BQ6f6Dto30A8psDsxHK
+         QXorgq+kVNxss8SZpd2cN5UnpufGEoS2yHdgo1VFptUQMmQuWoGYesUdkR9m+yGmAbMR
+         Zbv04H6KqaDujNATEcVSSbGobk+TGSG83dZ7ti4MiyulKXthdnbtKMNAFoRa4z85xC93
+         M1X9cm3TcNeIX2ZISVNO0C3KC6IKqA7eI4QSQ9iznqGfHDXfVoCtJexFbmTBmexO801P
+         DPIrxI+oV4tMUsyLrPTwiZUUABt/qXGZngLx9vZwzPrEbRR6FwH3lyzCFnk8aN4QikoC
+         mw5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=pYJChcNv9kTyyBBWQRc9Z4CvYs6BEoOTslFgIRk9Lj8=;
-        b=FhL+OrpSoI6CIE3qne6bwIYfDhS8l99Y1Wsl4tHGwHizcDW3eAdVPJO7EvWkY+3t+r
-         GgnYB5O36AnEKYxqEM0iW4FglNFCupaJx2Z8FNsyrRTaQuqrb9/wsBUBXhIHKOQuYQTD
-         /LbtI4Vxca23WvI/56o6RzJpE8slEyNlsl7cvTh3U1mFC13n00tgToE4gAwuC/3Q6LZ1
-         TAHKs07VwW3+XZ34TL641dD5eOEd8RUpWCuama/u6Fid47ndwPiwQFVt/iTLn0MG+qNh
-         a4LdxLt1puKHVPBa8MjjiXXNG/UmBLhJ6xu+3+c8F50po91KwXwpYze4hXO/E90hvhXy
-         Q88w==
-X-Gm-Message-State: ALoCoQkICulDRTPvGAZAejRG+cQaaMQWKwrswPQ3a/dTu/9ckKS4+2+K0v05bwZEMEyG1HHw9UvT
-X-Received: by 10.58.151.201 with SMTP id us9mr1282825veb.23.1403111349638;
+        bh=CqKBzOVHkUj7n9msfExAKLSGzSjATZmk1wHAYU7Exlk=;
+        b=cVH2cQh779cJoU65G06g+baT4X8EzpUZyGYIRWw6OKCpBd89W1r4/0HW9uqLjoZ2Kl
+         IP0E8/PMBoWZPiA5/piSo83wGN/bJYtwrfRDj9jbBh7/yseObfwFKgizeqsWMKYnWwSA
+         2ylaKWJysoeRgYYcmtk7X6rpS3yi/p6JaqwuJEiL1/nZpZXHKoqw5bOCEM5hprh1tCMl
+         Fd66AFV9lIPCrod+FpEPQxhGNEmr77M8WJzwBv1mHytWzsIanv7KO5T5zCeTwzwy+5ud
+         miP5uzdlw/MavEEVFo5eDPwKrYYY3v/yl1dqbrJiAI1hLW+xoEfTSCL3mS+sLuHUH7Eb
+         v9IA==
+X-Gm-Message-State: ALoCoQl+kfwQL7+DcP0HWBVIQ5fEe/ug44DZvMdS4lVwKXhxHcZ50flhtTLkmjAy5g6zgA5KJoU1
+X-Received: by 10.182.28.136 with SMTP id b8mr1349011obh.19.1403111349966;
         Wed, 18 Jun 2014 10:09:09 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id y50si173339yhk.4.2014.06.18.10.09.09
+        by gmr-mx.google.com with ESMTPS id y50si173341yhk.4.2014.06.18.10.09.09
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Wed, 18 Jun 2014 10:09:09 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 7B4B65A4790;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id CBA325A4790;
 	Wed, 18 Jun 2014 10:09:09 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 28F06E0424; Wed, 18 Jun 2014 10:09:09 -0700 (PDT)
+	id 69105E05BF; Wed, 18 Jun 2014 10:09:09 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.467.g08c0633
 In-Reply-To: <1403111346-18466-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251994>
+
+Break out the code to create the string and writing it to the file
+descriptor from log_ref_write and into a dedicated function log_ref_write_fd.
+For now this is only used from log_ref_write but later on we will call
+this function from reflog transactions too which means that we will end
+up with only a single place where we write a reflog entry to a file instead
+of the current two places (log_ref_write and builtin/reflog.c).
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 17 +++++------------
- refs.h |  2 +-
- 2 files changed, 6 insertions(+), 13 deletions(-)
+ refs.c | 48 ++++++++++++++++++++++++++++++------------------
+ 1 file changed, 30 insertions(+), 18 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index a9f91ab..0eace70 100644
+index 4129de6..f203285 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3503,24 +3503,17 @@ int ref_transaction_delete(struct ref_transaction *transaction,
- 			   int flags, int have_old, const char *msg,
- 			   struct strbuf *err)
- {
--	struct ref_update *update;
--
- 	if (transaction->state != REF_TRANSACTION_OPEN)
- 		die("BUG: delete called for transaction that is not open");
- 
- 	if (have_old && !old_sha1)
- 		die("BUG: have_old is true but old_sha1 is NULL");
- 
--	update = add_update(transaction, refname);
--	update->flags = flags;
--	update->have_old = have_old;
--	if (have_old) {
--		assert(!is_null_sha1(old_sha1));
--		hashcpy(update->old_sha1, old_sha1);
--	}
--	if (msg)
--		update->msg = xstrdup(msg);
--	return 0;
-+	if (have_old && is_null_sha1(old_sha1))
-+		die("BUG: have_old is true but old_sha1 is null_sha1");
-+
-+	return ref_transaction_update(transaction, refname, null_sha1,
-+				      old_sha1, flags, have_old, msg, err);
+@@ -2865,15 +2865,37 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+ 	return 0;
  }
  
- int update_ref(const char *action, const char *refname,
-diff --git a/refs.h b/refs.h
-index 495740d..20bb152 100644
---- a/refs.h
-+++ b/refs.h
-@@ -282,7 +282,7 @@ struct ref_transaction *ref_transaction_begin(struct strbuf *err);
++static int log_ref_write_fd(int fd, const unsigned char *old_sha1,
++			    const unsigned char *new_sha1,
++			    const char *committer, const char *msg)
++{
++	int msglen, written;
++	unsigned maxlen, len;
++	char *logrec;
++
++	msglen = msg ? strlen(msg) : 0;
++	maxlen = strlen(committer) + msglen + 100;
++	logrec = xmalloc(maxlen);
++	len = sprintf(logrec, "%s %s %s\n",
++		      sha1_to_hex(old_sha1),
++		      sha1_to_hex(new_sha1),
++		      committer);
++	if (msglen)
++		len += copy_msg(logrec + len - 1, msg) - 1;
++
++	written = len <= maxlen ? write_in_full(fd, logrec, len) : -1;
++	free(logrec);
++	if (written != len)
++		return -1;
++
++	return 0;
++}
++
+ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
+ 			 const unsigned char *new_sha1, const char *msg)
+ {
+-	int logfd, result, written, oflags = O_APPEND | O_WRONLY;
+-	unsigned maxlen, len;
+-	int msglen;
++	int logfd, result, oflags = O_APPEND | O_WRONLY;
+ 	char log_file[PATH_MAX];
+-	char *logrec;
+-	const char *committer;
  
- /*
-  * Add a reference update to transaction.  new_sha1 is the value that
-- * the reference should have after the update, or zeros if it should
-+ * the reference should have after the update, or null_sha1 if it should
-  * be deleted.  If have_old is true and old_sha is not the null_sha1
-  * then the previous value of the ref must match or the update will fail.
-  * If have_old is true and old_sha1 is the null_sha1 then the ref must not
+ 	if (log_all_ref_updates < 0)
+ 		log_all_ref_updates = !is_bare_repository();
+@@ -2885,19 +2907,9 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
+ 	logfd = open(log_file, oflags);
+ 	if (logfd < 0)
+ 		return 0;
+-	msglen = msg ? strlen(msg) : 0;
+-	committer = git_committer_info(0);
+-	maxlen = strlen(committer) + msglen + 100;
+-	logrec = xmalloc(maxlen);
+-	len = sprintf(logrec, "%s %s %s\n",
+-		      sha1_to_hex(old_sha1),
+-		      sha1_to_hex(new_sha1),
+-		      committer);
+-	if (msglen)
+-		len += copy_msg(logrec + len - 1, msg) - 1;
+-	written = len <= maxlen ? write_in_full(logfd, logrec, len) : -1;
+-	free(logrec);
+-	if (written != len) {
++	result = log_ref_write_fd(logfd, old_sha1, new_sha1,
++				  git_committer_info(0), msg);
++	if (result) {
+ 		int save_errno = errno;
+ 		close(logfd);
+ 		error("Unable to append to %s", log_file);
 -- 
 2.0.0.467.g08c0633
