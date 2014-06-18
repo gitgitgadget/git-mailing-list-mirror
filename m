@@ -1,114 +1,104 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Re: [PATCH 0/7] Second part of msysgit/unicode
-Date: Wed, 18 Jun 2014 23:35:12 +0200
-Message-ID: <53A20610.80500@kdbg.org>
-References: <1402479466-8500-1-git-send-email-kasal@ucw.cz>	<53A0052C.6040604@gmail.com> <20140618030507.GA3809@camelia.ucw.cz> <xmqq7g4ejf6y.fsf@gitster.dls.corp.google.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v18 14/48] refs.c: log_ref_write should try to return
+ meaningful errno
+Date: Wed, 18 Jun 2014 14:38:57 -0700
+Message-ID: <CAL=YDWnH2ovsLOCWaMgOf3jjSmGF8uyVo=kuFEDiC1Bi8N1Hew@mail.gmail.com>
+References: <1403020442-31049-1-git-send-email-sahlberg@google.com>
+	<1403020442-31049-15-git-send-email-sahlberg@google.com>
+	<53A1FFE3.9060006@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Stepan Kasal <kasal@ucw.cz>, Karsten Blees <karsten.blees@gmail.com>, 
- GIT Mailing-list <git@vger.kernel.org>,
- msysGit <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCJYV6HBKQIJHDEITUCRUBGSCXIRU@googlegroups.com Wed Jun 18 23:35:17 2014
-Return-path: <msysgit+bncBCJYV6HBKQIJHDEITUCRUBGSCXIRU@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f60.google.com ([74.125.82.60])
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 18 23:39:03 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIJHDEITUCRUBGSCXIRU@googlegroups.com>)
-	id 1WxNVk-00053F-Qe
-	for gcvm-msysgit@m.gmane.org; Wed, 18 Jun 2014 23:35:16 +0200
-Received: by mail-wg0-f60.google.com with SMTP id n12sf171500wgh.5
-        for <gcvm-msysgit@m.gmane.org>; Wed, 18 Jun 2014 14:35:16 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WxNZO-0000r3-HA
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 23:39:02 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751868AbaFRVi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 17:38:59 -0400
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:40404 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751646AbaFRVi6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 17:38:58 -0400
+Received: by mail-vc0-f176.google.com with SMTP id ik5so1401535vcb.7
+        for <git@vger.kernel.org>; Wed, 18 Jun 2014 14:38:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=JR5IF8X3US4+gec1HUdszbYrTYNUtZVOmr8l8G5qX7o=;
-        b=ZyTU5q2j+naH2JhxD1TVMBSA5XT5xgt3C+8WKZYEvPFw6zH31yNEW3nF6S+PPwrHM9
-         ncQvt+Mh//4tsADu3fFGmsm5T73TMoXuWXkpV+7NWwItsTcm8WQceBqVvgbYF4CgaZkG
-         SkiSABcTjiVFTlWyyyC0Qsv4wbai+NkFstMaRQX9f11y8MeWjV3fn7rwrUv4tskq7hTC
-         XJ7dWoiKcP1gCF8vHTwgvYU+0mPo161j06StFcRZuAXPOmUgYkaJY++gj33FugTgtXmD
-         /PTt9F6FzxeAMAyuKt/cM4xtJnBoCz/VnY+eeIU/nbx/XKbs+affPYwv4QqxScn3c+Jg
-         m/Jg==
-X-Received: by 10.152.28.101 with SMTP id a5mr7668lah.4.1403127316483;
-        Wed, 18 Jun 2014 14:35:16 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.21.166 with SMTP id w6ls60778lae.29.gmail; Wed, 18 Jun
- 2014 14:35:15 -0700 (PDT)
-X-Received: by 10.152.203.199 with SMTP id ks7mr71765lac.0.1403127315631;
-        Wed, 18 Jun 2014 14:35:15 -0700 (PDT)
-Received: from bsmtp.bon.at (bsmtp2.bon.at. [213.33.87.16])
-        by gmr-mx.google.com with ESMTPS id ck3si1259869wib.0.2014.06.18.14.35.15
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Wed, 18 Jun 2014 14:35:15 -0700 (PDT)
-Received-SPF: none (google.com: j6t@kdbg.org does not designate permitted sender hosts) client-ip=213.33.87.16;
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9FBD2A7EB4;
-	Wed, 18 Jun 2014 23:35:14 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id DF09319F450;
-	Wed, 18 Jun 2014 23:35:13 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <xmqq7g4ejf6y.fsf@gitster.dls.corp.google.com>
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: j6t@kdbg.org does not designate permitted sender hosts) smtp.mail=j6t@kdbg.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252072>
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=ShkiNn4T6Q+wFWVawBcG2gRpgCT7m46mfGi07sMLeBY=;
+        b=XNwDjdDl4MIIcwszmYxH6JoNqQrwEKFWu+qYRac8GExg/28UMgC2dtjZnQnd3XtzS4
+         0MMQNE0bR5LJcntlVA/CUPbsUaB6av7j1WVVMr8ruZtgPvG0FrYPxDVWw4I5q5EbrJa/
+         PRWYuTpnUdNCDM5Rkbq8lPiHsEh2ObHSu9x83sIQNmf5Q+0YDb/2plR+9S9t3oR3T5hg
+         JhzCTetF+6ti+kTiOtHHkrpEzrNG1uiNDDfrwrBziff4Ifd42QBc3ueoN70XbF1RdePx
+         q5BSS0q6jcO9NvXkhFRubIpUZ8Ckz4/liZ71azHC6/hwn5u8LP/l+87ILCErXP+z98UG
+         WfXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=ShkiNn4T6Q+wFWVawBcG2gRpgCT7m46mfGi07sMLeBY=;
+        b=YjAFu61PXszYmeZrMKb6qYgVW5cAlglBNy8YbxN1txKzinYFzXA9OH6S14e7yJ7UAN
+         P3/vWOun2zP8M5ia2q286Po4Iv1ifCoFUCgG6+9BjAtWd8Qr7IMVIHvVkGUsoWR0j/iQ
+         4bXUNofP2ed6eciwL4aay5auhFGbcJqZZ44LFBBraG9McsiBhhDJCiJwF9MbfLQQKv2x
+         3Kr2V+jwBwQ3u2JkfXK+cNGpJJzh9GXUzYGAiACURYhJDQcb5x7wnTFWWsx4ZSERjEiw
+         nnpzDJ/yje/Wq1dl4GsYIVVlDALiy+wIj6bfS+vAK9btqctAapuqF8jfFtRrmVe6oDb4
+         NZ0g==
+X-Gm-Message-State: ALoCoQlxAKmX8lQVUXVL93vSr+MJzF9PCxuPY9UitoWICtOLQnZTj/cKgoh0U8Kso/8z3m98exHj
+X-Received: by 10.58.74.201 with SMTP id w9mr121260vev.56.1403127537257; Wed,
+ 18 Jun 2014 14:38:57 -0700 (PDT)
+Received: by 10.52.255.65 with HTTP; Wed, 18 Jun 2014 14:38:57 -0700 (PDT)
+In-Reply-To: <53A1FFE3.9060006@alum.mit.edu>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252073>
 
-Am 18.06.2014 19:33, schrieb Junio C Hamano:
-> In the meantime, are Windows folks happy with the four topics queued
-> on 'pu' so far?  I would like to start moving them down to 'next'
-> and to 'master' soonish.
-> 
-> They consist of these individual patches:
-> 
->     $ git shortlog ^master \
->       sk/mingw-dirent \
->       sk/mingw-main \
->       sk/mingw-uni-console \
->       sk/mingw-unicode-spawn-args
+On Wed, Jun 18, 2014 at 2:08 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 06/17/2014 05:53 PM, Ronnie Sahlberg wrote:
+>> Making errno from write_ref_sha1() meaningful, which should fix
+>>
+>> * a bug in "git checkout -b" where it prints strerror(errno)
+>>   despite errno possibly being zero or clobbered
+>>
+>> * a bug in "git fetch"'s s_update_ref, which trusts the result of an
+>>   errno == ENOTDIR check to detect D/F conflicts
+>>
+>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>> ---
+>>  refs.c | 29 ++++++++++++++++++++++++-----
+>>  1 file changed, 24 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/refs.c b/refs.c
+>> index 211429d..1f2eb24 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -1979,6 +1979,7 @@ static int remove_empty_directories(const char *file)
+>>       result = remove_dir_recursively(&path, REMOVE_DIR_EMPTY_ONLY);
+>>       save_errno = errno;
+>>
+>> +     errno = save_errno;
+>>       strbuf_release(&path);
+>>       errno = save_errno;
+>
+> This new line looks like an accident.
 
-Topic sk/test-cmp-bin revealed a new breakage in t5000-tar-tree,
-specifically, the penultimate test "remote tar.gz is allowed by
-default". I have yet to find out what it is (I suspect a LF-CRLF
-conversion issue) and whether it is in connection with one of these topics.
+Yepp.  Too many rebases.
 
-I haven't had a chance to test the topics in the field. In particular, I
-have a few files with Shift-JIS content (but ASCII file names), and I
-would like to see how well I fare with the unicode topics in this situation.
+Thanks.
 
--- Hannes
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+>
+>> [...]
+>
+> Michael
+>
+> --
+> Michael Haggerty
+> mhagger@alum.mit.edu
+> http://softwareswirl.blogspot.com/
