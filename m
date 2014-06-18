@@ -1,91 +1,117 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v18 14/48] refs.c: log_ref_write should try to return
- meaningful errno
-Date: Wed, 18 Jun 2014 23:08:51 +0200
-Message-ID: <53A1FFE3.9060006@alum.mit.edu>
-References: <1403020442-31049-1-git-send-email-sahlberg@google.com> <1403020442-31049-15-git-send-email-sahlberg@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re* [PATCH v3 04/14] refs.c: add a new update_type field to ref_update
+Date: Wed, 18 Jun 2014 14:10:26 -0700
+Message-ID: <xmqqbntpj54t.fsf_-_@gitster.dls.corp.google.com>
+References: <1403111346-18466-1-git-send-email-sahlberg@google.com>
+	<1403111346-18466-5-git-send-email-sahlberg@google.com>
+	<xmqqfvj2hs5g.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 18 23:09:00 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 18 23:10:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxN6I-0000um-3P
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 23:08:58 +0200
+	id 1WxN7u-0002nW-ME
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 23:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755472AbaFRVIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 17:08:54 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45331 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755268AbaFRVIx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2014 17:08:53 -0400
-X-AuditID: 12074414-f79f86d000000b9f-10-53a1ffe5a219
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 93.7C.02975.5EFF1A35; Wed, 18 Jun 2014 17:08:53 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB19A6.dip0.t-ipconnect.de [93.219.25.166])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5IL8pSu029706
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 18 Jun 2014 17:08:52 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <1403020442-31049-15-git-send-email-sahlberg@google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1H36f2Gwwc9LbBZdV7qZLP5NqHFg
-	8liwqdTj8ya5AKYobpukxJKy4Mz0PH27BO6MPR+b2QraOSq2HV3J2sC4i62LkZNDQsBEYsmr
-	LmYIW0ziwr31QHEuDiGBy4wS82dsZgdJCAmcZ5J49SoCxOYV0JZYfn4pWDOLgKrEluPNLCA2
-	m4CuxKKeZiYQW1QgSGL253nsEPWCEidnPgGrERGwk1h/ayHYMmGBGInNux8A2RxA82sk+te4
-	gYQ5BVwlTn3oYQEJSwiIS/Q0BoGYzALqEuvnCYFUMAvIS2x/O4d5AqPALCTzZyFUzUJStYCR
-	eRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRroVebmaJXmpK6SZGSHCK7GA8clLuEKMAB6MSD++C
-	ywuDhVgTy4orcw8xSnIwKYnyHvgBFOJLyk+pzEgszogvKs1JLT7EKMHBrCTCK/8LKMebklhZ
-	lVqUD5OS5mBREuf9tljdT0ggPbEkNTs1tSC1CCYrw8GhJMHr+g+oUbAoNT21Ii0zpwQhzcTB
-	CTKcS0qkODUvJbUosbQkIx4UofHFwBgFSfEA7ZUFaectLkjMBYpCtJ5i1OU4dedYG5MQS15+
-	XqqUOO+vv0BFAiBFGaV5cCtgqegVozjQx8K86SCjeIBpDG7SK6AlTEBLVCbOA1lSkoiQkmpg
-	5NdK0U+6ZnXDelvPnUccVTP4rsrkGh93UorlS3vIn7vesrcsJUn/k1leh6LNwikbu9fuWqfa
-	rSvNtDJ6PUfbRSFHiyNtH6rcFnPtvLappcDvB88sseCE5RP2CvKq98pGvO5+NXdT 
+	id S1755508AbaFRVKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 17:10:35 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59154 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755268AbaFRVKe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 17:10:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F00E82026E;
+	Wed, 18 Jun 2014 17:10:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bAyp3XzRFw/mwNhsGLfyQL3w3Lc=; b=OoHjqh
+	RJc91LRDupZ955lbumaKl+YZ8IFx4kSdzYcTsi6zIfAhwqhBprq+4PfWaC5rOq6C
+	K4e7FVhrp7nTL9nv04Oop5idmJiJaNj0NOV0n+EGUsima2Ln7bdktQ9sUbq3DEQz
+	upK8jEsLZROzX9j7Qy+uYMs1iPQj2dPy2VUMg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wsEQVv5EwNquIE/TUJRqFop6f7bT2kwP
+	lsBgIkzSVLT6x5ejrKReNEpRwo+wog1duyK4UUYQ+2yw9v11RS+ixm87HYzteuo/
+	zxWzXotoTIjSNbMqmmetVSplxFnQvK1RuSx5yCLzO/IE1aAy290zI4+FA8VeVYCe
+	bnz0dOw2MRc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A54622026B;
+	Wed, 18 Jun 2014 17:10:30 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EF7C320268;
+	Wed, 18 Jun 2014 17:10:25 -0400 (EDT)
+In-Reply-To: <xmqqfvj2hs5g.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 18 Jun 2014 13:36:11 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F7D6CC92-F72C-11E3-A297-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252071>
 
-On 06/17/2014 05:53 PM, Ronnie Sahlberg wrote:
-> Making errno from write_ref_sha1() meaningful, which should fix
-> 
-> * a bug in "git checkout -b" where it prints strerror(errno)
->   despite errno possibly being zero or clobbered
-> 
-> * a bug in "git fetch"'s s_update_ref, which trusts the result of an
->   errno == ENOTDIR check to detect D/F conflicts
-> 
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> ---
->  refs.c | 29 ++++++++++++++++++++++++-----
->  1 file changed, 24 insertions(+), 5 deletions(-)
-> 
-> diff --git a/refs.c b/refs.c
-> index 211429d..1f2eb24 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1979,6 +1979,7 @@ static int remove_empty_directories(const char *file)
->  	result = remove_dir_recursively(&path, REMOVE_DIR_EMPTY_ONLY);
->  	save_errno = errno;
->  
-> +	errno = save_errno;
->  	strbuf_release(&path);
->  	errno = save_errno;
+Junio C Hamano <gitster@pobox.com> writes:
 
-This new line looks like an accident.
+> Ronnie Sahlberg <sahlberg@google.com> writes:
+>
+>> Add a field that describes what type of update this refers to. For now
+>> the only type is UPDATE_SHA1 but we will soon add more types.
+>>
+>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>> ---
+>>  refs.c | 25 +++++++++++++++++++++----
+>>  1 file changed, 21 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/refs.c b/refs.c
+>> index 4e3d4c3..4129de6 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -3374,6 +3374,10 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
+>>  	return retval;
+>>  }
+>>  
+>> +enum transaction_update_type {
+>> +       UPDATE_SHA1 = 0,
+>
+> indent with SP?
+>
+> Unlike an array initialisation, e.g.
+>
+> 	int foo[] = { 1,2,3,4,5, };
+>
+> some compilers we support complain if enum definition ends with a
+> trailing comma.
 
-> [...]
+I do recall we had fixes to drop the comma after the last element in
+enum definition in the past, in response real compilation breakages
+on some platforms.  But there is a curious thing:
 
-Michael
+    git grep -A<somenumber> 'enum ' master -- \*.c
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+tells me that builtin/clean.c would fail to compile for those folks.
+
+Here is an off-topic "fix" that may no longer be needed.
+
+ builtin/clean.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 9a91515..27701d2 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -48,7 +48,7 @@ enum color_clean {
+ 	CLEAN_COLOR_PROMPT = 2,
+ 	CLEAN_COLOR_HEADER = 3,
+ 	CLEAN_COLOR_HELP = 4,
+-	CLEAN_COLOR_ERROR = 5,
++	CLEAN_COLOR_ERROR = 5
+ };
+ 
+ #define MENU_OPTS_SINGLETON		01
