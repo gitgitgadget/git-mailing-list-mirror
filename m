@@ -1,24 +1,24 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH v5 09/11] trace: add high resolution timer
- function to debug performance issues
-Date: Wed, 18 Jun 2014 17:14:31 +0200
-Message-ID: <53A1ACD7.1040504@gmail.com>
-References: <53980B83.9050409@gmail.com> <53980CBF.2060400@gmail.com>	<53980F68.7050009@gmail.com> <xmqq4mzjo58t.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v5 10/11] trace: add trace_performance facility
+ to debug performance issues
+Date: Wed, 18 Jun 2014 17:14:42 +0200
+Message-ID: <53A1ACE2.30406@gmail.com>
+References: <53980B83.9050409@gmail.com> <53980CD8.5090801@gmail.com> <xmqqsin3mpfe.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
  Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCH3XYXLXQDBBWGZQ2OQKGQE5HJ67MQ@googlegroups.com Wed Jun 18 17:14:39 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBWGZQ2OQKGQE5HJ67MQ@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBY6ZQ2OQKGQE6OWJH7Q@googlegroups.com Wed Jun 18 17:14:44 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBY6ZQ2OQKGQE6OWJH7Q@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f55.google.com ([74.125.82.55])
+Received: from mail-we0-f185.google.com ([74.125.82.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBWGZQ2OQKGQE5HJ67MQ@googlegroups.com>)
-	id 1WxHZJ-0008NH-IR
-	for gcvm-msysgit@m.gmane.org; Wed, 18 Jun 2014 17:14:33 +0200
-Received: by mail-wg0-f55.google.com with SMTP id a1sf122139wgh.20
-        for <gcvm-msysgit@m.gmane.org>; Wed, 18 Jun 2014 08:14:33 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBY6ZQ2OQKGQE6OWJH7Q@googlegroups.com>)
+	id 1WxHZU-00005D-2q
+	for gcvm-msysgit@m.gmane.org; Wed, 18 Jun 2014 17:14:44 +0200
+Received: by mail-we0-f185.google.com with SMTP id t60sf121850wes.12
+        for <gcvm-msysgit@m.gmane.org>; Wed, 18 Jun 2014 08:14:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
@@ -26,40 +26,40 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type;
-        bh=6qB/Qz9vtniin9u/qBhxwVAhi//C/K9CB2cOlyy+ci8=;
-        b=x+X0zIEmYowWb8Mfvl0GGNi1o3bGFgVrB5GyTr5xipfCkikeWvaAGs1viWQFGS7vjO
-         GnmM9CZMBA0DWWIEADv/rpAbKPW687gBQofAeCCKTHgbBJak4BmY8ix3002NNw0FGIh7
-         7u6bMfrMyC0EM4NLCM+d8d186wnC2DMGO24lxwknBaXhhUV/L/JpCiK9EIaAbduU1jzV
-         WAqgmdZxvGcbJgTWOAtrWV/0FhrKc6sbwMdg7D+SmbSnb5qqHiAJfRXWODKPoE1l82hj
-         jp8CliGllUmCUzcXx/riaQLjfcTk277aIhlyK+bZpZi11OsqZUT8VnbQK65cuChmJTc7
-         nHoA==
-X-Received: by 10.181.12.36 with SMTP id en4mr19194wid.5.1403104473344;
-        Wed, 18 Jun 2014 08:14:33 -0700 (PDT)
+        bh=Nf8H+xiLYTSYZkJ0w1sdpVeBFCM6jtSHrrB80Ikihn0=;
+        b=vmj4q30xyUuZdzhF8zB/uvG+8l7o+nMBfkAnnmQ40pOc+PtMmYSr8lmxWBTpEZLEsZ
+         p2AS48UunyMoTQ7bPCUbD79V5+YhWe+jx1ckzll/frqbN2VUdrU9/eWvW3OHiU2fcgdw
+         ESd/dkBvrJJ2V7Y3fhs/pkI9mvkWf3Upxyjpheaq7zUCP2oJi0yokLdE+L20U7OM/a+E
+         MHjBH07ceYgkQ6Kt3FJ8VZIFxSFIS5gsL9w7xfno+i0eQJg1QRPMR1aG1IY1a/JhbHrF
+         AbXtFktXsygapK1JfmWyML/hR/zhZdKS4g18ZDBQ1v14f4xYReHSVKaThqdxEs62Y60d
+         Z17Q==
+X-Received: by 10.152.205.1 with SMTP id lc1mr21942lac.29.1403104483774;
+        Wed, 18 Jun 2014 08:14:43 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.108.140 with SMTP id hk12ls66331wib.31.gmail; Wed, 18 Jun
- 2014 08:14:32 -0700 (PDT)
-X-Received: by 10.194.57.48 with SMTP id f16mr2224960wjq.2.1403104472125;
-        Wed, 18 Jun 2014 08:14:32 -0700 (PDT)
-Received: from mail-wi0-x22a.google.com (mail-wi0-x22a.google.com [2a00:1450:400c:c05::22a])
-        by gmr-mx.google.com with ESMTPS id x7si190933wiw.1.2014.06.18.08.14.32
+Received: by 10.152.115.134 with SMTP id jo6ls34776lab.62.gmail; Wed, 18 Jun
+ 2014 08:14:42 -0700 (PDT)
+X-Received: by 10.112.140.170 with SMTP id rh10mr308830lbb.7.1403104482712;
+        Wed, 18 Jun 2014 08:14:42 -0700 (PDT)
+Received: from mail-wi0-x236.google.com (mail-wi0-x236.google.com [2a00:1450:400c:c05::236])
+        by gmr-mx.google.com with ESMTPS id mx7si813031wic.1.2014.06.18.08.14.42
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 18 Jun 2014 08:14:32 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22a as permitted sender) client-ip=2a00:1450:400c:c05::22a;
-Received: by mail-wi0-f170.google.com with SMTP id cc10so8714625wib.1
-        for <msysgit@googlegroups.com>; Wed, 18 Jun 2014 08:14:32 -0700 (PDT)
-X-Received: by 10.194.62.140 with SMTP id y12mr48533995wjr.27.1403104472051;
-        Wed, 18 Jun 2014 08:14:32 -0700 (PDT)
+        Wed, 18 Jun 2014 08:14:42 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236 as permitted sender) client-ip=2a00:1450:400c:c05::236;
+Received: by mail-wi0-f182.google.com with SMTP id bs8so1337242wib.9
+        for <msysgit@googlegroups.com>; Wed, 18 Jun 2014 08:14:42 -0700 (PDT)
+X-Received: by 10.194.223.67 with SMTP id qs3mr14801721wjc.66.1403104482614;
+        Wed, 18 Jun 2014 08:14:42 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id a1sm5837935eep.3.2014.06.18.08.14.30
+        by mx.google.com with ESMTPSA id q46sm5840902eem.1.2014.06.18.08.14.41
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 18 Jun 2014 08:14:31 -0700 (PDT)
+        Wed, 18 Jun 2014 08:14:41 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq4mzjo58t.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqsin3mpfe.fsf@gitster.dls.corp.google.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22a
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -72,24 +72,72 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251987>
 
-Am 17.06.2014 18:44, schrieb Junio C Hamano:
+Am 17.06.2014 19:11, schrieb Junio C Hamano:
 > Karsten Blees <karsten.blees@gmail.com> writes:
 > 
->> Am 11.06.2014 10:01, schrieb Karsten Blees:
->>> the epoch allows using the results (div 10e9) with other time-related APIs.
+>> Simple use case (measure one code section):
 >>
->> s/10e9/1e9/
+>>   uint64_t start = getnanotime();
+>>   /* code section to measure */
+>>   trace_performance_since(start, "foobar");
+>>
+>> Medium use case (measure consecutive code sections):
+>>
+>>   uint64_t start = getnanotime();
+>>   /* first code section to measure */
+>>   start = trace_performance_since(start, "first foobar");
+>>   /* second code section to measure */
+>>   trace_performance_since(start, "second foobar");
+>>
+>> Complex use case (measure repetitive code sections):
+>>
+>>   uint64_t t = 0;
+>>   for (;;) {
+>>     /* ignore */
+>>     t -= getnanotime();
+>>     /* code section to measure */
+>>     t += getnanotime();
+>>     /* ignore */
+>>   }
+>>   trace_performance(t, "frotz");
 > 
-> That replacement is fine but the "(div 1e9)" still wants to be
-> clarified.  What did you exactly mean by that?  If the result is
-> divided by 10^9 then it yields the number of seconds?
-> 
-> Thanks.
+> Hmph.  Even though trace_performance() makes an extra call to
+> getnanotime() in order to return, examples do not use the returned
+> value?  The second example is a good illustration why it makes sense
+> for trace_performance_since(), though.
 > 
 
-Div 10^9 yields a time_t. But as not all time-related APIs use time_t, perhaps its best to drop the "(div 1e9)" altogether. That the function returns nanoseconds should be clear enough. Will drop in the next round.
+Right, it makes no sense for trace_performance(), and for
+trace_performance_since() only if followed by another 'measured' code
+section. In that special case, I think it wouldn't hurt if you had to
+write:
+
+  uint64_t start = getnanotime();
+  /* first code section to measure */
+  trace_performance_since(start, "first foobar");
+
+  start = getnanotime();
+  /* second code section to measure */
+  trace_performance_since(start, "second foobar");
+
+So I guess I'll drop the return value (and the second example, which
+is then redundant to the first).
+
+>> +static void trace_performance_vfl(const char *file, int line,
+>> +				      uint64_t nanos, const char *format,
+>> +				      va_list ap)
+>> +{
+> 
+> Just being curious, but what does "v" stand for?
+> 
+
+trace_performance_vfl(, va_list)
+vs.
+trace_performance_fl(, ...)
+
+Will change to trace_performance_vprintf_fl()
 
 -- 
 -- 
