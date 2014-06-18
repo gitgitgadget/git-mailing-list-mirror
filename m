@@ -1,143 +1,132 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 13/16] fast-import: refactor parsing of spaces
-Date: Wed, 18 Jun 2014 15:51:57 -0400
-Message-ID: <20140618195157.GM22622@sigill.intra.peff.net>
-References: <20140618194117.GA22269@sigill.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH] alloc.c: remove alloc_raw_commit_node() function
+Date: Wed, 18 Jun 2014 20:52:46 +0100
+Message-ID: <53A1EE0E.6040000@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 18 21:52:08 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jun 18 21:53:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxLts-0007ef-UR
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 21:52:05 +0200
+	id 1WxLuh-000057-8p
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 21:52:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754940AbaFRTv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 15:51:59 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46963 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754900AbaFRTv7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 15:51:59 -0400
-Received: (qmail 30546 invoked by uid 102); 18 Jun 2014 19:51:59 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jun 2014 14:51:59 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jun 2014 15:51:57 -0400
-Content-Disposition: inline
-In-Reply-To: <20140618194117.GA22269@sigill.intra.peff.net>
+	id S1754664AbaFRTww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 15:52:52 -0400
+Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:58917 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754537AbaFRTwv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 15:52:51 -0400
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id B8F34AC40B3;
+	Wed, 18 Jun 2014 20:53:00 +0100 (BST)
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 6E76BAC40AD;
+	Wed, 18 Jun 2014 20:53:00 +0100 (BST)
+Received: from [192.168.254.9] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
+	Wed, 18 Jun 2014 20:52:59 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+X-MDF-HostID: 17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252046>
 
-When we see a file change in a commit, we expect one of:
+In order to encapsulate the setting of the unique commit index, commit
+969eba63 ("commit: push commit_index update into alloc_commit_node",
+10-06-2014) introduced a (logically private) intermediary allocator
+function. However, this function (alloc_raw_commit_node()) was declared
+as a public function, which undermines its entire purpose.
 
-  1. A mark.
+Remove the alloc_raw_commit_node() function and inline its code into
+the (public) alloc_commit_node() function.
 
-  2. An "inline" keyword.
+Noticed by sparse ("symbol 'alloc_raw_commit_node' was not declared.
+Should it be static?").
 
-  3. An object sha1.
-
-The handling of spaces is inconsistent between the three
-options. Option 1 calls a sub-function which checks for the
-space, but doesn't parse past it. Option 2 parses the space,
-then deliberately avoids moving the pointer past it. Option
-3 detects the space locally but doesn't move past it.
-
-This is confusing, because it looks like option 1 forgets to
-check for the space (it's just buried). And option 2 checks
-for "inline ", but only moves strlen("inline") characters
-forward, which looks like a bug but isn't.
-
-We can make this more clear by just having each branch move
-past the space as it is checked (and we can replace the
-doubled use of "inline" with a call to skip_prefix).
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 ---
- fast-import.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/fast-import.c b/fast-import.c
-index 5f17adb..55ca7d8 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2269,7 +2269,7 @@ static uintmax_t parse_mark_ref_space(const char **p)
- 	char *end;
+Hi Jeff,
+
+I noticed this while it was still in 'pu', but got distracted and
+didn't send this in time ... sorry about that! :(
+
+My first attempt at fixing this involved changing the DEFINE_ALLOCATOR
+macro to include a 'scope' parameter so that I could declare the
+raw_commit allocator 'static'. Unfortunately, I could not pass the
+extern keyword as the scope parameter to all the other allocators,
+because that made sparse even more upset - you can't use extern on
+a function _definition_. That meant passing an empty argument (or a
+comment token) to the scope parameter. This worked for gcc 4.8.2 and
+clang 3.4, but I was a little concerned about portability.
+
+This seems a better solution to me. Having said that ... as I'm typing
+this I realized that I could have removed the 'commit_count' variable
+and used 'commit_allocs' to set c->index instead! :-P Oh well ...
+
+ATB,
+Ramsay Jones
+
+ alloc.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
+
+diff --git a/alloc.c b/alloc.c
+index eb22a45..124d710 100644
+--- a/alloc.c
++++ b/alloc.c
+@@ -47,16 +47,30 @@ union any_object {
  
- 	mark = parse_mark_ref(*p, &end);
--	if (*end != ' ')
-+	if (*end++ != ' ')
- 		die("Missing space after mark: %s", command_buf.buf);
- 	*p = end;
- 	return mark;
-@@ -2304,20 +2304,17 @@ static void file_change_m(const char *p, struct branch *b)
- 	if (*p == ':') {
- 		oe = find_mark(parse_mark_ref_space(&p));
- 		hashcpy(sha1, oe->idx.sha1);
--	} else if (starts_with(p, "inline ")) {
-+	} else if (skip_prefix(p, "inline ", &p)) {
- 		inline_data = 1;
- 		oe = NULL; /* not used with inline_data, but makes gcc happy */
--		p += strlen("inline");  /* advance to space */
- 	} else {
- 		if (get_sha1_hex(p, sha1))
- 			die("Invalid dataref: %s", command_buf.buf);
- 		oe = find_object(sha1);
- 		p += 40;
--		if (*p != ' ')
-+		if (*p++ != ' ')
- 			die("Missing space after SHA1: %s", command_buf.buf);
- 	}
--	assert(*p == ' ');
--	p++;  /* skip space */
+ DEFINE_ALLOCATOR(blob, struct blob)
+ DEFINE_ALLOCATOR(tree, struct tree)
+-DEFINE_ALLOCATOR(raw_commit, struct commit)
+ DEFINE_ALLOCATOR(tag, struct tag)
+ DEFINE_ALLOCATOR(object, union any_object)
  
- 	strbuf_reset(&uq);
- 	if (!unquote_c_style(&uq, p, &endp)) {
-@@ -2474,20 +2471,17 @@ static void note_change_n(const char *p, struct branch *b, unsigned char *old_fa
- 	if (*p == ':') {
- 		oe = find_mark(parse_mark_ref_space(&p));
- 		hashcpy(sha1, oe->idx.sha1);
--	} else if (starts_with(p, "inline ")) {
-+	} else if (skip_prefix(p, "inline ", &p)) {
- 		inline_data = 1;
- 		oe = NULL; /* not used with inline_data, but makes gcc happy */
--		p += strlen("inline");  /* advance to space */
- 	} else {
- 		if (get_sha1_hex(p, sha1))
- 			die("Invalid dataref: %s", command_buf.buf);
- 		oe = find_object(sha1);
- 		p += 40;
--		if (*p != ' ')
-+		if (*p++ != ' ')
- 			die("Missing space after SHA1: %s", command_buf.buf);
- 	}
--	assert(*p == ' ');
--	p++;  /* skip space */
++static unsigned int commit_allocs;
++
+ void *alloc_commit_node(void)
+ {
+ 	static int commit_count;
+-	struct commit *c = alloc_raw_commit_node();
++	static int nr;
++	static struct commit *block;
++	struct commit *c;
++	void *ret;
++
++	if (!nr) {
++		nr = BLOCKING;
++		block = xmalloc(BLOCKING * sizeof(struct commit));
++	}
++	nr--;
++	commit_allocs++;
++	ret = block++;
++	memset(ret, 0, sizeof(struct commit));
++	c = (struct commit *) ret;
+ 	c->index = commit_count++;
+-	return c;
++	return ret;
+ }
  
- 	/* <commit-ish> */
- 	s = lookup_branch(p);
-@@ -3005,6 +2999,8 @@ static struct object_entry *parse_treeish_dataref(const char **p)
- 			die("Invalid dataref: %s", command_buf.buf);
- 		e = find_object(sha1);
- 		*p += 40;
-+		if (*(*p)++ != ' ')
-+			die("Missing space after tree-ish: %s", command_buf.buf);
- 	}
- 
- 	while (!e || e->type != OBJ_TREE)
-@@ -3056,8 +3052,6 @@ static void parse_ls(const char *p, struct branch *b)
- 		if (!is_null_sha1(root->versions[1].sha1))
- 			root->versions[1].mode = S_IFDIR;
- 		load_tree(root);
--		if (*p++ != ' ')
--			die("Missing space after tree-ish: %s", command_buf.buf);
- 	}
- 	if (*p == '"') {
- 		static struct strbuf uq = STRBUF_INIT;
+ static void report(const char *name, unsigned int count, size_t size)
+@@ -72,7 +86,7 @@ void alloc_report(void)
+ {
+ 	REPORT(blob, struct blob);
+ 	REPORT(tree, struct tree);
+-	REPORT(raw_commit, struct commit);
++	REPORT(commit, struct commit);
+ 	REPORT(tag, struct tag);
+ 	REPORT(object, union any_object);
+ }
 -- 
-2.0.0.566.gfe3e6b2
+2.0.0
