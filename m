@@ -1,124 +1,130 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v18 07/48] lockfile.c: make lock_file return a meaningful
- errno on failurei
-Date: Wed, 18 Jun 2014 22:36:31 +0200
-Message-ID: <53A1F84F.2010308@alum.mit.edu>
-References: <1403020442-31049-1-git-send-email-sahlberg@google.com> <1403020442-31049-8-git-send-email-sahlberg@google.com>
+Subject: Re: [PATCH v18 10/48] refs.c: verify_lock should set errno to something
+ meaningful
+Date: Wed, 18 Jun 2014 22:38:21 +0200
+Message-ID: <53A1F8BD.4060203@alum.mit.edu>
+References: <1403020442-31049-1-git-send-email-sahlberg@google.com> <1403020442-31049-11-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 18 22:36:48 2014
+X-From: git-owner@vger.kernel.org Wed Jun 18 22:45:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxMb9-000755-Tp
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 22:36:48 +0200
+	id 1WxMje-0008VF-7W
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 22:45:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755516AbaFRUgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 16:36:36 -0400
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:63705 "EHLO
-	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755498AbaFRUge (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2014 16:36:34 -0400
-X-AuditID: 12074413-f79bc6d000000b9e-b3-53a1f851b3c3
+	id S1755808AbaFRUp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 16:45:28 -0400
+Received: from alum-mailsec-scanner-5.mit.edu ([18.7.68.17]:47197 "EHLO
+	alum-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755765AbaFRUpZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2014 16:45:25 -0400
+X-Greylist: delayed 422 seconds by postgrey-1.27 at vger.kernel.org; Wed, 18 Jun 2014 16:45:25 EDT
+X-AuditID: 12074411-f794c6d000000b6d-c5-53a1f8bf8178
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 2A.58.02974.158F1A35; Wed, 18 Jun 2014 16:36:33 -0400 (EDT)
+	by alum-mailsec-scanner-5.mit.edu (Symantec Messaging Gateway) with SMTP id E4.CE.02925.FB8F1A35; Wed, 18 Jun 2014 16:38:23 -0400 (EDT)
 Received: from [192.168.69.130] (p5DDB19A6.dip0.t-ipconnect.de [93.219.25.166])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5IKaWHf028239
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5IKcLmC028329
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 18 Jun 2014 16:36:33 -0400
+	Wed, 18 Jun 2014 16:38:22 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <1403020442-31049-8-git-send-email-sahlberg@google.com>
+In-Reply-To: <1403020442-31049-11-git-send-email-sahlberg@google.com>
 X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqBv4Y2GwwYcOPYuuK91MFv8m1Dgw
-	eSzYVOrxeZNcAFMUt01SYklZcGZ6nr5dAnfGvqWNbAUvBCve9V5mamB8wNvFyMkhIWAi8WzO
-	XzYIW0ziwr31QDYXh5DAZUaJXU+eskI455kk/i9YywRSxSugLTHz1W+wDhYBVYlvU/8wgths
-	AroSi3qawWpEBYIkZn+exw5RLyhxcuYTFhBbRMBOYv2thcwgtrBAokT7kfNgtpBAtcTh/k6w
-	Gk4BF4mHV/4A2RxAF4lL9DQGgYSZBXQk3vU9YIaw5SW2v53DPIFRYBaSDbOQlM1CUraAkXkV
-	o1xiTmmubm5iZk5xarJucXJiXl5qka65Xm5miV5qSukmRkiQCu9g3HVS7hCjAAejEg/vgssL
-	g4VYE8uKK3MPMUpyMCmJ8kZ8BwrxJeWnVGYkFmfEF5XmpBYfYpTgYFYS4XV6AJTjTUmsrEot
-	yodJSXOwKInzqi1R9xMSSE8sSc1OTS1ILYLJynBwKEnw8oIMFSxKTU+tSMvMKUFIM3Fwggzn
-	khIpTs1LSS1KLC3JiAdFanwxMFZBUjxAe/1A2nmLCxJzgaIQracYdTlO3TnWxiTEkpeflyol
-	zvvrG1CRAEhRRmke3ApYSnrFKA70sTDvapAqHmA6g5v0CmgJE9ASlYnzQJaUJCKkpBoYdb4r
-	zfmoySu3ju/3I5Zt/F9/+TFIv/7/bl7x/2U3Wnf5nWMuiJP1nRZ1im/qJAW3J30PlmXpvV6x
-	Q/nG0673HnFz9i6t5Ne7e/rC/vtW8XqTpzmWvlZv/WYi6F2UWJGgE5/fFX3g+jyj 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnleLIzCtJLcpLzFFi42IRYndR1N3/Y2GwwZdTQhZdV7qZLP5NqHFg
+	8liwqdTj8ya5AKYobpukxJKy4Mz0PH27BO6Mh3da2QoaRSoaJsk0MF7i72Lk5JAQMJF40fqO
+	DcIWk7hwbz2QzcUhJHCZUWLl2z5WCOc8k8ThnT2sIFW8AtoSNy5eZOli5OBgEVCVaN3gAhJm
+	E9CVWNTTzARiiwoEScz+PI8dolxQ4uTMJywgtoiAncT6WwuZQWxhgViJ629mgC0WEqiR2N72
+	ASzOKeAq0dXRDjZeQkBcoqcxCCTMLKAj8a7vATOELS+x/e0c5gmMArOQbJiFpGwWkrIFjMyr
+	GOUSc0pzdXMTM3OKU5N1i5MT8/JSi3RN9XIzS/RSU0o3MUICVHAH44yTcocYBTgYlXh4F1xe
+	GCzEmlhWXJl7iFGSg0lJlNcNGN5CfEn5KZUZicUZ8UWlOanFhxglOJiVRHidHgDleFMSK6tS
+	i/JhUtIcLErivHxL1P2EBNITS1KzU1MLUotgsjIcHEoSvMkgQwWLUtNTK9Iyc0oQ0kwcnCDD
+	uaREilPzUlKLEktLMuJBURpfDIxTkBQP0N5KkHbe4oLEXKAoROspRl2OU3eOtTEJseTl56VK
+	ifNGghQJgBRllObBrYClo1eM4kAfC/P6gVTxAFMZ3KRXQEuYgJaoTJwHsqQkESEl1cCYydW5
+	03aPo/fcpTtDOk+k+d42ydX9f3DLrH13c8VV5zXuqlnGsEFQr/9I9r1+fuWJR7SZEpKvsz3+
+	ZN2v/rzzxYQv3LF7nk3b0qzml5bnXbbB5K7ag11bnH1W1bO9z7orHi7qKsQa1NA/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252067>
 
 On 06/17/2014 05:53 PM, Ronnie Sahlberg wrote:
-> Making errno when returning from lock_file() meaningful, which should
-> fix
+> Making errno when returning from verify_lock() meaningful, which
+> should almost but not completely fix
 > 
->  * an existing almost-bug in lock_ref_sha1_basic where it assumes
->    errno==ENOENT is meaningful and could waste some work on retries
+>  * a bug in "git fetch"'s s_update_ref, which trusts the result of an
+>    errno == ENOTDIR check to detect D/F conflicts
 > 
->  * an existing bug in repack_without_refs where it prints
->    strerror(errno) and picks advice based on errno, despite errno
->    potentially being zero and potentially having been clobbered by
->    that point
+> ENOTDIR makes sense as a sign that a file was in the way of a
+> directory we wanted to create.  Should "git fetch" also look for
+> ENOTEMPTY or EEXIST to catch cases where a directory was in the way
+> of a file to be created?
 > 
 > Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > ---
->  lockfile.c | 17 ++++++++++++-----
->  refs.c     |  1 +
->  refs.h     |  1 +
->  3 files changed, 14 insertions(+), 5 deletions(-)
+>  refs.c | 4 ++++
+>  refs.h | 6 +++++-
+>  2 files changed, 9 insertions(+), 1 deletion(-)
 > 
-> diff --git a/lockfile.c b/lockfile.c
-> index 464031b..a921d77 100644
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -121,7 +121,7 @@ static char *resolve_symlink(char *p, size_t s)
->  	return p;
+> diff --git a/refs.c b/refs.c
+> index 9ea519c..a48f805 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1932,18 +1932,22 @@ int refname_match(const char *abbrev_name, const char *full_name)
+>  	return 0;
 >  }
 >  
-> -
-> +/* Make sure errno contains a meaningful value on error */
->  static int lock_file(struct lock_file *lk, const char *path, int flags)
+> +/* This function should make sure errno is meaningful on error */
+>  static struct ref_lock *verify_lock(struct ref_lock *lock,
+>  	const unsigned char *old_sha1, int mustexist)
 >  {
->  	/*
-> @@ -130,8 +130,10 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
->  	 */
->  	static const size_t max_path_len = sizeof(lk->filename) - 5;
+>  	if (read_ref_full(lock->ref_name, lock->old_sha1, mustexist, NULL)) {
+> +		int save_errno = errno;
+>  		error("Can't verify ref %s", lock->ref_name);
+>  		unlock_ref(lock);
+> +		errno = save_errno;
+>  		return NULL;
+>  	}
+>  	if (hashcmp(lock->old_sha1, old_sha1)) {
+>  		error("Ref %s is at %s but expected %s", lock->ref_name,
+>  			sha1_to_hex(lock->old_sha1), sha1_to_hex(old_sha1));
+>  		unlock_ref(lock);
+> +		errno = EBUSY;
+>  		return NULL;
+>  	}
+>  	return lock;
+> diff --git a/refs.h b/refs.h
+> index 82cc5cb..af4fcdc 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -137,11 +137,15 @@ extern int ref_exists(const char *);
+>   */
+>  extern int peel_ref(const char *refname, unsigned char *sha1);
 >  
-> -	if (strlen(path) >= max_path_len)
-> +	if (strlen(path) >= max_path_len) {
-> +		errno = ENAMETOOLONG;
->  		return -1;
-> +	}
->  	strcpy(lk->filename, path);
->  	if (!(flags & LOCK_NODEREF))
->  		resolve_symlink(lk->filename, max_path_len);
-> @@ -148,9 +150,13 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
->  			lock_file_list = lk;
->  			lk->on_list = 1;
->  		}
-> -		if (adjust_shared_perm(lk->filename))
-> -			return error("cannot fix permission bits on %s",
-> -				     lk->filename);
-> +		if (adjust_shared_perm(lk->filename)) {
-> +			int save_errno = errno;
-> +			error("cannot fix permission bits on %s",
-> +			      lk->filename);
-> +			errno = save_errno;
-> +			return -1;
-> +		}
+> -/** Locks a "refs/" ref returning the lock on success and NULL on failure. **/
+> +/*
+> + * Locks a "refs/" ref returning the lock on success and NULL on failure.
+> + * On failure errno is set to something meaningfull.
 
-Wouldn't it make sense for error() to save and restore errno instead of
-scattering the save/restore code around everywhere?  I saw the same type
-of code about three commits later, too.
+s/meaningfull/meaningful/
 
-> [...]
+> + */
+>  extern struct ref_lock *lock_ref_sha1(const char *refname, const unsigned char *old_sha1);
+>  
+>  /** Locks any ref (for 'HEAD' type refs). */
+>  #define REF_NODEREF	0x01
+> +/* errno is set to something meaningful on failure */
+>  extern struct ref_lock *lock_any_ref_for_update(const char *refname,
+>  						const unsigned char *old_sha1,
+>  						int flags, int *type_p);
+> 
 
-Michael
 
 -- 
 Michael Haggerty
