@@ -1,117 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re* [PATCH v3 04/14] refs.c: add a new update_type field to ref_update
-Date: Wed, 18 Jun 2014 14:10:26 -0700
-Message-ID: <xmqqbntpj54t.fsf_-_@gitster.dls.corp.google.com>
-References: <1403111346-18466-1-git-send-email-sahlberg@google.com>
-	<1403111346-18466-5-git-send-email-sahlberg@google.com>
-	<xmqqfvj2hs5g.fsf@gitster.dls.corp.google.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: Re: [PATCH 0/7] Second part of msysgit/unicode
+Date: Wed, 18 Jun 2014 23:35:12 +0200
+Message-ID: <53A20610.80500@kdbg.org>
+References: <1402479466-8500-1-git-send-email-kasal@ucw.cz>	<53A0052C.6040604@gmail.com> <20140618030507.GA3809@camelia.ucw.cz> <xmqq7g4ejf6y.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 18 23:10:41 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Stepan Kasal <kasal@ucw.cz>, Karsten Blees <karsten.blees@gmail.com>, 
+ GIT Mailing-list <git@vger.kernel.org>,
+ msysGit <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCJYV6HBKQIJHDEITUCRUBGSCXIRU@googlegroups.com Wed Jun 18 23:35:17 2014
+Return-path: <msysgit+bncBCJYV6HBKQIJHDEITUCRUBGSCXIRU@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f60.google.com ([74.125.82.60])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxN7u-0002nW-ME
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 23:10:39 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755508AbaFRVKf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 17:10:35 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59154 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755268AbaFRVKe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 17:10:34 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F00E82026E;
-	Wed, 18 Jun 2014 17:10:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bAyp3XzRFw/mwNhsGLfyQL3w3Lc=; b=OoHjqh
-	RJc91LRDupZ955lbumaKl+YZ8IFx4kSdzYcTsi6zIfAhwqhBprq+4PfWaC5rOq6C
-	K4e7FVhrp7nTL9nv04Oop5idmJiJaNj0NOV0n+EGUsima2Ln7bdktQ9sUbq3DEQz
-	upK8jEsLZROzX9j7Qy+uYMs1iPQj2dPy2VUMg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wsEQVv5EwNquIE/TUJRqFop6f7bT2kwP
-	lsBgIkzSVLT6x5ejrKReNEpRwo+wog1duyK4UUYQ+2yw9v11RS+ixm87HYzteuo/
-	zxWzXotoTIjSNbMqmmetVSplxFnQvK1RuSx5yCLzO/IE1aAy290zI4+FA8VeVYCe
-	bnz0dOw2MRc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A54622026B;
-	Wed, 18 Jun 2014 17:10:30 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EF7C320268;
-	Wed, 18 Jun 2014 17:10:25 -0400 (EDT)
-In-Reply-To: <xmqqfvj2hs5g.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 18 Jun 2014 13:36:11 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F7D6CC92-F72C-11E3-A297-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252071>
+	(envelope-from <msysgit+bncBCJYV6HBKQIJHDEITUCRUBGSCXIRU@googlegroups.com>)
+	id 1WxNVk-00053F-Qe
+	for gcvm-msysgit@m.gmane.org; Wed, 18 Jun 2014 23:35:16 +0200
+Received: by mail-wg0-f60.google.com with SMTP id n12sf171500wgh.5
+        for <gcvm-msysgit@m.gmane.org>; Wed, 18 Jun 2014 14:35:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=JR5IF8X3US4+gec1HUdszbYrTYNUtZVOmr8l8G5qX7o=;
+        b=ZyTU5q2j+naH2JhxD1TVMBSA5XT5xgt3C+8WKZYEvPFw6zH31yNEW3nF6S+PPwrHM9
+         ncQvt+Mh//4tsADu3fFGmsm5T73TMoXuWXkpV+7NWwItsTcm8WQceBqVvgbYF4CgaZkG
+         SkiSABcTjiVFTlWyyyC0Qsv4wbai+NkFstMaRQX9f11y8MeWjV3fn7rwrUv4tskq7hTC
+         XJ7dWoiKcP1gCF8vHTwgvYU+0mPo161j06StFcRZuAXPOmUgYkaJY++gj33FugTgtXmD
+         /PTt9F6FzxeAMAyuKt/cM4xtJnBoCz/VnY+eeIU/nbx/XKbs+affPYwv4QqxScn3c+Jg
+         m/Jg==
+X-Received: by 10.152.28.101 with SMTP id a5mr7668lah.4.1403127316483;
+        Wed, 18 Jun 2014 14:35:16 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.21.166 with SMTP id w6ls60778lae.29.gmail; Wed, 18 Jun
+ 2014 14:35:15 -0700 (PDT)
+X-Received: by 10.152.203.199 with SMTP id ks7mr71765lac.0.1403127315631;
+        Wed, 18 Jun 2014 14:35:15 -0700 (PDT)
+Received: from bsmtp.bon.at (bsmtp2.bon.at. [213.33.87.16])
+        by gmr-mx.google.com with ESMTPS id ck3si1259869wib.0.2014.06.18.14.35.15
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Wed, 18 Jun 2014 14:35:15 -0700 (PDT)
+Received-SPF: none (google.com: j6t@kdbg.org does not designate permitted sender hosts) client-ip=213.33.87.16;
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 9FBD2A7EB4;
+	Wed, 18 Jun 2014 23:35:14 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id DF09319F450;
+	Wed, 18 Jun 2014 23:35:13 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
+In-Reply-To: <xmqq7g4ejf6y.fsf@gitster.dls.corp.google.com>
+X-Original-Sender: j6t@kdbg.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: j6t@kdbg.org does not designate permitted sender hosts) smtp.mail=j6t@kdbg.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252072>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 18.06.2014 19:33, schrieb Junio C Hamano:
+> In the meantime, are Windows folks happy with the four topics queued
+> on 'pu' so far?  I would like to start moving them down to 'next'
+> and to 'master' soonish.
+> 
+> They consist of these individual patches:
+> 
+>     $ git shortlog ^master \
+>       sk/mingw-dirent \
+>       sk/mingw-main \
+>       sk/mingw-uni-console \
+>       sk/mingw-unicode-spawn-args
 
-> Ronnie Sahlberg <sahlberg@google.com> writes:
->
->> Add a field that describes what type of update this refers to. For now
->> the only type is UPDATE_SHA1 but we will soon add more types.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  refs.c | 25 +++++++++++++++++++++----
->>  1 file changed, 21 insertions(+), 4 deletions(-)
->>
->> diff --git a/refs.c b/refs.c
->> index 4e3d4c3..4129de6 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -3374,6 +3374,10 @@ int for_each_reflog(each_ref_fn fn, void *cb_data)
->>  	return retval;
->>  }
->>  
->> +enum transaction_update_type {
->> +       UPDATE_SHA1 = 0,
->
-> indent with SP?
->
-> Unlike an array initialisation, e.g.
->
-> 	int foo[] = { 1,2,3,4,5, };
->
-> some compilers we support complain if enum definition ends with a
-> trailing comma.
+Topic sk/test-cmp-bin revealed a new breakage in t5000-tar-tree,
+specifically, the penultimate test "remote tar.gz is allowed by
+default". I have yet to find out what it is (I suspect a LF-CRLF
+conversion issue) and whether it is in connection with one of these topics.
 
-I do recall we had fixes to drop the comma after the last element in
-enum definition in the past, in response real compilation breakages
-on some platforms.  But there is a curious thing:
+I haven't had a chance to test the topics in the field. In particular, I
+have a few files with Shift-JIS content (but ASCII file names), and I
+would like to see how well I fare with the unicode topics in this situation.
 
-    git grep -A<somenumber> 'enum ' master -- \*.c
+-- Hannes
 
-tells me that builtin/clean.c would fail to compile for those folks.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Here is an off-topic "fix" that may no longer be needed.
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
- builtin/clean.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 9a91515..27701d2 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -48,7 +48,7 @@ enum color_clean {
- 	CLEAN_COLOR_PROMPT = 2,
- 	CLEAN_COLOR_HEADER = 3,
- 	CLEAN_COLOR_HELP = 4,
--	CLEAN_COLOR_ERROR = 5,
-+	CLEAN_COLOR_ERROR = 5
- };
- 
- #define MENU_OPTS_SINGLETON		01
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
