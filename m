@@ -1,106 +1,89 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v18 11/48] refs.c: make remove_empty_directories alwasy
- set errno to something sane
-Date: Wed, 18 Jun 2014 23:00:06 +0200
-Message-ID: <53A1FDD6.3030202@alum.mit.edu>
-References: <1403020442-31049-1-git-send-email-sahlberg@google.com> <1403020442-31049-12-git-send-email-sahlberg@google.com>
+Subject: Re: [PATCH v18 14/48] refs.c: log_ref_write should try to return
+ meaningful errno
+Date: Wed, 18 Jun 2014 23:08:51 +0200
+Message-ID: <53A1FFE3.9060006@alum.mit.edu>
+References: <1403020442-31049-1-git-send-email-sahlberg@google.com> <1403020442-31049-15-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 18 23:00:22 2014
+X-From: git-owner@vger.kernel.org Wed Jun 18 23:09:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxMxt-0008RE-5j
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 23:00:17 +0200
+	id 1WxN6I-0000um-3P
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 23:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755696AbaFRVAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 17:00:10 -0400
-Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:43478 "EHLO
-	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755467AbaFRVAI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2014 17:00:08 -0400
-X-AuditID: 1207440c-f79656d000000c83-42-53a1fdd7841c
+	id S1755472AbaFRVIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 17:08:54 -0400
+Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:45331 "EHLO
+	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755268AbaFRVIx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2014 17:08:53 -0400
+X-AuditID: 12074414-f79f86d000000b9f-10-53a1ffe5a219
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id EC.A7.03203.7DDF1A35; Wed, 18 Jun 2014 17:00:07 -0400 (EDT)
+	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 93.7C.02975.5EFF1A35; Wed, 18 Jun 2014 17:08:53 -0400 (EDT)
 Received: from [192.168.69.130] (p5DDB19A6.dip0.t-ipconnect.de [93.219.25.166])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5IL063M029288
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5IL8pSu029706
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 18 Jun 2014 17:00:07 -0400
+	Wed, 18 Jun 2014 17:08:52 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <1403020442-31049-12-git-send-email-sahlberg@google.com>
+In-Reply-To: <1403020442-31049-15-git-send-email-sahlberg@google.com>
 X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprIKsWRmVeSWpSXmKPExsUixO6iqHv978Jgg/szzSy6rnQzWfybUOPA
-	5LFgU6nH501yAUxR3DZJiSVlwZnpefp2CdwZcy7/ZSxYyV3RfW4zWwPja44uRk4OCQETidtz
-	HrBA2GISF+6tZ+ti5OIQErjMKDFrXzMLhHOeSeJa6yNmkCpeAW2JeVdugHWwCKhK7N/+hQ3E
-	ZhPQlVjU08wEYosKBEnM/jyPHaJeUOLkzCdg9SICdhLrby0EmyMskCmxvOMFWI2QQI3EzXXX
-	wOKcAq4S834uZ+1i5AC6SFyipzEIJMwsoCPxru8BM4QtL7H97RzmCYwCs5BsmIWkbBaSsgWM
-	zKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdA31cjNL9FJTSjcxQoKUZwfjt3UyhxgFOBiVeHgX
-	XF4YLMSaWFZcmXuIUZKDSUmU98APoBBfUn5KZUZicUZ8UWlOavEhRgkOZiURXvlfQDnelMTK
-	qtSifJiUNAeLkjiv6hJ1PyGB9MSS1OzU1ILUIpisDAeHkgTvrD9AjYJFqempFWmZOSUIaSYO
-	TpDhXFIixal5KalFiaUlGfGgSI0vBsYqSIoHaO9OkHbe4oLEXKAoROspRl2OU3eOtTEJseTl
-	56VKifP2gRQJgBRllObBrYClpFeM4kAfC/O2g1TxANMZ3KRXQEuYgJaoTJwHsqQkESEl1cBo
-	6ckelvz67rRnLmv4U/YZM+mtTdstedZ1+lkPu/+Pre7GneFK8/laNL0qLiZuxqmOsBx1lkcR
-	bHYc548ueJP3SWXtofutvSwb++wcFma8Yt4ULnp28uEri33PNTpsnc8QIeI9b57o 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42IRYndR1H36f2Gwwc9LbBZdV7qZLP5NqHFg
+	8liwqdTj8ya5AKYobpukxJKy4Mz0PH27BO6MPR+b2QraOSq2HV3J2sC4i62LkZNDQsBEYsmr
+	LmYIW0ziwr31QHEuDiGBy4wS82dsZgdJCAmcZ5J49SoCxOYV0JZYfn4pWDOLgKrEluPNLCA2
+	m4CuxKKeZiYQW1QgSGL253nsEPWCEidnPgGrERGwk1h/ayHYMmGBGInNux8A2RxA82sk+te4
+	gYQ5BVwlTn3oYQEJSwiIS/Q0BoGYzALqEuvnCYFUMAvIS2x/O4d5AqPALCTzZyFUzUJStYCR
+	eRWjXGJOaa5ubmJmTnFqsm5xcmJeXmqRroVebmaJXmpK6SZGSHCK7GA8clLuEKMAB6MSD++C
+	ywuDhVgTy4orcw8xSnIwKYnyHvgBFOJLyk+pzEgszogvKs1JLT7EKMHBrCTCK/8LKMebklhZ
+	lVqUD5OS5mBREuf9tljdT0ggPbEkNTs1tSC1CCYrw8GhJMHr+g+oUbAoNT21Ii0zpwQhzcTB
+	CTKcS0qkODUvJbUosbQkIx4UofHFwBgFSfEA7ZUFaectLkjMBYpCtJ5i1OU4dedYG5MQS15+
+	XqqUOO+vv0BFAiBFGaV5cCtgqegVozjQx8K86SCjeIBpDG7SK6AlTEBLVCbOA1lSkoiQkmpg
+	5NdK0U+6ZnXDelvPnUccVTP4rsrkGh93UorlS3vIn7vesrcsJUn/k1leh6LNwikbu9fuWqfa
+	rSvNtDJ6PUfbRSFHiyNtH6rcFnPtvLappcDvB88sseCE5RP2CvKq98pGvO5+NXdT 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252069>
-
-There is a typo in the commit log subject line:
-
-s/alwasy/always/
-
-Michael
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252070>
 
 On 06/17/2014 05:53 PM, Ronnie Sahlberg wrote:
-> Making errno when returning from remove_empty_directories() more
-> obviously meaningful, which should provide some peace of mind for
-> people auditing lock_ref_sha1_basic.
+> Making errno from write_ref_sha1() meaningful, which should fix
+> 
+> * a bug in "git checkout -b" where it prints strerror(errno)
+>   despite errno possibly being zero or clobbered
+> 
+> * a bug in "git fetch"'s s_update_ref, which trusts the result of an
+>   errno == ENOTDIR check to detect D/F conflicts
 > 
 > Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > ---
->  refs.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
+>  refs.c | 29 ++++++++++++++++++++++++-----
+>  1 file changed, 24 insertions(+), 5 deletions(-)
 > 
 > diff --git a/refs.c b/refs.c
-> index a48f805..cc69581 100644
+> index 211429d..1f2eb24 100644
 > --- a/refs.c
 > +++ b/refs.c
-> @@ -1960,14 +1960,16 @@ static int remove_empty_directories(const char *file)
->  	 * only empty directories), remove them.
->  	 */
->  	struct strbuf path;
-> -	int result;
-> +	int result, save_errno;
->  
->  	strbuf_init(&path, 20);
->  	strbuf_addstr(&path, file);
->  
+> @@ -1979,6 +1979,7 @@ static int remove_empty_directories(const char *file)
 >  	result = remove_dir_recursively(&path, REMOVE_DIR_EMPTY_ONLY);
-> +	save_errno = errno;
+>  	save_errno = errno;
 >  
->  	strbuf_release(&path);
 > +	errno = save_errno;
->  
->  	return result;
->  }
-> @@ -2056,6 +2058,7 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
->  	return logs_found;
->  }
->  
-> +/* This function should make sure errno is meaningful on error */
->  static struct ref_lock *lock_ref_sha1_basic(const char *refname,
->  					    const unsigned char *old_sha1,
->  					    int flags, int *type_p)
-> 
+>  	strbuf_release(&path);
+>  	errno = save_errno;
 
+This new line looks like an accident.
+
+> [...]
+
+Michael
 
 -- 
 Michael Haggerty
