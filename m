@@ -1,25 +1,23 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 10/11] trace: add trace_performance facility
- to debug performance issues
-Date: Wed, 18 Jun 2014 10:28:09 -0700
-Message-ID: <xmqqbntqjffa.fsf@gitster.dls.corp.google.com>
-References: <53980B83.9050409@gmail.com> <53980CD8.5090801@gmail.com>
-	<xmqqsin3mpfe.fsf@gitster.dls.corp.google.com>
-	<53A1ACE2.30406@gmail.com>
+Subject: Re: [PATCH 0/7] Second part of msysgit/unicode
+Date: Wed, 18 Jun 2014 10:33:09 -0700
+Message-ID: <xmqq7g4ejf6y.fsf@gitster.dls.corp.google.com>
+References: <1402479466-8500-1-git-send-email-kasal@ucw.cz>
+	<53A0052C.6040604@gmail.com> <20140618030507.GA3809@camelia.ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>,  Jeff King <peff@peff.net>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCG77UMM3EJRBMMYQ6OQKGQERIC5KOI@googlegroups.com Wed Jun 18 19:28:21 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBMMYQ6OQKGQERIC5KOI@googlegroups.com>
+Cc: Karsten Blees <karsten.blees@gmail.com>,  GIT Mailing-list <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: msysgit+bncBCG77UMM3EJRBXE2Q6OQKGQEJAMQ7RA@googlegroups.com Wed Jun 18 19:33:19 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBXE2Q6OQKGQEJAMQ7RA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yk0-f189.google.com ([209.85.160.189])
+Received: from mail-vc0-f187.google.com ([209.85.220.187])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBMMYQ6OQKGQERIC5KOI@googlegroups.com>)
-	id 1WxJek-0003DT-UF
-	for gcvm-msysgit@m.gmane.org; Wed, 18 Jun 2014 19:28:19 +0200
-Received: by mail-yk0-f189.google.com with SMTP id 9sf95963ykp.16
-        for <gcvm-msysgit@m.gmane.org>; Wed, 18 Jun 2014 10:28:18 -0700 (PDT)
+	(envelope-from <msysgit+bncBCG77UMM3EJRBXE2Q6OQKGQEJAMQ7RA@googlegroups.com>)
+	id 1WxJja-0000cX-Dy
+	for gcvm-msysgit@m.gmane.org; Wed, 18 Jun 2014 19:33:18 +0200
+Received: by mail-vc0-f187.google.com with SMTP id im17sf281715vcb.4
+        for <gcvm-msysgit@m.gmane.org>; Wed, 18 Jun 2014 10:33:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=from:to:cc:subject:references:date:in-reply-to:message-id
@@ -27,40 +25,40 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type;
-        bh=ONmah/lb1ocMVCUlcOV26aeDYxjXREYUeQmdg4J3qJI=;
-        b=XNJyEEbvxqTKNizWo3KDHkkUfNGqcr1MeIjm0uIG48Zk1C/2mEgfNe2n6AarRQNDoT
-         lQvkBBv7cccHP8lVlf81X7lILfXhI6hWCM3Hffpy5dIeTSKJ2ldurgKwdy2Bp7/HEdTP
-         T8E4k1bN6kLzQrRtuIqyOOw7OzrgW780OUYpIfQ18RYiFv/O+OT5TrYlN1TmxqwiFQ9b
-         MiUxoWdN+onnpgocDSUD9NYUSLIGdkgRsBLjuDuIgIpt2yHICdaXUN//cvK4g/SQ51YI
-         BXxQ7ZdKb1GjOwevdN8oNDUVPgZxGC7VwHOJqg52aAYnOpk68dKZCySBRhlQefyuFgG/
-         ESDw==
-X-Received: by 10.140.49.67 with SMTP id p61mr56216qga.21.1403112497950;
-        Wed, 18 Jun 2014 10:28:17 -0700 (PDT)
+        bh=jDBgRev9FkRpj3z9/tGDFsOSyZXccUU8bbS7NWEgNnA=;
+        b=IpZtiOI/Cu09ktKg7d3jpv2u226loFcEh3RKYYb8VUO6CMpbC9kbMKgUXRT1T6cV4W
+         LpKQd3TvyG81hyHRQPuKaVo1iUARdlxDghCcfoPbc8kaYMISwgQLI/RzqgaSqEQGWK5k
+         bST+5CyMCVMrb0hki/GSrjLqf8iQMIDY0I8GwIp6FsOf9Wt+jesbrJAc7xBC6zdz3DYb
+         o6TDP8B7wHQrNPqxnvqGdixLgpSpewBL0L6utOpm+hHatgbdgogINSDoz9eyxgL2/T/0
+         JiIaN3p+f581pZSu/mfiseVhhrJhvR7/L0qyG6VxtMcFqtU7IKfVohC8xZGS5/wpth3c
+         HF/A==
+X-Received: by 10.182.176.99 with SMTP id ch3mr16395obc.38.1403112797498;
+        Wed, 18 Jun 2014 10:33:17 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.140.24.181 with SMTP id 50ls177311qgr.92.gmail; Wed, 18 Jun
- 2014 10:28:17 -0700 (PDT)
-X-Received: by 10.236.124.100 with SMTP id w64mr1345053yhh.57.1403112497173;
-        Wed, 18 Jun 2014 10:28:17 -0700 (PDT)
+Received: by 10.182.81.170 with SMTP id b10ls71444oby.2.gmail; Wed, 18 Jun
+ 2014 10:33:16 -0700 (PDT)
+X-Received: by 10.182.128.234 with SMTP id nr10mr1464236obb.0.1403112796380;
+        Wed, 18 Jun 2014 10:33:16 -0700 (PDT)
 Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id o69si176297yhp.6.2014.06.18.10.28.17
+        by gmr-mx.google.com with ESMTP id y50si177877yhk.4.2014.06.18.10.33.16
         for <msysgit@googlegroups.com>;
-        Wed, 18 Jun 2014 10:28:17 -0700 (PDT)
+        Wed, 18 Jun 2014 10:33:16 -0700 (PDT)
 Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A85CD1E11B;
-	Wed, 18 Jun 2014 13:28:13 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B981E1E2F6;
+	Wed, 18 Jun 2014 13:33:13 -0400 (EDT)
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9BA501E11A;
-	Wed, 18 Jun 2014 13:28:13 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 78D961E2F4;
+	Wed, 18 Jun 2014 13:33:13 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4C2561E10E;
-	Wed, 18 Jun 2014 13:28:09 -0400 (EDT)
-In-Reply-To: <53A1ACE2.30406@gmail.com> (Karsten Blees's message of "Wed, 18
-	Jun 2014 17:14:42 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D47E01E2F0;
+	Wed, 18 Jun 2014 13:33:08 -0400 (EDT)
+In-Reply-To: <20140618030507.GA3809@camelia.ucw.cz> (Stepan Kasal's message of
+	"Wed, 18 Jun 2014 05:05:07 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EA90B6FC-F70D-11E3-8377-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 9D1D90F6-F70E-11E3-8CEC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 X-Original-Sender: gitster@pobox.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
  (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
@@ -75,43 +73,74 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252016>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+Stepan Kasal <kasal@ucw.cz> writes:
 
-> Right, it makes no sense for trace_performance(), and for
-> trace_performance_since() only if followed by another 'measured' code
-> section. In that special case, I think it wouldn't hurt if you had to
-> write:
+> Hello Karsten,
 >
->   uint64_t start = getnanotime();
->   /* first code section to measure */
->   trace_performance_since(start, "first foobar");
->
->   start = getnanotime();
->   /* second code section to measure */
->   trace_performance_since(start, "second foobar");
->
-> So I guess I'll drop the return value (and the second example, which
-> is then redundant to the first).
-
-That also sounds OK to me.
-
->>> +static void trace_performance_vfl(const char *file, int line,
->>> +				      uint64_t nanos, const char *format,
->>> +				      va_list ap)
->>> +{
+> On Tue, Jun 17, 2014 at 11:06:52AM +0200, Karsten Blees wrote:
+>> Am 11.06.2014 11:37, schrieb Stepan Kasal:
+>> > This is the second part of the time-proven unicode suport branch from msysgit.
+>> > This batch is a collection of small independent changes, limited to mingw.c.
+>> > The only exception is the last patch: it changes gitk and git-gui.
 >> 
->> Just being curious, but what does "v" stand for?
->> 
+>> I'm missing the other two "Unicode file name" patches (and "Win32: fix detection
 >
-> trace_performance_vfl(, va_list)
-> vs.
-> trace_performance_fl(, ...)
+> indeed.  I noticed that after sending the plan quoted above.
+> Luckily, the gitk/git-gui patch was not accepted and has to be
+> resubmitted.
 >
-> Will change to trace_performance_vprintf_fl()
+> So the plan for future submissions is:
+>
+> 1) two "Unicode file name" patches (with "fix... is_dir_empty"
+> squashed)
+> 2) the environament patches from your unicode branch (several
+> patches)
+> 3) "color term" (and env. var. TERM); updated according to your
+> instructions, thus sent separately after the series
+> 4) resubmit gitk / git-gui (have separate maintainers)
+>
+> This is work in progress, I suppose to mail 1) and 2) in a few days.
+>
+> Stepan
 
-Ah, OK.  The name with 'vprintf' in it does sound better.
+In the meantime, are Windows folks happy with the four topics queued
+on 'pu' so far?  I would like to start moving them down to 'next'
+and to 'master' soonish.
+
+They consist of these individual patches:
+
+    $ git shortlog ^master \
+      sk/mingw-dirent \
+      sk/mingw-main \
+      sk/mingw-uni-console \
+      sk/mingw-unicode-spawn-args
+    Johannes Schindelin (1):
+          Win32: let mingw_execve() return an int
+
+    Karsten Blees (18):
+          Win32 dirent: remove unused dirent.d_ino member
+          Win32 dirent: remove unused dirent.d_reclen member
+          Win32 dirent: change FILENAME_MAX to MAX_PATH
+          Win32 dirent: clarify #include directives
+          Win32 dirent: improve dirent implementation
+          Win32: move main macro to a function
+          Win32: support Unicode console output
+          Win32: detect console streams more reliably
+          Win32: warn if the console font doesn't support Unicode
+          Win32: add Unicode conversion functions
+          Win32: Thread-safe windows console output
+          Win32: fix broken pipe detection
+          Win32: reliably detect console pipe handles
+          Win32: simplify internal mingw_spawn* APIs
+          Win32: fix potential multi-threading issue
+          MinGW: disable CRT command line globbing
+          Win32: Unicode arguments (outgoing)
+          Win32: Unicode arguments (incoming)
+
+    Stepan Kasal (1):
+          mingw: avoid const warning
 
 Thanks.
 
