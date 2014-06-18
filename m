@@ -1,165 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] Second part of msysgit/unicode
-Date: Wed, 18 Jun 2014 10:33:09 -0700
-Message-ID: <xmqq7g4ejf6y.fsf@gitster.dls.corp.google.com>
-References: <1402479466-8500-1-git-send-email-kasal@ucw.cz>
-	<53A0052C.6040604@gmail.com> <20140618030507.GA3809@camelia.ucw.cz>
+Subject: Re: [PATCH RFC] git-am: support any number of signatures
+Date: Wed, 18 Jun 2014 10:51:04 -0700
+Message-ID: <xmqq38f2jed3.fsf@gitster.dls.corp.google.com>
+References: <1402589505-27632-1-git-send-email-mst@redhat.com>
+	<xmqqioo654mg.fsf@gitster.dls.corp.google.com>
+	<20140613080036.GA2117@redhat.com>
+	<xmqqy4x03ecm.fsf@gitster.dls.corp.google.com>
+	<20140615102736.GA11798@redhat.com>
+	<xmqqy4wwraoz.fsf@gitster.dls.corp.google.com>
+	<20140618030903.GA19593@redhat.com>
+	<CAPc5daVTZynCKMubZmreAjBh3i51wPaAA+8vSRwB9dGrrJb6FA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Karsten Blees <karsten.blees@gmail.com>,  GIT Mailing-list <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBCG77UMM3EJRBXE2Q6OQKGQEJAMQ7RA@googlegroups.com Wed Jun 18 19:33:19 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBXE2Q6OQKGQEJAMQ7RA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-vc0-f187.google.com ([209.85.220.187])
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Jun 18 19:51:34 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBXE2Q6OQKGQEJAMQ7RA@googlegroups.com>)
-	id 1WxJja-0000cX-Dy
-	for gcvm-msysgit@m.gmane.org; Wed, 18 Jun 2014 19:33:18 +0200
-Received: by mail-vc0-f187.google.com with SMTP id im17sf281715vcb.4
-        for <gcvm-msysgit@m.gmane.org>; Wed, 18 Jun 2014 10:33:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=jDBgRev9FkRpj3z9/tGDFsOSyZXccUU8bbS7NWEgNnA=;
-        b=IpZtiOI/Cu09ktKg7d3jpv2u226loFcEh3RKYYb8VUO6CMpbC9kbMKgUXRT1T6cV4W
-         LpKQd3TvyG81hyHRQPuKaVo1iUARdlxDghCcfoPbc8kaYMISwgQLI/RzqgaSqEQGWK5k
-         bST+5CyMCVMrb0hki/GSrjLqf8iQMIDY0I8GwIp6FsOf9Wt+jesbrJAc7xBC6zdz3DYb
-         o6TDP8B7wHQrNPqxnvqGdixLgpSpewBL0L6utOpm+hHatgbdgogINSDoz9eyxgL2/T/0
-         JiIaN3p+f581pZSu/mfiseVhhrJhvR7/L0qyG6VxtMcFqtU7IKfVohC8xZGS5/wpth3c
-         HF/A==
-X-Received: by 10.182.176.99 with SMTP id ch3mr16395obc.38.1403112797498;
-        Wed, 18 Jun 2014 10:33:17 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.81.170 with SMTP id b10ls71444oby.2.gmail; Wed, 18 Jun
- 2014 10:33:16 -0700 (PDT)
-X-Received: by 10.182.128.234 with SMTP id nr10mr1464236obb.0.1403112796380;
-        Wed, 18 Jun 2014 10:33:16 -0700 (PDT)
-Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id y50si177877yhk.4.2014.06.18.10.33.16
-        for <msysgit@googlegroups.com>;
-        Wed, 18 Jun 2014 10:33:16 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WxK1F-0004lE-Hx
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 19:51:33 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754037AbaFRRvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 13:51:13 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52034 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753578AbaFRRvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 13:51:12 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B981E1E2F6;
-	Wed, 18 Jun 2014 13:33:13 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 651291E9A3;
+	Wed, 18 Jun 2014 13:51:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3I7qCXkwVw4jNCGQ7xcRAH+jwY8=; b=JstprD
+	cNPdStyPYIMYNLRZ3yHMKfE3O7LChL4rIzplDPcDeqnyr0cLiWaa8sZfiufWjotH
+	ggMHNyqPVxoNQ/NwFVQ1xPdm/Msor3+hCRtmunviBHUfe9nyY6H+KohvsLVlOidE
+	CmbW8n7kAf79gsFa3QyMpCdHCb3LDb6xT5lP0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yKP5swS9mEZ55WZF5tfz1oFwjKe9+pc/
+	Sg5iN1fIVpYxETYBsRQqMHDYCora56R15KQ5thgi4awr0spQn4qkPLE3YtfEHb3e
+	7H3+AkGftHJ9brpO0EQgFYzejac/8wozv8ZUnqoS38bV2uGc0inFQ2Q3iVfU4Bhh
+	srnkdv3GiMI=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 78D961E2F4;
-	Wed, 18 Jun 2014 13:33:13 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AF2E71E9A1;
+	Wed, 18 Jun 2014 13:51:08 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D47E01E2F0;
-	Wed, 18 Jun 2014 13:33:08 -0400 (EDT)
-In-Reply-To: <20140618030507.GA3809@camelia.ucw.cz> (Stepan Kasal's message of
-	"Wed, 18 Jun 2014 05:05:07 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A36B21E99E;
+	Wed, 18 Jun 2014 13:51:03 -0400 (EDT)
+In-Reply-To: <CAPc5daVTZynCKMubZmreAjBh3i51wPaAA+8vSRwB9dGrrJb6FA@mail.gmail.com>
+	(Junio C. Hamano's message of "Tue, 17 Jun 2014 23:49:11 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9D1D90F6-F70E-11E3-8CEC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252016>
+X-Pobox-Relay-ID: 1DBF1CE6-F711-11E3-AC34-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252017>
 
-Stepan Kasal <kasal@ucw.cz> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hello Karsten,
+> On Tue, Jun 17, 2014 at 8:09 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
+>>
+>> OK, after looking into this for a while, I realize
+>> this is a special property of the Signed-off-by footer.
+>> For now I think it's reasonable to just avoid de-duplicating
+>> other footers if any. Agree?
 >
-> On Tue, Jun 17, 2014 at 11:06:52AM +0200, Karsten Blees wrote:
->> Am 11.06.2014 11:37, schrieb Stepan Kasal:
->> > This is the second part of the time-proven unicode suport branch from msysgit.
->> > This batch is a collection of small independent changes, limited to mingw.c.
->> > The only exception is the last patch: it changes gitk and git-gui.
->> 
->> I'm missing the other two "Unicode file name" patches (and "Win32: fix detection
->
-> indeed.  I noticed that after sending the plan quoted above.
-> Luckily, the gitk/git-gui patch was not accepted and has to be
-> resubmitted.
->
-> So the plan for future submissions is:
->
-> 1) two "Unicode file name" patches (with "fix... is_dir_empty"
-> squashed)
-> 2) the environament patches from your unicode branch (several
-> patches)
-> 3) "color term" (and env. var. TERM); updated according to your
-> instructions, thus sent separately after the series
-> 4) resubmit gitk / git-gui (have separate maintainers)
->
-> This is work in progress, I suppose to mail 1) and 2) in a few days.
->
-> Stepan
+> Not really. I'd rather see "git am" hardcode as little such policy as possible.
+> We do need to support S-o-b footer and the policy we defined for it long time
+> ago, if only for backward compatiblity, but for any other footers,
+> policy decision
+> such as "dedup by default" isn't something "am" should know about.
 
-In the meantime, are Windows folks happy with the four topics queued
-on 'pu' so far?  I would like to start moving them down to 'next'
-and to 'master' soonish.
+By the way, "append without looking for dups" is a policy decision
+that is as bad to have as "append with dedup".
 
-They consist of these individual patches:
+I'd rather not to see "am.signoff", or any name that implies what
+the "-s" option to the command is about for that matter, to be used
+in futzing with the trailers other than S-o-b in any way.  As I
+understand it, our longer term goal is to defer that task, including
+the user-programmable policy decisions, to something like the
+'trailer' Christian started.
 
-    $ git shortlog ^master \
-      sk/mingw-dirent \
-      sk/mingw-main \
-      sk/mingw-uni-console \
-      sk/mingw-unicode-spawn-args
-    Johannes Schindelin (1):
-          Win32: let mingw_execve() return an int
-
-    Karsten Blees (18):
-          Win32 dirent: remove unused dirent.d_ino member
-          Win32 dirent: remove unused dirent.d_reclen member
-          Win32 dirent: change FILENAME_MAX to MAX_PATH
-          Win32 dirent: clarify #include directives
-          Win32 dirent: improve dirent implementation
-          Win32: move main macro to a function
-          Win32: support Unicode console output
-          Win32: detect console streams more reliably
-          Win32: warn if the console font doesn't support Unicode
-          Win32: add Unicode conversion functions
-          Win32: Thread-safe windows console output
-          Win32: fix broken pipe detection
-          Win32: reliably detect console pipe handles
-          Win32: simplify internal mingw_spawn* APIs
-          Win32: fix potential multi-threading issue
-          MinGW: disable CRT command line globbing
-          Win32: Unicode arguments (outgoing)
-          Win32: Unicode arguments (incoming)
-
-    Stepan Kasal (1):
-          mingw: avoid const warning
+I suspect that it may add unnecessary work later if we overloaded
+"signoff" with a similar feature with the change under discussion.
+I would feel safer to see it outlined how we envision to transition
+to a more generic 'trailer' solution later if we were to enhance
+"am" with "am.signoff" now.
 
 Thanks.
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
