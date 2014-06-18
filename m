@@ -1,135 +1,142 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 0/1] receive-pack: optionally deny case clone refs
-Date: Wed, 18 Jun 2014 13:33:47 +0200
-Message-ID: <53A1791B.5010301@alum.mit.edu>
-References: <1402525838-31975-1-git-send-email-dturner@twitter.com>	<xmqqa99h6hbh.fsf@gitster.dls.corp.google.com>	<CAL=YDW=xn0OG5vu=9fnP0nycKV0F9bDJLrkYiwmL9P9q79LJSw@mail.gmail.com> <xmqqfvj81oym.fsf@gitster.dls.corp.google.com>
+From: Fabian Ruch <bafain@gmail.com>
+Subject: [RFC] rebase --root: Empty root commit is replaced with sentinel
+Date: Wed, 18 Jun 2014 14:10:00 +0200
+Message-ID: <53A18198.7070301@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: David Turner <dturner@twopensource.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed Jun 18 13:33:59 2014
+Cc: Chris Webb <chris@arachsys.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 18 14:10:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxE7n-0006Fi-Lk
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 13:33:56 +0200
+	id 1WxEgv-0003vb-05
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 14:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966142AbaFRLdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 07:33:51 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:42775 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933182AbaFRLdu (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2014 07:33:50 -0400
-X-AuditID: 12074414-f79f86d000000b9f-bf-53a1791d5d41
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id BC.88.02975.D1971A35; Wed, 18 Jun 2014 07:33:49 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB19A6.dip0.t-ipconnect.de [93.219.25.166])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5IBXlCp003243
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 18 Jun 2014 07:33:48 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <xmqqfvj81oym.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNKsWRmVeSWpSXmKPExsUixO6iqCtbuTDY4MFBWYv5m04wWnRd6Way
-	aOi9wmzx9uYSRot/E2ocWD12zrrL7rFgU6nHxUvKHgue32f3+LxJLoA1itsmKbGkLDgzPU/f
-	LoE7Y8+c36wFc2Urfs+Ma2BcId7FyMkhIWAi8eJ3JzOELSZx4d56ti5GLg4hgcuMEnvPPGeB
-	cM4zSTzuvM8IUsUroC1x9M1nJhCbRUBV4t6KNawgNpuArsSinmawuKhAkMTsz/PYIeoFJU7O
-	fMICYosI+Ep8u9/HDjKUWWACo8Thf0vAVgsLeEo0PXkMte0Zo8Tqfc1gCU4Ba4lbp0Fu4gC6
-	T1yipzEIJMwsoCPxru8BM4QtL7H97RzmCYyCs5Dsm4WkbBaSsgWMzKsY5RJzSnN1cxMzc4pT
-	k3WLkxPz8lKLdC30cjNL9FJTSjcxQgJfZAfjkZNyhxgFOBiVeHh37FkQLMSaWFZcmXuIUZKD
-	SUmUV6hgYbAQX1J+SmVGYnFGfFFpTmrxIUYJDmYlEd5jxUA53pTEyqrUonyYlDQHi5I477fF
-	6n5CAumJJanZqakFqUUwWRkODiUJXo0KoEbBotT01Iq0zJwShDQTByfIcC4pkeLUvJTUosTS
-	kox4UAzHFwOjGCTFA7TXHaSdt7ggMRcoCtF6ilGX49SdY21MQix5+XmpUuK8l8qAigRAijJK
-	8+BWwNLcK0ZxoI+FeXlBRvEAUyTcpFdAS5iAlqhMnAeypCQRISXVwDgx6tx9YVmBBTHLrl1e
-	YmDYML9/goJmugz7N8PXHzq5zsruaN3mWNO6Tfe49xWDOXYzOfdFp3BuFt3P1OAf 
+	id S966175AbaFRMKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 08:10:06 -0400
+Received: from mail-wg0-f41.google.com ([74.125.82.41]:34916 "EHLO
+	mail-wg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S966020AbaFRMKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 08:10:05 -0400
+Received: by mail-wg0-f41.google.com with SMTP id a1so744437wgh.12
+        for <git@vger.kernel.org>; Wed, 18 Jun 2014 05:10:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        bh=W3dZKU+g78PHSrs8EegGo6o8+aoEkPhdCDvQvcr3PNo=;
+        b=ZCf8yA4czPh2H3nzwjzW9YCnl//na4o/26h+zpdPpj4XbTZnnyjC9vS6I8zE9ByrS2
+         9XL8041YrrUl5bGCHb78zUE+mVd7zKZ1Z0p/167/wl/FeDV07vn8AbrBe4f4RF/700OF
+         KMRPWCa9ZkrSP6OhZiwh9ybEqIx55ka2w7LYcqOe/rMKEiVgT6LVAdDf+KKH+RfpWAUY
+         QL67w9tDui3yQkoMpgNu8fk1PrB5619N3UqNltGki37esaTfjzCmrx4nHOJ9D51Fszkq
+         eyVt9/wMefm5RoovcAcfXfjWKyTNHcWOK68QbvjqA/M4uP+Ccj9v4oB++4uCfshO1mKN
+         3K4Q==
+X-Received: by 10.180.24.2 with SMTP id q2mr4514301wif.22.1403093403233;
+        Wed, 18 Jun 2014 05:10:03 -0700 (PDT)
+Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
+        by mx.google.com with ESMTPSA id i4sm4232557eeo.44.2014.06.18.05.10.01
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 18 Jun 2014 05:10:02 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251981>
 
-On 06/13/2014 11:25 PM, Junio C Hamano wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
-> 
->> It gets even more hairy :
->> If the server has A/a and a/b and you clone it it becomes A/a and A/b
->> locally. Then you push back to the server and you end up with three
->> refs on the server:  A/a A/b and a/b.
-> 
-> That is part of the transition in deployment.  David who wants to
-> forbid A/a and a/b mixed in his project will surely correct the
-> situation at the server end so "somebody fetches A/a and a/b and
-> ends up with A/a and A/b" will not happen.  They will fetch A/a and
-> A/b.
-> 
-> If a user is with an older Git and he has his own a/c, fetching A/a
-> and A/b from a corrected central repository will still give the user
-> a/a and a/b, but then pushing it back will be forbidden.  The user's
-> repository needs to be fixed and installation of Git needs to be
-> updated to the version with an equivalent of David's "optionally
-> deny" feature implemented for the fetching side, so that the user
-> notices the local a/c is bad and not allowed within the context of
-> his project, deletes it and recreates it as A/c before he can fetch
-> A/a and A/b from the central repository.
-> 
-> I agree that the transition may be painful, but as long as the
-> desired semantics is "If you have A/a, you are not allowed to have
-> a/a or a/b", it cannot be avoided---in that sense, I view it as a
-> lower priority issue.
-> 
-> Having said that, it may indicate that the desired semantics above
-> may not be the optimal one.  Perhaps the flag might want to be "on
-> this platform, we cannot do case sensitive refs, so pretend as if
-> all refs are lowercase" instead.  I suspect that such a flag may
-> allow smoother transition than what has been proposed.
-> 
-> Underlying refs "A/a" and "a/b" can stay as they are in David's
-> central repository, but ref enumeration with the flag enabled will
-> return a/a and a/b, and these are the names that will be fetched by
-> the users.  If the user had an existing A/c, then fetching these
-> will still create A/a and A/b locally, but pushing them back will,
-> under that flag enabled, be turned into updates to a/a, a/b, and a/c
-> on the central server side with updated Git.
+`rebase` supports the option `--root` both with and without `--onto`.
+The case where `--onto` is not specified is handled by creating a
+sentinel commit and squashing the root commit into it. The sentinel
+commit refers to the empty tree and does not have a log message
+associated with it. Its purpose is that `rebase` can rely on having a
+rebase base even without `--onto`.
 
-The discussion here has made it pretty clear that, given our current
-loose reference and reflog storage schemes, it is not possible to
-implement case-sensitive references or even case-insensitive but
-case-preserving references correctly on a non-case-sensitive filesystem.
- We would always have spooky non-local conflicts like A/a vs. a/b.
+The combination of `--root` and no `--onto` implies an interactive
+rebase. When `--preserve-merges` is not specified on the `rebase`
+command line, `rebase--interactive` uses `--cherry-pick` with
+git-rev-list to put the initial to-do list together. If the root commit
+is empty, it is treated as a cherry-pick of the sentinel commit and
+omitted from the todo-list. This is unexpected because the user does not
+know of the sentinel commit.
 
-I think we *could* correctly implement
+Add a test case. Create an empty root commit, run `rebase --root` and
+check that it is still there. If the branch consists of the root commit
+only, the bug described above causes the resulting history to consist of
+the sentinel commit only. If the root commit has children, the resulting
+history contains neither the root nor the sentinel commit. This
+behaviour is the same with `--keep-empty`.
 
-* case-folded reference names (e.g., all lower-case; I wonder if
-  that would also apply to HEAD etc.?)
+Signed-off-by: Fabian Ruch <bafain@gmail.com>
+---
 
-* case-folded reference names except for the last component, which
-  could be case-insensitive but case-preserving:
-  refs/heads/MyCrazyBranch.  I suppose that many mixed-OS projects
-  effectively use this policy nowadays and that is why we don't hear
-  more complaints about this Git deficiency.
+Notes:
+    Hi,
+    
+    This is not a fix yet.
+    
+    We are currently special casing in `do_pick` and whether the current
+    head is the sentinel commit is not a special case that would fit into
+    `do_pick`'s interface description. What if we added the feature of
+    creating root commits to `do_pick`, using `commit-tree` just like when
+    creating the sentinel commit? We would have to add another special case
+    (`test -z "$onto"`) to where the to-do list is put together in
+    `rebase--interactive`. An empty `$onto` would imply
+    
+        git rev-list $orig_head
+    
+    to form the to-do list. The rebase comment in the commit message editor
+    would have to become something similar to
+    
+        Rebase $shortrevisions as new history
+    
+    , which might be even less confusing than mentioning the hash of the
+    sentinel commit.
+    
+       Fabian
 
-If we had an option to use only packed references in a repository, I
-think we could also implement case-insensitive but case-preserving
-references on a non-case-preserving filesystem.  The packed-refs file
-would be authoritative WRT case, and the case of the reflog directories
-and files would be ignored.  But I would be nervous about promoting this
-style, because it will likely cause performance problems for repos that
-have a lot of refs.
+ t/t3412-rebase-root.sh | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-To support arbitrary refname policies on arbitrary filesystems, we of
-course need a different way of storing references and reflogs.
-
-Michael
-
+diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
+index 0b52105..a4fe3c7 100755
+--- a/t/t3412-rebase-root.sh
++++ b/t/t3412-rebase-root.sh
+@@ -278,4 +278,31 @@ test_expect_success 'rebase -i -p --root with conflict (second part)' '
+ 	test_cmp expect-conflict-p out
+ '
+ 
++test_expect_success 'rebase --root recreates empty root commit' '
++	echo Initial >expected.msg &&
++	# commit the empty tree, no parents
++	empty_tree=$(git hash-object -t tree /dev/null) &&
++	empty_root_commit=$(git commit-tree $empty_tree -F expected.msg) &&
++	git checkout -b empty-root-commit-only $empty_root_commit &&
++	# implies interactive
++	git rebase --keep-empty --root &&
++	git show --pretty=format:%s HEAD >actual.msg &&
++	test_cmp actual.msg expected.msg
++'
++
++test_expect_success 'rebase --root recreates empty root commit (subsequent commits)' '
++	echo Initial >expected.msg &&
++	# commit the empty tree, no parents
++	empty_tree=$(git hash-object -t tree /dev/null) &&
++	empty_root_commit=$(git commit-tree $empty_tree -F expected.msg) &&
++	git checkout -b empty-root-commit $empty_root_commit &&
++	>file &&
++	git add file &&
++	git commit -m file &&
++	# implies interactive
++	git rebase --keep-empty --root &&
++	git show --pretty=format:%s HEAD^ >actual.msg &&
++	test_cmp actual.msg expected.msg
++'
++
+ test_done
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+2.0.0
