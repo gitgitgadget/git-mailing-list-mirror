@@ -1,24 +1,23 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH v5 10/11] trace: add trace_performance facility
- to debug performance issues
-Date: Wed, 18 Jun 2014 17:14:42 +0200
-Message-ID: <53A1ACE2.30406@gmail.com>
-References: <53980B83.9050409@gmail.com> <53980CD8.5090801@gmail.com> <xmqqsin3mpfe.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v5 00/11] add performance tracing facility
+Date: Wed, 18 Jun 2014 17:14:47 +0200
+Message-ID: <53A1ACE7.2070601@gmail.com>
+References: <53980B83.9050409@gmail.com> <xmqqvbs656bu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
  Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCH3XYXLXQDBBY6ZQ2OQKGQE6OWJH7Q@googlegroups.com Wed Jun 18 17:14:44 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBY6ZQ2OQKGQE6OWJH7Q@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBB2GZQ2OQKGQE7RMIVMI@googlegroups.com Wed Jun 18 17:14:54 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBB2GZQ2OQKGQE7RMIVMI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f185.google.com ([74.125.82.185])
+Received: from mail-wi0-f185.google.com ([209.85.212.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBY6ZQ2OQKGQE6OWJH7Q@googlegroups.com>)
-	id 1WxHZU-00005D-2q
-	for gcvm-msysgit@m.gmane.org; Wed, 18 Jun 2014 17:14:44 +0200
-Received: by mail-we0-f185.google.com with SMTP id t60sf121850wes.12
-        for <gcvm-msysgit@m.gmane.org>; Wed, 18 Jun 2014 08:14:43 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBB2GZQ2OQKGQE7RMIVMI@googlegroups.com>)
+	id 1WxHZZ-0000Cm-FP
+	for gcvm-msysgit@m.gmane.org; Wed, 18 Jun 2014 17:14:49 +0200
+Received: by mail-wi0-f185.google.com with SMTP id cc10sf139736wib.2
+        for <gcvm-msysgit@m.gmane.org>; Wed, 18 Jun 2014 08:14:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
@@ -26,40 +25,40 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type;
-        bh=Nf8H+xiLYTSYZkJ0w1sdpVeBFCM6jtSHrrB80Ikihn0=;
-        b=vmj4q30xyUuZdzhF8zB/uvG+8l7o+nMBfkAnnmQ40pOc+PtMmYSr8lmxWBTpEZLEsZ
-         p2AS48UunyMoTQ7bPCUbD79V5+YhWe+jx1ckzll/frqbN2VUdrU9/eWvW3OHiU2fcgdw
-         ESd/dkBvrJJ2V7Y3fhs/pkI9mvkWf3Upxyjpheaq7zUCP2oJi0yokLdE+L20U7OM/a+E
-         MHjBH07ceYgkQ6Kt3FJ8VZIFxSFIS5gsL9w7xfno+i0eQJg1QRPMR1aG1IY1a/JhbHrF
-         AbXtFktXsygapK1JfmWyML/hR/zhZdKS4g18ZDBQ1v14f4xYReHSVKaThqdxEs62Y60d
-         Z17Q==
-X-Received: by 10.152.205.1 with SMTP id lc1mr21942lac.29.1403104483774;
-        Wed, 18 Jun 2014 08:14:43 -0700 (PDT)
+        bh=KBkXhvMENDmbo6jGDPX78ypjVtIUT7Ypcl4E+zHCYnk=;
+        b=i6pVA/nRmbO1HpK+hc4QURBZRGFKXEzDImTgmsRPnhNna65ZaGezIjUUoY8yAy/2x4
+         Xdub+5ZtDX0ITLh8A46xDanML0g7M0EPwBhNHTxYcDEJUY9G6KRUIJ8EkoEzF4RydEHK
+         7T2BP0GqYHLbN8UZH3/BAE3oa1/j+rMZPkR2BEB8Q0U3exKpcK11r294jKjQHiqvvlbm
+         SDlW5R3jwhvEANBNoow2AybtuTX2qDnmdtz9iLG28noKlbEH3+DLiDngpU8PvtPCYOsH
+         jzNGV/7L0fh8suN9qrgvZ2FvxpcVSYP8TUCaEzzzXjJ83ZzvJtB3UmCj2A9zP8dfYvRx
+         yp6w==
+X-Received: by 10.152.8.17 with SMTP id n17mr2529laa.42.1403104489205;
+        Wed, 18 Jun 2014 08:14:49 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.115.134 with SMTP id jo6ls34776lab.62.gmail; Wed, 18 Jun
- 2014 08:14:42 -0700 (PDT)
-X-Received: by 10.112.140.170 with SMTP id rh10mr308830lbb.7.1403104482712;
-        Wed, 18 Jun 2014 08:14:42 -0700 (PDT)
-Received: from mail-wi0-x236.google.com (mail-wi0-x236.google.com [2a00:1450:400c:c05::236])
-        by gmr-mx.google.com with ESMTPS id mx7si813031wic.1.2014.06.18.08.14.42
+Received: by 10.152.116.48 with SMTP id jt16ls35173lab.50.gmail; Wed, 18 Jun
+ 2014 08:14:47 -0700 (PDT)
+X-Received: by 10.152.8.194 with SMTP id t2mr314360laa.7.1403104487907;
+        Wed, 18 Jun 2014 08:14:47 -0700 (PDT)
+Received: from mail-wi0-x22c.google.com (mail-wi0-x22c.google.com [2a00:1450:400c:c05::22c])
+        by gmr-mx.google.com with ESMTPS id s1si187662wiw.3.2014.06.18.08.14.47
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 18 Jun 2014 08:14:42 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236 as permitted sender) client-ip=2a00:1450:400c:c05::236;
-Received: by mail-wi0-f182.google.com with SMTP id bs8so1337242wib.9
-        for <msysgit@googlegroups.com>; Wed, 18 Jun 2014 08:14:42 -0700 (PDT)
-X-Received: by 10.194.223.67 with SMTP id qs3mr14801721wjc.66.1403104482614;
-        Wed, 18 Jun 2014 08:14:42 -0700 (PDT)
+        Wed, 18 Jun 2014 08:14:47 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22c as permitted sender) client-ip=2a00:1450:400c:c05::22c;
+Received: by mail-wi0-f172.google.com with SMTP id hi2so7854131wib.5
+        for <msysgit@googlegroups.com>; Wed, 18 Jun 2014 08:14:47 -0700 (PDT)
+X-Received: by 10.180.73.106 with SMTP id k10mr6283290wiv.11.1403104487740;
+        Wed, 18 Jun 2014 08:14:47 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id q46sm5840902eem.1.2014.06.18.08.14.41
+        by mx.google.com with ESMTPSA id m1sm5816325eep.24.2014.06.18.08.14.46
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 18 Jun 2014 08:14:41 -0700 (PDT)
+        Wed, 18 Jun 2014 08:14:47 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqsin3mpfe.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqvbs656bu.fsf@gitster.dls.corp.google.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22c
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -72,72 +71,40 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251988>
 
-Am 17.06.2014 19:11, schrieb Junio C Hamano:
+Am 12.06.2014 20:30, schrieb Junio C Hamano:
 > Karsten Blees <karsten.blees@gmail.com> writes:
 > 
->> Simple use case (measure one code section):
+>> Here's v5 of the performance tracing patch series, now including a bunch of cleanups and adding timestamp, file and line to all trace output.
 >>
->>   uint64_t start = getnanotime();
->>   /* code section to measure */
->>   trace_performance_since(start, "foobar");
+>> I'm particularly interested in feedback for the output format. As file names have different lengths, printing file:line as prefix results in unaligned output:
 >>
->> Medium use case (measure consecutive code sections):
+>>  > GIT_TRACE=1 git stash list
+>>  00:12:10.544266 git.c:512 trace: exec: 'git-stash' 'list'
+>>  00:12:10.544266 run-command.c:337 trace: run_command: 'git-stash' 'list'
+>>  00:12:10.649779 git.c:312 trace: built-in: git 'rev-parse' '--git-dir'
 >>
->>   uint64_t start = getnanotime();
->>   /* first code section to measure */
->>   start = trace_performance_since(start, "first foobar");
->>   /* second code section to measure */
->>   trace_performance_since(start, "second foobar");
+>> We could add separators to make it easier to parse, e.g.:
 >>
->> Complex use case (measure repetitive code sections):
->>
->>   uint64_t t = 0;
->>   for (;;) {
->>     /* ignore */
->>     t -= getnanotime();
->>     /* code section to measure */
->>     t += getnanotime();
->>     /* ignore */
->>   }
->>   trace_performance(t, "frotz");
+>>  > GIT_TRACE=1 git stash list
+>>  [00:12:10.544266 git.c:512] trace: exec: 'git-stash' 'list'
+>>  [00:12:10.544266 run-command.c:337] trace: run_command: 'git-stash' 'list'
+>>  [00:12:10.649779 git.c:312] trace: built-in: git 'rev-parse' '--git-dir'
 > 
-> Hmph.  Even though trace_performance() makes an extra call to
-> getnanotime() in order to return, examples do not use the returned
-> value?  The second example is a good illustration why it makes sense
-> for trace_performance_since(), though.
+> This is easier to parse if " " and ":" are found in the names of
+> _our_ source files and "]" isn't, but is that really the case?
 > 
 
-Right, it makes no sense for trace_performance(), and for
-trace_performance_since() only if followed by another 'measured' code
-section. In that special case, I think it wouldn't hurt if you had to
-write:
+By "parsing" I actually meant the HumanEye (tm) parser, not lex/yacc and
+friends ("[]" just make nice recognizable separators).
 
-  uint64_t start = getnanotime();
-  /* first code section to measure */
-  trace_performance_since(start, "first foobar");
+However, I think it shouldn't be too complicated to properly align the output,
+at least for the majority of 'short' file names in the git code base. E.g.:
 
-  start = getnanotime();
-  /* second code section to measure */
-  trace_performance_since(start, "second foobar");
-
-So I guess I'll drop the return value (and the second example, which
-is then redundant to the first).
-
->> +static void trace_performance_vfl(const char *file, int line,
->> +				      uint64_t nanos, const char *format,
->> +				      va_list ap)
->> +{
-> 
-> Just being curious, but what does "v" stand for?
-> 
-
-trace_performance_vfl(, va_list)
-vs.
-trace_performance_fl(, ...)
-
-Will change to trace_performance_vprintf_fl()
+00:12:10.544266 git.c:512                trace: exec: 'git-stash' 'list'
+00:12:10.544266 run-command.c:337        trace: run_command: 'git-stash' 'list'
+00:12:10.649779 git.c:312                trace: built-in: git 'rev-parse' '--git-dir'
 
 -- 
 -- 
