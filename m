@@ -1,68 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [puzzled and solved] "shortlog" not quite understanding all
- "log" options
-Date: Wed, 18 Jun 2014 04:08:48 -0400
-Message-ID: <20140618080848.GB11027@sigill.intra.peff.net>
-References: <xmqqzjhz83rk.fsf@gitster.dls.corp.google.com>
- <20140530201652.GC5513@sigill.intra.peff.net>
- <xmqqwqd36j9d.fsf@gitster.dls.corp.google.com>
+From: =?utf-8?B?T25kxZllaiBCw61sa2E=?= <neleai@seznam.cz>
+Subject: Re: [PATCH v2 0/3] add strnncmp() function
+Date: Wed, 18 Jun 2014 12:33:31 +0200
+Message-ID: <20140618103331.GA12445@domone.podge>
+References: <cover.1402990051.git.jmmahler@gmail.com>
+ <53A02195.8080202@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jun 18 10:09:01 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeremiah Mahler <jmmahler@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Wed Jun 18 12:33:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxAvU-0001GO-Is
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 10:09:00 +0200
+	id 1WxDBW-000896-4a
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 12:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933604AbaFRIIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 04:08:52 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46609 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932108AbaFRIIu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 04:08:50 -0400
-Received: (qmail 26744 invoked by uid 102); 18 Jun 2014 08:08:50 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jun 2014 03:08:50 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jun 2014 04:08:48 -0400
+	id S965745AbaFRKdi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Jun 2014 06:33:38 -0400
+Received: from popelka.ms.mff.cuni.cz ([195.113.20.131]:46726 "EHLO
+	popelka.ms.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965268AbaFRKdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 06:33:36 -0400
+Received: from domone.kolej.mff.cuni.cz (popelka.ms.mff.cuni.cz [195.113.20.131])
+	by popelka.ms.mff.cuni.cz (Postfix) with ESMTPS id 0EB05484ED;
+	Wed, 18 Jun 2014 12:33:32 +0200 (CEST)
+Received: by domone.kolej.mff.cuni.cz (Postfix, from userid 1000)
+	id D03C85FFB8; Wed, 18 Jun 2014 12:33:31 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <xmqqwqd36j9d.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <53A02195.8080202@web.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.98.1 at popelka.ms.mff.cuni.cz
+X-Virus-Status: Clean
+X-Spam-Status: No, score=-1.9 required=5.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	UNPARSEABLE_RELAY autolearn=ham version=3.3.2
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on
+	popelka.ms.mff.cuni.cz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/251976>
 
-On Fri, May 30, 2014 at 02:37:02PM -0700, Junio C Hamano wrote:
-
-> > I am slightly puzzled why parse_revision_opt does not just call
-> > handle_revision_pseudo_opt. According to f6aca0dc4, it is because
-> > pseudo-options need to be acted on in-order, as they affect things like
-> > subsequent "--not" options, etc. But if we are using parse_options_step,
-> > shouldn't we be handling the options in order?
-> >
-> > I am sure I am just missing something obvious, so do not trouble
-> > yourself if you do not know the answer offhand.
-> 
-> Sorry, I don't know ;-)
-
-Hopefully I am not wasting your time by responding to an old thread, but
-I figured this out and wanted to post it for posterity.
-
-The answer is that it is not about handling _options_ in order, but that
-we need to handle pseudo-options in order with non-options, like:
-
-  foo --not bar
-
-Stepping through the options with parseopt will just cover dashed
-options, but we handle non-option arguments later. So we have to handle
-the pseudo-arguments like "--not" at the same later time.
-
-So there's nothing interesting to clean up or fix here.
-
--Peff
+On Tue, Jun 17, 2014 at 01:08:05PM +0200, Torsten B=F6gershausen wrote:
+> On 2014-06-17 09.34, Jeremiah Mahler wrote:
+> > Add a strnncmp() function which behaves like strncmp() except it ta=
+kes
+> > the length of both strings instead of just one.
+> >=20
+> > Then simplify tree-walk.c and unpack-trees.c using this new functio=
+n.
+> > Replace all occurrences of name_compare() with strnncmp().  Remove
+> > name_compare(), which they both had identical copies of.
+> >=20
+> > Version 2 includes suggestions from Jonathan Neider [1]:
+> >=20
+> >   - Fix the logic which caused the new strnncmp() to behave differe=
+ntly
+> > 	from the old version.  Now it is identical to strncmp().
+> >=20
+> >   - Improve description of strnncmp().
+> >=20
+> > Also, strnncmp() was switched from using memcmp() to strncmp()
+> > internally to make it clear that this is meant for strings, not
+> > general buffers.
+> I don't think this is a good change, for 2 reasons:
+> - It changes the semantics of existing code, which should be carefull=
+y
+>   reviewed, documented and may be put into a seperate commit.
+> - Looking into the code for memcmp() and strncmp() in libc,
+>   I can see that memcmp() is written in 13 lines of assembler,
+>   (on a 386 system) with a fast
+>     repz cmpsb %es:(%edi),%ds:(%esi)
+>   working as the core engine.
+>  =20
+>   strncmp() uses 83 lines of assembler, because after each comparison
+>   the code needs to check of the '\0' in both strings.
+> - I can't see a reason to replace efficient code with less efficient =
+code,
+>   so moving the old function "as is" into a include file, and declare
+>   it "static inline" could be the first step.
+>=20
+That is not true, a rep cmpsb was fast for 486 but is relatively slow
+for newer processors. For performance a correct answer is to measure it=
+ than do=20
+blind guess. Are these strings null terminated or is giving a size just
+a hint? If it is a hint then a plain strcmp could be faster (this
+depends on implementation). A reason is that for implementations that
+check more bytes at once it is easier to combine a terminating null mas=
+k with=20
+difference than trying to first find which of first 16 bytes are differ=
+ent and=20
+then compare if it is within size.
