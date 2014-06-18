@@ -1,103 +1,125 @@
 From: Jeremiah Mahler <jmmahler@gmail.com>
-Subject: [PATCH v3 0/5] cleanup duplicate name_compare() functions
-Date: Wed, 18 Jun 2014 11:45:12 -0700
-Message-ID: <1403117117-10384-1-git-send-email-jmmahler@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [PATCH v3 1/5] cache: rename cache_name_compare() to name_compare()
+Date: Wed, 18 Jun 2014 11:45:13 -0700
+Message-ID: <1403117117-10384-2-git-send-email-jmmahler@gmail.com>
+References: <1403117117-10384-1-git-send-email-jmmahler@gmail.com>
 Cc: =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
 	git@vger.kernel.org, Jeremiah Mahler <jmmahler@gmail.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 18 20:45:59 2014
+X-From: git-owner@vger.kernel.org Wed Jun 18 20:46:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxKru-0006wh-7f
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 20:45:58 +0200
+	id 1WxKs4-00079o-BH
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 20:46:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752093AbaFRSpx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Jun 2014 14:45:53 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:57541 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751349AbaFRSpw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 14:45:52 -0400
-Received: by mail-pa0-f43.google.com with SMTP id lf10so1022432pab.30
-        for <git@vger.kernel.org>; Wed, 18 Jun 2014 11:45:52 -0700 (PDT)
+	id S1754212AbaFRSqC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 14:46:02 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:50207 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751349AbaFRSqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 14:46:01 -0400
+Received: by mail-pb0-f48.google.com with SMTP id rq2so1022029pbb.35
+        for <git@vger.kernel.org>; Wed, 18 Jun 2014 11:46:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:mime-version:content-type
-         :content-transfer-encoding;
-        bh=9NuLkqA34yoVg5MVclhUelN4Wx5bbc7WVsEIs5ZHXbU=;
-        b=L9n+h9kYAMTep3HLugD9akrymzsFY68ISYTqMuHyTbalX3cgt89N6y6LSBgh7H5gfN
-         zdmNGpf8pBseAcnUq00kKZ4C+w27GBjeQPKgPiPT+TjE4JfcsIfsdtK7DWxoHduLKqHf
-         G1C38STlcBvLXj7veOdwwwx1+7cYRlfrrM83mHUZIzt8JGjCTRmzAe0vEHYguFpIY3uH
-         9IpPrlOagejzIQEivYNFaKUn4CIBgSdyYDCQOAdcWtyFziPTDkmsQ4zTxADt1OZYauJ4
-         rCmSLdoerFZak2bkbyVR4Yi9a0HvO0LyDnfoczLf7HkmeidIThNIUpqZf6q9LuPfbhs3
-         SKBA==
-X-Received: by 10.66.65.225 with SMTP id a1mr4674190pat.139.1403117152216;
-        Wed, 18 Jun 2014 11:45:52 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=XFFva2epq/SxrqBHLTC9N+owVpbs/NfjbW5B9JexHkY=;
+        b=A4MrHr0lqrdnheAbGSW1TK1exf0Go7WtmL5yhd6uf6ZYYcytUs78O7xq6kT1dV3Dss
+         FbdEoJGxJj/YIUpzR/nDKKrpEHHQCi1UKjBNlQPxloSh2GpdhlS1bPvvbeoXGfJZPDFW
+         E7ALEVIAW1B8fkIXAHv+2AFi07wl719Oj18chcc3aKUuTLD9PeQUhPY1iOjR+QYTz96u
+         7gw27aeOnTD7t5tcTqnI1xvbw/TdmHd6hp00MMyFLIpLshyz3Shma4YLn8Z9lv5PBJjn
+         g8TF8XxJrtCkKhob7tDmQ99kj6MfFQmLEWYZmV2hGhiTRZdCYeWNtWHLjKs+9Cx9DGEc
+         wpzg==
+X-Received: by 10.68.171.193 with SMTP id aw1mr4365185pbc.117.1403117160312;
+        Wed, 18 Jun 2014 11:46:00 -0700 (PDT)
 Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
-        by mx.google.com with ESMTPSA id fd5sm14271505pad.12.2014.06.18.11.45.50
+        by mx.google.com with ESMTPSA id bu1sm4655008pbb.54.2014.06.18.11.45.58
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jun 2014 11:45:51 -0700 (PDT)
+        Wed, 18 Jun 2014 11:45:59 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.697.g57b47e0
+In-Reply-To: <1403117117-10384-1-git-send-email-jmmahler@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252021>
 
-Version 3 of the patch series to cleanup duplicate name_compare()
-functions (previously was 'add strnncmp() function' [1]). =20
+The cache_name_compare() function is not specific to a cache.
+Make its name more general by renaming it to name_compare().
 
-This version goes in a slightly different direction than the previous
-version.  Before I was trying to add a strnncmp() function so I could
-remove duplicate copies of the name_compare() function in tree-walk.c
-and unpack-trees.c.  But then Torsten B=C3=B6gershausen pointed out tha=
-t
-there is a cache_name_compare() function which is nearly identical to
-name_compare() [2]*.
+Simplify cache_name_stage_compare() via name_compare().
+Where lengths are involved, change int to size_t.
 
-* cache_name_compare() is not identical to name_compare().  The former
-  returns +1, -1, whereas the latter returns +N, -N.  But there is no
-  place where name_compare() was used that needed the magnitude so this
-  change would not alter its behavior.
+Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
+---
+ cache.h      |  2 +-
+ read-cache.c | 23 +++++++++++++----------
+ 2 files changed, 14 insertions(+), 11 deletions(-)
 
-So I decided why not generalize the name of cache_name_compare() by
-renaming it to  name_compare(), since it doesn't do anything with
-caches, other than being part of cache.h and read-cache.c.  Then the
-duplicate name_compare() functions can be removed and the few places
-that used cache_name_compare() can be renamed to name_compare().
-
-It cleans up the code with a minimal number of changes.  It keeps
-existing functions instead of creating new ones.  And there are several
-other functions in cache.h that are similarly named '*name_compare' so
-it follows the already established style.
-
-Also, the name_compare() now uses memcmp() as it did originally instead
-of using strncmp() as it did in the last version.
-
-[1]: http://marc.info/?l=3Dgit&m=3D140299051431479&w=3D2
-
-[2]: http://marc.info/?l=3Dgit&m=3D140300329403706&w=3D2
-
-Jeremiah Mahler (5):
-  cache: rename cache_name_compare() to name_compare()
-  tree-walk.c: remove name_compare() function
-  unpack-trees.c: remove name_compare() function
-  dir.c: rename to name_compare()
-  name-hash.c: rename to name_compare()
-
- cache.h        |  2 +-
- dir.c          |  3 +--
- name-hash.c    |  2 +-
- read-cache.c   | 23 +++++++++++++----------
- tree-walk.c    | 10 ----------
- unpack-trees.c | 11 -----------
- 6 files changed, 16 insertions(+), 35 deletions(-)
-
---=20
+diff --git a/cache.h b/cache.h
+index c498a30..e3205fe 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1027,7 +1027,7 @@ extern int validate_headref(const char *ref);
+ 
+ extern int base_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
+ extern int df_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
+-extern int cache_name_compare(const char *name1, int len1, const char *name2, int len2);
++extern int name_compare(const char *name1, size_t len1, const char *name2, size_t len2);
+ extern int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2);
+ 
+ extern void *read_object_with_reference(const unsigned char *sha1,
+diff --git a/read-cache.c b/read-cache.c
+index 9f56d76..158241d 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -434,18 +434,26 @@ int df_name_compare(const char *name1, int len1, int mode1,
+ 	return c1 - c2;
+ }
+ 
+-int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2)
++int name_compare(const char *name1, size_t len1, const char *name2, size_t len2)
+ {
+-	int len = len1 < len2 ? len1 : len2;
+-	int cmp;
+-
+-	cmp = memcmp(name1, name2, len);
++	size_t min_len = (len1 < len2) ? len1 : len2;
++	int cmp = memcmp(name1, name2, min_len);
+ 	if (cmp)
+ 		return cmp;
+ 	if (len1 < len2)
+ 		return -1;
+ 	if (len1 > len2)
+ 		return 1;
++	return 0;
++}
++
++int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2)
++{
++	int cmp;
++
++	cmp = name_compare(name1, len1, name2, len2);
++	if (cmp)
++		return cmp;
+ 
+ 	if (stage1 < stage2)
+ 		return -1;
+@@ -454,11 +462,6 @@ int cache_name_stage_compare(const char *name1, int len1, int stage1, const char
+ 	return 0;
+ }
+ 
+-int cache_name_compare(const char *name1, int len1, const char *name2, int len2)
+-{
+-	return cache_name_stage_compare(name1, len1, 0, name2, len2, 0);
+-}
+-
+ static int index_name_stage_pos(const struct index_state *istate, const char *name, int namelen, int stage)
+ {
+ 	int first, last;
+-- 
 2.0.0
