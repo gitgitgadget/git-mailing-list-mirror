@@ -1,97 +1,99 @@
-From: <warren.l.dodge@tektronix.com>
-Subject: Error 128 Clone succeeded, but checkout failed
-Date: Wed, 18 Jun 2014 16:03:40 -0700
-Message-ID: <05c29ee7-8629-424e-b2db-de49db976e55@US-BV-EXH02-P.global.tektronix.net>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Conventions on struct copying?
+Date: Wed, 18 Jun 2014 23:31:29 +0000
+Message-ID: <20140618233129.GK368384@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: <git@vger.kernel.org>, <warren.l.dodge@tektronix.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 01:03:49 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="CgTrtGVSVGoxAIFj"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 19 01:31:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxOtR-0002Ld-2s
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 01:03:49 +0200
+	id 1WxPKP-0007D2-9s
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 01:31:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755962AbaFRXDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 19:03:45 -0400
-Received: from ch1ehsobe004.messaging.microsoft.com ([216.32.181.184]:59897
-	"EHLO ch1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752390AbaFRXDo convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 19:03:44 -0400
-Received: from mail84-ch1-R.bigfish.com (10.43.68.240) by
- CH1EHSOBE008.bigfish.com (10.43.70.58) with Microsoft SMTP Server id
- 14.1.225.22; Wed, 18 Jun 2014 23:03:43 +0000
-Received: from mail84-ch1 (localhost [127.0.0.1])	by mail84-ch1-R.bigfish.com
- (Postfix) with ESMTP id 2856C1A0331	for <git@vger.kernel.org>; Wed, 18 Jun
- 2014 23:03:43 +0000 (UTC)
-X-Forefront-Antispam-Report: CIP:192.65.42.18;KIP:(null);UIP:(null);IPV:NLI;H:mx.danahertm.com;RD:mx.danahertm.com;EFVD:NLI
-X-SpamScore: 0
-X-BigFish: VPS0(zz444eMzz1f42h1ee6h1de0h1fdah2073h2146h1202h1e76h2189h1d1ah1d2ah21bch21a7h1fc6h208chzz1de097hb412mz31h2a8h839h8e3h947hc60hc61hd24hf0ah1288h12a5h12a9h12bdh137ah13b6h1441h1504h1537h153bh162dh1631h1758h18e1h1946h19b5h1b0ah224fh1d0ch1d2eh1d3fh1dc1h1dfeh1dffh1e1dh1fe8h1ff5h2216h22d0h2336h2438h2461h2487h24d7h2516h2545h255eh25f6h2605h268bh26d3h27e2h282bh293fh)
-Received-SPF: softfail (mail84-ch1: transitioning domain of tektronix.com does not designate 192.65.42.18 as permitted sender) client-ip=192.65.42.18; envelope-from=warren.l.dodge@tektronix.com; helo=mx.danahertm.com ;anahertm.com ;
-Received: from mail84-ch1 (localhost.localdomain [127.0.0.1]) by mail84-ch1
- (MessageSwitch) id 1403132621560243_14155; Wed, 18 Jun 2014 23:03:41 +0000
- (UTC)
-Received: from CH1EHSMHS037.bigfish.com (snatpool1.int.messaging.microsoft.com
- [10.43.68.246])	by mail84-ch1.bigfish.com (Postfix) with ESMTP id 85843E004A
-	for <git@vger.kernel.org>; Wed, 18 Jun 2014 23:03:41 +0000 (UTC)
-Received: from mx.danahertm.com (192.65.42.18) by CH1EHSMHS037.bigfish.com
- (10.43.69.246) with Microsoft SMTP Server (TLS) id 14.16.227.3; Wed, 18 Jun
- 2014 23:03:41 +0000
-Received: from US-BV-EXH02-P.global.tektronix.net (128.181.11.23) by
- US-BV-EXE01-P.global.tektronix.net (128.181.15.45) with Microsoft SMTP Server
- (TLS) id 14.3.146.0; Wed, 18 Jun 2014 16:03:32 -0700
-Received: from PC-BEAV-1F55 (128.181.7.176) by mail.danahertm.com
- (128.181.11.23) with Microsoft SMTP Server id 14.3.169.1; Wed, 18 Jun 2014
- 16:03:39 -0700
-X-OriginatorOrg: tektronix.com
-X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
+	id S1756679AbaFRXbh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 19:31:37 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:48414 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753095AbaFRXbg (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2014 19:31:36 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:4482:19b0:51d5:328f])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B2DCB2808E
+	for <git@vger.kernel.org>; Wed, 18 Jun 2014 23:31:33 +0000 (UTC)
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.15-rc5-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252081>
 
-I have looked for an answer to the Error 128 Clone succeeded, but checkout failed message we are getting on a clone command.
-And there does not seem to be any that relates to our situation. 
 
-The repository is on a local file server system that is mounted to the pc as L:
+--CgTrtGVSVGoxAIFj
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-If we clone the repository on to the L: directory structure we get the following
+I'm still working on the struct object_id patches, and I had a style
+question.  In several places throughout the code, we do something like
+this:
 
-git.exe clone      --progress -v  L:\GIT_REPOSITORY L:\warrend\fail
+  unsigned char a[20], b[20];
 
-Cloning into L:\warrend\fail
-Done.
-Fatal: unable to read "Long hash key"
-Warning: clone succeeded, but checkout failed.
-You can inspect what was checked out with git status
-And retry the checkout with git checkout -f HEAD
+  /* do some stuff with b */
+  hashcpy(a, b);
 
-Git did not exit cleanly (exit code 128) ( time and date etc)
+I could implement an oidcpy that does the same thing.
 
-At this point there is only a .git directory at the destination
+  struct object_id a, b;
 
-We have another drive mounted as X: which utilizes a different file server. If we do this
+  /* do some stuff with b */
+  oidcpy(&a, &b);
 
-git.exe clone      --progress -v  L:\GIT_REPOSITORY X:\warrend\works
+Or I could just write that as:
 
-It will clone and do the checkout properly.
+  a =3D b;
 
-These does not seem to be any permission or disk space problems on the L: drive. We are unable to figure out why this is happening.
+and let the compiler do the heavy lifting.  Is there any reason that
+we'd want the function for that purpose, or is it okay to just use the
+assignment?  I don't know of any place we explicitly copy structs like
+this, but I don't know of any prohibition against it, either.
 
-I copied the two .git directories to a linux file system and did a diff -r of them and found this
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
 
-Bad one doesn't have the putty line for some reason 
-diff -r fail/.git/config  works/.git/config
-12d11
-<       puttykeyfile = 
+--CgTrtGVSVGoxAIFj
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
 
-There was no index file in the bad tree. The config file which is in both trees was made after the index file.
-Only in .git: index
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
 
-I was hoping there was a debug method that would allow us to see what the actual check was that is failing.
-Any help on this would be greatly appreciated.
+iQIcBAEBCgAGBQJToiFRAAoJEL9TXYEfUvaLKqUP/R2tI1kBt+xdt+0h/Q3Ra24c
+Lba+7TnvWHwZHcotv3YAi50NRDnkEfzQTBJdAslCB3pQt6SPzTurSksA7ZBZliHZ
+8l3nxHnVa68SeCLLcZRlbpvGqPglaTAQqz5yEYxkLoM/fdN7GUlGQa7s5f5LsICM
+q4SxTMPyPSNtUWry7uHQXp4LeVnpqKbNTVpc8c3UV3AWNufzw6eFlGPTpSRFFfa0
+tRDUneEDRRCL6dYTeD3a2SrrXD9NsUx8bYhrzJESEIDALvgHysg9oZijYpAn6pfq
+6M/0oSHqIKBmlOSZ0To2rDcxKQq3PhSBh5jDWWbDknN6RUgDHLCw5H4yg7J9rv9E
+vLKOZpiYvv5LT0KBelPjaWO1u4k+XbgGq47l8F3tLDhlmOCBbwniKPIqKV3Q6t62
+KbA/VtJlQDdDarQ1ve9m9GG3NSrKkVUthNtuXpW3gZUM05HqJESUOBy+os5VNvJR
+D7H7Tfoqlh8Eim1Wa1gmGfozq7h4Y0ogQBUvr+A7UbNJe6nwQiOXH7zWqEUGyAwj
+4jhJrObWWhv+EY3JNctDvV85VND1gcWsCvt4xxmU2VW3CQDn1CauuUiOu19Ve9+S
+T5EP7GGCKb2nknhvPg1VnpxSyMFHTb/3wvcE+NTUUstAimqI13Ig2p2whduLgSiC
+PgeV8hjZDkNWiyAOKP5w
+=u9KE
+-----END PGP SIGNATURE-----
+
+--CgTrtGVSVGoxAIFj--
