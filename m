@@ -1,132 +1,104 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] alloc.c: remove alloc_raw_commit_node() function
-Date: Wed, 18 Jun 2014 20:52:46 +0100
-Message-ID: <53A1EE0E.6040000@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 14/16] fetch-pack: refactor parsing in get_ack
+Date: Wed, 18 Jun 2014 15:56:03 -0400
+Message-ID: <20140618195603.GN22622@sigill.intra.peff.net>
+References: <20140618194117.GA22269@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 18 21:53:00 2014
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jun 18 21:56:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxLuh-000057-8p
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 21:52:55 +0200
+	id 1WxLxq-0003cW-V9
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 21:56:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754664AbaFRTww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 15:52:52 -0400
-Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:58917 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754537AbaFRTwv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 15:52:51 -0400
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id B8F34AC40B3;
-	Wed, 18 Jun 2014 20:53:00 +0100 (BST)
-Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 6E76BAC40AD;
-	Wed, 18 Jun 2014 20:53:00 +0100 (BST)
-Received: from [192.168.254.9] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
-	Wed, 18 Jun 2014 20:52:59 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-X-MDF-HostID: 17
+	id S1754594AbaFRT4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 15:56:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46967 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754109AbaFRT4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 15:56:05 -0400
+Received: (qmail 30746 invoked by uid 102); 18 Jun 2014 19:56:04 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jun 2014 14:56:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jun 2014 15:56:03 -0400
+Content-Disposition: inline
+In-Reply-To: <20140618194117.GA22269@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252047>
 
-In order to encapsulate the setting of the unique commit index, commit
-969eba63 ("commit: push commit_index update into alloc_commit_node",
-10-06-2014) introduced a (logically private) intermediary allocator
-function. However, this function (alloc_raw_commit_node()) was declared
-as a public function, which undermines its entire purpose.
+There are several uses of the magic number "line+45" when
+parsing ACK lines from the server, and it's rather unclear
+why 45 is the correct number. We can make this more clear by
+keeping a running pointer as we parse, using skip_prefix to
+jump past the first "ACK ", then adding 40 to jump past
+get_sha1_hex (which is still magical, but hopefully 40 is
+less magical to readers of git code).
 
-Remove the alloc_raw_commit_node() function and inline its code into
-the (public) alloc_commit_node() function.
+Note that this actually puts us at line+44. The original
+required some character between the sha1 and further ACK
+flags (it is supposed to be a space, but we never enforced
+that). We start our search for flags at line+44, which
+meanas we are slightly more liberal than the old code.
 
-Noticed by sparse ("symbol 'alloc_raw_commit_node' was not declared.
-Should it be static?").
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Signed-off-by: Jeff King <peff@peff.net>
 ---
+I actually think we could tighten this even more and drop the strstrs,
+too, like:
 
-Hi Jeff,
+  arg += 40;
+  if (*arg++ != ' ')
+	return ACK;
+  if (!strcmp(arg, "continue"))
+	return ACK_continue;
 
-I noticed this while it was still in 'pu', but got distracted and
-didn't send this in time ... sorry about that! :(
+and so on. But I wasn't sure if there was a reason for the use of
+strstr. According to pack-protocol.txt, we would only get one at a time,
+and always with a single space between them.
 
-My first attempt at fixing this involved changing the DEFINE_ALLOCATOR
-macro to include a 'scope' parameter so that I could declare the
-raw_commit allocator 'static'. Unfortunately, I could not pass the
-extern keyword as the scope parameter to all the other allocators,
-because that made sparse even more upset - you can't use extern on
-a function _definition_. That meant passing an empty argument (or a
-comment token) to the scope parameter. This worked for gcc 4.8.2 and
-clang 3.4, but I was a little concerned about portability.
+ fetch-pack.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-This seems a better solution to me. Having said that ... as I'm typing
-this I realized that I could have removed the 'commit_count' variable
-and used 'commit_allocs' to set c->index instead! :-P Oh well ...
-
-ATB,
-Ramsay Jones
-
- alloc.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
-
-diff --git a/alloc.c b/alloc.c
-index eb22a45..124d710 100644
---- a/alloc.c
-+++ b/alloc.c
-@@ -47,16 +47,30 @@ union any_object {
- 
- DEFINE_ALLOCATOR(blob, struct blob)
- DEFINE_ALLOCATOR(tree, struct tree)
--DEFINE_ALLOCATOR(raw_commit, struct commit)
- DEFINE_ALLOCATOR(tag, struct tag)
- DEFINE_ALLOCATOR(object, union any_object)
- 
-+static unsigned int commit_allocs;
-+
- void *alloc_commit_node(void)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 3de3bd5..72ec520 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -189,20 +189,23 @@ static enum ack_type get_ack(int fd, unsigned char *result_sha1)
  {
- 	static int commit_count;
--	struct commit *c = alloc_raw_commit_node();
-+	static int nr;
-+	static struct commit *block;
-+	struct commit *c;
-+	void *ret;
-+
-+	if (!nr) {
-+		nr = BLOCKING;
-+		block = xmalloc(BLOCKING * sizeof(struct commit));
-+	}
-+	nr--;
-+	commit_allocs++;
-+	ret = block++;
-+	memset(ret, 0, sizeof(struct commit));
-+	c = (struct commit *) ret;
- 	c->index = commit_count++;
--	return c;
-+	return ret;
- }
+ 	int len;
+ 	char *line = packet_read_line(fd, &len);
++	const char *arg;
  
- static void report(const char *name, unsigned int count, size_t size)
-@@ -72,7 +86,7 @@ void alloc_report(void)
- {
- 	REPORT(blob, struct blob);
- 	REPORT(tree, struct tree);
--	REPORT(raw_commit, struct commit);
-+	REPORT(commit, struct commit);
- 	REPORT(tag, struct tag);
- 	REPORT(object, union any_object);
- }
+ 	if (!len)
+ 		die("git fetch-pack: expected ACK/NAK, got EOF");
+ 	if (!strcmp(line, "NAK"))
+ 		return NAK;
+-	if (starts_with(line, "ACK ")) {
+-		if (!get_sha1_hex(line+4, result_sha1)) {
+-			if (len < 45)
++	if (skip_prefix(line, "ACK ", &arg)) {
++		if (!get_sha1_hex(arg, result_sha1)) {
++			arg += 40;
++			len -= arg - line;
++			if (len < 1)
+ 				return ACK;
+-			if (strstr(line+45, "continue"))
++			if (strstr(arg, "continue"))
+ 				return ACK_continue;
+-			if (strstr(line+45, "common"))
++			if (strstr(arg, "common"))
+ 				return ACK_common;
+-			if (strstr(line+45, "ready"))
++			if (strstr(arg, "ready"))
+ 				return ACK_ready;
+ 			return ACK;
+ 		}
 -- 
-2.0.0
+2.0.0.566.gfe3e6b2
