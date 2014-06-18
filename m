@@ -1,381 +1,402 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 09/16] use skip_prefix to avoid repeating strings
-Date: Wed, 18 Jun 2014 15:48:29 -0400
-Message-ID: <20140618194829.GI22622@sigill.intra.peff.net>
+Subject: [PATCH 10/16] fast-import: use skip_prefix for parsing input
+Date: Wed, 18 Jun 2014 15:49:12 -0400
+Message-ID: <20140618194912.GJ22622@sigill.intra.peff.net>
 References: <20140618194117.GA22269@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 18 21:48:35 2014
+X-From: git-owner@vger.kernel.org Wed Jun 18 21:49:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxLqU-00042h-Rr
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 21:48:35 +0200
+	id 1WxLrD-0004ne-Tb
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 21:49:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754600AbaFRTsb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 15:48:31 -0400
-Received: from cloud.peff.net ([50.56.180.127]:46954 "HELO peff.net"
+	id S1754992AbaFRTtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 15:49:15 -0400
+Received: from cloud.peff.net ([50.56.180.127]:46956 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754109AbaFRTsa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 15:48:30 -0400
-Received: (qmail 30313 invoked by uid 102); 18 Jun 2014 19:48:30 -0000
+	id S1754590AbaFRTtO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 15:49:14 -0400
+Received: (qmail 30363 invoked by uid 102); 18 Jun 2014 19:49:14 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jun 2014 14:48:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jun 2014 15:48:29 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 18 Jun 2014 14:49:14 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 18 Jun 2014 15:49:12 -0400
 Content-Disposition: inline
 In-Reply-To: <20140618194117.GA22269@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252042>
 
-It's a common idiom to match a prefix and then skip past it
-with strlen, like:
+Fast-import does a lot of parsing of commands and
+dispatching to sub-functions. For example, given "option
+foo", we might recognize "option " using starts_with, and
+then hand it off to parse_option() to do the rest.
 
-  if (starts_with(foo, "bar"))
-	  foo += strlen("bar");
+However, we do not let parse_option know that we have parsed
+the first part already. It gets the full buffer, and has to
+skip past the uninteresting bits. Some functions simply add
+a magic constant:
 
-This avoids magic numbers, but means we have to repeat the
-string (and there is no compiler check that we didn't make a
-typo in one of the strings).
+  char *option = command_buf.buf + 7;
 
-We can use skip_prefix to handle this case without repeating
-ourselves.
+Others use strlen:
+
+  char *option = command_buf.buf + strlen("option ");
+
+And others use strchr:
+
+  char *option = strchr(command_buf.buf, ' ') + 1;
+
+All of these are brittle and easy to get wrong (especially
+given that the starts_with call and the code that assumes
+the presence of the prefix are far apart). Instead, we can
+use skip_prefix, and just pass each handler a pointer to its
+arguments.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin/checkout.c      |  4 ++--
- builtin/fmt-merge-msg.c |  6 +++---
- builtin/log.c           | 12 ++++++------
- diff.c                  | 27 +++++++++------------------
- help.c                  |  7 ++++---
- merge-recursive.c       | 15 ++++++++-------
- pretty.c                |  3 +--
- remote-curl.c           | 15 ++++++++-------
- remote.c                |  5 ++---
- sha1_name.c             |  4 +---
- 10 files changed, 44 insertions(+), 54 deletions(-)
+ fast-import.c | 125 +++++++++++++++++++++++++---------------------------------
+ 1 file changed, 53 insertions(+), 72 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f1dc56e..463cfee 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -776,8 +776,8 @@ static int switch_branches(const struct checkout_opts *opts,
- 	if (!(flag & REF_ISSYMREF))
- 		old.path = NULL;
+diff --git a/fast-import.c b/fast-import.c
+index a3ffe30..5f17adb 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -371,8 +371,8 @@ static volatile sig_atomic_t checkpoint_requested;
+ static int cat_blob_fd = STDOUT_FILENO;
  
--	if (old.path && starts_with(old.path, "refs/heads/"))
--		old.name = old.path + strlen("refs/heads/");
-+	if (old.path)
-+		skip_prefix(old.path, "refs/heads/", &old.name);
+ static void parse_argv(void);
+-static void parse_cat_blob(void);
+-static void parse_ls(struct branch *b);
++static void parse_cat_blob(const char *p);
++static void parse_ls(const char *p, struct branch *b);
  
- 	if (!new->name) {
- 		new->name = "HEAD";
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 3c19241..ad3bc58 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -100,7 +100,8 @@ static int handle_line(char *line, struct merge_parents *merge_parents)
+ static void write_branch_report(FILE *rpt, struct branch *b)
  {
- 	int i, len = strlen(line);
- 	struct origin_data *origin_data;
--	char *src, *origin;
-+	char *src;
-+	const char *origin;
- 	struct src_data *src_data;
- 	struct string_list_item *item;
- 	int pulling_head = 0;
-@@ -164,8 +165,7 @@ static int handle_line(char *line, struct merge_parents *merge_parents)
- 		origin = line;
- 		string_list_append(&src_data->tag, origin + 4);
- 		src_data->head_status |= 2;
--	} else if (starts_with(line, "remote-tracking branch ")) {
--		origin = line + strlen("remote-tracking branch ");
-+	} else if (skip_prefix(line, "remote-tracking branch ", &origin)) {
- 		string_list_append(&src_data->r_branch, origin);
- 		src_data->head_status |= 2;
- 	} else {
-diff --git a/builtin/log.c b/builtin/log.c
-index a7ba211..0f59c25 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -872,7 +872,7 @@ static char *find_branch_name(struct rev_info *rev)
- 	int i, positive = -1;
- 	unsigned char branch_sha1[20];
- 	const unsigned char *tip_sha1;
--	const char *ref;
-+	const char *ref, *v;
- 	char *full_ref, *branch = NULL;
+@@ -1861,6 +1861,8 @@ static int read_next_command(void)
+ 	}
  
- 	for (i = 0; i < rev->cmdline.nr; i++) {
-@@ -888,9 +888,9 @@ static char *find_branch_name(struct rev_info *rev)
- 	ref = rev->cmdline.rev[positive].name;
- 	tip_sha1 = rev->cmdline.rev[positive].item->sha1;
- 	if (dwim_ref(ref, strlen(ref), branch_sha1, &full_ref) &&
--	    starts_with(full_ref, "refs/heads/") &&
-+	    skip_prefix(full_ref, "refs/heads/", &v) &&
- 	    !hashcmp(tip_sha1, branch_sha1))
--		branch = xstrdup(full_ref + strlen("refs/heads/"));
-+		branch = xstrdup(v);
- 	free(full_ref);
- 	return branch;
- }
-@@ -1394,10 +1394,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 
- 		if (check_head) {
- 			unsigned char sha1[20];
--			const char *ref;
-+			const char *ref, *v;
- 			ref = resolve_ref_unsafe("HEAD", sha1, 1, NULL);
--			if (ref && starts_with(ref, "refs/heads/"))
--				branch_name = xstrdup(ref + strlen("refs/heads/"));
-+			if (ref && skip_prefix(ref, "refs/heads/", &v))
-+				branch_name = xstrdup(v);
- 			else
- 				branch_name = xstrdup(""); /* no branch */
- 		}
-diff --git a/diff.c b/diff.c
-index 97db932..2378ae4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3395,12 +3395,10 @@ int parse_long_opt(const char *opt, const char **argv,
- 		   const char **optarg)
- {
- 	const char *arg = argv[0];
--	if (arg[0] != '-' || arg[1] != '-')
-+	if (!skip_prefix(arg, "--", &arg))
- 		return 0;
--	arg += strlen("--");
--	if (!starts_with(arg, opt))
-+	if (!skip_prefix(arg, opt, &arg))
- 		return 0;
--	arg += strlen(opt);
- 	if (*arg == '=') { /* stuck form: --option=value */
- 		*optarg = arg + 1;
- 		return 1;
-@@ -3429,8 +3427,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 
- 	switch (*arg) {
- 	case '-':
--		if (starts_with(arg, "-width")) {
--			arg += strlen("-width");
-+		if (skip_prefix(arg, "-width", &arg)) {
- 			if (*arg == '=')
- 				width = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
-@@ -3439,8 +3436,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 				width = strtoul(av[1], &end, 10);
- 				argcount = 2;
- 			}
--		} else if (starts_with(arg, "-name-width")) {
--			arg += strlen("-name-width");
-+		} else if (skip_prefix(arg, "-name-width", &arg)) {
- 			if (*arg == '=')
- 				name_width = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
-@@ -3449,8 +3445,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 				name_width = strtoul(av[1], &end, 10);
- 				argcount = 2;
- 			}
--		} else if (starts_with(arg, "-graph-width")) {
--			arg += strlen("-graph-width");
-+		} else if (skip_prefix(arg, "-graph-width", &arg)) {
- 			if (*arg == '=')
- 				graph_width = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
-@@ -3459,8 +3454,7 @@ static int stat_opt(struct diff_options *options, const char **av)
- 				graph_width = strtoul(av[1], &end, 10);
- 				argcount = 2;
- 			}
--		} else if (starts_with(arg, "-count")) {
--			arg += strlen("-count");
-+		} else if (skip_prefix(arg, "-count", &arg)) {
- 			if (*arg == '=')
- 				count = strtoul(arg + 1, &end, 10);
- 			else if (!*arg && !av[1])
-@@ -3905,16 +3899,13 @@ static int diff_scoreopt_parse(const char *opt)
- 	cmd = *opt++;
- 	if (cmd == '-') {
- 		/* convert the long-form arguments into short-form versions */
--		if (starts_with(opt, "break-rewrites")) {
--			opt += strlen("break-rewrites");
-+		if (skip_prefix(opt, "break-rewrites", &opt)) {
- 			if (*opt == 0 || *opt++ == '=')
- 				cmd = 'B';
--		} else if (starts_with(opt, "find-copies")) {
--			opt += strlen("find-copies");
-+		} else if (skip_prefix(opt, "find-copies", &opt)) {
- 			if (*opt == 0 || *opt++ == '=')
- 				cmd = 'C';
--		} else if (starts_with(opt, "find-renames")) {
--			opt += strlen("find-renames");
-+		} else if (skip_prefix(opt, "find-renames", &opt)) {
- 			if (*opt == 0 || *opt++ == '=')
- 				cmd = 'M';
- 		}
-diff --git a/help.c b/help.c
-index b0f1a69..79e8007 100644
---- a/help.c
-+++ b/help.c
-@@ -414,11 +414,12 @@ static int append_similar_ref(const char *refname, const unsigned char *sha1,
- {
- 	struct similar_ref_cb *cb = (struct similar_ref_cb *)(cb_data);
- 	char *branch = strrchr(refname, '/') + 1;
-+	const char *remote;
+ 	for (;;) {
++		const char *p;
 +
- 	/* A remote branch of the same name is deemed similar */
--	if (starts_with(refname, "refs/remotes/") &&
-+	if (skip_prefix(refname, "refs/remotes/", &remote) &&
- 	    !strcmp(branch, cb->base_ref))
--		string_list_append(cb->similar_refs,
--				   refname + strlen("refs/remotes/"));
-+		string_list_append(cb->similar_refs, remote);
- 	return 0;
+ 		if (unread_command_buf) {
+ 			unread_command_buf = 0;
+ 		} else {
+@@ -1893,8 +1895,8 @@ static int read_next_command(void)
+ 			rc->prev->next = rc;
+ 			cmd_tail = rc;
+ 		}
+-		if (starts_with(command_buf.buf, "cat-blob ")) {
+-			parse_cat_blob();
++		if (skip_prefix(command_buf.buf, "cat-blob ", &p)) {
++			parse_cat_blob(p);
+ 			continue;
+ 		}
+ 		if (command_buf.buf[0] == '#')
+@@ -2273,9 +2275,8 @@ static uintmax_t parse_mark_ref_space(const char **p)
+ 	return mark;
  }
  
-diff --git a/merge-recursive.c b/merge-recursive.c
-index cab16fa..f848001 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2063,6 +2063,8 @@ void init_merge_options(struct merge_options *o)
- 
- int parse_merge_opt(struct merge_options *o, const char *s)
+-static void file_change_m(struct branch *b)
++static void file_change_m(const char *p, struct branch *b)
  {
-+	const char *arg;
+-	const char *p = command_buf.buf + 2;
+ 	static struct strbuf uq = STRBUF_INIT;
+ 	const char *endp;
+ 	struct object_entry *oe;
+@@ -2376,9 +2377,8 @@ static void file_change_m(struct branch *b)
+ 	tree_content_set(&b->branch_tree, p, sha1, mode, NULL);
+ }
+ 
+-static void file_change_d(struct branch *b)
++static void file_change_d(const char *p, struct branch *b)
+ {
+-	const char *p = command_buf.buf + 2;
+ 	static struct strbuf uq = STRBUF_INIT;
+ 	const char *endp;
+ 
+@@ -2391,15 +2391,14 @@ static void file_change_d(struct branch *b)
+ 	tree_content_remove(&b->branch_tree, p, NULL, 1);
+ }
+ 
+-static void file_change_cr(struct branch *b, int rename)
++static void file_change_cr(const char *s, struct branch *b, int rename)
+ {
+-	const char *s, *d;
++	const char *d;
+ 	static struct strbuf s_uq = STRBUF_INIT;
+ 	static struct strbuf d_uq = STRBUF_INIT;
+ 	const char *endp;
+ 	struct tree_entry leaf;
+ 
+-	s = command_buf.buf + 2;
+ 	strbuf_reset(&s_uq);
+ 	if (!unquote_c_style(&s_uq, s, &endp)) {
+ 		if (*endp != ' ')
+@@ -2444,9 +2443,8 @@ static void file_change_cr(struct branch *b, int rename)
+ 		leaf.tree);
+ }
+ 
+-static void note_change_n(struct branch *b, unsigned char *old_fanout)
++static void note_change_n(const char *p, struct branch *b, unsigned char *old_fanout)
+ {
+-	const char *p = command_buf.buf + 2;
+ 	static struct strbuf uq = STRBUF_INIT;
+ 	struct object_entry *oe;
+ 	struct branch *s;
+@@ -2587,7 +2585,7 @@ static int parse_from(struct branch *b)
+ 	const char *from;
+ 	struct branch *s;
+ 
+-	if (!starts_with(command_buf.buf, "from "))
++	if (!skip_prefix(command_buf.buf, "from ", &from))
+ 		return 0;
+ 
+ 	if (b->branch_tree.tree) {
+@@ -2595,7 +2593,6 @@ static int parse_from(struct branch *b)
+ 		b->branch_tree.tree = NULL;
+ 	}
+ 
+-	from = strchr(command_buf.buf, ' ') + 1;
+ 	s = lookup_branch(from);
+ 	if (b == s)
+ 		die("Can't create a branch from itself: %s", b->name);
+@@ -2636,8 +2633,7 @@ static struct hash_list *parse_merge(unsigned int *count)
+ 	struct branch *s;
+ 
+ 	*count = 0;
+-	while (starts_with(command_buf.buf, "merge ")) {
+-		from = strchr(command_buf.buf, ' ') + 1;
++	while (skip_prefix(command_buf.buf, "merge ", &from)) {
+ 		n = xmalloc(sizeof(*n));
+ 		s = lookup_branch(from);
+ 		if (s)
+@@ -2668,11 +2664,10 @@ static struct hash_list *parse_merge(unsigned int *count)
+ 	return list;
+ }
+ 
+-static void parse_new_commit(void)
++static void parse_new_commit(const char *arg)
+ {
+ 	static struct strbuf msg = STRBUF_INIT;
+ 	struct branch *b;
+-	char *sp;
+ 	char *author = NULL;
+ 	char *committer = NULL;
+ 	struct hash_list *merge_list = NULL;
+@@ -2680,11 +2675,9 @@ static void parse_new_commit(void)
+ 	unsigned char prev_fanout, new_fanout;
+ 	const char *v;
+ 
+-	/* Obtain the branch name from the rest of our command */
+-	sp = strchr(command_buf.buf, ' ') + 1;
+-	b = lookup_branch(sp);
++	b = lookup_branch(arg);
+ 	if (!b)
+-		b = new_branch(sp);
++		b = new_branch(arg);
+ 
+ 	read_next_command();
+ 	parse_mark();
+@@ -2713,20 +2706,22 @@ static void parse_new_commit(void)
+ 
+ 	/* file_change* */
+ 	while (command_buf.len > 0) {
+-		if (starts_with(command_buf.buf, "M "))
+-			file_change_m(b);
+-		else if (starts_with(command_buf.buf, "D "))
+-			file_change_d(b);
+-		else if (starts_with(command_buf.buf, "R "))
+-			file_change_cr(b, 1);
+-		else if (starts_with(command_buf.buf, "C "))
+-			file_change_cr(b, 0);
+-		else if (starts_with(command_buf.buf, "N "))
+-			note_change_n(b, &prev_fanout);
++		const char *v;
 +
- 	if (!s || !*s)
- 		return -1;
- 	if (!strcmp(s, "ours"))
-@@ -2071,14 +2073,14 @@ int parse_merge_opt(struct merge_options *o, const char *s)
- 		o->recursive_variant = MERGE_RECURSIVE_THEIRS;
- 	else if (!strcmp(s, "subtree"))
- 		o->subtree_shift = "";
--	else if (starts_with(s, "subtree="))
--		o->subtree_shift = s + strlen("subtree=");
-+	else if (skip_prefix(s, "subtree=", &arg))
-+		o->subtree_shift = arg;
- 	else if (!strcmp(s, "patience"))
- 		o->xdl_opts = DIFF_WITH_ALG(o, PATIENCE_DIFF);
- 	else if (!strcmp(s, "histogram"))
- 		o->xdl_opts = DIFF_WITH_ALG(o, HISTOGRAM_DIFF);
--	else if (starts_with(s, "diff-algorithm=")) {
--		long value = parse_algorithm_value(s + strlen("diff-algorithm="));
-+	else if (skip_prefix(s, "diff-algorithm=", &arg)) {
-+		long value = parse_algorithm_value(arg);
- 		if (value < 0)
- 			return -1;
- 		/* clear out previous settings */
-@@ -2096,9 +2098,8 @@ int parse_merge_opt(struct merge_options *o, const char *s)
- 		o->renormalize = 1;
- 	else if (!strcmp(s, "no-renormalize"))
- 		o->renormalize = 0;
--	else if (starts_with(s, "rename-threshold=")) {
--		const char *score = s + strlen("rename-threshold=");
--		if ((o->rename_score = parse_rename_score(&score)) == -1 || *score != 0)
-+	else if (skip_prefix(s, "rename-threshold=", &arg)) {
-+		if ((o->rename_score = parse_rename_score(&arg)) == -1 || *arg != 0)
- 			return -1;
++		if (skip_prefix(command_buf.buf, "M ", &v))
++			file_change_m(v, b);
++		else if (skip_prefix(command_buf.buf, "D ", &v))
++			file_change_d(v, b);
++		else if (skip_prefix(command_buf.buf, "R ", &v))
++			file_change_cr(v, b, 1);
++		else if (skip_prefix(command_buf.buf, "C ", &v))
++			file_change_cr(v, b, 0);
++		else if (skip_prefix(command_buf.buf, "N ", &v))
++			note_change_n(v, b, &prev_fanout);
+ 		else if (!strcmp("deleteall", command_buf.buf))
+ 			file_change_deleteall(b);
+-		else if (starts_with(command_buf.buf, "ls "))
+-			parse_ls(b);
++		else if (skip_prefix(command_buf.buf, "ls ", &v))
++			parse_ls(v, b);
+ 		else {
+ 			unread_command_buf = 1;
+ 			break;
+@@ -2769,10 +2764,9 @@ static void parse_new_commit(void)
+ 	b->last_commit = object_count_by_type[OBJ_COMMIT];
+ }
+ 
+-static void parse_new_tag(void)
++static void parse_new_tag(const char *arg)
+ {
+ 	static struct strbuf msg = STRBUF_INIT;
+-	char *sp;
+ 	const char *from;
+ 	char *tagger;
+ 	struct branch *s;
+@@ -2782,11 +2776,9 @@ static void parse_new_tag(void)
+ 	enum object_type type;
+ 	const char *v;
+ 
+-	/* Obtain the new tag name from the rest of our command */
+-	sp = strchr(command_buf.buf, ' ') + 1;
+ 	t = pool_alloc(sizeof(struct tag));
+ 	memset(t, 0, sizeof(struct tag));
+-	t->name = pool_strdup(sp);
++	t->name = pool_strdup(arg);
+ 	if (last_tag)
+ 		last_tag->next_tag = t;
+ 	else
+@@ -2795,9 +2787,8 @@ static void parse_new_tag(void)
+ 	read_next_command();
+ 
+ 	/* from ... */
+-	if (!starts_with(command_buf.buf, "from "))
++	if (!skip_prefix(command_buf.buf, "from ", &from))
+ 		die("Expected from command, got %s", command_buf.buf);
+-	from = strchr(command_buf.buf, ' ') + 1;
+ 	s = lookup_branch(from);
+ 	if (s) {
+ 		if (is_null_sha1(s->sha1))
+@@ -2853,14 +2844,11 @@ static void parse_new_tag(void)
+ 		t->pack_id = pack_id;
+ }
+ 
+-static void parse_reset_branch(void)
++static void parse_reset_branch(const char *arg)
+ {
+ 	struct branch *b;
+-	char *sp;
+ 
+-	/* Obtain the branch name from the rest of our command */
+-	sp = strchr(command_buf.buf, ' ') + 1;
+-	b = lookup_branch(sp);
++	b = lookup_branch(arg);
+ 	if (b) {
+ 		hashclr(b->sha1);
+ 		hashclr(b->branch_tree.versions[0].sha1);
+@@ -2871,7 +2859,7 @@ static void parse_reset_branch(void)
+ 		}
  	}
  	else
-diff --git a/pretty.c b/pretty.c
-index 4f51287..f24752a 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -40,10 +40,9 @@ static int git_pretty_formats_config(const char *var, const char *value, void *c
- 	const char *fmt;
- 	int i;
+-		b = new_branch(sp);
++		b = new_branch(arg);
+ 	read_next_command();
+ 	parse_from(b);
+ 	if (command_buf.len > 0)
+@@ -2929,14 +2917,12 @@ static void cat_blob(struct object_entry *oe, unsigned char sha1[20])
+ 		free(buf);
+ }
  
--	if (!starts_with(var, "pretty."))
-+	if (!skip_prefix(var, "pretty.", &name))
- 		return 0;
+-static void parse_cat_blob(void)
++static void parse_cat_blob(const char *p)
+ {
+-	const char *p;
+ 	struct object_entry *oe = oe;
+ 	unsigned char sha1[20];
  
--	name = var + strlen("pretty.");
- 	for (i = 0; i < builtin_formats_len; i++) {
- 		if (!strcmp(commit_formats[i].name, name))
- 			return 0;
-diff --git a/remote-curl.c b/remote-curl.c
-index 4493b38..cdcca29 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -791,9 +791,9 @@ static void parse_fetch(struct strbuf *buf)
- 	int alloc_heads = 0, nr_heads = 0;
+ 	/* cat-blob SP <object> LF */
+-	p = command_buf.buf + strlen("cat-blob ");
+ 	if (*p == ':') {
+ 		oe = find_mark(parse_mark_ref_eol(p));
+ 		if (!oe)
+@@ -3053,14 +3039,12 @@ static void print_ls(int mode, const unsigned char *sha1, const char *path)
+ 	cat_blob_write(line.buf, line.len);
+ }
  
- 	do {
--		if (starts_with(buf->buf, "fetch ")) {
--			char *p = buf->buf + strlen("fetch ");
--			char *name;
-+		const char *p;
-+		if (skip_prefix(buf->buf, "fetch ", &p)) {
-+			const char *name;
- 			struct ref *ref;
- 			unsigned char old_sha1[20];
+-static void parse_ls(struct branch *b)
++static void parse_ls(const char *p, struct branch *b)
+ {
+-	const char *p;
+ 	struct tree_entry *root = NULL;
+ 	struct tree_entry leaf = {NULL};
  
-@@ -968,6 +968,8 @@ int main(int argc, const char **argv)
- 	http_init(remote, url.buf, 0);
+ 	/* ls SP (<tree-ish> SP)? <path> */
+-	p = command_buf.buf + strlen("ls ");
+ 	if (*p == '"') {
+ 		if (!b)
+ 			die("Not in a commit: %s", command_buf.buf);
+@@ -3276,10 +3260,8 @@ static int parse_one_feature(const char *feature, int from_stream)
+ 	return 1;
+ }
  
- 	do {
-+		const char *arg;
-+
- 		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
- 			if (ferror(stdin))
- 				fprintf(stderr, "Error reading command stream\n");
-@@ -989,9 +991,8 @@ int main(int argc, const char **argv)
- 		} else if (starts_with(buf.buf, "push ")) {
- 			parse_push(&buf);
+-static void parse_feature(void)
++static void parse_feature(const char *feature)
+ {
+-	char *feature = command_buf.buf + 8;
+-
+ 	if (seen_data_command)
+ 		die("Got feature command '%s' after data command", feature);
  
--		} else if (starts_with(buf.buf, "option ")) {
--			char *name = buf.buf + strlen("option ");
--			char *value = strchr(name, ' ');
-+		} else if (skip_prefix(buf.buf, "option ", &arg)) {
-+			char *value = strchr(arg, ' ');
- 			int result;
+@@ -3289,10 +3271,8 @@ static void parse_feature(void)
+ 	die("This version of fast-import does not support feature %s.", feature);
+ }
  
- 			if (value)
-@@ -999,7 +1000,7 @@ int main(int argc, const char **argv)
- 			else
- 				value = "true";
+-static void parse_option(void)
++static void parse_option(const char *option)
+ {
+-	char *option = command_buf.buf + 11;
+-
+ 	if (seen_data_command)
+ 		die("Got option command '%s' after data command", option);
  
--			result = set_option(name, value);
-+			result = set_option(arg, value);
- 			if (!result)
- 				printf("ok\n");
- 			else if (result < 0)
-diff --git a/remote.c b/remote.c
-index 0e9459c..30d2829 100644
---- a/remote.c
-+++ b/remote.c
-@@ -488,9 +488,8 @@ static void read_config(void)
- 	current_branch = NULL;
- 	head_ref = resolve_ref_unsafe("HEAD", sha1, 0, &flag);
- 	if (head_ref && (flag & REF_ISSYMREF) &&
--	    starts_with(head_ref, "refs/heads/")) {
--		current_branch =
--			make_branch(head_ref + strlen("refs/heads/"), 0);
-+	    skip_prefix(head_ref, "refs/heads/", &head_ref)) {
-+		current_branch = make_branch(head_ref, 0);
- 	}
- 	git_config(handle_config, NULL);
- 	if (branch_pushremote_name) {
-diff --git a/sha1_name.c b/sha1_name.c
-index 2b6322f..72e6ac6 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -911,10 +911,8 @@ static int grab_nth_branch_switch(unsigned char *osha1, unsigned char *nsha1,
- 	const char *match = NULL, *target = NULL;
- 	size_t len;
- 
--	if (starts_with(message, "checkout: moving from ")) {
--		match = message + strlen("checkout: moving from ");
-+	if (skip_prefix(message, "checkout: moving from ", &match))
- 		target = strstr(match, " to ");
--	}
- 
- 	if (!match || !target)
- 		return 0;
+@@ -3408,26 +3388,27 @@ int main(int argc, char **argv)
+ 	set_die_routine(die_nicely);
+ 	set_checkpoint_signal();
+ 	while (read_next_command() != EOF) {
++		const char *v;
+ 		if (!strcmp("blob", command_buf.buf))
+ 			parse_new_blob();
+-		else if (starts_with(command_buf.buf, "ls "))
+-			parse_ls(NULL);
+-		else if (starts_with(command_buf.buf, "commit "))
+-			parse_new_commit();
+-		else if (starts_with(command_buf.buf, "tag "))
+-			parse_new_tag();
+-		else if (starts_with(command_buf.buf, "reset "))
+-			parse_reset_branch();
++		else if (skip_prefix(command_buf.buf, "ls ", &v))
++			parse_ls(v, NULL);
++		else if (skip_prefix(command_buf.buf, "commit ", &v))
++			parse_new_commit(v);
++		else if (skip_prefix(command_buf.buf, "tag ", &v))
++			parse_new_tag(v);
++		else if (skip_prefix(command_buf.buf, "reset ", &v))
++			parse_reset_branch(v);
+ 		else if (!strcmp("checkpoint", command_buf.buf))
+ 			parse_checkpoint();
+ 		else if (!strcmp("done", command_buf.buf))
+ 			break;
+ 		else if (starts_with(command_buf.buf, "progress "))
+ 			parse_progress();
+-		else if (starts_with(command_buf.buf, "feature "))
+-			parse_feature();
+-		else if (starts_with(command_buf.buf, "option git "))
+-			parse_option();
++		else if (skip_prefix(command_buf.buf, "feature ", &v))
++			parse_feature(v);
++		else if (skip_prefix(command_buf.buf, "option git ", &v))
++			parse_option(v);
+ 		else if (starts_with(command_buf.buf, "option "))
+ 			/* ignore non-git options*/;
+ 		else
 -- 
 2.0.0.566.gfe3e6b2
