@@ -1,74 +1,97 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v18 16/48] refs.c: add an err argument to delete_ref_loose
-Date: Thu, 19 Jun 2014 00:38:56 +0200
-Message-ID: <53A21500.2050508@alum.mit.edu>
-References: <1403020442-31049-1-git-send-email-sahlberg@google.com>	<1403020442-31049-17-git-send-email-sahlberg@google.com>	<53A1FAF8.4050700@alum.mit.edu> <CAL=YDWnbKTysV=OaDuxOz10=QbpSWkzmoYteSeq_-Fv=HtcOSQ@mail.gmail.com>
+From: <warren.l.dodge@tektronix.com>
+Subject: Error 128 Clone succeeded, but checkout failed
+Date: Wed, 18 Jun 2014 16:03:40 -0700
+Message-ID: <05c29ee7-8629-424e-b2db-de49db976e55@US-BV-EXH02-P.global.tektronix.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 00:39:04 2014
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: <git@vger.kernel.org>, <warren.l.dodge@tektronix.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 01:03:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxOVT-000080-0B
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 00:39:03 +0200
+	id 1WxOtR-0002Ld-2s
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 01:03:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752553AbaFRWi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 18:38:59 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:57408 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752027AbaFRWi6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Jun 2014 18:38:58 -0400
-X-AuditID: 1207440d-f79c26d000000b51-d2-53a21502b0ea
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id F9.50.02897.20512A35; Wed, 18 Jun 2014 18:38:58 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB19A6.dip0.t-ipconnect.de [93.219.25.166])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5IMcuma001264
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Wed, 18 Jun 2014 18:38:57 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <CAL=YDWnbKTysV=OaDuxOz10=QbpSWkzmoYteSeq_-Fv=HtcOSQ@mail.gmail.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprFKsWRmVeSWpSXmKPExsUixO6iqMskuijY4NkpYYuuK91MFv8m1Dgw
-	eSzYVOrxeZNcAFMUt01SYklZcGZ6nr5dAnfG/fYVTAWXWCrefOFrYLzJ3MXIySEhYCLx79p2
-	VghbTOLCvfVsXYxcHEIClxkl5s6ZwgThnGeS+PvvA2MXIwcHr4C2xILXsiANLAKqErNfnmQH
-	sdkEdCUW9TQzgdiiAkESsz/PA4vzCghKnJz5hAXEFhHQlLjZfxqshllAX+LTnwNgtrCAn8SH
-	1y+gFj9klJi/aR7YRZwCgRI/b3xmBdkrISAu0dMYBGIyC6hLrJ8nBDFGXmL72znMExgFZyHZ
-	NguhahaSqgWMzKsY5RJzSnN1cxMzc4pTk3WLkxPz8lKLdI30cjNL9FJTSjcxQsKWdwfj/3Uy
-	hxgFOBiVeHgXXF4YLMSaWFZcmXuIUZKDSUmUd4fAomAhvqT8lMqMxOKM+KLSnNTiQ4wSHMxK
-	Irzyv4DKeVMSK6tSi/JhUtIcLErivGpL1P2EBNITS1KzU1MLUotgsjIcHEoSvA+EgYYKFqWm
-	p1akZeaUIKSZODhBhnNJiRSn5qWkFiWWlmTEg2I3vhgYvSApHqC9W0DaeYsLEnOBohCtpxh1
-	OU7dOdbGJMSSl5+XKiXOywlSJABSlFGaB7cClqReMYoDfSzMewSkigeY4OAmvQJawgS0RGXi
-	PJAlJYkIKakGRq1ph99crfypKWSxfn+ed8ay5Gd7doZ8KNMwbMt7bt/65KKbXcOO74F6kl0L
-	vNmdVxh2vc6MbJuttab0xPfL8WfPvfksamqgeDbI6MjiUws+2V5ZcH7pgaVaFkeu 
+	id S1755962AbaFRXDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 19:03:45 -0400
+Received: from ch1ehsobe004.messaging.microsoft.com ([216.32.181.184]:59897
+	"EHLO ch1outboundpool.messaging.microsoft.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752390AbaFRXDo convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 19:03:44 -0400
+Received: from mail84-ch1-R.bigfish.com (10.43.68.240) by
+ CH1EHSOBE008.bigfish.com (10.43.70.58) with Microsoft SMTP Server id
+ 14.1.225.22; Wed, 18 Jun 2014 23:03:43 +0000
+Received: from mail84-ch1 (localhost [127.0.0.1])	by mail84-ch1-R.bigfish.com
+ (Postfix) with ESMTP id 2856C1A0331	for <git@vger.kernel.org>; Wed, 18 Jun
+ 2014 23:03:43 +0000 (UTC)
+X-Forefront-Antispam-Report: CIP:192.65.42.18;KIP:(null);UIP:(null);IPV:NLI;H:mx.danahertm.com;RD:mx.danahertm.com;EFVD:NLI
+X-SpamScore: 0
+X-BigFish: VPS0(zz444eMzz1f42h1ee6h1de0h1fdah2073h2146h1202h1e76h2189h1d1ah1d2ah21bch21a7h1fc6h208chzz1de097hb412mz31h2a8h839h8e3h947hc60hc61hd24hf0ah1288h12a5h12a9h12bdh137ah13b6h1441h1504h1537h153bh162dh1631h1758h18e1h1946h19b5h1b0ah224fh1d0ch1d2eh1d3fh1dc1h1dfeh1dffh1e1dh1fe8h1ff5h2216h22d0h2336h2438h2461h2487h24d7h2516h2545h255eh25f6h2605h268bh26d3h27e2h282bh293fh)
+Received-SPF: softfail (mail84-ch1: transitioning domain of tektronix.com does not designate 192.65.42.18 as permitted sender) client-ip=192.65.42.18; envelope-from=warren.l.dodge@tektronix.com; helo=mx.danahertm.com ;anahertm.com ;
+Received: from mail84-ch1 (localhost.localdomain [127.0.0.1]) by mail84-ch1
+ (MessageSwitch) id 1403132621560243_14155; Wed, 18 Jun 2014 23:03:41 +0000
+ (UTC)
+Received: from CH1EHSMHS037.bigfish.com (snatpool1.int.messaging.microsoft.com
+ [10.43.68.246])	by mail84-ch1.bigfish.com (Postfix) with ESMTP id 85843E004A
+	for <git@vger.kernel.org>; Wed, 18 Jun 2014 23:03:41 +0000 (UTC)
+Received: from mx.danahertm.com (192.65.42.18) by CH1EHSMHS037.bigfish.com
+ (10.43.69.246) with Microsoft SMTP Server (TLS) id 14.16.227.3; Wed, 18 Jun
+ 2014 23:03:41 +0000
+Received: from US-BV-EXH02-P.global.tektronix.net (128.181.11.23) by
+ US-BV-EXE01-P.global.tektronix.net (128.181.15.45) with Microsoft SMTP Server
+ (TLS) id 14.3.146.0; Wed, 18 Jun 2014 16:03:32 -0700
+Received: from PC-BEAV-1F55 (128.181.7.176) by mail.danahertm.com
+ (128.181.11.23) with Microsoft SMTP Server id 14.3.169.1; Wed, 18 Jun 2014
+ 16:03:39 -0700
+X-OriginatorOrg: tektronix.com
+X-FOPE-CONNECTOR: Id%0$Dn%*$RO%0$TLS%0$FQDN%$TlsDn%
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252080>
 
-On 06/19/2014 12:27 AM, Ronnie Sahlberg wrote:
-> It looks like we need to reorder two of the patches.
-> This patch needs to be moved to later in the series and happen after
-> the delete_ref conversion :
-> 
-> refs.c: make delete_ref use a transaction
-> refs.c: add an err argument to delete_ref_loose
+I have looked for an answer to the Error 128 Clone succeeded, but checkout failed message we are getting on a clone command.
+And there does not seem to be any that relates to our situation. 
 
-That agrees with what I have found out since my first email.  The
-failures go away starting with the later commit that you mentioned.
+The repository is on a local file server system that is mounted to the pc as L:
 
-> I will respin a v19 with these patches reordered.
+If we clone the repository on to the L: directory structure we get the following
 
-Michael
+git.exe clone      --progress -v  L:\GIT_REPOSITORY L:\warrend\fail
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+Cloning into L:\warrend\fail
+Done.
+Fatal: unable to read "Long hash key"
+Warning: clone succeeded, but checkout failed.
+You can inspect what was checked out with git status
+And retry the checkout with git checkout -f HEAD
+
+Git did not exit cleanly (exit code 128) ( time and date etc)
+
+At this point there is only a .git directory at the destination
+
+We have another drive mounted as X: which utilizes a different file server. If we do this
+
+git.exe clone      --progress -v  L:\GIT_REPOSITORY X:\warrend\works
+
+It will clone and do the checkout properly.
+
+These does not seem to be any permission or disk space problems on the L: drive. We are unable to figure out why this is happening.
+
+I copied the two .git directories to a linux file system and did a diff -r of them and found this
+
+Bad one doesn't have the putty line for some reason 
+diff -r fail/.git/config  works/.git/config
+12d11
+<       puttykeyfile = 
+
+There was no index file in the bad tree. The config file which is in both trees was made after the index file.
+Only in .git: index
+
+I was hoping there was a debug method that would allow us to see what the actual check was that is failing.
+Any help on this would be greatly appreciated.
