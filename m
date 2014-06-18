@@ -1,74 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cherry-pick lost
-Date: Wed, 18 Jun 2014 11:16:17 -0700
-Message-ID: <xmqqppi6hymm.fsf@gitster.dls.corp.google.com>
-References: <1958581451.1669669.1403088403521.JavaMail.zimbra@travelzen.com>
-	<581006621.1669726.1403088884141.JavaMail.zimbra@travelzen.com>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH RFC] git-am: support any number of signatures
+Date: Wed, 18 Jun 2014 21:23:42 +0300
+Message-ID: <20140618182342.GA6988@redhat.com>
+References: <1402589505-27632-1-git-send-email-mst@redhat.com>
+ <xmqqioo654mg.fsf@gitster.dls.corp.google.com>
+ <20140613080036.GA2117@redhat.com>
+ <xmqqy4x03ecm.fsf@gitster.dls.corp.google.com>
+ <20140615102736.GA11798@redhat.com>
+ <xmqqy4wwraoz.fsf@gitster.dls.corp.google.com>
+ <20140618030903.GA19593@redhat.com>
+ <CAPc5daVTZynCKMubZmreAjBh3i51wPaAA+8vSRwB9dGrrJb6FA@mail.gmail.com>
+ <xmqq38f2jed3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: guangai.che@travelzen.com
-X-From: git-owner@vger.kernel.org Wed Jun 18 20:16:42 2014
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 18 20:23:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxKPY-0006xU-5U
-	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 20:16:40 +0200
+	id 1WxKW4-0006HW-4Z
+	for gcvg-git-2@plane.gmane.org; Wed, 18 Jun 2014 20:23:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754564AbaFRSQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 14:16:32 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65396 "EHLO smtp.pobox.com"
+	id S1754435AbaFRSXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 14:23:20 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:41288 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753657AbaFRSQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 14:16:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 033E71F20E;
-	Wed, 18 Jun 2014 14:16:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uPx6CYIrnH+P/EOokNQ9unaU8ZM=; b=R1FLFo
-	/JTpQsmCUirou5UmGI3QlRbnDRGLn3DReaiKSQouyTDx3bIRIrzk227XGFZ3lK0p
-	RGO2nf2Dz1jgMXD1C7PQIfmtH2CXGOOe+kXDhC5BiygGhrNThlSLcyoh4JTJ5Ydf
-	eDWtOnz98yv5q8VWBKfs2TRcalTZYYHyQlS7A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mYXbmvSB247j+nRNF/e1fx7rfid2GEA0
-	RyD+Vo90SKWDinkajdcJ9WVt28QTAx5gJxvF1AG7NXgqtq9zwQNIRhQXrKWFalGY
-	JdZm7CF6uk75udNY8ieqPYR97SLL8gp1DEG4B6y4li5z0P+NmiH4HSuYAagGui40
-	QQS+5ALcJ2g=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EC5101F20D;
-	Wed, 18 Jun 2014 14:16:21 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3C0FD1F20A;
-	Wed, 18 Jun 2014 14:16:17 -0400 (EDT)
-In-Reply-To: <581006621.1669726.1403088884141.JavaMail.zimbra@travelzen.com>
-	(guangai che's message of "Wed, 18 Jun 2014 18:54:44 +0800 (CST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A3E82EE0-F714-11E3-8A6A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1754413AbaFRSXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 14:23:19 -0400
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s5IINEUv010424
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 18 Jun 2014 14:23:15 -0400
+Received: from redhat.com (ovpn-116-25.ams2.redhat.com [10.36.116.25])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s5IINC8p005204;
+	Wed, 18 Jun 2014 14:23:13 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq38f2jed3.fsf@gitster.dls.corp.google.com>
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252019>
 
-guangai.che@travelzen.com writes:
+On Wed, Jun 18, 2014 at 10:51:04AM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > On Tue, Jun 17, 2014 at 8:09 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >>
+> >> OK, after looking into this for a while, I realize
+> >> this is a special property of the Signed-off-by footer.
+> >> For now I think it's reasonable to just avoid de-duplicating
+> >> other footers if any. Agree?
+> >
+> > Not really. I'd rather see "git am" hardcode as little such policy as possible.
+> > We do need to support S-o-b footer and the policy we defined for it long time
+> > ago, if only for backward compatiblity, but for any other footers,
+> > policy decision
+> > such as "dedup by default" isn't something "am" should know about.
+> 
+> By the way, "append without looking for dups" is a policy decision
+> that is as bad to have as "append with dedup".
+> 
+> I'd rather not to see "am.signoff", or any name that implies what
+> the "-s" option to the command is about for that matter, to be used
+> in futzing with the trailers other than S-o-b in any way.  As I
+> understand it, our longer term goal is to defer that task, including
+> the user-programmable policy decisions, to something like the
+> 'trailer' Christian started.
+> 
+> I suspect that it may add unnecessary work later if we overloaded
+> "signoff" with a similar feature with the change under discussion.
+> I would feel safer to see it outlined how we envision to transition
+> to a more generic 'trailer' solution later if we were to enhance
+> "am" with "am.signoff" now.
+> 
+> Thanks.
 
->   I delete a file and push to master branch, after code reviewing
->   in gerrit, then click 'Cherry Pick To' button to cherry-pick to
->   release/1.1 branch, and then code review and merge...
+I'll need to look at trailers, if indeed they are a superset of this
+functionality, I will transition to trailers when they land on master.
+In this case seems easier for me to keep this out tree patch for now,
+Good thing I didn't spend time writing docs and tests :)
 
-Gerrit folks, for which this list may not be the best place to get
-in touch with, may know a lot better than anybody on this list what
-"Cherry Pick To" button does, how it does so, what the typical user
-errors are, etc.
-
-https://code.google.com/p/gerrit/ tells me that perhaps you would
-have better luck with these places:
-
-  https://groups.google.com/forum/#!forum/repo-discuss
-  IRC freenode #gerrit
+-- 
+MST
