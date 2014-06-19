@@ -1,88 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Surprising 'git-describe --all --match' behavior.
-Date: Thu, 19 Jun 2014 10:20:46 -0700
-Message-ID: <xmqqr42khl3l.fsf@gitster.dls.corp.google.com>
-References: <87ionxxbz8.fsf@osv.gnss.ru>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: Conventions on struct copying?
+Date: Thu, 19 Jun 2014 13:22:44 -0400
+Organization: PD Inc
+Message-ID: <5A7F0CEE2DEC4F1B825568DB8358D397@black>
+References: <20140618233129.GK368384@vauxhall.crustytoothpaste.net> <xmqqvbrwhlki.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 19:21:03 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>,
+	"'brian m. carlson'" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Thu Jun 19 19:22:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wxg1G-0001C0-WF
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 19:21:03 +0200
+	id 1Wxg34-0003hS-LW
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 19:22:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933467AbaFSRU6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 13:20:58 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63323 "EHLO smtp.pobox.com"
+	id S933754AbaFSRWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2014 13:22:50 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:48596 "EHLO mail.pdinc.us"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932530AbaFSRU5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2014 13:20:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 517231E9C7;
-	Thu, 19 Jun 2014 13:20:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N7XzBqP8+CEHqOiEpTnm5EFC1z4=; b=LknSxa
-	7UOA1MIVeBTsFMkRDwRqflyTdTiJfgVwaBCw8PboT0r8CUIH9A7Pk9OfLHPjXxzm
-	ZttG5JRGc3vGuEyHwVGAJIURm91TxJjs+E9FqEoPeIQyTCNh2ajKOHOGQ/pbVWFH
-	17z4LHJVhmp0Fsv4Y2J5FB3xBlMERipTQoiCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Jjx7K/8IGvX8sCYM/3Qibb3CgDy1i66c
-	O1GO5vtHcrBZaUYrruMFyDvlLHrFaJfcj93QGC68uDeoTIr90GnMiCo1/WUrXwSr
-	q0jjgT50C+qrtj8kqO8bCL/Rax0ZFrJxbT6ngneEYPoTk2PRZkiHNsixJaWM8d0b
-	7eXHH7VBz9E=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 469471E9C6;
-	Thu, 19 Jun 2014 13:20:52 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A56EC1E9C5;
-	Thu, 19 Jun 2014 13:20:45 -0400 (EDT)
-In-Reply-To: <87ionxxbz8.fsf@osv.gnss.ru> (Sergei Organov's message of "Thu,
-	19 Jun 2014 17:31:07 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 0C8D9BBC-F7D6-11E3-81F3-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932894AbaFSRWu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2014 13:22:50 -0400
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s5JHMimF025232;
+	Thu, 19 Jun 2014 13:22:44 -0400
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <xmqqvbrwhlki.fsf@gitster.dls.corp.google.com>
+Thread-Index: Ac+L4W7Pk/5NUb6DRXmzKz2d081mdQAAY8fQ
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252169>
 
-Sergei Organov <osv@javad.com> writes:
+> -----Original Message-----
+> From: Junio C Hamano
+> Sent: Thursday, June 19, 2014 13:11
+> 
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> 
+> > I don't know of any place we explicitly copy structs like
+> > this,...
+> 
+> which should be a reason enough.  The first concrete guideline is
+> "just imitate the existing code".
+> 
+> > but I don't know of any prohibition against it, either.
+> 
+> So now you know ;-).
 
-> Just playing with it, got some surprises:
->
-> $ git --version
-> git version 1.9.3
->
-> $ git describe --all
-> heads/v3.5
-> $ git describe --all --match 'v*'
-> tags/v3.5.6b2-4-gab4bf78
-> $ git describe --all --match 'heads/v*'
-> fatal: No names found, cannot describe anything.
+To expand, on that do not trust the compiler to do deep copies.
 
-I think
+http://stackoverflow.com/questions/2302351/assign-one-struct-to-another-in-c
 
-$ git describe --help
+Hit #1 on https://www.google.com/search?q=c+assignment+of+struct
 
-       ...
-       --match <pattern>
-           Only consider tags matching the given glob(7) pattern,
-           excluding the "refs/tags/" prefix. This can be used to
-           avoid leaking private tags from the repository.
-       ...
-
-is poorly phrased, especially its "excluding" part.  What it wants
-to say is "You give <pattern> but without refs/tags/, because the
-program helpfully always prepend refs/tags/ to your pattern and
-limit the output to those that match".  Hence you gave 'v*' as
-<pattern> and limited the output to those that match 'refs/tags/v*'
-(or you gave 'heads/v*' and limited to 'refs/tags/heads/v*').
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
