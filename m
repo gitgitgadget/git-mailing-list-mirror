@@ -1,99 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Surprising 'git-describe --all --match' behavior.
-Date: Thu, 19 Jun 2014 14:50:38 -0700
-Message-ID: <xmqq7g4cfu1d.fsf@gitster.dls.corp.google.com>
-References: <87ionxxbz8.fsf@osv.gnss.ru>
-	<xmqqr42khl3l.fsf@gitster.dls.corp.google.com>
-	<87d2e4d8w7.fsf@osv.gnss.ru>
-	<xmqq38f0hg0h.fsf@gitster.dls.corp.google.com>
-	<8761jwd5gk.fsf@osv.gnss.ru>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 17/16] http-push: refactor parsing of remote object names
+Date: Thu, 19 Jun 2014 17:58:10 -0400
+Message-ID: <20140619215810.GA29685@sigill.intra.peff.net>
+References: <20140618194117.GA22269@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 23:50:52 2014
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 19 23:58:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxkEM-0005T5-92
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 23:50:50 +0200
+	id 1WxkLZ-0006zA-8g
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 23:58:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965735AbaFSVuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 17:50:46 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50548 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S964833AbaFSVup (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2014 17:50:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5CD1620AAA;
-	Thu, 19 Jun 2014 17:50:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dc2TlOdlUi4BFCRBllDcvbO/Ris=; b=SHxCGC
-	jz4wiQ/o2TC3ZD1jx1OjOj6pvO+/S/7ctMIiM8fJ5kNJMsia0K1J9D8ZV7n7SR5S
-	/pF8TtqHWcx8he72x6XNYdVvo8ZmvWIIiljDzOjolFxQm5t+iEQbfLEr3bZ9mwn7
-	COHelY1wg7L3PdrZVZdA1FmMZidzvQpx7pBTQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rXkkEV1WjmTGQc+6Kq4en3vqp039+Lch
-	MTXEzewQ3sVAKzORN4OQi1lfh290NLpEGbhh6D48yexUjvMcuPwWpSFYV8psv3EC
-	d4yIoISoGlsYxuYjORGIecPiWCQ+G15sORADnej5NDSaaF1H+DtLCXgyV6upEiNl
-	aIjNWm6SQoE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5214920AA9;
-	Thu, 19 Jun 2014 17:50:40 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CF1B920AA6;
-	Thu, 19 Jun 2014 17:50:35 -0400 (EDT)
-In-Reply-To: <8761jwd5gk.fsf@osv.gnss.ru> (Sergei Organov's message of "Fri,
-	20 Jun 2014 00:12:11 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BEA4C2C4-F7FB-11E3-AF96-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S965489AbaFSV6N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2014 17:58:13 -0400
+Received: from cloud.peff.net ([50.56.180.127]:47827 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965317AbaFSV6M (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2014 17:58:12 -0400
+Received: (qmail 18753 invoked by uid 102); 19 Jun 2014 21:58:12 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 19 Jun 2014 16:58:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 19 Jun 2014 17:58:10 -0400
+Content-Disposition: inline
+In-Reply-To: <20140618194117.GA22269@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252196>
 
-Sergei Organov <osv@javad.com> writes:
+We get loose object names like "objects/??/..." from the
+remote side, and need to convert them to their hex
+representation.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Sergei Organov <osv@javad.com> writes:
->>
->>> Will something break if it won't helpfully prepend refs/tags/ once
->>> --all is given?
->>
->> "describe --all --match 'v*'" will no longer match a tag v1.2.3, and
->> forces the users to say "describe --match 'refs/tags/v*'",
->
-> No,
->
-> descirbe --match 'v*'
->
-> or
->
-> describe --tags --match 'v*'
->
-> depending on what they actually meant. Notice my "once --all is given"
-> above.  ...
-> Those who used --all meant to match against all the refs, no?
+The code to do so is rather hard to follow, as it uses some
+calculated lengths whose origins are hard to understand and
+verify (e.g., the path must be exactly 49 characters long.
+why? Why doesn't the strcpy overflow obj_hex, which is the
+same length as path?).
 
-I noticed it when I responded and ignored it as unworkable, because
-it would make the interface inconsistent by making the meaning of
-one option (i.e. --match) change depending on an unrelated option
-(i.e. --all or --tags).
+We can simplify this a bit by using skip_prefix, using standard
+40- and 20-character buffers for hex and binary sha1s, and
+adding some comments.
 
-You can argue both ways: Those who read the doc and used --match
-did mean to limit to tags.
+We also drop a totally bogus comment that claims strlcpy
+cannot be used because "path" is not NUL-terminated. Right
+between a call to strlen(path) and strcpy(path).
 
-The thing is, you cannot change it without risking to break existing
-usage.  That does not necessarily mean you can never change
-anything.  You only need to craft a careful transition plan to
-minimize the pain for those who will be broken, and the end result
-will be good if the pain is small enough and the benefit is large
-enough ;)
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I found this one while doing the xstrfmt series, but it actually doesn't
+need xstrfmt, and does need skip_prefix, so it probably goes better on
+the skip-prefix topic.
+
+It's still a little more magical than I would like, but I think this is
+the best we can do while still building on get_sha1_hex. Parsing it
+left-to-right would be better, but we would essentially end up
+reimplementing get_sha1_hex.
+
+ http-push.c | 38 +++++++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 15 deletions(-)
+
+diff --git a/http-push.c b/http-push.c
+index 26dfa67..c5c95e8 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -719,14 +719,10 @@ static int fetch_indices(void)
+ 	return ret;
+ }
+ 
+-static void one_remote_object(const char *hex)
++static void one_remote_object(const unsigned char *sha1)
+ {
+-	unsigned char sha1[20];
+ 	struct object *obj;
+ 
+-	if (get_sha1_hex(hex, sha1) != 0)
+-		return;
+-
+ 	obj = lookup_object(sha1);
+ 	if (!obj)
+ 		obj = parse_object(sha1);
+@@ -1020,26 +1016,38 @@ static void remote_ls(const char *path, int flags,
+ 		      void (*userFunc)(struct remote_ls_ctx *ls),
+ 		      void *userData);
+ 
++/* extract hex from sharded "xx/x{40}" filename */
++static int get_sha1_hex_from_objpath(const char *path, unsigned char *sha1)
++{
++	char hex[40];
++
++	if (strlen(path) != 41)
++		return -1;
++
++	memcpy(hex, path, 2);
++	path += 2;
++	path++; /* skip '/' */
++	memcpy(hex, path, 38);
++
++	return get_sha1_hex(hex, sha1);
++}
++
+ static void process_ls_object(struct remote_ls_ctx *ls)
+ {
+ 	unsigned int *parent = (unsigned int *)ls->userData;
+-	char *path = ls->dentry_name;
+-	char *obj_hex;
++	const char *path = ls->dentry_name;
++	unsigned char sha1[20];
+ 
+ 	if (!strcmp(ls->path, ls->dentry_name) && (ls->flags & IS_DIR)) {
+ 		remote_dir_exists[*parent] = 1;
+ 		return;
+ 	}
+ 
+-	if (strlen(path) != 49)
++	if (!skip_prefix(path, "objects/", &path) ||
++	    get_sha1_hex_from_objpath(path, sha1))
+ 		return;
+-	path += 8;
+-	obj_hex = xmalloc(strlen(path));
+-	/* NB: path is not null-terminated, can not use strlcpy here */
+-	memcpy(obj_hex, path, 2);
+-	strcpy(obj_hex + 2, path + 3);
+-	one_remote_object(obj_hex);
+-	free(obj_hex);
++
++	one_remote_object(sha1);
+ }
+ 
+ static void process_ls_ref(struct remote_ls_ctx *ls)
+-- 
+2.0.0.566.gfe3e6b2
