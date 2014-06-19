@@ -1,147 +1,134 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v19 09/48] refs.c: make sure log_ref_setup returns a meaningful errno
-Date: Thu, 19 Jun 2014 08:52:51 -0700
-Message-ID: <1403193210-6028-10-git-send-email-sahlberg@google.com>
+Subject: [PATCH v19 12/48] refs.c: commit_packed_refs to return a meaningful errno on failure
+Date: Thu, 19 Jun 2014 08:52:54 -0700
+Message-ID: <1403193210-6028-13-git-send-email-sahlberg@google.com>
 References: <1403193210-6028-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 19 17:56:35 2014
+X-From: git-owner@vger.kernel.org Thu Jun 19 17:56:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxehT-0000yz-M4
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 17:56:32 +0200
+	id 1Wxehc-0001G2-Gj
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 17:56:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758068AbaFSP43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 11:56:29 -0400
-Received: from mail-yh0-f74.google.com ([209.85.213.74]:61056 "EHLO
-	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757661AbaFSPxe (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1758064AbaFSP41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2014 11:56:27 -0400
+Received: from mail-ie0-f201.google.com ([209.85.223.201]:58166 "EHLO
+	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757678AbaFSPxe (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 19 Jun 2014 11:53:34 -0400
-Received: by mail-yh0-f74.google.com with SMTP id b6so330274yha.1
+Received: by mail-ie0-f201.google.com with SMTP id lx4so692919iec.2
         for <git@vger.kernel.org>; Thu, 19 Jun 2014 08:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=iJxqwwJHfWdcSbBSlgCMAKltJ0IVXA7W0T+oFFoMH0k=;
-        b=djWZRgoBIwEp+M2KrOSBhP6ZSluW5QBtQcrU5mWZA2t/lKb5ocBK0lWpAiShmv5Q9y
-         w3641sdvsM2VFK2T4jphLEYku61ldU2XNvpOABjTUloUTSQXv5HEyeLoZYBfikXw1c44
-         bGxbpQLSJJQ9ZMVaM8e4xm0sq+EQyaUwaOFp0FPlH/iGKymzjxPvQZhn3io4cvdvZBQv
-         b9gNN3ZwnVxVkG5Me2yj3bDI5b3i+LcceycMHxI7bh5GQ/39rBkrYGs4jkJeY2a0Z4Zk
-         OC/LDKOvQrAiv2UdC53X2tM541D8EXJAxO8Ac+rfOs/U+/me68eGshCjjgZadXSKH8my
-         Xa/Q==
+        bh=YSNw6N04pa3f7BJE3w+LlsQXj3Q4KQtq/RwOubt0pPw=;
+        b=fPBXoXGVQP1MuNmZ2pqZgRzAIn789tiivA8vgtt3CyyTn2+Ci9Ask402FCutQsYm13
+         Q4KkP552/W6rNYEoRD32Lr+98FiEIf293+hR0QHo9eAAy+Il0aGLVsnpybQXua1lsHq8
+         IrblnD/VG0UFs+aV7DqBEa3WwPN6N8DS8ThbI0H9I9qc3TRiMFBCe/wv7ZS9HCUhlPB1
+         tinE2KWmndjym3DLTL8hGB2bpbUEfJfISx9QbHIiOdiS9c9wW+oeFCzkGOw0DKeLudy9
+         p5yOQvGz2xJgpGYR6cflEoapudwShu9qOC1Ykgw8nl8zisuU/DaBJNH+55PC958i2QT3
+         OB9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=iJxqwwJHfWdcSbBSlgCMAKltJ0IVXA7W0T+oFFoMH0k=;
-        b=GdOxs/eRwCMznRUeN1oiKHRa2L8dPGiSamuOql6qSaRnXTwchY+lP0cmjWTCCQBVKH
-         YDns0tKKYpNz1OghdqJDr7uox7Xzxb2rnScM3Rz9GJ6Xz1fYgnaNemQYKDFVHQhdh3HJ
-         YunJsMQyw/GmeIB4YIi05bHq/jUZdes5fpCp/0hxlMZkdzo5QbXAXosAI0jWB0YYApso
-         rJ3pbtRrihlg0mj158QhGAsCAzl+5DnsiS5AGXaXxlcCFGPdN/mq24jY3vHjiBNIpgIy
-         XL4S8W+HnnNBtIH/zp/26/Ti314g5BkdFaUHGQp529Bhz8yMSaBBAiykSMhLqnV6BQVE
-         7eXQ==
-X-Gm-Message-State: ALoCoQlCEHdJIUeeoG7Skz+Kdz4XF7gRrdIsH88/Wo4B/msiXTKXl+t8LrOtScwkfJaqEsqREQtu
-X-Received: by 10.236.72.197 with SMTP id t45mr2329884yhd.44.1403193213224;
+        bh=YSNw6N04pa3f7BJE3w+LlsQXj3Q4KQtq/RwOubt0pPw=;
+        b=YoGDBVj47jD+AR9rlEeTtEgCuFRXvqgUi3R91G7iVL/Te76a0t5mVerLVHzf8DyWHy
+         lECUOTsnA8lKCTQwpo3y4bTnk2XSt370emuDyq6/fjJksGfDgnq2YoJOPHN8tTqGxKaQ
+         jIfntATIrYGVBNtMyaK/BXxqRlPh0vlzwPBxDwK8saCWPqUtYG3s+031EK0j2CfmI5el
+         e6ryWyhzefL3gL+BKB9gomnp4fgf5ZapvyIja47Ci6H9qKQQxV5Rb5QGSKARAFqE9W32
+         y6CVia5pthYqq5z8OtQPFK5YSd9qqwpOdpb2cnsJ0CLVzKRmqj5Usr1Jx/8RKHfbqKU+
+         OxtA==
+X-Gm-Message-State: ALoCoQkSEwJpkrUrW5oOlHsjSzmnrTQPnfe9p/8e6RGoMEFxnlrnxW4tnYv/vJb1QzmCzq7cCwNf
+X-Received: by 10.182.128.234 with SMTP id nr10mr2792595obb.0.1403193213273;
         Thu, 19 Jun 2014 08:53:33 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id o69si418781yhp.6.2014.06.19.08.53.33
+        by gmr-mx.google.com with ESMTPS id t4si421013yhm.0.2014.06.19.08.53.33
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 19 Jun 2014 08:53:33 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 1869F5A42EE;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 229675A4435;
 	Thu, 19 Jun 2014 08:53:33 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id A979CE0FFA; Thu, 19 Jun 2014 08:53:32 -0700 (PDT)
+	id B1D51E033F; Thu, 19 Jun 2014 08:53:32 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.438.g337c581
 In-Reply-To: <1403193210-6028-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252160>
 
-Making errno when returning from log_ref_setup() meaningful,
+Making errno when returning from commit_packed_refs() meaningful,
+which should fix
+
+ * a bug in "git clone" where it prints strerror(errno) based on
+   errno, despite errno possibly being zero and potentially having
+   been clobbered by that point
+ * the same kind of bug in "git pack-refs"
+
+and prepares for repack_without_refs() to get a meaningful
+error message when commit_packed_refs() fails without falling into
+the same bug.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 27 +++++++++++++++++++--------
- refs.h |  4 +++-
- 2 files changed, 22 insertions(+), 9 deletions(-)
+ refs.c | 10 +++++++++-
+ refs.h |  1 +
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/refs.c b/refs.c
-index 67a0217..9ea519c 100644
+index cc69581..7a815be 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2751,6 +2751,7 @@ static int copy_msg(char *buf, const char *msg)
- 	return cp - buf;
+@@ -2239,11 +2239,16 @@ int lock_packed_refs(int flags)
+ 	return 0;
  }
  
-+/* This function must set a meaningful errno on failure */
- int log_ref_setup(const char *refname, char *logfile, int bufsize)
++/*
++ * Commit the packed refs changes.
++ * On error we must make sure that errno contains a meaningful value.
++ */
+ int commit_packed_refs(void)
  {
- 	int logfd, oflags = O_APPEND | O_WRONLY;
-@@ -2761,9 +2762,12 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
- 	     starts_with(refname, "refs/remotes/") ||
- 	     starts_with(refname, "refs/notes/") ||
- 	     !strcmp(refname, "HEAD"))) {
--		if (safe_create_leading_directories(logfile) < 0)
--			return error("unable to create directory for %s",
--				     logfile);
-+		if (safe_create_leading_directories(logfile) < 0) {
-+			int save_errno = errno;
-+			error("unable to create directory for %s", logfile);
-+			errno = save_errno;
-+			return -1;
-+		}
- 		oflags |= O_CREAT;
- 	}
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(&ref_cache);
+ 	int error = 0;
++	int save_errno = 0;
  
-@@ -2774,15 +2778,22 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+ 	if (!packed_ref_cache->lock)
+ 		die("internal error: packed-refs not locked");
+@@ -2253,10 +2258,13 @@ int commit_packed_refs(void)
+ 	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
+ 				 0, write_packed_entry_fn,
+ 				 &packed_ref_cache->lock->fd);
+-	if (commit_lock_file(packed_ref_cache->lock))
++	if (commit_lock_file(packed_ref_cache->lock)) {
++		save_errno = errno;
+ 		error = -1;
++	}
+ 	packed_ref_cache->lock = NULL;
+ 	release_packed_ref_cache(packed_ref_cache);
++	errno = save_errno;
+ 	return error;
+ }
  
- 		if ((oflags & O_CREAT) && errno == EISDIR) {
- 			if (remove_empty_directories(logfile)) {
--				return error("There are still logs under '%s'",
--					     logfile);
-+				int save_errno = errno;
-+				error("There are still logs under '%s'",
-+				      logfile);
-+				errno = save_errno;
-+				return -1;
- 			}
- 			logfd = open(logfile, oflags, 0666);
- 		}
- 
--		if (logfd < 0)
--			return error("Unable to append to %s: %s",
--				     logfile, strerror(errno));
-+		if (logfd < 0) {
-+			int save_errno = errno;
-+			error("Unable to append to %s: %s", logfile,
-+			      strerror(errno));
-+			errno = save_errno;
-+			return -1;
-+		}
- 	}
- 
- 	adjust_shared_perm(logfile);
 diff --git a/refs.h b/refs.h
-index 65f7637..82cc5cb 100644
+index 8d6cac7..e588ff8 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -158,7 +158,9 @@ extern void unlock_ref(struct ref_lock *lock);
- /** Writes sha1 into the ref specified by the lock. **/
- extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, const char *msg);
+@@ -98,6 +98,7 @@ extern void add_packed_ref(const char *refname, const unsigned char *sha1);
+  * Write the current version of the packed refs cache from memory to
+  * disk.  The packed-refs file must already be locked for writing (see
+  * lock_packed_refs()).  Return zero on success.
++ * Sets errno to something meaningful on error.
+  */
+ extern int commit_packed_refs(void);
  
--/** Setup reflog before using. **/
-+/*
-+ * Setup reflog before using. Set errno to something meaningful on failure.
-+ */
- int log_ref_setup(const char *refname, char *logfile, int bufsize);
- 
- /** Reads log for the value of ref during at_time. **/
 -- 
 2.0.0.438.g337c581
