@@ -1,183 +1,176 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v19 33/48] walker.c: use ref transaction for ref updates
-Date: Thu, 19 Jun 2014 08:53:15 -0700
-Message-ID: <1403193210-6028-34-git-send-email-sahlberg@google.com>
+Subject: [PATCH v19 08/48] refs.c: add an err argument to repack_without_refs
+Date: Thu, 19 Jun 2014 08:52:50 -0700
+Message-ID: <1403193210-6028-9-git-send-email-sahlberg@google.com>
 References: <1403193210-6028-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 19 17:55:47 2014
+X-From: git-owner@vger.kernel.org Thu Jun 19 17:56:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wxegf-0008R7-A0
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 17:55:41 +0200
+	id 1Wxegs-0000Hk-OW
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 17:55:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933259AbaFSPyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 11:54:52 -0400
-Received: from mail-qc0-f202.google.com ([209.85.216.202]:49866 "EHLO
-	mail-qc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758072AbaFSPxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2014 11:53:35 -0400
-Received: by mail-qc0-f202.google.com with SMTP id x13so331522qcv.5
-        for <git@vger.kernel.org>; Thu, 19 Jun 2014 08:53:34 -0700 (PDT)
+	id S1757570AbaFSPzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2014 11:55:48 -0400
+Received: from mail-ig0-f202.google.com ([209.85.213.202]:52148 "EHLO
+	mail-ig0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757861AbaFSPxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2014 11:53:34 -0400
+Received: by mail-ig0-f202.google.com with SMTP id r2so250083igi.3
+        for <git@vger.kernel.org>; Thu, 19 Jun 2014 08:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=dhXtkG37Twf3pmtN1KJEURdxLPvZkCeeCdO2vHbpWGM=;
-        b=WyaqRx55qmY17Bf6OAMsVbbJlIZcQqL3edqNdWERUSxwaNLNBdqOZidCdUv4XGnGoZ
-         UK20XbitcGSEuVQjJw1bwAxN5aIVfTx4fCCeHlsnrlkagIPQ2lCZGVOBMIvA+i97AgUI
-         XDh3RgIDhb8YyIkWPAAJG0K3f2AYDJeoXi5lyTr+gxrzUn7xqPJYPIm8Jk3eFIpPdmxD
-         DNwrm7Gy/UPZCVEx6iwm7JcnPzRuFFU8NMXr/rWJJ9U/sMNpqIknUrmL3/Up4X0l3255
-         cdK617b3Lyr5g4l3TQHtc4PhN3agyjJnE+c/QSiI524czdSfsCosdM9+teCwUFfXUnOi
-         YYPQ==
+        bh=ZIoxY9Pj4yIRPqczgZ/pOP95UqHf8YqCWfT5b1eabzM=;
+        b=QQwVRx+/LQZUNeQjLGJhpJ+u2x9wVdMj9YazsVqSP3ArwhvdkLiOx53/hARnT/ysKF
+         CwEkEmysxL6/IzxzONerAt2pSdXfOD8UBVTnBDmg1MxamCjUF0GKwQ9wu8Ye7OHUQE+x
+         qy4lF7JhfKgP72uZkR8teSan0faQ5PN9fyJvv/Zh+jl5qO2erM9DSdxKvzc6DcWlrAJ/
+         jiYPI638Olmbnb5dxH6HacGK1QDhMr0kmw2Rg83vAwm6yYZk72nX3F2KsD3o1+wcicdo
+         IJYpBnhqOBSu70wnI7Rtl3926qCxEtBEJFLB/FWJSGEVsEw2YT8wHSdI+oS4nXnH+ytz
+         RHJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=dhXtkG37Twf3pmtN1KJEURdxLPvZkCeeCdO2vHbpWGM=;
-        b=FXHHPd31L2h9Z3Z004CrERM73p+KFhjoM5pDW8vBj0E+myA6sa2kFanXU1ocPpiKH2
-         gDerKuC1FYSb0Ou20xheEasZAIl7GzlwldC19OlFCCwFFyJWEYVyfHrKOteX3UlMDVRw
-         vbLrBcGdkIldOCZ1hay7pgXx0hdQW5T+MrVilqvwACwouQr/YyjvrUjWuiidw+qxhsFE
-         X660iIIMZwiVP01NKPnMTGU9d5mAnhIbYfCHbfdo8HRmLndfxpuAZE8jY4px9buwJKNN
-         ZVvrZprbuVV8bPTmp3PR3pHCfWtZHcE5ouPk6F9XxxzrDB/mA7EZHSelQE6/LPLNua+x
-         jg7w==
-X-Gm-Message-State: ALoCoQmL8jWNA52CGwAzWmO86KPCrI6L+IiraEFVZsXkyeUqJ4yE7ab2aqBUbN/+/Jx6mmnC2+nv
-X-Received: by 10.58.195.162 with SMTP id if2mr2647981vec.21.1403193214270;
-        Thu, 19 Jun 2014 08:53:34 -0700 (PDT)
+        bh=ZIoxY9Pj4yIRPqczgZ/pOP95UqHf8YqCWfT5b1eabzM=;
+        b=enHlJDzO59KYuAGQ4UfZ1E2Xs65DIqMA5keGIX/s9tudFbsdGZ6Zkw6OVkse99ylBc
+         Bxa88mgourgVwAvrQdSu8IqLRwJCjXyAY/1Z1I7iLjBazvNRHTnB8c4fBcc4F8dcBDsH
+         YmcHxI/lhYqJkrowZRiLeFo5jtLFFUxmQL9cDNICdFajlZbgaDG+eM1IC/GxFx63wATl
+         jjhyGTgcBH6aWGVA7id5T8Kt+1S+fq974tKooDPJ1pX/GawkryJXDBJg37U3HZQN2DnT
+         OX6qzDeI9+Okd/fR165NdsHA7iEe34ep8ni4yg/jkpi5cBrF5UYR/o48XH1bpj2XWg3z
+         5J9w==
+X-Gm-Message-State: ALoCoQnoq8dwogxAcs2XJ+JhFWFiCffCE2y8JMsnO/ClwRGTfOo3xsUQFBqa2wstHDjcMJQQ07tF
+X-Received: by 10.182.24.69 with SMTP id s5mr1032783obf.30.1403193213285;
+        Thu, 19 Jun 2014 08:53:33 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id y50si419494yhk.4.2014.06.19.08.53.34
+        by gmr-mx.google.com with ESMTPS id z50si419896yhb.3.2014.06.19.08.53.33
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 19 Jun 2014 08:53:34 -0700 (PDT)
+        Thu, 19 Jun 2014 08:53:33 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 0346D31C3A6;
-	Thu, 19 Jun 2014 08:53:34 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 0242231C416;
+	Thu, 19 Jun 2014 08:53:33 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id D3D5BE0ED7; Thu, 19 Jun 2014 08:53:33 -0700 (PDT)
+	id 94B91E0ED7; Thu, 19 Jun 2014 08:53:32 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.438.g337c581
 In-Reply-To: <1403193210-6028-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252146>
 
-Switch to using ref transactions in walker_fetch(). As part of the refactoring
-to use ref transactions we also fix a potential memory leak where in the
-original code if write_ref_sha1() would fail we would end up returning from
-the function without free()ing the msg string.
+Update repack_without_refs to take an err argument and update it if there
+is a failure. Pass the err variable from ref_transaction_commit to this
+function so that callers can print a meaningful error message if _commit
+fails due to this function.
 
-Note that this function is only called when fetching from a remote HTTP
-repository onto the local (most of the time single-user) repository which
-likely means that the type of collissions that the previous locking would
-protect against and cause the fetch to fail for to be even more rare.
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- walker.c | 59 +++++++++++++++++++++++++++++++++++------------------------
- 1 file changed, 35 insertions(+), 24 deletions(-)
+ builtin/remote.c |  5 +++--
+ refs.c           | 19 ++++++++++++++-----
+ refs.h           |  3 ++-
+ 3 files changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/walker.c b/walker.c
-index 1dd86b8..60d9f9e 100644
---- a/walker.c
-+++ b/walker.c
-@@ -251,39 +251,36 @@ void walker_targets_free(int targets, char **target, const char **write_ref)
- int walker_fetch(struct walker *walker, int targets, char **target,
- 		 const char **write_ref, const char *write_ref_log_details)
- {
--	struct ref_lock **lock = xcalloc(targets, sizeof(struct ref_lock *));
-+	struct strbuf ref_name = STRBUF_INIT;
-+	struct strbuf err = STRBUF_INIT;
-+	struct ref_transaction *transaction = NULL;
- 	unsigned char *sha1 = xmalloc(targets * 20);
--	char *msg;
--	int ret;
-+	char *msg = NULL;
- 	int i;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index c9102e8..401feb3 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -755,7 +755,7 @@ static int remove_branches(struct string_list *branches)
+ 	branch_names = xmalloc(branches->nr * sizeof(*branch_names));
+ 	for (i = 0; i < branches->nr; i++)
+ 		branch_names[i] = branches->items[i].string;
+-	result |= repack_without_refs(branch_names, branches->nr);
++	result |= repack_without_refs(branch_names, branches->nr, NULL);
+ 	free(branch_names);
  
- 	save_commit_buffer = 0;
- 
--	for (i = 0; i < targets; i++) {
--		if (!write_ref || !write_ref[i])
--			continue;
--
--		lock[i] = lock_ref_sha1(write_ref[i], NULL);
--		if (!lock[i]) {
--			error("Can't lock ref %s", write_ref[i]);
--			goto unlock_and_fail;
-+	if (write_ref) {
-+		transaction = ref_transaction_begin(&err);
-+		if (!transaction) {
-+			error("%s", err.buf);
-+			goto rollback_and_fail;
- 		}
- 	}
--
- 	if (!walker->get_recover)
- 		for_each_ref(mark_complete, NULL);
- 
- 	for (i = 0; i < targets; i++) {
- 		if (interpret_target(walker, target[i], &sha1[20 * i])) {
- 			error("Could not interpret response from server '%s' as something to pull", target[i]);
--			goto unlock_and_fail;
-+			goto rollback_and_fail;
- 		}
- 		if (process(walker, lookup_unknown_object(&sha1[20 * i])))
--			goto unlock_and_fail;
-+			goto rollback_and_fail;
+ 	for (i = 0; i < branches->nr; i++) {
+@@ -1333,7 +1333,8 @@ static int prune_remote(const char *remote, int dry_run)
+ 		for (i = 0; i < states.stale.nr; i++)
+ 			delete_refs[i] = states.stale.items[i].util;
+ 		if (!dry_run)
+-			result |= repack_without_refs(delete_refs, states.stale.nr);
++			result |= repack_without_refs(delete_refs,
++						      states.stale.nr, NULL);
+ 		free(delete_refs);
  	}
  
- 	if (loop(walker))
--		goto unlock_and_fail;
-+		goto rollback_and_fail;
- 
- 	if (write_ref_log_details) {
- 		msg = xmalloc(strlen(write_ref_log_details) + 12);
-@@ -294,19 +291,33 @@ int walker_fetch(struct walker *walker, int targets, char **target,
- 	for (i = 0; i < targets; i++) {
- 		if (!write_ref || !write_ref[i])
- 			continue;
--		ret = write_ref_sha1(lock[i], &sha1[20 * i], msg ? msg : "fetch (unknown)");
--		lock[i] = NULL;
--		if (ret)
--			goto unlock_and_fail;
-+		strbuf_reset(&ref_name);
-+		strbuf_addf(&ref_name, "refs/%s", write_ref[i]);
-+		if (ref_transaction_update(transaction, ref_name.buf,
-+					   &sha1[20 * i], NULL, 0, 0,
-+					   &err)) {
-+			error("%s", err.buf);
-+			goto rollback_and_fail;
-+		}
-+	}
-+	if (write_ref) {
-+		if (ref_transaction_commit(transaction,
-+					   msg ? msg : "fetch (unknown)",
-+					   &err)) {
-+			error("%s", err.buf);
-+			goto rollback_and_fail;
-+		}
-+		ref_transaction_free(transaction);
- 	}
--	free(msg);
- 
-+	free(msg);
+diff --git a/refs.c b/refs.c
+index e9d53e4..67a0217 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2456,12 +2456,12 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
  	return 0;
- 
--unlock_and_fail:
--	for (i = 0; i < targets; i++)
--		if (lock[i])
--			unlock_ref(lock[i]);
-+rollback_and_fail:
-+	ref_transaction_free(transaction);
-+	free(msg);
-+	strbuf_release(&err);
-+	strbuf_release(&ref_name);
- 
- 	return -1;
  }
+ 
+-int repack_without_refs(const char **refnames, int n)
++int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ {
+ 	struct ref_dir *packed;
+ 	struct string_list refs_to_delete = STRING_LIST_INIT_DUP;
+ 	struct string_list_item *ref_to_delete;
+-	int i, removed = 0;
++	int i, ret, removed = 0;
+ 
+ 	/* Look for a packed ref */
+ 	for (i = 0; i < n; i++)
+@@ -2473,6 +2473,11 @@ int repack_without_refs(const char **refnames, int n)
+ 		return 0; /* no refname exists in packed refs */
+ 
+ 	if (lock_packed_refs(0)) {
++		if (err) {
++			unable_to_lock_message(git_path("packed-refs"), errno,
++					       err);
++			return -1;
++		}
+ 		unable_to_lock_error(git_path("packed-refs"), errno);
+ 		return error("cannot delete '%s' from packed refs", refnames[i]);
+ 	}
+@@ -2499,12 +2504,16 @@ int repack_without_refs(const char **refnames, int n)
+ 	}
+ 
+ 	/* Write what remains */
+-	return commit_packed_refs();
++	ret = commit_packed_refs();
++	if (ret && err)
++		strbuf_addf(err, "unable to overwrite old ref-pack file: %s",
++			    strerror(errno));
++	return ret;
+ }
+ 
+ static int repack_without_ref(const char *refname)
+ {
+-	return repack_without_refs(&refname, 1);
++	return repack_without_refs(&refname, 1, NULL);
+ }
+ 
+ static int delete_ref_loose(struct ref_lock *lock, int flag)
+@@ -3508,7 +3517,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		}
+ 	}
+ 
+-	ret |= repack_without_refs(delnames, delnum);
++	ret |= repack_without_refs(delnames, delnum, err);
+ 	for (i = 0; i < delnum; i++)
+ 		unlink_or_warn(git_path("logs/%s", delnames[i]));
+ 	clear_loose_ref_cache(&ref_cache);
+diff --git a/refs.h b/refs.h
+index 64f25d9..65f7637 100644
+--- a/refs.h
++++ b/refs.h
+@@ -122,7 +122,8 @@ extern void rollback_packed_refs(void);
+  */
+ int pack_refs(unsigned int flags);
+ 
+-extern int repack_without_refs(const char **refnames, int n);
++extern int repack_without_refs(const char **refnames, int n,
++			       struct strbuf *err);
+ 
+ extern int ref_exists(const char *);
+ 
 -- 
 2.0.0.438.g337c581
