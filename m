@@ -1,174 +1,184 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC] rebase --root: Empty root commit is replaced with sentinel
-Date: Thu, 19 Jun 2014 13:35:52 +0200
-Message-ID: <53A2CB18.7020408@alum.mit.edu>
-References: <53A18198.7070301@gmail.com>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: [PATCH 4/4] diff: mark any file larger than
+ core.bigfilethreshold binary
+Date: Thu, 19 Jun 2014 14:27:25 +0200
+Message-ID: <1403180845.10052.16.camel@thomas-debian-x64>
+References: <CACsJy8BM1f1pJPzGPf--a-kUim6wyX+Mr1AfMupY3mpREY+8DA@mail.gmail.com>
+	 <1401368227-14469-1-git-send-email-pclouds@gmail.com>
+	 <1401368227-14469-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Chris Webb <chris@arachsys.com>
-To: Fabian Ruch <bafain@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 19 13:36:04 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, worley@alum.mit.edu,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 14:27:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxadM-0000kG-6u
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 13:36:00 +0200
+	id 1WxbRH-0006v3-KX
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 14:27:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757987AbaFSLf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 07:35:56 -0400
-Received: from alum-mailsec-scanner-2.mit.edu ([18.7.68.13]:60186 "EHLO
-	alum-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757129AbaFSLfz (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Jun 2014 07:35:55 -0400
-X-AuditID: 1207440d-f79c26d000000b51-8e-53a2cb1a91d9
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-2.mit.edu (Symantec Messaging Gateway) with SMTP id D1.5A.02897.A1BC2A35; Thu, 19 Jun 2014 07:35:54 -0400 (EDT)
-Received: from [192.168.69.130] (p5DDB3EB8.dip0.t-ipconnect.de [93.219.62.184])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5JBZqIC032701
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 19 Jun 2014 07:35:53 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <53A18198.7070301@gmail.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrOKsWRmVeSWpSXmKPExsUixO6iqCt1elGwwfkeUYtDc++xWxzY4GjR
-	daWbyYHZ4//K2YweO2fdZff4vEkugDmK2yYpsaQsODM9T98ugTtj+fJNrAX3VSu+L5nH3sD4
-	SLaLkZNDQsBEom/NSnYIW0ziwr31bF2MXBxCApcZJT4sfMwO4ZxnkmieuZ+li5GDg1dAW+Jm
-	kxNIA4uAqsTJm/OYQWw2AV2JRT3NTCC2qECQxOzP88CG8goISpyc+YQFxBYRMJc4vmMWWJxZ
-	QFmi+dg8RhBbWMBXYtm5HlYQW0hAQ+L7tH1g9ZwCmhLzdu5kAlkrISAu0dMYBNGqI/Gu7wEz
-	hC0vsf3tHOYJjIKzkGybhaRsFpKyBYzMqxjlEnNKc3VzEzNzilOTdYuTE/PyUot0jfRyM0v0
-	UlNKNzFCApp3B+P/dTKHGAU4GJV4eBdcXhgsxJpYVlyZe4hRkoNJSZQ3+/iiYCG+pPyUyozE
-	4oz4otKc1OJDjBIczEoivN0HgHK8KYmVValF+TApaQ4WJXFetSXqfkIC6YklqdmpqQWpRTBZ
-	GQ4OJQnejyeBGgWLUtNTK9Iyc0oQ0kwcnCDDuaREilPzUlKLEktLMuJB8RtfDIxgkBQP0N4/
-	IO28xQWJuUBRiNZTjLocp+4ca2MSYsnLz0uVEufNAykSACnKKM2DWwFLX68YxYE+FuZlOAVU
-	xQNMfXCTXgEtYQJasrgHbElJIkJKqoExs/ypfbZ8v+VZvUiG+cWlyRniXqyZst3/JeN3up2U
-	PzhXMUrc8NvO7n1e+aJWSl3MphItqs7l01yljDuS1a73OP53cWqwqN34a3OKSMri 
+	id S932502AbaFSM1b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2014 08:27:31 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:37045 "EHLO
+	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932336AbaFSM1a (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Jun 2014 08:27:30 -0400
+Received: from p5ddc18b9.dip0.t-ipconnect.de ([93.220.24.185] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	id 1WxbR8-0004us-Az; Thu, 19 Jun 2014 14:27:26 +0200
+In-Reply-To: <1401368227-14469-4-git-send-email-pclouds@gmail.com>
+X-Mailer: Evolution 3.4.4-3 
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1403180850;1661c079;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252110>
 
-On 06/18/2014 02:10 PM, Fabian Ruch wrote:
-> `rebase` supports the option `--root` both with and without `--onto`.
-> The case where `--onto` is not specified is handled by creating a
-> sentinel commit and squashing the root commit into it. The sentinel
-> commit refers to the empty tree and does not have a log message
-> associated with it. Its purpose is that `rebase` can rely on having a
-> rebase base even without `--onto`.
-> 
-> The combination of `--root` and no `--onto` implies an interactive
-> rebase. When `--preserve-merges` is not specified on the `rebase`
-> command line, `rebase--interactive` uses `--cherry-pick` with
-> git-rev-list to put the initial to-do list together. If the root commit
-> is empty, it is treated as a cherry-pick of the sentinel commit and
-> omitted from the todo-list. This is unexpected because the user does not
-> know of the sentinel commit.
+Am Donnerstag, den 29.05.2014, 19:57 +0700 schrieb Nguy=E1=BB=85n Th=C3=
+=A1i Ng=E1=BB=8Dc Duy:
 
-I see that your new tests below both use --keep-empty.  Without
---keep-empty, I would have expected empty commits to be discarded by
-design.  If that is the case, then there is only a bug if --keep-empty
-is used, and I think you should mention that option earlier in this
-description.
+Hi,
 
-Also, I think this bug strikes if *any* of the commits to be rebased is
-empty, not only the first commit.
+sorry for chiming in so late.
 
-> Add a test case. Create an empty root commit, run `rebase --root` and
-> check that it is still there. If the branch consists of the root commit
-> only, the bug described above causes the resulting history to consist of
-> the sentinel commit only. If the root commit has children, the resulting
-> history contains neither the root nor the sentinel commit. This
-> behaviour is the same with `--keep-empty`.
-> 
-> Signed-off-by: Fabian Ruch <bafain@gmail.com>
+I've just played around with patch 3 and 4 of that series.
+And I like it very much as I work often with large files so any further=
+=20
+enhancement in that area is really nice.
+
+(see comments below)
+
+> Too large files may lead to failure to allocate memory. If it happens
+> here, it could impact quite a few commands that involve
+> diff. Moreover, too large files are inefficient to compare anyway (an=
+d
+> most likely non-text), so mark them binary and skip looking at their
+> content.
+>=20
+> Noticed-by: Dale R. Worley <worley@alum.mit.edu>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
-> 
-> Notes:
->     Hi,
->     
->     This is not a fix yet.
+>  diff.c           | 26 ++++++++++++++++++--------
+>  diffcore.h       |  1 +
+>  t/t1050-large.sh |  4 ++++
+>  3 files changed, 23 insertions(+), 8 deletions(-)
+>=20
+> diff --git a/diff.c b/diff.c
+> index 54281cb..0a2f865 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2185,8 +2185,8 @@ int diff_filespec_is_binary(struct diff_filespe=
+c *one)
+>  			one->is_binary =3D one->driver->binary;
+>  		else {
+>  			if (!one->data && DIFF_FILE_VALID(one))
+> -				diff_populate_filespec(one, 0);
+> -			if (one->data)
+> +				diff_populate_filespec(one, DIFF_POPULATE_IS_BINARY);
+> +			if (one->is_binary =3D=3D -1 && one->data)
+>  				one->is_binary =3D buffer_is_binary(one->data,
+>  						one->size);
+>  			if (one->is_binary =3D=3D -1)
+> @@ -2721,6 +2721,11 @@ int diff_populate_filespec(struct diff_filespe=
+c *s, unsigned int flags)
+>  		}
+>  		if (size_only)
+>  			return 0;
+> +		if ((flags & DIFF_POPULATE_IS_BINARY) &&
+> +		    s->size > big_file_threshold && s->is_binary =3D=3D -1) {
+> +			s->is_binary =3D 1;
+> +			return 0;
+> +		}
 
-It is actually OK to add failing tests to the test suite, but they must
-be added with 'test_expect_failure' instead of 'test_expect_success'.
-Though of course it is preferred if the new test is followed by a commit
-that fixes it :-)
+Why do you check for s->is_binary =3D=3D -1 here? I think it does not m=
+atter
+what s_is_binary says here.
 
->     We are currently special casing in `do_pick` and whether the current
->     head is the sentinel commit is not a special case that would fit into
->     `do_pick`'s interface description. What if we added the feature of
->     creating root commits to `do_pick`, using `commit-tree` just like when
->     creating the sentinel commit? We would have to add another special case
->     (`test -z "$onto"`) to where the to-do list is put together in
->     `rebase--interactive`. An empty `$onto` would imply
->     
->         git rev-list $orig_head
->     
->     to form the to-do list. The rebase comment in the commit message editor
->     would have to become something similar to
->     
->         Rebase $shortrevisions as new history
->     
->     , which might be even less confusing than mentioning the hash of the
->     sentinel commit.
-
-Since you are working on a hammer, I'm tempted to see this problem as a
-nail.  Would it make it easier to encode the special behavior into the
-todo list itself?:
-
-    pick --orphan 0cf23b1 New initial commit
-    pick 144a852 Second commit
-    pick 255f8de Third commit
-
-Michael
-
->  t/t3412-rebase-root.sh | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
-> 
-> diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
-> index 0b52105..a4fe3c7 100755
-> --- a/t/t3412-rebase-root.sh
-> +++ b/t/t3412-rebase-root.sh
-> @@ -278,4 +278,31 @@ test_expect_success 'rebase -i -p --root with conflict (second part)' '
->  	test_cmp expect-conflict-p out
+>  		fd =3D open(s->path, O_RDONLY);
+>  		if (fd < 0)
+>  			goto err_empty;
+> @@ -2742,16 +2747,21 @@ int diff_populate_filespec(struct diff_filesp=
+ec *s, unsigned int flags)
+>  	}
+>  	else {
+>  		enum object_type type;
+> -		if (size_only) {
+> +		if (size_only || (flags & DIFF_POPULATE_IS_BINARY)) {
+>  			type =3D sha1_object_info(s->sha1, &s->size);
+>  			if (type < 0)
+>  				die("unable to read %s", sha1_to_hex(s->sha1));
+> -		} else {
+> -			s->data =3D read_sha1_file(s->sha1, &type, &s->size);
+> -			if (!s->data)
+> -				die("unable to read %s", sha1_to_hex(s->sha1));
+> -			s->should_free =3D 1;
+> +			if (size_only)
+> +				return 0;
+> +			if (s->size > big_file_threshold && s->is_binary =3D=3D -1) {
+same as above.
+> +				s->is_binary =3D 1;
+> +				return 0;
+> +			}
+>  		}
+> +		s->data =3D read_sha1_file(s->sha1, &type, &s->size);
+> +		if (!s->data)
+> +			die("unable to read %s", sha1_to_hex(s->sha1));
+> +		s->should_free =3D 1;
+>  	}
+>  	return 0;
+>  }
+> diff --git a/diffcore.h b/diffcore.h
+> index a186d7c..e7760d9 100644
+> --- a/diffcore.h
+> +++ b/diffcore.h
+> @@ -56,6 +56,7 @@ extern void fill_filespec(struct diff_filespec *, c=
+onst unsigned char *,
+>  			  int, unsigned short);
+> =20
+>  #define DIFF_POPULATE_SIZE_ONLY 1
+> +#define DIFF_POPULATE_IS_BINARY 2
+>  extern int diff_populate_filespec(struct diff_filespec *, unsigned i=
+nt);
+>  extern void diff_free_filespec_data(struct diff_filespec *);
+>  extern void diff_free_filespec_blob(struct diff_filespec *);
+> diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+> index 333909b..4d922e2 100755
+> --- a/t/t1050-large.sh
+> +++ b/t/t1050-large.sh
+> @@ -112,6 +112,10 @@ test_expect_success 'diff --raw' '
+>  	git diff --raw HEAD^
 >  '
->  
-> +test_expect_success 'rebase --root recreates empty root commit' '
-> +	echo Initial >expected.msg &&
-> +	# commit the empty tree, no parents
-> +	empty_tree=$(git hash-object -t tree /dev/null) &&
-> +	empty_root_commit=$(git commit-tree $empty_tree -F expected.msg) &&
-> +	git checkout -b empty-root-commit-only $empty_root_commit &&
-> +	# implies interactive
-> +	git rebase --keep-empty --root &&
-> +	git show --pretty=format:%s HEAD >actual.msg &&
-> +	test_cmp actual.msg expected.msg
+> =20
+> +test_expect_success 'diff --stat' '
+> +	git diff --stat HEAD^ HEAD
 > +'
 > +
-> +test_expect_success 'rebase --root recreates empty root commit (subsequent commits)' '
-> +	echo Initial >expected.msg &&
-> +	# commit the empty tree, no parents
-> +	empty_tree=$(git hash-object -t tree /dev/null) &&
-> +	empty_root_commit=$(git commit-tree $empty_tree -F expected.msg) &&
-> +	git checkout -b empty-root-commit $empty_root_commit &&
-> +	>file &&
-> +	git add file &&
-> +	git commit -m file &&
-> +	# implies interactive
-> +	git rebase --keep-empty --root &&
-> +	git show --pretty=format:%s HEAD^ >actual.msg &&
-> +	test_cmp actual.msg expected.msg
-> +'
-> +
->  test_done
-> 
+>  test_expect_success 'hash-object' '
+>  	git hash-object large1
+>  '
 
+I would also add a note to the documentation e. g:
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 9f467d3..7a2f27d 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -499,7 +499,8 @@ core.bigFileThreshold::
+        Files larger than this size are stored deflated, without
+        attempting delta compression.  Storing large files without
+        delta compression avoids excessive memory usage, at the
+-       slight expense of increased disk usage.
++       slight expense of increased disk usage.  Additionally files
++       larger than this size are allways treated as binary.
+ +
+ Default is 512 MiB on all platforms.  This should be reasonable
+ for most projects as source code and other text files can still
+
+Thomas
