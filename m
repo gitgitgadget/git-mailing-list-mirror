@@ -1,55 +1,64 @@
-From: vicentiu.neagoe@ni.com
-Subject: search for equivalent commits by patch-id
-Date: Thu, 19 Jun 2014 15:26:17 +0300
-Message-ID: <53A2D6E9.30341.4A8A1942@vicentiu.neagoe.ni.com>
+From: Sergei Organov <osv@javad.com>
+Subject: Surprising 'git-describe --all --match' behavior.
+Date: Thu, 19 Jun 2014 17:31:07 +0400
+Message-ID: <87ionxxbz8.fsf@osv.gnss.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 19 15:25:06 2014
+X-From: git-owner@vger.kernel.org Thu Jun 19 15:31:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxcKw-0001KP-Bw
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 15:25:06 +0200
+	id 1WxcR1-0000Z8-0Y
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 15:31:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755077AbaFSNZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 09:25:00 -0400
-Received: from skprod3.natinst.com ([130.164.80.24]:50958 "EHLO ni.com"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754863AbaFSNY6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2014 09:24:58 -0400
-X-Greylist: delayed 3517 seconds by postgrey-1.27 at vger.kernel.org; Thu, 19 Jun 2014 09:24:57 EDT
-Received: from us-aus-mgwout1.amer.corp.natinst.com (nb-snip2-1338.natinst.com [130.164.19.135])
-	by us-aus-skprod3.natinst.com (8.14.5/8.14.5) with ESMTP id s5JCQJTA029243
-	for <git@vger.kernel.org>; Thu, 19 Jun 2014 07:26:19 -0500
-Received: from [10.113.1.11] ([130.164.14.198])
-          by us-aus-mgwout1.amer.corp.natinst.com (Lotus Domino Release 8.5.3FP5)
-          with ESMTP id 2014061907261999-192846 ;
-          Thu, 19 Jun 2014 07:26:19 -0500 
-X-mailer: Pegasus Mail for Windows (4.70)
-X-MIMETrack: Itemize by SMTP Server on US-AUS-MGWOut1/AUS/H/NIC(Release 8.5.3FP5|July 31, 2013) at
- 06/19/2014 07:26:20 AM,
-	Serialize by Router on US-AUS-MGWOut1/AUS/H/NIC(Release 8.5.3FP5|July 31, 2013) at
- 06/19/2014 07:26:20 AM,
-	Serialize complete at 06/19/2014 07:26:20 AM
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10432:5.12.52,1.0.14,0.0.0000
- definitions=2014-06-19_04:2014-06-19,2014-06-19,1970-01-01 signatures=0
+	id S1755497AbaFSNbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2014 09:31:16 -0400
+Received: from mail.javad.com ([54.86.164.124]:39271 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754545AbaFSNbK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2014 09:31:10 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id DC1E760BFF
+	for <git@vger.kernel.org>; Thu, 19 Jun 2014 13:31:08 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <s.organov@javad.com>)
+	id 1WxcQl-0006gh-1m
+	for git@vger.kernel.org; Thu, 19 Jun 2014 17:31:07 +0400
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252114>
 
 Hello,
 
-Is there a way to find all equivalent commits by patch-id?
+Just playing with it, got some surprises:
 
-Something similar to:
+$ git --version
+git version 1.9.3
 
-git branch -a --commit <commit>
+$ git describe --all
+heads/v3.5
+$ git describe --all --match 'v*'
+tags/v3.5.6b2-4-gab4bf78
+$ git describe --all --match 'heads/v*'
+fatal: No names found, cannot describe anything.
 
-but instead of <commit> to search by patch-id.
 
-thanks
+... "heads/v3.5" matches neither 'v*' nor 'heads/v*'?
 
-Vicentiu
+$ git describe --all --match 'v*'
+tags/v3.5.6b2-4-gab4bf78
+$ git describe --all --match 'tags/v*'
+fatal: No names found, cannot describe anything.
+
+... git matches short names when outputs full names?
+
+Is it a defect, or what do I miss?
+
+-- 
+Sergei.
