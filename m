@@ -1,155 +1,162 @@
 From: Fabian Ruch <bafain@gmail.com>
-Subject: [RFC PATCH 4/7] rebase -i: Commit only once when rewriting picks
-Date: Thu, 19 Jun 2014 05:28:38 +0200
-Message-ID: <53A258E6.5050301@gmail.com>
+Subject: [RFC PATCH 5/7] rebase -i: Do not die in do_pick
+Date: Thu, 19 Jun 2014 05:28:41 +0200
+Message-ID: <53A258E9.7030909@gmail.com>
 References: <cover.1403146774.git.bafain@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 19 05:28:45 2014
+X-From: git-owner@vger.kernel.org Thu Jun 19 05:28:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxT1o-0002z2-Q8
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 05:28:45 +0200
+	id 1WxT1v-0003AX-Cp
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 05:28:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756897AbaFSD2m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Jun 2014 23:28:42 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:46969 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751674AbaFSD2l (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Jun 2014 23:28:41 -0400
-Received: by mail-wg0-f46.google.com with SMTP id y10so1684458wgg.5
-        for <git@vger.kernel.org>; Wed, 18 Jun 2014 20:28:40 -0700 (PDT)
+	id S1756959AbaFSD2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Jun 2014 23:28:46 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:64943 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751674AbaFSD2o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Jun 2014 23:28:44 -0400
+Received: by mail-wi0-f177.google.com with SMTP id r20so2107408wiv.16
+        for <git@vger.kernel.org>; Wed, 18 Jun 2014 20:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
          :in-reply-to:content-type:content-transfer-encoding;
-        bh=tx+xtyxBLwx7S7cRFo9vBhLW42IaP1kGhJzBzVLVBpg=;
-        b=DSEuiwx6BiMvsK9Z7xiNeAsAPMPUu1GTXaOaG1XyVFbe7aHwhv0YWOKfpqA6rhdgVW
-         0/VOumjzZa/6DI9nah5B4HNigz05yStmE5rEyT5lH5vH+36SL6Lbc7Hrr/WAqY8qaBnm
-         vwa2CxDJfOqm2cDg7p9vyX2c4I7VrgKAIFn0XH5wbDuAg0/jmu7qEAn+a9l1hYD6b+qQ
-         GTtVydVesPoJsyUqtf9b2JiaL2kVxQEPEJne6ZWnkJSpn2f1n+3Y27Dpm0NW4A38CA77
-         0+7wXL2nLrkTc9W3dMBUYd9smDL6seF46uhpl2txPoa5xS0T7OcRxuL7IYB1QFx4MOfB
-         oX8g==
-X-Received: by 10.181.12.102 with SMTP id ep6mr2669426wid.0.1403148520006;
-        Wed, 18 Jun 2014 20:28:40 -0700 (PDT)
+        bh=SC4m5eIRAGz3qXew/zxGyjO5cu6SBaq+zSbMRJTORxU=;
+        b=y4i5COqKa3Z2odBUAB/lqocHEqSAhvTGB6FlWEWNygqm7U7MWFt/ux/SyVNFuu4Vom
+         3ZHSCfSs/xojJL/3avl6W4P2raI+O8YNzuQebSQGRCmAIBgmCOg45Y4t/BjY0uXlWHhU
+         PlbHCaYEgWL4aDNhyhi6v1YxXstRc7eElfhFsV4FQQGQoyQw4W0klYCB4NJNe3me18oH
+         fmM5DRZJhzhewTRCFP42N6yetZ6ePHEhRuSxKwQTBzJJq0FHMnRiR/tlmCEyVmbjfwow
+         nNr5+oPyanYmhDQGwQtFRyRYbRAzrK+rjn9Y1W658yeCmpy+/GZlP5J+ClzB++WXJ/SC
+         uAHw==
+X-Received: by 10.194.87.170 with SMTP id az10mr1903840wjb.1.1403148523669;
+        Wed, 18 Jun 2014 20:28:43 -0700 (PDT)
 Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
-        by mx.google.com with ESMTPSA id vm8sm5783007wjc.27.2014.06.18.20.28.38
+        by mx.google.com with ESMTPSA id um7sm5792453wjc.12.2014.06.18.20.28.42
         for <git@vger.kernel.org>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 18 Jun 2014 20:28:39 -0700 (PDT)
+        Wed, 18 Jun 2014 20:28:42 -0700 (PDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 In-Reply-To: <cover.1403146774.git.bafain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252093>
 
-The options passed to `do_pick` determine whether the picked commit will
-be rewritten or not. If the commit gets rewritten, because the user
-requested to edit the commit message for instance, let `pick_one` merely
-apply the changes introduced by the commit and do not commit the
-resulting tree yet. If the commit is replayed as is, leave it to
-`pick_one` to recreate the commit (possibly by fast-forwarding the
-head). This makes it easier to combine git-commit options like `--edit`
-and `--amend` in `do_pick` because git-cherry-pick does not support
-`--amend`.
-
-In the case of `--edit`, do not `exit_with_patch` but assign `rewrite`
-to pick the changes with `-n`. If the pick conflicts, no commit is
-created which we would have to amend when continuing the rebase. To
-complete the pick after the conflicts are resolved the user just resumes
-with `git rebase --continue`.
-
-If `rebase--interactive` is used to rebase a complete branch onto some
-head, `rebase` creates a sentinel commit that requires special treatment
-by `do_pick`. Do not finalize the pick here either because its commit
-message can be altered as for any other pick. Since the orphaned root
-commit gets a temporary parent, it is always rewritten. Safely use the
-rewrite infrastructure of `do_pick` to create the final commit.
+Since `do_pick` might be executed in a sub-shell (a modified author
+environment for instance), calling `die` in `do_pick` has no effect but
+exiting the sub-shell with a failure exit status. Moreover, if `do_pick`
+is called while a squash or fixup is happening, `die_with_patch` will
+discard `$squash_msg` as commit message. Indicate an error in `do_pick`
+using return statements and properly kill the script at the call sites.
+Remove unused commit message title argument from `do_pick`'s signature.
 
 Signed-off-by: Fabian Ruch <bafain@gmail.com>
 ---
- git-rebase--interactive.sh | 31 ++++++++++++++++++-------------
- 1 file changed, 18 insertions(+), 13 deletions(-)
+ git-rebase--interactive.sh | 33 ++++++++++++++++++---------------
+ 1 file changed, 18 insertions(+), 15 deletions(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index f09eeae..f903599 100644
+index f903599..e4992dc 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -63,7 +63,8 @@ msgnum="$state_dir"/msgnum
- author_script="$state_dir"/author-script
+@@ -493,14 +493,10 @@ record_in_rewritten() {
  
- # When an "edit" rebase command is being processed, the SHA1 of the
--# commit to be edited is recorded in this file.  When "git rebase
-+# commit to be edited is recorded in this file.  The same happens when
-+# rewriting a commit fails, for instance "reword".  When "git rebase
- # --continue" is executed, if there are any staged changes then they
- # will be amended to the HEAD commit, but only provided the HEAD
- # commit is still the commit to be edited.  When any other rebase
-@@ -508,12 +509,15 @@ record_in_rewritten() {
+ # Apply the changes introduced by the given commit to the current head.
+ #
+-# do_pick [--edit] <commit> <title>
++# do_pick [--edit] <commit>
+ #
+ # Wrapper around git-cherry-pick.
+ #
+-# <title>
+-#     The commit message title of <commit>. Used for information
+-#     purposes only.
+-#
+ # <commit>
+ #     The commit to cherry-pick.
+ #
+@@ -508,6 +504,12 @@ record_in_rewritten() {
+ #     After picking <commit>, open an editor and let the user edit the
  #     commit message. The editor contents becomes the commit message of
  #     the new head.
++#
++# The return value is 1 if applying the changes resulted in a conflict
++# and 2 if the specified arguments were incorrect. If the changes could
++# be applied successfully but creating the commit failed, a value
++# greater than 2 is returned. No commit is created in either case and
++# the index is left with the (conflicting) changes in place.
  do_pick () {
--	edit=
-+	rewrite=
-+	rewrite_amend=
-+	rewrite_edit=
- 	while test $# -gt 0
- 	do
- 		case "$1" in
- 		-e|--edit)
--			edit=y
-+			rewrite=y
-+			rewrite_edit=y
- 			;;
- 		-*)
- 			warn "do_pick: ignored option -- $1"
-@@ -528,6 +532,9 @@ do_pick () {
+ 	rewrite=
+ 	rewrite_amend=
+@@ -528,7 +530,11 @@ do_pick () {
+ 		esac
+ 		shift
+ 	done
+-	test $# -ne 2 && die "do_pick: wrong number of arguments"
++	if test $# -ne 1
++	then
++		warn "do_pick: wrong number of arguments"
++		return 2
++	fi
  
  	if test "$(git rev-parse HEAD)" = "$squash_onto"
  	then
-+		rewrite=y
-+		rewrite_amend=y
-+		git rev-parse --verify HEAD >"$amend"
- 		# Set the correct commit message and author info on the
- 		# sentinel root before cherry-picking the original changes
- 		# without committing (-n).  Finally, update the sentinel again
-@@ -538,22 +545,20 @@ do_pick () {
+@@ -545,11 +551,9 @@ do_pick () {
  		# rebase --continue.
  		git commit --allow-empty --allow-empty-message --amend \
  			   --no-post-rewrite -n -q -C $1 &&
--			pick_one -n $1 &&
--			git commit --allow-empty --amend \
--				   --no-post-rewrite -n -q \
--				   ${gpg_sign_opt:+"$gpg_sign_opt"} ||
-+			pick_one -n $1 ||
- 			die_with_patch $1 "Could not apply $1... $2"
+-			pick_one -n $1 ||
+-			die_with_patch $1 "Could not apply $1... $2"
++			pick_one -n $1 || return 1
  	else
--		pick_one $1 ||
-+		pick_one ${rewrite:+-n} $1 ||
- 			die_with_patch $1 "Could not apply $1... $2"
+-		pick_one ${rewrite:+-n} $1 ||
+-			die_with_patch $1 "Could not apply $1... $2"
++		pick_one ${rewrite:+-n} $1 || return 1
  	fi
  
--	if test -n "$edit"
-+	if test -n "$rewrite"
- 	then
--		git commit --allow-empty --amend --no-post-rewrite -n -q ${gpg_sign_opt:+"$gpg_sign_opt"} || {
--			warn "Could not amend commit after successfully picking $1... $2"
--			exit_with_patch $1 1
--		}
-+		git commit --allow-empty --no-post-rewrite -n -q \
-+			   ${rewrite_amend:+--amend} \
-+			   ${rewrite_edit:+--edit} \
-+			   ${gpg_sign_opt:+"$gpg_sign_opt"} ||
-+			die_with_patch $1 "Could not rewrite commit after successfully picking $1... $2"
+ 	if test -n "$rewrite"
+@@ -557,8 +561,7 @@ do_pick () {
+ 		git commit --allow-empty --no-post-rewrite -n -q \
+ 			   ${rewrite_amend:+--amend} \
+ 			   ${rewrite_edit:+--edit} \
+-			   ${gpg_sign_opt:+"$gpg_sign_opt"} ||
+-			die_with_patch $1 "Could not rewrite commit after successfully picking $1... $2"
++			   ${gpg_sign_opt:+"$gpg_sign_opt"} || return 3
  	fi
  }
  
+@@ -573,21 +576,21 @@ do_next () {
+ 		comment_for_reflog pick
+ 
+ 		mark_action_done
+-		do_pick $sha1 "$rest"
++		do_pick $sha1 || die_with_patch $sha1 "Could not apply $sha1... $rest"
+ 		record_in_rewritten $sha1
+ 		;;
+ 	reword|r)
+ 		comment_for_reflog reword
+ 
+ 		mark_action_done
+-		do_pick --edit $sha1 "$rest"
++		do_pick --edit $sha1 || die_with_patch $sha1 "Could not apply $sha1... $rest"
+ 		record_in_rewritten $sha1
+ 		;;
+ 	edit|e)
+ 		comment_for_reflog edit
+ 
+ 		mark_action_done
+-		do_pick $sha1 "$rest"
++		do_pick $sha1 || die_with_patch $sha1 "Could not apply $sha1... $rest"
+ 		warn "Stopped at $sha1... $rest"
+ 		exit_with_patch $sha1 0
+ 		;;
 -- 
 2.0.0
