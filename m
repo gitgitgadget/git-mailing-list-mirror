@@ -1,90 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4] cleanup duplicate name_compare() functions
-Date: Thu, 19 Jun 2014 11:29:21 -0700
-Message-ID: <CAPc5daW5hsKeJsG8+2nxFzFL9gMnLR2gMBXG5__dhSCLKkBWmA@mail.gmail.com>
-References: <1403165242-16849-1-git-send-email-jmmahler@gmail.com>
- <1403165242-16849-2-git-send-email-jmmahler@gmail.com> <xmqqionwhj54.fsf@gitster.dls.corp.google.com>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: Surprising 'git-describe --all --match' behavior.
+Date: Thu, 19 Jun 2014 22:58:00 +0400
+Message-ID: <87d2e4d8w7.fsf@osv.gnss.ru>
+References: <87ionxxbz8.fsf@osv.gnss.ru>
+	<xmqqr42khl3l.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeremiah Mahler <jmmahler@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 20:29:52 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 20:58:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wxh5r-0007N8-EZ
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 20:29:52 +0200
+	id 1WxhXF-0003xm-1e
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 20:58:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934288AbaFSS3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 14:29:45 -0400
-Received: from mail-la0-f47.google.com ([209.85.215.47]:38201 "EHLO
-	mail-la0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933454AbaFSS3n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2014 14:29:43 -0400
-Received: by mail-la0-f47.google.com with SMTP id s18so1688306lam.20
-        for <git@vger.kernel.org>; Thu, 19 Jun 2014 11:29:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=8uhNLycd1V+in8nWPGIodjEKj3IJv9jEWnBQU30jRoo=;
-        b=iRluPPpq+Wnd3AbnepytIuVFfCxSCEFh30oU5bAByVj+bKA7DY9SR4IrpiRHyyRSCM
-         MCUfJxtAwePUyMw4UYCbzcoIM8ckBHlR8xOrs4aLQIV/FP201G4oBmIeYOE18NWoS+Ck
-         VwNVvlfCevSxpRC0eG6//beSOKcahrY4JI8wQpZuXBG3HvVZJtnQvCc/ZtaAQodxchpN
-         Rh8dKC83llL7PolATGpI5CbL/s08lCR2tvlZ7TKrdGxguF2JATKTuKSlDmFQ1ocgxEZD
-         ZRY+2NiDx1Yx3PiM4s4hmUArzWUsoCeDMkdY1BrDZpGb7puzPEC9B1saKDKmn3c0uYJI
-         fqVw==
-X-Received: by 10.152.21.169 with SMTP id w9mr2335735lae.90.1403202581701;
- Thu, 19 Jun 2014 11:29:41 -0700 (PDT)
-Received: by 10.112.172.103 with HTTP; Thu, 19 Jun 2014 11:29:21 -0700 (PDT)
-In-Reply-To: <xmqqionwhj54.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: 5uLpHxYmIDxSVjvQhP9IfJiT8oU
+	id S933596AbaFSS6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2014 14:58:04 -0400
+Received: from mail.javad.com ([54.86.164.124]:44811 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933024AbaFSS6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2014 14:58:03 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id C617F60BFF;
+	Thu, 19 Jun 2014 18:58:01 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <s.organov@javad.com>)
+	id 1WxhX6-0006xJ-3k; Thu, 19 Jun 2014 22:58:00 +0400
+In-Reply-To: <xmqqr42khl3l.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Thu, 19 Jun 2014 10:20:46 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252172>
 
-On Thu, Jun 19, 2014 at 11:03 AM, Junio C Hamano <gitster@pobox.com> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Sergei Organov <osv@javad.com> writes:
 >
-> You chose to use the one that loses the information by unifying
-> these two into the variant that only returns -1/0/+1.  We know that
-> it does not matter for the current callers, but is it expected that
-> no future callers will benefit by having the magnitude information?
+>> Just playing with it, got some surprises:
+>>
+>> $ git --version
+>> git version 1.9.3
+>>
+>> $ git describe --all
+>> heads/v3.5
+>> $ git describe --all --match 'v*'
+>> tags/v3.5.6b2-4-gab4bf78
+>> $ git describe --all --match 'heads/v*'
+>> fatal: No names found, cannot describe anything.
+>
+> I think
+>
+> $ git describe --help
+>
+>        ...
+>        --match <pattern>
+>            Only consider tags matching the given glob(7) pattern,
+>            excluding the "refs/tags/" prefix. This can be used to
+>            avoid leaking private tags from the repository.
+>        ...
+>
+> is poorly phrased, especially its "excluding" part.  What it wants
+> to say is "You give <pattern> but without refs/tags/, because the
+> program helpfully always prepend refs/tags/ to your pattern and
+> limit the output to those that match".  Hence you gave 'v*' as
+> <pattern> and limited the output to those that match 'refs/tags/v*'
+> (or you gave 'heads/v*' and limited to 'refs/tags/heads/v*').
 
-Heh, I was being silly, partly fooled by your reference to
-"magnitude".
+OK, thanks, at least I now see how it works. So no <pattern> can ever
+match any reference but tag, even when --all switch is given? If so,
+appearance of --match effectively turns --all into --tags, that is still
+rather confusing, isn't it?
 
-You are not losing information at all, because the caller cannot
-tell if the return value came from an earlier memcmp(), whose only
-guarantee is that the sign of the returned value is all that
-matters, or from the later subtraction between lengths.
+Will something break if it won't helpfully prepend refs/tags/ once
+--all is given?
 
-So unifying to the -1/0/+1 variant is entirely justifiable.  It is
-just your rationale was a bit misleading.
-
-    We often represent our strings as a counted string, i.e. a pair of
-    the pointer to the beginning of the string and its length, and the
-    string may not be NUL terminated to that length.
-
-    To compare a pair of such counted strings, unpack-trees.c and
-    read-cache.c implement their own name_compare() functions
-    identically.  In addition, cache_name_compare() function in
-    read-cache.c is nearly identical.  The only difference is when one
-    string is the prefix of the other string, in which case the former
-    returns -1/+1 to show which one is longer and the latter returns the
-    difference of the lengths to show the same information.
-
-    Unify these three functions by using the implementation from
-    cache_name_compare().  This does not make any difference to the
-    existing and future callers, as they must be paying attention only
-    to the sign of the returned value (and not the magnitude) because
-    the original implementations of these two functions return values
-    returned by memcmp(3) when the one string is not a prefix of the
-    other string, and the only thing memcmp(3) guarantees its callers is
-    the sign of the returned value, not the magnitude.
-
-or something like that, perhaps?
+-- 
+Sergei.
