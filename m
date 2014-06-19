@@ -1,122 +1,68 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH 1/2] strbuf: add xstrdup_fmt helper
-Date: Thu, 19 Jun 2014 18:52:39 +0200
-Message-ID: <53A31557.8070901@web.de>
-References: <20140618200000.GA22994@sigill.intra.peff.net> <20140618200133.GA23057@sigill.intra.peff.net> <xmqq7g4dj1cn.fsf@gitster.dls.corp.google.com> <20140619090532.GB1009@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Conventions on struct copying?
+Date: Thu, 19 Jun 2014 10:10:37 -0700
+Message-ID: <xmqqvbrwhlki.fsf@gitster.dls.corp.google.com>
+References: <20140618233129.GK368384@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 18:53:11 2014
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Thu Jun 19 19:10:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxfaI-0006LL-M5
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 18:53:11 +0200
+	id 1WxfrO-0004LM-8R
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 19:10:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933474AbaFSQxE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Jun 2014 12:53:04 -0400
-Received: from mout.web.de ([212.227.17.12]:55836 "EHLO mout.web.de"
+	id S933173AbaFSRKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2014 13:10:46 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61053 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932775AbaFSQw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2014 12:52:59 -0400
-Received: from [192.168.178.27] ([79.253.184.31]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0M0yiR-1Wil1i1635-00v7RK; Thu, 19 Jun 2014 18:52:57
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <20140619090532.GB1009@sigill.intra.peff.net>
-X-Provags-ID: V03:K0:EIRjBW7a7Jlx7XkKVNpMXukBs3hnE4q4x6b/KNFERd3KBqYPDm8
- 4INzqUK+LntaXLPs8X2a6K+X7DQe2y5/plIiS8c8JX9850TpXAQ90YWKGvGDI1cPhVNql4n
- W0hNC9XcgJVUetEKN51UMPTRsP+j6fnJ+LIXPO2XglWnSILAo9a9SpVnxvdUozo2iJuJLIu
- /tWT5GAeH0Db1Inmu2fdQ==
+	id S932188AbaFSRKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2014 13:10:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3F5661E6DB;
+	Thu, 19 Jun 2014 13:10:42 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sTcbptHP4eseVSLiZa3wm9FR7S8=; b=v9UIrB
+	J2ZQgp3qiIcGqd+xnJAsHzF8QSj+z00Z8HLBVUtNBNId2avLupVqUnIADLBH98QF
+	oYRfBhZzE81kd/I1CAavLswddFIj+JDST1ITkMY348UFHIS7C1weBzMc6a0tb/YT
+	HtlSx13pvljyYR+XHnl70N2pRfsyIkKr9/azA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=CXVT7Se40b7Hwgf1AkTYX+3Rdh8QDZA+
+	dSzladQgPwP4zOmSTKR/AMI9jn5f9l0jPl1STUj1zwpjbOo+ufiS5J9wtFhWxvsh
+	lI0cLGVDxOdaedLebHs9fOF0Jwb+5d3TtDwUe2pZNFTlKcQrm3moqLxgJXu+T6LJ
+	TwmcySOMftY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BD1681E6DA;
+	Thu, 19 Jun 2014 13:10:41 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F1E031E6D3;
+	Thu, 19 Jun 2014 13:10:36 -0400 (EDT)
+In-Reply-To: <20140618233129.GK368384@vauxhall.crustytoothpaste.net> (brian
+	m. carlson's message of "Wed, 18 Jun 2014 23:31:29 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A1BE959E-F7D4-11E3-BF3E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252167>
 
-Am 19.06.2014 11:05, schrieb Jeff King:
-> On Wed, Jun 18, 2014 at 03:32:08PM -0700, Junio C Hamano wrote:
->
->>>    str =3D xstrdup_fmt(fmt, some, args);
->>> ---
->>> I'm open to suggestions on the name. This really is the same thing
->>> conceptually as the GNU asprintf(), but the interface is different =
-(that
->>> function takes a pointer-to-pointer as an out-parameter, and return=
-s the
->>> number of characters return).
->>
->> Naming it with anything "dup" certainly feels wrong.  The returned
->> string is not a duplicate of anything.
->
-> I was somewhat inspired by "mkpathdup" and friends. It is quite simia=
-lr
-> to mkpathdup, except that it is not limited to paths (and does not do
-> any path-specific munging). I agree something with "printf" in the na=
-me
-> is probably more descriptive, though.
->
->> I wonder if our callers can instead use asprintf(3) with its
->> slightly more quirky API (and then we supply compat/asprintf.c for
->> non-GNU platforms).  Right now we only have three call sites, but if
->> we anticipate that "printf-like format into an allocated piece of
->> memory" will prove be generally useful in our code base, following
->> an API that other people already have established may give our
->> developers one less thing that they have to learn.
->
-> I considered that, but I do find asprintf's interface unnecessarily
-> annoying (you can't return a value directly, and you run afoul of con=
-st
-> issues when passing pointers to pointers). As you noted, it's not _to=
-o_
-> bad, but we really get nothing from the integer return type. AFAICT, =
-it
-> helps with:
->
->    1. You know how many characters are in the string. If you cared ab=
-out
->       that here, you would just use a strbuf directly, which is much =
-more
->       flexible.
->
->    2. The error handling is different. But our x-variant would just d=
-ie()
->       on errors anyway, so we do not care.
->
-> So modeling after asprintf feels like carrying around unnecessary
-> baggage (and I am not convinced asprintf is in wide enough use, nor t=
-hat
-> the function is complicated enough to care about developer familiarit=
-y).
-> Part of me is tempted to call it xasprintf anyway, and use our own
-> interface. GNU does not get to squat on that useful name. ;)
->
-> That is probably unnecessarily confusing, though.
->
->> As usual, I would expect we would have xasprintf wrapper around it
->> to die instead of returning -1 upon allocation failure.
->
-> Would it be crazy to just call it xprintf? By our current scheme that
-> would be "a wrapper for printf", which means it is potentially
-> confusing.
->
-> Literally any other unused letter would be fine. dprintf for detach? =
-I
-> dunno.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I agree that "dup" doesn't fit and that potential callers don't need th=
-e=20
-length of the generated string (or should use strbuf otherwise).
+> I don't know of any place we explicitly copy structs like
+> this,...
 
-Including "print" in the name is not necessary, though -- die(), error(=
-)=20
-and friends work fine without them.
+which should be a reason enough.  The first concrete guideline is
+"just imitate the existing code".
 
-What about simply removing the "dup_" part and using xstrfmt?
+> but I don't know of any prohibition against it, either.
 
-Ren=C3=A9
+So now you know ;-).
