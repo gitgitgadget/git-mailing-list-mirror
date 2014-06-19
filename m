@@ -1,107 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jun 2014, #04; Tue, 17)
-Date: Thu, 19 Jun 2014 13:40:16 -0700
-Message-ID: <xmqqfvj0fxan.fsf@gitster.dls.corp.google.com>
-References: <xmqqfvj2jfkg.fsf@gitster.dls.corp.google.com>
-	<CACsJy8CXbbNEFigjibd-W3V3RaXOzsptMkufMybYCKPFAHM6UA@mail.gmail.com>
+From: Jeremiah Mahler <jmmahler@gmail.com>
+Subject: Re: [PATCH v4] cleanup duplicate name_compare() functions
+Date: Thu, 19 Jun 2014 13:45:54 -0700
+Message-ID: <20140619204554.GA2481@hudson.localdomain>
+References: <1403165242-16849-1-git-send-email-jmmahler@gmail.com>
+ <1403165242-16849-2-git-send-email-jmmahler@gmail.com>
+ <xmqqionwhj54.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 22:40:47 2014
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 19 22:46:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wxj8W-0003HQ-KO
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 22:40:44 +0200
+	id 1WxjDf-000239-6R
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 22:46:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934571AbaFSUkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 16:40:25 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60338 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932343AbaFSUkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2014 16:40:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A2F041FA3B;
-	Thu, 19 Jun 2014 16:40:18 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=T82vxKN5121qIT/XVRspP4mkeRY=; b=EyUonz
-	Y37UdWZhH45wY9p/ee0/9YH8Oxjcrca/4yrLHRGY8x7siO4MPbIvLFwLhoWysqyx
-	0fXU417jk4xt9zP1jPDg3rDNCPc0q7IDrz/1jd7RZHrTb6RUDyl5SuMpNyO4tmdv
-	QYNP9U3+DY2ZJhSdoXL4q2paDjEudw+ASfda4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B+zZMp99+TaHvph0JipQ+eWDJiTKpavj
-	VEFz/gwTEe96IBqNalQVDTq8Xp9Cbo6eAspfYeT3MCItPHpxEohB380VazugnGJf
-	DRKdU2f7OXPzjZd20/KJHZTKtEvYSOzsmgRNzeRqGtOFJOF5L/dN+QmRQZM0El0Y
-	FrMg0KSLkxc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 998CE1FA3A;
-	Thu, 19 Jun 2014 16:40:18 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3DF141FA32;
-	Thu, 19 Jun 2014 16:40:14 -0400 (EDT)
-In-Reply-To: <CACsJy8CXbbNEFigjibd-W3V3RaXOzsptMkufMybYCKPFAHM6UA@mail.gmail.com>
-	(Duy Nguyen's message of "Thu, 19 Jun 2014 17:06:19 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EA60CF84-F7F1-11E3-9E24-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S965334AbaFSUp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2014 16:45:59 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:53257 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964975AbaFSUp6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2014 16:45:58 -0400
+Received: by mail-pa0-f42.google.com with SMTP id lj1so2290679pab.29
+        for <git@vger.kernel.org>; Thu, 19 Jun 2014 13:45:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=qESgpDo7ol1kQF4rAXhAYI0yFfUgOgaCij0yZo15B2A=;
+        b=DSdtRfQ2naN4kNtTVuZTEGZBd2TFk4B4hXN33tFrkp1z/rSR96ONp9C9TAyKVqsgJo
+         OBzypK25ALHK6aJEZWDl5lxdY7rJtA3OIrxEHgdrIF14l0qHdsARz5B9R5o/TdtO6+Gn
+         qiDAwh0OygqStqvJzO+Fn7y6t/qOLxCuT/rHYxTIPNPVm2vIm706H8RCjGG7ZowEDDhF
+         9doIlXo1UIs5t1lIczBKgfJpcreoOAoNqZHONHxfuxE7Q83hdm81diLBVF3/0vQLMdqo
+         b6TEg6CWzINWSIIjzplv5OD1ZgNnIx+h1ZtMrsQekdszgcr6YXMOgCijyNgiadx4Z7MD
+         E9BQ==
+X-Received: by 10.68.213.198 with SMTP id nu6mr8467406pbc.21.1403210758417;
+        Thu, 19 Jun 2014 13:45:58 -0700 (PDT)
+Received: from localhost (108-76-185-60.lightspeed.frokca.sbcglobal.net. [108.76.185.60])
+        by mx.google.com with ESMTPSA id xk1sm31911551pac.21.2014.06.19.13.45.55
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Jun 2014 13:45:56 -0700 (PDT)
+Mail-Followup-To: Jeremiah Mahler <jmmahler@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <xmqqionwhj54.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252182>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Junio,
 
-> On Thu, Jun 19, 2014 at 12:25 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> [Stalled]
->> * nd/multiple-work-trees (2014-03-25) 28 commits
->>  - count-objects: report unused files in $GIT_DIR/repos/...
->>  - gc: support prune --repos
->>  - gc: style change -- no SP before closing bracket
->>  - prune: strategies for linked checkouts
->>  - checkout: detach if the branch is already checked out elsewhere
->>  - checkout: clean up half-prepared directories in --to mode
->>  - checkout: support checking out into a new working directory
->>  - use new wrapper write_file() for simple file writing
->>  - wrapper.c: wrapper to open a file, fprintf then close
->>  - setup.c: support multi-checkout repo setup
->>  - setup.c: detect $GIT_COMMON_DIR check_repository_format_gently()
->>  - setup.c: convert check_repository_format_gently to use strbuf
->>  - setup.c: detect $GIT_COMMON_DIR in is_git_directory()
->>  - setup.c: convert is_git_directory() to use strbuf
->>  - git-stash: avoid hardcoding $GIT_DIR/logs/....
->>  - *.sh: avoid hardcoding $GIT_DIR/hooks/...
->>  - git-sh-setup.sh: use rev-parse --git-path to get $GIT_DIR/objects
->>  - $GIT_COMMON_DIR: a new environment variable
->>  - commit: use SEQ_DIR instead of hardcoding "sequencer"
->>  - fast-import: use git_path() for accessing .git dir instead of get_git_dir()
->>  - reflog: avoid constructing .lock path with git_path
->>  - *.sh: respect $GIT_INDEX_FILE
->>  - git_path(): be aware of file relocation in $GIT_DIR
->>  - path.c: group git_path(), git_pathdup() and strbuf_git_path() together
->>  - path.c: rename vsnpath() to do_git_path()
->>  - git_snpath(): retire and replace with strbuf_git_path()
->>  - path.c: make get_pathname() call sites return const char *
->>  - path.c: make get_pathname() return strbuf instead of static buffer
->>
->>  A replacement for contrib/workdir/git-new-workdir that does not
->>  rely on symbolic links and make sharing of objects and refs safer
->>  by making the borrowee and borrowers aware of each other.
->
-> Anything I can do to get this going again? The only thing I just found
-> (and have not fixed) is, I think $GIT_DIR/info/excludes and
-> $GIT_DIR/info/sparse-checkout should be per-worktree, not shared.
+On Thu, Jun 19, 2014 at 11:03:03AM -0700, Junio C Hamano wrote:
+> Jeremiah Mahler <jmmahler@gmail.com> writes:
+> 
+> > Both unpack-trees.c and read-cache.c have their own name_compare()
+> > function, which are identical.  And read-cache.c has a
+> > cache_name_compare() function which is nearly identical to
+> > name_compare() [1].  The cache_name_compare() function is not specific
+> > to a cache, other than by being part of cache.h.
+> 
+> 'other than by designed to be used only for comparing names in the
+> cache entries' is probably more accurate, I would think.
+> 
+> > Generalize the cache_name_compare() function by renaming it to
+> > name_compare().  Simplify the cache_name_stage_compare() function using
+> > name_compare().  Then change the few instances which used
+> > cache_name_compare() to name_compare() [2].
+> >
+> > [1] cache_name_compare() is not identical to name_compare().  The former
+> >     returns +1, -1, whereas the latter returns +N, -N.  But there is no
+> >     place where name_compare() is used that needs the magnitude so this
+> >     difference does not alter its behavior.
+> 
+> You chose to use the one that loses the information by unifying
+> these two into the variant that only returns -1/0/+1.  We know that
+> it does not matter for the current callers, but is it expected that
+> no future callers will benefit by having the magnitude information?
+> 
+> > [2] The instances where cache_name_compare() is used have nothing to do
+> >     with a cache.  The new name, name_compare(), makes it clear that no
+> >     cache is involved.
+> 
+> This is redundant and should be dropped, as you already said "is not
+> specific to a cache" earlier.
+> 
+> > Signed-off-by: Jeremiah Mahler <jmmahler@gmail.com>
+> > ---
+> >  cache.h        |  2 +-
+> >  dir.c          |  3 +--
+> >  name-hash.c    |  2 +-
+> >  read-cache.c   | 23 +++++++++++++----------
+> >  tree-walk.c    | 10 ----------
+> >  unpack-trees.c | 11 -----------
+> >  6 files changed, 16 insertions(+), 35 deletions(-)
+> >
+> > diff --git a/cache.h b/cache.h
+> > index c498a30..e3205fe 100644
+> > --- a/cache.h
+> > +++ b/cache.h
+> > @@ -1027,7 +1027,7 @@ extern int validate_headref(const char *ref);
+> >  
+> >  extern int base_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
+> >  extern int df_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
+> > -extern int cache_name_compare(const char *name1, int len1, const char *name2, int len2);
+> > +extern int name_compare(const char *name1, size_t len1, const char *name2, size_t len2);
+> >  extern int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2);
+> >  
+> >  extern void *read_object_with_reference(const unsigned char *sha1,
+> > diff --git a/dir.c b/dir.c
+> > index 797805d..e65888d 100644
+> > --- a/dir.c
+> > +++ b/dir.c
+> > @@ -1354,8 +1354,7 @@ static int cmp_name(const void *p1, const void *p2)
+> >  	const struct dir_entry *e1 = *(const struct dir_entry **)p1;
+> >  	const struct dir_entry *e2 = *(const struct dir_entry **)p2;
+> >  
+> > -	return cache_name_compare(e1->name, e1->len,
+> > -				  e2->name, e2->len);
+> > +	return name_compare(e1->name, e1->len, e2->name, e2->len);
+> >  }
+> >  
+> >  static struct path_simplify *create_simplify(const char **pathspec)
+> > diff --git a/name-hash.c b/name-hash.c
+> > index be7c4ae..e2bea88 100644
+> > --- a/name-hash.c
+> > +++ b/name-hash.c
+> > @@ -179,7 +179,7 @@ static int same_name(const struct cache_entry *ce, const char *name, int namelen
+> >  	 * Always do exact compare, even if we want a case-ignoring comparison;
+> >  	 * we do the quick exact one first, because it will be the common case.
+> >  	 */
+> > -	if (len == namelen && !cache_name_compare(name, namelen, ce->name, len))
+> > +	if (len == namelen && !name_compare(name, namelen, ce->name, len))
+> >  		return 1;
+> 
+> The existing code is somewhat strange; while the update is correct
+> in the context of this patch, it may further want to be fixed in a
+> later patch to either
+> 
+> 	!name_compare(name, namelen, ce->name, len)
+> 
+> or
+> 
+> 	len == namelen && !memcmp(name, ce->name, len)
+> 
+I did not notice that, good catch.  Since that line is going to be
+changed I can make a short fixup patch before the main patch and avoid
+the rename.
 
-I threw it into the stalled category because you said even you do
-not use it yourself (you may also have said that it has issues
-already known and not fixed) in the first place.  If we want to
-resuscitate it, a good point to start is to refresh it with a reroll
-to address known issues, I would guess.
+> The patch text looks good.
+> 
+> Thanks.
 
-Thanks.
+-- 
+Jeremiah Mahler
+jmmahler@gmail.com
+http://github.com/jmahler
