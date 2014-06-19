@@ -1,95 +1,99 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v18 16/48] refs.c: add an err argument to delete_ref_loose
-Date: Thu, 19 Jun 2014 08:56:58 -0700
-Message-ID: <CAL=YDW=Xj49fxUvuFU8s-9c6iB=rVoc6+AAbKYuBVMvSPGznOA@mail.gmail.com>
-References: <1403020442-31049-1-git-send-email-sahlberg@google.com>
-	<1403020442-31049-17-git-send-email-sahlberg@google.com>
-	<53A1FAF8.4050700@alum.mit.edu>
-	<CAL=YDWnbKTysV=OaDuxOz10=QbpSWkzmoYteSeq_-Fv=HtcOSQ@mail.gmail.com>
-	<53A21500.2050508@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] strbuf: add xstrdup_fmt helper
+Date: Thu, 19 Jun 2014 09:49:41 -0700
+Message-ID: <xmqq38f0j13u.fsf@gitster.dls.corp.google.com>
+References: <20140618200000.GA22994@sigill.intra.peff.net>
+	<20140618200133.GA23057@sigill.intra.peff.net>
+	<xmqq7g4dj1cn.fsf@gitster.dls.corp.google.com>
+	<20140619090532.GB1009@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 19 17:57:06 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 19 18:49:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wxei1-0001gz-8F
-	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 17:57:05 +0200
+	id 1WxfX9-0002K7-Kq
+	for gcvg-git-2@plane.gmane.org; Thu, 19 Jun 2014 18:49:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757948AbaFSP5A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 11:57:00 -0400
-Received: from mail-ve0-f172.google.com ([209.85.128.172]:42331 "EHLO
-	mail-ve0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757558AbaFSP47 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2014 11:56:59 -0400
-Received: by mail-ve0-f172.google.com with SMTP id jz11so2478821veb.31
-        for <git@vger.kernel.org>; Thu, 19 Jun 2014 08:56:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=N1SIKCJD0kCFyMX2ucR0tr5ssQIYlrBTqInGtGJ8k5M=;
-        b=iRNxlnRPiGHioUrFegPoLXuS7m27J/XrdNHmT3cvzQJPBuIwXC3If4FPdn+Ma9pYKM
-         mbCPtK6B6Frs4WB2Pjzg2lcSiwct5GC9TJGykIdS2xtIkzo5JmEy6bLaQVEckPWUqAq2
-         NoqFAkYV2tNDgf5/YbK8RuAGGRHQtSUpPkD8Xt7vzTjg+uVkScqJ/67GbN66l0VCAnUp
-         oxZ7qrx7sbH2FXrAplGPAcT6Bb4dtVvwSiUAihxeE5c3iXHHsTeGOFoFfj9XHv39+aDf
-         31gwpxvAYRNtLvfq0Zal+fy3CTtS6ni/QNxtCevGI1kA0ekd88Q+6uiJKQD4Ocjd1k/0
-         d5zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=N1SIKCJD0kCFyMX2ucR0tr5ssQIYlrBTqInGtGJ8k5M=;
-        b=gQhxpKWTX4y8GBqVSHgzvGV8siSp30zFhfU8KfIybFCb/UfHX28PMQLHra2dbIIuop
-         xwJOx2OyuFaGeoDciSs6T7mlv1w1e3cRXv7riUrc2BrP4xSC8lnp7rkrPCv7YIxXfQcA
-         N6nZQHsp3BGTlWK4WqvSoJsx2xBKxkpxN0q/fLiGaLygEpMfLc+DLmICNcc7zw5q941G
-         MhbBCWr4mbm+CfZ/U3+KROvCnc398D/4ALnIvKwdi9r8OWbYFolqDORhiWRRSF7FIGho
-         nTZH5B1Oo+j7Yr99F20K/Nz1grCqdS3lka1XPVMAMhg6WEjuTWwS7Lut3er+nuGUpJ0a
-         GRcA==
-X-Gm-Message-State: ALoCoQlfxeSN697TySHAaYATdxI0jpraF1wGAZkuRhnn8lBtjruGtftmg66kstPLbf2S3lIVH9V1
-X-Received: by 10.52.130.18 with SMTP id oa18mr818495vdb.78.1403193418439;
- Thu, 19 Jun 2014 08:56:58 -0700 (PDT)
-Received: by 10.52.255.65 with HTTP; Thu, 19 Jun 2014 08:56:58 -0700 (PDT)
-In-Reply-To: <53A21500.2050508@alum.mit.edu>
+	id S933711AbaFSQtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Jun 2014 12:49:50 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58708 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932213AbaFSQts (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Jun 2014 12:49:48 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC2001E1EE;
+	Thu, 19 Jun 2014 12:49:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=37vvFq5b70AI+cwiNg4jIwy3+j4=; b=fXWb0D
+	nUQYmnJouFECyOMAet9GfM+Efd9skLpcm0i6HJ7nij/74vZCnyGUJI0xtwva5LbR
+	X0hs8RAnT56Aw0f89uismv5YsJmWtUeH1LG3hL9z1QJYjHzjbTQL4ji3pEjXmtJY
+	RIh2Q0w+G0f++Ojz/oZTutdVW+dq4THrfYJWM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=aHIVEZVmfcSqagirgoMJAQEjYdZkE1ZC
+	o2t88L1uJ8HYSQ/Z+fAplYCedT3LVED+izBFuDK9HqNJwzAdesEpSjb+eDjTwHVi
+	ENLUxXogTTp3Ds4AV1OMK4/V+rtHYEVQ0Kp1XDgCNbQiYKC++eQrC+RNL1g7wbfi
+	p+5tHGaoqQg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A0D211E1ED;
+	Thu, 19 Jun 2014 12:49:45 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 211841E1E9;
+	Thu, 19 Jun 2014 12:49:41 -0400 (EDT)
+In-Reply-To: <20140619090532.GB1009@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 19 Jun 2014 05:05:32 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: B532E7FE-F7D1-11E3-8E57-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252165>
 
-I have resent v19 that does
-1, remove the spurios redundant errno line
-2, fixes the type
-and
-3, reorders the patch as mentioned previously in this thread.
+Jeff King <peff@peff.net> writes:
 
-This I hope will be the final version of the series we will need.
+> On Wed, Jun 18, 2014 at 03:32:08PM -0700, Junio C Hamano wrote:
+>
+>> >   str = xstrdup_fmt(fmt, some, args);
+>> > ---
+>> > I'm open to suggestions on the name. This really is the same thing
+>> > conceptually as the GNU asprintf(), but the interface is different (that
+>> > function takes a pointer-to-pointer as an out-parameter, and returns the
+>> > number of characters return).
+>> 
+>> Naming it with anything "dup" certainly feels wrong.  The returned
+>> string is not a duplicate of anything.
+>
+> I was somewhat inspired by "mkpathdup" and friends.
 
-regards
-ronnie sahlberg
+That name is from "mkpath gives its result in a static buffer and
+forces the callers to xstrdup() if they want to keep the result;
+this is a thin wrapper to do so for the caller".  As there is no
+str_fmt() that gives its result in a static, so...
 
-On Wed, Jun 18, 2014 at 3:38 PM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 06/19/2014 12:27 AM, Ronnie Sahlberg wrote:
->> It looks like we need to reorder two of the patches.
->> This patch needs to be moved to later in the series and happen after
->> the delete_ref conversion :
->>
->> refs.c: make delete_ref use a transaction
->> refs.c: add an err argument to delete_ref_loose
+> I considered that, but I do find asprintf's interface unnecessarily
+> annoying...
+
+Yes, it is annoying.
+
+> Would it be crazy to just call it xprintf? By our current scheme that
+> would be "a wrapper for printf", which means it is potentially
+> confusing.
 >
-> That agrees with what I have found out since my first email.  The
-> failures go away starting with the later commit that you mentioned.
->
->> I will respin a v19 with these patches reordered.
->
-> Michael
->
-> --
-> Michael Haggerty
-> mhagger@alum.mit.edu
-> http://softwareswirl.blogspot.com/
+> Literally any other unused letter would be fine. dprintf for detach? I
+> dunno.
+
+If we twist the logic behind the 'mkpathdup' name a little bit,
+perhaps we can call it sprintf_dup or something.  That is, "sprintf
+wants a fixed preallocated piece of memory to print into, and we
+relieve the callers of having to do so", perhaps?
+
+dprintf, mprintf, etc. are also fine by me.
