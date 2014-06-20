@@ -1,99 +1,111 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Tool/Scripts - For maintaining different branches on a repo
-Date: Fri, 20 Jun 2014 22:30:47 +0000
-Message-ID: <20140620223047.GB856079@vauxhall.crustytoothpaste.net>
-References: <CAD6G_RRxj_tHhiGxP+ehNMBewqveUbbGuLLxgnHjUt96WkC_xg@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 05/11] trace: add infrastructure to augment
+ trace output with additional info
+Date: Fri, 20 Jun 2014 15:33:22 -0700
+Message-ID: <xmqqmwd7citp.fsf@gitster.dls.corp.google.com>
+References: <53A4A195.1070502@gmail.com> <53A4A267.2060907@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="R3G7APHDIzY6R/pk"
-Cc: Git List <git@vger.kernel.org>
-To: Jagan Teki <jagannadh.teki@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jun 21 00:30:59 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRBOPNSKOQKGQE5HTBC3I@googlegroups.com Sat Jun 21 00:33:34 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBOPNSKOQKGQE5HTBC3I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-pd0-f186.google.com ([209.85.192.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wy7Kk-0001qg-JE
-	for gcvg-git-2@plane.gmane.org; Sat, 21 Jun 2014 00:30:58 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966868AbaFTWaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2014 18:30:55 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:48468 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965046AbaFTWay (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jun 2014 18:30:54 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:484c:d808:778d:663a])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(envelope-from <msysgit+bncBCG77UMM3EJRBOPNSKOQKGQE5HTBC3I@googlegroups.com>)
+	id 1Wy7ND-0004Z4-3r
+	for gcvm-msysgit@m.gmane.org; Sat, 21 Jun 2014 00:33:31 +0200
+Received: by mail-pd0-f186.google.com with SMTP id fp1sf940983pdb.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 20 Jun 2014 15:33:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=ACfJGkTqp+waCDmKslhhZoYXtIMXmyZQ4jJHZBeaxGo=;
+        b=HlTewyTjQNhLXdDIT68x75BU1qdaLV1mUT0KsYu0auz4c8nGToCOmCqYZTaIPGVn/g
+         zsfP3Wr+qDgMTuQ5LncQxqxR+nM6p244b0hv0q16x/TUtxbh+rUs0Cv+j329vQ++s0Ud
+         z3dfsHmCk5x1LbD3xxzW8GnAGA6iFJw9dXQ3cLu9g/sa3P76uhtKEU6OiIMgZrTzRuS1
+         hDNLAc1b74sdaTUAUlCPHbbMBCImtzrdSBYmpK17Nofh9B9X6u/tsWouJfh/7dFh94Le
+         Si+R0DIjoOFj0EuVYEC53GH7B7WCzCEdLBIeRZTJHvGs1z5b6a7VFU1jxaBUg8i75nPN
+         cO1Q==
+X-Received: by 10.182.165.36 with SMTP id yv4mr35900obb.18.1403303609828;
+        Fri, 20 Jun 2014 15:33:29 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.182.22.129 with SMTP id d1ls429436obf.30.gmail; Fri, 20 Jun
+ 2014 15:33:28 -0700 (PDT)
+X-Received: by 10.182.33.106 with SMTP id q10mr2755763obi.8.1403303608688;
+        Fri, 20 Jun 2014 15:33:28 -0700 (PDT)
+Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id ci7si2101803qcb.1.2014.06.20.15.33.28
+        for <msysgit@googlegroups.com>;
+        Fri, 20 Jun 2014 15:33:28 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F39A22B4D;
+	Fri, 20 Jun 2014 18:33:24 -0400 (EDT)
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 161ED22B4C;
+	Fri, 20 Jun 2014 18:33:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 5A18A2808E;
-	Fri, 20 Jun 2014 22:30:53 +0000 (UTC)
-Mail-Followup-To: Jagan Teki <jagannadh.teki@gmail.com>,
-	Git List <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <CAD6G_RRxj_tHhiGxP+ehNMBewqveUbbGuLLxgnHjUt96WkC_xg@mail.gmail.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.15-rc5-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252293>
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B293E22B49;
+	Fri, 20 Jun 2014 18:33:19 -0400 (EDT)
+In-Reply-To: <53A4A267.2060907@gmail.com> (Karsten Blees's message of "Fri, 20
+	Jun 2014 23:06:47 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E1406CA0-F8CA-11E3-BAFD-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252294>
 
+Karsten Blees <karsten.blees@gmail.com> writes:
 
---R3G7APHDIzY6R/pk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> To be able to add a common prefix or suffix to all trace output (e.g.
+> a timestamp or file:line of the caller), factor out common setup and
+> cleanup tasks of the trace* functions.
+>
+> Some unit-tests use trace output to verify internal state, and variable
+> output such as timestamps and line numbers are not useful there. Disable
+> additional trace output if GIT_TRACE_BARE is set.
 
-On Thu, Jun 19, 2014 at 04:18:22PM +0530, Jagan Teki wrote:
-> Hi,
->=20
-> I have a single repo with different kinds of branches say 4 branches.
-> Developers will send a patches wrt to specific branch.
+Hmph, this makes me wonder if we are better off making these
+additional trace output optional, i.e. not disabling with
+GIT_TRACE_BARE like this, but show the new output only when
+explicitly asked for by setting GIT_TRACE_PERF or something.
 
-I presume here that you're referring to emailed patches, or patches in
-independent files, as opposed to just having branches with commits.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-> Is there any opensource tool/script that does applying patches/maintaining
-> the branches in repo w/o manual intervention?
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-If you want something that works with patches specifically, TopGit might
-do what you want.  If what you're looking for is a tool that accepts
-patches and automatically applies them, I'm not aware of one.  It
-shouldn't be terribly difficult to script, though.
-
-If you don't need to deal with patches and can instead deal with git
-repositories, GitLab and Gitorious offer merge requests, which might
-make life easier.  I have heard that GitLab is less painful to set up.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---R3G7APHDIzY6R/pk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJTpLYXAAoJEL9TXYEfUvaLDgoP/0YJdpxs7HRaWeUDOX4qbest
-lxZ9XH81Pzg/eLB3p21ASpo8AutJyeDKiKnhnov+h5cETY+StzJkAiVDaWUJc1bE
-XHBf3/3/jXLsj9FmI50a1t4SyQGBH3dzeXE+KcLT+vi/Rvkh1fXNiMgdAw0HaK3I
-6O4kfZ0Kba1li8WyoPH5OIuv+t29iPWgAy4hp08ZRNyyv7JrIzdIn/9O7jlG+7WW
-6pK/u2U9JnoeZQ85qEGNstw5TFRIo4A1kZb2G9Vb5tpKTOSRYCzJbbY3DDxB7Fq/
-3s53eq7aVV1S8ezUj45+wkKzqhhYZHtt/0T6PctNkAXh1KC1i3FeOjBIlyDKL4xi
-Okvl//UFeb5QPyr3jgHwDzU7TsYvJFV0vpo+ZegJQ64rCwMoHNGEPEONkidHtevi
-te+9w9wf7zQc59fVyrC/EcuXH9kdzHBl7Y8BnKa2OvFQELdEb70QNGKp4dbFhbBV
-68KQ1ycZ1Hg0heUykxsQ79qUaj/lTjcqKLGkMZSj4PMtxj/oIABux5+sBDY6Tws0
-5LQatqR7IROs5Ne7PB30ClBXlcynitEZPCCRk+KZoUK5fYrhRNZ+h6de8fiIPzkX
-bvp6nX6uZXivlE8CrBwCnm+w2+uts4CzLj+hd2w159kgzljxzHHWXQsVhR8PBvXY
-KXrbqkBnx4AjjGdZkPnK
-=8kQ0
------END PGP SIGNATURE-----
-
---R3G7APHDIzY6R/pk--
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
