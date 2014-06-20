@@ -1,120 +1,67 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 10/16] fast-import: use skip_prefix for parsing input
-Date: Thu, 19 Jun 2014 23:19:09 -0400
-Message-ID: <CAPig+cTgz1s_68MVT5XgTsM9j=NZnCt3tNX3wBGddEq3nWZgyw@mail.gmail.com>
+Subject: Re: [PATCH 14/16] fetch-pack: refactor parsing in get_ack
+Date: Fri, 20 Jun 2014 01:15:20 -0400
+Message-ID: <CAPig+cTBaDDigjSSeMLvJ=R701XNTtjVL1JKE8TWbHVTFC8BJA@mail.gmail.com>
 References: <20140618194117.GA22269@sigill.intra.peff.net>
-	<20140618194912.GJ22622@sigill.intra.peff.net>
+	<20140618195603.GN22622@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jun 20 05:19:22 2014
+X-From: git-owner@vger.kernel.org Fri Jun 20 07:15:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WxpMH-0005oK-0d
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 05:19:21 +0200
+	id 1WxrAc-0000qX-Fi
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 07:15:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933565AbaFTDTN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Jun 2014 23:19:13 -0400
-Received: from mail-yh0-f47.google.com ([209.85.213.47]:37070 "EHLO
-	mail-yh0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932125AbaFTDTK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Jun 2014 23:19:10 -0400
-Received: by mail-yh0-f47.google.com with SMTP id v1so2410280yhn.6
-        for <git@vger.kernel.org>; Thu, 19 Jun 2014 20:19:10 -0700 (PDT)
+	id S933838AbaFTFPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 01:15:22 -0400
+Received: from mail-yk0-f174.google.com ([209.85.160.174]:38930 "EHLO
+	mail-yk0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933503AbaFTFPV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2014 01:15:21 -0400
+Received: by mail-yk0-f174.google.com with SMTP id 19so2341968ykq.5
+        for <git@vger.kernel.org>; Thu, 19 Jun 2014 22:15:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=N3xQROxcKx5P1NU6XaFHIsFONXY10gr7+/mujYv+UgM=;
-        b=pYFvYTuxJE1adrxDwKSo2iBNDKuaQAl8u+kglfew3sVSQdXCN4V3F0mjObJW4YMXh+
-         OdADNsdEw027H0dKHBScaenzeYP/P6RBFXpdgPv/gQq2YMQdADv710BHZzZvmL4ZrNXc
-         ElBBL8Y3aAkZ011C0cdxXBPjsLjd+pDmw2JSeyHW1LBvM1vlqVln564NW4kV/l2tnqp/
-         zQumsJOarcMdTfXBQhsWdAzY1tkJNRUmM5Le8QPtPXhF27zPPJhwQRNDFVu0/VGU5XmG
-         zecE06N/0ZdIS6MOSD304/zz0w+E4r/2pt+wp8EeaPu/dr+RE2io/V0loVPf1XhNwrjv
-         Rv+w==
-X-Received: by 10.236.66.139 with SMTP id h11mr1001395yhd.30.1403234349997;
- Thu, 19 Jun 2014 20:19:09 -0700 (PDT)
-Received: by 10.170.36.80 with HTTP; Thu, 19 Jun 2014 20:19:09 -0700 (PDT)
-In-Reply-To: <20140618194912.GJ22622@sigill.intra.peff.net>
-X-Google-Sender-Auth: mZAA9p0NRdV8LTDEAsNDF0YCjyE
+        bh=nRGm7c4rBy6sC85RJ3/tZmwQs1YHfOdA+3W5UkhYJMQ=;
+        b=h0bznYMK6WAYZEj7WNL//PEpX90wru5OHtv4HQWzQPi0oVTTnVDSUm9OJRf17Wd6l9
+         PGe6JEuInXqrd7o5al7hrfxWh5rAAYA469GpBsnK0nXwCkqm0kUTA2FVo1AdyeyCx0CX
+         aFKq/LGtf8SDRgy9nnMEZxu0zJgQ3wz+evKPT0eu8k/bEnLJymrXKcxyvnaBMU5rcsrw
+         CqfVpcrbpNPPUapFy6NFTSzHFoiBc1b095HK/nuNTSzqI8eANlYI1PFerHaJfkGa27jf
+         8jat9oSKk+Hux7Gkd3ySqNYeqgiwMf1sDOMOj0OeWmqc6EbuN7UFPJq1sYphbOx1jQK+
+         JebA==
+X-Received: by 10.236.117.169 with SMTP id j29mr1704191yhh.118.1403241320899;
+ Thu, 19 Jun 2014 22:15:20 -0700 (PDT)
+Received: by 10.170.36.80 with HTTP; Thu, 19 Jun 2014 22:15:20 -0700 (PDT)
+In-Reply-To: <20140618195603.GN22622@sigill.intra.peff.net>
+X-Google-Sender-Auth: v9xJG3Zb6xg_7GvQQgbCqulMDv0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252213>
 
-On Wed, Jun 18, 2014 at 3:49 PM, Jeff King <peff@peff.net> wrote:
-> Fast-import does a lot of parsing of commands and
-> dispatching to sub-functions. For example, given "option
-> foo", we might recognize "option " using starts_with, and
-> then hand it off to parse_option() to do the rest.
+On Wed, Jun 18, 2014 at 3:56 PM, Jeff King <peff@peff.net> wrote:
+> There are several uses of the magic number "line+45" when
+> parsing ACK lines from the server, and it's rather unclear
+> why 45 is the correct number. We can make this more clear by
+> keeping a running pointer as we parse, using skip_prefix to
+> jump past the first "ACK ", then adding 40 to jump past
+> get_sha1_hex (which is still magical, but hopefully 40 is
+> less magical to readers of git code).
 >
-> However, we do not let parse_option know that we have parsed
-> the first part already. It gets the full buffer, and has to
-> skip past the uninteresting bits. Some functions simply add
-> a magic constant:
->
->   char *option = command_buf.buf + 7;
->
-> Others use strlen:
->
->   char *option = command_buf.buf + strlen("option ");
->
-> And others use strchr:
->
->   char *option = strchr(command_buf.buf, ' ') + 1;
->
-> All of these are brittle and easy to get wrong (especially
-> given that the starts_with call and the code that assumes
-> the presence of the prefix are far apart). Instead, we can
-> use skip_prefix, and just pass each handler a pointer to its
-> arguments.
->
+> Note that this actually puts us at line+44. The original
+> required some character between the sha1 and further ACK
+> flags (it is supposed to be a space, but we never enforced
+> that). We start our search for flags at line+44, which
+> meanas we are slightly more liberal than the old code.
+
+s/meanas/means/
+
 > Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/fast-import.c b/fast-import.c
-> index a3ffe30..5f17adb 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -2713,20 +2706,22 @@ static void parse_new_commit(void)
->
->         /* file_change* */
->         while (command_buf.len > 0) {
-> -               if (starts_with(command_buf.buf, "M "))
-> -                       file_change_m(b);
-> -               else if (starts_with(command_buf.buf, "D "))
-> -                       file_change_d(b);
-> -               else if (starts_with(command_buf.buf, "R "))
-> -                       file_change_cr(b, 1);
-> -               else if (starts_with(command_buf.buf, "C "))
-> -                       file_change_cr(b, 0);
-> -               else if (starts_with(command_buf.buf, "N "))
-> -                       note_change_n(b, &prev_fanout);
-> +               const char *v;
-
-This declaration of 'v' shadows the 'v' added by patch 8/16 earlier in
-the function.
-
-> +               if (skip_prefix(command_buf.buf, "M ", &v))
-> +                       file_change_m(v, b);
-> +               else if (skip_prefix(command_buf.buf, "D ", &v))
-> +                       file_change_d(v, b);
-> +               else if (skip_prefix(command_buf.buf, "R ", &v))
-> +                       file_change_cr(v, b, 1);
-> +               else if (skip_prefix(command_buf.buf, "C ", &v))
-> +                       file_change_cr(v, b, 0);
-> +               else if (skip_prefix(command_buf.buf, "N ", &v))
-> +                       note_change_n(v, b, &prev_fanout);
->                 else if (!strcmp("deleteall", command_buf.buf))
->                         file_change_deleteall(b);
-> -               else if (starts_with(command_buf.buf, "ls "))
-> -                       parse_ls(b);
-> +               else if (skip_prefix(command_buf.buf, "ls ", &v))
-> +                       parse_ls(v, b);
->                 else {
->                         unread_command_buf = 1;
->                         break;
