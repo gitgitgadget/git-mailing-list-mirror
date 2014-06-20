@@ -1,140 +1,134 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v20 06/48] lockfile.c: add a new public function unable_to_lock_message
-Date: Fri, 20 Jun 2014 07:42:47 -0700
-Message-ID: <1403275409-28173-7-git-send-email-sahlberg@google.com>
+Subject: [PATCH v20 12/48] refs.c: commit_packed_refs to return a meaningful errno on failure
+Date: Fri, 20 Jun 2014 07:42:53 -0700
+Message-ID: <1403275409-28173-13-git-send-email-sahlberg@google.com>
 References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 16:43:55 2014
+X-From: git-owner@vger.kernel.org Fri Jun 20 16:43:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wy02i-00017d-MV
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:43:53 +0200
+	id 1Wy02g-00017d-K8
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:43:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753515AbaFTOnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2014 10:43:47 -0400
-Received: from mail-pa0-f74.google.com ([209.85.220.74]:50442 "EHLO
-	mail-pa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752837AbaFTOnc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2014 10:43:32 -0400
-Received: by mail-pa0-f74.google.com with SMTP id lj1so448569pab.5
+	id S1753434AbaFTOnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 10:43:39 -0400
+Received: from mail-pa0-f73.google.com ([209.85.220.73]:40926 "EHLO
+	mail-pa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753148AbaFTOnd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2014 10:43:33 -0400
+Received: by mail-pa0-f73.google.com with SMTP id kq14so449610pab.0
         for <git@vger.kernel.org>; Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=ZkuCM8XteSTr++Ap3y/lGauyrHGGh/5X9bS4nXU+eVQ=;
-        b=aV3aV+5XUx4nq4kD2dW5gLlUnqRREpcH5xu/BQalIEd1a60ndLIbT02NcVzgpKKLdO
-         R3s3tzWqjhi/jJjHXGUC/Wm/ikV0XwrCadKUEEjNiHgHMxRoLyxxlyNdHosdrp2s227U
-         3dlUymR/93D9FRvP3ahRQTVe0tnHsREl3dXfM7ki21ubJwNQ23FBrnl87TeRzo5AVXWI
-         vaAh7qAdJKmGL/z9rGecdkem1o/1sXf5ZWXPGWeysvUSPWONf0xe4lppevyAbUWM237R
-         MXurMuuiufD/7xENx2fq4EKpqejeO4NCuLSabmbZhppZldQ5+YlQrLaaWPpd4WhOG1tE
-         fStQ==
+        bh=VS/RoN0v7YMc/IOkRuZOrhnt+R4lIs46nXv1Us+aUqE=;
+        b=l5HHdZl0Lmu1SHMNe7zxwI1mo+PNCf1E/pPPUEIWUuxwvL97n19Den04TnYSr/fR2X
+         SSpKULW6DO3O1JoNGFWMm6eLg3TxXCkncr8uYfn+901rlM7L3X8egRfgdO21txc+SU7V
+         yXSA6qDU/vP51ggVp0TFbejUiHReY2Fv7sEOGccBaqiph8mexCtzQoZim1HnoteAsOJ9
+         lTIf7vmem3lFpcCUZG1T/dBg2l6a2lC0rg4VieTl6APvH5CJlp8vWvV5WAhCxT2ptcv3
+         MhMF0kiqeD2HZc0yYGzNHF73efWZgNq1lErpvRshaNgZ3sPVfqWyysYZkX6HblPPfC35
+         Gqwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=ZkuCM8XteSTr++Ap3y/lGauyrHGGh/5X9bS4nXU+eVQ=;
-        b=dEAl9/fgCeeCvnmRgFV0DHr31Qz14jTTpn1LN9MY2eke/OU40SP6VqT6SNCrZDIz9z
-         NvM68sofWENJOx9djXOTjR7QoIKK5ogMVwsv6bO71vhnQsY0YxNSS0rqIL/bgPCTKpa4
-         MFJus3rp6H1jCfA1V8QNal68E1A0GS3UuXA5HoshT0566Ok13wGbtf8PG310hbfwFUxW
-         FMQpsiO7dXM4Sig5dd/iQWnShrgXCxDexJK75QdIANsdM1Tuqzx4NSLedlZV7WvJHQ31
-         RfbwdRiEVh4BD/Fc3tCv840Il1GTRBr/2IiDvlC9tt0SoW5vejTEMaf45bGs569yad2/
-         EYZg==
-X-Gm-Message-State: ALoCoQkE1F+LHMfCJ12ClgkUEf2Ht+Gh0h0GJBk7uQgBAHjkgD9c4+XclnFYaQ1JBr+gXWBuffXa
-X-Received: by 10.66.220.34 with SMTP id pt2mr1471842pac.8.1403275412378;
+        bh=VS/RoN0v7YMc/IOkRuZOrhnt+R4lIs46nXv1Us+aUqE=;
+        b=ZwTjg81FaDYLnPyDfx/JrYKFKSZe0uckCCKcNpfoOmov3JBfe1h5KCvZKL3A1e/BHx
+         tvBXZgLcloFO5W5+TOgKn7xTpMUJTGlYSv7FtNNobqM2lF+m0L5SzDTALoRGTL1YtyXl
+         0FmhGpJuX2W5MvakLADKMkXptygEdld/oY4sS97SfBCzaouZGZPgadLK+WlOdae4jzw1
+         8hbX1i6jgq85e5hNnTLago9ZlzTgAfncWcMzzIL1kl6TCz9CnsUXsyhXcug/t5Wa1qJy
+         RETUvQq4EPjNTN/+ejWRsfrRj3f0RuN+4XbK4cU4zDL5n9FuTfDf7tetACOuNwGpQ8+u
+         biig==
+X-Gm-Message-State: ALoCoQn0+2S/Pmf+Pz8mbBhYbepfG+UTDC8XlL/KsiRN8gtSXXesUs9tC3oFYk7Qfuuv0jz0Qcrs
+X-Received: by 10.68.135.200 with SMTP id pu8mr1500095pbb.9.1403275412547;
         Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id y50si664348yhk.4.2014.06.20.07.43.32
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id o69si663693yhp.6.2014.06.20.07.43.32
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 33BF831C6B4;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 5E25A5A44A6;
 	Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id B4C8EE0A04; Fri, 20 Jun 2014 07:43:31 -0700 (PDT)
+	id 17B3FE15A5; Fri, 20 Jun 2014 07:43:31 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.420.g181e020.dirty
 In-Reply-To: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252232>
 
-Introducing a new unable_to_lock_message helper, which has nicer
-semantics than unable_to_lock_error and cleans up lockfile.c a little.
+Making errno when returning from commit_packed_refs() meaningful,
+which should fix
+
+ * a bug in "git clone" where it prints strerror(errno) based on
+   errno, despite errno possibly being zero and potentially having
+   been clobbered by that point
+ * the same kind of bug in "git pack-refs"
+
+and prepares for repack_without_refs() to get a meaningful
+error message when commit_packed_refs() fails without falling into
+the same bug.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- cache.h    |  2 ++
- lockfile.c | 22 ++++++++++++----------
- 2 files changed, 14 insertions(+), 10 deletions(-)
+ refs.c | 10 +++++++++-
+ refs.h |  1 +
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/cache.h b/cache.h
-index cbe1935..8b12aa8 100644
---- a/cache.h
-+++ b/cache.h
-@@ -559,6 +559,8 @@ struct lock_file {
- #define LOCK_DIE_ON_ERROR 1
- #define LOCK_NODEREF 2
- extern int unable_to_lock_error(const char *path, int err);
-+extern void unable_to_lock_message(const char *path, int err,
-+				   struct strbuf *buf);
- extern NORETURN void unable_to_lock_index_die(const char *path, int err);
- extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
- extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
-diff --git a/lockfile.c b/lockfile.c
-index 8fbcb6a..464031b 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -157,33 +157,35 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 	return lk->fd;
+diff --git a/refs.c b/refs.c
+index cc69581..7a815be 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2239,11 +2239,16 @@ int lock_packed_refs(int flags)
+ 	return 0;
  }
  
--static char *unable_to_lock_message(const char *path, int err)
-+void unable_to_lock_message(const char *path, int err, struct strbuf *buf)
++/*
++ * Commit the packed refs changes.
++ * On error we must make sure that errno contains a meaningful value.
++ */
+ int commit_packed_refs(void)
  {
--	struct strbuf buf = STRBUF_INIT;
--
- 	if (err == EEXIST) {
--		strbuf_addf(&buf, "Unable to create '%s.lock': %s.\n\n"
-+		strbuf_addf(buf, "Unable to create '%s.lock': %s.\n\n"
- 		    "If no other git process is currently running, this probably means a\n"
- 		    "git process crashed in this repository earlier. Make sure no other git\n"
- 		    "process is running and remove the file manually to continue.",
- 			    absolute_path(path), strerror(err));
- 	} else
--		strbuf_addf(&buf, "Unable to create '%s.lock': %s",
-+		strbuf_addf(buf, "Unable to create '%s.lock': %s",
- 			    absolute_path(path), strerror(err));
--	return strbuf_detach(&buf, NULL);
+ 	struct packed_ref_cache *packed_ref_cache =
+ 		get_packed_ref_cache(&ref_cache);
+ 	int error = 0;
++	int save_errno = 0;
+ 
+ 	if (!packed_ref_cache->lock)
+ 		die("internal error: packed-refs not locked");
+@@ -2253,10 +2258,13 @@ int commit_packed_refs(void)
+ 	do_for_each_entry_in_dir(get_packed_ref_dir(packed_ref_cache),
+ 				 0, write_packed_entry_fn,
+ 				 &packed_ref_cache->lock->fd);
+-	if (commit_lock_file(packed_ref_cache->lock))
++	if (commit_lock_file(packed_ref_cache->lock)) {
++		save_errno = errno;
+ 		error = -1;
++	}
+ 	packed_ref_cache->lock = NULL;
+ 	release_packed_ref_cache(packed_ref_cache);
++	errno = save_errno;
+ 	return error;
  }
  
- int unable_to_lock_error(const char *path, int err)
- {
--	char *msg = unable_to_lock_message(path, err);
--	error("%s", msg);
--	free(msg);
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	unable_to_lock_message(path, err, &buf);
-+	error("%s", buf.buf);
-+	strbuf_release(&buf);
- 	return -1;
- }
+diff --git a/refs.h b/refs.h
+index 8d6cac7..e588ff8 100644
+--- a/refs.h
++++ b/refs.h
+@@ -98,6 +98,7 @@ extern void add_packed_ref(const char *refname, const unsigned char *sha1);
+  * Write the current version of the packed refs cache from memory to
+  * disk.  The packed-refs file must already be locked for writing (see
+  * lock_packed_refs()).  Return zero on success.
++ * Sets errno to something meaningful on error.
+  */
+ extern int commit_packed_refs(void);
  
- NORETURN void unable_to_lock_index_die(const char *path, int err)
- {
--	die("%s", unable_to_lock_message(path, err));
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	unable_to_lock_message(path, err, &buf);
-+	die("%s", buf.buf);
- }
- 
- int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
 -- 
 2.0.0.420.g181e020.dirty
