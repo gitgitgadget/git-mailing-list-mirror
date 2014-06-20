@@ -1,161 +1,122 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v20 13/48] refs.c: make resolve_ref_unsafe set errno to something meaningful on error
-Date: Fri, 20 Jun 2014 07:42:54 -0700
-Message-ID: <1403275409-28173-14-git-send-email-sahlberg@google.com>
+Subject: [PATCH v20 22/48] refs.c: make ref_transaction_begin take an err argument
+Date: Fri, 20 Jun 2014 07:43:03 -0700
+Message-ID: <1403275409-28173-23-git-send-email-sahlberg@google.com>
 References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 16:46:49 2014
+X-From: git-owner@vger.kernel.org Fri Jun 20 16:46:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wy05U-000410-Ek
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:46:44 +0200
+	id 1Wy05S-000410-U7
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:46:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754295AbaFTOq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2014 10:46:27 -0400
-Received: from mail-qc0-f201.google.com ([209.85.216.201]:57612 "EHLO
-	mail-qc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753166AbaFTOnd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2014 10:43:33 -0400
-Received: by mail-qc0-f201.google.com with SMTP id c9so506791qcz.0
+	id S1754236AbaFTOqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 10:46:21 -0400
+Received: from mail-ig0-f202.google.com ([209.85.213.202]:39284 "EHLO
+	mail-ig0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753183AbaFTOne (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2014 10:43:34 -0400
+Received: by mail-ig0-f202.google.com with SMTP id c1so38697igq.3
         for <git@vger.kernel.org>; Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=5sjNv+gFMPB/6axy7Dl8R/E4HHmM3nFsPqqH0jyCR9E=;
-        b=g/YDiIdD25s/BWcQLv1R+sZIEwWNhQMcEqcMguO6cWAqrLrJ8ZGwE99AAU0G+5Xz7r
-         FP+mNghQVrSdBTOzKwkSxRN1Fc/YbyocQkPaxHphejpn21e1M5a+mQ3vjPKNwWcZjoKp
-         AZakpwarfDVuQ4OounP6MYk5+1zTxNJA/IVEBYaKw/INHauq5Ud6Bk7o+5cAEkr+eiue
-         BcSC3zprg11RIx++3uTX6nHDEf64Xq6UyCKRKZGGNzA0aDfQjT2b5bEmbQ/g3ZuZGPe+
-         5tIrhr5zTcD6AisgMCeJF/5HZFg6ma5dYEZU4PzRpH3UHvuFBsCIykKa/JTv1MPNVZ32
-         jSkA==
+        bh=wYZDdbMbgGdlUoRKRAkKWo7iOAeX0Mc0D8OhmodFIx4=;
+        b=EBIAGx9Yem1aHJxaufut+DNn01TLjzhuTuFSXK6SvmrKdmhlWRjTpNu3r9wMLSFHqn
+         5oaGHEMXscgc4f9E8nz6bn/P1JJUIoUWVwHNIqc2I7qNArzrjtI9nstnbhJ7XYUYcwqD
+         4Tha8Htfnv2yzSkqYbt47k/x3FKI4wTS1ZpbSyxSOSYcXyxsYcI3VNprsRxIgWh2gJ1i
+         NEoFbeW/Yif/oMTvpMUeko0rlqPC6y2flGCoESTY8crf0DoBuVGZzlye5w/LDCCCMhaQ
+         d0j0yu6VIQbeWu09FQJwbmkRhOZI3ci81dYPtht47QuAtP5FNrXxkmRFWp+9BlHa+fzn
+         KbVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=5sjNv+gFMPB/6axy7Dl8R/E4HHmM3nFsPqqH0jyCR9E=;
-        b=NvYBArWpWIPBYAnGqOd8QQdzRhfJpWwrJKk0esWW9z4wuge51SwTh2eNIm/jRr8c4s
-         6Laq9QG6kIE9zxQx8e5JP7R/L07iF3p0MtOWOJRoph7O7Ou1NzLNSEtIOCbZVPxhVGtE
-         w93saesZBYwT6tH88dE98f1q0HzynkeLaTzjMtzrktOfobFT5HM+Y+ahqZZVJjZcnqu2
-         R0AkOx9kjVBsMNXOPD/U8uQToNkyf9+rT/sN92Fm/imIZ37NVDn1WbmvzmjU5n7QLik+
-         4AefkBlQjElcF54gN4hw40nfAfbYscIPsONZC4hDhzKW6V20LWxAkaS0+18LVF5siqk2
-         rjkg==
-X-Gm-Message-State: ALoCoQmmFmQ0L2iIwrYg3ByQT9U3tzVNmc1kC7JmnvIj5aC6/UyA2I30MuO9cWhDRN7fF+q8IJ17
-X-Received: by 10.236.216.5 with SMTP id f5mr1297058yhp.10.1403275412615;
+        bh=wYZDdbMbgGdlUoRKRAkKWo7iOAeX0Mc0D8OhmodFIx4=;
+        b=a9t3jLFn8ODZ1F7Uci6s+OmWTNigDQqCeV3cRkBkGezg12uYCAvkwUHCijvwnnsmuR
+         tisVgAD8l6oT/oZTZ+wSWgIfreTu9HxHroZdOayXmaBRDDOi7iVwrMzVII+KiCrlZonY
+         3VjTnew8nj4YzspzN4/GlAy4lp9oWejdPxHmo+RgGxZFEbjcZ2rtDzIauRwJj/SiQieH
+         2r4PIzHyRi+m8FdsAqPprPLsPszNIFcYfNNEssQS0qOgn2qnsA83z2cswv9DW4udWajX
+         Sb44CUZiouj7DaLglwUZ7oDab47KZ2aCZqsmon05q1QafifL9egjrWwB7Df++zX6v4xs
+         ba9g==
+X-Gm-Message-State: ALoCoQkbJVHwHbu1JuZIWguH8hfFTIXT22K+AnXP3GpK48TevyZqQpd8J+yHyx0ZSsSkmFyPtac4
+X-Received: by 10.50.87.65 with SMTP id v1mr1517898igz.0.1403275412889;
         Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id j43si432418yhh.5.2014.06.20.07.43.32
+        by gmr-mx.google.com with ESMTPS id j5si665233yhi.1.2014.06.20.07.43.32
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 7978931C6B5;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id B810E31C6B4;
 	Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 57BA2E1207; Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
+	id 9438EE0873; Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.420.g181e020.dirty
 In-Reply-To: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252267>
 
-Making errno when returning from resolve_ref_unsafe() meaningful,
-which should fix
+Add an err argument to _begin so that on non-fatal failures in future ref
+backends we can report a nice error back to the caller.
+While _begin can currently never fail for other reasons than OOM, in which
+case we die() anyway, we may add other types of backends in the future.
+For example, a hypothetical MySQL backend could fail in _being with
+"Can not connect to MySQL server. No route to host".
 
- * a bug in lock_ref_sha1_basic, where it assumes EISDIR
-   means it failed due to a directory being in the way
-
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- cache.h |  2 +-
- refs.c  | 19 +++++++++++++++----
- 2 files changed, 16 insertions(+), 5 deletions(-)
+ builtin/update-ref.c | 2 +-
+ refs.c               | 2 +-
+ refs.h               | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 8b12aa8..e7ec626 100644
---- a/cache.h
-+++ b/cache.h
-@@ -979,7 +979,7 @@ extern int read_ref(const char *refname, unsigned char *sha1);
-  * NULL.  If more than MAXDEPTH recursive symbolic lookups are needed,
-  * give up and return NULL.
-  *
-- * errno is sometimes set on errors, but not always.
-+ * errno is set to something meaningful on error.
-  */
- extern const char *resolve_ref_unsafe(const char *ref, unsigned char *sha1, int reading, int *flag);
- extern char *resolve_refdup(const char *ref, unsigned char *sha1, int reading, int *flag);
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 7c9c248..c6ad0be 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -365,7 +365,7 @@ int cmd_update_ref(int argc, const char **argv, const char *prefix)
+ 		die("Refusing to perform update with empty message.");
+ 
+ 	if (read_stdin) {
+-		transaction = ref_transaction_begin();
++		transaction = ref_transaction_begin(&err);
+ 		if (delete || no_deref || argc > 0)
+ 			usage_with_options(git_update_ref_usage, options);
+ 		if (end_null)
 diff --git a/refs.c b/refs.c
-index 7a815be..211429d 100644
+index 40f04f4..9cb7908 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1334,6 +1334,7 @@ static const char *handle_missing_loose_ref(const char *refname,
- 	}
- }
+@@ -3397,7 +3397,7 @@ struct ref_transaction {
+ 	size_t nr;
+ };
  
-+/* This function needs to return a meaningful errno on failure */
- const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int reading, int *flag)
+-struct ref_transaction *ref_transaction_begin(void)
++struct ref_transaction *ref_transaction_begin(struct strbuf *err)
  {
- 	int depth = MAXDEPTH;
-@@ -1344,8 +1345,10 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
- 	if (flag)
- 		*flag = 0;
+ 	return xcalloc(1, sizeof(struct ref_transaction));
+ }
+diff --git a/refs.h b/refs.h
+index eeababd..e729ea9 100644
+--- a/refs.h
++++ b/refs.h
+@@ -269,7 +269,7 @@ enum action_on_err {
+  * Begin a reference transaction.  The reference transaction must
+  * be freed by calling ref_transaction_free().
+  */
+-struct ref_transaction *ref_transaction_begin(void);
++struct ref_transaction *ref_transaction_begin(struct strbuf *err);
  
--	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL))
-+	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
-+		errno = EINVAL;
- 		return NULL;
-+	}
- 
- 	for (;;) {
- 		char path[PATH_MAX];
-@@ -1353,8 +1356,10 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
- 		char *buf;
- 		int fd;
- 
--		if (--depth < 0)
-+		if (--depth < 0) {
-+			errno = ELOOP;
- 			return NULL;
-+		}
- 
- 		git_snpath(path, sizeof(path), "%s", refname);
- 
-@@ -1416,9 +1421,13 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
- 				return NULL;
- 		}
- 		len = read_in_full(fd, buffer, sizeof(buffer)-1);
--		close(fd);
--		if (len < 0)
-+		if (len < 0) {
-+			int save_errno = errno;
-+			close(fd);
-+			errno = save_errno;
- 			return NULL;
-+		}
-+		close(fd);
- 		while (len && isspace(buffer[len-1]))
- 			len--;
- 		buffer[len] = '\0';
-@@ -1435,6 +1444,7 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
- 			    (buffer[40] != '\0' && !isspace(buffer[40]))) {
- 				if (flag)
- 					*flag |= REF_ISBROKEN;
-+				errno = EINVAL;
- 				return NULL;
- 			}
- 			return refname;
-@@ -1447,6 +1457,7 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int rea
- 		if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)) {
- 			if (flag)
- 				*flag |= REF_ISBROKEN;
-+			errno = EINVAL;
- 			return NULL;
- 		}
- 		refname = strcpy(refname_buffer, buf);
+ /*
+  * The following functions add a reference check or update to a
 -- 
 2.0.0.420.g181e020.dirty
