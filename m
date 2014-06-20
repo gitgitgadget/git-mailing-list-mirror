@@ -1,68 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 05/11] trace: add infrastructure to augment
- trace output with additional info
-Date: Fri, 20 Jun 2014 15:33:22 -0700
-Message-ID: <xmqqmwd7citp.fsf@gitster.dls.corp.google.com>
-References: <53A4A195.1070502@gmail.com> <53A4A267.2060907@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH v6 00/11] add performance tracing facility
+Date: Fri, 20 Jun 2014 23:49:56 +0100
+Organization: OPDS
+Message-ID: <CEA564C177884D1D86D69200A9A43AC8@PhilipOakley>
+References: <53A4A195.1070502@gmail.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCG77UMM3EJRBOPNSKOQKGQE5HTBC3I@googlegroups.com Sat Jun 21 00:33:34 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBOPNSKOQKGQE5HTBC3I@googlegroups.com>
+Content-Type: text/plain; format=flowed; charset=ISO-8859-1; reply-type=original
+To: "Karsten Blees" <karsten.blees@gmail.com>,
+	"Git List" <git@vger.kernel.org>,
+	"Junio C Hamano" <gitster@pobox.com>,
+	"msysGit" <msysgit@googlegroups.com>
+X-From: msysgit+bncBDSOTWHYX4PBBJPVSKOQKGQEIYGA3LI@googlegroups.com Sat Jun 21 00:50:14 2014
+Return-path: <msysgit+bncBDSOTWHYX4PBBJPVSKOQKGQEIYGA3LI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pd0-f186.google.com ([209.85.192.186])
+Received: from mail-we0-f184.google.com ([74.125.82.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBOPNSKOQKGQE5HTBC3I@googlegroups.com>)
-	id 1Wy7ND-0004Z4-3r
-	for gcvm-msysgit@m.gmane.org; Sat, 21 Jun 2014 00:33:31 +0200
-Received: by mail-pd0-f186.google.com with SMTP id fp1sf940983pdb.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 20 Jun 2014 15:33:29 -0700 (PDT)
+	(envelope-from <msysgit+bncBDSOTWHYX4PBBJPVSKOQKGQEIYGA3LI@googlegroups.com>)
+	id 1Wy7dO-00051f-5q
+	for gcvm-msysgit@m.gmane.org; Sat, 21 Jun 2014 00:50:14 +0200
+Received: by mail-we0-f184.google.com with SMTP id u56sf473057wes.11
+        for <gcvm-msysgit@m.gmane.org>; Fri, 20 Jun 2014 15:50:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=ACfJGkTqp+waCDmKslhhZoYXtIMXmyZQ4jJHZBeaxGo=;
-        b=HlTewyTjQNhLXdDIT68x75BU1qdaLV1mUT0KsYu0auz4c8nGToCOmCqYZTaIPGVn/g
-         zsfP3Wr+qDgMTuQ5LncQxqxR+nM6p244b0hv0q16x/TUtxbh+rUs0Cv+j329vQ++s0Ud
-         z3dfsHmCk5x1LbD3xxzW8GnAGA6iFJw9dXQ3cLu9g/sa3P76uhtKEU6OiIMgZrTzRuS1
-         hDNLAc1b74sdaTUAUlCPHbbMBCImtzrdSBYmpK17Nofh9B9X6u/tsWouJfh/7dFh94Le
-         Si+R0DIjoOFj0EuVYEC53GH7B7WCzCEdLBIeRZTJHvGs1z5b6a7VFU1jxaBUg8i75nPN
-         cO1Q==
-X-Received: by 10.182.165.36 with SMTP id yv4mr35900obb.18.1403303609828;
-        Fri, 20 Jun 2014 15:33:29 -0700 (PDT)
+        h=message-id:reply-to:from:to:references:subject:date:organization
+         :mime-version:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=PTUJDXCQba3cvu5eEWrmHu4CEtjFS3wODxQahBpW6G4=;
+        b=GJGmGxpetncdF2SYeaRH9rVP1kWPOd8sht/D28XIv1AGzCkGKQoP6GAk3xxzQ6lpzy
+         Zuw9C+q/KRktruK47LT3IA1qKMtnF1IKMjDMMsxoe4Jnvwyww/XTeJkOAszmbLpeMIhV
+         SMsE/CM2nAv323d2MFMDfs5lXAzW1ShkuXdTtSGhaFLpoIHCckjZ2PhNXyy9andphGAB
+         w5CM9zyjrvMvdMjDqQMScXI76qwapQsFpNTcxri8GFPvHqYgykBfYw4mfJPgcJXNAb3D
+         dbLtA4qixvoQdcLoJ+TE2vxPSwwPocUvnUSaNaU/Vsz6FG8nLSkBQkbeVBv1a5cLVPSZ
+         Wp7w==
+X-Received: by 10.180.12.3 with SMTP id u3mr26640wib.17.1403304613677;
+        Fri, 20 Jun 2014 15:50:13 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.22.129 with SMTP id d1ls429436obf.30.gmail; Fri, 20 Jun
- 2014 15:33:28 -0700 (PDT)
-X-Received: by 10.182.33.106 with SMTP id q10mr2755763obi.8.1403303608688;
-        Fri, 20 Jun 2014 15:33:28 -0700 (PDT)
-Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id ci7si2101803qcb.1.2014.06.20.15.33.28
+Received: by 10.180.187.34 with SMTP id fp2ls113383wic.51.canary; Fri, 20 Jun
+ 2014 15:50:12 -0700 (PDT)
+X-Received: by 10.194.2.130 with SMTP id 2mr489381wju.5.1403304612625;
+        Fri, 20 Jun 2014 15:50:12 -0700 (PDT)
+Received: from out1.ip02ir2.opaltelecom.net (out1.ip02ir2.opaltelecom.net. [62.24.128.238])
+        by gmr-mx.google.com with ESMTP id iz18si232196wic.3.2014.06.20.15.50.12
         for <msysgit@googlegroups.com>;
-        Fri, 20 Jun 2014 15:33:28 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F39A22B4D;
-	Fri, 20 Jun 2014 18:33:24 -0400 (EDT)
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 161ED22B4C;
-	Fri, 20 Jun 2014 18:33:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B293E22B49;
-	Fri, 20 Jun 2014 18:33:19 -0400 (EDT)
-In-Reply-To: <53A4A267.2060907@gmail.com> (Karsten Blees's message of "Fri, 20
-	Jun 2014 23:06:47 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E1406CA0-F8CA-11E3-BAFD-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+        Fri, 20 Jun 2014 15:50:12 -0700 (PDT)
+Received-SPF: softfail (google.com: domain of transitioning philipoakley@iee.org does not designate 62.24.128.238 as permitted sender) client-ip=62.24.128.238;
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ApMcAGS6pFMCYJeh/2dsb2JhbABZgw1SEQOIbrskBQECAQ2BARd1g34FAQEEAQgBAS4eAQEmBgIDBQIBAxUMJRQBBAgSBgcXBgESCAIBAgMBiB0DCQyyf5BmDYZijFOCWIJ/gRYEkGCHa49RhgKDQzw
+X-IPAS-Result: ApMcAGS6pFMCYJeh/2dsb2JhbABZgw1SEQOIbrskBQECAQ2BARd1g34FAQEEAQgBAS4eAQEmBgIDBQIBAxUMJRQBBAgSBgcXBgESCAIBAgMBiB0DCQyyf5BmDYZijFOCWIJ/gRYEkGCHa49RhgKDQzw
+X-IronPort-AV: E=Sophos;i="5.01,517,1400022000"; 
+   d="scan'208";a="506287332"
+Received: from host-2-96-151-161.as13285.net (HELO PhilipOakley) ([2.96.151.161])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 20 Jun 2014 23:49:55 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+X-Original-Sender: philipoakley@iee.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=softfail
+ (google.com: domain of transitioning philipoakley@iee.org does not designate
+ 62.24.128.238 as permitted sender) smtp.mail=philipoakley@iee.org
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -73,22 +71,55 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252295>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
-
-> To be able to add a common prefix or suffix to all trace output (e.g.
-> a timestamp or file:line of the caller), factor out common setup and
-> cleanup tasks of the trace* functions.
+From: "Karsten Blees" <karsten.blees@gmail.com>
+> Changes since v5:
+> [05/11]: GIT_TRACE_BARE=1 disables 'timestamp file:line' output for
+>         unit tests that rely on trace output (t1510 and t5503)
+> [08/11]: Align original trace output at col 40
+> [09/11]: Dropped '(div 10e9)' from the commit message.
+> [10/11]: Dropped trace_performance[_since]() return value and the
+>         respective usage example. Renamed trace_performance_vfl to
+>         trace_performance_vprintf_fl.
 >
-> Some unit-tests use trace output to verify internal state, and variable
-> output such as timestamps and line numbers are not useful there. Disable
-> additional trace output if GIT_TRACE_BARE is set.
+> The other patches are the versions from pu.
+>
+> Karsten Blees (11):
+>  trace: move trace declarations from cache.h to new trace.h
+>  trace: consistently name the format parameter
+>  trace: remove redundant printf format attribute
+>  trace: factor out printing to the trace file
+>  trace: add infrastructure to augment trace output with additional 
+> info
+>  trace: add current timestamp to all trace output
+>  trace: move code around, in preparation to file:line output
+>  trace: add 'file:line' to all trace output
+>  trace: add high resolution timer function to debug performance issues
+>  trace: add trace_performance facility to debug performance issues
+>  git: add performance tracing for git's main() function to debug
+>    scripts
+>
+> Makefile              |   7 ++
+> cache.h               |  13 +--
+> config.mak.uname      |   1 +
+> git-compat-util.h     |   4 +
+> git.c                 |   2 +
+> t/t1510-repo-setup.sh |   2 +-
+> t/t5503-tagfollow.sh  |   8 +-
+> trace.c               | 313 
+> ++++++++++++++++++++++++++++++++++++++++++++------
+> trace.h               |  90 +++++++++++++++
+> 9 files changed, 387 insertions(+), 53 deletions(-)
 
-Hmph, this makes me wonder if we are better off making these
-additional trace output optional, i.e. not disabling with
-GIT_TRACE_BARE like this, but show the new output only when
-explicitly asked for by setting GIT_TRACE_PERF or something.
+Should there be some documentation as well? Perhaps in t/README, or in
+Documentation/howto.
+
+
+> create mode 100644 trace.h
+>
+> -- 
+Philip 
 
 -- 
 -- 
