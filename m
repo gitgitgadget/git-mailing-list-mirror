@@ -1,60 +1,63 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v6 00/11] add performance tracing facility
-Date: Fri, 20 Jun 2014 23:03:17 +0200
-Message-ID: <53A4A195.1070502@gmail.com>
+Subject: [PATCH v6 01/11] trace: move trace declarations from
+ cache.h to new trace.h
+Date: Fri, 20 Jun 2014 23:04:06 +0200
+Message-ID: <53A4A1C6.3060307@gmail.com>
+References: <53A4A195.1070502@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
  msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBBFGDSKOQKGQEY3ED7LI@googlegroups.com Fri Jun 20 23:03:17 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBFGDSKOQKGQEY3ED7LI@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBRODSKOQKGQED5EAK3Y@googlegroups.com Fri Jun 20 23:04:06 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBRODSKOQKGQED5EAK3Y@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f183.google.com ([209.85.217.183])
+Received: from mail-we0-f192.google.com ([74.125.82.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBFGDSKOQKGQEY3ED7LI@googlegroups.com>)
-	id 1Wy5xt-00026d-Hx
-	for gcvm-msysgit@m.gmane.org; Fri, 20 Jun 2014 23:03:17 +0200
-Received: by mail-lb0-f183.google.com with SMTP id l4sf450121lbv.20
-        for <gcvm-msysgit@m.gmane.org>; Fri, 20 Jun 2014 14:03:17 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBRODSKOQKGQED5EAK3Y@googlegroups.com>)
+	id 1Wy5yg-0002zV-Eb
+	for gcvm-msysgit@m.gmane.org; Fri, 20 Jun 2014 23:04:06 +0200
+Received: by mail-we0-f192.google.com with SMTP id u57sf478284wes.19
+        for <gcvm-msysgit@m.gmane.org>; Fri, 20 Jun 2014 14:04:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=LJhTJRit7XvcsTaT+WEeEOnDymnEehLn0VC87BYN4eQ=;
-        b=cbbuP1b4vJebw2/VUXTAbcLNWIbWVWdEDiVlwLy2j2Wp+we5EVpJ8KIotH/JYj1I6j
-         cr1czSBWJIZPp6WuXDvei5l5FMuC3nXwWpeD2QcS4qNWAxd3wd6MBQd+v0zb/V0h23nJ
-         9nGQiJvTTaO2KWoPPNPv+kMrptukV384Yc4Q2CKBVLvOL1QYRcL7Dqj5QWUu3PEb0FE6
-         Huk+IVD44QN4RfAYPijo1SlAa9aP3ISufpKOriGTg5Vvm44bITBi0kbU8D3+gh84TZAy
-         A5xzy20kOne4yTHiQSazhyvxhFweIkw57QZtzDo2ahfM/XOMYO8zl69yRsuoVQo0bV2V
-         xHig==
-X-Received: by 10.152.8.199 with SMTP id t7mr23159laa.11.1403298197370;
-        Fri, 20 Jun 2014 14:03:17 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=ENbjDGed0azfty0bDcPoAASoOejzDBHJAQhEU3BU7Dk=;
+        b=yzx8neYFipKF31R2Qc6bdB3MoCXrGPp3kitwh5QEWDPwdnW1HwswImMHKdzNbrtLGf
+         AbP3gRhuaTBgURwZxAj/ljHP3Dfef+QH47wuAGFbmlxN24io2LzWLxzQSi+ZBavJye2+
+         3Ha3caTcUdAJ+iwsy1iZXZTcJG0LzPlzb6qEPpu+l5Ifg0RNE/c1KkF5a6Qjp2uzS4YC
+         tI7BgmGk3V88QSQIWort9AKXZ75ngwv3EvVP3tqwV37kMsMcTp1fftE+/w4EJF34Jf9e
+         nDPLseYj1E+Q0Yb7mo/KK3zKGrsrHtdQkXerS1ia3ApqULIAARz88Bb5ZRpKbNl6Zjhd
+         DqyA==
+X-Received: by 10.152.234.137 with SMTP id ue9mr22516lac.15.1403298246183;
+        Fri, 20 Jun 2014 14:04:06 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.37.8 with SMTP id u8ls110448laj.11.gmail; Fri, 20 Jun 2014
- 14:03:16 -0700 (PDT)
-X-Received: by 10.112.188.229 with SMTP id gd5mr502590lbc.13.1403298196097;
-        Fri, 20 Jun 2014 14:03:16 -0700 (PDT)
-Received: from mail-wg0-x230.google.com (mail-wg0-x230.google.com [2a00:1450:400c:c00::230])
-        by gmr-mx.google.com with ESMTPS id h4si220861wib.2.2014.06.20.14.03.16
+Received: by 10.152.4.194 with SMTP id m2ls191360lam.104.gmail; Fri, 20 Jun
+ 2014 14:04:04 -0700 (PDT)
+X-Received: by 10.112.50.203 with SMTP id e11mr1655lbo.23.1403298244833;
+        Fri, 20 Jun 2014 14:04:04 -0700 (PDT)
+Received: from mail-wg0-x22c.google.com (mail-wg0-x22c.google.com [2a00:1450:400c:c00::22c])
+        by gmr-mx.google.com with ESMTPS id x7si225503wiw.1.2014.06.20.14.04.04
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 20 Jun 2014 14:03:16 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::230 as permitted sender) client-ip=2a00:1450:400c:c00::230;
-Received: by mail-wg0-f48.google.com with SMTP id n12so4142032wgh.31
-        for <msysgit@googlegroups.com>; Fri, 20 Jun 2014 14:03:16 -0700 (PDT)
-X-Received: by 10.180.14.65 with SMTP id n1mr6863971wic.4.1403298195918;
-        Fri, 20 Jun 2014 14:03:15 -0700 (PDT)
+        Fri, 20 Jun 2014 14:04:04 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22c as permitted sender) client-ip=2a00:1450:400c:c00::22c;
+Received: by mail-wg0-f44.google.com with SMTP id x13so4238432wgg.27
+        for <msysgit@googlegroups.com>; Fri, 20 Jun 2014 14:04:04 -0700 (PDT)
+X-Received: by 10.194.59.65 with SMTP id x1mr7187271wjq.60.1403298244749;
+        Fri, 20 Jun 2014 14:04:04 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id cj8sm17893748wjb.5.2014.06.20.14.03.14
+        by mx.google.com with ESMTPSA id lk7sm16828859wjb.24.2014.06.20.14.04.03
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 20 Jun 2014 14:03:15 -0700 (PDT)
+        Fri, 20 Jun 2014 14:04:03 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <53A4A195.1070502@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::230
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22c
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -67,45 +70,74 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252280>
 
-Changes since v5:
-[05/11]: GIT_TRACE_BARE=1 disables 'timestamp file:line' output for
-         unit tests that rely on trace output (t1510 and t5503)
-[08/11]: Align original trace output at col 40
-[09/11]: Dropped '(div 10e9)' from the commit message.
-[10/11]: Dropped trace_performance[_since]() return value and the
-         respective usage example. Renamed trace_performance_vfl to
-         trace_performance_vprintf_fl.
+Also include direct dependencies (strbuf.h and git-compat-util.h for
+__attribute__) so that trace.h can be used independently of cache.h, e.g.
+in test programs.
 
-The other patches are the versions from pu.
-
-Karsten Blees (11):
-  trace: move trace declarations from cache.h to new trace.h
-  trace: consistently name the format parameter
-  trace: remove redundant printf format attribute
-  trace: factor out printing to the trace file
-  trace: add infrastructure to augment trace output with additional info
-  trace: add current timestamp to all trace output
-  trace: move code around, in preparation to file:line output
-  trace: add 'file:line' to all trace output
-  trace: add high resolution timer function to debug performance issues
-  trace: add trace_performance facility to debug performance issues
-  git: add performance tracing for git's main() function to debug
-    scripts
-
- Makefile              |   7 ++
- cache.h               |  13 +--
- config.mak.uname      |   1 +
- git-compat-util.h     |   4 +
- git.c                 |   2 +
- t/t1510-repo-setup.sh |   2 +-
- t/t5503-tagfollow.sh  |   8 +-
- trace.c               | 313 ++++++++++++++++++++++++++++++++++++++++++++------
- trace.h               |  90 +++++++++++++++
- 9 files changed, 387 insertions(+), 53 deletions(-)
+Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ cache.h | 13 ++-----------
+ trace.h | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+), 11 deletions(-)
  create mode 100644 trace.h
 
+diff --git a/cache.h b/cache.h
+index cbe1935..466f6b3 100644
+--- a/cache.h
++++ b/cache.h
+@@ -7,6 +7,7 @@
+ #include "advice.h"
+ #include "gettext.h"
+ #include "convert.h"
++#include "trace.h"
+ 
+ #include SHA1_HEADER
+ #ifndef git_SHA_CTX
+@@ -1377,17 +1378,7 @@ extern void *alloc_tag_node(void);
+ extern void *alloc_object_node(void);
+ extern void alloc_report(void);
+ 
+-/* trace.c */
+-__attribute__((format (printf, 1, 2)))
+-extern void trace_printf(const char *format, ...);
+-__attribute__((format (printf, 2, 3)))
+-extern void trace_argv_printf(const char **argv, const char *format, ...);
+-extern void trace_repo_setup(const char *prefix);
+-extern int trace_want(const char *key);
+-__attribute__((format (printf, 2, 3)))
+-extern void trace_printf_key(const char *key, const char *fmt, ...);
+-extern void trace_strbuf(const char *key, const struct strbuf *buf);
+-
++/* pkt-line.c */
+ void packet_trace_identity(const char *prog);
+ 
+ /* add */
+diff --git a/trace.h b/trace.h
+new file mode 100644
+index 0000000..6cc4541
+--- /dev/null
++++ b/trace.h
+@@ -0,0 +1,17 @@
++#ifndef TRACE_H
++#define TRACE_H
++
++#include "git-compat-util.h"
++#include "strbuf.h"
++
++__attribute__((format (printf, 1, 2)))
++extern void trace_printf(const char *format, ...);
++__attribute__((format (printf, 2, 3)))
++extern void trace_argv_printf(const char **argv, const char *format, ...);
++extern void trace_repo_setup(const char *prefix);
++extern int trace_want(const char *key);
++__attribute__((format (printf, 2, 3)))
++extern void trace_printf_key(const char *key, const char *fmt, ...);
++extern void trace_strbuf(const char *key, const struct strbuf *buf);
++
++#endif /* TRACE_H */
 -- 
 2.0.0.402.g13b8b25
 
