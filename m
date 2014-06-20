@@ -1,122 +1,130 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Re: The different EOL behavior between libgit2-based
- software and official Git
-Date: Fri, 20 Jun 2014 09:33:08 -0700
-Message-ID: <xmqqmwd7ee2j.fsf@gitster.dls.corp.google.com>
-References: <1403146778624-7613670.post@n2.nabble.com>
-	<53A285A1.3090804@web.de> <53A3DB01.7090904@web.de>
-	<CAO_ghTLq-a3dJGXvmspaCYS19RhTJzT0teWO5XSfVSiRUN7rrQ@mail.gmail.com>
-	<53A40DEC.4050902@web.de>
+Subject: Re: [RFC PATCH 1/7] rebase -i: Make option handling in pick_one more flexible
+Date: Fri, 20 Jun 2014 12:53:10 -0700
+Message-ID: <xmqqvbrvcq8p.fsf@gitster.dls.corp.google.com>
+References: <cover.1403146774.git.bafain@gmail.com>
+	<53A258DA.3030903@gmail.com> <53A439B2.7000106@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Cc: Yue Lin Ho <yuelinho777@gmail.com>,  git@vger.kernel.org,  msysGit <msysgit@googlegroups.com>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: msysgit+bncBCG77UMM3EJRBTGESGOQKGQECUYGPAI@googlegroups.com Fri Jun 20 18:33:21 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBTGESGOQKGQECUYGPAI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ve0-f189.google.com ([209.85.128.189])
+Content-Type: text/plain; charset=us-ascii
+Cc: Fabian Ruch <bafain@gmail.com>, git@vger.kernel.org
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jun 20 21:53:28 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBTGESGOQKGQECUYGPAI@googlegroups.com>)
-	id 1Wy1kc-0001Jw-6v
-	for gcvm-msysgit@m.gmane.org; Fri, 20 Jun 2014 18:33:18 +0200
-Received: by mail-ve0-f189.google.com with SMTP id pa12sf888724veb.16
-        for <gcvm-msysgit@m.gmane.org>; Fri, 20 Jun 2014 09:33:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=26WrOSi+aeOieln919VTbkdePoZV9JV6GJ26ikH+bF4=;
-        b=XnuLQtzb6WrDlogfOLCFf8Qvbo6r3GhkyROoq3kSm5wldDU6ynNKkuQ0ec/cy99AAh
-         wRXIg450FuCj6q//LjT1vTgrDuA/TBl1GqZqWSuFVX8ZVGu7ZXaThLk0wX2doswAv0I0
-         Z7DEtejBSu4/bbGWF87B4nVo3rK5T+0Pg1jzFSc1WD+giXIpOKeALTXFuWOO8Kbkzfi8
-         E0bscs15yel0yUUaGdENMFiTI3608yHW+EAxS8jTc33CsKiGCFNvrwonqMOrCJym3neI
-         +ws8i1JSvyhDyeG0F4efsmfLilS+EsApzxd7yOJniHteL2DDbCv46n7FZf14NAuz+X9F
-         FSSQ==
-X-Received: by 10.50.153.48 with SMTP id vd16mr98483igb.12.1403281997421;
-        Fri, 20 Jun 2014 09:33:17 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.176.134 with SMTP id ci6ls367148igc.22.canary; Fri, 20 Jun
- 2014 09:33:16 -0700 (PDT)
-X-Received: by 10.42.85.142 with SMTP id q14mr1612207icl.16.1403281996343;
-        Fri, 20 Jun 2014 09:33:16 -0700 (PDT)
-Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id m2si1940288qcr.2.2014.06.20.09.33.16
-        for <msysgit@googlegroups.com>;
-        Fri, 20 Jun 2014 09:33:16 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wy4sH-0003Jz-OQ
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 21:53:26 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S965537AbaFTTxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 15:53:20 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62326 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932438AbaFTTxS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2014 15:53:18 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A93BF1F7FE;
-	Fri, 20 Jun 2014 12:33:11 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DC6DF20D8A;
+	Fri, 20 Jun 2014 15:53:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KOBL3TdpXxt2wB+iadhn4+Rdz30=; b=EkmCux
+	rHL81qNVheu5FsN6GRiyaUDRjy5JElA6TzsDePBj+ggSD6H+vtptu4PxBqarpcO5
+	wve3EyW+PBn8LDZI9Vb25x3wDtc6DLQ52JrB/dhAeDHETpcGtoWG8MeYf168Yi1E
+	N2iPkkH48TgzzZgIzr14k+DqbTV4jPBRRPJXw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ErXvCRg9Xi82bHtq6bdnh2Tt5uGV/d4d
+	7zQH0lkJjfkIFYXmRCrFLKVv8brj+2uFKsSqbHzWEKljU26JvcBpREk8Ok91t93c
+	3M/GzumM8vhiGKjBNvWaRrVZFZLIZ87hxw5u5YvLQ/zW5ipbgeApbDbolyb5xViN
+	zKDWCRf0DOM=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E77B1F7FC;
-	Fri, 20 Jun 2014 12:33:11 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D049720D89;
+	Fri, 20 Jun 2014 15:53:12 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 850A21F7F8;
-	Fri, 20 Jun 2014 12:33:06 -0400 (EDT)
-In-Reply-To: <53A40DEC.4050902@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Fri, 20 Jun 2014 12:33:16 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1016520D86;
+	Fri, 20 Jun 2014 15:53:07 -0400 (EDT)
+In-Reply-To: <53A439B2.7000106@alum.mit.edu> (Michael Haggerty's message of
+	"Fri, 20 Jun 2014 15:40:02 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 8ECAA10C-F898-11E3-B967-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252275>
+X-Pobox-Relay-ID: 8040E83C-F8B4-11E3-A250-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252277>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-tb@Linux:~/EOL_Test/TestAutoCrlf$ t=3DLF.txt  &&  rm -f $t &&  git -c core.=
-eol=3DCRLF checkout $t  && od -c  $t
-0000000   L   i   n   e       1  \n   l   i   n   e       (   2   )  \n
-0000020   l   i   n   e       3   .  \n   t   h   i   s       i   s   =20
-0000040   l   i   n   e       4  \n   l       i       n       e       N
-0000060   o   .       5  \n   L   i   n   e       N   u   m   b   e   r
-0000100       6  \n  \n
+>>  pick_one () {
+>>  	ff=--ff
+>> +	extra_args=
+>> +	while test $# -gt 0
+>> +	do
+>> +		case "$1" in
+>> +		-n)
+>> +			ff=
+>> +			extra_args="$extra_args -n"
+>> +			;;
+>> +		-*)
+>> +			warn "pick_one: ignored option -- $1"
+>> +			;;
+>
+> This is an internal interface, right?  I.e., user input isn't being
+> processed here?  If so, then the presence of an unrecognized option is a
+> bug and it is preferable to "die" here rather than "warn".
+>
+> The same below and in at least one later commit.
 
-In Documentation/config.txt, we find:
+And if this is purely an internal interface, then I really do not
+see the point of allowing -n to be anywhere other than the front.
+If we are planning to accept other random options to cherry-pick in
+later steps, but we are not yet doing so at this step, then I do not
+thin we want to have any loop like this before we actually start
+accepting and passing them to the underlying cherry-pick.
 
-    core.eol::
-            Sets the line ending type to use in the working directory for
-            files that have the `text` property set.  Alternatives are ...
+Furthermore, if the "-n" is currently used as an internal signal
+from the caller to pick_one() that it is executing the end-user
+supplied "squash" in the insn sheet, it may be a good idea to change
+that "-n" to something that is *NOT* a valid option to cherry-pick
+at this step, before we start accepting user-supplied options and
+relaying them to underlying cherry-pick.
 
-Does that file $t in your practice "have the `text` property set"?
+One way to do so cleanly may be to _always_ add the type of pick as
+the first parameter to pick_one, i.e. either "pick" or "squash", and
+do:
 
---=20
---=20
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github =
-accounts are free.
+        pick_one () {
+                ...
+                n_arg=
+                case "$1" in
+                pick) ;;
+                squash) n_arg=-n ;;
+                *)	die "BUG: pick_one $1???" ;;
+                esac
+                shift
+                sha1=$1
+                ...
+                output eval git cherry-pick $n_arg \
+                        ...
+        }
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den
+Also I suspect that you would need to be careful *not* to allow "-n"
+to be given as part of the "random user-specified options" and pass
+that to cherry-pick in the later steps of your series [*1*], and for
+that you may need a loop that inspects the arguments like you had in
+this patch.
 
----=20
-You received this message because you are subscribed to the Google Groups "=
-msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an e=
-mail to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+[Footnote]
+
+*1* The existing callers of "pick_one -n" very well know and expect
+    that the step will only update the working tree and the index
+    and it is the callers' responsibility to create a commit out of
+    that state (either by amending or committing); similarly the
+    existing callers of "pick_one" without "-n" very well know and
+    expect that the step will make a commit unless there is a
+    problem.  I do not think you would consider it such a "problem
+    to replay the change in the named commit" for the end user's
+    insn sheet to pass a "-n".
