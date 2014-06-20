@@ -1,90 +1,126 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v20 42/48] refs.c: pass NULL as *flags to read_ref_full
-Date: Fri, 20 Jun 2014 07:43:23 -0700
-Message-ID: <1403275409-28173-43-git-send-email-sahlberg@google.com>
+Subject: [PATCH v20 47/48] fetch.c: change s_update_ref to use a ref transaction
+Date: Fri, 20 Jun 2014 07:43:28 -0700
+Message-ID: <1403275409-28173-48-git-send-email-sahlberg@google.com>
 References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 16:44:26 2014
+X-From: git-owner@vger.kernel.org Fri Jun 20 16:44:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wy03F-0001eH-Hy
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:44:25 +0200
+	id 1Wy03E-0001eH-Hq
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:44:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022AbaFTOoS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2014 10:44:18 -0400
-Received: from mail-oa0-f73.google.com ([209.85.219.73]:34279 "EHLO
-	mail-oa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752834AbaFTOne (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2014 10:43:34 -0400
-Received: by mail-oa0-f73.google.com with SMTP id eb12so980886oac.2
+	id S1753654AbaFTOoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 10:44:15 -0400
+Received: from mail-ie0-f201.google.com ([209.85.223.201]:35155 "EHLO
+	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753373AbaFTOnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2014 10:43:35 -0400
+Received: by mail-ie0-f201.google.com with SMTP id lx4so978411iec.2
         for <git@vger.kernel.org>; Fri, 20 Jun 2014 07:43:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=UJImE0fuWUWQ0gh6NqI6yo8Xg52cDyMVNmSZnHsjhO0=;
-        b=kb5KqZWuGT+5EYJCc7ZYsmpHYIi3IYvR2M7TEYBHQ5Z01hb2+UeuSCCg7CiHHTQWdr
-         q7tiOvG6W32y9Gxzh4bYz/7ot8IeQNRuwXlfnvuLEjZjXEkOQ6+V++q+1nhJEmOf/mz2
-         ChTVsolx8RvikMZRfVLzROIzl6ZPIJRU/YQdvdxiBQK5rPzQGZ5VLPg9GsdVFGIDpJ5M
-         lmJ2uOwIzkd7WS0yPQH5RT6rf+Hr0GJ6iJekybzAnQPzBnjCVPO6w8tB/zXfIYiRlwkc
-         liQo6JSdNSP+9p09n1FnhgbFfSpFtWUPOE52pBFdjtCk+GgVMKc1G9zVaeze6DxUBsm9
-         ZLkQ==
+        bh=Ig8V4VANqc1/gYpUnrtMF/AN3xtcz4Rh24gBk5w/wRA=;
+        b=V7E+JVauObg1PGBUGYGUZ8kB0dfvj7cqNSPF/F7RVJcXAfWV/ntqJhDEntwv6hYW5j
+         OmyrvdRxbxbi8T3PU1WkG+Yj3XjtEjufZa41KtSZ0CghL2WfCvrbDZJ6JN1OR+2LiiGC
+         eJUsU2b6uOhyqJQaFYppenBxfizPxcYLgsVCwnu0JB9lyj/lngQ9FaJsiAtVI1S4gFEw
+         KrAq9snqX1npmFvyWQUQ1d/2g/fJmHY1/HAluAv7GnUkCBM3zWPUl+X0rARniPIeILcB
+         n7I7AtSFSrNzdDBOTJjYdoE2UPYy5ewjmKgBhTQ42eYUKkDOSaJHgCUji34BJD9wzQy/
+         Ngqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=UJImE0fuWUWQ0gh6NqI6yo8Xg52cDyMVNmSZnHsjhO0=;
-        b=RCINhxRmaYyWhiMw/Ikr+xokz/rq0igcRZwnI9v/wzg+pAZ0GKKJM0xtAvxn10i8IQ
-         6B1Yy9jlQEVmHu6xca+aBlRa+tyhphD91xVgw9etT0T5IEjPUJ6iY9tULyXhr0Yeb2Dw
-         X+fZgeYnWOeYZ4JBnAwYJsQiRid0POYh30sTpnjpNf0H/JTYe6PU7PRp/quQ8jGtlHJB
-         Z3SzytTVL7zlE3ZpX7FfpcmHLz+8aveZqK4DpeVKB1C+YTCknVc+FpVQYqt3D+TG5wlk
-         PJhl0NjE9TvOLxg6IEZUEEvWDAjQ09G5Bvqxa1hDJU4BDcdQqdao6DfSa8x7P3DbdE3N
-         qcmg==
-X-Gm-Message-State: ALoCoQlWMzmkVHrKwxf8BRtQU7UGSTQAJdOvlm0eSwy1gqOl8+x2fX4b8Uk0/jMHHpsltW5N++tT
-X-Received: by 10.182.166.36 with SMTP id zd4mr1530539obb.43.1403275414028;
+        bh=Ig8V4VANqc1/gYpUnrtMF/AN3xtcz4Rh24gBk5w/wRA=;
+        b=EWObsweqhmCbuTQ7AbnOIKwkEfgciXV/skj13Jvx003IgTXPfSMRc1gw6DxYkZE2v/
+         k0VFnPIgFLEiO+9ACjddzagRHu4LbqyeMJFTr/9OZVAIG1Ngw4KWrZvbH9gg47ygJ1p0
+         FCr9qe5nxWC1A+zLES9BGVdO8gYVTpz3a6bR4YGoVpQa5EV+/NO05dVbNIY4jKrYFqFt
+         hVgbmdAQqlfafMWgkmemrLyFjgumoxPHEjZ+ZujQPGiixMIrQDz27YNtVdAEedXpfZa2
+         oseoVUmlQuqLesuKfhcBrPJJXUuFno0x03E6KcxzcmHKWaeh46MPZ/FJ1ktJk1f5yQ2E
+         rN/g==
+X-Gm-Message-State: ALoCoQkW3q/JDJlRktN4U3UamBu3eGz9r2RWYOFdVAwSMAFuwKYP1cjApQQVr04fpFRUt0uWWHh6
+X-Received: by 10.182.47.199 with SMTP id f7mr1486445obn.6.1403275414210;
         Fri, 20 Jun 2014 07:43:34 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id v12si591927yhe.2.2014.06.20.07.43.34
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id z50si664715yhb.3.2014.06.20.07.43.34
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Fri, 20 Jun 2014 07:43:34 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id DBED131C6B4;
-	Fri, 20 Jun 2014 07:43:33 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 02EBE5A44A6;
+	Fri, 20 Jun 2014 07:43:34 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id B7ED3E08AF; Fri, 20 Jun 2014 07:43:33 -0700 (PDT)
+	id D9612E0769; Fri, 20 Jun 2014 07:43:33 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.420.g181e020.dirty
 In-Reply-To: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252242>
 
-We call read_ref_full with a pointer to flags from rename_ref but since
-we never actually use the returned flags we can just pass NULL here instead.
+Change s_update_ref to use a ref transaction for the ref update.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/fetch.c | 33 +++++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 1f17a13..389a55f 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2688,7 +2688,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 		goto rollback;
- 	}
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index faa1233..52f1ebc 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -375,23 +375,36 @@ static int s_update_ref(const char *action,
+ {
+ 	char msg[1024];
+ 	char *rla = getenv("GIT_REFLOG_ACTION");
+-	static struct ref_lock *lock;
++	struct ref_transaction *transaction;
++	struct strbuf err = STRBUF_INIT;
++	int ret, df_conflict = 0;
  
--	if (!read_ref_full(newrefname, sha1, 1, &flag) &&
-+	if (!read_ref_full(newrefname, sha1, 1, NULL) &&
- 	    delete_ref(newrefname, sha1, REF_NODEREF)) {
- 		if (errno==EISDIR) {
- 			if (remove_empty_directories(git_path("%s", newrefname))) {
+ 	if (dry_run)
+ 		return 0;
+ 	if (!rla)
+ 		rla = default_rla.buf;
+ 	snprintf(msg, sizeof(msg), "%s: %s", rla, action);
+-	lock = lock_any_ref_for_update(ref->name,
+-				       check_old ? ref->old_sha1 : NULL,
+-				       0, NULL);
+-	if (!lock)
+-		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
+-					  STORE_REF_ERROR_OTHER;
+-	if (write_ref_sha1(lock, ref->new_sha1, msg) < 0)
+-		return errno == ENOTDIR ? STORE_REF_ERROR_DF_CONFLICT :
+-					  STORE_REF_ERROR_OTHER;
++
++	transaction = ref_transaction_begin(&err);
++	if (!transaction ||
++	    ref_transaction_update(transaction, ref->name, ref->new_sha1,
++				   ref->old_sha1, 0, check_old, msg, &err))
++		goto fail;
++
++	ret = ref_transaction_commit(transaction, &err);
++	if (ret == UPDATE_REFS_NAME_CONFLICT)
++		df_conflict = 1;
++	if (ret)
++		goto fail;
++
++	ref_transaction_free(transaction);
+ 	return 0;
++fail:
++	ref_transaction_free(transaction);
++	error("%s", err.buf);
++	strbuf_release(&err);
++	return df_conflict ? STORE_REF_ERROR_DF_CONFLICT
++			   : STORE_REF_ERROR_OTHER;
+ }
+ 
+ #define REFCOL_WIDTH  10
 -- 
 2.0.0.420.g181e020.dirty
