@@ -1,88 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Our merge bases sometimes suck
-Date: Thu, 19 Jun 2014 23:53:42 -0700
-Message-ID: <xmqqtx7gdqbt.fsf@gitster.dls.corp.google.com>
-References: <539A25BF.4060501@alum.mit.edu>
-	<xmqq8uovo9pa.fsf@gitster.dls.corp.google.com>
-	<53A06264.9080205@alum.mit.edu>
+From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+Subject: Re: The different EOL behavior between libgit2-based software and
+ official Git
+Date: Fri, 20 Jun 2014 08:56:01 +0200
+Message-ID: <53A3DB01.7090904@web.de>
+References: <1403146778624-7613670.post@n2.nabble.com> <53A285A1.3090804@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: git discussion list <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Fri Jun 20 08:53:55 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Yue Lin Ho <yuelinho777@gmail.com>, git@vger.kernel.org,
+	msysGit <msysgit@googlegroups.com>,
+	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Fri Jun 20 08:56:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wxshu-0002x4-Up
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 08:53:55 +0200
+	id 1Wxsk7-0005KU-Gm
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 08:56:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933971AbaFTGxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2014 02:53:50 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52303 "EHLO smtp.pobox.com"
+	id S934323AbaFTG4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 02:56:07 -0400
+Received: from mout.web.de ([212.227.17.12]:51768 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751217AbaFTGxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2014 02:53:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 77F461B6D9;
-	Fri, 20 Jun 2014 02:53:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ho3HiheXgn4SyF9Egzd3azQw+Xk=; b=tHjQlg
-	QfVu4i74xkchX36TeDHHPK0ZVloyG/7uUYWLvGENYHSeuFOrhEPlcyOub4mb3Nu7
-	FrfwLbYfsO7vLD2AHGwtE0DcCFo1nZwK43iiqOMijDmvyRZc96I+eXMpixZecmEY
-	XML0pSwAdF2Gb6mzb71wU8nNnlWxJ0s5gXx8Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ddohmvZTP+3Esah4UAJflMYAJ8RtQuc0
-	BdLM5gCVS64xe8f6/N+NtMeiPIxtzFZLgsbVnR/AKSbG4ZYCur0GU6WKCHjGIxCj
-	r04i0FXksNL/q9n3+gRbpc8sJOJ3no4RNoQFziGWRY1ZQNtyHmgo0s/H6f/cKQgA
-	5RXvA52L5xc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CCFD1B6D8;
-	Fri, 20 Jun 2014 02:53:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 187741B6D6;
-	Fri, 20 Jun 2014 02:53:40 -0400 (EDT)
-In-Reply-To: <53A06264.9080205@alum.mit.edu> (Michael Haggerty's message of
-	"Tue, 17 Jun 2014 17:44:36 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9C5F5B60-F847-11E3-8458-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752794AbaFTG4F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2014 02:56:05 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MJkt6-1WyzCg2Dn2-0019KJ; Fri, 20 Jun 2014 08:56:02
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <53A285A1.3090804@web.de>
+X-Provags-ID: V03:K0:VUCdHPPTdStm41gpE552uI2KzMAFPOWXv/jw6ykM0jPGj+GfQQA
+ iwJWA9Z7SmtJTBPX788Bd8jlcN0nLFn0Gpzc1zGGSrPXmWoJ9uQrqPZUk7gA2S3GfFS+7oi
+ gsNKUYF2wirqlbqWqxlDQ4/mLNFfbJkLwU2FmldzGQPcnM0Wqxi1ZvWSAivRl6/zAXEH97x
+ lpwn2u6Sie7KwhCkVsEiw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252216>
 
-Michael Haggerty <mhagger@alum.mit.edu> writes:
+Hm,
+I feeled puzzled here.
+Even if I wouldn't recommend to use core.autocrlf, and prefer to use .gitattributes,
+the CRLF conversion should work under Git, but it doensn't seem to do so.
 
-> It just looks asymmetric, but actually it is symmetric, which was kindof
-> surprising when I realized it....
->
-> Since "|branch ∧ master|" is the same for all candidates, minimizing N
-> is the same as maximizing |candidate|, which is the same as
->
->     git rev-list --count --no-merges $candidate
->
-> This is clearly symmetric in master vs. base.
+Clone this repo:
+origin  https://github.com/YueLinHo/TestAutoCrlf.git
+Try to see if LF or CRLF can be converted into CRLF,
+when core.autocrlf is true.
 
-Hmph, but that obviously will become very expensive to compute as
-project grows.
 
-When we (potentially) have multiple merge-bases, after finding all
-the candidates by traversing from the two commits to be merged, we
-already make another set of traversals, starting from the candidates
-and painting the ancestors down to their common ancestors.  This is
-done to discover if each candidate is reachable from any other
-candidate (in which case the reachable one is not a merge-base).
+Neither msysgit nor Git under Linux produces CRLF (?)
 
-The resulting graph of this traversal is currently used only to cull
-non-merge-bases out of the candidates, but I wonder if you can
-*count* the nodes in it in each color and use that number (which is
-essentially the number of commits that can be reached only from one
-candidate and not from other candidates) to derive a score for each
-candidate, and use it to assess the goodness of merge-bases, just
-like the number you are counting in the above full traversal.
+Git under Mac OS produces the CRLF:
+both Git 2.0.0  and the latest msygit code base (7e872d24a9bd03),
+compiled under Mac OS
+
+What do I miss ?
+
+git --version
+git version 2.0.0
+tb@Linux:~/EOL_Test/TestAutoCrlf$ t=MIX-more_LF.txt  &&  rm -f $t &&  git -c core.eol=CRLF checkout $t  && od -c  $t
+0000000   L   i   n   e       1  \n   l   i   n   e       (   2   )  \r
+0000020  \n   l   i   n   e       3   .  \n   t   h   i   s       i   s
+0000040       l   i   n   e       4  \n   l       i       n       e    
+0000060   N   o   .       5  \n   L   i   n   e       N   u   m   b   e
+0000100   r       6  \n
+
+=============================================
+$ git --version
+git version 1.9.2.msysgit.0.1206.g7e872d2
+
+tb@msgit ~/EOL_test/TestAutoCrlf (master)
+$  t=MIX-more_LF.txt  &&  rm -f $t &&  git -c core.eol=CRLF checkout $t  && od -c  $t
+0000000   L   i   n   e       1  \n   l   i   n   e       (   2   )  \r
+0000020  \n   l   i   n   e       3   .  \n   t   h   i   s       i   s
+0000040       l   i   n   e       4  \n   l       i       n       e
+0000060   N   o   .       5  \n   L   i   n   e       N   u   m   b   e
+0000100   r       6  \n
+
+=============================================
+tb@mac:~/EOL_Test/TestAutoCrlf> git --version
+git version 2.0.0.622.g9478935
+tb@mac:~/EOL_Test/TestAutoCrlf> t=MIX-more_LF.txt  &&  rm -f $t &&  git -c core.eol=CRLF checkout $t  && od -c  $t
+0000000    L   i   n   e       1  \r  \n   l   i   n   e       (   2   )
+0000020   \r  \n   l   i   n   e       3   .  \r  \n   t   h   i   s    
+0000040    i   s       l   i   n   e       4  \r  \n   l       i       n
+0000060        e       N   o   .       5  \r  \n   L   i   n   e       N
+0000100    u   m   b   e   r       6  \r  \n                            
+
+==============================================
+tb@mac:~/EOL_Test/TestAutoCrlf> t=MIX-more_LF.txt  &&  rm -f $t &&  ~/projects/git/tb.msygit/git -c core.eol=CRLF checkout $t  && od -c  $t
+0000000    L   i   n   e       1  \r  \n   l   i   n   e       (   2   )
+0000020   \r  \n   l   i   n   e       3   .  \r  \n   t   h   i   s    
+0000040    i   s       l   i   n   e       4  \r  \n   l       i       n
+0000060        e       N   o   .       5  \r  \n   L   i   n   e       N
+0000100    u   m   b   e   r       6  \r  \n                            
