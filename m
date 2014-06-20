@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v20 11/48] refs.c: make remove_empty_directories always set errno to something sane
-Date: Fri, 20 Jun 2014 07:42:52 -0700
-Message-ID: <1403275409-28173-12-git-send-email-sahlberg@google.com>
+Subject: [PATCH v20 16/48] refs.c: make update_ref_write update a strbuf on failure
+Date: Fri, 20 Jun 2014 07:42:57 -0700
+Message-ID: <1403275409-28173-17-git-send-email-sahlberg@google.com>
 References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,97 +11,105 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wy05H-0003jx-7l
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:46:31 +0200
+	id 1Wy05H-0003jx-OT
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754245AbaFTOqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2014 10:46:23 -0400
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:47771 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753167AbaFTOnd (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754308AbaFTOq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 10:46:28 -0400
+Received: from mail-qg0-f73.google.com ([209.85.192.73]:34316 "EHLO
+	mail-qg0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753160AbaFTOnd (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 20 Jun 2014 10:43:33 -0400
-Received: by mail-vc0-f202.google.com with SMTP id id10so505219vcb.5
+Received: by mail-qg0-f73.google.com with SMTP id q107so168109qgd.4
         for <git@vger.kernel.org>; Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=BNOVEXvf/W/g0xBnLdm0n0W6qsXvras52yRS8FCB1kg=;
-        b=Dlp1X0MH9fBaSweH7Iuz4ntR38ovMZsZmWFzTJ5eV+a83VfBSAFysxX1XLdYdl2dpt
-         ZEsB7uzYFmMcM/Dz8HjfGzxdWS/qBSIlHshIEYVy4IsegbU6ZLRtU6gzWSqp/zW7zEa3
-         8dH751bIxnRUuEdcvCz6OVezOQOhQZxm0Opk7AJdSsdqgrKOOoeHLjR6MeGT658kmrLW
-         Km0KkHiFUTWpPvhpYX+Fswwjpqxv8Uy5TOqCVz1AlYMV/McFhTj5XwlpkDZ9yr+FT26F
-         6Ps76Z7posAxdNex4hqAyFRIHOt3gb/uN71u0qJO4BbfZhjVzRMGSozm7ob1tc1qJL2h
-         PaUg==
+        bh=28zpzXOryjRxsPGlruwcIz0BLvkB3gv/3smARY8IPeg=;
+        b=H1ObJJSau329DbHJ2RaWppKGF3Ef3vDRzX7BIWBu1q7FgboCxDmHLYJV1M+dE7biqD
+         gzLlc19CiwU7yZ/1M/BWTJ4jMi6iFnmO1PCuuafjxkS+Aod0Xv7GzrnUTvt/nCpjd/OG
+         VdSA5r5ryQWf6jiV1vf44xukBqXTnk/iw14UqRAL5ejB9/3jIap1Iama4OdETjE7SJgL
+         1BpQW/s570DEj4XZifbwwJJBXV3/DOk34Gc1JeCv94N0d/4fxO4CHzvAOhOjC0zS+Yxo
+         AXZqr1dtmSfDl5bNgImV9IBT4xsTlaZCJ/dxK7mF23/gvkdUIMAURTOUPt2YMElS5u2G
+         /fiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=BNOVEXvf/W/g0xBnLdm0n0W6qsXvras52yRS8FCB1kg=;
-        b=IsCB0KA0992CTG8CUTlyg1pqrQXfhzGTpnCLvuioWIUJOqBoWZkj3fEroCJuTbWboQ
-         5j8j2DrFH5CSRosZMWCBDCz8YbOLWXNO+p6AaBI7On0hyo+b2D6qGPX5U0yN+gCuAZq3
-         fOB9NELBT0RJIYtawCDhKCYfQNSwp16jUteP2RVo+eaGWUelc+L7/RxJsJ94KNmIvBIB
-         /aucwreLFRlkp75p8zl3BNwZT7dZJlZDsAXvRzIptSs+0zGikc5YgdqGM1YKCwibqq4a
-         ABN14DkxPnUnwqLoUYBxhO9XOBAm6dL3KQDbbyXeNkjRlJB4Er/qqFullNv7WYqw3twX
-         i7MA==
-X-Gm-Message-State: ALoCoQkS6I1TztVoX6NNx8FuKoxjkRLkN7Zvo0KQ0LBIu6xgqfCJ9bt/kyD6sF0I1o1v3/O10W6P
-X-Received: by 10.58.187.44 with SMTP id fp12mr1527207vec.24.1403275412612;
+        bh=28zpzXOryjRxsPGlruwcIz0BLvkB3gv/3smARY8IPeg=;
+        b=N137p88uQeHYTodInlSWLz3Pbl0F/ZPTPBQwY11IeFcMEuku4iE2k+v/E1E5qLYG7C
+         XAnnt/yDyOLzhYiaVrMcsigDywB41j7Th+CoZ9sMu6L/O+3XhhEF6q+hC3dxXqSCj1Xw
+         OGysDKSai9+j1MN6cqVaFwwCqCUIc7NrI40PPbMUAA6BjlvPksLdbQYO9ZLmevHpW/he
+         QXMeMjAtqh7DcmI4HponUorDxBBMqdO79izBTDoe/HoU8LuYieCp/SSLUkwYPLaYT167
+         BV5fewezLCyJdktXp6IGkAuw6Kpa7j0cWj3niLtMqH7WNmtt27C5UamN3tonOz13Ar2W
+         nu9g==
+X-Gm-Message-State: ALoCoQnrFfXdOrwIE/P9FMfq4ZlL/ABvCZ7AqNK1Hb2rXOXPQOX2DMnvSP4b7v6U1ECSe0NOTf3K
+X-Received: by 10.58.220.4 with SMTP id ps4mr1521859vec.38.1403275412579;
         Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id z50si664702yhb.3.2014.06.20.07.43.32
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id v12si591922yhe.2.2014.06.20.07.43.32
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 772FF5A40F4;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 6ECE231C6B4;
 	Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 2806FE0651; Fri, 20 Jun 2014 07:43:31 -0700 (PDT)
+	id 4D2B0E0A04; Fri, 20 Jun 2014 07:43:32 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.420.g181e020.dirty
 In-Reply-To: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252262>
 
-Making errno when returning from remove_empty_directories() more
-obviously meaningful, which should provide some peace of mind for
-people auditing lock_ref_sha1_basic.
+Change update_ref_write to also update an error strbuf on failure.
+This makes the error available to ref_transaction_commit callers if the
+transaction failed due to update_ref_sha1/write_ref_sha1 failures.
 
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ refs.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index a48f805..cc69581 100644
+index 115f143..003b313 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1960,14 +1960,16 @@ static int remove_empty_directories(const char *file)
- 	 * only empty directories), remove them.
- 	 */
- 	struct strbuf path;
--	int result;
-+	int result, save_errno;
+@@ -3353,10 +3353,13 @@ static struct ref_lock *update_ref_lock(const char *refname,
  
- 	strbuf_init(&path, 20);
- 	strbuf_addstr(&path, file);
- 
- 	result = remove_dir_recursively(&path, REMOVE_DIR_EMPTY_ONLY);
-+	save_errno = errno;
- 
- 	strbuf_release(&path);
-+	errno = save_errno;
- 
- 	return result;
+ static int update_ref_write(const char *action, const char *refname,
+ 			    const unsigned char *sha1, struct ref_lock *lock,
+-			    enum action_on_err onerr)
++			    struct strbuf *err, enum action_on_err onerr)
+ {
+ 	if (write_ref_sha1(lock, sha1, action) < 0) {
+ 		const char *str = "Cannot update the ref '%s'.";
++		if (err)
++			strbuf_addf(err, str, refname);
++
+ 		switch (onerr) {
+ 		case UPDATE_REFS_MSG_ON_ERR: error(str, refname); break;
+ 		case UPDATE_REFS_DIE_ON_ERR: die(str, refname); break;
+@@ -3477,7 +3480,7 @@ int update_ref(const char *action, const char *refname,
+ 	lock = update_ref_lock(refname, oldval, flags, NULL, onerr);
+ 	if (!lock)
+ 		return 1;
+-	return update_ref_write(action, refname, sha1, lock, onerr);
++	return update_ref_write(action, refname, sha1, lock, NULL, onerr);
  }
-@@ -2056,6 +2058,7 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
- 	return logs_found;
- }
  
-+/* This function should make sure errno is meaningful on error */
- static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 					    const unsigned char *old_sha1,
- 					    int flags, int *type_p)
+ static int ref_update_compare(const void *r1, const void *r2)
+@@ -3559,7 +3562,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 			ret = update_ref_write(msg,
+ 					       update->refname,
+ 					       update->new_sha1,
+-					       update->lock, onerr);
++					       update->lock, err, onerr);
+ 			update->lock = NULL; /* freed by update_ref_write */
+ 			if (ret)
+ 				goto cleanup;
 -- 
 2.0.0.420.g181e020.dirty
