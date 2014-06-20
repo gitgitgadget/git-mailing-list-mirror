@@ -1,174 +1,166 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC PATCH 1/7] rebase -i: Make option handling in pick_one more
- flexible
-Date: Fri, 20 Jun 2014 15:40:02 +0200
-Message-ID: <53A439B2.7000106@alum.mit.edu>
-References: <cover.1403146774.git.bafain@gmail.com> <53A258DA.3030903@gmail.com>
+Subject: Re: [RFC PATCH 2/7] rebase -i: Teach do_pick the option --edit
+Date: Fri, 20 Jun 2014 15:41:23 +0200
+Message-ID: <53A43A03.5030506@alum.mit.edu>
+References: <cover.1403146774.git.bafain@gmail.com> <53A258DE.10407@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: Fabian Ruch <bafain@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 15:40:15 2014
+X-From: git-owner@vger.kernel.org Fri Jun 20 15:41:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wxz36-00039D-E2
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 15:40:12 +0200
+	id 1Wxz4M-0004V6-HS
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 15:41:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966329AbaFTNkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2014 09:40:06 -0400
-Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:52941 "EHLO
-	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S965829AbaFTNkE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Jun 2014 09:40:04 -0400
-X-AuditID: 1207440e-f79026d000000c25-be-53a439b3f1d0
+	id S965676AbaFTNl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 09:41:27 -0400
+Received: from alum-mailsec-scanner-1.mit.edu ([18.7.68.12]:53803 "EHLO
+	alum-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S934326AbaFTNl0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Jun 2014 09:41:26 -0400
+X-AuditID: 1207440c-f79656d000000c83-2a-53a43a05df2b
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 73.A0.03109.3B934A35; Fri, 20 Jun 2014 09:40:03 -0400 (EDT)
+	by alum-mailsec-scanner-1.mit.edu (Symantec Messaging Gateway) with SMTP id 91.73.03203.50A34A35; Fri, 20 Jun 2014 09:41:25 -0400 (EDT)
 Received: from [192.168.69.130] (p4FC96616.dip0.t-ipconnect.de [79.201.102.22])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5KDe2l3002532
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5KDfNgD002582
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 20 Jun 2014 09:40:03 -0400
+	Fri, 20 Jun 2014 09:41:24 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <53A258DA.3030903@gmail.com>
+In-Reply-To: <53A258DE.10407@gmail.com>
 X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprAKsWRmVeSWpSXmKPExsUixO6iqLvZckmwwYWfFhaH5t5jt+i60s3k
-	wOSxc9Zddo/Pm+QCmKK4bZISS8qCM9Pz9O0SuDNuNf1jK+jVqujbUNjAuFehi5GTQ0LAROLc
-	1NesELaYxIV769lAbCGBy4wS27YEdzFyAdnnmSSmLzgHVsQroC2xZ+l09i5GDg4WAVWJq/0B
-	IGE2AV2JRT3NTCC2qECQxOzP89ghygUlTs58wgJiiwiYSxzfMQssLiwQIbH+4FR2iF0BEo/O
-	TGIGsTkFNCWOL9nFAjJeQkBcoqcxCCTMLKAj8a7vATOELS+x/e0c5gmMArOQbJiFpGwWkrIF
-	jMyrGOUSc0pzdXMTM3OKU5N1i5MT8/JSi3SN9XIzS/RSU0o3MUJClG8HY/t6mUOMAhyMSjy8
-	naaLg4VYE8uKK3MPMUpyMCmJ8rrrLAkW4kvKT6nMSCzOiC8qzUktPsQowcGsJMJ7SxYox5uS
-	WFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS4OUExqKQYFFqempFWmZOCUKa
-	iYMTZDiXlEhxal5KalFiaUlGPChG44uBUQqS4gHaqwDSzltckJgLFIVoPcWoy3HqzrE2JiGW
-	vPy8VClx3mYLoCIBkKKM0jy4FbCE9IpRHOhjYV4VkFE8wGQGN+kV0BImoCWLexaBLClJREhJ
-	NTB2KFyae2fJqcmMm9bXZMtlTNkrscKfRXrRDp25uk3u1rW6Pw5y1p2tfPk4OvzTiVuJFuu/
-	+2esaO31vnyL+491f3Te9YabgXbPth97e8BE+0ndx8jlGRYOG9s0udVs1r4P3J6p 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprEKsWRmVeSWpSXmKPExsUixO6iqMtqtSTYYN4WSYtDc++xW3Rd6WZy
+	YPLYOesuu8fnTXIBTFHcNkmJJWXBmel5+nYJ3Bn3z+YVXDCt+HF2AlMD4y/NLkZODgkBE4md
+	k78zQ9hiEhfurWfrYuTiEBK4zCix4fJ+KOc8k8TBmfNYQap4BbQlvn+/BmazCKhKfNq2AKyb
+	TUBXYlFPMxOILSoQJDH78zx2iHpBiZMzn7CA2CIC5hLHd8wCiwsLuEtMOdoGFhcS8JNYsuk9
+	WJxTQF1i09JLQDYH0EXiEj2NQSBhZgEdiXd9D5ghbHmJ7W/nME9gFJiFZMMsJGWzkJQtYGRe
+	xSiXmFOaq5ubmJlTnJqsW5ycmJeXWqRrqJebWaKXmlK6iRESpjw7GL+tkznEKMDBqMTD22G6
+	OFiINbGsuDL3EKMkB5OSKK+7zpJgIb6k/JTKjMTijPii0pzU4kOMEhzMSiK8t2SBcrwpiZVV
+	qUX5MClpDhYlcV7VJep+QgLpiSWp2ampBalFMFkZDg4lCV5bS6BGwaLU9NSKtMycEoQ0Ewcn
+	yHAuKZHi1LyU1KLE0pKMeFCcxhcDIxUkxQO0VwGknbe4IDEXKArReopRl+PUnWNtTEIsefl5
+	qVLivM0WQEUCIEUZpXlwK2BJ6RWjONDHwrzxIKN4gAkNbtIroCVMQEsW9ywCWVKSiJCSamBM
+	vb8t/7y7g77XA7+A6UHpV6QO5Z78eDEnOEXfpnj6H4Y9WYLXtk97E5fj9UzpQ4+VRcblfsEN
+	P2SUDgTmPJeZ82z1nq7IuSk99QdLb3Mdeem79olUy/1onllxWSvDuK7G+UkyPwz/ 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252225>
 
 On 06/19/2014 05:28 AM, Fabian Ruch wrote:
-> `pick_one` and `pick_one_preserving_merges` are wrappers around
-> `cherry-pick` in `rebase --interactive`. They take the hash of a commit
-> and build a `cherry-pick` command line that
+> The to-do list command `reword` replays a commit like `pick` but lets
+> the user also edit the commit's log message. If one thinks of `pick`
+> entries as scheduled `cherry-pick` command lines, then `reword` becomes
+> an alias for the command line `cherry-pick --edit`. The porcelain
+> `rebase--interactive` defines a function `do_pick` for processing the
+> `pick` entries on to-do lists. Teach `do_pick` to handle the option
+> `--edit` and reimplement `reword` in terms of `do_pick --edit`. Refer to
+> `pick_one` for the way options are parsed.
 > 
->  - respects the user-supplied merge options
->  - disables complaints about empty commits
->  - tries to fast-forward the rebase head unless rebase is forced
->  - suppresses output unless the user requested higher verbosity
->  - rewrites merge commits to point to their rebased parents.
+> `do_pick` ought to act as a wrapper around `cherry-pick`. Unfortunately,
+> it cannot just forward `--edit` to the `cherry-pick` command line. The
+> assembled command line is executed within a command substitution for
+> controlling the verbosity of `rebase--interactive`. Passing `--edit`
+> would either hang the terminal or clutter the substituted command output
+> with control sequences. Execute the `reword` code from `do_next` instead
+> if the option `--edit` is specified. Adjust the fragment in two regards.
+> Firstly, discard the additional message which is printed if an error
+> occurs because
 > 
-> `pick_one` is used to implement not only `pick` but also `squash`, which
-> amends the previous commit rather than creating a new one. When
-> `pick_one` is called from `squash`, it receives a second argument `-n`.
-> This tells `pick_one` to apply the changes to the index without
-> committing them. Since the argument is almost directly passed to
-> `cherry-pick`, we might want to do the same with other `cherry-pick`
-> options. Currently, `pick_one` expects `-n` to be the first and only
-> argument except for the commit hash.
+>     Aborting commit due to empty commit message. (Duplicate Signed-off-by lines.)
+>     Could not amend commit after successfully picking 1234567... Some change
 > 
-> Prepare `pick_one` for additional `cherry-pick` options by allowing `-n`
-> to appear anywhere before the commit hash in the argument list. Loop
-> over the argument list and pop each handled item until the commit hash
-> is the only parameter left on the list. If an option is not supported,
-> ignore it and issue a warning on the console. Construct a new arguments
-> list `extra_args` of recognized options that shall be passed to
-> `cherry-pick` on the command line.
+> is more readable than and contains (almost) the same information as
 > 
+>     Aborting commit due to empty commit message. (Duplicate Signed-off-by lines.)
+>     Could not amend commit after successfully picking 1234567... Some change
+>     This is most likely due to an empty commit message, or the pre-commit hook
+>     failed. If the pre-commit hook failed, you may need to resolve the issue before
+>     you are able to reword the commit.
+> 
+> (It is true that a hook might not output any diagnosis but the same
+> problem arises when using git-commit directly. git-rebase at least
+> prints a generic message saying that it failed to commit.) Secondly,
+> sneak in additional git-commit arguments:
+> 
+>  - `--allow-empty` is missing: `rebase--interactive` suddenly fails if
+>    an empty commit is picked using `reword` instead of `pick`. The
+>    whether a commit is empty or not is not changed by an altered log
+>    message, so do as `pick` does. Add test.
+> 
+>  - `-n`: Hide the fact that we are committing several times by not
+>    executing the pre-commit hook. Caveat: The altered log message is not
+>    verified because `-n` also skips the commit-msg hook. Either the log
+>    message verification must be included in the post-rewrite hook or
+>    git-commit must support more fine-grained control over which hooks
+>    are executed.
+> 
+>  - `-q`: Hide the fact that we are committing several times by not
+>    printing the commit summary.
+
+It is preferable that each commit makes one logical change (though it
+must always be a self-contained change; i.e., the code should never be
+broken at the end of a commit).  It would be clearer if you would split
+this commit into one refactoring commit (moving the handling of --edit
+to do_pick) plus one commit for each "git commit" option change and
+error message change.  That way,
+
+* Each commit (and log message) becomes simpler, making it easier
+  to review.
+* The changes can be discussed separately.
+* If there is an error, "git bisect" can help determine which of
+  the changes is at fault.
+
 > Signed-off-by: Fabian Ruch <bafain@gmail.com>
 > ---
->  git-rebase--interactive.sh | 61 ++++++++++++++++++++++++++++++++++------------
->  1 file changed, 45 insertions(+), 16 deletions(-)
+>  git-rebase--interactive.sh    | 52 ++++++++++++++++++++++++++++++++++++-------
+>  t/t3404-rebase-interactive.sh |  8 +++++++
+>  2 files changed, 52 insertions(+), 8 deletions(-)
 > 
 > diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index f267d8b..ea5514e 100644
+> index ea5514e..fffdfa5 100644
 > --- a/git-rebase--interactive.sh
 > +++ b/git-rebase--interactive.sh
-> @@ -237,8 +237,26 @@ git_sequence_editor () {
->  
->  pick_one () {
->  	ff=--ff
-> +	extra_args=
-> +	while test $# -gt 0
-> +	do
-> +		case "$1" in
-> +		-n)
-> +			ff=
-> +			extra_args="$extra_args -n"
-> +			;;
-> +		-*)
-> +			warn "pick_one: ignored option -- $1"
-> +			;;
-
-This is an internal interface, right?  I.e., user input isn't being
-processed here?  If so, then the presence of an unrecognized option is a
-bug and it is preferable to "die" here rather than "warn".
-
-The same below and in at least one later commit.
-
-> +		*)
-> +			break
-> +			;;
-> +		esac
-> +		shift
-> +	done
-> +	test $# -ne 1 && die "pick_one: wrong number of arguments"
-> +	sha1=$1
->  
-> -	case "$1" in -n) sha1=$2; ff= ;; *) sha1=$1 ;; esac
->  	case "$force_rebase" in '') ;; ?*) ff= ;; esac
->  	output git rev-parse --verify $sha1 || die "Invalid commit name: $sha1"
->  
-> @@ -248,24 +266,35 @@ pick_one () {
->  	fi
->  
->  	test -d "$rewritten" &&
-> -		pick_one_preserving_merges "$@" && return
-> +		pick_one_preserving_merges $extra_args $sha1 && return
->  	output eval git cherry-pick \
->  			${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")} \
-> -			"$strategy_args" $empty_args $ff "$@"
-> +			"$strategy_args" $empty_args $ff $extra_args $sha1
+> @@ -490,7 +490,42 @@ record_in_rewritten() {
+>  	esac
 >  }
+>  
+> +# Apply the changes introduced by the given commit to the current head.
+> +#
+> +# do_pick [--edit] <commit> <title>
+> +#
+> +# Wrapper around git-cherry-pick.
+> +#
+> +# <title>
+> +#     The commit message title of <commit>. Used for information
+> +#     purposes only.
+> +#
+> +# <commit>
+> +#     The commit to cherry-pick.
 
-It might be confusing that extra_args is used both in pick_one and in
-pick_one_preserving_merges.  Since these are not local variables, the
-call to the latter changes the value of the variable in the former.  I
-don't know if that could be a problem now (can
-pick_one_preserving_merges return with a nonzero exit code?) but even if
-not, it is a trap for future developers.  I recommend giving the two
-variables different names.
+Unless there is a reason to do otherwise, please order the documentation
+to match the order that the do_pick arguments appear.
 
->  pick_one_preserving_merges () {
->  	fast_forward=t
-> -	case "$1" in
-> -	-n)
-> -		fast_forward=f
-> -		sha1=$2
-> -		;;
-> -	*)
-> -		sha1=$1
-> -		;;
-> -	esac
-> -	sha1=$(git rev-parse $sha1)
-> +	no_commit=
-> +	extra_args=
+> +#
+> +# -e, --edit
+> +#     After picking <commit>, open an editor and let the user edit the
+> +#     commit message. The editor contents becomes the commit message of
+> +#     the new head.
+>  do_pick () {
+> +	edit=
 > +	while test $# -gt 0
 > +	do
 > +		case "$1" in
-> +		-n)
-> +			fast_forward=f
-> +			extra_args="$extra_args -n"
-> +			no_commit=y
+> +		-e|--edit)
+> +			edit=y
 > +			;;
 > +		-*)
-> +			warn "pick_one_preserving_merges: ignored option -- $1"
+> +			warn "do_pick: ignored option -- $1"
 > +			;;
 > +		*)
 > +			break
@@ -176,38 +168,61 @@ variables different names.
 > +		esac
 > +		shift
 > +	done
-> +	test $# -ne 1 && die "pick_one_preserving_merges: wrong number of arguments"
-> +	sha1=$(git rev-parse $1)
->  
->  	if test -f "$state_dir"/current-commit
+> +	test $# -ne 2 && die "do_pick: wrong number of arguments"
+> +
+>  	if test "$(git rev-parse HEAD)" = "$squash_onto"
 >  	then
-> @@ -335,7 +364,7 @@ pick_one_preserving_merges () {
->  	f)
->  		first_parent=$(expr "$new_parents" : ' \([^ ]*\)')
+>  		# Set the correct commit message and author info on the
+> @@ -512,6 +547,14 @@ do_pick () {
+>  		pick_one $1 ||
+>  			die_with_patch $1 "Could not apply $1... $2"
+>  	fi
+> +
+> +	if test -n "$edit"
+> +	then
+> +		git commit --allow-empty --amend --no-post-rewrite -n -q ${gpg_sign_opt:+"$gpg_sign_opt"} || {
+> +			warn "Could not amend commit after successfully picking $1... $2"
+> +			exit_with_patch $1 1
+> +		}
+> +	fi
+>  }
 >  
-> -		if [ "$1" != "-n" ]
-> +		if test -z "$no_commit"
->  		then
->  			# detach HEAD to current parent
->  			output git checkout $first_parent 2> /dev/null ||
-> @@ -344,7 +373,7 @@ pick_one_preserving_merges () {
+>  do_next () {
+> @@ -532,14 +575,7 @@ do_next () {
+>  		comment_for_reflog reword
 >  
->  		case "$new_parents" in
->  		' '*' '*)
-> -			test "a$1" = a-n && die "Refusing to squash a merge: $sha1"
-> +			test -n "$no_commit" && die "Refusing to squash a merge: $sha1"
+>  		mark_action_done
+> -		do_pick $sha1 "$rest"
+> -		git commit --amend --no-post-rewrite ${gpg_sign_opt:+"$gpg_sign_opt"} || {
+> -			warn "Could not amend commit after successfully picking $sha1... $rest"
+> -			warn "This is most likely due to an empty commit message, or the pre-commit hook"
+> -			warn "failed. If the pre-commit hook failed, you may need to resolve the issue before"
+> -			warn "you are able to reword the commit."
+> -			exit_with_patch $sha1 1
+> -		}
+> +		do_pick --edit $sha1 "$rest"
+>  		record_in_rewritten $sha1
+>  		;;
+>  	edit|e)
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index 8197ed2..9931143 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -75,6 +75,14 @@ test_expect_success 'rebase --keep-empty' '
+>  	test_line_count = 6 actual
+>  '
 >  
->  			# redo merge
->  			author_script_content=$(get_author_ident_from_commit $sha1)
-> @@ -365,7 +394,7 @@ pick_one_preserving_merges () {
->  		*)
->  			output eval git cherry-pick \
->  				${gpg_sign_opt:+$(git rev-parse --sq-quote "$gpg_sign_opt")} \
-> -				"$strategy_args" "$@" ||
-> +				"$strategy_args" $extra_args $sha1 ||
->  				die_with_patch $sha1 "Could not pick $sha1"
->  			;;
->  		esac
+> +test_expect_success 'rebase --keep-empty' '
+> +	git checkout emptybranch &&
+> +	set_fake_editor &&
+> +	FAKE_LINES="1 reword 2" git rebase --keep-empty -i HEAD~2 &&
+> +	git log --oneline >actual &&
+> +	test_line_count = 6 actual
+> +'
+> +
+>  test_expect_success 'rebase -i with the exec command' '
+>  	git checkout master &&
+>  	(
 > 
 
 
