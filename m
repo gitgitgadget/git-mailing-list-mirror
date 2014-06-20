@@ -1,70 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 10/16] fast-import: use skip_prefix for parsing input
-Date: Fri, 20 Jun 2014 01:45:49 -0400
-Message-ID: <20140620054549.GA4623@sigill.intra.peff.net>
-References: <20140618194117.GA22269@sigill.intra.peff.net>
- <20140618194912.GJ22622@sigill.intra.peff.net>
- <CAPig+cTgz1s_68MVT5XgTsM9j=NZnCt3tNX3wBGddEq3nWZgyw@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Our merge bases sometimes suck
+Date: Thu, 19 Jun 2014 23:53:42 -0700
+Message-ID: <xmqqtx7gdqbt.fsf@gitster.dls.corp.google.com>
+References: <539A25BF.4060501@alum.mit.edu>
+	<xmqq8uovo9pa.fsf@gitster.dls.corp.google.com>
+	<53A06264.9080205@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git List <git@vger.kernel.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Fri Jun 20 07:46:00 2014
+Content-Type: text/plain; charset=iso-2022-jp
+Cc: git discussion list <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Fri Jun 20 08:53:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wxre9-00015Q-O4
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 07:45:58 +0200
+	id 1Wxshu-0002x4-Up
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 08:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934584AbaFTFpx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2014 01:45:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:47998 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933667AbaFTFpv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Jun 2014 01:45:51 -0400
-Received: (qmail 7678 invoked by uid 102); 20 Jun 2014 05:45:51 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 20 Jun 2014 00:45:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 20 Jun 2014 01:45:49 -0400
-Content-Disposition: inline
-In-Reply-To: <CAPig+cTgz1s_68MVT5XgTsM9j=NZnCt3tNX3wBGddEq3nWZgyw@mail.gmail.com>
+	id S933971AbaFTGxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 02:53:50 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52303 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751217AbaFTGxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2014 02:53:49 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 77F461B6D9;
+	Fri, 20 Jun 2014 02:53:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ho3HiheXgn4SyF9Egzd3azQw+Xk=; b=tHjQlg
+	QfVu4i74xkchX36TeDHHPK0ZVloyG/7uUYWLvGENYHSeuFOrhEPlcyOub4mb3Nu7
+	FrfwLbYfsO7vLD2AHGwtE0DcCFo1nZwK43iiqOMijDmvyRZc96I+eXMpixZecmEY
+	XML0pSwAdF2Gb6mzb71wU8nNnlWxJ0s5gXx8Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ddohmvZTP+3Esah4UAJflMYAJ8RtQuc0
+	BdLM5gCVS64xe8f6/N+NtMeiPIxtzFZLgsbVnR/AKSbG4ZYCur0GU6WKCHjGIxCj
+	r04i0FXksNL/q9n3+gRbpc8sJOJ3no4RNoQFziGWRY1ZQNtyHmgo0s/H6f/cKQgA
+	5RXvA52L5xc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CCFD1B6D8;
+	Fri, 20 Jun 2014 02:53:44 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 187741B6D6;
+	Fri, 20 Jun 2014 02:53:40 -0400 (EDT)
+In-Reply-To: <53A06264.9080205@alum.mit.edu> (Michael Haggerty's message of
+	"Tue, 17 Jun 2014 17:44:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9C5F5B60-F847-11E3-8458-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252215>
 
-On Thu, Jun 19, 2014 at 11:19:09PM -0400, Eric Sunshine wrote:
+Michael Haggerty <mhagger@alum.mit.edu> writes:
 
-> > -               if (starts_with(command_buf.buf, "M "))
-> > -                       file_change_m(b);
-> > -               else if (starts_with(command_buf.buf, "D "))
-> > -                       file_change_d(b);
-> > -               else if (starts_with(command_buf.buf, "R "))
-> > -                       file_change_cr(b, 1);
-> > -               else if (starts_with(command_buf.buf, "C "))
-> > -                       file_change_cr(b, 0);
-> > -               else if (starts_with(command_buf.buf, "N "))
-> > -                       note_change_n(b, &prev_fanout);
-> > +               const char *v;
-> 
-> This declaration of 'v' shadows the 'v' added by patch 8/16 earlier in
-> the function.
+> It just looks asymmetric, but actually it is symmetric, which was kindof
+> surprising when I realized it....
+>
+> Since "|branch ∧ master|" is the same for all candidates, minimizing N
+> is the same as maximizing |candidate|, which is the same as
+>
+>     git rev-list --count --no-merges $candidate
+>
+> This is clearly symmetric in master vs. base.
 
-Thanks.  I reordered the patches before sending, so when this one was
-originally written, there was no "v" at the top-level of the function.
-I think we can just drop this interior one. The point of the short "v"
-is that it can be used as a temporary value for prefix matches, so I
-think we can just reuse the same one.
+Hmph, but that obviously will become very expensive to compute as
+project grows.
 
-I tried compiling with -Wshadow (which I don't usually do), but we're
-not even close to compiling clean there. Some of them are legitimately
-confusing (e.g., try figuring out "end" in parse_rev_note). But others
-look just annoying (e.g., complaining that a local "usage" conflicts
-with the global function). I don't know if we want to put effort into
-being -Wshadow clean or not.
+When we (potentially) have multiple merge-bases, after finding all
+the candidates by traversing from the two commits to be merged, we
+already make another set of traversals, starting from the candidates
+and painting the ancestors down to their common ancestors.  This is
+done to discover if each candidate is reachable from any other
+candidate (in which case the reachable one is not a merge-base).
 
--Peff
+The resulting graph of this traversal is currently used only to cull
+non-merge-bases out of the candidates, but I wonder if you can
+*count* the nodes in it in each color and use that number (which is
+essentially the number of commits that can be reached only from one
+candidate and not from other candidates) to derive a score for each
+candidate, and use it to assess the goodness of merge-bases, just
+like the number you are counting in the above full traversal.
