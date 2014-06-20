@@ -1,181 +1,205 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v20 46/48] refs.c: propagate any errno==ENOTDIR from _commit back to the callers
-Date: Fri, 20 Jun 2014 07:43:27 -0700
-Message-ID: <1403275409-28173-47-git-send-email-sahlberg@google.com>
+Subject: [PATCH v20 45/48] refs.c: pass a skip list to name_conflict_fn
+Date: Fri, 20 Jun 2014 07:43:26 -0700
+Message-ID: <1403275409-28173-46-git-send-email-sahlberg@google.com>
 References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 20 16:45:13 2014
+X-From: git-owner@vger.kernel.org Fri Jun 20 16:45:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wy040-0002Sc-20
-	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:45:12 +0200
+	id 1Wy04S-0002xF-WC
+	for gcvg-git-2@plane.gmane.org; Fri, 20 Jun 2014 16:45:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753570AbaFTOoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Jun 2014 10:44:10 -0400
-Received: from mail-ob0-f202.google.com ([209.85.214.202]:55844 "EHLO
-	mail-ob0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753391AbaFTOnf (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753565AbaFTOoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 10:44:09 -0400
+Received: from mail-ie0-f202.google.com ([209.85.223.202]:35263 "EHLO
+	mail-ie0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753386AbaFTOnf (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 20 Jun 2014 10:43:35 -0400
-Received: by mail-ob0-f202.google.com with SMTP id va2so193382obc.3
+Received: by mail-ie0-f202.google.com with SMTP id tr6so978225ieb.5
         for <git@vger.kernel.org>; Fri, 20 Jun 2014 07:43:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=achO6kQDlB0DBxSviHSY1s9I4rdHxz2vjJbnUQye15o=;
-        b=c5563H7Esj6eb0OowXqrXX8L9nXz3z74ovFHenPJqt0rPikTadON6KjMxpr2Dlw6Gr
-         zHavI7F/+Y/Y7f+XWeMyoPDw5svgjh+cYX/w2AqkFokOgiQHUFahl0n5rajzjKT7l66U
-         va0EPnVcpXjbbpnMmGK+OJfFisPg+iq95iK0CvtLId9bDR5MYO8WeshBDIhaU4X38DWp
-         IA3amdwEwOQaqIvGBBThWj6rEjAc/Mw55d8bG0PaZCvKhnZ58Z2oPF6A3EHvkE9RM39b
-         5gpR+QG0Ihopbagr2C8IHFyhKNqfYXCuD+Mj9wlj02uEB+BLC1mMGz4GipR/38busRT8
-         5BBg==
+        bh=vZ5qExmFAQU2eJUEI6k71oFIJc4vT7iT5CT23f/z+Xs=;
+        b=IWAeMni5ZYsrMYPNWwqkwhPzs4ydcgH/mEtM9imk4mQNqM4iWtD2Tyrmbc6YTb4yon
+         V68D7oTn1atV93/kiIkGlpRenHTcGcDM+Hq0osDVbESZVy/roize8YwVCsFoxiM7RMfX
+         xuB7yjMhN0tH32l4aZTEdd3qUXbb/ik36sxDzRFZvwkcsKPQLyYnFImUGBD24k/k7ByB
+         wkWEqXNWB2EQ+Cv69pANksyHi4RlfhEFVM19CgPP1dwgXM2ZNzpLonz2NC5a7Dqthywg
+         n97zLSgNasCP3kPT6XAuWXEUf3ajX1Ogy2OERUL3aD96Uevj3f/PG3XsOH3DyGNjJMqK
+         hKpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=achO6kQDlB0DBxSviHSY1s9I4rdHxz2vjJbnUQye15o=;
-        b=CuoepgadcMNznurJ0O3v+mFpi+oCRs+VwUdfdRT4ybJ+O7bJGjd2q36OpQj5IYP//6
-         nneOAT2qPI/3vWIT2sXUFsi8zrMuYAv8NxC7yNSaR7k1ueJxvWfysC+uupPZ2wTMlueZ
-         w0mM75u2miMc730DnEXEdjPuOgKK48AxWNv01FYn0IxoXZ5iR3K6v0Dy1iD7EJBQQOFn
-         LZthKCeGh93MgSDvnxvIxyQP18M7r38j2Z2s66fVHuShfZVUektS10JcA71Y+RWH8lof
-         J4T1nWwTqqQdRhYjcE6rP9qVvGUrqNW3PoXsPmAevOqqYEM2KKMEZI3l32XbUnYSGR1R
-         tOlw==
-X-Gm-Message-State: ALoCoQlHTgqZYF3txYEb2aTBqdtW/xNXqTPO2BK6SXyGp3aeaz9x/iaSgENdeJkZaXUqWp9j35gf
-X-Received: by 10.50.12.7 with SMTP id u7mr1531369igb.5.1403275414176;
+        bh=vZ5qExmFAQU2eJUEI6k71oFIJc4vT7iT5CT23f/z+Xs=;
+        b=K0ugTjA3F2aX7oLqBJkR4LgDnEyaIaKIr/2/YF6Id0JckjT9xaIY4AFqiYyhaOeYut
+         u+dT03i2CpyxBVh7v5U0pMtLpe+CEPxjpFjVSvL0iU0dcAi5OoZlaaNYZA6+JA6GjnHB
+         IfPtlBS1yJIVDuuWyx7ioX3gFLU4ObjYC1CBDXSu/CpU+DbpskgWA2vxNF+UPr0jpL6q
+         9LrcBPj7jHuZsMOkFBe29jVUUXldsohRHVgTuj1jDrplN1OAtAJ/VPgzg4HRpd0GZ6D/
+         FX3346Mef/Q+uzZrcG4PE3QDYN3WZgRAsNCTPlptkvgvfWJrsHoLo1nhEp6ixRFT+NJq
+         4jVw==
+X-Gm-Message-State: ALoCoQmlSIAvbvT+ZBwE8vm4pYVbEd33m5s1ghDe4f0IsVKc/E+1r7REnTLJE5vzQ+yTsesbtCHp
+X-Received: by 10.182.47.199 with SMTP id f7mr1486446obn.6.1403275414213;
         Fri, 20 Jun 2014 07:43:34 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id b39si187841yhj.0.2014.06.20.07.43.34
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id j5si665240yhi.1.2014.06.20.07.43.34
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Fri, 20 Jun 2014 07:43:34 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id EB54431C6B6;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id F0DE85A43E3;
 	Fri, 20 Jun 2014 07:43:33 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id C4999E0873; Fri, 20 Jun 2014 07:43:33 -0700 (PDT)
+	id D0CAEE0651; Fri, 20 Jun 2014 07:43:33 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0.420.g181e020.dirty
 In-Reply-To: <1403275409-28173-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252246>
 
-In _commit, ENOTDIR can happen in the call to lock_ref_sha1_basic, either when
-we lstat the new refname and it returns ENOTDIR or if the name checking
-function reports that the same type of conflict happened. In both cases it
-means that we can not create the new ref due to a name conflict.
+Allow passing a list of refs to skip checking to name_conflict_fn.
+There are some conditions where we want to allow a temporary conflict and skip
+checking those refs. For example if we have a transaction that
+1, guarantees that m is a packed refs and there is no loose ref for m
+2, the transaction will delete m from the packed ref
+3, the transaction will create conflicting m/m
 
-For these cases, save the errno value and abort and make sure that the caller
-can see errno==ENOTDIR.
-
-Also start defining specific return codes for _commit, assign -1 as a generic
-error and -2 as the error that refers to a name conflict. Callers can (and
-should) use that return value inspecting errno directly.
+For this case we want to be able to lock and create m/m since we know that the
+conflict is only transient. I.e. the conflict will be automatically resolved
+by the transaction when it deletes m.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 22 +++++++++++++++-------
- refs.h |  6 ++++++
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ refs.c | 41 ++++++++++++++++++++++++++---------------
+ 1 file changed, 26 insertions(+), 15 deletions(-)
 
 diff --git a/refs.c b/refs.c
-index c6990d0..74a55b5 100644
+index f3fab37..c6990d0 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -3582,7 +3582,7 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err)
+@@ -801,15 +801,18 @@ static int names_conflict(const char *refname1, const char *refname2)
+ 
+ struct name_conflict_cb {
+ 	const char *refname;
+-	const char *oldrefname;
+ 	const char *conflicting_refname;
++	const char **skip;
++	int skipnum;
+ };
+ 
+ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
  {
--	int ret = 0, delnum = 0, i;
-+	int ret = 0, delnum = 0, i, df_conflict = 0;
- 	const char **delnames;
- 	int n = transaction->nr;
- 	struct ref_update **updates = transaction->updates;
-@@ -3600,9 +3600,10 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 	struct name_conflict_cb *data = (struct name_conflict_cb *)cb_data;
+-	if (data->oldrefname && !strcmp(data->oldrefname, entry->name))
+-		return 0;
++	int i;
++	for (i = 0; i < data->skipnum; i++)
++		if (!strcmp(entry->name, data->skip[i]))
++			return 0;
+ 	if (names_conflict(data->refname, entry->name)) {
+ 		data->conflicting_refname = entry->name;
+ 		return 1;
+@@ -822,15 +825,18 @@ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
+  * conflicting with the name of an existing reference in dir.  If
+  * oldrefname is non-NULL, ignore potential conflicts with oldrefname
+  * (e.g., because oldrefname is scheduled for deletion in the same
+- * operation).
++ * operation). skip contains a list of refs we want to skip checking for
++ * conflicts with.
+  */
+-static int is_refname_available(const char *refname, const char *oldrefname,
+-				struct ref_dir *dir)
++static int is_refname_available(const char *refname,
++				struct ref_dir *dir,
++				const char **skip, int skipnum)
+ {
+ 	struct name_conflict_cb data;
+ 	data.refname = refname;
+-	data.oldrefname = oldrefname;
+ 	data.conflicting_refname = NULL;
++	data.skip = skip;
++	data.skipnum = skipnum;
  
- 	/* Copy, sort, and reject duplicate refs */
- 	qsort(updates, n, sizeof(*updates), ref_update_compare);
--	ret = ref_update_reject_duplicates(updates, n, err);
--	if (ret)
-+	if (ref_update_reject_duplicates(updates, n, err)) {
-+		ret = -1;
- 		goto cleanup;
-+	}
- 
- 	/* Acquire all locks while verifying old values */
- 	for (i = 0; i < n; i++) {
-@@ -3616,10 +3617,12 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 						   &update->type,
- 						   delnames, delnum);
- 		if (!update->lock) {
-+			if (errno == ENOTDIR)
-+				df_conflict = 1;
- 			if (err)
- 				strbuf_addf(err, "Cannot lock the ref '%s'.",
- 					    update->refname);
--			ret = 1;
-+			ret = -1;
- 			goto cleanup;
- 		}
+ 	sort_ref_dir(dir);
+ 	if (do_for_each_entry_in_dir(dir, 0, name_conflict_fn, &data)) {
+@@ -2077,7 +2083,8 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ /* This function should make sure errno is meaningful on error */
+ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 					    const unsigned char *old_sha1,
+-					    int flags, int *type_p)
++					    int flags, int *type_p,
++					    const char **skip, int skipnum)
+ {
+ 	char *ref_file;
+ 	const char *orig_refname = refname;
+@@ -2126,7 +2133,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+ 	 * name is a proper prefix of our refname.
+ 	 */
+ 	if (missing &&
+-	     !is_refname_available(refname, NULL, get_packed_refs(&ref_cache))) {
++	     !is_refname_available(refname, get_packed_refs(&ref_cache),
++				   skip, skipnum)) {
+ 		last_errno = ENOTDIR;
+ 		goto error_return;
  	}
-@@ -3637,6 +3640,7 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 
- 				if (err)
- 					strbuf_addf(err, str, update->refname);
-+				ret = -1;
- 				goto cleanup;
- 			}
- 		}
-@@ -3647,14 +3651,16 @@ int ref_transaction_commit(struct ref_transaction *transaction,
- 		struct ref_update *update = updates[i];
- 
- 		if (update->lock) {
--			ret |= delete_ref_loose(update->lock, update->type,
--						err);
-+			if (delete_ref_loose(update->lock, update->type, err))
-+				ret = -1;
-+
- 			if (!(update->flags & REF_ISPRUNING))
- 				delnames[delnum++] = update->lock->ref_name;
- 		}
- 	}
- 
--	ret |= repack_without_refs(delnames, delnum, err);
-+	if (repack_without_refs(delnames, delnum, err))
-+		ret = -1;
- 	for (i = 0; i < delnum; i++)
- 		unlink_or_warn(git_path("logs/%s", delnames[i]));
- 	clear_loose_ref_cache(&ref_cache);
-@@ -3667,6 +3673,8 @@ cleanup:
- 		if (updates[i]->lock)
- 			unlock_ref(updates[i]->lock);
- 	free(delnames);
-+	if (df_conflict)
-+		ret = -2;
- 	return ret;
+@@ -2184,7 +2192,7 @@ struct ref_lock *lock_any_ref_for_update(const char *refname,
+ 					 const unsigned char *old_sha1,
+ 					 int flags, int *type_p)
+ {
+-	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p);
++	return lock_ref_sha1_basic(refname, old_sha1, flags, type_p, NULL, 0);
  }
  
-diff --git a/refs.h b/refs.h
-index f24b2c1..5c0543d 100644
---- a/refs.h
-+++ b/refs.h
-@@ -333,7 +333,13 @@ int ref_transaction_delete(struct ref_transaction *transaction,
-  * Commit all of the changes that have been queued in transaction, as
-  * atomically as possible.  Return a nonzero value if there is a
-  * problem.
-+ * If the transaction is already in failed state this function will return
-+ * an error.
-+ * Function returns 0 on success, -1 for generic failures and
-+ * UPDATE_REFS_NAME_CONFLICT (-2) if the failure was due to a name
-+ * collision (ENOTDIR).
-  */
-+#define UPDATE_REFS_NAME_CONFLICT -2
- int ref_transaction_commit(struct ref_transaction *transaction,
- 			   struct strbuf *err);
+ /*
+@@ -2676,10 +2684,12 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	if (!symref)
+ 		return error("refname %s not found", oldrefname);
  
+-	if (!is_refname_available(newrefname, oldrefname, get_packed_refs(&ref_cache)))
++	if (!is_refname_available(newrefname, get_packed_refs(&ref_cache),
++				  &oldrefname, 1))
+ 		return 1;
+ 
+-	if (!is_refname_available(newrefname, oldrefname, get_loose_refs(&ref_cache)))
++	if (!is_refname_available(newrefname, get_loose_refs(&ref_cache),
++				  &oldrefname, 1))
+ 		return 1;
+ 
+ 	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
+@@ -2709,7 +2719,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 
+ 	logmoved = log;
+ 
+-	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL);
++	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL, NULL, 0);
+ 	if (!lock) {
+ 		error("unable to lock %s for update", newrefname);
+ 		goto rollback;
+@@ -2724,7 +2734,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
+ 	return 0;
+ 
+  rollback:
+-	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL);
++	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL, NULL, 0);
+ 	if (!lock) {
+ 		error("unable to lock %s for rollback", oldrefname);
+ 		goto rollbacklog;
+@@ -3603,7 +3613,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 						    update->old_sha1 :
+ 						    NULL),
+ 						   update->flags,
+-						   &update->type);
++						   &update->type,
++						   delnames, delnum);
+ 		if (!update->lock) {
+ 			if (err)
+ 				strbuf_addf(err, "Cannot lock the ref '%s'.",
 -- 
 2.0.0.420.g181e020.dirty
