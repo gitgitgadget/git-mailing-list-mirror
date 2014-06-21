@@ -1,118 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6 05/11] trace: add infrastructure to augment
- trace output with additional info
-Date: Fri, 20 Jun 2014 17:33:47 -0700
-Message-ID: <CAPc5daV=vbJz90X9K85DzJZ0PjyzF_xfSi9Cy9XZ+TX0YdEkeg@mail.gmail.com>
-References: <53A4A195.1070502@gmail.com> <53A4A267.2060907@gmail.com>
- <xmqqmwd7citp.fsf@gitster.dls.corp.google.com> <53A4C47D.609@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: How should git-config include.path option work in ~/.gitconfig
+ file?
+Date: Sat, 21 Jun 2014 06:08:03 -0400
+Message-ID: <20140621100803.GB16599@sigill.intra.peff.net>
+References: <CAK6hiNhumFhKd9tjr07SgtZe23LwW8RKSp3BbwVRh06-L0C8EA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCG77UMM3EJRBAFGSOOQKGQEJXKAIWI@googlegroups.com Sat Jun 21 02:34:12 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBAFGSOOQKGQEJXKAIWI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f187.google.com ([209.85.217.187])
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: "Cox, Michael" <mhcox@bluezoosoftware.com>
+X-From: git-owner@vger.kernel.org Sat Jun 21 12:08:13 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBAFGSOOQKGQEJXKAIWI@googlegroups.com>)
-	id 1Wy9Fy-00065a-0B
-	for gcvm-msysgit@m.gmane.org; Sat, 21 Jun 2014 02:34:10 +0200
-Received: by mail-lb0-f187.google.com with SMTP id n15sf3877lbi.24
-        for <gcvm-msysgit@m.gmane.org>; Fri, 20 Jun 2014 17:34:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=X7GShypHHqVDb+avRu6UCoOt3p/Cp/3AGvkjHfi2eGc=;
-        b=TZa421IMRRfegNwb/XJPa8UP1gEuuR/6nJSB4cLH2G2dlGKk9x6+iOnX2B+/Igrgxt
-         AJCIh/t/aab9a+u60maPDjR7dGhHnS6zlHA5+g3IuMvWqLsxYprOXtaRh0NBWAcH+CSI
-         8eVGWecyA0saWUVWHwDvcjYuaD1CxawNu0WDy2er1A78QlL5KgsQCgdNJeCslIcgwxM0
-         5f0DVTmpmgghYf9xf+IzhN1q/bWNeG7io0woH70uGweqTxJ734EXfUhaaXL5UOc2CihW
-         5+71caegeIAxmScI2HpcDAIMe5GgLTreH/Iy4yf/OWkXGPxDjcgXwyZ/D6qZi0lZ5vzt
-         ASQA==
-X-Received: by 10.152.2.40 with SMTP id 8mr88lar.12.1403310849549;
-        Fri, 20 Jun 2014 17:34:09 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.18.228 with SMTP id z4ls216016lad.109.gmail; Fri, 20 Jun
- 2014 17:34:08 -0700 (PDT)
-X-Received: by 10.152.23.65 with SMTP id k1mr601703laf.2.1403310848114;
-        Fri, 20 Jun 2014 17:34:08 -0700 (PDT)
-Received: from mail-lb0-x233.google.com (mail-lb0-x233.google.com [2a00:1450:4010:c04::233])
-        by gmr-mx.google.com with ESMTPS id tf1si1321048lbb.1.2014.06.20.17.34.08
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 20 Jun 2014 17:34:08 -0700 (PDT)
-Received-SPF: pass (google.com: domain of jch2355@gmail.com designates 2a00:1450:4010:c04::233 as permitted sender) client-ip=2a00:1450:4010:c04::233;
-Received: by mail-lb0-f179.google.com with SMTP id z11so2771216lbi.38
-        for <msysgit@googlegroups.com>; Fri, 20 Jun 2014 17:34:08 -0700 (PDT)
-X-Received: by 10.152.180.195 with SMTP id dq3mr4861141lac.26.1403310848005;
- Fri, 20 Jun 2014 17:34:08 -0700 (PDT)
-Sender: msysgit@googlegroups.com
-Received: by 10.112.172.103 with HTTP; Fri, 20 Jun 2014 17:33:47 -0700 (PDT)
-In-Reply-To: <53A4C47D.609@gmail.com>
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of jch2355@gmail.com designates 2a00:1450:4010:c04::233
- as permitted sender) smtp.mail=jch2355@gmail.com;       dkim=pass header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252299>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WyIDU-00088D-TU
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jun 2014 12:08:13 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S934513AbaFUKII (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Jun 2014 06:08:08 -0400
+Received: from cloud.peff.net ([50.56.180.127]:48705 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S934497AbaFUKIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Jun 2014 06:08:06 -0400
+Received: (qmail 905 invoked by uid 102); 21 Jun 2014 10:08:05 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 21 Jun 2014 05:08:05 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 21 Jun 2014 06:08:03 -0400
+Content-Disposition: inline
+In-Reply-To: <CAK6hiNhumFhKd9tjr07SgtZe23LwW8RKSp3BbwVRh06-L0C8EA@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252300>
 
-On Fri, Jun 20, 2014 at 4:32 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
-> Am 21.06.2014 00:33, schrieb Junio C Hamano:
->> Karsten Blees <karsten.blees@gmail.com> writes:
->
-> GIT_TRACE_VERBOSE perhaps? It affects all trace output, not just
-> GIT_TRACE_PERFORMANCE. The tests would still have to disable it
-> explicitly, though, in case someone sets it in their profile.
->
-> However, IIRC conclusion of v4 discussion was that this would be
-> useful for all trace output [1], so I think it should be the default.
->
-> [1] https://groups.google.com/forum/#!topic/msysgit/UMKTvmZX5aI
+[+cc mailing list]
 
-Hmph, after re-reading of that thread, I recall that I thought Peff's
+On Sat, Jun 21, 2014 at 03:16:05AM -0600, Cox, Michael wrote:
 
->> Would it make
->> sense to just tie this to regular trace_* calls, and if
->> GIT_TRACE_PERFORMANCE is set, add a timestamp to each line?
+> I discovered the new (to me, at least) git config include.path option
+> recently and tried using it to include a file, .gitremotes in my git
+> worktree.  The .gitremotes file contains a remote.upstream section
+> containing information (url, fetch, etc.) for the upstream remote I'm using
+> to fetch updates for the project I'm working on, e.g.
+> 
+> [remote "upstream"]
+> url = http://github.com/diydrones/ardupilot
+> fetch = +refs/heads/*:refs/remotes/upstream/*
+> 
+> When I add
+> 
+> [include]
+> path = ../.gitremotes
+> 
+> to my .git/config file, everything works as expected.
 
-was the conclusion (i.e. by default no change, ask with GIT_TRACE_PERFORMANCE),
-and that I found that reasonable back then.
+So far so good, though note the potential security implications. If the
+upstream you fetch from puts something malicious into .gitremotes, they
+could execute arbitrary code (e.g., by setting up external diff config).
 
-As to the need to disable in the tests, yes, you are right. Just like
-we give predictiable
-environment to tests by setting EDITOR, HOME, etc. in test-lib.sh, we
-should do the
-same for these new settings there.
+That may be a tradeoff you're OK with, but I wanted to point it out to
+make sure you are aware.
 
-Thanks.
+> I then thought I'd like to make this work for all my repositories by
+> default by adding the above include.path option to my global ~/.gitconfig
+> file. This way I would not have to run "git config include.path
+> ../.gitremotes" for each of my repositories and the .gitremotes file would
+> server as documentation of the official remote repositories for the
+> project. The documentation for the git config include.path option does
+> state that relative paths are relative to the including config file. But
+> the ~/.gitconfig file is supposed to contain common configuration options
+> that appear in all your git repositories.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+The including config file in that case would be ~/.gitconfig, and the
+included path is relative to it.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+Your final sentence seems to me to be the one that introduces the
+confusion. Options in .gitconfig do not "appear in all your git
+repositories". Rather, when a git command is run, it consults the
+repo-local $GIT_DIR/config, the global ~/.gitconfig file, and the
+system-level /etc/gitconfig.
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> So is this a bug or a feature?
+
+Feature. :)
+
+> It seems like the currently documented behavior of include.path and
+> .gitconfig are conflicting. I can see how having include.path
+> statements in your .gitconfig file that are processed immediately
+> would be useful for modularizing your .gitconfig file, but I think my
+> use case is also a valuable use of the include.path functionality.
+> Not sure how to syntactically express the deferral of the include file
+> processing in the .gitconfig file, though.
+
+Yes, the design of includes from ~/.gitconfig is very intentional, and
+not going to change (and even if it weren't, we would have to deal with
+backwards compatibility while changing it).  I agree what you are trying
+to do is a sane thing (the security implications of pointing straight
+into the work-tree aside, you could easily be doing the same thing with
+another file in $GIT_DIR, or any number of similar schemes).
+
+There isn't currently a way to do what you want. I think we would need a
+new syntax for it. Recently we discussed supporting environment
+variables in expansions of path-oriented config variables. So something
+like:
+
+  [include]
+  path = $GIT_DIR/../.gitremotes
+
+would do what you want. We'd have to give some thought on what that
+should do when $GIT_DIR is not set (e.g., when you run a git command
+outside of a repository). I'd be inclined to say that such an include
+should be ignored (the naive shell interpretation would be to look for
+"/../.gitremotes", which is almost certainly not what the user wants).
+
+> P.S.  I searched the archive and found your patch submittal.  I wasn't sure
+> if I should post this to git@vger.kernel.org, so I decided it would be
+> better to check with the original feature developer first.  Sorry if that
+> was a violation of this mailing list's etiquette.
+
+This is definitely the sort of thing that should be discussed on the
+mailing list. I've added it to the cc so we can continue the discussion
+there.
+
+-Peff
