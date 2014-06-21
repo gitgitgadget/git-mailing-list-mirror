@@ -1,100 +1,171 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH v6 00/11] add performance tracing facility
-Date: Sat, 21 Jun 2014 01:42:51 +0200
-Message-ID: <53A4C6FB.5040005@gmail.com>
-References: <53A4A195.1070502@gmail.com> <CEA564C177884D1D86D69200A9A43AC8@PhilipOakley>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [RFC PATCH 3/7] rebase -i: Stop on root commits with empty log messages
+Date: Fri, 20 Jun 2014 20:33:00 -0400
+Message-ID: <CAPig+cS48D1GBX9duHLVWnsW+g5_8rBGOdU=UBRuxrS9JpUh_A@mail.gmail.com>
+References: <cover.1403146774.git.bafain@gmail.com>
+	<53A258E2.501@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Philip Oakley <philipoakley@iee.org>, Git List <git@vger.kernel.org>, 
- Junio C Hamano <gitster@pobox.com>,
- msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBB6MNSOOQKGQE5JGPU3A@googlegroups.com Sat Jun 21 01:42:51 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBB6MNSOOQKGQE5JGPU3A@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f62.google.com ([74.125.82.62])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Fabian Ruch <bafain@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jun 21 02:33:08 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBB6MNSOOQKGQE5JGPU3A@googlegroups.com>)
-	id 1Wy8SI-0001cG-VK
-	for gcvm-msysgit@m.gmane.org; Sat, 21 Jun 2014 01:42:51 +0200
-Received: by mail-wg0-f62.google.com with SMTP id y10sf472535wgg.7
-        for <gcvm-msysgit@m.gmane.org>; Fri, 20 Jun 2014 16:42:50 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Wy9Ex-0004yp-Ll
+	for gcvg-git-2@plane.gmane.org; Sat, 21 Jun 2014 02:33:08 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756689AbaFUAdC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Jun 2014 20:33:02 -0400
+Received: from mail-yh0-f44.google.com ([209.85.213.44]:39246 "EHLO
+	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756609AbaFUAdB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Jun 2014 20:33:01 -0400
+Received: by mail-yh0-f44.google.com with SMTP id f10so3418655yha.17
+        for <git@vger.kernel.org>; Fri, 20 Jun 2014 17:33:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=HTjW0I8147YjeSew5Vfk8cFzeIFL/1clHbU1BS6KOqU=;
-        b=BxOohDL1+nMzEoOVch7yktjwo64iv1e/AsXHzMnJeNiYzokyMGk1o/Zo0xKHH3qt+D
-         BPCWKpwmH4xu0//bqJxoAposy77Mvaa0vQRC4/6ic4EtE9BcH2bMMoalQubSi8vYnH/w
-         vsCgVCOtlIecgOIX10z01AnwOIMJjtiCO/0bHg4QG/Hk4FeSZkv7VbHAeR2mvcEMO95V
-         wQ5TfrWMPHBXaVICLd0iNpMzqQno88471Ja0yWnhnX+KKRDb4UZBNGJmFpeoJLvvp9HX
-         t9s4Jh9oYI+ACJIDICk3u4L0i5kgUk5jdaDnBRMboHsBdShTQVmoaeGyXKAhXzhPdfvI
-         sccg==
-X-Received: by 10.152.30.66 with SMTP id q2mr18620lah.2.1403307770492;
-        Fri, 20 Jun 2014 16:42:50 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.242.130 with SMTP id wq2ls193760lac.85.gmail; Fri, 20 Jun
- 2014 16:42:48 -0700 (PDT)
-X-Received: by 10.112.14.5 with SMTP id l5mr591642lbc.6.1403307768924;
-        Fri, 20 Jun 2014 16:42:48 -0700 (PDT)
-Received: from mail-wi0-x22f.google.com (mail-wi0-x22f.google.com [2a00:1450:400c:c05::22f])
-        by gmr-mx.google.com with ESMTPS id r13si246672wib.0.2014.06.20.16.42.48
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 20 Jun 2014 16:42:48 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22f as permitted sender) client-ip=2a00:1450:400c:c05::22f;
-Received: by mail-wi0-f175.google.com with SMTP id r20so1570406wiv.8
-        for <msysgit@googlegroups.com>; Fri, 20 Jun 2014 16:42:48 -0700 (PDT)
-X-Received: by 10.180.221.229 with SMTP id qh5mr7507133wic.33.1403307768849;
-        Fri, 20 Jun 2014 16:42:48 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id lk7sm17543223wjb.24.2014.06.20.16.42.47
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 20 Jun 2014 16:42:48 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CEA564C177884D1D86D69200A9A43AC8@PhilipOakley>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22f
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252297>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=WK2H69vB6kWwQoLja3fGmb+LQIoCWORk1OkF4de74Kg=;
+        b=WMsyg+x4QkLgNWRibYai/kt4ZSdu5WGmQCSzzrnxnqdMTOC37itobWVLhTuQCC461Y
+         0+iyMjLwq4JjTl/XTlWUOGmuQ43oxaL9rVm4AAqa65v3sZrm4brY51Qr7Cnh+jnBBnur
+         Ixq8Kmi0KaCJkvYmd1k8gTOedbAEIqfCwsIV85ZEoP0ly//qoOFK/aFHs+fwmKwypUW5
+         JMa8BIv8f4zLvIN3AWyMUh8VNO7H6rKVWcREMKW2ghyVpBfYfteWF02oenHfGgPFxubr
+         W0EXVX+7zKVXOvFFTuasBbN0KxqFb52VLVdyBRU00jTmpAGGsx46uuzisXQ9YPCWSnUv
+         rxhg==
+X-Received: by 10.236.108.176 with SMTP id q36mr10035078yhg.87.1403310780266;
+ Fri, 20 Jun 2014 17:33:00 -0700 (PDT)
+Received: by 10.170.36.80 with HTTP; Fri, 20 Jun 2014 17:33:00 -0700 (PDT)
+In-Reply-To: <53A258E2.501@gmail.com>
+X-Google-Sender-Auth: L0XpHzeSxLUvonWhUjTjPB1jsbw
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252298>
 
-Am 21.06.2014 00:49, schrieb Philip Oakley:
-> Should there be some documentation as well? Perhaps in t/README, or in
-> Documentation/howto.
+On Wed, Jun 18, 2014 at 11:28 PM, Fabian Ruch <bafain@gmail.com> wrote:
+> When `rebase` is executed with `--root` but no `--onto` is specified,
+> `rebase` creates a sentinel commit which is replaced with the root
+> commit in three steps. This combination of options results never in a
+> fast-forward.
+>
+>  1. The sentinel commit is forced into the authorship of the root
+>     commit.
+>
+>  2. The changes introduced by the root commit are applied to the index
+>     but not committed. If this step fails for whatever reason, all
+>     commit information will be there and the user can safely run
+>     `git-commit --amend` after resolving the problems.
+>
+>  3. The new root commit is created by squashing the changes into the
+>     sentinel commit which already carries the authorship of the
+>     cherry-picked root commit.
+>
+> The command line used to create the commit in the third step specifies
+> effectless and erroneous options. Remove those.
+>
+>  - `--allow-empty-message` is erroneous: If the root's commit message is
+>    empty, the rebase shall fail like for any other commit that is on the
+>    to-do list and has an empty commit message.
+>
+>    Fix the bug that git-rebase does not fail when the initial commit has
+>    an empty log message but is replayed using `--root` is specified.
+>    Add test.
+>
+>  - `-C` is effectless: The commit being amended, which is the sentinel
+>    commit, already carries the authorship and log message of the
+>    cherry-picked root commit. The committer email and commit date fields
+>    are reset either way.
+>
+> After all, if step two fails, `rebase --continue` won't include these
+> flags in the git-commit command line either.
+>
+> Signed-off-by: Fabian Ruch <bafain@gmail.com>
+> ---
+>  git-rebase--interactive.sh |  4 ++--
+>  t/t3412-rebase-root.sh     | 39 +++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 41 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index fffdfa5..f09eeae 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -539,8 +539,8 @@ do_pick () {
+>                 git commit --allow-empty --allow-empty-message --amend \
+>                            --no-post-rewrite -n -q -C $1 &&
+>                         pick_one -n $1 &&
+> -                       git commit --allow-empty --allow-empty-message \
+> -                                  --amend --no-post-rewrite -n -q -C $1 \
+> +                       git commit --allow-empty --amend \
+> +                                  --no-post-rewrite -n -q \
+>                                    ${gpg_sign_opt:+"$gpg_sign_opt"} ||
+>                         die_with_patch $1 "Could not apply $1... $2"
+>         else
+> diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
+> index 0b52105..3608db4 100755
+> --- a/t/t3412-rebase-root.sh
+> +++ b/t/t3412-rebase-root.sh
+> @@ -278,4 +278,43 @@ test_expect_success 'rebase -i -p --root with conflict (second part)' '
+>         test_cmp expect-conflict-p out
+>  '
+>
+> +test_expect_success 'stop rebase --root on empty root log message' '
+> +       # create a root commit with a non-empty tree so that rebase does
+> +       # not fail because of an empty commit, and an empty log message
+> +       echo root-commit >file &&
+> +       git add file &&
+> +       tree=$(git write-tree) &&
+> +       root=$(git commit-tree $tree </dev/null) &&
+> +       git checkout -b no-message-root-commit $root &&
+> +       # do not ff because otherwise neither the patch nor the message
+> +       # are looked at and checked for emptiness
+> +       test_must_fail env EDITOR=true git rebase -i --force-rebase --root &&
+> +       echo root-commit >file.expected &&
+> +       test_cmp file file.expected &&
 
-I'll add Documentation/technical/api-trace.txt when I find the time.
-But lets settle on the final API first.
+It is customary, and provides nicer diagnostic output upon failure, to
+have the "expected" file mentioned first:
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+    test_cmp file.expected file &&
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+> +       git rebase --abort
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+Do you want to place this under control of test_when_finished
+somewhere above the "git rebase" invocation to ensure cleanup if
+something fails before this point?
+
+> +'
+> +
+> +test_expect_success 'stop rebase --root on empty child log message' '
+> +       # create a root commit with a non-empty tree and provide a log
+> +       # message so that rebase does not fail until the root commit is
+> +       # successfully replayed
+> +       echo root-commit >file &&
+> +       git add file &&
+> +       tree=$(git write-tree) &&
+> +       root=$(git commit-tree $tree -m root-commit) &&
+> +       git checkout -b no-message-child-commit $root &&
+> +       # create a child commit with a non-empty patch so that rebase
+> +       # does not fail because of an empty commit, but an empty log
+> +       # message
+> +       echo child-commit >file &&
+> +       git add file &&
+> +       git commit --allow-empty-message --no-edit &&
+> +       # do not ff because otherwise neither the patch nor the message
+> +       # are looked at and checked for emptiness
+> +       test_must_fail env EDITOR=true git rebase -i --force-rebase --root &&
+> +       echo child-commit >file.expected &&
+> +       test_cmp file file.expected &&
+> +       git rebase --abort
+
+Same two comments as for previous test.
+
+> +'
+> +
+>  test_done
+> --
+> 2.0.0
