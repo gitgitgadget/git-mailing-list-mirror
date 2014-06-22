@@ -1,80 +1,110 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: autopacking twice?
-Date: Sun, 22 Jun 2014 08:51:54 +0300
-Message-ID: <20140622055154.GA13819@redhat.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [msysGit] Re: The different EOL behavior between libgit2-based
+ software and official Git
+Date: Sun, 22 Jun 2014 08:46:57 +0200
+Message-ID: <53A67BE1.4060903@web.de>
+References: <1403146778624-7613670.post@n2.nabble.com>	<53A285A1.3090804@web.de> <53A3DB01.7090904@web.de>	<CAO_ghTLq-a3dJGXvmspaCYS19RhTJzT0teWO5XSfVSiRUN7rrQ@mail.gmail.com>	<53A40DEC.4050902@web.de> <xmqqmwd7ee2j.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 22 07:51:37 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Yue Lin Ho <yuelinho777@gmail.com>, git@vger.kernel.org,
+	msysGit <msysgit@googlegroups.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Sun Jun 22 08:47:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wyagj-0001Wt-7N
-	for gcvg-git-2@plane.gmane.org; Sun, 22 Jun 2014 07:51:37 +0200
+	id 1WybYh-0002av-T5
+	for gcvg-git-2@plane.gmane.org; Sun, 22 Jun 2014 08:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750943AbaFVFv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2014 01:51:28 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:25725 "EHLO mx1.redhat.com"
+	id S1751153AbaFVGrE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Jun 2014 02:47:04 -0400
+Received: from mout.web.de ([212.227.15.3]:58031 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750782AbaFVFv2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2014 01:51:28 -0400
-Received: from int-mx11.intmail.prod.int.phx2.redhat.com (int-mx11.intmail.prod.int.phx2.redhat.com [10.5.11.24])
-	by mx1.redhat.com (8.14.4/8.14.4) with ESMTP id s5M5pRMu001452
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <git@vger.kernel.org>; Sun, 22 Jun 2014 01:51:27 -0400
-Received: from redhat.com (ovpn-116-23.ams2.redhat.com [10.36.116.23])
-	by int-mx11.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id s5M5pPGA021184
-	for <git@vger.kernel.org>; Sun, 22 Jun 2014 01:51:26 -0400
-Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.24
+	id S1751102AbaFVGrD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Jun 2014 02:47:03 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Maamb-1XIbFL3mVV-00KAyR; Sun, 22 Jun 2014 08:46:59
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqmwd7ee2j.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:EShQiKCfa8rfqNg2aXp19eLuvdgJ85aFqkaRa1tcFg04qtK8eug
+ 9ANCzFufXq7EZtPUmrTjZFKBWtb4+jU3g2gi6DCTu4joJXWvdoqPxN7uA/oxu4v55Ody3/y
+ SoS+PHORtU16RQMQonh/P9F2q0UtPZukE5vIAQadQIYS3bYqo1zg4B/Z/UtILg2msX7DD7X
+ mTOyj4qGPyBeiFvz9IkXg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252307>
 
-I noticed this:
-remote: Counting objects: 302, done.
-remote: Compressing objects: 100% (195/195), done.
-remote: Total 209 (delta 169), reused 15 (delta 14)
-Receiving objects: 100% (209/209), 42.83 KiB | 0 bytes/s, done.
-Resolving deltas: 100% (169/169), completed with 67 local objects.
-From git://git.qemu.org/qemu
-   6baa963..427e175  master     -> origin/master
-Auto packing the repository in background for optimum performance.
-See "git help gc" for manual housekeeping.
-First, rewinding head to replay your work on top of it...
-Applying: vhost: block migration if backend does not log memory
-Applying: vhost: fix resource leak in error handling
-Applying: qapi/hmp: use 'backend' instead of 'device' with memory
-backend
-Applying: libqemustub: add more stubs for qemu-char
-Applying: qtest: fix qtest for vhost-user
-Applying: qtest: fix vhost-user-test unbalanced mutex locks
-Applying: e1000: emulate auto-negotiation during external link status
-change
-Applying: e1000: improve auto-negotiation reporting via mii-tool
-Applying: e1000: signal guest on successful link auto-negotiation
-Applying: e1000: move e1000_autoneg_timer() to after set_ics()
-Applying: e1000: factor out checking for auto-negotiation availability
-Applying: fixup! libqemustub: add more stubs for qemu-char
-Applying: qapi/string-output-visitor: fix human output
-Applying: tests: add human format test for string output visitor
-Applying: Revert "fixup! libqemustub: add more stubs for qemu-char"
-Applying: fixup! libqemustub: add more stubs for qemu-char
-warning: notes ref refs/notes/commits is invalid
-Auto packing the repository in background for optimum performance.
-See "git help gc" for manual housekeeping.
+On 2014-06-20 18.33, Junio C Hamano wrote:
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>=20
+> tb@Linux:~/EOL_Test/TestAutoCrlf$ t=3DLF.txt  &&  rm -f $t &&  git -c=
+ core.eol=3DCRLF checkout $t  && od -c  $t
+> 0000000   L   i   n   e       1  \n   l   i   n   e       (   2   )  =
+\n
+> 0000020   l   i   n   e       3   .  \n   t   h   i   s       i   s  =
+ =20
+> 0000040   l   i   n   e       4  \n   l       i       n       e      =
+ N
+> 0000060   o   .       5  \n   L   i   n   e       N   u   m   b   e  =
+ r
+> 0000100       6  \n  \n
+>=20
+> In Documentation/config.txt, we find:
+>=20
+>     core.eol::
+>             Sets the line ending type to use in the working directory=
+ for
+>             files that have the `text` property set.  Alternatives ar=
+e ...
+>=20
+> Does that file $t in your practice "have the `text` property set"?
+>=20
+No, it hadn't, under my Linux box.
+(And I had a .gittatributes file on the Mac OS box, which I forgot abou=
+t.
+I am really sorry for the confusion and saying that Git behaves differe=
+nt under Linux and Mac OS).
 
-Why did it auto-pack twice in a single pull?
-None of the changes applied are very large.
+You are pointing into the right direction:
+=46iles with mixed LF CRLF in the repo are not changed by Git, when the=
+ checkout out
+or checked in, unless the .gitattributes say that the file is text.
 
-Guess: auto-packing was started in background, did not
-complete in time, and was restarted for the second time?
-If true, some kind of lock file would be useful
-to prevent this.
+And libgit2 should do the same.
 
--- 
-MST
+
+However, I was confused by this
+https://www.kernel.org/pub/software/scm/git/docs/git-config.html
+(My comments inline with ##)
+-----------------------
+core.autocrlf
+
+    Setting this variable to "true" is almost the same as setting the t=
+ext attribute to "auto" on all files except that text files are not gua=
+ranteed to be normalized: files that contain CRLF in the repository wil=
+l not be touched.=20
+## And is this line still valid:
+Use this setting if you want to have CRLF line endings in your working =
+directory even though the repository does not have normalized line endi=
+ngs.=20
+
+## In 2010 the "the new safer autocrlf handling" was introduced,
+## and it looks as if commits fd6cce9e and c4805393 are involved here.
+## When the file in the repo has only LF, it will have CRLF in the work=
+ tree
+## When the file in the repo has mixed LF and CRLF, it will not be chan=
+ged in the work tree
+## and will have mixed line endings in the work tree
+## When the file in the repo has only CRLF, it will not be changed in t=
+he work tree
+## and will have CRLF in the work tree as well as in the repo.
+
+##Should this line simply be dropped in the documentation ?
