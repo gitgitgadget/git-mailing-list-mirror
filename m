@@ -1,92 +1,66 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [PATCH v3 1/3] string-list: add string_list initialiser helper
- functions
-Date: Mon, 23 Jun 2014 06:19:52 -0700
-Message-ID: <53A82978.2010900@gmail.com>
-References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com> <1403518300-23053-2-git-send-email-tanayabh@gmail.com> <53A81F45.70802@web.de>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Re: gitk with submodules does not show new commits on other branches
+Date: Mon, 23 Jun 2014 15:25:39 +0200
+Message-ID: <lo99sj$e2$1@ger.gmane.org>
+References: <lo6o2h$vva$1@ger.gmane.org> <53A6F978.4010005@web.de> <lo6tnh$p3c$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Mon Jun 23 15:20:12 2014
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 23 15:26:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wz4AN-0001WX-27
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 15:20:11 +0200
+	id 1Wz4GF-0005CE-Dr
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 15:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754821AbaFWNUD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Jun 2014 09:20:03 -0400
-Received: from mail-pd0-f182.google.com ([209.85.192.182]:56493 "EHLO
-	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754457AbaFWNUB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2014 09:20:01 -0400
-Received: by mail-pd0-f182.google.com with SMTP id y13so5672243pdi.13
-        for <git@vger.kernel.org>; Mon, 23 Jun 2014 06:20:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=FIRPU1OG2p7mkUA8AQK6qZe8JgIaRYnBCFOcUmxkEHQ=;
-        b=VxHccIsU8wnejJY3eHVQV9BQlmcj51mIGcsUicxzHc7k2e9TBGc4lyW0x+zLGVWjyK
-         +cUeVyWTmqGKqw8+OhPPKG9TzresVEI+1YPPxfQ4NyG82X+8MzNVdgbzOTGmDRRuhJZ1
-         oAyZfa/twmtcR5ZlexSkYrnhrFd5fodtqh0n6DAjAPcdUeL28rUpR/sesneUf3wdtE2X
-         zCydo7vDioGUiNAovJusiFmHokIV21l5ObTIWxWEKndKzLY0+s8NQqML5TKyPKXjKoR8
-         pewc1nV87FzrRapQGX78zRQ/qxT/vajBhrPUzeI44j6lpVHVPjdXTcvUn78lPWw8lNTP
-         OSNQ==
-X-Received: by 10.68.197.134 with SMTP id iu6mr28908604pbc.164.1403529600199;
-        Mon, 23 Jun 2014 06:20:00 -0700 (PDT)
-Received: from [192.168.52.169] ([117.254.217.38])
-        by mx.google.com with ESMTPSA id ib5sm26946162pbb.55.2014.06.23.06.19.56
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 23 Jun 2014 06:19:59 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:17.0) Gecko/20130329 Thunderbird/17.0.5
-In-Reply-To: <53A81F45.70802@web.de>
+	id S1755037AbaFWN0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 09:26:09 -0400
+Received: from plane.gmane.org ([80.91.229.3]:45786 "EHLO plane.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754147AbaFWN0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2014 09:26:06 -0400
+Received: from list by plane.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Wz4Fx-00051Q-OB
+	for git@vger.kernel.org; Mon, 23 Jun 2014 15:25:57 +0200
+Received: from 188.111.54.34 ([188.111.54.34])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Jun 2014 15:25:57 +0200
+Received: from steveire by 188.111.54.34 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 23 Jun 2014 15:25:57 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 188.111.54.34
+User-Agent: KNode/4.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252346>
 
-On 06/23/2014 05:36 AM, Torsten B=F6gershausen wrote:
-> If we look at the definition below:
-> struct string_list {
-> 	struct string_list_item *items;
-> 	unsigned int nr, alloc;
-> 	unsigned int strdup_strings:1;
-> 	compare_strings_fn cmp; /* NULL uses strcmp() */
-> I think a simple memset() will be easier to read,
-> and it will be more future proof:
-> In case elements are added, the will have 0 or NULL automatically:
+Stephen Kelly wrote:
 
-Yes, you are right. After sending the patch I saw that for string_list
-initialization the codebase either uses xcalloc or memset and after tha=
-t
-marks the list as DUP or NODUP.
+>> But I agree that this is suboptimal for your workflow. What about adding
+>> a "Visualize These Changes In The Submodule" menu entry for the context
+>> menu of a change in gitk just like the one git gui already has?
+> 
+> Can you tell me how to find and try that out in git gui?
 
-> void string_list_init_nodup(struct string_list *list)
-> {
-> 	memset (list, 0, sizeof(*list));
-> }
-> (But then I wonder if we need the function at all ?)
->=20
-> Or does it make sense to have a common function similar to this,
-> which covers both cases:
->=20
-> void string_list_init(struct string_list *list, int strdup_strings)
-> {
-> 	memset (list, 0, sizeof(*list));
-> 	list->strdup_strings =3D strdup_strings;
-> }
->=20
+In particular, I don't see it in my git gui. Is it only in master?
 
-A common function would be much better as other API constructs as strbu=
-f
-have runtime init functions like the version you have shown above.
+My versions:
 
-Thanks for the review.
+ git-gui version 0.18.0.14.g1b2c7
+ git version 1.9.1
+
+ Tcl/Tk version 8.6.1
+ Aspell 0.60.7-20110707, en_US
+
+Thanks,
+
+Steve.
