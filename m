@@ -1,105 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] config: add hashtable for config parsing & retrieval
-Date: Mon, 23 Jun 2014 16:25:22 -0700
-Message-ID: <xmqqsimv9pjx.fsf@gitster.dls.corp.google.com>
-References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com>
-	<1403518300-23053-3-git-send-email-tanayabh@gmail.com>
-	<53A84077.4010200@ramsay1.demon.co.uk>
+From: Mark Ferrell <major@homeonderanged.org>
+Subject: Triangular workflow with Central repo
+Date: Mon, 23 Jun 2014 16:37:22 -0700
+Message-ID: <CANR0-ag4ZKmHBNPxYkohBJEpXierFV+K3Ub4tH8YYD7FK73FdA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Jun 24 01:25:36 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 24 01:37:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzDcF-0001zp-0e
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 01:25:35 +0200
+	id 1WzDo3-0000JY-Cs
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 01:37:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798AbaFWXZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2014 19:25:30 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59619 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750931AbaFWXZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2014 19:25:29 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7A27523485;
-	Mon, 23 Jun 2014 19:25:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eYBMmA35o457A5hSWt1xHOY4tcE=; b=U04Y8m
-	PTEP974wEvAN180z5uh5/f+00tYocLFHSuJoD54Fnci/4N892tVhYlqUuIQkF3ei
-	ttIHnTffjT2IsojRmEEhzSc17dlKOSbDNQMCOctyoLfImSa5Q1j7hKO6oWEmd2dZ
-	rRGlaX+C8fkwncE9qRhD97bLT0BesFMAcs/fc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tc0GMkZh+MuRVj4D/ynrEIBRFosm865L
-	gpYjCKrSSZiTvkGAukAaAHDTJSnw4FF2T0lu8nrUy4CuzaqBMeUqHguupUpXFe5/
-	AeoUjHkoo2nkAM0azt3dxAqHl4oIE57cfQFBEbAKz1q+7WFn/rxGCaaKKRCfL0qO
-	cLR/DJTdU3c=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6F6A323484;
-	Mon, 23 Jun 2014 19:25:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D473423481;
-	Mon, 23 Jun 2014 19:25:19 -0400 (EDT)
-In-Reply-To: <53A84077.4010200@ramsay1.demon.co.uk> (Ramsay Jones's message of
-	"Mon, 23 Jun 2014 15:57:59 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A446E576-FB2D-11E3-ADDF-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752742AbaFWXho (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 19:37:44 -0400
+Received: from mail-qg0-f53.google.com ([209.85.192.53]:59197 "EHLO
+	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751573AbaFWXhn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2014 19:37:43 -0400
+Received: by mail-qg0-f53.google.com with SMTP id i50so6475743qgf.26
+        for <git@vger.kernel.org>; Mon, 23 Jun 2014 16:37:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:from:date:message-id:subject:to:content-type;
+        bh=/FXiLUBD+0dbku25EIxp2Fxdv58DFsr3SLKh5SvdlFQ=;
+        b=uFAy7lxteejmZBKKur3HRV+OwRBwO5oyt80qixLNf9Gti5xqXJRRZgKpjG/eupq8iW
+         UEXxYc7ggIrvu0SCGbu4FWKXXZKNNk6Rsonf20PCzTb8/yoXQ/hSwQsVdhRPQ81VpoZQ
+         HTdHYTHs2EpPMFNisIZBtA2dUvYTM4kVCpjQ4kiSxMOgdTOjNS0LSqtOmtaSd68hk0nM
+         YpOI5jEIiGdVB9Eza4jsVw33Vz1gpjnNVUjRb7yeFPVFZvv0XphN7ddriTl8PKh6YAu/
+         vs7tvJ+RTCTfYBEmI2Hi80rJGlVO9ybgpxPFWfhpsolPEoGTyc5CS5vr9Iuk73bG4jWN
+         dzcg==
+X-Received: by 10.140.26.179 with SMTP id 48mr35695321qgv.51.1403566662735;
+ Mon, 23 Jun 2014 16:37:42 -0700 (PDT)
+Received: by 10.140.27.41 with HTTP; Mon, 23 Jun 2014 16:37:22 -0700 (PDT)
+X-Google-Sender-Auth: SPmK4C8DUdQVitpBWEMiYUcUQKg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252380>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+I was trying to setup a git client to deal with our version of a
+triangular workflow and found that there where no configuration
+directives which supported our use case.
 
->> +static struct hashmap *get_config_cache(void)
->> +{
->> +	static struct hashmap config_cache;
->> +	if (!hashmap_initialized) {
->> +		config_cache_init(&config_cache);
->> +		hashmap_initialized = 1;
->> +		git_config(config_cache_callback, NULL);
->> +	}
->> +	return &config_cache;
->> +}
->
-> [I have not been following this series at all (sorry I haven't had
-> the time to spare), so take these comments with a very big pinch of
-> salt! ie just ignore me if it's already been discussed etc. ;-) ]
->
-> The 'git config' command can be used to read arbitrary files (so long
-> as they conform to the config syntax). For example, see the --file and
-> --blob options to git-config. At present, I think only scripted commands
-> use this facility (eg git-submodule). Noting the singleton config_cache,
-> what happens when git-submodule becomes a C builtin, or indeed any other
-> C builtin wants to take advantage of the new code when processing a non-
-> standard config file?
+Developers create and commit to branches named dev/<user>/TOPIC
+(Branch permissions are handled by Gitolite).  If the topic is
+prefixed with 'pqm/' then the revisions are treated as "proposals" for
+changing the head of a higher-level branch.  E.g. pushing to
+dev/bob/pqm/master results in the PQM software checking out that
+revision and running tests upon the source.  If all tests pass then
+the 'master' branch is updated to point at the submitted revision. The
+benefit for us using this approach is that it gives developers a
+private sandbox in which they can push/pull code between one another
+w/out needing a separate repository per-developer (or setting up a
+repo on everyones workstation), and if they choose to submit code
+changes to be a new baseline they simply create a PQM branch and
+submit to it.
 
-Yup, that is a very good point.  There needs an infrastructure to
-tie a set of files (i.e. the standard one being the chain of
-system-global /etc/gitconfig to repo-specific .git/config, and any
-custom one that can be specified by the caller like submodule code)
-to a separate hashmap; a future built-in submodule code would use
-two hashmaps aka "config-caches", one to manage the usual
-"configuration" and the other to manage the contents of the
-.gitmodules file.
-
-When we are operating across repositories (think "recursive
-checkout"), we somehow have to deal with multiple sets of
-configuration, one that applies to the top-level superproject and
-others that apply to individual submodule repositories.
-
-Even there is currently one caller, the "git config" command
-implementation, if one is designing the new API, the design
-shouldn't be tied to a singleton limitation, I would have to say, so
-that future callers do not have to throw away everything done in
-this series and start from scratch.
+I found that it is possible to setup git to easily deal with this
+work-flow (triangular) if the pull repository is different than the
+push repository, but our use case relies on the pull branch being
+different than the push branch.  It would seem that git would need a
+branch.<name>.push directive for this to work out.
