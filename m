@@ -1,86 +1,66 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 4/7] ident_split: store begin/end pairs on their own struct
-Date: Sun, 22 Jun 2014 21:28:29 -0400
-Message-ID: <CAPig+cSZfm4fL0xBUCMKU5h8gWeSb736T8Rv62QhREg1F=xzqA@mail.gmail.com>
-References: <20140618201944.GA23238@sigill.intra.peff.net>
-	<20140618203133.GD23896@sigill.intra.peff.net>
+From: Noel Grandin <noelgrandin@gmail.com>
+Subject: bug: git grep -P and multiline mode
+Date: Mon, 23 Jun 2014 08:54:29 +0200
+Message-ID: <53A7CF25.7060508@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 23 03:28:35 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 23 08:54:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wyt3i-0003G0-Hl
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 03:28:34 +0200
+	id 1Wyy9J-0007fj-L9
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 08:54:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751130AbaFWB2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Jun 2014 21:28:30 -0400
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:34046 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750823AbaFWB2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Jun 2014 21:28:30 -0400
-Received: by mail-yh0-f45.google.com with SMTP id t59so4554553yho.18
-        for <git@vger.kernel.org>; Sun, 22 Jun 2014 18:28:29 -0700 (PDT)
+	id S1751310AbaFWGyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 02:54:37 -0400
+Received: from mail-we0-f170.google.com ([74.125.82.170]:62773 "EHLO
+	mail-we0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751121AbaFWGyg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2014 02:54:36 -0400
+Received: by mail-we0-f170.google.com with SMTP id w61so6416587wes.1
+        for <git@vger.kernel.org>; Sun, 22 Jun 2014 23:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=3F69UbpE7oKCI7X1qpJvyjxMzhhZLzPkpjBDFSdDUIA=;
-        b=PxyDO/64UjLp8S9cvg0lFd9lsvOxuF+zTKVMpDJW2WPwWkGWb76t3dAMOK4XENNxvu
-         WzBPFwT9lhdDWG3bnJalL3miYUFmDe6HTeVpsPbUwEx/dBTBavnvdq+kfJ47QmYg9QVM
-         C3xLRMzBd6x/q8rQnwjx4clvvg4lVKZtIOAuXSCm/2hEMcss7PXEusE9xtkLTjsQ1rdb
-         b9GtxYoxKPrui6qLt9mYLkFVBIzME87FZE22caxTsbc1YrHLtqZdWxjT7kmWuwiDkJkf
-         xO5ffwvYubSmr+5dw3upoLM0VPrckkJJGHAbrt8EbslKhoIK0idZt+gGQTo+PV2zBP6N
-         2Gxw==
-X-Received: by 10.236.31.39 with SMTP id l27mr30581278yha.7.1403486909365;
- Sun, 22 Jun 2014 18:28:29 -0700 (PDT)
-Received: by 10.170.36.80 with HTTP; Sun, 22 Jun 2014 18:28:29 -0700 (PDT)
-In-Reply-To: <20140618203133.GD23896@sigill.intra.peff.net>
-X-Google-Sender-Auth: po_j11M52BCvKa2ihLNrYXkUOWI
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=dQzHjO7uZpW3aoe/2/DDh71B8AtLHs2CnehGR12HkGo=;
+        b=BzNE6+WgqxmIDMV7at3U9ZYz/BzbAmwUIMn8JnWwW6gSWgJW+yZJppB86FAHha+OCJ
+         o2UEC79kkALgCmUKJEUAd6+KaQ/I5oEBKIKQ0r+UGXcxkyNYVoQtIEygCyd/sHDL6Mwc
+         FqFWV4GcjIG2FH+V7xJgfF9xjIlSmi3jMAWTafZ8YCTJbiBI2vyPU/NDGxyOYVkszL2C
+         ImSCKq6y7C4YtozJ+BeZ3JtGi+Z+3Gnss3y8GPnEuJGftdAbTbdMYbi/pG3dUx7QSnzp
+         HkJwRMmXB7/rfc/hT1+adWu3gGgM4BM1WE/1t6Ajx3ZMK2sSiAvar3ioywJu3mrz7Xjp
+         MmGA==
+X-Received: by 10.194.120.103 with SMTP id lb7mr23955359wjb.40.1403506475422;
+        Sun, 22 Jun 2014 23:54:35 -0700 (PDT)
+Received: from [192.168.1.212] ([41.164.8.42])
+        by mx.google.com with ESMTPSA id ja9sm30524049wic.8.2014.06.22.23.54.33
+        for <git@vger.kernel.org>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Sun, 22 Jun 2014 23:54:34 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252318>
 
-On Wednesday, June 18, 2014, Jeff King <peff@peff.net> wrote:
-> Subject: ident_split: store begin/end pairs on their own struct
+Hi
 
-s/on/in/
+It looks like the perl regular expression multiline mode does not work with 'git grep'
 
-> When we parse an ident line, we end up with several fields,
-> each with a begin/end pointer into the buffer, like:
->
->   const char *name_begin;
->   const char *name_end;
->
-> There is nothing except the field names to indicate that
-> they are paired. This makes it annoying to write helper
-> functions for dealing with the sub-fields, as you have to
-> pass both sides. Instead, let's move them into a single
-> struct "name", with fields "begin" and "end". This will be
-> stored identically, but can be passed as a unit.
->
-> We have to do a mechanical update of "s/_/./" at each point
-> of use, but other than that, the fields should behave
-> identically.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Suggestions welcome on the name "pointer_pair".
+for example, something like
 
-str_segment  ;-)
+    git grep -P '(?s)foo.*?bar"
 
-> While writing this series, I also noticed that it would be more
-> convenient to have a pointer/len combination rather than two pointers.
-> You can convert between them, of course, but I found I was always
-> converting the other way.
->
-> I left it this way because it makes the mass-update mechanical (and
-> because now that I can pass the pair as a unit, I don't have to write
-> the same "ident->name_begin, ident->name_end - ident->name_begin" pair
-> over and over).
+will not match a file in the repo where it has something like
+
+    foo
+    bar
+
+ie. split across two lines
+
+Regards, Noel Grandin
