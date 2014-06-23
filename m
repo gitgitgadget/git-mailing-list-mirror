@@ -1,124 +1,64 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [RFC/PATCH] pager.c: replace git_config with git_config_get_string
-Date: Mon, 23 Jun 2014 03:41:45 -0700
-Message-ID: <1403520105-23250-6-git-send-email-tanayabh@gmail.com>
-References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 23 12:42:55 2014
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: autopacking twice?
+Date: Mon, 23 Jun 2014 17:57:31 +0700
+Message-ID: <CACsJy8D3cz9w9RrVLcRgz+xgw0+2B9G_BAotvVzUoJ9Uf-Zoag@mail.gmail.com>
+References: <20140622055154.GA13819@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Jun 23 12:58:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wz1iA-0002Fn-EV
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 12:42:54 +0200
+	id 1Wz1wv-00070C-A1
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 12:58:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753400AbaFWKmu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2014 06:42:50 -0400
-Received: from mail-pb0-f45.google.com ([209.85.160.45]:33991 "EHLO
-	mail-pb0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542AbaFWKmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2014 06:42:49 -0400
-Received: by mail-pb0-f45.google.com with SMTP id rr13so5708713pbb.18
-        for <git@vger.kernel.org>; Mon, 23 Jun 2014 03:42:48 -0700 (PDT)
+	id S1752535AbaFWK6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 06:58:04 -0400
+Received: from mail-qg0-f43.google.com ([209.85.192.43]:41656 "EHLO
+	mail-qg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752496AbaFWK6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2014 06:58:03 -0400
+Received: by mail-qg0-f43.google.com with SMTP id z60so5849603qgd.30
+        for <git@vger.kernel.org>; Mon, 23 Jun 2014 03:58:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FINmAH5dVzXkIgEli7Xj/FJ5LhLbxS6WBR6ASGYqgt0=;
-        b=BOkO1OgtSaT0HE4Zts7HElQH0KBSvfv/82ofENnRXoXKyUZSXls6IpT6nx+7JODNED
-         EGI1GpemMpWcuFvJ0UPfSJ1O1tFTztBMc/pRL1lkLJX0gR9xwFvYSDdsqh5+0CA/y5H0
-         CYT9t6OX1ov2H5nAckvtGCkMvYgGD68D+eM/hKsiqeDkjy7Ze6J/lJYu1LFGUkOLTsjA
-         AlzySieEvTAs0Km4NU4RjBbyezxe4Y/gypRIpBfVSVp+8kiGLJWU4n1IzUSxxCOdH1uD
-         1JYe50JRcr/H6DG8LgtU/o/dlvSW2wdXEyd+RVfI5PAR1krDwDQbC2Z4ubmW3yTSoEG1
-         9KgA==
-X-Received: by 10.66.150.169 with SMTP id uj9mr27578028pab.148.1403520168829;
-        Mon, 23 Jun 2014 03:42:48 -0700 (PDT)
-Received: from localhost.localdomain ([117.254.223.81])
-        by mx.google.com with ESMTPSA id zc10sm91487896pac.46.2014.06.23.03.42.45
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 23 Jun 2014 03:42:48 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0.GIT
-In-Reply-To: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=kA96M+XcAUoph0jN3zhZaIwuxv6FMpjqkWofPPBnbPE=;
+        b=nEGe2VkcxbYrLjN+aQxp2rrdsgg8AS/opWQ713ZJADikJudylbBtTSjqWd3ctcm7JB
+         H0rC0XqPI16jQhrhs/lZ50ySCXPSsShmFhNXU3gAjs2B7XVKqrmnmgmAVg/RA98GihQP
+         whOTsYqIqwLFb2UEenk75a+PVrN0X7bbO/H+7WZBfJoSq8wowEmyiCOXrT0fmUZDAy2C
+         m8KbGMPsuUi9ybKjwTasweMhVyR1JPWbrEsUmAqcb3uggsao3MfKdc1IQUyvZvVc0R6B
+         budn49i1T08TQBbWZyVt3T9L4P7hdxU8nuZrp/P7/8o9MR1X1j3QaAuGp+R/fJlx8hPB
+         LGTg==
+X-Received: by 10.229.192.5 with SMTP id do5mr30631618qcb.12.1403521082041;
+ Mon, 23 Jun 2014 03:58:02 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Mon, 23 Jun 2014 03:57:31 -0700 (PDT)
+In-Reply-To: <20140622055154.GA13819@redhat.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252340>
 
-Use git_config_get_string instead of git_config to take advantage of
-the config hash-table api which provides a cleaner control flow.
+On Sun, Jun 22, 2014 at 12:51 PM, Michael S. Tsirkin <mst@redhat.com> wrote:
+> Why did it auto-pack twice in a single pull?
+> None of the changes applied are very large.
+>
+> Guess: auto-packing was started in background, did not
+> complete in time, and was restarted for the second time?
+> If true, some kind of lock file would be useful
+> to prevent this.
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
- pager.c | 44 +++++++++++++++-----------------------------
- 1 file changed, 15 insertions(+), 29 deletions(-)
-
-diff --git a/pager.c b/pager.c
-index 8b5cbc5..96abe6d 100644
---- a/pager.c
-+++ b/pager.c
-@@ -6,12 +6,6 @@
- #define DEFAULT_PAGER "less"
- #endif
- 
--struct pager_config {
--	const char *cmd;
--	int want;
--	char *value;
--};
--
- /*
-  * This is split up from the rest of git so that we can do
-  * something different on Windows.
-@@ -155,30 +149,22 @@ int decimal_width(int number)
- 	return width;
- }
- 
--static int pager_command_config(const char *var, const char *value, void *data)
--{
--	struct pager_config *c = data;
--	if (starts_with(var, "pager.") && !strcmp(var + 6, c->cmd)) {
--		int b = git_config_maybe_bool(var, value);
--		if (b >= 0)
--			c->want = b;
--		else {
--			c->want = 1;
--			c->value = xstrdup(value);
--		}
--	}
--	return 0;
--}
--
- /* returns 0 for "no pager", 1 for "use pager", and -1 for "not specified" */
- int check_pager_config(const char *cmd)
- {
--	struct pager_config c;
--	c.cmd = cmd;
--	c.want = -1;
--	c.value = NULL;
--	git_config(pager_command_config, &c);
--	if (c.value)
--		pager_program = c.value;
--	return c.want;
-+	struct strbuf key = STRBUF_INIT;
-+	int want = -1;
-+	const char *value = NULL;
-+	strbuf_addf(&key, "pager.%s", cmd);
-+	if (!git_config_get_string(key.buf, &value)) {
-+		int b = git_config_maybe_bool(key.buf, value);
-+		if (b >= 0)
-+			want = b;
-+		else
-+			want = 1;
-+	}
-+	if (value)
-+		pager_program = value;
-+	strbuf_release(&key);
-+	return want;
- }
+There is a lock, $GIT_DIR/gc.pid. However we are prepared to deal with
+stale locks, and may have slipped somehow. The test is in
+builtin/gc.c, lock_repo_for_gc(). Oh wait, we check for lock (and exit
+if lock exists) _after_ we print the message (in cmd_gc). That might
+be it.. If it so, maybe we can reorder some code to prevent this bogus
+message, but has to be careful and do it before daemonizing..
 -- 
-1.9.0.GIT
+Duy
