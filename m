@@ -1,88 +1,62 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] config: add hashtable for config parsing & retrieval
-Date: Mon, 23 Jun 2014 16:14:42 -0700
-Message-ID: <xmqqwqc79q1p.fsf@gitster.dls.corp.google.com>
-References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com>
-	<1403518300-23053-3-git-send-email-tanayabh@gmail.com>
+Subject: Re: pb/trim-trailing-spaces (Re: What's cooking in git.git (Jun 2014,
+ #05; Fri, 20))
+Date: Mon, 23 Jun 2014 16:17:28 -0700
+Message-ID: <CAPc5daXpLQLaYMwzZhyAY5r5=fWB705AwJon7xSyMn8856pxcA@mail.gmail.com>
+References: <xmqqr42jcj5l.fsf@gitster.dls.corp.google.com> <20140623231303.GD4445@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 01:14:54 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 01:17:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzDRt-0004Uw-8R
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 01:14:53 +0200
+	id 1WzDUn-0006B9-UA
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 01:17:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285AbaFWXOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2014 19:14:49 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61862 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750931AbaFWXOt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2014 19:14:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 37BB523266;
-	Mon, 23 Jun 2014 19:14:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SJVzAPBmMq4lGBcPG6zAePYnoyE=; b=D+Aq9H
-	0eXkwRXeLWGMcvLlF56L37un9jb/tkH7Ifnfv6pPri4eaDEZegnOurPQpwtbHGGT
-	+ylMFonDMR1A2yAM8N15NuEMxgwPHbHCDwAebdBjFl9tc3m2zlHGJIhESbHd0Tna
-	Ny1jBQwuBtoJ/qIj9ZvPrV8Gqzq/hu3dUj22Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TXg7gUYbtdrRm7XUBzmzvJyzMPXV0VZi
-	6idH79PQmETglzJ/m7kXiYPsgSJhW/yZjEKmBYe7xc3qgfTqtI8rgw6jPDvD+LI8
-	XwRsPVGevMpBwvcMoIlyo0JJYG+YLwh9+Y1l7iyMI2wo+qJR7lXJumcvDYRqJI9n
-	X3J777UQZJk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2D93123265;
-	Mon, 23 Jun 2014 19:14:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B376D23264;
-	Mon, 23 Jun 2014 19:14:39 -0400 (EDT)
-In-Reply-To: <1403518300-23053-3-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Mon, 23 Jun 2014 03:11:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 26B07650-FB2C-11E3-BC9E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752012AbaFWXRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 19:17:50 -0400
+Received: from mail-lb0-f170.google.com ([209.85.217.170]:36606 "EHLO
+	mail-lb0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751390AbaFWXRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2014 19:17:50 -0400
+Received: by mail-lb0-f170.google.com with SMTP id 10so5576578lbg.29
+        for <git@vger.kernel.org>; Mon, 23 Jun 2014 16:17:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=FXr8DXo55y7+iL4ujDI7aw57xdM0fVLnJ3yH5F9fQYQ=;
+        b=hl8ksP7e+uBfEKqMnKWhatkA9Y9iDWYMQzYvnhoy3ARX2VuRyGxOwW42tTuOY9v/Ma
+         ev5DdEJOvRUdZK/Fob3C8s/yrk1sYsXsWHTl+Loo6UpzYQ75ub8g1GavImyTi7+eBsvl
+         /lFi5GZdTxZujfLtDC0+pSE/J5QCxRagAFTnlcOEqiDvmPoUwW+cn5z4dnJ2J9Ady2/F
+         kPtAH4PAft3aZForgfQnzdikcgLOs6PgYyfzLlHFC5SHWIygHXdFnpP4jODRlC8hStZN
+         A/CN23EWiBSJ7Fk+V/RUz9FivZwFfWngC7PosjuZbIax4UA2f70jnVTSxuWi6R2oj4Pt
+         paHQ==
+X-Received: by 10.112.56.233 with SMTP id d9mr4570174lbq.55.1403565468222;
+ Mon, 23 Jun 2014 16:17:48 -0700 (PDT)
+Received: by 10.112.172.74 with HTTP; Mon, 23 Jun 2014 16:17:28 -0700 (PDT)
+In-Reply-To: <20140623231303.GD4445@google.com>
+X-Google-Sender-Auth: 7nD6U7HzgIQusBHSGOhKxQtyF2w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252378>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+On Mon, Jun 23, 2014 at 4:13 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Junio C Hamano wrote:
+>
+>> * pb/trim-trailing-spaces (2014-06-13) 1 commit
+>>   (merged to 'next' on 2014-06-20 at 6985153)
+>>  + t0008: do not depend on 'echo' handling backslashes specially
+>>
+>>  Will merge to 'master'.
+>
+> Without this patch, 'master' doesn't pass t0008 for me with bash as
+> /bin/sh.  The patch fixes it.  So fwiw I like the patch.
 
-> +static int hashmap_initialized;
-> + ...
-> +static struct hashmap *get_config_cache(void)
-> +{
-> +	static struct hashmap config_cache;
-> +	if (!hashmap_initialized) {
-> +		config_cache_init(&config_cache);
-> +		hashmap_initialized = 1;
-
-I find the arrangement of these two variables somewhat dubious at
-the API design level.
-
-If you are going to keep the singleton "config_cache" as a function
-scope static, shouldn't the corresponding guard also be in the same
-scope?
-
-If you ever need to "uninitialize" to force re-read the file to the
-in-core cache, such an uninitializer will need access to not just
-the "is hashmap initialized?" boolean (which you do by having it as
-a file-scope global like this patch does) but also the thing that
-may need to be uninitialized (i.e. the hashmap that may already be
-populated), but a function scope static variable config_cache does
-not allow access from other places, so you end up calling this
-function to initialize it if necessary only to get the pointer to
-that structure in order to uninitialize it.
-
-Sounds very twisted and ugly, doesn't it?
+Yup, that is why I wrote it ;-)
