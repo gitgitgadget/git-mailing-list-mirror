@@ -1,64 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Is column.ui.* configuration a bit too strong?
-Date: Mon, 23 Jun 2014 12:03:11 -0700
-Message-ID: <xmqqsimvbg9c.fsf@gitster.dls.corp.google.com>
+From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: Re: [PATCH 4/4] diff: mark any file larger than core.bigfilethreshold
+ binary
+Date: Mon, 23 Jun 2014 21:21:12 +0200
+Message-ID: <53A87E28.8050903@virtuell-zuhause.de>
+References: <CACsJy8BM1f1pJPzGPf--a-kUim6wyX+Mr1AfMupY3mpREY+8DA@mail.gmail.com> <1401368227-14469-1-git-send-email-pclouds@gmail.com> <1401368227-14469-4-git-send-email-pclouds@gmail.com> <1403180845.10052.16.camel@thomas-debian-x64> <CACsJy8A5StEv4O64rnd39+1jMNWiaAv4oOd0+Yko_JPuk6EYZw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 21:03:32 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Dale R. Worley" <worley@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 23 21:21:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wz9WV-0001QO-7Z
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 21:03:23 +0200
+	id 1Wz9nu-0003KC-Bg
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 21:21:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754483AbaFWTDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2014 15:03:19 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59498 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754205AbaFWTDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2014 15:03:18 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 82AB722D21;
-	Mon, 23 Jun 2014 15:03:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
-	 bh=cjHppuQCWkZLVtaRchyauHI8Awk=; b=BaefxCvVJPTyXk1F/nGlRG/W3T9D
-	+CwAO1mSdtMtNXMttby5uH8UP9N9sTig8rU9l2hByZM9J2bV3xfWFkuTY1zlPfpK
-	YFuWe752hMf2EvkkKYceXBU7ET5pKkqpDpzbO7M/omreR6avxDrSRWLaB2VZoJuY
-	S8J466VbQizXafk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:cc:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	p1O9pMv/8AE6jCH5c0iMpsWvOATXzlqqSFpBkDjFlRmwMgL/t9MVhMasvkBIhIfp
-	dCjL5rIR94YRDPWAdaVKHDa+8lK3CMb+OAjCejavU47BAjMLvGW8jxwcevFEN6l1
-	/JKjp/6MDqsXAlRD5GuZoYhSOS8Jm9USU9z+aSXd2yE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7669822D20;
-	Mon, 23 Jun 2014 15:03:13 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9D27E22D1C;
-	Mon, 23 Jun 2014 15:03:08 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 03B28E18-FB09-11E3-BFA1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1755438AbaFWTVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 15:21:18 -0400
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:55069 "EHLO
+	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754652AbaFWTVR (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jun 2014 15:21:17 -0400
+Received: from p5ddc21d8.dip0.t-ipconnect.de ([93.220.33.216] helo=[192.168.100.43]); authenticated
+	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
+	id 1Wz9nk-00089a-VR; Mon, 23 Jun 2014 21:21:13 +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CACsJy8A5StEv4O64rnd39+1jMNWiaAv4oOd0+Yko_JPuk6EYZw@mail.gmail.com>
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1403551277;d88064d9;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252366>
 
-Since its inception at 7e29b825 (Add column layout skeleton and
-git-column, 2012-04-21), it seems that git_column_config() asked for
-a specific $command did not give "column.$command.*" any precedence
-over the fallback value defined for "column.ui.*".  If you happen to
-have column.ui.* earlier than the corresponding column.$command.* in
-your configuration, then the values come from column.ui.* may be
-overwritten, but the code does not seem to enforce "if there is a
-setting for a specific command, honor that, otherwise fall back to
-the generic 'ui' setting".
+Am 23.06.2014 14:18, schrieb Duy Nguyen:
+> On Thu, Jun 19, 2014 at 7:27 PM, Thomas Braun
+> <thomas.braun@virtuell-zuhause.de> wrote:
+>>> @@ -2721,6 +2721,11 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+>>>               }
+>>>               if (size_only)
+>>>                       return 0;
+>>> +             if ((flags & DIFF_POPULATE_IS_BINARY) &&
+>>> +                 s->size > big_file_threshold && s->is_binary == -1) {
+>>> +                     s->is_binary = 1;
+>>> +                     return 0;
+>>> +             }
+>>
+>> Why do you check for s->is_binary == -1 here? I think it does not matter
+>> what s_is_binary says here.
+> 
+> If some .gitattributes to mark one file not-binary, we should respect
+> that, I think. Same for below too.
 
-Am I misreading the code?
+Reading diffcore.h I thought is_binary being -1 means it is not yet
+decided if it is binary or text.
+Respecting .gitattributes is obviously a good thing :)
