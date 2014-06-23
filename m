@@ -1,71 +1,195 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: gitk with submodules does not show new commits on other branches
-Date: Mon, 23 Jun 2014 19:00:49 +0200
-Message-ID: <lo9mg1$bma$1@ger.gmane.org>
-References: <lo6o2h$vva$1@ger.gmane.org> <53A6F978.4010005@web.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 7/7] determine_author_info: stop leaking name/email
+Date: Mon, 23 Jun 2014 13:20:25 -0400
+Message-ID: <20140623172025.GB4838@sigill.intra.peff.net>
+References: <20140618201944.GA23238@sigill.intra.peff.net>
+ <20140618203609.GG23896@sigill.intra.peff.net>
+ <CAPig+cT7mAGaGXZHNEWvZ31acth2wooexZ5s7wWFrJ40rBviYw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jun 23 19:01:13 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Git List <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Jun 23 19:20:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wz7cF-00031X-VB
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 19:01:12 +0200
+	id 1Wz7ux-0006qd-Qm
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 19:20:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755932AbaFWRBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2014 13:01:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:57025 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755369AbaFWRBF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2014 13:01:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Wz7c8-0002xA-Hr
-	for git@vger.kernel.org; Mon, 23 Jun 2014 19:01:04 +0200
-Received: from 188.111.54.34 ([188.111.54.34])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 23 Jun 2014 19:01:04 +0200
-Received: from steveire by 188.111.54.34 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 23 Jun 2014 19:01:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 188.111.54.34
-User-Agent: KNode/4.13
+	id S1756344AbaFWRU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 13:20:28 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49742 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751926AbaFWRU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2014 13:20:27 -0400
+Received: (qmail 2440 invoked by uid 102); 23 Jun 2014 17:20:27 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 23 Jun 2014 12:20:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 23 Jun 2014 13:20:25 -0400
+Content-Disposition: inline
+In-Reply-To: <CAPig+cT7mAGaGXZHNEWvZ31acth2wooexZ5s7wWFrJ40rBviYw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252354>
 
-Jens Lehmann wrote:
+On Mon, Jun 23, 2014 at 05:28:14AM -0400, Eric Sunshine wrote:
 
-> But I agree that this is suboptimal for your workflow. What about adding
-> a "Visualize These Changes In The Submodule" menu entry for the context
-> menu of a change in gitk just like the one git gui already has? Then the
-> user could examine the merges in more detail if he wants.
+> >  static void determine_author_info(struct strbuf *author_ident)
+> >  {
+> >         char *name, *email, *date;
+> >         struct ident_split author;
+> > -       struct strbuf date_buf = STRBUF_INIT;
+> > +       struct strbuf name_buf = STRBUF_INIT,
+> > +                     mail_buf = STRBUF_INIT,
+> 
+> nit: The associated 'char *' variable is named "email", so perhaps
+> s/mail_buf/email_buf/g
 
-Such a menu entry might be useful,  but it is still different workflow. It 
-would be useful in the 'that commit sounds interesting - show me' case. I 
-would need to see the commit title to know if it sounds interesting though. 
+Yeah, you wouldn't believe the number of times I switched back and forth
+while writing the patch. The variable is called "mail" in "struct
+ident_split", so you have a mismatch at some point unless we rename the
+local pointer.
 
-Your suggestion involves a different window and context, but all I want to 
-see is a list of commit titles so I can press 'up' to see the next ones, not 
-have to close a window first before I can see the next list, and then have 
-to right-click to see the list of commits.
+I avoided doing that to keep the diff smaller, but perhaps it's worth
+doing.
 
-Is it so difficult to list the titles of all of the newly-reachable commits? 
-Even with a config option? Even an undocumented option? 
+> >                 if (split_ident_line(&ident, force_author, strlen(force_author)) < 0)
+> >                         die(_("malformed --author parameter"));
+> > -               name = xmemdupz_pair(&ident.name);
+> > -               email = xmemdupz_pair(&ident.mail);
+> > +               name = set_pair(&name_buf, &ident.name);
+> > +               email = set_pair(&mail_buf, &ident.mail);
+> 
+> Does the code become too convoluted with these changes? You're now
+> maintaining three 'char *' variables in parallel with three strbuf
+> variables. Is it possible to drop the 'char *' variables and just pass
+> the .buf member of the strbufs to fmt_ident()?
 
-Failing all of that, can you show me where the code would need to be changed 
-to list all of the newly-reachable commits? I can keep a commit for myself 
-then.
+Yeah, I agree it is getting a bit complicated (I tried to introduce
+helpers like set_pair to at least keep the per-variable work down to a
+single line in each instance).
 
-Thanks,
+It unfortunately doesn't work to just pass the ".buf" of each strbuf. We
+care about the distinction between the empty string and NULL here (the
+latter will cause fmt_ident to use the default ident).
 
-Steve.
+> Alternately, you also could solve the leaks by having an envdup() helper:
+> 
+>     static char *envdup(const char *s)
+>     {
+>         const char *v = getenv(s);
+>         return v ? xstrdup(v) : NULL;
+>     }
+> 
+>     ...
+>     name = envdup("GIT_AUTHOR_NAME");
+>     email = envdup("GIT_AUTHOR_EMAIL");
+>     ...
+> 
+> And then just free() 'name' and 'email' normally.
+
+Yeah, I also considered that. You end up having to free() before
+re-assigning throughout the function, though that is not much worse than
+having to strbuf_reset() before re-adding (the reset is hidden in
+set_pair, but we could similarly abstract it).
+
+Here's what that looks like (this converts date_buf away, too, to avoid
+relying on getenv()'s static return value):
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 62abee0..35045ca 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -551,15 +551,26 @@ static char *xmemdupz_pair(const struct pointer_pair *p)
+ 	return xmemdupz(p->begin, p->end - p->begin);
+ }
+ 
++static void set_ident_var(char **buf, char *val)
++{
++	free(*buf);
++	*buf = val;
++}
++
++static char *envdup(const char *var)
++{
++	const char *val = getenv(var);
++	return val ? xstrdup(val) : NULL;
++}
++
+ static void determine_author_info(struct strbuf *author_ident)
+ {
+ 	char *name, *email, *date;
+ 	struct ident_split author;
+-	struct strbuf date_buf = STRBUF_INIT;
+ 
+-	name = getenv("GIT_AUTHOR_NAME");
+-	email = getenv("GIT_AUTHOR_EMAIL");
+-	date = getenv("GIT_AUTHOR_DATE");
++	name = envdup("GIT_AUTHOR_NAME");
++	email = envdup("GIT_AUTHOR_EMAIL");
++	date = envdup("GIT_AUTHOR_DATE");
+ 
+ 	if (author_message) {
+ 		struct ident_split ident;
+@@ -572,15 +583,15 @@ static void determine_author_info(struct strbuf *author_ident)
+ 		if (split_ident_line(&ident, a, len) < 0)
+ 			die(_("commit '%s' has malformed author line"), author_message);
+ 
+-		name = xmemdupz_pair(&ident.name);
+-		email = xmemdupz_pair(&ident.mail);
++		set_ident_var(&name, xmemdupz_pair(&ident.name));
++		set_ident_var(&email, xmemdupz_pair(&ident.mail));
+ 		if (ident.date.begin) {
+-			strbuf_reset(&date_buf);
++			struct strbuf date_buf = STRBUF_INIT;
+ 			strbuf_addch(&date_buf, '@');
+ 			strbuf_add_pair(&date_buf, &ident.date);
+ 			strbuf_addch(&date_buf, ' ');
+ 			strbuf_add_pair(&date_buf, &ident.tz);
+-			date = date_buf.buf;
++			set_ident_var(&date, strbuf_detach(&date_buf, NULL));
+ 		}
+ 	}
+ 
+@@ -589,15 +600,15 @@ static void determine_author_info(struct strbuf *author_ident)
+ 
+ 		if (split_ident_line(&ident, force_author, strlen(force_author)) < 0)
+ 			die(_("malformed --author parameter"));
+-		name = xmemdupz_pair(&ident.name);
+-		email = xmemdupz_pair(&ident.mail);
++		set_ident_var(&name, xmemdupz_pair(&ident.name));
++		set_ident_var(&email, xmemdupz_pair(&ident.mail));
+ 	}
+ 
+ 	if (force_date) {
+-		strbuf_reset(&date_buf);
++		struct strbuf date_buf = STRBUF_INIT;
+ 		if (parse_force_date(force_date, &date_buf))
+ 			die(_("invalid date format: %s"), force_date);
+-		date = date_buf.buf;
++		set_ident_var(&date, strbuf_detach(&date_buf, NULL));
+ 	}
+ 
+ 	strbuf_addstr(author_ident, fmt_ident(name, email, date, IDENT_STRICT));
+@@ -608,7 +619,9 @@ static void determine_author_info(struct strbuf *author_ident)
+ 		export_one("GIT_AUTHOR_DATE", author.date.begin, author.tz.end, '@');
+ 	}
+ 
+-	strbuf_release(&date_buf);
++	free(name);
++	free(email);
++	free(date);
+ }
+ 
+ static void split_ident_or_die(struct ident_split *id, const struct strbuf *buf)
+
+
+I dunno. Maybe the set_ident_var helper is a little too cutesy and
+obfuscating.
+
+-Peff
