@@ -1,92 +1,108 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 0/5] verify-commit: verify commit signatures
-Date: Mon, 23 Jun 2014 14:23:20 -0700
-Message-ID: <xmqqoaxjb9rr.fsf@gitster.dls.corp.google.com>
-References: <cover.1402655838.git.git@drmicha.warpmail.net>
-	<cover.1403506792.git.git@drmicha.warpmail.net>
-	<20140623172805.GD4838@sigill.intra.peff.net>
-	<xmqq61jrcy3d.fsf@gitster.dls.corp.google.com>
-	<20140623210930.GB15766@sigill.intra.peff.net>
+Subject: [PATCH] builtin/clone.c: detect a clone starting at a tag correctly
+Date: Mon, 23 Jun 2014 14:32:51 -0700
+Message-ID: <xmqqk387b9bw.fsf_-_@gitster.dls.corp.google.com>
+References: <20140618194117.GA22269@sigill.intra.peff.net>
+	<20140618194417.GD22622@sigill.intra.peff.net>
+	<xmqq1tufcvfl.fsf@gitster.dls.corp.google.com>
+	<20140623210755.GA15766@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jun 23 23:23:36 2014
+Cc: Jeff King <peff@peff.net>, Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jun 23 23:33:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzBiA-00074o-Hu
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 23:23:34 +0200
+	id 1WzBrL-0004M7-RB
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 23:33:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755369AbaFWVXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2014 17:23:30 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50978 "EHLO smtp.pobox.com"
+	id S1751798AbaFWVc7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 17:32:59 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59485 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755332AbaFWVX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2014 17:23:27 -0400
+	id S1751144AbaFWVc6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2014 17:32:58 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 90D67235A5;
-	Mon, 23 Jun 2014 17:23:22 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E0A3323776;
+	Mon, 23 Jun 2014 17:32:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=J7o27Mvy8FOvUzrG8ws8i+E7LLA=; b=V0m4Q0
-	yksaI7W7iIrcEM2gCw62VHrKuVc3PyCqnOtRzwXozPjOkeh/5AOLCbgSFHOEtw3s
-	o3RRPYv3dMtlNWm2dpWl/IsLjqoCto7lZolF+6mBgTR6jDy47De9I83kRfSJJcZQ
-	ptVv8IyqLeULR699mGjLnOYkpBmMHArofTLOs=
+	:content-type; s=sasl; bh=TdhbXTJR3BfEC1p9YVOngfG0Ssc=; b=Z/PwFJ
+	6uKqw5EBZXcZti98iiScEAi9kmvxQsPxZLRvLGf32rUA93b2d+z1OPIbwgDa1Kjd
+	s9PxXZvCrtIqrWc2ih8+LHUqBMbcgB2Tik+9LSS8OzUKZ2Y0yzmYh5+MkY0fJjKw
+	Im7bmk8vDrOJoefjTDEO0Y4S/AkU5bmTjyTl0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WL+6lmYEos3+zHd2lhETEXplThLdb63n
-	KHa057kxhHaGvdM2+au/4hkyCFH1Jvmmv1aKOPwi4+CxhmlF3pKpVA+9L/+22A50
-	0tJ9FeU7zUa/3yu6M+kgkYpe87NLuV7ZKsSu7n/KMixXLPdSaFJ/++Xa4p2/+ww4
-	jN+bJncEtV0=
+	:content-type; q=dns; s=sasl; b=qcrK5H4nAQpHFxcU0qA5lO8WsXfNdu2j
+	4frj2izRhdut+RA1TASD1OKJo2dcXaWN7UMHY938qAr8zlAo3AIoqGyPN07TqxsK
+	r2X9ZvxBEOxs1pdM5fDkPvmQ1DW6StL49fMUwEZMekUbEV2SoivJdlftlQcyOdcR
+	WBpB+Y7kB4A=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8790D235A4;
-	Mon, 23 Jun 2014 17:23:22 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D716723775;
+	Mon, 23 Jun 2014 17:32:53 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AE7172359E;
-	Mon, 23 Jun 2014 17:23:17 -0400 (EDT)
-In-Reply-To: <20140623210930.GB15766@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 23 Jun 2014 17:09:31 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 16E6723772;
+	Mon, 23 Jun 2014 17:32:49 -0400 (EDT)
+In-Reply-To: <20140623210755.GA15766@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 23 Jun 2014 17:07:55 -0400")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 97E52E3E-FB1C-11E3-BF7B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: EC7630DC-FB1D-11E3-B09F-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252371>
 
-Jeff King <peff@peff.net> writes:
+31b808a0 (clone --single: limit the fetch refspec to fetched branch,
+2012-09-20) tried to see if the given "branch" to follow is actually
+a tag at the remote repository by checking with "refs/tags/" but it
+incorrectly used strstr(3); it is actively wrong to treat a "branch"
+"refs/heads/refs/tags/foo" and use the logic for the "refs/tags/"
+ref hierarchy.  What the code really wanted to do is to see if it
+starts with "refs/tags/".
 
-> On Mon, Jun 23, 2014 at 10:52:38AM -0700, Junio C Hamano wrote:
->
->> > The one thing that does give me pause is that we do not seem to have any
->> > way of accessing mergetag signatures. We should perhaps stop and think
->> > for a second about how we might expose those (and whether it would fit
->> > into the "git-verify-{commit,tag}" paradigm). I am tempted to say that
->> > "git verify-tag" on a commit should verify the mergetag (right now it
->> > would simply be an error). But I haven't though that hard on it.
->> 
->> I agree that "verify-commit" that lives next to "verify-tag" is fine
->> and does not have to wait for a unified "verify" that may not even
->> be a good idea, but if we were to verify the mergetags in one of
->> these "verify-$OBJECTTYPE" commands, I would think "verify-commit"
->> should be the one to check them, for the simple reason that they
->> appear in "commit" objects, not in "tag" objects.
->
-> My thinking was the opposite: it is a signature on a tag, but that
-> signature happens to be stuffed into a commit object. But I do not have
-> a strong feeling either way.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Well, the whole point of storing mergetag inside commit objects is
-so that these transient "please pull, here is a tag to prove you
-that it is from me" tags do not have to be kept in the history;
-hence people who are following along only see commits and not tags.
-The signature being sent via a signed tag from the requestor to the
-integrator is merely an implementation detail after the mergetag is
-recorded and when people would want to verify them.
+  Jeff King <peff@peff.net> writes:
 
-So...
+  >> Because the pattern is not anchored to the left with a slash, it is
+  >> clear that the original cannot even claim that it was trying to
+  >> munge "foo/refs/tags/" as well.
+  >
+  > Yeah, the strstr seems very wrong there. Even with the "/", why would
+  > you want to match "refs/heads/refs/tags/"?
+  >
+  >> Which means this is trivially correct, but at the same time I wonder
+  >> what it means for our-head to point at a ref in refs/tags/ hierarchy.
+  >
+  > I think it is for "git clone --branch=v1.0". We create a refspec pulling
+  > v1.0 to its local tag in that case (as opposed to to something in
+  > "refs/remotes/origin/").  So I really think this does want to be
+  > starts_with.
+
+  Thanks; here is what I'm gonna queue.
+
+ builtin/clone.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 9b3c04d..545105a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -695,7 +695,7 @@ static void write_refspec_config(const char* src_ref_prefix,
+ 	if (option_mirror || !option_bare) {
+ 		if (option_single_branch && !option_mirror) {
+ 			if (option_branch) {
+-				if (strstr(our_head_points_at->name, "refs/tags/"))
++				if (starts_with(our_head_points_at->name, "refs/tags/"))
+ 					strbuf_addf(&value, "+%s:%s", our_head_points_at->name,
+ 						our_head_points_at->name);
+ 				else
+-- 
+2.0.0-637-g8ac8cc9
