@@ -1,70 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 2/3] config: add hashtable for config parsing & retrieval
-Date: Mon, 23 Jun 2014 13:55:32 +0200
-Message-ID: <vpqtx7bn8ln.fsf@anie.imag.fr>
-References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com>
-	<1403518300-23053-3-git-send-email-tanayabh@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH 4/4] diff: mark any file larger than core.bigfilethreshold binary
+Date: Mon, 23 Jun 2014 19:18:37 +0700
+Message-ID: <CACsJy8A5StEv4O64rnd39+1jMNWiaAv4oOd0+Yko_JPuk6EYZw@mail.gmail.com>
+References: <CACsJy8BM1f1pJPzGPf--a-kUim6wyX+Mr1AfMupY3mpREY+8DA@mail.gmail.com>
+ <1401368227-14469-1-git-send-email-pclouds@gmail.com> <1401368227-14469-4-git-send-email-pclouds@gmail.com>
+ <1403180845.10052.16.camel@thomas-debian-x64>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 23 13:55:44 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Dale R. Worley" <worley@alum.mit.edu>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+X-From: git-owner@vger.kernel.org Mon Jun 23 14:19:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wz2qa-0001ZZ-0W
-	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 13:55:40 +0200
+	id 1Wz3DN-00076H-TG
+	for gcvg-git-2@plane.gmane.org; Mon, 23 Jun 2014 14:19:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751849AbaFWLzg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2014 07:55:36 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:54477 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750974AbaFWLzg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2014 07:55:36 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s5NBtV3P012111
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 23 Jun 2014 13:55:31 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s5NBtWuQ025162;
-	Mon, 23 Jun 2014 13:55:32 +0200
-In-Reply-To: <1403518300-23053-3-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Mon, 23 Jun 2014 03:11:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 23 Jun 2014 13:55:31 +0200 (CEST)
+	id S1753241AbaFWMTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 08:19:09 -0400
+Received: from mail-qa0-f48.google.com ([209.85.216.48]:54430 "EHLO
+	mail-qa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752977AbaFWMTI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Jun 2014 08:19:08 -0400
+Received: by mail-qa0-f48.google.com with SMTP id x12so5464585qac.7
+        for <git@vger.kernel.org>; Mon, 23 Jun 2014 05:19:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=dAMGT9EBi+PQ3J9GMO4gztAm9P2WtUeLJDpuCvMs2VQ=;
+        b=dBrW2+2DW+kaVMo3jAShGh3oxy33+nl5/0Nstyh4NEP/D1+B5ST3K7VCYABWeROwue
+         a2qkCM43Mto+N4UF3ACfr8h/qTOo1zv9bfiqIJptdCZ55VTyQpbryp1nuUb0uh+cqhUr
+         mrL7F95Of5s5E+5GSmWHZutV01sMwkVuaiCGXD7Ch2K6hqdwxpNErYr98AYE4gFDvS4G
+         2d7oacN1QBCFhDowCTf4VegkH7GdEIhHqkGnvlaEkcKEqB1eUgG1qnJV6NapDBcPG93U
+         yPFYZ+fB/cxKM2N+SDt2dQwQe97hSKRr4ts6MmupD5hqxP+DWjWPQE2x5qSQ87o7c9Do
+         n2qw==
+X-Received: by 10.140.109.118 with SMTP id k109mr30057590qgf.98.1403525947737;
+ Mon, 23 Jun 2014 05:19:07 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Mon, 23 Jun 2014 05:18:37 -0700 (PDT)
+In-Reply-To: <1403180845.10052.16.camel@thomas-debian-x64>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252343>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+On Thu, Jun 19, 2014 at 7:27 PM, Thomas Braun
+<thomas.braun@virtuell-zuhause.de> wrote:
+>> @@ -2721,6 +2721,11 @@ int diff_populate_filespec(struct diff_filespec *s, unsigned int flags)
+>>               }
+>>               if (size_only)
+>>                       return 0;
+>> +             if ((flags & DIFF_POPULATE_IS_BINARY) &&
+>> +                 s->size > big_file_threshold && s->is_binary == -1) {
+>> +                     s->is_binary = 1;
+>> +                     return 0;
+>> +             }
+>
+> Why do you check for s->is_binary == -1 here? I think it does not matter
+> what s_is_binary says here.
 
-> +/* for NULL values, 'util' for each `string_list_item` is flagged as 1 */
+If some .gitattributes to mark one file not-binary, we should respect
+that, I think. Same for below too.
 
-It's a void *, so just saying that it is flagged as 1 does not say how
-it's encoded. How about "... is an 'int *' pointing to the value 1".
+> I would also add a note to the documentation e. g:
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 9f467d3..7a2f27d 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -499,7 +499,8 @@ core.bigFileThreshold::
+>         Files larger than this size are stored deflated, without
+>         attempting delta compression.  Storing large files without
+>         delta compression avoids excessive memory usage, at the
+> -       slight expense of increased disk usage.
+> +       slight expense of increased disk usage.  Additionally files
+> +       larger than this size are allways treated as binary.
+>  +
+>  Default is 512 MiB on all platforms.  This should be reasonable
+>  for most projects as source code and other text files can still
 
-And actually, you can save one malloc by encoding the value directly in
-the util pointer itself like
-
-#define NULL_FLAG (void *)1
-
-	item->util = NULL_FLAG;
-
-I find this a bit ugly, but I think Git already uses this in a few
-places (git grep 'void \*) *1' for examples).
-
-Or you can use a pointer to a single static value:
-
-static const int boolean_null_flag = 1; // Or even without = 1.
-
-and then
-
-	item->util = &boolean_null_flag;
-
+Thanks. Will do. Sorry a little busy these days and could not reply earlier.
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Duy
