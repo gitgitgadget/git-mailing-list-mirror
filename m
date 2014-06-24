@@ -1,82 +1,85 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: gitk with submodules does not show new commits on other branches
-Date: Tue, 24 Jun 2014 12:07:03 +0200
-Message-ID: <lobik7$a7b$1@ger.gmane.org>
-References: <lo6o2h$vva$1@ger.gmane.org> <53A6F978.4010005@web.de> <lo9mg1$bma$1@ger.gmane.org> <lo9ogu$4in$1@ger.gmane.org> <lo9rcn$8tu$1@ger.gmane.org> <53A88067.5010908@web.de>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: Use case (was Re: Should branches be objects?)
+Date: Tue, 24 Jun 2014 12:01:27 +0100
+Message-ID: <20140624110127.GH28807@serenity.lan>
+References: <CAK3OfOgskVKs=eUT+EM+GZOjh0p6gxKeDWH-iTt29P1i1d1iZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jun 24 12:07:48 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	git discussion list <git@vger.kernel.org>,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: Nico Williams <nico@cryptonector.com>
+X-From: git-owner@vger.kernel.org Tue Jun 24 13:02:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzNdd-0005Iz-0g
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 12:07:41 +0200
+	id 1WzOU9-0004Dk-2T
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 13:01:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753185AbaFXKHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2014 06:07:35 -0400
-Received: from plane.gmane.org ([80.91.229.3]:59647 "EHLO plane.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751783AbaFXKHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2014 06:07:33 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1WzNdQ-0005AQ-MU
-	for git@vger.kernel.org; Tue, 24 Jun 2014 12:07:28 +0200
-Received: from g226035061.adsl.alicedsl.de ([92.226.35.61])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Jun 2014 12:07:28 +0200
-Received: from steveire by g226035061.adsl.alicedsl.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 24 Jun 2014 12:07:28 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: g226035061.adsl.alicedsl.de
-User-Agent: KNode/4.13
+	id S1752965AbaFXLBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2014 07:01:53 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:60347 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752186AbaFXLBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2014 07:01:52 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id A96B0CDA60E;
+	Tue, 24 Jun 2014 12:01:51 +0100 (BST)
+X-Quarantine-ID: <jEwdY6xz2KLn>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jEwdY6xz2KLn; Tue, 24 Jun 2014 12:01:50 +0100 (BST)
+Received: from pichi.aluminati.org (pichi.aluminati.org [10.0.16.50])
+	by jackal.aluminati.org (Postfix) with ESMTP id 8B15DCDA623;
+	Tue, 24 Jun 2014 12:01:46 +0100 (BST)
+Received: from localhost (localhost [127.0.0.1])
+	by pichi.aluminati.org (Postfix) with ESMTP id 7055E161E516;
+	Tue, 24 Jun 2014 12:01:46 +0100 (BST)
+X-Quarantine-ID: <yVsBu4FJskiK>
+X-Virus-Scanned: Debian amavisd-new at aluminati.org
+Received: from pichi.aluminati.org ([127.0.0.1])
+	by localhost (pichi.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id yVsBu4FJskiK; Tue, 24 Jun 2014 12:01:40 +0100 (BST)
+Received: from serenity.lan (banza.aluminati.org [10.0.7.182])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by pichi.aluminati.org (Postfix) with ESMTPSA id 30094161E4B1;
+	Tue, 24 Jun 2014 12:01:29 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <CAK3OfOgskVKs=eUT+EM+GZOjh0p6gxKeDWH-iTt29P1i1d1iZA@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252396>
 
-Jens Lehmann wrote:
+On Mon, Jun 23, 2014 at 10:20:14PM -0500, Nico Williams wrote:
+> The Illumos repo, like OpenSolaris before it, and Solaris itself at
+> Sun (and now at Oracle) requires that fixes be broken down into small
+> commits, with related fixes, tests, and docs changes all typically in
+> separate commits, but all pushed together, so that a single push of N
+> commits is a logical set of changes (e.g., to be backed out together
+> if, say, any one of them breaks a build).  With git the only way to
+> record this grouping at push time is with a post-receive hook that
+> does the recording (which is what the Illumos repo does, sending email
+> to a list about all the commits pushed in one go).
 
-> Am 23.06.2014 20:24, schrieb Stephen Kelly:
->> Stephen Kelly wrote:
->> 
->>> I see that gitk is showing the output of git diff --submodule, similar
->>> to git submodule summary.
-> 
-> Right, and for your use case --submodule would have to learn a
-> different value in addition to 'log' and 'short'. And the default
-> is already configurable via the 'diff.submodule' config option.
+Have you considered using merges for this instead?  If each set of
+related changes is its own branch, then if you merge with `--no-ff` so
+that a merge commit is always created, you can identify the set of
+related changes with:
 
-Right.
+	git log ${MERGE_COMMIT}^1..${MERGE_COMMIT}^2
 
->>> Assuming that is not going to be changed, maybe I can hack
->>> parseblobdiffline locally. I have not really tried to read of write tcl
->>> code before though, so I'd still prefer a 'proper' solution somehow.
-> 
-> I'd prefer a proper solution too, which is exactly why I tried
-> to understand your use case first before speculating about how
-> it could be solved.
-
-Thanks for your help!
-
->> I dug deeper and came up with this patch which suits my needs:
-> 
-> Yup, I think that's the core of the change necessary to help
-> your workflow.
-
-Ok, so I guess we can add --summary=commits ?
-
-I don't write C code generally, so I'm not certain how that needs to be 
-propagated.
-
-Thanks,
-
-Steve.
+There are some interesting effects with reverting merge commits,
+particularly if you want to merge the same set of changes at a later
+date, but this seems like the "Git way" of identifying related commits.
