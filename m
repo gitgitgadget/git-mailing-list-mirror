@@ -1,95 +1,106 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: Use case (was Re: Should branches be objects?)
-Date: Tue, 24 Jun 2014 07:09:32 -0400
-Message-ID: <20140624110932.GI14887@thunk.org>
-References: <CAK3OfOgskVKs=eUT+EM+GZOjh0p6gxKeDWH-iTt29P1i1d1iZA@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH v2 2/4] fsck: do not die when not enough memory to examine a pack entry
+Date: Tue, 24 Jun 2014 18:45:34 +0700
+Message-ID: <1403610336-27761-2-git-send-email-pclouds@gmail.com>
+References: <1401368227-14469-1-git-send-email-pclouds@gmail.com>
+ <1403610336-27761-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	git discussion list <git@vger.kernel.org>,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: Nico Williams <nico@cryptonector.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 13:09:48 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, worley@alum.mit.edu,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jun 24 13:45:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzObh-0000F6-LW
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 13:09:45 +0200
+	id 1WzPAj-0004I2-AI
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 13:45:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752256AbaFXLJm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2014 07:09:42 -0400
-Received: from imap.thunk.org ([74.207.234.97]:54913 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751530AbaFXLJl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2014 07:09:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=fnlIRd/xZY49a+px6EEpgVq8fJ8F9P2hfmIn9UDAj2w=;
-	b=lSz9eeXZipj4O3NS/q3iAu9Eu4D6q3SVo3QUNPqLZ8/rK5aMMn6SII18tPOGQNQxSMOhLDHWRR3FfDtVAUhvlRy99u1XOoQEuR1j88DQd8NcdyS52hMMr7JS2UZWvBxWdoikAJcI8NyKPUyez9Q6nej9xz5RERRY/d32HS8WWXs=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.80)
-	(envelope-from <tytso@thunk.org>)
-	id 1WzOba-0008SP-GU; Tue, 24 Jun 2014 11:09:38 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id C2AA05808A8; Tue, 24 Jun 2014 07:09:32 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CAK3OfOgskVKs=eUT+EM+GZOjh0p6gxKeDWH-iTt29P1i1d1iZA@mail.gmail.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1752668AbaFXLpx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Jun 2014 07:45:53 -0400
+Received: from mail-pb0-f43.google.com ([209.85.160.43]:41082 "EHLO
+	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752581AbaFXLpw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2014 07:45:52 -0400
+Received: by mail-pb0-f43.google.com with SMTP id um1so151406pbc.30
+        for <git@vger.kernel.org>; Tue, 24 Jun 2014 04:45:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        bh=36ij4gk0NyAnAQQYlHqvFALXx9oiTa4S6M7QNmBxWdo=;
+        b=o47IBQ5eW4yOnYvAt2jQoCgHHPsZOYD+nLR+FEGooTbQj8HrTULAFUiB5KHQjgYd9C
+         hsc866u5rujNKIJDgWKS4k1D3hIhNm7iEflQ+HrS/mPgmAaaFNhy5Mavq+sDhqjiJCI+
+         r4vCt999hCrgYMUFz8bCELKGQI9qOBomqvnJ0yhwW2Squ9skR4c+6Zs2T3MkiHViMTI3
+         FM2WzYRwA8Q4IUuQI6g1TLvJQXV6gGeBvw7Z0lpo6Leji6iLfqyE5qAX/hWbaC1Ac6XE
+         ZDZAmt66tb8nLKzp2KYIXFliExkakL8P8h5H3pmlwFoUDR5S+gt4Tih9vw7qPD/ZTMzH
+         Q0lA==
+X-Received: by 10.68.235.100 with SMTP id ul4mr580346pbc.15.1403610352102;
+        Tue, 24 Jun 2014 04:45:52 -0700 (PDT)
+Received: from lanh ([115.73.210.12])
+        by mx.google.com with ESMTPSA id kn1sm72363pbd.13.2014.06.24.04.45.49
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 24 Jun 2014 04:45:51 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Tue, 24 Jun 2014 18:45:49 +0700
+X-Mailer: git-send-email 1.9.1.346.ga2b5940
+In-Reply-To: <1403610336-27761-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252398>
 
-On Mon, Jun 23, 2014 at 10:20:14PM -0500, Nico Williams wrote:
-> 
-> Now, suppose that branches were objects.  Then at push time one might
-> push with a message about the set of commits being pushed, and this
-> message (and time of push, and pusher ID) would get recorded in the
-> branch object.  At fetch time the branch objects's histories would be
-> pulled (but usually never pushed), and would be available for browsing
-> with git log at remotes/<remote>/<branch>.  Each commit of the branch
-> object (as it were) would record each logical set of commits.
+fsck is a tool that error() is more preferred than die(), but many
+functions embed die() inside beyond fsck's control.
+unpack_compressed_entry()'s using xmallocz is such a function,
+triggered from verify_packfile() -> unpack_entry(). Make it use
+xmallocz_gentle() instead.
 
-This seems pretty close to what we have with signed tags.  When I send
-a pull request to Linus, I create a signed tag which createscontains a
-message about a set of commits, and this message is automatically
-included in the pull request message generated with "git
-request-pull", and when Linus merges my pull request, the
-cryptographically signed tag, along with the message, date of the
-signature, etc., is preserved for all posterity.
+Noticed-by: Dale R. Worley <worley@alum.mit.edu>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ sha1_file.c      | 4 +++-
+ t/t1050-large.sh | 6 ++++++
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-> Problem: if pushing via an intermediary the push metadat would get
-> lost.  This would argue for either a stronger still notion of related
-> commits, or none stronger than what exists now (because ETOOMUCH).
-> But this branch object concept could also be just right: if pushing
-> through a an intermediary (what at Sun was called a project gate) then
-> it becomes that intermedirary's (gatekeeper's) job to squash, rebase,
-> regroup, edit, drop, reword, ... commits.
-
-With signed tags, the metadata is preserved even when the set of
-commits is sent via an intermediary.
-
-It seems the major difference is that it's a pull model, where some
-projects seem much happier with a push model.  But that sounds like
-what is needed is that someone replaces Linus Torvalds with a shell
-script --- namely, an e-mail bot that receives pull requests, checks
-the signed tag against an access control list, and if it is an
-authorized committer, accepts the pull request automatically (or
-rejects it if there are merge conflicts).
-
-Not that I am suggesting for even a second that Linus could be fully
-replaced by a shell script.  For example, he handles trivial merge
-conflicts, and more importantly, applies a "oh my G*d you must be
-kidding" taste filter on incoming pull requests, which I think would
-be hard to automate.  Then again, neural networks have automatically
-evolved to recognize cat videos, so we can't rule it out in the
-future.  :-)
-
-Cheers,
-
-							- Ted
+diff --git a/sha1_file.c b/sha1_file.c
+index 34d527f..eb69c78 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1925,7 +1925,9 @@ static void *unpack_compressed_entry(struct packe=
+d_git *p,
+ 	git_zstream stream;
+ 	unsigned char *buffer, *in;
+=20
+-	buffer =3D xmallocz(size);
++	buffer =3D xmallocz_gentle(size);
++	if (!buffer)
++		return NULL;
+ 	memset(&stream, 0, sizeof(stream));
+ 	stream.next_out =3D buffer;
+ 	stream.avail_out =3D size + 1;
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index aea4936..5642f84 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -163,4 +163,10 @@ test_expect_success 'zip achiving, deflate' '
+ 	git archive --format=3Dzip HEAD >/dev/null
+ '
+=20
++test_expect_success 'fsck' '
++	test_must_fail git fsck 2>err &&
++	n=3D$(grep "error: attempting to allocate .* over limit" err | wc -l)=
+ &&
++	test "$n" -gt 1
++'
++
+ test_done
+--=20
+1.9.1.346.ga2b5940
