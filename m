@@ -1,77 +1,85 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: Git-status / preload_index() performance
-Date: Wed, 25 Jun 2014 01:25:05 +0200
-Message-ID: <53AA08D1.5080205@gmail.com>
-References: <53AA0129.1080109@gmail.com> <1403651538.22828.4.camel@stross>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: Feature request: git commit -A
+Date: Tue, 24 Jun 2014 16:34:45 -0700
+Organization: Twitter
+Message-ID: <1403652885.22828.10.camel@stross>
+References: <CAPgiXS7AizvtVNWR4dPXZ6nUQh7ujrrRFmd2SAktsUB0pidFVw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 01:25:16 2014
+Cc: git <git@vger.kernel.org>
+To: Aidan Feldman <aidan.feldman@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 01:34:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wza5R-0002VQ-Re
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 01:25:14 +0200
+	id 1WzaEn-0007vW-EZ
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 01:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753891AbaFXXZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2014 19:25:07 -0400
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:44226 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753490AbaFXXZG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2014 19:25:06 -0400
-Received: by mail-wg0-f51.google.com with SMTP id x12so1155974wgg.10
-        for <git@vger.kernel.org>; Tue, 24 Jun 2014 16:25:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=vN+vzvLEeyNbNkwsgH8WBkIh/oOmRIojquw9xrL1CAw=;
-        b=cngbRZI5drlQBxxUjmONls8fKLV6QyaF3MjxCFKN91FR7Q8yIvEofPO4ZUm4CbjaAW
-         1h81yCas/2+rozTBq6j/SX7k7OUEC4Ih7wfsIEonOs3wHQXEjDxCI5x/hkYBOtqqbvn9
-         eaIufutBRI6P2Fwh/aye/ucC3mpgOMz7S+X3OTzQcyWg7wQcYsnT25k+w4i34YG9EY0e
-         JWAAQtdz9lb7ZjDnI+sMOl1QaISdQdSbkK4e2LGfvo4zp4PYtls+On9VfQhghsfFMKkY
-         IYBMn1XkITkaLn/1W97Pxqjy+65xtBCct0R8kg3iCSRsHHc4stT4u8cnWTRrp9i4Vpwy
-         I8Jw==
-X-Received: by 10.194.119.228 with SMTP id kx4mr5253639wjb.108.1403652304831;
-        Tue, 24 Jun 2014 16:25:04 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id na4sm47404402wic.21.2014.06.24.16.25.03
+	id S1752848AbaFXXeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2014 19:34:50 -0400
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:34635 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752088AbaFXXet (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Jun 2014 19:34:49 -0400
+Received: by mail-qc0-f172.google.com with SMTP id o8so1029176qcw.31
+        for <git@vger.kernel.org>; Tue, 24 Jun 2014 16:34:48 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=rIOt4GM5C+VNYeBwIH+2EW3ACSJJjey7RouQvMUliGs=;
+        b=AIPlbZZWiUtcpHGOzlflDl2wzQYI7OuRntjQkrqze0sq9vMCBXlUKpg5azR8WECTpN
+         7VNnpBU7l69qQByO7v+JvncTX1jlQIFIScch1bVfigk4Q8Q9D5cKnN8IgwJSAqoygJkO
+         wEoZsWER7+Wpw5P4Zdafy7S9FgPe2NGPn/ueax4m2ge30qKGD+ZG7RqS88X9aL7NPrQ8
+         YmW1PcIcMxejRL/5eaSyGI9ysiTPFn8kcwEv6libaoyDKdqn+uzW2OQuMFkDPmdMMnbw
+         6VJq1tu2gLkhhNlb+dxZpiVkvob6yFAX8xOe1hwntPlQJVUUIUP5SrElnmq4hKWfVCAU
+         Y/DQ==
+X-Gm-Message-State: ALoCoQlPVIQIzzH59xx67U3n0B4kZQU6zNKrwJMWZRDJv6Kc+tvRyKWmXp/Jos+NRmjVFpsUJKA1
+X-Received: by 10.140.94.225 with SMTP id g88mr5990030qge.101.1403652888470;
+        Tue, 24 Jun 2014 16:34:48 -0700 (PDT)
+Received: from [172.25.140.220] ([8.25.197.27])
+        by mx.google.com with ESMTPSA id j1sm2819416qaa.11.2014.06.24.16.34.46
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 24 Jun 2014 16:25:04 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <1403651538.22828.4.camel@stross>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Tue, 24 Jun 2014 16:34:47 -0700 (PDT)
+In-Reply-To: <CAPgiXS7AizvtVNWR4dPXZ6nUQh7ujrrRFmd2SAktsUB0pidFVw@mail.gmail.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252427>
 
-Am 25.06.2014 01:12, schrieb David Turner:
-> On Wed, 2014-06-25 at 00:52 +0200, Karsten Blees wrote:
->> Even more time is spent unpacking the HEAD tree, even with hot cache (repacking with depth 10 reduces this to ~250ms, on SSD its just 7ms). Perhaps caching the HEAD tree in an index extension could help here?
+On Tue, 2014-06-24 at 15:01 -0400, Aidan Feldman wrote:
+> Hi all-
+> I work on the education team at GitHub and do a fair number of Git
+> workshops.  One thing that I've always found difficult to explain to
+> newbies is how the staging area works, and why it's useful.  As a
+> hand-wave to simplify things, I usually have them use
 > 
-> This is approximately what the cache-tree extension does.  However, it's
-> a bit broken.  I've been working on a fix, but slowly because my other
-> work has taken me longer than expected.  You can see the effect of the
-> cache-tree extension by doing git reset --hard HEAD; this temporarily
-> restores that extension.
+> git add -A
+> git commit -m "..."
 > 
+> to not really have to worry about untracked vs. modified/removed files
+> aren't included with `git commit -a` or `git add .`.  I would like to
+> add a `-A` flag to the `commit` command, which effectively does a `git
+> add -A` before committing.
+> 
+> I was trying to submit a patch myself, but couldn't even manage to
+> find where the various flags are defined :-)  Does the feature sound
+> reasonable?  Mind pointing me in the right direction of where this
+> would be added?
 
-Indeed:
+Look at builtin/commit.c in the cmd_commit function.  You'll see:
+		OPT_BOOL('a', "all", &all, N_("commit all changed files")),
+Just add another one, 
+		OPT_BOOL('A', "all-untracked", &all_untracked, N_("commit all changed
+files as well as all non-excluded untracked files")),
 
-01:32:35.965910 builtin/commit.c:1374   performance: 0.097505786 s: cmd_status:setup
-...
-01:32:36.047534 preload-index.c:129     performance: 0.081458337 s: read_index_preload
-01:32:36.056204 read-cache.c:1226       performance: 0.008641527 s: refresh_index
-01:32:36.059237 builtin/commit.c:1385   performance: 0.002997060 s: cmd_status:update_index
-01:32:36.065163 wt-status.c:630         performance: 0.005732979 s: wt_status_collect_changes_worktree
-01:32:36.072078 wt-status.c:638         performance: 0.006832976 s: wt_status_collect_changes_index
-01:32:36.072150 wt-status.c:643         performance: 0.000000374 s: wt_status_collect_untracked
-01:32:36.072211 trace.c:414             performance: 0.204069579 s: git command: 'git' 'status' '-s' '-uno'
-
-Thanks
+That said, I am mildly opposed to this feature because it will
+inevitably lead to cruft (and credentials) being checked into
+repositories.  It's easier, but it's not simpler.
