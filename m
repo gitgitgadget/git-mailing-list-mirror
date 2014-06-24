@@ -1,137 +1,108 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH] t7510: Skip all if GPG isn't installed
-Date: Tue, 24 Jun 2014 00:52:16 -0400
-Message-ID: <1403585536-32185-1-git-send-email-brian@gernhardtsoftware.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jun 24 07:00:10 2014
+From: Max Kirillov <max@max630.net>
+Subject: [PATCH] gitk: add visiblerefs option, which lists always shown
+ branches
+Date: Tue, 24 Jun 2014 08:19:44 +0300
+Message-ID: <20140624051944.GA14064@wheezy.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Jun 24 07:27:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzIq0-0006Ru-LR
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 07:00:08 +0200
+	id 1WzJGs-0004VV-A7
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 07:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210AbaFXFAC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Jun 2014 01:00:02 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:52879 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751150AbaFXFAB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Jun 2014 01:00:01 -0400
-X-Greylist: delayed 459 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jun 2014 01:00:01 EDT
-Received: from localhost.localdomain (c-50-133-228-236.hsd1.ma.comcast.net [50.133.228.236])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 738AF16218A7;
-	Tue, 24 Jun 2014 04:52:20 +0000 (UTC)
-X-Mailer: git-send-email 2.0.0.582.g8574df7
+	id S1751466AbaFXF1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Jun 2014 01:27:50 -0400
+Received: from p3plsmtpa11-03.prod.phx3.secureserver.net ([68.178.252.104]:57596
+	"EHLO p3plsmtpa11-03.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751116AbaFXF1u (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Jun 2014 01:27:50 -0400
+X-Greylist: delayed 469 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Jun 2014 01:27:50 EDT
+Received: from wheezy.local ([82.181.158.170])
+	by p3plsmtpa11-03.prod.phx3.secureserver.net with 
+	id J5Kt1o00D3gsSd6015KzUS; Mon, 23 Jun 2014 22:20:00 -0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252386>
 
-Since the setup requires the GPG prerequisite, it doesn't make much
-sense to try and run any tests without it.  So rather than using a
-prereq on each individual test and possibly forgetting it on new ones
-(as just happened), skip the entire file if GPG isn't found.
+When many branches contain the commit, they used to be shown in
+the form "A, B and many more", where A, B can be master of current
+HEAD. But there are more which might be interesting to always know about.
+For example, "origin/master".
 
-Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+The new option, visiblerefs, is stored in ~/.gitk. It contains a list
+of references which are always shown before "and many more" if they
+contain the commit. By default it is `{"master"}', which is compatible
+with previous behavior.
+
+Signed-off-by: Max Kirillov <max@max630.net>
 ---
- t/t7510-signed-commit.sh | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ gitk | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 9810242..414f9d1 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -4,7 +4,13 @@ test_description='signed commit tests'
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-gpg.sh"
+diff --git a/gitk b/gitk
+index 41e5071..7ce6014 100755
+--- a/gitk
++++ b/gitk
+@@ -2787,7 +2787,7 @@ proc savestuff {w} {
+     global mainheadcirclecolor workingfilescirclecolor indexcirclecolor
+     global linkfgcolor circleoutlinecolor
+     global autoselect autosellen extdifftool perfile_attrs markbgcolor use_ttk
+-    global hideremotes want_ttk maxrefs
++    global hideremotes want_ttk maxrefs visiblerefs
+     global config_file config_file_tmp
  
--test_expect_success GPG 'create signed commits' '
-+if ! test_have_prereq GPG
-+then
-+	skip_all='skipping signed commit tests; gpg not available'
-+	test_done
-+fi
-+
-+test_expect_success 'create signed commits' '
- 	test_when_finished "test_unconfig commit.gpgsign" &&
+     if {$stuffsaved} return
+@@ -2813,6 +2813,7 @@ proc savestuff {w} {
+ 	puts $f [list set autosellen $autosellen]
+ 	puts $f [list set showneartags $showneartags]
+ 	puts $f [list set maxrefs $maxrefs]
++	puts $f [list set visiblerefs $visiblerefs]
+ 	puts $f [list set hideremotes $hideremotes]
+ 	puts $f [list set showlocalchanges $showlocalchanges]
+ 	puts $f [list set datetimeformat $datetimeformat]
+@@ -7033,7 +7034,7 @@ proc viewnextline {dir} {
+ # add a list of tag or branch names at position pos
+ # returns the number of names inserted
+ proc appendrefs {pos ids var} {
+-    global ctext linknum curview $var maxrefs mainheadid
++    global ctext linknum curview $var maxrefs visiblerefs mainheadid
  
- 	echo 1 >file && git add file &&
-@@ -48,7 +54,7 @@ test_expect_success GPG 'create signed commits' '
- 	git tag eighth-signed-alt
- '
- 
--test_expect_success GPG 'show signatures' '
-+test_expect_success 'show signatures' '
- 	(
- 		for commit in initial second merge fourth-signed fifth-signed sixth-signed seventh-signed
- 		do
-@@ -79,7 +85,7 @@ test_expect_success GPG 'show signatures' '
- 	)
- '
- 
--test_expect_success GPG 'detect fudged signature' '
-+test_expect_success 'detect fudged signature' '
- 	git cat-file commit seventh-signed >raw &&
- 
- 	sed -e "s/seventh/7th forged/" raw >forged1 &&
-@@ -89,7 +95,7 @@ test_expect_success GPG 'detect fudged signature' '
- 	! grep "Good signature from" actual1
- '
- 
--test_expect_success GPG 'detect fudged signature with NUL' '
-+test_expect_success 'detect fudged signature with NUL' '
- 	git cat-file commit seventh-signed >raw &&
- 	cat raw >forged2 &&
- 	echo Qwik | tr "Q" "\000" >>forged2 &&
-@@ -99,7 +105,7 @@ test_expect_success GPG 'detect fudged signature with NUL' '
- 	! grep "Good signature from" actual2
- '
- 
--test_expect_success GPG 'amending already signed commit' '
-+test_expect_success 'amending already signed commit' '
- 	git checkout fourth-signed^0 &&
- 	git commit --amend -S --no-edit &&
- 	git show -s --show-signature HEAD >actual &&
-@@ -107,7 +113,7 @@ test_expect_success GPG 'amending already signed commit' '
- 	! grep "BAD signature from" actual
- '
- 
--test_expect_success GPG 'show good signature with custom format' '
-+test_expect_success 'show good signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	G
- 	13B6F51ECDDE430D
-@@ -117,7 +123,7 @@ test_expect_success GPG 'show good signature with custom format' '
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG 'show bad signature with custom format' '
-+test_expect_success 'show bad signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	B
- 	13B6F51ECDDE430D
-@@ -127,7 +133,7 @@ test_expect_success GPG 'show bad signature with custom format' '
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG 'show unknown signature with custom format' '
-+test_expect_success 'show unknown signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	U
- 	61092E85B7227189
-@@ -137,7 +143,7 @@ test_expect_success GPG 'show unknown signature with custom format' '
- 	test_cmp expect actual
- '
- 
--test_expect_success GPG 'show lack of signature with custom format' '
-+test_expect_success 'show lack of signature with custom format' '
- 	cat >expect <<-\EOF &&
- 	N
- 
+     if {[catch {$ctext index $pos}]} {
+ 	return 0
+@@ -7054,14 +7055,14 @@ proc appendrefs {pos ids var} {
+     if {[llength $tags] > $maxrefs} {
+ 	# If we are displaying heads, and there are too many,
+ 	# see if there are some important heads to display.
+-	# Currently this means "master" and the current head.
++	# Currently that are the current head and heads listed in $visiblerefs option
+ 	set itags {}
+ 	if {$var eq "idheads"} {
+ 	    set utags {}
+ 	    foreach ti $tags {
+ 		set hname [lindex $ti 0]
+ 		set id [lindex $ti 1]
+-		if {($hname eq "master" || $id eq $mainheadid) &&
++		if {([lsearch -exact $visiblerefs $hname] != -1 || $id eq $mainheadid) &&
+ 		    [llength $itags] < $maxrefs} {
+ 		    lappend itags $ti
+ 		} else {
+@@ -12043,6 +12044,7 @@ set wrapcomment "none"
+ set showneartags 1
+ set hideremotes 0
+ set maxrefs 20
++set visiblerefs {"master"}
+ set maxlinelen 200
+ set showlocalchanges 1
+ set limitdiffs 1
 -- 
-2.0.0.495.gf681aa8
+2.0.0.526.g5318336
