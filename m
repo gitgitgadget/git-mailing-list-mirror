@@ -1,74 +1,97 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [RFC/PATCH V2] alias.c: replace git_config with git_config_get_string
-Date: Tue, 24 Jun 2014 07:20:13 +0530
-Message-ID: <53A8D955.9050200@gmail.com>
-References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com> <20140623223825.GC4445@google.com>
+From: Nico Williams <nico@cryptonector.com>
+Subject: Use case (was Re: Should branches be objects?)
+Date: Mon, 23 Jun 2014 22:20:14 -0500
+Message-ID: <CAK3OfOgskVKs=eUT+EM+GZOjh0p6gxKeDWH-iTt29P1i1d1iZA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Content-Type: text/plain; charset=UTF-8
+Cc: git discussion list <git@vger.kernel.org>,
+	Ronnie Sahlberg <sahlberg@google.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jun 24 03:50:30 2014
+X-From: git-owner@vger.kernel.org Tue Jun 24 05:20:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzFsR-0005ZV-Eh
-	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 03:50:27 +0200
+	id 1WzHHY-0002vw-PU
+	for gcvg-git-2@plane.gmane.org; Tue, 24 Jun 2014 05:20:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201AbaFXBuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Jun 2014 21:50:23 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:37668 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751179AbaFXBuX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Jun 2014 21:50:23 -0400
-Received: by mail-pb0-f43.google.com with SMTP id um1so6325298pbc.16
-        for <git@vger.kernel.org>; Mon, 23 Jun 2014 18:50:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=umtJ8WoYcM94F1ICpU1cf6U8QYF8v9NOvfg4FIqUbFE=;
-        b=ZiEPp2q7uZXlGquAuPnt3Sy45DuSbgoQqMR9Ps52WCOGIZX7jPI6BRy8rH/vl/2Api
-         jykqD+t3o5EAYdV9ZyX0xuxiPvYmxexmpbtAFnVMpVKvr1Lan/Ngb/g2szjjwjsIksWE
-         OKgmVb9cW1Bw8S46LZisNWs5S3cyYLrJMwQQOa7fSYg+aq4/8TLVKoq/FuZiIAFOpXlO
-         lqmwW0sCoB9ACYp3p0LOgSsQ/ST/+y9mCgMt6YImnwH/CpPredz2g8O2oyhCJDCaRXC7
-         uzuAlrjQf6dx+ud5HsrV2uMY8BAk0tX8UJ4Nkd2eD4IDM1UXR8oQOOgAQn/OjU8tVLjJ
-         tadw==
-X-Received: by 10.68.102.34 with SMTP id fl2mr33462707pbb.2.1403574622745;
-        Mon, 23 Jun 2014 18:50:22 -0700 (PDT)
-Received: from [127.0.0.1] ([117.254.220.71])
-        by mx.google.com with ESMTPSA id mt1sm29030620pbb.31.2014.06.23.18.50.19
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 23 Jun 2014 18:50:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <20140623223825.GC4445@google.com>
+	id S1751126AbaFXDUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Jun 2014 23:20:17 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:40011 "EHLO
+	homiemail-a72.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751101AbaFXDUQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Jun 2014 23:20:16 -0400
+Received: from homiemail-a72.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a72.g.dreamhost.com (Postfix) with ESMTP id 6C6F56B0078
+	for <git@vger.kernel.org>; Mon, 23 Jun 2014 20:20:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=
+	mime-version:date:message-id:subject:from:to:cc:content-type; s=
+	cryptonector.com; bh=+YRMK03ExZ3y9u9ngKqsqC+LL9c=; b=EYkD0rmKC0s
+	a+IfD8yFgaLftE+9ByuakOo+Dj8VRFSUDwwNZsz0Ih3o+w6o7FRWxNNW8p6BNhSk
+	QTSXM+nApfiYURw1g4ap/sWej5bBdZdgsRSpPMV8VXxf0qaAXYooHOE/IXHjEnR0
+	Y82QlI2gkfCt26sm6mdZpZ8c/rePlQck=
+Received: from mail-wg0-f42.google.com (mail-wg0-f42.google.com [74.125.82.42])
+	(using TLSv1 with cipher RC4-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by homiemail-a72.g.dreamhost.com (Postfix) with ESMTPSA id 2122C6B0070
+	for <git@vger.kernel.org>; Mon, 23 Jun 2014 20:20:15 -0700 (PDT)
+Received: by mail-wg0-f42.google.com with SMTP id z12so7164245wgg.13
+        for <git@vger.kernel.org>; Mon, 23 Jun 2014 20:20:15 -0700 (PDT)
+X-Received: by 10.194.2.45 with SMTP id 13mr60071wjr.127.1403580015019; Mon,
+ 23 Jun 2014 20:20:15 -0700 (PDT)
+Received: by 10.216.29.200 with HTTP; Mon, 23 Jun 2014 20:20:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252384>
 
-On 6/24/2014 4:08 AM, Jonathan Nieder wrote:
-> Tanay Abhra wrote:
->
->>   alias.c | 28 ++++++++++------------------
->>   1 file changed, 10 insertions(+), 18 deletions(-)
->
-> What commit are these patches against?  Are they a continuation
-> of the "git config cache & special querying api" series?
->
+(thinking more about this, digesting Jonathan's response...)
 
-My fault, I should have marked them. You have inferred correctly,
-they have been built on top of "git config cache & special" querying
-api" series[1].
+The Illumos repo, like OpenSolaris before it, and Solaris itself at
+Sun (and now at Oracle) requires that fixes be broken down into small
+commits, with related fixes, tests, and docs changes all typically in
+separate commits, but all pushed together, so that a single push of N
+commits is a logical set of changes (e.g., to be backed out together
+if, say, any one of them breaks a build).  With git the only way to
+record this grouping at push time is with a post-receive hook that
+does the recording (which is what the Illumos repo does, sending email
+to a list about all the commits pushed in one go).
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/252329
+Now, suppose that branches were objects.  Then at push time one might
+push with a message about the set of commits being pushed, and this
+message (and time of push, and pusher ID) would get recorded in the
+branch object.  At fetch time the branch objects's histories would be
+pulled (but usually never pushed), and would be available for browsing
+with git log at remotes/<remote>/<branch>.  Each commit of the branch
+object (as it were) would record each logical set of commits.
 
-Thanks,
-Tanay.
+Side effects besides addressing the contiguous and related commit grouping need:
+
+ - no more need to sign-off on cherry-picks: the branch will record
+the ousher's ID, which can then be taken as the person signing off;
+
+ - branch objects substantially replace/augment reflogs;
+
+ - no need to ammend commits: just push an empty set of commits just
+to update the branch object with a note!
+
+The UI would mostly consist of an option to git push to include a push
+message, and a way to review branch history (much like git log -g, but
+with access to the push-time metadata).  Also along for the ride: a
+way to get the new metadata in post-receive hooks.
+
+Problem: if pushing via an intermediary the push metadat would get
+lost.  This would argue for either a stronger still notion of related
+commits, or none stronger than what exists now (because ETOOMUCH).
+But this branch object concept could also be just right: if pushing
+through a an intermediary (what at Sun was called a project gate) then
+it becomes that intermedirary's (gatekeeper's) job to squash, rebase,
+regroup, edit, drop, reword, ... commits.
+
+Just a thought,
+
+Nico
+--
