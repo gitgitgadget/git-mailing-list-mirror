@@ -1,59 +1,65 @@
-From: Duy Nguyen <pclouds@gmail.com>
+From: Karsten Blees <karsten.blees@gmail.com>
 Subject: Re: [PATCH v5 00/11] add performance tracing facility
-Date: Wed, 25 Jun 2014 21:28:46 +0700
-Message-ID: <CACsJy8AV5GhB+7iHL11vAMvp=X2yeHgO-ejrtMQqGNG3z_ekBw@mail.gmail.com>
-References: <53980B83.9050409@gmail.com>
+Date: Wed, 25 Jun 2014 16:49:30 +0200
+Message-ID: <53AAE17A.7050500@gmail.com>
+References: <53980B83.9050409@gmail.com> <CACsJy8AV5GhB+7iHL11vAMvp=X2yeHgO-ejrtMQqGNG3z_ekBw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
-	Jeff King <peff@peff.net>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBC2ZN5PHQUMBBPFZVOOQKGQETSLZCKQ@googlegroups.com Wed Jun 25 16:29:18 2014
-Return-path: <msysgit+bncBC2ZN5PHQUMBBPFZVOOQKGQETSLZCKQ@googlegroups.com>
+ Jeff King <peff@peff.net>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: msysgit+bncBCH3XYXLXQDBB7OCVOOQKGQE4BCWLOY@googlegroups.com Wed Jun 25 16:49:39 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBB7OCVOOQKGQE4BCWLOY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f191.google.com ([209.85.216.191])
+Received: from mail-lb0-f185.google.com ([209.85.217.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC2ZN5PHQUMBBPFZVOOQKGQETSLZCKQ@googlegroups.com>)
-	id 1WzoCM-0006zD-0R
-	for gcvm-msysgit@m.gmane.org; Wed, 25 Jun 2014 16:29:18 +0200
-Received: by mail-qc0-f191.google.com with SMTP id l6sf383714qcy.8
-        for <gcvm-msysgit@m.gmane.org>; Wed, 25 Jun 2014 07:29:17 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBB7OCVOOQKGQE4BCWLOY@googlegroups.com>)
+	id 1WzoVz-0005XQ-HT
+	for gcvm-msysgit@m.gmane.org; Wed, 25 Jun 2014 16:49:35 +0200
+Received: by mail-lb0-f185.google.com with SMTP id 10sf235206lbg.12
+        for <gcvm-msysgit@m.gmane.org>; Wed, 25 Jun 2014 07:49:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=eQoGOpJuTXw1PnqnKdZg8ka7QwHt6yZ01rGdX4F3MTA=;
-        b=yWHyIvV65U+NnzxvqUW+Tnh4iqPRQR6IOA3bAG4fY5PnyP3OObD/zfhsLfYnGQ6KSQ
-         q8xakG5ydZCP7zz33AZOQ5ALmuEGlM9J11uL2AyWT/sNMXFQi1ZdfuqN8XJDuShoBkoO
-         d6qCYWLWP/R4mW/2SU/T2QX4J4CwREvdQNO5qZfWbdoJiOeW3IGYpCPUl5AbgVyLx4nX
-         eKpDRjWbNcu10l26IQas+vqY40FVzDk2FHEtIUQyQd7WwPE5FnVGyJr0uIL5/YwCqTlt
-         d/6HsPcBMgDCNDMjvaXpHhbQyKjr5exMQye4mLe/drCH8xVG6xgAM46IgXScRcEyE+90
-         Cmuw==
-X-Received: by 10.50.18.50 with SMTP id t18mr228517igd.10.1403706557083;
-        Wed, 25 Jun 2014 07:29:17 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=whmOjgKqOY4n75BJO3x0Mx/qQW8EiiXEAEluC31lMMA=;
+        b=ayqHxqP3OnC1/uKaG0S6++W8xAQPL5pV1W8Rx4oEslc6FLoBNTvfjLJnRlg1ZZs2Om
+         g0IAMozNMPpSKflIdTnzJkh4sx3WiOemQ5OOTi/8/+EHh1Lk+NFBcjr/UMh25I0KR927
+         QWdJMxmhC9kTTrFxY6U7ZcIctW6j82PzKJ2hu/OgQVF2uT7jTu6/f/9BJCR22p0cb6wp
+         NkV/SojziDan6jpuXxGbKgM08z7qS+7mjO5sOWg3RheptPQNQV1XJ6AUWXt306GYwwgg
+         5tseLxZprCY0wbIcYg+stP2KMjXSrcFH++AfTvAsvqgKF1EXxsfBDebS/nWGOU1//S/W
+         4+hA==
+X-Received: by 10.153.6.39 with SMTP id cr7mr92182lad.1.1403707775308;
+        Wed, 25 Jun 2014 07:49:35 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.33.51 with SMTP id o19ls1086873igi.8.canary; Wed, 25 Jun
- 2014 07:29:16 -0700 (PDT)
-X-Received: by 10.66.230.165 with SMTP id sz5mr4478815pac.33.1403706556439;
-        Wed, 25 Jun 2014 07:29:16 -0700 (PDT)
-Received: from mail-qg0-x22d.google.com (mail-qg0-x22d.google.com [2607:f8b0:400d:c04::22d])
-        by gmr-mx.google.com with ESMTPS id he4si484440qcb.0.2014.06.25.07.29.16
+Received: by 10.152.10.4 with SMTP id e4ls460492lab.84.gmail; Wed, 25 Jun 2014
+ 07:49:33 -0700 (PDT)
+X-Received: by 10.112.200.164 with SMTP id jt4mr478045lbc.14.1403707773206;
+        Wed, 25 Jun 2014 07:49:33 -0700 (PDT)
+Received: from mail-wg0-x22b.google.com (mail-wg0-x22b.google.com [2a00:1450:400c:c00::22b])
+        by gmr-mx.google.com with ESMTPS id s1si349966wiw.3.2014.06.25.07.49.33
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 25 Jun 2014 07:29:16 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c04::22d as permitted sender) client-ip=2607:f8b0:400d:c04::22d;
-Received: by mail-qg0-f45.google.com with SMTP id 63so1729019qgz.32
-        for <msysgit@googlegroups.com>; Wed, 25 Jun 2014 07:29:16 -0700 (PDT)
-X-Received: by 10.140.92.144 with SMTP id b16mr11236771qge.41.1403706556284;
- Wed, 25 Jun 2014 07:29:16 -0700 (PDT)
-Received: by 10.96.66.129 with HTTP; Wed, 25 Jun 2014 07:28:46 -0700 (PDT)
-In-Reply-To: <53980B83.9050409@gmail.com>
-X-Original-Sender: pclouds@gmail.com
+        Wed, 25 Jun 2014 07:49:33 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22b as permitted sender) client-ip=2a00:1450:400c:c00::22b;
+Received: by mail-wg0-x22b.google.com with SMTP id b13so2101905wgh.26
+        for <msysgit@googlegroups.com>; Wed, 25 Jun 2014 07:49:33 -0700 (PDT)
+X-Received: by 10.194.86.225 with SMTP id s1mr10360662wjz.21.1403707773099;
+        Wed, 25 Jun 2014 07:49:33 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id fq2sm13156441wib.2.2014.06.25.07.49.31
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 25 Jun 2014 07:49:32 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CACsJy8AV5GhB+7iHL11vAMvp=X2yeHgO-ejrtMQqGNG3z_ekBw@mail.gmail.com>
+X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c04::22d
- as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22b
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -65,23 +71,25 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252447>
 
-On Wed, Jun 11, 2014 at 2:55 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
-> Here's v5 of the performance tracing patch series, now including a bunch of cleanups and adding timestamp, file and line to all trace output.
->
-> I'm particularly interested in feedback for the output format. As file names have different lengths, printing file:line as prefix results in unaligned output:
->
->  > GIT_TRACE=1 git stash list
->  00:12:10.544266 git.c:512 trace: exec: 'git-stash' 'list'
->  00:12:10.544266 run-command.c:337 trace: run_command: 'git-stash' 'list'
->  00:12:10.649779 git.c:312 trace: built-in: git 'rev-parse' '--git-dir'
+Am 25.06.2014 16:28, schrieb Duy Nguyen:
+> On Wed, Jun 11, 2014 at 2:55 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
+>> Here's v5 of the performance tracing patch series, now including a bunch of cleanups and adding timestamp, file and line to all trace output.
+>>
+>> I'm particularly interested in feedback for the output format. As file names have different lengths, printing file:line as prefix results in unaligned output:
+>>
+>>  > GIT_TRACE=1 git stash list
+>>  00:12:10.544266 git.c:512 trace: exec: 'git-stash' 'list'
+>>  00:12:10.544266 run-command.c:337 trace: run_command: 'git-stash' 'list'
+>>  00:12:10.649779 git.c:312 trace: built-in: git 'rev-parse' '--git-dir'
+> 
+> Can I have an (build-time) option to show <function>:<line> instead of
+> <file>:<line>? I know it's not supported by all compilers, which may
+> make support a bit cumbersome..
+> 
 
-Can I have an (build-time) option to show <function>:<line> instead of
-<file>:<line>? I know it's not supported by all compilers, which may
-make support a bit cumbersome..
--- 
-Duy
+Is this really useful? <file>:<line> is unique, but <function>:<line> is not. E.g. in case of "hash_name:47" you'd have to guess if its the one in attr.c or name-hash.c...
 
 -- 
 -- 
