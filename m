@@ -1,142 +1,104 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: BUG: git request-pull broken for plain branches
-Date: Wed, 25 Jun 2014 15:21:31 +0200
-Message-ID: <20140625132131.GO14781@pengutronix.de>
-References: <20140625095535.GA27365@pengutronix.de>
- <CA+55aFwZb7tT7xb7y2XJpzcmrxB=Rf--bjz5XbBcxC-7MMm9eg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v5 00/11] add performance tracing facility
+Date: Wed, 25 Jun 2014 21:28:46 +0700
+Message-ID: <CACsJy8AV5GhB+7iHL11vAMvp=X2yeHgO-ejrtMQqGNG3z_ekBw@mail.gmail.com>
+References: <53980B83.9050409@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>, kernel@pengutronix.de
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Jun 25 15:21:51 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
+	Jeff King <peff@peff.net>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBC2ZN5PHQUMBBPFZVOOQKGQETSLZCKQ@googlegroups.com Wed Jun 25 16:29:18 2014
+Return-path: <msysgit+bncBC2ZN5PHQUMBBPFZVOOQKGQETSLZCKQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qc0-f191.google.com ([209.85.216.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wzn95-0007se-08
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 15:21:51 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755444AbaFYNVq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jun 2014 09:21:46 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:46451 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753576AbaFYNVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 09:21:45 -0400
-Received: from ptx.hi.pengutronix.de ([2001:6f8:1178:2:5054:ff:fec0:8e10] ident=Debian-exim)
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Wzn8r-0004Mu-KZ; Wed, 25 Jun 2014 15:21:37 +0200
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.80)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Wzn8l-00026j-9q; Wed, 25 Jun 2014 15:21:31 +0200
-Content-Disposition: inline
-In-Reply-To: <CA+55aFwZb7tT7xb7y2XJpzcmrxB=Rf--bjz5XbBcxC-7MMm9eg@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:5054:ff:fec0:8e10
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252444>
+	(envelope-from <msysgit+bncBC2ZN5PHQUMBBPFZVOOQKGQETSLZCKQ@googlegroups.com>)
+	id 1WzoCM-0006zD-0R
+	for gcvm-msysgit@m.gmane.org; Wed, 25 Jun 2014 16:29:18 +0200
+Received: by mail-qc0-f191.google.com with SMTP id l6sf383714qcy.8
+        for <gcvm-msysgit@m.gmane.org>; Wed, 25 Jun 2014 07:29:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=eQoGOpJuTXw1PnqnKdZg8ka7QwHt6yZ01rGdX4F3MTA=;
+        b=yWHyIvV65U+NnzxvqUW+Tnh4iqPRQR6IOA3bAG4fY5PnyP3OObD/zfhsLfYnGQ6KSQ
+         q8xakG5ydZCP7zz33AZOQ5ALmuEGlM9J11uL2AyWT/sNMXFQi1ZdfuqN8XJDuShoBkoO
+         d6qCYWLWP/R4mW/2SU/T2QX4J4CwREvdQNO5qZfWbdoJiOeW3IGYpCPUl5AbgVyLx4nX
+         eKpDRjWbNcu10l26IQas+vqY40FVzDk2FHEtIUQyQd7WwPE5FnVGyJr0uIL5/YwCqTlt
+         d/6HsPcBMgDCNDMjvaXpHhbQyKjr5exMQye4mLe/drCH8xVG6xgAM46IgXScRcEyE+90
+         Cmuw==
+X-Received: by 10.50.18.50 with SMTP id t18mr228517igd.10.1403706557083;
+        Wed, 25 Jun 2014 07:29:17 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.33.51 with SMTP id o19ls1086873igi.8.canary; Wed, 25 Jun
+ 2014 07:29:16 -0700 (PDT)
+X-Received: by 10.66.230.165 with SMTP id sz5mr4478815pac.33.1403706556439;
+        Wed, 25 Jun 2014 07:29:16 -0700 (PDT)
+Received: from mail-qg0-x22d.google.com (mail-qg0-x22d.google.com [2607:f8b0:400d:c04::22d])
+        by gmr-mx.google.com with ESMTPS id he4si484440qcb.0.2014.06.25.07.29.16
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 25 Jun 2014 07:29:16 -0700 (PDT)
+Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c04::22d as permitted sender) client-ip=2607:f8b0:400d:c04::22d;
+Received: by mail-qg0-f45.google.com with SMTP id 63so1729019qgz.32
+        for <msysgit@googlegroups.com>; Wed, 25 Jun 2014 07:29:16 -0700 (PDT)
+X-Received: by 10.140.92.144 with SMTP id b16mr11236771qge.41.1403706556284;
+ Wed, 25 Jun 2014 07:29:16 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Wed, 25 Jun 2014 07:28:46 -0700 (PDT)
+In-Reply-To: <53980B83.9050409@gmail.com>
+X-Original-Sender: pclouds@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c04::22d
+ as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252445>
 
-Hello Linus,
+On Wed, Jun 11, 2014 at 2:55 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
+> Here's v5 of the performance tracing patch series, now including a bunch of cleanups and adding timestamp, file and line to all trace output.
+>
+> I'm particularly interested in feedback for the output format. As file names have different lengths, printing file:line as prefix results in unaligned output:
+>
+>  > GIT_TRACE=1 git stash list
+>  00:12:10.544266 git.c:512 trace: exec: 'git-stash' 'list'
+>  00:12:10.544266 run-command.c:337 trace: run_command: 'git-stash' 'list'
+>  00:12:10.649779 git.c:312 trace: built-in: git 'rev-parse' '--git-dir'
 
-On Wed, Jun 25, 2014 at 05:05:51AM -0700, Linus Torvalds wrote:
-> On Wed, Jun 25, 2014 at 2:55 AM, Uwe Kleine-K=F6nig
-> <u.kleine-koenig@pengutronix.de> wrote:
-> >
-> >         $ git rev-parse HEAD
-> >         9e065e4a5a58308f1a0da4bb80b830929dfa90b3
-> >         $ git ls-remote origin | grep 9e065e4a5a58308f1a0da4bb80b83=
-0929dfa90b3
-> >         9e065e4a5a58308f1a0da4bb80b830929dfa90b3        refs/heads/=
-ukl/for-mainline
-> >         $ git request-pull origin/master origin HEAD > /dev/null
-> >         warn: No match for commit 9e065e4a5a58308f1a0da4bb80b830929=
-dfa90b3 found at origin
-> >         warn: Are you sure you pushed 'HEAD' there?
->=20
-> Notice how "HEAD" does not match.
->=20
-> The error message is perhaps misleading. It's not enough to match the
-> commit. You need to match the branch name too. git used to guess the
-> branch name (from the commit), and it often guessed wrongly. So now
-> they need to match.
->=20
-> So you should do
->=20
->     git request-pull origin/master origin ukl/for-mainline
->=20
-> to let request-pull know that you're requesting a pull for "ukl/for-m=
-ainline".
->=20
-> If you have another name for that branch locally (ie you did somethin=
-g
-> like "git push origin local:remote"), then you can say
->=20
->     git request-pull origin/master origin local-name:remote-name
->=20
-> to specify what the branch to be pulled is called locally vs remotely=
-=2E
->=20
-> In other words, what used to be "pick some branch randomly" is now
-> "you need to _specify_ the branch".
-ah, got it. Still some of my concerns stay valid and I also have some
-new ones:
+Can I have an (build-time) option to show <function>:<line> instead of
+<file>:<line>? I know it's not supported by all compilers, which may
+make support a bit cumbersome..
+-- 
+Duy
 
- - if there is a branch and a tag on the remote side that match what I
-   specified the outcome depends on the order of git-ls-remote. (minor
-   nit.)
- - if I have to specify the remote name now, why do I have to also
-   specify my local ref? Isn't the respective $sha1 of the remote side
-   enough to do what is needed?
- - Isn't $found =3D $sha1; silly because I cannot pull a rev, only a re=
-f?
-   (side note:
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-   	git pull linus d91d66e88ea95b6dd21958834414009614385153
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-   gives no error message, only returns 1 and does nothing else.)
- - Is the result of
-
- 	git request-pull $somecommit origin
-
-   what is intended? For me it does
-
-   	...
-	are available in the git repository at:
-
-	  $repository
-
-	for you to fetch changes ...
-
-   if the remote HEAD matches the local one. I'd prefer to have an
-   explicit branch name there, or at least HEAD.
-
-I liked git guessing the branch name, maybe we can teach it to guess a
-bit better than it did before 2.0? Something like:
-
- - if there is a unique match on the remote side, use it.
- - if there are >=3D 1 match on the remote side and exactly one matches
-   what I specified as <end>, use it.
- - if there are >=3D 1 match on the remote side and exactly one of them=
- is
-   a tag, use the tag
- - if there are two matches on the remote side, and one is "HEAD",
-   pick the other one.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
