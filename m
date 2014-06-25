@@ -1,268 +1,152 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 7/8] tag: use commit_contains
-Date: Wed, 25 Jun 2014 19:49:21 -0400
-Message-ID: <20140625234921.GG23146@sigill.intra.peff.net>
+Subject: [PATCH 8/8] perf: add tests for tag --contains
+Date: Wed, 25 Jun 2014 19:53:35 -0400
+Message-ID: <20140625235335.GH23146@sigill.intra.peff.net>
 References: <20140625233429.GA20457@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 01:49:28 2014
+X-From: git-owner@vger.kernel.org Thu Jun 26 01:53:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzwwR-0002UD-Hc
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 01:49:28 +0200
+	id 1Wzx0Y-0005vC-80
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 01:53:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756702AbaFYXtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 19:49:24 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51230 "HELO peff.net"
+	id S1755871AbaFYXxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 19:53:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51233 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754496AbaFYXtX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 19:49:23 -0400
-Received: (qmail 5518 invoked by uid 102); 25 Jun 2014 23:49:23 -0000
+	id S1753356AbaFYXxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 19:53:37 -0400
+Received: (qmail 5703 invoked by uid 102); 25 Jun 2014 23:53:37 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 18:49:23 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 19:49:21 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 18:53:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 19:53:35 -0400
 Content-Disposition: inline
 In-Reply-To: <20140625233429.GA20457@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252479>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252480>
 
-The newly added commit_contains function should do a better
-job than our custom depth-first traversal. It should be the
-same speed when going close to the roots, but much faster
-when all tags are close to the searched-for commit (this
-usually isn't the case, but could be if you limit the tags
-with a pattern).
+These tests can demonstrate the changes in "tag --contains"
+speed over time. The interesting points in history are:
 
-It also cleans up some of the more egregious pitfalls of the
-original implementation, including an abuse of the
-UNINTERESTING and TMP_MARK flags, an utterly confusing
-calling convention (it silently caches the bits between
-calls, with no checks that our "with_commit" was the same
-for each call), and a failure to clean up after itself
-(tainting any further traversals).
+  - pre-ffc4b80, where we used a series of N merge-base
+    traversals
+
+  - ffc4b80 up to the current master, where we moved to a
+    single depth-first traversal
+
+  - the previous commit, where we moved from depth-first to
+    a multi-tip merge-base
+
+The interesting cases to measure are:
+
+  - checking which tags contain a recent commit (we use
+    HEAD~100 here)
+
+  - checking which tags contain a very ancient commit (we
+    use the last commit output by rev-list)
+
+  - checking which tags contain a commit in the middle (we
+    use HEAD~5000, which goes back 5 years in git.git)
+
+  - all of the above, but instead of looking at all commits,
+    considering only recent ones (we pick the most recent
+    tag by its tagger date)
+
+Here are the timings for git.git:
+
+    Test                              ffc4b80^          origin/master             HEAD
+    ----------------------------------------------------------------------------------------------------
+    7000.3: contains recent/all       1.97(1.96+0.01)   0.26(0.25+0.00) -86.8%    0.27(0.26+0.00) -86.3%
+    7000.4: contains recent/v2.0.1    0.08(0.08+0.00)   0.25(0.24+0.01) +212.5%   0.02(0.02+0.00) -75.0%
+    7000.5: contains old/all          0.90(0.89+0.00)   0.18(0.17+0.00) -80.0%    0.27(0.26+0.00) -70.0%
+    7000.6: contains old/v2.0.1       0.25(0.23+0.02)   0.03(0.03+0.00) -88.0%    0.25(0.24+0.00) +0.0%
+    7000.7: contains ancient/all      1.98(1.97+0.01)   0.26(0.24+0.01) -86.9%    0.28(0.25+0.02) -85.9%
+    7000.8: contains ancient/v2.0.1   1.95(1.94+0.00)   0.26(0.24+0.01) -86.7%    0.27(0.26+0.00) -86.2%
+
+You can see that ffc4b80 vastly improved the normal case of
+checking all tags. This is because we avoid walking over the
+same parts of history over and over. However, when looking
+only for a recent tag (v2.0.1 in these tests), it sometimes
+performs much worse than the original. This is not
+surprising. For a merge-base solution, we can quit when we
+hit history shared between the contained commit and the tag.
+For ffc4b80's depth-first approach, we typically go all the
+way to the roots before backtracking. For the ancient/v2.0.1
+case, that's not a big deal, because the merge base requires
+us doing that anyway. But for recent/v2.0.1, the merge-base
+answer should involve only recent history.
+
+The new traversal code performs about as well as the
+depth-first code in the normal case, but fixes the
+regression in the recent/v2.0.1 case.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-The code to use the new contains function ends up disappointingly longer
-than I would have hoped, but it has to massage our string_list of tag
-names into a list of commits, and then massage the output back into a
-filtered string list. It's not too bad, though. And as I mentioned, I
-hope to eventually factor this out to share with for-each-ref and
-branch.
+There are still two things about the timings that puzzle me a bit.
 
- builtin/tag.c | 161 +++++++++++++++++-----------------------------------------
- 1 file changed, 48 insertions(+), 113 deletions(-)
+One is that the old/all case gets slower moving from the depth-first
+traversal to the merge-base one. I think this is simply because the
+depth-first one may get "lucky" sometimes, and hit the commit we are
+looking for on the way down. So its average case is somewhat better than
+its worst case (and I would not be surprised if my choice of HEAD~5000
+helps it, because it follows first parents first).
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 3ef2fab..f17192c 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -72,108 +72,6 @@ static const unsigned char *match_points_at(const char *refname,
- 	return NULL;
- }
- 
--static int in_commit_list(const struct commit_list *want, struct commit *c)
--{
--	for (; want; want = want->next)
--		if (!hashcmp(want->item->object.sha1, c->object.sha1))
--			return 1;
--	return 0;
--}
--
--enum contains_result {
--	CONTAINS_UNKNOWN = -1,
--	CONTAINS_NO = 0,
--	CONTAINS_YES = 1,
--};
--
--/*
-- * Test whether the candidate or one of its parents is contained in the list.
-- * Do not recurse to find out, though, but return -1 if inconclusive.
-- */
--static enum contains_result contains_test(struct commit *candidate,
--			    const struct commit_list *want)
--{
--	/* was it previously marked as containing a want commit? */
--	if (candidate->object.flags & TMP_MARK)
--		return 1;
--	/* or marked as not possibly containing a want commit? */
--	if (candidate->object.flags & UNINTERESTING)
--		return 0;
--	/* or are we it? */
--	if (in_commit_list(want, candidate)) {
--		candidate->object.flags |= TMP_MARK;
--		return 1;
--	}
--
--	if (parse_commit(candidate) < 0)
--		return 0;
--
--	return -1;
--}
--
--/*
-- * Mimicking the real stack, this stack lives on the heap, avoiding stack
-- * overflows.
-- *
-- * At each recursion step, the stack items points to the commits whose
-- * ancestors are to be inspected.
-- */
--struct stack {
--	int nr, alloc;
--	struct stack_entry {
--		struct commit *commit;
--		struct commit_list *parents;
--	} *stack;
--};
--
--static void push_to_stack(struct commit *candidate, struct stack *stack)
--{
--	int index = stack->nr++;
--	ALLOC_GROW(stack->stack, stack->nr, stack->alloc);
--	stack->stack[index].commit = candidate;
--	stack->stack[index].parents = candidate->parents;
--}
--
--static enum contains_result contains(struct commit *candidate,
--		const struct commit_list *want)
--{
--	struct stack stack = { 0, 0, NULL };
--	int result = contains_test(candidate, want);
--
--	if (result != CONTAINS_UNKNOWN)
--		return result;
--
--	push_to_stack(candidate, &stack);
--	while (stack.nr) {
--		struct stack_entry *entry = &stack.stack[stack.nr - 1];
--		struct commit *commit = entry->commit;
--		struct commit_list *parents = entry->parents;
--
--		if (!parents) {
--			commit->object.flags |= UNINTERESTING;
--			stack.nr--;
--		}
--		/*
--		 * If we just popped the stack, parents->item has been marked,
--		 * therefore contains_test will return a meaningful 0 or 1.
--		 */
--		else switch (contains_test(parents->item, want)) {
--		case CONTAINS_YES:
--			commit->object.flags |= TMP_MARK;
--			stack.nr--;
--			break;
--		case CONTAINS_NO:
--			entry->parents = parents->next;
--			break;
--		case CONTAINS_UNKNOWN:
--			push_to_stack(parents->item, &stack);
--			break;
--		}
--	}
--	free(stack.stack);
--	return contains_test(candidate, want);
--}
--
- static void show_tag_lines(const unsigned char *sha1, int lines)
- {
- 	int i;
-@@ -227,7 +125,7 @@ static void print_tag(const char *refname, const unsigned char *sha1,
- 
- static int filter_can_stream(struct tag_filter *filter)
- {
--	return !filter->sort;
-+	return !filter->sort && !filter->with_commit;
- }
- 
- static int show_reference(const char *refname, const unsigned char *sha1,
-@@ -236,16 +134,6 @@ static int show_reference(const char *refname, const unsigned char *sha1,
- 	struct tag_filter *filter = cb_data;
- 
- 	if (match_pattern(filter->patterns, refname)) {
--		if (filter->with_commit) {
--			struct commit *commit;
--
--			commit = lookup_commit_reference_gently(sha1, 1);
--			if (!commit)
--				return 0;
--			if (!contains(commit, filter->with_commit))
--				return 0;
--		}
--
- 		if (points_at.nr && !match_points_at(refname, sha1))
- 			return 0;
- 
-@@ -258,6 +146,46 @@ static int show_reference(const char *refname, const unsigned char *sha1,
- 	return 0;
- }
- 
-+static int util_is_not_null(struct string_list_item *it, int pos, void *data)
-+{
-+	return !!it->util;
-+}
+The second question is why ffc4b80^ is so much slower on the v2.0.1
+tests than the new code. They should both be doing a single merge-base
+traversal, and I'd expect them to take about the same amount of time
+(for that matter, ancient/v2.0.1 should take the same amount of time as
+the depth-first code, since they all basically have to read all of the
+commits once). My guess is that there's some other speedup that has
+happened in the years between ffc4b80 and now.
+
+ t/perf/p7000-tag-contains.sh | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+ create mode 100755 t/perf/p7000-tag-contains.sh
+
+diff --git a/t/perf/p7000-tag-contains.sh b/t/perf/p7000-tag-contains.sh
+new file mode 100755
+index 0000000..846f106
+--- /dev/null
++++ b/t/perf/p7000-tag-contains.sh
+@@ -0,0 +1,30 @@
++#!/bin/sh
 +
-+static int matches_contains(struct string_list_item *it, int pos, void *data)
-+{
-+	unsigned char *contains = data;
-+	return contains[pos];
-+}
++test_description='speed of tag --contains lookups'
++. ./perf-lib.sh
 +
-+static void limit_by_contains(struct string_list *tags, struct commit_list *with)
-+{
-+	struct commit_list *tag_commits = NULL, **tail = &tag_commits;
-+	unsigned char *result;
-+	int i;
++test_perf_default_repo
 +
-+	for (i = 0; i < tags->nr; i++) {
-+		struct string_list_item *it = &tags->items[i];
-+		struct commit *c = lookup_commit_reference_gently(it->util, 1);
-+		if (c)
-+			tail = commit_list_append(c, tail);
-+		else {
-+			free(it->util);
-+			it->util = NULL;
-+		}
-+	}
-+	filter_string_list(tags, 0, util_is_not_null, NULL);
++test_expect_success 'find reference points' '
++	recent=$(git rev-parse HEAD~100) &&
++	old=$(git rev-parse HEAD~5000) &&
++	ancient=$(git rev-list | tail -n 1)
++'
 +
-+	if (!tags->nr)
-+		return;
++test_expect_success 'find most recent tag' '
++	tag=$(git for-each-ref --sort=-taggerdate \
++			       --format="%(refname:short)" \
++			       refs/tags |
++	      head -n 1)
++'
 +
-+	result = xmalloc(tags->nr);
-+	commit_contains(with, tag_commits, NULL, result);
-+	filter_string_list(tags, 1, matches_contains, result);
++for distance in recent old ancient; do
++	contains=$(eval echo \$$distance)
++	for match in "" "$tag"; do
++		test_perf "contains $distance/${match:-all}" "
++			git tag -l --contains $contains $match
++		"
++	done
++done
 +
-+	free(result);
-+	free_commit_list(tag_commits);
-+}
-+
- static int sort_by_version(const void *a_, const void *b_)
- {
- 	const struct string_list_item *a = a_;
-@@ -278,9 +206,16 @@ static int list_tags(const char **patterns, int lines,
- 	filter.tags.strdup_strings = 1;
- 
- 	for_each_tag_ref(show_reference, (void *) &filter);
-+	if (with_commit)
-+		limit_by_contains(&filter.tags, with_commit);
- 	if ((sort & SORT_MASK) == VERCMP_SORT)
- 		qsort(filter.tags.items, filter.tags.nr,
- 		      sizeof(struct string_list_item), sort_by_version);
-+	if (sort) {
-+		if ((sort & SORT_MASK) == VERCMP_SORT)
-+			qsort(filter.tags.items, filter.tags.nr,
-+			      sizeof(struct string_list_item), sort_by_version);
-+	}
- 	if (!filter_can_stream(&filter)) {
- 		int i;
- 		if (sort & REVERSE_SORT)
++test_done
 -- 
 2.0.0.566.gfe3e6b2
