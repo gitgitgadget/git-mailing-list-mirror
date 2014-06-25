@@ -1,100 +1,72 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH v3 2/3] config: add hashtable for config parsing & retrieval
-Date: Wed, 25 Jun 2014 23:44:30 +0200
-Message-ID: <53AB42BE.9010308@gmail.com>
-References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com> <1403518300-23053-3-git-send-email-tanayabh@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t7510: Skip all if GPG isn't installed
+Date: Wed, 25 Jun 2014 15:24:00 -0700
+Message-ID: <xmqqwqc46327.fsf@gitster.dls.corp.google.com>
+References: <1403585536-32185-1-git-send-email-brian@gernhardtsoftware.com>
+	<xmqqfvis8zaw.fsf@gitster.dls.corp.google.com>
+	<20140625214217.GA13564@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jun 25 23:44:36 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jun 26 00:24:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wzuzb-0000ZX-1O
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 23:44:35 +0200
+	id 1WzvcG-00089q-7C
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 00:24:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756493AbaFYVoc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 17:44:32 -0400
-Received: from mail-wg0-f43.google.com ([74.125.82.43]:63285 "EHLO
-	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756427AbaFYVoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 17:44:30 -0400
-Received: by mail-wg0-f43.google.com with SMTP id b13so2681501wgh.14
-        for <git@vger.kernel.org>; Wed, 25 Jun 2014 14:44:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=V6Wo7xKoj+fYjbcqDptU4gv6EHLaxOT1pcx0Qsmxg0w=;
-        b=MNHFuDx2JBBgRqB611FZ6YO0MOAhzGehuzNAbslaPjOPhtYASNL6kBleiGGZKTURtG
-         BskhUwweMlDjiYvcA8Lg1YGixyLTwPWpkHHnYIpz4rVr/GrswMGUSQ0NG66wjpUg5vn3
-         mufAJOODkvLLh/jEcUTrv0aPWph5H9aP5WxcOa163+7KoA5ZB0v6Sx9AlozQsC/7evlZ
-         f+zmkAei0t5e99mn4TCZnSt2buJR6ZgK1fBvpWXLslfpGxiB1f8Npf0CA54U0C4sLaNV
-         FXH1gDTc1kTV6RwvSRhxgCH7A0sVE5fM3r9J8x5pNvmP1aVEzeYO+x7orjCAw5SuF1dp
-         +Nug==
-X-Received: by 10.180.72.201 with SMTP id f9mr34746493wiv.41.1403732669155;
-        Wed, 25 Jun 2014 14:44:29 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id gi15sm9988974wjc.20.2014.06.25.14.44.27
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 25 Jun 2014 14:44:28 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <1403518300-23053-3-git-send-email-tanayabh@gmail.com>
+	id S1755544AbaFYWY1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 18:24:27 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51968 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755519AbaFYWYH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 18:24:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 72DBF228FF;
+	Wed, 25 Jun 2014 18:24:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2ro0G9HLlDse5okZWziRs8x+uSU=; b=fCUhYE
+	Dt2b5CI+udQKoWr+KCI0OLEtBkSlkhbW7T7XJRuMofIqVy7nCtkmX4RY85ThUWSx
+	641/ZuspxxlNUYfLMKJm+1o+yAS3vaqH4MdSg1Ctn7r98ruml1++tg+cgmMMCUOT
+	n1blbIZ2IAMY7Pjl1YxvRvZde6jq+FkFK1YsM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LhQPmQ3FnZR01f/yq9tbK0Gx+mS/CkR3
+	J0kbQP43KChhOg+dK1O7CqW0suWSuNv1hfK8O0FkZ4HnjEkYJp3Q0dYJ4etD5KJU
+	v4qDKZN7j1KIX6OZuB8aOdy1UwQ09T0XONRxrfAMgir9AC+TosjC3Vrtwutnm40S
+	+vesOBNMu9w=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4BC96228FE;
+	Wed, 25 Jun 2014 18:24:00 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9765A228FD;
+	Wed, 25 Jun 2014 18:23:55 -0400 (EDT)
+In-Reply-To: <20140625214217.GA13564@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 25 Jun 2014 17:42:17 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 65147D2E-FCB7-11E3-B199-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252469>
 
-Am 23.06.2014 12:11, schrieb Tanay Abhra:
+Jeff King <peff@peff.net> writes:
 
-[...]
+> ...
+> I think it may make more sense to just configure gpg.program to "false"
+> for the NOGPG case. Then you get coverage both on systems with it
+> installed, and without (you could also just test it on GPG systems, and
+> drop the "ship commits in fast-import form" part of the plan).
+>
+> Anyway, that is all outside the scope of the immediate problem. Here's
+> the patch to fix jk/pretty-G-format-fixes.
 
-> +
-> +static struct config_cache_entry *config_cache_find_entry(const char *key)
-> +{
-> +	struct hashmap *config_cache;
-> +	struct config_cache_entry k;
-> +	struct config_cache_entry *found_entry;
-> +	char *normalized_key;
-> +	int ret;
-> +	config_cache = get_config_cache();
-> +	ret = git_config_parse_key(key, &normalized_key, NULL);
-
-[I didn't follow all previous discussion, so feel free to ignore me if this has been discussed already]
-
-Is it really necessary to normalize keys on each lookup? The current git config code simply does a 'strcmp("lower-case-key", var)' so normalization shouldn't be necessary for the majority of callers. If a caller uses a non-constant key (e.g. as passed to 'git config --get <name>'), it would be the caller's responsibility to normalize.
-
-[...]
-
-> +int git_config_get_string(const char *key, const char **value)
-
-I would have expected '..._get_string' to return a string. If the return value indicates whether something was found, it should probably be called '..._find_...'?
-
-In the end, you want typed config functions that do type conversion and handle parse errors, at least for the common types bool/int/string... Thus the generic function that returns unparsed data should probably be called '..._value', not '..._string'?
-
-A typical pull-style config API will also let you specify default values, e.g.:
-
-  const char *git_config_get_string(const char *key, const char *default_value)
-  {
-    const char *value;
-    if (!git_config_find_value(key, &value))
-      return default_value;
-    if (!value)
-      config_error_nonbool();
-    return value;
-  }
-
-  int git_config_get_bool(const char *key, int default_value)
-  {
-    const char *value;
-    if (!git_config_find_value(key, &value))
-      return default_value;
-    return git_config_bool(key, value);
-  }
+All sounds sensible.  Thanks.
