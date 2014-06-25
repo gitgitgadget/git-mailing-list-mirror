@@ -1,244 +1,233 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 5/8] string-list: add pos to iterator callback
-Date: Wed, 25 Jun 2014 19:42:52 -0400
-Message-ID: <20140625234252.GE23146@sigill.intra.peff.net>
+Subject: [PATCH 6/8] commit: provide a fast multi-tip contains function
+Date: Wed, 25 Jun 2014 19:47:30 -0400
+Message-ID: <20140625234730.GF23146@sigill.intra.peff.net>
 References: <20140625233429.GA20457@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 01:43:02 2014
+X-From: git-owner@vger.kernel.org Thu Jun 26 01:47:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzwqB-0005Vj-Bi
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 01:42:59 +0200
+	id 1Wzwud-0000wv-V0
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 01:47:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754810AbaFYXmz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 19:42:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51223 "HELO peff.net"
+	id S1755122AbaFYXrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 19:47:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51228 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752641AbaFYXmy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 19:42:54 -0400
-Received: (qmail 5148 invoked by uid 102); 25 Jun 2014 23:42:54 -0000
+	id S1753302AbaFYXrb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 19:47:31 -0400
+Received: (qmail 5421 invoked by uid 102); 25 Jun 2014 23:47:31 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 18:42:54 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 19:42:52 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 18:47:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 19:47:30 -0400
 Content-Disposition: inline
 In-Reply-To: <20140625233429.GA20457@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252478>
 
-When we are running a string-list foreach or filter, the
-callback function sees only the string_list_item, along with
-a void* data pointer provided by the caller. This is
-sufficient for most purposes.
+When commands like "git branch --contains" want to know
+which branches contain a particular commit, they run a
+series of merge-base calculations, one per branch. This can
+be very slow if you have a large number of branches.
 
-However, it can also be useful to know the position of the
-item within the string (for example, if the data pointer
-points to a secondary array in which each element
-corresponds to part of the string list). We can help this
-use case by providing the position to each callback.
+We made "tag --contains" faster in ffc4b80 (tag: speed up
+--contains calculation, 2011-06-11) by switching to a
+different algorithm that caches intermediate "contains"
+information from each tag we check. The downside of the new
+algorithm is that it moves depth-first through the graph. So
+it tends to go all the way to the roots, even if the
+contained commit is near the top of history. That works OK
+for tags, because repositories tend to have tags near the
+roots anyway (e.g., a v0.1 or similar). The number of
+commits we look at increased a little bit, but since we
+avoid traversing over the same parts of history repeatedly,
+it was a huge net win.
+
+For "branch --contains", it is less clear that this is a
+win. Most branches stay up to date, so we can bound a search
+for a recent commit when we hit the merge base between the
+commit and the branches.
+
+The ideal would be to use the merge-base-style breadth-first
+traversal, but to perform a single traversal for all tips.
+The problem is that we need one bit of storage per tip in
+each commit, and "struct commit" has only a fixed number of
+bits. We can solve that by using a process similar to
+paint_down_to_common, but instead of storing PARENT1 and
+PARENT2 flags, using a commit slab to store one bit per tip.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-The diff here is noisy, and I expect in the long run that the one caller
-I add to builtin/tag.c later in the series will eventually stop using
-string_list entirely (in favor of a custom struct), which may leave us
-with no callers that actually use the new field.
+This is the interesting commit, and I'd really love some eyes on the
+logic. It's basically paint_down_to_common but with the PARENT1 and
+PARENT2 flags replaced with larger bitfields.
 
-I do think the logic above is sound, though, and it's a potentially
-useful thing. There may be other sites that avoid the for_each wrapper
-in favor of iterating themselves simply _because_ they needed to know
-the position (I would just do the same here, except that my new caller
-wants to use filter_string_list, which is a little more complicated).
+I haven't quite convinced myself that the stale logic in the middle is
+right. The origin paint_down function checks "PARENT1 | PARENT2" to see
+if we found a merge base (even though PARENT2 may represent many tips).
+Here I check whether we have _any_ "left" parent flag and _any_ "right"
+parent flag. I'm not sure if I actually need to be finding the merge
+base of _all_ of the commits. I don't think so, and I can't find a case
+where this doesn't work, but perhaps I am not being imaginative enough.
 
- builtin/clone.c    |  2 +-
- builtin/remote.c   | 12 ++++++------
- notes.c            |  1 +
- setup.c            |  1 +
- string-list.c      |  6 +++---
- string-list.h      |  9 +++++++--
- test-path-utils.c  |  2 +-
- test-string-list.c |  2 +-
- 8 files changed, 21 insertions(+), 14 deletions(-)
+ commit.c | 102 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ commit.h |  17 +++++++++++
+ 2 files changed, 119 insertions(+)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index b12989d..89d0709 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -227,7 +227,7 @@ static void strip_trailing_slashes(char *dir)
- 	*end = '\0';
+diff --git a/commit.c b/commit.c
+index 445b679..66e0def 100644
+--- a/commit.c
++++ b/commit.c
+@@ -11,6 +11,7 @@
+ #include "commit-slab.h"
+ #include "prio-queue.h"
+ #include "sha1-lookup.h"
++#include "bitset.h"
+ 
+ static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
+ 
+@@ -1040,6 +1041,107 @@ struct commit_list *reduce_heads(struct commit_list *heads)
+ 	return result;
  }
  
--static int add_one_reference(struct string_list_item *item, void *cb_data)
-+static int add_one_reference(struct string_list_item *item, int pos, void *cb_data)
- {
- 	char *ref_git;
- 	const char *repo;
-diff --git a/builtin/remote.c b/builtin/remote.c
-index c9102e8..bea0b58 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -925,7 +925,7 @@ struct show_info {
- 	int any_rebase;
- };
++define_commit_slab(bit_slab, unsigned char);
++
++static int init_contains_bits(const struct commit_list *commits,
++			      struct bit_slab *bits,
++			      struct prio_queue *queue)
++{
++	int i, nr = commit_list_count(commits);
++
++	init_bit_slab_with_stride(bits, bitset_sizeof(nr));
++	for (i = 0; i < nr; i++, commits = commits->next) {
++		struct commit *c = commits->item;
++
++		prio_queue_put(queue, c);
++		bitset_set(bit_slab_at(bits, c), i);
++	}
++
++	return nr;
++}
++
++static int queue_has_nonstale_bits(struct prio_queue *queue, struct bit_slab *stale)
++{
++	int i;
++	for (i = 0; i < queue->nr; i++) {
++		struct commit *commit = queue->array[i];
++		if (!*bit_slab_at(stale, commit))
++			return 1;
++	}
++	return 0;
++}
++
++static void fill_contains_result(unsigned char *result, int nr,
++				 struct bit_slab *bits,
++				 const struct commit_list *other_side)
++{
++	const struct commit_list *c;
++
++	memset(result, 0, nr);
++	for (c = other_side; c; c = c->next) {
++		unsigned char *c_bits = bit_slab_at(bits, c->item);
++		int i;
++
++		for (i = 0; i < nr; i++)
++			result[i] |= bitset_get(c_bits, i);
++	}
++}
++
++void commit_contains(const struct commit_list *left,
++		     const struct commit_list *right,
++		     unsigned char *left_contains,
++		     unsigned char *right_contains)
++{
++	struct prio_queue queue = { compare_commits_by_commit_date };
++	struct bit_slab left_bits, right_bits, stale_bits;
++	int left_nr, right_nr;
++
++	left_nr = init_contains_bits(left, &left_bits, &queue);
++	right_nr = init_contains_bits(right, &right_bits, &queue);
++	init_bit_slab(&stale_bits);
++
++	while (queue_has_nonstale_bits(&queue, &stale_bits)) {
++		struct commit *commit = prio_queue_get(&queue);
++		struct commit_list *parents;
++		unsigned char *c_left, *c_right, *c_stale;
++
++		c_left = bit_slab_at(&left_bits, commit);
++		c_right = bit_slab_at(&right_bits, commit);
++		c_stale = bit_slab_at(&stale_bits, commit);
++
++		if (!bitset_empty(c_left, left_nr) &&
++		    !bitset_empty(c_right, right_nr))
++			*c_stale = 1;
++
++		for (parents = commit->parents; parents; parents = parents->next) {
++			struct commit *p = parents->item;
++			unsigned char *p_left = bit_slab_at(&left_bits, p),
++				      *p_right = bit_slab_at(&right_bits, p);
++
++			if (bitset_equal(c_left, p_left, left_nr) &&
++			    bitset_equal(c_right, p_right, right_nr))
++				continue;
++			if (parse_commit(p))
++				die("unable to parse commit");
++			bitset_or(p_left, c_left, left_nr);
++			bitset_or(p_right, c_right, right_nr);
++			*bit_slab_at(&stale_bits, p) |= *c_stale;
++			prio_queue_put(&queue, p);
++		}
++	}
++
++	if (left_contains)
++		fill_contains_result(left_contains, left_nr, &left_bits, right);
++	if (right_contains)
++		fill_contains_result(right_contains, right_nr, &right_bits, left);
++
++	clear_prio_queue(&queue);
++	clear_bit_slab(&left_bits);
++	clear_bit_slab(&right_bits);
++	clear_bit_slab(&stale_bits);
++}
++
++
+ static const char gpg_sig_header[] = "gpgsig";
+ static const int gpg_sig_header_len = sizeof(gpg_sig_header) - 1;
  
--static int add_remote_to_show_info(struct string_list_item *item, void *cb_data)
-+static int add_remote_to_show_info(struct string_list_item *item, int pos, void *cb_data)
- {
- 	struct show_info *info = cb_data;
- 	int n = strlen(item->string);
-@@ -935,7 +935,7 @@ static int add_remote_to_show_info(struct string_list_item *item, void *cb_data)
- 	return 0;
- }
+diff --git a/commit.h b/commit.h
+index a9f177b..d3a142a 100644
+--- a/commit.h
++++ b/commit.h
+@@ -307,4 +307,21 @@ int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused)
+ LAST_ARG_MUST_BE_NULL
+ extern int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
  
--static int show_remote_info_item(struct string_list_item *item, void *cb_data)
-+static int show_remote_info_item(struct string_list_item *item, int pos, void *cb_data)
- {
- 	struct show_info *info = cb_data;
- 	struct ref_states *states = info->states;
-@@ -962,7 +962,7 @@ static int show_remote_info_item(struct string_list_item *item, void *cb_data)
- 	return 0;
- }
- 
--static int add_local_to_show_info(struct string_list_item *branch_item, void *cb_data)
-+static int add_local_to_show_info(struct string_list_item *branch_item, int pos, void *cb_data)
- {
- 	struct show_info *show_info = cb_data;
- 	struct ref_states *states = show_info->states;
-@@ -984,7 +984,7 @@ static int add_local_to_show_info(struct string_list_item *branch_item, void *cb
- 	return 0;
- }
- 
--static int show_local_info_item(struct string_list_item *item, void *cb_data)
-+static int show_local_info_item(struct string_list_item *item, int pos, void *cb_data)
- {
- 	struct show_info *show_info = cb_data;
- 	struct branch_info *branch_info = item->util;
-@@ -1016,7 +1016,7 @@ static int show_local_info_item(struct string_list_item *item, void *cb_data)
- 	return 0;
- }
- 
--static int add_push_to_show_info(struct string_list_item *push_item, void *cb_data)
-+static int add_push_to_show_info(struct string_list_item *push_item, int pos, void *cb_data)
- {
- 	struct show_info *show_info = cb_data;
- 	struct push_info *push_info = push_item->util;
-@@ -1045,7 +1045,7 @@ static int cmp_string_with_push(const void *va, const void *vb)
- 	return cmp ? cmp : strcmp(a_push->dest, b_push->dest);
- }
- 
--static int show_push_info_item(struct string_list_item *item, void *cb_data)
-+static int show_push_info_item(struct string_list_item *item, int pos, void *cb_data)
- {
- 	struct show_info *show_info = cb_data;
- 	struct push_info *push_info = item->util;
-diff --git a/notes.c b/notes.c
-index 5fe691d..f7a84f9 100644
---- a/notes.c
-+++ b/notes.c
-@@ -881,6 +881,7 @@ static int string_list_add_note_lines(struct string_list *list,
- }
- 
- static int string_list_join_lines_helper(struct string_list_item *item,
-+					 int pos,
- 					 void *cb_data)
- {
- 	struct strbuf *buf = cb_data;
-diff --git a/setup.c b/setup.c
-index 0a22f8b..0fe92fe 100644
---- a/setup.c
-+++ b/setup.c
-@@ -586,6 +586,7 @@ static dev_t get_device_or_die(const char *path, const char *prefix, int prefix_
-  * subsequent entries.
-  */
- static int canonicalize_ceiling_entry(struct string_list_item *item,
-+				      int pos,
- 				      void *cb_data)
- {
- 	int *empty_entry_found = cb_data;
-diff --git a/string-list.c b/string-list.c
-index aabb25e..85e1e41 100644
---- a/string-list.c
-+++ b/string-list.c
-@@ -116,7 +116,7 @@ int for_each_string_list(struct string_list *list,
- {
- 	int i, ret = 0;
- 	for (i = 0; i < list->nr; i++)
--		if ((ret = fn(&list->items[i], cb_data)))
-+		if ((ret = fn(&list->items[i], i, cb_data)))
- 			break;
- 	return ret;
- }
-@@ -126,7 +126,7 @@ void filter_string_list(struct string_list *list, int free_util,
- {
- 	int src, dst = 0;
- 	for (src = 0; src < list->nr; src++) {
--		if (want(&list->items[src], cb_data)) {
-+		if (want(&list->items[src], src, cb_data)) {
- 			list->items[dst++] = list->items[src];
- 		} else {
- 			if (list->strdup_strings)
-@@ -138,7 +138,7 @@ void filter_string_list(struct string_list *list, int free_util,
- 	list->nr = dst;
- }
- 
--static int item_is_not_empty(struct string_list_item *item, void *unused)
-+static int item_is_not_empty(struct string_list_item *item, int pos, void *unused)
- {
- 	return *item->string != '\0';
- }
-diff --git a/string-list.h b/string-list.h
-index dd5e294..3318076 100644
---- a/string-list.h
-+++ b/string-list.h
-@@ -26,8 +26,13 @@ void string_list_clear(struct string_list *list, int free_util);
- typedef void (*string_list_clear_func_t)(void *p, const char *str);
- void string_list_clear_func(struct string_list *list, string_list_clear_func_t clearfunc);
- 
--/* Use this function or the macro below to iterate over each item */
--typedef int (*string_list_each_func_t)(struct string_list_item *, void *);
 +/*
-+ * Use this function or the macro below to iterate over each item. Each item
-+ * is passed as the first argument to an invocation of the callback. The second
-+ * argument, "pos", is the numeric position of the first argument within the
-+ * list (_not_ an offset from the first item).
++ * Calculate which commits in left contain commits in right, and vice versa.
++ *
++ * The left_contains result, if non-NULL, must point to an array of unsigned
++ * char with as many elements as there are items in the "left" commit_list.
++ * When the function completes, the nth char in left_contains will be non-zero
++ * iff the nth commit in the "left" list contains at least one commit from the
++ * "right" list.
++ *
++ * The right_contains result works in the same way, but with left and right
++ * swapped.
 + */
-+typedef int (*string_list_each_func_t)(struct string_list_item *, int pos, void *);
- int for_each_string_list(struct string_list *list,
- 			 string_list_each_func_t, void *cb_data);
- #define for_each_string_list_item(item,list) \
-diff --git a/test-path-utils.c b/test-path-utils.c
-index 3dd3744..f3c584b 100644
---- a/test-path-utils.c
-+++ b/test-path-utils.c
-@@ -6,7 +6,7 @@
-  * GIT_CEILING_DIRECTORIES.  If the path is unusable for some reason,
-  * die with an explanation.
-  */
--static int normalize_ceiling_entry(struct string_list_item *item, void *unused)
-+static int normalize_ceiling_entry(struct string_list_item *item, int pos, void *unused)
- {
- 	const char *ceil = item->string;
- 	int len = strlen(ceil);
-diff --git a/test-string-list.c b/test-string-list.c
-index 14bdf9d..85d9893 100644
---- a/test-string-list.c
-+++ b/test-string-list.c
-@@ -35,7 +35,7 @@ static void write_list_compact(const struct string_list *list)
- 	}
- }
- 
--static int prefix_cb(struct string_list_item *item, void *cb_data)
-+static int prefix_cb(struct string_list_item *item, int pos, void *cb_data)
- {
- 	const char *prefix = (const char *)cb_data;
- 	return starts_with(item->string, prefix);
++void commit_contains(const struct commit_list *left,
++		     const struct commit_list *right,
++		     unsigned char *left_contains,
++		     unsigned char *right_contains);
++
+ #endif /* COMMIT_H */
 -- 
 2.0.0.566.gfe3e6b2
