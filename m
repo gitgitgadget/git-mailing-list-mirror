@@ -1,101 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 06/10] setup_git_env: use git_pathdup instead of xmalloc + sprintf
-Date: Wed, 25 Jun 2014 12:54:38 -0700
-Message-ID: <xmqqtx789341.fsf@gitster.dls.corp.google.com>
-References: <20140619211659.GA32412@sigill.intra.peff.net>
-	<20140619212800.GF28474@sigill.intra.peff.net>
-	<CACsJy8B-zQUH++U_RKq16_M+6FF5bmHXA100xM3uO42TUj3kJg@mail.gmail.com>
-	<20140624205815.GA28724@sigill.intra.peff.net>
-	<xmqqmwd0aotu.fsf@gitster.dls.corp.google.com>
-	<20140625172237.GA15294@sigill.intra.peff.net>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH v3 2/3] config: add hashtable for config parsing & retrieval
+Date: Wed, 25 Jun 2014 22:23:06 +0200
+Message-ID: <53AB2FAA.0@gmail.com>
+References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com>	<1403518300-23053-3-git-send-email-tanayabh@gmail.com>	<53A84077.4010200@ramsay1.demon.co.uk>	<xmqqsimv9pjx.fsf@gitster.dls.corp.google.com>	<53A99FEB.5040808@ramsay1.demon.co.uk> <xmqq61joamcc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	=?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jun 25 21:54:58 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Jun 25 22:23:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WztHP-0002wm-D2
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 21:54:51 +0200
+	id 1Wztir-0000Y2-EP
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 22:23:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754743AbaFYTyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 15:54:47 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52472 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754550AbaFYTyq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 15:54:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DD97422559;
-	Wed, 25 Jun 2014 15:54:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fo5gM+kIo4cIuWsgbdgXyBZge8Y=; b=IYEbg8
-	yn9toPhP8QKbRA+VkKhh7BxBd6RiepWd+U+GSk8dVTfPe298b08sK1Q0KK1jiv07
-	X8Sw+LAle2gmJ0Zpb1WWRjuc9HgX57XbExxmvye8mPXE3QeG0QVeyy+/lwm1gCGr
-	EVuT3vmMTNe759MAc+CyEtTSbxYdZose2caMQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LKkaNWvAQB+f0bBR6AlyqDoO2y5x2yrN
-	GRlHhMk1+bo8F16K/Idc9nmK6WoC04gvilvmkCGMRhw8CBEscBBapx8eYr8RbiF3
-	of7HbJZdEUnhl+fFLPVVsLk485qCwYlqt2NOA7rAKlUMs2Ft1KG240RmuS6pAb45
-	tE5s0tLm/WI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CEF1C22558;
-	Wed, 25 Jun 2014 15:54:38 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BEDB022554;
-	Wed, 25 Jun 2014 15:54:33 -0400 (EDT)
-In-Reply-To: <20140625172237.GA15294@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 25 Jun 2014 13:22:38 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 87689E4C-FCA2-11E3-9780-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S964777AbaFYUXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 16:23:08 -0400
+Received: from mail-wi0-f180.google.com ([209.85.212.180]:56673 "EHLO
+	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932426AbaFYUXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 16:23:07 -0400
+Received: by mail-wi0-f180.google.com with SMTP id hi2so3150831wib.1
+        for <git@vger.kernel.org>; Wed, 25 Jun 2014 13:23:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=eyxv04qyIcvNTXuvRLq5QF+SmHM1r/ezZ3D9lJA0vNU=;
+        b=oWh4P44Ni7ipx4efSJySGhbtnR0V6iKrGbV4XAFjuRq3VZG/j7QTiW+mxPD2kLD8J+
+         GLYXlX+JOchPQQsnqTMLyLq4bE88YE0ZsB4zi53rerGh3dEEKb5NcyXKACgmO9v50WBW
+         81/cguRK0230in9CGodVKdlM5r+X8t/d/QFI9VIJMM9rb46nF8PGR0Lx3jHsn3jdMF6b
+         zCa0NBiTUMYTxds7Qqxic7qORcHygXdZGH12IM+F+GcMlGNM/lZjOwSNyS5nPQZ5NyrM
+         kcE18JKfFXuSWUB3zyk885q1VW34eI748mpMivAaFFG0kuoLJ1z/PrvpObTk3Xbyda12
+         STQw==
+X-Received: by 10.194.57.132 with SMTP id i4mr12197229wjq.6.1403727785481;
+        Wed, 25 Jun 2014 13:23:05 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id i4sm15971059wib.21.2014.06.25.13.23.04
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 25 Jun 2014 13:23:04 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqq61joamcc.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252456>
 
-Jeff King <peff@peff.net> writes:
+Am 25.06.2014 20:13, schrieb Junio C Hamano:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+> 
+>> On 24/06/14 00:25, Junio C Hamano wrote:
+>> ...
+>>> Yup, that is a very good point.  There needs an infrastructure to
+>>> tie a set of files (i.e. the standard one being the chain of
+>>> system-global /etc/gitconfig to repo-specific .git/config, and any
+>>> custom one that can be specified by the caller like submodule code)
+>>> to a separate hashmap; a future built-in submodule code would use
+>>> two hashmaps aka "config-caches", one to manage the usual
+>>> "configuration" and the other to manage the contents of the
+>>> .gitmodules file.
+>>>
+>>
+>> I had expected to see one hash table per file/blob, with the three
+>> standard config hash tables linked together to implement the scope/
+>> priority rules. (Well, these could be merged into one, as the current
+>> code does, since that makes handling "multi" keys slightly easier).
+> 
+> Again, good point.  I think a rough outline of a design that take
+> both
+> 
+>  (1) we may have to read two or more separate sets of "config like
+>      things" (e.g. the contents from the normal config system and
+>      the contents from the .gitmodules file) and
+> 
+>  (2) we may have to read two or more files that make up a logically
+>      single set of "config-like things" (e.g. the "normal config
+>      system" reads from three separate files)
+> 
+> into account may look like this:
+> 
+>  * Each instance of in-core "config-like things" is expressed as a
+>    struct "config-set".
+> 
+>  * A "config-set" points at an ordered set of struct "config-file",
+>    each of which represents what was read and cached in-core from a
+>    file.
 
-> On Wed, Jun 25, 2014 at 10:20:13AM -0700, Junio C Hamano wrote:
->
->> Jeff King <peff@peff.net> writes:
->> 
->> > Here's a replacement patch that handles this (and just drops the ugly
->> > mallocs as a side effect).
->> >
->> > -- >8 --
->> > Subject: [PATCH] setup_git_env: copy getenv return value
->> >
->> > The return value of getenv is not guaranteed to survive
->> > across further invocations of setenv or even getenv. When we
->> > are assigning it to globals that last the lifetime of the
->> > program, we should make our own copy.
->> >
->> > Signed-off-by: Jeff King <peff@peff.net>
->> > ---
->> 
->> Sigh. This mail unfortunately crossed with 64f25581 (Merge branch 'jk/xstrfmt'
->> into next, 2014-06-23) with about 20 hours of lag.
->
-> Ah, sorry. I had checked yesterday that jk/xstrfmt hadn't been merged
-> yet, but I didn't check when responding to Duy.
+Is this additional complexity really necessary?
 
-Sorry to have sighed --- crossing e-mails happen all the time.  No
-need to feel sorry.
+How would you handle included files? Split up the including file in before / after parts? I.e.
 
->> I'd make it relative like the attached on top of the series.  Note
->> that I tweaked the args to git_pathdup() to avoid the "are you sure
->> you want to give a variable format string to git_pathdup() which you
->> said is like printf(3)?" warning from the compiler.
->
-> Both changes look good to me. Thanks for taking care of it.
+  repo-config-file[include-to-end]
+  included-file
+  repo-config-file[top-to-include]
+  user-config-file
+  ...
 
-Thanks.
+Looking up a single-valued key would then be O(n) (where n is the number of sruct config_file's in the config_set) rather than O(1).
+
+Looking up a multi-valued key would involve joining values from all files, every time the value is looked up (dynamically allocating lists on the heap etc.).
+
+The configuration is typically loaded once, followed by lots of lookups. So from a performance perspective, doing the merging at load time is sure better.
+
+> 
+>  * When we know or notice that a single file on the filesystem was
+>    modified, we do not have to invalidate the whole "config-set"
+>    that depends on the file; the "config-file" that corresponds to
+>    the file on the filesystem is invalidated instead.
+> 
+
+What's the use case for this? Do you expect e.g. 'git gc' to detect changed depth/window size at run time and adjust the algorithm accordingly? Or do you just intend to cache parsed config data (the latter could be done by recording all involved file names and stats in the config-set and reloading the whole thing if any of the files change)?
