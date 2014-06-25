@@ -1,213 +1,193 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/8] paint_down_to_common: use prio_queue
-Date: Wed, 25 Jun 2014 19:39:52 -0400
-Message-ID: <20140625233952.GC23146@sigill.intra.peff.net>
+Subject: [PATCH 4/8] add functions for memory-efficient bitmaps
+Date: Wed, 25 Jun 2014 19:40:01 -0400
+Message-ID: <20140625234000.GD23146@sigill.intra.peff.net>
 References: <20140625233429.GA20457@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 01:39:58 2014
+X-From: git-owner@vger.kernel.org Thu Jun 26 01:40:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzwnF-00032y-TL
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 01:39:58 +0200
+	id 1WzwnR-0003E0-FT
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 01:40:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756676AbaFYXjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 19:39:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51218 "HELO peff.net"
+	id S1755308AbaFYXkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 19:40:03 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51221 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755212AbaFYXjx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 19:39:53 -0400
-Received: (qmail 4979 invoked by uid 102); 25 Jun 2014 23:39:53 -0000
+	id S1752641AbaFYXkC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 19:40:02 -0400
+Received: (qmail 5036 invoked by uid 102); 25 Jun 2014 23:40:02 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 18:39:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 19:39:52 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 18:40:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 19:40:01 -0400
 Content-Disposition: inline
 In-Reply-To: <20140625233429.GA20457@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252476>
 
-When we are traversing to find merge bases, we keep our
-usual commit_list of commits to process, sorted by their
-commit timestamp. As we add each parent to the list, we have
-to spend "O(width of history)" to do the insertion, where
-the width of history is the number of simultaneous lines of
-development.
+We already have a nice-to-use bitmap implementation in
+ewah/bitmap.c. It pretends to be infinitely long when asking
+for a bit (and just returns 0 for bits that haven't been
+allocated or set), and dynamically resizes as appropriate
+when you set bits.
 
-If we instead use a heap-based priority queue, we can do
-these insertions in "O(log width)" time. This provides minor
-speedups to merge-base calculations (timings in linux.git,
-warm cache, best-of-five):
+The cost to this is that each bitmap must store its own
+pointer and length, using up to 16 bytes per bitmap on top
+of the actual bit storage. This is a lot of storage (not to
+mention an extra level of pointer indirection) if you are
+going to store one bitmap per commit in a traversal.
 
-  [before]
-  $ git merge-base HEAD v2.6.12
-  real    0m3.251s
-  user    0m3.148s
-  sys     0m0.104s
-
-  [after]
-  $ git merge-base HEAD v2.6.12
-  real    0m3.234s
-  user    0m3.108s
-  sys     0m0.128s
-
-That's only an 0.5% speedup, but it does help protect us
-against pathological cases.
-
-The downside is that our priority queue is not stable, which
-means that commits with the same timestamp may not come out
-in the order we put them in. You can see this in the test
-update in t6024. That test does a recursive merge across a
-set of commits that all have the same timestamp. For the
-virtual ancestor, the test currently ends up with blob like
-this:
-
-    <<<<<<< Temporary merge branch 1
-    <<<<<<< Temporary merge branch 1
-    C
-    =======
-    B
-    >>>>>>> Temporary merge branch 2
-    =======
-    A
-    >>>>>>> Temporary merge branch 2
-
-but with this patch, the positions of B and A are swapped.
-This is probably fine, as the order is an internal
-implementation detail anyway (it would _not_ be fine if we
-were using a priority queue for "git log" traversal, which
-should show commits in parent order).
-
-While we are munging the "interesting" function, we also
-take the opportunity to give it a more descriptive name, and
-convert the return value to an int (we returned the first
-interesting commit, but nobody ever looked at it).
+These functions provide an alternative bitmap implementation
+that can be used when you have a large number of fixed-size
+bitmaps. See the documentation in the header file for
+details and examples.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This one is not strictly required for the series; it's just that I'm
-adding what is essentially a clone of paint_down_to_common later in the
-series. I wanted to use the priority queue there, too, so I looked into
-using it here.
+ Makefile |   1 +
+ bitset.h | 113 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 114 insertions(+)
+ create mode 100644 bitset.h
 
-I'm slightly hesitant because of the stability thing mentioned above. I
-_think_ it's probably fine. But we could also implement a
-stable_prio_queue on top of the existing prio_queue if we're concerned
-(and that may be something we want to do anyway, because "git log" would
-want that if it switched to a priority queue).
-
-I had no recollection while writing this patch, but after searching the
-list for "stable priority queue", I realized that Junio and I discussed
-it quite extensively a few years ago:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/204386/focus=204534
-
-I think the conclusion there is that what this patch does is acceptable.
-
- commit.c                   | 42 +++++++++++++++++++-----------------------
- t/t6024-recursive-merge.sh |  2 +-
- 2 files changed, 20 insertions(+), 24 deletions(-)
-
-diff --git a/commit.c b/commit.c
-index 881be3b..445b679 100644
---- a/commit.c
-+++ b/commit.c
-@@ -729,45 +729,41 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
- 
- static const unsigned all_flags = (PARENT1 | PARENT2 | STALE | RESULT);
- 
--static struct commit *interesting(struct commit_list *list)
-+static int queue_has_nonstale(struct prio_queue *queue)
- {
--	while (list) {
--		struct commit *commit = list->item;
--		list = list->next;
--		if (commit->object.flags & STALE)
--			continue;
--		return commit;
-+	int i;
-+	for (i = 0; i < queue->nr; i++) {
-+		struct commit *commit = queue->array[i];
-+		if (!(commit->object.flags & STALE))
-+			return 1;
- 	}
--	return NULL;
-+	return 0;
- }
- 
- /* all input commits in one and twos[] must have been parsed! */
- static struct commit_list *paint_down_to_common(struct commit *one, int n, struct commit **twos)
- {
--	struct commit_list *list = NULL;
-+	struct prio_queue queue = { compare_commits_by_commit_date };
- 	struct commit_list *result = NULL;
- 	int i;
- 
- 	one->object.flags |= PARENT1;
--	commit_list_insert_by_date(one, &list);
--	if (!n)
--		return list;
-+	if (!n) {
-+		commit_list_append(one, &result);
-+		return result;
-+	}
-+	prio_queue_put(&queue, one);
+diff --git a/Makefile b/Makefile
+index 07ea105..8158fd2 100644
+--- a/Makefile
++++ b/Makefile
+@@ -633,6 +633,7 @@ LIB_H += archive.h
+ LIB_H += argv-array.h
+ LIB_H += attr.h
+ LIB_H += bisect.h
++LIB_H += bitset.h
+ LIB_H += blob.h
+ LIB_H += branch.h
+ LIB_H += builtin.h
+diff --git a/bitset.h b/bitset.h
+new file mode 100644
+index 0000000..5fbc956
+--- /dev/null
++++ b/bitset.h
+@@ -0,0 +1,113 @@
++#ifndef BITSET_H
++#define BITSET_H
 +
- 	for (i = 0; i < n; i++) {
- 		twos[i]->object.flags |= PARENT2;
--		commit_list_insert_by_date(twos[i], &list);
-+		prio_queue_put(&queue, twos[i]);
- 	}
- 
--	while (interesting(list)) {
--		struct commit *commit;
-+	while (queue_has_nonstale(&queue)) {
-+		struct commit *commit = prio_queue_get(&queue);
- 		struct commit_list *parents;
--		struct commit_list *next;
- 		int flags;
- 
--		commit = list->item;
--		next = list->next;
--		free(list);
--		list = next;
--
- 		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
- 		if (flags == (PARENT1 | PARENT2)) {
- 			if (!(commit->object.flags & RESULT)) {
-@@ -786,11 +782,11 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
- 			if (parse_commit(p))
- 				return NULL;
- 			p->object.flags |= flags;
--			commit_list_insert_by_date(p, &list);
-+			prio_queue_put(&queue, p);
- 		}
- 	}
- 
--	free_commit_list(list);
-+	clear_prio_queue(&queue);
- 	return result;
- }
- 
-diff --git a/t/t6024-recursive-merge.sh b/t/t6024-recursive-merge.sh
-index 755d30c..c3c634f 100755
---- a/t/t6024-recursive-merge.sh
-+++ b/t/t6024-recursive-merge.sh
-@@ -76,7 +76,7 @@ test_expect_success "result contains a conflict" "test_cmp expect a1"
- 
- git ls-files --stage > out
- cat > expect << EOF
--100644 439cc46de773d8a83c77799b7cc9191c128bfcff 1	a1
-+100644 222cbac87715ba85080f8b1463833bb3cfb3b9e0 1	a1
- 100644 cf84443e49e1b366fac938711ddf4be2d4d1d9e9 2	a1
- 100644 fd7923529855d0b274795ae3349c5e0438333979 3	a1
- EOF
++/*
++ * This header file provides functions for operating on an array of unsigned
++ * characters as a bitmap. There is zero per-bitset storage overhead beyond the
++ * actual number of stored bits (modulo some padding). This is efficient, but
++ * makes the API harder to use. In particular, each bitset does not know how
++ * long it is. It is the caller's responsibility to:
++ *
++ *   1. Never ask to get or set a bit outside of the allocated range.
++ *
++ *   2. Provide the allocated range to any functions which operate
++ *      on the whole bitset (e.g., bitset_or).
++ *
++ *   3. Always feed bitsets of the same size to functions which require it
++ *      (e.g., bitset_or).
++ *
++ * It is mostly intended to be used with commit-slabs to store N bits per
++ * commit. Here's an example:
++ *
++ *   define_commit_slab(bit_slab, unsigned char);
++ *
++ *   ... assume we want to store nr bits per commit ...
++ *   struct bit_slab bits;
++ *   init_bit_slab_with_stride(&bits, bitset_sizeof(nr));
++ *
++ *   ... set a bit (make sure 10 < nr!) ...
++ *   bitset_set(bit_slab_at(&bits, commit), 10);
++ *
++ *   ... or get a bit ...
++ *   if (bitset_get(bit_slab_at(&bits, commit), 5))
++ *
++ *   ... propagate bits to a parent commit ...
++ *   bitset_or(bit_slab_at(&bits, parent),
++ *	       bit_slab_at(&bits, commit),
++ *	       nr);
++ */
++
++/*
++ * Return the number of unsigned chars required to store num_bits bits.
++ *
++ * This is mostly used internally by the bitset functions, but you may need it
++ * when allocating the bitset. Example:
++ *
++ *   bits = xcalloc(1, bitset_sizeof(nr));
++ */
++static inline int bitset_sizeof(int num_bits)
++{
++	return (num_bits + CHAR_BIT - 1) / CHAR_BIT;
++}
++
++/*
++ * Set the bit at position "n". "n" is counted from zero, and must be
++ * smaller than the num_bits given to bitset_sizeof when allocating the bitset.
++ */
++static inline void bitset_set(unsigned char *bits, int n)
++{
++	bits[n / CHAR_BIT] |= 1 << (n % CHAR_BIT);
++}
++
++/*
++ * Return the bit at position "n" (see bitset_set for a description of "n").
++ */
++static inline int bitset_get(unsigned char *bits, int n)
++{
++	return !!(bits[n / CHAR_BIT] & (1 << (n % CHAR_BIT)));
++}
++
++/*
++ * Return true iff the bitsets contain the same bits. Each bitset should be the
++ * same size, and should have been allocated using bitset_sizeof(max).
++ *
++ * Note that it is not safe to check partial equality by providing a smaller
++ * "max" (we assume any bits beyond "max" up to the next CHAR_BIT boundary are
++ * zeroed padding).
++ */
++static inline int bitset_equal(unsigned char *a, unsigned char *b, int max)
++{
++	int i;
++	for (i = bitset_sizeof(max); i > 0; i--)
++		if (*a++ != *b++)
++			return 0;
++	return 1;
++}
++
++/*
++ * Bitwise-or the bitsets in "dst" and "src", and store the result in "dst".
++ *
++ * See bitset_equal for the definition of "max".
++ */
++static inline void bitset_or(unsigned char *dst, const unsigned char *src, int max)
++{
++	int i;
++	for (i = bitset_sizeof(max); i > 0; i--)
++		*dst++ |= *src++;
++}
++
++/*
++ * Returns true iff the bitset contains all zeroes.
++ *
++ * See bitset_equal for the definition of "max".
++ */
++static inline int bitset_empty(const unsigned char *bits, int max)
++{
++	int i;
++	for (i = bitset_sizeof(max); i > 0; i--, bits++)
++		if (*bits)
++			return 0;
++	return 1;
++}
++
++#endif /* BITSET_H */
 -- 
 2.0.0.566.gfe3e6b2
