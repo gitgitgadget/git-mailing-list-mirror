@@ -1,118 +1,96 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/PATCH] notes.c: replace git_config with git_config_get_string
-Date: Wed, 25 Jun 2014 04:06:08 -0400
-Message-ID: <CAPig+cR-fdXCe+9e89++KrLPqfPkbSi4FeU_gD=fwfrMnH-a2Q@mail.gmail.com>
-References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>
-	<1403520105-23250-5-git-send-email-tanayabh@gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: BUG: git request-pull broken for plain branches
+Date: Wed, 25 Jun 2014 11:55:35 +0200
+Message-ID: <20140625095535.GA27365@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 10:07:01 2014
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, kernel@pengutronix.de
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 11:55:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WziEO-00071k-BP
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 10:07:00 +0200
+	id 1Wzjvh-0007KG-Aq
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 11:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755284AbaFYIGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 04:06:52 -0400
-Received: from mail-yh0-f43.google.com ([209.85.213.43]:39307 "EHLO
-	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754563AbaFYIGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 04:06:09 -0400
-Received: by mail-yh0-f43.google.com with SMTP id a41so938458yho.2
-        for <git@vger.kernel.org>; Wed, 25 Jun 2014 01:06:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=JvDjMagCG+JhKmucZxH3HYUBgQi3vmbRDWPZtJad/54=;
-        b=VJX4Thuk/QVlZFXTDp2mHXVvcTpcXBRGdjKfG9m9wlSDo9SfIbWo5X0ErTYizqUzD4
-         VxIqOfW8KVgDzkcj6jy736T0X4lMmat5tAKJSPQ3wCA//9YMODVRqtfS8cBFtXJJbMfN
-         0s1xvYOmzVsOt/fs5T9G4lWk798sDy1+or0vG1ni7O+wQC+NIV0SYZIh4MJ/n4Qh4+GS
-         6PdkTBQrm+HXkDb22jdsyolFPxP9EyQCAX8xvfzjomldwASr+RNA/2KMobXzTDJAqcOW
-         8v3auxMXQj218Jg1eH3vE1pwjNT6R80224NHJ4U8LqwJzVNJw1Ia8nVHd2E7rNSXnFCH
-         mvoA==
-X-Received: by 10.236.13.46 with SMTP id a34mr9514609yha.28.1403683568594;
- Wed, 25 Jun 2014 01:06:08 -0700 (PDT)
-Received: by 10.170.120.69 with HTTP; Wed, 25 Jun 2014 01:06:08 -0700 (PDT)
-In-Reply-To: <1403520105-23250-5-git-send-email-tanayabh@gmail.com>
-X-Google-Sender-Auth: _zPUCdCTB2TxV3IAOpQCmaanAzk
+	id S1756124AbaFYJzp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Jun 2014 05:55:45 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:50632 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752609AbaFYJzn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 05:55:43 -0400
+Received: from ptx.hi.pengutronix.de ([2001:6f8:1178:2:5054:ff:fec0:8e10] ident=Debian-exim)
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1WzjvW-0006yF-3A; Wed, 25 Jun 2014 11:55:38 +0200
+Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.80)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1WzjvT-0001TW-TT; Wed, 25 Jun 2014 11:55:35 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:5054:ff:fec0:8e10
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252439>
 
-On Mon, Jun 23, 2014 at 6:41 AM, Tanay Abhra <tanayabh@gmail.com> wrote:
-> Use git_config_get_string instead of git_config to take advantage of
-> the config hash-table api which provides a cleaner control flow.
->
-> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
-> ---
->  notes.c | 20 ++++++--------------
->  1 file changed, 6 insertions(+), 14 deletions(-)
->
-> diff --git a/notes.c b/notes.c
-> index 5fe691d..fc92eec 100644
-> --- a/notes.c
-> +++ b/notes.c
-> @@ -961,19 +961,6 @@ void string_list_add_refs_from_colon_sep(struct string_list *list,
->         free(globs_copy);
->  }
->
-> -static int notes_display_config(const char *k, const char *v, void *cb)
-> -{
-> -       int *load_refs = cb;
-> -
-> -       if (*load_refs && !strcmp(k, "notes.displayref")) {
-> -               if (!v)
-> -                       config_error_nonbool(k);
-> -               string_list_add_refs_by_glob(&display_notes_refs, v);
-> -       }
-> -
-> -       return 0;
-> -}
-> -
->  const char *default_notes_ref(void)
->  {
->         const char *notes_ref = NULL;
-> @@ -1041,6 +1028,7 @@ struct notes_tree **load_notes_trees(struct string_list *refs)
->  void init_display_notes(struct display_notes_opt *opt)
->  {
->         char *display_ref_env;
-> +       const char *value;
->         int load_config_refs = 0;
->         display_notes_refs.strdup_strings = 1;
->
-> @@ -1058,7 +1046,11 @@ void init_display_notes(struct display_notes_opt *opt)
->                         load_config_refs = 1;
->         }
->
-> -       git_config(notes_display_config, &load_config_refs);
-> +       if (load_config_refs && !git_config_get_string("notes.displayref", &value)) {
-> +               if (!value)
-> +                       config_error_nonbool("notes.displayref");
-> +               string_list_add_refs_by_glob(&display_notes_refs, value);
+Hello,
 
-Although you correctly diagnose a NULL 'value', you then invoke
-string_list_add_refs_by_glob() with that NULL, which will result in a
-crash.
+I have git from Debian's 2.0.0-2 package:
 
-This is not a new error. It dates back to 894a9d33 (Support showing
-notes from more than one notes tree; 2010-03-12), but your rewrite
-should not retain the brokenness. Whether you fix it in this patch or
-a lead-in fix-up patch, the fix deserves mention in the commit
-message.
+	$ git version
+	git version 2.0.0
 
-> +       }
->
->         if (opt) {
->                 struct string_list_item *item;
-> --
-> 1.9.0.GIT
+git request-pull is broken for me:
+
+	$ git rev-parse HEAD
+	9e065e4a5a58308f1a0da4bb80b830929dfa90b3
+	$ git ls-remote origin | grep 9e065e4a5a58308f1a0da4bb80b830929dfa90b3
+	9e065e4a5a58308f1a0da4bb80b830929dfa90b3	refs/heads/ukl/for-mainline
+	$ git request-pull origin/master origin HEAD > /dev/null
+	warn: No match for commit 9e065e4a5a58308f1a0da4bb80b830929dfa90b3 fou=
+nd at origin
+	warn: Are you sure you pushed 'HEAD' there?
+
+The same happens on 2.0.0.421.g786a89d.
+
+The problem is in git-request-pull.sh's find_matching_ref. This code ha=
+s
+more than one problem (looking on 2.0.0.421.g786a89d):
+
+	- find_matching_ref doesn't assign to $found if none of the if
+	  conditions in the loop match (this results in my problem);
+	- find_matching_ref happily overwrites $found even if the
+	  previous ref was better according to the metric specified
+	  above the definition of find_matching_ref; and
+	- the output generated uses $pretty_remote without asserting
+	  that it matches $ref. In my case this results in a branch
+	  specification of "HEAD" even if I fix find_matching_ref to
+	  return refs/heads/ukl/for-mainline.
+
+I tried to add this case to t/t5150-request-pull.sh, but didn't
+understand how after starring at it for half an hour. :-(
+
+Bisection points on 024d34cb0813 (request-pull: more strictly match
+local/remote branches) as first bad commit. Apart from introducing the
+warning, it also changes the branch spec from "ukl/for-mainline" (which
+is correct) to the name of the current branch (which is bogus). Also
+024d34cb0813 makes 5 out of 7 tests in t/t5150-request-pull.sh fail.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
