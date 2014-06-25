@@ -1,123 +1,94 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/PATCH V2] branch.c: replace git_config with git_config_get_string
-Date: Wed, 25 Jun 2014 00:45:14 -0400
-Message-ID: <CAPig+cTMWKtAjN931voVs7aY7JdEyaRVZj+-qDUiDk0C_Tq6-A@mail.gmail.com>
-References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>
-	<1403520105-23250-2-git-send-email-tanayabh@gmail.com>
+From: Nico Williams <nico@cryptonector.com>
+Subject: Re: Use case (was Re: Should branches be objects?)
+Date: Wed, 25 Jun 2014 00:29:50 -0500
+Message-ID: <CAK3OfOgb3zt0HKkeQKfMR9u7sKRzjCZAeOQh=qSyt9cVordG4A@mail.gmail.com>
+References: <CAK3OfOgskVKs=eUT+EM+GZOjh0p6gxKeDWH-iTt29P1i1d1iZA@mail.gmail.com>
+	<20140624110932.GI14887@thunk.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 06:45:27 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	git discussion list <git@vger.kernel.org>,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: "Theodore Ts'o" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Wed Jun 25 07:29:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wzf5L-0003Bb-0X
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 06:45:27 +0200
+	id 1WzfmP-000291-46
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 07:29:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750789AbaFYEpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 00:45:16 -0400
-Received: from mail-yk0-f172.google.com ([209.85.160.172]:50294 "EHLO
-	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750732AbaFYEpP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 00:45:15 -0400
-Received: by mail-yk0-f172.google.com with SMTP id 142so794679ykq.31
-        for <git@vger.kernel.org>; Tue, 24 Jun 2014 21:45:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=Q6iqKylsbIhH8/QREKJaMYRvzteqq4Yor+k2sylnAN4=;
-        b=kMpx33PWG4kUFzqUTyhMrgdfU9PlozsxjSdt6jFSOnYMvcfjcwcUe7IAeNzO1TVfMl
-         +AGtuBaqKvR+7l6fq6pyUP/44fEhbyzCv+AaGDba4kaOlETJvFPOAeKcRiG+r5ACyFLh
-         kQbISlgUmlZ1iWV7/kVvfvd5YOTX4DvtqfX2i1W///ZFrt4l9tuDv2P0VLDuAmIPDQB9
-         LGqyn4W3QNngsjWgXqD07QLA9EwTcIAgsJ9gj/VSRQBXzQzrhKVoh3fD6dvSNe9CGlW7
-         ZxwLWP6yIE45lYYpL0DZfgB8jPBG2xHJC13DFT/72sRk6OtK3NwUd8rHwO2h9tR/DxKD
-         ulkQ==
-X-Received: by 10.236.81.1 with SMTP id l1mr8028757yhe.27.1403671514820; Tue,
- 24 Jun 2014 21:45:14 -0700 (PDT)
-Received: by 10.170.120.69 with HTTP; Tue, 24 Jun 2014 21:45:14 -0700 (PDT)
-In-Reply-To: <1403520105-23250-2-git-send-email-tanayabh@gmail.com>
-X-Google-Sender-Auth: jtQUHsJwwWbYa_DfOSlPHw22sDE
+	id S1754157AbaFYF3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 01:29:53 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:36035 "EHLO
+	homiemail-a111.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752725AbaFYF3w (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Jun 2014 01:29:52 -0400
+Received: from homiemail-a111.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a111.g.dreamhost.com (Postfix) with ESMTP id 406F12007F008
+	for <git@vger.kernel.org>; Tue, 24 Jun 2014 22:29:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=
+	mime-version:in-reply-to:references:date:message-id:subject:from
+	:to:cc:content-type; s=cryptonector.com; bh=f9BKJdTfd0EiQRg71Aci
+	vG9sUbQ=; b=q2iedIbyx5Ts1KBlBzUi8MDXKq5LfDEgh9nDULFGDxAMI0+llOQ6
+	rUUhQJu5MG6CfPGqigjgMj0M66/GGiDpNf8Yqzm2g632Ng1XL6O1lnDPlYn4UGnm
+	vSJs8JaA1XfIx8/CJILW+V0wxUe2013soh2LFDPiMSLTyvIL8kYk4ts=
+Received: from mail-wg0-f43.google.com (mail-wg0-f43.google.com [74.125.82.43])
+	(using TLSv1 with cipher ECDHE-RSA-RC4-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by homiemail-a111.g.dreamhost.com (Postfix) with ESMTPSA id EA1EB2007F006
+	for <git@vger.kernel.org>; Tue, 24 Jun 2014 22:29:51 -0700 (PDT)
+Received: by mail-wg0-f43.google.com with SMTP id b13so1383868wgh.14
+        for <git@vger.kernel.org>; Tue, 24 Jun 2014 22:29:50 -0700 (PDT)
+X-Received: by 10.180.37.230 with SMTP id b6mr7482764wik.47.1403674190606;
+ Tue, 24 Jun 2014 22:29:50 -0700 (PDT)
+Received: by 10.216.29.200 with HTTP; Tue, 24 Jun 2014 22:29:50 -0700 (PDT)
+In-Reply-To: <20140624110932.GI14887@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252434>
 
-On Mon, Jun 23, 2014 at 6:41 AM, Tanay Abhra <tanayabh@gmail.com> wrote:
-> Use git_config_get_string instead of git_config to take advantage of
-> the config hash-table api which provides a cleaner control flow.
+On Tue, Jun 24, 2014 at 6:09 AM, Theodore Ts'o <tytso@mit.edu> wrote:
 >
-> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
-> ---
->  branch.c | 24 ++++++++----------------
->  1 file changed, 8 insertions(+), 16 deletions(-)
+> On Mon, Jun 23, 2014 at 10:20:14PM -0500, Nico Williams wrote:
+> >
+> > Now, suppose that branches were objects.  Then at push time one might
+> > push with a message about the set of commits being pushed, and this
+> > message (and time of push, and pusher ID) would get recorded in the
+> > branch object.  At fetch time the branch objects's histories would be
+> > pulled (but usually never pushed), and would be available for browsing
+> > with git log at remotes/<remote>/<branch>.  Each commit of the branch
+> > object (as it were) would record each logical set of commits.
 >
-> diff --git a/branch.c b/branch.c
-> index 660097b..c9a2a0d 100644
-> --- a/branch.c
-> +++ b/branch.c
-> @@ -140,33 +140,25 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
->         return 0;
->  }
->
-> -struct branch_desc_cb {
-> +struct branch_desc {
->         const char *config_name;
->         const char *value;
->  };
+> This seems pretty close to what we have with signed tags.  When I send
+> a pull request to Linus, I create a signed tag which createscontains a
+> message about a set of commits, and this message is automatically
+> included in the pull request message generated with "git
+> request-pull", and when Linus merges my pull request, the
+> cryptographically signed tag, along with the message, date of the
+> signature, etc., is preserved for all posterity.
 
-What is the purpose of retaining this structure? Following your
-changes, it is never used outside of read_branch_desc(), and
-'config_name' and 'value' would be more naturally declared as
-variables local to that function.
+Thanks for pointing this out.  Signed tags are objects -- that's a
+clear and strong precedent..  That's another thing that branches as
+objects could have: signatures of pushed commits (separately from the
+commits themselves).
 
-> -static int read_branch_desc_cb(const char *var, const char *value, void *cb)
-> -{
-> -       struct branch_desc_cb *desc = cb;
-> -       if (strcmp(desc->config_name, var))
-> -               return 0;
-> -       free((char *)desc->value);
-> -       return git_config_string(&desc->value, var, value);
-> -}
-> -
->  int read_branch_desc(struct strbuf *buf, const char *branch_name)
->  {
-> -       struct branch_desc_cb cb;
-> +       const char *value = NULL;
-> +       struct branch_desc desc;
->         struct strbuf name = STRBUF_INIT;
->         strbuf_addf(&name, "branch.%s.description", branch_name);
-> -       cb.config_name = name.buf;
-> -       cb.value = NULL;
-> -       if (git_config(read_branch_desc_cb, &cb) < 0) {
-> +       desc.config_name = name.buf;
-> +       desc.value = NULL;
-> +       git_config_get_string(desc.config_name, &value);
-> +       if (git_config_string(&desc.value, desc.config_name, value) < 0) {
+> It seems the major difference is that it's a pull model, where some
+> projects seem much happier with a push model.  But that sounds like
+> what is needed is that someone replaces Linus Torvalds with a shell
+> script --- namely, an e-mail bot that receives pull requests, checks
+> the signed tag against an access control list, and if it is an
+> authorized committer, accepts the pull request automatically (or
+> rejects it if there are merge conflicts).
 
-Although it works in this case, it's somewhat ugly that you ignore the
-return value of git_config_get_string(), and a person reading the code
-has to spend extra time digging into git_config_string() to figure out
-why this is safe. If might be clearer for future readers by rephrasing
-like this:
+Shell script, protocol..  The git push protocol is convenient.  The
+fact that git supports a patches-via-email, push, and pull models,
+that's a great aspect of git.  Why disadvantage the push case, when
+it's so popular (e.g., via github and such)?
 
-    if (git_config_get_string(desc.config_name, &value) < 0 ||
-        git_config_string(&desc.value, desc.config_name, value) < 0) {
-
->                 strbuf_release(&name);
->                 return -1;
->         }
-> -       if (cb.value)
-> -               strbuf_addstr(buf, cb.value);
-> +       strbuf_addstr(buf, desc.value);
->         strbuf_release(&name);
->         return 0;
->  }
-> --
-> 1.9.0.GIT
+Nico
+--
