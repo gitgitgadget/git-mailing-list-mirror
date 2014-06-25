@@ -1,179 +1,141 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [RFC/PATCH] imap-send.c: replace git_config with git_config_get_string
-Date: Wed, 25 Jun 2014 03:09:18 -0400
-Message-ID: <CAPig+cTStpB09Fh3bAF2NcdWR9W_UMaL5qutvUuQNfEL4=GwNw@mail.gmail.com>
+Subject: Re: [RFC/PATCH] notes-util.c: replace git_config with git_config_get_string
+Date: Wed, 25 Jun 2014 03:54:57 -0400
+Message-ID: <CAPig+cRcbamkpeaoCMQ9yXtYeMEEL-ve--VWKg4MAWeS08Lqyg@mail.gmail.com>
 References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>
-	<1403520105-23250-3-git-send-email-tanayabh@gmail.com>
+	<1403520105-23250-4-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git List <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jun 25 09:09:33 2014
+X-From: git-owner@vger.kernel.org Wed Jun 25 09:55:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzhKl-00076n-H9
-	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 09:09:31 +0200
+	id 1Wzi2o-0008Bn-54
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 09:55:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754748AbaFYHJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 03:09:23 -0400
-Received: from mail-yk0-f180.google.com ([209.85.160.180]:64887 "EHLO
-	mail-yk0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754698AbaFYHJT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 03:09:19 -0400
-Received: by mail-yk0-f180.google.com with SMTP id 131so855875ykp.25
-        for <git@vger.kernel.org>; Wed, 25 Jun 2014 00:09:18 -0700 (PDT)
+	id S1755219AbaFYHy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 03:54:58 -0400
+Received: from mail-yk0-f172.google.com ([209.85.160.172]:50624 "EHLO
+	mail-yk0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755223AbaFYHy5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 03:54:57 -0400
+Received: by mail-yk0-f172.google.com with SMTP id 142so887305ykq.3
+        for <git@vger.kernel.org>; Wed, 25 Jun 2014 00:54:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=TmPi57u7cxp5UkkB57qLVPpKU/LU3Nu1I9M87tsv/nQ=;
-        b=bNuTt/6OJvxsO1PVKVje5ODBi7ahT27UJDT6cKJ5gBt4C9MWhcYUBrYy/3TE5ypFs9
-         fg3I+EHwvM1RBziPnNUjlhUziPy2gPJK4XjbRxos/Ag0VZ8OXOkteliM6Ob/Kb/mlOhH
-         9/zIb6BE/SqJwawTXDuu7oGlf3rHzvQIacZg7belQIafdllAarwsu2KphY1/WSjd+QjW
-         3NdJlPAcdZqXaT8phLjiVlY70HecVniZ4Z4oJV+xBXPENVMnSH0pyr/y1fAESCV/VSgp
-         UUX7V7l5Ms70uQALBUolBIaOcECpv02NgxWdNL6l+22tG1RCSX9vdOWluSI4aOOEXWrt
-         nc7g==
-X-Received: by 10.236.81.1 with SMTP id l1mr8903411yhe.27.1403680158605; Wed,
- 25 Jun 2014 00:09:18 -0700 (PDT)
-Received: by 10.170.120.69 with HTTP; Wed, 25 Jun 2014 00:09:18 -0700 (PDT)
-In-Reply-To: <1403520105-23250-3-git-send-email-tanayabh@gmail.com>
-X-Google-Sender-Auth: cNhuWG9v8ua7RvLFU9SVdou0NbQ
+        bh=d91+fJZElZaYuV2XROc+dnw6A0z1ZPtHbDQE/jDbZIg=;
+        b=N3WPxWUf11qgQ8tA1Bk9EC3mox8ellXWvZsUhivUK+CHYA+63p1/owzIcSOk01Xd5y
+         atTTOozvpVoLO0HdXNmQYCLZdBHdAUxCdfD7Yj8iQ7xrprlRtUoDQR4unuJP9JcuoU76
+         J/4tLv9lx4qPWFvf0K9bXm+xTzMrofxNAMUPyOO2ZT1qOLf3jIfKbfKbviw7iLICJw0B
+         mcxjEiH+8cX1n3r1wPddan/7JzMwOCIndS06CusCl3DcjSOPjI5Eoj8nlo46lnWlH48c
+         PNE2fTUwL51H4dT8jbCOdTX3tciY5bmEbvUd0/oEbMn9tD3I8WA3dk3709jAuM3ibWEH
+         4jGA==
+X-Received: by 10.236.39.109 with SMTP id c73mr8949489yhb.139.1403682897292;
+ Wed, 25 Jun 2014 00:54:57 -0700 (PDT)
+Received: by 10.170.120.69 with HTTP; Wed, 25 Jun 2014 00:54:57 -0700 (PDT)
+In-Reply-To: <1403520105-23250-4-git-send-email-tanayabh@gmail.com>
+X-Google-Sender-Auth: oyS-b3CYYcIIKY3_2qnKvMGAOMw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252437>
 
 On Mon, Jun 23, 2014 at 6:41 AM, Tanay Abhra <tanayabh@gmail.com> wrote:
 > Use git_config_get_string instead of git_config to take advantage of
 > the config hash-table api which provides a cleaner control flow.
-
-You may want to mention as a side-note the slight behavior change
-introduced by this patch. The original code complained about any
-unknown boolean "imap.*" key, whereas the new code does not.
-
-More below.
-
+>
 > Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 > ---
->  imap-send.c | 68 ++++++++++++++++++++++++++-----------------------------------
->  1 file changed, 29 insertions(+), 39 deletions(-)
+>  notes-utils.c | 31 +++++++++++++++----------------
+>  1 file changed, 15 insertions(+), 16 deletions(-)
 >
-> diff --git a/imap-send.c b/imap-send.c
-> index 83a6ed2..87bd418 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -1326,47 +1326,37 @@ static int split_msg(struct strbuf *all_msgs, struct strbuf *msg, int *ofs)
->
->  static char *imap_folder;
->
-> -static int git_imap_config(const char *key, const char *val, void *cb)
-> +static void git_imap_config(void)
->  {
-> -       char imap_key[] = "imap.";
-> -
-> -       if (strncmp(key, imap_key, sizeof imap_key - 1))
-> -               return 0;
-> -
-> -       key += sizeof imap_key - 1;
-> -
-> -       /* check booleans first, and barf on others */
-> -       if (!strcmp("sslverify", key))
-> -               server.ssl_verify = git_config_bool(key, val);
-> -       else if (!strcmp("preformattedhtml", key))
-> -               server.use_html = git_config_bool(key, val);
-> -       else if (!val)
-> -               return config_error_nonbool(key);
-> -
-> -       if (!strcmp("folder", key)) {
-> -               imap_folder = xstrdup(val);
-> -       } else if (!strcmp("host", key)) {
-> -               if (starts_with(val, "imap:"))
-> -                       val += 5;
-> -               else if (starts_with(val, "imaps:")) {
-> -                       val += 6;
-> +       const char *value;
-
-Observation: If you name this variable 'val', which is the name of the
-argument to the function in the original code, you will get a slightly
-smaller and more readable diff. In this case, the improvement in the
-diff is so slight that it might not be worth re-using the old variable
-name, but in general, it's helpful to keep in mind that the smaller
-and simpler the diff, the easier the patch is to review.
-
-> +       if (!git_config_get_string("imap.sslverify", &value))
-> +               server.ssl_verify = git_config_bool("sslverify", value);
-
-I realize that you are just replicating the behavior of the original
-code, but the error message emitted here for a non-bool value is less
-than desirable since it throws away context (namely, the "imap."
-prefix). You can improve the message, and help the user resolve the
-error more quickly, by presenting the full configuration key (namely,
-"imap.sslverify"). Such a change would deserve mention in the commit
-message. Alternately, it could be fixed in a follow-up patch.
-
-> +       if (!git_config_get_string("imap.preformattedhtml", &value))
-> +               server.use_html = git_config_bool("preformattedhtml", value);
-
-Ditto regarding error message: "imap.preformattedhtml"
-
-> +       if (!git_config_get_string("imap.folder", &value))
-> +               imap_folder = xstrdup(value);
-> +       if (!git_config_get_string("imap.host", &value)) {
-> +               if (starts_with(value, "imap:"))
-> +                       value += 5;
-> +               else if (starts_with(value, "imaps:")) {
-> +                       value += 6;
->                         server.use_ssl = 1;
->                 }
-> -               if (starts_with(val, "//"))
-> -                       val += 2;
-> -               server.host = xstrdup(val);
-> -       } else if (!strcmp("user", key))
-> -               server.user = xstrdup(val);
-> -       else if (!strcmp("pass", key))
-> -               server.pass = xstrdup(val);
-> -       else if (!strcmp("port", key))
-> -               server.port = git_config_int(key, val);
-> -       else if (!strcmp("tunnel", key))
-> -               server.tunnel = xstrdup(val);
-> -       else if (!strcmp("authmethod", key))
-> -               server.auth_method = xstrdup(val);
-> -
-> -       return 0;
-> +               if (starts_with(value, "//"))
-> +                       value += 2;
-> +               server.host = xstrdup(value);
-> +       }
-> +       if (!git_config_get_string("imap.user", &value))
-> +               server.user = xstrdup(value);
-> +       if (!git_config_get_string("imap.pass", &value))
-> +               server.pass = xstrdup(value);
-> +       if (!git_config_get_string("imap.port", &value))
-> +               server.port = git_config_int("port", value);
-
-Same regarding diagnostic: "imap.port"
-
-> +       if (!git_config_get_string("imap.tunnel", &value))
-> +               server.tunnel = xstrdup(value);
-> +       if (!git_config_get_string("imap.authmethod", &value))
-> +               server.auth_method = xstrdup(value);
+> diff --git a/notes-utils.c b/notes-utils.c
+> index a0b1d7b..fdc9912 100644
+> --- a/notes-utils.c
+> +++ b/notes-utils.c
+> @@ -68,22 +68,23 @@ static combine_notes_fn parse_combine_notes_fn(const char *v)
+>                 return NULL;
 >  }
 >
->  int main(int argc, char **argv)
-> @@ -1387,7 +1377,7 @@ int main(int argc, char **argv)
->                 usage(imap_send_usage);
+> -static int notes_rewrite_config(const char *k, const char *v, void *cb)
+> +static void notes_rewrite_config(struct notes_rewrite_cfg *c)
+>  {
+> -       struct notes_rewrite_cfg *c = cb;
+> -       if (starts_with(k, "notes.rewrite.") && !strcmp(k+14, c->cmd)) {
+> -               c->enabled = git_config_bool(k, v);
+> -               return 0;
+> -       } else if (!c->mode_from_env && !strcmp(k, "notes.rewritemode")) {
+> +       struct strbuf key = STRBUF_INIT;
+> +       const char *v;
+> +       strbuf_addf(&key, "notes.rewrite.%s", c->cmd);
+> +
+> +       if (!git_config_get_string(key.buf, &v))
+> +               c->enabled = git_config_bool(key.buf, v);
+> +
+> +       if (!c->mode_from_env && !git_config_get_string("notes.rewritemode", &v)) {
+>                 if (!v)
+> -                       return config_error_nonbool(k);
+> +                       config_error_nonbool("notes.rewritemode");
+
+There's a behavior change here. In the original code, the callback
+function would return -1, which would cause the program to die() if
+the config.c:die_on_error flag was set. The new code merely emits an
+error.
+
+>                 c->combine = parse_combine_notes_fn(v);
+
+Worse: Though you correctly emit an error when 'v' is NULL, you then
+(incorrectly) invoke parse_combine_notes_fn() with that NULL value,
+which will result in a crash.
+
+> -               if (!c->combine) {
+> +               if (!c->combine)
+>                         error(_("Bad notes.rewriteMode value: '%s'"), v);
+> -                       return 1;
+> -               }
+> -               return 0;
+> -       } else if (!c->refs_from_env && !strcmp(k, "notes.rewriteref")) {
+> +       }
+> +       if (!c->refs_from_env && !git_config_get_string("notes.rewriteref", &v)) {
+>                 /* note that a refs/ prefix is implied in the
+>                  * underlying for_each_glob_ref */
+>                 if (starts_with(v, "refs/notes/"))
+> @@ -91,10 +92,8 @@ static int notes_rewrite_config(const char *k, const char *v, void *cb)
+>                 else
+>                         warning(_("Refusing to rewrite notes in %s"
+>                                 " (outside of refs/notes/)"), v);
+> -               return 0;
+>         }
+> -
+> -       return 0;
+> +       strbuf_release(&key);
+
+It would be better to release the strbuf immediately after its final
+use rather than waiting until the end of function. Not only does that
+reduce cognitive load on people reading the code, but it also reduces
+likelihood of 'key' being leaked if some future programmer inserts an
+early 'return' into the function for some reason.
+
+>  }
 >
->         setup_git_directory_gently(&nongit_ok);
-> -       git_config(git_imap_config, NULL);
-> +       git_imap_config();
 >
->         if (!server.port)
->                 server.port = server.use_ssl ? 993 : 143;
+> @@ -123,7 +122,7 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
+>                 c->refs_from_env = 1;
+>                 string_list_add_refs_from_colon_sep(c->refs, rewrite_refs_env);
+>         }
+> -       git_config(notes_rewrite_config, c);
+> +       notes_rewrite_config(c);
+>         if (!c->enabled || !c->refs->nr) {
+>                 string_list_clear(c->refs, 0);
+>                 free(c->refs);
 > --
 > 1.9.0.GIT
