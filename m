@@ -1,92 +1,74 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: Use case (was Re: Should branches be objects?)
-Date: Wed, 25 Jun 2014 18:44:40 -0400
-Message-ID: <20140625224440.GD10397@thunk.org>
-References: <CAK3OfOgskVKs=eUT+EM+GZOjh0p6gxKeDWH-iTt29P1i1d1iZA@mail.gmail.com>
- <20140624110932.GI14887@thunk.org>
- <CAK3OfOgb3zt0HKkeQKfMR9u7sKRzjCZAeOQh=qSyt9cVordG4A@mail.gmail.com>
- <xmqqegycans6.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/8] use merge-base for tag --contains
+Date: Wed, 25 Jun 2014 19:34:30 -0400
+Message-ID: <20140625233429.GA20457@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nico Williams <nico@cryptonector.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	git discussion list <git@vger.kernel.org>,
-	Ronnie Sahlberg <sahlberg@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 00:44:49 2014
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 26 01:34:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wzvvs-0008EA-AU
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 00:44:48 +0200
+	id 1Wzwi4-00074F-3N
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 01:34:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753106AbaFYWoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 18:44:44 -0400
-Received: from imap.thunk.org ([74.207.234.97]:58454 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752104AbaFYWon (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 18:44:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=c2Ghd3KeqjBRZxYlq7w6H1bDxaQIHyT7d5lK2mkZY/s=;
-	b=meB/Autr3QhIBT2kaAKgJm/g5yspHcIwQVUsIuSJb0iWTFQJHmBhV9vCbeGz0OLQAixH3EGakoBBpw3onZ2k5+ww5LEWoWs53nkkzUzQGYWtC2PMpP+12JfSD1fgA27lL91FFYzpNW7/J5JiLiSkzkMANoD0oToBynWYUJbZt2E=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.80)
-	(envelope-from <tytso@thunk.org>)
-	id 1Wzvvk-0007Fn-Kg; Wed, 25 Jun 2014 22:44:40 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id 20D02580ED0; Wed, 25 Jun 2014 18:44:40 -0400 (EDT)
+	id S1755951AbaFYXec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 19:34:32 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51211 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755235AbaFYXeb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 19:34:31 -0400
+Received: (qmail 4544 invoked by uid 102); 25 Jun 2014 23:34:31 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 18:34:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 19:34:30 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqegycans6.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252472>
 
-On Wed, Jun 25, 2014 at 10:42:49AM -0700, Junio C Hamano wrote:
-> Nico Williams <nico@cryptonector.com> writes:
-> 
-> > On Tue, Jun 24, 2014 at 6:09 AM, Theodore Ts'o <tytso@mit.edu> wrote:
-> > ...
-> >> This seems pretty close to what we have with signed tags.  When I send
-> >> a pull request to Linus, I create a signed tag which createscontains a
-> >> message about a set of commits, and this message is automatically
-> >> included in the pull request message generated with "git
-> >> request-pull", and when Linus merges my pull request, the
-> >> cryptographically signed tag, along with the message, date of the
-> >> signature, etc., is preserved for all posterity.
-> >
-> > Thanks for pointing this out.  Signed tags are objects -- that's a
-> > clear and strong precedent..
-> 
-> Sounds as if you are interpreting what Ted said as a supporting
-> argument for having branches as separate type of objects, but the
-> way I read it was "signed tags are sufficient for what you want to
-> do; adding a new "branch" type does not make much sense at this
-> point".
+Once upon a time we checked "tag --contains" by doing N merge-base
+traversals, one per tag. That turned out to be really slow.
 
-Yes, that's what I was saying.  If you want to record a reliable "who
-pushed this" (or "who requested this to be pulled"), you really want
-to use a GPG signature, since otherwise the identity of the pusher can
-be completely faked --- especially if the you have a tiered system
-where you have sub-maintainers in the mix.  So if you want any kind of
-auditability long after the fact, you want digital signatures, and so
-a signed tag maps exactly to what you want --- modulo needing a
-standardized "Linus Torvalds" bot.  But the nice thing about creating
-such an automated pull request processing system is that it doesn't
-require making any changes to core git.
+Later, I added a single traversal in ffc4b80 (tag: speed up --contains
+calculation, 2011-06-11) that works in a depth-first way. That's fast
+for the common case of tags spread throughout history, but slow when all
+of the tags are close to the searched-for commit (which would be more
+likely with branches, since they advance). That, plus the general
+hacky-ness of the implementation, prevented it from being used for "git
+branch" or in other places.
 
-If you insist that it has to be done via a "git push", I suspect it
-wouldn't be that hard to add changes to Gerrit (which already has an
-concept of access control which ssh keys are allowed to push a
-change), and extended it to include a hook that validated whether the
-push included a signed tag.  Again, no core changes needed to git, or
-to the repository format.
+Over a year ago, Junio and I worked on the commit-slab code. The
+original point of it[1] was to be able to do a merge-base traversal like
+this, where we kept one bit per tip in each commit (so that we know not
+only what the merge base is, but _which_ tip hit each commit). So now I
+finally got around to it. :)
 
-					- Ted
+Timings are in the final patch, but the short of it is: it's about as
+fast as the depth-first code for the normal tag case (tags spread out
+through history), but way faster for the branch-like case (tags close to
+the commit).
+
+This series stops short of moving "git branch" over to it.  My next goal
+once this is solid is to factor the logic out so that "tag -l", "branch
+-l", and "for-each-ref" all use the same code. I got stuck on that
+earlier because I just couldn't justify sharing the tag-contains
+implementation with the others.
+
+  [1/8]: tag: allow --sort with -n
+  [2/8]: tag: factor out decision to stream tags
+  [3/8]: paint_down_to_common: use prio_queue
+  [4/8]: add functions for memory-efficient bitmaps
+  [5/8]: string-list: add pos to iterator callback
+  [6/8]: commit: provide a fast multi-tip contains function
+  [7/8]: tag: use commit_contains
+  [8/8]: perf: add tests for tag --contains
+
+-Peff
+
+[1] http://article.gmane.org/gmane.comp.version-control.git/220545
