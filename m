@@ -1,290 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git v2.0.1
-Date: Wed, 25 Jun 2014 14:19:34 -0700
-Message-ID: <xmqqegyc7k4j.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] t7510: Skip all if GPG isn't installed
+Date: Wed, 25 Jun 2014 17:42:17 -0400
+Message-ID: <20140625214217.GA13564@sigill.intra.peff.net>
+References: <1403585536-32185-1-git-send-email-brian@gernhardtsoftware.com>
+ <xmqqfvis8zaw.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Wed Jun 25 23:30:33 2014
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+Cc: Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jun 25 23:42:26 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Wzulz-0005a2-7h
-	for glk-linux-kernel-3@plane.gmane.org; Wed, 25 Jun 2014 23:30:31 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1WzuxV-0007C2-7T
+	for gcvg-git-2@plane.gmane.org; Wed, 25 Jun 2014 23:42:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756253AbaFYVaR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 25 Jun 2014 17:30:17 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62980 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754866AbaFYVaN convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 25 Jun 2014 17:30:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8FA6F21E24;
-	Wed, 25 Jun 2014 17:30:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=meJ/d+tDisoV7PAm68MNKphmJ
-	XM=; b=W8HbT2S3uZdV6beQbx0u6lPMbJ4VRh42Vddn0KBFOV0Xb3Xon/IMnDPQx
-	1aUQ50NyRr1NPmj6HBN/B0Nge1O1ts+jmHVL+7NTMw1VXdkZs6oLX59eQBl4apCo
-	roKLLcrxutjWLItwR27kVm6r3aQjLWR9QfRof7PmMUIuXCQuX4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=SuQLrjn3JitNkx8xVbQ
-	mIKysGlKsQoT+Od95C5ElYQh0iY9BQ9KnlDqAzgip68Ikx8O1GBAuLfa1oVsqiOA
-	Y24NBO00ysVL0uZUB4cscloFoA1TAwmL4lyAy79Nj4vVo3aOBA6aDTpZegQnB4y0
-	59NTUS5MbqkHgBle1EgPbT/k=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5F4FD21E23;
-	Wed, 25 Jun 2014 17:30:06 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E633421E1B;
-	Wed, 25 Jun 2014 17:29:59 -0400 (EDT)
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DC7810EA-FCAF-11E3-BAD9-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1755071AbaFYVmV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 17:42:21 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51153 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753181AbaFYVmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 17:42:21 -0400
+Received: (qmail 30799 invoked by uid 102); 25 Jun 2014 21:42:20 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 16:42:20 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 17:42:17 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqfvis8zaw.fsf@gitster.dls.corp.google.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252466>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252467>
 
-Git v2.0.1, the first maintenance release for Git v2.0, is now
-available at the usual places.  This contains most of the fixes
-already merged on the 'master' front in preparation for the v2.1
-release.
+On Wed, Jun 25, 2014 at 02:16:55PM -0700, Junio C Hamano wrote:
 
-The tarballs are found at:
+> Brian Gernhardt <brian@gernhardtsoftware.com> writes:
+> 
+> > Since the setup requires the GPG prerequisite, it doesn't make much
+> > sense to try and run any tests without it.  So rather than using a
+> > prereq on each individual test and possibly forgetting it on new ones
+> > (as just happened), skip the entire file if GPG isn't found.
+> >
+> > Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+> > ---
+> 
+> I think by "just happend" you mean aa4b78d4 (pretty: avoid reading
+> past end-of-string with "%G", 2014-06-16), which adds one that is
+> not protected (Cc'ed peff).
 
-    https://www.kernel.org/pub/software/scm/git/
+If that is the one Brian means (and that is the only one I see in pu),
+leaving it off was intentional. You do not need to have the GPG
+prerequisite to verify the handling of %G and %GX, as the point is that
+they are not actually gpg format placeholders.
 
-The following public repositories all have a copy of the 'v2.0.1'
-tag and the 'maint' branch that the tag points at:
+That being said, I did botch the commit, because not having GPG means
+we would not create any commits, and therefore "git log -1" fails for
+the wrong reason.
 
-  url =3D https://kernel.googlesource.com/pub/scm/git/git
-  url =3D git://repo.or.cz/alt-git.git
-  url =3D https://code.google.com/p/git-core/
-  url =3D git://git.sourceforge.jp/gitroot/git-core/git.git
-  url =3D git://git-core.git.sourceforge.net/gitroot/git-core/git-core
-  url =3D https://github.com/gitster/git
+The "right" fix is actually to make sure there is at least one commit in
+that final test (e.g., by adding one base commit before the others).
+Then it can run regardless of whether the GPG tests ran. And in that
+sense, Brian's patch is working in the opposite direction.
 
-Git v2.0.1 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Thinking on the explanation I gave above, though, I think it means the
+test would probably be better placed in t6006 along with the other
+format-specifier tests. That fixes the problem, and means that Brian's
+simplification (to just skip all tests) becomes the right thing to do.
 
- * We used to unconditionally disable the pager in the pager process
-   we spawn to feed out output, but that prevented people who want to
-   run "less" within "less" from doing so.
+> As there are a few additional test pieces to this file in flight
+> that come from another topic (which by the way protects them with
+> the prerequiste), I'd rather fix it up with the necessary GPG
+> prerequisite, at least for now, instead of doing it this way.
 
- * Tools that read diagnostic output in our standard error stream do
-   not want to see terminal control sequence (e.g. erase-to-eol).
-   Detect them by checking if the standard error stream is connected
-   to a tty.
- * Reworded the error message given upon a failure to open an existing
-   loose object file due to e.g. permission issues; it was reported as
-   the object being corrupt, but that is not quite true.
+The patch below should fix it with minimal fuss. I think Brian's patch
+makes sense on top, but I agree it would be nice to wait until the
+existing topics settle.
 
- * "git log -2master" is a common typo that shows two commits starting
-   from whichever random branch that is not 'master' that happens to
-   be checked out currently.
+> Another thing we may want to take into account is that we would also
+> want to make sure that builds of Git without GPG installed still
+> behave sensibly (with some definition of sensible) when faced with
+> GPG signatures in existing commit objects and tag objects.
 
- * The "%<(10,trunc)%s" pretty format specifier in the log family of
-   commands is used to truncate the string to a given length (e.g. 10
-   in the example) with padding to column-align the output, but did
-   not take into account that number of bytes and number of display
-   columns are different.
+Yeah, I agree that is a good thing to test.
 
- * The "mailmap.file" configuration option did not support the tilde
-   expansion (i.e. ~user/path and ~/path).
+> If that will happen in this same script, then skipping all by
+> requiring GPG upfront may not be a good change, but it is likely that
+> we would want a NOGPG prerequisite for "No GPG installed" case and
+> have a separate test script, in which case, this will just skip all
+> without GPG, and the other new one will just skip all without NOGPG.
+> We'll see.
 
- * The completion scripts (in contrib/) did not know about quite a few
-   options that are common between "git merge" and "git pull", and a
-   couple of options unique to "git merge".
+I think it may make more sense to just configure gpg.program to "false"
+for the NOGPG case. Then you get coverage both on systems with it
+installed, and without (you could also just test it on GPG systems, and
+drop the "ship commits in fast-import form" part of the plan).
 
- * "--ignore-space-change" option of "git apply" ignored the spaces
-   at the beginning of line too aggressively, which is inconsistent
-   with the option of the same name "diff" and "git diff" have.
+Anyway, that is all outside the scope of the immediate problem. Here's
+the patch to fix jk/pretty-G-format-fixes.
 
- * "git blame" miscounted number of columns needed to show localized
-   timestamps, resulting in jaggy left-side-edge of the source code
-   lines in its output.
+-- >8 --
+Subject: move "%G" format test from t7510 to t6006
 
- * "git blame" assigned the blame to the copy in the working-tree if
-   the repository is set to core.autocrlf=3Dinput and the file used CRL=
-=46
-   line endings.
+The final test in t7510 checks that "--format" placeholders
+that look similar to GPG placeholders (but that we don't
+actually understand) are passed through. That test was
+placed in t7510, since the other GPG placeholder tests are
+there. However, it does not have a GPG prerequisite, because
+it is not actually checking any signed commits.
 
- * "git commit --allow-empty-message -C $commit" did not work when the
-   commit did not have any log message.
+This causes the test to erroneously fail when gpg is not
+installed on a system, however. Not because we need signed
+commits, but because we need _any_ commit to run "git log".
+If we don't have gpg installed, t7510 doesn't create any
+commits at all.
 
- * "git diff --find-copies-harder" sometimes pretended as if the mode
-   bits have changed for paths that are marked with assume-unchanged
-   bit.
+We can fix this by moving the test into t6006. This is
+arguably a better place anyway, because it is where we test
+most of the other placeholders (we do not test GPG
+placeholders there because of the infrastructure needed to
+make signed commits).
 
- * "git format-patch" did not enforce the rule that the "--follow"
-   option from the log/diff family of commands must be used with
-   exactly one pathspec.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t6006-rev-list-format.sh | 6 ++++++
+ t/t7510-signed-commit.sh   | 6 ------
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
- * "git gc --auto" was recently changed to run in the background to
-   give control back early to the end-user sitting in front of the
-   terminal, but it forgot that housekeeping involving reflogs should
-   be done without other processes competing for accesses to the refs.
-
- * "git grep -O" to show the lines that hit in the pager did not work
-   well with case insensitive search.  We now spawn "less" with its
-   "-I" option when it is used as the pager (which is the default).
-
- * We used to disable threaded "git index-pack" on platforms without
-   thread-safe pread(); use a different workaround for such
-   platforms to allow threaded "git index-pack".
-
- * The error reporting from "git index-pack" has been improved to
-   distinguish missing objects from type errors.
-
- * "git mailinfo" used to read beyond the end of header string while
-   parsing an incoming e-mail message to extract the patch.
-
- * On a case insensitive filesystem, merge-recursive incorrectly
-   deleted the file that is to be renamed to a name that is the same
-   except for case differences.
-
- * "git pack-objects" unnecessarily copied the previous contents when
-   extending the hashtable, even though it will populate the table
-   from scratch anyway.
-
- * "git rerere forget" did not work well when merge.conflictstyle
-   was set to a non-default value.
-
- * "git remote rm" and "git remote prune" can involve removing many
-   refs at once, which is not a very efficient thing to do when very
-   many refs exist in the packed-refs file.
-
- * "git log --exclude=3D<glob> --all | git shortlog" worked as expected=
-,
-   but "git shortlog --exclude=3D<glob> --all", which is supposed to be
-   identical to the above pipeline, was not accepted at the command
-   line argument parser level.
-
- * The autostash mode of "git rebase -i" did not restore the dirty
-   working tree state if the user aborted the interactive rebase by
-   emptying the insn sheet.
-
- * "git show -s" (i.e. show log message only) used to incorrectly emit
-   an extra blank line after a merge commit.
-
- * "git status", even though it is a read-only operation, tries to
-   update the index with refreshed lstat(2) info to optimize future
-   accesses to the working tree opportunistically, but this could
-   race with a "read-write" operation that modify the index while it
-   is running.  Detect such a race and avoid overwriting the index.
-
- * "git status" (and "git commit") behaved as if changes in a modified
-   submodule are not there if submodule.*.ignore configuration is set,
-   which was misleading.  The configuration is only to unclutter diff
-   output during the course of development, and should not to hide
-   changes in the "status" output to cause the users forget to commit
-   them.
-
- * The mode to run tests with HTTP server tests disabled was broken.
-
-----------------------------------------------------------------
-
-Changes since v2.0.0 are as follows:
-
-Alexey Shumkin (5):
-      t4205 (log-pretty-formats): don't hardcode SHA-1 in expected outp=
-uts
-      t4041, t4205, t6006, t7102: don't hardcode tested encoding value
-      t4205 (log-pretty-format): use `tformat` rather than `format`
-      t4205, t6006: add tests that fail with i18n.logOutputEncoding set
-      pretty.c: format string with truncate respects logOutputEncoding
-
-David Turner (2):
-      merge-recursive.c: fix case-changing merge bug
-      mv: allow renaming to fix case on case insensitive filesystems
-
-=46elipe Contreras (1):
-      rerere: fix for merge.conflictstyle
-
-Jacek Konieczny (1):
-      pull: do not abuse 'break' inside a shell 'case'
-
-Jeff King (7):
-      commit: do not complain of empty messages from -C
-      index-pack: distinguish missing objects from type errors
-      run_diff_files: do not look at uninitialized stat data
-      open_sha1_file: report "most interesting" errno
-      move "--follow needs one pathspec" rule to diff_setup_done
-      t5537: re-drop http tests
-      update-index: fix segfault with missing --cacheinfo argument
-
-Jens Lehmann (2):
-      status/commit: show staged submodules regardless of ignore config
-      commit -m: commit staged submodules regardless of ignore config
-
-Jens Lindstr=C3=B6m (3):
-      remote rm: delete remote configuration as the last
-      remote: repack packed-refs once when deleting multiple refs
-      remote prune: optimize "dangling symref" check/warning
-
-Jiang Xin (2):
-      blame: fix broken time_buf paddings in relative timestamp
-      blame: dynamic blame_date_width for different locales
-
-Johannes Schindelin (1):
-      git grep -O -i: if the pager is 'less', pass the '-I' option
-
-John Keeping (2):
-      completion: add a note that merge options are shared
-      completion: add missing options for git-merge
-
-Junio C Hamano (5):
-      apply --ignore-space-change: lines with and without leading white=
-spaces do not match
-      Git 1.9.4
-      shortlog: allow --exclude=3D<glob> to be passed
-      revision: parse "git log -<count>" more carefully
-      Git 2.0.1
-
-J=C3=B6rn Engel (1):
-      pager: do allow spawning pager recursively
-
-Matthieu Moy (1):
-      rebase -i: test "Nothing to do" case with autostash
-
-Max Kirillov (1):
-      git-show: fix 'git show -s' to not add extra terminator after mer=
-ge commit
-
-Michael Naumov (1):
-      sideband.c: do not use ANSI control sequence on non-terminal
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
-      index-pack: work around thread-unsafe pread()
-      gc --auto: do not lock refs in the background
-
-Nick Alcock (1):
-      t5538: move http push tests out to t5542
-
-Ramkumar Ramachandra (1):
-      rebase -i: handle "Nothing to do" case with autostash
-
-Ren=C3=A9 Scharfe (2):
-      mailinfo: use strcmp() for string comparison
-      pack-objects: use free()+xcalloc() instead of xrealloc()+memset()
-
-Yiannis Marangos (2):
-      wrapper.c: add xpread() similar to xread()
-      read-cache.c: verify index file before we opportunistically updat=
-e it
-
-brian m. carlson (1):
-      blame: correctly handle files regardless of autocrlf
-
-=C3=98ystein Walle (1):
-      config: respect '~' and '~user' in mailmap.file
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index c277db6..88ed319 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -468,4 +468,10 @@ test_expect_success 'single-character name is parsed correctly' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'unused %G placeholders are passed through' '
++	echo "%GX %G" >expect &&
++	git log -1 --format="%GX %G" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 9810242..e97477a 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -147,10 +147,4 @@ test_expect_success GPG 'show lack of signature with custom format' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'unused %G placeholders are passed through' '
+-	echo "%GX %G" >expect &&
+-	git log -1 --format="%GX %G" >actual &&
+-	test_cmp expect actual
+-'
+-
+ test_done
+-- 
+2.0.0.566.gfe3e6b2
