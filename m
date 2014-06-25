@@ -1,217 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] replace: add a --raw mode for --edit
-Date: Wed, 25 Jun 2014 15:33:42 -0700
-Message-ID: <xmqqsims62m1.fsf@gitster.dls.corp.google.com>
-References: <20140624094217.GA14216@sigill.intra.peff.net>
-	<20140624094631.GD14514@sigill.intra.peff.net>
+From: Theodore Ts'o <tytso@mit.edu>
+Subject: Re: Use case (was Re: Should branches be objects?)
+Date: Wed, 25 Jun 2014 18:44:40 -0400
+Message-ID: <20140625224440.GD10397@thunk.org>
+References: <CAK3OfOgskVKs=eUT+EM+GZOjh0p6gxKeDWH-iTt29P1i1d1iZA@mail.gmail.com>
+ <20140624110932.GI14887@thunk.org>
+ <CAK3OfOgb3zt0HKkeQKfMR9u7sKRzjCZAeOQh=qSyt9cVordG4A@mail.gmail.com>
+ <xmqqegycans6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jun 26 00:33:55 2014
+Cc: Nico Williams <nico@cryptonector.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	git discussion list <git@vger.kernel.org>,
+	Ronnie Sahlberg <sahlberg@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 00:44:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1WzvlK-0007Z0-Q3
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 00:33:55 +0200
+	id 1Wzvvs-0008EA-AU
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 00:44:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755212AbaFYWdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 18:33:51 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59021 "EHLO smtp.pobox.com"
+	id S1753106AbaFYWoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 18:44:44 -0400
+Received: from imap.thunk.org ([74.207.234.97]:58454 "EHLO imap.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756046AbaFYWdt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 18:33:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CAFB922AB3;
-	Wed, 25 Jun 2014 18:33:42 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Oog8oRlPQGSdgttjcLMTvy/rvmw=; b=rqz6oF
-	+eOehs3SHSCs9SUoB1+CYYvPmIoPhJnaku+tTQetPIeJLrbbsSpDtnqExPmSMIMn
-	c+D1fW+Gt84OH5sdARUNGc9dPo1xTw6jgKRRcXSb0yi+Fj5kyDBpl0PHiVINC6KM
-	V1wmVVNHsqQhl6KzgSRqGc1PeZM3MVEDhZnEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=revaQITKEaJjTC4PyVyAuw0prS43nvgi
-	hQj1otyzvO7VGm2Lg42aCg/2wRTs0ZHmGlFmY8bU17CFZ5P3c14YGY+bczLARorr
-	BQ7WNhv+cN020eP5Q2FiXOferal7tOeXQJ1HgKfwONVzX95iara+zdffFDVzi1pq
-	hsRZ9sViZLo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFF3722AB1;
-	Wed, 25 Jun 2014 18:33:42 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 10D7822AAA;
-	Wed, 25 Jun 2014 18:33:37 -0400 (EDT)
-In-Reply-To: <20140624094631.GD14514@sigill.intra.peff.net> (Jeff King's
-	message of "Tue, 24 Jun 2014 05:46:31 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: C03F4084-FCB8-11E3-8C4D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752104AbaFYWon (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 18:44:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=c2Ghd3KeqjBRZxYlq7w6H1bDxaQIHyT7d5lK2mkZY/s=;
+	b=meB/Autr3QhIBT2kaAKgJm/g5yspHcIwQVUsIuSJb0iWTFQJHmBhV9vCbeGz0OLQAixH3EGakoBBpw3onZ2k5+ww5LEWoWs53nkkzUzQGYWtC2PMpP+12JfSD1fgA27lL91FFYzpNW7/J5JiLiSkzkMANoD0oToBynWYUJbZt2E=;
+Received: from root (helo=closure.thunk.org)
+	by imap.thunk.org with local-esmtp (Exim 4.80)
+	(envelope-from <tytso@thunk.org>)
+	id 1Wzvvk-0007Fn-Kg; Wed, 25 Jun 2014 22:44:40 +0000
+Received: by closure.thunk.org (Postfix, from userid 15806)
+	id 20D02580ED0; Wed, 25 Jun 2014 18:44:40 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqegycans6.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252471>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jun 25, 2014 at 10:42:49AM -0700, Junio C Hamano wrote:
+> Nico Williams <nico@cryptonector.com> writes:
+> 
+> > On Tue, Jun 24, 2014 at 6:09 AM, Theodore Ts'o <tytso@mit.edu> wrote:
+> > ...
+> >> This seems pretty close to what we have with signed tags.  When I send
+> >> a pull request to Linus, I create a signed tag which createscontains a
+> >> message about a set of commits, and this message is automatically
+> >> included in the pull request message generated with "git
+> >> request-pull", and when Linus merges my pull request, the
+> >> cryptographically signed tag, along with the message, date of the
+> >> signature, etc., is preserved for all posterity.
+> >
+> > Thanks for pointing this out.  Signed tags are objects -- that's a
+> > clear and strong precedent..
+> 
+> Sounds as if you are interpreting what Ted said as a supporting
+> argument for having branches as separate type of objects, but the
+> way I read it was "signed tags are sufficient for what you want to
+> do; adding a new "branch" type does not make much sense at this
+> point".
 
-> One of the purposes of "git replace --edit" is to help a
-> user repair objects which are malformed or corrupted.
-> Usually we pretty-print trees with "ls-tree", which is much
-> easier to work with than the raw binary data.  However, some
-> forms of corruption break the tree-walker, in which case our
-> pretty-printing fails, rendering "--edit" useless for the
-> user.
->
-> This patch introduces a "--raw" option, which lets you edit
-> the binary data in these instances.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
+Yes, that's what I was saying.  If you want to record a reliable "who
+pushed this" (or "who requested this to be pulled"), you really want
+to use a GPG signature, since otherwise the identity of the pusher can
+be completely faked --- especially if the you have a tiered system
+where you have sub-maintainers in the mix.  So if you want any kind of
+auditability long after the fact, you want digital signatures, and so
+a signed tag maps exactly to what you want --- modulo needing a
+standardized "Linus Torvalds" bot.  But the nice thing about creating
+such an automated pull request processing system is that it doesn't
+require making any changes to core git.
 
-Hmmmmm, this feels almost like inviting accidents to make it easy
-and limiting the attempt to only one shot at the "transformation"
-step.
+If you insist that it has to be done via a "git push", I suspect it
+wouldn't be that hard to add changes to Gerrit (which already has an
+concept of access control which ssh keys are allowed to push a
+change), and extended it to include a hook that validated whether the
+push included a signed tag.  Again, no core changes needed to git, or
+to the repository format.
 
-Will queue, but we can do the same with "cat-file $type >temp", do
-some transformation on "temp", doubly make sure what is in "temp" is
-sensible and then finally "hash-object -w -t $type temp".  And it
-makes me feel uneasy that the new feature seems to make it harder to
-do the "doubly make sure" part.
-
-I dunno.
-
->  Documentation/git-replace.txt |  8 ++++++++
->  builtin/replace.c             | 31 +++++++++++++++++++++----------
->  2 files changed, 29 insertions(+), 10 deletions(-)
->
-> diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-> index 61461b9..089dcac 100644
-> --- a/Documentation/git-replace.txt
-> +++ b/Documentation/git-replace.txt
-> @@ -73,6 +73,14 @@ OPTIONS
->  	newly created object. See linkgit:git-var[1] for details about
->  	how the editor will be chosen.
->  
-> +--raw::
-> +	When editing, provide the raw object contents rather than
-> +	pretty-printed ones. Currently this only affects trees, which
-> +	will be shown in their binary form. This is harder to work with,
-> +	but can help when repairing a tree that is so corrupted it
-> +	cannot be pretty-printed. Note that you may need to configure
-> +	your editor to cleanly read and write binary data.
-> +
->  -l <pattern>::
->  --list <pattern>::
->  	List replace refs for objects that match the given pattern (or
-> diff --git a/builtin/replace.c b/builtin/replace.c
-> index 2584170..d1ea2c2 100644
-> --- a/builtin/replace.c
-> +++ b/builtin/replace.c
-> @@ -188,10 +188,12 @@ static int replace_object(const char *object_ref, const char *replace_ref, int f
->  }
->  
->  /*
-> - * Write the contents of the object named by "sha1" to the file "filename",
-> - * pretty-printed for human editing based on its type.
-> + * Write the contents of the object named by "sha1" to the file "filename".
-> + * If "raw" is true, then the object's raw contents are printed according to
-> + * "type". Otherwise, we pretty-print the contents for human editing.
->   */
-> -static void export_object(const unsigned char *sha1, const char *filename)
-> +static void export_object(const unsigned char *sha1, enum object_type type,
-> +			  int raw, const char *filename)
->  {
->  	struct child_process cmd = { NULL };
->  	int fd;
-> @@ -202,7 +204,10 @@ static void export_object(const unsigned char *sha1, const char *filename)
->  
->  	argv_array_push(&cmd.args, "--no-replace-objects");
->  	argv_array_push(&cmd.args, "cat-file");
-> -	argv_array_push(&cmd.args, "-p");
-> +	if (raw)
-> +		argv_array_push(&cmd.args, typename(type));
-> +	else
-> +		argv_array_push(&cmd.args, "-p");
->  	argv_array_push(&cmd.args, sha1_to_hex(sha1));
->  	cmd.git_cmd = 1;
->  	cmd.out = fd;
-> @@ -217,7 +222,7 @@ static void export_object(const unsigned char *sha1, const char *filename)
->   * The sha1 of the written object is returned via sha1.
->   */
->  static void import_object(unsigned char *sha1, enum object_type type,
-> -			  const char *filename)
-> +			  int raw, const char *filename)
->  {
->  	int fd;
->  
-> @@ -225,7 +230,7 @@ static void import_object(unsigned char *sha1, enum object_type type,
->  	if (fd < 0)
->  		die_errno("unable to open %s for reading", filename);
->  
-> -	if (type == OBJ_TREE) {
-> +	if (!raw && type == OBJ_TREE) {
->  		const char *argv[] = { "mktree", NULL };
->  		struct child_process cmd = { argv };
->  		struct strbuf result = STRBUF_INIT;
-> @@ -265,7 +270,7 @@ static void import_object(unsigned char *sha1, enum object_type type,
->  	 */
->  }
->  
-> -static int edit_and_replace(const char *object_ref, int force)
-> +static int edit_and_replace(const char *object_ref, int force, int raw)
->  {
->  	char *tmpfile = git_pathdup("REPLACE_EDITOBJ");
->  	enum object_type type;
-> @@ -281,10 +286,10 @@ static int edit_and_replace(const char *object_ref, int force)
->  
->  	check_ref_valid(old, prev, ref, sizeof(ref), force);
->  
-> -	export_object(old, tmpfile);
-> +	export_object(old, type, raw, tmpfile);
->  	if (launch_editor(tmpfile, NULL, NULL) < 0)
->  		die("editing object file failed");
-> -	import_object(new, type, tmpfile);
-> +	import_object(new, type, raw, tmpfile);
->  
->  	free(tmpfile);
->  
-> @@ -297,6 +302,7 @@ static int edit_and_replace(const char *object_ref, int force)
->  int cmd_replace(int argc, const char **argv, const char *prefix)
->  {
->  	int force = 0;
-> +	int raw = 0;
->  	const char *format = NULL;
->  	enum {
->  		MODE_UNSPECIFIED = 0,
-> @@ -310,6 +316,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
->  		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete replace refs"), MODE_DELETE),
->  		OPT_CMDMODE('e', "edit", &cmdmode, N_("edit existing object"), MODE_EDIT),
->  		OPT_BOOL('f', "force", &force, N_("replace the ref if it exists")),
-> +		OPT_BOOL(0, "raw", &raw, N_("do not pretty-print contents for --edit")),
->  		OPT_STRING(0, "format", &format, N_("format"), N_("use this format")),
->  		OPT_END()
->  	};
-> @@ -329,6 +336,10 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
->  		usage_msg_opt("-f only makes sense when writing a replacement",
->  			      git_replace_usage, options);
->  
-> +	if (raw && cmdmode != MODE_EDIT)
-> +		usage_msg_opt("--raw only makes sense with --edit",
-> +			      git_replace_usage, options);
-> +
->  	switch (cmdmode) {
->  	case MODE_DELETE:
->  		if (argc < 1)
-> @@ -346,7 +357,7 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
->  		if (argc != 1)
->  			usage_msg_opt("-e needs exactly one argument",
->  				      git_replace_usage, options);
-> -		return edit_and_replace(argv[0], force);
-> +		return edit_and_replace(argv[0], force, raw);
->  
->  	case MODE_LIST:
->  		if (argc > 1)
+					- Ted
