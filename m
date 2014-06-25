@@ -1,233 +1,268 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 6/8] commit: provide a fast multi-tip contains function
-Date: Wed, 25 Jun 2014 19:47:30 -0400
-Message-ID: <20140625234730.GF23146@sigill.intra.peff.net>
+Subject: [PATCH 7/8] tag: use commit_contains
+Date: Wed, 25 Jun 2014 19:49:21 -0400
+Message-ID: <20140625234921.GG23146@sigill.intra.peff.net>
 References: <20140625233429.GA20457@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 01:47:37 2014
+X-From: git-owner@vger.kernel.org Thu Jun 26 01:49:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Wzwud-0000wv-V0
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 01:47:36 +0200
+	id 1WzwwR-0002UD-Hc
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 01:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755122AbaFYXrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Jun 2014 19:47:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51228 "HELO peff.net"
+	id S1756702AbaFYXtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Jun 2014 19:49:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:51230 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753302AbaFYXrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Jun 2014 19:47:31 -0400
-Received: (qmail 5421 invoked by uid 102); 25 Jun 2014 23:47:31 -0000
+	id S1754496AbaFYXtX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Jun 2014 19:49:23 -0400
+Received: (qmail 5518 invoked by uid 102); 25 Jun 2014 23:49:23 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 18:47:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 19:47:30 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 25 Jun 2014 18:49:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 25 Jun 2014 19:49:21 -0400
 Content-Disposition: inline
 In-Reply-To: <20140625233429.GA20457@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252479>
 
-When commands like "git branch --contains" want to know
-which branches contain a particular commit, they run a
-series of merge-base calculations, one per branch. This can
-be very slow if you have a large number of branches.
+The newly added commit_contains function should do a better
+job than our custom depth-first traversal. It should be the
+same speed when going close to the roots, but much faster
+when all tags are close to the searched-for commit (this
+usually isn't the case, but could be if you limit the tags
+with a pattern).
 
-We made "tag --contains" faster in ffc4b80 (tag: speed up
---contains calculation, 2011-06-11) by switching to a
-different algorithm that caches intermediate "contains"
-information from each tag we check. The downside of the new
-algorithm is that it moves depth-first through the graph. So
-it tends to go all the way to the roots, even if the
-contained commit is near the top of history. That works OK
-for tags, because repositories tend to have tags near the
-roots anyway (e.g., a v0.1 or similar). The number of
-commits we look at increased a little bit, but since we
-avoid traversing over the same parts of history repeatedly,
-it was a huge net win.
-
-For "branch --contains", it is less clear that this is a
-win. Most branches stay up to date, so we can bound a search
-for a recent commit when we hit the merge base between the
-commit and the branches.
-
-The ideal would be to use the merge-base-style breadth-first
-traversal, but to perform a single traversal for all tips.
-The problem is that we need one bit of storage per tip in
-each commit, and "struct commit" has only a fixed number of
-bits. We can solve that by using a process similar to
-paint_down_to_common, but instead of storing PARENT1 and
-PARENT2 flags, using a commit slab to store one bit per tip.
+It also cleans up some of the more egregious pitfalls of the
+original implementation, including an abuse of the
+UNINTERESTING and TMP_MARK flags, an utterly confusing
+calling convention (it silently caches the bits between
+calls, with no checks that our "with_commit" was the same
+for each call), and a failure to clean up after itself
+(tainting any further traversals).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-This is the interesting commit, and I'd really love some eyes on the
-logic. It's basically paint_down_to_common but with the PARENT1 and
-PARENT2 flags replaced with larger bitfields.
+The code to use the new contains function ends up disappointingly longer
+than I would have hoped, but it has to massage our string_list of tag
+names into a list of commits, and then massage the output back into a
+filtered string list. It's not too bad, though. And as I mentioned, I
+hope to eventually factor this out to share with for-each-ref and
+branch.
 
-I haven't quite convinced myself that the stale logic in the middle is
-right. The origin paint_down function checks "PARENT1 | PARENT2" to see
-if we found a merge base (even though PARENT2 may represent many tips).
-Here I check whether we have _any_ "left" parent flag and _any_ "right"
-parent flag. I'm not sure if I actually need to be finding the merge
-base of _all_ of the commits. I don't think so, and I can't find a case
-where this doesn't work, but perhaps I am not being imaginative enough.
+ builtin/tag.c | 161 +++++++++++++++++-----------------------------------------
+ 1 file changed, 48 insertions(+), 113 deletions(-)
 
- commit.c | 102 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- commit.h |  17 +++++++++++
- 2 files changed, 119 insertions(+)
-
-diff --git a/commit.c b/commit.c
-index 445b679..66e0def 100644
---- a/commit.c
-+++ b/commit.c
-@@ -11,6 +11,7 @@
- #include "commit-slab.h"
- #include "prio-queue.h"
- #include "sha1-lookup.h"
-+#include "bitset.h"
- 
- static struct commit_extra_header *read_commit_extra_header_lines(const char *buf, size_t len, const char **);
- 
-@@ -1040,6 +1041,107 @@ struct commit_list *reduce_heads(struct commit_list *heads)
- 	return result;
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 3ef2fab..f17192c 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -72,108 +72,6 @@ static const unsigned char *match_points_at(const char *refname,
+ 	return NULL;
  }
  
-+define_commit_slab(bit_slab, unsigned char);
-+
-+static int init_contains_bits(const struct commit_list *commits,
-+			      struct bit_slab *bits,
-+			      struct prio_queue *queue)
+-static int in_commit_list(const struct commit_list *want, struct commit *c)
+-{
+-	for (; want; want = want->next)
+-		if (!hashcmp(want->item->object.sha1, c->object.sha1))
+-			return 1;
+-	return 0;
+-}
+-
+-enum contains_result {
+-	CONTAINS_UNKNOWN = -1,
+-	CONTAINS_NO = 0,
+-	CONTAINS_YES = 1,
+-};
+-
+-/*
+- * Test whether the candidate or one of its parents is contained in the list.
+- * Do not recurse to find out, though, but return -1 if inconclusive.
+- */
+-static enum contains_result contains_test(struct commit *candidate,
+-			    const struct commit_list *want)
+-{
+-	/* was it previously marked as containing a want commit? */
+-	if (candidate->object.flags & TMP_MARK)
+-		return 1;
+-	/* or marked as not possibly containing a want commit? */
+-	if (candidate->object.flags & UNINTERESTING)
+-		return 0;
+-	/* or are we it? */
+-	if (in_commit_list(want, candidate)) {
+-		candidate->object.flags |= TMP_MARK;
+-		return 1;
+-	}
+-
+-	if (parse_commit(candidate) < 0)
+-		return 0;
+-
+-	return -1;
+-}
+-
+-/*
+- * Mimicking the real stack, this stack lives on the heap, avoiding stack
+- * overflows.
+- *
+- * At each recursion step, the stack items points to the commits whose
+- * ancestors are to be inspected.
+- */
+-struct stack {
+-	int nr, alloc;
+-	struct stack_entry {
+-		struct commit *commit;
+-		struct commit_list *parents;
+-	} *stack;
+-};
+-
+-static void push_to_stack(struct commit *candidate, struct stack *stack)
+-{
+-	int index = stack->nr++;
+-	ALLOC_GROW(stack->stack, stack->nr, stack->alloc);
+-	stack->stack[index].commit = candidate;
+-	stack->stack[index].parents = candidate->parents;
+-}
+-
+-static enum contains_result contains(struct commit *candidate,
+-		const struct commit_list *want)
+-{
+-	struct stack stack = { 0, 0, NULL };
+-	int result = contains_test(candidate, want);
+-
+-	if (result != CONTAINS_UNKNOWN)
+-		return result;
+-
+-	push_to_stack(candidate, &stack);
+-	while (stack.nr) {
+-		struct stack_entry *entry = &stack.stack[stack.nr - 1];
+-		struct commit *commit = entry->commit;
+-		struct commit_list *parents = entry->parents;
+-
+-		if (!parents) {
+-			commit->object.flags |= UNINTERESTING;
+-			stack.nr--;
+-		}
+-		/*
+-		 * If we just popped the stack, parents->item has been marked,
+-		 * therefore contains_test will return a meaningful 0 or 1.
+-		 */
+-		else switch (contains_test(parents->item, want)) {
+-		case CONTAINS_YES:
+-			commit->object.flags |= TMP_MARK;
+-			stack.nr--;
+-			break;
+-		case CONTAINS_NO:
+-			entry->parents = parents->next;
+-			break;
+-		case CONTAINS_UNKNOWN:
+-			push_to_stack(parents->item, &stack);
+-			break;
+-		}
+-	}
+-	free(stack.stack);
+-	return contains_test(candidate, want);
+-}
+-
+ static void show_tag_lines(const unsigned char *sha1, int lines)
+ {
+ 	int i;
+@@ -227,7 +125,7 @@ static void print_tag(const char *refname, const unsigned char *sha1,
+ 
+ static int filter_can_stream(struct tag_filter *filter)
+ {
+-	return !filter->sort;
++	return !filter->sort && !filter->with_commit;
+ }
+ 
+ static int show_reference(const char *refname, const unsigned char *sha1,
+@@ -236,16 +134,6 @@ static int show_reference(const char *refname, const unsigned char *sha1,
+ 	struct tag_filter *filter = cb_data;
+ 
+ 	if (match_pattern(filter->patterns, refname)) {
+-		if (filter->with_commit) {
+-			struct commit *commit;
+-
+-			commit = lookup_commit_reference_gently(sha1, 1);
+-			if (!commit)
+-				return 0;
+-			if (!contains(commit, filter->with_commit))
+-				return 0;
+-		}
+-
+ 		if (points_at.nr && !match_points_at(refname, sha1))
+ 			return 0;
+ 
+@@ -258,6 +146,46 @@ static int show_reference(const char *refname, const unsigned char *sha1,
+ 	return 0;
+ }
+ 
++static int util_is_not_null(struct string_list_item *it, int pos, void *data)
 +{
-+	int i, nr = commit_list_count(commits);
-+
-+	init_bit_slab_with_stride(bits, bitset_sizeof(nr));
-+	for (i = 0; i < nr; i++, commits = commits->next) {
-+		struct commit *c = commits->item;
-+
-+		prio_queue_put(queue, c);
-+		bitset_set(bit_slab_at(bits, c), i);
-+	}
-+
-+	return nr;
++	return !!it->util;
 +}
 +
-+static int queue_has_nonstale_bits(struct prio_queue *queue, struct bit_slab *stale)
++static int matches_contains(struct string_list_item *it, int pos, void *data)
 +{
++	unsigned char *contains = data;
++	return contains[pos];
++}
++
++static void limit_by_contains(struct string_list *tags, struct commit_list *with)
++{
++	struct commit_list *tag_commits = NULL, **tail = &tag_commits;
++	unsigned char *result;
 +	int i;
-+	for (i = 0; i < queue->nr; i++) {
-+		struct commit *commit = queue->array[i];
-+		if (!*bit_slab_at(stale, commit))
-+			return 1;
-+	}
-+	return 0;
-+}
 +
-+static void fill_contains_result(unsigned char *result, int nr,
-+				 struct bit_slab *bits,
-+				 const struct commit_list *other_side)
-+{
-+	const struct commit_list *c;
-+
-+	memset(result, 0, nr);
-+	for (c = other_side; c; c = c->next) {
-+		unsigned char *c_bits = bit_slab_at(bits, c->item);
-+		int i;
-+
-+		for (i = 0; i < nr; i++)
-+			result[i] |= bitset_get(c_bits, i);
-+	}
-+}
-+
-+void commit_contains(const struct commit_list *left,
-+		     const struct commit_list *right,
-+		     unsigned char *left_contains,
-+		     unsigned char *right_contains)
-+{
-+	struct prio_queue queue = { compare_commits_by_commit_date };
-+	struct bit_slab left_bits, right_bits, stale_bits;
-+	int left_nr, right_nr;
-+
-+	left_nr = init_contains_bits(left, &left_bits, &queue);
-+	right_nr = init_contains_bits(right, &right_bits, &queue);
-+	init_bit_slab(&stale_bits);
-+
-+	while (queue_has_nonstale_bits(&queue, &stale_bits)) {
-+		struct commit *commit = prio_queue_get(&queue);
-+		struct commit_list *parents;
-+		unsigned char *c_left, *c_right, *c_stale;
-+
-+		c_left = bit_slab_at(&left_bits, commit);
-+		c_right = bit_slab_at(&right_bits, commit);
-+		c_stale = bit_slab_at(&stale_bits, commit);
-+
-+		if (!bitset_empty(c_left, left_nr) &&
-+		    !bitset_empty(c_right, right_nr))
-+			*c_stale = 1;
-+
-+		for (parents = commit->parents; parents; parents = parents->next) {
-+			struct commit *p = parents->item;
-+			unsigned char *p_left = bit_slab_at(&left_bits, p),
-+				      *p_right = bit_slab_at(&right_bits, p);
-+
-+			if (bitset_equal(c_left, p_left, left_nr) &&
-+			    bitset_equal(c_right, p_right, right_nr))
-+				continue;
-+			if (parse_commit(p))
-+				die("unable to parse commit");
-+			bitset_or(p_left, c_left, left_nr);
-+			bitset_or(p_right, c_right, right_nr);
-+			*bit_slab_at(&stale_bits, p) |= *c_stale;
-+			prio_queue_put(&queue, p);
++	for (i = 0; i < tags->nr; i++) {
++		struct string_list_item *it = &tags->items[i];
++		struct commit *c = lookup_commit_reference_gently(it->util, 1);
++		if (c)
++			tail = commit_list_append(c, tail);
++		else {
++			free(it->util);
++			it->util = NULL;
 +		}
 +	}
++	filter_string_list(tags, 0, util_is_not_null, NULL);
 +
-+	if (left_contains)
-+		fill_contains_result(left_contains, left_nr, &left_bits, right);
-+	if (right_contains)
-+		fill_contains_result(right_contains, right_nr, &right_bits, left);
++	if (!tags->nr)
++		return;
 +
-+	clear_prio_queue(&queue);
-+	clear_bit_slab(&left_bits);
-+	clear_bit_slab(&right_bits);
-+	clear_bit_slab(&stale_bits);
++	result = xmalloc(tags->nr);
++	commit_contains(with, tag_commits, NULL, result);
++	filter_string_list(tags, 1, matches_contains, result);
++
++	free(result);
++	free_commit_list(tag_commits);
 +}
 +
-+
- static const char gpg_sig_header[] = "gpgsig";
- static const int gpg_sig_header_len = sizeof(gpg_sig_header) - 1;
+ static int sort_by_version(const void *a_, const void *b_)
+ {
+ 	const struct string_list_item *a = a_;
+@@ -278,9 +206,16 @@ static int list_tags(const char **patterns, int lines,
+ 	filter.tags.strdup_strings = 1;
  
-diff --git a/commit.h b/commit.h
-index a9f177b..d3a142a 100644
---- a/commit.h
-+++ b/commit.h
-@@ -307,4 +307,21 @@ int compare_commits_by_commit_date(const void *a_, const void *b_, void *unused)
- LAST_ARG_MUST_BE_NULL
- extern int run_commit_hook(int editor_is_used, const char *index_file, const char *name, ...);
- 
-+/*
-+ * Calculate which commits in left contain commits in right, and vice versa.
-+ *
-+ * The left_contains result, if non-NULL, must point to an array of unsigned
-+ * char with as many elements as there are items in the "left" commit_list.
-+ * When the function completes, the nth char in left_contains will be non-zero
-+ * iff the nth commit in the "left" list contains at least one commit from the
-+ * "right" list.
-+ *
-+ * The right_contains result works in the same way, but with left and right
-+ * swapped.
-+ */
-+void commit_contains(const struct commit_list *left,
-+		     const struct commit_list *right,
-+		     unsigned char *left_contains,
-+		     unsigned char *right_contains);
-+
- #endif /* COMMIT_H */
+ 	for_each_tag_ref(show_reference, (void *) &filter);
++	if (with_commit)
++		limit_by_contains(&filter.tags, with_commit);
+ 	if ((sort & SORT_MASK) == VERCMP_SORT)
+ 		qsort(filter.tags.items, filter.tags.nr,
+ 		      sizeof(struct string_list_item), sort_by_version);
++	if (sort) {
++		if ((sort & SORT_MASK) == VERCMP_SORT)
++			qsort(filter.tags.items, filter.tags.nr,
++			      sizeof(struct string_list_item), sort_by_version);
++	}
+ 	if (!filter_can_stream(&filter)) {
+ 		int i;
+ 		if (sort & REVERSE_SORT)
 -- 
 2.0.0.566.gfe3e6b2
