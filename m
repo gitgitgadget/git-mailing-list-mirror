@@ -1,80 +1,103 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Is it possible to list unpushed tags without accessing remote?
-Date: Thu, 26 Jun 2014 18:54:22 +0200
-Message-ID: <874mz76281.fsf@igel.home>
-References: <BAA3119F-8351-4BFD-B42A-C96E4C7A1440@jetbrains.com>
-	<CAJo=hJvdMURuaEZA3XEWE_Uuq8QRZ+mt8K2H8XrbTuZsVX9gKQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v3 2/3] config: add hashtable for config parsing & retrieval
+Date: Thu, 26 Jun 2014 19:37:38 +0200
+Message-ID: <vpq1tubinbx.fsf@anie.imag.fr>
+References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com>
+	<1403518300-23053-3-git-send-email-tanayabh@gmail.com>
+	<53A84077.4010200@ramsay1.demon.co.uk>
+	<xmqqsimv9pjx.fsf@gitster.dls.corp.google.com>
+	<53A99FEB.5040808@ramsay1.demon.co.uk>
+	<xmqq61joamcc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
-	git <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 18:54:32 2014
+Content-Type: text/plain
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 19:39:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0CwS-0005WC-4O
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 18:54:32 +0200
+	id 1X0Ddt-0001Cb-Pc
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 19:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757436AbaFZQy1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2014 12:54:27 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:42325 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756853AbaFZQy0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 12:54:26 -0400
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3gznPq5gJsz3hhTs;
-	Thu, 26 Jun 2014 18:54:23 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3gznPq10q3z7S6QT;
-	Thu, 26 Jun 2014 18:54:23 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.180])
-	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id QNAL9zC3LUMl; Thu, 26 Jun 2014 18:54:22 +0200 (CEST)
-X-Auth-Info: gVrSyMDQz6wn3OOBc4m+whGeXtygiR7r+pVFkThjeIQ=
-Received: from igel.home (ppp-188-174-158-98.dynamic.mnet-online.de [188.174.158.98])
-	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Thu, 26 Jun 2014 18:54:22 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 43CCF2C2527; Thu, 26 Jun 2014 18:54:22 +0200 (CEST)
-X-Yow: Let's send the Russians defective lifestyle accessories!
-In-Reply-To: <CAJo=hJvdMURuaEZA3XEWE_Uuq8QRZ+mt8K2H8XrbTuZsVX9gKQ@mail.gmail.com>
-	(Shawn Pearce's message of "Thu, 26 Jun 2014 09:13:53 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.91 (gnu/linux)
+	id S932404AbaFZRjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2014 13:39:22 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:55263 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932214AbaFZRjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 13:39:21 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s5QHbaY7026913
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 26 Jun 2014 19:37:36 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s5QHbcRx015376;
+	Thu, 26 Jun 2014 19:37:38 +0200
+In-Reply-To: <xmqq61joamcc.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 25 Jun 2014 11:13:55 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 26 Jun 2014 19:37:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s5QHbaY7026913
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1404409058.47423@fOaszEhHOFiBlZIfsnkQJw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252511>
 
-Shawn Pearce <spearce@spearce.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Jun 26, 2014 at 5:42 AM, Kirill Likhodedov
-> <kirill.likhodedov@jetbrains.com> wrote:
->> is it possible to know which tags are not yet pushed to a remote via=
- a completely local command?
->>
->> (e.g. the list of unpushed _commits_ may be received by =E2=80=98git=
- log <upstream>..=E2=80=99)
->>
->> I know it is possible to execute 'git ls-remote=E2=80=99 or 'git pus=
-h --dry-run=E2=80=99, but both ask the remote server.
->> I=E2=80=99m almost sure that the answer is =E2=80=9CNO=E2=80=9D, but=
- want to receive a confirmation from Git gurus :)
+> When the submodule script that uses "git config -f .gitmodules" is
+> converted into C, if the updated config API is ready, it may be able
+> to do something like these in a single program:
 >
-> No. The client doesn't track what tags the remote has.
+> 	const char *url;
+> 	struct config_set *gm_config;
+>
+>         /* read from $GIT_DIR/config */
+>         url = git_config_get_string("remote.origin.url");
+>
+>         /*
+>          * allow us to read from .gitmodules; the parameters are
+>          * list of files that make up the configset, perhaps.
+>          */
+> 	gm_config = git_configset_new(".gitmodules", NULL);
+>
+>
+>         if (!git_configset_get_bool(gm_config, "submodule.frotz.ignore")) {
+> 		/* do a lot of stuff for the submodule */
+>                 ...
+> 	}
+>
+>         /* when we are done with the configset */
+>         git_configset_clear(gm_config);
 
-Not by default, but it is easy to configure your clone to fetch tags to
-a separate namespace.
+Isn't that a bit overkill? Why not just let the caller manage a hashmap
+directly instead of a config_set? Your code could become
 
-Andreas.
+  struct hashmap *gm_config;
+  config_cache_init(&gm_config);
+  config_cache_read_from_file(".gitmodule", gm_config);
+  /* possibly more calls to
+     config_cache_read_from_file("some-other-file", ...). */
+  
+and then
 
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+  if (!git_configset_get_bool(gm_config, "submodule.frotz.ignore")) {
+     ...
+  
+
+Perhaps a bit more complicated to use, but much simpler to implement.
+Since there are very few callers, I'd say it's better to keep the
+implementation simple.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
