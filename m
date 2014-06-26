@@ -1,50 +1,70 @@
-From: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-Subject: Is it possible to list unpushed tags without accessing remote?
-Date: Thu, 26 Jun 2014 16:42:41 +0400
-Message-ID: <BAA3119F-8351-4BFD-B42A-C96E4C7A1440@jetbrains.com>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.2\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Alan Franzoni <mailing@franzoni.eu>
+Subject: [PATCH] Fix: wrong offset for CET timezone
+Date: Thu, 26 Jun 2014 15:53:32 +0200
+Message-ID: <1403790812-29174-1-git-send-email-mailing@franzoni.eu>
+Cc: Alan Franzoni <username@franzoni.eu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jun 26 14:49:39 2014
+X-From: git-owner@vger.kernel.org Thu Jun 26 15:54:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X097Q-0003ao-4R
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 14:49:36 +0200
+	id 1X0A7x-0006BO-FS
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 15:54:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755928AbaFZMt0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2014 08:49:26 -0400
-Received: from mail1.intellij.net ([46.137.178.215]:50045 "EHLO
-	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755871AbaFZMtY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Jun 2014 08:49:24 -0400
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jun 2014 08:49:23 EDT
-Received: (qmail 5455 invoked by uid 89); 26 Jun 2014 12:42:43 -0000
-Received: from unknown (HELO loki.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@81.3.129.2)
-  by ip-10-62-119-91.eu-west-1.compute.internal with ESMTPA; 26 Jun 2014 12:42:43 -0000
-X-Mailer: Apple Mail (2.1878.2)
+	id S1751783AbaFZNyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2014 09:54:08 -0400
+Received: from mail-wi0-f178.google.com ([209.85.212.178]:51159 "EHLO
+	mail-wi0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750960AbaFZNyH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 09:54:07 -0400
+Received: by mail-wi0-f178.google.com with SMTP id n15so1071769wiw.17
+        for <git@vger.kernel.org>; Thu, 26 Jun 2014 06:53:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=+mJJN+nlBEvYs35NfNuonU7tqNdDDneBBz0LhMpaDbo=;
+        b=SUqmTkv5ezwzXdaSsigO8iFVcUkvw8wx8gZW45qLkzSPGo+GLSOEF80wuzUuD5yPXd
+         zVwKnINZ+a5t7z/cEy8gwrGShwHNUvgKA/yi+5Roe+Dh8Nulbb+dS15XGnwT1BRujjCW
+         NRYUNOvztItbXUoHZrMStH09ww8XBgaPQwJ+kYZFVw/ocA2jrJa+3lYwkvptje/y0oNf
+         dqzMlICdKnXr1bsYuygIxsX3NiE/TbBo3Q8HIjJAVrVwTQkZPdHSfzjsRrHN0dHaGqil
+         Kf9GvuK8PUHnmUoy0AMfv0s61zbQJZSa+Kx7/DgaPftqXlvgnY8HwUBGfEjNwtbtllAk
+         L3LA==
+X-Gm-Message-State: ALoCoQlDYKTPfqWZg9WtbA6lCquoPwO7AGYqhCgxDYM/APG5cxJ6wU/Yt8xrCCQEY49K7tXaXr/O
+X-Received: by 10.180.105.68 with SMTP id gk4mr4555594wib.24.1403790839319;
+        Thu, 26 Jun 2014 06:53:59 -0700 (PDT)
+Received: from afrastation.intranet ([195.14.103.53])
+        by mx.google.com with ESMTPSA id o3sm66138175wiz.24.2014.06.26.06.53.57
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 26 Jun 2014 06:53:58 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252500>
 
-Hi,
+From: Alan Franzoni <username@franzoni.eu>
 
-is it possible to know which tags are not yet pushed to a remote via a =
-completely local command?
+Signed-off-by: Alan Franzoni <username@franzoni.eu>
+---
+ Documentation/date-formats.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-(e.g. the list of unpushed _commits_ may be received by =91git log <ups=
-tream>..=92)
-
-I know it is possible to execute 'git ls-remote=92 or 'git push --dry-r=
-un=92, but both ask the remote server.
-I=92m almost sure that the answer is =93NO=94, but want to receive a co=
-nfirmation from Git gurus :)
-
-
-Thanks a lot!
--- Kirill.
+diff --git a/Documentation/date-formats.txt b/Documentation/date-formats.txt
+index ccd1fc8..284308a 100644
+--- a/Documentation/date-formats.txt
++++ b/Documentation/date-formats.txt
+@@ -11,7 +11,7 @@ Git internal format::
+ 	It is `<unix timestamp> <time zone offset>`, where `<unix
+ 	timestamp>` is the number of seconds since the UNIX epoch.
+ 	`<time zone offset>` is a positive or negative offset from UTC.
+-	For example CET (which is 2 hours ahead UTC) is `+0200`.
++	For example CET (which is 1 hour ahead UTC) is `+0100`.
+ 
+ RFC 2822::
+ 	The standard email format as described by RFC 2822, for example
+-- 
+2.0.0
