@@ -1,82 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Is it possible to list unpushed tags without accessing remote?
-Date: Thu, 26 Jun 2014 12:04:29 -0700
-Message-ID: <xmqqlhsj4hmq.fsf@gitster.dls.corp.google.com>
-References: <BAA3119F-8351-4BFD-B42A-C96E4C7A1440@jetbrains.com>
-	<CAJo=hJvdMURuaEZA3XEWE_Uuq8QRZ+mt8K2H8XrbTuZsVX9gKQ@mail.gmail.com>
-	<874mz76281.fsf@igel.home>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH v3 2/3] config: add hashtable for config parsing & retrieval
+Date: Thu, 26 Jun 2014 21:19:42 +0200
+Message-ID: <53AC724E.3090106@gmail.com>
+References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com>	<1403518300-23053-3-git-send-email-tanayabh@gmail.com>	<53A84077.4010200@ramsay1.demon.co.uk>	<xmqqsimv9pjx.fsf@gitster.dls.corp.google.com>	<53A99FEB.5040808@ramsay1.demon.co.uk>	<xmqq61joamcc.fsf@gitster.dls.corp.google.com>	<vpq1tubinbx.fsf@anie.imag.fr> <xmqqpphv4hu6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-2022-jp
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
-	git <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 21:04:43 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jun 26 21:19:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0EyO-00050n-JM
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 21:04:40 +0200
+	id 1X0FD1-0006Dr-K8
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 21:19:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751273AbaFZTEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2014 15:04:37 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51385 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751139AbaFZTEg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 15:04:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3AADC22841;
-	Thu, 26 Jun 2014 15:04:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4WSjE657josSp8DLLG1/kx5YZw4=; b=iF6ZeV
-	YzlljsT8Wn5YBTE0KCnl5Jjuk1yUFg7YBte6CXhHOrX8FBVoFSkNUi3CD45ENCoA
-	9LalxZyjGsUzOZEZ4CAQp13jPTD6bKFvCIPHnxAfN86eMR29ozCOI4T8wZq76aqu
-	QCRKpuLZI5T5iUxwYyAPCX+WYyzpjnziWYAU8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UovecunNgxztGtLg1uWplbExmcuggfKM
-	nee5Wl1atNbzKEr2qewAjkzOVOl4SjuQiEk2+wmlKrf68M74Rwt8tuW12xQHnU/b
-	6rtw6kn9jFDw+3rnHlLfM+qJ2BQVzlDVTt8gmwBxM092VfU6W3LhyJYobh42akyr
-	kH3ZwAorwns=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2C01A2283E;
-	Thu, 26 Jun 2014 15:04:29 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5C2952282E;
-	Thu, 26 Jun 2014 15:04:24 -0400 (EDT)
-In-Reply-To: <874mz76281.fsf@igel.home> (Andreas Schwab's message of "Thu, 26
-	Jun 2014 18:54:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B0141534-FD64-11E3-AFAF-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751047AbaFZTTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2014 15:19:43 -0400
+Received: from mail-we0-f173.google.com ([74.125.82.173]:63867 "EHLO
+	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750844AbaFZTTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 15:19:43 -0400
+Received: by mail-we0-f173.google.com with SMTP id t60so4203666wes.18
+        for <git@vger.kernel.org>; Thu, 26 Jun 2014 12:19:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=cNaUnUa1NlNhgbqfjL2FCFYs51kx9Wl10nh8mFCnedw=;
+        b=DAk3rg8hvDvKua+I97OFMwO1b4qpOKKf/O0l5305iIaWP78p9DiP5mqouL5SejBfXP
+         zQTt4QbqKp2UgS7cbhvzzqiYb7gMrRtJzCBHK8EwA5lVWjlwGiixBNEPyE+5vfExL4+y
+         UzOUXE7ZGjDSYC7/bMVe8940BhIMH9PE9/tTZorNxKcL6/O1tEqWXA0DsW/AszsR2sIM
+         v9CSpehfXt3z2+NZvkiIg5fxBuicryk9TssSUY6SEJANC+YUFvvztwZ3ICLX9/TdbzNj
+         d3oOe94C2HxeP9HXFQtrXVS9kIf94cAUNx8NYgNhtXzSy/3CZg8vECuqDKd6+ddJ3ioA
+         kU3w==
+X-Received: by 10.194.237.135 with SMTP id vc7mr20860212wjc.86.1403810381664;
+        Thu, 26 Jun 2014 12:19:41 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id i12sm16270450wjr.32.2014.06.26.12.19.40
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 26 Jun 2014 12:19:41 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqpphv4hu6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252518>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
-
-> Shawn Pearce <spearce@spearce.org> writes:
->
->> On Thu, Jun 26, 2014 at 5:42 AM, Kirill Likhodedov
->> <kirill.likhodedov@jetbrains.com> wrote:
->>> is it possible to know which tags are not yet pushed to a remote via a completely local command?
->>>
->>> (e.g. the list of unpushed _commits_ may be received by ‘git log <upstream>..’)
->>>
->>> I know it is possible to execute 'git ls-remote’ or 'git push --dry-run’, but both ask the remote server.
->>> I’m almost sure that the answer is “NO”, but want to receive a confirmation from Git gurus :)
+Am 26.06.2014 21:00, schrieb Junio C Hamano:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> 
+>> Junio C Hamano <gitster@pobox.com> writes:
 >>
->> No. The client doesn't track what tags the remote has.
->
-> Not by default, but it is easy to configure your clone to fetch tags to
-> a separate namespace.
+>>> When the submodule script that uses "git config -f .gitmodules" is
+>>> converted into C, if the updated config API is ready, it may be able
+>>> to do something like these in a single program:
+>>>
+>>> 	const char *url;
+>>> 	struct config_set *gm_config;
+>>>
+>>>         /* read from $GIT_DIR/config */
+>>>         url = git_config_get_string("remote.origin.url");
+>>>
+>>>         /*
+>>>          * allow us to read from .gitmodules; the parameters are
+>>>          * list of files that make up the configset, perhaps.
+>>>          */
+>>> 	gm_config = git_configset_new(".gitmodules", NULL);
+>>>
+>>>
+>>>         if (!git_configset_get_bool(gm_config, "submodule.frotz.ignore")) {
+>>> 		/* do a lot of stuff for the submodule */
+>>>                 ...
+>>> 	}
+>>>
+>>>         /* when we are done with the configset */
+>>>         git_configset_clear(gm_config);
+>>
+>> Isn't that a bit overkill? Why not just let the caller manage a hashmap
+>> directly instead of a config_set?
+> 
+> Because I had an experience under my belt of a painful refactoring
+> of "the_index" which turned out to be not just a single array, I
+> simply suspect that the final data structure to represent a "set of
+> config-like things" will not be just a single hashmap, hence I do
+> prefer to have one layer of abstraction "struct config_set", which
+> would contain a hashmap and possibly more.  Doesn't "is the hashmap
+> initialized" bit belong there, for example?
 
-But then in order to learn what tags the remote has, you need to
-talk to the remote and it won't be "complately a local" operation
-anymore, no?
+Would an additional
+
+  int hashmap_is_initialized(constr struct hashmap *map)
+  {
+    return !!map->table;
+  }
+
+API help? (Note that hashmap_free() already does memset(0), so the usual notion of "zero memory means unitialized" applies).
