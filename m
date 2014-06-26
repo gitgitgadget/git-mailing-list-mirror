@@ -1,8 +1,8 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [RFC/PATCH] pager.c: replace git_config with git_config_get_string
-Date: Thu, 26 Jun 2014 13:54:10 +0530
-Message-ID: <53ABD8AA.10909@gmail.com>
-References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>	<1403520105-23250-6-git-send-email-tanayabh@gmail.com> <CAPig+cTwBB8bmKDtdv8zPojR+6Kyu6fYB7Sw0-UJoSHFLQX+fQ@mail.gmail.com>
+Subject: Re: [RFC/PATCH V2] alias.c: replace git_config with git_config_get_string
+Date: Thu, 26 Jun 2014 13:54:32 +0530
+Message-ID: <53ABD8C0.1000308@gmail.com>
+References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com> <CAPig+cQ3hzFFRRhbDTddArBC0nB9gZ7yMXuh35GHe73x-1JDng@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
@@ -10,146 +10,124 @@ Cc: Git List <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 10:24:29 2014
+X-From: git-owner@vger.kernel.org Thu Jun 26 10:25:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X04yo-0002RI-EZ
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 10:24:26 +0200
+	id 1X04zK-0002sf-OH
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 10:24:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104AbaFZIYV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2014 04:24:21 -0400
-Received: from mail-pb0-f43.google.com ([209.85.160.43]:64701 "EHLO
-	mail-pb0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750770AbaFZIYT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 04:24:19 -0400
-Received: by mail-pb0-f43.google.com with SMTP id um1so2847524pbc.16
-        for <git@vger.kernel.org>; Thu, 26 Jun 2014 01:24:19 -0700 (PDT)
+	id S1752852AbaFZIYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2014 04:24:54 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:45653 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752149AbaFZIYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 04:24:52 -0400
+Received: by mail-pa0-f54.google.com with SMTP id et14so2891833pad.27
+        for <git@vger.kernel.org>; Thu, 26 Jun 2014 01:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=v16oiBlHwTKFKpwatQB1pH8OXBWMyaJfkLDF2c7G2YM=;
-        b=AB+uJuyWAywmV5ZJn3aUQ+4E8I7uUW9e2So7YBAqX1meX4UF+pg66wrG2gRnjs+MXw
-         eZOoOzfKVbCbqOOX4Gi8rwjhBEn20l43PUzf8UyfpkC4f/OrZWHEaLOgvhIKCqipZ1D6
-         /nY3TCj/9knJtCLAbBahFXk2EJH4bX1YVdgS2UOk5ySxXwm9CG1q8mbqd9cR+mBqa60B
-         fuhiaMfyF9aAuGDNKdtZ7SwfEEaLLlF+SnxX8vG+dHViRp2fSiAW3S2ZPriWiT92H05I
-         ToApdTiuRcCS5jxSMo2ZFNPqztVpBUtyaETh9/Bghvpmeh5jYv8dVG6wV4Kzl/+D7NoE
-         gejg==
-X-Received: by 10.66.66.199 with SMTP id h7mr19587645pat.30.1403771059184;
-        Thu, 26 Jun 2014 01:24:19 -0700 (PDT)
+        bh=tAo5g2KWTrOU5xWQohd1JtWwG5rKMNFnis34fCCC+dU=;
+        b=VfEjQz+Jk3XOGo4zixUkia0icGoPetchf0UhkpZOJ2ZVbeyEOXBEGYDv2STeCspTBX
+         leXKJ6kuk30FGxMNk+LpvK0DaGD+lunpL4n4UlC+2tWtVMsIP575PpTSwzv3tBWzK8Ga
+         a1bjSecQtf9qua/0kPsoWzvepGdw3wjFAjOOwkv7trCNlGrtZawaua0HII4O0U/fX/3c
+         KG88j/BIBw8wFejOzJCXc4zjoFEKfIlVADLh8R6U1an44lVpDvypT0PtgoLxSaKwxU9a
+         Z3jbPreJNQlnRZQbiS6XGHAwzyuqu2AfqMtk8uPAxYx4kCpJ2Wovz9Vtr+3oIqoz/szl
+         Dgxg==
+X-Received: by 10.68.161.101 with SMTP id xr5mr19044050pbb.168.1403771092437;
+        Thu, 26 Jun 2014 01:24:52 -0700 (PDT)
 Received: from [127.0.0.1] ([117.251.76.15])
-        by mx.google.com with ESMTPSA id g6sm31277848pat.2.2014.06.26.01.24.15
+        by mx.google.com with ESMTPSA id xk1sm31223553pac.21.2014.06.26.01.24.33
         for <multiple recipients>
         (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 26 Jun 2014 01:24:18 -0700 (PDT)
+        Thu, 26 Jun 2014 01:24:51 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CAPig+cTwBB8bmKDtdv8zPojR+6Kyu6fYB7Sw0-UJoSHFLQX+fQ@mail.gmail.com>
+In-Reply-To: <CAPig+cQ3hzFFRRhbDTddArBC0nB9gZ7yMXuh35GHe73x-1JDng@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252493>
 
 
 
-On 6/25/2014 9:29 AM, Eric Sunshine wrote:
+On 6/25/2014 7:42 AM, Eric Sunshine wrote:
 > On Mon, Jun 23, 2014 at 6:41 AM, Tanay Abhra <tanayabh@gmail.com> wrote:
 >> Use git_config_get_string instead of git_config to take advantage of
 >> the config hash-table api which provides a cleaner control flow.
 >>
 >> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 >> ---
->>  pager.c | 44 +++++++++++++++-----------------------------
->>  1 file changed, 15 insertions(+), 29 deletions(-)
+>>  alias.c | 28 ++++++++++------------------
+>>  1 file changed, 10 insertions(+), 18 deletions(-)
 >>
->> diff --git a/pager.c b/pager.c
->> index 8b5cbc5..96abe6d 100644
->> --- a/pager.c
->> +++ b/pager.c
->> @@ -6,12 +6,6 @@
->>  #define DEFAULT_PAGER "less"
->>  #endif
+>> diff --git a/alias.c b/alias.c
+>> index 5efc3d6..0fe32bc 100644
+>> --- a/alias.c
+>> +++ b/alias.c
+>> @@ -1,25 +1,17 @@
+>>  #include "cache.h"
 >>
->> -struct pager_config {
->> -       const char *cmd;
->> -       int want;
->> -       char *value;
->> -};
+>> -static const char *alias_key;
+>> -static char *alias_val;
 >> -
->>  /*
->>   * This is split up from the rest of git so that we can do
->>   * something different on Windows.
->> @@ -155,30 +149,22 @@ int decimal_width(int number)
->>         return width;
->>  }
->>
->> -static int pager_command_config(const char *var, const char *value, void *data)
+>> -static int alias_lookup_cb(const char *k, const char *v, void *cb)
 >> -{
->> -       struct pager_config *c = data;
->> -       if (starts_with(var, "pager.") && !strcmp(var + 6, c->cmd)) {
->> -               int b = git_config_maybe_bool(var, value);
->> -               if (b >= 0)
->> -                       c->want = b;
->> -               else {
->> -                       c->want = 1;
->> -                       c->value = xstrdup(value);
->> -               }
+>> -       if (starts_with(k, "alias.") && !strcmp(k + 6, alias_key)) {
+>> -               if (!v)
+>> -                       return config_error_nonbool(k);
+>> -               alias_val = xstrdup(v);
+>> -               return 0;
 >> -       }
 >> -       return 0;
 >> -}
 >> -
->>  /* returns 0 for "no pager", 1 for "use pager", and -1 for "not specified" */
->>  int check_pager_config(const char *cmd)
+>>  char *alias_lookup(const char *alias)
 >>  {
->> -       struct pager_config c;
->> -       c.cmd = cmd;
->> -       c.want = -1;
->> -       c.value = NULL;
->> -       git_config(pager_command_config, &c);
->> -       if (c.value)
->> -               pager_program = c.value;
->> -       return c.want;
+>> -       alias_key = alias;
+>> -       alias_val = NULL;
+>> -       git_config(alias_lookup_cb, NULL);
+>> -       return alias_val;
+>> +       const char *v;
+>> +       char *value;
 >> +       struct strbuf key = STRBUF_INIT;
->> +       int want = -1;
->> +       const char *value = NULL;
->> +       strbuf_addf(&key, "pager.%s", cmd);
->> +       if (!git_config_get_string(key.buf, &value)) {
->> +               int b = git_config_maybe_bool(key.buf, value);
->> +               if (b >= 0)
->> +                       want = b;
->> +               else
->> +                       want = 1;
->> +       }
->> +       if (value)
->> +               pager_program = value;
+>> +       strbuf_addf(&key, "alias.%s", alias);
+>> +       git_config_get_string(key.buf, &v);
+>> +       if (!v)
+>> +               config_error_nonbool(key.buf);
 > 
-> Two issues:
+> If 'v' is NULL, you correctly report an error, but then fall through
+> and invoke xstrdup() with NULL, which invites undefined behavior [1].
 > 
-> First, why is 'if(value)' standing by itself? Although this works, it
-> seems to imply that 'value' might be able to become non-NULL by some
-> mechanism other than the get_config_maybe_bool() call, which means
-> that people reading this code have to spend extra time trying to
-> understand the overall logic. If you follow the example of the
-> original code, where 'value' is only ever set when 'b < 0', then it is
-> obvious even to the most casual reader that 'pager_program' is
-> assigned only for that one condition.
+> [1]: http://pubs.opengroup.org/onlinepubs/009695399/functions/strdup.html
 > 
-
-Noted.
-
-> Second, don't you want to xstrdup(value) when assigning to
-> 'pager_program'? If you don't, then 'pager_program' will become a
-> dangling pointer when config_cache_free() is invoked.
-> 
-
-Noted. Thanks.
-
+>> +       value = xstrdup(v);
 >> +       strbuf_release(&key);
->> +       return want;
+>> +       return value;
+> 
+> You could release the strbuf earlier, which would allow you to 'return
+> xstrdup(v)' and drop the 'value' variable. Perhaps you want something
+> like this:
+> 
+>     const char *v;
+>     struct strbuf key = STRBUF_INIT;
+>     strbuf_addf(&key, "alias.%s", alias);
+>     git_config_get_string(key.buf, &v);
+>     if (v)
+>         config_error_nonbool(key.buf);
+>     strbuf_release(&key);
+>     return v ? xstrdup(v) : NULL;
+> 
+
+Done. Thanks.
+
 >>  }
+>>
+>>  #define SPLIT_CMDLINE_BAD_ENDING 1
 >> --
 >> 1.9.0.GIT
 > 
