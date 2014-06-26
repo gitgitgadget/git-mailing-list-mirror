@@ -1,140 +1,130 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: BUG: git request-pull broken for plain branches
-Date: Thu, 26 Jun 2014 09:06:12 +0200
-Message-ID: <20140626070612.GR14781@pengutronix.de>
-References: <20140625095535.GA27365@pengutronix.de>
- <CA+55aFwZb7tT7xb7y2XJpzcmrxB=Rf--bjz5XbBcxC-7MMm9eg@mail.gmail.com>
- <20140625132131.GO14781@pengutronix.de>
- <xmqqoaxg90y4.fsf@gitster.dls.corp.google.com>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [RFC/PATCH V2] branch.c: replace git_config with git_config_get_string
+Date: Thu, 26 Jun 2014 13:39:15 +0530
+Message-ID: <53ABD52B.3030502@gmail.com>
+References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>	<1403520105-23250-2-git-send-email-tanayabh@gmail.com> <CAPig+cTMWKtAjN931voVs7aY7JdEyaRVZj+-qDUiDk0C_Tq6-A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>, kernel@pengutronix.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 09:06:27 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 10:10:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X03lK-0006Wa-IT
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 09:06:26 +0200
+	id 1X04kt-0007pT-6G
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 10:10:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753414AbaFZHGV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2014 03:06:21 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:34462 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753358AbaFZHGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 03:06:21 -0400
-Received: from ptx.hi.pengutronix.de ([2001:6f8:1178:2:5054:ff:fec0:8e10] ident=Debian-exim)
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1X03l9-0005Jf-8C; Thu, 26 Jun 2014 09:06:15 +0200
-Received: from ukl by ptx.hi.pengutronix.de with local (Exim 4.80)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1X03l6-0002fL-Gg; Thu, 26 Jun 2014 09:06:12 +0200
-Content-Disposition: inline
-In-Reply-To: <xmqqoaxg90y4.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:5054:ff:fec0:8e10
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1755699AbaFZIJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2014 04:09:57 -0400
+Received: from mail-pb0-f48.google.com ([209.85.160.48]:46628 "EHLO
+	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754771AbaFZIJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 04:09:29 -0400
+Received: by mail-pb0-f48.google.com with SMTP id rq2so2815132pbb.35
+        for <git@vger.kernel.org>; Thu, 26 Jun 2014 01:09:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=9jI/zm8j7UFMTiVF8waEfla20Pqbe92x+6pbI21Ve7o=;
+        b=qCgJTMXnGLMYk1ShsMh4ZJr7Cu6/Hzu2PbwzOKMLK3pTdIJTNnUQMS9qVPXuaMGapr
+         rDpcHxrwUgr15dJEQdRGXvEKm4AqCpCi8L7AGbvb2IkjdCr6hDexeu0AWj2kAxgqJyc/
+         wzkvfB3ibU8pA3RC/E/V/4L8L2QBkc7Mw9P/VZxg77eipSWi5FCiWZ7/bjlQLVfftMWH
+         LwGP/w2nQqb+dH0fu7h10dshFBSFJlFleMApGtjJM/DPPDYU9GmgRSxIb3X9rqaaP9ZS
+         JqgJjR3s+OwvGJu1ijcjugqZK/h5TAE1Sta3Z3dev8bN9UHPsEhQpJdAeDOOqe4JwZMi
+         UZWg==
+X-Received: by 10.66.66.166 with SMTP id g6mr19136980pat.108.1403770168596;
+        Thu, 26 Jun 2014 01:09:28 -0700 (PDT)
+Received: from [127.0.0.1] ([117.251.76.15])
+        by mx.google.com with ESMTPSA id z3sm31049845pas.15.2014.06.26.01.09.23
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Thu, 26 Jun 2014 01:09:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CAPig+cTMWKtAjN931voVs7aY7JdEyaRVZj+-qDUiDk0C_Tq6-A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252488>
 
-Hi Junio,
 
-On Wed, Jun 25, 2014 at 01:41:23PM -0700, Junio C Hamano wrote:
-> Uwe Kleine-K=F6nig  <u.kleine-koenig@pengutronix.de> writes:
-> > On Wed, Jun 25, 2014 at 05:05:51AM -0700, Linus Torvalds wrote:
-> >> On Wed, Jun 25, 2014 at 2:55 AM, Uwe Kleine-K=F6nig
-> >> <u.kleine-koenig@pengutronix.de> wrote:
-> >> >
-> >> >         $ git rev-parse HEAD
-> >> >         9e065e4a5a58308f1a0da4bb80b830929dfa90b3
-> >> >         $ git ls-remote origin | grep 9e065e4a5a58308f1a0da4bb80=
-b830929dfa90b3
-> >> >         9e065e4a5a58308f1a0da4bb80b830929dfa90b3        refs/hea=
-ds/ukl/for-mainline
-> >> >         $ git request-pull origin/master origin HEAD > /dev/null
-> >> >         warn: No match for commit 9e065e4a5a58308f1a0da4bb80b830=
-929dfa90b3 found at origin
-> >> >         warn: Are you sure you pushed 'HEAD' there?
-> >>=20
-> >> Notice how "HEAD" does not match.
-> >>=20
-> >> The error message is perhaps misleading. It's not enough to match =
-the
-> >> commit. You need to match the branch name too. git used to guess t=
-he
-> >> branch name (from the commit), and it often guessed wrongly. So no=
-w
-> >> they need to match.
-> >>=20
-> >> So you should do
-> >>=20
-> >>     git request-pull origin/master origin ukl/for-mainline
-> >>=20
-> >> to let request-pull know that you're requesting a pull for "ukl/fo=
-r-mainline".
->=20
-> Or
->=20
-> 	git request-pull origin/master origin HEAD:ukl/for-mainline
->=20
-> I am not Linus, and do not speak for him, but FWIW here are some
-> comments on the ideas.
->=20
-> > I liked git guessing the branch name, maybe we can teach it to gues=
-s a
-> > bit better than it did before 2.0? Something like:
-> >
-> >  - if there is a unique match on the remote side, use it.
->=20
-> I am on the fence but slightly leaning to the negative side on this
-> one.  The branch/ref the object was took from when "git pull" is run
-> does matter, because the name is recorded in the merge summary, so
-> we cannot say "There are refs that happen to point at the object you
-> wanted to be pulled, so we'll pick one of them let the integrator
-> pull from that ref we randomly chose" is not something we would
-> want.  "If there is a unique one, that must be the one the user has
-> meant; there is nothing else possible" feels like a strong argument,
-> and I was actually contemplating about doing an enhancement on top
-> of Linus's original myself along that line, back when we queued that
-> patch exactly for that reason.
->=20
-> But a counter-argument, in the context of Linus's change in question
-> being primarily to avoid end-user mistakes resulting in a bogus
-> request, is that the ref on the remote that happens to match the
-> object but is different from what the user named may be a totally
-> unrelated branch before the user actually has pushed the set of
-> changes the request is going to ask to be pulled.  The mistake that
-> this extra strictness tries to avoid is to compose request-pull
-> before pushing what to be pulled and then forgetting to push.
-Sounds sensible. Then the enhancements that come to my mind are:
+On 6/25/2014 10:15 AM, Eric Sunshine wrote:
+> On Mon, Jun 23, 2014 at 6:41 AM, Tanay Abhra <tanayabh@gmail.com> wrote:
 
-Change git-request-pull to explicitly take a remote ref as end. This
-makes sure that it is actually there and the right remote name is
-picked. Don't require to specify a local ref even if there is no
-local matching ref, just use the remote sha1 to generate the diffstat
-and summary.
+>> diff --git a/branch.c b/branch.c
+>> index 660097b..c9a2a0d 100644
+>> --- a/branch.c
+>> +++ b/branch.c
+>> @@ -140,33 +140,25 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
+>>         return 0;
+>>  }
+>>
+>> -struct branch_desc_cb {
+>> +struct branch_desc {
+>>         const char *config_name;
+>>         const char *value;
+>>  };
+> 
+> What is the purpose of retaining this structure? Following your
+> changes, it is never used outside of read_branch_desc(), and
+> 'config_name' and 'value' would be more naturally declared as
+> variables local to that function.
 
-Another thing I'd like to have is to make git-request-pull not generate
-the usual output if there is no match. Optionally introduce a -f to get
-back the (maybe bogus) output; in this case a local rev would be needed=
-=2E
+Done. :)
 
-Best regards
-Uwe
+> 
+>> -static int read_branch_desc_cb(const char *var, const char *value, void *cb)
+>> -{
+>> -       struct branch_desc_cb *desc = cb;
+>> -       if (strcmp(desc->config_name, var))
+>> -               return 0;
+>> -       free((char *)desc->value);
+>> -       return git_config_string(&desc->value, var, value);
+>> -}
+>> -
+>>  int read_branch_desc(struct strbuf *buf, const char *branch_name)
+>>  {
+>> -       struct branch_desc_cb cb;
+>> +       const char *value = NULL;
+>> +       struct branch_desc desc;
+>>         struct strbuf name = STRBUF_INIT;
+>>         strbuf_addf(&name, "branch.%s.description", branch_name);
+>> -       cb.config_name = name.buf;
+>> -       cb.value = NULL;
+>> -       if (git_config(read_branch_desc_cb, &cb) < 0) {
+>> +       desc.config_name = name.buf;
+>> +       desc.value = NULL;
+>> +       git_config_get_string(desc.config_name, &value);
+>> +       if (git_config_string(&desc.value, desc.config_name, value) < 0) {
+> 
+> Although it works in this case, it's somewhat ugly that you ignore the
+> return value of git_config_get_string(), and a person reading the code
+> has to spend extra time digging into git_config_string() to figure out
+> why this is safe. If might be clearer for future readers by rephrasing
+> like this:
+> 
+>     if (git_config_get_string(desc.config_name, &value) < 0 ||
+>         git_config_string(&desc.value, desc.config_name, value) < 0) {
+>
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Noted, also didn't the old code leak desc.value as it was xstrduped
+by git_config_string()? Thanks for the review.
+
+>>                 strbuf_release(&name);
+>>                 return -1;
+>>         }
+>> -       if (cb.value)
+>> -               strbuf_addstr(buf, cb.value);
+>> +       strbuf_addstr(buf, desc.value);
+>>         strbuf_release(&name);
+>>         return 0;
+>>  }
+>> --
+>> 1.9.0.GIT
+> 
