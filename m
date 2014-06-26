@@ -1,83 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 4/4] replace: add a --raw mode for --edit
-Date: Thu, 26 Jun 2014 11:55:30 -0400
-Message-ID: <20140626155530.GB10402@sigill.intra.peff.net>
-References: <20140624094217.GA14216@sigill.intra.peff.net>
- <20140624094631.GD14514@sigill.intra.peff.net>
- <xmqqsims62m1.fsf@gitster.dls.corp.google.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Is it possible to list unpushed tags without accessing remote?
+Date: Thu, 26 Jun 2014 09:13:53 -0700
+Message-ID: <CAJo=hJvdMURuaEZA3XEWE_Uuq8QRZ+mt8K2H8XrbTuZsVX9gKQ@mail.gmail.com>
+References: <BAA3119F-8351-4BFD-B42A-C96E4C7A1440@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 17:55:42 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 18:14:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0C1Q-00020s-L1
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 17:55:36 +0200
+	id 1X0CJW-0005Op-Ip
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 18:14:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755517AbaFZPzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2014 11:55:33 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51581 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752149AbaFZPzc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 11:55:32 -0400
-Received: (qmail 20077 invoked by uid 102); 26 Jun 2014 15:55:32 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 26 Jun 2014 10:55:32 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 26 Jun 2014 11:55:30 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqsims62m1.fsf@gitster.dls.corp.google.com>
+	id S1755485AbaFZQOO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2014 12:14:14 -0400
+Received: from mail-ig0-f169.google.com ([209.85.213.169]:46795 "EHLO
+	mail-ig0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753211AbaFZQOO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jun 2014 12:14:14 -0400
+Received: by mail-ig0-f169.google.com with SMTP id c1so937455igq.2
+        for <git@vger.kernel.org>; Thu, 26 Jun 2014 09:14:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=f3fmd729gg1ony+eSxMWCQc9NW8yg435BMTxq9lToSA=;
+        b=PYYNWYalWMJreS/C1rmjRp/iRRU7t/q/yFnF46vwR+Pc7GR786z9VFu2MJgVOAJBtO
+         cZkX2FhNXQpLifz52FUxuaq3pAhGH6ubPKNg/1jN6pUoPNoNRIIQa2+Od/30nlq1EyU6
+         LzX7O0JQtrD/I+a3kh71LxcjaliSKhPKBp9JU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=f3fmd729gg1ony+eSxMWCQc9NW8yg435BMTxq9lToSA=;
+        b=aacIZz2DX22pGHFQhObF7OdGVwV2sfy/842j4aXSNysrSUPHphjMrNjrz1Vvd1Np7Y
+         /ERwVi5TVp3Sj20Q4JmPVLmLu9fpENmCWFXywBHzH55lLr6TXTzWDTyWcpBmHW7EptTh
+         w+JQFAmEx1zMCS76M9J3MRUNOAPBVAMHp0qgtiEQHovPa2JUYfTDfIxyzMN+7TgFyAAe
+         Z8kRkYbOOYXmgtVWsnpz9gdr8hfb3bZpjV3tS7gRBu1hCdWZvDhIeYONS4ciMojbhs6C
+         Ri6magb58jN7MFg28AWsZ8hajAf1F1+2tJPeJNhLXZnfH2e32kg1sscQMBz4VbFQtWWa
+         uxIg==
+X-Gm-Message-State: ALoCoQl7LOYkDYN6xZIO9kH/aFUomWj8BTK8emaPgk/T8y2/JGpNlcoqznkWWK8ltZLyjo9mqjcE
+X-Received: by 10.50.97.104 with SMTP id dz8mr5545134igb.3.1403799253094; Thu,
+ 26 Jun 2014 09:14:13 -0700 (PDT)
+Received: by 10.64.208.12 with HTTP; Thu, 26 Jun 2014 09:13:53 -0700 (PDT)
+In-Reply-To: <BAA3119F-8351-4BFD-B42A-C96E4C7A1440@jetbrains.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252503>
 
-On Wed, Jun 25, 2014 at 03:33:42PM -0700, Junio C Hamano wrote:
+On Thu, Jun 26, 2014 at 5:42 AM, Kirill Likhodedov
+<kirill.likhodedov@jetbrains.com> wrote:
+> is it possible to know which tags are not yet pushed to a remote via =
+a completely local command?
+>
+> (e.g. the list of unpushed _commits_ may be received by =E2=80=98git =
+log <upstream>..=E2=80=99)
+>
+> I know it is possible to execute 'git ls-remote=E2=80=99 or 'git push=
+ --dry-run=E2=80=99, but both ask the remote server.
+> I=E2=80=99m almost sure that the answer is =E2=80=9CNO=E2=80=9D, but =
+want to receive a confirmation from Git gurus :)
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > One of the purposes of "git replace --edit" is to help a
-> > user repair objects which are malformed or corrupted.
-> > Usually we pretty-print trees with "ls-tree", which is much
-> > easier to work with than the raw binary data.  However, some
-> > forms of corruption break the tree-walker, in which case our
-> > pretty-printing fails, rendering "--edit" useless for the
-> > user.
-> >
-> > This patch introduces a "--raw" option, which lets you edit
-> > the binary data in these instances.
-> >
-> > Signed-off-by: Jeff King <peff@peff.net>
-> > ---
-> 
-> Hmmmmm, this feels almost like inviting accidents to make it easy
-> and limiting the attempt to only one shot at the "transformation"
-> step.
-> 
-> Will queue, but we can do the same with "cat-file $type >temp", do
-> some transformation on "temp", doubly make sure what is in "temp" is
-> sensible and then finally "hash-object -w -t $type temp".  And it
-> makes me feel uneasy that the new feature seems to make it harder to
-> do the "doubly make sure" part.
+No. The client doesn't track what tags the remote has.
 
-I do not think it is any worse than "--edit" is by itself. True, editing
-the binary contents is hard, but we do check that the format is sane
-when we read it back in (using the same checks that hash-object does). I
-think it would be nice to take that a step further and actually let
-hash-object (and "replace --edit") do the more rigorous fsck checks on
-created objects.
-
-I do still think even with those automated sanity checks that it makes
-sense to double-check the replacement manually. But I think that is one
-of the features of replace objects: you are not doing anything
-permanent, and can view the object in place. So not only can you examine
-the object by "git show $new_sha1", you can see it in place as "git log
--p", etc. And easily back it out with "git replace -d" (or fix it up
-again with "git replace --edit") if need be.
-
--Peff
+You may be able to guess by looking at `git log --decorate upstream..`
+and seeing which tags, if any show up.
