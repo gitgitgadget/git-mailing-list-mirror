@@ -1,75 +1,50 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH (performance tracing)] test git-status performance
-Date: Thu, 26 Jun 2014 19:30:55 +0700
-Message-ID: <CACsJy8Bkfz6=WUy0RsXd0e9dXqocUFXhAaO0dpUg+AjZ5RNeNA@mail.gmail.com>
-References: <53AA0129.1080109@gmail.com> <53AA0228.4080600@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 14:31:31 2014
+From: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
+Subject: Is it possible to list unpushed tags without accessing remote?
+Date: Thu, 26 Jun 2014 16:42:41 +0400
+Message-ID: <BAA3119F-8351-4BFD-B42A-C96E4C7A1440@jetbrains.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.2\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jun 26 14:49:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X08pu-0005QZ-U9
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 14:31:31 +0200
+	id 1X097Q-0003ao-4R
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 14:49:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753617AbaFZMb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2014 08:31:26 -0400
-Received: from mail-qg0-f48.google.com ([209.85.192.48]:50357 "EHLO
-	mail-qg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753122AbaFZMb0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 08:31:26 -0400
-Received: by mail-qg0-f48.google.com with SMTP id q108so2926242qgd.7
-        for <git@vger.kernel.org>; Thu, 26 Jun 2014 05:31:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=FvyFVvRhblYUjhvIXOfoyKchFuAI3PTp1TMDpqGp9Ms=;
-        b=ojgVLiOndlvyugPReiPAVM7VyLAoUbqDsxg/LAYLIH0oiNtRE/UjOTe3W0J0neNwe1
-         xvalEm4g1QM3AwoQxMgQitw8ywN3HK0jX+mLnJQB9frkUMhWSBCOsDfqwlyKNOD7ieLk
-         mqg9gcv8ABB2aqruhCUqR99FjgLLzj4iZBpHBf87ByeAjvVsrDixxaq3TRrnaZJPiws3
-         lCkfbqtn4sHYdaGOqXK1CBkae5LwovWMikzbEfnGq44QttvZkuiEB0Yl1qB+LTWUbhUn
-         URQya9DaToQbsYEtnbpS0DZ1urgfq2WQOgqzlCVogwWIoHnEfJNQqJ0LqTwBFL+SFdEW
-         1+nw==
-X-Received: by 10.224.22.12 with SMTP id l12mr22134640qab.88.1403785885265;
- Thu, 26 Jun 2014 05:31:25 -0700 (PDT)
-Received: by 10.96.66.129 with HTTP; Thu, 26 Jun 2014 05:30:55 -0700 (PDT)
-In-Reply-To: <53AA0228.4080600@gmail.com>
+	id S1755928AbaFZMt0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2014 08:49:26 -0400
+Received: from mail1.intellij.net ([46.137.178.215]:50045 "EHLO
+	mail1.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755871AbaFZMtY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Jun 2014 08:49:24 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Jun 2014 08:49:23 EDT
+Received: (qmail 5455 invoked by uid 89); 26 Jun 2014 12:42:43 -0000
+Received: from unknown (HELO loki.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@81.3.129.2)
+  by ip-10-62-119-91.eu-west-1.compute.internal with ESMTPA; 26 Jun 2014 12:42:43 -0000
+X-Mailer: Apple Mail (2.1878.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252499>
 
-On Wed, Jun 25, 2014 at 5:56 AM, Karsten Blees <karsten.blees@gmail.com> wrote:
->  void wt_status_collect(struct wt_status *s)
->  {
-> +       uint64_t start = getnanotime();
-> +
->         wt_status_collect_changes_worktree(s);
->
-> +       trace_performance_since(start, "wt_status_collect_changes_worktree");
-> +       start = getnanotime();
-> +
->         if (s->is_initial)
->                 wt_status_collect_changes_initial(s);
->         else
->                 wt_status_collect_changes_index(s);
-> +
-> +       trace_performance_since(start, "wt_status_collect_changes_index");
-> +       start = getnanotime();
-> +
->         wt_status_collect_untracked(s);
-> +
-> +       trace_performance_since(start, "wt_status_collect_untracked");
->  }
+Hi,
 
-Now that we have good perf measuring support, perhaps the next step is
-remove gettimeofday() in advice_status_u_option related code in
-wt_status_collect_untracked().
--- 
-Duy
+is it possible to know which tags are not yet pushed to a remote via a =
+completely local command?
+
+(e.g. the list of unpushed _commits_ may be received by =91git log <ups=
+tream>..=92)
+
+I know it is possible to execute 'git ls-remote=92 or 'git push --dry-r=
+un=92, but both ask the remote server.
+I=92m almost sure that the answer is =93NO=94, but want to receive a co=
+nfirmation from Git gurus :)
+
+
+Thanks a lot!
+-- Kirill.
