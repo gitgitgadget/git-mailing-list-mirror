@@ -1,8 +1,8 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [RFC/PATCH V2] branch.c: replace git_config with git_config_get_string
-Date: Thu, 26 Jun 2014 13:39:15 +0530
-Message-ID: <53ABD52B.3030502@gmail.com>
-References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>	<1403520105-23250-2-git-send-email-tanayabh@gmail.com> <CAPig+cTMWKtAjN931voVs7aY7JdEyaRVZj+-qDUiDk0C_Tq6-A@mail.gmail.com>
+Subject: Re: [RFC/PATCH] imap-send.c: replace git_config with git_config_get_string
+Date: Thu, 26 Jun 2014 13:44:47 +0530
+Message-ID: <53ABD677.4040808@gmail.com>
+References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>	<1403520105-23250-3-git-send-email-tanayabh@gmail.com> <CAPig+cTStpB09Fh3bAF2NcdWR9W_UMaL5qutvUuQNfEL4=GwNw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
@@ -10,121 +10,191 @@ Cc: Git List <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 10:10:04 2014
+X-From: git-owner@vger.kernel.org Thu Jun 26 10:15:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X04kt-0007pT-6G
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 10:10:03 +0200
+	id 1X04pg-0003VH-PC
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 10:15:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755699AbaFZIJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2014 04:09:57 -0400
-Received: from mail-pb0-f48.google.com ([209.85.160.48]:46628 "EHLO
-	mail-pb0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754771AbaFZIJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 04:09:29 -0400
-Received: by mail-pb0-f48.google.com with SMTP id rq2so2815132pbb.35
-        for <git@vger.kernel.org>; Thu, 26 Jun 2014 01:09:28 -0700 (PDT)
+	id S1750770AbaFZIO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2014 04:14:56 -0400
+Received: from mail-pa0-f44.google.com ([209.85.220.44]:36034 "EHLO
+	mail-pa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750731AbaFZIOx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 04:14:53 -0400
+Received: by mail-pa0-f44.google.com with SMTP id rd3so2856576pab.17
+        for <git@vger.kernel.org>; Thu, 26 Jun 2014 01:14:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=9jI/zm8j7UFMTiVF8waEfla20Pqbe92x+6pbI21Ve7o=;
-        b=qCgJTMXnGLMYk1ShsMh4ZJr7Cu6/Hzu2PbwzOKMLK3pTdIJTNnUQMS9qVPXuaMGapr
-         rDpcHxrwUgr15dJEQdRGXvEKm4AqCpCi8L7AGbvb2IkjdCr6hDexeu0AWj2kAxgqJyc/
-         wzkvfB3ibU8pA3RC/E/V/4L8L2QBkc7Mw9P/VZxg77eipSWi5FCiWZ7/bjlQLVfftMWH
-         LwGP/w2nQqb+dH0fu7h10dshFBSFJlFleMApGtjJM/DPPDYU9GmgRSxIb3X9rqaaP9ZS
-         JqgJjR3s+OwvGJu1ijcjugqZK/h5TAE1Sta3Z3dev8bN9UHPsEhQpJdAeDOOqe4JwZMi
-         UZWg==
-X-Received: by 10.66.66.166 with SMTP id g6mr19136980pat.108.1403770168596;
-        Thu, 26 Jun 2014 01:09:28 -0700 (PDT)
+        bh=Lo2MrT+CD+FiNnKG/z7iepqwpF1cWELe6HIjbRobC1Y=;
+        b=JoVt9S6mqmKRpQX3WUvX2ji33Gyq3iW7c7YzWozvASy+AmlXOgFeHqFW9rB/yH1Hnq
+         er8Dz7nVWEP8NlRtCKAN7XGRLF/WdnwLCumsI7oSSQ2iHsNSNy2NlO+PHIc5FwqtorJS
+         gMbcGhj8sPktB0UjStCpkSa/7GVfLzp2gGI07H3ooHuqGNW37uj3LLEAexYbTJemgjec
+         ljczRCgfKAI68ld43uo+G4ppIx8Mozc1Pcct2qd8Rx3Tq9hyA6i/S1e14uGbpg/6hTTL
+         HzAE94aVaeL4ydppixJc23EIiBbt7Z6c26aRheuR3LcVUR/nvzJ+hwqy7zZjZ9+450ie
+         +lmA==
+X-Received: by 10.66.153.80 with SMTP id ve16mr19154266pab.143.1403770492854;
+        Thu, 26 Jun 2014 01:14:52 -0700 (PDT)
 Received: from [127.0.0.1] ([117.251.76.15])
-        by mx.google.com with ESMTPSA id z3sm31049845pas.15.2014.06.26.01.09.23
+        by mx.google.com with ESMTPSA id xk3sm8715981pbb.65.2014.06.26.01.14.47
         for <multiple recipients>
         (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 26 Jun 2014 01:09:27 -0700 (PDT)
+        Thu, 26 Jun 2014 01:14:52 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CAPig+cTMWKtAjN931voVs7aY7JdEyaRVZj+-qDUiDk0C_Tq6-A@mail.gmail.com>
+In-Reply-To: <CAPig+cTStpB09Fh3bAF2NcdWR9W_UMaL5qutvUuQNfEL4=GwNw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252489>
 
 
-On 6/25/2014 10:15 AM, Eric Sunshine wrote:
+
+On 6/25/2014 12:39 PM, Eric Sunshine wrote:
 > On Mon, Jun 23, 2014 at 6:41 AM, Tanay Abhra <tanayabh@gmail.com> wrote:
+>> Use git_config_get_string instead of git_config to take advantage of
+>> the config hash-table api which provides a cleaner control flow.
+> 
+> You may want to mention as a side-note the slight behavior change
+> introduced by this patch. The original code complained about any
+> unknown boolean "imap.*" key, whereas the new code does not.
+> 
 
->> diff --git a/branch.c b/branch.c
->> index 660097b..c9a2a0d 100644
->> --- a/branch.c
->> +++ b/branch.c
->> @@ -140,33 +140,25 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
->>         return 0;
+Also, my code is error prone. Previous one had all NULL values returned
+as config_non_boolean. But, now I have to add a NULL check to every strdup
+in the code.
+
+More below,
+
+> 
+>> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+>> ---
+>>  imap-send.c | 68 ++++++++++++++++++++++++++-----------------------------------
+>>  1 file changed, 29 insertions(+), 39 deletions(-)
+>>
+>> diff --git a/imap-send.c b/imap-send.c
+>> index 83a6ed2..87bd418 100644
+>> --- a/imap-send.c
+>> +++ b/imap-send.c
+>> @@ -1326,47 +1326,37 @@ static int split_msg(struct strbuf *all_msgs, struct strbuf *msg, int *ofs)
+>>
+>>  static char *imap_folder;
+>>
+>> -static int git_imap_config(const char *key, const char *val, void *cb)
+>> +static void git_imap_config(void)
+>>  {
+>> -       char imap_key[] = "imap.";
+>> -
+>> -       if (strncmp(key, imap_key, sizeof imap_key - 1))
+>> -               return 0;
+>> -
+>> -       key += sizeof imap_key - 1;
+>> -
+>> -       /* check booleans first, and barf on others */
+>> -       if (!strcmp("sslverify", key))
+>> -               server.ssl_verify = git_config_bool(key, val);
+>> -       else if (!strcmp("preformattedhtml", key))
+>> -               server.use_html = git_config_bool(key, val);
+>> -       else if (!val)
+>> -               return config_error_nonbool(key);
+>> -
+>> -       if (!strcmp("folder", key)) {
+>> -               imap_folder = xstrdup(val);
+>> -       } else if (!strcmp("host", key)) {
+>> -               if (starts_with(val, "imap:"))
+>> -                       val += 5;
+>> -               else if (starts_with(val, "imaps:")) {
+>> -                       val += 6;
+>> +       const char *value;
+> 
+> Observation: If you name this variable 'val', which is the name of the
+> argument to the function in the original code, you will get a slightly
+> smaller and more readable diff. 
+
+Noted.
+
+> 
+>> +       if (!git_config_get_string("imap.sslverify", &value))
+>> +               server.ssl_verify = git_config_bool("sslverify", value);
+> 
+> I realize that you are just replicating the behavior of the original
+> code, but the error message emitted here for a non-bool value is less
+> than desirable since it throws away context (namely, the "imap."
+> prefix). You can improve the message, and help the user resolve the
+> error more quickly, by presenting the full configuration key (namely,
+> "imap.sslverify"). Such a change would deserve mention in the commit
+> message. Alternately, it could be fixed in a follow-up patch.
+> 
+
+Yes, I thought so also when writing the patch. Will change it in the next
+iteration.
+
+Thanks.
+Tanay Abhra.
+
+>> +       if (!git_config_get_string("imap.preformattedhtml", &value))
+>> +               server.use_html = git_config_bool("preformattedhtml", value);
+> 
+> Ditto regarding error message: "imap.preformattedhtml"
+> 
+>> +       if (!git_config_get_string("imap.folder", &value))
+>> +               imap_folder = xstrdup(value);
+>> +       if (!git_config_get_string("imap.host", &value)) {
+>> +               if (starts_with(value, "imap:"))
+>> +                       value += 5;
+>> +               else if (starts_with(value, "imaps:")) {
+>> +                       value += 6;
+>>                         server.use_ssl = 1;
+>>                 }
+>> -               if (starts_with(val, "//"))
+>> -                       val += 2;
+>> -               server.host = xstrdup(val);
+>> -       } else if (!strcmp("user", key))
+>> -               server.user = xstrdup(val);
+>> -       else if (!strcmp("pass", key))
+>> -               server.pass = xstrdup(val);
+>> -       else if (!strcmp("port", key))
+>> -               server.port = git_config_int(key, val);
+>> -       else if (!strcmp("tunnel", key))
+>> -               server.tunnel = xstrdup(val);
+>> -       else if (!strcmp("authmethod", key))
+>> -               server.auth_method = xstrdup(val);
+>> -
+>> -       return 0;
+>> +               if (starts_with(value, "//"))
+>> +                       value += 2;
+>> +               server.host = xstrdup(value);
+>> +       }
+>> +       if (!git_config_get_string("imap.user", &value))
+>> +               server.user = xstrdup(value);
+>> +       if (!git_config_get_string("imap.pass", &value))
+>> +               server.pass = xstrdup(value);
+>> +       if (!git_config_get_string("imap.port", &value))
+>> +               server.port = git_config_int("port", value);
+> 
+> Same regarding diagnostic: "imap.port"
+> 
+>> +       if (!git_config_get_string("imap.tunnel", &value))
+>> +               server.tunnel = xstrdup(value);
+>> +       if (!git_config_get_string("imap.authmethod", &value))
+>> +               server.auth_method = xstrdup(value);
 >>  }
 >>
->> -struct branch_desc_cb {
->> +struct branch_desc {
->>         const char *config_name;
->>         const char *value;
->>  };
-> 
-> What is the purpose of retaining this structure? Following your
-> changes, it is never used outside of read_branch_desc(), and
-> 'config_name' and 'value' would be more naturally declared as
-> variables local to that function.
-
-Done. :)
-
-> 
->> -static int read_branch_desc_cb(const char *var, const char *value, void *cb)
->> -{
->> -       struct branch_desc_cb *desc = cb;
->> -       if (strcmp(desc->config_name, var))
->> -               return 0;
->> -       free((char *)desc->value);
->> -       return git_config_string(&desc->value, var, value);
->> -}
->> -
->>  int read_branch_desc(struct strbuf *buf, const char *branch_name)
->>  {
->> -       struct branch_desc_cb cb;
->> +       const char *value = NULL;
->> +       struct branch_desc desc;
->>         struct strbuf name = STRBUF_INIT;
->>         strbuf_addf(&name, "branch.%s.description", branch_name);
->> -       cb.config_name = name.buf;
->> -       cb.value = NULL;
->> -       if (git_config(read_branch_desc_cb, &cb) < 0) {
->> +       desc.config_name = name.buf;
->> +       desc.value = NULL;
->> +       git_config_get_string(desc.config_name, &value);
->> +       if (git_config_string(&desc.value, desc.config_name, value) < 0) {
-> 
-> Although it works in this case, it's somewhat ugly that you ignore the
-> return value of git_config_get_string(), and a person reading the code
-> has to spend extra time digging into git_config_string() to figure out
-> why this is safe. If might be clearer for future readers by rephrasing
-> like this:
-> 
->     if (git_config_get_string(desc.config_name, &value) < 0 ||
->         git_config_string(&desc.value, desc.config_name, value) < 0) {
->
-
-Noted, also didn't the old code leak desc.value as it was xstrduped
-by git_config_string()? Thanks for the review.
-
->>                 strbuf_release(&name);
->>                 return -1;
->>         }
->> -       if (cb.value)
->> -               strbuf_addstr(buf, cb.value);
->> +       strbuf_addstr(buf, desc.value);
->>         strbuf_release(&name);
->>         return 0;
->>  }
+>>  int main(int argc, char **argv)
+>> @@ -1387,7 +1377,7 @@ int main(int argc, char **argv)
+>>                 usage(imap_send_usage);
+>>
+>>         setup_git_directory_gently(&nongit_ok);
+>> -       git_config(git_imap_config, NULL);
+>> +       git_imap_config();
+>>
+>>         if (!server.port)
+>>                 server.port = server.use_ssl ? 993 : 143;
 >> --
 >> 1.9.0.GIT
 > 
