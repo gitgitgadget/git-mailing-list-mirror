@@ -1,82 +1,113 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 2/3] config: add hashtable for config parsing & retrieval
-Date: Thu, 26 Jun 2014 18:43:21 +0200
-Message-ID: <vpqha37mxjq.fsf@anie.imag.fr>
-References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com>
-	<1403518300-23053-3-git-send-email-tanayabh@gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: files deleted with no record?
+Date: Thu, 26 Jun 2014 12:47:43 -0400
+Message-ID: <CABURp0p6amKmhMhOUzdKy0a8TY7bmPoSLM0sUnZfGErhyfLsEQ@mail.gmail.com>
+References: <CAFDwLfyXrUZUUuaciAjamn-cXJ6mAv_D41zLwT4AZE=cmAX7rg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 18:43:52 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jeremy Scott <jeremy@great-scotts.org>
+X-From: git-owner@vger.kernel.org Thu Jun 26 18:48:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0Cm6-000747-No
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 18:43:51 +0200
+	id 1X0CqI-0001SK-BB
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 18:48:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932069AbaFZQnr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2014 12:43:47 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52207 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753575AbaFZQnq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 12:43:46 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s5QGhQNb016186
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 26 Jun 2014 18:43:26 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s5QGhLAP014786;
-	Thu, 26 Jun 2014 18:43:21 +0200
-In-Reply-To: <1403518300-23053-3-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Mon, 23 Jun 2014 03:11:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 26 Jun 2014 18:43:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s5QGhQNb016186
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1404405809.98642@5JLjn5egILeNJ3HIxi6RXw
+	id S1757286AbaFZQsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2014 12:48:05 -0400
+Received: from mail-ve0-f181.google.com ([209.85.128.181]:33199 "EHLO
+	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757085AbaFZQsE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 12:48:04 -0400
+Received: by mail-ve0-f181.google.com with SMTP id db11so3951786veb.40
+        for <git@vger.kernel.org>; Thu, 26 Jun 2014 09:48:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=WwoMjUkbXNj6hUHk81VDfP0/FNS15uXlpG1yu5Yilho=;
+        b=1IN+Be2mUTtF3kITnm3qgyUj2Oc7tVNosHbFuQSB9TgfSVC9kreFYuVXSBz/ah1fwP
+         2de3E16qC4jwnIbAc9xTTQfKeCvu3IszuTky9OJ8A4PttckrcSV74MFrOWNdJj9I+Dsr
+         Nm54tcSJ4HrBr9ILkix3I0ptYUNRtDeSMJNUuVt+SGCbDKc8CXCXNWjMCJ1Z7K4GspBe
+         MVtmNm3fUFtkoC4yzn+czMj0bsR82y0Rh0rmogZAaOvNZuR6MnNA2yw3bP40IHGtGnXd
+         VMCRQ0lSi9th3rsHSmpeWSLkqOuBaaW4n1LnOH46GhzMrBOV/s8RxnsDcInrL4WXAEuX
+         mB0A==
+X-Received: by 10.52.17.129 with SMTP id o1mr12406792vdd.0.1403801283184; Thu,
+ 26 Jun 2014 09:48:03 -0700 (PDT)
+Received: by 10.58.67.168 with HTTP; Thu, 26 Jun 2014 09:47:43 -0700 (PDT)
+In-Reply-To: <CAFDwLfyXrUZUUuaciAjamn-cXJ6mAv_D41zLwT4AZE=cmAX7rg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252508>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+On Mon, Jun 23, 2014 at 9:15 PM, Jeremy Scott <jeremy@great-scotts.org> wrote:
+> I just encountered a situation where a merge was made, with no
+> apparent changes in files (ie no log), but the result was that some
+> files were deleted.
+>
+> person A adds some files
+> person B adds some files from the same point
 
-> +Querying For Specific Variables
-> +-------------------------------
-> +
-> +For programs wanting to query for specific variables in a non-callback
-> +manner, the config API provides two functions `git_config_get_string`
-> +and `git_config_get_string_multi`.They both read values from an internal
-> +cache generated previously from reading the config files.
-> +
-> +`git_config_get_string` takes two parameters,
-> +
-> +- a key string in canonical flat form for which the corresponding value
-> +  with the highest priority (i.e. value in the repo config will be
-> +  preferred over value in user wide config for the same variable) will
-> +  be retrieved.
-> +
-> +- a pointer to a string which will point to the retrieved value.
-> +
-> +`git_config_get_string` returns 0 for success, or -1 for no value found.
-> +
-> +`git_config_get_string_multi` returns a `string_list` containing all the
-> +values for the key passed as parameter, sorted in order of increasing
-> +priority (Note: NULL values are flagged as 1, check `util` for each
-> +'string_list_item` for flag value).
+You mean from the same point in history, right?  Not files with the
+same filename or path?
 
-I think you need to add something like:
+> person B commits and pushes.
+> person A commits -- now merge is required
+> a few more commits on top of person B's commit
 
-   Both functions return pointers to values owned by the config cache. The
-   caller need not free them, but should not modify them.
+I don't understand this step.  Who adds a few more commits on top of B and why?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> person A merges - this removes the files that B added. There is no log
+> of the files being deleted
+
+This sounds like an "evil merge" (see man gitglossary, and google),
+but it's not clear to me how you arrived here.
+
+When I tried to reproduce your issue with this script, it did not
+remove any files unexpectedly:
+------------------->8-----------------------
+#!/bin/sh
+
+set -e
+mkdir foo && cd foo && git init
+echo foo > foo && git add foo && git commit -mfoo
+
+git checkout -b PersonA master
+echo bar > bar && git add bar
+git commit -m"PersonA: bar"
+
+git checkout -b PersonB master
+echo baz > baz && git add baz
+git commit -m"PersonB: baz"
+
+echo foo-conflict >> foo && git add foo
+git commit -m"PersonB: foo"
+
+git checkout PersonA
+echo foo-different >> foo && git add foo
+git commit -m"PersonA: foo (conflicts with PersonB)"
+
+git log --oneline --all --stat
+
+if ! git merge PersonB ; then
+  git checkout PersonA foo
+  git commit --no-edit
+fi
+git log --oneline --graph --stat
+------------------->8-----------------------
+
+A sneaky issue with merges is that they do not have a clear way to
+show patch information -- the diff between the commit and its ancestor
+-- because they have multiple ancestors.  You can show diffs for a
+merge relative to each of its parents, but it is not usually done for
+you automatically.  This is why making changes in a merge which are
+not actually required for the merge is bad ("evil").
+
+> Clearly this is possible - was this a user error?
+
+Probably, but we'd need to see how the user got there.
