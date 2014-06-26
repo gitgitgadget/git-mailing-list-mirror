@@ -1,97 +1,151 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitk: catch mkdtemp errors
-Date: Thu, 26 Jun 2014 13:47:36 -0700
-Message-ID: <xmqq4mz74cuv.fsf@gitster.dls.corp.google.com>
-References: <1403146394-9589-1-git-send-email-davvid@gmail.com>
+From: Jeremy Scott <jeremy@great-scotts.org>
+Subject: Re: files deleted with no record?
+Date: Fri, 27 Jun 2014 06:57:48 +1000
+Message-ID: <CAFDwLfwdcka25o0S_-ekb+AAFRVDADeiZD1f5kXJczqei=e3eg@mail.gmail.com>
+References: <CAFDwLfyXrUZUUuaciAjamn-cXJ6mAv_D41zLwT4AZE=cmAX7rg@mail.gmail.com>
+	<CABURp0p6amKmhMhOUzdKy0a8TY7bmPoSLM0sUnZfGErhyfLsEQ@mail.gmail.com>
+	<7298A047128B405F94F5E73903089107@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 22:47:52 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Thu Jun 26 22:57:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0GaB-00047b-FY
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 22:47:47 +0200
+	id 1X0Gjx-00028a-Os
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 22:57:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750956AbaFZUro (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2014 16:47:44 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55302 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750703AbaFZUrn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 16:47:43 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F94123F8A;
-	Thu, 26 Jun 2014 16:47:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9pQh93QJ+QDW0bU9IMly5HoI2Zk=; b=b+T8tA
-	pQruATQ+8dd6ud2WnJZX6JJR/T0mUva+rLGOmKxIaO1/R0p8E8EUB6ED4ffOlHmb
-	tDiC0IupnDnw/vhvPDu6Kez8n8GKO2SGSq6FqXB8SPIUVIAPcRwtZBd6dxBems1f
-	STtVNPQ9LhI2QF2Q26cEJ2ISSApjQ7NkOEcn0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eZI/3cV2aKFcz1xfB7QlZs7L1Jy9/EBe
-	lZ/SbTahFH5uZjyaHjucMmBrxZ2GsfNW1i6KE8pHibfzb52ZObAxds5QoXALUBx7
-	p6lbRM68mKV1B2KT8WpCer9hglxWda8sDb1TRoOw7fv3eu7xRALyFxVtnTXYjkdA
-	+EfCGHa01kQ=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0EDAA23F89;
-	Thu, 26 Jun 2014 16:47:36 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 368BB23F87;
-	Thu, 26 Jun 2014 16:47:31 -0400 (EDT)
-In-Reply-To: <1403146394-9589-1-git-send-email-davvid@gmail.com> (David
-	Aguilar's message of "Wed, 18 Jun 2014 19:53:14 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 17B9EE8A-FD73-11E3-A215-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751361AbaFZU5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2014 16:57:50 -0400
+Received: from mail-qc0-f177.google.com ([209.85.216.177]:55866 "EHLO
+	mail-qc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750940AbaFZU5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 16:57:49 -0400
+Received: by mail-qc0-f177.google.com with SMTP id r5so3631375qcx.22
+        for <git@vger.kernel.org>; Thu, 26 Jun 2014 13:57:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=1CfgJDEocC/JhtUX8Shh2ZyrCFesPJaMpCBcm4Z9fhE=;
+        b=BmjQub4suzr88sZu4j32LZRdmStDr8tQw11dCFHsWlB8ZErrdpOu7wz8rXpm0aKxLT
+         prSDIgHHLcTsAxsvBifF8abN473uC4NThAADVfeHMrus07hZAu65uPI1AC3lcNHJm0eJ
+         C8MM9ssyqx7pvo0NOLyh4YA3JcdOhoO9G0avTLokCPVB/xVbrtQxzLI47wRhxlzx1Gy4
+         8K2TI6iiyCtZKjX5vds8vFutykHzc4zE444RJZtj7xSQ4LW8/rN5VEp48REPbguwIG8w
+         pWCGYWAhK0XnF2Br54nQMAzJISNYdjG5CaKEvpLRG7I1+oD7pXAf48esL5EVIPBPpqAk
+         vt/w==
+X-Received: by 10.229.117.136 with SMTP id r8mr26044525qcq.17.1403816268980;
+ Thu, 26 Jun 2014 13:57:48 -0700 (PDT)
+Received: by 10.140.34.146 with HTTP; Thu, 26 Jun 2014 13:57:48 -0700 (PDT)
+In-Reply-To: <7298A047128B405F94F5E73903089107@PhilipOakley>
+X-Google-Sender-Auth: _oIkzlSSvjnG9nd__Qo2kYC_s2I
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252525>
 
-David Aguilar <davvid@gmail.com> writes:
+Hi. Thanks for getting back to me.
 
-> 105b5d3fbb1c00bb0aeaf9d3e0fbe26a7b1993fc introduced a dependency
-> on mkdtemp, which is not available on Windows.
+here is a screenshot from source tree to visualise the scenario:
+
+https://drive.google.com/file/d/0B-Wn7DfHsuhyTEVkRHAzeGVZelpMWjFxZW1kbVBKVlNab3pR/edit?usp=sharing
+
+I will attempt a script to reproduce this later today.
+
+Thanks
+
+On Fri, Jun 27, 2014 at 5:53 AM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Phil Hord" <phil.hord@gmail.com>
 >
-> Use the original temporary directory behavior when mkdtemp fails.
-> This makes the code use mkdtemp when available and gracefully
-> fallback to the existing behavior when it is not available.
+>> On Mon, Jun 23, 2014 at 9:15 PM, Jeremy Scott <jeremy@great-scotts.org>
+>> wrote:
+>>>
+>>> I just encountered a situation where a merge was made, with no
+>>> apparent changes in files (ie no log), but the result was that some
+>>> files were deleted.
+>>>
+>>> person A adds some files
+>>> person B adds some files from the same point
+>>
+>>
+>> You mean from the same point in history, right?  Not files with the
+>> same filename or path?
+>>
+>>> person B commits and pushes.
+>>> person A commits -- now merge is required
+>>> a few more commits on top of person B's commit
+>>
+>>
+>> I don't understand this step.  Who adds a few more commits on top of B and
+>> why?
+>>
+>>> person A merges - this removes the files that B added. There is no log
+>>> of the files being deleted
 >
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
-
-In the meantime, I've fetched from you and merged up to your
-master~2 aka 17f9836c (gitk: Show staged submodules regardless of
-ignore config, 2014-04-08).
-
-Thanks.
-
->  gitk | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> diff --git a/gitk b/gitk
-> index 41e5071..9237830 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -3504,7 +3504,9 @@ proc gitknewtmpdir {} {
->  	    set tmpdir $gitdir
->  	}
->  	set gitktmpformat [file join $tmpdir ".gitk-tmp.XXXXXX"]
-> -	set gitktmpdir [exec mktemp -d $gitktmpformat]
-> +	if {[catch {set gitktmpdir [exec mktemp -d $gitktmpformat]}]} {
-> +	    set gitktmpdir [file join $gitdir [format ".gitk-tmp.%s" [pid]]]
-> +	}
->  	if {[catch {file mkdir $gitktmpdir} err]} {
->  	    error_popup "[mc "Error creating temporary directory %s:" $gitktmpdir] $err"
->  	    unset gitktmpdir
+> A similar issue, by reference, just came up on the [git-users] list. The
+> reference was:
+> 1. http://randyfay.com/content/avoiding-git-disasters-gory-story
+>
+> In that case the problem was a mixture of tools and  misunderstandings.
+>
+> It may not be the same as your case, but could give insights into what's
+> happening between different developers.
+>
+> Which Tools are You, person A and Person B using, with --version?
+>
+>>
+>> This sounds like an "evil merge" (see man gitglossary, and google),
+>> but it's not clear to me how you arrived here.
+>>
+>> When I tried to reproduce your issue with this script, it did not
+>> remove any files unexpectedly:
+>> ------------------->8-----------------------
+>> #!/bin/sh
+>>
+>> set -e
+>> mkdir foo && cd foo && git init
+>> echo foo > foo && git add foo && git commit -mfoo
+>>
+>> git checkout -b PersonA master
+>> echo bar > bar && git add bar
+>> git commit -m"PersonA: bar"
+>>
+>> git checkout -b PersonB master
+>> echo baz > baz && git add baz
+>> git commit -m"PersonB: baz"
+>>
+>> echo foo-conflict >> foo && git add foo
+>> git commit -m"PersonB: foo"
+>>
+>> git checkout PersonA
+>> echo foo-different >> foo && git add foo
+>> git commit -m"PersonA: foo (conflicts with PersonB)"
+>>
+>> git log --oneline --all --stat
+>>
+>> if ! git merge PersonB ; then
+>>  git checkout PersonA foo
+>>  git commit --no-edit
+>> fi
+>> git log --oneline --graph --stat
+>> ------------------->8-----------------------
+>>
+>> A sneaky issue with merges is that they do not have a clear way to
+>> show patch information -- the diff between the commit and its ancestor
+>> -- because they have multiple ancestors.  You can show diffs for a
+>> merge relative to each of its parents, but it is not usually done for
+>> you automatically.  This is why making changes in a merge which are
+>> not actually required for the merge is bad ("evil").
+>>
+>>> Clearly this is possible - was this a user error?
+>>
+>>
+>> Probably, but we'd need to see how the user got there.
+>> --
+>
+> Philip
