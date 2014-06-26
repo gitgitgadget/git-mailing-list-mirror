@@ -1,113 +1,73 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: files deleted with no record?
-Date: Thu, 26 Jun 2014 12:47:43 -0400
-Message-ID: <CABURp0p6amKmhMhOUzdKy0a8TY7bmPoSLM0sUnZfGErhyfLsEQ@mail.gmail.com>
-References: <CAFDwLfyXrUZUUuaciAjamn-cXJ6mAv_D41zLwT4AZE=cmAX7rg@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] imap-send.c: replace git_config with git_config_get_string
+Date: Thu, 26 Jun 2014 18:50:22 +0200
+Message-ID: <vpqbntfmx81.fsf@anie.imag.fr>
+References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>
+	<1403520105-23250-3-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeremy Scott <jeremy@great-scotts.org>
-X-From: git-owner@vger.kernel.org Thu Jun 26 18:48:14 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jun 26 18:51:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0CqI-0001SK-BB
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 18:48:10 +0200
+	id 1X0Ct5-0003Ia-Kk
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 18:51:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757286AbaFZQsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2014 12:48:05 -0400
-Received: from mail-ve0-f181.google.com ([209.85.128.181]:33199 "EHLO
-	mail-ve0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757085AbaFZQsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 12:48:04 -0400
-Received: by mail-ve0-f181.google.com with SMTP id db11so3951786veb.40
-        for <git@vger.kernel.org>; Thu, 26 Jun 2014 09:48:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=WwoMjUkbXNj6hUHk81VDfP0/FNS15uXlpG1yu5Yilho=;
-        b=1IN+Be2mUTtF3kITnm3qgyUj2Oc7tVNosHbFuQSB9TgfSVC9kreFYuVXSBz/ah1fwP
-         2de3E16qC4jwnIbAc9xTTQfKeCvu3IszuTky9OJ8A4PttckrcSV74MFrOWNdJj9I+Dsr
-         Nm54tcSJ4HrBr9ILkix3I0ptYUNRtDeSMJNUuVt+SGCbDKc8CXCXNWjMCJ1Z7K4GspBe
-         MVtmNm3fUFtkoC4yzn+czMj0bsR82y0Rh0rmogZAaOvNZuR6MnNA2yw3bP40IHGtGnXd
-         VMCRQ0lSi9th3rsHSmpeWSLkqOuBaaW4n1LnOH46GhzMrBOV/s8RxnsDcInrL4WXAEuX
-         mB0A==
-X-Received: by 10.52.17.129 with SMTP id o1mr12406792vdd.0.1403801283184; Thu,
- 26 Jun 2014 09:48:03 -0700 (PDT)
-Received: by 10.58.67.168 with HTTP; Thu, 26 Jun 2014 09:47:43 -0700 (PDT)
-In-Reply-To: <CAFDwLfyXrUZUUuaciAjamn-cXJ6mAv_D41zLwT4AZE=cmAX7rg@mail.gmail.com>
+	id S1756890AbaFZQu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Jun 2014 12:50:58 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52355 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756110AbaFZQu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 12:50:57 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s5QGoKdD020253
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 26 Jun 2014 18:50:20 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s5QGoMH6014870;
+	Thu, 26 Jun 2014 18:50:22 +0200
+In-Reply-To: <1403520105-23250-3-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Mon, 23 Jun 2014 03:41:42 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 26 Jun 2014 18:50:20 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s5QGoKdD020253
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1404406221.12515@9m0tym7OcmLO+FD608VOrA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252509>
 
-On Mon, Jun 23, 2014 at 9:15 PM, Jeremy Scott <jeremy@great-scotts.org> wrote:
-> I just encountered a situation where a merge was made, with no
-> apparent changes in files (ie no log), but the result was that some
-> files were deleted.
->
-> person A adds some files
-> person B adds some files from the same point
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-You mean from the same point in history, right?  Not files with the
-same filename or path?
+> +	if (!git_config_get_string("imap.user", &value))
+> +		server.user = xstrdup(value);
+> +	if (!git_config_get_string("imap.pass", &value))
+> +		server.pass = xstrdup(value);
+> +	if (!git_config_get_string("imap.port", &value))
+> +		server.port = git_config_int("port", value);
+> +	if (!git_config_get_string("imap.tunnel", &value))
+> +		server.tunnel = xstrdup(value);
+> +	if (!git_config_get_string("imap.authmethod", &value))
+> +		server.auth_method = xstrdup(value);
 
-> person B commits and pushes.
-> person A commits -- now merge is required
-> a few more commits on top of person B's commit
+Given this kind of systematic code, I find it very tempting to factor
+this with a new helper function as
 
-I don't understand this step.  Who adds a few more commits on top of B and why?
+...
+git_config_get_string_dup("imap.tunnel", &server.tunnel)
+git_config_get_string_dup("imap.authmethod", &server.auth_method)
 
-> person A merges - this removes the files that B added. There is no log
-> of the files being deleted
+Is there any reason not to do so?
 
-This sounds like an "evil merge" (see man gitglossary, and google),
-but it's not clear to me how you arrived here.
-
-When I tried to reproduce your issue with this script, it did not
-remove any files unexpectedly:
-------------------->8-----------------------
-#!/bin/sh
-
-set -e
-mkdir foo && cd foo && git init
-echo foo > foo && git add foo && git commit -mfoo
-
-git checkout -b PersonA master
-echo bar > bar && git add bar
-git commit -m"PersonA: bar"
-
-git checkout -b PersonB master
-echo baz > baz && git add baz
-git commit -m"PersonB: baz"
-
-echo foo-conflict >> foo && git add foo
-git commit -m"PersonB: foo"
-
-git checkout PersonA
-echo foo-different >> foo && git add foo
-git commit -m"PersonA: foo (conflicts with PersonB)"
-
-git log --oneline --all --stat
-
-if ! git merge PersonB ; then
-  git checkout PersonA foo
-  git commit --no-edit
-fi
-git log --oneline --graph --stat
-------------------->8-----------------------
-
-A sneaky issue with merges is that they do not have a clear way to
-show patch information -- the diff between the commit and its ancestor
--- because they have multiple ancestors.  You can show diffs for a
-merge relative to each of its parents, but it is not usually done for
-you automatically.  This is why making changes in a merge which are
-not actually required for the merge is bad ("evil").
-
-> Clearly this is possible - was this a user error?
-
-Probably, but we'd need to see how the user got there.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
