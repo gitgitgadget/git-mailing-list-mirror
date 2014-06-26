@@ -1,73 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] imap-send.c: replace git_config with git_config_get_string
-Date: Thu, 26 Jun 2014 18:50:22 +0200
-Message-ID: <vpqbntfmx81.fsf@anie.imag.fr>
-References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>
-	<1403520105-23250-3-git-send-email-tanayabh@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Is it possible to list unpushed tags without accessing remote?
+Date: Thu, 26 Jun 2014 18:54:22 +0200
+Message-ID: <874mz76281.fsf@igel.home>
+References: <BAA3119F-8351-4BFD-B42A-C96E4C7A1440@jetbrains.com>
+	<CAJo=hJvdMURuaEZA3XEWE_Uuq8QRZ+mt8K2H8XrbTuZsVX9gKQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jun 26 18:51:06 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
+	git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Jun 26 18:54:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0Ct5-0003Ia-Kk
-	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 18:51:03 +0200
+	id 1X0CwS-0005WC-4O
+	for gcvg-git-2@plane.gmane.org; Thu, 26 Jun 2014 18:54:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756890AbaFZQu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Jun 2014 12:50:58 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52355 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756110AbaFZQu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Jun 2014 12:50:57 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s5QGoKdD020253
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 26 Jun 2014 18:50:20 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s5QGoMH6014870;
-	Thu, 26 Jun 2014 18:50:22 +0200
-In-Reply-To: <1403520105-23250-3-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Mon, 23 Jun 2014 03:41:42 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 26 Jun 2014 18:50:20 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s5QGoKdD020253
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1404406221.12515@9m0tym7OcmLO+FD608VOrA
+	id S1757436AbaFZQy1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Jun 2014 12:54:27 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:42325 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756853AbaFZQy0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Jun 2014 12:54:26 -0400
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 3gznPq5gJsz3hhTs;
+	Thu, 26 Jun 2014 18:54:23 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 3gznPq10q3z7S6QT;
+	Thu, 26 Jun 2014 18:54:23 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
+	with ESMTP id QNAL9zC3LUMl; Thu, 26 Jun 2014 18:54:22 +0200 (CEST)
+X-Auth-Info: gVrSyMDQz6wn3OOBc4m+whGeXtygiR7r+pVFkThjeIQ=
+Received: from igel.home (ppp-188-174-158-98.dynamic.mnet-online.de [188.174.158.98])
+	by mail.mnet-online.de (Postfix) with ESMTPA;
+	Thu, 26 Jun 2014 18:54:22 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 43CCF2C2527; Thu, 26 Jun 2014 18:54:22 +0200 (CEST)
+X-Yow: Let's send the Russians defective lifestyle accessories!
+In-Reply-To: <CAJo=hJvdMURuaEZA3XEWE_Uuq8QRZ+mt8K2H8XrbTuZsVX9gKQ@mail.gmail.com>
+	(Shawn Pearce's message of "Thu, 26 Jun 2014 09:13:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252510>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Shawn Pearce <spearce@spearce.org> writes:
 
-> +	if (!git_config_get_string("imap.user", &value))
-> +		server.user = xstrdup(value);
-> +	if (!git_config_get_string("imap.pass", &value))
-> +		server.pass = xstrdup(value);
-> +	if (!git_config_get_string("imap.port", &value))
-> +		server.port = git_config_int("port", value);
-> +	if (!git_config_get_string("imap.tunnel", &value))
-> +		server.tunnel = xstrdup(value);
-> +	if (!git_config_get_string("imap.authmethod", &value))
-> +		server.auth_method = xstrdup(value);
+> On Thu, Jun 26, 2014 at 5:42 AM, Kirill Likhodedov
+> <kirill.likhodedov@jetbrains.com> wrote:
+>> is it possible to know which tags are not yet pushed to a remote via=
+ a completely local command?
+>>
+>> (e.g. the list of unpushed _commits_ may be received by =E2=80=98git=
+ log <upstream>..=E2=80=99)
+>>
+>> I know it is possible to execute 'git ls-remote=E2=80=99 or 'git pus=
+h --dry-run=E2=80=99, but both ask the remote server.
+>> I=E2=80=99m almost sure that the answer is =E2=80=9CNO=E2=80=9D, but=
+ want to receive a confirmation from Git gurus :)
+>
+> No. The client doesn't track what tags the remote has.
 
-Given this kind of systematic code, I find it very tempting to factor
-this with a new helper function as
+Not by default, but it is easy to configure your clone to fetch tags to
+a separate namespace.
 
-...
-git_config_get_string_dup("imap.tunnel", &server.tunnel)
-git_config_get_string_dup("imap.authmethod", &server.auth_method)
+Andreas.
 
-Is there any reason not to do so?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
+ED5
+"And now for something completely different."
