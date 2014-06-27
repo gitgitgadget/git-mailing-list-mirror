@@ -1,180 +1,97 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Re: [PATCH v2 4/4] diff: mark any file larger than core.bigfilethreshold
- binary
-Date: Fri, 27 Jun 2014 20:56:17 +0200
-Message-ID: <53ADBE51.9050005@virtuell-zuhause.de>
-References: <1401368227-14469-1-git-send-email-pclouds@gmail.com>	<1403610336-27761-1-git-send-email-pclouds@gmail.com>	<1403610336-27761-4-git-send-email-pclouds@gmail.com> <xmqqegyb5zeh.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 0/4] verify-commit: verify commit signatures
+Date: Fri, 27 Jun 2014 12:07:35 -0700
+Message-ID: <xmqqoaxe1894.fsf@gitster.dls.corp.google.com>
+References: <xmqqoaxjb9rr.fsf@gitster.dls.corp.google.com>
+	<cover.1403877430.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, worley@alum.mit.edu
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 20:56:33 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Jun 27 21:07:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0bK2-00014f-Ce
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 20:56:30 +0200
+	id 1X0bUw-0008GT-CR
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 21:07:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751570AbaF0S41 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jun 2014 14:56:27 -0400
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:60877 "EHLO
-	wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751531AbaF0S40 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Jun 2014 14:56:26 -0400
-Received: from p5ddc0fb2.dip0.t-ipconnect.de ([93.220.15.178] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1X0bJt-00019c-9O; Fri, 27 Jun 2014 20:56:21 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqegyb5zeh.fsf@gitster.dls.corp.google.com>
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1403895385;0c1413f3;
+	id S1751786AbaF0THm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2014 15:07:42 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61451 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751264AbaF0THm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2014 15:07:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C9FEA21AB9;
+	Fri, 27 Jun 2014 15:07:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=31Ye3ut5FMiw/NgKo+ShTZjsi3w=; b=YlOOBh
+	OOjZLYVtt0EBsR+xDDaOF2qL/RYyIO3ikTEC4j5svNq/ymB6N6c2BSFrO1gjfIjA
+	ugQUhjLRhVGaOa+Ef9e1UihdyNk41UgfM4gps38swRsHp2CSUxdRtgAYi5tFr/Iw
+	T4fhASgUkDXS5PCBqtOK61rIKqxtKVPN8QsoU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cK3wcHroOXlZzzPc4AuylmQp1Z7cF3tt
+	YM0bNtY3Y+3RfuXvIYoj0pTAWKEVUbtL6VoynsEPSHwGEfnCaHimhHi4keKgSmXT
+	J4XLo2qcjdlXw66UpDiY7+1QnEUvA4EhqNHi6JYUbuuNRn1/dkjTN0JuihqxQSa6
+	L2/NfGnMwZM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BFFE421AB8;
+	Fri, 27 Jun 2014 15:07:32 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0C97721AB2;
+	Fri, 27 Jun 2014 15:07:27 -0400 (EDT)
+In-Reply-To: <cover.1403877430.git.git@drmicha.warpmail.net> (Michael
+	J. Gruber's message of "Fri, 27 Jun 2014 16:13:22 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 47F7F676-FE2E-11E3-A508-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252572>
 
-Am 26.06.2014 19:55, schrieb Junio C Hamano:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->=20
->> Too large files may lead to failure to allocate memory. If it happen=
-s
->> here, it could impact quite a few commands that involve
->> diff. Moreover, too large files are inefficient to compare anyway (a=
-nd
->> most likely non-text), so mark them binary and skip looking at their
->> content.
->> ...
->> diff --git a/diff.c b/diff.c
->> index a489540..7a977aa 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -2185,8 +2185,8 @@ int diff_filespec_is_binary(struct diff_filesp=
-ec *one)
->>  			one->is_binary =3D one->driver->binary;
->>  		else {
->>  			if (!one->data && DIFF_FILE_VALID(one))
->> -				diff_populate_filespec(one, 0);
->> -			if (one->data)
->> +				diff_populate_filespec(one, DIFF_POPULATE_IS_BINARY);
->> +			if (one->is_binary =3D=3D -1 && one->data)
->>  				one->is_binary =3D buffer_is_binary(one->data,
->>  						one->size);
->>  			if (one->is_binary =3D=3D -1)
->=20
-> The name is misleading and forced me to read it twice before I
-> realized that this is "populating the is-binary bit".  It might make
-> it a bit better if you renamed it to DIFF_POPULATE_IS_BINARY_BIT or
-> perhaps DIFF_POPULATE_CHECK_BINARY or something.  For consistency,
-> the other bit may want to be also renamed from SIZE_ONLY to either
->=20
->  (1) CHECK_SIZE_ONLY
->=20
->  (2) One bit for CHECK_SIZE, another for NO_CONTENTS, and optionally
->      make SIZE_ONLY the union of two
->=20
-> I do not have strong preference either way; the latter may be more
-> logical in that "not loading contents" and "check size" are sort of
-> orthogonal in that you can later choose to check, without loading
-> contents, only the binary-ness without checking size, but no calles
-> that passes a non-zero flag to the populate-filespec function will
-> want to slurp in the contents in practice, so in that sense we could
-> declare that the NO_CONENTS bit is implied.
->=20
-> But more importantly, would this patch actually help?  For one
-> thing, this wouldn't (and shouldn't) help if the user wants --binary
-> diff out of us anyway, I suspect, but I wonder what the following
-> codepath in the builtin_diff() function would do:
->=20
-> 		...
-> 	} else if (!DIFF_OPT_TST(o, TEXT) &&
-> 	    ( (!textconv_one && diff_filespec_is_binary(one)) ||
-> 	      (!textconv_two && diff_filespec_is_binary(two)) )) {
-> 		if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
-> 			die("unable to read files to diff");
-> 		/* Quite common confusing case */
-> 		if (mf1.size =3D=3D mf2.size &&
-> 		    !memcmp(mf1.ptr, mf2.ptr, mf1.size)) {
-> 			if (must_show_header)
-> 				fprintf(o->file, "%s", header.buf);
-> 			goto free_ab_and_return;
-> 		}
-> 		fprintf(o->file, "%s", header.buf);
-> 		strbuf_reset(&header);
-> 		if (DIFF_OPT_TST(o, BINARY))
-> 			emit_binary_diff(o->file, &mf1, &mf2, line_prefix);
-> 		else
-> 			fprintf(o->file, "%sBinary files %s and %s differ\n",
-> 				line_prefix, lbl[0], lbl[1]);
-> 		o->found_changes =3D 1;
-> 	} else {
-> 		...
->=20
-> If we weren't told with --text/-a to force textual output, and
-> at least one of the sides is marked as binary (and this patch marks
-> a large blob as binary unless attributes says otherwise), we still
-> call fill_mmfile() on them to slurp the contents to be compared, no?
->=20
-> And before you get to the DIFF_OPT_TST(o, BINARY), you memcmp(3) to
-> check if the sides are identical, so...
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Good point. So how about an additional change roughly sketched as
+> This is v3 rebased on current next (the %G works by Jeff & Junio).
+>
+> Open questions:
+>
+> - Should one of git verify-{commit,tag} learn how to verify mergetags?
+> (Probably no, it differs from both other cases.)
 
-@@ -2223,6 +2223,14 @@ struct userdiff_driver *get_textconv(struct
-diff_filespec *one)
- 	return userdiff_get_textconv(one->driver);
- }
+If we were to teach one of them, "verify-commit" as part of
+"verifying what is recorded in the commit object", would be the
+logical place to do so.
 
-+/* read the files in small chunks into memory and compare them */
-+static int filecmp_chunked(struct diff_filespec *one,
-+	struct diff_filespec *two)
-+{
-+	// TODO add implementation
-+	return 0;
-+}
-+
- static void builtin_diff(const char *name_a,
- 			 const char *name_b,
- 			 struct diff_filespec *one,
-@@ -2325,19 +2333,26 @@ static void builtin_diff(const char *name_a,
- 	} else if (!DIFF_OPT_TST(o, TEXT) &&
- 	    ( (!textconv_one && diff_filespec_is_binary(one)) ||
- 	      (!textconv_two && diff_filespec_is_binary(two)) )) {
--		if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2,two)< 0)
--			die("unable to read files to diff");
-+
-+		unsigned long size1 =3D diff_filespec_size(one);
-+		unsigned long size2 =3D diff_filespec_size(two);
-+
-+		if (size1 =3D=3D 0 || size2 =3D=3D 0)
-+			die("unable to retrieve file sizes for diff");
- 		/* Quite common confusing case */
--		if (mf1.size =3D=3D mf2.size &&
--		    !memcmp(mf1.ptr, mf2.ptr, mf1.size)) {
-+		if (size1 =3D=3D size2 && !filecmp_chunked(one,two)) {
- 			if (must_show_header)
- 				fprintf(o->file, "%s", header.buf);
- 			goto free_ab_and_return;
- 		}
- 		fprintf(o->file, "%s", header.buf);
- 		strbuf_reset(&header);
--		if (DIFF_OPT_TST(o, BINARY))
-+		if (DIFF_OPT_TST(o, BINARY)) {
-+			if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
-+				die("unable to read files to diff");
- 			emit_binary_diff(o->file, &mf1, &mf2, line_prefix);
-+		}
- 		else
- 			fprintf(o->file, "%sBinary files %s and %s differ\n",
- 				line_prefix, lbl[0], lbl[1]);
+It is OK to implement only verification of signatures on commit
+objects themselves, but we would need a plan for handling other
+kinds of verifications later, so that we can give a stable output to
+scripts.
 
-Then the default diff case, no BINARY flag, would not read both files i=
-nto memory.
-filecmp_chunked will be slower than file_mmfile and memcmp, but its who=
-le purpose is to read and compare the files in chunks.
-The chunk size can be something like 64MiB.
+If we decide to signal successful verification of the signature on
+the commit itself one way in this implementation, that should
+reliably be the way to do so even if we later add verification of
+other aspects on the commit object (e.g. mergetags it carries).  If
+running "verify-commit $commit" and checking the zero-ness of its
+exit status is the way, that should not change if later versions of
+Git learns to verify mergetags as well; even if the given $commit
+carries a mergetag that does not verify, as long as the signature in
+the commit itself is valid, the script should continue to receive
+"success" from the command.
+
+> - Should we do this now or go for generic "git verify" right away?
+
+I do not think we are ready to do "git verify" yet.  We first need
+to design how "verify-commit" should communicate failure/success
+combinations of verification of a commit that has a signature on
+itself and a mergetag on one of its parents, and of a commit that
+has zero or one signature on itself and two or more mergetags on its
+parents.  Do we fail unless all of them are found to be valid?  Do
+we use bits in exit status?  Output to the standard output, one line
+per signature verified?
