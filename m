@@ -1,86 +1,110 @@
-From: Jarrad Hope <me@jarradhope.com>
-Subject: Tackling Git Limitations with Singular Large Line-seperated Plaintext files
-Date: Fri, 27 Jun 2014 15:45:16 +0700
-Message-ID: <CAJoVafc1LMxmvCiWci3N+AuAZBsABR3Wb3c6c3stw93OJZ7Scw@mail.gmail.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] Fix: wrong offset for CET timezone
+Date: Fri, 27 Jun 2014 10:51:45 +0200 (CEST)
+Message-ID: <339300321.129156.1403859105924.JavaMail.zimbra@dewire.com>
+References: <1403790812-29174-1-git-send-email-mailing@franzoni.eu> <166360487.125996.1403820532765.JavaMail.zimbra@dewire.com> <CAF3z5=m5Ac5qWuXNXZaRqfDjbmt37qHjbj6YxkaE12VYsZegcg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jun 27 10:45:30 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Alan Franzoni <username@franzoni.eu>,
+	schwab@linux-m68k.org
+To: Alan Franzoni <mailing@franzoni.eu>
+X-From: git-owner@vger.kernel.org Fri Jun 27 10:51:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0Rmk-0001qT-Ax
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 10:45:30 +0200
+	id 1X0Rt0-0005hm-55
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 10:51:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753073AbaF0IpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2014 04:45:22 -0400
-Received: from mail-vc0-f174.google.com ([209.85.220.174]:61361 "EHLO
-	mail-vc0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752953AbaF0IpR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2014 04:45:17 -0400
-Received: by mail-vc0-f174.google.com with SMTP id hy4so4809098vcb.33
-        for <git@vger.kernel.org>; Fri, 27 Jun 2014 01:45:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=5ZvWyRlVoNmGp4kIFNJJAZl00ZTgeTZL4ldd1jeWgwM=;
-        b=ImhUMKkw/kSmHJeQVnQR3lK8SDuQEXqmwr/6g+0E7Rj42qwroNaJDUf3kdWT6XkG9i
-         JSYv13F85LA1OlX4yf2pCh8/FYr5RbT0n6fBlJjsLefVWQUNTZSwdBnhkLnhhYg+Sy+M
-         L4nq0hq6C5q4zwPGAyeHA4eMndth1UJTT/H7NKXW53+a/qz/U1jX/mwtTSdTNg5jNMkm
-         VyiDfsiJIQAtB+qI5k584654ox/7UqzUJn4cGuRoFL9Yc+VDhT63yvp5k+NNgPD/MbrD
-         JRqhodx5opn/2xUvaDDSMdQuE7Q60GMF5d8+uaWgfya60G5p1HikzjKZKET0bpDi+e6m
-         RANQ==
-X-Gm-Message-State: ALoCoQk/dCIizVn7w86mMdmHT8c3hADcIp98m7REKP/CFTDdcAGID8Q2HCHxAjT6rOpEtW0kF0pG
-X-Received: by 10.52.253.131 with SMTP id aa3mr11685936vdd.25.1403858716809;
- Fri, 27 Jun 2014 01:45:16 -0700 (PDT)
-Received: by 10.52.255.103 with HTTP; Fri, 27 Jun 2014 01:45:16 -0700 (PDT)
+	id S1753025AbaF0Ivw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jun 2014 04:51:52 -0400
+Received: from zimbra.dewire.com ([83.140.172.131]:36647 "EHLO
+	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752844AbaF0Ivv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jun 2014 04:51:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id D475F8155D;
+	Fri, 27 Jun 2014 10:51:49 +0200 (CEST)
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id 7mIrFHnXfAWq; Fri, 27 Jun 2014 10:51:46 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by zimbra.dewire.com (Postfix) with ESMTP id 576B1815E4;
+	Fri, 27 Jun 2014 10:51:46 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at dewire.se
+Received: from zimbra.dewire.com ([127.0.0.1])
+	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id e4eqrNCN2f6v; Fri, 27 Jun 2014 10:51:46 +0200 (CEST)
+Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
+	by zimbra.dewire.com (Postfix) with ESMTP id 4227C8155D;
+	Fri, 27 Jun 2014 10:51:46 +0200 (CEST)
+In-Reply-To: <CAF3z5=m5Ac5qWuXNXZaRqfDjbmt37qHjbj6YxkaE12VYsZegcg@mail.gmail.com>
+X-Originating-IP: [80.252.171.62]
+X-Mailer: Zimbra 8.0.7_GA_6020 (ZimbraWebClient - FF30 (Mac)/8.0.7_GA_6020)
+Thread-Topic: wrong offset for CET timezone
+Thread-Index: EMaG2s2GDZUex4C5oGiwCcmzl043cg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252543>
 
-Hello,
 
-As a software developer I've used git for years and have found it the
-perfect solution for source control.
 
-Lately I have found myself using git in a unique use-case - modifying
-DNA/RNA sequences and storing them in git, which are essentially
-software/source code for cells/life. For Bacteria and Viruses the
-repo's are very small <10mb & compress nicely.
+----- Ursprungligt meddelande -----
+> Fr=C3=A5n: "Alan Franzoni" <mailing@franzoni.eu>
+> Till: "Robin Rosenberg" <robin.rosenberg@dewire.com>
+> Kopia: git@vger.kernel.org, "Alan Franzoni" <username@franzoni.eu>, s=
+chwab@linux-m68k.org
+> Skickat: fredag, 27 jun 2014 10:24:23
+> =C3=84mne: Re: [PATCH] Fix: wrong offset for CET timezone
+>=20
+> On Fri, Jun 27, 2014 at 12:08 AM, Robin Rosenberg
+> <robin.rosenberg@dewire.com> wrote:
+> > 1 hour in winter and 2 in summer, although some standards seem to s=
+ay
+> > that summer time is really called CEST, computers apply DST to CET =
+in
+> > summer.
+> >
+> > $ TZ=3DUTC date
+> > Tor 26 Jun 2014 22:08:01 UTC
+> >
+> > $ TZ=3DCET date
+> > Fre 27 Jun 2014 00:08:05 CEST
+>=20
+> Like Andreas pointed out, this seems an implementation detail. CET is
+> still +1, while CEST is +2.
 
-However on the extreme end of the spectrum a human genome can run in
-at 50gb or say ~1gb per file/chromosome.
+I mentioned that myself...=20
+=20
+> If you take a look at the official IANA tzdata:
+>=20
+> http://www.iana.org/time-zones/repository/releases/tzdata2014e.tar.gz
+>=20
+> For europe, it's something like "std: CET" and "dst: CEST".
+>=20
+> The current doc is not correct either; we should write something like
+> "either +1 or +2 depending on DST" (there seems to be a 2dst as well
+> which gets +3 offset);
 
-Now, this is not the binary problem and it is not the same as storing
-media inside git - I have reviewed the solutions that exist for the
-binary problem, such as git-annex, git-media & bup. But they don't
-provide the featureset of git and the data i'm storing is more like
-plaintext sourcecode with relatively small edits per commit.
+I knew there gotta be a catch. I don't think glibc is advanced enough
+to provide two different summer times for the same TZ.
 
-I have googled and asked in #git which discussion mostly revolved
-around these tools.
+> Usually the best way of handling timezones is to use the proper
+> location format (e.g. TZ=3D'Europe/Rome') and then letting the system
+> pick the proper offset; we might say something like ' "Europe/Rome"
+> which is +1 in winter ' in the doc, but I'd say that's nitpicking.
 
-The only project that holds interest is a 2009 project, git-bigfiles -
-however it is abit dated & the author is not interested in reviving
-this project - referring me to git-annex. Unfortunately.
+Probably is. I think mentioning that CET can be either +1 or +2 is
+enough.=20
 
-With that background;
-I wanted to discuss the problems with git and how I can contribute to
-the core project to best solve them.
++ For example CET (here), which is nominally 1 hour ahead of UTC is enc=
+oded=20
++ as `+0100`, but when summer savings apply, CET is two hours ahead and=
+ encoded
++ as `+0200`).
 
->From my understanding the largest problem revolves around git's delta
-discovery method, holding 2 files in memory at once - is there a
-reason this could not be adapted to page/chunk the data in a sliding
-window fashion ?
-
-Are there any other issues I need to know about, is anyone else
-working on making git more capable of handling large source files that
-I can collaborate with?
-
-Thanks for your time,
-Jarrad
+-- robin
