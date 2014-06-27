@@ -1,109 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 2/3] config: add hashtable for config parsing & retrieval
-Date: Fri, 27 Jun 2014 10:19:50 +0200
-Message-ID: <vpqzjgyg3x5.fsf@anie.imag.fr>
-References: <1403518300-23053-1-git-send-email-tanayabh@gmail.com>
-	<1403518300-23053-3-git-send-email-tanayabh@gmail.com>
-	<53A84077.4010200@ramsay1.demon.co.uk>
-	<xmqqsimv9pjx.fsf@gitster.dls.corp.google.com>
-	<53A99FEB.5040808@ramsay1.demon.co.uk>
-	<xmqq61joamcc.fsf@gitster.dls.corp.google.com>
-	<vpq1tubinbx.fsf@anie.imag.fr>
-	<xmqqpphv4hu6.fsf@gitster.dls.corp.google.com>
+From: Alan Franzoni <mailing@franzoni.eu>
+Subject: Re: [PATCH] Fix: wrong offset for CET timezone
+Date: Fri, 27 Jun 2014 10:24:23 +0200
+Message-ID: <CAF3z5=m5Ac5qWuXNXZaRqfDjbmt37qHjbj6YxkaE12VYsZegcg@mail.gmail.com>
+References: <1403790812-29174-1-git-send-email-mailing@franzoni.eu> <166360487.125996.1403820532765.JavaMail.zimbra@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 10:20:04 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Alan Franzoni <username@franzoni.eu>,
+	schwab@linux-m68k.org
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Jun 27 10:24:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0RO7-0003hc-EA
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 10:20:03 +0200
+	id 1X0RSk-0006Ul-Ai
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 10:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753067AbaF0IT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2014 04:19:59 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:43729 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752934AbaF0IT5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2014 04:19:57 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s5R8Jn22008214
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 27 Jun 2014 10:19:49 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s5R8Jo3C022775;
-	Fri, 27 Jun 2014 10:19:50 +0200
-In-Reply-To: <xmqqpphv4hu6.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 26 Jun 2014 12:00:01 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 27 Jun 2014 10:19:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s5R8Jn22008214
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1404461990.4556@xM+HMOhl+NWa8JCMlVVd4w
+	id S1753046AbaF0IYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2014 04:24:46 -0400
+Received: from mail-ie0-f178.google.com ([209.85.223.178]:64047 "EHLO
+	mail-ie0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752986AbaF0IYo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2014 04:24:44 -0400
+Received: by mail-ie0-f178.google.com with SMTP id rd18so4149301iec.9
+        for <git@vger.kernel.org>; Fri, 27 Jun 2014 01:24:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=Vo3f9/kQN54K/2B3MP7GNFa3YAprRH4y2KZbbgH8pAA=;
+        b=az+/YmMnyWjUBpbiwdwL/+XpRr1XJ5auJ+wwlyzpGcw89LBg3TMP8HLCYyhooVjkGj
+         bnX8O9G8cgIkiozxaFmn8yTwz45HJKnHAHTzs0Uy7qEbkUA8tQDMY53aktHG2t4ZeuJO
+         hRPDHJ7NqOBWqvpRiH/dwIAsf2M+w3cpgi2tn2Fsv7c1vNahxK2Y+zKNep+HDhtMQjRJ
+         PnWezlzrOmYISkr6aYobSaHPOb1asl2Ong/A/H337RxHKM0hcjMuVGR7eEpoqHBmPVlu
+         QXgZQEMKXqCh+tPjar2u7AzFFNN7X4Uy9q5mxNgNR7ZvnjVovv2MpPMSm5yJ430tb7d1
+         esMw==
+X-Gm-Message-State: ALoCoQnaSjM0ZKl83mLRSfuhdI332B7V+wfveCZlpDf6dx80MrX6duZ6iO9YSWac7PVwakBfFp7i
+X-Received: by 10.50.134.135 with SMTP id pk7mr10632193igb.31.1403857483534;
+ Fri, 27 Jun 2014 01:24:43 -0700 (PDT)
+Received: by 10.64.11.225 with HTTP; Fri, 27 Jun 2014 01:24:23 -0700 (PDT)
+In-Reply-To: <166360487.125996.1403820532765.JavaMail.zimbra@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252541>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Fri, Jun 27, 2014 at 12:08 AM, Robin Rosenberg
+<robin.rosenberg@dewire.com> wrote:
+> 1 hour in winter and 2 in summer, although some standards seem to say
+> that summer time is really called CEST, computers apply DST to CET in summer.
 >
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> When the submodule script that uses "git config -f .gitmodules" is
->>> converted into C, if the updated config API is ready, it may be able
->>> to do something like these in a single program:
->>>
->>> 	const char *url;
->>> 	struct config_set *gm_config;
->>>
->>>         /* read from $GIT_DIR/config */
->>>         url = git_config_get_string("remote.origin.url");
->>>
->>>         /*
->>>          * allow us to read from .gitmodules; the parameters are
->>>          * list of files that make up the configset, perhaps.
->>>          */
->>> 	gm_config = git_configset_new(".gitmodules", NULL);
->>>
->>>
->>>         if (!git_configset_get_bool(gm_config, "submodule.frotz.ignore")) {
->>> 		/* do a lot of stuff for the submodule */
->>>                 ...
->>> 	}
->>>
->>>         /* when we are done with the configset */
->>>         git_configset_clear(gm_config);
->>
->> Isn't that a bit overkill? Why not just let the caller manage a hashmap
->> directly instead of a config_set?
+> $ TZ=UTC date
+> Tor 26 Jun 2014 22:08:01 UTC
 >
-> Because I had an experience under my belt of a painful refactoring
-> of "the_index" which turned out to be not just a single array, I
-> simply suspect that the final data structure to represent a "set of
-> config-like things" will not be just a single hashmap, hence I do
-> prefer to have one layer of abstraction "struct config_set", which
-> would contain a hashmap and possibly more.
+> $ TZ=CET date
+> Fre 27 Jun 2014 00:08:05 CEST
 
-OK, I guess I overinterpreted what you meant by "struct config_set". If
-it's a thin abstraction layer on top of the hashmap (i.e. essentially
-contain the hashmap, and possibly a few more metadata), then it
-definitely makes sense.
+Like Andreas pointed out, this seems an implementation detail. CET is
+still +1, while CEST is +2.
 
-> Doesn't "is the hashmap initialized" bit belong there, for example?
+If you take a look at the official IANA tzdata:
 
-Yes.
+http://www.iana.org/time-zones/repository/releases/tzdata2014e.tar.gz
+
+For europe, it's something like "std: CET" and "dst: CEST".
+
+The current doc is not correct either; we should write something like
+"either +1 or +2 depending on DST" (there seems to be a 2dst as well
+which gets +3 offset);
+
+Usually the best way of handling timezones is to use the proper
+location format (e.g. TZ='Europe/Rome') and then letting the system
+pick the proper offset; we might say something like ' "Europe/Rome"
+which is +1 in winter ' in the doc, but I'd say that's nitpicking.
+
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+contact me at public@[mysurname].eu
