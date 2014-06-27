@@ -1,58 +1,89 @@
-From: Christian Halstrick <christian.halstrick@gmail.com>
-Subject: How to populate index/worktree when recursive merge merges multiple
- common ancestors?
-Date: Fri, 27 Jun 2014 07:50:44 +0200
-Message-ID: <CAENte7jg7RnpEFmZ0QWGw=a-AvAN6AF=cknHXWyTEuo9zq7ERg@mail.gmail.com>
+From: Jagan Teki <jagannadh.teki@gmail.com>
+Subject: Re: Tool/Scripts - For maintaining different branches on a repo
+Date: Fri, 27 Jun 2014 11:57:51 +0530
+Message-ID: <CAD6G_RQ9KpW4i5BPRNrSWmR5oZn0eAZsvM4S_erCXx0+Y7Oj2Q@mail.gmail.com>
+References: <CAD6G_RRxj_tHhiGxP+ehNMBewqveUbbGuLLxgnHjUt96WkC_xg@mail.gmail.com>
+	<20140620223047.GB856079@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 27 07:51:14 2014
+Content-Type: text/plain; charset=UTF-8
+To: Jagan Teki <jagannadh.teki@gmail.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 08:27:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0P46-000138-2y
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 07:51:14 +0200
+	id 1X0Pdc-0005TH-Du
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 08:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750990AbaF0FvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2014 01:51:07 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:52066 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750729AbaF0FvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2014 01:51:06 -0400
-Received: by mail-qg0-f53.google.com with SMTP id i50so3926903qgf.40
-        for <git@vger.kernel.org>; Thu, 26 Jun 2014 22:51:04 -0700 (PDT)
+	id S1752726AbaF0G1x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2014 02:27:53 -0400
+Received: from mail-yk0-f171.google.com ([209.85.160.171]:61396 "EHLO
+	mail-yk0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750980AbaF0G1w (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2014 02:27:52 -0400
+Received: by mail-yk0-f171.google.com with SMTP id 200so2617200ykr.30
+        for <git@vger.kernel.org>; Thu, 26 Jun 2014 23:27:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=HL4bFWw3X17MNUP0BHYJvQkUCAtWkKMMHvGHacXtXKE=;
-        b=U/bY7JQTsDAGwy2bvMKREQw5+Mcc39lK8+A6Fo41svbRdwWSre3NP6lO4oQ4EM5idZ
-         gKYVqWbkKnWkIkt3WerWxoret3QK1SLjFb0WkQx+9OBxAUXMwspNuAyy2SZD7l8QeP3Z
-         kjZLIRCGMFOt3lolFiHnTK1489Lzp4FYNbEFyrNAZmRUZ7/10yjUuGh7z/EgTEV7HeBv
-         ssawo/aXAjYarsszWzeDKoow4yJGP46Q19dVjKoOuNfVtuYDoxHEYYPOphyfqS6sWjlx
-         b4uhrIs2siScUyy9Palw8MfSfr7e2dDh08M8lxBOgIpxdDZBZ4oX6wMDdWmXtP3neTLk
-         zHhg==
-X-Received: by 10.140.47.173 with SMTP id m42mr3749368qga.9.1403848264529;
- Thu, 26 Jun 2014 22:51:04 -0700 (PDT)
-Received: by 10.96.179.199 with HTTP; Thu, 26 Jun 2014 22:50:44 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=cSxhigZrJi45bg6YPI0sSU5XyOe1/buP38C8eIpOn/M=;
+        b=qlxQ4XTqoEZ1cQvSOHrnzp4ZdnGwORRyxrd7xQ6vuueJSLCM560SV6DQaX/QGdbMA7
+         gVNdh0gNYM/Rq6DGFT4TvScFIsPN3uyKCQPfCa/ASicYd5XQbT/bdkQdYApem2475AOK
+         iLc4Fu7Shwq+o64yKRmG2BwTRXxTVK8jYNODOlCesQ195afwgn1yupQPxfvP7XyLERtd
+         0iZs1hK8IInENBbRbJv57rYiMGxpJVWrTs/ckRSTjaWZT1W47vGxrAG+tLUx9MrBsApz
+         YceqiIA21ifSYv94oek/VbGZhfFU/Og7JbQB9bsNuwivKTGxOYPCq8b1SGOgwnBq+F0m
+         EWBA==
+X-Received: by 10.236.98.103 with SMTP id u67mr28638879yhf.99.1403850471578;
+ Thu, 26 Jun 2014 23:27:51 -0700 (PDT)
+Received: by 10.170.187.84 with HTTP; Thu, 26 Jun 2014 23:27:51 -0700 (PDT)
+In-Reply-To: <20140620223047.GB856079@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252533>
 
-Imagine git does a recursive merge between A and B and finds multiple
-common ancestors X1,X2 for these commits.
-- Does git try to create an implicit/temporary common ancestor X3 by
-merging X1 and X2?
-- How should workingtree, index (stage1,2,3) look like if during that
-merge of common ancestors a conflict occurs? Will I see in stage2 and
-stage3 really see content of X1 and X2?
-- How is the end user supposed to fix this? Imaging merging X1 and X2
-leads to conflicts solved by the end user leading to a implicit common
-ancestor X3. Then merging A and B with X3 as common base again
-conflicts occur.
+On Sat, Jun 21, 2014 at 4:00 AM, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+> On Thu, Jun 19, 2014 at 04:18:22PM +0530, Jagan Teki wrote:
+>> Hi,
+>>
+>> I have a single repo with different kinds of branches say 4 branches.
+>> Developers will send a patches wrt to specific branch.
+>
+> I presume here that you're referring to emailed patches, or patches in
+> independent files, as opposed to just having branches with commits.
 
-Ciao
-  Chris
+Let me clear my requirement:
+
+I'm using Thunderbird,  the tool will pick the patches with _defined_
+subject prefix
+and apply the respective branches as I inputting.
+
+Please let me know if you still have any clarity.
+
+>
+>> Is there any opensource tool/script that does applying patches/maintaining
+>> the branches in repo w/o manual intervention?
+>
+> If you want something that works with patches specifically, TopGit might
+> do what you want.  If what you're looking for is a tool that accepts
+> patches and automatically applies them, I'm not aware of one.  It
+> shouldn't be terribly difficult to script, though.
+>
+> If you don't need to deal with patches and can instead deal with git
+> repositories, GitLab and Gitorious offer merge requests, which might
+> make life easier.  I have heard that GitLab is less painful to set up.
+>
+> --
+> brian m. carlson / brian with sandals: Houston, Texas, US
+> +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+> OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+
+thanks!
+-- 
+Jagan.
