@@ -1,128 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] config: Add config sets for config parsing & retrieval
-Date: Fri, 27 Jun 2014 14:07:49 -0700
-Message-ID: <xmqq8uoi12oq.fsf@gitster.dls.corp.google.com>
-References: <1403892285-9878-1-git-send-email-tanayabh@gmail.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Experimental TDB support for GIT REFS
+Date: Fri, 27 Jun 2014 14:30:07 -0700
+Message-ID: <CAL=YDWn-CGZGr5bXNTiZmzr4-w_8CERx3r2bmLWbczqJ0Sn7dg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 23:08:05 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jun 27 23:30:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0dNL-00073l-DW
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 23:08:03 +0200
+	id 1X0diw-0003TA-PH
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 23:30:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754137AbaF0VH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2014 17:07:59 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60876 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754116AbaF0VH6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2014 17:07:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C0F26237A0;
-	Fri, 27 Jun 2014 17:07:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2tjDT8v9NsoaqQlzbJtWU038RMQ=; b=SwlCvt
-	zp+1/hKJ2lI9OBbnOg8U1hfTCCCKzC3tZY11IRyQtwhA8D8wQG12fHXJbMkcgGUk
-	jacbvxKBUFGfegrDsumfUFBm6MQWBceQEGRhgeVqLwB4XuT9TcBDthNguPJm1Fm0
-	dFgeeJEquZghaRdTlzB/4EWXM5IqwLzuUTP4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OjpGYlHYFKW62RjnuC3iFf70OIfJqwQ4
-	jmJSU7a9s23HT+Nr1B7p6aN+SZfq5MwDhHCLD7ngQuR2k/6MkDV7Ey6XqayzXtub
-	f3egkGslY2Geec3PMZYKTbXMj9jP+AfLeKCks3tiA2sRZaFG1fMoqGOJKKYHVUyx
-	OOuBLYxNJZ4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B54612379F;
-	Fri, 27 Jun 2014 17:07:48 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8330E23785;
-	Fri, 27 Jun 2014 17:07:42 -0400 (EDT)
-In-Reply-To: <1403892285-9878-1-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Fri, 27 Jun 2014 11:04:45 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 14234D1C-FE3F-11E3-8D46-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753340AbaF0VaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2014 17:30:09 -0400
+Received: from mail-vc0-f172.google.com ([209.85.220.172]:33569 "EHLO
+	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753187AbaF0VaI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2014 17:30:08 -0400
+Received: by mail-vc0-f172.google.com with SMTP id hy10so5627125vcb.17
+        for <git@vger.kernel.org>; Fri, 27 Jun 2014 14:30:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        bh=nsQk0k0yMVPnaybcka26ghE7VzIOYy1IqY/8ECa25WI=;
+        b=j235ZIpvo1ClcpyCFqdy9e7+CNQjRftWYr0QB6EwPDX1/jrRO1aLZo4ep19yzw5w0K
+         P+PIRGwijh4GI8FILM3No8C7vkRiu8lHXjNShOn1JMd+LMQMZlsNtzOuoiTUzWfiWecs
+         J4SsXO34DvNZoNHHN1rzVBW/CYMeTa4lRvC73QOKrmV+396irJA1aytMgQLco6bP13Sh
+         NomOi2eb8PoglduZaWTMCqsRAgdRIHIpjfc73NWSELJLIldQi6fDKk8Om99UzlZVrx0G
+         qxfFaPGBE5cJBOIPdL1nQGy5cRwNg3i5210MVH5sWWTLvASvM6k+JJLg6QoW6IY6LTlx
+         ZQ5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
+         :content-type;
+        bh=nsQk0k0yMVPnaybcka26ghE7VzIOYy1IqY/8ECa25WI=;
+        b=kfeZu3yDmlWJ+trtBLmeHaYp0GPsdH7WK7gL3hsdFc7g2CHgZ3CXGuPgYIH+b3sOGX
+         AUjg1NuQkVk+9ShJIGJ2x1UmLVJRemqGFxFxdMtb9NniQ0KaOOrbx/GvoXgqHnyath+Q
+         bHhC/3//RLnkKxmAPipxtiRsDVhVINr84Yph1SdAo8PkC7vhCPIMdUztiz+Y7pS8fa5y
+         AKOhexQ+CK7Sz9xp/jW1wwVQ14iY3NWP190Qe6/iMAE5cezKHff1yaN8Ygs03k2NbTWK
+         pe//UhllPQTDPaTFYAgxTfkczcXG20sjen5+owcWQoQ3xgitfiO0LTtlnvG0Nr6PvVxZ
+         2F6Q==
+X-Gm-Message-State: ALoCoQnWtWK4+TNiXRUnVWUon1tiV7BLoFVhGL1jU8C6w/LKQC/VoZr1Ue+0+UAC63I4KyZ/FPdK
+X-Received: by 10.221.64.20 with SMTP id xg20mr21927143vcb.3.1403904607542;
+ Fri, 27 Jun 2014 14:30:07 -0700 (PDT)
+Received: by 10.52.255.65 with HTTP; Fri, 27 Jun 2014 14:30:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252582>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+List,
 
-> API functions:
->
-> 1. int git_config_get_value(char *k, char **v): The most generic function, traverses
-> the usual config functions for values. (internally uses the the_config_set struct)
+One of my ref transaction aims is to make define a stable public API
+for accessing refs.
+Once this is done I want to make it possible to replace the current
+.git/refs/* model with a
+different type of backend.
+In my case I want to add support to store all refs and reflogs in a TDB database
+but once we have a pluggable backend framework for refs, if someone
+wants to store the refs
+in a SQL database, that should be fairly trivial too.
 
-This may also want to be accompanied by a set of more type-specific
-API functions, e.g.
+There are a few series queued before this becomes possible, but is
+anyone wants to test or play with my "git can use TDB database" you
+can find an implementation of this at
 
-     long git_config_get_long(char *key);
-     unsigned long git_config_get_ulong(char *key);
-     char *git_config_get_string(char *key);
-     
-but we would need to know how the error reporting should look like
-for them.
+https://github.com/rsahlberg/git/tree/backend-struct-tdb
 
-You would also want to add a bit more before we can call the API to
-be complete.  Here are two that comes to my mind:
-
- - Multi-valued variables
-
-   int git_config_get_multi(char *k, char ***v, int *cnt);
-
-   which may allocate an array of "char *" and return its address in
-   *v, while returning its length in *cnt.  Alternatively, we can
-   report the length of the array as the return value, signalling an
-   error with a negative return value, without having the *cnt
-   argument.
-
- - Iterating over keys
-
-   Existing git_config() function signature can be kept for
-   iterating over keys, I would think, even if we start caching the
-   previous read of the config files from the filesystem.
+Most everything works (except submodules) but the code needs more work.
+It is also VERY LIKELY that the database schema WILL CHANGE so this is
+only for testing
+and you will need to blow the repo away and start all over again at some stage.
+I.e. no production use.
 
 
-> 2. int git_configset_get_value_from(const char *key, const char **value,
-> 			 	const char *filename, struct config_set *cs)
+To activate TDB support a new flag is added to the init-db and clone commands:
 
-Having to give "filename" each and every time I want to know about a
-single variable does not make any sense to me.  I would have
-expected the API to be more like this:
+git init --tdb-repo-name=RONNIE .
 
-	struct config_set *cs = git_configset_init();
-        char *value;
+This creates a new git repo and sets core.tdb_repo_name in the config.
+This config variable tells git to dlopen and use libtdb instead of
+using the files under .git/refs
 
-        git_configset_from_file(cs, ".gitmodule");
-        git_configset_get_value(cs, "submodule.kernel.update", &value);
+repo-name=RONNIE is a string that identifies the repository and all
+keys in the database is prefixed
+with repo-name + '\0'
 
-There will need to be a set of "config-set" variant of functions
-that parallel the "work on the_config_set" variant above, e.g.
+By default this will create the two database refs.tdb and logs.tdb in
+the repositories .git directory
+but it is also possible to store the databases somehwere else by
+adding --tdb-repo-dir=/var/lib/git/
+when creating the repo.
 
-	long git_configset_get_long(struct config_set *, char *);
-	int git_configset_get_multi(struct config_set *, char *, char ***, int *);
-	int git_configset_config(struct config_set *, config_fn_t, void *);
+Since the keys in the database are prefixed with the repo name it is
+even possible to store all the
+refs for multiple independent repos in the same database :
 
-The last one is the parallel to the traditional git_config() but it
-walks over a specific config_set.
+- First repository
+  $ cd <somewhere>
+  $ git init-db --tdb-repo-name=MyFirstRepo --tdb-repo-dir=/var/lib/git
 
-And once this is done, you wouldn't have any separate implementation of
-git_config_get_value(). it will be a series of macros:
+- Second repository
+  $ cd <somewhere else>
+  $ git init-db --tdb-repo-name=MySecondRepo --tdb-repo-dir=/var/lib/git
 
-	#define git_config_get_value(k, v) \
-        	git_configset_get_value(&the_config_set, (k), (v))
 
-just like all the *_cache() API that used to be functions are now
-implemented as macros built around corresponding *_index() API
-functions (defined in cache.h).
+This can also be a solutions for platforms lacking case sensitive
+filesystems where today two refs that only differ in case can not be
+used.
+
+
+
+The current prototype will still apply the naming collision rules that
+the existing files backend has.
+For example if you have a ref 'm'  you can not create another ref 'm/foo'.
+I left those checks as is in order to not break compatibility between
+the TDB backend and the current Files backend.
+
+
+Please feel free to test this out. And comment.
+
+
+regards
+ronnie sahlberg
