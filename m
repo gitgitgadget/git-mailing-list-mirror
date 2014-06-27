@@ -1,68 +1,64 @@
 From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Is it possible to list unpushed tags without accessing remote?
-Date: Fri, 27 Jun 2014 09:41:58 +0200
-Message-ID: <87pphu23zt.fsf@igel.home>
-References: <BAA3119F-8351-4BFD-B42A-C96E4C7A1440@jetbrains.com>
-	<CAJo=hJvdMURuaEZA3XEWE_Uuq8QRZ+mt8K2H8XrbTuZsVX9gKQ@mail.gmail.com>
-	<874mz76281.fsf@igel.home>
-	<xmqqlhsj4hmq.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH] Fix: wrong offset for CET timezone
+Date: Fri, 27 Jun 2014 09:48:10 +0200
+Message-ID: <87lhsi23ph.fsf@igel.home>
+References: <1403790812-29174-1-git-send-email-mailing@franzoni.eu>
+	<166360487.125996.1403820532765.JavaMail.zimbra@dewire.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Kirill Likhodedov <kirill.likhodedov@jetbrains.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jun 27 09:42:10 2014
+Cc: Alan Franzoni <mailing@franzoni.eu>, git@vger.kernel.org,
+	Alan Franzoni <username@franzoni.eu>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Fri Jun 27 09:48:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0QnR-0006bS-4g
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 09:42:09 +0200
+	id 1X0QtZ-0001zt-42
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 09:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbaF0HmE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2014 03:42:04 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:44451 "EHLO
+	id S1752886AbaF0HsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2014 03:48:25 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:33105 "EHLO
 	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751836AbaF0HmD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2014 03:42:03 -0400
+	with ESMTP id S1752462AbaF0HsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2014 03:48:25 -0400
 Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 3h095z6JgXz3hhhW;
-	Fri, 27 Jun 2014 09:41:59 +0200 (CEST)
+	by mail-out.m-online.net (Postfix) with ESMTP id 3h09FM3wQHz3hhh8;
+	Fri, 27 Jun 2014 09:48:23 +0200 (CEST)
 Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 3h095z2n9Pz7S6Qw;
-	Fri, 27 Jun 2014 09:41:59 +0200 (CEST)
+	by mail.m-online.net (Postfix) with ESMTP id 3h09FJ36FRz7S6Vb;
+	Fri, 27 Jun 2014 09:48:16 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at mnet-online.de
 Received: from mail.mnet-online.de ([192.168.8.180])
 	by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavisd-new, port 10024)
-	with ESMTP id RxEwODAYlaGa; Fri, 27 Jun 2014 09:41:58 +0200 (CEST)
-X-Auth-Info: o2LjGuU0gMFBppQR0x9cfSznK9QtBLTtPnlVWhryig4=
+	with ESMTP id bbNKUWT37P09; Fri, 27 Jun 2014 09:48:10 +0200 (CEST)
+X-Auth-Info: GmZDHGBatx7AS1Okfc+wv6EjcUCVhdW+Bs/ZkR7zwrg=
 Received: from igel.home (host-188-174-210-37.customer.m-online.net [188.174.210.37])
 	by mail.mnet-online.de (Postfix) with ESMTPA;
-	Fri, 27 Jun 2014 09:41:58 +0200 (CEST)
+	Fri, 27 Jun 2014 09:48:10 +0200 (CEST)
 Received: by igel.home (Postfix, from userid 1000)
-	id 2E9F32C0597; Fri, 27 Jun 2014 09:41:58 +0200 (CEST)
-X-Yow: ..The TENSION mounts as I MASSAGE your RIGHT ANKLE according to
- ancient Tibetan ACCOUNTING PROCEDURES..are you NEUROTIC yet??
-In-Reply-To: <xmqqlhsj4hmq.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 26 Jun 2014 12:04:29 -0700")
+	id 6EE612C0597; Fri, 27 Jun 2014 09:48:10 +0200 (CEST)
+X-Yow: What GOOD is a CARDBOARD suitcase ANYWAY?
+In-Reply-To: <166360487.125996.1403820532765.JavaMail.zimbra@dewire.com>
+	(Robin Rosenberg's message of "Fri, 27 Jun 2014 00:08:52 +0200
+	(CEST)")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252537>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Robin Rosenberg <robin.rosenberg@dewire.com> writes:
 
-> But then in order to learn what tags the remote has, you need to
-> talk to the remote and it won't be "complately a local" operation
-> anymore, no?
+> $ TZ=CET date
+> Fre 27 Jun 2014 00:08:05 CEST
 
-Just like for every other remote ref.  If you need to know the
-ultimative truth the only way is to ask the remote.  Your local copy is
-just a cache that may be outdated any time.
+That only works because CET is a special zone name (POSIX time zones
+require at least a number to denote the standard offset), similar to
+Europe/Berlin but without the history.
 
 Andreas.
 
