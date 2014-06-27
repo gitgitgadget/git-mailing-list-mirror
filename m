@@ -1,133 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Passing rev-list options in git-filter-branch broken
-Date: Fri, 27 Jun 2014 15:20:51 -0700
-Message-ID: <xmqq4mz60zb0.fsf@gitster.dls.corp.google.com>
-References: <987cd4ccd2b86a840b900a25e0edf0f9@tribut.de>
-	<xmqq1tua2oi5.fsf@gitster.dls.corp.google.com>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: Trouble merging renamed but identical files - CONFLICT (rename/rename)
+Date: Fri, 27 Jun 2014 18:39:26 -0400
+Organization: PD Inc
+Message-ID: <073A89A2555A4CD6AB28AF42078575ED@black>
+References: <B901ECBC8F944F039AFD6B53929FF18C@black> <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Lee Carver <Lee.Carver@servicenow.com>
-To: Felix Eckhofer <felix@tribut.de>
-X-From: git-owner@vger.kernel.org Sat Jun 28 00:21:05 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Phil Hord'" <phil.hord@gmail.com>
+To: "'git'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 28 01:52:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0eW0-0008UD-0P
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 00:21:04 +0200
+	id 1X0fwp-0002AN-2x
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 01:52:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751675AbaF0WU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2014 18:20:59 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65452 "EHLO smtp.pobox.com"
+	id S1754279AbaF0Xwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2014 19:52:47 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:42126 "EHLO mail.pdinc.us"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750980AbaF0WU6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2014 18:20:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 53B6222839;
-	Fri, 27 Jun 2014 18:20:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7ztVI6hRbuVzjuGcPG0AynNjseM=; b=VgHua/
-	W/aKoifZTMI98BbAk2uM+SOCAV4uzWpI/duWo7zrnh8wk4wSIwAgrnxPHpKWvUo5
-	6Nx5gqsVWW05qwntTkG9GDG0+G3gLgy5vt6rgiAj3vLz1DZ6onv+NeSQ8uuci5cZ
-	tIBlB0P/gfpgqNllTgYxynm4HJ55zR/JyER2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z+eVUbVRE8nnSkvMh9SAZ5+u+w2Bdxl5
-	Zhx0a7qNDwZUxvDdYSgHHw5f4P0CfGZUDgiLXOzAwvAoPbEqgaf4aIcRk39Ce1sj
-	1ZissK3h6Xu5mXMQ5h3XqfRuOhxKx4/tS+Dz4vVABJfRA2Mx3pXM7yevUSfX4eOp
-	t8K3MJKFubw=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4AAE422838;
-	Fri, 27 Jun 2014 18:20:49 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 98A9E22837;
-	Fri, 27 Jun 2014 18:20:44 -0400 (EDT)
-In-Reply-To: <xmqq1tua2oi5.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 27 Jun 2014 11:31:13 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 481086D0-FE49-11E3-A0DE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753843AbaF0Xwq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2014 19:52:46 -0400
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s5RMdNIb004911;
+	Fri, 27 Jun 2014 18:39:23 -0400
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: Ac+SVFK8rL6RQuuWQaWXdVkf2liIZgAAaFHw
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+In-Reply-To: <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252585>
 
-Junio C Hamano <gitster@pobox.com> writes:
+> -----Original Message-----
+> From: Phil Hord [mailto:phil.hord@gmail.com] 
+> Sent: Friday, June 27, 2014 17:46
+> To: Jason Pyeron
+> Cc: git
+> Subject: Re: Trouble merging renamed but identical files - 
+> CONFLICT (rename/rename)
+> 
+> On Fri, Jun 27, 2014 at 4:47 PM, Jason Pyeron 
+> <jpyeron@pdinc.us> wrote:
+> > There are two identical files from the same original 
+> parent, but both were
+> > renamed in their own branches. One branch moved the file to 
+> a new folder, the
+> > other renamed the file in the same folder.
+> 
+> You have not stated what you think the issue is.  You have only stated
+> the setup.
 
-> Felix Eckhofer <felix@tribut.de> writes:
->
->> This seems to have been caused by 3361a548db. After reverting this
->> commit, using --date-order appears to work again.
->
-> Hmph, unfortunate.
->
-> 3361a548 (Allow git-filter-branch to process large repositories with
-> lots of branches., 2013-09-10) has this change:
->
->  
->     -rev_args=$(git rev-parse --revs-only "$@")
->     +git rev-parse --revs-only "$@" >../parse
->
-> and then later feeds ../parse from the standard input of rev-list.
->
-> The --revs-only option, because --date-order *is* a rev-list related
-> argument, is emitted by the above rev-parse, along with the tip of
-> refs (which come from --all).  But --stdin mode of rev-list is meant
-> to receive *only* revisions, not options.  When it gets to the point
-> to accept the list of tips to start traversing from, it is too late
-> to give it an option.
->
-> Changing the above to something like:
->
-> 	git rev-parse --revs-only --no-flags "$@" >../parse
->
-> would be a better workaround that would not break repositories with
-> large number of references, but it obviously will lose --date-order
-> option (why would it be even necessary, though?  I suspect that
-> forcing the date-order will make the resulting pack a lot worse by
-> robbing the data stream of locality).
+Thanks, I could have said it better. 
 
-As the original "../parse" file will have mixture of revs (i.e. the
-object names) and whatever rev-list options (e.g. "--date-order")
-you gave from the command line, here is a band-aid to sift them into
-two, to be applied on top of 3361a548 (Allow git-filter-branch to
-process large repositories with lots of branches., 2013-09-10).
+I think that git should understand that I have moved a file in path only (the
+tree object containing the file's entry change, but not the entry it self) and
+that the branch from which I want to merge back (with common ancestry) has
+renamed the file in the same path ( the tree object is unchanged, but the entry
+is) such that the object is re-parented and renamed in that path.
 
-I wish there was a way to tell rev-parse "give us only flags
-relevant to rev-list, don't include revs in the output", but I do
-not think there was ever any such option (we can get revs without
-any flags with --no-flags, though).
+How can this be done in git or if it cannot what are the chalenges to patching
+git for this issue.
 
+git cat-file -p b60070f4d0879e277f44d174a163bbb292325fea # tree
+d8df83fc6714aab1fc1df061fcb03410e1dab1e5
+git cat-file -p d8df83fc6714aab1fc1df061fcb03410e1dab1e5 # 040000 tree
+68bb8a223284e0f5057421217a5965128bf1d51a    src
+git cat-file -p 68bb8a223284e0f5057421217a5965128bf1d51a # 100644 blob
+25c7d3b12bced67046359ba1e7945f82a2640147    TrueCrypt.sln
 
- git-filter-branch.sh | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+git cat-file -p a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68 # tree
+7f82a6c46f19931c3c40d44dc196cbfab7feaa72
+git cat-file -p 7f82a6c46f19931c3c40d44dc196cbfab7feaa72 # 100644 blob
+25c7d3b12bced67046359ba1e7945f82a2640147    CipherShed.sln
 
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index ca3d539..ed55c01 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -255,7 +255,9 @@ else
- 	remap_to_ancestor=t
- fi
- 
--git rev-parse --revs-only "$@" >../parse
-+git rev-parse --revs-only "$@" >../parse.revs.flags
-+sed -ne '/^[0-9a-f][0-9a-f][0-9a-f]*[0-9a-f]$/p' <../parse.revs.flags >../parse.revs
-+sed -e '/^[0-9a-f][0-9a-f][0-9a-f]*[0-9a-f]$/d' <../parse.revs.flags >../parse.flags
- 
- case "$filter_subdir" in
- "")
-@@ -268,7 +270,8 @@ case "$filter_subdir" in
- esac
- 
- git rev-list --reverse --topo-order --default HEAD \
--	--parents --simplify-merges --stdin "$@" <../parse >../revs ||
-+	--parents --simplify-merges --stdin "$@" \
-+	$(cat ../parse.flags) <../parse.revs >../revs ||
- 	die "Could not get the commits"
- commits=$(wc -l <../revs | tr -d " ")
+> 
+> 
+> I suppose you want Git to merge without conflict in the end, though,
+> based on your script.  Is that right?
+> 
+> 
+> > Steps to reproduce the issue:
+> > git init
+> > git fetch https://github.com/pdinc-oss/CipherShed.git
+> > git fetch https://github.com/srguglielmo/CipherShed.git
+> > git checkout -b test b60070f4d0879e277f44d174a163bbb292325fea
+> > git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
+> >
+> > CONFLICT (rename/rename): Rename 
+> "TrueCrypt.sln"->"src/TrueCrypt.sln" in branch
+> > "HEAD" rename "TrueCrypt.sln"->"CipherShed.sln" in
+> > "a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68"
+> 
+> Git seems to be doing the correct thing here.
+> 
+> 
+> > git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
+> > git mv src/TrueCrypt.sln src/CipherShed.sln
+> > git commit -m 'renamed to be congruent with a0c84ff'
+> > git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
+> >
+> > Sill get a CONFLICT (rename/rename): Rename
+> > "TrueCrypt.sln"->"src/CipherShed.sln" in branch "HEAD" rename
+> > "TrueCrypt.sln"->"CipherShed.sln" in 
+> "a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68"
+> 
+> Git seems to be doing the correct thing here, too.
+> 
+> > I will have many more to come, any suggestions?
+> 
+> Maybe you meant to move the renamed file to the same folder where it
+> exists in the merge target.  I do not get a conflict when I do that.
+
+Are you saying I should git mv src/TrueCrypt.sln CipherShed.sln ?
+
+Then it will be in the wrong path as intended.
+
+> 
+>    git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
+>    git mv src/TrueCrypt.sln CipherShed.sln
+>    git commit -m 'renamed to be congruent with a0c84ff'
+>    git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
+> 
+> No conflict (on that file, anyway).
+
+Agreed, but not the desired end state.
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
+
  
