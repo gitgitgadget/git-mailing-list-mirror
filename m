@@ -1,110 +1,83 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] Fix: wrong offset for CET timezone
-Date: Fri, 27 Jun 2014 10:51:45 +0200 (CEST)
-Message-ID: <339300321.129156.1403859105924.JavaMail.zimbra@dewire.com>
-References: <1403790812-29174-1-git-send-email-mailing@franzoni.eu> <166360487.125996.1403820532765.JavaMail.zimbra@dewire.com> <CAF3z5=m5Ac5qWuXNXZaRqfDjbmt37qHjbj6YxkaE12VYsZegcg@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Alan Franzoni <username@franzoni.eu>,
-	schwab@linux-m68k.org
-To: Alan Franzoni <mailing@franzoni.eu>
-X-From: git-owner@vger.kernel.org Fri Jun 27 10:51:58 2014
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH] resolve_gitlink_ref_recursive(): verify format of symbolic refs
+Date: Fri, 27 Jun 2014 13:01:17 +0200
+Message-ID: <1403866877-15733-1-git-send-email-mhagger@alum.mit.edu>
+Cc: Jens Lehmann <jens.lehmann@web.de>, git@vger.kernel.org,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jun 27 13:01:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0Rt0-0005hm-55
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 10:51:58 +0200
+	id 1X0TuP-0007Pb-5G
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 13:01:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753025AbaF0Ivw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Jun 2014 04:51:52 -0400
-Received: from zimbra.dewire.com ([83.140.172.131]:36647 "EHLO
-	zimbra.dewire.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752844AbaF0Ivv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Jun 2014 04:51:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id D475F8155D;
-	Fri, 27 Jun 2014 10:51:49 +0200 (CEST)
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id 7mIrFHnXfAWq; Fri, 27 Jun 2014 10:51:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by zimbra.dewire.com (Postfix) with ESMTP id 576B1815E4;
-	Fri, 27 Jun 2014 10:51:46 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at dewire.se
-Received: from zimbra.dewire.com ([127.0.0.1])
-	by localhost (zimbra.dewire.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id e4eqrNCN2f6v; Fri, 27 Jun 2014 10:51:46 +0200 (CEST)
-Received: from zimbra.dewire.com (zimbra.dewire.com [10.1.2.96])
-	by zimbra.dewire.com (Postfix) with ESMTP id 4227C8155D;
-	Fri, 27 Jun 2014 10:51:46 +0200 (CEST)
-In-Reply-To: <CAF3z5=m5Ac5qWuXNXZaRqfDjbmt37qHjbj6YxkaE12VYsZegcg@mail.gmail.com>
-X-Originating-IP: [80.252.171.62]
-X-Mailer: Zimbra 8.0.7_GA_6020 (ZimbraWebClient - FF30 (Mac)/8.0.7_GA_6020)
-Thread-Topic: wrong offset for CET timezone
-Thread-Index: EMaG2s2GDZUex4C5oGiwCcmzl043cg==
+	id S1753424AbaF0LB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2014 07:01:28 -0400
+Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:63138 "EHLO
+	alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753417AbaF0LB1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Jun 2014 07:01:27 -0400
+X-AuditID: 12074413-f79ed6d000002501-49-53ad4f06c9ba
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id B0.F5.09473.60F4DA35; Fri, 27 Jun 2014 07:01:26 -0400 (EDT)
+Received: from michael.fritz.box (p4FC97742.dip0.t-ipconnect.de [79.201.119.66])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s5RB1Nva024781
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Fri, 27 Jun 2014 07:01:25 -0400
+X-Mailer: git-send-email 2.0.0
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrNIsWRmVeSWpSXmKPExsUixO6iqMvmvzbY4NphcYuuK91MFg29V5gt
+	Jk5bzGxxe8V8ZgcWj7/vPzB5XLyk7PF5k5zH7WfbWAJYorhtkhJLyoIz0/P07RK4M+a8nstY
+	MJ29YuPzd+wNjK9Zuxg5OSQETCQ2fnnADmGLSVy4t56ti5GLQ0jgMqNEw9nLTBDOCSaJR9Oe
+	MIFUsQnoSizqaQazRQTUJCa2HWIBsZkFciXeLj/NCGILCwRITFx3D2wqi4CqxKru7WA1vAIu
+	Eqt6J7JBbJOTaLjxiW0CI/cCRoZVjHKJOaW5urmJmTnFqcm6xcmJeXmpRbrmermZJXqpKaWb
+	GCEBIbyDcddJuUOMAhyMSjy8Bh5rgoVYE8uKK3MPMUpyMCmJ8jq6rg0W4kvKT6nMSCzOiC8q
+	zUktPsQowcGsJMI72QMox5uSWFmVWpQPk5LmYFES51Vbou4nJJCeWJKanZpakFoEk5Xh4FCS
+	4PXyA2oULEpNT61Iy8wpQUgzcXCCDOeSEilOzUtJLUosLcmIB4V6fDEw2EFSPEB73/mC7C0u
+	SMwFikK0nmJUlBLnDQZJCIAkMkrz4MbC4vwVozjQl8K8F0CqeIApAq77FdBgJqDB5gWrQAaX
+	JCKkpBoY6ytfP/+3+YHq8urIQt3c6fpCxumLYrUOuSxLiy+Xkpms8+jq5h0XtUwn1p1pMhPI
+	dDOzV3NRZ+F9cPNDkPt95TXXnCz0excc+8obkSS0rujm7GulDRmC8pf8nGIdrucJRn+c37Ai
+	M/VUazujzxWnAGZTKdOycM/ooK+rbm+XWzGL8VnNIjUlluKMREMt5qLiRADJhuXp 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252544>
 
+When reading a symbolic ref via resolve_gitlink_ref_recursive(), check
+that the reference name that is pointed at is formatted correctly,
+using the same check as resolve_ref_unsafe() uses for non-gitlink
+references.  This prevents bogosity like
 
+    ref: ../../other/file
 
------ Ursprungligt meddelande -----
-> Fr=C3=A5n: "Alan Franzoni" <mailing@franzoni.eu>
-> Till: "Robin Rosenberg" <robin.rosenberg@dewire.com>
-> Kopia: git@vger.kernel.org, "Alan Franzoni" <username@franzoni.eu>, s=
-chwab@linux-m68k.org
-> Skickat: fredag, 27 jun 2014 10:24:23
-> =C3=84mne: Re: [PATCH] Fix: wrong offset for CET timezone
->=20
-> On Fri, Jun 27, 2014 at 12:08 AM, Robin Rosenberg
-> <robin.rosenberg@dewire.com> wrote:
-> > 1 hour in winter and 2 in summer, although some standards seem to s=
-ay
-> > that summer time is really called CEST, computers apply DST to CET =
-in
-> > summer.
-> >
-> > $ TZ=3DUTC date
-> > Tor 26 Jun 2014 22:08:01 UTC
-> >
-> > $ TZ=3DCET date
-> > Fre 27 Jun 2014 00:08:05 CEST
->=20
-> Like Andreas pointed out, this seems an implementation detail. CET is
-> still +1, while CEST is +2.
+from causing problems.
 
-I mentioned that myself...=20
-=20
-> If you take a look at the official IANA tzdata:
->=20
-> http://www.iana.org/time-zones/repository/releases/tzdata2014e.tar.gz
->=20
-> For europe, it's something like "std: CET" and "dst: CEST".
->=20
-> The current doc is not correct either; we should write something like
-> "either +1 or +2 depending on DST" (there seems to be a 2dst as well
-> which gets +3 offset);
+Signed-off-by: Michael Haggerty <mhagger@alum.mit.edu>
+---
+Given that symbolic references cannot be transferred via the Git
+protocol, I do not expect this bug to be exploitable.
 
-I knew there gotta be a catch. I don't think glibc is advanced enough
-to provide two different summer times for the same TZ.
+ refs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-> Usually the best way of handling timezones is to use the proper
-> location format (e.g. TZ=3D'Europe/Rome') and then letting the system
-> pick the proper offset; we might say something like ' "Europe/Rome"
-> which is +1 in winter ' in the doc, but I'd say that's nitpicking.
-
-Probably is. I think mentioning that CET can be either +1 or +2 is
-enough.=20
-
-+ For example CET (here), which is nominally 1 hour ahead of UTC is enc=
-oded=20
-+ as `+0100`, but when summer savings apply, CET is two hours ahead and=
- encoded
-+ as `+0200`).
-
--- robin
+diff --git a/refs.c b/refs.c
+index dc45774..7da8e7d 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1273,6 +1273,9 @@ static int resolve_gitlink_ref_recursive(struct ref_cache *refs,
+ 	while (isspace(*p))
+ 		p++;
+ 
++	if (check_refname_format(p, REFNAME_ALLOW_ONELEVEL))
++		return -1;
++
+ 	return resolve_gitlink_ref_recursive(refs, p, sha1, recursion+1);
+ }
+ 
+-- 
+2.0.0
