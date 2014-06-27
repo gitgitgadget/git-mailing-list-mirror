@@ -1,130 +1,104 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Experimental TDB support for GIT REFS
-Date: Fri, 27 Jun 2014 14:30:07 -0700
-Message-ID: <CAL=YDWn-CGZGr5bXNTiZmzr4-w_8CERx3r2bmLWbczqJ0Sn7dg@mail.gmail.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Trouble merging renamed but identical files - CONFLICT (rename/rename)
+Date: Fri, 27 Jun 2014 17:46:20 -0400
+Message-ID: <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com>
+References: <B901ECBC8F944F039AFD6B53929FF18C@black>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jun 27 23:30:23 2014
+Cc: git <git@vger.kernel.org>
+To: Jason Pyeron <jpyeron@pdinc.us>
+X-From: git-owner@vger.kernel.org Fri Jun 27 23:46:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0diw-0003TA-PH
-	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 23:30:23 +0200
+	id 1X0dyn-0004v7-7w
+	for gcvg-git-2@plane.gmane.org; Fri, 27 Jun 2014 23:46:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753340AbaF0VaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2014 17:30:09 -0400
-Received: from mail-vc0-f172.google.com ([209.85.220.172]:33569 "EHLO
-	mail-vc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753187AbaF0VaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2014 17:30:08 -0400
-Received: by mail-vc0-f172.google.com with SMTP id hy10so5627125vcb.17
-        for <git@vger.kernel.org>; Fri, 27 Jun 2014 14:30:07 -0700 (PDT)
+	id S1753290AbaF0Vql (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2014 17:46:41 -0400
+Received: from mail-ve0-f176.google.com ([209.85.128.176]:53457 "EHLO
+	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751929AbaF0Vql (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2014 17:46:41 -0400
+Received: by mail-ve0-f176.google.com with SMTP id db12so5800315veb.7
+        for <git@vger.kernel.org>; Fri, 27 Jun 2014 14:46:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        bh=nsQk0k0yMVPnaybcka26ghE7VzIOYy1IqY/8ECa25WI=;
-        b=j235ZIpvo1ClcpyCFqdy9e7+CNQjRftWYr0QB6EwPDX1/jrRO1aLZo4ep19yzw5w0K
-         P+PIRGwijh4GI8FILM3No8C7vkRiu8lHXjNShOn1JMd+LMQMZlsNtzOuoiTUzWfiWecs
-         J4SsXO34DvNZoNHHN1rzVBW/CYMeTa4lRvC73QOKrmV+396irJA1aytMgQLco6bP13Sh
-         NomOi2eb8PoglduZaWTMCqsRAgdRIHIpjfc73NWSELJLIldQi6fDKk8Om99UzlZVrx0G
-         qxfFaPGBE5cJBOIPdL1nQGy5cRwNg3i5210MVH5sWWTLvASvM6k+JJLg6QoW6IY6LTlx
-         ZQ5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to:cc
-         :content-type;
-        bh=nsQk0k0yMVPnaybcka26ghE7VzIOYy1IqY/8ECa25WI=;
-        b=kfeZu3yDmlWJ+trtBLmeHaYp0GPsdH7WK7gL3hsdFc7g2CHgZ3CXGuPgYIH+b3sOGX
-         AUjg1NuQkVk+9ShJIGJ2x1UmLVJRemqGFxFxdMtb9NniQ0KaOOrbx/GvoXgqHnyath+Q
-         bHhC/3//RLnkKxmAPipxtiRsDVhVINr84Yph1SdAo8PkC7vhCPIMdUztiz+Y7pS8fa5y
-         AKOhexQ+CK7Sz9xp/jW1wwVQ14iY3NWP190Qe6/iMAE5cezKHff1yaN8Ygs03k2NbTWK
-         pe//UhllPQTDPaTFYAgxTfkczcXG20sjen5+owcWQoQ3xgitfiO0LTtlnvG0Nr6PvVxZ
-         2F6Q==
-X-Gm-Message-State: ALoCoQnWtWK4+TNiXRUnVWUon1tiV7BLoFVhGL1jU8C6w/LKQC/VoZr1Ue+0+UAC63I4KyZ/FPdK
-X-Received: by 10.221.64.20 with SMTP id xg20mr21927143vcb.3.1403904607542;
- Fri, 27 Jun 2014 14:30:07 -0700 (PDT)
-Received: by 10.52.255.65 with HTTP; Fri, 27 Jun 2014 14:30:07 -0700 (PDT)
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=+MfoBZ9LPJcL8KZuMIFjuv4/ih1MdDr0/Zt6movtsyg=;
+        b=ZsTiv6N+XGVbjd5Q7zu9BSnuiN6WlKBD/ha5xgXvHDkj3UQM0EkZR7F+ryR5OIEaRr
+         7wPTmHIipC27N3QoJIf1ML782BpHt75d5BK5PnxAP7sdMYSxcRN3ywmwzleG3TtP+3n+
+         iJaM8T8NYwyLt8mhfrUbKe/hM78asQXA3+np+/NlhbMIv+JUaPZ6RC0zsP2HPT1aWtiT
+         onRDVOXMYc5xP9M2jX/3X+9gfaS+P9i9/VJvS0JsdUIc/E9+CIYpRToWCa6FLClJ4D9D
+         p4EQqhIZ9i9cZVIZU2WgW1/hhY5mAVjhFjUAioKanFS4gVe93ooH3MveZ4gdOMjs5h64
+         I/GA==
+X-Received: by 10.58.56.102 with SMTP id z6mr21576671vep.7.1403905600295; Fri,
+ 27 Jun 2014 14:46:40 -0700 (PDT)
+Received: by 10.58.67.168 with HTTP; Fri, 27 Jun 2014 14:46:20 -0700 (PDT)
+In-Reply-To: <B901ECBC8F944F039AFD6B53929FF18C@black>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252583>
 
-List,
+On Fri, Jun 27, 2014 at 4:47 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
+> There are two identical files from the same original parent, but both were
+> renamed in their own branches. One branch moved the file to a new folder, the
+> other renamed the file in the same folder.
 
-One of my ref transaction aims is to make define a stable public API
-for accessing refs.
-Once this is done I want to make it possible to replace the current
-.git/refs/* model with a
-different type of backend.
-In my case I want to add support to store all refs and reflogs in a TDB database
-but once we have a pluggable backend framework for refs, if someone
-wants to store the refs
-in a SQL database, that should be fairly trivial too.
-
-There are a few series queued before this becomes possible, but is
-anyone wants to test or play with my "git can use TDB database" you
-can find an implementation of this at
-
-https://github.com/rsahlberg/git/tree/backend-struct-tdb
-
-Most everything works (except submodules) but the code needs more work.
-It is also VERY LIKELY that the database schema WILL CHANGE so this is
-only for testing
-and you will need to blow the repo away and start all over again at some stage.
-I.e. no production use.
+You have not stated what you think the issue is.  You have only stated
+the setup.
 
 
-To activate TDB support a new flag is added to the init-db and clone commands:
-
-git init --tdb-repo-name=RONNIE .
-
-This creates a new git repo and sets core.tdb_repo_name in the config.
-This config variable tells git to dlopen and use libtdb instead of
-using the files under .git/refs
-
-repo-name=RONNIE is a string that identifies the repository and all
-keys in the database is prefixed
-with repo-name + '\0'
-
-By default this will create the two database refs.tdb and logs.tdb in
-the repositories .git directory
-but it is also possible to store the databases somehwere else by
-adding --tdb-repo-dir=/var/lib/git/
-when creating the repo.
-
-Since the keys in the database are prefixed with the repo name it is
-even possible to store all the
-refs for multiple independent repos in the same database :
-
-- First repository
-  $ cd <somewhere>
-  $ git init-db --tdb-repo-name=MyFirstRepo --tdb-repo-dir=/var/lib/git
-
-- Second repository
-  $ cd <somewhere else>
-  $ git init-db --tdb-repo-name=MySecondRepo --tdb-repo-dir=/var/lib/git
+I suppose you want Git to merge without conflict in the end, though,
+based on your script.  Is that right?
 
 
-This can also be a solutions for platforms lacking case sensitive
-filesystems where today two refs that only differ in case can not be
-used.
+> Steps to reproduce the issue:
+> git init
+> git fetch https://github.com/pdinc-oss/CipherShed.git
+> git fetch https://github.com/srguglielmo/CipherShed.git
+> git checkout -b test b60070f4d0879e277f44d174a163bbb292325fea
+> git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
+>
+> CONFLICT (rename/rename): Rename "TrueCrypt.sln"->"src/TrueCrypt.sln" in branch
+> "HEAD" rename "TrueCrypt.sln"->"CipherShed.sln" in
+> "a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68"
+
+Git seems to be doing the correct thing here.
 
 
+> git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
+> git mv src/TrueCrypt.sln src/CipherShed.sln
+> git commit -m 'renamed to be congruent with a0c84ff'
+> git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
+>
+> Sill get a CONFLICT (rename/rename): Rename
+> "TrueCrypt.sln"->"src/CipherShed.sln" in branch "HEAD" rename
+> "TrueCrypt.sln"->"CipherShed.sln" in "a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68"
 
-The current prototype will still apply the naming collision rules that
-the existing files backend has.
-For example if you have a ref 'm'  you can not create another ref 'm/foo'.
-I left those checks as is in order to not break compatibility between
-the TDB backend and the current Files backend.
+Git seems to be doing the correct thing here, too.
 
+> I will have many more to come, any suggestions?
 
-Please feel free to test this out. And comment.
+Maybe you meant to move the renamed file to the same folder where it
+exists in the merge target.  I do not get a conflict when I do that.
 
+   git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
+   git mv src/TrueCrypt.sln CipherShed.sln
+   git commit -m 'renamed to be congruent with a0c84ff'
+   git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
 
-regards
-ronnie sahlberg
+No conflict (on that file, anyway).
+
+Regards,
+Phil
+
+> This message is copyright PD Inc, subject to license 20080407P00.
+
+p.s. Maybe you should remove this copyright threat in the future when
+you are writing to an open source community seeking help.
