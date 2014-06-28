@@ -1,181 +1,161 @@
 From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 3/3] cache-tree: Write index with updated cache-tree after commit
-Date: Fri, 27 Jun 2014 17:20:56 -0700
-Message-ID: <1403914856-3546-3-git-send-email-dturner@twitter.com>
-References: <1403914856-3546-1-git-send-email-dturner@twitter.com>
+Subject: [PATCH 1/3] cache-tree: Create/update cache-tree on checkout
+Date: Fri, 27 Jun 2014 17:20:54 -0700
+Message-ID: <1403914856-3546-1-git-send-email-dturner@twitter.com>
 Cc: David Turner <dturner@twitter.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jun 28 02:21:42 2014
+X-From: git-owner@vger.kernel.org Sat Jun 28 02:21:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0gOi-0002d1-Lm
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 02:21:41 +0200
+	id 1X0gOv-0002lf-G0
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 02:21:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754625AbaF1AVf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Jun 2014 20:21:35 -0400
-Received: from mail-qg0-f41.google.com ([209.85.192.41]:54442 "EHLO
-	mail-qg0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754513AbaF1AVd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Jun 2014 20:21:33 -0400
-Received: by mail-qg0-f41.google.com with SMTP id i50so136111qgf.14
-        for <git@vger.kernel.org>; Fri, 27 Jun 2014 17:21:33 -0700 (PDT)
+	id S1754632AbaF1AVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Jun 2014 20:21:50 -0400
+Received: from mail-qc0-f171.google.com ([209.85.216.171]:48256 "EHLO
+	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754371AbaF1AVa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Jun 2014 20:21:30 -0400
+Received: by mail-qc0-f171.google.com with SMTP id w7so5142374qcr.16
+        for <git@vger.kernel.org>; Fri, 27 Jun 2014 17:21:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=lJT6q2BheTwt2I6hGnGwAgDc+uSOArxwrZJ52ypcrFc=;
-        b=iW3LPqst9EesKixpq1piQgY0TCyL2KnY5K4CZFs4XkfNAPYhMdNcpOTWynj7+bOz4O
-         0RQtfIPMggtNDMi90LQ/R4+sJM4LBLLc1j8DEMtffAb8KrEnCOi90g2oMsGBtzntb2kO
-         4IctZWcKT4QyFdc2NCMM2xq37U0Bn7xGAMoTgL21RFI20HkMPPoy1fNogXS0hUgR/Idz
-         Taf1ISGoOOXq2WuklKNx/y6VMajf58lsY504bskr6+W1DCsMfCAvw8pLJfGnbbJS/BJt
-         ZzXqKDNuXW/L3VvY4hKd4oeZF6Wlpw0UV9tALBwD1yUJ3gzuTFav799mXtyBbhF8xlVy
-         yQkg==
-X-Gm-Message-State: ALoCoQmy5WztB+2rXlikXvfv9oW9owNNNdYnTaspJKdqx1e6eIEiuUaHfDR28EzPzMnhf87OrWST
-X-Received: by 10.140.84.168 with SMTP id l37mr36810072qgd.104.1403914893069;
-        Fri, 27 Jun 2014 17:21:33 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=FKUlD5phmrQDMxTlxwndxwX1RlyvRv+dIOubzJD8MW0=;
+        b=fpSYEf9Tw1rmtoM9f2DrDYyHLl7cSzblZrD+Q64sRQeEJeuq8CVCtE6TythESSsvyo
+         1Den5PwlSaaQhXzrrV/4IE9TW6bG2UFGFh0DKPJa1hus0+rgp6Xcw0IK8HgflHrCE/15
+         SpVmVCLfv9GjCYQS1iIERVxG6/2FztjTeauGpTwU4fwGPoocrxCk6KHiBQUb4Lsf1aIU
+         rfl9UbSJvDv0/WGrj0cZtrtg82zFlwA6oNQvZGWz6f0JjyBZCbCQXd0XBB2U65r7Dl3P
+         SiK318NxGiMQzriZnPK6qC5zzEnWHnCzZxOJEw1AnsVJ7sTrwuI7GOY6iYk/UTJ77fxS
+         1uIg==
+X-Gm-Message-State: ALoCoQmq6SH0+NHmZAE4yCRJ89nvmOJM78Dme6z8smbj9MUPVnYkWndnqqC8yAM+JXgLDjO8k9I2
+X-Received: by 10.224.131.74 with SMTP id w10mr39229443qas.100.1403914889214;
+        Fri, 27 Jun 2014 17:21:29 -0700 (PDT)
 Received: from stross.twitter.corp ([8.25.197.27])
-        by mx.google.com with ESMTPSA id j1sm18940941qaa.11.2014.06.27.17.21.31
+        by mx.google.com with ESMTPSA id j1sm18940941qaa.11.2014.06.27.17.21.27
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 27 Jun 2014 17:21:32 -0700 (PDT)
+        Fri, 27 Jun 2014 17:21:28 -0700 (PDT)
 X-Google-Original-From: David Turner <dturner@twitter.com>
 X-Mailer: git-send-email 2.0.0.390.gcb682f8
-In-Reply-To: <1403914856-3546-1-git-send-email-dturner@twitter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252588>
 
-During the commit process, the cache-tree is updated. We need to write
-this updated cache-tree so that it's ready for subsequent commands.
-
-Add test code which demonstrates that git commit now writes the cache
-tree.  Also demonstrate that  cache-tree invalidation is correct.
+When git checkout checks out a branch, create or update the
+cache-tree so that subsequent operations are faster.
 
 Signed-off-by: David Turner <dturner@twitter.com>
 ---
- builtin/commit.c      |  6 ++++++
- t/t0090-cache-tree.sh | 50 +++++++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 53 insertions(+), 3 deletions(-)
+ builtin/checkout.c    |  4 ++++
+ cache-tree.c          | 22 ++++++++++++----------
+ cache-tree.h          |  1 +
+ t/t0090-cache-tree.sh | 15 ++++++++++++++-
+ 4 files changed, 31 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 9cfef6c..6814e87 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -607,6 +607,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	const char *hook_arg2 = NULL;
- 	int clean_message_contents = (cleanup_mode != CLEANUP_NONE);
- 	int old_display_comment_prefix;
-+	static struct lock_file index_lock;
-+	int index_fd;
- 
- 	/* This checks and barfs if author is badly specified */
- 	determine_author_info(author_ident);
-@@ -872,6 +874,10 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		error(_("Error building trees"));
- 		return 0;
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 07cf555..df791e8 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -553,6 +553,10 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		}
  	}
-+	/* After updating the cache-tree, rewrite the index */
-+	index_fd = hold_locked_index(&index_lock, 0);
-+	if (index_fd >= 0 && write_index(&the_index, index_fd) >= 0)
-+		commit_locked_index(&index_lock);
  
- 	if (run_commit_hook(use_editor, index_file, "prepare-commit-msg",
- 			    git_path(commit_editmsg), hook_arg1, hook_arg2, NULL))
++	if (write_cache_as_tree(NULL, WRITE_TREE_DO_NOT_WRITE, "")) {
++		warn("Unable to write cache_tree");
++	}
++
+ 	if (write_cache(newfd, active_cache, active_nr) ||
+ 	    commit_locked_index(lock_file))
+ 		die(_("unable to write new index file"));
+diff --git a/cache-tree.c b/cache-tree.c
+index 7fa524a..fb203c6 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -568,17 +568,18 @@ static struct cache_tree *cache_tree_find(struct cache_tree *it, const char *pat
+ 
+ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
+ {
+-	int entries, was_valid, newfd;
++	int entries, was_valid, newfd = -1;
+ 	struct lock_file *lock_file;
+ 
+-	/*
+-	 * We can't free this memory, it becomes part of a linked list
+-	 * parsed atexit()
+-	 */
+-	lock_file = xcalloc(1, sizeof(struct lock_file));
+-
+-	newfd = hold_locked_index(lock_file, 1);
++	if (!(flags & WRITE_TREE_DO_NOT_WRITE)) {
++		/*
++		 * We can't free this memory, it becomes part of a linked list
++		 * parsed atexit()
++		 */
++		lock_file = xcalloc(1, sizeof(struct lock_file));
+ 
++		newfd = hold_locked_index(lock_file, 1);
++	}
+ 	entries = read_cache();
+ 	if (entries < 0)
+ 		return WRITE_TREE_UNREADABLE_INDEX;
+@@ -612,9 +613,10 @@ int write_cache_as_tree(unsigned char *sha1, int flags, const char *prefix)
+ 			cache_tree_find(active_cache_tree, prefix);
+ 		if (!subtree)
+ 			return WRITE_TREE_PREFIX_ERROR;
+-		hashcpy(sha1, subtree->sha1);
++		if (sha1)
++			hashcpy(sha1, subtree->sha1);
+ 	}
+-	else
++	else if (sha1)
+ 		hashcpy(sha1, active_cache_tree->sha1);
+ 
+ 	if (0 <= newfd)
+diff --git a/cache-tree.h b/cache-tree.h
+index f1923ad..daf6640 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -39,6 +39,7 @@ int update_main_cache_tree(int);
+ #define WRITE_TREE_IGNORE_CACHE_TREE 2
+ #define WRITE_TREE_DRY_RUN 4
+ #define WRITE_TREE_SILENT 8
++#define WRITE_TREE_DO_NOT_WRITE 16
+ 
+ /* error return codes */
+ #define WRITE_TREE_UNREADABLE_INDEX (-1)
 diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 5383258..ef012b9 100755
+index 6c33e28..7c60675 100755
 --- a/t/t0090-cache-tree.sh
 +++ b/t/t0090-cache-tree.sh
-@@ -16,8 +16,31 @@ cmp_cache_tree () {
- # We don't bother with actually checking the SHA1:
- # test-dump-cache-tree already verifies that all existing data is
- # correct.
-+generate_expected_cache_tree () {
-+	if [ -n "$1" ]
-+	then
-+		local dir="$1/"
-+	else
-+		local dir="$1"
-+	fi
-+	# ls-files might have foo/bar, foo/bar/baz, and foo/bar/quux
-+	# We want to count only foo because it's the only direct child
-+	local subtrees=$(git ls-files|egrep '/' |cut -d / -f 1|uniq) &&
-+	local subtree_count=$(echo "$subtrees"|grep -c .) &&
-+	local files_count=$(git ls-files|grep -v /|wc -l) &&
-+	local entries=$(expr "$subtree_count" + "$files_count") &&
-+	printf "SHA $dir (%d entries, %d subtrees)\n" $entries $subtree_count &&
-+	local subtree &&
-+	for subtree in $subtrees
-+	do
-+	    cd "$subtree"
-+	    generate_expected_cache_tree "$dir$subtree" || return 1
-+	    cd ..
-+	done
-+}
-+
- test_shallow_cache_tree () {
--	printf "SHA  (%d entries, 0 subtrees)\n" $(git ls-files|wc -l) >expect &&
-+	generate_expected_cache_tree > expect &&
- 	cmp_cache_tree expect
- }
- 
-@@ -35,7 +58,7 @@ test_no_cache_tree () {
- 	cmp_cache_tree expect
- }
- 
--test_expect_failure 'initial commit has cache-tree' '
-+test_expect_success 'initial commit has cache-tree' '
- 	test_commit foo &&
- 	test_shallow_cache_tree
- '
-@@ -60,15 +83,28 @@ test_expect_success 'git-add in subdir invalidates cache-tree' '
- 	test_invalid_cache_tree
- '
- 
-+cat >before <<\EOF
-+SHA  (3 entries, 2 subtrees)
-+SHA dir1/ (1 entries, 0 subtrees)
-+SHA dir2/ (1 entries, 0 subtrees)
-+EOF
-+
-+cat >expect <<\EOF
-+invalid                                   (2 subtrees)
-+invalid                                  dir1/ (0 subtrees)
-+SHA dir2/ (1 entries, 0 subtrees)
-+EOF
-+
- test_expect_success 'git-add in subdir does not invalidate sibling cache-tree' '
- 	git tag no-children
- 	test_when_finished "git reset --hard no-children; git read-tree HEAD" &&
- 	mkdir dir1 dir2 &&
- 	test_commit dir1/a &&
- 	test_commit dir2/b &&
-+	cmp_cache_tree before &&
- 	echo "I changed this file" > dir1/a &&
- 	git add dir1/a &&
--	test_invalid_cache_tree dir1/
-+	cmp_cache_tree expect
- '
- 
- test_expect_success 'update-index invalidates cache-tree' '
-@@ -95,6 +131,14 @@ test_expect_success 'second commit has cache-tree' '
+@@ -85,9 +85,22 @@ test_expect_success 'reset --hard without index gives cache-tree' '
  	test_shallow_cache_tree
  '
  
-+test_expect_success 'commit in child dir has cache-tree' '
-+	mkdir dir &&
-+	>dir/child.t &&
-+	git add dir/child.t &&
-+	git commit -m dir/child.t
+-test_expect_failure 'checkout gives cache-tree' '
++test_expect_success 'checkout gives cache-tree' '
++	git tag current
+ 	git checkout HEAD^ &&
+ 	test_shallow_cache_tree
+ '
+ 
++test_expect_success 'checkout -b gives cache-tree' '
++	git checkout current &&
++	git checkout -b prev HEAD^ &&
 +	test_shallow_cache_tree
 +'
 +
- test_expect_success 'reset --hard gives cache-tree' '
- 	test-scrap-cache-tree &&
- 	git reset --hard &&
++test_expect_success 'checkout -B gives cache-tree' '
++	git checkout current &&
++	git checkout -B prev HEAD^ &&
++	test_shallow_cache_tree
++'
++
+ test_done
 -- 
 2.0.0.390.gcb682f8
