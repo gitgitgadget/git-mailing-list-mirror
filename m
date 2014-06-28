@@ -1,132 +1,230 @@
-From: Jarrad Hope <me@jarradhope.com>
-Subject: Re: Tackling Git Limitations with Singular Large Line-seperated
- Plaintext files
-Date: Sat, 28 Jun 2014 13:51:07 +0700
-Message-ID: <CAJoVafdyFWjnaKbz47n12ykLAn28TSFDxLvbWfT51Rim7SXLsA@mail.gmail.com>
-References: <CAJoVafc1LMxmvCiWci3N+AuAZBsABR3Wb3c6c3stw93OJZ7Scw@mail.gmail.com>
-	<CAJo=hJtJCy96SRYmOxEpEMoEVcaegv0SCG0_AH2u0=bSrHZi_A@mail.gmail.com>
-	<xmqqegya2qgu.fsf@gitster.dls.corp.google.com>
-	<CA+55aFx6vFyZvpyQot_3Ym7wsCZ06abjNx_hEKkza-N856jMnw@mail.gmail.com>
-	<57F015EB50E54211BF29FE1F6DE05CF4@black>
-	<CA+55aFyaQJDq4dvPyS3oLJp57J_zEmqbXA5UxzL8fdgAaHpJOA@mail.gmail.com>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: Trouble merging renamed but identical files - CONFLICT (rename/rename)
+Date: Sat, 28 Jun 2014 05:46:04 -0400
+Organization: PD Inc
+Message-ID: <E569F92DE6554654A2133A162EDB688E@black>
+References: <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com> <66A60DA77398CD439FA676CEF593977D52477A@exchange.1.internal.pdinc.us> <CEAC9BE9F83B4CD0AFD73BBAC8A54232@black>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jason Pyeron <jpyeron@pdinc.us>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>, git <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Jun 28 08:51:19 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Phil Hord'" <phil.hord@gmail.com>
+To: "'git'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 28 11:46:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0mTm-0000Sx-Lj
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 08:51:19 +0200
+	id 1X0pDT-0005jU-MH
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 11:46:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751035AbaF1GvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2014 02:51:09 -0400
-Received: from mail-vc0-f181.google.com ([209.85.220.181]:54495 "EHLO
-	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750759AbaF1GvI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2014 02:51:08 -0400
-Received: by mail-vc0-f181.google.com with SMTP id il7so5693476vcb.26
-        for <git@vger.kernel.org>; Fri, 27 Jun 2014 23:51:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=fWzO66d+yZi4UAj/QCyRuchriROj1v/IH/9C71IrLyA=;
-        b=VUeAlH+htgIHdNjYLjFu5ZMtIWmC8YqregLKOvERiO9I05IAiWAl3mNFmRjrSTOaVm
-         1tGWWvikOBVv8GI5roP+K9O8NGQl+gR/kS0WHpPnJEmz50AujwNCH1lKOh78qNe85Cb2
-         iICrwZgdocZQSNcaOCFSaTjALeVjMwCURnCiUziOwhj+fc7SfpeepGL57xI7xXCSBQhc
-         bD3u5866hDRs/q7okTVYOFnTaqTtEdK+AFMXf0fW50VuqKwyyfk1yAM+gm/8Ow9XNgCi
-         73+Pc+ykgq1RiSPDYYYUwDMCl68axCGsnphf4YWE3j2RLLEE+u3e+Cd+s368aeRg9Gdc
-         n4Iw==
-X-Gm-Message-State: ALoCoQnKgb9xye5mMEiT9QrjEsDMrnADOSEryFPgkXABXdPXxffOHpLGpP/5FncNKHYD2fU649d6
-X-Received: by 10.58.122.196 with SMTP id lu4mr1301022veb.52.1403938267452;
- Fri, 27 Jun 2014 23:51:07 -0700 (PDT)
-Received: by 10.52.255.103 with HTTP; Fri, 27 Jun 2014 23:51:07 -0700 (PDT)
-In-Reply-To: <CA+55aFyaQJDq4dvPyS3oLJp57J_zEmqbXA5UxzL8fdgAaHpJOA@mail.gmail.com>
+	id S1752021AbaF1JqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jun 2014 05:46:23 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:45225 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751710AbaF1JqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jun 2014 05:46:08 -0400
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s5S9k6sb006518;
+	Sat, 28 Jun 2014 05:46:06 -0400
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: Ac+SVFK8rL6RQuuWQaWXdVkf2liIZgAAaFHwAAHERuAAFdktAA==
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
+In-Reply-To: <CEAC9BE9F83B4CD0AFD73BBAC8A54232@black>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252600>
 
-Thank-you all for replying,
+> -----Original Message-----
+> From: Jason Pyeron
+> Sent: Friday, June 27, 2014 20:42
+> To: 'git'
+> Cc: 'Phil Hord'
+> Subject: RE: Trouble merging renamed but identical files - 
+> CONFLICT (rename/rename)
+> 
+> > -----Original Message-----
+> > From: Jason Pyeron 
+> > Sent: Friday, June 27, 2014 18:39
+> > 
+> > > -----Original Message-----
+> > > From: Phil Hord [mailto:phil.hord@gmail.com] 
+> > > Sent: Friday, June 27, 2014 17:46
+> > > To: Jason Pyeron
+> > > Cc: git
+> > > Subject: Re: Trouble merging renamed but identical files - 
+> > > CONFLICT (rename/rename)
+> > > 
+> > > On Fri, Jun 27, 2014 at 4:47 PM, Jason Pyeron 
+> > > <jpyeron@pdinc.us> wrote:
+> > > > There are two identical files from the same original 
+> > > parent, but both were
+> > > > renamed in their own branches. One branch moved the file to 
+> > > a new folder, the
+> > > > other renamed the file in the same folder.
+> > > 
+> > > You have not stated what you think the issue is.  You have 
+> > only stated
+> > > the setup.
+> > 
+> > Thanks, I could have said it better. 
+> > 
+> > I think that git should understand that I have moved a file 
+> > in path only (the tree object containing the file's entry 
+> > change, but not the entry it self) and that the branch from 
+> > which I want to merge back (with common ancestry) has renamed 
+> > the file in the same path ( the tree object is unchanged, but 
+> > the entry is) such that the object is re-parented and renamed 
+> > in that path.
+> > 
+> > How can this be done in git or if it cannot what are the 
+> > chalenges to patching git for this issue.
+> > 
+> > git cat-file -p b60070f4d0879e277f44d174a163bbb292325fea # 
+> > tree d8df83fc6714aab1fc1df061fcb03410e1dab1e5
+> > git cat-file -p d8df83fc6714aab1fc1df061fcb03410e1dab1e5 # 
+> > 040000 tree 68bb8a223284e0f5057421217a5965128bf1d51a    src
+> > git cat-file -p 68bb8a223284e0f5057421217a5965128bf1d51a # 
+> > 100644 blob 25c7d3b12bced67046359ba1e7945f82a2640147    
+> TrueCrypt.sln
+> > 
+> > git cat-file -p a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68 # 
+> > tree 7f82a6c46f19931c3c40d44dc196cbfab7feaa72
+> > git cat-file -p 7f82a6c46f19931c3c40d44dc196cbfab7feaa72 # 
+> > 100644 blob 25c7d3b12bced67046359ba1e7945f82a2640147    
+> CipherShed.sln
+> > 
+> > > 
+> > > 
+> > > I suppose you want Git to merge without conflict in the 
+> end, though,
+> > > based on your script.  Is that right?
+> > > 
+> > > 
+> > > > Steps to reproduce the issue:
+> > > > git init
+> > > > git fetch https://github.com/pdinc-oss/CipherShed.git
+> > > > git fetch https://github.com/srguglielmo/CipherShed.git
+> > > > git checkout -b test b60070f4d0879e277f44d174a163bbb292325fea
+> > > > git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
+> > > >
+> > > > CONFLICT (rename/rename): Rename 
+> > > "TrueCrypt.sln"->"src/TrueCrypt.sln" in branch
+> > > > "HEAD" rename "TrueCrypt.sln"->"CipherShed.sln" in
+> > > > "a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68"
+> > > 
+> > > Git seems to be doing the correct thing here.
+> > > 
+> > > 
+> > > > git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
+> > > > git mv src/TrueCrypt.sln src/CipherShed.sln
+> > > > git commit -m 'renamed to be congruent with a0c84ff'
+> > > > git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
+> > > >
+> > > > Sill get a CONFLICT (rename/rename): Rename
+> > > > "TrueCrypt.sln"->"src/CipherShed.sln" in branch "HEAD" rename
+> > > > "TrueCrypt.sln"->"CipherShed.sln" in 
+> > > "a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68"
+> > > 
+> > > Git seems to be doing the correct thing here, too.
+> > > 
+> > > > I will have many more to come, any suggestions?
+> > > 
+> > > Maybe you meant to move the renamed file to the same 
+> folder where it
+> > > exists in the merge target.  I do not get a conflict when 
+> I do that.
+> > 
+> > Are you saying I should git mv src/TrueCrypt.sln CipherShed.sln ?
+> > 
+> > Then it will be in the wrong path as intended.
+> > 
+> > > 
+> > >    git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
+> > >    git mv src/TrueCrypt.sln CipherShed.sln
+> > >    git commit -m 'renamed to be congruent with a0c84ff'
+> > >    git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
+> > > 
+> > > No conflict (on that file, anyway).
+> > 
+> > Agreed, but not the desired end state.
+> 
+> Sorry for the http://pastebin.com/1R68v6jt (changes the merge to
+> 1ca13ed2271d60ba93d40bcc8db17ced8545f172, and manually 
+> reconciles the merge),
+> but it was too long to be readable in the email.
+> 
+> git blame HEAD -- src/Main/Forms/CipherShed.fbp | cut -c 1-8 
+> | sort -u 
+> 
+> Gives: 
+> ac812aa3
+> b50a2fb1
+> 
+> git blame b60070f4d0879e277f44d174a163bbb292325fea --
+> src/Main/Forms/TrueCrypt.fbp | cut -c 1-8 | sort -u
+> 
+> Gives: 
+> 07b2176f
+> 0eb8b4fa
+> 12c94add
+> a17c95a3
+> a757b4d4
+> cac6cd14
+> d0a9dfa8
+> d94128a9
+> e6b1437a
+> f1bb489c
+> 
+> If I use cherry pick (vs merge), I can maintain the big 
+> history in b60070f, but
+> loose the small history in 1ca13ed
+> 
+>       [test]
+>       /     \
+>      /       \
+> [b60070f] [1ca13ed]
+>     |         |
+>     |         |
+> [65efd37]     |
+>     |    \    |
+>     |     \   |
+> [d8da778] [39ebb06]
+> 
+> How do I maintain all the history including the (line) 
+> changes in 1ca13ed?
 
-It's just as Jason suggests - Genbank, FASTA & EMBL are more or less
-the defacto standards, I suspect FASTA will be phased out because (to
-my knowledge) it does not support gene annotation, nevertheless, they
-are all text based.
+# http://pastebin.com/TuqhYubH 
 
-These formats usually insert linebreaks around 80 characters (a
-cultural/human readability relic, whatever terminal output they had
-the time)
+# do the cerry picks, then...
 
-I tried to find a Penguin genome sequence for you, The best I can find
-is the complete penguin mitochrondrian dna, as you can see, fairly
-small.
-http://www.ncbi.nlm.nih.gov/nuccore/558603183?report=fasta
-http://www.ncbi.nlm.nih.gov/nuccore/558603183?report=genbank
+git merge $(echo 'Merge of 1ca13ed2271d60ba93d40bcc8db17ced8545f172 branch -
+rebranding' |\
+   git commit-tree -p HEAD -p rebranding \
+     $(git cat-file -p HEAD | grep ^tree | sed -e 's/^tree //') )
 
-If you would like to checkout the source for a Human, please see
-ftp://ftp.ensembl.org/pub/current_fasta/homo_sapiens/dna/
-Don't ask me for a Makefile :) in near future you'll be able to print
-sequences of this length, today we're limited to small sequences (such
-as bacteria/virus) at ~30cents per basepair
-
-Each chromosome packs quite well ~80MB packed, ~240MB unpacked
-However these formats allow you to repesent multiple sequences in one file
-ftp://ftp-trace.ncbi.nih.gov/1000genomes/ftp/technical/reference/human_g1k_v37.fasta.gz
-<- ~850MB packed
-
-Sidenote, Humans aren't that particulary more complicated than Rice
-(in terms of genome size)
-http://www.plantgdb.org/XGDB/phplib/download.php?GDB=Os
-
-Other animal sequences - http://www.ensembl.org/index.html
-
-Git is already being used very successfully for SBML, Synthetic
-Biology Markup Language, an XML dialect for cell modelling.
-
-I would show an example git repo of some open source cancer treatments
-(various oncolytic viruses) I've been working on, unfortunately it's
-not finished yet, but you can imagine something the size of penguin
-mitochrondrial dna with essentially just text being deleted (gene
-deletions) as commits.
-
-I hope that helps - With the advancement of Synthetic and Systems
-Biology, I really see these sequences benefiting from git.
+Perfect results. This does not seem like this should be the "right" way to do
+it.
 
 
-On Sat, Jun 28, 2014 at 3:13 AM, Linus Torvalds
-<torvalds@linux-foundation.org> wrote:
-> On Fri, Jun 27, 2014 at 12:55 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
->>
->> The issue will be, if we talk about changes other than same length substitutions
->> (e.g. Down's Syndrome where it has an insertion of code) would require one code
->> per line for the diffs to work nicely.
->
-> Not my area of expertise, but depending on what you are interested in
-> - like protein encoding etc, I really think you don't need to do
-> things character-per-character. You might want to break at interesting
-> sequences (TATA box, and/or known long repeating sequences).
->
-> So you could basically turn the "one long line" representation into
-> multiple lines, by just looking for particular known interesting (or
-> known particularly *UN*interesting) patterns, and whenever you see the
-> pattern you create a new line, describing the pattern ("TATAAA" or
-> "run of 128 U"), and then continue on the next line.
->
-> Then you diff those "semantically enriched" streams instead of the raw data.
->
-> But it probably depends on what you are looking for and at. Sometimes
-> you might be looking at individual base pairs. And sometimes maybe you
-> want to look at the codons, and consider condons that transcribe to
-> the same amino acid to be the same, and not show up as a difference.
-> So I could well imagine that you might want to have multiple different
-> ways to generate these diffs. No?
->
->                Linus
+Instead of git merge rebranding, which gives CONFLICT (rename/rename)....
+Automatic merge failed; fix conflicts and then commit the result. Followed by
+bad blame lines.
+
+-Jason
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
+
+ 
