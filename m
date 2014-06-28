@@ -1,230 +1,79 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: Trouble merging renamed but identical files - CONFLICT (rename/rename)
-Date: Sat, 28 Jun 2014 05:46:04 -0400
-Organization: PD Inc
-Message-ID: <E569F92DE6554654A2133A162EDB688E@black>
-References: <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com> <66A60DA77398CD439FA676CEF593977D52477A@exchange.1.internal.pdinc.us> <CEAC9BE9F83B4CD0AFD73BBAC8A54232@black>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH v2 0/4] submodule config lookup API
+Date: Sat, 28 Jun 2014 11:58:00 +0200
+Message-ID: <20140628095800.GA89729@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'Phil Hord'" <phil.hord@gmail.com>
-To: "'git'" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jun 28 11:46:43 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jun 28 11:58:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0pDT-0005jU-MH
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 11:46:40 +0200
+	id 1X0pOq-0004Vs-Pm
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 11:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752021AbaF1JqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2014 05:46:23 -0400
-Received: from mail.pdinc.us ([67.90.184.27]:45225 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751710AbaF1JqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2014 05:46:08 -0400
-Received: from black (nsa1.pdinc.us [67.90.184.2])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s5S9k6sb006518;
-	Sat, 28 Jun 2014 05:46:06 -0400
-X-Mailer: Microsoft Office Outlook 11
-Thread-Index: Ac+SVFK8rL6RQuuWQaWXdVkf2liIZgAAaFHwAAHERuAAFdktAA==
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
-In-Reply-To: <CEAC9BE9F83B4CD0AFD73BBAC8A54232@black>
+	id S1751016AbaF1J6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jun 2014 05:58:15 -0400
+Received: from smtprelay04.ispgateway.de ([80.67.31.38]:34398 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750720AbaF1J6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jun 2014 05:58:14 -0400
+Received: from [92.194.105.81] (helo=book.hvoigt.net)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1X0pOb-0005YB-E6; Sat, 28 Jun 2014 11:58:09 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.19 (2009-01-05)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252601>
 
-> -----Original Message-----
-> From: Jason Pyeron
-> Sent: Friday, June 27, 2014 20:42
-> To: 'git'
-> Cc: 'Phil Hord'
-> Subject: RE: Trouble merging renamed but identical files - 
-> CONFLICT (rename/rename)
-> 
-> > -----Original Message-----
-> > From: Jason Pyeron 
-> > Sent: Friday, June 27, 2014 18:39
-> > 
-> > > -----Original Message-----
-> > > From: Phil Hord [mailto:phil.hord@gmail.com] 
-> > > Sent: Friday, June 27, 2014 17:46
-> > > To: Jason Pyeron
-> > > Cc: git
-> > > Subject: Re: Trouble merging renamed but identical files - 
-> > > CONFLICT (rename/rename)
-> > > 
-> > > On Fri, Jun 27, 2014 at 4:47 PM, Jason Pyeron 
-> > > <jpyeron@pdinc.us> wrote:
-> > > > There are two identical files from the same original 
-> > > parent, but both were
-> > > > renamed in their own branches. One branch moved the file to 
-> > > a new folder, the
-> > > > other renamed the file in the same folder.
-> > > 
-> > > You have not stated what you think the issue is.  You have 
-> > only stated
-> > > the setup.
-> > 
-> > Thanks, I could have said it better. 
-> > 
-> > I think that git should understand that I have moved a file 
-> > in path only (the tree object containing the file's entry 
-> > change, but not the entry it self) and that the branch from 
-> > which I want to merge back (with common ancestry) has renamed 
-> > the file in the same path ( the tree object is unchanged, but 
-> > the entry is) such that the object is re-parented and renamed 
-> > in that path.
-> > 
-> > How can this be done in git or if it cannot what are the 
-> > chalenges to patching git for this issue.
-> > 
-> > git cat-file -p b60070f4d0879e277f44d174a163bbb292325fea # 
-> > tree d8df83fc6714aab1fc1df061fcb03410e1dab1e5
-> > git cat-file -p d8df83fc6714aab1fc1df061fcb03410e1dab1e5 # 
-> > 040000 tree 68bb8a223284e0f5057421217a5965128bf1d51a    src
-> > git cat-file -p 68bb8a223284e0f5057421217a5965128bf1d51a # 
-> > 100644 blob 25c7d3b12bced67046359ba1e7945f82a2640147    
-> TrueCrypt.sln
-> > 
-> > git cat-file -p a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68 # 
-> > tree 7f82a6c46f19931c3c40d44dc196cbfab7feaa72
-> > git cat-file -p 7f82a6c46f19931c3c40d44dc196cbfab7feaa72 # 
-> > 100644 blob 25c7d3b12bced67046359ba1e7945f82a2640147    
-> CipherShed.sln
-> > 
-> > > 
-> > > 
-> > > I suppose you want Git to merge without conflict in the 
-> end, though,
-> > > based on your script.  Is that right?
-> > > 
-> > > 
-> > > > Steps to reproduce the issue:
-> > > > git init
-> > > > git fetch https://github.com/pdinc-oss/CipherShed.git
-> > > > git fetch https://github.com/srguglielmo/CipherShed.git
-> > > > git checkout -b test b60070f4d0879e277f44d174a163bbb292325fea
-> > > > git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
-> > > >
-> > > > CONFLICT (rename/rename): Rename 
-> > > "TrueCrypt.sln"->"src/TrueCrypt.sln" in branch
-> > > > "HEAD" rename "TrueCrypt.sln"->"CipherShed.sln" in
-> > > > "a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68"
-> > > 
-> > > Git seems to be doing the correct thing here.
-> > > 
-> > > 
-> > > > git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
-> > > > git mv src/TrueCrypt.sln src/CipherShed.sln
-> > > > git commit -m 'renamed to be congruent with a0c84ff'
-> > > > git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
-> > > >
-> > > > Sill get a CONFLICT (rename/rename): Rename
-> > > > "TrueCrypt.sln"->"src/CipherShed.sln" in branch "HEAD" rename
-> > > > "TrueCrypt.sln"->"CipherShed.sln" in 
-> > > "a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68"
-> > > 
-> > > Git seems to be doing the correct thing here, too.
-> > > 
-> > > > I will have many more to come, any suggestions?
-> > > 
-> > > Maybe you meant to move the renamed file to the same 
-> folder where it
-> > > exists in the merge target.  I do not get a conflict when 
-> I do that.
-> > 
-> > Are you saying I should git mv src/TrueCrypt.sln CipherShed.sln ?
-> > 
-> > Then it will be in the wrong path as intended.
-> > 
-> > > 
-> > >    git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
-> > >    git mv src/TrueCrypt.sln CipherShed.sln
-> > >    git commit -m 'renamed to be congruent with a0c84ff'
-> > >    git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
-> > > 
-> > > No conflict (on that file, anyway).
-> > 
-> > Agreed, but not the desired end state.
-> 
-> Sorry for the http://pastebin.com/1R68v6jt (changes the merge to
-> 1ca13ed2271d60ba93d40bcc8db17ced8545f172, and manually 
-> reconciles the merge),
-> but it was too long to be readable in the email.
-> 
-> git blame HEAD -- src/Main/Forms/CipherShed.fbp | cut -c 1-8 
-> | sort -u 
-> 
-> Gives: 
-> ac812aa3
-> b50a2fb1
-> 
-> git blame b60070f4d0879e277f44d174a163bbb292325fea --
-> src/Main/Forms/TrueCrypt.fbp | cut -c 1-8 | sort -u
-> 
-> Gives: 
-> 07b2176f
-> 0eb8b4fa
-> 12c94add
-> a17c95a3
-> a757b4d4
-> cac6cd14
-> d0a9dfa8
-> d94128a9
-> e6b1437a
-> f1bb489c
-> 
-> If I use cherry pick (vs merge), I can maintain the big 
-> history in b60070f, but
-> loose the small history in 1ca13ed
-> 
->       [test]
->       /     \
->      /       \
-> [b60070f] [1ca13ed]
->     |         |
->     |         |
-> [65efd37]     |
->     |    \    |
->     |     \   |
-> [d8da778] [39ebb06]
-> 
-> How do I maintain all the history including the (line) 
-> changes in 1ca13ed?
+Here another iteration with all the comments incorporated:
 
-# http://pastebin.com/TuqhYubH 
+  * Dropped the hashmap enum parameter patch
+  * Renamed the test to t7411
+  * Compilation fixes and style
 
-# do the cerry picks, then...
+Gmane seems offline for me, so I can not check but this should be the last
+iteration:
 
-git merge $(echo 'Merge of 1ca13ed2271d60ba93d40bcc8db17ced8545f172 branch -
-rebranding' |\
-   git commit-tree -p HEAD -p rebranding \
-     $(git cat-file -p HEAD | grep ^tree | sed -e 's/^tree //') )
+http://mid.gmane.org/20140605060425.GA23874@sandbox-ub
 
-Perfect results. This does not seem like this should be the "right" way to do
-it.
+Heiko Voigt (4):
+  implement submodule config cache for lookup of submodule names
+  extract functions for submodule config set and lookup
+  use new config API for worktree configurations of submodules
+  do not die on error of parsing fetchrecursesubmodules option
 
+ .gitignore                                       |   1 +
+ Documentation/technical/api-submodule-config.txt |  63 ++++
+ Makefile                                         |   2 +
+ builtin/checkout.c                               |   1 +
+ builtin/fetch.c                                  |   1 +
+ diff.c                                           |   1 +
+ submodule-config.c                               | 435 +++++++++++++++++++++++
+ submodule-config.h                               |  29 ++
+ submodule.c                                      | 122 ++-----
+ submodule.h                                      |   4 +-
+ t/t7411-submodule-config.sh                      | 141 ++++++++
+ test-submodule-config.c                          |  70 ++++
+ 12 files changed, 772 insertions(+), 98 deletions(-)
+ create mode 100644 Documentation/technical/api-submodule-config.txt
+ create mode 100644 submodule-config.c
+ create mode 100644 submodule-config.h
+ create mode 100755 t/t7411-submodule-config.sh
+ create mode 100644 test-submodule-config.c
 
-Instead of git merge rebranding, which gives CONFLICT (rename/rename)....
-Automatic merge failed; fix conflicts and then commit the result. Followed by
-bad blame lines.
-
--Jason
-
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00.
-
- 
+-- 
+1.9.2.464.g1bbf329
