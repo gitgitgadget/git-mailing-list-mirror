@@ -1,231 +1,204 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH v2 4/4] do not die on error of parsing
-	fetchrecursesubmodules option
-Date: Sat, 28 Jun 2014 12:04:28 +0200
-Message-ID: <20140628100428.GE89729@book.hvoigt.net>
-References: <20140628095800.GA89729@book.hvoigt.net>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [RFC/PATCH] pager.c: replace git_config with git_config_get_string
+Date: Sat, 28 Jun 2014 16:29:17 +0200
+Message-ID: <53AED13D.60705@gmail.com>
+References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>	<1403520105-23250-6-git-send-email-tanayabh@gmail.com>	<CAPig+cTwBB8bmKDtdv8zPojR+6Kyu6fYB7Sw0-UJoSHFLQX+fQ@mail.gmail.com>	<53AC6A7B.3040602@gmail.com> <vpqr42afty5.fsf@anie.imag.fr>	<53ADA26E.8030801@gmail.com> <vpqmwcyw47q.fsf@anie.imag.fr>	<53AE50A9.6010707@gmail.com> <vpqy4whshbj.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jun 28 12:04:37 2014
+Content-Type: multipart/mixed;
+ boundary="------------050504040606010403080901"
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Tanay Abhra <tanayabh@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sat Jun 28 16:29:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0pUq-0008Ky-LW
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 12:04:37 +0200
+	id 1X0tdL-0002BF-Tx
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 16:29:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752214AbaF1KEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2014 06:04:33 -0400
-Received: from smtprelay04.ispgateway.de ([80.67.31.31]:59638 "EHLO
-	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923AbaF1KEc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2014 06:04:32 -0400
-Received: from [92.194.105.81] (helo=book.hvoigt.net)
-	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1X0pUj-0006Tr-Ty; Sat, 28 Jun 2014 12:04:30 +0200
-Content-Disposition: inline
-In-Reply-To: <20140628095800.GA89729@book.hvoigt.net>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+	id S1752646AbaF1O3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jun 2014 10:29:24 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:44403 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752534AbaF1O3W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jun 2014 10:29:22 -0400
+Received: by mail-wi0-f182.google.com with SMTP id bs8so4079836wib.3
+        for <git@vger.kernel.org>; Sat, 28 Jun 2014 07:29:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type;
+        bh=JTDLonZHe2Kcd60X9sOIV77nSSokVAwfAC9IwTve/BA=;
+        b=peRefUslVcBT9oosgCMfdZHLlYEIrgif9GnWUikeLWVZNQeIRSGS+9CkTCmtDM1sQh
+         Ugs6/9LjvsN4iWwFMZsHdqS+XMgRpGl7Ob5tewVuHTi+sCH1EuLLqXvwDgmEvHmQSjPf
+         V35juypga4i/hphMJoytuI8up05sxyUVvQJrgmY8Vs295rvQTxwTyEDZsbVYJjXALVjA
+         ASf22MwHNcgNpnFFHCiGnv7AnhzpzSkDgN7JGqgg4v6yqQYaw5yPddMTlfMQ+V3A6wyI
+         MCMNKufJ4ZAhpS7GI3CmVsV46g/CS8rT17dLF/kH9cbgJEdQcKJ21F54/qW7gzhADQGf
+         SXqw==
+X-Received: by 10.180.207.9 with SMTP id ls9mr18540257wic.32.1403965761298;
+        Sat, 28 Jun 2014 07:29:21 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id ft17sm28334778wjc.14.2014.06.28.07.29.14
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 28 Jun 2014 07:29:15 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <vpqy4whshbj.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252606>
 
-We should not die when reading the submodule config cache since the user
-might not be able to get out of that situation when the configuration is
-part of the history.
+This is a multi-part message in MIME format.
+--------------050504040606010403080901
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 
-We should handle this condition later when the value is about to be
-used.
+Am 28.06.2014 08:01, schrieb Matthieu Moy:
+> Karsten Blees <karsten.blees@gmail.com> writes:
+> 
+>> I still don't like that the invalidation is done in git_config_set, though, as
+>> this is also used to write completely unrelated files.
+> 
+> I don't get it. It is used to write the config files. Yes, we trigger a
+> complete reload instead of just changing this particular value in the
+> hashmap, but I do not see "unrelated files" in the picture.
+> 
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- builtin/fetch.c             |  1 +
- submodule-config.c          | 29 ++++++++++++++++++++++++++++-
- submodule-config.h          |  1 +
- submodule.c                 | 15 ---------------
- submodule.h                 |  2 +-
- t/t7411-submodule-config.sh | 35 +++++++++++++++++++++++++++++++++++
- 6 files changed, 66 insertions(+), 17 deletions(-)
+git-cherry-pick, revert: writes '.git/sequencer/opts' (sequencer.c:save_opts)
+git-mv <submodule>: writes '.gitmodules' (submodule.c:update_path_in_gitmodules)
+  ...and the submodule's '.git/config' (submodule.c:connect_work_tree_and_git_dir)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 55f457c..706326f 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -12,6 +12,7 @@
- #include "parse-options.h"
- #include "sigchain.h"
- #include "transport.h"
-+#include "submodule-config.h"
- #include "submodule.h"
- #include "connected.h"
- #include "argv-array.h"
-diff --git a/submodule-config.c b/submodule-config.c
-index 4046233..96623ad 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -199,6 +199,30 @@ static struct submodule *lookup_or_create_by_name(struct submodule_cache *cache,
- 	return submodule;
- }
- 
-+static int parse_fetch_recurse(const char *opt, const char *arg,
-+			       int die_on_error)
-+{
-+	switch (git_config_maybe_bool(opt, arg)) {
-+	case 1:
-+		return RECURSE_SUBMODULES_ON;
-+	case 0:
-+		return RECURSE_SUBMODULES_OFF;
-+	default:
-+		if (!strcmp(arg, "on-demand"))
-+			return RECURSE_SUBMODULES_ON_DEMAND;
-+
-+		if (die_on_error)
-+			die("bad %s argument: %s", opt, arg);
-+		else
-+			return RECURSE_SUBMODULES_ERROR;
-+	}
-+}
-+
-+int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
-+{
-+	return parse_fetch_recurse(opt, arg, 1);
-+}
-+
- static void warn_multiple_config(const unsigned char *commit_sha1,
- 				 const char *name, const char *option)
- {
-@@ -250,6 +274,8 @@ static int parse_config(const char *var, const char *value, void *data)
- 		submodule->path = strbuf_detach(&path, NULL);
- 		cache_put_path(me->cache, submodule);
- 	} else if (!strcmp(item.buf, "fetchrecursesubmodules")) {
-+		/* when parsing worktree configurations we can die early */
-+		int die_on_error = is_null_sha1(me->gitmodules_sha1);
- 		if (!me->overwrite &&
- 		    submodule->fetch_recurse != RECURSE_SUBMODULES_NONE) {
- 			warn_multiple_config(me->commit_sha1, submodule->name,
-@@ -257,7 +283,8 @@ static int parse_config(const char *var, const char *value, void *data)
- 			goto release_return;
- 		}
- 
--		submodule->fetch_recurse = parse_fetch_recurse_submodules_arg(var, value);
-+		submodule->fetch_recurse = parse_fetch_recurse(var, value,
-+								die_on_error);
- 	} else if (!strcmp(item.buf, "ignore")) {
- 		struct strbuf ignore = STRBUF_INIT;
- 		if (!me->overwrite && submodule->ignore != NULL) {
-diff --git a/submodule-config.h b/submodule-config.h
-index 2083cb9..58afc83 100644
---- a/submodule-config.h
-+++ b/submodule-config.h
-@@ -18,6 +18,7 @@ struct submodule {
- 	unsigned char gitmodules_sha1[20];
- };
- 
-+int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- int parse_submodule_config_option(const char *var, const char *value);
- const struct submodule *submodule_from_name(const unsigned char *commit_sha1,
- 		const char *name);
-diff --git a/submodule.c b/submodule.c
-index 188b4d2..75f502f 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -288,21 +288,6 @@ static void print_submodule_summary(struct rev_info *rev, FILE *f,
- 	strbuf_release(&sb);
- }
- 
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg)
--{
--	switch (git_config_maybe_bool(opt, arg)) {
--	case 1:
--		return RECURSE_SUBMODULES_ON;
--	case 0:
--		return RECURSE_SUBMODULES_OFF;
--	default:
--		if (!strcmp(arg, "on-demand"))
--			return RECURSE_SUBMODULES_ON_DEMAND;
--		/* TODO: remove the die for history parsing here */
--		die("bad %s argument: %s", opt, arg);
--	}
--}
--
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-diff --git a/submodule.h b/submodule.h
-index 547219d..5507c3d 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -5,6 +5,7 @@ struct diff_options;
- struct argv_array;
- 
- enum {
-+	RECURSE_SUBMODULES_ERROR = -3,
- 	RECURSE_SUBMODULES_NONE = -2,
- 	RECURSE_SUBMODULES_ON_DEMAND = -1,
- 	RECURSE_SUBMODULES_OFF = 0,
-@@ -21,7 +22,6 @@ void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- int submodule_config(const char *var, const char *value, void *cb);
- void gitmodules_config(void);
- void handle_ignore_submodules_arg(struct diff_options *diffopt, const char *);
--int parse_fetch_recurse_submodules_arg(const char *opt, const char *arg);
- void show_submodule_summary(FILE *f, const char *path,
- 		const char *line_prefix,
- 		unsigned char one[20], unsigned char two[20],
-diff --git a/t/t7411-submodule-config.sh b/t/t7411-submodule-config.sh
-index dcd5e01..1ba0d64 100755
---- a/t/t7411-submodule-config.sh
-+++ b/t/t7411-submodule-config.sh
-@@ -103,4 +103,39 @@ test_expect_success 'reading of local configuration' '
- 	)
- '
- 
-+cat >super/expect_fetchrecurse_die.err <<EOF
-+fatal: bad submodule.submodule.fetchrecursesubmodules argument: blabla
-+EOF
-+
-+test_expect_success 'local error in fetchrecursesubmodule dies early' '
-+	(cd super &&
-+		git config submodule.submodule.fetchrecursesubmodules blabla &&
-+		test_must_fail test-submodule-config \
-+			"" b \
-+			"" submodule \
-+				>actual.out 2>actual.err &&
-+		touch expect_fetchrecurse_die.out &&
-+		test_cmp expect_fetchrecurse_die.out actual.out  &&
-+		test_cmp expect_fetchrecurse_die.err actual.err  &&
-+		git config --unset submodule.submodule.fetchrecursesubmodules
-+	)
-+'
-+
-+test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
-+	(cd super &&
-+		git config -f .gitmodules \
-+			submodule.submodule.fetchrecursesubmodules blabla &&
-+		git add .gitmodules &&
-+		git config --unset -f .gitmodules \
-+			submodule.submodule.fetchrecursesubmodules &&
-+		git commit -m "add error in fetchrecursesubmodules" &&
-+		test-submodule-config \
-+			HEAD b \
-+			HEAD submodule \
-+				>actual &&
-+		test_cmp expect_error actual  &&
-+		git reset --hard HEAD^
-+	)
-+'
-+
- test_done
--- 
-1.9.2.464.g1bbf329
+
+Note that the typical configuration commands git-config/remote/branch seem
+to call git_config_set* immediately before exit, so no need to invalidate
+the config cache here either.
+
+Which leaves clone, init and push (transport.c:set_upstreams, seems to be
+just before exit as well).
+
+I didn't look further after finding the example in cmd_clone, so with the
+statistics above, it may well be the only instance of {git_config; 
+git_config_set; git_config}, I don't know.
+
+I've attached the reverse call hierarchy as generated by Eclipse - quite
+useful for things like this.
+
+>> Wouldn't it be better to have a 'git_config_refresh()' that could be
+>> used in place of (or before) current 'git_config(callback)' calls? The
+>> initial implementation could just invalidate the config cache. If
+>> there's time and energy to spare, a more advanced version could first
+>> check if any of the involved config files has changed.
+> 
+> That would not change the "xstrdup" vs "no xstrdup" issue, right?
+> 
+
+Right. (Unless it turns out invalidation isn't needed after all. But even
+then using interned strings for the config would be a Good Thing IMO.)
+
+>> The xstrdup() problem could be solved by interning strings (see the
+>> attached patch for a trivial implementation). I.e. allocate each distinct
+>> string only once (and keep it allocated).
+> 
+> That's an option. We need to be carefull not to modify any string
+> in-place,
+
+Hopefully an illegal non-const cast will be caught in the review process.
+
+
+
+--------------050504040606010403080901
+Content-Type: text/plain; charset=windows-1252;
+ name="git-config-set-callers.txt"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="git-config-set-callers.txt"
+
+git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int) : int - /git/config.c
+	cmd_config(int, const char * *, const char *) : int - /git/builtin/config.c (5 matches)
+	git_config_set_in_file(const char *, const char *, const char *) : int - /git/config.c
+		cmd_config(int, const char * *, const char *) : int - /git/builtin/config.c (2 matches)
+		connect_work_tree_and_git_dir(const char *, const char *) : void - /git/submodule.c
+			cmd_mv(int, const char * *, const char *) : int - /git/builtin/mv.c
+		save_opts(replay_opts *) : void - /git/sequencer.c (8 matches)
+			sequencer_pick_revisions(replay_opts *) : int - /git/sequencer.c
+				cmd_cherry_pick(int, const char * *, const char *) : int - /git/builtin/revert.c
+				cmd_revert(int, const char * *, const char *) : int - /git/builtin/revert.c
+		update_path_in_gitmodules(const char *, const char *) : int - /git/submodule.c
+			cmd_mv(int, const char * *, const char *) : int - /git/builtin/mv.c
+	git_config_set_multivar(const char *, const char *, const char *, int) : int - /git/config.c
+		add_branch(const char *, const char *, const char *, int, strbuf *) : int - /git/builtin/remote.c
+			add_branches(remote *, const char * *, const char *) : int - /git/builtin/remote.c
+				set_remote_branches(const char *, const char * *, int) : int - /git/builtin/remote.c
+					set_branches(int, const char * *) : int - /git/builtin/remote.c
+						cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+			add(int, const char * *) : int - /git/builtin/remote.c
+				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+		cmd_branch(int, const char * *, const char *) : int - /git/builtin/branch.c (2 matches)
+		git_config_set(const char *, const char *) : int - /git/config.c
+			add(int, const char * *) : int - /git/builtin/remote.c (3 matches)
+				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+			cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c (2 matches)
+			create_default_files(const char *) : int - /git/builtin/init-db.c (8 matches)
+				init_db(const char *, unsigned int) : int - /git/builtin/init-db.c
+					cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
+					cmd_init_db(int, const char * *, const char *) : int - /git/builtin/init-db.c
+			edit_branch_description(const char *) : int - /git/builtin/branch.c
+				cmd_branch(int, const char * *, const char *) : int - /git/builtin/branch.c
+			init_db(const char *, unsigned int) : int - /git/builtin/init-db.c (2 matches)
+				cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
+				cmd_init_db(int, const char * *, const char *) : int - /git/builtin/init-db.c
+			install_branch_config(int, const char *, const char *, const char *) : void - /git/branch.c (3 matches)
+				cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
+				set_upstreams(transport *, ref *, int) : void - /git/transport.c
+					transport_push(transport *, int, const char * *, int, unsigned int *) : int - /git/transport.c
+						push_with_options(transport *, int) : int - /git/builtin/push.c
+							do_push(const char *, int) : int - /git/builtin/push.c (2 matches)
+								cmd_push(int, const char * *, const char *) : int - /git/builtin/push.c
+				setup_tracking(const char *, const char *, enum branch_track, int) : int - /git/branch.c
+					create_branch(const char *, const char *, const char *, int, int, int, int, enum branch_track) : void - /git/branch.c
+						cmd_branch(int, const char * *, const char *) : int - /git/builtin/branch.c (2 matches)
+						update_refs_for_switch(const checkout_opts *, branch_info *, branch_info *) : void - /git/builtin/checkout.c
+							switch_branches(const checkout_opts *, branch_info *) : int - /git/builtin/checkout.c
+								checkout_branch(checkout_opts *, branch_info *) : int - /git/builtin/checkout.c
+									cmd_checkout(int, const char * *, const char *) : int - /git/builtin/checkout.c
+				update_head(const ref *, const ref *, const char *) : void - /git/builtin/clone.c
+					cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
+			mingw_mark_as_git_dir(const char *) : void - /git/compat/mingw.c
+				init_db(const char *, unsigned int) : int - /git/builtin/init-db.c
+					cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
+					cmd_init_db(int, const char * *, const char *) : int - /git/builtin/init-db.c
+			mv(int, const char * *) : int - /git/builtin/remote.c
+				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+			rm(int, const char * *) : int - /git/builtin/remote.c
+				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+			set_url(int, const char * *) : int - /git/builtin/remote.c
+				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+			write_refspec_config(const char *, const ref *, const ref *, strbuf *) : void - /git/builtin/clone.c
+				cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
+		migrate_file(remote *) : int - /git/builtin/remote.c (3 matches)
+			mv(int, const char * *) : int - /git/builtin/remote.c
+				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+		mv(int, const char * *) : int - /git/builtin/remote.c (2 matches)
+			cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+		remove_all_fetch_refspecs(const char *, const char *) : int - /git/builtin/remote.c
+			set_remote_branches(const char *, const char * *, int) : int - /git/builtin/remote.c
+				set_branches(int, const char * *) : int - /git/builtin/remote.c
+					cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+		set_url(int, const char * *) : int - /git/builtin/remote.c (3 matches)
+			cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
+		write_one_config(const char *, const char *, void *) : int - /git/builtin/clone.c
+			write_config(string_list *) : void - /git/builtin/clone.c
+				cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
+		write_refspec_config(const char *, const ref *, const ref *, strbuf *) : void - /git/builtin/clone.c
+			cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
+	save_opts(replay_opts *) : void - /git/sequencer.c
+		sequencer_pick_revisions(replay_opts *) : int - /git/sequencer.c
+			cmd_cherry_pick(int, const char * *, const char *) : int - /git/builtin/revert.c
+			cmd_revert(int, const char * *, const char *) : int - /git/builtin/revert.c
+--------------050504040606010403080901--
