@@ -1,204 +1,141 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [RFC/PATCH] pager.c: replace git_config with git_config_get_string
-Date: Sat, 28 Jun 2014 16:29:17 +0200
-Message-ID: <53AED13D.60705@gmail.com>
-References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>	<1403520105-23250-6-git-send-email-tanayabh@gmail.com>	<CAPig+cTwBB8bmKDtdv8zPojR+6Kyu6fYB7Sw0-UJoSHFLQX+fQ@mail.gmail.com>	<53AC6A7B.3040602@gmail.com> <vpqr42afty5.fsf@anie.imag.fr>	<53ADA26E.8030801@gmail.com> <vpqmwcyw47q.fsf@anie.imag.fr>	<53AE50A9.6010707@gmail.com> <vpqy4whshbj.fsf@anie.imag.fr>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH 1/2] sha1_file: replace PATH_MAX buffer wirh strbuf in prepare_packed_git_one()
+Date: Sat, 28 Jun 2014 16:47:55 +0200
+Message-ID: <53AED59B.1020209@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------050504040606010403080901"
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Tanay Abhra <tanayabh@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat Jun 28 16:29:40 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
+	<pclouds@gmail.com>, Jeff King <peff@peff.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Jun 28 16:53:15 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X0tdL-0002BF-Tx
-	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 16:29:40 +0200
+	id 1X0u08-0007l9-QW
+	for gcvg-git-2@plane.gmane.org; Sat, 28 Jun 2014 16:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752646AbaF1O3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2014 10:29:24 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:44403 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752534AbaF1O3W (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2014 10:29:22 -0400
-Received: by mail-wi0-f182.google.com with SMTP id bs8so4079836wib.3
-        for <git@vger.kernel.org>; Sat, 28 Jun 2014 07:29:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type;
-        bh=JTDLonZHe2Kcd60X9sOIV77nSSokVAwfAC9IwTve/BA=;
-        b=peRefUslVcBT9oosgCMfdZHLlYEIrgif9GnWUikeLWVZNQeIRSGS+9CkTCmtDM1sQh
-         Ugs6/9LjvsN4iWwFMZsHdqS+XMgRpGl7Ob5tewVuHTi+sCH1EuLLqXvwDgmEvHmQSjPf
-         V35juypga4i/hphMJoytuI8up05sxyUVvQJrgmY8Vs295rvQTxwTyEDZsbVYJjXALVjA
-         ASf22MwHNcgNpnFFHCiGnv7AnhzpzSkDgN7JGqgg4v6yqQYaw5yPddMTlfMQ+V3A6wyI
-         MCMNKufJ4ZAhpS7GI3CmVsV46g/CS8rT17dLF/kH9cbgJEdQcKJ21F54/qW7gzhADQGf
-         SXqw==
-X-Received: by 10.180.207.9 with SMTP id ls9mr18540257wic.32.1403965761298;
-        Sat, 28 Jun 2014 07:29:21 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id ft17sm28334778wjc.14.2014.06.28.07.29.14
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 28 Jun 2014 07:29:15 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <vpqy4whshbj.fsf@anie.imag.fr>
+	id S1752647AbaF1OtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jun 2014 10:49:10 -0400
+Received: from mout.web.de ([212.227.17.12]:63177 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750967AbaF1OtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jun 2014 10:49:08 -0400
+Received: from [192.168.178.27] ([79.250.182.181]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0Lm4lR-1WRq641gSP-00ZjZ3; Sat, 28 Jun 2014 16:48:49
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Provags-ID: V03:K0:h4qI3weZOUnCJqBVx8SpQxIh95h+b5XRXlAwb8SCS9X4kn9MzWn
+ bmXRYAFzYB1ZdJAqJPSyt+iDl15NBQowYw2bxM1kHUZlAJtFDMi92+nRvNeIcRGxo385RNR
+ HQNWuk72kinHXe748LasajDKErH3Rb3G1P4lEI794gqJ//z3SYY/5CjQoTVQBRb9amxL0fx
+ 8Q4TDLjiMZ8+a0EQDSJeQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252607>
 
-This is a multi-part message in MIME format.
---------------050504040606010403080901
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Instead of using strbuf to create a message string in case a path is
+too long for our fixed-size buffer, replace that buffer with a strbuf
+and thus get rid of the limitation.
 
-Am 28.06.2014 08:01, schrieb Matthieu Moy:
-> Karsten Blees <karsten.blees@gmail.com> writes:
-> 
->> I still don't like that the invalidation is done in git_config_set, though, as
->> this is also used to write completely unrelated files.
-> 
-> I don't get it. It is used to write the config files. Yes, we trigger a
-> complete reload instead of just changing this particular value in the
-> hashmap, but I do not see "unrelated files" in the picture.
-> 
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ sha1_file.c | 41 +++++++++++++++--------------------------
+ 1 file changed, 15 insertions(+), 26 deletions(-)
 
-git-cherry-pick, revert: writes '.git/sequencer/opts' (sequencer.c:save_opts)
-git-mv <submodule>: writes '.gitmodules' (submodule.c:update_path_in_gitmodules)
-  ...and the submodule's '.git/config' (submodule.c:connect_work_tree_and_git_dir)
-
-
-Note that the typical configuration commands git-config/remote/branch seem
-to call git_config_set* immediately before exit, so no need to invalidate
-the config cache here either.
-
-Which leaves clone, init and push (transport.c:set_upstreams, seems to be
-just before exit as well).
-
-I didn't look further after finding the example in cmd_clone, so with the
-statistics above, it may well be the only instance of {git_config; 
-git_config_set; git_config}, I don't know.
-
-I've attached the reverse call hierarchy as generated by Eclipse - quite
-useful for things like this.
-
->> Wouldn't it be better to have a 'git_config_refresh()' that could be
->> used in place of (or before) current 'git_config(callback)' calls? The
->> initial implementation could just invalidate the config cache. If
->> there's time and energy to spare, a more advanced version could first
->> check if any of the involved config files has changed.
-> 
-> That would not change the "xstrdup" vs "no xstrdup" issue, right?
-> 
-
-Right. (Unless it turns out invalidation isn't needed after all. But even
-then using interned strings for the config would be a Good Thing IMO.)
-
->> The xstrdup() problem could be solved by interning strings (see the
->> attached patch for a trivial implementation). I.e. allocate each distinct
->> string only once (and keep it allocated).
-> 
-> That's an option. We need to be carefull not to modify any string
-> in-place,
-
-Hopefully an illegal non-const cast will be caught in the review process.
-
-
-
---------------050504040606010403080901
-Content-Type: text/plain; charset=windows-1252;
- name="git-config-set-callers.txt"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename="git-config-set-callers.txt"
-
-git_config_set_multivar_in_file(const char *, const char *, const char *, const char *, int) : int - /git/config.c
-	cmd_config(int, const char * *, const char *) : int - /git/builtin/config.c (5 matches)
-	git_config_set_in_file(const char *, const char *, const char *) : int - /git/config.c
-		cmd_config(int, const char * *, const char *) : int - /git/builtin/config.c (2 matches)
-		connect_work_tree_and_git_dir(const char *, const char *) : void - /git/submodule.c
-			cmd_mv(int, const char * *, const char *) : int - /git/builtin/mv.c
-		save_opts(replay_opts *) : void - /git/sequencer.c (8 matches)
-			sequencer_pick_revisions(replay_opts *) : int - /git/sequencer.c
-				cmd_cherry_pick(int, const char * *, const char *) : int - /git/builtin/revert.c
-				cmd_revert(int, const char * *, const char *) : int - /git/builtin/revert.c
-		update_path_in_gitmodules(const char *, const char *) : int - /git/submodule.c
-			cmd_mv(int, const char * *, const char *) : int - /git/builtin/mv.c
-	git_config_set_multivar(const char *, const char *, const char *, int) : int - /git/config.c
-		add_branch(const char *, const char *, const char *, int, strbuf *) : int - /git/builtin/remote.c
-			add_branches(remote *, const char * *, const char *) : int - /git/builtin/remote.c
-				set_remote_branches(const char *, const char * *, int) : int - /git/builtin/remote.c
-					set_branches(int, const char * *) : int - /git/builtin/remote.c
-						cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-			add(int, const char * *) : int - /git/builtin/remote.c
-				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-		cmd_branch(int, const char * *, const char *) : int - /git/builtin/branch.c (2 matches)
-		git_config_set(const char *, const char *) : int - /git/config.c
-			add(int, const char * *) : int - /git/builtin/remote.c (3 matches)
-				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-			cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c (2 matches)
-			create_default_files(const char *) : int - /git/builtin/init-db.c (8 matches)
-				init_db(const char *, unsigned int) : int - /git/builtin/init-db.c
-					cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
-					cmd_init_db(int, const char * *, const char *) : int - /git/builtin/init-db.c
-			edit_branch_description(const char *) : int - /git/builtin/branch.c
-				cmd_branch(int, const char * *, const char *) : int - /git/builtin/branch.c
-			init_db(const char *, unsigned int) : int - /git/builtin/init-db.c (2 matches)
-				cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
-				cmd_init_db(int, const char * *, const char *) : int - /git/builtin/init-db.c
-			install_branch_config(int, const char *, const char *, const char *) : void - /git/branch.c (3 matches)
-				cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
-				set_upstreams(transport *, ref *, int) : void - /git/transport.c
-					transport_push(transport *, int, const char * *, int, unsigned int *) : int - /git/transport.c
-						push_with_options(transport *, int) : int - /git/builtin/push.c
-							do_push(const char *, int) : int - /git/builtin/push.c (2 matches)
-								cmd_push(int, const char * *, const char *) : int - /git/builtin/push.c
-				setup_tracking(const char *, const char *, enum branch_track, int) : int - /git/branch.c
-					create_branch(const char *, const char *, const char *, int, int, int, int, enum branch_track) : void - /git/branch.c
-						cmd_branch(int, const char * *, const char *) : int - /git/builtin/branch.c (2 matches)
-						update_refs_for_switch(const checkout_opts *, branch_info *, branch_info *) : void - /git/builtin/checkout.c
-							switch_branches(const checkout_opts *, branch_info *) : int - /git/builtin/checkout.c
-								checkout_branch(checkout_opts *, branch_info *) : int - /git/builtin/checkout.c
-									cmd_checkout(int, const char * *, const char *) : int - /git/builtin/checkout.c
-				update_head(const ref *, const ref *, const char *) : void - /git/builtin/clone.c
-					cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
-			mingw_mark_as_git_dir(const char *) : void - /git/compat/mingw.c
-				init_db(const char *, unsigned int) : int - /git/builtin/init-db.c
-					cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
-					cmd_init_db(int, const char * *, const char *) : int - /git/builtin/init-db.c
-			mv(int, const char * *) : int - /git/builtin/remote.c
-				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-			rm(int, const char * *) : int - /git/builtin/remote.c
-				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-			set_url(int, const char * *) : int - /git/builtin/remote.c
-				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-			write_refspec_config(const char *, const ref *, const ref *, strbuf *) : void - /git/builtin/clone.c
-				cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
-		migrate_file(remote *) : int - /git/builtin/remote.c (3 matches)
-			mv(int, const char * *) : int - /git/builtin/remote.c
-				cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-		mv(int, const char * *) : int - /git/builtin/remote.c (2 matches)
-			cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-		remove_all_fetch_refspecs(const char *, const char *) : int - /git/builtin/remote.c
-			set_remote_branches(const char *, const char * *, int) : int - /git/builtin/remote.c
-				set_branches(int, const char * *) : int - /git/builtin/remote.c
-					cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-		set_url(int, const char * *) : int - /git/builtin/remote.c (3 matches)
-			cmd_remote(int, const char * *, const char *) : int - /git/builtin/remote.c
-		write_one_config(const char *, const char *, void *) : int - /git/builtin/clone.c
-			write_config(string_list *) : void - /git/builtin/clone.c
-				cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
-		write_refspec_config(const char *, const ref *, const ref *, strbuf *) : void - /git/builtin/clone.c
-			cmd_clone(int, const char * *, const char *) : int - /git/builtin/clone.c
-	save_opts(replay_opts *) : void - /git/sequencer.c
-		sequencer_pick_revisions(replay_opts *) : int - /git/sequencer.c
-			cmd_cherry_pick(int, const char * *, const char *) : int - /git/builtin/revert.c
-			cmd_revert(int, const char * *, const char *) : int - /git/builtin/revert.c
---------------050504040606010403080901--
+diff --git a/sha1_file.c b/sha1_file.c
+index 34d527f..0c3cada 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -1177,48 +1177,36 @@ static void report_pack_garbage(struct string_list *list)
+ 
+ static void prepare_packed_git_one(char *objdir, int local)
+ {
+-	/* Ensure that this buffer is large enough so that we can
+-	   append "/pack/" without clobbering the stack even if
+-	   strlen(objdir) were PATH_MAX.  */
+-	char path[PATH_MAX + 1 + 4 + 1 + 1];
+-	int len;
++	struct strbuf path = STRBUF_INIT;
++	size_t dirnamelen;
+ 	DIR *dir;
+ 	struct dirent *de;
+ 	struct string_list garbage = STRING_LIST_INIT_DUP;
+ 
+-	sprintf(path, "%s/pack", objdir);
+-	len = strlen(path);
+-	dir = opendir(path);
++	strbuf_addstr(&path, objdir);
++	strbuf_addstr(&path, "/pack");
++	dir = opendir(path.buf);
+ 	if (!dir) {
+ 		if (errno != ENOENT)
+ 			error("unable to open object pack directory: %s: %s",
+-			      path, strerror(errno));
++			      path.buf, strerror(errno));
+ 		return;
+ 	}
+-	path[len++] = '/';
++	strbuf_addch(&path, '/');
++	dirnamelen = path.len;
+ 	while ((de = readdir(dir)) != NULL) {
+-		int namelen = strlen(de->d_name);
+ 		struct packed_git *p;
+ 
+-		if (len + namelen + 1 > sizeof(path)) {
+-			if (report_garbage) {
+-				struct strbuf sb = STRBUF_INIT;
+-				strbuf_addf(&sb, "%.*s/%s", len - 1, path, de->d_name);
+-				report_garbage("path too long", sb.buf);
+-				strbuf_release(&sb);
+-			}
+-			continue;
+-		}
+-
+ 		if (is_dot_or_dotdot(de->d_name))
+ 			continue;
+ 
+-		strcpy(path + len, de->d_name);
++		strbuf_setlen(&path, dirnamelen);
++		strbuf_addstr(&path, de->d_name);
+ 
+ 		if (has_extension(de->d_name, ".idx")) {
+ 			/* Don't reopen a pack we already have. */
+ 			for (p = packed_git; p; p = p->next) {
+-				if (!memcmp(path, p->pack_name, len + namelen - 4))
++				if (!memcmp(path.buf, p->pack_name, path.len - 4))
+ 					break;
+ 			}
+ 			if (p == NULL &&
+@@ -1226,7 +1214,7 @@ static void prepare_packed_git_one(char *objdir, int local)
+ 			     * See if it really is a valid .idx file with
+ 			     * corresponding .pack file that we can map.
+ 			     */
+-			    (p = add_packed_git(path, len + namelen, local)) != NULL)
++			    (p = add_packed_git(path.buf, path.len, local)) != NULL)
+ 				install_packed_git(p);
+ 		}
+ 
+@@ -1237,13 +1225,14 @@ static void prepare_packed_git_one(char *objdir, int local)
+ 		    has_extension(de->d_name, ".pack") ||
+ 		    has_extension(de->d_name, ".bitmap") ||
+ 		    has_extension(de->d_name, ".keep"))
+-			string_list_append(&garbage, path);
++			string_list_append(&garbage, path.buf);
+ 		else
+-			report_garbage("garbage found", path);
++			report_garbage("garbage found", path.buf);
+ 	}
+ 	closedir(dir);
+ 	report_pack_garbage(&garbage);
+ 	string_list_clear(&garbage, 0);
++	strbuf_release(&path);
+ }
+ 
+ static int sort_pack(const void *a_, const void *b_)
+-- 
+2.0.0
