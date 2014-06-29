@@ -1,89 +1,401 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v3 1/4] replace: add --graft option
-Date: Sun, 29 Jun 2014 08:34:35 +0200
-Message-ID: <CAP8UFD25k4X0vVUDDTOj_XDqmShz-aHXFLKD5bruUYYLX6awow@mail.gmail.com>
-References: <20140604194118.23903.3019.chriscool@tuxfamily.org>
-	<20140604194353.23903.89933.chriscool@tuxfamily.org>
-	<xmqqfvjjrpq9.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD3k98_6Uh+noJgt4xqEooATVMAEf58FFkuy6rHBnP10zw@mail.gmail.com>
-	<CAP8UFD2u-DReCv2ZXhAzH_UMW5P--+a=AKS-N88xE6zmdWBLqQ@mail.gmail.com>
-	<CAP8UFD344NFECqtO-uK-2wHA7XEko3XMJWuhW9+KGBdaiqGq+w@mail.gmail.com>
-	<CAPc5daWBycdmKBZXGhhy4_649p_JFfGf7RQbqa08XA1hL9mFTg@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: [PATCH 2/2] t0027: combinations of core.autocrlf, core.eol and text
+Date: Sun, 29 Jun 2014 08:34:54 +0200
+Message-ID: <53AFB38E.8000401@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 08:34:41 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: tboegi@web.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jun 29 08:35:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X18hE-0001JZ-UV
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 08:34:41 +0200
+	id 1X18hZ-0001VN-VC
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 08:35:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752208AbaF2Geh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2014 02:34:37 -0400
-Received: from mail-vc0-f182.google.com ([209.85.220.182]:43746 "EHLO
-	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752127AbaF2Geg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2014 02:34:36 -0400
-Received: by mail-vc0-f182.google.com with SMTP id il7so6498665vcb.27
-        for <git@vger.kernel.org>; Sat, 28 Jun 2014 23:34:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=OWTehfHO+ZTT7P5CYWzb9GBU+v40OEKHpicjJRNWz/E=;
-        b=SKAvG3p0IZSq/uydB4w+9+rcav5Ri5eW+duDETHvriS+NZskDBj5wWP3OfKkUTl7AV
-         Myto1W7uHuIzoKMK3C3ZqASGvuaXIyrL6Q85LiLQ1s2Mz8ur5aStdYaWv04qdnCWpmS0
-         keqheknksWshZBWHwYfOyaFYzdqwtW2pry6tR2e0KeRmx7dleCweaXpf55Fc89Nw5HCU
-         DBgkfhyTUsSST/l2DhqL85CnJwy3ooZJIydTL1Z77rj2YVe2gcUiAFhyHB2rqFYEI6AP
-         8Rz2CV8c1imTFg2jF/nJyHNeLCZme7s+KOPVh2VjDSgEbY6rX4RnVnMRPiMaP+2+4CzI
-         gIpA==
-X-Received: by 10.58.160.10 with SMTP id xg10mr31193749veb.0.1404023675471;
- Sat, 28 Jun 2014 23:34:35 -0700 (PDT)
-Received: by 10.58.76.137 with HTTP; Sat, 28 Jun 2014 23:34:35 -0700 (PDT)
-In-Reply-To: <CAPc5daWBycdmKBZXGhhy4_649p_JFfGf7RQbqa08XA1hL9mFTg@mail.gmail.com>
+	id S1752263AbaF2Ge6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jun 2014 02:34:58 -0400
+Received: from mout.web.de ([212.227.15.14]:65230 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752222AbaF2Ge5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2014 02:34:57 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MF3Nr-1WtfWe2h6h-00GGcZ; Sun, 29 Jun 2014 08:34:55
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Provags-ID: V03:K0:mJwigYJZGV0/AZyKgiI+YHDzcTqkwCWeDZTGs5HEY0kTpL/2KEv
+ YidXTVbqjRG4aPafOFFA02xNrgIJOpNskYnQkS38DaVT7nRJwAXndjRfU9ZyOs9NvTdBjDY
+ ZsKKxsQpSBo6Cf5Dxbl+HJLSlXr9bUXMCLmthE8Maez333c6mAsME5ECvNcn5NOIe4+wx6P
+ BxAf+nWEjPL+dtZFv2fWA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252632>
 
-On Sun, Jun 8, 2014 at 10:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> On Sat, Jun 7, 2014 at 11:49 PM, Christian Couder
-> <christian.couder@gmail.com> wrote:
->>
->> On Fri, Jun 6, 2014 at 5:44 PM, Christian Couder
->> <christian.couder@gmail.com> wrote:
->> >
->> >         /* find existing parents */
->> >         strbuf_addstr(&buf, commit->buffer);
->>
->> Unfortunately, it looks like the above will not work if the commit->buffer
->> contains an embedded NUL. I wonder if it is a real problem or not.
->
-> Yes, it is a real problem (there was another thread on this regarding the
-> code path that verifies GPG signature on the commit itself), which
-> incidentally reminds us to another thing to think about in your patch as
-> well. I *think* you shoud drop the GPG signature on the commit itself, and
-> you also should drop the merge-tag of a parent you are not going to keep,
-> but should keep the merge-tag of a parent you are keeping.
+Historically there are 3 different parameters controlling how line endi=
+ngs
+are handled by Git:
+- core.autocrlf
+- core.eol
+- the "text" attribute in .gitattributes
 
-In the v5 of the patch series, I now drop the GPG signature on the commit
-itself.
+There are different types of content:
+- (1) Files with only LF
+- (2) Files with only CRLF
+- (3) Files with mixed LF and CRLF
+- (4) Files with LF and/or CRLF with CR not followed by LF
+- (5) Files which are binary (e.g. have NUL bytes)
 
-Now, after having read the recent thread about "git verify-commit", I understand
-that you also want me to drop the signature of a tag that was merged, because
-such signatures are added to the commit message.
+Recently the question came up, how files with mixed EOLs are handled by=
+ Git
+(and libgit2) when they are checked out and core.autocrlf=3Dtrue.
 
-But I wonder how far should we go in this path. For example merge commits
-have a title like "Merge branch 'dev'" or "Merge tag 'stuff'", but
-this does not make
-sense any more if the replacement commit drops the parent corresponding to
-'dev' or 'stuff'. And I don't think we should change the commit title.
+See
+http://git.661346.n2.nabble.com/The-different-EOL-behavior-between-libg=
+it2-based-software-and-official-Git-td7613670.html#a7613801
 
-Thanks,
-Christian.
+Add the EXPENSIVE t0027-auto-crlf.sh to test all combination of files
+and parameters for both "git add/commit" and "git checkout".
+
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ t/t0027-auto-crlf.sh | 265 +++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 file changed, 265 insertions(+)
+ create mode 100755 t/t0027-auto-crlf.sh
+
+diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+new file mode 100755
+index 0000000..72dd3e8
+--- /dev/null
++++ b/t/t0027-auto-crlf.sh
+@@ -0,0 +1,265 @@
++#!/bin/sh
++
++test_description=3D'CRLF conversion all combinations'
++
++. ./test-lib.sh
++
++if ! test_have_prereq EXPENSIVE
++then
++	skip_all=3D"EXPENSIVE not set"
++	test_done
++fi
++
++
++compare_files()
++{
++	od -c <"$1" >"$1".expect &&
++	od -c <"$2" >"$2".actual &&
++	test_cmp "$1".expect "$2".actual &&
++	rm "$1".expect "$2".actual
++}
++
++compare_ws_file()
++{
++	pfx=3D$1
++	exp=3D$2.expect
++	act=3D$pfx.actual.$3
++	od -c <"$2" >"$exp" &&
++	od -c <"$3" >"$act" &&
++	test_cmp $exp $act &&
++	rm $exp $act
++}
++
++create_gitattributes()
++{
++	txtbin=3D$1
++	case "$txtbin" in
++		auto)
++		echo "*.txt text=3Dauto" >.gitattributes
++		;;
++		text)
++		echo "*.txt text" >.gitattributes
++		;;
++		-text)
++		echo "*.txt -text" >.gitattributes
++		;;
++		*)
++		echo >.gitattributes
++		;;
++	esac
++}
++
++create_file_in_repo()
++{
++	crlf=3D$1
++	txtbin=3D$2
++	create_gitattributes "$txtbin" &&
++	for f in LF CRLF LF_mix_CR CRLF_mix_LF CRLF_nul
++	do
++		pfx=3Dcrlf_${crlf}_attr_${txtbin}_$f.txt &&
++		cp $f $pfx && git -c core.autocrlf=3D$crlf add $pfx
++	done &&
++	git commit -m "core.autocrlf $crlf"
++}
++
++check_files_in_repo()
++{
++	crlf=3D$1
++	txtbin=3D$2
++	lfname=3D$3
++	crlfname=3D$4
++	lfmixcrlf=3D$5
++	lfmixcr=3D$6
++	crlfnul=3D$7
++	pfx=3Dcrlf_${crlf}_attr_${txtbin}_ &&
++	compare_files $lfname ${pfx}LF.txt &&
++	compare_files $crlfname ${pfx}CRLF.txt &&
++	compare_files $lfmixcrlf ${pfx}CRLF_mix_LF.txt &&
++	compare_files $lfmixcr ${pfx}LF_mix_CR.txt &&
++	compare_files $crlfnul ${pfx}CRLF_nul.txt
++}
++
++
++check_files_in_ws()
++{
++	eol=3D$1
++	crlf=3D$2
++	txtbin=3D$3
++	lfname=3D$4
++	crlfname=3D$5
++	lfmixcrlf=3D$6
++	lfmixcr=3D$7
++	crlfnul=3D$8
++	create_gitattributes $txtbin &&
++	git config core.autocrlf $crlf &&
++	pfx=3Deol_${eol}_crlf_${crlf}_attr_${txtbin}_ &&
++	src=3Dcrlf_false_attr__ &&
++	for f in LF CRLF LF_mix_CR CRLF_mix_LF CRLF_nul
++	do
++		rm $src$f.txt &&
++		if test -z "$eol"; then
++			git checkout $src$f.txt
++		else
++			git -c core.eol=3D$eol checkout $src$f.txt
++		fi
++	done
++
++
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DLF" "
++		compare_ws_file $pfx $lfname    ${src}LF.txt
++	"
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DCRLF" "
++		compare_ws_file $pfx $crlfname  ${src}CRLF.txt
++	"
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DCRLF_mix_LF" "
++		compare_ws_file $pfx $lfmixcrlf ${src}CRLF_mix_LF.txt
++	"
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DLF_mix_CR" "
++		compare_ws_file $pfx $lfmixcr   ${src}LF_mix_CR.txt
++	"
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DCRLF_nul" "
++		compare_ws_file $pfx $crlfnul   ${src}CRLF_nul.txt
++	"
++}
++
++#######
++(
++	type od >/dev/null &&
++	printf "line1Q\r\nline2\r\nline3" | q_to_nul >CRLF_nul &&
++	cat >expect <<-EOF &&
++	0000000 l i n e 1 \0 \r \n l i n e 2 \r \n l
++	0000020 i n e 3
++	0000024
++EOF
++	od -c CRLF_nul | sed -e "s/[ 	][	 ]*/ /g" -e "s/ *$//" >actual
++	test_cmp expect actual &&
++	rm expect actual
++) || {
++		skip_all=3D"od not found or od -c not usable"
++		exit 0
++		test_done
++}
++
++test_expect_success 'setup master' '
++	echo >.gitattributes &&
++	git checkout -b master &&
++	git add .gitattributes &&
++	git commit -m "add .gitattributes" "" &&
++	printf "line1\nline2\nline3"     >LF &&
++	printf "line1\r\nline2\r\nline3" >CRLF &&
++	printf "line1\r\nline2\nline3"   >CRLF_mix_LF &&
++	printf "line1\nline2\rline3"     >LF_mix_CR &&
++	printf "line1\r\nline2\rline3"   >CRLF_mix_CR &&
++	printf "line1Q\nline2\nline3" | q_to_nul >LF_nul
++'
++#  CRLF_nul had been created above
++
++test_expect_success 'create files' '
++	create_file_in_repo false "" &&
++	create_file_in_repo true  "" &&
++	create_file_in_repo input "" &&
++
++	create_file_in_repo false "auto" &&
++	create_file_in_repo true  "auto" &&
++	create_file_in_repo input "auto" &&
++
++	create_file_in_repo false "text" &&
++	create_file_in_repo true  "text" &&
++	create_file_in_repo input "text" &&
++
++	create_file_in_repo false "-text" &&
++	create_file_in_repo true  "-text" &&
++	create_file_in_repo input "-text" &&
++	rm -f *.txt &&
++	git reset --hard
++'
++
++test_expect_success 'commit empty gitattribues' '
++	check_files_in_repo false ""      LF CRLF CRLF_mix_LF LF_mix_CR CRLF_=
+nul &&
++	check_files_in_repo true  ""      LF LF   LF          LF_mix_CR CRLF_=
+nul &&
++	check_files_in_repo input ""      LF LF   LF          LF_mix_CR CRLF_=
+nul
++'
++
++test_expect_success 'commit text=3Dauto' '
++	check_files_in_repo false "auto"  LF LF   LF          LF_mix_CR CRLF_=
+nul &&
++	check_files_in_repo true  "auto"  LF LF   LF          LF_mix_CR CRLF_=
+nul &&
++	check_files_in_repo input "auto"  LF LF   LF          LF_mix_CR CRLF_=
+nul
++'
++
++test_expect_success 'commit text' '
++	check_files_in_repo false "text"  LF LF   LF          LF_mix_CR LF_nu=
+l &&
++	check_files_in_repo true  "text"  LF LF   LF          LF_mix_CR LF_nu=
+l &&
++	check_files_in_repo input "text"  LF LF   LF          LF_mix_CR LF_nu=
+l
++'
++
++test_expect_success 'commit -text' '
++	check_files_in_repo false "-text" LF CRLF CRLF_mix_LF LF_mix_CR CRLF_=
+nul &&
++	check_files_in_repo true  "-text" LF CRLF CRLF_mix_LF LF_mix_CR CRLF_=
+nul &&
++	check_files_in_repo input "-text" LF CRLF CRLF_mix_LF LF_mix_CR CRLF_=
+nul
++'
++
++######################################################################=
+##########
++# Check how files in the repo are changed when they are checked out
++# How to read the table below:
++# - check_files_in_ws will check multiple files, see below
++# - parameter $1 : core.eol               lf | crlf
++# - parameter $2 : core.autocrlf          false | true | input
++# - parameter $3 : text in .gitattributs  "" (empty) | auto | text | -=
+text
++# - parameter $4 : reference for a file with only LF in the repo
++# - parameter $5 : reference for a file with only CRLF in the repo
++# - parameter $6 : reference for a file with mixed LF and CRLF in the =
+repo
++# - parameter $7 : reference for a file with LF and CR in the repo (do=
+es somebody uses this ?)
++# - parameter $8 : reference for a file with CRLF and a NUL (should be=
+ handled as binary when auto)
++
++check_files_in_ws lf      false  ""       LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws lf      true   ""       CRLF  CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws lf      input  ""       LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++
++check_files_in_ws lf      false "auto"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws lf      true  "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
++check_files_in_ws lf      input "auto"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++
++check_files_in_ws lf      false "text"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws lf      true  "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
++check_files_in_ws lf      input "text"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++
++check_files_in_ws lf      false "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws lf      true  "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws lf      input "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++
++###########
++#core.autocrlf=3Dinput is forbidden with core.eol=3Dcrlf
++check_files_in_ws crlf    false ""        LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws crlf    true  ""        CRLF  CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++
++check_files_in_ws crlf    false "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
++check_files_in_ws crlf    true  "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
++
++check_files_in_ws crlf    false "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
++check_files_in_ws crlf    true  "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
++
++check_files_in_ws crlf    false "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws crlf    true  "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++
++if test_have_prereq MINGW
++then
++check_files_in_ws ""      false ""        LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws ""      true  ""        CRLF  CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws ""      false "auto"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws ""      true  "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
++check_files_in_ws ""      false "text"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws ""      true  "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
++check_files_in_ws ""      false "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws ""      true  "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++
++check_files_in_ws native  false ""        LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws native  true  ""        CRLF  CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws native  false "auto"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws native  true  "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
++check_files_in_ws native  false "text"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws native  true  "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
++check_files_in_ws native  false "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++check_files_in_ws native  true  "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++fi
++
++test_done
+--=20
+2.0.0.9631.g7e872d2
