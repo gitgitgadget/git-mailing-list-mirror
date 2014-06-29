@@ -1,69 +1,108 @@
-From: Felix Eckhofer <felix@tribut.de>
-Subject: Re: Passing rev-list options in git-filter-branch broken
-Date: Sun, 29 Jun 2014 16:00:49 +0200
-Message-ID: <cacf17948e270ab33cc9ff145c4a1af7@tribut.de>
-References: <987cd4ccd2b86a840b900a25e0edf0f9@tribut.de>
- <xmqq1tua2oi5.fsf@gitster.dls.corp.google.com>
+From: Phil Hord <phil.hord@gmail.com>
+Subject: Re: Trouble merging renamed but identical files - CONFLICT (rename/rename)
+Date: Sun, 29 Jun 2014 11:28:09 -0400
+Message-ID: <CABURp0oy6LcZD1k7wx=JEg=iU0Z=SeWdNv3ZQHxSYpZWr=7+Dg@mail.gmail.com>
+References: <B901ECBC8F944F039AFD6B53929FF18C@black> <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com>
+ <073A89A2555A4CD6AB28AF42078575ED@black>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 16:00:59 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Jason Pyeron <jpyeron@pdinc.us>
+X-From: git-owner@vger.kernel.org Sun Jun 29 17:28:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1Ff8-00070k-VN
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 16:00:59 +0200
+	id 1X1H1y-0001Lu-Sf
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 17:28:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750897AbaF2OAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2014 10:00:53 -0400
-Received: from metis.tribut.de ([78.46.43.195]:52849 "EHLO metis.tribut.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750720AbaF2OAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2014 10:00:52 -0400
-Received: from webmail.tribut.de (localhost [127.0.0.1])
-	by metis.tribut.de (Postfix) with ESMTP id F35CB13578B;
-	Sun, 29 Jun 2014 16:00:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tribut.de; s=dkim;
-	t=1404050450; bh=gLMCsfKdvbaSp7yZjCwLwOGJPMkxWzXrFyPd23m5FjQ=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=AMFMRUH0g5ySwrPI6pseFrd4yxG1pMjUfVIyl3udOaR9S62C1/k9OpUqXhOcoPo7q
-	 lzfRCtqT6myUwZFrmL8LjKwxi74SeGkS91TrT3cNn2ncnlEDuxoWCLQPQBw2lsh73+
-	 uFrntRNKcF/6uR8VxDSkpgufveVNFZcya/gpmlN9d6p4qC0BQ/M6JALK5Pb2WCrM9E
-	 CVzOnRf5X6nhuEuoyQywzoUrbe17xFHL5H55ap0AA3WLZbFuLlE43cDh53rz7bJ7eT
-	 7P4szONdYt1UH1R5C67jDogyIEe6pqr/yYby3JblNqsyjXpVBRPnu5AxwYcBGrlIrp
-	 +dGOdpfRr7rtw==
-In-Reply-To: <xmqq1tua2oi5.fsf@gitster.dls.corp.google.com>
-X-Sender: felix@tribut.de
-User-Agent: Roundcube Webmail
+	id S1751798AbaF2P2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2014 11:28:31 -0400
+Received: from mail-ve0-f176.google.com ([209.85.128.176]:64094 "EHLO
+	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751515AbaF2P2a (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2014 11:28:30 -0400
+Received: by mail-ve0-f176.google.com with SMTP id db12so7196845veb.35
+        for <git@vger.kernel.org>; Sun, 29 Jun 2014 08:28:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=to0r3rf5mPzoAozIpWq67B4PIH09nmhv+aFRTWB8reU=;
+        b=d999IwAqXDzff0yce+1P1ox3LGyZ2uHjiVAqVXhfU+G2FqdgWf2sFYp6AJ+Mm7h3sh
+         76RMIVRUOPMj09vZa2SacyeDnqhXkLaNuGxnzxzJrIQ/E3yojfTHfrrH9A5vJAKlyYMk
+         yfIhvUSDi0X/idzlM+VLGFUzDvdUBkX4Hk45ZMLDo7CSF6zm69CaSg3L0jnrhUxGa0Nz
+         qIxzkJ0UQBDrKA2ancUNBf/+AU/Td8u/QeM5ikCnHV7VSn0P5pE+fbnPhwx1Ka4M8Zfu
+         sqcbwVwwiS7mkOtUN1bh0lh2fmwwO+TauL40r9PVX0m7mhUQ5TJ+veeFc5aToqoTRXqo
+         5PJw==
+X-Received: by 10.52.163.208 with SMTP id yk16mr27178963vdb.36.1404055709154;
+ Sun, 29 Jun 2014 08:28:29 -0700 (PDT)
+Received: by 10.58.67.168 with HTTP; Sun, 29 Jun 2014 08:28:09 -0700 (PDT)
+In-Reply-To: <073A89A2555A4CD6AB28AF42078575ED@black>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252643>
 
-Junio,
+On Fri, Jun 27, 2014 at 6:39 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
+>> On Fri, Jun 27, 2014 at 4:47 PM, Jason Pyeron
+>> <jpyeron@pdinc.us> wrote:
+>> > There are two identical files from the same original
+>> parent, but both were
+>> > renamed in their own branches. One branch moved the file to
+>> a new folder, the
+>> > other renamed the file in the same folder.
+>>
+>> You have not stated what you think the issue is.  You have only stated
+>> the setup.
+>
+> Thanks, I could have said it better.
+>
+> I think that git should understand that I have moved a file in path only (the
+> tree object containing the file's entry change, but not the entry it self) and
+> that the branch from which I want to merge back (with common ancestry) has
+> renamed the file in the same path ( the tree object is unchanged, but the entry
+> is) such that the object is re-parented and renamed in that path.
 
-thanks for your reply and your patch.
+I think Git's perspective is that you have moved the file in both
+contexts. The name of the file includes the path and filename.  The
+fact is that you renamed the file in both branches.  If you had
+renamed the file in only one branch, Git would have had a better
+chance of figuring out the "right" thing to do.  Git tries not to do
+something potentially dangerous without getting your involvement.
 
-Am 27.06.2014 20:31, schrieb Junio C Hamano:
-> [...]
-> would be a better workaround that would not break repositories with
-> large number of references, but it obviously will lose --date-order
-> option (why would it be even necessary, though?  I suspect that
-> forcing the date-order will make the resulting pack a lot worse by
-> robbing the data stream of locality).
+That said, Git's rename handling is stupid sometimes and could stand
+to be improved.
 
-We're migrating some svn repositories to git. The use case is to replace 
-mentions of svn revisions in commit messages by the corresponding commit 
-hash. Therefore, the commits must be ordered by svn revision number, 
-which is not guaranteed for commits on different branches with 
---topo-order.
+> How can this be done in git or if it cannot what are the chalenges to patching
+> git for this issue.
+
+I do not know a better thing for git to do here.  I can imagine cases
+where either choice is the wrong one.  If git silently makes the
+choice and continues, say, during a rebase, you might not notice until
+things have horribly awry.
 
 
-Regards
-felix
+>> ...
+>> Maybe you meant to move the renamed file to the same folder where it
+>> exists in the merge target.  I do not get a conflict when I do that.
+>
+> Are you saying I should git mv src/TrueCrypt.sln CipherShed.sln ?
+>
+> Then it will be in the wrong path as intended.
+>
+>>
+>>    git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
+>>    git mv src/TrueCrypt.sln CipherShed.sln
+>>    git commit -m 'renamed to be congruent with a0c84ff'
+>>    git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
+>>
+>> No conflict (on that file, anyway).
+>
+> Agreed, but not the desired end state.
+
+Git's magic still has limits.
+
+Phil
