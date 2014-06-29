@@ -1,89 +1,92 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Trouble merging renamed but identical files - CONFLICT (rename/rename)
-Date: Sun, 29 Jun 2014 16:26:47 -0400
-Message-ID: <CABURp0q1u_Hzz2ni63oHuinFpBTCzZ+=-6h5YpC0k_bQ_03TSA@mail.gmail.com>
-References: <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com>
- <66A60DA77398CD439FA676CEF593977D52477A@exchange.1.internal.pdinc.us>
- <CEAC9BE9F83B4CD0AFD73BBAC8A54232@black> <CABURp0okCDbwLOL3Osj2WtfQ_Qj3v=1FrAV28gJjPy1yzQU7Vg@mail.gmail.com>
- <CABURp0qZVMGMQ8X4P0P1OGF9gNqu__=Uk+Lr7GyBbscm5wL1=w@mail.gmail.com> <35E240FD8DD74A2F9B80FFCBD818A122@black>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/2] wt-status: use argv_array for environment
+Date: Sun, 29 Jun 2014 22:47:00 +0200
+Message-ID: <53B07B44.9000406@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Jason Pyeron <jpyeron@pdinc.us>
-X-From: git-owner@vger.kernel.org Sun Jun 29 22:27:16 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jun 29 22:47:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1Lgv-0001Vk-KO
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 22:27:13 +0200
+	id 1X1M0V-0007fQ-64
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 22:47:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432AbaF2U1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2014 16:27:09 -0400
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:45517 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750720AbaF2U1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2014 16:27:08 -0400
-Received: by mail-vc0-f171.google.com with SMTP id id10so6805009vcb.30
-        for <git@vger.kernel.org>; Sun, 29 Jun 2014 13:27:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=w7JDLNeEVxkp2pDkWnojm5KdyOl63YtMMCmAGtO3VlQ=;
-        b=vcCZNvCpYFkOmLG0ukLIJo9TDz6Ok/PqMI24TOzNCR3CzlaRa3yBgBkPVURrbCwbNU
-         WsPJDL//wBOeSP6hoN4qQ65Dvg3R8TR5GXlRgzZRG0D+dcXqGR0UJE8amvsqiQ8dc5VR
-         dlanIw3eGmf88RWRhOWKszJjvXzHGinEjrh77tc7kpN2cWYDA2sisdEIq/ELdQz9LEqS
-         JL7yig0doddlnTqa3qvN7OkpF2ds4paRjTVa+Q0vSHQjqXhdY1bfLQJqUENR8N2R5qxT
-         gtGPT27prBd7OqUZcsv/f5Owmvh1eVhF1I1l5lKmnplSoEn4kVZg1ZsjnQe4UZTbIKHo
-         /amw==
-X-Received: by 10.220.203.134 with SMTP id fi6mr23980138vcb.18.1404073627321;
- Sun, 29 Jun 2014 13:27:07 -0700 (PDT)
-Received: by 10.58.67.168 with HTTP; Sun, 29 Jun 2014 13:26:47 -0700 (PDT)
-In-Reply-To: <35E240FD8DD74A2F9B80FFCBD818A122@black>
+	id S1753539AbaF2UrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2014 16:47:23 -0400
+Received: from mout.web.de ([212.227.17.11]:54514 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751169AbaF2UrG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2014 16:47:06 -0400
+Received: from [192.168.178.27] ([79.250.179.75]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MRl5x-1XCW0U2nmL-00SyL1; Sun, 29 Jun 2014 22:47:03
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Provags-ID: V03:K0:uqRsIxie6QPXmsZFY6pc593dj2Dw98TKZvftnxkJUwP2hf7DV+R
+ BFsFQk3e0E4LJIpnUwD9v+4pJR0vHM4jBN6A4lr66yyfKxodEE5Ue8TpB0t65tWaHsEf734
+ Gu4W46HnYwwANadQMEol5oULTJnRwsjrDiGwQKbL7sUCr1BQi/BaQhpKFrrQJwPzkHD68Be
+ W7ibeY4vyVgqBafb52Wng==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252648>
 
-On Sun, Jun 29, 2014 at 4:20 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
->> -----Original Message-----
->> From: Phil Hord
->> Sent: Sunday, June 29, 2014 16:09
->>
->> On Sun, Jun 29, 2014 at 11:31 AM, Phil Hord
->> <phil.hord@gmail.com> wrote:
->> > On Fri, Jun 27, 2014 at 8:42 PM, Jason Pyeron
->> <jpyeron@pdinc.us> wrote:
->> >> Sorry for the http://pastebin.com/1R68v6jt (changes the merge to
->> >> 1ca13ed2271d60ba93d40bcc8db17ced8545f172, and manually
->> reconciles the merge),
->> >> but it was too long to be readable in the email.
->>
->> Ok, I think I understand the issue you are trying to solve now.
->>
->> Git (rather famously[1]) does not record renames or copies.  It is
->> expected instead that renames and copies will be detected when it is
->> important after the fact. This allows us to ignore rename detection
->> and resolution when creating project history; in the future, better
->> rename/copy detection will "just work" on existing repositories and
->> the repos themselves will not need to be adjusted.
->
-> Looking at http://pastebin.com/1R68v6jt , I have a work around.
->
-> In summary, 7.git cherry-pick -x HEAD..rebranding , then
->
-> git merge $(echo 'Merge of 1ca13ed2271d60ba93d40bcc8db17ced8545f172 branch -
-> rebranding' |\
->     git commit-tree -p HEAD -p rebranding \
->          $(git cat-file -p HEAD | grep ^tree | sed -e 's/^tree //') )
->
-> Now it is perfect in the blame and log --graph.
+Instead of using a PATH_MAX buffer, use argv_array for constructing the
+environment for git submodule summary.  This simplifies the code a bit
+and removes the arbitrary length limit.
 
-Yes, but your workaround unnecessarily duplicates commits and
-complicates the history of your project. You are munging your project
-to compensate for git's current shortcomings.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ wt-status.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-But it's your project.  Your choice.
+diff --git a/wt-status.c b/wt-status.c
+index 318a191..2c0bff8 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -735,8 +735,7 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+ {
+ 	struct child_process sm_summary;
+ 	char summary_limit[64];
+-	char index[PATH_MAX];
+-	const char *env[] = { NULL, NULL };
++	struct argv_array env = ARGV_ARRAY_INIT;
+ 	struct argv_array argv = ARGV_ARRAY_INIT;
+ 	struct strbuf cmd_stdout = STRBUF_INIT;
+ 	struct strbuf summary = STRBUF_INIT;
+@@ -744,9 +743,8 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+ 	size_t len;
+ 
+ 	sprintf(summary_limit, "%d", s->submodule_summary);
+-	snprintf(index, sizeof(index), "GIT_INDEX_FILE=%s", s->index_file);
++	argv_array_pushf(&env, "GIT_INDEX_FILE=%s", s->index_file);
+ 
+-	env[0] = index;
+ 	argv_array_push(&argv, "submodule");
+ 	argv_array_push(&argv, "summary");
+ 	argv_array_push(&argv, uncommitted ? "--files" : "--cached");
+@@ -758,13 +756,14 @@ static void wt_status_print_submodule_summary(struct wt_status *s, int uncommitt
+ 
+ 	memset(&sm_summary, 0, sizeof(sm_summary));
+ 	sm_summary.argv = argv.argv;
+-	sm_summary.env = env;
++	sm_summary.env = env.argv;
+ 	sm_summary.git_cmd = 1;
+ 	sm_summary.no_stdin = 1;
+ 	fflush(s->fp);
+ 	sm_summary.out = -1;
+ 
+ 	run_command(&sm_summary);
++	argv_array_clear(&env);
+ 	argv_array_clear(&argv);
+ 
+ 	len = strbuf_read(&cmd_stdout, sm_summary.out, 1024);
+-- 
+2.0.0
