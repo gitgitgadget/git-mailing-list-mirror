@@ -1,108 +1,92 @@
 From: Phil Hord <phil.hord@gmail.com>
 Subject: Re: Trouble merging renamed but identical files - CONFLICT (rename/rename)
-Date: Sun, 29 Jun 2014 11:28:09 -0400
-Message-ID: <CABURp0oy6LcZD1k7wx=JEg=iU0Z=SeWdNv3ZQHxSYpZWr=7+Dg@mail.gmail.com>
-References: <B901ECBC8F944F039AFD6B53929FF18C@black> <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com>
- <073A89A2555A4CD6AB28AF42078575ED@black>
+Date: Sun, 29 Jun 2014 11:31:06 -0400
+Message-ID: <CABURp0okCDbwLOL3Osj2WtfQ_Qj3v=1FrAV28gJjPy1yzQU7Vg@mail.gmail.com>
+References: <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com>
+ <66A60DA77398CD439FA676CEF593977D52477A@exchange.1.internal.pdinc.us> <CEAC9BE9F83B4CD0AFD73BBAC8A54232@black>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git <git@vger.kernel.org>
 To: Jason Pyeron <jpyeron@pdinc.us>
-X-From: git-owner@vger.kernel.org Sun Jun 29 17:28:41 2014
+X-From: git-owner@vger.kernel.org Sun Jun 29 17:31:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1H1y-0001Lu-Sf
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 17:28:39 +0200
+	id 1X1H4m-0002Ry-4A
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 17:31:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798AbaF2P2b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2014 11:28:31 -0400
-Received: from mail-ve0-f176.google.com ([209.85.128.176]:64094 "EHLO
-	mail-ve0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751515AbaF2P2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2014 11:28:30 -0400
-Received: by mail-ve0-f176.google.com with SMTP id db12so7196845veb.35
-        for <git@vger.kernel.org>; Sun, 29 Jun 2014 08:28:29 -0700 (PDT)
+	id S1752821AbaF2Pb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2014 11:31:28 -0400
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:64151 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752226AbaF2Pb1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2014 11:31:27 -0400
+Received: by mail-vc0-f170.google.com with SMTP id hy10so6640202vcb.29
+        for <git@vger.kernel.org>; Sun, 29 Jun 2014 08:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        bh=to0r3rf5mPzoAozIpWq67B4PIH09nmhv+aFRTWB8reU=;
-        b=d999IwAqXDzff0yce+1P1ox3LGyZ2uHjiVAqVXhfU+G2FqdgWf2sFYp6AJ+Mm7h3sh
-         76RMIVRUOPMj09vZa2SacyeDnqhXkLaNuGxnzxzJrIQ/E3yojfTHfrrH9A5vJAKlyYMk
-         yfIhvUSDi0X/idzlM+VLGFUzDvdUBkX4Hk45ZMLDo7CSF6zm69CaSg3L0jnrhUxGa0Nz
-         qIxzkJ0UQBDrKA2ancUNBf/+AU/Td8u/QeM5ikCnHV7VSn0P5pE+fbnPhwx1Ka4M8Zfu
-         sqcbwVwwiS7mkOtUN1bh0lh2fmwwO+TauL40r9PVX0m7mhUQ5TJ+veeFc5aToqoTRXqo
-         5PJw==
-X-Received: by 10.52.163.208 with SMTP id yk16mr27178963vdb.36.1404055709154;
- Sun, 29 Jun 2014 08:28:29 -0700 (PDT)
-Received: by 10.58.67.168 with HTTP; Sun, 29 Jun 2014 08:28:09 -0700 (PDT)
-In-Reply-To: <073A89A2555A4CD6AB28AF42078575ED@black>
+        bh=3wNE1udcYBmRSA91rcKxXGztWzkgMlIzRgzAniWBMgc=;
+        b=eCnJ5fWN0P3ZX6G8YHWqkEj0JRqejJJApDrqK+Mxcq3DXeZnCmWORxaoGWSnZCNvz6
+         J7wp1I941/j8PFcWICbQeNQRo4ofN6hRPOandGs6tqDTvFaf9WHtpobzrIRygJkOaCud
+         7FqU//P4Y2sQtExKosh1ks11XW4ddzldTyntpMpq2yDMzRBFMt/UnZnRwNj5bNoarcxn
+         Y6oTN68YVVU7ESg1v7PYIKsDcwS5y0HbUt50m93W0DzeiN5xwOFACufXYYhmI6bGdboV
+         AnR9SQyheGADQGec7Q8ELDONwi/Sokto4PZZK3cmugrhjMWmNPjjWty60CiFfXdUoGYl
+         ZysQ==
+X-Received: by 10.52.96.8 with SMTP id do8mr27344262vdb.4.1404055886997; Sun,
+ 29 Jun 2014 08:31:26 -0700 (PDT)
+Received: by 10.58.67.168 with HTTP; Sun, 29 Jun 2014 08:31:06 -0700 (PDT)
+In-Reply-To: <CEAC9BE9F83B4CD0AFD73BBAC8A54232@black>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252644>
 
-On Fri, Jun 27, 2014 at 6:39 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
->> On Fri, Jun 27, 2014 at 4:47 PM, Jason Pyeron
->> <jpyeron@pdinc.us> wrote:
->> > There are two identical files from the same original
->> parent, but both were
->> > renamed in their own branches. One branch moved the file to
->> a new folder, the
->> > other renamed the file in the same folder.
->>
->> You have not stated what you think the issue is.  You have only stated
->> the setup.
+On Fri, Jun 27, 2014 at 8:42 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
+> Sorry for the http://pastebin.com/1R68v6jt (changes the merge to
+> 1ca13ed2271d60ba93d40bcc8db17ced8545f172, and manually reconciles the merge),
+> but it was too long to be readable in the email.
 >
-> Thanks, I could have said it better.
+> git blame HEAD -- src/Main/Forms/CipherShed.fbp | cut -c 1-8 | sort -u
 >
-> I think that git should understand that I have moved a file in path only (the
-> tree object containing the file's entry change, but not the entry it self) and
-> that the branch from which I want to merge back (with common ancestry) has
-> renamed the file in the same path ( the tree object is unchanged, but the entry
-> is) such that the object is re-parented and renamed in that path.
-
-I think Git's perspective is that you have moved the file in both
-contexts. The name of the file includes the path and filename.  The
-fact is that you renamed the file in both branches.  If you had
-renamed the file in only one branch, Git would have had a better
-chance of figuring out the "right" thing to do.  Git tries not to do
-something potentially dangerous without getting your involvement.
-
-That said, Git's rename handling is stupid sometimes and could stand
-to be improved.
-
-> How can this be done in git or if it cannot what are the chalenges to patching
-> git for this issue.
-
-I do not know a better thing for git to do here.  I can imagine cases
-where either choice is the wrong one.  If git silently makes the
-choice and continues, say, during a rebase, you might not notice until
-things have horribly awry.
-
-
->> ...
->> Maybe you meant to move the renamed file to the same folder where it
->> exists in the merge target.  I do not get a conflict when I do that.
+> Gives:
+> ac812aa3
+> b50a2fb1
 >
-> Are you saying I should git mv src/TrueCrypt.sln CipherShed.sln ?
+> git blame b60070f4d0879e277f44d174a163bbb292325fea --
+> src/Main/Forms/TrueCrypt.fbp | cut -c 1-8 | sort -u
 >
-> Then it will be in the wrong path as intended.
+> Gives:
+> 07b2176f
+> 0eb8b4fa
+> 12c94add
+> a17c95a3
+> a757b4d4
+> cac6cd14
+> d0a9dfa8
+> d94128a9
+> e6b1437a
+> f1bb489c
 >
->>
->>    git reset --hard b60070f4d0879e277f44d174a163bbb292325fea
->>    git mv src/TrueCrypt.sln CipherShed.sln
->>    git commit -m 'renamed to be congruent with a0c84ff'
->>    git merge a0c84ff28f356bcb8b872a9c65a2e9bff97b3f68
->>
->> No conflict (on that file, anyway).
+> If I use cherry pick (vs merge), I can maintain the big history in b60070f, but
+> loose the small history in 1ca13ed
 >
-> Agreed, but not the desired end state.
+>       [test]
+>       /     \
+>      /       \
+> [b60070f] [1ca13ed]
+>     |         |
+>     |         |
+> [65efd37]     |
+>     |    \    |
+>     |     \   |
+> [d8da778] [39ebb06]
+>
+> How do I maintain all the history including the (line) changes in 1ca13ed?
 
-Git's magic still has limits.
-
-Phil
+I see the results, but my brain is not able to make sense of your goal
+yet.  I'll try again later when I've had my coffee.
