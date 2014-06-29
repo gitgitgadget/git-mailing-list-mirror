@@ -1,279 +1,89 @@
-From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: [PATCH 1/2] t0025: Rename the test files
-Date: Sun, 29 Jun 2014 08:34:22 +0200
-Message-ID: <53AFB36E.7060008@web.de>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v3 1/4] replace: add --graft option
+Date: Sun, 29 Jun 2014 08:34:35 +0200
+Message-ID: <CAP8UFD25k4X0vVUDDTOj_XDqmShz-aHXFLKD5bruUYYLX6awow@mail.gmail.com>
+References: <20140604194118.23903.3019.chriscool@tuxfamily.org>
+	<20140604194353.23903.89933.chriscool@tuxfamily.org>
+	<xmqqfvjjrpq9.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD3k98_6Uh+noJgt4xqEooATVMAEf58FFkuy6rHBnP10zw@mail.gmail.com>
+	<CAP8UFD2u-DReCv2ZXhAzH_UMW5P--+a=AKS-N88xE6zmdWBLqQ@mail.gmail.com>
+	<CAP8UFD344NFECqtO-uK-2wHA7XEko3XMJWuhW9+KGBdaiqGq+w@mail.gmail.com>
+	<CAPc5daWBycdmKBZXGhhy4_649p_JFfGf7RQbqa08XA1hL9mFTg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: tboegi@web.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jun 29 08:34:34 2014
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 29 08:34:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X18h7-0001GN-Th
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 08:34:34 +0200
+	id 1X18hE-0001JZ-UV
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 08:34:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752183AbaF2Gea convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Jun 2014 02:34:30 -0400
-Received: from mout.web.de ([212.227.15.14]:54918 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752127AbaF2Ge3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2014 02:34:29 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0M9GHu-1WoSyL0jQk-00CiH3; Sun, 29 Jun 2014 08:34:27
- +0200
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-X-Provags-ID: V03:K0:5TdOhUjy4vPS56FNwixllZFHIoMBEY/7kotVzmuI+qRFT2XhlrD
- kDscq9I7mcF/MzmpHJfNdz75gngwGqANi8DOFi8CrxqfU2uuPn3ZPYpmUDMHQ+FPpkVmpX4
- 4KqML+syGwI1I5jzP7P50+uKuJqeDOIB6SEnisL4CvNWLvVKb1iL4S2uUWkZrsiGuH2jSsz
- DKREAFX38QZvs8IiNuTHg==
+	id S1752208AbaF2Geh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Jun 2014 02:34:37 -0400
+Received: from mail-vc0-f182.google.com ([209.85.220.182]:43746 "EHLO
+	mail-vc0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752127AbaF2Geg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Jun 2014 02:34:36 -0400
+Received: by mail-vc0-f182.google.com with SMTP id il7so6498665vcb.27
+        for <git@vger.kernel.org>; Sat, 28 Jun 2014 23:34:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=OWTehfHO+ZTT7P5CYWzb9GBU+v40OEKHpicjJRNWz/E=;
+        b=SKAvG3p0IZSq/uydB4w+9+rcav5Ri5eW+duDETHvriS+NZskDBj5wWP3OfKkUTl7AV
+         Myto1W7uHuIzoKMK3C3ZqASGvuaXIyrL6Q85LiLQ1s2Mz8ur5aStdYaWv04qdnCWpmS0
+         keqheknksWshZBWHwYfOyaFYzdqwtW2pry6tR2e0KeRmx7dleCweaXpf55Fc89Nw5HCU
+         DBgkfhyTUsSST/l2DhqL85CnJwy3ooZJIydTL1Z77rj2YVe2gcUiAFhyHB2rqFYEI6AP
+         8Rz2CV8c1imTFg2jF/nJyHNeLCZme7s+KOPVh2VjDSgEbY6rX4RnVnMRPiMaP+2+4CzI
+         gIpA==
+X-Received: by 10.58.160.10 with SMTP id xg10mr31193749veb.0.1404023675471;
+ Sat, 28 Jun 2014 23:34:35 -0700 (PDT)
+Received: by 10.58.76.137 with HTTP; Sat, 28 Jun 2014 23:34:35 -0700 (PDT)
+In-Reply-To: <CAPc5daWBycdmKBZXGhhy4_649p_JFfGf7RQbqa08XA1hL9mFTg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252631>
 
-The current test files are named one, two and three.
-Make it clearer what the tests do and rename them into
-LFonly, CRLFonly and LFwithNUL.
+On Sun, Jun 8, 2014 at 10:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> On Sat, Jun 7, 2014 at 11:49 PM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>>
+>> On Fri, Jun 6, 2014 at 5:44 PM, Christian Couder
+>> <christian.couder@gmail.com> wrote:
+>> >
+>> >         /* find existing parents */
+>> >         strbuf_addstr(&buf, commit->buffer);
+>>
+>> Unfortunately, it looks like the above will not work if the commit->buffer
+>> contains an embedded NUL. I wonder if it is a real problem or not.
+>
+> Yes, it is a real problem (there was another thread on this regarding the
+> code path that verifies GPG signature on the commit itself), which
+> incidentally reminds us to another thing to think about in your patch as
+> well. I *think* you shoud drop the GPG signature on the commit itself, and
+> you also should drop the merge-tag of a parent you are not going to keep,
+> but should keep the merge-tag of a parent you are keeping.
 
-After the renaming we can see easier that we may want more test cases
-for 2 types of files:
-- files which have mixed LF and CRLF line endings,
-- files which have mixed LF and CR line endings.
+In the v5 of the patch series, I now drop the GPG signature on the commit
+itself.
 
-See commit fd6cce9e, "Add per-repository eol normalization" and
-"the new safer autocrlf handling" in convert.c
+Now, after having read the recent thread about "git verify-commit", I understand
+that you also want me to drop the signature of a tag that was merged, because
+such signatures are added to the commit message.
 
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
----
- t/t0025-crlf-auto.sh | 122 +++++++++++++++++++++++++------------------=
---------
- 1 file changed, 61 insertions(+), 61 deletions(-)
+But I wonder how far should we go in this path. For example merge commits
+have a title like "Merge branch 'dev'" or "Merge tag 'stuff'", but
+this does not make
+sense any more if the replacement commit drops the parent corresponding to
+'dev' or 'stuff'. And I don't think we should change the commit title.
 
-diff --git a/t/t0025-crlf-auto.sh b/t/t0025-crlf-auto.sh
-index 28102de..c164b46 100755
---- a/t/t0025-crlf-auto.sh
-+++ b/t/t0025-crlf-auto.sh
-@@ -12,144 +12,144 @@ test_expect_success setup '
-=20
- 	git config core.autocrlf false &&
-=20
--	for w in Hello world how are you; do echo $w; done >one &&
--	for w in I am very very fine thank you; do echo ${w}Q; done | q_to_cr=
- >two &&
--	for w in Oh here is a QNUL byte how alarming; do echo ${w}; done | q_=
-to_nul >three &&
-+	for w in Hello world how are you; do echo $w; done >LFonly &&
-+	for w in I am very very fine thank you; do echo ${w}Q; done | q_to_cr=
- >CRLFonly &&
-+	for w in Oh here is a QNUL byte how alarming; do echo ${w}; done | q_=
-to_nul >LFwithNUL &&
- 	git add . &&
-=20
- 	git commit -m initial &&
-=20
--	one=3D$(git rev-parse HEAD:one) &&
--	two=3D$(git rev-parse HEAD:two) &&
--	three=3D$(git rev-parse HEAD:three) &&
-+	LFonly=3D$(git rev-parse HEAD:LFonly) &&
-+	CRLFonly=3D$(git rev-parse HEAD:CRLFonly) &&
-+	LFwithNUL=3D$(git rev-parse HEAD:LFwithNUL) &&
-=20
- 	echo happy.
- '
-=20
- test_expect_success 'default settings cause no changes' '
-=20
--	rm -f .gitattributes tmp one two three &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
- 	git read-tree --reset -u HEAD &&
-=20
--	! has_cr one &&
--	has_cr two &&
--	onediff=3D$(git diff one) &&
--	twodiff=3D$(git diff two) &&
--	threediff=3D$(git diff three) &&
--	test -z "$onediff" && test -z "$twodiff" && test -z "$threediff"
-+	! has_cr LFonly &&
-+	has_cr CRLFonly &&
-+	LFonlydiff=3D$(git diff LFonly) &&
-+	CRLFonlydiff=3D$(git diff CRLFonly) &&
-+	LFwithNULdiff=3D$(git diff LFwithNUL) &&
-+	test -z "$LFonlydiff" -a -z "$CRLFonlydiff" -a -z "$LFwithNULdiff"
- '
-=20
- test_expect_success 'crlf=3Dtrue causes a CRLF file to be normalized' =
-'
-=20
- 	# Backwards compatibility check
--	rm -f .gitattributes tmp one two three &&
--	echo "two crlf" > .gitattributes &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
-+	echo "CRLFonly crlf" > .gitattributes &&
- 	git read-tree --reset -u HEAD &&
-=20
- 	# Note, "normalized" means that git will normalize it if added
--	has_cr two &&
--	twodiff=3D$(git diff two) &&
--	test -n "$twodiff"
-+	has_cr CRLFonly &&
-+	CRLFonlydiff=3D$(git diff CRLFonly) &&
-+	test -n "$CRLFonlydiff"
- '
-=20
- test_expect_success 'text=3Dtrue causes a CRLF file to be normalized' =
-'
-=20
--	rm -f .gitattributes tmp one two three &&
--	echo "two text" > .gitattributes &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
-+	echo "CRLFonly text" > .gitattributes &&
- 	git read-tree --reset -u HEAD &&
-=20
- 	# Note, "normalized" means that git will normalize it if added
--	has_cr two &&
--	twodiff=3D$(git diff two) &&
--	test -n "$twodiff"
-+	has_cr CRLFonly &&
-+	CRLFonlydiff=3D$(git diff CRLFonly) &&
-+	test -n "$CRLFonlydiff"
- '
-=20
- test_expect_success 'eol=3Dcrlf gives a normalized file CRLFs with aut=
-ocrlf=3Dfalse' '
-=20
--	rm -f .gitattributes tmp one two three &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
- 	git config core.autocrlf false &&
--	echo "one eol=3Dcrlf" > .gitattributes &&
-+	echo "LFonly eol=3Dcrlf" > .gitattributes &&
- 	git read-tree --reset -u HEAD &&
-=20
--	has_cr one &&
--	onediff=3D$(git diff one) &&
--	test -z "$onediff"
-+	has_cr LFonly &&
-+	LFonlydiff=3D$(git diff LFonly) &&
-+	test -z "$LFonlydiff"
- '
-=20
- test_expect_success 'eol=3Dcrlf gives a normalized file CRLFs with aut=
-ocrlf=3Dinput' '
-=20
--	rm -f .gitattributes tmp one two three &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
- 	git config core.autocrlf input &&
--	echo "one eol=3Dcrlf" > .gitattributes &&
-+	echo "LFonly eol=3Dcrlf" > .gitattributes &&
- 	git read-tree --reset -u HEAD &&
-=20
--	has_cr one &&
--	onediff=3D$(git diff one) &&
--	test -z "$onediff"
-+	has_cr LFonly &&
-+	LFonlydiff=3D$(git diff LFonly) &&
-+	test -z "$LFonlydiff"
- '
-=20
- test_expect_success 'eol=3Dlf gives a normalized file LFs with autocrl=
-f=3Dtrue' '
-=20
--	rm -f .gitattributes tmp one two three &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
- 	git config core.autocrlf true &&
--	echo "one eol=3Dlf" > .gitattributes &&
-+	echo "LFonly eol=3Dlf" > .gitattributes &&
- 	git read-tree --reset -u HEAD &&
-=20
--	! has_cr one &&
--	onediff=3D$(git diff one) &&
--	test -z "$onediff"
-+	! has_cr LFonly &&
-+	LFonlydiff=3D$(git diff LFonly) &&
-+	test -z "$LFonlydiff"
- '
-=20
- test_expect_success 'autocrlf=3Dtrue does not normalize CRLF files' '
-=20
--	rm -f .gitattributes tmp one two three &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
- 	git config core.autocrlf true &&
- 	git read-tree --reset -u HEAD &&
-=20
--	has_cr one &&
--	has_cr two &&
--	onediff=3D$(git diff one) &&
--	twodiff=3D$(git diff two) &&
--	threediff=3D$(git diff three) &&
--	test -z "$onediff" && test -z "$twodiff" && test -z "$threediff"
-+	has_cr LFonly &&
-+	has_cr CRLFonly &&
-+	LFonlydiff=3D$(git diff LFonly) &&
-+	CRLFonlydiff=3D$(git diff CRLFonly) &&
-+	LFwithNULdiff=3D$(git diff LFwithNUL) &&
-+	test -z "$LFonlydiff" -a -z "$CRLFonlydiff" -a -z "$LFwithNULdiff"
- '
-=20
- test_expect_success 'text=3Dauto, autocrlf=3Dtrue _does_ normalize CRL=
-=46 files' '
-=20
--	rm -f .gitattributes tmp one two three &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
- 	git config core.autocrlf true &&
- 	echo "* text=3Dauto" > .gitattributes &&
- 	git read-tree --reset -u HEAD &&
-=20
--	has_cr one &&
--	has_cr two &&
--	onediff=3D$(git diff one) &&
--	twodiff=3D$(git diff two) &&
--	threediff=3D$(git diff three) &&
--	test -z "$onediff" && test -n "$twodiff" && test -z "$threediff"
-+	has_cr LFonly &&
-+	has_cr CRLFonly &&
-+	LFonlydiff=3D$(git diff LFonly) &&
-+	CRLFonlydiff=3D$(git diff CRLFonly) &&
-+	LFwithNULdiff=3D$(git diff LFwithNUL) &&
-+	test -z "$LFonlydiff" -a -n "$CRLFonlydiff" -a -z "$LFwithNULdiff"
- '
-=20
- test_expect_success 'text=3Dauto, autocrlf=3Dtrue does not normalize b=
-inary files' '
-=20
--	rm -f .gitattributes tmp one two three &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
- 	git config core.autocrlf true &&
- 	echo "* text=3Dauto" > .gitattributes &&
- 	git read-tree --reset -u HEAD &&
-=20
--	! has_cr three &&
--	threediff=3D$(git diff three) &&
--	test -z "$threediff"
-+	! has_cr LFwithNUL &&
-+	LFwithNULdiff=3D$(git diff LFwithNUL) &&
-+	test -z "$LFwithNULdiff"
- '
-=20
- test_expect_success 'eol=3Dcrlf _does_ normalize binary files' '
-=20
--	rm -f .gitattributes tmp one two three &&
--	echo "three eol=3Dcrlf" > .gitattributes &&
-+	rm -f .gitattributes tmp LFonly CRLFonly LFwithNUL &&
-+	echo "LFwithNUL eol=3Dcrlf" > .gitattributes &&
- 	git read-tree --reset -u HEAD &&
-=20
--	has_cr three &&
--	threediff=3D$(git diff three) &&
--	test -z "$threediff"
-+	has_cr LFwithNUL &&
-+	LFwithNULdiff=3D$(git diff LFwithNUL) &&
-+	test -z "$LFwithNULdiff"
- '
-=20
- test_done
---=20
-2.0.0.9631.g7e872d2
+Thanks,
+Christian.
