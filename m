@@ -1,189 +1,89 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH v2 2/2] git-merge-file: do not add LF at EOF while applying unrelated change
-Date: Sun, 29 Jun 2014 01:04:46 +0300
-Message-ID: <1403993086-15625-3-git-send-email-max@max630.net>
-References: <1403993086-15625-1-git-send-email-max@max630.net>
-Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>
-To: Bert Wesarg <bert.wesarg@googlemail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Jun 29 00:13:40 2014
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: What's cooking in git.git (Jun 2014, #06; Thu, 26)
+Date: Sun, 29 Jun 2014 07:33:20 +0700
+Message-ID: <CACsJy8CXLO2Tt_poChMkT7CPyUaY4gbF1cdsscDH3LsUaJRxPA@mail.gmail.com>
+References: <xmqqvbrn2utv.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jun 29 02:37:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X10sN-0002ym-Eq
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 00:13:39 +0200
+	id 1X137R-0008Ak-3x
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 02:37:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751548AbaF1WNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2014 18:13:35 -0400
-Received: from p3plsmtpa06-07.prod.phx3.secureserver.net ([173.201.192.108]:38291
-	"EHLO p3plsmtpa06-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750944AbaF1WNf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Jun 2014 18:13:35 -0400
-X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Jun 2014 18:13:06 EDT
-Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa06-07.prod.phx3.secureserver.net with 
-	id Ky521o00K3gsSd601y5EdL; Sat, 28 Jun 2014 15:05:18 -0700
-X-Mailer: git-send-email 2.0.0.526.g5318336
-In-Reply-To: <1403993086-15625-1-git-send-email-max@max630.net>
+	id S1751464AbaF2Adw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Jun 2014 20:33:52 -0400
+Received: from mail-qg0-f53.google.com ([209.85.192.53]:42845 "EHLO
+	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751281AbaF2Adv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Jun 2014 20:33:51 -0400
+Received: by mail-qg0-f53.google.com with SMTP id i50so783943qgf.40
+        for <git@vger.kernel.org>; Sat, 28 Jun 2014 17:33:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=BjKCP75KCp4ViG5KkYBF0j0C9rqxLFIrUVeLgRlA6XI=;
+        b=zVaW6G1jgidCHezmi/CHDRz4IIKPuXtGXy+/0bb5vb4vf93GBy5xs6zsvi8wQyCfJz
+         Yhvlu8Rj9C6CMw2HzAK3Pcc2cjkunOeCqDoNTZ8tRXtvBEtkbQ8Kq+bCcHYRD+zS2tA1
+         8aJqCLhCxWExrxCk4wv9V1UIgmxq/PpeeO3hDw3ok92j1Hr1qEp3HYAw6wqf1PHNdhP/
+         eyZCgNpksJSCTPMmIIoR6OJwU6CQkv8Qwk/fXb9Oy4Pn2ihlG7evsguZSYih261tp9Bl
+         jv+70VLKjvObA62n/Qzqf8HjAwrc+SvkXpwnD7SYsaqItKbCUYaj6Lts5n3NQFgHwu/R
+         FYYw==
+X-Received: by 10.224.2.74 with SMTP id 10mr47311823qai.89.1404002030944; Sat,
+ 28 Jun 2014 17:33:50 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Sat, 28 Jun 2014 17:33:20 -0700 (PDT)
+In-Reply-To: <xmqqvbrn2utv.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252623>
 
-If 'current-file' does not contain LF at EOF, and change between
-'base-file' and 'other-file' does not change any line close to EOF, the
-3-way merge should not add LF to EOF.  This is what 'diff3 -m' does, and
-seems to be a reasonable expectation.
+On Fri, Jun 27, 2014 at 5:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> * nd/split-index (2014-06-13) 32 commits
+>  - t1700: new tests for split-index mode
+>  - t2104: make sure split index mode is off for the version test
+>  - read-cache: force split index mode with GIT_TEST_SPLIT_INDEX
+>  - read-tree: note about dropping split-index mode or index version
+>  - read-tree: force split-index mode off on --index-output
+>  - rev-parse: add --shared-index-path to get shared index path
+>  - update-index --split-index: do not split if $GIT_DIR is read only
+>  - update-index: new options to enable/disable split index mode
+>  - split-index: strip pathname of on-disk replaced entries
+>  - split-index: do not invalidate cache-tree at read time
+>  - split-index: the reading part
+>  - split-index: the writing part
+>  - read-cache: mark updated entries for split index
+>  - read-cache: save deleted entries in split index
+>  - read-cache: mark new entries for split index
+>  - read-cache: split-index mode
+>  - read-cache: save index SHA-1 after reading
+>  - entry.c: update cache_changed if refresh_cache is set in checkout_entry()
+>  - cache-tree: mark istate->cache_changed on prime_cache_tree()
+>  - cache-tree: mark istate->cache_changed on cache tree update
+>  - cache-tree: mark istate->cache_changed on cache tree invalidation
+>  - unpack-trees: be specific what part of the index has changed
+>  - resolve-undo: be specific what part of the index has changed
+>  - update-index: be specific what part of the index has changed
+>  - read-cache: be specific what part of the index has changed
+>  - read-cache: be strict about "changed" in remove_marked_cache_entries()
+>  - read-cache: store in-memory flags in the first 12 bits of ce_flags
+>  - read-cache: relocate and unexport commit_locked_index()
+>  - read-cache: new API write_locked_index instead of write_index/write_cache
+>  - sequencer: do not update/refresh index if the lock cannot be held
+>  - ewah: delete unused ewah_read_mmap_native declaration
+>  - ewah: fix constness of ewah_read_mmap
+>
+>  What's the doneness of this one?
 
-The change which introduced the behavior is cd1d61c44f. It always calls
-function xdl_recs_copy() for sides with add_nl == 1. In fact, it looks
-like the only case when this is needed is when 2 files are being
-union-merged, and they do not have LF at EOF (strictly speaking, the
-first of them).
-
-Add tests:
-* "merge without conflict (missing LF at EOF, away from change in the
-other file)" and "merge does not add LF away of change", to demonstrate
-the changed behavior.
-* "conflict at EOF without LF resolved by --union", to verify that the
-union-merge at the end inerts newline between versions.
-* some more tests which I felt like not covering the functionality well
-
-Signed-off-by: Max Kirillov <max@max630.net>
----
- t/t6023-merge-file.sh | 85 +++++++++++++++++++++++++++++++++++++++++++++++++++
- xdiff/xmerge.c        |  4 +--
- 2 files changed, 87 insertions(+), 2 deletions(-)
-
-diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
-index 6da921c..59ae712 100755
---- a/t/t6023-merge-file.sh
-+++ b/t/t6023-merge-file.sh
-@@ -83,6 +83,23 @@ test_expect_failure "merge without conflict (missing LF at EOF)" \
- test_expect_failure "merge result added missing LF" \
- 	"test_cmp test.txt test2.txt"
- 
-+cp new4.txt test3.txt
-+test_expect_success "merge without conflict (missing LF at EOF, away from change in the other file)" \
-+	"git merge-file --quiet test3.txt new2.txt new3.txt"
-+
-+cat > expect.txt << EOF
-+DOMINUS regit me,
-+et nihil mihi deerit.
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+EOF
-+printf "propter nomen suum." >> expect.txt
-+
-+test_expect_success "merge does not add LF away of change" \
-+	"test_cmp test3.txt expect.txt"
-+
- cp test.txt backup.txt
- test_expect_success "merge with conflicts" \
- 	"test_must_fail git merge-file test.txt orig.txt new3.txt"
-@@ -107,6 +124,55 @@ EOF
- test_expect_success "expected conflict markers" "test_cmp test.txt expect.txt"
- 
- cp backup.txt test.txt
-+
-+cat > expect.txt << EOF
-+Dominus regit me, et nihil mihi deerit.
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+propter nomen suum.
-+Nam et si ambulavero in medio umbrae mortis,
-+non timebo mala, quoniam tu mecum es:
-+virga tua et baculus tuus ipsa me consolata sunt.
-+EOF
-+test_expect_success "merge conflicting with --ours" \
-+	"git merge-file --ours test.txt orig.txt new3.txt && test_cmp test.txt expect.txt"
-+cp backup.txt test.txt
-+
-+cat > expect.txt << EOF
-+DOMINUS regit me,
-+et nihil mihi deerit.
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+propter nomen suum.
-+Nam et si ambulavero in medio umbrae mortis,
-+non timebo mala, quoniam tu mecum es:
-+virga tua et baculus tuus ipsa me consolata sunt.
-+EOF
-+test_expect_success "merge conflicting with --theirs" \
-+	"git merge-file --theirs test.txt orig.txt new3.txt && test_cmp test.txt expect.txt"
-+cp backup.txt test.txt
-+
-+cat > expect.txt << EOF
-+Dominus regit me, et nihil mihi deerit.
-+DOMINUS regit me,
-+et nihil mihi deerit.
-+In loco pascuae ibi me collocavit,
-+super aquam refectionis educavit me;
-+animam meam convertit,
-+deduxit me super semitas jusitiae,
-+propter nomen suum.
-+Nam et si ambulavero in medio umbrae mortis,
-+non timebo mala, quoniam tu mecum es:
-+virga tua et baculus tuus ipsa me consolata sunt.
-+EOF
-+test_expect_success "merge conflicting with --union" \
-+	"git merge-file --union test.txt orig.txt new3.txt && test_cmp test.txt expect.txt"
-+cp backup.txt test.txt
-+
- test_expect_success "merge with conflicts, using -L" \
- 	"test_must_fail git merge-file -L 1 -L 2 test.txt orig.txt new3.txt"
- 
-@@ -260,4 +326,23 @@ test_expect_success 'marker size' '
- 	test_cmp expect actual
- '
- 
-+printf "line1\nline2\nline3" >nolf-orig.txt
-+printf "line1\nline2\nline3x" >nolf-diff1.txt
-+printf "line1\nline2\nline3y" >nolf-diff2.txt
-+
-+test_expect_success 'conflict at EOF without LF resolved by --ours' \
-+	'git merge-file -p --ours nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
-+	 printf "line1\nline2\nline3x" >expect.txt &&
-+	 test_cmp expect.txt output.txt'
-+
-+test_expect_success 'conflict at EOF without LF resolved by --theirs' \
-+	'git merge-file -p --theirs nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
-+	 printf "line1\nline2\nline3y" >expect.txt &&
-+	 test_cmp expect.txt output.txt'
-+
-+test_expect_success 'conflict at EOF without LF resolved by --union' \
-+	'git merge-file -p --union nolf-diff1.txt nolf-orig.txt nolf-diff2.txt >output.txt &&
-+	 printf "line1\nline2\nline3x\nline3y" >expect.txt &&
-+	 test_cmp expect.txt output.txt'
-+
- test_done
-diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
-index 9e13b25..625198e 100644
---- a/xdiff/xmerge.c
-+++ b/xdiff/xmerge.c
-@@ -245,11 +245,11 @@ static int xdl_fill_merge_buffer(xdfenv_t *xe1, const char *name1,
- 					      dest ? dest + size : NULL);
- 			/* Postimage from side #1 */
- 			if (m->mode & 1)
--				size += xdl_recs_copy(xe1, m->i1, m->chg1, 1,
-+				size += xdl_recs_copy(xe1, m->i1, m->chg1, (m->mode & 2),
- 						      dest ? dest + size : NULL);
- 			/* Postimage from side #2 */
- 			if (m->mode & 2)
--				size += xdl_recs_copy(xe2, m->i2, m->chg2, 1,
-+				size += xdl_recs_copy(xe2, m->i2, m->chg2, 0,
- 						      dest ? dest + size : NULL);
- 		} else
- 			continue;
+It's done, at least for the extension format and core algorithm. Later
+we may want to automatically re-split the index when too many changes
+are accumulated in the main index.
 -- 
-2.0.0.526.g5318336
+Duy
