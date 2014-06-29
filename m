@@ -1,89 +1,89 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Jun 2014, #06; Thu, 26)
-Date: Sun, 29 Jun 2014 07:33:20 +0700
-Message-ID: <CACsJy8CXLO2Tt_poChMkT7CPyUaY4gbF1cdsscDH3LsUaJRxPA@mail.gmail.com>
-References: <xmqqvbrn2utv.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2 2/4] fsck: do not die when not enough memory to examine
+ a pack entry
+Date: Sun, 29 Jun 2014 07:40:19 +0700
+Message-ID: <CACsJy8C8TkQLNXdz=D8YC8TjSEP1nth8LmvftJYSG0bTRvqU7A@mail.gmail.com>
+References: <1401368227-14469-1-git-send-email-pclouds@gmail.com>
+ <1403610336-27761-1-git-send-email-pclouds@gmail.com> <1403610336-27761-2-git-send-email-pclouds@gmail.com>
+ <xmqqa98z5yrg.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Dale R. Worley" <worley@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jun 29 02:37:25 2014
+X-From: git-owner@vger.kernel.org Sun Jun 29 02:40:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X137R-0008Ak-3x
-	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 02:37:21 +0200
+	id 1X13As-0001YA-OD
+	for gcvg-git-2@plane.gmane.org; Sun, 29 Jun 2014 02:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbaF2Adw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Jun 2014 20:33:52 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:42845 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751281AbaF2Adv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Jun 2014 20:33:51 -0400
-Received: by mail-qg0-f53.google.com with SMTP id i50so783943qgf.40
-        for <git@vger.kernel.org>; Sat, 28 Jun 2014 17:33:51 -0700 (PDT)
+	id S1751750AbaF2Akv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Jun 2014 20:40:51 -0400
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:45300 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751409AbaF2Aku convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Jun 2014 20:40:50 -0400
+Received: by mail-qg0-f47.google.com with SMTP id q108so791145qgd.34
+        for <git@vger.kernel.org>; Sat, 28 Jun 2014 17:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=BjKCP75KCp4ViG5KkYBF0j0C9rqxLFIrUVeLgRlA6XI=;
-        b=zVaW6G1jgidCHezmi/CHDRz4IIKPuXtGXy+/0bb5vb4vf93GBy5xs6zsvi8wQyCfJz
-         Yhvlu8Rj9C6CMw2HzAK3Pcc2cjkunOeCqDoNTZ8tRXtvBEtkbQ8Kq+bCcHYRD+zS2tA1
-         8aJqCLhCxWExrxCk4wv9V1UIgmxq/PpeeO3hDw3ok92j1Hr1qEp3HYAw6wqf1PHNdhP/
-         eyZCgNpksJSCTPMmIIoR6OJwU6CQkv8Qwk/fXb9Oy4Pn2ihlG7evsguZSYih261tp9Bl
-         jv+70VLKjvObA62n/Qzqf8HjAwrc+SvkXpwnD7SYsaqItKbCUYaj6Lts5n3NQFgHwu/R
-         FYYw==
-X-Received: by 10.224.2.74 with SMTP id 10mr47311823qai.89.1404002030944; Sat,
- 28 Jun 2014 17:33:50 -0700 (PDT)
-Received: by 10.96.66.129 with HTTP; Sat, 28 Jun 2014 17:33:20 -0700 (PDT)
-In-Reply-To: <xmqqvbrn2utv.fsf@gitster.dls.corp.google.com>
+         :cc:content-type:content-transfer-encoding;
+        bh=mIwVxPDkqhMqdOrLZMwfN16RJsNxxqBFqFpPz1PkB1Q=;
+        b=0lCOO6fC83VMdOIg3pII3kDeIJ+1dsiji9fSEaEk9H0H8x8h8NBtk+EYZCEK0MA/Cr
+         o/DdEPmigPC2PAEGS2aP5Z6DJ0f9fbFdBybComg9voaK59JNRQEqdNdaEAczqQZSta2g
+         SnWRGrZ7ZlHdTLzc4eaPAyl4uIRAlDOnhtm7mMVIlNV69rzyPbTusLPfDwC/dC7C1TYv
+         h4Sr7wYhYtikfbnS/zteUahBLBSl4bE3+VdtjpB3B45CVbHSgQQmaBZHyjLQEhIes5k8
+         DGRRuzexrZCuaVR0evZl/Q0xLi/yde/WjYOIdm/zj6tCJozCOYTesCwfbgHPwE21eiiT
+         7Mkw==
+X-Received: by 10.140.24.76 with SMTP id 70mr1048624qgq.30.1404002449839; Sat,
+ 28 Jun 2014 17:40:49 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Sat, 28 Jun 2014 17:40:19 -0700 (PDT)
+In-Reply-To: <xmqqa98z5yrg.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252624>
 
-On Fri, Jun 27, 2014 at 5:02 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> * nd/split-index (2014-06-13) 32 commits
->  - t1700: new tests for split-index mode
->  - t2104: make sure split index mode is off for the version test
->  - read-cache: force split index mode with GIT_TEST_SPLIT_INDEX
->  - read-tree: note about dropping split-index mode or index version
->  - read-tree: force split-index mode off on --index-output
->  - rev-parse: add --shared-index-path to get shared index path
->  - update-index --split-index: do not split if $GIT_DIR is read only
->  - update-index: new options to enable/disable split index mode
->  - split-index: strip pathname of on-disk replaced entries
->  - split-index: do not invalidate cache-tree at read time
->  - split-index: the reading part
->  - split-index: the writing part
->  - read-cache: mark updated entries for split index
->  - read-cache: save deleted entries in split index
->  - read-cache: mark new entries for split index
->  - read-cache: split-index mode
->  - read-cache: save index SHA-1 after reading
->  - entry.c: update cache_changed if refresh_cache is set in checkout_entry()
->  - cache-tree: mark istate->cache_changed on prime_cache_tree()
->  - cache-tree: mark istate->cache_changed on cache tree update
->  - cache-tree: mark istate->cache_changed on cache tree invalidation
->  - unpack-trees: be specific what part of the index has changed
->  - resolve-undo: be specific what part of the index has changed
->  - update-index: be specific what part of the index has changed
->  - read-cache: be specific what part of the index has changed
->  - read-cache: be strict about "changed" in remove_marked_cache_entries()
->  - read-cache: store in-memory flags in the first 12 bits of ce_flags
->  - read-cache: relocate and unexport commit_locked_index()
->  - read-cache: new API write_locked_index instead of write_index/write_cache
->  - sequencer: do not update/refresh index if the lock cannot be held
->  - ewah: delete unused ewah_read_mmap_native declaration
->  - ewah: fix constness of ewah_read_mmap
+On Fri, Jun 27, 2014 at 1:09 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
 >
->  What's the doneness of this one?
+>> fsck is a tool that error() is more preferred than die(), but many
+>
+> "more preferred" without justifying why it is "more preferred" is
+> not quite a justification, is it?  Also, an object failing to load
+> in-core is not a missing object, so if your aim is to let "fsck"
+> diagnose a too-large-to-load object as missing and let it continue,
+> I do not know if it is "more preferred" in the first place.  Adding
+> a "too large--cannot check" bin of objects may be needed for it to
+> be useful.  Also, we might need to give at the end "oh by the way,
+> because we couldn't read some objects to even determine its type,
+> the unreachable report from this fsck run is totally useless."
 
-It's done, at least for the extension format and core algorithm. Later
-we may want to automatically re-split the index when too many changes
-are accumulated in the main index.
--- 
+=46air enough. I think avoiding dying in xmalloc() in this code path is
+still a good thing. At least "failed to read object %s" is more
+informative than simply "Out of memory". The error cascading effect in
+fsck is something I think we already have. I'll try to rephrase the
+commit message. But if you think this is not a good direction,
+dropping it is not so bad.
+
+I'm going to look at xmalloc() in unpack-objects. That's where we
+really should not abort because of memory shortage as the user may try
+to get as many objects as possible out of the pack.
+
+> The log message tries to justify that this may be a good thing for
+> "fsck", but the patch actually tries to change the behaviour of all
+> code paths that try to load an object in-core without considering
+> the ramifications of such a change.  I _think_ all callers should be
+> prepared to receive NULL when we encounter a corrupt object (and
+> otherwise we should fix them), but it is unclear how much audit of
+> the callers (if any) was done to prepare this change.
+--=20
 Duy
