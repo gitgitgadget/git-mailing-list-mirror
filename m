@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/9] add strip_suffix function
-Date: Mon, 30 Jun 2014 12:57:51 -0400
-Message-ID: <20140630165751.GB16637@sigill.intra.peff.net>
+Subject: [PATCH 3/9] implement ends_with via strip_suffix
+Date: Mon, 30 Jun 2014 12:58:08 -0400
+Message-ID: <20140630165808.GC16637@sigill.intra.peff.net>
 References: <20140630165526.GA15690@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -9,112 +9,95 @@ Cc: Duy Nguyen <pclouds@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Mon Jun 30 18:58:09 2014
+X-From: git-owner@vger.kernel.org Mon Jun 30 18:58:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1eu0-0000z9-Ia
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 18:58:00 +0200
+	id 1X1euI-00019Q-CF
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 18:58:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755990AbaF3Q5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2014 12:57:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53645 "HELO peff.net"
+	id S1756712AbaF3Q6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2014 12:58:11 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53650 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754728AbaF3Q5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2014 12:57:52 -0400
-Received: (qmail 7678 invoked by uid 102); 30 Jun 2014 16:57:52 -0000
+	id S1754567AbaF3Q6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2014 12:58:09 -0400
+Received: (qmail 7702 invoked by uid 102); 30 Jun 2014 16:58:09 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 30 Jun 2014 11:57:52 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Jun 2014 12:57:51 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 30 Jun 2014 11:58:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Jun 2014 12:58:08 -0400
 Content-Disposition: inline
 In-Reply-To: <20140630165526.GA15690@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252685>
 
-Many callers of ends_with want to not only find out whether
-a string has a suffix, but want to also strip it off. Doing
-that separately has two minor problems:
+The ends_with function is essentially a simplified version
+of strip_suffix, in which we throw away the stripped length.
+Implementing it as an inline on top of strip_suffix has two
+advantages:
 
-  1. We often run over the string twice (once to find
-     the suffix, and then once more to find its length to
-     subtract the suffix length).
+  1. We save a bit of duplicated code.
 
-  2. We have to specify the suffix length again, which means
-     either a magic number, or repeating ourselves with
-     strlen("suffix").
-
-Just as we have skip_prefix to avoid these cases with
-starts_with, we can add a strip_suffix to avoid them with
-ends_with.
-
-Note that we add two forms of strip_suffix here: one that
-takes a string, with the resulting length as an
-out-parameter; and one that takes a pointer/length pair, and
-reuses the length as an out-parameter. The latter is more
-efficient when the caller already has the length (e.g., when
-using strbufs), but it can be easy to confuse the two, as
-they take the same number and types of parameters.
-
-For that reason, the "mem" form puts its length parameter
-next to the buffer (since they are a pair), and the string
-form puts it at the end (since it is an out-parameter). The
-compiler can notice when you get the order wrong, which
-should help prevent writing one when you meant the other.
+  2. The suffix is typically a string literal, and we call
+     strlen on it. By making the function inline, many
+     compilers can replace the strlen call with a constant.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I hope the word "strip" is OK, as it does not actually NUL-terminate
-(doing so would make it unusable for many cases). Between the comment
-below and the "const" in the parameter, I think it should be pretty
-clear that it does not touch the string. And I could not think of a
-better word.
-
- git-compat-util.h | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ git-compat-util.h | 7 ++++++-
+ strbuf.c          | 9 ---------
+ 2 files changed, 6 insertions(+), 10 deletions(-)
 
 diff --git a/git-compat-util.h b/git-compat-util.h
-index b6f03b3..d044c42 100644
+index d044c42..4cfde49 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -358,6 +358,33 @@ static inline const char *skip_prefix(const char *str, const char *prefix)
- 	return NULL;
+@@ -347,7 +347,6 @@ extern void set_error_routine(void (*routine)(const char *err, va_list params));
+ extern void set_die_is_recursing_routine(int (*routine)(void));
+ 
+ extern int starts_with(const char *str, const char *prefix);
+-extern int ends_with(const char *str, const char *suffix);
+ 
+ static inline const char *skip_prefix(const char *str, const char *prefix)
+ {
+@@ -385,6 +384,12 @@ static inline int strip_suffix(const char *str, const char *suffix, size_t *len)
+ 	return strip_suffix_mem(str, len, suffix);
  }
  
-+/*
-+ * If buf ends with suffix, return 1 and subtract the length of the suffix
-+ * from *len. Otherwise, return 0 and leave *len untouched.
-+ */
-+static inline int strip_suffix_mem(const char *buf, size_t *len,
-+				   const char *suffix)
++static inline int ends_with(const char *str, const char *suffix)
 +{
-+	size_t suflen = strlen(suffix);
-+	if (*len < suflen || memcmp(buf + (*len - suflen), suffix, suflen))
-+		return 0;
-+	*len -= suflen;
-+	return 1;
-+}
-+
-+/*
-+ * If str ends with suffix, return 1 and set *len to the size of the string
-+ * without the suffix. Otherwise, return 0 and set *len to the size of the
-+ * string.
-+ *
-+ * Note that we do _not_ NUL-terminate str to the new length.
-+ */
-+static inline int strip_suffix(const char *str, const char *suffix, size_t *len)
-+{
-+	*len = strlen(str);
-+	return strip_suffix_mem(str, len, suffix);
++	size_t len;
++	return strip_suffix(str, suffix, &len);
 +}
 +
  #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
  
  #ifndef PROT_READ
+diff --git a/strbuf.c b/strbuf.c
+index ac62982..99dbeba 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -11,15 +11,6 @@ int starts_with(const char *str, const char *prefix)
+ 			return 0;
+ }
+ 
+-int ends_with(const char *str, const char *suffix)
+-{
+-	int len = strlen(str), suflen = strlen(suffix);
+-	if (len < suflen)
+-		return 0;
+-	else
+-		return !strcmp(str + len - suflen, suffix);
+-}
+-
+ /*
+  * Used as the default ->buf value, so that people can always assume
+  * buf is non NULL and ->buf is NUL terminated even for a freshly
 -- 
 2.0.0.566.gfe3e6b2
