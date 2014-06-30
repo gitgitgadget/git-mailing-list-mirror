@@ -1,104 +1,62 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: [PATCH v12 11/11] Documentation: add documentation for 'git interpret-trailers'
-Date: Mon, 30 Jun 2014 13:57:40 +0200
-Message-ID: <53B150B4.1030303@gmail.com>
-References: <20140525051254.5329.66539.chriscool@tuxfamily.org> <20140525053223.5329.28002.chriscool@tuxfamily.org>
+From: Christian Halstrick <christian.halstrick@gmail.com>
+Subject: Re: How to populate index/worktree when recursive merge merges
+ multiple common ancestors?
+Date: Mon, 30 Jun 2014 14:48:44 +0200
+Message-ID: <CAENte7i3f_zvPmnPZe2s7guPv03o1d_Ln+nVaj5PYmP8uoK=rw@mail.gmail.com>
+References: <CAENte7jg7RnpEFmZ0QWGw=a-AvAN6AF=cknHXWyTEuo9zq7ERg@mail.gmail.com>
+ <CAJo=hJtLzMqrBf5Y1dzUxi_0nGmY72xURRmcvmjoFD+=j0FCwQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
-	Josh Triplett <josh@joshtriplett.org>,
-	Thomas Rast <tr@thomasrast.ch>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 13:57:57 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Jun 30 14:49:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1aDc-0005K0-AC
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 13:57:56 +0200
+	id 1X1b1F-0000gq-6W
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 14:49:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754239AbaF3L5w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2014 07:57:52 -0400
-Received: from mail-we0-f173.google.com ([74.125.82.173]:57043 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751302AbaF3L5v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2014 07:57:51 -0400
-Received: by mail-we0-f173.google.com with SMTP id t60so8105006wes.4
-        for <git@vger.kernel.org>; Mon, 30 Jun 2014 04:57:49 -0700 (PDT)
+	id S1755595AbaF3MtH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2014 08:49:07 -0400
+Received: from mail-qg0-f42.google.com ([209.85.192.42]:46921 "EHLO
+	mail-qg0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755350AbaF3MtE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2014 08:49:04 -0400
+Received: by mail-qg0-f42.google.com with SMTP id e89so1908448qgf.1
+        for <git@vger.kernel.org>; Mon, 30 Jun 2014 05:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=NMDubG/KXpxOH+hYMZ/Qj3Zw9I5Hb5Yu7Q/2o9pPcc0=;
-        b=Hp5Ke3XyV9NkqNs/88FOmLp9zs2CJM4lbPOk9repHnMIIaPa2BkiCyojAuo1maDwai
-         vXCFcKM9ufw/xhvCjZW4cbjUUIgi7otLdYmIs9M3EsCYFEuMad4CqLGNlU0CaAMENMR+
-         l/BmjCRL4k03X/J2pJ9ZpBu22KPCMtoq1vyl7Y1Vt+s77pJCYoaKFf16C10i7buEMY8v
-         nNFxOFEzIbne8S3VYejYfOtpArJxzCGDJ5owH4djlMMAD6hqoIO9t2+nl3aGdcL165wv
-         6m9K43QcIf4NLrv9w3yZobtrq00wHM2a4NTyTxth6GVRXxcjbLDHrqMwnxDRDMz+5CpY
-         lR6Q==
-X-Received: by 10.180.208.13 with SMTP id ma13mr29183423wic.45.1404129469830;
-        Mon, 30 Jun 2014 04:57:49 -0700 (PDT)
-Received: from [192.168.130.241] ([158.75.2.130])
-        by mx.google.com with ESMTPSA id m3sm30685593wik.7.2014.06.30.04.57.48
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 30 Jun 2014 04:57:49 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <20140525053223.5329.28002.chriscool@tuxfamily.org>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=JTAl7mMa6dXnQnoTu3y7y9Ykr33A6cTdtiudkdlxhgQ=;
+        b=WHtiMdhaKSls0Wtu8d8H82v3I6pOJ8nq9iL7fqMlssC8CXYry35a4daPmPwaV/OCC1
+         TNusez2d3H+91UjCr8LQkWvghgGWHCL8GBvnOax2hYUF2mVfjHzBCviMfzco12fIuivd
+         jFwXULeX8VbHGAngARWqhcOT9+O1FwscCUVETNK5hVQwKSiz+mvXOoDGBaqasA6XYnsJ
+         +3cxNvft+lRJ22C8vmx1Yb2rC0qqMV0KhzPyDh8joUp9bYxO/R29TPIdz0qfcrvo9kFi
+         KyF2fPEM/W9CGtFRBVHOeiZ/IlQ/vA1Yftc7D8R1UbDkaweWYbVpnKCyFp5OpFQGzfYH
+         ryMA==
+X-Received: by 10.224.13.139 with SMTP id c11mr60989647qaa.77.1404132544080;
+ Mon, 30 Jun 2014 05:49:04 -0700 (PDT)
+Received: by 10.96.179.199 with HTTP; Mon, 30 Jun 2014 05:48:44 -0700 (PDT)
+In-Reply-To: <CAJo=hJtLzMqrBf5Y1dzUxi_0nGmY72xURRmcvmjoFD+=j0FCwQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252664>
 
-Christian Couder wrote:
+> They don't. The conflicts are preserved into the virtual ancestor. The
+> user only sees the final conflicts during merging of A and B with
+> virtual X3 as the common ancestor.
 
-> +------------
-> +
-> +* Configure a 'sign' trailer with a command to automatically add a
-> +  'Signed-off-by: ' with the author information only if there is no
-> +  'Signed-off-by: ' already, and show how it works:
-> ++
-> +------------
-> +$ git config trailer.sign.key "Signed-off-by: "
-> +$ git config trailer.sign.ifmissing add
-> +$ git config trailer.sign.ifexists doNothing
-> +$ git config trailer.sign.command 'echo "$(git config user.name) <$(=
-git config user.email)>"'
-> +$ git interpret-trailers <<EOF
-> +> EOF
-
-How to configure git-interpret-trailers command so that it follow
-current rules for DCO:
-* Signed-off-by: is always at bottom; we can have
-   signoff+signoff+ack+signoff
-* Signed-off-by: can repeat itself with the same author;
-   this denotes steps in coming up with current version of the patch.
-* but we shouldn't repeat the same signoff one after another
-
-So we want to allow this:
-
-   Signed-off-by: A U Thor <author@example.com>
-   Signed-off-by: Joe R. Hacker <joe@hacker.com>
-   Acked-by: D E Veloper <developer@example.com>
-   Signed-off-by: C O Mitter <committer@example.com>
-
-but prevent this
-
-   Signed-off-by: C O Mitter <committer@example.com>
-   Signed-off-by: C O Mitter <committer@example.com>
-
-
-IIRC
---=20
-Jakub Nar=C4=99bski
+Ah, now I understand. When I merge X1 and X2 into the virtual X3
+I should not stop if this is not doable without conflict resolution. I
+should store in memory the X3 content, including all the conflict
+markers. If I finally merge A and B I will specify a common base
+content which may contain conflict markers. Right?
+Are git config param's like merge.conflictstyle=diff3 are also
+effective when creating the virtual X3 content? Couldn't that lead to
+complicated conflict marker situations? In the area where you expect
+common base content you again see conflict markers in diff3 style.
