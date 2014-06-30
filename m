@@ -1,122 +1,168 @@
-From: Phil Hord <phil.hord@gmail.com>
-Subject: Re: Trouble merging renamed but identical files - CONFLICT (rename/rename)
-Date: Sun, 29 Jun 2014 21:42:24 -0400
-Message-ID: <CABURp0pwWRjocTbbRLG4tkd_W8ZPswMzwoUhe4geUF6bGdVoKQ@mail.gmail.com>
-References: <CABURp0rFCxxpiQhRYXmN5eBnKhyyOeuFSTj0V1tGZJSNea5iEA@mail.gmail.com>
- <66A60DA77398CD439FA676CEF593977D52477A@exchange.1.internal.pdinc.us>
- <CEAC9BE9F83B4CD0AFD73BBAC8A54232@black> <CABURp0okCDbwLOL3Osj2WtfQ_Qj3v=1FrAV28gJjPy1yzQU7Vg@mail.gmail.com>
- <CABURp0qZVMGMQ8X4P0P1OGF9gNqu__=Uk+Lr7GyBbscm5wL1=w@mail.gmail.com>
- <35E240FD8DD74A2F9B80FFCBD818A122@black> <CABURp0q1u_Hzz2ni63oHuinFpBTCzZ+=-6h5YpC0k_bQ_03TSA@mail.gmail.com>
- <CBA6D67B4439423CB4F73F3DD3C08952@black>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] verify-commit: scriptable commit signature verification
+Date: Sun, 29 Jun 2014 23:14:43 -0700
+Message-ID: <xmqqzjguzzxo.fsf@gitster.dls.corp.google.com>
+References: <20140613080229.GJ7908@sigill.intra.peff.net>
+	<539ACA8A.90108@drmicha.warpmail.net>
+	<20140613110901.GB14066@sigill.intra.peff.net>
+	<xmqqbntw4u4d.fsf@gitster.dls.corp.google.com>
+	<20140616195428.GB24376@sigill.intra.peff.net>
+	<xmqqk38gpp9v.fsf@gitster.dls.corp.google.com>
+	<20140616203956.GA3546@sigill.intra.peff.net>
+	<53AD640A.9060006@drmicha.warpmail.net>
+	<53AD685A.1030401@drmicha.warpmail.net>
+	<xmqqwqc219og.fsf@gitster.dls.corp.google.com>
+	<20140628003246.GA13228@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Jason Pyeron <jpyeron@pdinc.us>
-X-From: git-owner@vger.kernel.org Mon Jun 30 03:42:51 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jun 30 08:15:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1QcL-0004iT-TD
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 03:42:50 +0200
+	id 1X1Url-0006EZ-2F
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 08:15:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753794AbaF3Bmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Jun 2014 21:42:45 -0400
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:60892 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753407AbaF3Bmp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Jun 2014 21:42:45 -0400
-Received: by mail-vc0-f171.google.com with SMTP id id10so6890098vcb.16
-        for <git@vger.kernel.org>; Sun, 29 Jun 2014 18:42:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=LfDASqrfShIx8o30InKznkL267kX+nbfzn5z/DCYtRk=;
-        b=PBsOCHRvMAfLrRhyIL7S4TB32a6HkzNJJtrKRxnv/oYrRfthOKtjJ7+4/FTFAb6Y/u
-         0lDzR3j3iVE4PGnZ77V6CGj/b1Yr9Tm3leuvXtbC9a6SPo++NYPpaeznh26k0nTRjftN
-         aKoRgoADR4LAfP9yZF8HzrUFYi+q3EkaWfBazyRG+ADPtoxQnpy5Y5Ov3W5FAdLUVq5N
-         2/Qn83ibd0CT6QEr/TEjhd5CJ2BQPKsluIgmR5EooBBVcag6BoINsmm06jOIQBiAzhj+
-         dGwWjLrMEv2uKRyy5VGaXWscPm22Irv7DKyzaiVYhI0nR0N2/5Qzt+7/shm18WyvJ7GP
-         9UzA==
-X-Received: by 10.52.96.8 with SMTP id do8mr29353808vdb.4.1404092564490; Sun,
- 29 Jun 2014 18:42:44 -0700 (PDT)
-Received: by 10.58.67.168 with HTTP; Sun, 29 Jun 2014 18:42:24 -0700 (PDT)
-In-Reply-To: <CBA6D67B4439423CB4F73F3DD3C08952@black>
+	id S1752290AbaF3GO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2014 02:14:57 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61349 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751150AbaF3GO4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2014 02:14:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id ADC611D1B9;
+	Mon, 30 Jun 2014 02:14:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=p5gHIQtWIWR8WRG2RwOceKRvmGs=; b=j65rE5
+	TIqWXEYi/Zih6+2BlCTajBvoOHiet3VWjImPCuZljcxJNcaWs+lamwJSG2APG9aD
+	X9AUuC0SDvIRlaazzwx1eXWp7IAaV1yk1ZvQ3jeb/5i9NObS8bjeqvDxbh3+4lPS
+	f8LaCdnp48jTChaGDlNhgqm7N/19Z6L3hg42o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mtfmihWwwBm2W7lZ7owgeGYLBiiE1L02
+	Lk5f16pTLyHRQV4Wqt4au/7Eb9euno00OPF+xn7A8xIZrmBUKX7rDtqa2D3XzkB8
+	60Xug1sk5szDU1E2i2HVfpQWjaWUwWHwD/8Q5zLad7cL5JMz5CuBcaWFqDMpa7Jj
+	nQ+VfF66bGQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A300A1D1B8;
+	Mon, 30 Jun 2014 02:14:41 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C13081D1B4;
+	Mon, 30 Jun 2014 02:14:36 -0400 (EDT)
+In-Reply-To: <20140628003246.GA13228@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 27 Jun 2014 20:32:46 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CFC88822-001D-11E4-9EE2-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252652>
 
-On Sun, Jun 29, 2014 at 5:13 PM, Jason Pyeron <jpyeron@pdinc.us> wrote:
->> -----Original Message-----
->> From: Phil Hord
->> Sent: Sunday, June 29, 2014 16:27
->>
->> On Sun, Jun 29, 2014 at 4:20 PM, Jason Pyeron
->> <jpyeron@pdinc.us> wrote:
->> >> -----Original Message-----
->> >> From: Phil Hord
->> >> Sent: Sunday, June 29, 2014 16:09
->> >>
->> >> On Sun, Jun 29, 2014 at 11:31 AM, Phil Hord
->> >> <phil.hord@gmail.com> wrote:
->> >> > On Fri, Jun 27, 2014 at 8:42 PM, Jason Pyeron
->> >> <jpyeron@pdinc.us> wrote:
->> >> >> Sorry for the http://pastebin.com/1R68v6jt (changes the merge to
->> >> >> 1ca13ed2271d60ba93d40bcc8db17ced8545f172, and manually
->> >> reconciles the merge),
->> >> >> but it was too long to be readable in the email.
->> >>
->> >> Ok, I think I understand the issue you are trying to solve now.
->> >>
->> >> Git (rather famously[1]) does not record renames or copies.  It is
->> >> expected instead that renames and copies will be detected
->> when it is
->> >> important after the fact. This allows us to ignore rename detection
->> >> and resolution when creating project history; in the future, better
->> >> rename/copy detection will "just work" on existing repositories and
->> >> the repos themselves will not need to be adjusted.
->> >
->> > Looking at http://pastebin.com/1R68v6jt , I have a work around.
->> >
->> > In summary, 7.git cherry-pick -x HEAD..rebranding , then
->> >
->> > git merge $(echo 'Merge of
->> 1ca13ed2271d60ba93d40bcc8db17ced8545f172 branch -
->> > rebranding' |\
->> >     git commit-tree -p HEAD -p rebranding \
->> >          $(git cat-file -p HEAD | grep ^tree | sed -e
->> 's/^tree //') )
->> >
->> > Now it is perfect in the blame and log --graph.
->>
->> Yes, but your workaround unnecessarily duplicates commits and
->> complicates the history of your project. You are munging your project
+Jeff King <peff@peff.net> writes:
+
+> First off, I agree that "verify-tag" is probably not the right place.
+> There _is_ no tag object to verify anymore (the only reason it is a tag
+> at all is that the signature came out of what once was a tag).
+
+Yes, if we imagine that the header were called "mergesig", it may be
+more apparent what it is.  Similar to the commit signature itself
+(which gives GPG protection over the commit itself), a "mergesig"
+covers one of the parent commit object name recorded in the commit.
+
+You could look at it as one aspect of the child commit object being
+verified, and that is why I would suggest it is the responsibility
+of verify-commit that is run on the child commit (I saw suggestions
+to verify other aspects such as "author ident matches the GPG signer
+of the signature on the commit itself", etc.)
+
+> Let us imagine that we have a "verify-commit" that verifies commit
+> signatures made by "commit -S". If I run "verify-commit foo", that
+> implies to me two things:
 >
-> But I want to avoid thet complicating, while still showing that line 42 was
-> modified by X. Should this be possible with a merge, without using cherry-pick?
+>   1. I am verifying the signature over the contents of "foo".
+>
+>      But the mergetag is _not_ a statement about "foo"; the person who
+>      signed it never saw "foo". It is a statement about foo^2 at best,
+>      or possibly about the whole history of foo^1..foo^2.
+>
+>   2. I am verifying _only_ the contents of foo. That is, I expect people
+>      to use "commit -S" to cryptographically claim authorship of a
+>      commit. Whereas with tags, I think we have typically taken them to
+>      mean "I have signed the tip of a segment of history, and I am
+>      taking responsibility for the final state" (e.g., signing release
+>      tags).
 
-I think it should.  But there are other complications in your project
-which may be getting in the way. You are merging two branches with no
-common ancestor.  When git walks down either path looking for the
-source commit for each line, it finds two sources for it.  For
-example, it reaches commit 39ebb06 which appears to be the origin of
-all lines in that file since it has no parent. I imagine this could
-act as a short-circuit to further searching.  Furthermore, I'm not
-sure how git should know any better.
+I think you are making it too hard ;-).  Fundamentally, a signature
+on a commit object itself _can_ be used to attest _some_ property
+about the whole history behind it by the signer, but it does not
+prevent a project from adopting a lot looser convention.  If a
+project's stance is "commit signature in this project is about the
+contents of the tree" (i.e. the signer does not have much confidence
+in his memory on how he got there), the result from verify-commit on
+the signature of the commit itself should be interpreted in the
+context of such a project as such---the signer is confident that the
+tree matches what he signed and the signature wouldn't mean any more
+than that.
 
-It seems you already have a merge point for these two branches, but I
-haven't looked deeply into how that merge was done.  But I think the
-multiple disconnected branch histories may be the cause of the
-confusion.
+>      I realize that this claim is somewhat tenuous. It's not something
+>      inherent in the crypto, but rather in the social convention of what
+>      it means to sign a commit.
 
-> Btw I am not able to pull up https://git.wiki.kernel.org/ or
-> http://git.wiki.kernel.org/
+Yup, I think we are on the same page.
 
+>      But I would ask, then: what
+>      is the point of signing a commit versus signing a tag?  I think
+>      that people who wanted commit signatures wanted them to give a
+>      stronger guarantee of authorship of individual commits.
 
-That is strange.  It works for me here, and I am just a user like you.
+There are practical concerns.
 
-Phil
+ - tags are easier to manage because you can make a commit, give it
+   out for trials by guinea pigs and then after it proves good, you
+   can add a signed tag after the fact without rewriting the commit
+   itself.  Incidentally, this is the primary reason behind the
+   design of mergetags that were introduced after the k.org break-in
+   fiasco.
+
+   Theoretically you could have argued that lieutenants can sign the
+   commits they want Linus to pull and we wouldn't have had to add
+   anything to the system to support the new "not only we can use
+   third-party publishing sites that we do not know how much we can
+   trust, such as GitHub, we do not even have to trust k.org blindly"
+   workflow.  But they really wanted to be able to commit first,
+   let time pass and then sign to request pulling.
+
+ - tags are a lot more cumbersome if you want to sign each and every
+   commit (which some of us view as pointless, given the chain of
+   SHA-1 hashes our history storage is based on), because you end up
+   having to name, keep and transfer O(n) refs to represent them for
+   the history of project of size n.  Embedding signature in each
+   commit would be the only workable way if somebody wants to sign
+   each and every commit.
+
+>      Git has largely stayed agnostic about what such signatures mean.
+>      But if we accept that some projects _are_ going to make that
+>      distinction, I think conflating verification of the two within the
+>      same command leads to a potential for confusion.
+
+I agree that the users and scripts must be able to inspect the
+validity of "gpgsig" and "mergetag"(s) separately.  When you inspect
+a merge commit, if gpgsig verifies but mergetag does not, we know
+that the integrator created and signed the merge but we do not know
+if the lieutenant whose name appears on the mergetag really asked
+the side branch to be pulled, or if the merge was made in response
+to a request by an imposter.  For that matter, when verifying an
+octopus merge, we must be able to see the validity of "mergetag" for
+each parent separately.  We can do that by having two separate
+commands (one to verify "gpgsig", the other to verify "mergetag"),
+or we can do that with a separate command line options to a single
+command ("verify-commit --gpgsig" and "verify-commit --mergsig <n>")
+or a single "verify-commit" may report multi-values to its output
+for scripts to parse.  I do not have a strong opinion.
