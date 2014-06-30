@@ -1,90 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v12 11/11] Documentation: add documentation for 'git interpret-trailers'
-Date: Sun, 29 Jun 2014 23:40:22 -0700
-Message-ID: <xmqqmwcuzyqx.fsf@gitster.dls.corp.google.com>
-References: <20140525051254.5329.66539.chriscool@tuxfamily.org>
-	<20140525053223.5329.28002.chriscool@tuxfamily.org>
-	<xmqqegzdd7cm.fsf@gitster.dls.corp.google.com>
-	<20140629.113731.1129545703421115235.chriscool@tuxfamily.org>
+From: Gary Fixler <gfixler@gmail.com>
+Subject: `git log --graph` with multiple roots is confusing
+Date: Sun, 29 Jun 2014 23:40:40 -0700
+Message-ID: <CALygMcDXjMUcq=8ERVTES+5qNjLMe_OFPbmeqAosU7qmk=QuUQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johan@herland.net, josh@joshtriplett.org,
-	tr@thomasrast.ch, mhagger@alum.mit.edu, dan.carpenter@oracle.com,
-	greg@kroah.com, peff@peff.net, sunshine@sunshineco.com,
-	ramsay@ramsay1.demon.co.uk, jrnieder@gmail.com
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Jun 30 08:40:36 2014
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 30 08:40:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1VGV-00059g-JB
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 08:40:35 +0200
+	id 1X1VGf-0005CH-Lv
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 08:40:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbaF3Gkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2014 02:40:31 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59544 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751307AbaF3Gkb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2014 02:40:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7C3991D57D;
-	Mon, 30 Jun 2014 02:40:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=f85xZPtIer1q0l7PbrUlYdUGuk0=; b=GGM6Li
-	na8lPEBbjcppbhJlGxpXDJbHleVO9t8n9p9992+1QZ6t8HHHV08azroPLwM2OE/n
-	3U8u64V+5JF8rfcv89flB5lTzuU6vHeZXYirrQhHS819pPwtVQ4wdA789WsY7u40
-	efYETvQHylmQERXd1DGw0PiqcwnbgJMqpb2bw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=B8jpYmX3plBFZ/CSfd534DCe+GESmtEE
-	wgert1bZFI2lNWqh1TN9UV8HDXW2OH7px2MUOEzjL5kM9fVXy4y18EHE7G50Mwc1
-	oeqOcjX8hkCDJzOrfHUYMjLPpyY1I9e9p0twqzT8tpwJ8carN9wf+ByQ6GQeHKGn
-	7TiPJBfCFQg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EEA7F1D57C;
-	Mon, 30 Jun 2014 02:40:20 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 92FB81D572;
-	Mon, 30 Jun 2014 02:40:15 -0400 (EDT)
-In-Reply-To: <20140629.113731.1129545703421115235.chriscool@tuxfamily.org>
-	(Christian Couder's message of "Sun, 29 Jun 2014 11:37:31 +0200
-	(CEST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 65068A80-0021-11E4-AC8A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753338AbaF3Gkm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2014 02:40:42 -0400
+Received: from mail-we0-f170.google.com ([74.125.82.170]:47461 "EHLO
+	mail-we0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752524AbaF3Gkl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2014 02:40:41 -0400
+Received: by mail-we0-f170.google.com with SMTP id w61so7487020wes.1
+        for <git@vger.kernel.org>; Sun, 29 Jun 2014 23:40:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=fjz21MPnwdg58XNOyW7EQr8GmwrX8U5y9S3Xd64/OVE=;
+        b=kpWQ0JZGudSCikDDHzwwdCrRXgsYdbUis8oNgFu5YGUsDYLfZp+q4uY40yNDNri17b
+         6wxPYrBnWr/0Mc5hYKOm08yCsoIax5XE/wJy6xtUnw08s8fTYBiGZly2MqH6vLZ+NOJf
+         w9pulzni5wh+PLhECZc5WiquR7il3BmbK8HS16IdEEDdH591iptYcCpy+2a9Kd2HLYe1
+         ixJALvdN5dUCZJXcGFoO5lzcSurV7rceoHt5J2UxDLpFzHdmMB8k0PKce9+Lm357bH0j
+         D6eBj0M1c3YiI2VungpeM1c/KJtaTrGpRIc1kW4DLIqSL60JmB0vSsFeTOZGz8pgS6t1
+         EQCw==
+X-Received: by 10.194.48.103 with SMTP id k7mr41469552wjn.68.1404110440492;
+ Sun, 29 Jun 2014 23:40:40 -0700 (PDT)
+Received: by 10.194.108.5 with HTTP; Sun, 29 Jun 2014 23:40:40 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252657>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+I sometimes pull things in from unrelated repositories to rebase or
+cherry-pick items from a different line of development. I've done this
+to bring isolated features into a project in their own feature
+branches with their full development histories, and also to extract
+lines of development out to their own project, with their histories
+intact. These are usually not connected commits, but things I have to
+track down across time with `git log -S` and friends.
 
->> While I agree with Michael on the other thread that we should limit
->> the syntax and start with ':' only, if you really want to allow
->> random syntax like "Bug #12345" and "Acked-by= Peff", for which you
->> have demonstrations in the tests in the other patch, the above rule
->> should be updated to also allow prefix matches to possible set of
->> keys defined by the user, so that an existing line that is produced
->> by your tool, e.g. "Acked-by= Peff", can be picked up as matching
->> with some token having a key "Acked-by= ".  Otherwise, the input
->> side of your tool is inconsistent with the output side of your own
->> tool, and that will make the flexiblity of the output side useless.
->
-> I don't think that the flexibility of the output side would be
-> useless.
+When I `git remote add otherrepo <url>`, then view things with my
+aliased `git log --oneline --all --graph --decorate` alias, I'm
+usually immediately straining to figure out what's what, as the two
+trees stack onto each other with no separation. It would be nice if
+root commits used something other than *, and/or if they could be
+colored differently by default, or via some option to make them stand
+out as parent-less commits.
 
-Flexibility is useful, only if you can control it.
-
-> We already emit stuff like:
->
-> (cherry picked from commit f72baf07969242882128aff4c95ec8059e7fd054)
->
-> and we don't care about any input side when we do that.
-
-That is something you may want to _fix_, not take as an excuse to
-make things worse, no?
+Is this feasible, or already possible?
