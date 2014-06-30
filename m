@@ -1,135 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git format-patch doesn't add Content-type for UTF-8 diffs
-Date: Mon, 30 Jun 2014 13:30:52 -0400
-Message-ID: <20140630173052.GB16747@sigill.intra.peff.net>
-References: <53B127DD.8000807@cs.ucla.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] notes-util.c: replace git_config with git_config_get_string
+Date: Mon, 30 Jun 2014 10:52:52 -0700
+Message-ID: <xmqqioniz3m3.fsf@gitster.dls.corp.google.com>
+References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>
+	<1403520105-23250-4-git-send-email-tanayabh@gmail.com>
+	<CAPig+cRcbamkpeaoCMQ9yXtYeMEEL-ve--VWKg4MAWeS08Lqyg@mail.gmail.com>
+	<53ABD78E.3050800@gmail.com>
+	<CAPig+cSRBk5Q2amvFXyjH4dpoP83qbYUEUizE7v38Wh8Ofnfpw@mail.gmail.com>
+	<53B16748.8080703@gmail.com> <53B17696.3060808@gmail.com>
+	<53B1889D.3010506@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Paul Eggert <eggert@cs.ucla.edu>
-X-From: git-owner@vger.kernel.org Mon Jun 30 19:31:05 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jun 30 19:53:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1fPu-0001Wi-39
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 19:30:58 +0200
+	id 1X1flJ-0004bJ-N8
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 19:53:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846AbaF3Ray convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Jun 2014 13:30:54 -0400
-Received: from cloud.peff.net ([50.56.180.127]:53699 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751184AbaF3Rax (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2014 13:30:53 -0400
-Received: (qmail 9542 invoked by uid 102); 30 Jun 2014 17:30:53 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 30 Jun 2014 12:30:53 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 30 Jun 2014 13:30:52 -0400
-Content-Disposition: inline
-In-Reply-To: <53B127DD.8000807@cs.ucla.edu>
+	id S1756540AbaF3RxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2014 13:53:00 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52761 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753774AbaF3Rw7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2014 13:52:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CFAF22D6E;
+	Mon, 30 Jun 2014 13:52:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tAtR0gKYOtepsbCa/Z31MWblSmo=; b=PS/PRV
+	1PBpI7UiM8c0h4ru4T6E/+nvByf7/Z/GLV2Zyng0VNHuzeFCrdX8/MRqfuKjok55
+	X8YUwI07aXz/TAkVuewB6ZDz0+C4RDx1dluS1wM4EkVSUG2lUTV6U0f+jbwJH0iu
+	AFIvdE0jV1e1C8JTwGejX1nxZPUgr3/zUI4kw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=du2vju77VwX+EYaqMAgN/C2kTgofWsjt
+	fpnMHui7FoNKeAkuPEDTmYWOmSCtqUpF4C3wKCPy6eBOoBagEYX5fGfg/1nhlBsu
+	s1in0Ch43MedkMIsAwqpUJMOox9xb7860UYVOCFj4Sle9ke5qv0020Rm7AHidaxJ
+	Gr1Gq7f8M2I=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6028322D6B;
+	Mon, 30 Jun 2014 13:52:50 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 47F0622D64;
+	Mon, 30 Jun 2014 13:52:45 -0400 (EDT)
+In-Reply-To: <53B1889D.3010506@gmail.com> (Karsten Blees's message of "Mon, 30
+	Jun 2014 17:56:13 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5746EF26-007F-11E4-A304-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252695>
 
-On Mon, Jun 30, 2014 at 02:03:25AM -0700, Paul Eggert wrote:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-> I've been having trouble sending my Git-generated patches to the tz m=
-ailing
-> list.  Patches containing UTF-8 text are garbled, e.g., if you visit
-> <http://mm.icann.org/pipermail/tz/2014-June/021086.html> you'll see
-> "=C3=83=C5=93r=C3=83=C2=BCmqi" where the patch actually had "=C3=9Cr=C3=
-=BCmqi".
->=20
-> I've tracked this down to the fact that "git format-patch" isn't outp=
-utting
-> a Content-Type: line in the outgoing email.  I thought it was suppose=
-d to do
-> that; the man page implies that it does.
+> Which may not be too harmful in some cases, but if a user changes:
+>
+>  gc.pruneexpire=4.weeks.ago
+>
+> to
+>
+>  gc.pruneexpire=4.monhts.ago
+>
+> (note the typo), the next git-gc will warn the user and then happily throw
+> away data that the user intended to keep (default is 2.weeks.ago).
+>
+> Thus I think git should die() if it encounters an invalid config setting.
 
-format-patch will add a content-type header if the commit message
-contains non-ascii characters, and is marked as an alternate encoding
-(usually this is utf8, but you can use i18n.commitEncoding to store the=
-m
-in a different format).
-
-However, it doesn't look at the filenames or diff contents at all. If i=
-t
-were to do so, it would have to guess at the correct encoding, since gi=
-t
-doesn't know anything about the encoding of filenames or contents.
-Worse, you could actually have several different encodings, across
-multiple files in the same diff.
-
-Typically, the next stage in the pipeline is to give the output to
-send-email, or to a MUA. Send-email will detect high-bit characters in
-this case and ask you which encoding you want. Many MUAs will do some
-kind of auto-detection and fill in the content-type (e.g., I know that
-mutt handles this correctly).
-
-How do you send the mails after they come out of format-patch?
-
-> Here's how I can reproduce the bug with the git 1.9.3 that's shipped =
-with
-> Fedora 20.  Notice that the patch is missing the line "Content-Type:
-> text/plain; charset=3DUTF-8" that the git-format-patch man page impli=
-es it
-> should be generating, and this causes the ICANN email software to
-> misinterpret the patch's character set encoding.
-> [...]
-
-Thanks for the reproduction recipe. While I think we have to accept tha=
-t
-some hard cases (e.g., multiple encodings in a single diff) can't be
-handled cleanly, it would be really nice if this all-utf8 case worked
-out of the box. And perhaps the complex cases could use binary diffs
-when we see multiple encodings.
-
-One tricky thing about the implementation is that we stream the output
-from format-patch, and write the content-type header (if any) before we
-start opening the blobs for diff.
-
-I wonder if it would be enough to do:
-
-  1. Always add a content-type header, even if the commit is utf-8 and
-     contains only ascii characters. This _shouldn't_ hurt anything,
-     though I suppose it would if you have latin1 (for example) commit
-     messages and did not correctly set the encoding header in your
-     commits.
-
-  2. When producing diff header lines do not respect core.quotepath if
-     the filename does is not valid for the encoding we claimed earlier=
-=2E
-
-  3. When producing lines of textual diff, use a binary diff if the
-     contents are not valid for the encoding we claimed earlier.
-
-That would make the utf-8 case "just work", and would prevent us from
-ever sending malformed contents (i.e., mismatched encodings in the
-commit message and diff contents). However, it is not perfect:
-
-  1. Right now if you send a diff for a latin1 file but do not use any
-     non-ascii characters in your commit message (and do not set
-     i18n.commitEncoding, so it is "utf8"), you get no claimed encoding
-     in the email. If your receiving end is OK with that, everything
-     works, and you get to see text diffs.
-
-     So my scheme would be a slight regression there. But it is somewha=
-t
-     of an accident waiting to happen. If you ever use a utf-8 characte=
-r
-     in your commit message, that particular email will be marked as
-     utf-8, and your diff will be broken.
-
-  2. We can only check "is it valid?" for the encoding. That works well
-     with utf-8, which has rules. But for something like latin1 versus
-     another "use a code page for the high-bit bytes" type of encoding,
-     we cannot really tell the difference. However, I do not think we
-     are making anything _worse_ there. You'd already get mojibake in
-     such a case.
-
--Peff
+Yes but not at the parsing time.  Only when we are about to _use_
+the value for pruneexpire as a time duration we should die of the
+error.  Diagnosing an error early is a separate matter, but if the
+operation does not care about the typo we shouldn't die.
