@@ -1,86 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] notes-util.c: replace git_config with git_config_get_string
-Date: Mon, 30 Jun 2014 10:52:52 -0700
-Message-ID: <xmqqioniz3m3.fsf@gitster.dls.corp.google.com>
-References: <1403520105-23250-1-git-send-email-tanayabh@gmail.com>
-	<1403520105-23250-4-git-send-email-tanayabh@gmail.com>
-	<CAPig+cRcbamkpeaoCMQ9yXtYeMEEL-ve--VWKg4MAWeS08Lqyg@mail.gmail.com>
-	<53ABD78E.3050800@gmail.com>
-	<CAPig+cSRBk5Q2amvFXyjH4dpoP83qbYUEUizE7v38Wh8Ofnfpw@mail.gmail.com>
-	<53B16748.8080703@gmail.com> <53B17696.3060808@gmail.com>
-	<53B1889D.3010506@gmail.com>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: Git log --show-signature breaks --graph formatting
+Date: Mon, 30 Jun 2014 13:54:20 -0400
+Organization: PD Inc
+Message-ID: <EFDBC38B50004650A7BA9E8FB6A7F855@black>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 19:53:06 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: "'git'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jun 30 19:54:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1flJ-0004bJ-N8
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 19:53:06 +0200
+	id 1X1fmZ-00059P-8p
+	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 19:54:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756540AbaF3RxA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2014 13:53:00 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52761 "EHLO smtp.pobox.com"
+	id S1756452AbaF3RyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2014 13:54:16 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:33882 "EHLO mail.pdinc.us"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753774AbaF3Rw7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2014 13:52:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6CFAF22D6E;
-	Mon, 30 Jun 2014 13:52:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=tAtR0gKYOtepsbCa/Z31MWblSmo=; b=PS/PRV
-	1PBpI7UiM8c0h4ru4T6E/+nvByf7/Z/GLV2Zyng0VNHuzeFCrdX8/MRqfuKjok55
-	X8YUwI07aXz/TAkVuewB6ZDz0+C4RDx1dluS1wM4EkVSUG2lUTV6U0f+jbwJH0iu
-	AFIvdE0jV1e1C8JTwGejX1nxZPUgr3/zUI4kw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=du2vju77VwX+EYaqMAgN/C2kTgofWsjt
-	fpnMHui7FoNKeAkuPEDTmYWOmSCtqUpF4C3wKCPy6eBOoBagEYX5fGfg/1nhlBsu
-	s1in0Ch43MedkMIsAwqpUJMOox9xb7860UYVOCFj4Sle9ke5qv0020Rm7AHidaxJ
-	Gr1Gq7f8M2I=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6028322D6B;
-	Mon, 30 Jun 2014 13:52:50 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 47F0622D64;
-	Mon, 30 Jun 2014 13:52:45 -0400 (EDT)
-In-Reply-To: <53B1889D.3010506@gmail.com> (Karsten Blees's message of "Mon, 30
-	Jun 2014 17:56:13 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5746EF26-007F-11E4-A304-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1756679AbaF3RyL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2014 13:54:11 -0400
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s5UHsA4l015950
+	for <git@vger.kernel.org>; Mon, 30 Jun 2014 13:54:10 -0400
+X-Mailer: Microsoft Office Outlook 11
+Thread-Index: Ac+UjFFzSKn7RWJ3QcCf0UF9xeJPug==
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252696>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+It looks like the gpg output is not parsed to prefix the correct number of
+spaces. What interests me the most is the folowing line is also wrong.
 
-> Which may not be too harmful in some cases, but if a user changes:
->
->  gc.pruneexpire=4.weeks.ago
->
-> to
->
->  gc.pruneexpire=4.monhts.ago
->
-> (note the typo), the next git-gc will warn the user and then happily throw
-> away data that the user intended to keep (default is 2.weeks.ago).
->
-> Thus I think git should die() if it encounters an invalid config setting.
+$ git log  --graph
+*   commit 258e0a237cb69aaa587b0a4fb528bb0316b1b776
+|\  Merge: 727c355 1ca13ed
+| | Author: Jason Pyeron <jpyeron@pdinc.us>
+| | Date:   Mon Jun 30 13:22:29 2014 -0400
+| |
+| |     Merge of 1ca13ed2271d60ba93d40bcc8db17ced8545f172 branch - rebranding
+| |
+| * commit 1ca13ed2271d60ba93d40bcc8db17ced8545f172
+| | Author: Stephen R Guglielmo <srg@guglielmo.us>
+| | Date:   Mon Jun 23 09:45:27 2014 -0400
+| |
+| |     Minor URL updates
+| |
+| * commit d8587c43cfdb12343524ce117a4a59726c438925
+| | Author: Stephen R Guglielmo <srg@guglielmo.us>
+| | Date:   Tue Jun 17 12:58:23 2014 -0400
+| |
+| |     One final 'foundation' reference. Also fix a string length for the
+rescue disk.
+| |
+| * commit 49ecdfd874029ea287d2755f7e0d5188ce49e81a
+| | Author: Stephen R Guglielmo <srg@guglielmo.us>
+| | Date:   Tue Jun 17 12:44:36 2014 -0400
 
-Yes but not at the parsing time.  Only when we are about to _use_
-the value for pruneexpire as a time duration we should die of the
-error.  Diagnosing an error early is a separate matter, but if the
-operation does not care about the typo we shouldn't die.
+
+$ git log --show-signature --graph
+*   commit 258e0a237cb69aaa587b0a4fb528bb0316b1b776
+|\  gpg: Signature made Mon, Jun 30, 2014 13:22:33 EDT using RSA key ID DA0848AD
+gpg: Good signature from "Jason Pyeron <jpyeron@pdinc.us>"
+Merge: 727c355 1ca13ed
+| | Author: Jason Pyeron <jpyeron@pdinc.us>
+| | Date:   Mon Jun 30 13:22:29 2014 -0400
+| |
+| |     Merge of 1ca13ed2271d60ba93d40bcc8db17ced8545f172 branch - rebranding
+| |
+| * commit 1ca13ed2271d60ba93d40bcc8db17ced8545f172
+| | gpg: Signature made Mon, Jun 23, 2014  9:45:47 EDT using RSA key ID DD3766FF
+gpg: Good signature from "Stephen Robert Guglielmo <srg@guglielmo.us>"
+gpg:                 aka "Stephen Robert Guglielmo <srguglielmo@gmail.com>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 0D54 BE6A B832 8701 AA94  9036 2D15 C7B0 DD37 66FF
+Author: Stephen R Guglielmo <srg@guglielmo.us>
+| | Date:   Mon Jun 23 09:45:27 2014 -0400
+| |
+| |     Minor URL updates
+| |
+| * commit d8587c43cfdb12343524ce117a4a59726c438925
+| | gpg: Signature made Tue, Jun 17, 2014 12:58:30 EDT using RSA key ID DD3766FF
+gpg: Good signature from "Stephen Robert Guglielmo <srg@guglielmo.us>"
+gpg:                 aka "Stephen Robert Guglielmo <srguglielmo@gmail.com>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 0D54 BE6A B832 8701 AA94  9036 2D15 C7B0 DD37 66FF
+Author: Stephen R Guglielmo <srg@guglielmo.us>
+| | Date:   Tue Jun 17 12:58:23 2014 -0400
+| |
+| |     One final 'foundation' reference. Also fix a string length for the
+rescue disk.
+| |
+| * commit 49ecdfd874029ea287d2755f7e0d5188ce49e81a
+| | gpg: Signature made Tue, Jun 17, 2014 12:44:43 EDT using RSA key ID DD3766FF
+gpg: Good signature from "Stephen Robert Guglielmo <srg@guglielmo.us>"
+gpg:                 aka "Stephen Robert Guglielmo <srguglielmo@gmail.com>"
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 0D54 BE6A B832 8701 AA94  9036 2D15 C7B0 DD37 66FF
+Author: Stephen R Guglielmo <srg@guglielmo.us>
+| | Date:   Tue Jun 17 12:44:36 2014 -0400
+| |
+| |     Should be done!
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
