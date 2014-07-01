@@ -1,102 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/8] commit: provide a fast multi-tip contains function
-Date: Tue, 01 Jul 2014 11:16:29 -0700
-Message-ID: <xmqqwqbxvtaa.fsf@gitster.dls.corp.google.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 5/8] string-list: add pos to iterator callback
+Date: Tue, 1 Jul 2014 15:00:37 -0400
+Message-ID: <20140701190037.GA15828@sigill.intra.peff.net>
 References: <20140625233429.GA20457@sigill.intra.peff.net>
-	<20140625234730.GF23146@sigill.intra.peff.net>
-	<xmqqtx774i1r.fsf@gitster.dls.corp.google.com>
-	<xmqqha374gx3.fsf@gitster.dls.corp.google.com>
+ <20140625234252.GE23146@sigill.intra.peff.net>
+ <xmqq1tu5x9ao.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 01 20:16:45 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 01 21:00:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X22bi-00040k-4d
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jul 2014 20:16:42 +0200
+	id 1X23II-0006TX-RT
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jul 2014 21:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758495AbaGASQi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2014 14:16:38 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57114 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758467AbaGASQg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2014 14:16:36 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 89D392482D;
-	Tue,  1 Jul 2014 14:16:25 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uDBXhDZauNmFpJuhDloelEBQ7cA=; b=GHoP2F
-	PYQmg37YzF2YJgRQi+hjiVT2lnWpwHlBVBMznzhVnzrQsTmIYkB3DRamkkYiZw62
-	BEsGDoe3Qg7Sp+SkcO4wlh8EIvp7Esuf/6s2Pn5lfh7o5e/fjP1iQlHXY+sKNh0T
-	/eRGVJS2zCjm3Ryda3a638KKao+n0E+bjzGz0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xxJny0TvEFQn4YuMQF3dDSliZI+ZUxkq
-	5IhAeZT8R+Jg9kf6SrsXjNn3gQlHgpe3FdcIjD7hvFtd35g8Wk+tE/t9t/UGnHJc
-	Tf+nXWncxFrbsGnGjI0Tcv+H+D+DOf++l0GukFC3oNWN2dtZJk0SmbNc6eIqCRpx
-	ymJ96cUIN0M=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7EFDD2482C;
-	Tue,  1 Jul 2014 14:16:25 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 89DA724825;
-	Tue,  1 Jul 2014 14:16:20 -0400 (EDT)
-In-Reply-To: <xmqqha374gx3.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 26 Jun 2014 12:19:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: CD41B7D4-014B-11E4-A13C-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751538AbaGATAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2014 15:00:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54373 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751141AbaGATAh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2014 15:00:37 -0400
+Received: (qmail 21569 invoked by uid 102); 1 Jul 2014 19:00:37 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 Jul 2014 14:00:37 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jul 2014 15:00:37 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq1tu5x9ao.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252734>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jul 01, 2014 at 10:45:19AM -0700, Junio C Hamano wrote:
 
-> If you are trying to do "branch --with $commit", what you would want
-> is not exactly "paint-down-to-common(all branches, $commit)", but
-> something that paints down to $commit from all branches, with an
-> optimization that cuts off the traversal at a commit that is
-> reachable from $commit.  If a traversal from branch B reached such a
-> commit that is reachable from $commit, you can stop the traversal
-> because propagating the bit for B further down to its parents will
-> not reach the $commit you are interested in.
+> Jeff King <peff@peff.net> writes:
+> 
+> > When we are running a string-list foreach or filter, the
+> > callback function sees only the string_list_item, along with
+> > a void* data pointer provided by the caller. This is
+> > sufficient for most purposes.
+> >
+> > However, it can also be useful to know the position of the
+> > item within the string (for example, if the data pointer
+> 
+> s/the string/&-list/ (or s/&/&_list/).
 
-I forgot about the other direction, i.e. "branch --merged $commit".
-Since I do "git branch --no-merged pu" fairly often, I care about
-its performance ;-)
+Thanks, yeah.
 
-We paint $commit as Left, and tips of all the branches as Right.  We
-try to paint down from $commit but the traversal cannot terminate if
-it reaches a commit that is reachable from one Right ref---we may
-find that we can reach more Right refs by following its ancestor.
-We can stop when we paint Right bits fully, of course, but I wonder
-if we can do better than that.
+> While I can buy that some callers would want to learn the pos in the
+> list, I am not sure if this is a good direction to go.  Primarily, I
+> am having trouble sifting between "want" and "need".
+> 
+> How often do callers want to do this?  If only narrow specialized
+> callers want this, is it unreasonable to ask them to add a "int ctr"
+> in their cb_data and use "pos = ((struct theirs *)cb_data)->ctr++"
+> in their callback instead?
 
-Suppose we just painted a commit with L and Rn bit (i.e. the commit
-is a common ancestor of the $commit and one branch).  We know that
-traversing down from there will never reach the tip of the branch
-whose color is Rn (otherwise we will have a cycle from that commit
-back to the tip of the branch), so if the reason we are continuing
-the traversal is to prove that the tip of the branch Rn is reachable
-(or unreachable) from $commit, there is no reason to continue
-digging from there.  Can we exploit that to terminate the traversal
-earlier?
+Not all that often, I suppose (I only add one caller in this series). I
+just found it a little hack-ish to force callers to keep their own
+counter when we already have it (especially because it is not too hard
+to get it wrong, for example by forgetting to increment the counter in
+one code path of the callback).
 
-When we encounter a new commit that is painted with L bit and some
-but not necessarily all R bits, we propagate the bits and check the
-R bits.  Some of the commits in Right set that correspond to R bits
-may have been painted in L (i.e. we found branches that are merged
-to $commit), and digging further from this commit will not give us
-any new information.  Other commits are not painted in L (i.e. we do
-not yet know if $commit merges these branches), so we may need to
-keep digging.  So perhaps we can stop if a commit is painted in L
-and also has all the R bits that correspond to Right commits that
-are not yet proven reachable from $commit (i.e. not painted in L)?
+Here's what the caller would look like without "pos" (done as a patch on
+top of the series, so pos is still there, but no longer used).
+
+diff --git a/builtin/tag.c b/builtin/tag.c
+index f17192c..dc6f105 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -151,14 +151,20 @@ static int util_is_not_null(struct string_list_item *it, int pos, void *data)
+ 	return !!it->util;
+ }
+ 
+-static int matches_contains(struct string_list_item *it, int pos, void *data)
++struct contains_callback_data {
++	int ctr;
++	unsigned char *contains;
++};
++
++static int matches_contains(struct string_list_item *it, int pos, void *vdata)
+ {
+-	unsigned char *contains = data;
+-	return contains[pos];
++	struct contains_callback_data *data = vdata;
++	return data->contains[data->ctr++];
+ }
+ 
+ static void limit_by_contains(struct string_list *tags, struct commit_list *with)
+ {
++	struct contains_callback_data cbdata;
+ 	struct commit_list *tag_commits = NULL, **tail = &tag_commits;
+ 	unsigned char *result;
+ 	int i;
+@@ -180,7 +186,10 @@ static void limit_by_contains(struct string_list *tags, struct commit_list *with
+ 
+ 	result = xmalloc(tags->nr);
+ 	commit_contains(with, tag_commits, NULL, result);
+-	filter_string_list(tags, 1, matches_contains, result);
++
++	cbdata.ctr = 0;
++	cbdata.contains = result;
++	filter_string_list(tags, 1, matches_contains, &cbdata);
+ 
+ 	free(result);
+ 	free_commit_list(tag_commits);
+
+So I think it's a small change in a lot of places rather than a kind of
+ugly change in one spot.
+
+All that being said, I think the real issue here is that I want more
+than a string list (I am already using the util field for the sha1, but
+this code would be potentially simpler if I could also store the commit
+object). In the long run I hope to factor out a ref-listing API that can
+be used by tag, branch, and for-each-ref. And then this string-list code
+would go away in favor of a more expansive struct. So it may not be
+worth worrying about keeping it too clean.
+
+-Peff
