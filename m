@@ -1,62 +1,62 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v7 15/16] wt-status: simplify performance
- measurement by using getnanotime()
-Date: Wed, 02 Jul 2014 01:04:32 +0200
-Message-ID: <53B33E80.8020306@gmail.com>
+Subject: [PATCH v7 16/16] progress: simplify performance measurement
+ by using getnanotime()
+Date: Wed, 02 Jul 2014 01:05:14 +0200
+Message-ID: <53B33EAA.4050407@gmail.com>
 References: <53B33C05.5090900@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBBAH5ZSOQKGQEXFCB56Y@googlegroups.com Wed Jul 02 01:04:32 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBAH5ZSOQKGQEXFCB56Y@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBKX5ZSOQKGQEEKD6HYQ@googlegroups.com Wed Jul 02 01:05:18 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBKX5ZSOQKGQEEKD6HYQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
 Received: from mail-la0-f64.google.com ([209.85.215.64])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBAH5ZSOQKGQEXFCB56Y@googlegroups.com>)
-	id 1X276G-0005tj-Ll
-	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2014 01:04:32 +0200
-Received: by mail-la0-f64.google.com with SMTP id mc6sf1003176lab.19
-        for <gcvm-msysgit@m.gmane.org>; Tue, 01 Jul 2014 16:04:32 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBKX5ZSOQKGQEEKD6HYQ@googlegroups.com>)
+	id 1X276x-0006Ih-Be
+	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2014 01:05:15 +0200
+Received: by mail-la0-f64.google.com with SMTP id mc6sf995160lab.9
+        for <gcvm-msysgit@m.gmane.org>; Tue, 01 Jul 2014 16:05:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
          :in-reply-to:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=jbSDIcWMP5Ex+AlV66+yWzd56i8ONdaBzUomu5aovmU=;
-        b=c3jDwfvt2OzYbrge2eFJUyxgUAncX4xBcVBfY80f/GUxCZPjDByzK2uYWTe2JAGsnm
-         BBHxmtJuqRXFdTVgX3duSeE0CTh9obMS73ghjZFV7xkS8j/cgT6TYWkOCaSLu0Vu9Lb1
-         Y4P9qYIsMRJq/mmVcyMfvCQJJp58ba/8b8u6Nbu5pWgA2fVFFivDq3Doq+GEtbclzisU
-         8Uke/eRjzDusUD+Ybfc2JOsRWj9Jf0lbXYK3kMeTqUF7MYe5mj5rO5leWXcbc8uRYHL4
-         s/ydH/LkBsk0ZBhvUvN2V3thImiYYlDENuPsy5J/VpJAAMNz49UDH4Qsrlpm4AMw4cHW
-         I9Xg==
-X-Received: by 10.180.91.107 with SMTP id cd11mr2397wib.12.1404255872462;
-        Tue, 01 Jul 2014 16:04:32 -0700 (PDT)
+        bh=qPK+Jkk0Ed8foVjxPbnPopNb/9YL30FnzWSJYuqBlgs=;
+        b=Rcb9CRVqq56K/yq2jembc5SwGpPeQSf5JK2RB+9VpBvVBtaKjNK0Ud/3B4uFIDD9/P
+         i7noOVt+f17BNj4kqgUKvqr++kyIfRCWq4B/Ad0vkt4hh3xU3C0ojIsuvHb12ePBpdrD
+         G0zUpk4mZ6e51aqTUDyVaRmbX5ktGi9TVGX0F/5nqUuRiKFJgpZ0rXf3LSA2URuTclg1
+         yi/RhtdXGA7thja0ghQkN/XH79bj2EovgANEbT37t57NYX8Ojm+erh1JJAn5fG8+ruke
+         kSOU4SMYctMg0vNZpqRlqWhU9e5HFkr9y6F+Zzj5eRBu8+PCO58X/mVF+UMVrBorXOgr
+         5NeA==
+X-Received: by 10.180.108.79 with SMTP id hi15mr141769wib.19.1404255915182;
+        Tue, 01 Jul 2014 16:05:15 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.8.229 with SMTP id u5ls641078wia.30.canary; Tue, 01 Jul
- 2014 16:04:31 -0700 (PDT)
-X-Received: by 10.180.13.18 with SMTP id d18mr3853373wic.2.1404255871695;
-        Tue, 01 Jul 2014 16:04:31 -0700 (PDT)
-Received: from mail-we0-x22a.google.com (mail-we0-x22a.google.com [2a00:1450:400c:c03::22a])
-        by gmr-mx.google.com with ESMTPS id b9si330228wic.2.2014.07.01.16.04.31
+Received: by 10.180.105.33 with SMTP id gj1ls27730wib.33.gmail; Tue, 01 Jul
+ 2014 16:05:14 -0700 (PDT)
+X-Received: by 10.180.13.196 with SMTP id j4mr3863796wic.0.1404255914484;
+        Tue, 01 Jul 2014 16:05:14 -0700 (PDT)
+Received: from mail-wi0-x22e.google.com (mail-wi0-x22e.google.com [2a00:1450:400c:c05::22e])
+        by gmr-mx.google.com with ESMTPS id cj4si811390wid.0.2014.07.01.16.05.14
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 01 Jul 2014 16:04:31 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22a as permitted sender) client-ip=2a00:1450:400c:c03::22a;
-Received: by mail-we0-f170.google.com with SMTP id w61so10346065wes.15
-        for <msysgit@googlegroups.com>; Tue, 01 Jul 2014 16:04:31 -0700 (PDT)
-X-Received: by 10.180.19.65 with SMTP id c1mr40165285wie.16.1404255871596;
-        Tue, 01 Jul 2014 16:04:31 -0700 (PDT)
+        Tue, 01 Jul 2014 16:05:14 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22e as permitted sender) client-ip=2a00:1450:400c:c05::22e;
+Received: by mail-wi0-x22e.google.com with SMTP id bs8so8674645wib.13
+        for <msysgit@googlegroups.com>; Tue, 01 Jul 2014 16:05:14 -0700 (PDT)
+X-Received: by 10.180.84.168 with SMTP id a8mr39350285wiz.36.1404255914417;
+        Tue, 01 Jul 2014 16:05:14 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id q11sm48248006wib.14.2014.07.01.16.04.30
+        by mx.google.com with ESMTPSA id dt7sm48259233wic.6.2014.07.01.16.05.13
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 01 Jul 2014 16:04:31 -0700 (PDT)
+        Tue, 01 Jul 2014 16:05:13 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 In-Reply-To: <53B33C05.5090900@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22a
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22e
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -69,55 +69,140 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252765>
 
 Calculating duration from a single uint64_t is simpler than from a struct
-timeval. Change performance measurement for 'advice.statusuoption' from
-gettimeofday() to getnanotime().
+timeval. Change throughput measurement from gettimeofday() to
+getnanotime().
 
-Also initialize t_begin to prevent uninitialized variable warning.
+Also calculate misec only if needed, and change integer division to integer
+multiplication + shift, which should be slightly faster.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
- wt-status.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ progress.c | 71 +++++++++++++++++++++++++++++++-------------------------------
+ 1 file changed, 36 insertions(+), 35 deletions(-)
 
-diff --git a/wt-status.c b/wt-status.c
-index 318a191..dfdc018 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -574,14 +574,11 @@ static void wt_status_collect_untracked(struct wt_status *s)
+diff --git a/progress.c b/progress.c
+index 261314e..412e6b1 100644
+--- a/progress.c
++++ b/progress.c
+@@ -12,13 +12,14 @@
+ #include "gettext.h"
+ #include "progress.h"
+ #include "strbuf.h"
++#include "trace.h"
+ 
+ #define TP_IDX_MAX      8
+ 
+ struct throughput {
+ 	off_t curr_total;
+ 	off_t prev_total;
+-	struct timeval prev_tv;
++	uint64_t prev_ns;
+ 	unsigned int avg_bytes;
+ 	unsigned int avg_misecs;
+ 	unsigned int last_bytes[TP_IDX_MAX];
+@@ -127,65 +128,65 @@ static void throughput_string(struct strbuf *buf, off_t total,
+ void display_throughput(struct progress *progress, off_t total)
  {
- 	int i;
- 	struct dir_struct dir;
--	struct timeval t_begin;
-+	uint64_t t_begin = getnanotime();
+ 	struct throughput *tp;
+-	struct timeval tv;
+-	unsigned int misecs;
++	uint64_t now_ns;
++	unsigned int misecs, count, rate;
++	struct strbuf buf = STRBUF_INIT;
  
- 	if (!s->show_untracked_files)
+ 	if (!progress)
  		return;
+ 	tp = progress->throughput;
  
--	if (advice_status_u_option)
--		gettimeofday(&t_begin, NULL);
+-	gettimeofday(&tv, NULL);
++	now_ns = getnanotime();
+ 
+ 	if (!tp) {
+ 		progress->throughput = tp = calloc(1, sizeof(*tp));
+ 		if (tp) {
+ 			tp->prev_total = tp->curr_total = total;
+-			tp->prev_tv = tv;
++			tp->prev_ns = now_ns;
+ 		}
+ 		return;
+ 	}
+ 	tp->curr_total = total;
+ 
++	/* only update throughput every 0.5 s */
++	if (now_ns - tp->prev_ns <= 500000000)
++		return;
++
+ 	/*
+-	 * We have x = bytes and y = microsecs.  We want z = KiB/s:
++	 * We have x = bytes and y = nanosecs.  We want z = KiB/s:
+ 	 *
+-	 *	z = (x / 1024) / (y / 1000000)
+-	 *	z = x / y * 1000000 / 1024
+-	 *	z = x / (y * 1024 / 1000000)
++	 *	z = (x / 1024) / (y / 1000000000)
++	 *	z = x / y * 1000000000 / 1024
++	 *	z = x / (y * 1024 / 1000000000)
+ 	 *	z = x / y'
+ 	 *
+ 	 * To simplify things we'll keep track of misecs, or 1024th of a sec
+ 	 * obtained with:
+ 	 *
+-	 *	y' = y * 1024 / 1000000
+-	 *	y' = y / (1000000 / 1024)
+-	 *	y' = y / 977
++	 *	y' = y * 1024 / 1000000000
++	 *	y' = y * (2^10 / 2^42) * (2^42 / 1000000000)
++	 *	y' = y / 2^32 * 4398
++	 *	y' = (y * 4398) >> 32
+ 	 */
+-	misecs = (tv.tv_sec - tp->prev_tv.tv_sec) * 1024;
+-	misecs += (int)(tv.tv_usec - tp->prev_tv.tv_usec) / 977;
++	misecs = ((now_ns - tp->prev_ns) * 4398) >> 32;
+ 
+-	if (misecs > 512) {
+-		struct strbuf buf = STRBUF_INIT;
+-		unsigned int count, rate;
++	count = total - tp->prev_total;
++	tp->prev_total = total;
++	tp->prev_ns = now_ns;
++	tp->avg_bytes += count;
++	tp->avg_misecs += misecs;
++	rate = tp->avg_bytes / tp->avg_misecs;
++	tp->avg_bytes -= tp->last_bytes[tp->idx];
++	tp->avg_misecs -= tp->last_misecs[tp->idx];
++	tp->last_bytes[tp->idx] = count;
++	tp->last_misecs[tp->idx] = misecs;
++	tp->idx = (tp->idx + 1) % TP_IDX_MAX;
+ 
+-		count = total - tp->prev_total;
+-		tp->prev_total = total;
+-		tp->prev_tv = tv;
+-		tp->avg_bytes += count;
+-		tp->avg_misecs += misecs;
+-		rate = tp->avg_bytes / tp->avg_misecs;
+-		tp->avg_bytes -= tp->last_bytes[tp->idx];
+-		tp->avg_misecs -= tp->last_misecs[tp->idx];
+-		tp->last_bytes[tp->idx] = count;
+-		tp->last_misecs[tp->idx] = misecs;
+-		tp->idx = (tp->idx + 1) % TP_IDX_MAX;
 -
- 	memset(&dir, 0, sizeof(dir));
- 	if (s->show_untracked_files != SHOW_ALL_UNTRACKED_FILES)
- 		dir.flags |=
-@@ -612,13 +609,8 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 	free(dir.ignored);
- 	clear_directory(&dir);
- 
--	if (advice_status_u_option) {
--		struct timeval t_end;
--		gettimeofday(&t_end, NULL);
--		s->untracked_in_ms =
--			(uint64_t)t_end.tv_sec * 1000 + t_end.tv_usec / 1000 -
--			((uint64_t)t_begin.tv_sec * 1000 + t_begin.tv_usec / 1000);
+-		throughput_string(&buf, total, rate);
+-		strncpy(tp->display, buf.buf, sizeof(tp->display));
+-		strbuf_release(&buf);
+-		if (progress->last_value != -1 && progress_update)
+-			display(progress, progress->last_value, NULL);
 -	}
-+	if (advice_status_u_option)
-+		s->untracked_in_ms = (getnanotime() - t_begin) / 1000000;
++	throughput_string(&buf, total, rate);
++	strncpy(tp->display, buf.buf, sizeof(tp->display));
++	strbuf_release(&buf);
++	if (progress->last_value != -1 && progress_update)
++		display(progress, progress->last_value, NULL);
  }
  
- void wt_status_collect(struct wt_status *s)
+ int display_progress(struct progress *progress, unsigned n)
 -- 
 2.0.0.406.ge74f8ff
 
