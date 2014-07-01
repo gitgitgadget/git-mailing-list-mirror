@@ -1,88 +1,160 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: How to populate index/worktree when recursive merge merges
- multiple common ancestors?
-Date: Mon, 30 Jun 2014 14:30:18 -0700
-Message-ID: <CAJo=hJsVSqvEB4wnSp_RtfF3rMXyLWjm8kUXHxmOWmzYn6MM2Q@mail.gmail.com>
-References: <CAENte7jg7RnpEFmZ0QWGw=a-AvAN6AF=cknHXWyTEuo9zq7ERg@mail.gmail.com>
- <CAJo=hJtLzMqrBf5Y1dzUxi_0nGmY72xURRmcvmjoFD+=j0FCwQ@mail.gmail.com> <CAENte7i3f_zvPmnPZe2s7guPv03o1d_Ln+nVaj5PYmP8uoK=rw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Christian Halstrick <christian.halstrick@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jun 30 23:30:47 2014
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH 2/3] test-dump-cache-tree: Improve output format and exit code
+Date: Mon, 30 Jun 2014 17:13:16 -0700
+Message-ID: <1404173597-24713-2-git-send-email-dturner@twitter.com>
+References: <1404173597-24713-1-git-send-email-dturner@twitter.com>
+Cc: David Turner <dturner@twitter.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 01 02:13:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X1j9w-00015M-WA
-	for gcvg-git-2@plane.gmane.org; Mon, 30 Jun 2014 23:30:45 +0200
+	id 1X1lhe-0007mU-Tp
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jul 2014 02:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757156AbaF3Val (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Jun 2014 17:30:41 -0400
-Received: from mail-ig0-f178.google.com ([209.85.213.178]:44633 "EHLO
-	mail-ig0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757149AbaF3Vai (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Jun 2014 17:30:38 -0400
-Received: by mail-ig0-f178.google.com with SMTP id hn18so4755159igb.17
-        for <git@vger.kernel.org>; Mon, 30 Jun 2014 14:30:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=spearce.org; s=google;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=mwJo/ZzvQQEqvA66o9NlQkTmYW55Hl2kk25/LAlUeS4=;
-        b=MT4oQMkR6gKV2dcs/gq5ZAvmaFyF11Tt0433gy6KESY4Y4c5OiQjQP561B8ZbJTNvB
-         7si3lAwqQHRf0/xjTqW1a/RfRRaB7XtoGFk4kIH4307rz6C1f4C5ek6bJhsQunm4o80g
-         e7AbdulX2Cf7jApjDDnoQh7IqqMIUgDNk6GMc=
+	id S1756836AbaGAANj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Jun 2014 20:13:39 -0400
+Received: from mail-qc0-f178.google.com ([209.85.216.178]:36586 "EHLO
+	mail-qc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752091AbaGAANi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Jun 2014 20:13:38 -0400
+Received: by mail-qc0-f178.google.com with SMTP id c9so7619557qcz.23
+        for <git@vger.kernel.org>; Mon, 30 Jun 2014 17:13:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=mwJo/ZzvQQEqvA66o9NlQkTmYW55Hl2kk25/LAlUeS4=;
-        b=Adw60Twr92dPmW4SLz672ZsmISmMrDztrl7wLeLEAhY8nlGRMsQSgnTrKTK8WS+/l9
-         wsyIF7+a/UuVZMx2wPmh6QSuZ767V9xmK5+4AxZLcKFYIW/XfsuB18OXTAwOpRebVpH/
-         4pOQmjonJoQ6SxZedMMTo17wtCYGWukTORCjZ7OeY+MmqcxQwB/jOTy6f+dBkA4E3pzC
-         fw8pQiOKqjBnMUuwU+kMN5xzQfqJEyXAdsek1exucTBAePksNBdmGbFLCwqQ+jR3ZosS
-         oengv+BMrmyDRQPjJsuTNa6GU25e2Rc6lsBpiklKZn+kEdExuboAzUecpluDCejgAm4O
-         0gMg==
-X-Gm-Message-State: ALoCoQnyrZDdxOW6WIWsU1Ubttf2m1tKuK5Bdf/dlfYtXAWmuvuIKAENJipZuTrLx+6Rk2/ahNc+
-X-Received: by 10.42.76.205 with SMTP id f13mr10762929ick.63.1404163838191;
- Mon, 30 Jun 2014 14:30:38 -0700 (PDT)
-Received: by 10.64.208.12 with HTTP; Mon, 30 Jun 2014 14:30:18 -0700 (PDT)
-In-Reply-To: <CAENte7i3f_zvPmnPZe2s7guPv03o1d_Ln+nVaj5PYmP8uoK=rw@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=xd/AwoP/8aeipmYCtRDiyokAsnyXv05QKQF7kgGdkTs=;
+        b=b1fDGVj8V/SfxX6mz+/Vqdl6alocJYJDHhxmcOz0GjwunGuuQDonFJ3eb6PTkzAgJK
+         TzY55jbEqMmvW1YeMKLCYQbz6dQ1y4dzCtbOWAWyC0ETiWpQSlujRF16HeYpGoh9Z8H1
+         6xEcmXmVhMA5JzyZBY0lVEWI/kOS57SD2FoULFXP1YoLBe2AJh5vQmCrfxnQXtkrW4TO
+         UJX9HIVijF1pbHvJD1iEU9bTvectObL3sUut/MwviuvrovroY1XtIPXaWLDrtxHOHFN6
+         GAICXNwisNXEV4TPZhqkFXio+7zkCUtjDK8Cigzw4eIm8IcPUlbkXoYfhJLGGN67bhAO
+         R1pg==
+X-Gm-Message-State: ALoCoQklPeO/crMG0WlqSQf3+rTYIBNlD71wLuJYEHqPASDA7e8/CQUTBJWoR2m/+j8sDry9pgAy
+X-Received: by 10.140.23.134 with SMTP id 6mr64413527qgp.84.1404173617438;
+        Mon, 30 Jun 2014 17:13:37 -0700 (PDT)
+Received: from stross.twitter.corp ([8.25.197.27])
+        by mx.google.com with ESMTPSA id p3sm316651qga.33.2014.06.30.17.13.36
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 30 Jun 2014 17:13:36 -0700 (PDT)
+X-Google-Original-From: David Turner <dturner@twitter.com>
+X-Mailer: git-send-email 2.0.0.390.gcb682f8
+In-Reply-To: <1404173597-24713-1-git-send-email-dturner@twitter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252703>
 
-On Mon, Jun 30, 2014 at 5:48 AM, Christian Halstrick
-<christian.halstrick@gmail.com> wrote:
->> They don't. The conflicts are preserved into the virtual ancestor. The
->> user only sees the final conflicts during merging of A and B with
->> virtual X3 as the common ancestor.
->
-> Ah, now I understand. When I merge X1 and X2 into the virtual X3
-> I should not stop if this is not doable without conflict resolution. I
-> should store in memory the X3 content, including all the conflict
-> markers. If I finally merge A and B I will specify a common base
-> content which may contain conflict markers. Right?
+Make test-dump-cache-tree more useful for testing.  Do not treat known
+invalid trees as errors (and do not produce non-zero exit code),
+because we can fall back to the non-cache-tree codepath.
 
-Yes.
+Signed-off-by: David Turner <dturner@twitter.com>
+---
+ t/t0090-cache-tree.sh  | 28 +++++++++++++++++++++++++---
+ test-dump-cache-tree.c | 24 ++++++++++++------------
+ 2 files changed, 37 insertions(+), 15 deletions(-)
 
-If X3 content is large, it could flow to loose objects on disk. These
-will be unreachable and cleaned up automatically in a future garbage
-collection.
-
-> Are git config param's like merge.conflictstyle=diff3 are also
-> effective when creating the virtual X3 content? Couldn't that lead to
-> complicated conflict marker situations? In the area where you expect
-> common base content you again see conflict markers in diff3 style.
-
-Yes, but I think this is the correct behavior. The machine can't
-reconcile the two branches any better than this, so now a human has to
-step in and fix all of the conflicts.
-
-IIRC, this is uncommon. Usually you use A's common content as A and B
-do not differ relative to X3 in the regions where X3 has a conflict,
-so those conflicts aren't considered relevant when A and B merge.
+diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+index 7c60675..5383258 100755
+--- a/t/t0090-cache-tree.sh
++++ b/t/t0090-cache-tree.sh
+@@ -21,10 +21,13 @@ test_shallow_cache_tree () {
+ 	cmp_cache_tree expect
+ }
+ 
++# Test that the cache-tree for a given directory is invalid.
++# If no directory is given, check that the root is invalid
+ test_invalid_cache_tree () {
+-	echo "invalid                                   (0 subtrees)" >expect &&
+-	printf "SHA #(ref)  (%d entries, 0 subtrees)\n" $(git ls-files|wc -l) >>expect &&
+-	cmp_cache_tree expect
++	test-dump-cache-tree >actual &&
++	sed -e "s/$_x40/SHA/" -e "s/[0-9]* subtrees//g" <actual >filtered &&
++	expect=$(printf "invalid                                  $1 ()\n") &&
++	fgrep "$expect" filtered
+ }
+ 
+ test_no_cache_tree () {
+@@ -49,6 +52,25 @@ test_expect_success 'git-add invalidates cache-tree' '
+ 	test_invalid_cache_tree
+ '
+ 
++test_expect_success 'git-add in subdir invalidates cache-tree' '
++	test_when_finished "git reset --hard; git read-tree HEAD" &&
++	mkdir dirx &&
++	echo "I changed this file" > dirx/foo &&
++	git add dirx/foo &&
++	test_invalid_cache_tree
++'
++
++test_expect_success 'git-add in subdir does not invalidate sibling cache-tree' '
++	git tag no-children
++	test_when_finished "git reset --hard no-children; git read-tree HEAD" &&
++	mkdir dir1 dir2 &&
++	test_commit dir1/a &&
++	test_commit dir2/b &&
++	echo "I changed this file" > dir1/a &&
++	git add dir1/a &&
++	test_invalid_cache_tree dir1/
++'
++
+ test_expect_success 'update-index invalidates cache-tree' '
+ 	test_when_finished "git reset --hard; git read-tree HEAD" &&
+ 	echo "I changed this file" > foo &&
+diff --git a/test-dump-cache-tree.c b/test-dump-cache-tree.c
+index 47eab97..ad42ca1 100644
+--- a/test-dump-cache-tree.c
++++ b/test-dump-cache-tree.c
+@@ -6,12 +6,12 @@
+ static void dump_one(struct cache_tree *it, const char *pfx, const char *x)
+ {
+ 	if (it->entry_count < 0)
+-		printf("%-40s %s%s (%d subtrees)\n",
+-		       "invalid", x, pfx, it->subtree_nr);
++		printf("%-40s %s (%d subtrees)%s\n",
++		       "invalid", pfx, it->subtree_nr, x);
+ 	else
+-		printf("%s %s%s (%d entries, %d subtrees)\n",
+-		       sha1_to_hex(it->sha1), x, pfx,
+-		       it->entry_count, it->subtree_nr);
++		printf("%s %s (%d entries, %d subtrees)%s\n",
++		       sha1_to_hex(it->sha1), pfx,
++		       it->entry_count, it->subtree_nr, x);
+ }
+ 
+ static int dump_cache_tree(struct cache_tree *it,
+@@ -25,19 +25,19 @@ static int dump_cache_tree(struct cache_tree *it,
+ 		/* missing in either */
+ 		return 0;
+ 
+-	if (it->entry_count < 0) {
++	if (it->entry_count < 0)
++		/* invalid */
+ 		dump_one(it, pfx, "");
+-		dump_one(ref, pfx, "#(ref) ");
+-		if (it->subtree_nr != ref->subtree_nr)
+-			errs = 1;
+-	}
+ 	else {
+-		dump_one(it, pfx, "");
+ 		if (hashcmp(it->sha1, ref->sha1) ||
+ 		    ref->entry_count != it->entry_count ||
+ 		    ref->subtree_nr != it->subtree_nr) {
+-			dump_one(ref, pfx, "#(ref) ");
++			/* claims to be valid but is lying */
++			dump_one(ref, pfx, " #(error)");
+ 			errs = 1;
++		} else {
++			/* is actually valid */
++			dump_one(it, pfx, "");
+ 		}
+ 	}
+ 
+-- 
+2.0.0.390.gcb682f8
