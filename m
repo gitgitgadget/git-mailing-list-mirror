@@ -1,92 +1,160 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH 1/3] cache-tree: Create/update cache-tree on checkout
-Date: Tue, 01 Jul 2014 15:09:47 -0700
-Organization: Twitter
-Message-ID: <1404252587.3109.1.camel@stross>
-References: <1404173597-24713-1-git-send-email-dturner@twitter.com>
-	 <53B23605.40705@web.de> <1404242126.6112.7.camel@stross>
-	 <xmqq4mz0x04l.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] cache-tree: Write index with updated cache-tree after commit
+Date: Tue, 01 Jul 2014 15:45:35 -0700
+Message-ID: <xmqqlhscvgts.fsf@gitster.dls.corp.google.com>
+References: <1404242075-7068-1-git-send-email-dturner@twitter.com>
+	<1404242075-7068-3-git-send-email-dturner@twitter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Torsten =?ISO-8859-1?Q?B=F6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org, David Turner <dturner@twitter.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 02 00:09:56 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Jul 02 00:45:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X26FP-0007Uk-RQ
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 00:09:56 +0200
+	id 1X26o7-00037n-H1
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 00:45:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965101AbaGAWJw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Jul 2014 18:09:52 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:65275 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964973AbaGAWJv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2014 18:09:51 -0400
-Received: by mail-qa0-f53.google.com with SMTP id j15so8357882qaq.12
-        for <git@vger.kernel.org>; Tue, 01 Jul 2014 15:09:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=r9P6zWsEd8FVGlfhpHS5MchYIXlfTK3h7zGu6P589TE=;
-        b=dSfiDqvxL35OyvytEw5VrEUe0jbWL5K0gM58sOr/eG3A420LvP5TUKjQakzBNfZifX
-         uYIAicBC4ly5zdMvEswUcahsOQj9f+TA9Ms7EMW4iTNW4hntw5M1KBgk7sXC/dQJH6fz
-         y3SgE9Kki45feNv54Vg9iKMbJkzPNlpfm+zY4in2azM+4/6lpKd4mBcP2b9w6yEXzGcr
-         VK4Po68xyli04CRmFdQubKyzufgTscmyxPZI9rFIHSPirsjzyO5+JYoYroPSe3m+MYel
-         wyAl6jbrwmsGw61MlIKdZ+KhaHXEJitD0OkSLclrMypmhV3KZXU+RDXuoYyOLhPqjipf
-         /Q4w==
-X-Gm-Message-State: ALoCoQlaaqiRvBxpBsv3jzazXOf3J0MCmCYBeMql7AR3+aGt1LDQe9rnFuky1C0Z7aEaCSmqfj+K
-X-Received: by 10.229.117.136 with SMTP id r8mr74475942qcq.17.1404252590581;
-        Tue, 01 Jul 2014 15:09:50 -0700 (PDT)
-Received: from [172.25.140.220] ([8.25.197.27])
-        by mx.google.com with ESMTPSA id m1sm39417398qaz.27.2014.07.01.15.09.48
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Tue, 01 Jul 2014 15:09:49 -0700 (PDT)
-In-Reply-To: <xmqq4mz0x04l.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+	id S964964AbaGAWpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2014 18:45:43 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62552 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752150AbaGAWpm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2014 18:45:42 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3B02425886;
+	Tue,  1 Jul 2014 18:45:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Wrwa+sHVgV5EexrPfHiKvllXj9o=; b=uRQ9Qd
+	TLxGhFROIWwPbbXl9LengdvrJ7w+2Q6+wsQH/KMPb5g4+l5woOpvrHj+Jvhzlpld
+	iABhDh6LKVlhH5FH5NeULiUAVA8C55aK783WTI9SBNzf08ZCjWeGVmO206bd9UOd
+	WzTiAOzu34RM/yuSN62YJVeIS4u1RlCcPsZrc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yVgpjFLI13lq9ybf20+UuNPZWEffDf5P
+	IHEV2/MmzIUbhddoSM5VQXTwCZLqNh2ePYt4cV32/hu3MuSDvJlLxhKss9ehMkKw
+	PWq4A/ndAQByTvKG+ML9ma487qLtCWer83lKDTFVIRz0vIEjqvA52VSHCtSpnI1M
+	w1XZYH4BP3Q=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 324E925885;
+	Tue,  1 Jul 2014 18:45:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4037A25880;
+	Tue,  1 Jul 2014 18:45:26 -0400 (EDT)
+In-Reply-To: <1404242075-7068-3-git-send-email-dturner@twitter.com> (David
+	Turner's message of "Tue, 1 Jul 2014 12:14:35 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 64D7BC22-0171-11E4-B750-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252747>
 
-On Tue, 2014-07-01 at 14:03 -0700, Junio C Hamano wrote:
-> David Turner <dturner@twopensource.com> writes:
->=20
-> > On Tue, 2014-07-01 at 06:16 +0200, Torsten B=C3=B6gershausen wrote:
-> >> diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-> >> index 6c33e28..7c60675 100755
-> >> --- a/t/t0090-cache-tree.sh
-> >> +++ b/t/t0090-cache-tree.sh
-> >> @@ -85,9 +85,22 @@ test_expect_success 'reset --hard without index=
- gives cache-tree' '
-> >>   	test_shallow_cache_tree
-> >>   '
-> >>  =20
-> >> -test_expect_failure 'checkout gives cache-tree' '
-> >> +test_expect_success 'checkout gives cache-tree' '
-> >> +	git tag current
-> >>   	git checkout HEAD^ &&
-> >>   	test_shallow_cache_tree
-> >>=20
-> >> The && chainis broken here.
-> >> Does the test now pass, because "git tag" is added ?
-> >
-> > The tag does not cause the cache-tree to be created, so git tag doe=
-s not
-> > cause the test to pass.
->=20
-> That does not explain why it is a good idea to declare success of
-> this test if this new "git tag current" fails here for whatever
-> reason (e.g. somebody updated "git tag" for a reason that is
-> completely unrelated to cache-tree and made it segfault without
-> creating the "current" tag).
+David Turner <dturner@twopensource.com> writes:
 
-Indeed; that's why the latest version includes &&.
+> During the commit process, the cache-tree is updated. We need to write
+> this updated cache-tree so that it's ready for subsequent commands.
+>
+> Add test code which demonstrates that git commit now writes the cache
+> tree.  Also demonstrate that cache-tree invalidation is correct.
+>
+> Signed-off-by: David Turner <dturner@twitter.com>
+> ---
+>  builtin/commit.c      | 15 ++++++------
+>  t/t0090-cache-tree.sh | 63 ++++++++++++++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 67 insertions(+), 11 deletions(-)
+>
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 9cfef6c..dbd4f4b 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -342,6 +342,8 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
+>  
+>  		discard_cache();
+>  		read_cache_from(index_lock.filename);
+> +		if (update_main_cache_tree(WRITE_TREE_SILENT) >= 0)
+> +			write_cache(fd, active_cache, active_nr);
+
+OK, interactive-add may leave the cache-tree not quite populated;
+we are going to write out a tree from the cache so we need to update
+the in-core cache tree anyway, so calling update-main-cache-tree
+here would not hurt (it will speed up the write-cache-as-tree we
+will eventually call).
+
+We might want to see if we are really changing anything, though.
+What happens if the interactive-add gave us an index with fully
+valid cache-tree?  Is that rare enough not to matter (not a
+rhetorical question)?
+
+> @@ -383,14 +385,10 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
+>  	if (!only && !pathspec.nr) {
+>  		fd = hold_locked_index(&index_lock, 1);
+>  		refresh_cache_or_die(refresh_flags);
+> -		if (active_cache_changed) {
+> -			update_main_cache_tree(WRITE_TREE_SILENT);
+> -			if (write_cache(fd, active_cache, active_nr) ||
+> -			    commit_locked_index(&index_lock))
+> -				die(_("unable to write new_index file"));
+> -		} else {
+> -			rollback_lock_file(&index_lock);
+> -		}
+> +		update_main_cache_tree(WRITE_TREE_SILENT);
+> +		if (write_cache(fd, active_cache, active_nr) ||
+> +		    commit_locked_index(&index_lock))
+> +			die(_("unable to write new_index file"));
+
+
+How about doing this part like the following instead, so that we can
+avoid the overhead of uselessly rewriting the index file when we do
+not have to?
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 5e2221c..7d730a5 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -383,8 +383,11 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
+ 	if (!only && !pathspec.nr) {
+ 		fd = hold_locked_index(&index_lock, 1);
+ 		refresh_cache_or_die(refresh_flags);
+-		if (active_cache_changed) {
++		if (active_cache_changed || !cache_tree_fully_valid(active_cache_tree)) {
+ 			update_main_cache_tree(WRITE_TREE_SILENT);
++			active_cache_changed = 1;
++		}
++		if (active_cache_changed) {
+ 			if (write_cache(fd, active_cache, active_nr) ||
+ 			    commit_locked_index(&index_lock))
+ 				die(_("unable to write new_index file"));
+
+It makes me wonder if we should teach update_main_cache_tree() to
+somehow smudge active_cache_changed bit as necessary.  Then we do
+not have to make the call to update-main-cache-tree conditional.
+
+> @@ -435,6 +433,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
+>  	fd = hold_locked_index(&index_lock, 1);
+>  	add_remove_files(&partial);
+>  	refresh_cache(REFRESH_QUIET);
+> +	update_main_cache_tree(WRITE_TREE_SILENT);
+>  	if (write_cache(fd, active_cache, active_nr) ||
+>  	    close_lock_file(&index_lock))
+>  		die(_("unable to write new_index file"));
+
+This is the index that will be used after we create the commit
+(which will be created from a temporary index that will be discarded
+immediately after we create the commit).  As we _know_ we are
+changing something in this code path by calling add_remote_files(),
+it is fine to call update-main-cache-tree here unconditionally.
+
+I didn't notice it when I gave the previous review comment but while
+reviewing this round, we already do the cache-tree population for
+"commit -a" in this function, which suggests me that it is the right
+place to do these changes.  Modulo minor niggles, I like this
+iteration much better than the previous one.
+
+Thanks for working on this.
