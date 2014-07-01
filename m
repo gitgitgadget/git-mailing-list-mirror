@@ -1,160 +1,133 @@
-From: David Turner <dturner@twopensource.com>
-Subject: [PATCH 2/3] test-dump-cache-tree: Improve output format and exit code
-Date: Tue,  1 Jul 2014 12:14:34 -0700
-Message-ID: <1404242075-7068-2-git-send-email-dturner@twitter.com>
-References: <1404242075-7068-1-git-send-email-dturner@twitter.com>
-Cc: David Turner <dturner@twitter.com>
+From: Roger Gammans <rgammans@gammascience.co.uk>
+Subject: [PATCH/RFC] Add --force-seen option to git-fast-export
+Date: Tue, 1 Jul 2014 17:28:08 +0100
+Message-ID: <S1758643AbaGATZM/20140701192515Z+27@vger.kernel.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 01 21:16:13 2014
+X-From: git-owner@vger.kernel.org Tue Jul 01 21:25:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X23XC-0007xq-Tt
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jul 2014 21:16:07 +0200
+	id 1X23g8-0005VB-1e
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jul 2014 21:25:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758597AbaGATP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2014 15:15:57 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:60485 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758570AbaGATPz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2014 15:15:55 -0400
-Received: by mail-qg0-f51.google.com with SMTP id z60so3781330qgd.38
-        for <git@vger.kernel.org>; Tue, 01 Jul 2014 12:15:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=hQOLipd7Ft+NcFdfYscgLgWw8iadR2QBgH6/WU6GTJ8=;
-        b=XbygHirMRntbMWljm5MHu9oUda3DPDReXAkcHw5iFB14YSR6sk9p63xd8UfzSOEXqj
-         d4wjwypm3bxaP+EiYFg2boI/hyefD1/MVjc+psPyDi6ScnD7Idqpgqva8LWUvtjVcxXH
-         sqLNyql/FzImbHbw+wZXAChlTjbNqcWDWxh39+X6lSaB83bxt49woULKJt29KUf8pY51
-         5W0b2cHIcZfD12HDMe5W0wZRERuzSnhsh3V06RNlxf7YZbf20ifDxVVFogviRLS8yP+8
-         ERXxL5reOMV1JGOEHymmoTsOoDO9C9Jjgc8U/sdFiz+HSLBjcbLb1xq4Z6wUClpq1vTh
-         RINg==
-X-Gm-Message-State: ALoCoQmpIUDkmJw5rtZmPzQLE7siM+GK9U8Reeljc1/9suaIgT1f6/nP/pvNrrxrDyOid0QhyiGP
-X-Received: by 10.140.19.21 with SMTP id 21mr72778959qgg.76.1404242155226;
-        Tue, 01 Jul 2014 12:15:55 -0700 (PDT)
-Received: from stross.twitter.corp ([8.25.197.27])
-        by mx.google.com with ESMTPSA id i44sm1094930qgd.13.2014.07.01.12.15.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 01 Jul 2014 12:15:54 -0700 (PDT)
-X-Google-Original-From: David Turner <dturner@twitter.com>
-X-Mailer: git-send-email 2.0.0.390.gcb682f8
-In-Reply-To: <1404242075-7068-1-git-send-email-dturner@twitter.com>
+	id S1758643AbaGATZM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2014 15:25:12 -0400
+Received: from 82-68-162-46.dsl.in-addr.zen.co.uk ([82.68.162.46]:57190 "EHLO
+	bath.backslashat.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752050AbaGATZL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2014 15:25:11 -0400
+X-Greylist: delayed 2446 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Jul 2014 15:25:11 EDT
+Received: from roger by bath.backslashat.org with local (Exim 4.82)
+	(envelope-from <roger@backslashat.org>)
+	id 1X232U-0002jq-P1
+	for git@vger.kernel.org; Tue, 01 Jul 2014 19:44:22 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252740>
 
-Make test-dump-cache-tree more useful for testing.  Do not treat known
-invalid trees as errors (and do not produce non-zero exit code),
-because we can fall back to the non-cache-tree codepath.
+I've been playing with git-stitch-repo and similar tools all
+of which seem to use the fast export to get their input data with.
 
-Signed-off-by: David Turner <dturner@twitter.com>
+I have need to provide these tools with a hints file so they can
+be given the extra metadata about parents - to do this they need
+to be able to decode marks->commit id's reliably. 
+
+git-stitch-repo reads it input direct from git-fast-export in a 
+pipe, so I could change that (by reading from saved output files)
+or modify git to have a mode to ensure that the mark/commit id map
+could be made stable.
+
+I've chosen the later (mainly because it occurred to me first - but
+it does seem the simpler to code )
+
+There are no tests yet, and I'm not entirely sure I like the
+new options name.
+
+Comments welcome.
+
+-- Patch follows ->
+
+Allow the use of --import/export-marks options to guarantee
+stability of the marks assigned to commits for tools that use
+the fast-export format to manipulate history.
+
+Signed-off-by: Roger Gammans <rgammans@gammascience.co.uk>
 ---
- t/t0090-cache-tree.sh  | 28 +++++++++++++++++++++++++---
- test-dump-cache-tree.c | 24 ++++++++++++------------
- 2 files changed, 37 insertions(+), 15 deletions(-)
+ Documentation/git-fast-export.txt |  5 +++++
+ builtin/fast-export.c             | 15 ++++++++++++---
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
-index 98fb1ab..8437c5f 100755
---- a/t/t0090-cache-tree.sh
-+++ b/t/t0090-cache-tree.sh
-@@ -21,10 +21,13 @@ test_shallow_cache_tree () {
- 	cmp_cache_tree expect
- }
+diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+index 221506b..10f58fa 100644
+--- a/Documentation/git-fast-export.txt
++++ b/Documentation/git-fast-export.txt
+@@ -81,6 +81,11 @@ If the backend uses a similar \--import-marks file, this allows for
+ incremental bidirectional exporting of the repository by keeping the
+ marks the same across runs.
  
-+# Test that the cache-tree for a given directory is invalid.
-+# If no directory is given, check that the root is invalid
- test_invalid_cache_tree () {
--	echo "invalid                                   (0 subtrees)" >expect &&
--	printf "SHA #(ref)  (%d entries, 0 subtrees)\n" $(git ls-files|wc -l) >>expect &&
--	cmp_cache_tree expect
-+	test-dump-cache-tree >actual &&
-+	sed -e "s/$_x40/SHA/" -e "s/[0-9]* subtrees//g" <actual >filtered &&
-+	expect=$(printf "invalid                                  $1 ()\n") &&
-+	fgrep "$expect" filtered
- }
- 
- test_no_cache_tree () {
-@@ -49,6 +52,25 @@ test_expect_success 'git-add invalidates cache-tree' '
- 	test_invalid_cache_tree
- '
- 
-+test_expect_success 'git-add in subdir invalidates cache-tree' '
-+	test_when_finished "git reset --hard; git read-tree HEAD" &&
-+	mkdir dirx &&
-+	echo "I changed this file" >dirx/foo &&
-+	git add dirx/foo &&
-+	test_invalid_cache_tree
-+'
++--force-seen::
++	Only meaningful with \--import-marks . This prevents the suppression
++	of commits listed the \--import-marks file from being exported again.
++	The allows multiple runs with a guaranteed marks/commit id stability
 +
-+test_expect_success 'git-add in subdir does not invalidate sibling cache-tree' '
-+	git tag no-children &&
-+	test_when_finished "git reset --hard no-children; git read-tree HEAD" &&
-+	mkdir dir1 dir2 &&
-+	test_commit dir1/a &&
-+	test_commit dir2/b &&
-+	echo "I changed this file" >dir1/a &&
-+	git add dir1/a &&
-+	test_invalid_cache_tree dir1/
-+'
+ --fake-missing-tagger::
+ 	Some old repositories have tags without a tagger.  The
+ 	fast-import protocol was pretty strict about that, and did not
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index ef44816..06f0366 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -29,6 +29,7 @@ static enum { ABORT, VERBATIM, WARN, WARN_STRIP, STRIP } signed_tag_mode = ABORT
+ static enum { ERROR, DROP, REWRITE } tag_of_filtered_mode = ERROR;
+ static int fake_missing_tagger;
+ static int use_done_feature;
++static int force_seen;
+ static int no_data;
+ static int full_tree;
+ static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
+@@ -324,13 +325,18 @@ static void handle_commit(struct commit *commit, struct rev_info *rev)
+ 		if (!S_ISGITLINK(diff_queued_diff.queue[i]->two->mode))
+ 			export_blob(diff_queued_diff.queue[i]->two->sha1);
+ 
+-	mark_next_object(&commit->object);
++	uint32_t mark = get_object_mark(&commit->object);
++	if (! mark) {
++		mark_next_object(&commit->object);
++		mark = last_idnum;
++	}
 +
- test_expect_success 'update-index invalidates cache-tree' '
- 	test_when_finished "git reset --hard; git read-tree HEAD" &&
- 	echo "I changed this file" >foo &&
-diff --git a/test-dump-cache-tree.c b/test-dump-cache-tree.c
-index 47eab97..ad42ca1 100644
---- a/test-dump-cache-tree.c
-+++ b/test-dump-cache-tree.c
-@@ -6,12 +6,12 @@
- static void dump_one(struct cache_tree *it, const char *pfx, const char *x)
- {
- 	if (it->entry_count < 0)
--		printf("%-40s %s%s (%d subtrees)\n",
--		       "invalid", x, pfx, it->subtree_nr);
-+		printf("%-40s %s (%d subtrees)%s\n",
-+		       "invalid", pfx, it->subtree_nr, x);
- 	else
--		printf("%s %s%s (%d entries, %d subtrees)\n",
--		       sha1_to_hex(it->sha1), x, pfx,
--		       it->entry_count, it->subtree_nr);
-+		printf("%s %s (%d entries, %d subtrees)%s\n",
-+		       sha1_to_hex(it->sha1), pfx,
-+		       it->entry_count, it->subtree_nr, x);
- }
+ 	if (!is_encoding_utf8(encoding))
+ 		reencoded = reencode_string(message, "UTF-8", encoding);
+ 	if (!commit->parents)
+ 		printf("reset %s\n", (const char*)commit->util);
+ 	printf("commit %s\nmark :%"PRIu32"\n%.*s\n%.*s\ndata %u\n%s",
+-	       (const char *)commit->util, last_idnum,
++	       (const char *)commit->util, mark,
+ 	       (int)(author_end - author), author,
+ 	       (int)(committer_end - committer), committer,
+ 	       (unsigned)(reencoded
+@@ -668,7 +674,8 @@ static void import_marks(char *input_file)
  
- static int dump_cache_tree(struct cache_tree *it,
-@@ -25,19 +25,19 @@ static int dump_cache_tree(struct cache_tree *it,
- 		/* missing in either */
- 		return 0;
+ 		mark_object(object, mark);
  
--	if (it->entry_count < 0) {
-+	if (it->entry_count < 0)
-+		/* invalid */
- 		dump_one(it, pfx, "");
--		dump_one(ref, pfx, "#(ref) ");
--		if (it->subtree_nr != ref->subtree_nr)
--			errs = 1;
--	}
- 	else {
--		dump_one(it, pfx, "");
- 		if (hashcmp(it->sha1, ref->sha1) ||
- 		    ref->entry_count != it->entry_count ||
- 		    ref->subtree_nr != it->subtree_nr) {
--			dump_one(ref, pfx, "#(ref) ");
-+			/* claims to be valid but is lying */
-+			dump_one(ref, pfx, " #(error)");
- 			errs = 1;
-+		} else {
-+			/* is actually valid */
-+			dump_one(it, pfx, "");
- 		}
+-		object->flags |= SHOWN;
++		if (! force_seen )
++			object->flags |= SHOWN;
  	}
- 
+ 	fclose(f);
+ }
+@@ -713,6 +720,8 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 			 N_("Output full tree for each commit")),
+ 		OPT_BOOL(0, "use-done-feature", &use_done_feature,
+ 			     N_("Use the done feature to terminate the stream")),
++		OPT_BOOL(0, "force-seen", &force_seen,
++			     N_("Output commit and blobs even if in an imported marks-file")),
+ 		OPT_BOOL(0, "no-data", &no_data, N_("Skip output of blob data")),
+ 		OPT_STRING_LIST(0, "refspec", &refspecs_list, N_("refspec"),
+ 			     N_("Apply refspec to exported refs")),
 -- 
-2.0.0.390.gcb682f8
+1.8.5.1
