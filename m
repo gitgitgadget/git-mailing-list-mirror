@@ -1,101 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: move detection doesnt take filename into account
-Date: Tue, 01 Jul 2014 10:08:15 -0700
-Message-ID: <xmqq61jhxb0g.fsf@gitster.dls.corp.google.com>
-References: <53B105DA.30004@gmail.com>
-	<287177519.16421.1404206204124.JavaMail.zimbra@dewire.com>
-	<xmqqtx71xh27.fsf@gitster.dls.corp.google.com>
-	<53B2CE4A.9060509@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/8] paint_down_to_common: use prio_queue
+Date: Tue, 1 Jul 2014 13:10:51 -0400
+Message-ID: <20140701171051.GA7282@sigill.intra.peff.net>
+References: <20140625233429.GA20457@sigill.intra.peff.net>
+ <20140625233952.GC23146@sigill.intra.peff.net>
+ <xmqqionhxd3a.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org
-To: Elliot Wolk <elliot.wolk@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 19:08:34 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 01 19:10:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X21Xl-0003tL-NZ
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jul 2014 19:08:34 +0200
+	id 1X21a4-0005Lj-Pq
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jul 2014 19:10:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758663AbaGARI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2014 13:08:26 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53351 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758658AbaGARIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2014 13:08:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C167223FD1;
-	Tue,  1 Jul 2014 13:08:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xD2bKvODHbrNP1CjQo1eOY0Qnmo=; b=ib7OMT
-	Mc06Ro7gtSRgVgHHMbonKmYXpbe1fg18Cum7Uum6jjiz+jP7DHYxYLxjQejoG0Ga
-	sFYQCV2cLzbcNCZSXSUFqlabJYqk1MYpz/NZHU9klDtoxni/SzUz7dt0bp2+vJtT
-	BlKRwCQiwf+UuexMZgI6wUtFnRLIJKAVRRylE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qrdoKDxaXbEWto3b8IF0ubBWPMMA8hmJ
-	R08j4lj781VfSE9YsvvkixVbu3ErnH3tuGwxPbgEHosE/CfBD/lL6LLbecUTMZPD
-	s6RscOcLRmBSj1BiPr7AZhlutlE64+siACBXLZopyHrA57gwKNQwNEm0QLWdqAQL
-	gPijr/A9pP8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B840223FD0;
-	Tue,  1 Jul 2014 13:08:12 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2BBBB23FC0;
-	Tue,  1 Jul 2014 13:08:06 -0400 (EDT)
-In-Reply-To: <53B2CE4A.9060509@gmail.com> (Elliot Wolk's message of "Tue, 01
-	Jul 2014 11:05:46 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 44CFDFB0-0142-11E4-8684-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1758768AbaGARKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2014 13:10:53 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54292 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758307AbaGARKw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2014 13:10:52 -0400
+Received: (qmail 14945 invoked by uid 102); 1 Jul 2014 17:10:51 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 Jul 2014 12:10:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jul 2014 13:10:51 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqqionhxd3a.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252727>
 
-Elliot Wolk <elliot.wolk@gmail.com> writes:
+On Tue, Jul 01, 2014 at 09:23:21AM -0700, Junio C Hamano wrote:
 
-> On 07/01/2014 10:57 AM, Junio C Hamano wrote:
->> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
->>
->>> I think it does, but based on filename suffix. E.g. here is a rename of
->>> three empty files with a suffix.
->>>
->>>   3 files changed, 0 insertions(+), 0 deletions(-)
->>>   rename 1.a => 2.a (100%)
->>>   rename 1.b => 2.b (100%)
->>>   rename 1.c => 2.c (100%)
->> This is not more than a chance.
->>
->> We tie-break rename source candidates that have the same content
->> similarity score to a rename destination using "name similarity",
->> whose implementation has been diffcore-rename.c::basename_same(),
->> which scores 1 if `basename $src` and `basename $dst` are the same
->> and 0 otherwise, i.e. from 1.a to a/1.a is judged to be a better
->> rename than from 1.a to a/2.a but otherwise there is nothing that
->> favors rename from 1.a to 2.a over 1.a to 2.b.
->
-> thanks for the info!
-> then i suppose my bug is a petition to have name similarity instead
-> use a different statistical matching algorithm.
+> > but with this patch, the positions of B and A are swapped.
+> > This is probably fine, as the order is an internal
+> > implementation detail anyway (it would _not_ be fine if we
+> > were using a priority queue for "git log" traversal, which
+> > should show commits in parent order).
+> 
+> Interesting that the queue is not "stable", but the test can still
+> rely on a fixed output.
 
-[administrivia: please do not top-post on this list]
+I think it is deterministic for a particular sequence of inserts/pops,
+but not stable with respect to insertion order.
 
-I didn't think it through but my gut feeling is that we could change
-the name similarity score to be the length of the tail part that
-matches (e.g. 1.a to a/2.a that has the same two bytes at the tail
-is a better match than to a/2.b that does not share any tail, and to
-a/1.a that shares the three bytes at the tail is an even better
-match).
+> While I tend to agree that for the purpose
+> of this code path, the order is an internal implementation detail,
+> but I wonder if it would benefit us a lot if we taught prio-queue to
+> be optionally more "stable", which would allow us to use it in other
+> code paths that care.  If we really wanted to, I would imagine that
+> we could keep the "insertion counter" in the elements of the queue
+> to make the result stable (i.e. the "void **array" would become
+> something like "struct { int insertion_ctr; void *thing; } *array").
 
-Oh, and rename basename_same() to something else; currently it is
-only used as the "name similarity", and after such a change, it will
-stay to be "name similarity" but will not be asking "are basenames
-the same?" anymore.
+Yeah, I think the reasons to be stable are:
 
-Hint, hint...
+  1. To be on the safe side for operations like this where it
+    _shouldn't_ matter, but perhaps there are hidden dependencies we
+    don't know of.
+
+  2. To make it easier for later callers to use prio-queue for cases
+     where it does matter (and I think "git log" is one of these).
+
+If we can do it without a big performance loss (and I don't see any
+reason it should be any worse than a slight bump to the constant-factor
+of the logarithmic operations), it probably makes sense to.
+
+I'll take a look at it (in fact, I already implemented something like it
+once long ago in the thread I linked to earlier). My sense of taste says
+it should be a stable_prio_queue implemented on top of prio_queue (i.e.,
+storing pointers to the struct you mention above). That means you can
+still use the unstable one if you want the (presumably minor)
+performance benefit, and it keeps the logic nice and tidy.
+
+But given that we have implemented prio_queue using void pointers, I
+think it would introduce an extra pointer per item and an extra layer of
+indirection on each access.  So maybe it is better to just build it in.
+
+The low-cost alternative is to implement prio_queue to hold items of
+arbitrary size. I'm not sure if that is the worth the complexity and
+maintenance cost.
+
+> Heh, I should have read the below-three-dashs commentary before
+> commenting (I often start working from the commit messages in "git
+> log" and then go back to the original thread).
+
+I always wonder how people read those. I tend to write them as if people
+have (just) read the commit message, but not yet read the patch.
+
+-Peff
+
+PS Thanks for your earlier comments on the actual commit-slab painting
+   algorithm. Responding to those is taking more thinking, and I haven't
+   gotten to it yet, but it's on my agenda.
