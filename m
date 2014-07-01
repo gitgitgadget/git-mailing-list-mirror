@@ -1,102 +1,85 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/8] paint_down_to_common: use prio_queue
-Date: Tue, 1 Jul 2014 13:10:51 -0400
-Message-ID: <20140701171051.GA7282@sigill.intra.peff.net>
+Subject: Re: [PATCH 4/8] add functions for memory-efficient bitmaps
+Date: Tue, 1 Jul 2014 13:18:00 -0400
+Message-ID: <20140701171759.GB7282@sigill.intra.peff.net>
 References: <20140625233429.GA20457@sigill.intra.peff.net>
- <20140625233952.GC23146@sigill.intra.peff.net>
- <xmqqionhxd3a.fsf@gitster.dls.corp.google.com>
+ <20140625234000.GD23146@sigill.intra.peff.net>
+ <CAPig+cSc=A=+PR7oF43yeLpcd4n=Bd1KU1AHPfMKXEu5wAF4Ug@mail.gmail.com>
+ <20140630170732.GA16747@sigill.intra.peff.net>
+ <xmqqegy5xbiu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 01 19:10:58 2014
+X-From: git-owner@vger.kernel.org Tue Jul 01 19:18:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X21a4-0005Lj-Pq
-	for gcvg-git-2@plane.gmane.org; Tue, 01 Jul 2014 19:10:57 +0200
+	id 1X21h0-0001M0-Sj
+	for gcvg-git-2@plane.gmane.org; Tue, 01 Jul 2014 19:18:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758768AbaGARKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Jul 2014 13:10:53 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54292 "HELO peff.net"
+	id S1758405AbaGARSB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Jul 2014 13:18:01 -0400
+Received: from cloud.peff.net ([50.56.180.127]:54299 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758307AbaGARKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Jul 2014 13:10:52 -0400
-Received: (qmail 14945 invoked by uid 102); 1 Jul 2014 17:10:51 -0000
+	id S1757138AbaGARSA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Jul 2014 13:18:00 -0400
+Received: (qmail 15288 invoked by uid 102); 1 Jul 2014 17:18:00 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 Jul 2014 12:10:51 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jul 2014 13:10:51 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 01 Jul 2014 12:18:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Jul 2014 13:18:00 -0400
 Content-Disposition: inline
-In-Reply-To: <xmqqionhxd3a.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqqegy5xbiu.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252728>
 
-On Tue, Jul 01, 2014 at 09:23:21AM -0700, Junio C Hamano wrote:
+On Tue, Jul 01, 2014 at 09:57:13AM -0700, Junio C Hamano wrote:
 
-> > but with this patch, the positions of B and A are swapped.
-> > This is probably fine, as the order is an internal
-> > implementation detail anyway (it would _not_ be fine if we
-> > were using a priority queue for "git log" traversal, which
-> > should show commits in parent order).
+> Another thing I noticed was that the definition of and the
+> commentary on bitset_equal() and bitset_empty() sounded somewhat
+> "undecided".  These functions take "max" that is deliberately named
+> differently from "num_bits" (the width of the bitsets involved),
+> inviting to use them for testing only earlier bits in the bitset as
+> long as the caller understands the caveat, but the caveat requires
+> that the partial bitset to test must be byte-aligned, which makes it
+> not very useful in practice, which means we probably do not want
+> them to be used for any "max" other than "num_bits".
+
+Yeah, I added that comment because I found "max" to be confusing, but
+couldn't think of a better name. I'm not sure why "num_bits" did not
+occur to me, as that makes it completely obvious.
+
+>  * take "num_bits", not "max", to clarify that callers must use them
+>    only on the full bitset.
+
+This seems like the right solution to me. Handling partially aligned
+bytes adds to the complexity and may hurt performance (in fact, I think
+bitset_equal could actually just call memcmp, which I should fix).
+That's fine if callers care about that feature, but I actually don't
+anticipate any that do.
+
+By the way, I chose "unsigned char" as the storage format somewhat
+arbitrarily. Performance might be better with "unsigned int" or even
+"unsigned long". It means potentially wasting more space, but not more
+than one word (minus a byte) per commit (so about 3MB on linux.git).
+I'll try to do some timings to see if it's worth doing.
+
+> In either case, there needs another item in the "caller's responsibility"
+> list at the beginning of bitset.h:
 > 
-> Interesting that the queue is not "stable", but the test can still
-> rely on a fixed output.
+>     4. Ensure that padding bits at the end of the bitset array are
+>        initialized to 0.
 
-I think it is deterministic for a particular sequence of inserts/pops,
-but not stable with respect to insertion order.
+Agreed. That is definitely a requirement I had in mind, but I didn't
+think to write it down.
 
-> While I tend to agree that for the purpose
-> of this code path, the order is an internal implementation detail,
-> but I wonder if it would benefit us a lot if we taught prio-queue to
-> be optionally more "stable", which would allow us to use it in other
-> code paths that care.  If we really wanted to, I would imagine that
-> we could keep the "insertion counter" in the elements of the queue
-> to make the result stable (i.e. the "void **array" would become
-> something like "struct { int insertion_ctr; void *thing; } *array").
-
-Yeah, I think the reasons to be stable are:
-
-  1. To be on the safe side for operations like this where it
-    _shouldn't_ matter, but perhaps there are hidden dependencies we
-    don't know of.
-
-  2. To make it easier for later callers to use prio-queue for cases
-     where it does matter (and I think "git log" is one of these).
-
-If we can do it without a big performance loss (and I don't see any
-reason it should be any worse than a slight bump to the constant-factor
-of the logarithmic operations), it probably makes sense to.
-
-I'll take a look at it (in fact, I already implemented something like it
-once long ago in the thread I linked to earlier). My sense of taste says
-it should be a stable_prio_queue implemented on top of prio_queue (i.e.,
-storing pointers to the struct you mention above). That means you can
-still use the unstable one if you want the (presumably minor)
-performance benefit, and it keeps the logic nice and tidy.
-
-But given that we have implemented prio_queue using void pointers, I
-think it would introduce an extra pointer per item and an extra layer of
-indirection on each access.  So maybe it is better to just build it in.
-
-The low-cost alternative is to implement prio_queue to hold items of
-arbitrary size. I'm not sure if that is the worth the complexity and
-maintenance cost.
-
-> Heh, I should have read the below-three-dashs commentary before
-> commenting (I often start working from the commit messages in "git
-> log" and then go back to the original thread).
-
-I always wonder how people read those. I tend to write them as if people
-have (just) read the commit message, but not yet read the patch.
+I'll fix both points in the re-roll.
 
 -Peff
-
-PS Thanks for your earlier comments on the actual commit-slab painting
-   algorithm. Responding to those is taking more thinking, and I haven't
-   gotten to it yet, but it's on my agenda.
