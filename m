@@ -1,137 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: [RFH] "git clean" deletes excluded files in untracked directories
-Date: Wed, 2 Jul 2014 15:11:14 -0400
-Message-ID: <20140702191114.GA3474@sigill.intra.peff.net>
-References: <20140702184429.GA32538@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 11/16] trace: add 'file:line' to all trace output
+Date: Wed, 02 Jul 2014 12:12:22 -0700
+Message-ID: <xmqqegy3h8x5.fsf@gitster.dls.corp.google.com>
+References: <53B33C05.5090900@gmail.com> <53B33DED.3030809@gmail.com>
+	<xmqqionfh9lp.fsf@gitster.dls.corp.google.com>
+	<53B45810.9000806@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 02 21:11:28 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRBHNT2GOQKGQEDIAGSWQ@googlegroups.com Wed Jul 02 21:12:32 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBHNT2GOQKGQEDIAGSWQ@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qa0-f55.google.com ([209.85.216.55])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2PwE-0007Pq-KI
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 21:11:26 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757551AbaGBTLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 15:11:19 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55085 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757546AbaGBTLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 15:11:16 -0400
-Received: (qmail 32508 invoked by uid 102); 2 Jul 2014 19:11:16 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 Jul 2014 14:11:16 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Jul 2014 15:11:14 -0400
-Content-Disposition: inline
-In-Reply-To: <20140702184429.GA32538@sigill.intra.peff.net>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252832>
+	(envelope-from <msysgit+bncBCG77UMM3EJRBHNT2GOQKGQEDIAGSWQ@googlegroups.com>)
+	id 1X2PxG-0008L4-Tn
+	for gcvm-msysgit@m.gmane.org; Wed, 02 Jul 2014 21:12:31 +0200
+Received: by mail-qa0-f55.google.com with SMTP id m5sf2504312qaj.20
+        for <gcvm-msysgit@m.gmane.org>; Wed, 02 Jul 2014 12:12:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=aUu7l48P3WJOe7iN4L6ebT45G4rcaCVlPEncFydFae8=;
+        b=HGS5N8E52mSqjH+3P5UgXVemdY+wME9g8iDu45CFf2keQ9KHza9A5xFFgiEfG/0E8G
+         5mz2gDabQmB3Dk0iCzFLVssWcwRVmMWT24a1gvVshz2sczPdDaRSvyMvaz+afevyKfDw
+         6XTLhG1Zrjk9A61TZqfruAktPQk4I/QM17d/OqzfQGmDN2CxNTfs6OZOtAsRN3pbPJxx
+         WHyV59dX9FTIuMZHYvKEnsYJrm2x0CpMk+KzjArd43UN+7VIrEnctY7U+Xb13IvRy6+G
+         e+zKRKPMPI8CIz0VXGom2BN93KxCCmaWAmLUQylMm+2noOisiCbAYBA8NMUm+nVdpS6d
+         To0g==
+X-Received: by 10.182.71.107 with SMTP id t11mr121099obu.11.1404328350141;
+        Wed, 02 Jul 2014 12:12:30 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.182.111.193 with SMTP id ik1ls127637obb.12.gmail; Wed, 02 Jul
+ 2014 12:12:29 -0700 (PDT)
+X-Received: by 10.182.105.230 with SMTP id gp6mr31314501obb.18.1404328349213;
+        Wed, 02 Jul 2014 12:12:29 -0700 (PDT)
+Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id w4si723828qcd.3.2014.07.02.12.12.29
+        for <msysgit@googlegroups.com>;
+        Wed, 02 Jul 2014 12:12:29 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 27F2D232A7;
+	Wed,  2 Jul 2014 15:12:18 -0400 (EDT)
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1E96C232A6;
+	Wed,  2 Jul 2014 15:12:18 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E37122329D;
+	Wed,  2 Jul 2014 15:12:12 -0400 (EDT)
+In-Reply-To: <53B45810.9000806@gmail.com> (Karsten Blees's message of "Wed, 02
+	Jul 2014 21:05:52 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C5D5C63A-021C-11E4-9212-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252833>
 
-If you have an untracked directory that contains excluded files, like
-this:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-  mkdir foo
-  echo content >foo/one
-  echo content >foo/two
-  echo "foo/one" >.gitignore
+>> Also, can it be set to something like __FILE__ ":" __FUNCTION__
+>> which may alleviate the alleged problem of "not necessarily unique"
+>> perhaps?
+>
+> Should work with MSVC. With GCC, however, __FUNCTION__ is a string constant
+> supplied by the compiler, so string literal concatenation doesn't work.
 
-then "git clean -d" will notice that "foo" is untracked and recursively
-delete it and its contents, including the ignored "foo/one".
+Shucks, but not too big a deal, I guess ;-)
 
-Our stance has always been that ignored files are not precious, so in
-that sense it is not a big loss. But "git clean" does provide a "-x"
-option, and takes care to avoid deleting ignored files when it is not
-given. So I'd argue that we should delete "foo/two" but retain
-"foo/one", unless "-x" is given.
+Thanks.
 
-I'm not sure of the best way to go about that, though. The patch below
-is my first attempt. It stops using DIR_SHOW_OTHER_DIRECTORIES when we
-find the list of files to delete, which means we get the full set of
-paths (so instead of "foo/", we see "foo/one" and "foo/two" after
-calling fill_directory). But then we have to notice that "foo" should go
-away if all of its contents do. For that, I use remove_path, which just
-walks up the pathname, removing leading directories until we hit a
-non-empty one.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-But there are a few problems:
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-  1. Is it possible that we want to remove "foo/bar" but not "foo"? The
-     obvious case would be that "foo" is excluded but "foo/bar" is not. I
-     guess you could get that with negative excludes, like:
-
-       foo/
-       !foo/bar
-
-  2. The output is different (we report each file we are removing,
-     rather than just the root directory).
-
-  3. The error handling is different. If we have an unreadable untracked
-     directory now, fill_directory does not recurse into it; we get the
-     directory name and complain when we cannot remove it. But with this
-     patch, fill_directory tries to enter it, can't, and simply fails to
-     report any entries inside it (this causes test failures in t7300).
-
-So this is probably not the right way to go about it.  I'm not sure of
-the best way.
-
-One option is to actually teach clean's recursive remove_dirs function
-to actually check excludes itself for each file. That feels hacky,
-though, since we should be checking them already in fill_directory.
-
-Another is to add a flag to fill_directory to indicate that it should
-recurse into directories to find excluded files, but not otherwise (we
-usually avoid it for reasons of efficiency, but since we would be
-immediately entering them to delete anyway, I don't think that's a
-concern here). I think this makes the fill_directory logic quite
-complicated, though.
-
-Suggestions?
-
----
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 9a91515..f159eed 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -914,7 +914,8 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	if (force > 1)
- 		rm_flags = 0;
- 
--	dir.flags |= DIR_SHOW_OTHER_DIRECTORIES;
-+	if (!remove_directories)
-+		dir.flags |= DIR_SHOW_OTHER_DIRECTORIES;
- 
- 	if (read_cache() < 0)
- 		die(_("index file corrupt"));
-@@ -985,7 +986,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 				printf(dry_run ? _(msg_would_remove) : _(msg_remove), qname);
- 			}
- 		} else {
--			res = dry_run ? 0 : unlink(abs_path.buf);
-+			res = dry_run ? 0 : remove_path(abs_path.buf);
- 			if (res) {
- 				qname = quote_path_relative(item->string, NULL, &buf);
- 				warning(_(msg_warn_remove_failed), qname);
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 04118ad..647844f 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -527,4 +527,12 @@ test_expect_success 'git clean -d respects pathspecs (pathspec is prefix of dir)
- 	test_path_is_dir foobar
- '
- 
-+test_expect_success 'clean -d does not clean ignored files' '
-+	mkdir -p foo &&
-+	echo content >foo/file &&
-+	echo "foo/*" >.gitignore &&
-+	git clean -df </dev/tty &&
-+	test_path_is_file foo/file
-+'
-+
- test_done
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
