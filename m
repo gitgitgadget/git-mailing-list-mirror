@@ -1,201 +1,56 @@
-From: Avi Kivity <avi@cloudius-systems.com>
-Subject: Re: [PATCH v2] git-am: add option to extract email Message-Id: tag
- into commit log
-Date: Wed, 02 Jul 2014 17:44:20 +0300
-Message-ID: <53B41AC4.5000308@cloudius-systems.com>
-References: <1404291113-4424-1-git-send-email-avi@cloudius-systems.com> <53B414A4.2060909@gmail.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Show containing branches in log?
+Date: Wed, 2 Jul 2014 09:50:57 -0500
+Message-ID: <CAHd499A78BRVawWSHNnzJcD1Ca7RfFeEnJf0SB7py1MD5qwL0g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Fabian Ruch <bafain@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 02 16:50:22 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 02 16:51:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2Lra-0006p5-3r
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 16:50:22 +0200
+	id 1X2LsE-0007Ln-TI
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 16:51:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752091AbaGBOuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 10:50:15 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:60235 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750880AbaGBOuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 10:50:14 -0400
-Received: by mail-wg0-f46.google.com with SMTP id y10so11316147wgg.17
-        for <git@vger.kernel.org>; Wed, 02 Jul 2014 07:50:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=UuNpl/EkXu46FyFnibZ+yl+g773hR0O2GH6D+/VgPd0=;
-        b=D+FecARi6AJvVxSJXO+cJBqZgNaJYRKFU0/+bynXPv2kEYSfIOzGaaGW9dvA3L7TIR
-         nm7hXkE86FmVMR8ACXvoR0kMJbKO6YbVoNa3Y+v25INTsZgirM2QOzJAu76Fbz9mQCK6
-         UpWk/Xke6w/ECK7AUYe07nxEp7gk80A8TPs8+fF6YS4wPjwKnTRnedsZRG3bChL1q/4j
-         OzAtXtvGGl+UgN6nkly7jLEm5xj08Yojvv6fNFkWd/96TqJeWaxSGAY8x3fqLFJPIcoG
-         UuDPUsVGM+Tm7wORorzm5T5XA243QSgaQx+Fo7t+EkmW2K/1MEUQq3hGlvxGDw5PcX+q
-         sr1w==
-X-Gm-Message-State: ALoCoQkCM2f4yrI0LobNeNq8AiIxjBe41GyYFuDwmQf6IJEmXEuKxEDIFnQx8do9V2kSmF1r0GDn
-X-Received: by 10.180.37.230 with SMTP id b6mr4827674wik.47.1404312262887;
-        Wed, 02 Jul 2014 07:44:22 -0700 (PDT)
-Received: from avi.cloudius (84.94.198.183.cable.012.net.il. [84.94.198.183])
-        by mx.google.com with ESMTPSA id ey16sm55896038wid.14.2014.07.02.07.44.21
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 02 Jul 2014 07:44:22 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53B414A4.2060909@gmail.com>
+	id S1754581AbaGBOu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 10:50:58 -0400
+Received: from mail-vc0-f171.google.com ([209.85.220.171]:44576 "EHLO
+	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754555AbaGBOu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 10:50:57 -0400
+Received: by mail-vc0-f171.google.com with SMTP id id10so10491811vcb.16
+        for <git@vger.kernel.org>; Wed, 02 Jul 2014 07:50:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=fbG91jVQK7KCX7n8QN12x4geYGZk7gqxOshTGjv/5Hk=;
+        b=nlrdD9LjxV6JjwP9h4td6ZQU5W0JPwr089t/irOIu6sRKdigITwcU+Fz9hi/axwb06
+         2aDBKQAgA/Qa/TRdpU/Q0s+QLxcunf5AepgsQDWK/tOJs4Sw3tMOL/YLb5phwWaXMdRm
+         gnb1lmvowlErpEiwee5dJUvcHxMwAVczpabsXxgMkPKv6GtSyqwUQ12qUrhrCfTtsUNu
+         NS30BGJu+5hDQGEoQo4njRgh7XUX5qwUxcXBeVo3xHEBrcycecMHKMqIEYkkapqKTFWX
+         ukO7WwftIkK61urL4Jbi5Q/4WxaMEaOx0zabwu8PkdEL+50/4lcL7DKJg8nh89al2+6Y
+         DbHw==
+X-Received: by 10.52.121.52 with SMTP id lh20mr37289674vdb.11.1404312657104;
+ Wed, 02 Jul 2014 07:50:57 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.102.204 with HTTP; Wed, 2 Jul 2014 07:50:57 -0700 (PDT)
+X-Google-Sender-Auth: XgrVssvIZKMDZpYGTtYS5VxZKOU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252783>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252784>
 
+I know that with the `git branch` command I can determine which
+branches contain a commit. Is there a way to represent this
+graphically with `git log`? Sometimes I just have a commit, and I need
+to find out what branch contains that commit. The reason why `git
+branch --contains` doesn't solve this problem for me is that it names
+almost all branches because of merge commits. Too much ancestry has
+been built since this commit, so there is no way to find the "closest"
+branch that contains that commit.
 
-On 07/02/2014 05:18 PM, Fabian Ruch wrote:
-> Hi Avi,
->
-> On 07/02/2014 10:51 AM, Avi Kivity wrote:
->> Some workflows prefer to track exactly which email message was used to
->> generate a commit.  This can be used, for example, to generate an
->> automated acknowledgement when a patch is committed as a response to
->> the patch email, or as a reference to the thread which introduced the
->> patch.
->>
->> Support this by adding a --message-id option (abbreviated as -m) to
->> git-am, which will then extract the message ID and append it to the
->> email commit log.
->>
->> Signed-off-by: Avi Kivity <avi@cloudius-systems.com>
->> ---
->>
->> v2: adjust to pass test suite (t5100)
->>
->>   Documentation/git-am.txt |  6 ++++++
->>   builtin/mailinfo.c       |  2 +-
->>   git-am.sh                | 10 +++++++++-
->>   t/t5100/info0004         |  1 +
->>   t/t5100/info0005         |  1 +
->>   t/t5100/info0012         |  1 +
->>   6 files changed, 19 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
->> index 9adce37..8a251a1 100644
->> --- a/Documentation/git-am.txt
->> +++ b/Documentation/git-am.txt
->> @@ -15,6 +15,7 @@ SYNOPSIS
->>   	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
->>   	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
->>   	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=<format>]
->> +	 [--message-id]
->>   	 [(<mbox> | <Maildir>)...]
->>   'git am' (--continue | --skip | --abort)
->>   
->> @@ -121,6 +122,11 @@ default.   You can use `--no-utf8` to override this.
->>   	user to lie about the author date by using the same
->>   	value as the committer date.
->>   
->> +-m::
->> +--message-id::
->> +	Extract the Message-Id: header from the e-mail and
->> +	append it to the commit message's tag stanza.
->> +
->>   --skip::
->>   	Skip the current patch.  This is only meaningful when
->>   	restarting an aborted patch.
->> diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
->> index cf11c8d..f1e1fed 100644
->> --- a/builtin/mailinfo.c
->> +++ b/builtin/mailinfo.c
->> @@ -278,7 +278,7 @@ static void cleanup_space(struct strbuf *sb)
->>   
->>   static void decode_header(struct strbuf *line);
->>   static const char *header[MAX_HDR_PARSED] = {
->> -	"From","Subject","Date",
->> +	"From","Subject","Date","Message-Id"
->>   };
->>   
->>   static inline int cmp_header(const struct strbuf *line, const char *hdr)
->> diff --git a/git-am.sh b/git-am.sh
->> index ee61a77..c0e7bdd 100755
->> --- a/git-am.sh
->> +++ b/git-am.sh
->> @@ -39,6 +39,7 @@ committer-date-is-author-date    lie about committer date
->>   ignore-date     use current timestamp for author date
->>   rerere-autoupdate update the index with reused conflict resolution if possible
->>   S,gpg-sign?     GPG-sign commits
->> +m,message-id    copy the Message-Id: header to the commit's tag stanza
->>   rebasing*       (internal use for git-rebase)"
->>   
->>   . git-sh-setup
->> @@ -371,7 +372,7 @@ split_patches () {
->>   prec=4
->>   dotest="$GIT_DIR/rebase-apply"
->>   sign= utf8=t keep= keepcr= skip= interactive= resolved= rebasing= abort=
->> -resolvemsg= resume= scissors= no_inbody_headers=
->> +resolvemsg= resume= scissors= no_inbody_headers= message_id=
->>   git_apply_opt=
->>   committer_date_is_author_date=
->>   ignore_date=
->> @@ -442,6 +443,8 @@ it will be removed. Please do not use it anymore."
->>   		gpg_sign_opt=-S ;;
->>   	--gpg-sign=*)
->>   		gpg_sign_opt="-S${1#--gpg-sign=}" ;;
->> +	-m|--message-id)
->> +		message_id=t ;;
-> Doesn't the message-id line in OPTIONS_SPEC make the negated long
-> option --no-message-id available as well? If that's the case, then
-> the corresponding case arm is missing from here.
-
-I don't know, but some other booleans don't supply negations, for 
-example --reject.
-
->>   	--)
->>   		shift; break ;;
->>   	*)
->> @@ -565,6 +568,7 @@ Use \"git am --abort\" to remove it.")"
->>   	echo " $git_apply_opt" >"$dotest/apply-opt"
->>   	echo "$threeway" >"$dotest/threeway"
->>   	echo "$sign" >"$dotest/sign"
->> +	echo "$message_id" > "$dotest/message-id"
-> To match the local style conventions, the space character after the
-> redirection operator should be removed.
-
-Sure.
-
-> Also, isn't the patch missing the bits where the state of message-id
-> is read? Like so:
->
->      if test "$(cat "$dotest/message-id")" = t
->      then
->      	message_id=t
->      fi
-
-Good catch, I guess this fixes a restarted am.
-
->
->>   	echo "$utf8" >"$dotest/utf8"
->>   	echo "$keep" >"$dotest/keep"
->>   	echo "$scissors" >"$dotest/scissors"
->> @@ -757,6 +761,10 @@ To restore the original branch and stop patching run \"\$cmdline --abort\"."
->>   		then
->>   			cat "$dotest/msg-clean"
->>   		fi
->> +		if test 't' == "$message_id"
->> +		then
->> +			grep ^Message-Id: "$dotest/info" || true
-> Why is the true guard needed here? The exit status of grep seems to
-> never be checked.
-
-I usually code scripts with -e, but here it's unneeded.
-
->
-> Although I cannot come up with an example where this would matter,
-> you might want to consider using the grep wrapper sane_grep from
-> git-sh-setup.sh instead. It resets the environment variable
-> GREP_OPTIONS before calling grep so that no unexpected user options
-> come into play.
-
-Good idea.  Will post a v4 shortly.
+Is there a way to graphically see what is the "nearest" named ref to
+the specified commit in the logs?
