@@ -1,125 +1,130 @@
 From: Fabian Ruch <bafain@gmail.com>
-Subject: [PATCH RFC v2 19/19] rebase -i: Enable options --signoff, --reset-author for pick, reword
-Date: Wed,  2 Jul 2014 19:48:11 +0200
-Message-ID: <ee5fc98420753a03a1f559ae824a2c13ee2aa49b.1404323078.git.bafain@gmail.com>
+Subject: [PATCH RFC v2 17/19] rebase -i: Teach do_pick the option --reset-author
+Date: Wed,  2 Jul 2014 19:48:09 +0200
+Message-ID: <baceb6e5770c530d938f497dd07ebb37efd518e1.1404323078.git.bafain@gmail.com>
 References: <53A258D2.7080806@gmail.com> <cover.1404323078.git.bafain@gmail.com>
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 02 19:50:42 2014
+X-From: git-owner@vger.kernel.org Wed Jul 02 19:50:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2Og2-0007DT-Vb
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 19:50:39 +0200
+	id 1X2OgB-0007LI-Nq
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 19:50:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932331AbaGBRuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 13:50:18 -0400
-Received: from mail-we0-f173.google.com ([74.125.82.173]:53240 "EHLO
-	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932318AbaGBRuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 13:50:14 -0400
-Received: by mail-we0-f173.google.com with SMTP id t60so11697428wes.18
-        for <git@vger.kernel.org>; Wed, 02 Jul 2014 10:50:13 -0700 (PDT)
+	id S1754191AbaGBRuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 13:50:12 -0400
+Received: from mail-we0-f181.google.com ([74.125.82.181]:46576 "EHLO
+	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756693AbaGBRuJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 13:50:09 -0400
+Received: by mail-we0-f181.google.com with SMTP id q59so11842672wes.12
+        for <git@vger.kernel.org>; Wed, 02 Jul 2014 10:50:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+IK+Vn3fwOIf2+UG3cqjzLIVxmtgc3k6swcSY/4XyiY=;
-        b=p8ENAZKhDoVijo3JdptStFTH/JP+InvmdoGUqBWewB51aMmgxOUhbsvKK7Z1ugP3qH
-         dC1v9pJrnwlk2Zfbz6+Q4+RGdbX8qiVHHAjA0aH7/uv/4nTK8sKO64Ryv3wm2fvpG+bc
-         Lyhq6NtU9X+9hpez1Po+WRW9hQnu80na3oR0M5SRyvdB16t0tE36ckkfslH48L59qSaM
-         zl/R9EKub329jNvOKkb8vnlyCXgfAGLLi9nL7MyRKDiIVPyXK6ESLoESOxLaJUMkGu8R
-         GZhtsohhL9OsjQLKX4a7UZ+N/YxYvTsiZRB+YPc0IZMFlDu4mGqiGtQ6hq08MDq7zYrx
-         cVIA==
-X-Received: by 10.194.92.177 with SMTP id cn17mr62245606wjb.71.1404323413176;
-        Wed, 02 Jul 2014 10:50:13 -0700 (PDT)
+        bh=5sbcgBafWH4wnovPM17s55OJ2FBO9ORbIkRkE2BejnU=;
+        b=OzfZoV7K+1Iq2YpCddd2y4X0cxJZLOgv0rQ9oK2f6EeXiXdeZ01u57yhlz3v8QtmOB
+         6Vh+1pFw3TxVxdw7nqvKKDHare+1sjugDjys4YrZEjz+KOzbPoPYJfLf5DQo30ldAGUn
+         jbkpOwSdbF821juGQByksCrGtBo8+33AkklQ+EjOvMQ+DhzualicL40004tj/lnuRl7x
+         ODXfDIjiJ8iZ/J3oaG8UIgayHd3E1y4koJ7HvMiUJShuM4hPXWyMBTTnmY4auFHNBAB/
+         AWvF8ABxEYU3l412PB3eoamIqRhKzJWAtYj9sfqhjcvTNyex6ejH7Ii0btbpi/GapRpU
+         GfjA==
+X-Received: by 10.194.63.77 with SMTP id e13mr5151316wjs.104.1404323408633;
+        Wed, 02 Jul 2014 10:50:08 -0700 (PDT)
 Received: from puffy.de (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
-        by mx.google.com with ESMTPSA id eo4sm57503504wid.4.2014.07.02.10.50.11
+        by mx.google.com with ESMTPSA id eo4sm57503504wid.4.2014.07.02.10.50.07
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Jul 2014 10:50:12 -0700 (PDT)
+        Wed, 02 Jul 2014 10:50:07 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0
 In-Reply-To: <cover.1404323078.git.bafain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252817>
 
-pick and reword are atomic to-do list commands in the sense that they
-open a new task which is closed after the respective command is
-completed. squash and fixup are not atomic. They create a new task
-which is not completed until the last squash or fixup is processed.
+`do_pick` is the git-cherry-pick wrapper in git-rebase--interactive
+that is used to implement many of the to-do list commands.
+Eventually, the complete `do_pick` interface will be exposed to the
+user in some form or another and those commands will become simple
+aliases for the `do_pick` options now used to implement them.
 
-Lift the general unknown option blockade for the pick and reword
-commands. If `do_cmd` comes across one of the options `--signoff` and
-`--reset-author` while parsing a to-do entry and the scheduled
-command is either `pick` or `reword`, relay the option to `do_pick`.
+Add the git-commit option `--reset-author` to the options pool of
+`do_pick`. It rewrites the author date and name of the picked commit
+to match the committer date and name.
 
-The `do_pick` options `--gpg-sign` and `--file` are not yet supported
-because `do_cmd` cannot handle option arguments and options with
-spaces at the moment. It is true that edit is one of the atomic
-commands but it displays hash information when the rebase is stopped
-and some options rewrite the picked commit which alters that
-information. squash and fixup still do not accept user options as the
-interplay of `--reset-author` and the author script are yet to be
-determined.
+If `--reset-author` is passed to `do_pick`, set the `rewrite` flag
+and relay the option to the git-commit command line which creates the
+final commit. If `--amend` is not passed as well, the fresh
+authorship effect is achieved by the mere fact that we are creating a
+new commit.
 
 Signed-off-by: Fabian Ruch <bafain@gmail.com>
 ---
- git-rebase--interactive.sh | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ git-rebase--interactive.sh | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index bb258bb..c34a9a7 100644
+index 2119d00..a9fcb76 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -624,6 +624,16 @@ do_replay () {
+@@ -464,10 +464,18 @@ record_in_rewritten() {
+ 
+ # Apply the changes introduced by the given commit to the current head.
+ #
+-# do_pick [--amend] [--file <file>] [--edit] <commit>
++# do_pick [--reset-author] [--amend] [--file <file>] [--edit] <commit>
+ #
+ # Wrapper around git-cherry-pick.
+ #
++# --reset-author
++#     Pretend the changes were made for the first time. Declare that the
++#     authorship of the resulting commit now belongs to the committer.
++#     This also renews the author timestamp. This creates a fresh
++#     commit.
++#
++#     _This is not a git-cherry-pick option._
++#
+ # --amend
+ #     After picking <commit>, replace the current head commit with a new
+ #     commit that also introduces the changes of <commit>.
+@@ -501,6 +509,10 @@ do_pick () {
  	while test $# -gt 0
  	do
  		case "$1" in
-+		--signoff|--reset-author)
-+			case "$command" in
-+			pick|reword)
-+				;;
-+			*)
-+				warn "Unsupported option: $1"
-+				command=unknown
-+				;;
-+			esac
++		--reset-author)
++			rewrite=y
++			rewrite_author=y
 +			;;
- 		-*)
- 			warn "Unknown option: $1"
- 			command=unknown
-@@ -644,21 +654,24 @@ do_replay () {
- 		comment_for_reflog pick
+ 		--amend)
+ 			if test "$(git rev-parse HEAD)" = "$squash_onto" || ! git rev-parse --verify HEAD
+ 			then
+@@ -562,12 +574,21 @@ do_pick () {
+ 		pick_one ${rewrite:+-n} $1 || return 1
+ 	fi
  
- 		mark_action_done
--		do_pick $sha1 || die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		eval do_pick $opts $sha1 \
-+			|| die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		record_in_rewritten $sha1
- 		;;
- 	reword|r)
- 		comment_for_reflog reword
++	if test -n "$rewrite_author" && test -z "$rewrite_amend"
++	then
++		# keep rewrite flag to create a new commit, rewrite
++		# without --reset-author though because it can only be
++		# used with -C, -c or --amend
++		rewrite_author=
++	fi
++
+ 	if test -n "$rewrite"
+ 	then
+ 		git commit --allow-empty --no-post-rewrite -n --no-edit \
+ 			   ${rewrite_amend:+--amend} \
+ 			   ${rewrite_edit:+--edit} \
+ 			   ${rewrite_message:+--file "$rewrite_message"} \
++			   ${rewrite_author:+--reset-author} \
+ 			   ${gpg_sign_opt:+"$gpg_sign_opt"} || return 3
+ 	fi
  
- 		mark_action_done
--		do_pick --edit $sha1 || die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		eval do_pick --edit $opts $sha1 \
-+			|| die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		record_in_rewritten $sha1
- 		;;
- 	edit|e)
- 		comment_for_reflog edit
- 
- 		mark_action_done
--		do_pick $sha1 || die_with_patch $sha1 "Could not apply $sha1... $rest"
-+		eval do_pick $opts $sha1 \
-+			|| die_with_patch $sha1 "Could not apply $sha1... $rest"
- 		warn "Stopped at $sha1... $rest"
- 		exit_with_patch $sha1 0
- 		;;
 -- 
 2.0.0
