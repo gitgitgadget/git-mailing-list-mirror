@@ -1,94 +1,77 @@
-From: Alex Vandiver <alex@chmrr.net>
-Subject: Race condition in git push --mirror can cause silent ref rewinding
-Date: Wed, 02 Jul 2014 17:10:13 -0400
-Message-ID: <53B47535.3020101@chmrr.net>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: [PATCH v1 0/4] hashmap improvements
+Date: Thu, 03 Jul 2014 00:18:40 +0200
+Message-ID: <53B48540.5070600@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 02 23:43:15 2014
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 03 00:18:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2SJ8-0004KS-FO
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 23:43:14 +0200
+	id 1X2Src-0007yx-NQ
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 00:18:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752842AbaGBVnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 17:43:10 -0400
-Received: from chmrr.net ([209.67.253.66]:54976 "EHLO utwig.chmrr.net"
-	rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751903AbaGBVnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 17:43:09 -0400
-X-Greylist: delayed 1952 seconds by postgrey-1.27 at vger.kernel.org; Wed, 02 Jul 2014 17:43:08 EDT
-Received: from 75-147-59-54-newengland.hfc.comcastbusiness.net ([75.147.59.54] helo=[10.1.10.102])
-	by utwig.chmrr.net with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.76)
-	(envelope-from <alex@chmrr.net>)
-	id 1X2RnO-0003p8-P2; Wed, 02 Jul 2014 17:10:27 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-X-Enigmail-Version: 1.6
-X-Authenticated-User: chmrr
-X-Authenticator: plain
-X-Sender-Verify: SUCCEEDED (sender exists & accepts mail)
-X-Exim-Version: 4.76 (build at 25-May-2011 17:04:25)
-X-Date: 2014-07-02 17:10:27
-X-Connected-IP: 75.147.59.54:49097
+	id S1752704AbaGBWSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 18:18:44 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:53737 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753481AbaGBWSl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 18:18:41 -0400
+Received: by mail-wi0-f174.google.com with SMTP id bs8so10428180wib.13
+        for <git@vger.kernel.org>; Wed, 02 Jul 2014 15:18:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :content-type:content-transfer-encoding;
+        bh=dvCelU3U7c/fZ/+n/3hP3E+6qpBa1rH+vMG9Bbigb2o=;
+        b=MkNQG4zys/19J/zmgJqgnywCesLwyUeaJFrZUzVOYNXjKrSHa23PMNz0mhgVqloa/D
+         a1HmSn417nCmxZq9+gjc2+6rS7HXgqoZ6sB8vl2YlmmpLN4/Ug0HUHVoqsSlQPDSeb8i
+         bOEc059gGnoP7e6U49fWmXp4rjI4HRpTZNNfM3y6HBD08XnNbscI7vyhVJNQtLEjCP73
+         NBlAz+hl+BfapMye4L11hhul5DtYU26KUNHvvjGRAtPxGQmB4ds4w0mVR6Zo1iGLr/t1
+         9gU5TQFEH6Lz5zizqUEedefR1wi3Id0gQLxoTUQgFe7iKQKo3pVDuklonqqEb7dbraTu
+         GMvA==
+X-Received: by 10.180.97.195 with SMTP id ec3mr6936049wib.13.1404339520008;
+        Wed, 02 Jul 2014 15:18:40 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id hi2sm57771291wjb.29.2014.07.02.15.18.38
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 02 Jul 2014 15:18:39 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252844>
 
-Heya,
+Here are a few small hashmap improvements, partly resulting from recent
+discussion of the config-cache topic.
 
-We recently ran into a particularly troubling race condition, discovered
-in git 2.0.0.  The setup for it is as follows:
+Karsten Blees (4):
+  hashmap: factor out getting an int hash code from a SHA1
+  hashmap: improve struct hashmap member documentation
+  hashmap: add simplified hashmap_get_from_hash() API
+  hashmap: add string interning API
 
-The repository is a bare repository, which developers push to via ssh;
-it mirrors its changes out onto github.  In its config:
+ Documentation/technical/api-hashmap.txt | 54 ++++++++++++++++++++++++++++++---
+ builtin/describe.c                      | 13 ++------
+ decorate.c                              |  5 +--
+ diffcore-rename.c                       | 11 +++----
+ hashmap.c                               | 38 +++++++++++++++++++++++
+ hashmap.h                               | 27 +++++++++++++++++
+ khash.h                                 | 11 ++-----
+ name-hash.c                             |  5 ++-
+ object.c                                | 13 +-------
+ pack-objects.c                          |  5 ++-
+ t/t0011-hashmap.sh                      | 13 ++++++++
+ test-hashmap.c                          | 25 ++++++++++-----
+ 12 files changed, 159 insertions(+), 61 deletions(-)
 
-    [remote "github"]
-        url = git@github.com:bestpractical/rt.git
-        fetch = +refs/*:refs/*
-        mirror = yes
-
-It has a post-receive hook which does:
-
-    sudo -u git -H /usr/bin/git push github
-
-
-We recently saw a situation where a push of a new branch caused a
-simultaneous update of a different branch (by a different user) to be
-rewound.  From the reflog of the created branch (4.2/html-gumbo-loading):
-
-    0000000000000000000000000000000000000000
-1aefd600fcbb5ded14376f77d77a14758668fb39 Wallace Reis
-<wreis@bestpractical.com> 1404326443 -0400       push
-
-And the updated branch (4.2-trunk), which was rewound:
-
-    44dc8ad0e4603e3f674b7c00deacc122ca52707a
-1e743b6225d502ad1a265929fb873f4c0bf4f8a5 Kevin Falcone
-<falcone@bestpractical.com> 1404326446 -0400    push
-    1e743b6225d502ad1a265929fb873f4c0bf4f8a5
-44dc8ad0e4603e3f674b7c00deacc122ca52707a git <git@bestpractical.com>
-1404326446 -0400        update by push
-
-It is my belief that this comes because the "--mirror" argument causes
-the local refs to be treated as tracking refs -- and thus updates all of
-them during the push.  I believe the race condition is thus:
-
-  1. User A starts a push --mirror; git records the values of the refs
-
-  2. User B updates a ref, commit mail goes out, etc
-
-  3. User A's push completes, updates "tracking" branch to value at (1).
-
-
-Needless to say, silently losing commits which appeared for all purposes
-to be pushed successfully (neither User A nor User B sees anything out
-of the ordinary) is extremely troubling.
-
- - Alex
+-- 
+1.9.4.msysgit.0.dirty
