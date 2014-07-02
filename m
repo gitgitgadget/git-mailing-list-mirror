@@ -1,76 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/9] add strip_suffix function
-Date: Wed, 2 Jul 2014 12:38:32 -0400
-Message-ID: <20140702163832.GC14404@sigill.intra.peff.net>
-References: <20140630165526.GA15690@sigill.intra.peff.net>
- <20140630165751.GB16637@sigill.intra.peff.net>
- <xmqqlhsbiwmz.fsf@gitster.dls.corp.google.com>
+From: Robert Dailey <rcdailey.lists@gmail.com>
+Subject: Re: Show containing branches in log?
+Date: Wed, 2 Jul 2014 11:52:43 -0500
+Message-ID: <CAHd499Bk6ZG+DDjN1HuC-RFczwd+AGZaUSkXA6a8MsZjOL5H8A@mail.gmail.com>
+References: <CAHd499A78BRVawWSHNnzJcD1Ca7RfFeEnJf0SB7py1MD5qwL0g@mail.gmail.com>
+	<20140702163451.GB14404@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 02 18:38:40 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jul 02 18:52:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2NYM-00071E-GB
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 18:38:38 +0200
+	id 1X2Nm7-0001vl-Vv
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 18:52:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755959AbaGBQie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 12:38:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:54954 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751717AbaGBQie (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 12:38:34 -0400
-Received: (qmail 23186 invoked by uid 102); 2 Jul 2014 16:38:34 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 02 Jul 2014 11:38:34 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Jul 2014 12:38:32 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqqlhsbiwmz.fsf@gitster.dls.corp.google.com>
+	id S1757524AbaGBQwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 12:52:46 -0400
+Received: from mail-ve0-f175.google.com ([209.85.128.175]:45003 "EHLO
+	mail-ve0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756380AbaGBQwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 12:52:44 -0400
+Received: by mail-ve0-f175.google.com with SMTP id jx11so11489182veb.34
+        for <git@vger.kernel.org>; Wed, 02 Jul 2014 09:52:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=upKin8gbaIikqAbogDk3Mj20Lk0GpFSVhGKt6DPgdJY=;
+        b=lHyhyoA/GUJ+BdvVVU2BVP4tJTsnLXlbn8DzHIJNGaF/FjIfpKgSADNGHxgLqmYHOa
+         rLFGMxatM1O/EvRYeni960TnnixtHIQM/AyM1H16DSbBND5TisDKXTML4r0JW8rkGyUC
+         lUVrOWCppw4zxFKkMrrWnLoY6MbzFJhdTy8nXU2TCqljVI40h2p5CTXqmYOP6SB8JNH4
+         qtM795BGBWVylko/CaU5srnOP27vfIEkbHSZiT8mfSWHU6dtXR7rRFU087udHziD1wyo
+         gZqDB3tObsvucGfLvmTARJCO3B2t9rWQb0w/hsr17/mLJgM0wDGwvNstIEf3AfnH8rS9
+         MIbw==
+X-Received: by 10.58.196.231 with SMTP id ip7mr1153596vec.47.1404319963645;
+ Wed, 02 Jul 2014 09:52:43 -0700 (PDT)
+X-Google-Sender-Delegation: rcdailey@gmail.com
+Received: by 10.220.102.204 with HTTP; Wed, 2 Jul 2014 09:52:43 -0700 (PDT)
+In-Reply-To: <20140702163451.GB14404@sigill.intra.peff.net>
+X-Google-Sender-Auth: MNdoYq2ctMLjD565-HPzVMXxzgk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252795>
 
-On Wed, Jul 02, 2014 at 08:54:44AM -0700, Junio C Hamano wrote:
+On Wed, Jul 2, 2014 at 11:34 AM, Jeff King <peff@peff.net> wrote:
+> Have you tried "git describe --contains --all <commit>"?
+>
+> To some degree, I fear your question isn't something git can answer. If
+> the branch containing the commit has been merged into other branches,
+> then they all "contain" the commit. There is not really any reason to
+> prefer one over the other ("describe --contains" will try to find the
+> "closest" branch, but that is based on heuristics and is not necessarily
+> well-defined).
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > For that reason, the "mem" form puts its length parameter
-> > next to the buffer (since they are a pair), and the string
-> > form puts it at the end (since it is an out-parameter). The
-> > compiler can notice when you get the order wrong, which
-> > should help prevent writing one when you meant the other.
-> 
-> Very sensible consideration.  I like commits that careful thinking
-> behind them shows through them.
+I have not tried that command. Note I mentioned named refs, so
+nameless branches I'm not worried about. Even if I merge branch A into
+branch B, branch A is still closest in terms of number of steps to get
+to the commit, because to get to the commit through B you have to
+cross over a merge commit. Basically the priority should be directness
+and distance. The more direct a branch is (i.e. the lesser number of
+merge commits it goes through to get to the commit) the more relevant
+it is. As a second condition, distance would be used in cases where
+the directness of it is the same.
 
-I would like to take credit for advanced thinking, but I actually did
-what felt natural, and only noticed the "compiler will tell you when you
-are wrong" effect when I got it wrong while writing a later patch in the
-series. :)
-
-> If we want to avoid implying NUL-termination, the only way to do so
-> would be to use wording that does not hint shortening.  At least for
-> the C-string variant, which is measuring the length of the basename
-> part (i.e. `basename $str $suffix`) without touching anything else,
-> e.g. basename_length("hello.c", ".c", &len), but at the same time
-> you want to make it a boolean to signal if the string ends with the
-> suffix, so perhaps has_suffix("hello.c", ".c", &len)?
-
-I think that invites some confusion with "ends_with", which is the same
-thing (but just does not take the "len" parameter). We could just add
-this feature to ends_with, and ask callers who do not care to pass NULL,
-but that makes those call sites uglier.
-
-Having had a day to mull it over, and having read your email, I think I
-still prefer strip_suffix.
-
--Peff
+Sorting this in the log graph and seeing it visually (I could even use
+--simplify-by-decoration) would help me understand the topography of
+git's history relative to the commit(s) I specify.
