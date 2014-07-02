@@ -1,142 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/9] add strip_suffix function
-Date: Wed, 02 Jul 2014 08:54:44 -0700
-Message-ID: <xmqqlhsbiwmz.fsf@gitster.dls.corp.google.com>
-References: <20140630165526.GA15690@sigill.intra.peff.net>
-	<20140630165751.GB16637@sigill.intra.peff.net>
+From: Eldon Nelson <eldon_nelson@ieee.org>
+Subject: Compile Error on Git 2.0.1 on Redhat 5.9 with Fix
+Date: Wed, 2 Jul 2014 10:56:25 -0500
+Message-ID: <CAH5EwqY8D=CGxB+rZvwPH5115r9qmRCBBvJMG_o0962d4Uquxw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 02 17:55:03 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 02 17:56:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2MsA-0005FN-95
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 17:55:02 +0200
+	id 1X2Mtb-0006OA-Jh
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 17:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964779AbaGBPy6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 11:54:58 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52969 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754128AbaGBPy5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 11:54:57 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 37B352185F;
-	Wed,  2 Jul 2014 11:54:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/Fibx9BNaeBF0lP3BUnwWuIBVR0=; b=QrkTCl
-	UZR+7TAvVheLKgRlvXzbimY1ehgx/ODvXiA7vwDCqm9sb9iK9tWLisEdH7NhTIZG
-	QVi0tk4B7rfpMEJOgwRt5ZULwlLiXKvlRKaO8HGk1iJdez+MLamUwe8AIN/by1ac
-	NDYaJQ9DmT1DgaK5NzB6frtAU7WS2uJgryc6s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yOPlfr2xlpVkbCWu1Q0BiBpxrUFdDOOG
-	AyWAdsO9c3meMJXJLE4caenyBx2aR6L291MnTugqxzthB7/qJP9KXlvXYJUCWUvB
-	C5a9YDWNWn7j0/oOW5f/3f5gO65NBfxEspf3vEq5pTP8QpyXuuuzP8wP/kMfjSGL
-	5nFmPs6C8Dc=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2A8652185E;
-	Wed,  2 Jul 2014 11:54:41 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 39AA521858;
-	Wed,  2 Jul 2014 11:54:36 -0400 (EDT)
-In-Reply-To: <20140630165751.GB16637@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 30 Jun 2014 12:57:51 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2AB23398-0201-11E4-A4FC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1755451AbaGBP41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 11:56:27 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:55164 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755377AbaGBP40 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 11:56:26 -0400
+Received: by mail-pd0-f179.google.com with SMTP id w10so12130376pde.24
+        for <git@vger.kernel.org>; Wed, 02 Jul 2014 08:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:date:message-id:subject:from:to:content-type;
+        bh=ghOR3eOgmx046+l+lAN+36OYW2EAR/uin6G4wZw8XOs=;
+        b=xhER+3uZ+S//34KQtC+gkK8P9NNwiMIyHGlwxWqB0OidCetPKxWVIaoiDDZ3ilvyh8
+         ojVQKouKQthjlMcRWXwGkPTETT+6cZl2aQbDxbhz2mTmHNEXGsVVtNjcXsBjc/V0f0jf
+         7vGZSpIMLSV/bcYx5jyJ+nhExAmwq55Q9Li0W7NY4u7lAgfzn6b3G9KK/u9mUgI4GxfO
+         2gsYVm4IeLs02DzjdT3RfCuzvuE2pIKRKHKivH2GZprJTlup17vUwpnyE23mJgZrJSj/
+         JoGj9cJmoMKr+Qnbczi+KrmQzfCOJsT1cvwj39XQPFoHbVCcwk+/9wzSnVEgC94Ra4h1
+         Hfbw==
+X-Received: by 10.66.141.76 with SMTP id rm12mr5033769pab.138.1404316585922;
+ Wed, 02 Jul 2014 08:56:25 -0700 (PDT)
+Received: by 10.70.128.48 with HTTP; Wed, 2 Jul 2014 08:56:25 -0700 (PDT)
+X-Google-Sender-Auth: OIgNuYFn56rUXT1in8bea5vhjCY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252789>
 
-Jeff King <peff@peff.net> writes:
+When compiling Git 2.0.1 on RedHat 5.9 as a non-root user I get the
+following error:
 
-> For that reason, the "mem" form puts its length parameter
-> next to the buffer (since they are a pair), and the string
-> form puts it at the end (since it is an out-parameter). The
-> compiler can notice when you get the order wrong, which
-> should help prevent writing one when you meant the other.
+BUILD ERROR
 
-Very sensible consideration.  I like commits that careful thinking
-behind them shows through them.
+```
+make prefix=/home/eldon/local all doc info
+...
+    CC zlib.o
+    CC unix-socket.o
+    CC thread-utils.o
+    CC compat/strlcpy.o
+    AR libgit.a
+/bin/sh: gar: command not found
+make: *** [libgit.a] Error 127
+```
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I hope the word "strip" is OK, as it does not actually NUL-terminate
-> (doing so would make it unusable for many cases). Between the comment
-> below and the "const" in the parameter, I think it should be pretty
-> clear that it does not touch the string. And I could not think of a
-> better word.
+My fix was to make a symlink below:
 
-All other words I can think of offhand, trim, chomp, etc., hint
-shortening of the input string, and by definition shortening of a
-string implies NUL-termination.
+SYMLINK
 
-The "mem" variant deals with a counted string, however, so its
-shortening implies NUL-termination a lot less [*1*] and should be
-fine.
+```
+gar -> /usr/bin/ar
+```
 
-If we want to avoid implying NUL-termination, the only way to do so
-would be to use wording that does not hint shortening.  At least for
-the C-string variant, which is measuring the length of the basename
-part (i.e. `basename $str $suffix`) without touching anything else,
-e.g. basename_length("hello.c", ".c", &len), but at the same time
-you want to make it a boolean to signal if the string ends with the
-suffix, so perhaps has_suffix("hello.c", ".c", &len)?
+LINUX VERSION
 
-[Footnote]
+```
+> lsb_release -i -r
+Distributor ID: RedHatEnterpriseClient
+Release:        5.9
+```
 
- *1* ... but not entirely, because we often NUL-terminate even
-     counted strings (the buffer returned from read_sha1_file() and
-     the payload of strbuf are two examples).
+I think the fix is to allow the use of "ar" if "gar" does not exist. I
+don't know if this exists for every Redhat install but "gar" is not
+available in /usr/bin but "ar" does.
 
->  git-compat-util.h | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index b6f03b3..d044c42 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -358,6 +358,33 @@ static inline const char *skip_prefix(const char *str, const char *prefix)
->  	return NULL;
->  }
->  
-> +/*
-> + * If buf ends with suffix, return 1 and subtract the length of the suffix
-> + * from *len. Otherwise, return 0 and leave *len untouched.
-> + */
-> +static inline int strip_suffix_mem(const char *buf, size_t *len,
-> +				   const char *suffix)
-> +{
-> +	size_t suflen = strlen(suffix);
-> +	if (*len < suflen || memcmp(buf + (*len - suflen), suffix, suflen))
-> +		return 0;
-> +	*len -= suflen;
-> +	return 1;
-> +}
-> +
-> +/*
-> + * If str ends with suffix, return 1 and set *len to the size of the string
-> + * without the suffix. Otherwise, return 0 and set *len to the size of the
-> + * string.
-> + *
-> + * Note that we do _not_ NUL-terminate str to the new length.
-> + */
-> +static inline int strip_suffix(const char *str, const char *suffix, size_t *len)
-> +{
-> +	*len = strlen(str);
-> +	return strip_suffix_mem(str, len, suffix);
-> +}
-> +
->  #if defined(NO_MMAP) || defined(USE_WIN32_MMAP)
->  
->  #ifndef PROT_READ
+```
+> /usr/bin/ar --version
+GNU ar 2.17.50.0.6-20.el5_8.3 20061020
+Copyright 2005 Free Software Foundation, Inc.
+```
+
+It could just be my corporate install of RedHat that is weird, but
+thought this might be at least a point to describe a fix.
+
+```
+gcc --version
+gcc (GCC) 4.1.2 20080704 (Red Hat 4.1.2-54)
+Copyright (C) 2006 Free Software Foundation, Inc.
+```
+
+~~~~~~~~~~~~
+Eldon Nelson
+eldon_nelson@ieee.org
+Cell: 952-393-3481
