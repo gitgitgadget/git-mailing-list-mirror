@@ -1,53 +1,85 @@
-From: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 00/14] Add submodule test harness
-Date: Wed, 02 Jul 2014 16:54:58 +0200
-Message-ID: <53B41D42.2090805@web.de>
-References: <539DD029.4030506@web.de>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: [PATCH v4] git-am: add option to extract email Message-Id: tag
+ into commit log
+Date: Wed, 02 Jul 2014 17:03:04 +0200
+Message-ID: <53B41F28.8040205@web.de>
+References: <1404312673-11836-1-git-send-email-avi@cloudius-systems.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 02 16:55:13 2014
+To: Avi Kivity <avi@cloudius-systems.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 02 17:03:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2LwD-00029m-Il
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 16:55:09 +0200
+	id 1X2M4H-0008Dh-T4
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 17:03:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753606AbaGBOzB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 10:55:01 -0400
-Received: from mout.web.de ([212.227.17.12]:60118 "EHLO mout.web.de"
+	id S1754575AbaGBPDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 11:03:09 -0400
+Received: from mout.web.de ([212.227.17.12]:62999 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751547AbaGBOzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 10:55:01 -0400
-Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0M4ZTk-1WhdAF1iPc-00ydvr; Wed, 02 Jul 2014 16:54:59
+	id S1754535AbaGBPDH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 11:03:07 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Maamb-1XMUJE3w1x-00K4lj; Wed, 02 Jul 2014 17:03:06
  +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <539DD029.4030506@web.de>
-X-Provags-ID: V03:K0:Yxb6yebrS+0gKYvq8W0Cjf4RqGln/cwX7mAygXy7p0sMjT3SMXZ
- rkFdeM1pXkWwzXOZpmBids6NBznwY3HFyocvkpfCSKt82KW6uRe7WxdACth61Wnq3EKHi2P
- nE8jtM+dMiRzfBAK4sP4ctuvaxaR2aJ0YZ6tt3wi87m31OoQXE9Dk3xZAv/w85E2ekLkJ0w
- nPDPlx/ug7iKlXd1Li9FQ==
+In-Reply-To: <1404312673-11836-1-git-send-email-avi@cloudius-systems.com>
+X-Provags-ID: V03:K0:wHMTFAD4k6MiCrgV+mOuQTgLWZdtnQ0eop0TO133HOTpFxmF0V6
+ ER95J78ndLQnumDwfckOnSDrIOg2EmyuLHO/DHZTw/V/31Drgo4JpDx7e8rRJl/QrpLjDiP
+ I6LGB1oFOSY2ireb59+KZkbpfvCa6BFAwanEHZQ5aXL0yUyDb/wRtY8/w7wk4udGvgIw4v/
+ Xt7xD9tA+T/D2PGwHam5g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252787>
 
-(Not sure if this is the right thread)
-(I haven't checked if this is fixed in your latest version)
-
-On what I have on pu 7a0da7902cbbc9a876b90c9, Tue Jul 1 14:51:53 2014 -0700
-
-Many submodule tests are broken.
-One problem is here:
-
-lib-submodule-update.sh:264: possible problem: echo -n is not portable (please use printf):                     echo -n >sub1 &&
-lib-submodule-update.sh:507: possible problem: echo -n is not portable (please use printf):                     echo -n >sub1 &&
-
-You can remove the "empty" "echo -n" to create an empty file:
->sub1 &&
+> diff --git a/git-am.sh b/git-am.sh
+> index ee61a77..fd0181f 100755
+> --- a/git-am.sh
+> +++ b/git-am.sh
+> @@ -39,6 +39,7 @@ committer-date-is-author-date    lie about committer date
+>  ignore-date     use current timestamp for author date
+>  rerere-autoupdate update the index with reused conflict resolution if possible
+>  S,gpg-sign?     GPG-sign commits
+> +m,message-id    copy the Message-Id: header to the commit's tag stanza
+>  rebasing*       (internal use for git-rebase)"
+>  
+>  . git-sh-setup
+> @@ -371,7 +372,7 @@ split_patches () {
+>  prec=4
+>  dotest="$GIT_DIR/rebase-apply"
+>  sign= utf8=t keep= keepcr= skip= interactive= resolved= rebasing= abort=
+> -resolvemsg= resume= scissors= no_inbody_headers=
+> +resolvemsg= resume= scissors= no_inbody_headers= message_id=
+>  git_apply_opt=
+>  committer_date_is_author_date=
+>  ignore_date=
+> @@ -442,6 +443,8 @@ it will be removed. Please do not use it anymore."
+>  		gpg_sign_opt=-S ;;
+>  	--gpg-sign=*)
+>  		gpg_sign_opt="-S${1#--gpg-sign=}" ;;
+> +	-m|--message-id)
+> +		message_id=t ;;
+>  	--)
+>  		shift; break ;;
+>  	*)
+> @@ -565,6 +568,7 @@ Use \"git am --abort\" to remove it.")"
+>  	echo " $git_apply_opt" >"$dotest/apply-opt"
+>  	echo "$threeway" >"$dotest/threeway"
+>  	echo "$sign" >"$dotest/sign"
+> +	echo "$message_id" >"$dotest/message-id"
+>  	echo "$utf8" >"$dotest/utf8"
+>  	echo "$keep" >"$dotest/keep"
+>  	echo "$scissors" >"$dotest/scissors"
+> @@ -651,6 +655,10 @@ then
+>  else
+>  	SIGNOFF=
+>  fi
+> +if test "$(cat "$dotest/message-id")" = t
+Does the usage of '"' inside of '"' look good, or can we write like this:
+if test $(cat "$dotest/message-id") = t
