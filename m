@@ -1,119 +1,106 @@
 From: Fabian Ruch <bafain@gmail.com>
-Subject: [PATCH RFC v2 02/19] rebase -i: reword complains about empty commit despite --keep-empty
-Date: Wed,  2 Jul 2014 19:47:54 +0200
-Message-ID: <b7ee74ddb785f0e087b30ca6be11723ca199fa03.1404323078.git.bafain@gmail.com>
+Subject: [PATCH RFC v2 03/19] rebase -i: reword executes pre-commit hook on interim commit
+Date: Wed,  2 Jul 2014 19:47:55 +0200
+Message-ID: <12171cf0323b3d10b12b02e3b7d42ff4b7964724.1404323078.git.bafain@gmail.com>
 References: <53A258D2.7080806@gmail.com> <cover.1404323078.git.bafain@gmail.com>
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 02 19:49:50 2014
+X-From: git-owner@vger.kernel.org Wed Jul 02 19:49:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2OfE-0006WL-9y
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 19:49:48 +0200
+	id 1X2OfE-0006WL-QT
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 19:49:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932169AbaGBRtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 13:49:36 -0400
-Received: from mail-wi0-f181.google.com ([209.85.212.181]:44782 "EHLO
-	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932147AbaGBRtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 13:49:35 -0400
-Received: by mail-wi0-f181.google.com with SMTP id n3so955824wiv.14
-        for <git@vger.kernel.org>; Wed, 02 Jul 2014 10:49:34 -0700 (PDT)
+	id S932216AbaGBRtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 13:49:39 -0400
+Received: from mail-we0-f177.google.com ([74.125.82.177]:62912 "EHLO
+	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932168AbaGBRti (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 13:49:38 -0400
+Received: by mail-we0-f177.google.com with SMTP id u56so11547269wes.36
+        for <git@vger.kernel.org>; Wed, 02 Jul 2014 10:49:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=VitfxCM/K7jufh/FrQ6GUWhkXQoL0j+8fMabByFloDk=;
-        b=XVRM4Lhqiy3qwiw2a+5nVcGEscfi8g1hFfv1jSmOIpaFJjKAFaPiZhONmy7E44K/kq
-         oq55/c4ZTacmG0/TVDkM79IYq1XymOl1+n0kSqGBLHgNpxRN+p8zDHAuJGUmxic3GxOd
-         DrXJ3YngC8aP08kK2KTN0XSzHDmxDuUQopUmWNGbN0f2wTZuu3THyihlELbFXLdBxpHS
-         nxjX+nfYtWNGHh0wGVcCI56+/uOSiHFT9H0WXnPK0YM1zPOOvUIEUZhiZj7ZTj3pCvYI
-         M9iikCQCRQTkFFpeeYXbMyC1uZqI96qGoQlmFAFxbGJTCXXRLEdhYhkNx8JE8hyIeb/H
-         TZXQ==
-X-Received: by 10.180.103.228 with SMTP id fz4mr44317487wib.4.1404323374382;
-        Wed, 02 Jul 2014 10:49:34 -0700 (PDT)
+        bh=+DbhgW214p+BMNr6cee3iDUBJ7hqd+gDYk0d8SidIMY=;
+        b=uI5Pibo2umAKRgXLHQf0Fg5tivsgcbB+rh4zvYw9ngscUzszc288+cbOQpipPLJ05h
+         GVczCpdre83J1yrgVgLMTI+4fM9o7QQpJNvrBcDQNU/kLJBTcZ6b2jAvlnK/f2Nb/J/f
+         /TVKHWibk/NsV7df8gNROVtMdn/TH+8Kf6zsbP8AsgEIMxjY8YDZ8sc07U32vkvZiYtH
+         4wFjjbUiftzncC5/Pv1D8EpI/5ESFAD0yFpQJb/m27/611LbNMAb3weAEQqCS18bbZBd
+         ZOiJ1DZQqF539nMtaq0qqcVJZARYwvthZ9s0uo/1pHsiH7NzuXudazUfeDioKIBY1x6Y
+         8vqQ==
+X-Received: by 10.194.24.2 with SMTP id q2mr19854369wjf.91.1404323377282;
+        Wed, 02 Jul 2014 10:49:37 -0700 (PDT)
 Received: from puffy.de (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
-        by mx.google.com with ESMTPSA id eo4sm57503504wid.4.2014.07.02.10.49.32
+        by mx.google.com with ESMTPSA id eo4sm57503504wid.4.2014.07.02.10.49.35
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 02 Jul 2014 10:49:33 -0700 (PDT)
+        Wed, 02 Jul 2014 10:49:36 -0700 (PDT)
 X-Mailer: git-send-email 2.0.0
 In-Reply-To: <cover.1404323078.git.bafain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252807>
 
 The to-do list command `reword` replays a commit like `pick` but lets
-the user also edit the commit's log message. If `--keep-empty` is
-passed as option to git-rebase--interactive, empty commits ought to
-be replayed without complaints. However, if the users chooses to
-reword an empty commit by changing the respective to-do list entry
-from
+the user also edit the commit's log message. This happens in two
+steps. Firstly, the named commit is cherry-picked. Secondly, the
+commit created in the first step is amended using an unchanged index
+to edit the log message. The pre-commit hook is meant to verify the
+changes introduced by a commit (for instance, catching inserted
+trailing white space). Since the committed tree is not changed
+between the two steps, do not execute the pre-commit hook in the
+second step.
 
-    pick fa1afe1 Empty commit
-
-to
-
-    reword fa1afe1 Empty commit
-
-, then git-rebase--interactive suddenly fails to replay the empty
-commit. This is especially counterintuitive because `reword` is
-thought of as a `pick` that alters the log message in some way but
-nothing more and the unchanged to-do list entry would not fail.
-
-Handle `reword` by cherry-picking the named commit and editing the
-log message using
-
-    git commit --allow-empty --amend
-
-instead of
-
-    git commit --amend.
-
-Add test.
+Specify the git-commit option `--no-verify` to disable the pre-commit
+hook when editing the log message. Because `--no-verify` also skips
+the commit-msg hook, execute the hook from within
+git-rebase--interactive after the commit is created. Fortunately, the
+commit message is still available in `$GIT_DIR/COMMIT_EDITMSG` after
+git-commit terminates. Caveat: In case the commit-msg hook finds the
+new log message ill-formatted, the user is only notified of the
+failed commit-msg hook but the log message is used for the commit
+anyway. git-commit ought to offer more fine-grained control over
+which hooks are executed.
 
 Signed-off-by: Fabian Ruch <bafain@gmail.com>
 ---
- git-rebase--interactive.sh    | 2 +-
- t/t3404-rebase-interactive.sh | 8 ++++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ git-rebase--interactive.sh | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index e733d7f..689400e 100644
+index 689400e..b50770d 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -504,7 +504,7 @@ do_next () {
+@@ -504,10 +504,19 @@ do_next () {
  
  		mark_action_done
  		do_pick $sha1 "$rest"
--		git commit --amend --no-post-rewrite ${gpg_sign_opt:+"$gpg_sign_opt"} || {
-+		git commit --allow-empty --amend --no-post-rewrite ${gpg_sign_opt:+"$gpg_sign_opt"} || {
- 			warn "Could not amend commit after successfully picking $sha1... $rest"
- 			exit_with_patch $sha1 1
- 		}
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 8197ed2..9931143 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -75,6 +75,14 @@ test_expect_success 'rebase --keep-empty' '
- 	test_line_count = 6 actual
- '
- 
-+test_expect_success 'rebase --keep-empty' '
-+	git checkout emptybranch &&
-+	set_fake_editor &&
-+	FAKE_LINES="1 reword 2" git rebase --keep-empty -i HEAD~2 &&
-+	git log --oneline >actual &&
-+	test_line_count = 6 actual
-+'
-+
- test_expect_success 'rebase -i with the exec command' '
- 	git checkout master &&
- 	(
+-		git commit --allow-empty --amend --no-post-rewrite ${gpg_sign_opt:+"$gpg_sign_opt"} || {
+-			warn "Could not amend commit after successfully picking $sha1... $rest"
+-			exit_with_patch $sha1 1
+-		}
++		# TODO: Work around the fact that git-commit lets us
++		# disable either both the pre-commit and the commit-msg
++		# hook or none. Disable the pre-commit hook because the
++		# tree is left unchanged but run the commit-msg hook
++		# from here because the log message is altered.
++		git commit --allow-empty --amend --no-post-rewrite -n ${gpg_sign_opt:+"$gpg_sign_opt"} &&
++			if test -x "$GIT_DIR"/hooks/commit-msg
++			then
++				"$GIT_DIR"/hooks/commit-msg "$GIT_DIR"/COMMIT_EDITMSG
++			fi || {
++				warn "Could not amend commit after successfully picking $sha1... $rest"
++				exit_with_patch $sha1 1
++			}
+ 		record_in_rewritten $sha1
+ 		;;
+ 	edit|e)
 -- 
 2.0.0
