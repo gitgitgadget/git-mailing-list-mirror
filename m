@@ -1,72 +1,88 @@
-From: Avi Kivity <avi@cloudius-systems.com>
-Subject: Re: [PATCH v2] git-am: add option to extract email Message-Id: tag
- into commit log
-Date: Wed, 02 Jul 2014 16:54:12 +0300
-Message-ID: <53B40F04.8000304@cloudius-systems.com>
-References: <1404291113-4424-1-git-send-email-avi@cloudius-systems.com> <53B3D7AB.6090207@web.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/2] git-merge-file: do not add LF at EOF while applying
+ unrelated change
+Date: Wed, 2 Jul 2014 16:08:28 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1407021604510.14982@s15462909.onlinehome-server.info>
+References: <1403993086-15625-1-git-send-email-max@max630.net> <1403993086-15625-3-git-send-email-max@max630.net> <alpine.DEB.1.00.1406301650430.14982@s15462909.onlinehome-server.info> <20140702044427.GA7325@wheezy.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 02 15:54:28 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Max Kirillov <max@max630.net>
+X-From: git-owner@vger.kernel.org Wed Jul 02 16:08:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2KzT-000766-9d
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 15:54:27 +0200
+	id 1X2LDL-0000uc-G1
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 16:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753417AbaGBNyT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jul 2014 09:54:19 -0400
-Received: from mail-we0-f169.google.com ([74.125.82.169]:60932 "EHLO
-	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751770AbaGBNyQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 09:54:16 -0400
-Received: by mail-we0-f169.google.com with SMTP id t60so11352837wes.14
-        for <git@vger.kernel.org>; Wed, 02 Jul 2014 06:54:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=wR9/Q8n9akOthZ+1uzhScLywVfse6I3SagVqyvUipHE=;
-        b=AkzyDom5msPOevltCs/n/PO+m9ymTBdyN6S0Rqd5MwDP2GaVAo6BJfpjyBZFTAlL3L
-         /1sXlhN35F2LT5kKNK4MRr6/RuFSuS1USPVU/Ic5xfGUAxrOrho9Md3oJPew0kY8TmCx
-         GH7aSsGUun4wpax/bBAaNMDQ61syr90yMX58ge0deX8z0DKesMQnWYwPhK42X6dV7bqj
-         PvRa9JcI+bkXsLVUXaBfPLvhx5MIMYOiHjEoFFk5SI0NXi/0g73xX5fIQWpPJNybWdp6
-         jYx5M8yjh8uoMN029ShOFPGJd5NUToOf25bFrl2uIZcDVdt75j8fmUvaoTLJS7c9oxwv
-         eKHg==
-X-Gm-Message-State: ALoCoQl97tz1Bq9nLbkOzeYR09Wuuj5atKBlQdh5w2vBE9aCZCFVv2fShdsGWKkBiwwuUub3XAAg
-X-Received: by 10.194.133.1 with SMTP id oy1mr19322582wjb.87.1404309254482;
-        Wed, 02 Jul 2014 06:54:14 -0700 (PDT)
-Received: from avi.cloudius (84.94.198.183.cable.012.net.il. [84.94.198.183])
-        by mx.google.com with ESMTPSA id 10sm43525039wjx.26.2014.07.02.06.54.12
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 02 Jul 2014 06:54:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53B3D7AB.6090207@web.de>
+	id S1753607AbaGBOIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 10:08:43 -0400
+Received: from mout.gmx.net ([212.227.17.22]:50275 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751398AbaGBOIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 10:08:42 -0400
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0MI8iw-1X40AM4B4A-003r9B;
+ Wed, 02 Jul 2014 16:08:29 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20140702044427.GA7325@wheezy.local>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:qRBK2ozBdzce5F4BYtmnj4I7Ym0giukQfbns07B9iu98N9sk0h3
+ 8bm8xKer2x9LTysOrj8JGJuLAFybJOOTPdoTtIYOacvPHsWkozj8/oeG/u7ryN9Z/bEmKR9
+ pmw7zpwliI+eFziEiZ+cE0Kaq/SgsK3gy+Jn9QzRurRBi1bxzfO3JFc9Rl7coALwlUaGDn7
+ vYh1AJBfcXKEs9kiQgzxw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252780>
 
+Hi Max,
 
-On 07/02/2014 12:58 PM, Torsten B=C3=B6gershausen wrote:
->> @@ -757,6 +761,10 @@ To restore the original branch and stop patchin=
-g run \"\$cmdline --abort\"."
->>   		then
->>   			cat "$dotest/msg-clean"
->>   		fi
->> +		if test 't' =3D=3D "$message_id"
-> The =3D=3D is bash special, please use =3D instead
-> And the 't' can be written as t, so that the whole line looks like th=
-is:
-> 		if test t =3D "$message_id"
->
+On Wed, 2 Jul 2014, Max Kirillov wrote:
 
-Thanks.  v3 posted with these changes.
+> On Mon, Jun 30, 2014 at 04:55:10PM +0200, Johannes Schindelin wrote:
+> > I just wish the tests were a little easier to understand...
+> 
+> What could be improved with them?
+
+Oh, I would name the files more appropriately, for example. That is,
+instead of test1.txt I would call it mixed-endings.txt or lf-only.txt or
+some such.
+
+And instead of the Latin version of Psalm 23, I would put lines into the
+files that describe their own role in the test, i.e.
+
+	unchanged
+	ends with a carriage return
+	ends with a line feed
+	unchanged
+
+or similar.
+
+Please keep in mind that this critique is most likely on my *own* work,
+for all I know *I* introduced those files.
+
+> By the way, for "\r\n" eol it did even worse, adding just "\n". And I
+> guess it still adds just "\n" for union merge.  Should file merge
+> consider the core.eol? I think it should, and for the conflict markers
+> also, it looks ugly when whole file has "\r\n" but the conflict markers
+> have "\n". But then git-merge-file could not be used outside of
+> repository, I guess.
+
+Oh, why not? It could read the configuration if it's inside a working
+directory, and just read /etc/gitconfig and $HOME/.gitconfig when
+outside...
+
+> In general, I wish file merging (and diffing) were more tolerant of the
+> line endings in input. Because in windows environment, when people have
+> different core.autocrlf, it becomes quite frustrating to always get
+> conflicts and changes.
+
+Amen!
+
+Ciao,
+Dscho
