@@ -1,224 +1,204 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [PATCH 2/2] test-config: Add tests for the config_set API
-Date: Wed, 02 Jul 2014 17:34:39 +0530
-Message-ID: <53B3F557.3080001@gmail.com>
-References: <1404280905-26763-1-git-send-email-tanayabh@gmail.com>	<1404280905-26763-3-git-send-email-tanayabh@gmail.com> <vpqzjgskt1v.fsf@anie.imag.fr>
+From: Avi Kivity <avi@cloudius-systems.com>
+Subject: [PATCH v3] git-am: add option to extract email Message-Id: tag into commit log
+Date: Wed,  2 Jul 2014 16:53:22 +0300
+Message-ID: <1404309202-10438-1-git-send-email-avi@cloudius-systems.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 02 14:04:55 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 02 15:53:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2JHR-0004w6-2I
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 14:04:53 +0200
+	id 1X2Kys-0006fx-Bf
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 15:53:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753211AbaGBMEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 08:04:48 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:34612 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753168AbaGBMEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 08:04:47 -0400
-Received: by mail-pa0-f47.google.com with SMTP id kq14so12409856pab.20
-        for <git@vger.kernel.org>; Wed, 02 Jul 2014 05:04:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=WWmQ7I5oUsY0HckO6KVh5861NINXT4acQVLHBB7VZdk=;
-        b=oLvcCnpmoyv8TiQavq2VUamPFI3zCbwCc3cYiyPWUhPSw93+9QYDaBon86pIHQvmc3
-         qOby7pb9QZr4+fTx2vKTf59R4F5Y9HYOTbpvNMKG584iaS4P+NzmrTElq68RGqn3c39L
-         rL2iXueDmVT86CZm8R3iFq3FQm7+sX/CIRUXcy/U4DT95jPyKYNWqxk33u7fv+J/0yZ8
-         xY8EX1uGSg/70Dk5fvMUqbhwXLT+3OdqmkBXRFw7JpJuWU4HR6NZTAfG9p1sHzuDF6ke
-         DzPnU4Yy4DU5rntYP5TV6qY8nzoWrVWTpaOvA1nYwomBhNs4btMvgGVL/ihYbcIOVVcY
-         lRHA==
-X-Received: by 10.66.254.166 with SMTP id aj6mr65759872pad.11.1404302687174;
-        Wed, 02 Jul 2014 05:04:47 -0700 (PDT)
-Received: from [127.0.0.1] ([117.254.223.133])
-        by mx.google.com with ESMTPSA id zc10sm129293235pac.46.2014.07.02.05.04.42
+	id S1752584AbaGBNxq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Jul 2014 09:53:46 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:61290 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751708AbaGBNxp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 09:53:45 -0400
+Received: by mail-wi0-f179.google.com with SMTP id cc10so528299wib.6
+        for <git@vger.kernel.org>; Wed, 02 Jul 2014 06:53:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=dF8iUSnKcBFx8wJxhtlCzpFGjyPUTh8FaRhUz7H1n90=;
+        b=V6sw7sv7XBlVRMKPov224eDt7rgBt+Dh1zMRVVZpQY3TXvJffTeKf8FZkJ/MyihklY
+         m6y9nowhpOjq/WEWe0vqeKRHA2rF1sPlLkyVmfFd0D58f1O1MHq6IOnNrzrryol4jFv0
+         MfwvWorkWGQmXpBskXR8QLBS8S08FqN/5MYNM2QwIPI0jSOl7XGr9nnHAQpg1Bo2b51d
+         etlrol12ESPkyIRrw7oXVWQZsVQzLMldKOZuU5L1LtjtKKxa2YLzYtgUbmuCFwfWYpeY
+         ojTIDozwp0RVhEloLUrmKngJ87Kdu+D25JbufYkUadGTVFfiJN76/CDNo1C+3iwJvPFz
+         jDcA==
+X-Gm-Message-State: ALoCoQki0D3huq79FDwPVBZ5/H46RE52DuGbebp2JpDnFGHJCK4lrCNiwKh++6XxbnWuWSkxrcvC
+X-Received: by 10.180.208.35 with SMTP id mb3mr38028804wic.48.1404309216513;
+        Wed, 02 Jul 2014 06:53:36 -0700 (PDT)
+Received: from avi.cloudius (84.94.198.183.cable.012.net.il. [84.94.198.183])
+        by mx.google.com with ESMTPSA id i4sm55461182wib.21.2014.07.02.06.53.35
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 02 Jul 2014 05:04:46 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <vpqzjgskt1v.fsf@anie.imag.fr>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 02 Jul 2014 06:53:35 -0700 (PDT)
+X-Mailer: git-send-email 1.9.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252778>
 
+Some workflows prefer to track exactly which email message was used to
+generate a commit.  This can be used, for example, to generate an
+automated acknowledgement when a patch is committed as a response to
+the patch email, or as a reference to the thread which introduced the
+patch.
 
+Support this by adding a --message-id option (abbreviated as -m) to
+git-am, which will then extract the message ID and append it to the
+email commit log.
 
-On 7/2/2014 2:59 PM, Matthieu Moy wrote:
-> Tanay Abhra <tanayabh@gmail.com> writes:
-> 
->> +test_expect_success 'clear default config' '
->> +	rm -f .git/config
->> +'
->> +
->> +cat > .git/config << EOF
-> 
-> t/README says:
-> 
->  - Put all code inside test_expect_success and other assertions.
-> 
->    Even code that isn't a test per se, but merely some setup code
->    should be inside a test assertion.
-> 
-> Even these cat > would better be in a test_expect_success 'initialize
-> config'.
-> 
-> (Not applied everywhere in Git's code essentially because some tests
-> were written before the guideline was set and never updated).
+Signed-off-by: Avi Kivity <avi@cloudius-systems.com>
+---
 
-Sorry about that. I followed t1300-repo-config.sh which has these mistakes
-also.
+v3: remove bashism and unneeded quoting
 
->> +[core]
->> +	penguin = very blue
->> +	Movie = BadPhysics
->> +	UPPERCASE = true
->> +	MixedCase = true
->> +	my =
->> +	foo
->> +	baz = sam
->> +[Cores]
->> +	WhatEver = Second
->> +[my "Foo bAr"]
->> +	hi = hello
-> 
-> To really stress the "case sensitive middle part" case, you should also
-> have other sections like
-> 
-> [my "foo bar"]
-> 	hi = lower-case
-> [my "FOO BAR"]
-> 	hi = upper-case
-> 
-> and check that you get the right value for my.*.hi
-> 
-> Similarly, I'd add a [CORE] and a [CoRe] section to check that their
-> content is actually merged with [core].
->
+v2: adjust to pass test suite (t5100)
 
-Noted.
+ Documentation/git-am.txt |  6 ++++++
+ builtin/mailinfo.c       |  2 +-
+ git-am.sh                | 10 +++++++++-
+ t/t5100/info0004         |  1 +
+ t/t5100/info0005         |  1 +
+ t/t5100/info0012         |  1 +
+ 6 files changed, 19 insertions(+), 2 deletions(-)
 
->> +test_expect_success 'get value for a key with value as an empty string' '
->> +	echo "" >expect &&
->> +	test-config get_value core.my >actual &&
->> +	test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'get value for a key with value as NULL' '
->> +	echo "(NULL)" >expect &&
->> +	test-config get_value core.foo >actual &&
->> +	test_cmp expect actual
->> +'
->> +test_expect_success 'upper case key' '
-> 
-> Keep the style consistent, if you separate tests with a single blank
-> line, do it everywhere.
-> 
->> +cat > expect << EOF
-> 
-> See above, should be in test_expect_success.
-> 
-> Also, >expect, not > expect.
-> 
-> There are other instances.
->
-
-Noted. Again copied t1300-repo-config.sh style for cat.
-
->> +1
->> +0
->> +1
->> +1
->> +1
->> +EOF
->> +
->> +test_expect_success 'find bool value for the entered key' '
->> +	test-config get_bool goat.head >>actual &&
-> 
-> The first one should be a single >, or you should clear actual before
-> the test.
-> 
-
-Noted.
-
->> +int main(int argc, char **argv)
->> +{
->> +	int i, no_of_files;
->> +	int ret = 0;
->> +	const char *v;
->> +	int val;
->> +	const struct string_list *strptr;
->> +	struct config_set cs = CONFIG_SET_INIT;
-> 
-> 
-> 
->> +	if (argc == 3 && !strcmp(argv[1], "get_value")) {
->> +		if (!git_config_get_value(argv[2], &v)) {
->> +			if (!v)
->> +				printf("(NULL)\n");
->> +			else
->> +				printf("%s\n", v);
->> +			return 0;
->> +		} else {
->> +			printf("Value not found for \"%s\"\n", argv[2]);
->> +			return -1;
->> +		}
->> +	} else if (argc == 3 && !strcmp(argv[1], "get_value_multi")) {
->> +		strptr = git_config_get_value_multi(argv[2]);
->> +		if (strptr) {
->> +			for (i = 0; i < strptr->nr; i++) {
->> +				v = strptr->items[i].string;
->> +				if (!v)
->> +					printf("(NULL)\n");
->> +				else
->> +					printf("%s\n", v);
->> +			}
->> +			return 0;
->> +		} else {
->> +			printf("Value not found for \"%s\"\n", argv[2]);
->> +			return -1;
->> +		}
->> +	} else if (argc == 3 && !strcmp(argv[1], "get_int")) {
->> +		if (!git_config_get_int(argv[2], &val)) {
->> +			printf("%d\n", val);
->> +			return 0;
->> +		} else {
->> +			printf("Value not found for \"%s\"\n", argv[2]);
->> +			return -1;
->> +		}
->> +	} else if (argc == 3 && !strcmp(argv[1], "get_bool")) {
->> +		if (!git_config_get_bool(argv[2], &val)) {
->> +			printf("%d\n", val);
->> +			return 0;
->> +		} else {
->> +			printf("Value not found for \"%s\"\n", argv[2]);
->> +			return -1;
->> +		}
->> +	} else if (!strcmp(argv[1], "configset_get_value")) {
->> +		no_of_files = git_config_int("unused", argv[2]);
-> 
-> Why ask the user to give a number of files on the command-line. With a
-> syntax like
-> 
-> test-config configset_get_value <key> <files>...
-> 
-> you could just use argc to iterate over argv. Here, you trust the user
-> to provide the right value, and most likely segfault otherwise (and this
-> is not really documented). I know this is only test code, but why not do
-> it right anyway ;-).
-> 
-
-Yup, your way is much better, thanks for the review.
-Tanay.
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 9adce37..8a251a1 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -15,6 +15,7 @@ SYNOPSIS
+ 	 [--whitespace=3D<option>] [-C<n>] [-p<n>] [--directory=3D<dir>]
+ 	 [--exclude=3D<path>] [--include=3D<path>] [--reject] [-q | --quiet]
+ 	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=3D<format>]
++	 [--message-id]
+ 	 [(<mbox> | <Maildir>)...]
+ 'git am' (--continue | --skip | --abort)
+=20
+@@ -121,6 +122,11 @@ default.   You can use `--no-utf8` to override thi=
+s.
+ 	user to lie about the author date by using the same
+ 	value as the committer date.
+=20
++-m::
++--message-id::
++	Extract the Message-Id: header from the e-mail and
++	append it to the commit message's tag stanza.
++
+ --skip::
+ 	Skip the current patch.  This is only meaningful when
+ 	restarting an aborted patch.
+diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
+index cf11c8d..f1e1fed 100644
+--- a/builtin/mailinfo.c
++++ b/builtin/mailinfo.c
+@@ -278,7 +278,7 @@ static void cleanup_space(struct strbuf *sb)
+=20
+ static void decode_header(struct strbuf *line);
+ static const char *header[MAX_HDR_PARSED] =3D {
+-	"From","Subject","Date",
++	"From","Subject","Date","Message-Id"
+ };
+=20
+ static inline int cmp_header(const struct strbuf *line, const char *hd=
+r)
+diff --git a/git-am.sh b/git-am.sh
+index ee61a77..9fae315 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -39,6 +39,7 @@ committer-date-is-author-date    lie about committer =
+date
+ ignore-date     use current timestamp for author date
+ rerere-autoupdate update the index with reused conflict resolution if =
+possible
+ S,gpg-sign?     GPG-sign commits
++m,message-id    copy the Message-Id: header to the commit's tag stanza
+ rebasing*       (internal use for git-rebase)"
+=20
+ . git-sh-setup
+@@ -371,7 +372,7 @@ split_patches () {
+ prec=3D4
+ dotest=3D"$GIT_DIR/rebase-apply"
+ sign=3D utf8=3Dt keep=3D keepcr=3D skip=3D interactive=3D resolved=3D =
+rebasing=3D abort=3D
+-resolvemsg=3D resume=3D scissors=3D no_inbody_headers=3D
++resolvemsg=3D resume=3D scissors=3D no_inbody_headers=3D message_id=3D
+ git_apply_opt=3D
+ committer_date_is_author_date=3D
+ ignore_date=3D
+@@ -442,6 +443,8 @@ it will be removed. Please do not use it anymore."
+ 		gpg_sign_opt=3D-S ;;
+ 	--gpg-sign=3D*)
+ 		gpg_sign_opt=3D"-S${1#--gpg-sign=3D}" ;;
++	-m|--message-id)
++		message_id=3Dt ;;
+ 	--)
+ 		shift; break ;;
+ 	*)
+@@ -565,6 +568,7 @@ Use \"git am --abort\" to remove it.")"
+ 	echo " $git_apply_opt" >"$dotest/apply-opt"
+ 	echo "$threeway" >"$dotest/threeway"
+ 	echo "$sign" >"$dotest/sign"
++	echo "$message_id" > "$dotest/message-id"
+ 	echo "$utf8" >"$dotest/utf8"
+ 	echo "$keep" >"$dotest/keep"
+ 	echo "$scissors" >"$dotest/scissors"
+@@ -757,6 +761,10 @@ To restore the original branch and stop patching r=
+un \"\$cmdline --abort\"."
+ 		then
+ 			cat "$dotest/msg-clean"
+ 		fi
++		if test t =3D "$message_id"
++		then
++			grep ^Message-Id: "$dotest/info" || true
++		fi
+ 		if test '' !=3D "$ADD_SIGNOFF"
+ 		then
+ 			echo "$ADD_SIGNOFF"
+diff --git a/t/t5100/info0004 b/t/t5100/info0004
+index 616c309..f7e2983 100644
+--- a/t/t5100/info0004
++++ b/t/t5100/info0004
+@@ -2,4 +2,5 @@ Author: YOSHIFUJI Hideaki / =E5=90=89=E8=97=A4=E8=8B=B1=
+=E6=98=8E
+ Email: yoshfuji@linux-ipv6.org
+ Subject: GIT: Try all addresses for given remote name
+ Date: Thu, 21 Jul 2005 09:10:36 -0400 (EDT)
++Message-Id: <20050721.091036.01119516.yoshfuji@linux-ipv6.org>
+=20
+diff --git a/t/t5100/info0005 b/t/t5100/info0005
+index 46a46fc..592388f 100644
+--- a/t/t5100/info0005
++++ b/t/t5100/info0005
+@@ -2,4 +2,5 @@ Author: David K=C3=A5gedal
+ Email: davidk@lysator.liu.se
+ Subject: Fixed two bugs in git-cvsimport-script.
+ Date: Mon, 15 Aug 2005 20:18:25 +0200
++Message-Id: <u5tacjjdpxq.fsf@lysator.liu.se>
+=20
+diff --git a/t/t5100/info0012 b/t/t5100/info0012
+index ac1216f..b5d89a1 100644
+--- a/t/t5100/info0012
++++ b/t/t5100/info0012
+@@ -2,4 +2,5 @@ Author: Dmitriy Blinov
+ Email: bda@mnsspb.ru
+ Subject: =D0=98=D0=B7=D0=BC=D0=B5=D0=BD=D1=91=D0=BD =D1=81=D0=BF=D0=B8=
+=D1=81=D0=BE=D0=BA =D0=BF=D0=B0=D0=BA=D0=B5=D1=82=D0=BE=D0=B2 =D0=BD=D0=
+=B5=D0=BE=D0=B1=D1=85=D0=BE=D0=B4=D0=B8=D0=BC=D1=8B=D1=85 =D0=B4=D0=BB=D1=
+=8F =D1=81=D0=B1=D0=BE=D1=80=D0=BA=D0=B8
+ Date: Wed, 12 Nov 2008 17:54:41 +0300
++Message-Id: <1226501681-24923-1-git-send-email-bda@mnsspb.ru>
+=20
+--=20
+1.9.3
