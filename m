@@ -1,266 +1,201 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4 1/2] add `config_set` API for caching config files
-Date: Wed, 02 Jul 2014 16:32:23 +0200
-Message-ID: <vpqbnt7bzm0.fsf@anie.imag.fr>
-References: <1404280905-26763-1-git-send-email-tanayabh@gmail.com>
-	<1404280905-26763-2-git-send-email-tanayabh@gmail.com>
-	<vpqoax8m8bh.fsf@anie.imag.fr> <53B3F403.6030501@gmail.com>
+From: Avi Kivity <avi@cloudius-systems.com>
+Subject: Re: [PATCH v2] git-am: add option to extract email Message-Id: tag
+ into commit log
+Date: Wed, 02 Jul 2014 17:44:20 +0300
+Message-ID: <53B41AC4.5000308@cloudius-systems.com>
+References: <1404291113-4424-1-git-send-email-avi@cloudius-systems.com> <53B414A4.2060909@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 02 16:32:57 2014
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Fabian Ruch <bafain@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 02 16:50:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2LaR-0001ul-BU
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 16:32:39 +0200
+	id 1X2Lra-0006p5-3r
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 16:50:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754590AbaGBOcf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 10:32:35 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52949 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754575AbaGBOcd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 10:32:33 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s62EWL1f026007
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 2 Jul 2014 16:32:21 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s62EWNDf002027;
-	Wed, 2 Jul 2014 16:32:23 +0200
-In-Reply-To: <53B3F403.6030501@gmail.com> (Tanay Abhra's message of "Wed, 02
-	Jul 2014 17:28:59 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 02 Jul 2014 16:32:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s62EWL1f026007
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1404916342.60608@wlhpHrxTrOW4eDFiT66oEQ
+	id S1752091AbaGBOuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 10:50:15 -0400
+Received: from mail-wg0-f46.google.com ([74.125.82.46]:60235 "EHLO
+	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750880AbaGBOuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 10:50:14 -0400
+Received: by mail-wg0-f46.google.com with SMTP id y10so11316147wgg.17
+        for <git@vger.kernel.org>; Wed, 02 Jul 2014 07:50:10 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=UuNpl/EkXu46FyFnibZ+yl+g773hR0O2GH6D+/VgPd0=;
+        b=D+FecARi6AJvVxSJXO+cJBqZgNaJYRKFU0/+bynXPv2kEYSfIOzGaaGW9dvA3L7TIR
+         nm7hXkE86FmVMR8ACXvoR0kMJbKO6YbVoNa3Y+v25INTsZgirM2QOzJAu76Fbz9mQCK6
+         UpWk/Xke6w/ECK7AUYe07nxEp7gk80A8TPs8+fF6YS4wPjwKnTRnedsZRG3bChL1q/4j
+         OzAtXtvGGl+UgN6nkly7jLEm5xj08Yojvv6fNFkWd/96TqJeWaxSGAY8x3fqLFJPIcoG
+         UuDPUsVGM+Tm7wORorzm5T5XA243QSgaQx+Fo7t+EkmW2K/1MEUQq3hGlvxGDw5PcX+q
+         sr1w==
+X-Gm-Message-State: ALoCoQkCM2f4yrI0LobNeNq8AiIxjBe41GyYFuDwmQf6IJEmXEuKxEDIFnQx8do9V2kSmF1r0GDn
+X-Received: by 10.180.37.230 with SMTP id b6mr4827674wik.47.1404312262887;
+        Wed, 02 Jul 2014 07:44:22 -0700 (PDT)
+Received: from avi.cloudius (84.94.198.183.cable.012.net.il. [84.94.198.183])
+        by mx.google.com with ESMTPSA id ey16sm55896038wid.14.2014.07.02.07.44.21
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 02 Jul 2014 07:44:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <53B414A4.2060909@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252783>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
-> On 7/2/2014 2:44 PM, Matthieu Moy wrote:
->> Tanay Abhra <tanayabh@gmail.com> writes:
 
-> Maybe a reworded sentence may work,
-> `git_configset_get_value_multi` returns a list of values sorted in order of
-> increasing priority (i.e. last match will be at the end of the list.)
-
-OK.
-
->>> read from usual config files(repo specific .git/config, user wide
->>> ~/.gitconfig and the global /etc/gitconfig). `the_config_set` uses a
->>> single hashmap populated using git_config(). The reason for doing so is
->>> twofold, one is to honour include directives, another is to guarantee O(1)
->>> lookups for usual config values, as values are queried for hundred of
->>> times during a run of a git program.
->> 
->> What is the reason to deal with `the_config_set` and other config sets
->> differently? You're giving arguments to store `the_config_set` as a
->> single hashmap, but what is the reason to store others as multiple
->> hashmaps?
->> 
->> And actually, I don't completely buy your arguments: having 3 or 4
->> hashmaps (.git/config, ~/.gitconfig, ~/.config/git/config and
->> /etc/gitconfig) would be a O(4) lookup, which is still O(1), and you
->> could deal with include directives by having ".git/config and included
->> files" in a hashmap, "~/.gitconfig and included files" in a second
->> hashmap, ...
->> 
->> My guess is that the real argument is "git_config already does what I
->> want and I'm too lazy to change it". And I do consider lazyness as a
->> quality for a computer-scientist ;-).
->> 
->> I would personally find it much simpler to have a single hashmap. We'd
->> lose the ability to invalidate the cache for only a single file, but I'm
->> not sure it's worth the code complexity.
->> 
+On 07/02/2014 05:18 PM, Fabian Ruch wrote:
+> Hi Avi,
 >
-> Point noted. I can take the multiple hashmap route for `the_config_set`.
-> Still, since it will be the most used config set in the code and for each
-> query it would have to look through n hashmaps hampering performance. I
-> can change it if you want but like you, I don't think it is worth the code
-> complexity.
-
-That's why my suggestion is to use a single hashmap everywhere.
-
-I don't have strong opinion either way, but whichever way you go, you
-should justify the choice better in the commit message.
-
->>> +The config API also provides type specific API functions which do conversion
->>> +as well as retrieval for the queried variable, including:
->>> +
->>> +`git_config_get_int`::
->>> +Parse the retrieved value to an integer, including unit factors. Dies on
->>> +error; otherwise, allocates and copies the integer into the dest parameter.
->>> +Returns 0 on success, or 1 if no value was found.
->> 
->> It seems strange to me to return 1 here, and -1 in git_config_get_value
->> to mean the same thing.
->> 
->
-> Noted. Some of the type specific function return -1 on wrong parsing, I will
-> put return value 1 for no value found in all of the cases.
-
-I'm not sure I fully get the existing convention. My understanding is
-that when the extracted value is returned, -1 is used as a special value
-to mean "no value" (e.g. git_config_maybe_bool can return 1, 0 or -1),
-but when the extracted value is written to a by-address parameter, then
-the return value is 1 or 0.
-
->>> +static struct hashmap *get_config_hash(const char *filename, struct config_set *cs)
->>> +{
->>> +	int i;
->>> +	for(i = 0; i < cs->nr; i++) {
->>> +		if (!strcmp(cs->item[i].filename, filename))
->>> +			return &cs->item[i].config_hash;
->>> +	}
->>> +	return add_config_hash(filename, cs);
->>> +}
->>> +
->>> +static struct config_hash_entry *config_hash_find_entry(const char *key, const char* filename,
->>> +							struct config_set *cs)
->> 
->> I don't get the logic here.
->> 
->> Either the caller explicitly manages a config_set variable like
->> 
->>   config_set my_set = git_configset_init();
->>   git_configset_add_file(my_set, "my-file");
->>   git_configset_get_value(my_set, "some.variable.name");
->> 
->> Or there's an implicit singleton mapping files to hashmaps to allow the
->> user to say
->> 
->>   git_configset_get_value("my-file", "some.variable.name");
->> 
->> without asking the user to explicitly manipulate config_set variables.
->> 
->> It seems to me that your solution is a bad compromise between both
->> solutions: you do require the user to manipulate config_set variables,
->> but you also require a filename to look for the right entry in the list.
->> 
->> Did you miss the end of Junio's message:
->> 
->>   http://thread.gmane.org/gmane.comp.version-control.git/252567
->> 
->> ?
+> On 07/02/2014 10:51 AM, Avi Kivity wrote:
+>> Some workflows prefer to track exactly which email message was used to
+>> generate a commit.  This can be used, for example, to generate an
+>> automated acknowledgement when a patch is committed as a response to
+>> the patch email, or as a reference to the thread which introduced the
+>> patch.
 >>
->
-> This is an internal function which is used to iterate over every `config_set`
-> item which contains a hashmap and filename as an identifier.
-> The exposed API which I documented above doesn't require the user to pass the
-> filename when querying for a value.
->
-> The API works like this, suppose there are two files,
-> A.config	B.config
-> [foo]		[foo]
-> a = b		a = d
-> a = c		a = e
->
-> config_set *my_set = git_configset_init();
-> git_configset_add_file(my_set, "A.config");
-> git_configset_add_file(my_set, "B.config");
-> git_configset_get_value(my_set, "foo.a");
->
-> Here get_value calls config_hash_find_entry once for each configset_item
-> "A.config" and "B.config" with key as "foo.a". which in turn returns
-> config_hash_item which contains the key and the value list.
-
-OK, I understand what you did. But it still seem wrong to me. If you
-inline functions, you are doing something like
-
-for (f in files) { // in git_configset_get_value
-   for (g in files) { // in get_config_hash
-      if (f == g) {
-         take the hashmap for g.
-      }
-   }
-}
-
-This is O(n^2) to iterate over an ordered list. OK, the list is small,
-but still, why not iterate normally over the array?
-
-Algorithmically speaking, you do not need the file names here, just
-iterate over an array of hashmaps. Filenames do not harm in struct
-config_set, but they are just metadata, not usefull to do the search.
-
-> We get two string_lists containing values for the key foo.a,
-> {b,c} and {d,e} corresponding to A.config & B.config  respectively.
->
-> get_value then returns the value with the highest priority which is 'e'
-> after going through both of the lists and picking the last one.
-> These steps are done by internal functions not by the user facing
-> API ones.
-
-But then, I have to wonder again what is the benefit of having multiple
-hashmaps in the config_set, since it has no user-visible benefit.
-
->> If the user explicitly asks for a single entry in the list, then why
->> group them in a list? I guess the question is the same as above, and the
->> more I read the patch, the more I think a config_set should contain a
->> single hashmap.
+>> Support this by adding a --message-id option (abbreviated as -m) to
+>> git-am, which will then extract the message ID and append it to the
+>> email commit log.
 >>
+>> Signed-off-by: Avi Kivity <avi@cloudius-systems.com>
+>> ---
+>>
+>> v2: adjust to pass test suite (t5100)
+>>
+>>   Documentation/git-am.txt |  6 ++++++
+>>   builtin/mailinfo.c       |  2 +-
+>>   git-am.sh                | 10 +++++++++-
+>>   t/t5100/info0004         |  1 +
+>>   t/t5100/info0005         |  1 +
+>>   t/t5100/info0012         |  1 +
+>>   6 files changed, 19 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+>> index 9adce37..8a251a1 100644
+>> --- a/Documentation/git-am.txt
+>> +++ b/Documentation/git-am.txt
+>> @@ -15,6 +15,7 @@ SYNOPSIS
+>>   	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
+>>   	 [--exclude=<path>] [--include=<path>] [--reject] [-q | --quiet]
+>>   	 [--[no-]scissors] [-S[<keyid>]] [--patch-format=<format>]
+>> +	 [--message-id]
+>>   	 [(<mbox> | <Maildir>)...]
+>>   'git am' (--continue | --skip | --abort)
+>>   
+>> @@ -121,6 +122,11 @@ default.   You can use `--no-utf8` to override this.
+>>   	user to lie about the author date by using the same
+>>   	value as the committer date.
+>>   
+>> +-m::
+>> +--message-id::
+>> +	Extract the Message-Id: header from the e-mail and
+>> +	append it to the commit message's tag stanza.
+>> +
+>>   --skip::
+>>   	Skip the current patch.  This is only meaningful when
+>>   	restarting an aborted patch.
+>> diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
+>> index cf11c8d..f1e1fed 100644
+>> --- a/builtin/mailinfo.c
+>> +++ b/builtin/mailinfo.c
+>> @@ -278,7 +278,7 @@ static void cleanup_space(struct strbuf *sb)
+>>   
+>>   static void decode_header(struct strbuf *line);
+>>   static const char *header[MAX_HDR_PARSED] = {
+>> -	"From","Subject","Date",
+>> +	"From","Subject","Date","Message-Id"
+>>   };
+>>   
+>>   static inline int cmp_header(const struct strbuf *line, const char *hdr)
+>> diff --git a/git-am.sh b/git-am.sh
+>> index ee61a77..c0e7bdd 100755
+>> --- a/git-am.sh
+>> +++ b/git-am.sh
+>> @@ -39,6 +39,7 @@ committer-date-is-author-date    lie about committer date
+>>   ignore-date     use current timestamp for author date
+>>   rerere-autoupdate update the index with reused conflict resolution if possible
+>>   S,gpg-sign?     GPG-sign commits
+>> +m,message-id    copy the Message-Id: header to the commit's tag stanza
+>>   rebasing*       (internal use for git-rebase)"
+>>   
+>>   . git-sh-setup
+>> @@ -371,7 +372,7 @@ split_patches () {
+>>   prec=4
+>>   dotest="$GIT_DIR/rebase-apply"
+>>   sign= utf8=t keep= keepcr= skip= interactive= resolved= rebasing= abort=
+>> -resolvemsg= resume= scissors= no_inbody_headers=
+>> +resolvemsg= resume= scissors= no_inbody_headers= message_id=
+>>   git_apply_opt=
+>>   committer_date_is_author_date=
+>>   ignore_date=
+>> @@ -442,6 +443,8 @@ it will be removed. Please do not use it anymore."
+>>   		gpg_sign_opt=-S ;;
+>>   	--gpg-sign=*)
+>>   		gpg_sign_opt="-S${1#--gpg-sign=}" ;;
+>> +	-m|--message-id)
+>> +		message_id=t ;;
+> Doesn't the message-id line in OPTIONS_SPEC make the negated long
+> option --no-message-id available as well? If that's the case, then
+> the corresponding case arm is missing from here.
+
+I don't know, but some other booleans don't supply negations, for 
+example --reject.
+
+>>   	--)
+>>   		shift; break ;;
+>>   	*)
+>> @@ -565,6 +568,7 @@ Use \"git am --abort\" to remove it.")"
+>>   	echo " $git_apply_opt" >"$dotest/apply-opt"
+>>   	echo "$threeway" >"$dotest/threeway"
+>>   	echo "$sign" >"$dotest/sign"
+>> +	echo "$message_id" > "$dotest/message-id"
+> To match the local style conventions, the space character after the
+> redirection operator should be removed.
+
+Sure.
+
+> Also, isn't the patch missing the bits where the state of message-id
+> is read? Like so:
 >
-> Do you think so after reading the whole patch? It would be much easier
-> to implement config_set using a single hashmap . But Junio had suggested
-> that it would be much better for config_set to be a collection of hashmaps
-> and `the_config_set` to contain a single hashmap[1].
+>      if test "$(cat "$dotest/message-id")" = t
+>      then
+>      	message_id=t
+>      fi
+
+Good catch, I guess this fixes a restarted am.
+
 >
-> [1]http://thread.gmane.org/gmane.comp.version-control.git/252329/focus=252460
+>>   	echo "$utf8" >"$dotest/utf8"
+>>   	echo "$keep" >"$dotest/keep"
+>>   	echo "$scissors" >"$dotest/scissors"
+>> @@ -757,6 +761,10 @@ To restore the original branch and stop patching run \"\$cmdline --abort\"."
+>>   		then
+>>   			cat "$dotest/msg-clean"
+>>   		fi
+>> +		if test 't' == "$message_id"
+>> +		then
+>> +			grep ^Message-Id: "$dotest/info" || true
+> Why is the true guard needed here? The exit status of grep seems to
+> never be checked.
 
-I do not read the message like you. Junio gives pros&cons of "everything
-in a single hashmap" Vs "one hashmap per file", and explicitely
-concludes with
+I usually code scripts with -e, but here it's unneeded.
 
-| I don't know at this point, and thinking these things through
-| to arrive at a good design is part of the GSoC project after all, so
-| I'd rather not to think it through to the end myself ;-).
+>
+> Although I cannot come up with an example where this would matter,
+> you might want to consider using the grep wrapper sane_grep from
+> git-sh-setup.sh instead. It resets the environment variable
+> GREP_OPTIONS before calling grep so that no unexpected user options
+> come into play.
 
-I do not read "there should be multiple hashmaps, except in the case of
-the_configset which should be handled differently".
-
-To summarize:
-
-Advantages of using a single hashmap per configset:
-
-1) Code is simpler
-
-2) Lookup is slightly more efficient
-
-Advantages of using one hashmap per configset:
-
-A) Allows sharing hashmaps between configsets
-
-B) Allows selectively refreshing the config for a single file without
-   touching the other files' hashmaps.
-
-C) Would allow more operations like "tell me which file contains the
-   config key foo.bar", that could be useful in some situation.
-
-Right now, I do not think that your implementation uses any of A), B) or
-C), so you're doing something uselessly complex.
-
-In the future, my feeling is that A) is essentially irrelevant (we're
-talking about a few hundreds of entry for large config files, not
-something we want to fine-tune in memory), B) would raise tons of
-corner-cases and would be hard to get right compared to the benefit. C)
-could be interesting, but the most common case would be to use
-the_configset, in which there's only one hashmap so it's not applicable
-without a big code change.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Good idea.  Will post a v4 shortly.
