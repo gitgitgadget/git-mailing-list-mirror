@@ -1,73 +1,89 @@
-From: Robert Dailey <rcdailey.lists@gmail.com>
-Subject: Re: Show containing branches in log?
-Date: Wed, 2 Jul 2014 11:52:43 -0500
-Message-ID: <CAHd499Bk6ZG+DDjN1HuC-RFczwd+AGZaUSkXA6a8MsZjOL5H8A@mail.gmail.com>
-References: <CAHd499A78BRVawWSHNnzJcD1Ca7RfFeEnJf0SB7py1MD5qwL0g@mail.gmail.com>
-	<20140702163451.GB14404@sigill.intra.peff.net>
+From: "Jason Pyeron" <jpyeron@pdinc.us>
+Subject: RE: Show containing branches in log?
+Date: Wed, 2 Jul 2014 12:52:55 -0400
+Organization: PD Inc
+Message-ID: <6C120F968C534117BC278DD93D1F84A5@black>
+References: <CAHd499A78BRVawWSHNnzJcD1Ca7RfFeEnJf0SB7py1MD5qwL0g@mail.gmail.com> <20140702163451.GB14404@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 02 18:52:56 2014
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Robert Dailey'" <rcdailey.lists@gmail.com>,
+	"'Jeff King'" <peff@peff.net>
+To: "'Git'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 02 18:53:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2Nm7-0001vl-Vv
-	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 18:52:52 +0200
+	id 1X2NmT-0002D7-7q
+	for gcvg-git-2@plane.gmane.org; Wed, 02 Jul 2014 18:53:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757524AbaGBQwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 12:52:46 -0400
-Received: from mail-ve0-f175.google.com ([209.85.128.175]:45003 "EHLO
-	mail-ve0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756380AbaGBQwo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 12:52:44 -0400
-Received: by mail-ve0-f175.google.com with SMTP id jx11so11489182veb.34
-        for <git@vger.kernel.org>; Wed, 02 Jul 2014 09:52:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=upKin8gbaIikqAbogDk3Mj20Lk0GpFSVhGKt6DPgdJY=;
-        b=lHyhyoA/GUJ+BdvVVU2BVP4tJTsnLXlbn8DzHIJNGaF/FjIfpKgSADNGHxgLqmYHOa
-         rLFGMxatM1O/EvRYeni960TnnixtHIQM/AyM1H16DSbBND5TisDKXTML4r0JW8rkGyUC
-         lUVrOWCppw4zxFKkMrrWnLoY6MbzFJhdTy8nXU2TCqljVI40h2p5CTXqmYOP6SB8JNH4
-         qtM795BGBWVylko/CaU5srnOP27vfIEkbHSZiT8mfSWHU6dtXR7rRFU087udHziD1wyo
-         gZqDB3tObsvucGfLvmTARJCO3B2t9rWQb0w/hsr17/mLJgM0wDGwvNstIEf3AfnH8rS9
-         MIbw==
-X-Received: by 10.58.196.231 with SMTP id ip7mr1153596vec.47.1404319963645;
- Wed, 02 Jul 2014 09:52:43 -0700 (PDT)
-X-Google-Sender-Delegation: rcdailey@gmail.com
-Received: by 10.220.102.204 with HTTP; Wed, 2 Jul 2014 09:52:43 -0700 (PDT)
+	id S1757584AbaGBQxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 12:53:05 -0400
+Received: from mail.pdinc.us ([67.90.184.27]:34852 "EHLO mail.pdinc.us"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754091AbaGBQxD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 12:53:03 -0400
+Received: from black (nsa1.pdinc.us [67.90.184.2])
+	(authenticated bits=0)
+	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s62GqtNd026045;
+	Wed, 2 Jul 2014 12:52:55 -0400
+X-Mailer: Microsoft Office Outlook 11
 In-Reply-To: <20140702163451.GB14404@sigill.intra.peff.net>
-X-Google-Sender-Auth: MNdoYq2ctMLjD565-HPzVMXxzgk
+Thread-Index: Ac+WE5LkoKE3TPzzRNCTqA9knotozQAAE6NQ
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252796>
 
-On Wed, Jul 2, 2014 at 11:34 AM, Jeff King <peff@peff.net> wrote:
+> -----Original Message-----
+> From: Jeff King
+> Sent: Wednesday, July 02, 2014 12:35
+> 
+> On Wed, Jul 02, 2014 at 09:50:57AM -0500, Robert Dailey wrote:
+> 
+> > I know that with the `git branch` command I can determine which
+> > branches contain a commit. Is there a way to represent this
+> > graphically with `git log`? Sometimes I just have a commit, 
+> and I need
+> > to find out what branch contains that commit. The reason why `git
+> > branch --contains` doesn't solve this problem for me is 
+> that it names
+> > almost all branches because of merge commits. Too much ancestry has
+> > been built since this commit, so there is no way to find 
+> the "closest"
+> > branch that contains that commit.
+> > 
+> > Is there a way to graphically see what is the "nearest" named ref to
+> > the specified commit in the logs?
+> 
 > Have you tried "git describe --contains --all <commit>"?
->
-> To some degree, I fear your question isn't something git can answer. If
+> 
+> To some degree, I fear your question isn't something git can 
+> answer. If
 > the branch containing the commit has been merged into other branches,
 > then they all "contain" the commit. There is not really any reason to
 > prefer one over the other ("describe --contains" will try to find the
-> "closest" branch, but that is based on heuristics and is not necessarily
+> "closest" branch, but that is based on heuristics and is not 
+> necessarily
 > well-defined).
 
-I have not tried that command. Note I mentioned named refs, so
-nameless branches I'm not worried about. Even if I merge branch A into
-branch B, branch A is still closest in terms of number of steps to get
-to the commit, because to get to the commit through B you have to
-cross over a merge commit. Basically the priority should be directness
-and distance. The more direct a branch is (i.e. the lesser number of
-merge commits it goes through to get to the commit) the more relevant
-it is. As a second condition, distance would be used in cases where
-the directness of it is the same.
+Another way I answer this question is git log --oneline --graph --all and then
+search for the commit and follow the lines.
 
-Sorting this in the log graph and seeing it visually (I could even use
---simplify-by-decoration) would help me understand the topography of
-git's history relative to the commit(s) I specify.
+
+--
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+-                                                               -
+- Jason Pyeron                      PD Inc. http://www.pdinc.us -
+- Principal Consultant              10 West 24th Street #100    -
+- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
+-                                                               -
+-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+This message is copyright PD Inc, subject to license 20080407P00.
+
+ 
