@@ -1,77 +1,75 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v1 0/4] hashmap improvements
-Date: Thu, 03 Jul 2014 00:18:40 +0200
-Message-ID: <53B48540.5070600@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Race condition in git push --mirror can cause silent ref rewinding
+Date: Wed, 02 Jul 2014 15:20:08 -0700
+Message-ID: <xmqqfvijflnr.fsf@gitster.dls.corp.google.com>
+References: <53B47535.3020101@chmrr.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 03 00:18:53 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Vandiver <alex@chmrr.net>
+X-From: git-owner@vger.kernel.org Thu Jul 03 00:20:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2Src-0007yx-NQ
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 00:18:53 +0200
+	id 1X2St4-0000k9-Mg
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 00:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752704AbaGBWSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Jul 2014 18:18:44 -0400
-Received: from mail-wi0-f174.google.com ([209.85.212.174]:53737 "EHLO
-	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753481AbaGBWSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Jul 2014 18:18:41 -0400
-Received: by mail-wi0-f174.google.com with SMTP id bs8so10428180wib.13
-        for <git@vger.kernel.org>; Wed, 02 Jul 2014 15:18:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :content-type:content-transfer-encoding;
-        bh=dvCelU3U7c/fZ/+n/3hP3E+6qpBa1rH+vMG9Bbigb2o=;
-        b=MkNQG4zys/19J/zmgJqgnywCesLwyUeaJFrZUzVOYNXjKrSHa23PMNz0mhgVqloa/D
-         a1HmSn417nCmxZq9+gjc2+6rS7HXgqoZ6sB8vl2YlmmpLN4/Ug0HUHVoqsSlQPDSeb8i
-         bOEc059gGnoP7e6U49fWmXp4rjI4HRpTZNNfM3y6HBD08XnNbscI7vyhVJNQtLEjCP73
-         NBlAz+hl+BfapMye4L11hhul5DtYU26KUNHvvjGRAtPxGQmB4ds4w0mVR6Zo1iGLr/t1
-         9gU5TQFEH6Lz5zizqUEedefR1wi3Id0gQLxoTUQgFe7iKQKo3pVDuklonqqEb7dbraTu
-         GMvA==
-X-Received: by 10.180.97.195 with SMTP id ec3mr6936049wib.13.1404339520008;
-        Wed, 02 Jul 2014 15:18:40 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id hi2sm57771291wjb.29.2014.07.02.15.18.38
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 02 Jul 2014 15:18:39 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+	id S1754782AbaGBWUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Jul 2014 18:20:17 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63578 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752212AbaGBWUQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Jul 2014 18:20:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6793323557;
+	Wed,  2 Jul 2014 18:20:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=yu+YCAN1DtsQhHQmFgDNnlNn3Uk=; b=C2KvC/
+	l5covQz/o31SfvBuCtR9ZdkrWmKofQ1Yb6slwsVG0XoeDyVW2HVcT7jzSDiO2BUL
+	hjn8rW6cugBJ5fKZyrTSD19kcIrtb0LZyOGhFyVUlmDNS+aUkPl+e7XYvoWQ+WxH
+	g/1fZMvG68mowEsTZR7v1jFRKRt4IiAKDTV2Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bknd26fr/HrAJJjzD2E+PoIPqla02xzK
+	SdyzP/yyLidyUfqP5p6TuO75bskqbP6tZ7LuwSA6nTOrwG2DGUP4aV6yeRS0Qc95
+	7LvKr+o2F4fUKbC6r2tnmvDs47Y9YrQEsAGqs8x50NQW8qBtC0T5QDeeTXsHvn/9
+	vbaI8yV/2gQ=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B2D923556;
+	Wed,  2 Jul 2014 18:20:04 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 49BEF23549;
+	Wed,  2 Jul 2014 18:19:59 -0400 (EDT)
+In-Reply-To: <53B47535.3020101@chmrr.net> (Alex Vandiver's message of "Wed, 02
+	Jul 2014 17:10:13 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 011D3DDA-0237-11E4-ADF0-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252845>
 
-Here are a few small hashmap improvements, partly resulting from recent
-discussion of the config-cache topic.
+Alex Vandiver <alex@chmrr.net> writes:
 
-Karsten Blees (4):
-  hashmap: factor out getting an int hash code from a SHA1
-  hashmap: improve struct hashmap member documentation
-  hashmap: add simplified hashmap_get_from_hash() API
-  hashmap: add string interning API
+>     [remote "github"]
+>         url = git@github.com:bestpractical/rt.git
+>         fetch = +refs/*:refs/*
+>         mirror = yes
 
- Documentation/technical/api-hashmap.txt | 54 ++++++++++++++++++++++++++++++---
- builtin/describe.c                      | 13 ++------
- decorate.c                              |  5 +--
- diffcore-rename.c                       | 11 +++----
- hashmap.c                               | 38 +++++++++++++++++++++++
- hashmap.h                               | 27 +++++++++++++++++
- khash.h                                 | 11 ++-----
- name-hash.c                             |  5 ++-
- object.c                                | 13 +-------
- pack-objects.c                          |  5 ++-
- t/t0011-hashmap.sh                      | 13 ++++++++
- test-hashmap.c                          | 25 ++++++++++-----
- 12 files changed, 159 insertions(+), 61 deletions(-)
+"git push github master^:master" must stay a usable way to update
+the published repository to an arbitrary commit, so "if set to
+mirror, do not pretend that a fetch in reverse has happened during
+'git push'" will not be a solution to this issue.
 
--- 
-1.9.4.msysgit.0.dirty
+Perhaps removing remote.github.fetch would be one sane way forward.
+Otherwise, even if your "git push" does not pretend to immediately
+fetch from there (i.e. even if the reported behaviour was a bug,
+without doing anything to trigger it) somebody running "git fetch"
+in this repository can destroy what other person pushes into this
+repository at the same time exactly the same way, I would think.
