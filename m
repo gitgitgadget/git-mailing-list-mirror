@@ -1,77 +1,77 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v5 5/7] replace: refactor replacing parents
-Date: Thu, 3 Jul 2014 15:42:34 +0200
-Message-ID: <CAP8UFD3wSxYVuwSLApQikEbXgsvU2H=6PQ-tmvRjdBinDNmGVA@mail.gmail.com>
-References: <20140628171731.5687.30308.chriscool@tuxfamily.org>
-	<20140628181117.5687.43446.chriscool@tuxfamily.org>
-	<xmqqtx6zfp3m.fsf@gitster.dls.corp.google.com>
+From: Avi Kivity <avi@cloudius-systems.com>
+Subject: Re: [PATCH v2] git-am: add option to extract email Message-Id: tag
+ into commit log
+Date: Thu, 03 Jul 2014 17:08:33 +0300
+Message-ID: <53B563E1.8080201@cloudius-systems.com>
+References: <1404291113-4424-1-git-send-email-avi@cloudius-systems.com> <xmqq1tu3isti.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 15:42:50 2014
+X-From: git-owner@vger.kernel.org Thu Jul 03 16:08:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2hHl-00047b-6P
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 15:42:49 +0200
+	id 1X2hgw-0007Iq-2w
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 16:08:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756653AbaGCNmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2014 09:42:38 -0400
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:35917 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756103AbaGCNmf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2014 09:42:35 -0400
-Received: by mail-vc0-f171.google.com with SMTP id id10so227945vcb.2
-        for <git@vger.kernel.org>; Thu, 03 Jul 2014 06:42:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=U+J1yXqHvs+gb8FP+LbTkp9gMnFKJACcSZUf4gWShBw=;
-        b=w5R5eb5N+s4fFEPp5k+0TaZ3gWjhbTQLvPmsEAwUlwMhgfOaw5NdrzHTaMhNQzd3wB
-         MztXspFQ9jOQxOrIplDcUiSTuUocziWu2BMiQ+oB973jc73zDvjEmvojxlQ9u4POfrdt
-         8+3fsohlaKPzuAvk1YCl/DwvzIagiqk2ewoy2uZXbLM5Uta6HSccbKk8JqLiJQrf2Xew
-         Cn7FzgXsQtykJ/rmScmkU5NBHyJIFNpr7/bpnWlITGszxM4UevIzRyOP/SYDpV14CwF7
-         br0IaYO/aoZGf1eBZ69RVFP8ImQZScc970Mjbn1QA/ylPjqrtOjevdxZazpWwbpVbjih
-         btHg==
-X-Received: by 10.58.119.75 with SMTP id ks11mr4034210veb.20.1404394954340;
- Thu, 03 Jul 2014 06:42:34 -0700 (PDT)
-Received: by 10.58.76.137 with HTTP; Thu, 3 Jul 2014 06:42:34 -0700 (PDT)
-In-Reply-To: <xmqqtx6zfp3m.fsf@gitster.dls.corp.google.com>
+	id S1757601AbaGCOIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2014 10:08:45 -0400
+Received: from mail-we0-f175.google.com ([74.125.82.175]:47551 "EHLO
+	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757567AbaGCOIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2014 10:08:43 -0400
+Received: by mail-we0-f175.google.com with SMTP id k48so283034wev.34
+        for <git@vger.kernel.org>; Thu, 03 Jul 2014 07:08:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=9KyEwQFyVs0x6VOTtp9fB/YQUaUlAoCkn+VprqvHNr4=;
+        b=EwRGYgsoanOBXY9ELMwEMRS0CzmibJt4tyu996oFh0WQc1tIf3z2pUuwhUV65t8FYW
+         WSIcbDHOGDxmbPKCxKELFlZmtXnNaOvkAa3VSzqMxPLieiQ+TdupGXPIFbIP/LgJD9qN
+         vpFA1ZHSwgxyMyXIaca7qqjRbS0holznhby3gsvSXxQKTEFWet58f5HrdBHydkqTq2PS
+         +rFDOfHpY0rca5CiG8q6JehKF5QqnhOI7wxZKSXv8UXsR3/MscSUmZh5d9YYMSJ8qeh2
+         77h7a+3ea2YvCsiHf8zjQtszM8xm4c31WX8xhCMrJAiDs9nSkTGvGvGlK0ito0LZSDvc
+         gHug==
+X-Gm-Message-State: ALoCoQlcnZaqsk2wEaledQn1l/cyUwgCN9kFYx4I65h0Fx1RjdEslIO/MJgiRIGyDShvQovY30Mn
+X-Received: by 10.180.97.67 with SMTP id dy3mr11458382wib.16.1404396515950;
+        Thu, 03 Jul 2014 07:08:35 -0700 (PDT)
+Received: from avi.cloudius (84.94.198.183.cable.012.net.il. [84.94.198.183])
+        by mx.google.com with ESMTPSA id q11sm67504423wib.14.2014.07.03.07.08.34
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 03 Jul 2014 07:08:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqq1tu3isti.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252861>
 
-On Wed, Jul 2, 2014 at 11:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <chriscool@tuxfamily.org> writes:
->
->> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->> ---
->>  builtin/replace.c | 42 +++++++++++++++++++++++++-----------------
->>  1 file changed, 25 insertions(+), 17 deletions(-)
->>
->> diff --git a/builtin/replace.c b/builtin/replace.c
->> index 3515979..ad47237 100644
->> --- a/builtin/replace.c
->> +++ b/builtin/replace.c
->> @@ -295,27 +295,14 @@ static int edit_and_replace(const char *object_ref, int force)
->>       return replace_object_sha1(object_ref, old, "replacement", new, force);
->>  }
->>
->> -static int create_graft(int argc, const char **argv, int force)
->> +static void replace_parents(struct strbuf *buf, int argc, const char **argv)
->
-> It is somewhat strange to see that a new function introduced earlier
-> in the series is rewritten with a "refactoring".  Shouldn't the new
-> function have been done right from the beginning instead?
 
-Yeah, I will do it right from the beginning in the next patch series.
+On 07/02/2014 08:17 PM, Junio C Hamano wrote:
+> Avi Kivity <avi@cloudius-systems.com> writes:
+>
+>> +		if test 't' == "$message_id"
+>> +		then
+>> +			grep ^Message-Id: "$dotest/info" || true
+>> +		fi
+>>   		if test '' != "$ADD_SIGNOFF"
+>>   		then
+>>   			echo "$ADD_SIGNOFF"
+> Seeing how existing code carefully makes sure that ADD_SIGNOFF has
+> an empty line before it when and only when necessary to ensure that
+> there is a blank after the existing log message, I would suspect
+> that this patch that blindly inserts a line is doubly wrong.  The
+> output from "grep" may be appended without adding a blank when
+> necessary, and appending of ADD_SIGNOFF may end up adding an extra
+> blank after Message-Id.  Am I reading the patch wrong?
+
+Yes, you're right.  Will have to redo the logic for deciding whether we 
+already have a tag stanza or not.
