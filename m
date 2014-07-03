@@ -1,59 +1,59 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Support for EBCDIC
-Date: Thu, 3 Jul 2014 13:34:13 -0400
-Message-ID: <20140703173413.GC20571@sigill.intra.peff.net>
-References: <1404355152.86116.YahooMailNeo@web184805.mail.gq1.yahoo.com>
+From: =?UTF-8?B?0J7Qu9C10LMg0K/RgNGL0LPQuNC9?= <arhad95@gmail.com>
+Subject: Wish bug report: "Comments to the state" group may be inconsistent
+ with real state
+Date: Thu, 3 Jul 2014 22:24:59 +0400
+Message-ID: <CAOJ_rAC6pcOBVqteK_xe-MVC+tg_R_gyBriDTe-=mbBbvLJgKw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org   " <git@vger.kernel.org>
-To: Scott McKellar <mck9@swbell.net>
-X-From: git-owner@vger.kernel.org Thu Jul 03 19:34:23 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 03 20:25:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2ktn-0007BS-Ha
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 19:34:19 +0200
+	id 1X2lgz-0004TF-RX
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 20:25:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758417AbaGCReP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2014 13:34:15 -0400
-Received: from cloud.peff.net ([50.56.180.127]:55599 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751726AbaGCReP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2014 13:34:15 -0400
-Received: (qmail 32262 invoked by uid 102); 3 Jul 2014 17:34:15 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Thu, 03 Jul 2014 12:34:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Jul 2014 13:34:13 -0400
-Content-Disposition: inline
-In-Reply-To: <1404355152.86116.YahooMailNeo@web184805.mail.gq1.yahoo.com>
+	id S1753453AbaGCSZD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2014 14:25:03 -0400
+Received: from mail-la0-f68.google.com ([209.85.215.68]:46755 "EHLO
+	mail-la0-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752903AbaGCSZB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2014 14:25:01 -0400
+Received: by mail-la0-f68.google.com with SMTP id gf5so134590lab.3
+        for <git@vger.kernel.org>; Thu, 03 Jul 2014 11:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=++EYsaD8WHxzqUUJ/9yr24zNBfH74t4zCPG0xoIa9CA=;
+        b=picEnZTXWxZ1O7uPKSbNVnGKLt0J4aMdqgnztE43+gKHAYIjGNjR6liJW9JCfES/dR
+         IGKW/vmEU9tul9805keOkX7NMniO0CflVo02qwX3bLCYfpqMzPFYh0A68kmQaQL/M9Pc
+         0EziduIsVyHsz0lYvAhsKvIv5STVG6ubzpGVrp2Lw/ygoynUnvoDB7OUUFF9taDNG47b
+         3tnj3iSthPpy3DELUbWcI1VPCzDZ5TWyAqiVGkqVw/i3vHM83PS4prES+3UTc9Gba+OE
+         Qnxxbqjm3D++JifWa+AAOquO8ZIasvQGQHoas3QWnScHkiOSrIo3Iv3AYKRtOpOfOzDD
+         0NXQ==
+X-Received: by 10.152.10.40 with SMTP id f8mr1990152lab.75.1404411899956; Thu,
+ 03 Jul 2014 11:24:59 -0700 (PDT)
+Received: by 10.112.201.38 with HTTP; Thu, 3 Jul 2014 11:24:59 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252872>
 
-On Wed, Jul 02, 2014 at 07:39:12PM -0700, Scott McKellar wrote:
+Hello to the community!
 
-> Is Git supposed to be usable in an environment where the execution character set is EBCDIC?
+I noticed when HEAD is changed outside the Wish (for example in
+console) while "Amend Last Commit" option in the GUI is chosen,
+committing state becomes inconsistent. Staged files list and commit
+description looks like "New Commit" is chosen, but options group still
+points to "Amend Last Commit".
 
-Not really.
+I consides that this is a bug.
 
-In addition to the cases you found (and I would be surprised if there
-are not more, such as our reimplementation of ctype.h), we assume:
+My Wish version is 0.19.
 
-  - we can intermingle ASCII from string literals with user data to form
-    diffs, commit objects, network protocols, etc. This is actually a
-    problem not just for EBCDIC, but for any encoding which is not an
-    ASCII-superset (like UTF-16).
+---
 
-  - many outputs from git should be ASCII in order to interoperate with
-    the outside world (object headers, network protocols, etc).
-
-So I'd be surprised if things worked well in an EBCDIC environment (but
-I have never worked with one, so maybe I do not understand all of the
-implications).
-
--Peff
+Oleg Yarigin <arhad95@gmail.com>.
