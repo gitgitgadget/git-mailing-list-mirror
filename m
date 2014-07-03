@@ -1,228 +1,110 @@
-From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
-Subject: t5150-request-pull.sh fails on newest master in Debian
-Date: Thu, 3 Jul 2014 23:55:27 +0200
-Message-ID: <CAA787r=78UWio3E==s+J2PbVqshQdWXpS9hiJrmNz+F0vLiuGg@mail.gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: t5150-request-pull.sh fails on newest master in Debian
+Date: Thu, 03 Jul 2014 15:16:22 -0700
+Organization: Twitter
+Message-ID: <1404425782.3109.12.camel@stross>
+References: <CAA787r=78UWio3E==s+J2PbVqshQdWXpS9hiJrmNz+F0vLiuGg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=089e0160b3ba116d2204fd511186
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 03 23:55:39 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?=D8yvind?= "A. Holm" <sunny@sunbase.org>
+X-From: git-owner@vger.kernel.org Fri Jul 04 00:16:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2oyf-0002rM-K8
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 23:55:38 +0200
+	id 1X2pIy-00023w-SE
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Jul 2014 00:16:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759895AbaGCVzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2014 17:55:31 -0400
-Received: from mail-la0-f46.google.com ([209.85.215.46]:43445 "EHLO
-	mail-la0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759877AbaGCVz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2014 17:55:29 -0400
-Received: by mail-la0-f46.google.com with SMTP id el20so605770lab.5
-        for <git@vger.kernel.org>; Thu, 03 Jul 2014 14:55:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=radn+qM3cja0rmeYuXtUvR//8SPqd+dz7YLHRPXkhJ8=;
-        b=hOAdWLdCZl0oVFccmf5frP54FJ2aEVRFzI5Xp+ARS+brQOdbfovN0V37XOZVOZNoV0
-         U2WEB3OT2HDcRecYqHbD0dKXvFpjpMK+B0nzF7uLrkq7neJoYdRMj+2Zk8rOC0yH4iaV
-         taO6jFs4Odoi8ZM6p/c6DET+WK5tQTrkLB8v9dKSvtoKYZi5cb+aytOZPzDf51Y1e3rN
-         k5dPu6f+mo71R7WCLsqARkmORNpxSbo9CC3b4tHFaBL/wbKzwGA9tP3hbhyPrL7N5WVr
-         4LjFmJCODmGmGYTXHCjsuRpESV4kj85eKt6rLUaSCwzRy9EeovHEVKAWL2jjzsg8v/tf
-         YDzQ==
-X-Received: by 10.152.44.233 with SMTP id h9mr3299118lam.58.1404424527367;
- Thu, 03 Jul 2014 14:55:27 -0700 (PDT)
-Received: by 10.112.142.7 with HTTP; Thu, 3 Jul 2014 14:55:27 -0700 (PDT)
-X-Google-Sender-Auth: 5wtLcrVDHrrQ8eWFNKs4atYh2ks
+	id S1759817AbaGCWQc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Jul 2014 18:16:32 -0400
+Received: from mail-qg0-f52.google.com ([209.85.192.52]:58552 "EHLO
+	mail-qg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759729AbaGCWQZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2014 18:16:25 -0400
+Received: by mail-qg0-f52.google.com with SMTP id f51so779874qge.25
+        for <git@vger.kernel.org>; Thu, 03 Jul 2014 15:16:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=FEzvNPuvrLSlSfWJ0FUWhjYNOnrsPmzI4/w+/CdTIi4=;
+        b=JH5mFMfaaAl/iXfw+E+3zLemDyYMVNXFkr1fe4+JADMGAHRzgFrtri9GK5pkcmyW0K
+         5FIOp8DlvQHrlazfwSfOw6G91/ks2b+CAgULxC6tGl+/xgea/15Dz3A3koH0cG9caYVA
+         9P1MdSg9wlsbWzGYLxQsJDT5Fmef9Q15gr+HO+WcK3l+V1HQL9R3lLun88UCx/gysECj
+         pW4o2WhGafSsT8Nzc6nHRAqPajF6RvgYM0JttiqKz/pwKd8i7m4UwUp/3xczgrvxzL7U
+         H2VEXUPaYaxs+RxoRGlE8Znux1a4XHllseB7jIuGG4Xl1wz4gbWgh1zUT2ZCp+a10NJ6
+         VoYQ==
+X-Gm-Message-State: ALoCoQlduZuyJ1Wx5NPf0i7J+GsM4rFmgtzWrC1HeitaFatfigs8ll6ee5Wy6Q4eK+ssG3R4ro2T
+X-Received: by 10.140.26.39 with SMTP id 36mr10809352qgu.61.1404425785048;
+        Thu, 03 Jul 2014 15:16:25 -0700 (PDT)
+Received: from [172.25.140.220] ([8.25.197.27])
+        by mx.google.com with ESMTPSA id z15sm16496890qaq.42.2014.07.03.15.16.23
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Thu, 03 Jul 2014 15:16:24 -0700 (PDT)
+In-Reply-To: <CAA787r=78UWio3E==s+J2PbVqshQdWXpS9hiJrmNz+F0vLiuGg@mail.gmail.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252882>
 
---089e0160b3ba116d2204fd511186
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Interesting!  I wonder if the problem is with the compiler or with my
+code.  I don't happen to have a Debian box handy; would it be possible
+for you to compile refs.c to assembly language (gcc -S) and send me the
+output?  That would help me track down the problem.
 
-When compiling newest master (v2.0.1-472-g6f92e5f) on Debian 7.5
-(64-bit), t5150-request-pull.sh fails when compiling with
-
-$ make configure
-$ ./configure --prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f92e5f
-$ make prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f92e5f
-$ make
-$ cd t
-$ ./t5150-request-pull.sh
-
-I have attached the output of t5150-request-pull.sh, but in case the
-attachment doesn't go through, I've also pasted it at
-<https://gist.github.com/sunny256/0f6ff7ffee26224dbe12>. This happened
-on two virtual servers (64 bit) hosted on Linode, with this
-configuration:
-
-$ lsb_release -a
-No LSB modules are available.
-Distributor ID: Debian
-Description:    Debian GNU/Linux 7.5 (wheezy)
-Release:        7.5
-Codename:       wheezy
-
-$ gcc --version
-gcc (Debian 4.7.2-5) 4.7.2
-
-Both servers are (of course) updated with new packages from apt-get.
-
-The test worked on my laptop which runs Ubuntu Studio 13.10. Have tried
-recompiling several times, and it fails on Debian every time.
-
-git bisect says the bad commit is 6f92e5ff3 ("Merge branch
-'dt/refs-check-refname-component-sse", 2014-07-02 12:53:07 -0700), but
-that's a merge. Both parent commits works, so could this be an evil
-merge?
-
-When compiling parent commit 745224e test 6 is disabled, could that be
-the reason?
-
-Parent commit a02ad88 passes all 7 tests.
-
-Cheers,
-=C3=98yvind
-
---089e0160b3ba116d2204fd511186
-Content-Type: text/plain; charset=UTF-8; name="t5150-output.txt"
-Content-Disposition: attachment; filename="t5150-output.txt"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_hx6m1db40
-
-KioqIHQ1MTUwLXJlcXVlc3QtcHVsbC5zaCAqKioKbm90IG9rIDEgLSBzZXR1cAojCiMKIyAgICAg
-ICAgICAgICAgIGdpdCBpbml0IC0tYmFyZSB1cHN0cmVhbS5naXQgJiYKIyAgICAgICAgICAgICAg
-IGdpdCBpbml0IC0tYmFyZSBkb3duc3RyZWFtLmdpdCAmJgojICAgICAgICAgICAgICAgZ2l0IGNs
-b25lIHVwc3RyZWFtLmdpdCB1cHN0cmVhbS1wcml2YXRlICYmCiMgICAgICAgICAgICAgICBnaXQg
-Y2xvbmUgZG93bnN0cmVhbS5naXQgbG9jYWwgJiYKIwojICAgICAgICAgICAgICAgdHJhc2hfdXJs
-PSJmaWxlOi8vJFRSQVNIX0RJUkVDVE9SWSIgJiYKIyAgICAgICAgICAgICAgIGRvd25zdHJlYW1f
-dXJsPSIkdHJhc2hfdXJsL2Rvd25zdHJlYW0uZ2l0LyIgJiYKIyAgICAgICAgICAgICAgIHVwc3Ry
-ZWFtX3VybD0iJHRyYXNoX3VybC91cHN0cmVhbS5naXQvIiAmJgojCiMgICAgICAgICAgICAgICAo
-CiMgICAgICAgICAgICAgICAgICAgICAgIGNkIHVwc3RyZWFtLXByaXZhdGUgJiYKIyAgICAgICAg
-ICAgICAgICAgICAgICAgY2F0IDw8LVxFT1QgPm1uZW1vbmljLnR4dCAmJgojICAgICAgICAgICAg
-ICAgICAgICAgICBUaGlydGV5IGRheXMgaGF0aCBOb3ZlbWJlciwKIyAgICAgICAgICAgICAgICAg
-ICAgICAgQXByaWxlLCBKdW5lLCBhbmQgU2VwdGVtYmVyOgojICAgICAgICAgICAgICAgICAgICAg
-ICBFT1QKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IGFkZCBtbmVtb25pYy50eHQgJiYKIyAg
-ICAgICAgICAgICAgICAgICAgICAgdGVzdF90aWNrICYmCiMgICAgICAgICAgICAgICAgICAgICAg
-IGdpdCBjb21taXQgLW0gIlwiVGhpcnR5IGRheXNcIiwgYSByZW1pbmRlciBvZiBtb250aCBsZW5n
-dGhzIiAmJgojICAgICAgICAgICAgICAgICAgICAgICBnaXQgdGFnIC1tICJ2ZXJzaW9uIDEiIC1h
-IGluaXRpYWwgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IHB1c2ggLS10YWdzIG9yaWdp
-biBtYXN0ZXIKIyAgICAgICAgICAgICAgICkgJiYKIyAgICAgICAgICAgICAgICgKIyAgICAgICAg
-ICAgICAgICAgICAgICAgY2QgbG9jYWwgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IHJl
-bW90ZSBhZGQgdXBzdHJlYW0gIiR0cmFzaF91cmwvdXBzdHJlYW0uZ2l0IiAmJgojICAgICAgICAg
-ICAgICAgICAgICAgICBnaXQgZmV0Y2ggdXBzdHJlYW0gJiYKIyAgICAgICAgICAgICAgICAgICAg
-ICAgZ2l0IHB1bGwgdXBzdHJlYW0gbWFzdGVyICYmCiMgICAgICAgICAgICAgICAgICAgICAgIGNh
-dCA8PC1cRU9UID4+bW5lbW9uaWMudHh0ICYmCiMgICAgICAgICAgICAgICAgICAgICAgIE9mIHR3
-eWVjZXNjb3JlLWVpZ2h0dCBpcyBidXQgZWluZSwKIyAgICAgICAgICAgICAgICAgICAgICAgQW5k
-IGFsbCB0aGUgcmVtbmFudGUgYmUgdGhyeWNlc2NvcmUtZWluZS4KIyAgICAgICAgICAgICAgICAg
-ICAgICAgT+KAmWNvdXJzZSBMZWFwIHlhcmUgY29tZXMgYW7igJlweW5lcywKIyAgICAgICAgICAg
-ICAgICAgICAgICAgRXbigJlyaWUgZm91cmUgeWFyZXMsIGdvdGUgaXQgcnlnaHRoLgojICAgICAg
-ICAgICAgICAgICAgICAgICBBbuKAmXR3eWVjZXNjb3JlLWVpZ2h0IGlzIGJ1dCB0d3llY2VzY29y
-ZS1ueW5lLgojICAgICAgICAgICAgICAgICAgICAgICBFT1QKIyAgICAgICAgICAgICAgICAgICAg
-ICAgZ2l0IGFkZCBtbmVtb25pYy50eHQgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgdGVzdF90
-aWNrICYmCiMgICAgICAgICAgICAgICAgICAgICAgIGdpdCBjb21taXQgLW0gIk1vcmUgZGV0YWls
-IiAmJgojICAgICAgICAgICAgICAgICAgICAgICBnaXQgdGFnIC1tICJ2ZXJzaW9uIDIiIC1hIGZ1
-bGwgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IGNoZWNrb3V0IC1iIHNpbXBsaWZ5IEhF
-QUReICYmCiMgICAgICAgICAgICAgICAgICAgICAgIG12IG1uZW1vbmljLnR4dCBtbmVtb25pYy5z
-dGFuZGFyZCAmJgojICAgICAgICAgICAgICAgICAgICAgICBjYXQgPDwtXEVPVCA+bW5lbW9uaWMu
-Y2xhcmlmaWVkICYmCiMgICAgICAgICAgICAgICAgICAgICAgIFRoaXJ0eSBkYXlzIGhhcyBTZXB0
-ZW1iZXIsCiMgICAgICAgICAgICAgICAgICAgICAgIEFsbCB0aGUgcmVzdCBJIGNhbuKAmXQgcmVt
-ZW1iZXIuCiMgICAgICAgICAgICAgICAgICAgICAgIEVPVAojICAgICAgICAgICAgICAgICAgICAg
-ICBnaXQgYWRkIC1OIG1uZW1vbmljLnN0YW5kYXJkIG1uZW1vbmljLmNsYXJpZmllZCAmJgojICAg
-ICAgICAgICAgICAgICAgICAgICBnaXQgY29tbWl0IC1hIC1tICJBZGFwdCB0byB1c2UgbW9kZXJu
-LCBzaW1wbGVyIEVuZ2xpc2gKIwojICAgICAgIEJ1dCBrZWVwIHRoZSBvbGQgdmVyc2lvbiwgdG9v
-LCBpbiBjYXNlIHNvbWUgcGVvcGxlIHByZWZlciBpdC4iICYmCiMgICAgICAgICAgICAgICAgICAg
-ICAgIGdpdCBjaGVja291dCBtYXN0ZXIKIyAgICAgICAgICAgICAgICkKIwojCm9rIDIgLSBzZXR1
-cDogdHdvIHNjcmlwdHMgZm9yIHJlYWRpbmcgcHVsbCByZXF1ZXN0cwpub3Qgb2sgMyAtIHB1bGwg
-cmVxdWVzdCB3aGVuIGZvcmdvdCB0byBwdXNoCiMKIwojICAgICAgICAgICAgICAgcm0gLWZyIGRv
-d25zdHJlYW0uZ2l0ICYmCiMgICAgICAgICAgICAgICBnaXQgaW5pdCAtLWJhcmUgZG93bnN0cmVh
-bS5naXQgJiYKIyAgICAgICAgICAgICAgICgKIyAgICAgICAgICAgICAgICAgICAgICAgY2QgbG9j
-YWwgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IGNoZWNrb3V0IGluaXRpYWwgJiYKIyAg
-ICAgICAgICAgICAgICAgICAgICAgZ2l0IG1lcmdlIC0tZmYtb25seSBtYXN0ZXIgJiYKIyAgICAg
-ICAgICAgICAgICAgICAgICAgdGVzdF9tdXN0X2ZhaWwgZ2l0IHJlcXVlc3QtcHVsbCBpbml0aWFs
-ICIkZG93bnN0cmVhbV91cmwiIFwKIyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAyPi4u
-L2VycgojICAgICAgICAgICAgICAgKSAmJgojICAgICAgICAgICAgICAgZ3JlcCAiTm8gbWF0Y2gg
-Zm9yIGNvbW1pdCAuKiIgZXJyICYmCiMgICAgICAgICAgICAgICBncmVwICJBcmUgeW91IHN1cmUg
-eW91IHB1c2hlZCIgZXJyCiMKIwpub3Qgb2sgNCAtIHB1bGwgcmVxdWVzdCBhZnRlciBwdXNoCiMK
-IwojICAgICAgICAgICAgICAgcm0gLWZyIGRvd25zdHJlYW0uZ2l0ICYmCiMgICAgICAgICAgICAg
-ICBnaXQgaW5pdCAtLWJhcmUgZG93bnN0cmVhbS5naXQgJiYKIyAgICAgICAgICAgICAgICgKIyAg
-ICAgICAgICAgICAgICAgICAgICAgY2QgbG9jYWwgJiYKIyAgICAgICAgICAgICAgICAgICAgICAg
-Z2l0IGNoZWNrb3V0IGluaXRpYWwgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IG1lcmdl
-IC0tZmYtb25seSBtYXN0ZXIgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IHB1c2ggb3Jp
-Z2luIG1hc3Rlcjpmb3ItdXBzdHJlYW0gJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IHJl
-cXVlc3QtcHVsbCBpbml0aWFsIG9yaWdpbiBtYXN0ZXI6Zm9yLXVwc3RyZWFtID4uLi9yZXF1ZXN0
-CiMgICAgICAgICAgICAgICApICYmCiMgICAgICAgICAgICAgICBzZWQgLW5mIHJlYWQtcmVxdWVz
-dC5zZWQgPHJlcXVlc3QgPmRpZ2VzdCAmJgojICAgICAgICAgICAgICAgY2F0IGRpZ2VzdCAmJgoj
-ICAgICAgICAgICAgICAgewojICAgICAgICAgICAgICAgICAgICAgICByZWFkIHRhc2sgJiYKIyAg
-ICAgICAgICAgICAgICAgICAgICAgcmVhZCByZXBvc2l0b3J5ICYmCiMgICAgICAgICAgICAgICAg
-ICAgICAgIHJlYWQgYnJhbmNoCiMgICAgICAgICAgICAgICB9IDxkaWdlc3QgJiYKIyAgICAgICAg
-ICAgICAgICgKIyAgICAgICAgICAgICAgICAgICAgICAgY2QgdXBzdHJlYW0tcHJpdmF0ZSAmJgoj
-ICAgICAgICAgICAgICAgICAgICAgICBnaXQgY2hlY2tvdXQgaW5pdGlhbCAmJgojICAgICAgICAg
-ICAgICAgICAgICAgICBnaXQgcHVsbCAtLWZmLW9ubHkgIiRyZXBvc2l0b3J5IiAiJGJyYW5jaCIK
-IyAgICAgICAgICAgICAgICkgJiYKIyAgICAgICAgICAgICAgIHRlc3QgIiRicmFuY2giID0gZm9y
-LXVwc3RyZWFtICYmCiMgICAgICAgICAgICAgICB0ZXN0X2NtcCBsb2NhbC9tbmVtb25pYy50eHQg
-dXBzdHJlYW0tcHJpdmF0ZS9tbmVtb25pYy50eHQKIwojCm5vdCBvayA1IC0gcmVxdWVzdCBhc2tz
-IEhFQUQgdG8gYmUgcHVsbGVkCiMKIwojICAgICAgICAgICAgICAgcm0gLWZyIGRvd25zdHJlYW0u
-Z2l0ICYmCiMgICAgICAgICAgICAgICBnaXQgaW5pdCAtLWJhcmUgZG93bnN0cmVhbS5naXQgJiYK
-IyAgICAgICAgICAgICAgICgKIyAgICAgICAgICAgICAgICAgICAgICAgY2QgbG9jYWwgJiYKIyAg
-ICAgICAgICAgICAgICAgICAgICAgZ2l0IGNoZWNrb3V0IGluaXRpYWwgJiYKIyAgICAgICAgICAg
-ICAgICAgICAgICAgZ2l0IG1lcmdlIC0tZmYtb25seSBtYXN0ZXIgJiYKIyAgICAgICAgICAgICAg
-ICAgICAgICAgZ2l0IHB1c2ggLS10YWdzIG9yaWdpbiBtYXN0ZXIgc2ltcGxpZnkgJiYKIyAgICAg
-ICAgICAgICAgICAgICAgICAgZ2l0IHB1c2ggb3JpZ2luIG1hc3Rlcjpmb3ItdXBzdHJlYW0gJiYK
-IyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IHJlcXVlc3QtcHVsbCBpbml0aWFsICIkZG93bnN0
-cmVhbV91cmwiID4uLi9yZXF1ZXN0CiMgICAgICAgICAgICAgICApICYmCiMgICAgICAgICAgICAg
-ICBzZWQgLW5mIHJlYWQtcmVxdWVzdC5zZWQgPHJlcXVlc3QgPmRpZ2VzdCAmJgojICAgICAgICAg
-ICAgICAgY2F0IGRpZ2VzdCAmJgojICAgICAgICAgICAgICAgewojICAgICAgICAgICAgICAgICAg
-ICAgICByZWFkIHRhc2sgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgcmVhZCByZXBvc2l0b3J5
-ICYmCiMgICAgICAgICAgICAgICAgICAgICAgIHJlYWQgYnJhbmNoCiMgICAgICAgICAgICAgICB9
-IDxkaWdlc3QgJiYKIyAgICAgICAgICAgICAgIHRlc3QgLXogIiRicmFuY2giCiMKIwpub3Qgb2sg
-NiAtIHB1bGwgcmVxdWVzdCBmb3JtYXQKIwojCiMgICAgICAgICAgICAgICBybSAtZnIgZG93bnN0
-cmVhbS5naXQgJiYKIyAgICAgICAgICAgICAgIGdpdCBpbml0IC0tYmFyZSBkb3duc3RyZWFtLmdp
-dCAmJgojICAgICAgICAgICAgICAgY2F0IDw8LVxFT1QgPmV4cGVjdCAmJgojICAgICAgICAgICAg
-ICAgVGhlIGZvbGxvd2luZyBjaGFuZ2VzIHNpbmNlIGNvbW1pdCBPQkpFQ1RfTkFNRToKIwojICAg
-ICAgICAgICAgICAgICBTVUJKRUNUIChEQVRFKQojCiMgICAgICAgICAgICAgICBhcmUgYXZhaWxh
-YmxlIGluIHRoZSBnaXQgcmVwb3NpdG9yeSBhdDoKIwojICAgICAgICAgICAgICAgICBVUkwgQlJB
-TkNICiMKIyAgICAgICAgICAgICAgIGZvciB5b3UgdG8gZmV0Y2ggY2hhbmdlcyB1cCB0byBPQkpF
-Q1RfTkFNRToKIwojICAgICAgICAgICAgICAgICBTVUJKRUNUIChEQVRFKQojCiMgICAgICAgICAg
-ICAgICAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tCiMgICAgICAgICAgICAgICBWRVJTSU9OCiMKIyAgICAgICAgICAgICAgIC0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0KIyAgICAgICAgICAgICAgIFNIT1JUTE9HCiMKIyAgICAgICAgICAgICAgIERJRkZTVEFU
-CiMgICAgICAgICAgICAgICBFT1QKIyAgICAgICAgICAgICAgICgKIyAgICAgICAgICAgICAgICAg
-ICAgICAgY2QgbG9jYWwgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IGNoZWNrb3V0IGlu
-aXRpYWwgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IG1lcmdlIC0tZmYtb25seSBtYXN0
-ZXIgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IHB1c2ggb3JpZ2luIHRhZ3MvZnVsbCAm
-JgojICAgICAgICAgICAgICAgICAgICAgICBnaXQgcmVxdWVzdC1wdWxsIGluaXRpYWwgIiRkb3du
-c3RyZWFtX3VybCIgdGFncy9mdWxsID4uLi9yZXF1ZXN0CiMgICAgICAgICAgICAgICApICYmCiMg
-ICAgICAgICAgICAgICA8cmVxdWVzdCBzZWQgLW5mIGZ1enouc2VkID5yZXF1ZXN0LmZ1enp5ICYm
-CiMgICAgICAgICAgICAgICB0ZXN0X2kxOG5jbXAgZXhwZWN0IHJlcXVlc3QuZnV6enkgJiYKIwoj
-ICAgICAgICAgICAgICAgKAojICAgICAgICAgICAgICAgICAgICAgICBjZCBsb2NhbCAmJgojICAg
-ICAgICAgICAgICAgICAgICAgICBnaXQgcmVxdWVzdC1wdWxsIGluaXRpYWwgIiRkb3duc3RyZWFt
-X3VybCIgdGFncy9mdWxsOnJlZnMvdGFncy9mdWxsCiMgICAgICAgICAgICAgICApID5yZXF1ZXN0
-ICYmCiMgICAgICAgICAgICAgICBzZWQgLW5mIGZ1enouc2VkIDxyZXF1ZXN0ID5yZXF1ZXN0LmZ1
-enp5ICYmCiMgICAgICAgICAgICAgICB0ZXN0X2kxOG5jbXAgZXhwZWN0IHJlcXVlc3QuZnV6enkg
-JiYKIwojICAgICAgICAgICAgICAgKAojICAgICAgICAgICAgICAgICAgICAgICBjZCBsb2NhbCAm
-JgojICAgICAgICAgICAgICAgICAgICAgICBnaXQgcmVxdWVzdC1wdWxsIGluaXRpYWwgIiRkb3du
-c3RyZWFtX3VybCIgZnVsbAojICAgICAgICAgICAgICAgKSA+cmVxdWVzdCAmJgojICAgICAgICAg
-ICAgICAgZ3JlcCAiIHRhZ3MvZnVsbFwkIiByZXF1ZXN0CiMKbm90IG9rIDcgLSByZXF1ZXN0LXB1
-bGwgaWdub3JlcyBPUFRJT05TX0tFRVBEQVNIREFTSCBwb2lzb24KIwojCiMgICAgICAgICAgICAg
-ICAoCiMgICAgICAgICAgICAgICAgICAgICAgIGNkIGxvY2FsICYmCiMgICAgICAgICAgICAgICAg
-ICAgICAgIE9QVElPTlNfS0VFUERBU0hEQVNIPVllcyAmJgojICAgICAgICAgICAgICAgICAgICAg
-ICBleHBvcnQgT1BUSU9OU19LRUVQREFTSERBU0ggJiYKIyAgICAgICAgICAgICAgICAgICAgICAg
-Z2l0IGNoZWNrb3V0IGluaXRpYWwgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IG1lcmdl
-IC0tZmYtb25seSBtYXN0ZXIgJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IHB1c2ggb3Jp
-Z2luIG1hc3Rlcjpmb3ItdXBzdHJlYW0gJiYKIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IHJl
-cXVlc3QtcHVsbCAtLSBpbml0aWFsICIkZG93bnN0cmVhbV91cmwiIG1hc3Rlcjpmb3ItdXBzdHJl
-YW0gPi4uL3JlcXVlc3QKIyAgICAgICAgICAgICAgICkKIwojCiMgZmFpbGVkIDYgYW1vbmcgNyB0
-ZXN0KHMpCjEuLjcKbWFrZVsyXTogKioqIFt0NTE1MC1yZXF1ZXN0LXB1bGwuc2hdIEVycm9yIDEK
-bWFrZVsyXTogTGVhdmluZyBkaXJlY3RvcnkgYC9ob21lL3N1bm55L3NyYy9vdGhlci9naXQvYnVp
-bGQtZ2l0L3QnCm1ha2VbMV06ICoqKiBbdGVzdF0gRXJyb3IgMgptYWtlWzFdOiBMZWF2aW5nIGRp
-cmVjdG9yeSBgL2hvbWUvc3Vubnkvc3JjL290aGVyL2dpdC9idWlsZC1naXQvdCcKbWFrZTogKioq
-IFt0ZXN0XSBFcnJvciAyCg==
---089e0160b3ba116d2204fd511186--
+On Thu, 2014-07-03 at 23:55 +0200, =C3=98yvind A. Holm wrote:
+> When compiling newest master (v2.0.1-472-g6f92e5f) on Debian 7.5
+> (64-bit), t5150-request-pull.sh fails when compiling with
+>=20
+> $ make configure
+> $ ./configure --prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f9=
+2e5f
+> $ make prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f92e5f
+> $ make
+> $ cd t
+> $ ./t5150-request-pull.sh
+>=20
+> I have attached the output of t5150-request-pull.sh, but in case the
+> attachment doesn't go through, I've also pasted it at
+> <https://gist.github.com/sunny256/0f6ff7ffee26224dbe12>. This happene=
+d
+> on two virtual servers (64 bit) hosted on Linode, with this
+> configuration:
+>=20
+> $ lsb_release -a
+> No LSB modules are available.
+> Distributor ID: Debian
+> Description:    Debian GNU/Linux 7.5 (wheezy)
+> Release:        7.5
+> Codename:       wheezy
+>=20
+> $ gcc --version
+> gcc (Debian 4.7.2-5) 4.7.2
+>=20
+> Both servers are (of course) updated with new packages from apt-get.
+>=20
+> The test worked on my laptop which runs Ubuntu Studio 13.10. Have tri=
+ed
+> recompiling several times, and it fails on Debian every time.
+>=20
+> git bisect says the bad commit is 6f92e5ff3 ("Merge branch
+> 'dt/refs-check-refname-component-sse", 2014-07-02 12:53:07 -0700), bu=
+t
+> that's a merge. Both parent commits works, so could this be an evil
+> merge?
+>=20
+> When compiling parent commit 745224e test 6 is disabled, could that b=
+e
+> the reason?
+>=20
+> Parent commit a02ad88 passes all 7 tests.
+>=20
+> Cheers,
+> =C3=98yvind
