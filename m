@@ -1,180 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 2/7] replace: add test for --graft
-Date: Thu, 03 Jul 2014 11:45:37 -0700
-Message-ID: <xmqq8uoaffhq.fsf@gitster.dls.corp.google.com>
-References: <20140628171731.5687.30308.chriscool@tuxfamily.org>
-	<20140628181117.5687.23923.chriscool@tuxfamily.org>
-	<xmqqy4wbfpux.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD2L8wV=7dyW6ChA2Y1UddQnLMZ=b4eUvGYGQY65ndLgHA@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [BUG] rebase no longer omits local commits
+Date: Thu, 3 Jul 2014 20:09:17 +0100
+Message-ID: <20140703190917.GE13153@serenity.lan>
+References: <53B57352.50202@tedfelix.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 20:45:59 2014
+Cc: git@vger.kernel.org
+To: Ted Felix <ted@tedfelix.com>
+X-From: git-owner@vger.kernel.org Thu Jul 03 21:09:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2m14-0002tY-NC
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 20:45:55 +0200
+	id 1X2mNs-0004Kz-K0
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 21:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759577AbaGCSpv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2014 14:45:51 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59558 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756243AbaGCSpt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2014 14:45:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0366224D13;
-	Thu,  3 Jul 2014 14:45:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bin7LSib+uRce18wOZykY9zGBko=; b=k7oqIo
-	JVMcUzi5ss8u7196xK/dPgbKgp+ATHWenDsb0Ak8MexGpbEwiG1G/7Iq2vL7LSGy
-	AmGokiBzH0bvvnbGJlqgmt/X1NzZ0i6KfuRmXyVpXZ7kox+RenVbQkuhGGLtGFj9
-	ojQascJnEK0VKyu1ngMwPYOZjZxdxkuiOvWGw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=lb9ID8ADuGsJfaG+vlpVBs7pJW5L1TsI
-	IDFKGFsltOKT5mzJOpqOGZZnbIxobsM0lUzgcYFTUc+9exrGFOGpi4wVvL6Iq6zR
-	/iK17uviaeQjdGFrqJmg2zcumINZRkuIPcDOGQBRQTToBK3zX3mh/pZ1yUS6tHkn
-	MfsC63QAS1M=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EAF9524D12;
-	Thu,  3 Jul 2014 14:45:32 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1752903AbaGCTJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2014 15:09:25 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:46796 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751109AbaGCTJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2014 15:09:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 74A5021851;
+	Thu,  3 Jul 2014 20:09:23 +0100 (BST)
+X-Quarantine-ID: <A4cMgvHqhmmZ>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id A4cMgvHqhmmZ; Thu,  3 Jul 2014 20:09:22 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D0C3F24D03;
-	Thu,  3 Jul 2014 14:45:27 -0400 (EDT)
-In-Reply-To: <CAP8UFD2L8wV=7dyW6ChA2Y1UddQnLMZ=b4eUvGYGQY65ndLgHA@mail.gmail.com>
-	(Christian Couder's message of "Thu, 3 Jul 2014 15:39:09 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 338CB128-02E2-11E4-94DF-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	by hyena.aluminati.org (Postfix) with ESMTPSA id 11A1B21D1C;
+	Thu,  3 Jul 2014 20:09:19 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <53B57352.50202@tedfelix.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252875>
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Thu, Jul 03, 2014 at 11:14:26AM -0400, Ted Felix wrote:
+> Starting with git 1.9.0, rebase no longer omits local commits that 
+> appear in both the upstream and local branches.
+> 
+> I've bisected this down to commit bb3f458: "rebase: fix fork-point with 
+> zero arguments".  The attached script reproduces the problem.  Reverting 
+> the aforementioned commit fixes the problem.
+> 
+> A failed run of this script will result in conflicts.  A successful run 
+> against master with bb3f458 reverted ends as follows:
+> 
+>  From /tmp/rebase-issue/maint
+>     fe401cd..955af04  master     -> origin/master
+> fatal: Not a valid object name: ''
+> First, rewinding head to replay your work on top of it...
+> Applying: Third change
+> 
+> (I'm not sure if that "fatal: Not a valid object name: ''" is of any 
+> concern.  It started appearing for me at some point during the bisect.)
 
-> On Wed, Jul 2, 2014 at 10:49 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Christian Couder <chriscool@tuxfamily.org> writes:
->>
->>> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
->>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->>> ---
->>>  t/t6050-replace.sh | 12 ++++++++++++
->>>  1 file changed, 12 insertions(+)
->>>
->>> diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
->>> index 68b3cb2..ca45a84 100755
->>> --- a/t/t6050-replace.sh
->>> +++ b/t/t6050-replace.sh
->>> @@ -351,4 +351,16 @@ test_expect_success 'replace ref cleanup' '
->>>       test -z "$(git replace)"
->>>  '
->>>
->>> +test_expect_success '--graft with and without already replaced object' '
->>> +     test $(git log --oneline | wc -l) = 7 &&
->>> +     git replace --graft $HASH5 &&
->>> +     test $(git log --oneline | wc -l) = 3 &&
->>> +     git cat-file -p $HASH5 | test_must_fail grep parent &&
->>
->> Please do not run non-git command under test_must_fail.
->
-> Ok, I think I will just use the following then:
->
-> test_must_fail git rev-parse $HASH5^1
-> ...
+It is the problem that bb3f458 fixes.  The change in behaviour is
+actually introduced by ad8261d (rebase: use reflog to find common base
+with upstream).
 
-See below.
+In your example, I think this is working as designed.  You can restore
+the previous behaviour either with `git rebase --no-fork-point` or with
+`git rebase @{u}`.
 
->>> +     test_must_fail git replace --graft $HASH5 $HASH4 $HASH3 &&
->>> +     git replace --force -g $HASH5 $HASH4 $HASH3 &&
->>> +     git cat-file -p $HASH5 | grep "parent $HASH4" &&
->>> +     git cat-file -p $HASH5 | grep "parent $HASH3" &&
->>> +     git replace -d $HASH5
->>> +'
->>> +
->>>  test_done
->>
->> For all these "git cat-file -p $commit | grep ...", I would think
->> you should add "commit_has_parents" helper function to allow a bit
->> more careful testing.  As written, the test will mistake a commit
->> with string "parent $HASHx" anywhere, not in the header part, and
->> the test does not ensure that $HASH{3,4} is the {first,second}
->> parent.
->>
->>         commit_has_parents $HASH5 $HASH4 $HASH3
->>
->> would then may be implemented like:
->>
->>         commit_has_parents () {
->>                 git cat-file commit "$1" >payload &&
->>                 sed -n -e '/^$/q' -e 's/^parent //p' <payload >actual &&
->>                 shift &&
->>                 printf 'parent %s\n' "$@" >expect &&
->>                 test_cmp expect actual
->>         }
->
-> I think I'll rather use something like:
->
-> test $(git rev-parse $HASH5^1) = "$HASH4" &&
-> test $(git rev-parse $HASH5^2) = "$HASH3" &&
-> ...
+The change is designed to help users recover from an upstream rebase, as
+described in the "DISCUSSION ON FORK-POINT MODE" section of
+git-merge-base(1) and makes `git rebase` match the behaviour of
+`git pull --rebase` so that:
 
-Even in that case, I'd suggest using the same "commit_has_parents"
-abstraction, which you will also be using to check the "replaced to
-be a new root" case in the earlier part of this test.
+	git fetch &&
+	git rebase
 
-In case you do not get what I mean by "in that case", you are saying
-that you will now be testing a different thing.  You can test what
-your new code produces at the bit level by directly obtaining the
-resulting object via "cat-file" and that lets you not to depend on
-the rest of the system (i.e. the part that allows you to pretend an
-existing object you have a corresponding replace ref for has contents
-of a totally different object) working correctly.  Or you can choose
-to test the system as a whole (i.e. not just the "git replace" produced
-a new object with contents you planned to fabricate, but also by
-having a replace ref, you can let the rest of the system use th
-contents of that object when asked for the replaced object).
+really is equivalent to:
 
-The implementation suggested in my previous message was in line with
-the former, because your use of "cat-file" seemed to indicate that
-you wanted to avoid depending on the rest of the system to test this
-new feature in your new tests.  You seem to be saying that you now
-want to take the other approach of testing both at the same time.
-
-I am fine with either approach, but I want to make sure that you are
-aware of the distinction.  The last thing I want to see is to flip
-the approach you take to test not because "testing as a whole is
-better than testing one thing without getting interfered by
-potential breakage in other parts" but because "testing as a whole
-is easier."
-
-The implementation of commit_has_parents that tests the system as a
-whole may look like
-
-        commit=$1 parent_number=1
-        shift
-        for parent
-        do
-                test $(git rev-parse --verify "$commit^$parent_number") = "$parent" ||
-		return 1
-		parent_number=$(( $parent_number + 1 ))
-	done
-        test_must_fail git rev-parse $commit^$parent_number
-
-and you would still use it like this:
-
-  commit_has_parents $HASH5 ;# must have no parent
-  commit_has_parents $HASH5 $HASH4 $HASH3 ;# must have these parents
-
-Thanks.
+	git pull --rebase
