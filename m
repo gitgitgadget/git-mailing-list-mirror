@@ -1,58 +1,65 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Show containing branches in log?
-Date: Thu, 3 Jul 2014 15:18:42 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1407031517100.4693@ds9.cixit.se>
-References: <CAHd499A78BRVawWSHNnzJcD1Ca7RfFeEnJf0SB7py1MD5qwL0g@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Git for Windows no longer on Google Code
+Date: Thu, 3 Jul 2014 17:11:37 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1407031701540.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 03 16:18:56 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: msysgit@googlegroups.com
+X-From: git-owner@vger.kernel.org Thu Jul 03 17:11:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2hqf-00071P-1k
-	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 16:18:53 +0200
+	id 1X2ifm-0007ZL-V3
+	for gcvg-git-2@plane.gmane.org; Thu, 03 Jul 2014 17:11:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755716AbaGCOSs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Jul 2014 10:18:48 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:50187 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752078AbaGCOSs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Jul 2014 10:18:48 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s63EIhYu023148
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 3 Jul 2014 16:18:43 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s63EIgFt023145;
-	Thu, 3 Jul 2014 16:18:42 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <CAHd499A78BRVawWSHNnzJcD1Ca7RfFeEnJf0SB7py1MD5qwL0g@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Thu, 03 Jul 2014 16:18:43 +0200 (CEST)
+	id S1759172AbaGCPLk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Jul 2014 11:11:40 -0400
+Received: from mout.gmx.net ([212.227.17.22]:51449 "EHLO mout.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759167AbaGCPLj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Jul 2014 11:11:39 -0400
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx102) with ESMTPSA (Nemesis) id 0LnlmV-1WQd2D0NLj-00hsAP;
+ Thu, 03 Jul 2014 17:11:38 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:ot1YVXy3416eDdFacMkTgwvGfqtEfxi/9qSGiVUDTdwEEx9826w
+ WrAD1UYOjhHXYlnSqNHZi0PsARUzYEUMIUPZxd0Y1qIM/J4Q1adHzFp0YdGEXp8ytplzHAu
+ pewX0JSj1oO9TLOgPPHJJSLB9qu12FVJCTiA6YoSNR91VAQwVSArnvShu5Kootg1ed7W1Xy
+ 8IEVk32p0wzk3IAzMPJZw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252865>
 
-Robert Dailey:
+Dear friends of Git,
 
-> Is there a way to graphically see what is the "nearest" named ref to 
-> the specified commit in the logs?
+the Git for Windows team, myself included, tried quite a couple of times
+to mark the old home of Git for Windows on Google Code as obsolete.
 
-git log --graph --decorate commit..
+Unfortunately, it is not possible to disable issue trackers nor downloads
+(and Google Search helpfully insists on listing them as top hits, still).
 
-will display all the commits that happened after the commit "commit", 
-with the branch names indicated, with lines indicating the ancestry. 
-That's the closest I can come to think of.
+It is not even possible to forward to a new project home: we tried
+literally twenty times to hit the "Project moved" button with the new URL
+-- http://msysgit.github.io/ -- but all it did was reset the URL to
+"http://" and give a "500. That's an error." when browsing the old URL.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+The link supposedly allowing to report the error leads to a read-only
+knowledge base with no way to inform any responsible developer of the bug.
+
+The only way was to delete the old project home, with no automatic
+redirection and no hint for users where to look instead.
+
+Therefore it is with great sadness that I have to resort to sending this
+mail and hoping that it reaches at least a part of the people who are from
+now on undoubtedly surprised to see a "Google. One account. All of
+Google." page instead of being forwarded to http://msysgit.github.io/.
+
+I am seriously sorry about the inconvenience, wishing there was anything
+I could do about this,
+Johannes
