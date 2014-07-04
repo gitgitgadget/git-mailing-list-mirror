@@ -1,80 +1,65 @@
-From: Tanay Abhra <tanayabh@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH v4 1/2] add `config_set` API for caching config files
-Date: Fri, 04 Jul 2014 14:55:54 +0530
-Message-ID: <53B67322.1080408@gmail.com>
-References: <1404280905-26763-1-git-send-email-tanayabh@gmail.com>	<1404280905-26763-2-git-send-email-tanayabh@gmail.com>	<vpqoax8m8bh.fsf@anie.imag.fr> <53B63461.2040300@gmail.com> <vpq1tu1xz2g.fsf@anie.imag.fr>
+Date: Fri, 04 Jul 2014 11:43:26 +0200
+Message-ID: <vpqsimhtq69.fsf@anie.imag.fr>
+References: <1404280905-26763-1-git-send-email-tanayabh@gmail.com>
+	<1404280905-26763-2-git-send-email-tanayabh@gmail.com>
+	<vpqoax8m8bh.fsf@anie.imag.fr> <53B63461.2040300@gmail.com>
+	<vpq1tu1xz2g.fsf@anie.imag.fr> <53B67322.1080408@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jul 04 11:26:09 2014
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 04 11:43:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X2zku-0005mt-Ul
-	for gcvg-git-2@plane.gmane.org; Fri, 04 Jul 2014 11:26:09 +0200
+	id 1X301m-0000RS-HX
+	for gcvg-git-2@plane.gmane.org; Fri, 04 Jul 2014 11:43:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752012AbaGDJ0E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2014 05:26:04 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:39901 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751198AbaGDJ0C (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2014 05:26:02 -0400
-Received: by mail-pa0-f50.google.com with SMTP id bj1so1718758pad.23
-        for <git@vger.kernel.org>; Fri, 04 Jul 2014 02:26:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=LSsWO40rXZL0LbLtOpWgH5LGLRQpFR2N6esrLckCF4E=;
-        b=mqSGKaXc8D7ZmlcXoqrjJ6X4Gqf7PD14xGzrCn8hwUq9kZdKy+IUOE8UANpb5gTTZB
-         xxSALBfIcPtJnQH/QgMIeUC8nsB6tUrkcHKMNyNAPlC7GuSmSLqdX0Y7hLZiNFmM/wgu
-         //PHALwKrG6A/b3nloDbUXIWHzgWeJS333S13ND3f3Y132g3r/QhQJDpAd9OQPARaTzz
-         W/7SOGu7xIh7JjQj2LtXsyT9aQ7HA1EkCuhAIQHO4WbTxjLcBJ7/n5QKH0KXcmop6muB
-         jebQXUHNYEeVv6wK18oK/m61xc11R9jaj2h5Kd9fP/6JZrgp37vZTM61pJ4ylbnFjLjs
-         bC2g==
-X-Received: by 10.68.136.5 with SMTP id pw5mr9899970pbb.106.1404465961672;
-        Fri, 04 Jul 2014 02:26:01 -0700 (PDT)
-Received: from [127.0.0.1] ([117.254.221.228])
-        by mx.google.com with ESMTPSA id hs5sm43527342pbb.92.2014.07.04.02.25.58
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 04 Jul 2014 02:26:01 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <vpq1tu1xz2g.fsf@anie.imag.fr>
+	id S1752217AbaGDJna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Jul 2014 05:43:30 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56021 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750758AbaGDJn3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Jul 2014 05:43:29 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s649hPOI021489
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 4 Jul 2014 11:43:25 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s649hQqK029301;
+	Fri, 4 Jul 2014 11:43:26 +0200
+In-Reply-To: <53B67322.1080408@gmail.com> (Tanay Abhra's message of "Fri, 04
+	Jul 2014 14:55:54 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 04 Jul 2014 11:43:25 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s649hPOI021489
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1405071806.12079@Xb233wxHgYNu15+NIWgSAw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252893>
 
+Tanay Abhra <tanayabh@gmail.com> writes:
 
+> One more doubt, does <filename,linenr> for every value has any use other than
+> raising semantic error in typespecific API functions.
 
-On 7/4/2014 2:47 PM, Matthieu Moy wrote:
-> Tanay Abhra <tanayabh@gmail.com> writes:
-> 
->> Hi,
->>
->> I have cooked up a single hashmap implementation. What are your
->> thoughts about it?
-> 
-> I had a quick look, and it looks good to me. I'll make a more detailed
-> review when you send the next series.
->
+I don't see any other. My suggestion would be: ignore this for now, it's
+not needed to get a new API that has at least as many features as the
+existing one.
 
-One more doubt, does <filename,linenr> for every value has any use other than
-raising semantic error in typespecific API functions.
+It's easy to add to the data-structure afterwards (although a bit less
+easy to add to the code that fills-in the data structure).
 
-For example, if we call git_config_get_int(foo.bar), we can show to the user
-"value not a int at <filename, linenr>". Other than that I cannot think of
-any other use of it. Currently `git_config_int` dies if value put for
-parsing is not an int.
-
-Junio and Karsten, both raised the point for saving <filename,linenr>, but I can't
-find any use cases for it other than what I mentioned above.
-
-Thanks.
-Tanay.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
