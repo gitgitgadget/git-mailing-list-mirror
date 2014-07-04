@@ -1,59 +1,61 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH 1/2] symlinks: remove PATH_MAX limitation
-Date: Sat, 05 Jul 2014 00:41:46 +0200
-Message-ID: <53B72DAA.5050007@gmail.com>
+Subject: [PATCH 2/2] dir: remove PATH_MAX limitation
+Date: Sat, 05 Jul 2014 00:42:29 +0200
+Message-ID: <53B72DD5.6020603@gmail.com>
+References: <53B72DAA.5050007@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 To: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBBKG33SOQKGQEWEPAFXQ@googlegroups.com Sat Jul 05 00:41:46 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBKG33SOQKGQEWEPAFXQ@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBVG33SOQKGQEINTPPRA@googlegroups.com Sat Jul 05 00:42:29 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBVG33SOQKGQEINTPPRA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f192.google.com ([209.85.212.192])
+Received: from mail-lb0-f192.google.com ([209.85.217.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBKG33SOQKGQEWEPAFXQ@googlegroups.com>)
-	id 1X3CAs-00056A-0W
-	for gcvm-msysgit@m.gmane.org; Sat, 05 Jul 2014 00:41:46 +0200
-Received: by mail-wi0-f192.google.com with SMTP id n3sf413911wiv.19
-        for <gcvm-msysgit@m.gmane.org>; Fri, 04 Jul 2014 15:41:45 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBVG33SOQKGQEINTPPRA@googlegroups.com>)
+	id 1X3CBZ-0005s2-81
+	for gcvm-msysgit@m.gmane.org; Sat, 05 Jul 2014 00:42:29 +0200
+Received: by mail-lb0-f192.google.com with SMTP id w7sf251492lbi.9
+        for <gcvm-msysgit@m.gmane.org>; Fri, 04 Jul 2014 15:42:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=MHpbThGfozXhmRIfscTKlMQDGqbs4HbvaSrPR3RsyqQ=;
-        b=QrvEn83OHH06zvl3XSf8CpZaSFnM9Vb0j4fFhO8bqUJUn0U5rWLK+Qdsy20p71MJge
-         iYru58pB/6eBnrCMI2LmG/Uvs8QzTZIkwvnpzWFRtniqWKMZUWF7hVIsyKc0L4llA6Wp
-         mZWK6zVEYy/C2QSq5h5D4b0S5YbW6a5dzmV8i6J9fpfNQaZ7rJXOjpVHkfG/xliXHV/u
-         czn7agG6BfupE0qEDs6OXzyyAB/3TYJukaT4EaiTAR2iDbuBeFYZ87kLNSFzzW+BELUm
-         BVmtzo8XN3vC1CtdWMJ6NQeNh9R2CEDCBwt6DLi/9Y5yy+DMLWU+jtaaNfMW7J/ls+7X
-         xTKw==
-X-Received: by 10.180.87.9 with SMTP id t9mr13070wiz.7.1404513705599;
-        Fri, 04 Jul 2014 15:41:45 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=RojkjYWJV/Vu6cg3FX09jvldpPQBw90Ixjx8hirtaCs=;
+        b=ZA+rU8mBbUYcPVU2WlabdJdE+1a8qEQ+Yt88fOlB0ou4P6+G9EWuMmCDOaRLJEFcaY
+         IlzoISQcdqtYhMlNaaVc1rXQEzgVO2rcP3vML+oPnbV/nbbCxdoEIK8Z34qCFwj6hHMn
+         1BzSfh6Ee4rtO87P19CSXFH9MVoKeiDBqY6vIppmFrZf67j6aVelBNxICNlEuQOfbBQf
+         0YTpHK/MKlX3Yu8HPnxldo+92Y1ASqp/uFtqoDGNqOQFlvBKnCMF4sUIT4UmXg5kedXq
+         RWfeOVv18X/uV3ac8XpAMJEXICV01hFfe/n5693iQwlp5ND4+DWKhizOesgcA5ZLi1YI
+         6JMA==
+X-Received: by 10.152.10.35 with SMTP id f3mr2023lab.6.1404513749051;
+        Fri, 04 Jul 2014 15:42:29 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.76.198 with SMTP id m6ls377722wiw.34.gmail; Fri, 04 Jul
- 2014 15:41:44 -0700 (PDT)
-X-Received: by 10.180.185.70 with SMTP id fa6mr2223567wic.3.1404513704541;
-        Fri, 04 Jul 2014 15:41:44 -0700 (PDT)
-Received: from mail-we0-x22d.google.com (mail-we0-x22d.google.com [2a00:1450:400c:c03::22d])
-        by gmr-mx.google.com with ESMTPS id gc5si1433960wic.1.2014.07.04.15.41.44
+Received: by 10.152.21.42 with SMTP id s10ls187519lae.74.gmail; Fri, 04 Jul
+ 2014 15:42:27 -0700 (PDT)
+X-Received: by 10.112.1.70 with SMTP id 6mr2334lbk.16.1404513747913;
+        Fri, 04 Jul 2014 15:42:27 -0700 (PDT)
+Received: from mail-wi0-x22c.google.com (mail-wi0-x22c.google.com [2a00:1450:400c:c05::22c])
+        by gmr-mx.google.com with ESMTPS id gc5si1434023wic.1.2014.07.04.15.42.27
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 04 Jul 2014 15:41:44 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22d as permitted sender) client-ip=2a00:1450:400c:c03::22d;
-Received: by mail-we0-f173.google.com with SMTP id t60so2165762wes.18
-        for <msysgit@googlegroups.com>; Fri, 04 Jul 2014 15:41:44 -0700 (PDT)
-X-Received: by 10.194.82.198 with SMTP id k6mr15245902wjy.10.1404513704419;
-        Fri, 04 Jul 2014 15:41:44 -0700 (PDT)
+        Fri, 04 Jul 2014 15:42:27 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22c as permitted sender) client-ip=2a00:1450:400c:c05::22c;
+Received: by mail-wi0-f172.google.com with SMTP id hi2so13538263wib.5
+        for <msysgit@googlegroups.com>; Fri, 04 Jul 2014 15:42:27 -0700 (PDT)
+X-Received: by 10.180.126.9 with SMTP id mu9mr19540486wib.69.1404513747839;
+        Fri, 04 Jul 2014 15:42:27 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id i4sm84002413wib.21.2014.07.04.15.41.43
+        by mx.google.com with ESMTPSA id cz4sm83965700wib.23.2014.07.04.15.42.26
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 04 Jul 2014 15:41:43 -0700 (PDT)
+        Fri, 04 Jul 2014 15:42:27 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <53B72DAA.5050007@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22d
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22c
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -66,226 +68,128 @@ List-Archive: <http://groups.google.com/group/msysgit>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252905>
 
-'git checkout' fails if a directory is longer than PATH_MAX, because the
-lstat_cache in symlinks.c checks if the leading directory exists using
-PATH_MAX-bounded string operations.
+'git status' segfaults if a directory is longer than PATH_MAX, because
+processing .gitignore files in prep_exclude() writes past the end of a
+PATH_MAX-bounded buffer.
 
 Remove the limitation by using strbuf instead.
 
+Note: this fix just 'abuses' strbuf as string allocator, len is always 0.
+prep_exclude() can probably be simplified using more strbuf APIs.
+
 Signed-off-by: Karsten Blees <blees@dcon.de>
 ---
+ dir.c | 35 +++++++++++++++++++----------------
+ dir.h |  4 ++--
+ 2 files changed, 21 insertions(+), 18 deletions(-)
 
-This fixes a bug on Windows with long paths [1].
-
-[1] https://github.com/msysgit/msysgit/issues/227
-
- cache.h         |  8 ++++++--
- preload-index.c |  4 ++--
- symlinks.c      | 63 +++++++++++++++++++++++++--------------------------------
- 3 files changed, 36 insertions(+), 39 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index df65231..44aa439 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1090,12 +1090,16 @@ struct checkout {
- extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
- 
- struct cache_def {
--	char path[PATH_MAX + 1];
--	int len;
-+	struct strbuf path;
- 	int flags;
- 	int track_flags;
- 	int prefix_len_stat_func;
- };
-+#define CACHE_DEF_INIT { STRBUF_INIT, 0, 0, 0 }
-+static inline void cache_def_free(struct cache_def *cache)
-+{
-+	strbuf_release(&cache->path);
-+}
- 
- extern int has_symlink_leading_path(const char *name, int len);
- extern int threaded_has_symlink_leading_path(struct cache_def *, const char *, int);
-diff --git a/preload-index.c b/preload-index.c
-index 968ee25..79ce8a9 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -37,9 +37,8 @@ static void *preload_thread(void *_data)
- 	struct thread_data *p = _data;
- 	struct index_state *index = p->index;
- 	struct cache_entry **cep = index->cache + p->offset;
--	struct cache_def cache;
-+	struct cache_def cache = CACHE_DEF_INIT;
- 
--	memset(&cache, 0, sizeof(cache));
- 	nr = p->nr;
- 	if (nr + p->offset > index->cache_nr)
- 		nr = index->cache_nr - p->offset;
-@@ -64,6 +63,7 @@ static void *preload_thread(void *_data)
- 			continue;
- 		ce_mark_uptodate(ce);
- 	} while (--nr > 0);
-+	cache_def_free(&cache);
- 	return NULL;
- }
- 
-diff --git a/symlinks.c b/symlinks.c
-index c2b41a8..5261e8c 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -35,12 +35,11 @@ static int longest_path_match(const char *name_a, int len_a,
- 	return match_len;
- }
- 
--static struct cache_def default_cache;
-+static struct cache_def default_cache = CACHE_DEF_INIT;
- 
- static inline void reset_lstat_cache(struct cache_def *cache)
- {
--	cache->path[0] = '\0';
--	cache->len = 0;
-+	strbuf_reset(&cache->path);
- 	cache->flags = 0;
- 	/*
- 	 * The track_flags and prefix_len_stat_func members is only
-@@ -73,7 +72,7 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 				int prefix_len_stat_func)
- {
- 	int match_len, last_slash, last_slash_dir, previous_slash;
--	int save_flags, max_len, ret;
-+	int save_flags, ret;
- 	struct stat st;
- 
- 	if (cache->track_flags != track_flags ||
-@@ -93,14 +92,14 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 		 * the 2 "excluding" path types.
- 		 */
- 		match_len = last_slash =
--			longest_path_match(name, len, cache->path, cache->len,
--					   &previous_slash);
-+			longest_path_match(name, len, cache->path.buf,
-+					   cache->path.len, &previous_slash);
- 		*ret_flags = cache->flags & track_flags & (FL_NOENT|FL_SYMLINK);
- 
- 		if (!(track_flags & FL_FULLPATH) && match_len == len)
- 			match_len = last_slash = previous_slash;
- 
--		if (*ret_flags && match_len == cache->len)
-+		if (*ret_flags && match_len == cache->path.len)
- 			return match_len;
- 		/*
- 		 * If we now have match_len > 0, we would know that
-@@ -121,21 +120,22 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 	 */
- 	*ret_flags = FL_DIR;
- 	last_slash_dir = last_slash;
--	max_len = len < PATH_MAX ? len : PATH_MAX;
--	while (match_len < max_len) {
-+	if (len > cache->path.len)
-+		strbuf_grow(&cache->path, len - cache->path.len);
-+	while (match_len < len) {
- 		do {
--			cache->path[match_len] = name[match_len];
-+			cache->path.buf[match_len] = name[match_len];
- 			match_len++;
--		} while (match_len < max_len && name[match_len] != '/');
--		if (match_len >= max_len && !(track_flags & FL_FULLPATH))
-+		} while (match_len < len && name[match_len] != '/');
-+		if (match_len >= len && !(track_flags & FL_FULLPATH))
+diff --git a/dir.c b/dir.c
+index e65888d..8d4d83c 100644
+--- a/dir.c
++++ b/dir.c
+@@ -798,7 +798,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+ 	 * path being checked. */
+ 	while ((stk = dir->exclude_stack) != NULL) {
+ 		if (stk->baselen <= baselen &&
+-		    !strncmp(dir->basebuf, base, stk->baselen))
++		    !strncmp(dir->base.buf, base, stk->baselen))
  			break;
- 		last_slash = match_len;
--		cache->path[last_slash] = '\0';
-+		cache->path.buf[last_slash] = '\0';
+ 		el = &group->el[dir->exclude_stack->exclude_ix];
+ 		dir->exclude_stack = stk->prev;
+@@ -833,48 +833,50 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+ 		stk->baselen = cp - base;
+ 		stk->exclude_ix = group->nr;
+ 		el = add_exclude_list(dir, EXC_DIRS, NULL);
+-		memcpy(dir->basebuf + current, base + current,
++		strbuf_grow(&dir->base, stk->baselen);
++		memcpy(dir->base.buf + current, base + current,
+ 		       stk->baselen - current);
  
- 		if (last_slash <= prefix_len_stat_func)
--			ret = stat(cache->path, &st);
-+			ret = stat(cache->path.buf, &st);
- 		else
--			ret = lstat(cache->path, &st);
-+			ret = lstat(cache->path.buf, &st);
+ 		/* Abort if the directory is excluded */
+ 		if (stk->baselen) {
+ 			int dt = DT_DIR;
+-			dir->basebuf[stk->baselen - 1] = 0;
++			dir->base.buf[stk->baselen - 1] = 0;
+ 			dir->exclude = last_exclude_matching_from_lists(dir,
+-				dir->basebuf, stk->baselen - 1,
+-				dir->basebuf + current, &dt);
+-			dir->basebuf[stk->baselen - 1] = '/';
++				dir->base.buf, stk->baselen - 1,
++				dir->base.buf + current, &dt);
++			dir->base.buf[stk->baselen - 1] = '/';
+ 			if (dir->exclude &&
+ 			    dir->exclude->flags & EXC_FLAG_NEGATIVE)
+ 				dir->exclude = NULL;
+ 			if (dir->exclude) {
+-				dir->basebuf[stk->baselen] = 0;
++				dir->base.buf[stk->baselen] = 0;
+ 				dir->exclude_stack = stk;
+ 				return;
+ 			}
+ 		}
  
- 		if (ret) {
- 			*ret_flags = FL_LSTATERR;
-@@ -158,12 +158,11 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 	 * for the moment!
- 	 */
- 	save_flags = *ret_flags & track_flags & (FL_NOENT|FL_SYMLINK);
--	if (save_flags && last_slash > 0 && last_slash <= PATH_MAX) {
--		cache->path[last_slash] = '\0';
--		cache->len = last_slash;
-+	if (save_flags && last_slash > 0) {
-+		cache->path.buf[last_slash] = '\0';
-+		cache->path.len = last_slash;
- 		cache->flags = save_flags;
--	} else if ((track_flags & FL_DIR) &&
--		   last_slash_dir > 0 && last_slash_dir <= PATH_MAX) {
-+	} else if ((track_flags & FL_DIR) && last_slash_dir > 0) {
- 		/*
- 		 * We have a separate test for the directory case,
- 		 * since it could be that we have found a symlink or a
-@@ -175,8 +174,8 @@ static int lstat_cache_matchlen(struct cache_def *cache,
- 		 * can still cache the path components before the last
- 		 * one (the found symlink or non-existing component).
- 		 */
--		cache->path[last_slash_dir] = '\0';
--		cache->len = last_slash_dir;
-+		cache->path.buf[last_slash_dir] = '\0';
-+		cache->path.len = last_slash_dir;
- 		cache->flags = FL_DIR;
- 	} else {
- 		reset_lstat_cache(cache);
-@@ -273,21 +272,18 @@ static int threaded_has_dirs_only_path(struct cache_def *cache, const char *name
- 		FL_DIR;
- }
- 
--static struct removal_def {
--	char path[PATH_MAX];
--	int len;
--} removal;
-+static struct strbuf removal = STRBUF_INIT;
- 
- static void do_remove_scheduled_dirs(int new_len)
- {
- 	while (removal.len > new_len) {
--		removal.path[removal.len] = '\0';
--		if (rmdir(removal.path))
-+		removal.buf[removal.len] = '\0';
-+		if (rmdir(removal.buf))
- 			break;
- 		do {
- 			removal.len--;
- 		} while (removal.len > new_len &&
--			 removal.path[removal.len] != '/');
-+			 removal.buf[removal.len] != '/');
+-		/* Try to read per-directory file unless path is too long */
+-		if (dir->exclude_per_dir &&
+-		    stk->baselen + strlen(dir->exclude_per_dir) < PATH_MAX) {
+-			strcpy(dir->basebuf + stk->baselen,
++		/* Try to read per-directory file */
++		if (dir->exclude_per_dir) {
++			strbuf_grow(&dir->base, stk->baselen +
++				    strlen(dir->exclude_per_dir));
++			strcpy(dir->base.buf + stk->baselen,
+ 					dir->exclude_per_dir);
+ 			/*
+-			 * dir->basebuf gets reused by the traversal, but we
++			 * dir->base gets reused by the traversal, but we
+ 			 * need fname to remain unchanged to ensure the src
+ 			 * member of each struct exclude correctly
+ 			 * back-references its source file.  Other invocations
+ 			 * of add_exclude_list provide stable strings, so we
+ 			 * strdup() and free() here in the caller.
+ 			 */
+-			el->src = strdup(dir->basebuf);
+-			add_excludes_from_file_to_list(dir->basebuf,
+-					dir->basebuf, stk->baselen, el, 1);
++			el->src = strdup(dir->base.buf);
++			add_excludes_from_file_to_list(dir->base.buf,
++					dir->base.buf, stk->baselen, el, 1);
+ 		}
+ 		dir->exclude_stack = stk;
+ 		current = stk->baselen;
  	}
- 	removal.len = new_len;
+-	dir->basebuf[baselen] = '\0';
++	dir->base.buf[baselen] = '\0';
  }
-@@ -297,7 +293,7 @@ void schedule_dir_for_removal(const char *name, int len)
- 	int match_len, last_slash, i, previous_slash;
  
- 	match_len = last_slash = i =
--		longest_path_match(name, len, removal.path, removal.len,
-+		longest_path_match(name, len, removal.buf, removal.len,
- 				   &previous_slash);
- 	/* Find last slash inside 'name' */
- 	while (i < len) {
-@@ -317,11 +313,8 @@ void schedule_dir_for_removal(const char *name, int len)
- 	 * If we go deeper down the directory tree, we only need to
- 	 * save the new path components as we go down.
+ /*
+@@ -1671,4 +1673,5 @@ void clear_directory(struct dir_struct *dir)
+ 		free(stk);
+ 		stk = prev;
+ 	}
++	strbuf_release(&dir->base);
+ }
+diff --git a/dir.h b/dir.h
+index 55e5345..e870fb6 100644
+--- a/dir.h
++++ b/dir.h
+@@ -111,13 +111,13 @@ struct dir_struct {
+ 	 * per-directory exclude lists.
+ 	 *
+ 	 * exclude_stack points to the top of the exclude_stack, and
+-	 * basebuf contains the full path to the current
++	 * base contains the full path to the current
+ 	 * (sub)directory in the traversal. Exclude points to the
+ 	 * matching exclude struct if the directory is excluded.
  	 */
--	if (match_len < last_slash) {
--		memcpy(&removal.path[match_len], &name[match_len],
--		       last_slash - match_len);
--		removal.len = last_slash;
--	}
-+	if (match_len < last_slash)
-+		strbuf_add(&removal, &name[match_len], last_slash - match_len);
- }
+ 	struct exclude_stack *exclude_stack;
+ 	struct exclude *exclude;
+-	char basebuf[PATH_MAX];
++	struct strbuf base;
+ };
  
- void remove_scheduled_dirs(void)
+ /*
 -- 
 1.9.4.msysgit.0.5.g1471ac1
 
