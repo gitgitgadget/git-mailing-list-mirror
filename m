@@ -1,104 +1,122 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] dir: remove PATH_MAX limitation
-Date: Sat, 5 Jul 2014 17:48:49 +0700
-Message-ID: <CACsJy8AXAusNHb5GJgrcbgzXY-1_ER2CNmah=vkJzOgPHMHudA@mail.gmail.com>
-References: <53B72DAA.5050007@gmail.com> <53B72DD5.6020603@gmail.com>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: t5150-request-pull.sh fails on newest master in Debian
+Date: Sat, 5 Jul 2014 16:24:52 +0200
+Message-ID: <CAA787rnMonCuON+C0U5FDXKzjTBdpOusCpGLeWytDWaA1torEw@mail.gmail.com>
+References: <CAA787r=78UWio3E==s+J2PbVqshQdWXpS9hiJrmNz+F0vLiuGg@mail.gmail.com>
+	<1404505370.3109.15.camel@stross>
+	<CAA787rmf36V1=Sd8TZrc7DboTkeJDYKuEGgCe90mZLLKSp6=tw@mail.gmail.com>
+	<1404525502.3109.25.camel@stross>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBC2ZN5PHQUMBBMFQ36OQKGQESKH62SI@googlegroups.com Sat Jul 05 12:49:23 2014
-Return-path: <msysgit+bncBC2ZN5PHQUMBBMFQ36OQKGQESKH62SI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ve0-f183.google.com ([209.85.128.183])
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat Jul 05 16:25:25 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBC2ZN5PHQUMBBMFQ36OQKGQESKH62SI@googlegroups.com>)
-	id 1X3NX0-0003X2-GR
-	for gcvm-msysgit@m.gmane.org; Sat, 05 Jul 2014 12:49:22 +0200
-Received: by mail-ve0-f183.google.com with SMTP id jx11sf642907veb.10
-        for <gcvm-msysgit@m.gmane.org>; Sat, 05 Jul 2014 03:49:21 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X3Qu2-0004gR-7H
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jul 2014 16:25:22 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752222AbaGEOYz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Jul 2014 10:24:55 -0400
+Received: from mail-la0-f41.google.com ([209.85.215.41]:46525 "EHLO
+	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751309AbaGEOYy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Jul 2014 10:24:54 -0400
+Received: by mail-la0-f41.google.com with SMTP id hz20so1791918lab.28
+        for <git@vger.kernel.org>; Sat, 05 Jul 2014 07:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=T0QAihAdTIiSzSAZAkulXPTFkkj8lx0HyVKCMFjA0Co=;
-        b=GliVJwrVK9L5rzcL/KIkxgf5xQJwvIPqvFfTMH8ZVakfKcWmy5aF6zWGRuaJfBnQYy
-         In5+t/dIvnDQFuy7ZwOxoweFW7KdlrIp3XsqOyycgB2YcbhXacDL5Y9dvSRfoDINqQD6
-         DInjGt1tIZhrtQmxuzd9npVE9Aao6Z3F+TZc48YPxoy1bwTR+CrpsmviB0c4+pd6m3tC
-         kvptgKEpV2eH/f5zR0N2ZzTLKU7R1Gx5eJzd0kqOQHDgVgTJbxJ1GfsSB0JBfMCpqFPq
-         LjZFTqV4BJ0pdKCfHhNvBdzAol++3evWqVRBIeB/SZvH0sbtZL6AoHdVcI6U2KZuHR9H
-         ZdlA==
-X-Received: by 10.182.91.37 with SMTP id cb5mr78182obb.0.1404557361427;
-        Sat, 05 Jul 2014 03:49:21 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.196.65 with SMTP id ik1ls484154obc.52.gmail; Sat, 05 Jul
- 2014 03:49:20 -0700 (PDT)
-X-Received: by 10.182.58.71 with SMTP id o7mr8465183obq.3.1404557360099;
-        Sat, 05 Jul 2014 03:49:20 -0700 (PDT)
-Received: from mail-qa0-x231.google.com (mail-qa0-x231.google.com [2607:f8b0:400d:c00::231])
-        by gmr-mx.google.com with ESMTPS id he4si4086031qcb.0.2014.07.05.03.49.20
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 05 Jul 2014 03:49:20 -0700 (PDT)
-Received-SPF: pass (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c00::231 as permitted sender) client-ip=2607:f8b0:400d:c00::231;
-Received: by mail-qa0-f49.google.com with SMTP id w8so1962039qac.8
-        for <msysgit@googlegroups.com>; Sat, 05 Jul 2014 03:49:20 -0700 (PDT)
-X-Received: by 10.140.91.164 with SMTP id z33mr25731443qgd.65.1404557360018;
- Sat, 05 Jul 2014 03:49:20 -0700 (PDT)
-Received: by 10.96.66.129 with HTTP; Sat, 5 Jul 2014 03:48:49 -0700 (PDT)
-In-Reply-To: <53B72DD5.6020603@gmail.com>
-X-Original-Sender: pclouds@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of pclouds@gmail.com designates 2607:f8b0:400d:c00::231
- as permitted sender) smtp.mail=pclouds@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252916>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=f9KF27YU4T4UV/4m1X5+UIPEIqBKWxave+/ut1lOpBE=;
+        b=BCoJm8WlwOFppVvpcv/ZBK+qczUIbSwVlLqbAU2JPY6lP5b5CaUOILCr2Xm2TWCqQg
+         QaTlPFoY6XoYKEoCC93qVCVU1uXlHOPsXsIDrZOEthjk/2crt836Fq7JOjX+ZEIjHTIQ
+         KxNCVteJdE5pOhjky9Up+1V0BdQXyMqPCj96xaKuvS1HQU35ScYpiIN/PMCO9yO6G+Su
+         HH1YQcMVDF3yAEbTdFerHVELE2LgSCyAcZpw57eZyICFSrHcs8TtuxZtX85xye9dCqba
+         Kf5zSP59uXh3jEXV5WYRpNHG8CFlF2jxgJKuHiWTdddLq6nPftz3Epd2akykgCqXAOwz
+         mKwg==
+X-Received: by 10.152.1.99 with SMTP id 3mr13620418lal.43.1404570292533; Sat,
+ 05 Jul 2014 07:24:52 -0700 (PDT)
+Received: by 10.112.142.7 with HTTP; Sat, 5 Jul 2014 07:24:52 -0700 (PDT)
+In-Reply-To: <1404525502.3109.25.camel@stross>
+X-Google-Sender-Auth: w73OBIMVkKnQnisF4nnrtOLNlBg
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252917>
 
-On Sat, Jul 5, 2014 at 5:42 AM, Karsten Blees <karsten.blees@gmail.com> wrote:
-> 'git status' segfaults if a directory is longer than PATH_MAX, because
-> processing .gitignore files in prep_exclude() writes past the end of a
-> PATH_MAX-bounded buffer.
+On 5 July 2014 03:58, David Turner <dturner@twopensource.com> wrote:
+> On Sat, 2014-07-05 at 02:09 +0200, =C3=98yvind A. Holm wrote:
+> <snip>
+> > The test works. Seems as there's something fishy about the use of
+> > --prefix in this specific commit (v2.0.1-472-g6f92e5f).
 >
-> Remove the limitation by using strbuf instead.
->
-> Note: this fix just 'abuses' strbuf as string allocator, len is always 0.
-> prep_exclude() can probably be simplified using more strbuf APIs.
+> Ok, now I can reproduce on my linode box (haven't tried it locally
+> yet). I'll try to get a fix up once I figure out what's up.
 
-FYI I had a similar patch [1] that attempted to lazily strbuf_init()
-instead so that strbuf_ API could be used.
+Awesome. I've done some more "./configure --prefix" testing, and this i=
+s
+the result:
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/248310
--- 
-Duy
+  # --prefix is set to non-existing directory
+  ./configure --prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f92e=
+5f
+    # ./t5150-request-pull.sh fails.
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+  # --prefix is set to non-existing directory, use trailing slash
+  ./configure --prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f92e=
+5f/
+    # ./t5150-request-pull.sh fails.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+  # --prefix is set to existing directory
+  ./configure --prefix=3D/usr/local/varprg/git.master.v2.0.1-442-g7fe68=
+34
+    # ./t5150-request-pull.sh fails.
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+  # --prefix is set to existing directory
+  ./configure --prefix=3D/usr/local
+    # ./t5150-request-pull.sh succeeds.
+
+  # --prefix is set to existing directory
+  ./configure --prefix=3D/usr/local/varprg
+    # ./t5150-request-pull.sh succeeds.
+
+  # --prefix is set to non-existing directory
+  ./configure --prefix=3D/usr/local/varprg/a-long-directory-name-which-=
+does-not-exist
+    # ./t5150-request-pull.sh succeeds.
+
+  ./configure --prefix=3D/usr/local/varprg/git.master.a-long-directory-=
+name-which-does-not-exist
+    # ./t5150-request-pull.sh succeeds.
+
+So it's something with names like "git.master.v2.0.1-472-g6f92e5f" that
+"./configure --prefix" is picky about.
+
+When testing this last night, I pushed the following branches to
+<https://github.com/sunny256/git> where I added all compiled files in
+various stages with "git add -f .":
+
+  t5150-fail.configure-without-prefix
+    Succeeds.
+    "./configure"
+
+  t5150-fail.configure-with-prefix
+    Fails.
+    "./configure --prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f=
+92e5f"
+
+  t5150-fail.configure-prefix-usr-local
+    Succeeds.
+    "./configure --prefix=3D/usr/local"
+
+Maybe something will turn up by diffing those branches. I've got to
+leave for now, but will have a look at this later tonight.
+
+Cheers,
+=C3=98yvind
