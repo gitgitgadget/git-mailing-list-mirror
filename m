@@ -1,143 +1,116 @@
-From: Andi Kleen <andi@firstfloor.org>
-Subject: [PATCH 4/5] Fix profile feedback with -jN and add profile-fast
-Date: Fri,  4 Jul 2014 16:43:51 -0700
-Message-ID: <1404517432-25185-5-git-send-email-andi@firstfloor.org>
-References: <1404517432-25185-1-git-send-email-andi@firstfloor.org>
-Cc: Andi Kleen <ak@linux.intel.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 05 01:45:14 2014
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: t5150-request-pull.sh fails on newest master in Debian
+Date: Sat, 5 Jul 2014 02:09:57 +0200
+Message-ID: <CAA787rmf36V1=Sd8TZrc7DboTkeJDYKuEGgCe90mZLLKSp6=tw@mail.gmail.com>
+References: <CAA787r=78UWio3E==s+J2PbVqshQdWXpS9hiJrmNz+F0vLiuGg@mail.gmail.com>
+	<1404505370.3109.15.camel@stross>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat Jul 05 02:10:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X3DAH-0006QZ-Fj
-	for gcvg-git-2@plane.gmane.org; Sat, 05 Jul 2014 01:45:13 +0200
+	id 1X3DYM-0003Db-0H
+	for gcvg-git-2@plane.gmane.org; Sat, 05 Jul 2014 02:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760326AbaGDXpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Jul 2014 19:45:07 -0400
-Received: from one.firstfloor.org ([193.170.194.197]:53374 "EHLO
-	one.firstfloor.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760145AbaGDXou (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Jul 2014 19:44:50 -0400
-Received: from basil.firstfloor.org (184-100-237-164.ptld.qwest.net [184.100.237.164])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by one.firstfloor.org (Postfix) with ESMTPSA id 262FF8677B;
-	Sat,  5 Jul 2014 01:44:48 +0200 (CEST)
-Received: by basil.firstfloor.org (Postfix, from userid 1000)
-	id 43E20A18AC; Fri,  4 Jul 2014 16:43:59 -0700 (PDT)
-X-Mailer: git-send-email 2.0.1
-In-Reply-To: <1404517432-25185-1-git-send-email-andi@firstfloor.org>
+	id S1760352AbaGEAKA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Jul 2014 20:10:00 -0400
+Received: from mail-la0-f44.google.com ([209.85.215.44]:54680 "EHLO
+	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760294AbaGEAJ7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Jul 2014 20:09:59 -0400
+Received: by mail-la0-f44.google.com with SMTP id ty20so1522819lab.3
+        for <git@vger.kernel.org>; Fri, 04 Jul 2014 17:09:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=+rONh6Pe/cZJzXPXufKenVeaHbeTswfhZplyq7KoQMc=;
+        b=yEj5EsDS3iBhblGI6Q07QOtG2IDQ7yBFN1Abjoeq0+6b8ffOCR2xwFpZM2wPvcnfME
+         FpTCliRkZbLbffrFU794fi5lCm8fQYKhh+zLWGW536BzsPX9cwR4chCm6KX25offwCQY
+         vr6ufGtfG/QXvLckUNvIlFt3RiXTpjWtAPfFAJemV02rUDO+D2z/ddox1+yDkgY7qNtV
+         DwJ5pZXZvAbFP53A/zrGd6Lx7O0+3SOVBB2JUW7xWbl9jJBg4MfFrvQRw5bNxiwdNyr3
+         oOPQ3VE95yYa6leq3+LfSu49POsRZnc6wsZOrLNcsf4Ch0c9iUl+C7PFIFSIYXGze2N4
+         ERBQ==
+X-Received: by 10.112.173.201 with SMTP id bm9mr9996088lbc.16.1404518997774;
+ Fri, 04 Jul 2014 17:09:57 -0700 (PDT)
+Received: by 10.112.142.7 with HTTP; Fri, 4 Jul 2014 17:09:57 -0700 (PDT)
+In-Reply-To: <1404505370.3109.15.camel@stross>
+X-Google-Sender-Auth: cDiBY7iO7-1VCsD4dSzGuRKa4rY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252912>
 
-From: Andi Kleen <ak@linux.intel.com>
+On 4 July 2014 22:22, David Turner <dturner@twopensource.com> wrote:
+> On Thu, 2014-07-03 at 23:55 +0200, =C3=98yvind A. Holm wrote:
+> > When compiling newest master (v2.0.1-472-g6f92e5f) on Debian 7.5
+> > (64-bit), t5150-request-pull.sh fails when compiling with
+> >
+> > $ make configure
+> > $ ./configure
+> > --prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f92e5f
+> > $ make prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f92e5f
+> > $ make
+> > $ cd t
+> > $ ./t5150-request-pull.sh
+>
+> Are you sure you're not running under valgrind? I can reproduce the
+> test failures when I run under valgrind because I didn't add the righ=
+t
+> stuff to the suppression files (patch to follow).
 
-Profile feedback always failed for me with -jN. The problem
-was that there was no implicit ordering between the profile generate
-stage and the profile use stage. So some objects in the later stage
-would be linked with profile generate objects, and fail due
-to the missing -lgcov.
+Nope, no valgrind involved here, it's not even installed on those two
+servers. The two server setups differ quite much, one of them I use for
+all kind of things, the other is a dedicated web server with not much
+else except Apache and some essential stuff I can't live without
+installed.
 
-This adds a new profile target that implicitely enforces the
-correct ordering by using submakes. Plus a profile-install target
-to also install. This is also nicer to type that PROFILE=...
+> I also just went ahead and got a Linode running Debian 7.5 (64-bit),
+> and I still can't reproduce the problem.
 
-Plus I always run the performance test suite now for the full
-profile run.
+Now that's what I call commitment. :)
 
-In addition I also added a profile-fast / profile-fast-install
-target the only runs the performance test suite instead of the
-whole test suite. This significantly speeds up the profile build,
-which was totally dominated by test suite run time. However
-it may have less coverage of course.
+> Do you have any additional reproduction info that I need here?
 
-Signed-off-by: Andi Kleen <ak@linux.intel.com>
----
- INSTALL  | 14 ++++++++++++--
- Makefile | 21 +++++++++++++++++----
- 2 files changed, 29 insertions(+), 6 deletions(-)
+I build new gits pretty much every time Junio pushes new stuff to
+kernel.org, and I'm using this script which takes care of everything:
 
-diff --git a/INSTALL b/INSTALL
-index ba01e74..6ec7a24 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -28,7 +28,7 @@ set up install paths (via config.mak.autogen), so you can write instead
- If you're willing to trade off (much) longer build time for a later
- faster git you can also do a profile feedback build with
- 
--	$ make prefix=/usr PROFILE=BUILD all
-+	$ make prefix=/usr profile
- 	# make prefix=/usr PROFILE=BUILD install
- 
- This will run the complete test suite as training workload and then
-@@ -36,10 +36,20 @@ rebuild git with the generated profile feedback. This results in a git
- which is a few percent faster on CPU intensive workloads.  This
- may be a good tradeoff for distribution packagers.
- 
-+Alternatively you can run profile feedback only with the git benchmark
-+suite. This runs significantly faster than the full test suite, but
-+has less coverage:
-+
-+	$ make prefix=/usr profile-fast
-+	# make prefix=/usr PROFILE=BUILD install
-+
- Or if you just want to install a profile-optimized version of git into
- your home directory, you could run:
- 
--	$ make PROFILE=BUILD install
-+	$ make profile-install
-+
-+or
-+	$ make profile-fast-install
- 
- As a caveat: a profile-optimized build takes a *lot* longer since the
- git tree must be built twice, and in order for the profiling
-diff --git a/Makefile b/Makefile
-index ba64be9..a760402 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1643,13 +1643,20 @@ SHELL = $(SHELL_PATH)
- all:: shell_compatibility_test
- 
- ifeq "$(PROFILE)" "BUILD"
--ifeq ($(filter all,$(MAKECMDGOALS)),all)
--all:: profile-clean
-+all:: profile
-+endif
-+
-+profile:: profile-clean
- 	$(MAKE) PROFILE=GEN all
- 	$(MAKE) PROFILE=GEN -j1 test
- 	$(MAKE) PROFILE=GEN -j1 perf
--endif
--endif
-+	$(MAKE) PROFILE=USE all
-+
-+profile-fast: profile-clean
-+	$(MAKE) PROFILE=GEN all
-+	$(MAKE) PROFILE=GEN -j1 perf
-+	$(MAKE) PROFILE=USE all
-+
- 
- all:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) GIT-BUILD-OPTIONS
- ifneq (,$X)
-@@ -2336,6 +2343,12 @@ mergetools_instdir_SQ = $(subst ','\'',$(mergetools_instdir))
- 
- install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
- 
-+profile-install: profile
-+	$(MAKE) install
-+
-+profile-fast-install: profile-fast
-+	$(MAKE) install
-+
- install: all
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
--- 
-2.0.1
+  https://github.com/sunny256/utils/blob/master/build-git
+
+I have a README at
+
+  https://github.com/sunny256/utils/blob/master/README.build-git.md
+
+where I have listed all packages I install from apt-get before I build
+the thing. The script I used to test with git bisect is at
+
+  https://github.com/sunny256/utils/blob/testfail.t5150-fail-g6f92e5f/t=
+estfail
+
+, it simulates what the "build-git" script does.
+
+The test works if I run a plain "make" using the standard Makefile
+without ./configure .
+
+Hm, interesting. When I don't use --prefix as mentioned above, just a
+
+  $ make configure
+  $ ./configure
+  $ make
+  $ cd t
+  $ ./t5150-request-pull.sh
+
+The test works. Seems as there's something fishy about the use of
+--prefix in this specific commit (v2.0.1-472-g6f92e5f).
+
+I'll dig more into this thing now to see what's going on.
+
+=D0=A1=D0=B5=D0=BD=D1=81=D0=BE=D1=80=D0=BD=D0=BE =D0=92=D0=B0=D1=88,
+=C3=98yvind
