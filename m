@@ -1,83 +1,101 @@
-From: Christoph Bonitz <ml.christophbonitz@gmail.com>
-Subject: Test failure in t9814-git-p4-rename.sh - my environment or bad test?
-Date: Sun, 6 Jul 2014 16:32:15 +0200
-Message-ID: <CABUJjW-iZU2Dp-yfuf302pNMuMj8NBXTvBW-0UHNxXdSWSk4Zw@mail.gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH 5/5] Add a little script to compare two make perf runs
+Date: Sun, 6 Jul 2014 18:12:12 +0200
+Message-ID: <CAKPyHN3rz+TUkcpAS3151XZo+zK2Un=LOrQ_A=TVo4QQ_EUsDg@mail.gmail.com>
+References: <1404517432-25185-1-git-send-email-andi@firstfloor.org>
+	<1404517432-25185-6-git-send-email-andi@firstfloor.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 06 16:32:40 2014
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Andi Kleen <ak@linux.intel.com>
+To: Andi Kleen <andi@firstfloor.org>
+X-From: git-owner@vger.kernel.org Sun Jul 06 18:12:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X3nUY-0005ho-GA
-	for gcvg-git-2@plane.gmane.org; Sun, 06 Jul 2014 16:32:34 +0200
+	id 1X3p3A-000810-EQ
+	for gcvg-git-2@plane.gmane.org; Sun, 06 Jul 2014 18:12:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751513AbaGFOcW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2014 10:32:22 -0400
-Received: from mail-ve0-f194.google.com ([209.85.128.194]:45142 "EHLO
-	mail-ve0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751492AbaGFOcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2014 10:32:16 -0400
-Received: by mail-ve0-f194.google.com with SMTP id jz11so968420veb.1
-        for <git@vger.kernel.org>; Sun, 06 Jul 2014 07:32:16 -0700 (PDT)
+	id S1751733AbaGFQMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2014 12:12:17 -0400
+Received: from mail-vc0-f178.google.com ([209.85.220.178]:55190 "EHLO
+	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751694AbaGFQMN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2014 12:12:13 -0400
+Received: by mail-vc0-f178.google.com with SMTP id ij19so3112900vcb.9
+        for <git@vger.kernel.org>; Sun, 06 Jul 2014 09:12:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=hNZsaU38e1DnKETLxbzbT3F3X+i4Y6YFBRjFsJrFt/w=;
-        b=XMXZ/wa4vJZnMaiFeqDevryCkPp27Pj8IRtj5FT74sk7o9g/qfH+uUBk8Fc6GQS68p
-         3eXlbd56ySf3D4KAQqsXGOmADgtMhTdlLd8zLdYBDdrnHVWffWvzHC74GWnjlIRypZ5x
-         PFBgNSZpJU98E0Z1qo1f/nukNrn1aL0doPXMcjrqLNYh20Ag4Jd1tZK3znM9Tcy7gV1f
-         CTTOM0dV+Q/WeZcN+tYJ4/BeMdmvkiutzeHJTM8QJ6dbv5pjdCbjdjxj/YJpEp1WgBnc
-         7vk2yr7QEGJ/3+qOEfVHUBMTf6KdvZIRhgDIk49HM96+ECtUEXQKikhC3mg2tK9ZJLMb
-         rRxw==
-X-Received: by 10.58.243.1 with SMTP id wu1mr22414673vec.27.1404657135941;
- Sun, 06 Jul 2014 07:32:15 -0700 (PDT)
-Received: by 10.220.4.200 with HTTP; Sun, 6 Jul 2014 07:32:15 -0700 (PDT)
+        d=googlemail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=a+iCau6Xoxxhw/YWTgIho/8W+RpUdzz7kgGbILk0rhI=;
+        b=cqBs3/Kz2lMe2g2w7eBk8ald8t+WghYFydt9p3DGUxyE9p+eTOTO97wv2yvjuDtGOX
+         7qm299RSBQjWX9NOelu8WunDyWEvWASYcAFMnKx2KM3jsZEXwqQktZ3Y5eFUuqaoeFl2
+         tpcDzZSceswPSousYva48mvn3dJZp16GbvHMvyXciCPsixn9dHhzUgHKP6ZfdyCJoUZm
+         hW/xA8Ue/kQ1p0V4s6AKHZ3jH4Mu8++vGxExyd37Hsu4q5QzwOxrGT7f2y6z5s/o6pDe
+         mNHbDpEKjEWXOOBMiINzqF0oV8KsDHzhClqDHpViLR5212Md4r0fi32GneUPMTIn1g/2
+         iKVg==
+X-Received: by 10.52.121.52 with SMTP id lh20mr18642422vdb.11.1404663132908;
+ Sun, 06 Jul 2014 09:12:12 -0700 (PDT)
+Received: by 10.221.7.70 with HTTP; Sun, 6 Jul 2014 09:12:12 -0700 (PDT)
+In-Reply-To: <1404517432-25185-6-git-send-email-andi@firstfloor.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252937>
 
 Hi,
 
-I'm trying to get the git p4 tests to pass on my machine (OS X
-Mavericks) from master before making some changes. I'm experiencing a
-test failure in "detect copies" of the rename test.
+On Sat, Jul 5, 2014 at 1:43 AM, Andi Kleen <andi@firstfloor.org> wrote:
+> From: Andi Kleen <ak@linux.intel.com>
+>
+> Signed-off-by: Andi Kleen <ak@linux.intel.com>
+> ---
+>  diff-res | 26 ++++++++++++++++++++++++++
+>  1 file changed, 26 insertions(+)
+>  create mode 100755 diff-res
+>
+> diff --git a/diff-res b/diff-res
+> new file mode 100755
+> index 0000000..90d57be
+> --- /dev/null
+> +++ b/diff-res
+> @@ -0,0 +1,26 @@
+> +#!/usr/bin/python
+> +# compare two make perf output file
+> +# this should be the results only without any header
+> +import argparse
+> +import math, operator
+> +from collections import OrderedDict
+> +
+> +ap = argparse.ArgumentParser()
+> +ap.add_argument('file1', type=argparse.FileType('r'))
+> +ap.add_argument('file2', type=argparse.FileType('r'))
+> +args = ap.parse_args()
+> +
+> +cmp = (OrderedDict(), OrderedDict())
+> +for f, k in zip((args.file1, args.file2), cmp):
+> +    for j in f:
+> +        num = j[59:63]
+> +        name = j[:59]
+> +        k[name] = float(num)
+> +
+> +for j in cmp[0].keys():
+> +    print j, cmp[1][j] - cmp[0][j]
+> +
+> +def geomean(l):
+> +   return math.pow(reduce(operator.mul, filter(lambda x: x != 0.0, l)), 1.0 / len(l))
+> +
+> +print "geomean %.2f -> %.2f" % (geomean(cmp[0].values()), geomean(cmp[1].values()))
 
-The test creates file2 with some content, creates a few copies (each
-with a commit), then does the following (no git write operations
-omitted):
-echo "file2" >>file2 &&
-cp file2 file10 &&
-git add file2 file10 &&
-git commit -a -m "Modify and copy file2 to file10" &&
-... (some non-write-operations) ...
-cp file2 file11 &&
-git add file11 &&
-git commit -a -m "Copy file2 to file11" &&
-git diff-tree -r -C --find-copies-harder HEAD &&
-src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
-test "$src" = file10 &&
+a justification why the geometric mean is used here would increase my
+confident significantly.
 
-This is where it fails on my machine. The git diff-tree output is this
-:100644 100644 22a35c17c4c0779f75142036beef6ccd58525b9c
-22a35c17c4c0779f75142036beef6ccd58525b9c C100 file2 file11
-so git diff-tree sees file2 as the copy source, not file10. In my
-opinion, the diff-tree result is legitimate (at that point, file2,
-file10 and file11 are identical). Later in the tests, after making
-more copies of file2, the conditions are more flexible, e.g.
-test "$src" = file10 || test "$src" = file11 || test "$src" = file12 &&
+It calculates wrong values anyway iff there are zeros in the sampling set.
 
-IMO, the test discounts the legitimate possibility of diff-tree
-detecting file2 as source, making unnecessary assumptions about
-implementation details. Is this correct, or do I misunderstand the
-workings of diff-tree?
+Thanks.
 
-I'd be grateful for advice, both on whether this is a bug, and if so,
-which branch to base a patch on.
-
-Best regards
-Christoph Bonitz
+Bert
