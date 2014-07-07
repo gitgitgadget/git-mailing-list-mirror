@@ -1,62 +1,91 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v5 2/2] test-config: Add tests for the config_set API
-Date: Sun, 6 Jul 2014 19:24:26 -0400
-Message-ID: <CALkWK0n9MWux3tA02n-hDvPjXt3Q1RCVd+x8tJV9ABjndaGQCQ@mail.gmail.com>
-References: <1404631162-18556-1-git-send-email-tanayabh@gmail.com> <1404631162-18556-3-git-send-email-tanayabh@gmail.com>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: Test failure in t9814-git-p4-rename.sh - my environment or bad
+ test?
+Date: Sun, 6 Jul 2014 21:10:17 -0400
+Message-ID: <20140707011017.GA3802@padd.com>
+References: <CABUJjW-iZU2Dp-yfuf302pNMuMj8NBXTvBW-0UHNxXdSWSk4Zw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 01:25:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Christoph Bonitz <ml.christophbonitz@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 07 03:10:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X3voF-0004Bi-Pr
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 01:25:28 +0200
+	id 1X3xS0-0008E2-J6
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 03:10:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751887AbaGFXZJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Jul 2014 19:25:09 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:33752 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303AbaGFXZI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Jul 2014 19:25:08 -0400
-Received: by mail-ig0-f181.google.com with SMTP id h15so3785553igd.14
-        for <git@vger.kernel.org>; Sun, 06 Jul 2014 16:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=qfe5fLMTLLj4RNQG1Bf57kFsblhfswNTkhSjyn07jik=;
-        b=04eD8hISu/4Q8Q9cBHghmT98KnEF9BfXHlc8Po1t0egHyanGbesoEhC6pQ49hp6m9P
-         AJqQA+eXUpqJDLpZZJyHiXvrYsS9iYINa8Rlzm0RWubdhpSndleHdwVYbwn6ewsnsGEd
-         FsJ7ZAN4pXLVWh4lp+HEImx5eIB7HXOEVWuo0Z7PgOUC4qJMVJXRObQm9qSuMaRJ1n2p
-         5aQhbRO97mS43q6/q4EaHobmqGUrgC3Uh/BPvAXNebSrTqjQLS6vpaKADKB7UKJe6skH
-         Aba5cdtpyisz0YJsOneNoD7bRYFKYNDKvOKUgTKaFUDdavGPdJ4CQ9eFXPwXhnkOhOXy
-         /Ffg==
-X-Received: by 10.50.43.168 with SMTP id x8mr1549088igl.36.1404689106342; Sun,
- 06 Jul 2014 16:25:06 -0700 (PDT)
-Received: by 10.64.228.242 with HTTP; Sun, 6 Jul 2014 16:24:26 -0700 (PDT)
-In-Reply-To: <1404631162-18556-3-git-send-email-tanayabh@gmail.com>
+	id S1752637AbaGGBKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Jul 2014 21:10:22 -0400
+Received: from honk.padd.com ([71.19.245.7]:54206 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752234AbaGGBKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Jul 2014 21:10:21 -0400
+Received: from arf.padd.com (unknown [50.105.4.164])
+	by honk.padd.com (Postfix) with ESMTPSA id 7D0676371;
+	Sun,  6 Jul 2014 18:10:20 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 08B912055E; Sun,  6 Jul 2014 21:10:17 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <CABUJjW-iZU2Dp-yfuf302pNMuMj8NBXTvBW-0UHNxXdSWSk4Zw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252945>
 
-A couple of quick nits.
+ml.christophbonitz@gmail.com wrote on Sun, 06 Jul 2014 16:32 +0200:
+> I'm trying to get the git p4 tests to pass on my machine (OS X
+> Mavericks) from master before making some changes. I'm experiencing a
+> test failure in "detect copies" of the rename test.
+> 
+> The test creates file2 with some content, creates a few copies (each
+> with a commit), then does the following (no git write operations
+> omitted):
+> echo "file2" >>file2 &&
+> cp file2 file10 &&
+> git add file2 file10 &&
+> git commit -a -m "Modify and copy file2 to file10" &&
+> ... (some non-write-operations) ...
+> cp file2 file11 &&
+> git add file11 &&
+> git commit -a -m "Copy file2 to file11" &&
+> git diff-tree -r -C --find-copies-harder HEAD &&
+> src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+> test "$src" = file10 &&
+> 
+> This is where it fails on my machine. The git diff-tree output is this
+> :100644 100644 22a35c17c4c0779f75142036beef6ccd58525b9c
+> 22a35c17c4c0779f75142036beef6ccd58525b9c C100 file2 file11
+> so git diff-tree sees file2 as the copy source, not file10. In my
+> opinion, the diff-tree result is legitimate (at that point, file2,
+> file10 and file11 are identical). Later in the tests, after making
+> more copies of file2, the conditions are more flexible, e.g.
+> test "$src" = file10 || test "$src" = file11 || test "$src" = file12 &&
+> 
+> IMO, the test discounts the legitimate possibility of diff-tree
+> detecting file2 as source, making unnecessary assumptions about
+> implementation details. Is this correct, or do I misunderstand the
+> workings of diff-tree?
+> 
+> I'd be grateful for advice, both on whether this is a bug, and if so,
+> which branch to base a patch on.
 
-Tanay Abhra wrote:
-> +test_expect_success 'clear default config' '
-> +       rm -f .git/config
-> +'
+I think your analysis is correct.  And I agree that later tests
+have noticed this ambiguity and added multiple comparisons like
+you quote.
 
-Unnecessary; a fresh temporary directory is created for each test run.
+I'm not sure how to robustify this.  At least doing the multiple
+comparisons should make the tests work again.  The goal of this
+series of tests is to make sure that copy detection is working,
+not to verify that the correct copy choice was made.  That should
+be in other (non-p4) tests.
 
-> +test_expect_success 'initialize default config' '
+Do send patches based on Junio's master.  I can ack, and they'll
+show up in a future git release.
 
-You might want to mark this as "setup".
+Thanks!
+
+		-- Pete
