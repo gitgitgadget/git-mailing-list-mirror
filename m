@@ -1,128 +1,126 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 06/10] replace: remove signature when using --graft
-Date: Mon, 07 Jul 2014 08:35:35 +0200
-Message-ID: <20140707063540.3708.20173.chriscool@tuxfamily.org>
+Subject: [PATCH v6 08/10] commit: add for_each_mergetag()
+Date: Mon, 07 Jul 2014 08:35:37 +0200
+Message-ID: <20140707063540.3708.39506.chriscool@tuxfamily.org>
 References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 08:36:56 2014
+X-From: git-owner@vger.kernel.org Mon Jul 07 08:36:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X42Xm-0007iA-WF
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 08:36:55 +0200
+	id 1X42Xp-0007iA-5h
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 08:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940AbaGGGgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2014 02:36:43 -0400
-Received: from [194.158.98.45] ([194.158.98.45]:37409 "EHLO mail-3y.bbox.fr"
+	id S1751962AbaGGGgu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2014 02:36:50 -0400
+Received: from [194.158.98.14] ([194.158.98.14]:57018 "EHLO mail-1y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751717AbaGGGgh (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751734AbaGGGgh (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 7 Jul 2014 02:36:37 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id D230855;
-	Mon,  7 Jul 2014 08:36:15 +0200 (CEST)
-X-git-sha1: 487f7a45e35946e044e2c7efe1f858f9f5294734 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id B12EA36;
+	Mon,  7 Jul 2014 08:36:16 +0200 (CEST)
+X-git-sha1: 117b6e2c0d6ae8c5142e989a752d470544b6f441 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140707063342.3708.83493.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252950>
 
-It could be misleading to keep a signature in a
-replacement commit, so let's remove it.
-
-Note that there should probably be a way to sign
-the replacement commit created when using --graft,
-but this can be dealt with in another commit or
-patch series.
+In the same way as there is for_each_ref() to
+iterate on refs, it might be useful to have
+for_each_mergetag() to iterate on the mergetags
+of a given commit.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/replace.c |  5 +++++
- commit.c          | 34 ++++++++++++++++++++++++++++++++++
- commit.h          |  2 ++
- 3 files changed, 41 insertions(+)
+ commit.c   | 13 +++++++++++++
+ commit.h   |  5 +++++
+ log-tree.c | 15 ++++-----------
+ 3 files changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index ad47237..cc29ef2 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -344,6 +344,11 @@ static int create_graft(int argc, const char **argv, int force)
- 
- 	replace_parents(&buf, argc, argv);
- 
-+	if (remove_signature(&buf)) {
-+		warning(_("the original commit '%s' has a gpg signature."), old_ref);
-+		warning(_("the signature will be removed in the replacement commit!"));
-+	}
-+
- 	if (write_sha1_file(buf.buf, buf.len, commit_type, new))
- 		die(_("could not write replacement commit for: '%s'"), old_ref);
- 
 diff --git a/commit.c b/commit.c
-index fb7897c..54e157d 100644
+index 54e157d..0f83ff7 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -1177,6 +1177,40 @@ int parse_signed_commit(const struct commit *commit,
- 	return saw_signature;
+@@ -1348,6 +1348,19 @@ struct commit_extra_header *read_commit_extra_headers(struct commit *commit,
+ 	return extra;
  }
  
-+int remove_signature(struct strbuf *buf)
++void for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data)
 +{
-+	const char *line = buf->buf;
-+	const char *tail = buf->buf + buf->len;
-+	int in_signature = 0;
-+	const char *sig_start = NULL;
-+	const char *sig_end = NULL;
++	struct commit_extra_header *extra, *to_free;
 +
-+	while (line < tail) {
-+		const char *next = memchr(line, '\n', tail - line);
-+		next = next ? next + 1 : tail;
-+
-+		if (in_signature && line[0] == ' ')
-+			sig_end = next;
-+		else if (starts_with(line, gpg_sig_header) &&
-+			 line[gpg_sig_header_len] == ' ') {
-+			sig_start = line;
-+			sig_end = next;
-+			in_signature = 1;
-+		} else {
-+			if (*line == '\n')
-+				/* dump the whole remainder of the buffer */
-+				next = tail;
-+			in_signature = 0;
-+		}
-+		line = next;
++	to_free = read_commit_extra_headers(commit, NULL);
++	for (extra = to_free; extra; extra = extra->next) {
++		if (strcmp(extra->key, "mergetag"))
++			continue; /* not a merge tag */
++		fn(commit, extra, data);
 +	}
-+
-+	if (sig_start)
-+		strbuf_remove(buf, sig_start - buf->buf, sig_end - sig_start);
-+
-+	return sig_start != NULL;
++	free_commit_extra_headers(to_free);
 +}
 +
- static void handle_signed_tag(struct commit *parent, struct commit_extra_header ***tail)
+ static inline int standard_header_field(const char *field, size_t len)
  {
- 	struct merge_remote_desc *desc;
+ 	return ((len == 4 && !memcmp(field, "tree ", 5)) ||
 diff --git a/commit.h b/commit.h
-index 2e1492a..4234dae 100644
+index 4234dae..c81ba85 100644
 --- a/commit.h
 +++ b/commit.h
-@@ -327,6 +327,8 @@ struct commit *get_merge_parent(const char *name);
+@@ -312,6 +312,11 @@ extern struct commit_extra_header *read_commit_extra_headers(struct commit *, co
  
- extern int parse_signed_commit(const struct commit *commit,
- 			       struct strbuf *message, struct strbuf *signature);
-+extern int remove_signature(struct strbuf *buf);
+ extern void free_commit_extra_headers(struct commit_extra_header *extra);
+ 
++typedef void (*each_mergetag_fn)(struct commit *commit, struct commit_extra_header *extra,
++				 void *cb_data);
 +
- extern void print_commit_list(struct commit_list *list,
- 			      const char *format_cur,
- 			      const char *format_last);
++extern void for_each_mergetag(each_mergetag_fn fn, struct commit *commit, void *data);
++
+ struct merge_remote_desc {
+ 	struct object *obj; /* the named object, could be a tag */
+ 	const char *name;
+diff --git a/log-tree.c b/log-tree.c
+index 10e6844..706ed4c 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -413,10 +413,11 @@ static int is_common_merge(const struct commit *commit)
+ 		&& !commit->parents->next->next);
+ }
+ 
+-static void show_one_mergetag(struct rev_info *opt,
++static void show_one_mergetag(struct commit *commit,
+ 			      struct commit_extra_header *extra,
+-			      struct commit *commit)
++			      void *data)
+ {
++	struct rev_info *opt = (struct rev_info *)data;
+ 	unsigned char sha1[20];
+ 	struct tag *tag;
+ 	struct strbuf verify_message;
+@@ -463,15 +464,7 @@ static void show_one_mergetag(struct rev_info *opt,
+ 
+ static void show_mergetag(struct rev_info *opt, struct commit *commit)
+ {
+-	struct commit_extra_header *extra, *to_free;
+-
+-	to_free = read_commit_extra_headers(commit, NULL);
+-	for (extra = to_free; extra; extra = extra->next) {
+-		if (strcmp(extra->key, "mergetag"))
+-			continue; /* not a merge tag */
+-		show_one_mergetag(opt, extra, commit);
+-	}
+-	free_commit_extra_headers(to_free);
++	for_each_mergetag(show_one_mergetag, commit, opt);
+ }
+ 
+ void show_log(struct rev_info *opt)
 -- 
 2.0.0.421.g786a89d.dirty
