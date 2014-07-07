@@ -1,87 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 1/2] add `config_set` API for caching config files
-Date: Mon, 07 Jul 2014 10:02:19 -0700
-Message-ID: <xmqqwqbpdrvo.fsf@gitster.dls.corp.google.com>
-References: <1404280905-26763-1-git-send-email-tanayabh@gmail.com>
-	<1404280905-26763-2-git-send-email-tanayabh@gmail.com>
-	<vpqoax8m8bh.fsf@anie.imag.fr> <53B63461.2040300@gmail.com>
-	<vpq1tu1xz2g.fsf@anie.imag.fr> <53B67322.1080408@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v6 2/2] test-config: Add tests for the config_set API
+Date: Mon, 07 Jul 2014 19:04:55 +0200
+Message-ID: <vpqvbr9w154.fsf@anie.imag.fr>
+References: <1404719566-3368-1-git-send-email-tanayabh@gmail.com>
+	<1404719566-3368-3-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 19:02:32 2014
+X-From: git-owner@vger.kernel.org Mon Jul 07 19:05:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4CJD-00065W-Qh
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 19:02:32 +0200
+	id 1X4CMJ-0000O5-6C
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 19:05:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677AbaGGRC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2014 13:02:27 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50673 "EHLO smtp.pobox.com"
+	id S1751941AbaGGRFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2014 13:05:39 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:47761 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752669AbaGGRC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2014 13:02:26 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5D4A326ED2;
-	Mon,  7 Jul 2014 13:02:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JZqsJfQoyQZKg4Icrl1/z7HKY1Y=; b=SS4Olu
-	L1+7MsmmyhMswqobItP4uj8VQt3aTcYNO5eDPJRp8wxOnTLXOOMeRiwq9CQGfSIy
-	aDoNDFdU1XSLEfJGvG3UrGnEX8RriADoTM7xPRrWK0buBg53vNp9yU/8tUdVYhjC
-	tIk4JtsPsLNEDviZoVHJonzCgdxHo2VsHtazo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=xxC9uifF9q8/MRCGgSj5C6yGCM+WN9so
-	lYeS0TzYQYFqZebj+N9ymoXIkX9gmUMgK2Pz+KrZ4f9XVRAYG++wdjk4bltqKSOb
-	vfe7/Pg13NDkEkCa/ZDLX4WCBJeA1WDHk+mHy/puU8C8Lq+CyL80pLBbAXvNRMbW
-	3p7Hnp7jnY8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4805C26ED0;
-	Mon,  7 Jul 2014 13:02:13 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1F00C26ECD;
-	Mon,  7 Jul 2014 13:02:08 -0400 (EDT)
-In-Reply-To: <53B67322.1080408@gmail.com> (Tanay Abhra's message of "Fri, 04
-	Jul 2014 14:55:54 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6DE064C8-05F8-11E4-9C64-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750809AbaGGRFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2014 13:05:38 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s67H4sdH013286
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 7 Jul 2014 19:04:54 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s67H4toe004388;
+	Mon, 7 Jul 2014 19:04:55 +0200
+In-Reply-To: <1404719566-3368-3-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Mon, 7 Jul 2014 00:52:46 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 07 Jul 2014 19:04:55 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s67H4sdH013286
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1405357500.08564@DPL+iFwCjEcSzGuXNUH1Xw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252969>
 
 Tanay Abhra <tanayabh@gmail.com> writes:
 
-> On 7/4/2014 2:47 PM, Matthieu Moy wrote:
->> Tanay Abhra <tanayabh@gmail.com> writes:
->> 
->>> Hi,
->>>
->>> I have cooked up a single hashmap implementation. What are your
->>> thoughts about it?
->> 
->> I had a quick look, and it looks good to me. I'll make a more detailed
->> review when you send the next series.
->>
->
-> One more doubt, does <filename,linenr> for every value has any use other than
-> raising semantic error in typespecific API functions.
->
-> For example, if we call git_config_get_int(foo.bar), we can show to the user
-> "value not a int at <filename, linenr>". Other than that I cannot think of
-> any other use of it. Currently `git_config_int` dies if value put for
-> parsing is not an int.
->
-> Junio and Karsten, both raised the point for saving <filename,linenr>, but I can't
-> find any use cases for it other than what I mentioned above.
+> diff --git a/t/t1308-config-hash.sh b/t/t1308-config-hash.sh
+> new file mode 100755
+> index 0000000..ad99f8b
+> --- /dev/null
+> +++ b/t/t1308-config-hash.sh
+> @@ -0,0 +1,168 @@
+> +#!/bin/sh
+> +
+> +test_description='Test git config-hash API in different settings'
 
-Yes, error reporting is what the pair needs to be kept for.
+You may want to call it "config_set API" now.
+
+> +#'check section.key value' verifies that the entry for section.key is
+> +#'value'
+
+Style: space after #.
+
+> +check() {
+> +	echo "$2" >expected
+> +	test-config get_value "$1" >actual 2>&1
+> +	test_cmp actual expected
+> +}
+
+You need to &&-chain these lines, to catch potential test-config
+failures (if it returns 1 after sending the right output, you won't
+notice).
+
+The doc says
+
+ - test_cmp <expected> <actual>
+
+You swapped the order of parameters.
+
+> +test_expect_success 'setup default config' '
+> +	cat >.git/config << EOF
+
+Missing && here (sorry, I should have noticed the first time).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
