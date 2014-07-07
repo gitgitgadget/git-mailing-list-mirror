@@ -1,71 +1,128 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 04/10] Documentation: replace: add --graft option
-Date: Mon, 07 Jul 2014 08:35:33 +0200
-Message-ID: <20140707063540.3708.57293.chriscool@tuxfamily.org>
+Subject: [PATCH v6 09/10] replace: check mergetags when using --graft
+Date: Mon, 07 Jul 2014 08:35:38 +0200
+Message-ID: <20140707063540.3708.29773.chriscool@tuxfamily.org>
 References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 08:37:08 2014
+X-From: git-owner@vger.kernel.org Mon Jul 07 08:37:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X42Xo-0007iA-2T
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 08:36:56 +0200
+	id 1X42Y1-00085i-Kl
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 08:37:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751942AbaGGGgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2014 02:36:47 -0400
-Received: from [194.158.98.14] ([194.158.98.14]:57005 "EHLO mail-1y.bbox.fr"
+	id S1751973AbaGGGhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2014 02:37:01 -0400
+Received: from [194.158.98.14] ([194.158.98.14]:57027 "EHLO mail-1y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751401AbaGGGgg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2014 02:36:36 -0400
+	id S1751874AbaGGGgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2014 02:36:39 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id F2A556E;
-	Mon,  7 Jul 2014 08:36:14 +0200 (CEST)
-X-git-sha1: 07c07a7aa534b81ad8663917efb3eb0b8873ab74 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 2C29E44;
+	Mon,  7 Jul 2014 08:36:17 +0200 (CEST)
+X-git-sha1: 7c417315691b759aedef7bf05de6a18a1b4e29bd 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140707063342.3708.83493.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252957>
+
+When using --graft, with a mergetag in the original
+commit, we should check that the commit pointed to by
+the mergetag is still a parent of then new commit we
+create, otherwise the mergetag could be misleading.
+
+If the commit pointed to by the mergetag is no more
+a parent of the new commit, we could remove the
+mergetag, but in this case there is a good chance
+that the title or other elements of the commit might
+also be misleading. So let's just error out and
+suggest to use --edit instead on the commit.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-replace.txt | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ builtin/replace.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
-diff --git a/Documentation/git-replace.txt b/Documentation/git-replace.txt
-index 61461b9..491875e 100644
---- a/Documentation/git-replace.txt
-+++ b/Documentation/git-replace.txt
-@@ -10,6 +10,7 @@ SYNOPSIS
- [verse]
- 'git replace' [-f] <object> <replacement>
- 'git replace' [-f] --edit <object>
-+'git replace' [-f] --graft <commit> [<parent>...]
- 'git replace' -d <object>...
- 'git replace' [--format=<format>] [-l [<pattern>]]
+diff --git a/builtin/replace.c b/builtin/replace.c
+index cc29ef2..2290529 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -13,6 +13,7 @@
+ #include "refs.h"
+ #include "parse-options.h"
+ #include "run-command.h"
++#include "tag.h"
  
-@@ -73,6 +74,13 @@ OPTIONS
- 	newly created object. See linkgit:git-var[1] for details about
- 	how the editor will be chosen.
+ static const char * const git_replace_usage[] = {
+ 	N_("git replace [-f] <object> <replacement>"),
+@@ -325,6 +326,50 @@ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
+ 	strbuf_release(&new_parents);
+ }
  
-+--graft <commit> [<parent>...]::
-+	Create a graft commit. A new commit is created with the same
-+	content as <commit> except that its parents will be
-+	[<parent>...] instead of <commit>'s parents. A replacement ref
-+	is then created to replace <commit> with the newly created
-+	commit.
++struct check_mergetag_data {
++	int argc;
++	const char **argv;
++};
 +
- -l <pattern>::
- --list <pattern>::
- 	List replace refs for objects that match the given pattern (or
++static void check_one_mergetag(struct commit *commit,
++			       struct commit_extra_header *extra,
++			       void *data)
++{
++	struct check_mergetag_data *mergetag_data = (struct check_mergetag_data *)data;
++	const char *ref = mergetag_data->argv[0];
++	unsigned char tag_sha1[20];
++	struct tag *tag;
++	int i;
++
++	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), tag_sha1);
++	tag = lookup_tag(tag_sha1);
++	if (!tag)
++		die(_("bad mergetag in commit '%s'"), ref);
++	if (parse_tag_buffer(tag, extra->value, extra->len))
++		die(_("malformed mergetag in commit '%s'"), ref);
++
++	/* iterate over new parents */
++	for (i = 1; i < mergetag_data->argc; i++) {
++		unsigned char sha1[20];
++		if (get_sha1(mergetag_data->argv[i], sha1) < 0)
++			die(_("Not a valid object name: '%s'"), mergetag_data->argv[i]);
++		if (!hashcmp(tag->tagged->sha1, sha1))
++			return; /* found */
++	}
++
++	die(_("original commit '%s' contains mergetag '%s' that is discarded; "
++	      "use --edit instead of --graft"), ref, sha1_to_hex(tag_sha1));
++}
++
++static void check_mergetags(struct commit *commit, int argc, const char **argv)
++{
++	struct check_mergetag_data mergetag_data;
++
++	mergetag_data.argc = argc;
++	mergetag_data.argv = argv;
++	for_each_mergetag(check_one_mergetag, commit, &mergetag_data);
++}
++
+ static int create_graft(int argc, const char **argv, int force)
+ {
+ 	unsigned char old[20], new[20];
+@@ -349,6 +394,8 @@ static int create_graft(int argc, const char **argv, int force)
+ 		warning(_("the signature will be removed in the replacement commit!"));
+ 	}
+ 
++	check_mergetags(commit, argc, argv);
++
+ 	if (write_sha1_file(buf.buf, buf.len, commit_type, new))
+ 		die(_("could not write replacement commit for: '%s'"), old_ref);
+ 
 -- 
 2.0.0.421.g786a89d.dirty
