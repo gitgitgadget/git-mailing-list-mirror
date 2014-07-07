@@ -1,93 +1,75 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] rebase no longer omits local commits
-Date: Mon, 07 Jul 2014 10:56:23 -0700
-Message-ID: <xmqqbnt1dpdk.fsf@gitster.dls.corp.google.com>
-References: <53B57352.50202@tedfelix.com>
-	<20140703190917.GE13153@serenity.lan>
-	<20140703222501.GF13153@serenity.lan>
+Subject: Re: [PATCH 2/2] t/Makefile: always test all lint targets when running tests
+Date: Mon, 07 Jul 2014 11:13:11 -0700
+Message-ID: <xmqq38eddolk.fsf@gitster.dls.corp.google.com>
+References: <53B5D6FE.2090700@web.de> <53B5D76D.1090509@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ted Felix <ted@tedfelix.com>, git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Jul 07 19:56:45 2014
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jul 07 20:13:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4D9X-0001qb-R9
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 19:56:36 +0200
+	id 1X4DPo-00081A-8r
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 20:13:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751540AbaGGR4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2014 13:56:31 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54151 "EHLO smtp.pobox.com"
+	id S1751367AbaGGSNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2014 14:13:20 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64487 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751320AbaGGR4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2014 13:56:30 -0400
+	id S1751281AbaGGSNT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2014 14:13:19 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EDF0F2649B;
-	Mon,  7 Jul 2014 13:56:16 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A85A326C09;
+	Mon,  7 Jul 2014 14:13:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bQ/TreJfgsSUpvgKu6ekHpcl258=; b=KRFyxk
-	iRfxU4kVelBERbq011kbwc2bCPwvqua3TLglU/UIJOQjyuU064CjUT0oDY1i05sQ
-	D2tJx8lRjewoJPYbnHXBMdvlbNup0GOWVucloWbdJPtFw04US9/9lKwagahsw9J3
-	1FUfYmdBurgbfy7XaBiSLN0QRC7hWK/tSX8b0=
+	:content-type; s=sasl; bh=zL/n8iw5zDGFEhJ/oNZJL7X+DoQ=; b=pSt7fX
+	cygsjXc66gwzB8MyzzmEESxGHKZuvYKCEzhh9vIPYt9xgomQ8GFYX/hWubo3UTGX
+	v5kdaO1ft8v+5BPpfQZ+xmfb/eIo7FpJq9vFdtmFBf36k9B3dwekQSYoxsq9gVtz
+	weScFTPEJCCfOUYBtYBLo/5W0eYXLoiPd4EJk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ir1GOH4EB6S3qWXRxxTnfzt4G0d3XZe9
-	/xaupAk2pHDZoFW6LomEMkD5kzeHYWbnFanhV7Nsh3pCMfbjpNQ/RXoTgoGEZJvk
-	3w7M7alymgdmDackiahdeuxNCS56GTd9l+Fz9CyBj2pGbBB80wRspLpYB+6AzCxu
-	EEesRFktzuc=
+	:content-type; q=dns; s=sasl; b=YQoltO20eURp5tb7It7fOQn7+raz4SDp
+	DcDbJNowE+Gwqkxdhw2FDTFpu6v4/on/7e554QXo9MMPxqsDFaJH0HI0S+165Rl0
+	jUxhIemXlW7my964X0QyULZnvWiZxKaXlBf+ZswCyPuI0LMsEN4ed88j9zp1aJjV
+	AGvIKWjD8cY=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E409F2649A;
-	Mon,  7 Jul 2014 13:56:16 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9F39F26C08;
+	Mon,  7 Jul 2014 14:13:05 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A43E126493;
-	Mon,  7 Jul 2014 13:56:11 -0400 (EDT)
-In-Reply-To: <20140703222501.GF13153@serenity.lan> (John Keeping's message of
-	"Thu, 3 Jul 2014 23:25:02 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4628A26BFB;
+	Mon,  7 Jul 2014 14:13:00 -0400 (EDT)
+In-Reply-To: <53B5D76D.1090509@web.de> (Jens Lehmann's message of "Fri, 04 Jul
+	2014 00:21:33 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FB2D7BCA-05FF-11E4-AC7E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 545C52D2-0602-11E4-8068-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252978>
 
-John Keeping <john@keeping.me.uk> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> Perhaps we shuld do something like this (which passes the test suite):
->
-> -- >8 --
-> diff --git a/git-rebase.sh b/git-rebase.sh
-> index 06c810b..0c6c5d3 100755
-> --- a/git-rebase.sh
-> +++ b/git-rebase.sh
-> @@ -544,7 +544,8 @@ if test "$fork_point" = t
->  then
->  	new_upstream=$(git merge-base --fork-point "$upstream_name" \
->  			"${switch_to:-HEAD}")
-> -	if test -n "$new_upstream"
-> +	if test -n "$new_upstream" &&
-> +	   ! git merge-base --is-ancestor "$new_upstream" "$upstream_name"
->  	then
->  		upstream=$new_upstream
->  	fi
-> -- 8< --
->
-> Since the intent of `--fork-point` is to find the best starting point
-> for the "$upstream...$orig_head" range, if the fork point is behind the
-> new location of the upstream then should we leave the upstream as it
-> was?
+> Only the two targets "test-lint-duplicates" and "test-lint-executable" are
+> currently executed when running the test target. This was done on purpose
+> when the TEST_LINT variable was added in 81127d74. But as this does not
+> include the "test-lint-shell-syntax" target added the same day in commit
+> c7ce70ac, it is easy to accidentally add non portable shell constructs
+> without noticing that when running the test suite.
 
-Probably; but the check to avoid giving worse fork-point should be
-in the implementation of "merge-base --fork-point" itself, so that
-we do not have to do the above to both "rebase" and "pull --rebase",
-no?
+I not running the lint-shell-syntax that is fundamentally flaky to
+avoid false positives is very much on purpose.  The flakiness is not
+the fault of the implementor of the lint-shell-syntax, but comes
+from the approach taken to pretend that simple pattern matching can
+parse shell scripts.  It may not complain on the current set of
+scripts, but that is not really by design but by accident.
 
-> I haven't thought through this completely, but it seems like we should
-> be doing a check like the above, at least when we're in
-> "$fork_point=auto" mode.
+So I am not very enthusiastic to see this change myself.
