@@ -1,146 +1,80 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [BUG] rebase no longer omits local commits
-Date: Mon, 7 Jul 2014 22:14:57 +0100
-Message-ID: <20140707211456.GA2322@serenity.lan>
-References: <53B57352.50202@tedfelix.com>
- <20140703190917.GE13153@serenity.lan>
- <20140703222501.GF13153@serenity.lan>
- <xmqqbnt1dpdk.fsf@gitster.dls.corp.google.com>
+From: Hamilton Turner <hamiltont@gmail.com>
+Subject: Potential bug in ls-files (version 1.7.9.5)
+Date: Mon, 7 Jul 2014 17:46:02 -0400
+Message-ID: <CAFow3A_f+nPCR1zqS9WdH1V9pNdSP=zRNt2UxbHpOz1d6miQEg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ted Felix <ted@tedfelix.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 23:15:22 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 07 23:46:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4GFt-0006Nm-9v
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 23:15:21 +0200
+	id 1X4Gjh-0007qM-Lt
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 23:46:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751780AbaGGVPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2014 17:15:11 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:40415 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751957AbaGGVPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2014 17:15:09 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 2B43D21846;
-	Mon,  7 Jul 2014 22:15:08 +0100 (BST)
-X-Quarantine-ID: <IcndTtbRu0iO>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id IcndTtbRu0iO; Mon,  7 Jul 2014 22:15:07 +0100 (BST)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 26DA31FFC0;
-	Mon,  7 Jul 2014 22:15:01 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <xmqqbnt1dpdk.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1751404AbaGGVqF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jul 2014 17:46:05 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:62068 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751158AbaGGVqE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Jul 2014 17:46:04 -0400
+Received: by mail-qa0-f53.google.com with SMTP id j15so4130528qaq.12
+        for <git@vger.kernel.org>; Mon, 07 Jul 2014 14:46:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=DeiVq1h134IqadnEyxYHE25q4xthoggkUpAX4Tkjs38=;
+        b=cb9XKLrOnon+VphY5l5EOPE3fd3yNR3OBnk/9m5Pg8ZKqG0NTmBkAkxYIFzggZD2TH
+         IyA3XsUT7r6PnOjMp3DMhN/FlmC8RVCVfD6SSBlw4UaFxMB3nkEyUAztQCxY9AAqj6dj
+         ANIbtRUVdx6CNnnrcMlzRGIgo/Qmh0vOflvta9CPGRIXOo8CJj6NPy0TnXPM4WnAKew7
+         4nIAbJeneJGRvvIeSnb1nlsggOKTjo9NHKdJjXI8f8Z5ZlvejZXJ0aLm5XZpWq4dFKVX
+         00NQkkVwy7frA2fy9BvS410OtuYVnwuEK8Za/tudBPUsla1/1LXJ1oThAMyylJMeQgl+
+         lkww==
+X-Received: by 10.140.37.9 with SMTP id q9mr43463529qgq.32.1404769562645; Mon,
+ 07 Jul 2014 14:46:02 -0700 (PDT)
+Received: by 10.140.32.7 with HTTP; Mon, 7 Jul 2014 14:46:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252989>
 
-On Mon, Jul 07, 2014 at 10:56:23AM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > Perhaps we shuld do something like this (which passes the test suite):
-> >
-> > -- >8 --
-> > diff --git a/git-rebase.sh b/git-rebase.sh
-> > index 06c810b..0c6c5d3 100755
-> > --- a/git-rebase.sh
-> > +++ b/git-rebase.sh
-> > @@ -544,7 +544,8 @@ if test "$fork_point" = t
-> >  then
-> >  	new_upstream=$(git merge-base --fork-point "$upstream_name" \
-> >  			"${switch_to:-HEAD}")
-> > -	if test -n "$new_upstream"
-> > +	if test -n "$new_upstream" &&
-> > +	   ! git merge-base --is-ancestor "$new_upstream" "$upstream_name"
-> >  	then
-> >  		upstream=$new_upstream
-> >  	fi
-> > -- 8< --
-> >
-> > Since the intent of `--fork-point` is to find the best starting point
-> > for the "$upstream...$orig_head" range, if the fork point is behind the
-> > new location of the upstream then should we leave the upstream as it
-> > was?
-> 
-> Probably; but the check to avoid giving worse fork-point should be
-> in the implementation of "merge-base --fork-point" itself, so that
-> we do not have to do the above to both "rebase" and "pull --rebase",
-> no?
+I'd appreciate if someone could confirm that this is a bug in git, as t=
+his works
+as expected with git 1.8.5.2.
 
-I don't think so, since in that case we're not actually finding the fork
-point as defined in the documentation, we're finding the upstream rebase
-wants.
+I'm not sure if this 1.7.X is still supported, but I think it's still
+the latest git-core available
+in Ubuntu 12.04 repositories.
 
-Having played with this a bit, I think we shouldn't be replacing the
-upstream with the fork point but should instead add the fork point as an
-additional negative ref:
+I'm having problems with git ls-files --others --ignored
+--exclude-standard not listing some ignored files.
 
-	$upstream...$orig_head ^$fork_point
+My project has this directory structure
 
-Here's a script that creates a repository showing this:
+=2E
+=E2=94=9C=E2=94=80=E2=94=80 aspnet
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 .gitignore
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 __init__.py
+=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 lib
+=E2=94=82   =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 <lots of big stuff>
 
--- >8 --
-#!/bin/sh
-git init rebase-test &&
-cd rebase-test &&
-echo one >file &&
-git add file &&
-git commit -m one &&
-echo frist >file2 &&
-git add file2 &&
-git commit -m first &&
-git branch --track dev &&
-echo first >file2 &&
-git commit -a --amend --no-edit &&
-echo two >file &&
-git commit -a -m two &&
-echo three >file &&
-git commit -a -m three &&
-echo second >file2 &&
-git commit -a -m second &&
-git checkout dev &&
-git cherry-pick -2 master &&
-echo four >file &&
-git commit -a -m four &&
-printf '\nWithout fork point (old behaviour)\n' &&
-git rev-list --oneline --cherry @{u}... &&
-printf '\nFork point as upstream (current behaviour)\n' &&
-git rev-list --oneline --cherry $(git merge-base --fork-point master HEAD)... &&
-printf '\nWith fork point\n' &&
-git rev-list --oneline --cherry @{u}... ^$(git merge-base --fork-point master HEAD)
--- 8< --
+My aspnet/.gitignore lists lib/*, and git add aspnet/lib/foo reports
+that this path is ignored.
 
-In this case the rebase should be clean since the only applicable patch
-changes "three" to "four" in "file", but the current rebase code fails
-both with `--fork-point` and with `--no-fork-point`.
+But git ls-files --others --ignored --exclude-standard does not list
+the files under lib. These are untracked files, they do show up in
+output if I do git ls-files --others, but not if I provide the ignored
+flag.
 
-With `--fork-point` we try to apply "two" and "three" which have already
-been cherry-picked across (as Ted originally reported) and with
-`--no-fork-point`, we try to apply "first" which conflicts because we
-have the version prior to it being fixed up on master.
+With 1.8.5.2, all of the files under lib are listed if I ls-files
+--ignored --others --exclude-standard
 
-I hacked up git-rebase to test this and the change to use the fork point
-as in the last line of the script above does indeed make the rebase go
-through cleanly, but I have not yet looked at how to cleanly patch in
-that behaviour.
+Tracks http://stackoverflow.com/questions/24620108/show-all-ignored-fil=
+es-in-git
 
-I haven't tested git-pull, but it looks like it has always (since 2009)
-behaved in the way `git rebase --fork-point` does now, failing to detect
-cherry-picked commits that are now in the upstream.
+Thanks,
