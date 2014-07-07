@@ -1,93 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v6 2/2] test-config: Add tests for the config_set API
-Date: Mon, 07 Jul 2014 19:04:55 +0200
-Message-ID: <vpqvbr9w154.fsf@anie.imag.fr>
-References: <1404719566-3368-1-git-send-email-tanayabh@gmail.com>
-	<1404719566-3368-3-git-send-email-tanayabh@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/14] Add submodule test harness
+Date: Mon, 07 Jul 2014 10:05:40 -0700
+Message-ID: <xmqqsimddrq3.fsf@gitster.dls.corp.google.com>
+References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>
+	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>
+	<53B5C7AC.4040701@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 19:05:44 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jul 07 19:05:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4CMJ-0000O5-6C
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 19:05:43 +0200
+	id 1X4CMU-0000Yr-Uf
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 19:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751941AbaGGRFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2014 13:05:39 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47761 "EHLO shiva.imag.fr"
+	id S1752217AbaGGRFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2014 13:05:51 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57995 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750809AbaGGRFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2014 13:05:38 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s67H4sdH013286
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 7 Jul 2014 19:04:54 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s67H4toe004388;
-	Mon, 7 Jul 2014 19:04:55 +0200
-In-Reply-To: <1404719566-3368-3-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Mon, 7 Jul 2014 00:52:46 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 07 Jul 2014 19:04:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s67H4sdH013286
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1405357500.08564@DPL+iFwCjEcSzGuXNUH1Xw
+	id S1751484AbaGGRFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2014 13:05:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8A2D026070;
+	Mon,  7 Jul 2014 13:05:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wys6nCfuwWyoHJ5MqshRoxVeFPo=; b=P+f6mx
+	+ZSNKizaPM8qkcvytS+FKyqta8SHK3c8posoSBW4THTxbVREagcX9ArpdhmRp2+0
+	g9UToY4318hRbMWcpKrS6Krw5vAbJ1KMzNNltMdUMBjFRT6u/4rM46eozHd4WDtT
+	EN9jbDECJp3u31hQ7koFffzt8oM9KdLSzHjVs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Rq134+jSzsFRoViN8R7BFP0IC++bjr6d
+	zALwl56Lzt5zn8rP/ZlZvnDfDUHq+u6toi5KkkUAz4DFz0ypmWJjCqZ/tOb0zHnZ
+	f3IQaIb0Drp9CSqQRvAqmIEW/H28dKOE25owbpEVqdTGervAllElRnVIMvgA6Fxs
+	KlnljxTyvQ4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5ABE32606E;
+	Mon,  7 Jul 2014 13:05:35 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A33822605D;
+	Mon,  7 Jul 2014 13:05:28 -0400 (EDT)
+In-Reply-To: <53B5C7AC.4040701@web.de> (Jens Lehmann's message of "Thu, 03 Jul
+	2014 23:14:20 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E567F75E-05F8-11E4-A548-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252970>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> diff --git a/t/t1308-config-hash.sh b/t/t1308-config-hash.sh
-> new file mode 100755
-> index 0000000..ad99f8b
-> --- /dev/null
-> +++ b/t/t1308-config-hash.sh
-> @@ -0,0 +1,168 @@
-> +#!/bin/sh
-> +
-> +test_description='Test git config-hash API in different settings'
+> Junio, do you want me to resend 02/14 without the non-portable "echo -n"
+> or could you just squash the following diff in?
 
-You may want to call it "config_set API" now.
+Amended locally here already; thanks, both.
 
-> +#'check section.key value' verifies that the entry for section.key is
-> +#'value'
-
-Style: space after #.
-
-> +check() {
-> +	echo "$2" >expected
-> +	test-config get_value "$1" >actual 2>&1
-> +	test_cmp actual expected
-> +}
-
-You need to &&-chain these lines, to catch potential test-config
-failures (if it returns 1 after sending the right output, you won't
-notice).
-
-The doc says
-
- - test_cmp <expected> <actual>
-
-You swapped the order of parameters.
-
-> +test_expect_success 'setup default config' '
-> +	cat >.git/config << EOF
-
-Missing && here (sorry, I should have noticed the first time).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>
+> -----8<----
+> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+> index 24c9fd7..3584755 100755
+> --- a/t/lib-submodule-update.sh
+> +++ b/t/lib-submodule-update.sh
+> @@ -304,7 +304,7 @@ test_submodule_switch () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t add_sub1 origin/add_sub1 &&
+> -			echo -n >sub1 &&
+> +			>sub1 &&
+>  			test_must_fail $command add_sub1 &&
+>  			test_superproject_content origin/no_submodule &&
+>  			test_must_be_empty sub1
+> @@ -547,7 +547,7 @@ test_submodule_forced_switch () {
+>  		(
+>  			cd submodule_update &&
+>  			git branch -t add_sub1 origin/add_sub1 &&
+> -			echo -n >sub1 &&
+> +			>sub1 &&
+>  			$command add_sub1 &&
+>  			test_superproject_content origin/add_sub1 &&
+>  			test_dir_is_empty sub1
+> -- 2.0.1.458.gf680257.dirty
