@@ -1,75 +1,98 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] t/Makefile: always test all lint targets when running tests
-Date: Mon, 07 Jul 2014 11:13:11 -0700
-Message-ID: <xmqq38eddolk.fsf@gitster.dls.corp.google.com>
-References: <53B5D6FE.2090700@web.de> <53B5D76D.1090509@web.de>
+Subject: Re: [PATCH] refs: Fix valgrind suppression file
+Date: Mon, 07 Jul 2014 11:20:41 -0700
+Message-ID: <xmqqy4w5c9om.fsf@gitster.dls.corp.google.com>
+References: <1404505441-1853-1-git-send-email-dturner@twitter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Jul 07 20:13:25 2014
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Jul 07 20:20:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4DPo-00081A-8r
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 20:13:24 +0200
+	id 1X4DX4-00063r-63
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 20:20:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367AbaGGSNU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2014 14:13:20 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64487 "EHLO smtp.pobox.com"
+	id S1751344AbaGGSUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2014 14:20:50 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54725 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751281AbaGGSNT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2014 14:13:19 -0400
+	id S1751085AbaGGSUt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2014 14:20:49 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A85A326C09;
-	Mon,  7 Jul 2014 14:13:05 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3089126F45;
+	Mon,  7 Jul 2014 14:20:36 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zL/n8iw5zDGFEhJ/oNZJL7X+DoQ=; b=pSt7fX
-	cygsjXc66gwzB8MyzzmEESxGHKZuvYKCEzhh9vIPYt9xgomQ8GFYX/hWubo3UTGX
-	v5kdaO1ft8v+5BPpfQZ+xmfb/eIo7FpJq9vFdtmFBf36k9B3dwekQSYoxsq9gVtz
-	weScFTPEJCCfOUYBtYBLo/5W0eYXLoiPd4EJk=
+	:content-type; s=sasl; bh=Z/M/+s7oaOz7XaA3tePOd/bH9e0=; b=Y5ZEOj
+	SmFtdL4xpTw7AdvcQsi3TtrYm/0J9ZczSzvcMtUs4YpRS5rTdqiLA7spvkfXBB+z
+	tdcAdjw8ZRtLRAHgTBBVWFd1UG4PC9nDTVGTy8hy+P27F2unAZHjCv5t/KJXqZyy
+	8Yu0qN5CAZzkloXa7vKX4LySWoOlNd1Qn6omU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YQoltO20eURp5tb7It7fOQn7+raz4SDp
-	DcDbJNowE+Gwqkxdhw2FDTFpu6v4/on/7e554QXo9MMPxqsDFaJH0HI0S+165Rl0
-	jUxhIemXlW7my964X0QyULZnvWiZxKaXlBf+ZswCyPuI0LMsEN4ed88j9zp1aJjV
-	AGvIKWjD8cY=
+	:content-type; q=dns; s=sasl; b=varg3TaJpc7Ipb5umA61rUV0ECDGPUE8
+	laHZmZACWO5sWUK9jg2zqgnwojbOTwwDzzQn74vujy1g0FS536MXSmj0KUFeNIgN
+	cgBPbwmPRA0phWRAPWqu66tz+sPVGWjX2luk8PkkOnd65DewYLvSNEZuZ5mZ8H/c
+	mLgLmrXV5y8=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9F39F26C08;
-	Mon,  7 Jul 2014 14:13:05 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 26C4126F44;
+	Mon,  7 Jul 2014 14:20:36 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4628A26BFB;
-	Mon,  7 Jul 2014 14:13:00 -0400 (EDT)
-In-Reply-To: <53B5D76D.1090509@web.de> (Jens Lehmann's message of "Fri, 04 Jul
-	2014 00:21:33 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 76AE726F3F;
+	Mon,  7 Jul 2014 14:20:30 -0400 (EDT)
+In-Reply-To: <1404505441-1853-1-git-send-email-dturner@twitter.com> (David
+	Turner's message of "Fri, 4 Jul 2014 13:24:01 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 545C52D2-0602-11E4-8068-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 60B2C916-0603-11E4-81AB-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252979>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+David Turner <dturner@twopensource.com> writes:
 
-> Only the two targets "test-lint-duplicates" and "test-lint-executable" are
-> currently executed when running the test target. This was done on purpose
-> when the TEST_LINT variable was added in 81127d74. But as this does not
-> include the "test-lint-shell-syntax" target added the same day in commit
-> c7ce70ac, it is easy to accidentally add non portable shell constructs
-> without noticing that when running the test suite.
+> Add all of the ways in which check_refname_format violates valgrind's
+> expectations to the valgrind suppression file; remove an assumption about
+> the call chain of check_refname_format from same.
+>
+> Signed-off-by: David Turner <dturner@twitter.com>
+> ---
+>  t/valgrind/default.supp | 15 +++++++++++----
+>  1 file changed, 11 insertions(+), 4 deletions(-)
 
-I not running the lint-shell-syntax that is fundamentally flaky to
-avoid false positives is very much on purpose.  The flakiness is not
-the fault of the implementor of the lint-shell-syntax, but comes
-from the approach taken to pretend that simple pattern matching can
-parse shell scripts.  It may not complain on the current set of
-scripts, but that is not really by design but by accident.
+I'll queue, but it makes me feel more and more disgusted with that
+SSE patch, to be honest.
 
-So I am not very enthusiastic to see this change myself.
+>
+> diff --git a/t/valgrind/default.supp b/t/valgrind/default.supp
+> index 332ab1a..9d51c92 100644
+> --- a/t/valgrind/default.supp
+> +++ b/t/valgrind/default.supp
+> @@ -50,10 +50,17 @@
+>  	fun:copy_ref
+>  }
+>  {
+> -	ignore-sse-check_refname_format
+> +	ignore-sse-check_refname_format-addr
+>  	Memcheck:Addr8
+>  	fun:check_refname_format
+> -	fun:cmd_check_ref_format
+> -	fun:handle_builtin
+> -	fun:main
+> +}
+> +{
+> +	ignore-sse-check_refname_format-cond
+> +	Memcheck:Cond
+> +	fun:check_refname_format
+> +}
+> +{
+> +	ignore-sse-check_refname_format-value
+> +	Memcheck:Value8
+> +	fun:check_refname_format
+>  }
