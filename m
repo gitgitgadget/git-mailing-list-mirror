@@ -1,128 +1,70 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 09/10] replace: check mergetags when using --graft
-Date: Mon, 07 Jul 2014 08:35:38 +0200
-Message-ID: <20140707063540.3708.29773.chriscool@tuxfamily.org>
-References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v5 2/2] test-config: Add tests for the config_set API
+Date: Mon, 07 Jul 2014 09:11:37 +0200
+Message-ID: <vpqvbr91w46.fsf@anie.imag.fr>
+References: <1404631162-18556-1-git-send-email-tanayabh@gmail.com>
+	<1404631162-18556-3-git-send-email-tanayabh@gmail.com>
+	<CALkWK0n9MWux3tA02n-hDvPjXt3Q1RCVd+x8tJV9ABjndaGQCQ@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Tanay Abhra <tanayabh@gmail.com>, Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 08:37:11 2014
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 07 09:11:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X42Y1-00085i-Kl
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 08:37:09 +0200
+	id 1X435f-0005RZ-QN
+	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 09:11:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973AbaGGGhB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2014 02:37:01 -0400
-Received: from [194.158.98.14] ([194.158.98.14]:57027 "EHLO mail-1y.bbox.fr"
-	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751874AbaGGGgj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Jul 2014 02:36:39 -0400
-Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 2C29E44;
-	Mon,  7 Jul 2014 08:36:17 +0200 (CEST)
-X-git-sha1: 7c417315691b759aedef7bf05de6a18a1b4e29bd 
-X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20140707063342.3708.83493.chriscool@tuxfamily.org>
+	id S1751517AbaGGHLv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2014 03:11:51 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:55863 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751255AbaGGHLt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Jul 2014 03:11:49 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s677BaUk032652
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 7 Jul 2014 09:11:36 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s677Bb2K026405;
+	Mon, 7 Jul 2014 09:11:37 +0200
+In-Reply-To: <CALkWK0n9MWux3tA02n-hDvPjXt3Q1RCVd+x8tJV9ABjndaGQCQ@mail.gmail.com>
+	(Ramkumar Ramachandra's message of "Sun, 6 Jul 2014 19:24:26 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 07 Jul 2014 09:11:37 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s677BaUk032652
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1405321897.45393@F04debAudcmlcg8NbmOMbQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252958>
 
-When using --graft, with a mergetag in the original
-commit, we should check that the commit pointed to by
-the mergetag is still a parent of then new commit we
-create, otherwise the mergetag could be misleading.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-If the commit pointed to by the mergetag is no more
-a parent of the new commit, we could remove the
-mergetag, but in this case there is a good chance
-that the title or other elements of the commit might
-also be misleading. So let's just error out and
-suggest to use --edit instead on the commit.
+> A couple of quick nits.
+>
+> Tanay Abhra wrote:
+>> +test_expect_success 'clear default config' '
+>> +       rm -f .git/config
+>> +'
+>
+> Unnecessary; a fresh temporary directory is created for each test run.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/replace.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+Hmm, fresh, but not empty.
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index cc29ef2..2290529 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -13,6 +13,7 @@
- #include "refs.h"
- #include "parse-options.h"
- #include "run-command.h"
-+#include "tag.h"
- 
- static const char * const git_replace_usage[] = {
- 	N_("git replace [-f] <object> <replacement>"),
-@@ -325,6 +326,50 @@ static void replace_parents(struct strbuf *buf, int argc, const char **argv)
- 	strbuf_release(&new_parents);
- }
- 
-+struct check_mergetag_data {
-+	int argc;
-+	const char **argv;
-+};
-+
-+static void check_one_mergetag(struct commit *commit,
-+			       struct commit_extra_header *extra,
-+			       void *data)
-+{
-+	struct check_mergetag_data *mergetag_data = (struct check_mergetag_data *)data;
-+	const char *ref = mergetag_data->argv[0];
-+	unsigned char tag_sha1[20];
-+	struct tag *tag;
-+	int i;
-+
-+	hash_sha1_file(extra->value, extra->len, typename(OBJ_TAG), tag_sha1);
-+	tag = lookup_tag(tag_sha1);
-+	if (!tag)
-+		die(_("bad mergetag in commit '%s'"), ref);
-+	if (parse_tag_buffer(tag, extra->value, extra->len))
-+		die(_("malformed mergetag in commit '%s'"), ref);
-+
-+	/* iterate over new parents */
-+	for (i = 1; i < mergetag_data->argc; i++) {
-+		unsigned char sha1[20];
-+		if (get_sha1(mergetag_data->argv[i], sha1) < 0)
-+			die(_("Not a valid object name: '%s'"), mergetag_data->argv[i]);
-+		if (!hashcmp(tag->tagged->sha1, sha1))
-+			return; /* found */
-+	}
-+
-+	die(_("original commit '%s' contains mergetag '%s' that is discarded; "
-+	      "use --edit instead of --graft"), ref, sha1_to_hex(tag_sha1));
-+}
-+
-+static void check_mergetags(struct commit *commit, int argc, const char **argv)
-+{
-+	struct check_mergetag_data mergetag_data;
-+
-+	mergetag_data.argc = argc;
-+	mergetag_data.argv = argv;
-+	for_each_mergetag(check_one_mergetag, commit, &mergetag_data);
-+}
-+
- static int create_graft(int argc, const char **argv, int force)
- {
- 	unsigned char old[20], new[20];
-@@ -349,6 +394,8 @@ static int create_graft(int argc, const char **argv, int force)
- 		warning(_("the signature will be removed in the replacement commit!"));
- 	}
- 
-+	check_mergetags(commit, argc, argv);
-+
- 	if (write_sha1_file(buf.buf, buf.len, commit_type, new))
- 		die(_("could not write replacement commit for: '%s'"), old_ref);
- 
+Anyway, the next test does a cat > on this file, so it will erase its
+content, so the "rm -f" is actually not needed.
+
 -- 
-2.0.0.421.g786a89d.dirty
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
