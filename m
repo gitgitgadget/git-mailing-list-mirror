@@ -1,78 +1,177 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v6 00/10] Add --graft option to git replace
-Date: Mon, 07 Jul 2014 08:35:29 +0200
-Message-ID: <20140707063342.3708.83493.chriscool@tuxfamily.org>
+Subject: [PATCH v6 02/10] replace: add --graft option
+Date: Mon, 07 Jul 2014 08:35:31 +0200
+Message-ID: <20140707063540.3708.51047.chriscool@tuxfamily.org>
+References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 07 08:36:41 2014
+X-From: git-owner@vger.kernel.org Mon Jul 07 08:36:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X42XZ-00073p-3U
+	id 1X42XZ-00073p-Jj
 	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 08:36:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751639AbaGGGgg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Jul 2014 02:36:36 -0400
-Received: from [194.158.98.45] ([194.158.98.45]:37386 "EHLO mail-3y.bbox.fr"
+	id S1751886AbaGGGgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Jul 2014 02:36:38 -0400
+Received: from [194.158.98.15] ([194.158.98.15]:63526 "EHLO mail-2y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750889AbaGGGgf (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1751223AbaGGGgf (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 7 Jul 2014 02:36:35 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-3y.bbox.fr (Postfix) with ESMTP id AA1B445;
-	Mon,  7 Jul 2014 08:36:12 +0200 (CEST)
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 10CCC3A;
+	Mon,  7 Jul 2014 08:36:14 +0200 (CEST)
+X-git-sha1: 24919e72c709cf2d660f9cd88f05b20beed11e44 
 X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20140707063342.3708.83493.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252948>
 
-Here is a small series to implement:
+The usage string for this option is:
 
-        git replace [-f] --graft <commit> [<parent>...]
+git replace [-f] --graft <commit> [<parent>...]
 
-This patch series goes on top of the patch series that
-implements --edit.
+First we create a new commit that is the same as <commit>
+except that its parents are [<parents>...]
 
-The changes since v5, thanks to Junio, are:
+Then we create a replace ref that replace <commit> with
+the commit we just created.
 
-- new patch 1/10 to clean up redirection style in t6050
+With this new option, it should be straightforward to
+convert grafts to replace refs.
 
-- new patches 8/10, 9/10 and 10/10 to check mergetags
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/replace.c | 74 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 73 insertions(+), 1 deletion(-)
 
-- add functions to test parents in patch 3/10 and 7/10
-
-- improve testing signed commits in patch 7/10
-
-- improve warning when removing commit signature in
-  patch 6/10
-
-Christian Couder (10):
-  replace: cleanup redirection style in tests
-  replace: add --graft option
-  replace: add test for --graft
-  Documentation: replace: add --graft option
-  contrib: add convert-grafts-to-replace-refs.sh
-  replace: remove signature when using --graft
-  replace: add test for --graft with signed commit
-  commit: add for_each_mergetag()
-  replace: check mergetags when using --graft
-  replace: add test for --graft with a mergetag
-
- Documentation/git-replace.txt             |  10 +++
- builtin/replace.c                         | 126 +++++++++++++++++++++++++++-
- commit.c                                  |  47 +++++++++++
- commit.h                                  |   7 ++
- contrib/convert-grafts-to-replace-refs.sh |  28 +++++++
- log-tree.c                                |  15 +---
- t/t6050-replace.sh                        | 135 ++++++++++++++++++++++++------
- 7 files changed, 332 insertions(+), 36 deletions(-)
- create mode 100755 contrib/convert-grafts-to-replace-refs.sh
-
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 1bb491d..ad47237 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -17,6 +17,7 @@
+ static const char * const git_replace_usage[] = {
+ 	N_("git replace [-f] <object> <replacement>"),
+ 	N_("git replace [-f] --edit <object>"),
++	N_("git replace [-f] --graft <commit> [<parent>...]"),
+ 	N_("git replace -d <object>..."),
+ 	N_("git replace [--format=<format>] [-l [<pattern>]]"),
+ 	NULL
+@@ -294,6 +295,66 @@ static int edit_and_replace(const char *object_ref, int force)
+ 	return replace_object_sha1(object_ref, old, "replacement", new, force);
+ }
+ 
++static void replace_parents(struct strbuf *buf, int argc, const char **argv)
++{
++	struct strbuf new_parents = STRBUF_INIT;
++	const char *parent_start, *parent_end;
++	int i;
++
++	/* find existing parents */
++	parent_start = buf->buf;
++	parent_start += 46; /* "tree " + "hex sha1" + "\n" */
++	parent_end = parent_start;
++
++	while (starts_with(parent_end, "parent "))
++		parent_end += 48; /* "parent " + "hex sha1" + "\n" */
++
++	/* prepare new parents */
++	for (i = 1; i < argc; i++) {
++		unsigned char sha1[20];
++		if (get_sha1(argv[i], sha1) < 0)
++			die(_("Not a valid object name: '%s'"), argv[i]);
++		lookup_commit_or_die(sha1, argv[i]);
++		strbuf_addf(&new_parents, "parent %s\n", sha1_to_hex(sha1));
++	}
++
++	/* replace existing parents with new ones */
++	strbuf_splice(buf, parent_start - buf->buf, parent_end - parent_start,
++		      new_parents.buf, new_parents.len);
++
++	strbuf_release(&new_parents);
++}
++
++static int create_graft(int argc, const char **argv, int force)
++{
++	unsigned char old[20], new[20];
++	const char *old_ref = argv[0];
++	struct commit *commit;
++	struct strbuf buf = STRBUF_INIT;
++	const char *buffer;
++	unsigned long size;
++
++	if (get_sha1(old_ref, old) < 0)
++		die(_("Not a valid object name: '%s'"), old_ref);
++	commit = lookup_commit_or_die(old, old_ref);
++
++	buffer = get_commit_buffer(commit, &size);
++	strbuf_add(&buf, buffer, size);
++	unuse_commit_buffer(commit, buffer);
++
++	replace_parents(&buf, argc, argv);
++
++	if (write_sha1_file(buf.buf, buf.len, commit_type, new))
++		die(_("could not write replacement commit for: '%s'"), old_ref);
++
++	strbuf_release(&buf);
++
++	if (!hashcmp(old, new))
++		return error("new commit is the same as the old one: '%s'", sha1_to_hex(old));
++
++	return replace_object_sha1(old_ref, old, "replacement", new, force);
++}
++
+ int cmd_replace(int argc, const char **argv, const char *prefix)
+ {
+ 	int force = 0;
+@@ -303,12 +364,14 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		MODE_LIST,
+ 		MODE_DELETE,
+ 		MODE_EDIT,
++		MODE_GRAFT,
+ 		MODE_REPLACE
+ 	} cmdmode = MODE_UNSPECIFIED;
+ 	struct option options[] = {
+ 		OPT_CMDMODE('l', "list", &cmdmode, N_("list replace refs"), MODE_LIST),
+ 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete replace refs"), MODE_DELETE),
+ 		OPT_CMDMODE('e', "edit", &cmdmode, N_("edit existing object"), MODE_EDIT),
++		OPT_CMDMODE('g', "graft", &cmdmode, N_("change a commit's parents"), MODE_GRAFT),
+ 		OPT_BOOL('f', "force", &force, N_("replace the ref if it exists")),
+ 		OPT_STRING(0, "format", &format, N_("format"), N_("use this format")),
+ 		OPT_END()
+@@ -325,7 +388,10 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		usage_msg_opt("--format cannot be used when not listing",
+ 			      git_replace_usage, options);
+ 
+-	if (force && cmdmode != MODE_REPLACE && cmdmode != MODE_EDIT)
++	if (force &&
++	    cmdmode != MODE_REPLACE &&
++	    cmdmode != MODE_EDIT &&
++	    cmdmode != MODE_GRAFT)
+ 		usage_msg_opt("-f only makes sense when writing a replacement",
+ 			      git_replace_usage, options);
+ 
+@@ -348,6 +414,12 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 				      git_replace_usage, options);
+ 		return edit_and_replace(argv[0], force);
+ 
++	case MODE_GRAFT:
++		if (argc < 1)
++			usage_msg_opt("-g needs at least one argument",
++				      git_replace_usage, options);
++		return create_graft(argc, argv, force);
++
+ 	case MODE_LIST:
+ 		if (argc > 1)
+ 			usage_msg_opt("only one pattern can be given with -l",
 -- 
 2.0.0.421.g786a89d.dirty
