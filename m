@@ -1,80 +1,211 @@
-From: Hamilton Turner <hamiltont@gmail.com>
-Subject: Potential bug in ls-files (version 1.7.9.5)
-Date: Mon, 7 Jul 2014 17:46:02 -0400
-Message-ID: <CAFow3A_f+nPCR1zqS9WdH1V9pNdSP=zRNt2UxbHpOz1d6miQEg@mail.gmail.com>
+From: Robert Dailey <rcdailey@gmail.com>
+Subject: Re: Git for Windows no longer on Google Code
+Date: Mon, 7 Jul 2014 15:03:04 -0700 (PDT)
+Message-ID: <5840354f-da4a-46b1-8499-1119774f6e22@googlegroups.com>
+References: <alpine.DEB.1.00.1407031701540.14982@s15462909.onlinehome-server.info>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 07 23:46:10 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_319_20817294.1404770584840"
+Cc: git@vger.kernel.org
+To: msysgit@googlegroups.com
+X-From: msysgit+bncBCKNPCNAWECRBGVS5SOQKGQEENZYO7A@googlegroups.com Tue Jul 08 00:03:08 2014
+Return-path: <msysgit+bncBCKNPCNAWECRBGVS5SOQKGQEENZYO7A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-ob0-f189.google.com ([209.85.214.189])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4Gjh-0007qM-Lt
-	for gcvg-git-2@plane.gmane.org; Mon, 07 Jul 2014 23:46:10 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404AbaGGVqF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Jul 2014 17:46:05 -0400
-Received: from mail-qa0-f53.google.com ([209.85.216.53]:62068 "EHLO
-	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751158AbaGGVqE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Jul 2014 17:46:04 -0400
-Received: by mail-qa0-f53.google.com with SMTP id j15so4130528qaq.12
-        for <git@vger.kernel.org>; Mon, 07 Jul 2014 14:46:02 -0700 (PDT)
+	(envelope-from <msysgit+bncBCKNPCNAWECRBGVS5SOQKGQEENZYO7A@googlegroups.com>)
+	id 1X4H07-0005sg-Lv
+	for gcvm-msysgit@m.gmane.org; Tue, 08 Jul 2014 00:03:07 +0200
+Received: by mail-ob0-f189.google.com with SMTP id wn1sf1399066obc.16
+        for <gcvm-msysgit@m.gmane.org>; Mon, 07 Jul 2014 15:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:x-original-sender:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=arLp2FT/VKogKFsDY/WZhFsnbFOPZb5kOlgVmUpbjC0=;
+        b=BbpocxWoVKWMTjmP33CLPvlI7bmxthdpX6VJaTkj1buzNcz3qSrIbZ88v3UGX7JbGV
+         yllLthlZv71JFtUKXj8Y4FNbkviv8FfRmMniTM0Zn9nrPw+2jRd++TQeF+hY5MRyHupG
+         DYX2STHyOPa8Jgyw58NUh5e8tOczpy+DeSj48qzOB89EOJD4RlkJacO+6GaZnHoXHaGW
+         /V1NJnONg5G8TSof1koYL1HeXLNo+E8iSWYuigbirJ0Qr/a6Kv5h6iS0ZqJ19+UOsGiH
+         S8F5K1zWGOM+2Rqfg7XYC2Hxhlxy2h6dNYKl3RYuGMGHcgCNJm7uEsuXMWOJqG8V/J1D
+         lJFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=DeiVq1h134IqadnEyxYHE25q4xthoggkUpAX4Tkjs38=;
-        b=cb9XKLrOnon+VphY5l5EOPE3fd3yNR3OBnk/9m5Pg8ZKqG0NTmBkAkxYIFzggZD2TH
-         IyA3XsUT7r6PnOjMp3DMhN/FlmC8RVCVfD6SSBlw4UaFxMB3nkEyUAztQCxY9AAqj6dj
-         ANIbtRUVdx6CNnnrcMlzRGIgo/Qmh0vOflvta9CPGRIXOo8CJj6NPy0TnXPM4WnAKew7
-         4nIAbJeneJGRvvIeSnb1nlsggOKTjo9NHKdJjXI8f8Z5ZlvejZXJ0aLm5XZpWq4dFKVX
-         00NQkkVwy7frA2fy9BvS410OtuYVnwuEK8Za/tudBPUsla1/1LXJ1oThAMyylJMeQgl+
-         lkww==
-X-Received: by 10.140.37.9 with SMTP id q9mr43463529qgq.32.1404769562645; Mon,
- 07 Jul 2014 14:46:02 -0700 (PDT)
-Received: by 10.140.32.7 with HTTP; Mon, 7 Jul 2014 14:46:02 -0700 (PDT)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252989>
+        h=date:from:to:cc:message-id:in-reply-to:references:subject
+         :mime-version:x-original-sender:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=arLp2FT/VKogKFsDY/WZhFsnbFOPZb5kOlgVmUpbjC0=;
+        b=BsD5/jWSDYGkLfqTDmx/WKtIBRjosFf1dBSrYlSNSyIvGpn7CWUOmyDl5Qsb6ot8uJ
+         H83ZG4WRAPzB8VEZG5vFVR7kSwF23EWa92mis7CWTfODfpOALasdM3oN8JPBu5dPjvQH
+         NtME+dC0TQMTtiy6Nn9QIV8DNOYhp32+jMT16k3bT82GpM9YaY/sfv2onBy1xY5GlVKn
+         z92+juyB3/QsvsZ46V1t5UJygBqFP3e0w+0ZXZRo9fyduTjkW1WAu+h65zT4ZFpDQEk5
+         UibgAjrbm/KqsW82cl4hknph1uYSLHYtrbBcl1pQsMb/a12llMpbgP6K5XFSkwCtoLvr
+         fI4w==
+X-Received: by 10.50.2.73 with SMTP id 9mr128302igs.13.1404770586668;
+        Mon, 07 Jul 2014 15:03:06 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.114.164 with SMTP id jh4ls700147igb.16.gmail; Mon, 07 Jul
+ 2014 15:03:05 -0700 (PDT)
+X-Received: by 10.50.2.73 with SMTP id 9mr128300igs.13.1404770585850;
+        Mon, 07 Jul 2014 15:03:05 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.1407031701540.14982@s15462909.onlinehome-server.info>
+X-Original-Sender: rcdailey@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/252990>
 
-I'd appreciate if someone could confirm that this is a bug in git, as t=
-his works
-as expected with git 1.8.5.2.
+------=_Part_319_20817294.1404770584840
+Content-Type: text/plain; charset=UTF-8
 
-I'm not sure if this 1.7.X is still supported, but I think it's still
-the latest git-core available
-in Ubuntu 12.04 repositories.
+Have you tried contacting Google? They will usually help with search 
+results when it comes to popular links.
 
-I'm having problems with git ls-files --others --ignored
---exclude-standard not listing some ignored files.
+On Thursday, July 3, 2014 10:11:41 AM UTC-5, Johannes Schindelin wrote:
+>
+> Dear friends of Git, 
+>
+> the Git for Windows team, myself included, tried quite a couple of times 
+> to mark the old home of Git for Windows on Google Code as obsolete. 
+>
+> Unfortunately, it is not possible to disable issue trackers nor downloads 
+> (and Google Search helpfully insists on listing them as top hits, still). 
+>
+> It is not even possible to forward to a new project home: we tried 
+> literally twenty times to hit the "Project moved" button with the new URL 
+> -- http://msysgit.github.io/ -- but all it did was reset the URL to 
+> "http://" and give a "500. That's an error." when browsing the old URL. 
+>
+> The link supposedly allowing to report the error leads to a read-only 
+> knowledge base with no way to inform any responsible developer of the bug. 
+>
+> The only way was to delete the old project home, with no automatic 
+> redirection and no hint for users where to look instead. 
+>
+> Therefore it is with great sadness that I have to resort to sending this 
+> mail and hoping that it reaches at least a part of the people who are from 
+> now on undoubtedly surprised to see a "Google. One account. All of 
+> Google." page instead of being forwarded to http://msysgit.github.io/. 
+>
+> I am seriously sorry about the inconvenience, wishing there was anything 
+> I could do about this, 
+> Johannes 
+>
 
-My project has this directory structure
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-=2E
-=E2=94=9C=E2=94=80=E2=94=80 aspnet
-=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 .gitignore
-=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 __init__.py
-=E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 lib
-=E2=94=82   =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 <lots of big stuff>
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-My aspnet/.gitignore lists lib/*, and git add aspnet/lib/foo reports
-that this path is ignored.
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
 
-But git ls-files --others --ignored --exclude-standard does not list
-the files under lib. These are untracked files, they do show up in
-output if I do git ls-files --others, but not if I provide the ignored
-flag.
+------=_Part_319_20817294.1404770584840
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-With 1.8.5.2, all of the files under lib are listed if I ls-files
---ignored --others --exclude-standard
+<div dir=3D"ltr">Have you tried contacting Google? They will usually help w=
+ith search results when it comes to popular links.<br><br>On Thursday, July=
+ 3, 2014 10:11:41 AM UTC-5, Johannes Schindelin wrote:<blockquote class=3D"=
+gmail_quote" style=3D"margin: 0;margin-left: 0.8ex;border-left: 1px #ccc so=
+lid;padding-left: 1ex;">Dear friends of Git,
+<br>
+<br>the Git for Windows team, myself included, tried quite a couple of time=
+s
+<br>to mark the old home of Git for Windows on Google Code as obsolete.
+<br>
+<br>Unfortunately, it is not possible to disable issue trackers nor downloa=
+ds
+<br>(and Google Search helpfully insists on listing them as top hits, still=
+).
+<br>
+<br>It is not even possible to forward to a new project home: we tried
+<br>literally twenty times to hit the "Project moved" button with the new U=
+RL
+<br>-- <a href=3D"http://msysgit.github.io/" target=3D"_blank" onmousedown=
+=3D"this.href=3D'http://www.google.com/url?q\75http%3A%2F%2Fmsysgit.github.=
+io%2F\46sa\75D\46sntz\0751\46usg\75AFQjCNH_WuJHsz90vgCYyjsBf4Jy_hYSfA';retu=
+rn true;" onclick=3D"this.href=3D'http://www.google.com/url?q\75http%3A%2F%=
+2Fmsysgit.github.io%2F\46sa\75D\46sntz\0751\46usg\75AFQjCNH_WuJHsz90vgCYyjs=
+Bf4Jy_hYSfA';return true;">http://msysgit.github.io/</a> -- but all it did =
+was reset the URL to
+<br>"http://" and give a "500. That's an error." when browsing the old URL.
+<br>
+<br>The link supposedly allowing to report the error leads to a read-only
+<br>knowledge base with no way to inform any responsible developer of the b=
+ug.
+<br>
+<br>The only way was to delete the old project home, with no automatic
+<br>redirection and no hint for users where to look instead.
+<br>
+<br>Therefore it is with great sadness that I have to resort to sending thi=
+s
+<br>mail and hoping that it reaches at least a part of the people who are f=
+rom
+<br>now on undoubtedly surprised to see a "Google. One account. All of
+<br>Google." page instead of being forwarded to <a href=3D"http://msysgit.g=
+ithub.io/" target=3D"_blank" onmousedown=3D"this.href=3D'http://www.google.=
+com/url?q\75http%3A%2F%2Fmsysgit.github.io%2F\46sa\75D\46sntz\0751\46usg\75=
+AFQjCNH_WuJHsz90vgCYyjsBf4Jy_hYSfA';return true;" onclick=3D"this.href=3D'h=
+ttp://www.google.com/url?q\75http%3A%2F%2Fmsysgit.github.io%2F\46sa\75D\46s=
+ntz\0751\46usg\75AFQjCNH_WuJHsz90vgCYyjsBf4Jy_hYSfA';return true;">http://m=
+sysgit.github.io/</a>.
+<br>
+<br>I am seriously sorry about the inconvenience, wishing there was anythin=
+g
+<br>I could do about this,
+<br>Johannes
+<br></blockquote></div>
 
-Tracks http://stackoverflow.com/questions/24620108/show-all-ignored-fil=
-es-in-git
+<p></p>
 
-Thanks,
+-- <br />
+-- <br />
+*** Please reply-to-all at all times ***<br />
+*** (do not pretend to know who is subscribed and who is not) ***<br />
+*** Please avoid top-posting. ***<br />
+The msysGit Wiki is here: <a href=3D"https://github.com/msysgit/msysgit/wik=
+i">https://github.com/msysgit/msysgit/wiki</a> - Github accounts are free.<=
+br />
+&nbsp;<br />
+You received this message because you are subscribed to the Google<br />
+Groups &quot;msysGit&quot; group.<br />
+To post to this group, send email to msysgit@googlegroups.com<br />
+To unsubscribe from this group, send email to<br />
+msysgit+unsubscribe@googlegroups.com<br />
+For more options, and view previous threads, visit this group at<br />
+<a href=3D"http://groups.google.com/group/msysgit?hl=3Den_US?hl=3Den">http:=
+//groups.google.com/group/msysgit?hl=3Den_US?hl=3Den</a><br />
+<br />
+--- <br />
+You received this message because you are subscribed to the Google Groups &=
+quot;msysGit&quot; group.<br />
+To unsubscribe from this group and stop receiving emails from it, send an e=
+mail to <a href=3D"mailto:msysgit+unsubscribe@googlegroups.com">msysgit+uns=
+ubscribe@googlegroups.com</a>.<br />
+For more options, visit <a href=3D"https://groups.google.com/d/optout">http=
+s://groups.google.com/d/optout</a>.<br />
+
+------=_Part_319_20817294.1404770584840--
