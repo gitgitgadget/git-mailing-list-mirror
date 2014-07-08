@@ -1,100 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/4] use new config API for worktree configurations of submodules
-Date: Tue, 08 Jul 2014 13:14:20 -0700
-Message-ID: <xmqqy4w38v6r.fsf@gitster.dls.corp.google.com>
-References: <20140628095800.GA89729@book.hvoigt.net>
-	<20140628100321.GD89729@book.hvoigt.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 00/14] Add submodule test harness
+Date: Tue, 08 Jul 2014 21:25:39 +0100
+Message-ID: <53BC53C3.1010304@ramsay1.demon.co.uk>
+References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>	<53B5C7AC.4040701@web.de> <xmqqsimddrq3.fsf@gitster.dls.corp.google.com> <53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karsten Blees <karsten.blees@gmail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Tue Jul 08 22:14:34 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>,
+	=?ISO-8859-1?Q?Torsten_B=F6gers?= =?ISO-8859-1?Q?hausen?= 
+	<tboegi@web.de>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 22:25:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4bma-0005Ln-I7
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 22:14:32 +0200
+	id 1X4bxV-0004AJ-Iy
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 22:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932166AbaGHUO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 16:14:28 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54679 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754334AbaGHUO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 16:14:27 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E05B327EF9;
-	Tue,  8 Jul 2014 16:14:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qwbD9MmOtCgs74l6MN2RHB/bqHM=; b=ICBcb6
-	lTFdFwHPXMJZFN9Qv0bB8YK5CesCCRmDhaHfLaGO/QcZSZn1Sqwtrjkm7SuFGrHb
-	qHevXfnyUxYSkBpvpmMS+ViHrjnFJ2L5s0plZBrR+CogaZcaJJIHB8nDnPzoIa/v
-	UeWjDiH2PXRFrbVI9JGDSbr0f/R0qPK3s4hYM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z6c1kjol8WzQGX8iP5sslJNzq7L7bgff
-	p3LRgOivBjJSn2TVmVncsl6cf+21gVuf+0jW3nsx2n0og80Prxi1LfxquvkbDhLv
-	FOa9d/CU8w8vNiBRbQcXEvcKAQro78Vg1ahCuR7O+uMx6Jr/Sp85m9P6DC1xqcWi
-	oUYTEKs9h9s=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D27A627EF8;
-	Tue,  8 Jul 2014 16:14:11 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
+	id S1753786AbaGHUZp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2014 16:25:45 -0400
+Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:35684 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750947AbaGHUZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 16:25:44 -0400
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id CFC7AA0C08A;
+	Tue,  8 Jul 2014 20:18:54 +0100 (BST)
+Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 9736FA0C087;
+	Tue,  8 Jul 2014 20:18:54 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 94BDC27EF1;
-	Tue,  8 Jul 2014 16:14:06 -0400 (EDT)
-In-Reply-To: <20140628100321.GD89729@book.hvoigt.net> (Heiko Voigt's message
-	of "Sat, 28 Jun 2014 12:03:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 69E09084-06DC-11E4-AA09-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;
+	Tue,  8 Jul 2014 20:18:53 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <53BC47BD.1000705@web.de>
+X-MDF-HostID: 9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253043>
 
-Heiko Voigt <hvoigt@hvoigt.net> writes:
+On 08/07/14 20:34, Jens Lehmann wrote:
+> Am 07.07.2014 21:40, schrieb Torsten B=F6gershausen:
+>> On 2014-07-07 19.05, Junio C Hamano wrote:
+>>> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>>>
+>>>> Junio, do you want me to resend 02/14 without the non-portable "ec=
+ho -n"
+>>>> or could you just squash the following diff in?
+>>>
+>>> Amended locally here already; thanks, both.
+>>
+>> There seems to be some other trouble under Mac OS, not yet fully tra=
+cked down,
+>> (may be related to the "diff -r")
+>=20
+> Torsten sees failures of this kind under Mac OS:
+>=20
+> diff -r .git/modules/sub1/config sub1/.git/config
+> 6d5
+> <     worktree =3D ../../../sub1
+> 8a8
+>>     worktree =3D ../../../sub1
+>=20
+> So the config contains the same content, but the worktree setting mov=
+ed
+> to a different line. This seems to be the result of setting core.work=
+tree
+> in the test_git_directory_is_unchanged function just before the "diff=
+ -r",
+> but only under Mac OS.
+>=20
+>> And Msysgit complains=20
+>> error: fchmod on c:/xxxt/trash directory.t7613-merge-submodule/submo=
+dule_update_repo/.git/modules/sub1/config.lock failed: Function not imp=
+lemented
+>=20
+> I'm not sure what this is about, seems to happen during the "cp -R" o=
+f
+> the repo under .git/modules into the submodule.
 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 07cf555..03ea20d 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -18,6 +18,7 @@
->  #include "xdiff-interface.h"
->  #include "ll-merge.h"
->  #include "resolve-undo.h"
-> +#include "submodule-config.h"
->  #include "submodule.h"
->  #include "argv-array.h"
->  
+I haven't looked into this at all, but from the above message, and
+noting that fchmod() is not implemented in mingw (see compat/mingw.h
+line 91), and the following:
 
-Hmph.  What is this change about?  
+    $ git grep -n fchmod
+    compat/mingw.h:91:static inline int fchmod(int fildes, mode_t mode)
+    config.c:1639:          if (fchmod(fd, st.st_mode & 07777) < 0) {
+    config.c:1640:                  error("fchmod on %s failed: %s",
+    config.c:1818:  if (fchmod(out_fd, st.st_mode & 07777) < 0) {
+    config.c:1819:          ret =3D error("fchmod on %s failed: %s",
+    $=20
 
-Nobody in checkout.c needs anything new, yet we add a new include?
+[I happen to be on the pu branch at the moment, so YMMV!]
 
-> diff --git a/diff.c b/diff.c
-> index f72769a..f692a3c 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -13,6 +13,7 @@
->  #include "utf8.h"
->  #include "userdiff.h"
->  #include "sigchain.h"
-> +#include "submodule-config.h"
->  #include "submodule.h"
->  #include "ll-merge.h"
->  #include "string-list.h"
+Both calls to fchmod() above are on config lock files, one
+in git_config_set_multivar_in_file() and the other in
+git_config_rename_section_in_file().
 
-Likewise.
-
-It is somewhat unclear to me what real change that improves the life
-of end-users this series brings to us.   The "test-submodule-config"
-test program obviously is new but that does not really count until
-we see real uses.
+ATB,
+Ramsay Jones
