@@ -1,65 +1,81 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 2/2] t/Makefile: always test all lint targets when running
- tests
-Date: Tue, 08 Jul 2014 21:24:25 +0200
-Message-ID: <53BC4569.3020907@web.de>
-References: <53B5D6FE.2090700@web.de> <53B5D76D.1090509@web.de> <xmqq38eddolk.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 00/14] Add submodule test harness
+Date: Tue, 08 Jul 2014 21:34:21 +0200
+Message-ID: <53BC47BD.1000705@web.de>
+References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>	<53B5C7AC.4040701@web.de> <xmqqsimddrq3.fsf@gitster.dls.corp.google.com> <53BAF7AF.4020901@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 21:24:51 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 21:36:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4b0P-0005p4-Ku
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 21:24:46 +0200
+	id 1X4bBN-0004tf-2I
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 21:36:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756306AbaGHTYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 15:24:35 -0400
-Received: from mout.web.de ([212.227.15.4]:63628 "EHLO mout.web.de"
+	id S1756735AbaGHTe2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2014 15:34:28 -0400
+Received: from mout.web.de ([212.227.15.3]:49438 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756301AbaGHTYe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 15:24:34 -0400
-Received: from [192.168.178.41] ([84.132.191.219]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0LcPhu-1WMDcn2yqk-00joQM; Tue, 08 Jul 2014 21:24:31
+	id S1756022AbaGHTe0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 15:34:26 -0400
+Received: from [192.168.178.41] ([84.132.191.219]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MGCm7-1WrATZ0KvP-00FAos; Tue, 08 Jul 2014 21:34:22
  +0200
 User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq38eddolk.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <53BAF7AF.4020901@web.de>
 X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:ktmh2DdDZUi8lwfOdSuJ4pXvLve4Fz7sK6hV7gL3Xb1pbnhsyvt
- nzAa0NwNNbDwztELVqJ+wnM30gW3dm47Q1uxiUr3ITwxinWONr/fDpH63MkZx+oUnrrbJwM
- MqyGiJN5FDDIBV06NvfdcVi+EwpRUxmG1U4llwIgbcCjnXeOAufQt7gjlOpEQvIanAeGQh+
- +fuq/RON3MRNFfNL+ZtrA==
+X-Provags-ID: V03:K0:ROq86TekfIIBSNJDm+iDRd28MmMQdFiB8myyxRtdP2vi9yyDoh6
+ 6M41yPU1VqnALvt3hvMwLAErAGjZ86UKBiv3kHhauaiWKalI7BK0Oi2AzGSBMqTv/Ea0167
+ WnaIO+jeSlrMEh0eMUvXy7NggUyaRsxvLcX6dzZvr/8WTT3aGmMzYWdR9mq2iQx3DXU0uOc
+ Xma9UMJjVLcCsuEiwYnqQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253041>
 
-Am 07.07.2014 20:13, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> Only the two targets "test-lint-duplicates" and "test-lint-executable" are
->> currently executed when running the test target. This was done on purpose
->> when the TEST_LINT variable was added in 81127d74. But as this does not
->> include the "test-lint-shell-syntax" target added the same day in commit
->> c7ce70ac, it is easy to accidentally add non portable shell constructs
->> without noticing that when running the test suite.
-> 
-> I not running the lint-shell-syntax that is fundamentally flaky to
-> avoid false positives is very much on purpose.  The flakiness is not
-> the fault of the implementor of the lint-shell-syntax, but comes
-> from the approach taken to pretend that simple pattern matching can
-> parse shell scripts.  It may not complain on the current set of
-> scripts, but that is not really by design but by accident.
-> 
-> So I am not very enthusiastic to see this change myself.
+Am 07.07.2014 21:40, schrieb Torsten B=F6gershausen:
+> On 2014-07-07 19.05, Junio C Hamano wrote:
+>> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>>
+>>> Junio, do you want me to resend 02/14 without the non-portable "ech=
+o -n"
+>>> or could you just squash the following diff in?
+>>
+>> Amended locally here already; thanks, both.
+>=20
+> There seems to be some other trouble under Mac OS, not yet fully trac=
+ked down,
+> (may be related to the "diff -r")
 
-Ok, I understand we do not want to lightly risk false positives. I
-just noticed that I accidentally forgot to sign off this series, so
-I'd resend just the first patch with a proper SOB, ok?
+Torsten sees failures of this kind under Mac OS:
+
+diff -r .git/modules/sub1/config sub1/.git/config
+6d5
+<     worktree =3D ../../../sub1
+8a8
+>     worktree =3D ../../../sub1
+
+So the config contains the same content, but the worktree setting moved
+to a different line. This seems to be the result of setting core.worktr=
+ee
+in the test_git_directory_is_unchanged function just before the "diff -=
+r",
+but only under Mac OS.
+
+> And Msysgit complains=20
+> error: fchmod on c:/xxxt/trash directory.t7613-merge-submodule/submod=
+ule_update_repo/.git/modules/sub1/config.lock failed: Function not impl=
+emented
+
+I'm not sure what this is about, seems to happen during the "cp -R" of
+the repo under .git/modules into the submodule.
+
+I'm currently investigating both issues (the next steps probably being
+to install msysgit and to do some Git hacking on a Mac in the family).
