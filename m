@@ -1,120 +1,175 @@
 From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v20 39/48] refs.c: make delete_ref use a transaction
-Date: Tue, 08 Jul 2014 15:52:20 +0200
-Message-ID: <53BBF794.1090702@alum.mit.edu>
-References: <1403275409-28173-1-git-send-email-sahlberg@google.com> <1403275409-28173-40-git-send-email-sahlberg@google.com>
+Subject: Re: [PATCH v20 40/48] refs.c: add an err argument to delete_ref_loose
+Date: Tue, 08 Jul 2014 16:19:42 +0200
+Message-ID: <53BBFDFE.5060902@alum.mit.edu>
+References: <1403275409-28173-1-git-send-email-sahlberg@google.com> <1403275409-28173-41-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 08 15:52:32 2014
+X-From: git-owner@vger.kernel.org Tue Jul 08 16:19:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4Vop-0004mm-RA
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 15:52:28 +0200
+	id 1X4WFJ-0005pp-FN
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 16:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752836AbaGHNwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 09:52:23 -0400
-Received: from alum-mailsec-scanner-8.mit.edu ([18.7.68.20]:54486 "EHLO
-	alum-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751610AbaGHNwW (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jul 2014 09:52:22 -0400
-X-AuditID: 12074414-f79446d000001f1d-6b-53bbf79688b6
+	id S1750951AbaGHOTp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2014 10:19:45 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:58171 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750834AbaGHOTp (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jul 2014 10:19:45 -0400
+X-AuditID: 1207440e-f79da6d0000002fc-4b-53bbfe00ea02
 Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-8.mit.edu (Symantec Messaging Gateway) with SMTP id 48.31.07965.697FBB35; Tue,  8 Jul 2014 09:52:22 -0400 (EDT)
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id F6.31.00764.00EFBB35; Tue,  8 Jul 2014 10:19:44 -0400 (EDT)
 Received: from [192.168.69.130] (p4FC97EC0.dip0.t-ipconnect.de [79.201.126.192])
 	(authenticated bits=0)
         (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s68DqKnG001635
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s68EJg8x002913
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 8 Jul 2014 09:52:21 -0400
+	Tue, 8 Jul 2014 10:19:43 -0400
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <1403275409-28173-40-git-send-email-sahlberg@google.com>
+In-Reply-To: <1403275409-28173-41-git-send-email-sahlberg@google.com>
 X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmphleLIzCtJLcpLzFFi42IRYndR1J32fXewwZUlQhZdV7qZLP5NqHFg
-	8liwqdTj8ya5AKYobpukxJKy4Mz0PH27BO6Mm2siCy4LVXRPPs7cwHiHr4uRk0NCwETi1cnp
-	rBC2mMSFe+vZuhi5OIQELjNK7J94lxXCOc8k8fDjEzaQKl4BbYmpf5ewgNgsAqoSrUvvgXWz
-	CehKLOppZgKxRQWCJGZ/nscOUS8ocXLmE7B6EQE7ifW3FjKD2MICHhLv2x6A2UICNRKHLvxj
-	BLE5BVwl3uzcCLSLA+gicYmexiCQMLOAjsS7PohyZgF5ie1v5zBPYBSYhWTDLCRls5CULWBk
-	XsUol5hTmqubm5iZU5yarFucnJiXl1qka6GXm1mil5pSuokREqIiOxiPnJQ7xCjAwajEw7vi
-	4K5gIdbEsuLK3EOMkhxMSqK8d97uDhbiS8pPqcxILM6ILyrNSS0+xCjBwawkwvvlFFCONyWx
-	siq1KB8mJc3BoiTO+22xup+QQHpiSWp2ampBahFMVoaDQ0mCN/UbUKNgUWp6akVaZk4JQpqJ
-	gxNkOJeUSHFqXkpqUWJpSUY8KE7ji4GRCpLiAdq79SvI3uKCxFygKETrKUZFKXHeF1+AEgIg
-	iYzSPLixsMTzilEc6Eth3n8g7TzApAXX/QpoMBPQ4M/vd4AMLklESEk1MKZ/TS1Z5MEpbnz2
-	3aHIR01eD1n4p9ifff3/sM77Wdp/O+a3XPh3e411+Jsph99tyFmmUflLXf/GQZ+j29q/rv3f
-	NkvBcZrCP9O5bwWn2Cql/m88vj/nXLfqb7WNZRFzLVuWOCztVs47OqXkgPS3pW// 
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmplleLIzCtJLcpLzFFi42IRYndR1GX4tzvYYMYzGYuuK91MFv8m1Dgw
+	eSzYVOrxeZNcAFMUt01SYklZcGZ6nr5dAnfG9OcLWAs65Svenj3I3MD4R7yLkZNDQsBEovXQ
+	XjYIW0ziwr31QDYXh5DAZUaJG50zoJzzTBIXmlcyglTxCmhLHNlwhgXEZhFQlehePw/MZhPQ
+	lVjU08wEYosKBEnM/jyPHaJeUOLkzCdgNSICdhLrby1kBrGFBfwkGua8AKsREqiRuP/3HpjN
+	KeAqMeEXyEUcQBeJS/Q0BoGEmQV0JN71PWCGsOUltr+dwzyBUWAWkg2zkJTNQlK2gJF5FaNc
+	Yk5prm5uYmZOcWqybnFyYl5eapGusV5uZoleakrpJkZIkPLtYGxfL3OIUYCDUYmHd8XBXcFC
+	rIllxZW5hxglOZiURHn3/94dLMSXlJ9SmZFYnBFfVJqTWnyIUYKDWUmE98spoBxvSmJlVWpR
+	PkxKmoNFSZxXbYm6n5BAemJJanZqakFqEUxWhoNDSYL3wB+gRsGi1PTUirTMnBKENBMHJ8hw
+	LimR4tS8lNSixNKSjHhQpMYXA2MVJMUDtPcvSDtvcUFiLlAUovUUo6KUOK8WSEIAJJFRmgc3
+	FpZ6XjGKA30pzHsWpIoHmLbgul8BDWYCGvz5/Q6QwSWJCCmpBsY+4X+5y2vXXdVSuF/9rODr
+	s6SDx9ZrpnxTS5p5a2PjjLVFb39XyT4r+Cj86mpRfOfnVX0GOx/FmZQzTn/L82Hty98KbAFL
+	/Hidm1dPv7TvdZLP2sM66/pOueuLFe8VfNeSIzXHpD03UXXebr9bZ8rCDh8smGdh 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253026>
 
 On 06/20/2014 04:43 PM, Ronnie Sahlberg wrote:
-> Change delete_ref to use a ref transaction for the deletion. At the same time
-> since we no longer have any callers of repack_without_ref we can now delete
-> this function.
+> Add an err argument to delete_loose_ref so that we can pass a descriptive
+> error string back to the caller. Pass the err argument from transaction
+> commit to this function so that transaction users will have a nice error
+> string if the transaction failed due to delete_loose_ref.
 > 
-> Change delete_ref to return 0 on success and 1 on failure instead of the
-> previous 0 on success either 1 or -1 on failure.
+> Add a new function unlink_or_err that we can call from delete_ref_loose. This
+> function is similar to unlink_or_warn except that we can pass it an err
+> argument. If err is non-NULL the function will populate err instead of
+> printing a warning().
 > 
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> Simplify warn_if_unremovable.
+
+The change to warn_if_unremovable() is orthogonal to the rest of the
+commit and should be a separate commit.
+
 > Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 > ---
->  refs.c | 34 +++++++++++++---------------------
->  1 file changed, 13 insertions(+), 21 deletions(-)
+>  refs.c    | 33 ++++++++++++++++++++++++++++-----
+>  wrapper.c | 14 ++++++--------
+>  2 files changed, 34 insertions(+), 13 deletions(-)
 > 
 > diff --git a/refs.c b/refs.c
-> index 3d070d5..92a06d4 100644
+> index 92a06d4..c7d1f3e 100644
 > --- a/refs.c
 > +++ b/refs.c
-> @@ -2544,11 +2544,6 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+> @@ -2544,16 +2544,38 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
 >  	return ret;
 >  }
 >  
-> -static int repack_without_ref(const char *refname)
-> -{
-> -	return repack_without_refs(&refname, 1, NULL);
-> -}
-> -
->  static int delete_ref_loose(struct ref_lock *lock, int flag)
+> -static int delete_ref_loose(struct ref_lock *lock, int flag)
+> +static int add_err_if_unremovable(const char *op, const char *file,
+> +				  struct strbuf *e, int rc)
+
+This function is only used once.  Given also that its purpose is not
+that obvious from its signature, it seems to me that the code would be
+easier to read if it were inlined.
+
+> +{
+> +	int err = errno;
+> +	if (rc < 0 && errno != ENOENT) {
+> +		strbuf_addf(e, "unable to %s %s: %s",
+> +			    op, file, strerror(errno));
+> +		errno = err;
+> +		return -1;
+> +	}
+> +	return 0;
+> +}
+> +
+> +static int unlink_or_err(const char *file, struct strbuf *err)
+
+The name of this function is misleading; it sounds like it will try to
+unlink the file and if not possible call error().  Maybe a name like
+"unlink_or_report" would be less prejudicial.
+
+It might also make sense to move this function to wrapper.c and
+implement unlink_or_warn() in terms of it rather than vice versa.
+
+> +{
+> +	if (err)
+> +		return add_err_if_unremovable("unlink", file, err,
+> +					      unlink(file));
+> +	else
+> +		return unlink_or_warn(file);
+> +}
+> +
+> +static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
 >  {
 >  	if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
-> @@ -2566,24 +2561,21 @@ static int delete_ref_loose(struct ref_lock *lock, int flag)
+>  		/* loose */
+> -		int err, i = strlen(lock->lk->filename) - 5; /* .lock */
+> +		int res, i = strlen(lock->lk->filename) - 5; /* .lock */
 >  
->  int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+>  		lock->lk->filename[i] = 0;
+> -		err = unlink_or_warn(lock->lk->filename);
+> +		res = unlink_or_err(lock->lk->filename, err);
+>  		lock->lk->filename[i] = '.';
+> -		if (err && errno != ENOENT)
+> +		if (res)
+>  			return 1;
+>  	}
+>  	return 0;
+> @@ -3603,7 +3625,8 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+>  		struct ref_update *update = updates[i];
+>  
+>  		if (update->lock) {
+> -			ret |= delete_ref_loose(update->lock, update->type);
+> +			ret |= delete_ref_loose(update->lock, update->type,
+> +						err);
+>  			if (!(update->flags & REF_ISPRUNING))
+>  				delnames[delnum++] = update->lock->ref_name;
+>  		}
+> diff --git a/wrapper.c b/wrapper.c
+> index bc1bfb8..740e193 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -429,14 +429,12 @@ int xmkstemp_mode(char *template, int mode)
+>  
+>  static int warn_if_unremovable(const char *op, const char *file, int rc)
 >  {
-> -	struct ref_lock *lock;
-> -	int ret = 0, flag = 0;
-> +	struct ref_transaction *transaction;
-> +	struct strbuf err = STRBUF_INIT;
+> -	if (rc < 0) {
+> -		int err = errno;
+> -		if (ENOENT != err) {
+> -			warning("unable to %s %s: %s",
+> -				op, file, strerror(errno));
+> -			errno = err;
+> -		}
+> -	}
+> +	int err;
+> +	if (rc >= 0 || errno == ENOENT)
+> +		return rc;
+> +	err = errno;
+> +	warning("unable to %s %s: %s", op, file, strerror(errno));
+> +	errno = err;
+>  	return rc;
+>  }
 >  
-> -	lock = lock_ref_sha1_basic(refname, sha1, delopt, &flag);
-
-The old code checked that the old value of refname was sha1, regardless
-of whether sha1 was null_sha1.  Presumably callers never set sha1 to
-null_sha1...
-
-> -	if (!lock)
-> +	transaction = ref_transaction_begin(&err);
-> +	if (!transaction ||
-> +	    ref_transaction_delete(transaction, refname, sha1, delopt,
-> +				   sha1 && !is_null_sha1(sha1), &err) ||
-
-...But the new code explicitly skips the check if sha1 is null_sha1.
-This shouldn't make a practical difference, because presumably callers
-never set sha1 to null_sha1.  But given that the new policy elsewhere
-for "delete" updates is that it is an error for old_sha1 to equal
-null_sha1, it seems to me that this extra check shouldn't be here.  So I
-think this should be changed to
-
-    ref_transaction_delete(transaction, refname, sha1, delopt,
-                           !!sha1, &err) ||
-
-
-> [...]
+> 
 
 Michael
 
