@@ -1,178 +1,153 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] http: Add Accept-Language header if possible
-Date: Tue, 8 Jul 2014 17:52:22 -0400
-Message-ID: <CAPig+cTbhUKF7OwYJY2_1m9j=khPRaLM2kd5KqDGD=vjRz0qHg@mail.gmail.com>
-References: <1404834846-11812-1-git-send-email-eungjun.yi@navercorp.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH RFC v2 06/19] rebase -i: Stop on root commits with empty log messages
+Date: Tue, 08 Jul 2014 15:26:39 -0700
+Message-ID: <xmqq8uo38p28.fsf@gitster.dls.corp.google.com>
+References: <53A258D2.7080806@gmail.com>
+	<cover.1404323078.git.bafain@gmail.com>
+	<00ca9dc0d1750301aa22c2bb78976b141233cef3.1404323078.git.bafain@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Yi EungJun <eungjun.yi@navercorp.com>
-To: Yi EungJun <semtlenori@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 23:52:30 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
+To: Fabian Ruch <bafain@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 00:27:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4dJN-0001V3-VQ
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 23:52:30 +0200
+	id 1X4dql-0006Ye-Gd
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 00:26:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754684AbaGHVwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 17:52:25 -0400
-Received: from mail-la0-f54.google.com ([209.85.215.54]:58919 "EHLO
-	mail-la0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752687AbaGHVwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 17:52:24 -0400
-Received: by mail-la0-f54.google.com with SMTP id mc6so4471854lab.13
-        for <git@vger.kernel.org>; Tue, 08 Jul 2014 14:52:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=z0nGbbcifArsJDDDME4o/EzJ8/cHey/N/qZ1nt8GBJE=;
-        b=diRaBL7HQMVsii3DtKb7P0WDTiw0f7PHOZSueOEYmMQ5k2hwM16xhBquc18OoOG862
-         jpm/rqmFSKrxH4kU50dNFqtz9zwdlZFnlY5M26QZJhDVt0ir89urPi1z4tSzk5XOMN37
-         yxFPAMUijLtoRWZhHM6JlxLgB/FCxE114EPgFrc4e9ajnH0ATKiSbyy+3fi0Ut9U6Cxb
-         /t7YiW/NdPzlDIwtKVMbjOKkNixhFkhxmXu5SfetGRLwrxqA8KAmkOybFrVsJFBFvL0D
-         W9JJHakRhMX/r7Noa3Pwd68XbAyO2P1gkTrSGDgRN6sW9Pjjlf5i+hvSZd0fuVje8m6O
-         SQwA==
-X-Received: by 10.112.161.71 with SMTP id xq7mr8866324lbb.57.1404856342076;
- Tue, 08 Jul 2014 14:52:22 -0700 (PDT)
-Received: by 10.114.78.167 with HTTP; Tue, 8 Jul 2014 14:52:22 -0700 (PDT)
-In-Reply-To: <1404834846-11812-1-git-send-email-eungjun.yi@navercorp.com>
-X-Google-Sender-Auth: rAm36B6QiqM1MWylrZtHQ8NxwOQ
+	id S1755274AbaGHW0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2014 18:26:49 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53813 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751942AbaGHW0q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 18:26:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2236327DFF;
+	Tue,  8 Jul 2014 18:26:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JEiUg+XSZiklD4O9auP+h0q4/h0=; b=GMpmj/
+	GOA2D09fc8DofNkLcAhwAFt5IQcgXS90ynqzhCtulVRFsPDXwYAHLsj0nvKTMj/g
+	8520kkVP35NuwNZVh6nrc0aD4BMrLKYWaaSi2TIzWr2yjIv7UQfsXyrsJVezOw4b
+	gULAc/Mpbku6jbgwibyIpI++qUpeDCdcuJLOk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=am0FzkFFapiNgGOF6CCahh/7uFGDu/cR
+	slkh8TRbolQk9IUKSDMgUq9ZlUCInopVlYtZh6iut86YYfdnS9W6A6LhWX10gQqY
+	KR8kUiNs6nZCxbex+LYV7LEsNVMkAGVxEWkR3QxMgkfC8KHSDTFMHW00m06xfeTD
+	UM2JF2qoeXw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 170C027DFE;
+	Tue,  8 Jul 2014 18:26:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E878327DFC;
+	Tue,  8 Jul 2014 18:26:25 -0400 (EDT)
+In-Reply-To: <00ca9dc0d1750301aa22c2bb78976b141233cef3.1404323078.git.bafain@gmail.com>
+	(Fabian Ruch's message of "Wed, 2 Jul 2014 19:47:58 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E60EA274-06EE-11E4-A045-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253054>
 
-On Tue, Jul 8, 2014 at 11:54 AM, Yi EungJun <semtlenori@gmail.com> wrote:
-> From: Yi EungJun <eungjun.yi@navercorp.com>
+Fabian Ruch <bafain@gmail.com> writes:
+
+> The command line used to recreate root commits specifies the
+> erroneous option `--allow-empty-message`. If the root commit has an
+> empty log message, the replay of this commit should fail and the
+> rebase should be interrupted like for any other commit that is on the
+> to-do list and has an empty commit message. Remove the option.
 >
-> Add an Accept-Language header which indicates the user's preferred
-> languages defined by 'LANGUAGE' environment variable if the variable is
-> not empty.
+> The option might have been introduced by copy-and-paste of the first
+> part of the command line which initializes the authorship of the
+> sentinel commit. Indeed, the sentinel commit has an empty log message
+> and this should not trigger a failure, which is why the option
+> `--allow-empty-message` is correctly specified here.
+
+The first "commit --amend" uses -C "$1" to give the amended result
+not just the authorship but also the log message taken from "$1".
+If we are allowing a commit without any message to be used as "$1",
+I think --allow-empty-message needs to be there.  If "$1" requires
+the option here, why doesn't the second one, that records the
+updated tree with the metainformation taken from the same commit
+"$1" can successfully commit without the option?
+
+Puzzled...
+
+> Add test.
 >
-> Example:
->   LANGUAGE= -> ""
->   LANGUAGE=ko -> "Accept-Language: ko; q=1.000, *; q=0.001"
->   LANGUAGE=ko:en -> "Accept-Language: ko; q=1.000, en; q=0.999, *; q=0.001"
->
-> This gives git servers a chance to display remote error messages in
-> the user's preferred language.
+> Signed-off-by: Fabian Ruch <bafain@gmail.com>
 > ---
->  http.c                     | 43 +++++++++++++++++++++++++++++++++++++++++++
->  t/t5550-http-fetch-dumb.sh | 10 ++++++++++
->  2 files changed, 53 insertions(+)
+>  git-rebase--interactive.sh |  2 +-
+>  t/t3412-rebase-root.sh     | 39 +++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 40 insertions(+), 1 deletion(-)
 >
-> diff --git a/http.c b/http.c
-> index 3a28b21..c345616 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -983,6 +983,47 @@ static void extract_content_type(struct strbuf *raw, struct strbuf *type,
->                 strbuf_addstr(charset, "ISO-8859-1");
->  }
->
-> +/*
-> + * Add an Accept-Language header which indicates user's preferred languages
-> + * defined by 'LANGUAGE' environment variable if the variable is not empty.
-> + *
-> + * Example:
-> + *   LANGUAGE= -> ""
-> + *   LANGUAGE=ko -> "Accept-Language: ko; q=1.000, *; q=0.001"
-> + *   LANGUAGE=ko:en -> "Accept-Language: ko; q=1.000, en; q=0.999, *; q=0.001"
-> + */
-> +static void add_accept_language(struct strbuf *buf)
-> +{
-> +       const char *p1, *p2;
-> +       float q = 1.000;
-> +
-> +       p1 = getenv("LANGUAGE");
-> +
-> +       if (p1 != NULL && p1[0] != '\0') {
-> +               strbuf_reset(buf);
-
-It seems wrong to clear 'buf' in a function named add_accept_language().
-
-> +               strbuf_addstr(buf, "Accept-Language: ");
-> +               for (p2 = p1; q > 0.001; p2++) {
-> +                       if ((*p2 == ':' || *p2 == '\0') && p1 != p2) {
-> +                               if (q < 1.0) {
-> +                                       strbuf_addstr(buf, ", ");
-> +                               }
-> +                               strbuf_add(buf, p1, p2 - p1);
-> +                               strbuf_addf(buf, "; q=%.3f", q);
-> +                               q -= 0.001;
-> +                               p1 = p2 + 1;
-> +
-> +                               if (*p2 == '\0') {
-> +                                       break;
-> +                               }
-> +                       }
-> +               }
-> +               if (q < 1.0) {
-> +                       strbuf_addstr(buf, ", ");
-> +               }
-> +               strbuf_addstr(buf, "*; q=0.001\r\n");
-
-Manually adding "\r\n" is contraindicated. Headers passed to
-curl_easy_setopt(c, CURLOPT_HTTPHEADER, headers) must not have "\r\n",
-since curl will add terminators itself [1].
-
-[1]: http://curl.haxx.se/libcurl/c/CURLOPT_HTTPHEADER.html
-
-> +       }
-> +}
-> +
->  /* http_request() targets */
->  #define HTTP_REQUEST_STRBUF    0
->  #define HTTP_REQUEST_FILE      1
-> @@ -1020,6 +1061,8 @@ static int http_request(const char *url,
->                                          fwrite_buffer);
->         }
->
-> +       add_accept_language(&buf);
-
-This is inconsistent with how other headers are handled by this
-function. The existing idiom is:
-
-    strbuf_add(&buf, ...); /* construct header */
-    headers = curl_slist_apend(headers, buf.buf);
-    strbuf_reset(&buf);
-
-> +
->         strbuf_addstr(&buf, "Pragma:");
->         if (options && options->no_cache)
->                 strbuf_addstr(&buf, " no-cache");
-> diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-> index ac71418..ea15158 100755
-> --- a/t/t5550-http-fetch-dumb.sh
-> +++ b/t/t5550-http-fetch-dumb.sh
-> @@ -196,5 +196,15 @@ test_expect_success 'reencoding is robust to whitespace oddities' '
->         grep "this is the error message" stderr
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 4c875d5..0af96f2 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -510,7 +510,7 @@ do_pick () {
+>  		git commit --allow-empty --allow-empty-message --amend \
+>  			   --no-post-rewrite -n -q -C $1 &&
+>  			pick_one -n $1 &&
+> -			git commit --allow-empty --allow-empty-message \
+> +			git commit --allow-empty \
+>  				   --amend --no-post-rewrite -n -q -C $1 \
+>  				   ${gpg_sign_opt:+"$gpg_sign_opt"} ||
+>  			die_with_patch $1 "Could not apply $1... $2"
+> diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
+> index 0b52105..9867705 100755
+> --- a/t/t3412-rebase-root.sh
+> +++ b/t/t3412-rebase-root.sh
+> @@ -278,4 +278,43 @@ test_expect_success 'rebase -i -p --root with conflict (second part)' '
+>  	test_cmp expect-conflict-p out
 >  '
->
-> +test_expect_success 'git client sends Accept-Language' '
-> +       GIT_CURL_VERBOSE=1 LANGUAGE=ko:en git clone "$HTTPD_URL/accept/language" 2>actual
-
-Broken &&-chain.
-
-> +       grep "^Accept-Language: ko; q=1.000, en; q=0.999, \*; q=0.001" actual
-
-Do you want to \-escape the periods? (Or maybe use 'grep -F'?)
-
+>  
+> +test_expect_success 'stop rebase --root on empty root log message' '
+> +	# create a root commit with a non-empty tree so that rebase does
+> +	# not fail because of an empty commit, and an empty log message
+> +	echo root-commit >file &&
+> +	git add file &&
+> +	tree=$(git write-tree) &&
+> +	root=$(git commit-tree $tree </dev/null) &&
+> +	git checkout -b no-message-root-commit $root &&
+> +	# do not ff because otherwise neither the patch nor the message
+> +	# are looked at and checked for emptiness
+> +	test_when_finished git rebase --abort &&
+> +	test_must_fail env EDITOR=true git rebase -i --force-rebase --root &&
+> +	echo root-commit >file.expected &&
+> +	test_cmp file.expected file
 > +'
 > +
-> +test_expect_success 'git client does not send Accept-Language' '
-> +       GIT_CURL_VERBOSE=1 LANGUAGE= git clone "$HTTPD_URL/accept/language" 2>actual
-
-Broken &&-chain.
-
-> +       test_must_fail grep "^Accept-Language:" actual
+> +test_expect_success 'stop rebase --root on empty child log message' '
+> +	# create a root commit with a non-empty tree and provide a log
+> +	# message so that rebase does not fail until the root commit is
+> +	# successfully replayed
+> +	echo root-commit >file &&
+> +	git add file &&
+> +	tree=$(git write-tree) &&
+> +	root=$(git commit-tree $tree -m root-commit) &&
+> +	git checkout -b no-message-child-commit $root &&
+> +	# create a child commit with a non-empty patch so that rebase
+> +	# does not fail because of an empty commit, but an empty log
+> +	# message
+> +	echo child-commit >file &&
+> +	git add file &&
+> +	git commit --allow-empty-message --no-edit &&
+> +	# do not ff because otherwise neither the patch nor the message
+> +	# are looked at and checked for emptiness
+> +	test_when_finished git rebase --abort &&
+> +	test_must_fail env EDITOR=true git rebase -i --force-rebase --root &&
+> +	echo child-commit >file.expected &&
+> +	test_cmp file.expected file
 > +'
 > +
->  stop_httpd
 >  test_done
-> --
-> 2.0.1.473.gafdefd9.dirty
