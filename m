@@ -1,75 +1,83 @@
-From: Jeremy Apthorp <nornagon@nornagon.net>
-Subject: Branch list by date
-Date: Mon, 7 Jul 2014 21:54:55 -0700
-Message-ID: <CAMxk9GhQs_kF5573MS1SJ6a7UZuPu+oquXidOOvibznLQ7_FWw@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v6 09/10] replace: check mergetags when using --graft
+Date: Tue, 08 Jul 2014 07:35:01 +0200 (CEST)
+Message-ID: <20140708.073501.2265697032770915844.chriscool@tuxfamily.org>
+References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
+	<20140707063540.3708.29773.chriscool@tuxfamily.org>
+	<xmqqion8by82.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 08 06:55:31 2014
+Content-Type: Text/Plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, peff@peff.net, mhagger@alum.mit.edu,
+	jnareb@gmail.com, sunshine@sunshineco.com
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jul 08 07:35:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4NRD-0003x8-54
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 06:55:31 +0200
+	id 1X4O3j-0002SR-Oh
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 07:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752229AbaGHEz0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 00:55:26 -0400
-Received: from mail-ob0-f170.google.com ([209.85.214.170]:63550 "EHLO
-	mail-ob0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751874AbaGHEzZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 00:55:25 -0400
-Received: by mail-ob0-f170.google.com with SMTP id uz6so5751914obc.15
-        for <git@vger.kernel.org>; Mon, 07 Jul 2014 21:55:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:from:date:message-id:subject:to:content-type;
-        bh=SwpLgy7Dcvro0YHhuw4PwonciAhtgxejxLcZDk6b5A4=;
-        b=MUy+npniGxn8qIaV3xSzCXardMCUgfaftMP2oIr/E+abKF0uMpMr7wljjwyEHKZXsg
-         NH4c2RPfoZ0McPaoG9/zfX6pL+DpjV98Vo+hyNy52iaaxhcbTuEtbWiYIZm+1YRPtBMi
-         6f15zYWpt5F5r08U0QvIsSXiotALwuS/PTTP+nXsJ2oeRFRNwnwtRj5I6KXG8bmq7jfv
-         zjXxHKdMnx+BuD6LYi0xQ583u7yKhqmoy2YIqsT5gFZcEvv1qY+LHtd4uvcQ9zc2j45k
-         TyIrd7veSWO/LsV1EMcQy9FeLKRvgT/6IKsZcuS7j31EksYnz4iMG3Uv7HuunB4JsQfS
-         QFMA==
-X-Received: by 10.60.42.162 with SMTP id p2mr36724575oel.27.1404795325343;
- Mon, 07 Jul 2014 21:55:25 -0700 (PDT)
-Received: by 10.60.132.49 with HTTP; Mon, 7 Jul 2014 21:54:55 -0700 (PDT)
-X-Google-Sender-Auth: UJfjoTXeKgF0lRTHhqGjMkABY1A
+	id S1752051AbaGHFfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2014 01:35:05 -0400
+Received: from mail-2y.bbox.fr ([194.158.98.15]:38058 "EHLO mail-2y.bbox.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751834AbaGHFfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 01:35:04 -0400
+Received: from localhost (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
+	by mail-2y.bbox.fr (Postfix) with ESMTP id 0404C59;
+	Tue,  8 Jul 2014 07:35:01 +0200 (CEST)
+In-Reply-To: <xmqqion8by82.fsf@gitster.dls.corp.google.com>
+X-Mailer: Mew version 6.3 on Emacs 23.3 / Mule 6.0 (HANACHIRUSATO)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253002>
 
-I built this terribly-written alias because I wanted to see a list of
-branches by date of commit. The output looks like this:
+From: Junio C Hamano <gitster@pobox.com>
+>
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> 
+>> When using --graft, with a mergetag in the original
+>> commit, we should check that the commit pointed to by
+>> the mergetag is still a parent of then new commit we
+>> create, otherwise the mergetag could be misleading.
+>>
+>> If the commit pointed to by the mergetag is no more
+>> a parent of the new commit, we could remove the
+>> mergetag, but in this case there is a good chance
+>> that the title or other elements of the commit might
+>> also be misleading. So let's just error out and
+>> suggest to use --edit instead on the commit.
+> 
+> I do not quite understand the reasoning.  If you have a merge you
+> earlier made with a signed tag, and then want to redo the merge with
+> an updated tip of that branch (perhaps the side branch was earlier
+> based on maint but now was rebased on master), it will perfectly be
+> normal to expect that the title or other elements of the resulting
+> merge to stay the same.  
 
-$ git bbd
-  11 months ago  pipette_editor
-    7 weeks ago  ensure-ie-rendering-edge
-    6 weeks ago  strings-yml
-    5 weeks ago  message-when-validation-fails
-    4 weeks ago  new-parsers
-    11 days ago  tax
-    8 hours ago  search
-    7 hours ago  browse
- 16 minutes ago  master
-  8 seconds ago  org-read
+Yeah, but then you might also want to have a mergetag for the updated
+tip of the branch and --graft will not put it in the new commit, so it
+would be better to use --edit in this case.
 
-And the alias, in all its glory:
+> Why is it a good idea to error it out?
 
-[alias]
-  bbd = "!export head=$(git symbolic-ref HEAD); git for-each-ref
---sort=committerdate --format 'color=$(if [[ %(refname) = $head ]];
-then printf \"\\e[32m\"; fi); printf \"\\e[01;30m%%15s\\e(B\\e[m
-%%s%%s\\n\" %(committerdate:relative) $color %(refname:short)'
-refs/heads/ --shell | sh"
+Because sometimes, in complex cases, it is misleading to do as if you
+can do the right thing, when there is a good chance you cannot.
 
-I write this missive with dual purpose: firstly to share a potentially
-useful tool, and secondly to suggest that this feature (with a less
-mind-wrenchingly disgusting implementation) might be included in
-mainline git, as for example `git branch [-t] | [--by-time]`.
+> If the argument were '"replace --graft" that changes the parents is
+> likely to affect merge summary message, so error out and suggest to
+> use --edit instead', regardless of the 'mergetag', I'd understand
+> it, but that would essentially mean that 'replace --graft' should
+> never be used, so...
 
-Until the ocean swallows us all,
-j
+I think that when "replace --graft" is used on a regular commit there
+is much better chance that the resulting replacement commit will be as
+the user expect it to be.
+
+Thanks,
+Christian.
