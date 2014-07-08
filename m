@@ -1,113 +1,121 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 00/14] Add submodule test harness
-Date: Tue, 08 Jul 2014 22:03:56 +0100
-Message-ID: <53BC5CBC.7030005@ramsay1.demon.co.uk>
-References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>	<53B5C7AC.4040701@web.de> <xmqqsimddrq3.fsf@gitster.dls.corp.google.com> <53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de> <53BC53C3.1010304@ramsay1.demon.co.uk>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] log: fix indentation for --graph --show-signature
+Date: Tue, 8 Jul 2014 17:33:04 -0400
+Message-ID: <CAPig+cT1xcpH7GzfGO8ZkNsN0=waS34p=Yejd-Mv7che1U0i2Q@mail.gmail.com>
+References: <1404817948-7794-1-git-send-email-zoltan.klinger@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>,
-	=?ISO-8859-1?Q?Torsten_B=F6gers?= =?ISO-8859-1?Q?hausen?= 
-	<tboegi@web.de>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 23:04:06 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, jpyeron@pdinc.us,
+	Junio C Hamano <gitster@pobox.com>
+To: Zoltan Klinger <zoltan.klinger@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 23:33:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4cYX-0003cy-3R
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 23:04:05 +0200
+	id 1X4d0h-0005kW-Sm
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 23:33:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753961AbaGHVEB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2014 17:04:01 -0400
-Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:40222 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753402AbaGHVEA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 17:04:00 -0400
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id CAC00A64F45;
-	Tue,  8 Jul 2014 20:58:02 +0100 (BST)
-Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 9AA0CA64F22;
-	Tue,  8 Jul 2014 20:58:02 +0100 (BST)
-Received: from [192.168.254.1] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
-	Tue,  8 Jul 2014 20:58:01 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53BC53C3.1010304@ramsay1.demon.co.uk>
-X-MDF-HostID: 8
+	id S1751965AbaGHVdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2014 17:33:07 -0400
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:58792 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751940AbaGHVdG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 17:33:06 -0400
+Received: by mail-lb0-f182.google.com with SMTP id c11so4437803lbj.13
+        for <git@vger.kernel.org>; Tue, 08 Jul 2014 14:33:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=tSZPXIt12qymn6MfvYxhENf+J2Yagqj9uvGVawON+f0=;
+        b=s0f1TLek3RcxfcpuxPd92isa2y2hOjEfxdINYkBq/rNCMsOnIqW+mhx/cR9JJTm5/O
+         o+9Hjtz9jbJelILRK34pbx3kiPR+w0EfyV5GX0X0AhipzkTdqN9km0ZdTByksyUBseHP
+         adepE+x69S1kSXIjryx1Qzu7JlZykSUf4gq2L0/hv/HAMoKDFA2ihSQDM++ADggpdgB+
+         U9yVR4pyR9I2K7DxiNwjxUNLX5j87TV8itndW+idPQghL1bz0RgwjIdwFUbKWTD5np+D
+         7gXLgU5VeUtOZMw2z80H3LNy+n1z5wexqqm3dAsjjYR8WQurqlVheE+f7ofibmvSBpqj
+         HXnQ==
+X-Received: by 10.112.161.71 with SMTP id xq7mr8808103lbb.57.1404855184109;
+ Tue, 08 Jul 2014 14:33:04 -0700 (PDT)
+Received: by 10.114.78.167 with HTTP; Tue, 8 Jul 2014 14:33:04 -0700 (PDT)
+In-Reply-To: <1404817948-7794-1-git-send-email-zoltan.klinger@gmail.com>
+X-Google-Sender-Auth: MURIz3aYkhafnQK5M2xvf0JZwEs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253050>
 
-On 08/07/14 21:25, Ramsay Jones wrote:
-> On 08/07/14 20:34, Jens Lehmann wrote:
->> Am 07.07.2014 21:40, schrieb Torsten B=F6gershausen:
->>> On 2014-07-07 19.05, Junio C Hamano wrote:
->>>> Jens Lehmann <Jens.Lehmann@web.de> writes:
->>>>
->>>>> Junio, do you want me to resend 02/14 without the non-portable "e=
-cho -n"
->>>>> or could you just squash the following diff in?
->>>>
->>>> Amended locally here already; thanks, both.
->>>
->>> There seems to be some other trouble under Mac OS, not yet fully tr=
-acked down,
->>> (may be related to the "diff -r")
->>
->> Torsten sees failures of this kind under Mac OS:
->>
->> diff -r .git/modules/sub1/config sub1/.git/config
->> 6d5
->> <     worktree =3D ../../../sub1
->> 8a8
->>>     worktree =3D ../../../sub1
->>
->> So the config contains the same content, but the worktree setting mo=
-ved
->> to a different line. This seems to be the result of setting core.wor=
-ktree
->> in the test_git_directory_is_unchanged function just before the "dif=
-f -r",
->> but only under Mac OS.
->>
->>> And Msysgit complains=20
->>> error: fchmod on c:/xxxt/trash directory.t7613-merge-submodule/subm=
-odule_update_repo/.git/modules/sub1/config.lock failed: Function not im=
-plemented
->>
->> I'm not sure what this is about, seems to happen during the "cp -R" =
-of
->> the repo under .git/modules into the submodule.
->=20
-> I haven't looked into this at all, but from the above message, and
-> noting that fchmod() is not implemented in mingw (see compat/mingw.h
-> line 91), and the following:
->=20
->     $ git grep -n fchmod
->     compat/mingw.h:91:static inline int fchmod(int fildes, mode_t mod=
-e)
->     config.c:1639:          if (fchmod(fd, st.st_mode & 07777) < 0) {
->     config.c:1640:                  error("fchmod on %s failed: %s",
->     config.c:1818:  if (fchmod(out_fd, st.st_mode & 07777) < 0) {
->     config.c:1819:          ret =3D error("fchmod on %s failed: %s",
->     $=20
->=20
-> [I happen to be on the pu branch at the moment, so YMMV!]
->=20
-> Both calls to fchmod() above are on config lock files, one
-> in git_config_set_multivar_in_file() and the other in
-> git_config_rename_section_in_file().
->=20
+On Tue, Jul 8, 2014 at 7:12 AM, Zoltan Klinger <zoltan.klinger@gmail.com> wrote:
+> The git log --graph --show-signature command incorrectly indents the gpg
+> information about signed commits and merged signed tags. It does not
+> follow the level of indentation of the current commit.
+>
+> Reported-by: Jason Pyeron <jpyeron@pdinc.us>
+> Signed-off-by: Zoltan Klinger <zoltan.klinger@gmail.com>
+> ---
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index cb03d28..b429aff 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -3,6 +3,7 @@
+>  test_description='git log'
+>
+>  . ./test-lib.sh
+> +. "$TEST_DIRECTORY/lib-gpg.sh"
+>
+>  test_expect_success setup '
+>
+> @@ -841,4 +842,32 @@ test_expect_success 'dotdot is a parent directory' '
+>         test_cmp expect actual
+>  '
+>
+> +test_expect_success GPG 'log --graph --show-signature' '
+> +       git checkout -b signed master &&
 
-See commit daa22c6f8 ("config: preserve config file permissions
-on edits", 06-05-2014).
+Do you want
 
-ATB,
-Ramsay Jones
+    test_when_finished 'git reset --hard && git checkout master' &&
+
+here in case of failure in this test in order to restore sanity for
+tests which might be added later?
+
+> +       echo foo >foo &&
+> +       git add foo &&
+> +       git commit -S -m signed_commit &&
+> +       git log --graph --show-signature -n1 signed >actual &&
+> +       grep "^| gpg: Signature made" actual &&
+> +       grep "^| gpg: Good signature" actual
+> +'
+> +
+> +test_expect_success GPG 'log --graph --show-signature for merged tag' '
+> +       git checkout -b plain master &&
+> +       echo aaa >bar &&
+> +       git add bar &&
+> +       git commit -m bar_commit
+
+Broken &&-chain.
+
+> +       git checkout -b tagged master &&
+
+Ditto regarding test_when_finished.
+
+> +       echo bbb >baz &&
+> +       git add baz &&
+> +       git commit -m baz_commit
+
+Broken &&-chain.
+
+> +       git tag -s -m signed_tag_msg signed_tag &&
+> +       git checkout plain &&
+> +       git merge --no-ff -m msg signed_tag &&
+> +       git log --graph --show-signature -n1 plain >actual &&
+> +       grep "^|\\\  merged tag" actual &&
+> +       grep "^| | gpg: Signature made" actual &&
+> +       grep "^| | gpg: Good signature" actual
+> +'
+> +
+>  test_done
+> --
+> 2.0.0
