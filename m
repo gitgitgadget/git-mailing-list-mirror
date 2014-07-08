@@ -1,79 +1,113 @@
-From: Max Kirillov <max@max630.net>
-Subject: [PATCH] gitk: add keybinding to switch to parent commit
-Date: Tue,  8 Jul 2014 23:45:35 +0300
-Message-ID: <1404852335-27731-1-git-send-email-max@max630.net>
-Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Jul 08 22:46:16 2014
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 00/14] Add submodule test harness
+Date: Tue, 08 Jul 2014 22:03:56 +0100
+Message-ID: <53BC5CBC.7030005@ramsay1.demon.co.uk>
+References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>	<53B5C7AC.4040701@web.de> <xmqqsimddrq3.fsf@gitster.dls.corp.google.com> <53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de> <53BC53C3.1010304@ramsay1.demon.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>,
+	=?ISO-8859-1?Q?Torsten_B=F6gers?= =?ISO-8859-1?Q?hausen?= 
+	<tboegi@web.de>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 23:04:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4cHG-0000VI-Gk
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 22:46:14 +0200
+	id 1X4cYX-0003cy-3R
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 23:04:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754398AbaGHUqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 16:46:10 -0400
-Received: from p3plsmtpa07-07.prod.phx3.secureserver.net ([173.201.192.236]:46832
-	"EHLO p3plsmtpa07-07.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753893AbaGHUqI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jul 2014 16:46:08 -0400
-Received: from wheezy.local ([82.181.158.170])
-	by p3plsmtpa07-07.prod.phx3.secureserver.net with 
-	id Pwm11o00U3gsSd601wm6FB; Tue, 08 Jul 2014 13:46:08 -0700
-X-Mailer: git-send-email 2.0.0.526.g5318336
+	id S1753961AbaGHVEB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2014 17:04:01 -0400
+Received: from mdfmta005.mxout.tbr.inty.net ([91.221.168.46]:40222 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753402AbaGHVEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 17:04:00 -0400
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id CAC00A64F45;
+	Tue,  8 Jul 2014 20:58:02 +0100 (BST)
+Received: from mdfmta005.tbr.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP id 9AA0CA64F22;
+	Tue,  8 Jul 2014 20:58:02 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta005.tbr.inty.net (Postfix) with ESMTP;
+	Tue,  8 Jul 2014 20:58:01 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <53BC53C3.1010304@ramsay1.demon.co.uk>
+X-MDF-HostID: 8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253049>
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Hi.
+On 08/07/14 21:25, Ramsay Jones wrote:
+> On 08/07/14 20:34, Jens Lehmann wrote:
+>> Am 07.07.2014 21:40, schrieb Torsten B=F6gershausen:
+>>> On 2014-07-07 19.05, Junio C Hamano wrote:
+>>>> Jens Lehmann <Jens.Lehmann@web.de> writes:
+>>>>
+>>>>> Junio, do you want me to resend 02/14 without the non-portable "e=
+cho -n"
+>>>>> or could you just squash the following diff in?
+>>>>
+>>>> Amended locally here already; thanks, both.
+>>>
+>>> There seems to be some other trouble under Mac OS, not yet fully tr=
+acked down,
+>>> (may be related to the "diff -r")
+>>
+>> Torsten sees failures of this kind under Mac OS:
+>>
+>> diff -r .git/modules/sub1/config sub1/.git/config
+>> 6d5
+>> <     worktree =3D ../../../sub1
+>> 8a8
+>>>     worktree =3D ../../../sub1
+>>
+>> So the config contains the same content, but the worktree setting mo=
+ved
+>> to a different line. This seems to be the result of setting core.wor=
+ktree
+>> in the test_git_directory_is_unchanged function just before the "dif=
+f -r",
+>> but only under Mac OS.
+>>
+>>> And Msysgit complains=20
+>>> error: fchmod on c:/xxxt/trash directory.t7613-merge-submodule/subm=
+odule_update_repo/.git/modules/sub1/config.lock failed: Function not im=
+plemented
+>>
+>> I'm not sure what this is about, seems to happen during the "cp -R" =
+of
+>> the repo under .git/modules into the submodule.
+>=20
+> I haven't looked into this at all, but from the above message, and
+> noting that fchmod() is not implemented in mingw (see compat/mingw.h
+> line 91), and the following:
+>=20
+>     $ git grep -n fchmod
+>     compat/mingw.h:91:static inline int fchmod(int fildes, mode_t mod=
+e)
+>     config.c:1639:          if (fchmod(fd, st.st_mode & 07777) < 0) {
+>     config.c:1640:                  error("fchmod on %s failed: %s",
+>     config.c:1818:  if (fchmod(out_fd, st.st_mode & 07777) < 0) {
+>     config.c:1819:          ret =3D error("fchmod on %s failed: %s",
+>     $=20
+>=20
+> [I happen to be on the pu branch at the moment, so YMMV!]
+>=20
+> Both calls to fchmod() above are on config lock files, one
+> in git_config_set_multivar_in_file() and the other in
+> git_config_rename_section_in_file().
+>=20
 
-I was missing this one. Actually the most needed is go to first
-parent, though the second also may be useful.
- gitk | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+See commit daa22c6f8 ("config: preserve config file permissions
+on edits", 06-05-2014).
 
-diff --git a/gitk b/gitk
-index 41e5071..de35fe4 100755
---- a/gitk
-+++ b/gitk
-@@ -2594,6 +2594,9 @@ proc makewindow {} {
-     bind $ctext $ctxbut {pop_diff_menu %W %X %Y %x %y}
-     bind $ctext <Button-1> {focus %W}
-     bind $ctext <<Selection>> rehighlight_search_results
-+    for {set i 1} {$i<10} {incr i} {
-+	bind . <$M1B-Key-$i> [list go_to_parent $i]
-+    }
- 
-     set maincursor [. cget -cursor]
-     set textcursor [$ctext cget -cursor]
-@@ -3016,6 +3019,7 @@ proc keys {} {
- [mc "<Down>, n, j	Move down one commit"]
- [mc "<Left>, z, h	Go back in history list"]
- [mc "<Right>, x, l	Go forward in history list"]
-+[mc "<%s-n>	Go to n-th parent of current commit in history list" $M1T]
- [mc "<PageUp>	Move up one page in commit list"]
- [mc "<PageDown>	Move down one page in commit list"]
- [mc "<%s-Home>	Scroll to top of commit list" $M1T]
-@@ -7494,6 +7498,14 @@ proc goforw {} {
-     }
- }
- 
-+proc go_to_parent {i} {
-+    global parents curview targetid
-+    set ps $parents($curview,$targetid)
-+    if {[llength $ps] >= $i} {
-+	selbyid [lindex $ps [expr $i - 1]]
-+    }
-+}
-+
- proc gettree {id} {
-     global treefilelist treeidlist diffids diffmergeid treepending
-     global nullid nullid2
--- 
-2.0.0.526.g5318336
+ATB,
+Ramsay Jones
