@@ -1,86 +1,142 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v4 4/4] cache-tree: Write updated cache-tree after commit
-Date: Tue, 8 Jul 2014 17:32:20 +0700
-Message-ID: <CACsJy8C20oFdATHKTLK=9U3_kHu1QsuS4i74RPgQn0aTwVCC8w@mail.gmail.com>
-References: <1404619619-4774-1-git-send-email-dturner@twitter.com>
- <1404619619-4774-4-git-send-email-dturner@twitter.com> <xmqq61j9c4xb.fsf@gitster.dls.corp.google.com>
- <xmqq7g3obsqm.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twitter.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 12:32:56 2014
+From: Zoltan Klinger <zoltan.klinger@gmail.com>
+Subject: [PATCH] log: fix indentation for --graph --show-signature
+Date: Tue,  8 Jul 2014 21:12:28 +1000
+Message-ID: <1404817948-7794-1-git-send-email-zoltan.klinger@gmail.com>
+Cc: jpyeron@pdinc.us, gitster@pobox.com,
+	Zoltan Klinger <zoltan.klinger@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 08 13:15:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4Shk-0001I6-7o
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 12:32:56 +0200
+	id 1X4TN4-00032r-5G
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 13:15:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753534AbaGHKcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 06:32:52 -0400
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:38962 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753141AbaGHKcv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 06:32:51 -0400
-Received: by mail-qc0-f171.google.com with SMTP id w7so4959339qcr.2
-        for <git@vger.kernel.org>; Tue, 08 Jul 2014 03:32:51 -0700 (PDT)
+	id S1753398AbaGHLPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2014 07:15:34 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:33271 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753139AbaGHLPd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 07:15:33 -0400
+Received: by mail-pa0-f45.google.com with SMTP id rd3so7143264pab.4
+        for <git@vger.kernel.org>; Tue, 08 Jul 2014 04:15:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=ocgACW/GQZHJWm/zAXF5sYzckcg9uJ4l/3yeYknveo4=;
-        b=Q+UTX33Cc28O5wHwW+8RO489AcOeYDe7nsJhSVJlPUbm1yYp8pCQ6GtDeeT0qBAJ0Y
-         nJ9WafSs7IWPWfrW1aZ7oqdy15QwXx9J2rRinu5afmDUx1/hVsF76xmW5ryJmKEou2TV
-         4fx0M/G6hd099WCdlQJXb0UdCQ0/VYFaLPPX9KjAgU4qLqxv7RTb3ywxz8j0yj5k6w+6
-         ORHz9NFw9dmqPDCorQEtf+Vt4Nm7yitCoVgje+CAJtFF2ODqrND2d6aDrO08UjFsqzVR
-         2TTxwt4L3iTipsaBrwYqil6mbwSbpL+I4jqu/F9aEp2pq8ea4qJhIWzc5K3zFHgwiaTg
-         +sGQ==
-X-Received: by 10.140.98.195 with SMTP id o61mr43938839qge.41.1404815570928;
- Tue, 08 Jul 2014 03:32:50 -0700 (PDT)
-Received: by 10.96.66.129 with HTTP; Tue, 8 Jul 2014 03:32:20 -0700 (PDT)
-In-Reply-To: <xmqq7g3obsqm.fsf@gitster.dls.corp.google.com>
+        h=from:to:cc:subject:date:message-id;
+        bh=5LtiUv6hTqDMlurd6zDbct8P9aot6cdi6BW3DdNNL4U=;
+        b=aAwjX0sX4DypEfyV+wsqrmROmVCrG7CxgPCxM73yWhIzJsg3wMV4g3YLlxW1VSzLlj
+         kK43Kqqf+YCvhKMoVzucEeTNYvO8CKUXCZP2MOiTXiHBrRxYPxbM+S0rgzesYeJ36rK7
+         0j1opxURxIczYztn4CToD3wVBYXDy3EZFbUdpmbh/e08zb/5NB8fzubtW1ma3l/1zakm
+         PjOX/eqNpA7lCsgR7FOYl2VkddiLLOTzmMFSRAvZ/Es7bFhgFeP8FclXDL9AYkShRLiG
+         QOkZe1Yp4KlNCYH3S/QVB4G5Fgy3cXEqCG6SrEEFxf+5gBNexUPB3FNf12T3j4ufJBGO
+         U6hw==
+X-Received: by 10.68.213.34 with SMTP id np2mr13683pbc.167.1404818132787;
+        Tue, 08 Jul 2014 04:15:32 -0700 (PDT)
+Received: from localhost.localdomain (ppp121-44-139-46.lns20.syd7.internode.on.net. [121.44.139.46])
+        by mx.google.com with ESMTPSA id cc8sm3570148pdb.57.2014.07.08.04.15.30
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Tue, 08 Jul 2014 04:15:32 -0700 (PDT)
+X-Mailer: git-send-email 2.0.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253011>
 
-On Tue, Jul 8, 2014 at 7:26 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>> diff --git a/builtin/commit.c b/builtin/commit.c
->>> index 9cfef6c..5981755 100644
->>> --- a/builtin/commit.c
->>> +++ b/builtin/commit.c
->>> @@ -342,6 +342,8 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
->>>
->>>              discard_cache();
->>>              read_cache_from(index_lock.filename);
->>> +            if (update_main_cache_tree(WRITE_TREE_SILENT) >= 0)
->>> +                    write_cache(fd, active_cache, active_nr);
->>>
->>>              commit_style = COMMIT_NORMAL;
->>>              return index_lock.filename;
+The git log --graph --show-signature command incorrectly indents the gpg
+information about signed commits and merged signed tags. It does not
+follow the level of indentation of the current commit.
 
-I wonder if we need to update_main_cache_tree() so many times in this
-function. If I read the code correctly, all roads must lead to
-update_main_cache_tree(0) in prepare_to_commit(). If we find out that
-we have incomplete cache-tree before that call, we could write the
-index one more time after that call, instead of spreading
-update_main_cache_tree() all over prepare_index(). I know the
-"index_file" in prepare_to_commit() is probably "index.lock" or
-something, but that does not stop us from locking again
-("index.lock.lock") if we want to update it.
+Example of garbled output:
+$ git log --show-signature --graph
+*   commit 258e0a237cb69aaa587b0a4fb528bb0316b1b776
+|\  gpg: Signature made Mon, Jun 30, 2014 13:22:33 EDT using RSA key ID DA08
+gpg: Good signature from "Jason Pyeron <jpye...@pdinc.us>"
+Merge: 727c355 1ca13ed
+| | Author: Jason Pyeron <jpye...@pdinc.us>
+| | Date:   Mon Jun 30 13:22:29 2014 -0400
+| |
+| |     Merge of 1ca13ed2271d60ba9 branch - rebranding
+| |
+| * commit 1ca13ed2271d60ba93d40bcc8db17ced8545f172
+| | gpg: Signature made Mon, Jun 23, 2014  9:45:47 EDT using RSA key ID DD37
+gpg: Good signature from "Stephen Robert Guglielmo <s...@guglielmo.us>"
+gpg:                 aka "Stephen Robert Guglielmo <srguglie...@gmail.com>"
+Author: Stephen R Guglielmo <s...@guglielmo.us>
+| | Date:   Mon Jun 23 09:45:27 2014 -0400
+| |
+| |     Minor URL updates
 
-Writing cache tree early in prepare_index() does help hooks, but I
-would say hooks are uncommon case and we could add an option to
-update-index to explicitly rebuild cache-tree, then hooks that do diff
-a lot (or other operations that use cache-tree) could rebuild
-cache-tree by themselves. When the index file is large, every write
-pays high penalty so I think trying to write less often is good.
+In log-tree.c modify show_sig_lines() function to call graph_show_oneline()
+after each line of gpg information it has printed in order to preserve
+the level of indentation for the next output line.
+
+Reported-by: Jason Pyeron <jpyeron@pdinc.us>
+Signed-off-by: Zoltan Klinger <zoltan.klinger@gmail.com>
+---
+ log-tree.c     |  1 +
+ t/t4202-log.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
+
+diff --git a/log-tree.c b/log-tree.c
+index 10e6844..f13b861 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -365,6 +365,7 @@ static void show_sig_lines(struct rev_info *opt, int status, const char *bol)
+ 		eol = strchrnul(bol, '\n');
+ 		printf("%s%.*s%s%s", color, (int)(eol - bol), bol, reset,
+ 		       *eol ? "\n" : "");
++		graph_show_oneline(opt->graph);
+ 		bol = (*eol) ? (eol + 1) : eol;
+ 	}
+ }
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index cb03d28..b429aff 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -3,6 +3,7 @@
+ test_description='git log'
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY/lib-gpg.sh"
+ 
+ test_expect_success setup '
+ 
+@@ -841,4 +842,32 @@ test_expect_success 'dotdot is a parent directory' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success GPG 'log --graph --show-signature' '
++	git checkout -b signed master &&
++	echo foo >foo &&
++	git add foo &&
++	git commit -S -m signed_commit &&
++	git log --graph --show-signature -n1 signed >actual &&
++	grep "^| gpg: Signature made" actual &&
++	grep "^| gpg: Good signature" actual
++'
++
++test_expect_success GPG 'log --graph --show-signature for merged tag' '
++	git checkout -b plain master &&
++	echo aaa >bar &&
++	git add bar &&
++	git commit -m bar_commit
++	git checkout -b tagged master &&
++	echo bbb >baz &&
++	git add baz &&
++	git commit -m baz_commit
++	git tag -s -m signed_tag_msg signed_tag &&
++	git checkout plain &&
++	git merge --no-ff -m msg signed_tag &&
++	git log --graph --show-signature -n1 plain >actual &&
++	grep "^|\\\  merged tag" actual &&
++	grep "^| | gpg: Signature made" actual &&
++	grep "^| | gpg: Good signature" actual
++'
++
+ test_done
 -- 
-Duy
+2.0.0
