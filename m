@@ -1,120 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 4/4] cache-tree: Write updated cache-tree after commit
-Date: Tue, 08 Jul 2014 12:15:06 -0700
-Message-ID: <xmqq61j7achx.fsf@gitster.dls.corp.google.com>
-References: <1404619619-4774-1-git-send-email-dturner@twitter.com>
-	<1404619619-4774-4-git-send-email-dturner@twitter.com>
-	<xmqq61j9c4xb.fsf@gitster.dls.corp.google.com>
-	<xmqq7g3obsqm.fsf@gitster.dls.corp.google.com>
-	<CACsJy8C20oFdATHKTLK=9U3_kHu1QsuS4i74RPgQn0aTwVCC8w@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 2/2] t/Makefile: always test all lint targets when running
+ tests
+Date: Tue, 08 Jul 2014 21:24:25 +0200
+Message-ID: <53BC4569.3020907@web.de>
+References: <53B5D6FE.2090700@web.de> <53B5D76D.1090509@web.de> <xmqq38eddolk.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twitter.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 21:16:58 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 21:24:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4asq-0000bt-68
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 21:16:56 +0200
+	id 1X4b0P-0005p4-Ku
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 21:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932406AbaGHTPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 15:15:19 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65211 "EHLO smtp.pobox.com"
+	id S1756306AbaGHTYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2014 15:24:35 -0400
+Received: from mout.web.de ([212.227.15.4]:63628 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932366AbaGHTPQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 15:15:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 644C42655D;
-	Tue,  8 Jul 2014 15:15:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ROoRUjvMsqiKXG9KuKL8PzgeOpw=; b=yHYz7R
-	Xx/iCRVZVKDcoDDuqAJBRfRofHxaqexy/mfz86e8TRruf9kS1sfnZpmqu63n98yn
-	QA6UM5frwYDzWMRmZVG6j7eyRUiE8kbS8K211tvNu2R5vmRr/POmgup2uaAUHUyW
-	u029fA9DRkUvH1DMcQJw360C+6AZFHE7+1rqI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jSN95lD1VGz3ruWsrR6+sdAWewmOgQTG
-	a2mDoSpr61qi+PBZaE7gOO8u7vRaWormrnuNMPWMNITufM0X0l5QcqkpB3cetv91
-	IUFVQLGv5qTxlKfNnmWepMvSsIKEGat1tB+RUIVBdneJY5V+aCHaK/Z21cw9VAuU
-	ShzbXdh0suI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D36512655A;
-	Tue,  8 Jul 2014 15:15:00 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C25B62654F;
-	Tue,  8 Jul 2014 15:14:54 -0400 (EDT)
-In-Reply-To: <CACsJy8C20oFdATHKTLK=9U3_kHu1QsuS4i74RPgQn0aTwVCC8w@mail.gmail.com>
-	(Duy Nguyen's message of "Tue, 8 Jul 2014 17:32:20 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 24CAE538-06D4-11E4-B257-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1756301AbaGHTYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 15:24:34 -0400
+Received: from [192.168.178.41] ([84.132.191.219]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LcPhu-1WMDcn2yqk-00joQM; Tue, 08 Jul 2014 21:24:31
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqq38eddolk.fsf@gitster.dls.corp.google.com>
+X-Enigmail-Version: 1.6
+X-Provags-ID: V03:K0:ktmh2DdDZUi8lwfOdSuJ4pXvLve4Fz7sK6hV7gL3Xb1pbnhsyvt
+ nzAa0NwNNbDwztELVqJ+wnM30gW3dm47Q1uxiUr3ITwxinWONr/fDpH63MkZx+oUnrrbJwM
+ MqyGiJN5FDDIBV06NvfdcVi+EwpRUxmG1U4llwIgbcCjnXeOAufQt7gjlOpEQvIanAeGQh+
+ +fuq/RON3MRNFfNL+ZtrA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253040>
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Am 07.07.2014 20:13, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> Only the two targets "test-lint-duplicates" and "test-lint-executable" are
+>> currently executed when running the test target. This was done on purpose
+>> when the TEST_LINT variable was added in 81127d74. But as this does not
+>> include the "test-lint-shell-syntax" target added the same day in commit
+>> c7ce70ac, it is easy to accidentally add non portable shell constructs
+>> without noticing that when running the test suite.
+> 
+> I not running the lint-shell-syntax that is fundamentally flaky to
+> avoid false positives is very much on purpose.  The flakiness is not
+> the fault of the implementor of the lint-shell-syntax, but comes
+> from the approach taken to pretend that simple pattern matching can
+> parse shell scripts.  It may not complain on the current set of
+> scripts, but that is not really by design but by accident.
+> 
+> So I am not very enthusiastic to see this change myself.
 
-> Writing cache tree early in prepare_index() does help hooks, but I
-> would say hooks are uncommon case and we could add an option to
-> update-index to explicitly rebuild cache-tree, then hooks that do diff
-> a lot (or other operations that use cache-tree) could rebuild
-> cache-tree by themselves.
-
-Yes, "update-index --update-cache-tree" would be a good addition for
-completeness; scripts working with plumbing should be able to do
-what built-in Porcelains can.  They can of course do "write-tree" in
-the meantime so I do not see it as a very high priority, though.
-
-This should apply on top of 'master', and if the series under
-discussion turns out to be a good idea, the new call to
-update-main-cache-tree I added to this code path should use the
-option added by the series that only repairs parts of cache-trees
-that can be repaird without writing out new trees, so it is just to
-give hints to future people (iow I am not going to apply this patch
-myself right now).
-
- builtin/update-index.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index ebea285..1ce2274 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -26,6 +26,7 @@ static int allow_remove;
- static int allow_replace;
- static int info_only;
- static int force_remove;
-+static int update_cache_tree;
- static int verbose;
- static int mark_valid_only;
- static int mark_skip_worktree_only;
-@@ -762,6 +763,8 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		OPT_BIT(0, "unmerged", &refresh_args.flags,
- 			N_("refresh even if index contains unmerged entries"),
- 			REFRESH_UNMERGED),
-+		OPT_BOOL(0, "update-cache-tree", &update_cache_tree,
-+			 N_("update cache-tree before writing the result out")),
- 		{OPTION_CALLBACK, 0, "refresh", &refresh_args, NULL,
- 			N_("refresh stat information"),
- 			PARSE_OPT_NOARG | PARSE_OPT_NONEG,
-@@ -918,6 +921,11 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&buf);
- 	}
- 
-+	if (update_cache_tree && !unmerged_cache()) {
-+		update_main_cache_tree(0);
-+		active_cache_changed = 1; /* force write-out */
-+	}
-+
- 	if (active_cache_changed) {
- 		if (newfd < 0) {
- 			if (refresh_args.flags & REFRESH_QUIET)
+Ok, I understand we do not want to lightly risk false positives. I
+just noticed that I accidentally forgot to sign off this series, so
+I'd resend just the first patch with a proper SOB, ok?
