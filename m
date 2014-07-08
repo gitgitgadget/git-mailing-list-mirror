@@ -1,107 +1,129 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 00/14] Add submodule test harness
-Date: Tue, 08 Jul 2014 21:25:39 +0100
-Message-ID: <53BC53C3.1010304@ramsay1.demon.co.uk>
-References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>	<53B5C7AC.4040701@web.de> <xmqqsimddrq3.fsf@gitster.dls.corp.google.com> <53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH RFC v2 01/19] rebase -i: Failed reword prints redundant error message
+Date: Tue, 08 Jul 2014 13:31:13 -0700
+Message-ID: <xmqqtx6r8uem.fsf@gitster.dls.corp.google.com>
+References: <53A258D2.7080806@gmail.com>
+	<cover.1404323078.git.bafain@gmail.com>
+	<10d7fae199e4d8adec537aa377177de652badc07.1404323078.git.bafain@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>,
-	=?ISO-8859-1?Q?Torsten_B=F6gers?= =?ISO-8859-1?Q?hausen?= 
-	<tboegi@web.de>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 08 22:25:52 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>,
+	Andrew Wong <andrew.kw.w@gmail.com>
+To: Fabian Ruch <bafain@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 22:31:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4bxV-0004AJ-Iy
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 22:25:49 +0200
+	id 1X4c30-0007i9-MC
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 22:31:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753786AbaGHUZp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2014 16:25:45 -0400
-Received: from mdfmta004.mxout.tbr.inty.net ([91.221.168.45]:35684 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750947AbaGHUZo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 16:25:44 -0400
-Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id CFC7AA0C08A;
-	Tue,  8 Jul 2014 20:18:54 +0100 (BST)
-Received: from mdfmta004.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta004.tbr.inty.net (Postfix) with ESMTP id 9736FA0C087;
-	Tue,  8 Jul 2014 20:18:54 +0100 (BST)
-Received: from [192.168.254.1] (unknown [80.176.147.220])
+	id S1752223AbaGHUb1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2014 16:31:27 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60684 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751074AbaGHUb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 16:31:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2FE402637E;
+	Tue,  8 Jul 2014 16:31:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MvM8jBEZVEBnR7Z0J0JJDHW/K/Y=; b=FLR2jq
+	Wb9i4i2OFp87r9+uYPCzdkEg1//3fRnJPt+vACgDx/2s6WvQVSjR5oOUclEz0GWF
+	nLm5EHHC0Wu6tdPIOvwXq+eSyxTpfnvwh5ldDmnb6nMziO9FQz5YJvYzNWJyudw7
+	wmhP2HgHBKCuO6LcJR6nxhEmaafRlJiuyl/fg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UChLm2jLM6UpC0SpYYHIN1cWCHs9X9rh
+	XQXiu7qT79XJ4psmjo2+WaPgvgbMD6hMNlk8fDOodF6LODaOc0w72Rsn23JBZ/hT
+	HMXu5HRxihZHL8lLaNHgdiUS6rVWVf/f9XX760gwDON4P7A1zqlRxndBJYSd3rAL
+	7NzuwUSrFwY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1BEC92637C;
+	Tue,  8 Jul 2014 16:31:05 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mdfmta004.tbr.inty.net (Postfix) with ESMTP;
-	Tue,  8 Jul 2014 20:18:53 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53BC47BD.1000705@web.de>
-X-MDF-HostID: 9
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6DD6626376;
+	Tue,  8 Jul 2014 16:30:59 -0400 (EDT)
+In-Reply-To: <10d7fae199e4d8adec537aa377177de652badc07.1404323078.git.bafain@gmail.com>
+	(Fabian Ruch's message of "Wed, 2 Jul 2014 19:47:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C5931CF6-06DE-11E4-BAA0-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253044>
 
-On 08/07/14 20:34, Jens Lehmann wrote:
-> Am 07.07.2014 21:40, schrieb Torsten B=F6gershausen:
->> On 2014-07-07 19.05, Junio C Hamano wrote:
->>> Jens Lehmann <Jens.Lehmann@web.de> writes:
->>>
->>>> Junio, do you want me to resend 02/14 without the non-portable "ec=
-ho -n"
->>>> or could you just squash the following diff in?
->>>
->>> Amended locally here already; thanks, both.
->>
->> There seems to be some other trouble under Mac OS, not yet fully tra=
-cked down,
->> (may be related to the "diff -r")
->=20
-> Torsten sees failures of this kind under Mac OS:
->=20
-> diff -r .git/modules/sub1/config sub1/.git/config
-> 6d5
-> <     worktree =3D ../../../sub1
-> 8a8
->>     worktree =3D ../../../sub1
->=20
-> So the config contains the same content, but the worktree setting mov=
-ed
-> to a different line. This seems to be the result of setting core.work=
-tree
-> in the test_git_directory_is_unchanged function just before the "diff=
- -r",
-> but only under Mac OS.
->=20
->> And Msysgit complains=20
->> error: fchmod on c:/xxxt/trash directory.t7613-merge-submodule/submo=
-dule_update_repo/.git/modules/sub1/config.lock failed: Function not imp=
-lemented
->=20
-> I'm not sure what this is about, seems to happen during the "cp -R" o=
-f
-> the repo under .git/modules into the submodule.
+Fabian Ruch <bafain@gmail.com> writes:
 
-I haven't looked into this at all, but from the above message, and
-noting that fchmod() is not implemented in mingw (see compat/mingw.h
-line 91), and the following:
+> The to-do list command `reword` replays a commit like `pick` but lets
+> the user also edit the commit's log message. If the edited log
+> message is empty or is found ill-formatted by one of the commit
+> hooks, git-rebase--interactive prints three error messages to the
+> console.
+>
+>     1. The git-commit output, which contains all the output from hook
+>        scripts.
+>     2. A rebase diagnosis saying at which task on the to-do list it
+>        got stuck.
+>     3. Generic presumptions about what could have triggered the
+>        error.
+>
+> The third message contains redundant information and does not add any
+> enlightenment either, which makes the output unnecessarily longish
+> and different from the other command's output. For instance, this is
+> what the output looks like if the log message is empty (contains
+> duplicate Signed-off-by lines).
+>
+>     (1.) Aborting commit due to empty commit message. (Duplicate Signed-off-by lines.)
+>     (2.) Could not amend commit after successfully picking fa1afe1... Some change
+>     (3.) This is most likely due to an empty commit message, or the pre-commit hook
+>          failed. If the pre-commit hook failed, you may need to resolve the issue before
+>          you are able to reword the commit.
+>
+> Discard the third message.
+>
+> It is true that a failed hook script might not output any diagnosis...
 
-    $ git grep -n fchmod
-    compat/mingw.h:91:static inline int fchmod(int fildes, mode_t mode)
-    config.c:1639:          if (fchmod(fd, st.st_mode & 07777) < 0) {
-    config.c:1640:                  error("fchmod on %s failed: %s",
-    config.c:1818:  if (fchmod(out_fd, st.st_mode & 07777) < 0) {
-    config.c:1819:          ret =3D error("fchmod on %s failed: %s",
-    $=20
+I think the message originally came from 0becb3e4 (rebase -i:
+interrupt rebase when "commit --amend" failed during "reword",
+2011-11-30); it seems that the primary point of the change was to
+make sure it exits and the warning message may not have been well
+thought out, but before discarding the result of somebody else's
+work, it may not be a bad idea to ask just in case you may have
+overlooked something (Andrew Wong Cc'ed).
 
-[I happen to be on the pu branch at the moment, so YMMV!]
 
-Both calls to fchmod() above are on config lock files, one
-in git_config_set_multivar_in_file() and the other in
-git_config_rename_section_in_file().
 
-ATB,
-Ramsay Jones
+
+
+> but then the generic message is not of much help either. Since this
+> lack of information affects the built-in git commands for commit,
+> merge and cherry-pick first, the solution would be to keep track of
+> the failed hooks in their output so that the user knows which of her
+> hooks require improvement.
+>
+> Signed-off-by: Fabian Ruch <bafain@gmail.com>
+> ---
+>  git-rebase--interactive.sh | 3 ---
+>  1 file changed, 3 deletions(-)
+>
+> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+> index 7e1eda0..e733d7f 100644
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -506,9 +506,6 @@ do_next () {
+>  		do_pick $sha1 "$rest"
+>  		git commit --amend --no-post-rewrite ${gpg_sign_opt:+"$gpg_sign_opt"} || {
+>  			warn "Could not amend commit after successfully picking $sha1... $rest"
+> -			warn "This is most likely due to an empty commit message, or the pre-commit hook"
+> -			warn "failed. If the pre-commit hook failed, you may need to resolve the issue before"
+> -			warn "you are able to reword the commit."
+>  			exit_with_patch $sha1 1
+>  		}
+>  		record_in_rewritten $sha1
