@@ -1,110 +1,126 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v20 00/48] Use ref transactions
-Date: Tue, 08 Jul 2014 18:29:07 +0200
-Message-ID: <53BC1C53.9030203@alum.mit.edu>
-References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 4/4] cache-tree: Write updated cache-tree after commit
+Date: Tue, 08 Jul 2014 10:05:24 -0700
+Message-ID: <xmqqwqbnaii3.fsf@gitster.dls.corp.google.com>
+References: <1404619619-4774-1-git-send-email-dturner@twitter.com>
+	<1404619619-4774-4-git-send-email-dturner@twitter.com>
+	<xmqq61j9c4xb.fsf@gitster.dls.corp.google.com>
+	<xmqq7g3obsqm.fsf@gitster.dls.corp.google.com>
+	<CACsJy8C20oFdATHKTLK=9U3_kHu1QsuS4i74RPgQn0aTwVCC8w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Ronnie Sahlberg <sahlberg@google.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 08 18:36:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Turner <dturner@twitter.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 08 19:05:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4YNQ-0003O7-87
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 18:36:20 +0200
+	id 1X4Ypy-0005yw-DK
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 19:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754539AbaGHQgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 12:36:13 -0400
-Received: from alum-mailsec-scanner-6.mit.edu ([18.7.68.18]:50318 "EHLO
-	alum-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754485AbaGHQgM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Jul 2014 12:36:12 -0400
-X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jul 2014 12:36:11 EDT
-X-AuditID: 12074412-f792e6d000005517-5e-53bc1c556cfa
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-	by alum-mailsec-scanner-6.mit.edu (Symantec Messaging Gateway) with SMTP id 9F.96.21783.55C1CB35; Tue,  8 Jul 2014 12:29:09 -0400 (EDT)
-Received: from [192.168.69.130] (p4FC97EC0.dip0.t-ipconnect.de [79.201.126.192])
-	(authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s68GT8qN009554
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Tue, 8 Jul 2014 12:29:09 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <1403275409-28173-1-git-send-email-sahlberg@google.com>
-X-Enigmail-Version: 1.6
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpgleLIzCtJLcpLzFFi42IRYndR1A2V2RNssHmerkXXlW4mi38TahyY
-	PBZsKvX4vEkugCmK2yYpsaQsODM9T98ugTvjwvcLzAXnhCoWbl/I3sD4jK+LkZNDQsBE4s+2
-	xYwQtpjEhXvr2UBsIYHLjBKfzwpD2OeZJOZMLwOxeQW0JQ533gOq5+BgEVCVODAHrJxNQFdi
-	UU8zE4gtKhAkMfvzPHaIckGJkzOfsIDYIgJ2EutvLWQGsYUFjCVm/3/ICDHeWaLrz36wOZwC
-	LhL/b35hARkvISAu0dMYBGIyC6hLrJ8nBFLBLCAvsf3tHOYJjAKzkCyYhVA1C0nVAkbmVYxy
-	iTmlubq5iZk5xanJusXJiXl5qUW6Znq5mSV6qSmlmxghoSm0g3H9SblDjAIcjEo8vAo8e4KF
-	WBPLiitzDzFKcjApifJOYAIK8SXlp1RmJBZnxBeV5qQWH2KU4GBWEuFdLgiU401JrKxKLcqH
-	SUlzsCiJ8/5crO4nJJCeWJKanZpakFoEk5Xh4FCS4FWVBmoULEpNT61Iy8wpQUgzcXCCDOeS
-	EilOzUtJLUosLcmIB8VnfDEwQkFSPEB7eUDaeYsLEnOBohCtpxgVpcR570oBJQRAEhmleXBj
-	YQnnFaM40JfCvDIg7TzAZAXX/QpoMBPQ4M/vd4AMLklESEk1MGYwH3qiZibfxdzRoTGfa++6
-	nNIJ+6ttuiInfLxzrnLprEkfZtxYoqrKca42LUxcfIGdkl2BbJHwt/k/7wv/cJT/Wnzza6Ss
-	jVz3Te0lLbl8x6cp/TzJYHTsm43cslccac+n7rklf1Eu/C+vmdnJ9IflL368XdV2 
+	id S1754853AbaGHRFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2014 13:05:40 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52093 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754833AbaGHRFj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 13:05:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 96672252CF;
+	Tue,  8 Jul 2014 13:05:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2ANscy0ZAXZdSlo1Rw8lMrWzXcQ=; b=iw82Eh
+	tB+wLusj0XsWtiHyXzTNFrBDi6NwLRTdUlGhKuJ24QEmGqqO6h2pTgI61rAXy3OD
+	/U89tjtzcGpCZzZSM6GWXkf4ghBhQ+vNcEEW4kd+DfbUOIVMIJgr5PKwXVxmq5AN
+	ZO/WnMJdUUuvjO4lAMHXQ6GVTfDLEt1NqlIsc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ANLs3e/UGVFlpo1TKcvD8/RgQe77EC/r
+	2tQyNBcgOclItYaGNQD6h9SN01Phz2elXTYwrEj/e5dbJclR0Iez31CqHHi+Ds2N
+	Fkd6z7VHw1RWejrKIZ3lQ8/YzviXHL+e6D2xQChl+Oc6RuOWlD3V/oP51ovEkiSu
+	OUZMWVi+TOI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1F187252CE;
+	Tue,  8 Jul 2014 13:05:19 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2AA04252CA;
+	Tue,  8 Jul 2014 13:05:13 -0400 (EDT)
+In-Reply-To: <CACsJy8C20oFdATHKTLK=9U3_kHu1QsuS4i74RPgQn0aTwVCC8w@mail.gmail.com>
+	(Duy Nguyen's message of "Tue, 8 Jul 2014 17:32:20 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 069614E6-06C2-11E4-8A93-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253034>
 
-On 06/20/2014 04:42 PM, Ronnie Sahlberg wrote:
-> This patch series can also be found at
-> https://github.com/rsahlberg/git/tree/ref-transactions
-> 
-> This patch series is based on current master and expands on the transaction
-> API. It converts all ref updates, inside refs.c as well as external, to use the
-> transaction API for updates. This makes most of the ref updates to become
-> atomic when there are failures locking or writing to a ref.
-> 
-> This version completes the work to convert all ref updates to use transactions.
-> Now that all updates are through transactions I will start working on
-> cleaning up the reading of refs and to create an api for managing reflogs but
-> all that will go in a different patch series.
-> 
-> Version 20:
->  - Whitespace and style changes suggested by Jun.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I spent most of the day on reviewing this patch series, but now I'm out
-of time again.  Here is a summary from my point of view:
+> I wonder if we need to update_main_cache_tree() so many times in this
+> function. If I read the code correctly, all roads must lead to
+> update_main_cache_tree(0) in prepare_to_commit().
 
-Patches 01-19 -- ACK mhagger
-Patches 20-42 -- I sent various comments, small to large, concerning
-these patches
-Patch 43 -- Needs more justification if it is to be acceptable
-Patch 44 -- Depends on 43
-Patches 45-48 -- I didn't quite get to these, but...
+I think prepare-to-commit is too late; it does not want to know if
+the index it was given to create a tree out of is the one that the
+user will keep using after this invocation of "git commit" or just a
+temporary one used for partial commit.  The cache-tree rebuilt there
+is what is recorded with commit_tree_extended() in cmd_commit(), but
+if you are doing a partial commit, these generic code paths are
+given a temporary index file on the filesystem to work on, and
+cache-tree in that will not help user's later operation.
 
-Perhaps it would be more appropriate for the rules about reference name
-conflicts to be enforced by the backend, since it is the limitations of
-the current backend that impose the restrictions.  Would that make sense?
+For three main uses of "git commit", prepare_index() does these:
 
-On the other hand, removing the restrictions isn't simply a matter of
-picking a different backend, because all Git repositories have to be
-able to interact with each other.
+ - "git commit -a" and "git commit -i $paths" update the index with
+   the new contents from the working tree, fully builds cache-tree
+   in-core to write out the tree objects, and writes the index file
+   to the filesystem.  Because this index is the one used after this
+   invocation of "git commit" returns, we have a fully populated
+   cache-tree after this happens.  This code path is perfect and
+   there is no need to change.
 
-So, I don't yet have a considered opinion on the matter.
+ - "git commit" commits the contents of the index as-is, so
+   technically there is no reason for it to update the index on the
+   filesystem at all, but it refreshes the cached stat data to help
+   the "status" part of the command, and if it finds that stat data
+   was stale, updates the index on the filesystem because it is
+   wasteful not to do so.  As we would be spending I/O cycles to
+   update the index file in that case anyway, we also rebuild the
+   cache-tree and include that in the updated index.
 
+   When the cached stat data was already up-to-date, however, we do
+   not update the index on the filesystem, so the series under
+   discussion will change the trade-off by doing one more I/O to
+   write out a new index to the filesystem only to update cache-tree.
 
-I think it would be good to try to merge the first part of this patch
-series to lock in some progress while we continue iterating on the
-remainder.  I'm satisfied that it is all going in the right direction
-and I am thankful to Ronnie for pushing it forward.  But handling
-48-patch series is very daunting and I would welcome a split.
+ - "git commit $paths" updates the "real" index with given $paths
+   and writes it out to the filesystem first.  This is the index the
+   user will use after "git commit" finishes; traditionally our
+   trade-off was "populate cache-tree only when we do not have to
+   spend any cycle only to do so (i.e. when we are writing trees
+   anyway, or when we read from a tree), and let it degrade as paths
+   are added, removed and modified" and we avoided populating
+   cache-tree in this codepath.  The series under discussion will
+   change the trade-off here, too.
 
-I'm not sure whether patches 01-19 are necessarily the right split
-between merge-now/iterate-more; it is more or less an accident that I
-stopped after patch 19 on an earlier review.  Maybe Ronnie could propose
-a logical subset of the commits as being ready to be merged to next in
-the nearish term?
+   After it updates this "real" index, it builds another temporary
+   index that represents the tree state to be committed (starting
+   from HEAD and updates with the given $paths), but that will be
+   discarded and we do not want to spend any extra cycle to do
+   anything only to make its later use more efficient (like writing
+   updated cache-tree to it).
 
-Michael
+> If we find out that
+> we have incomplete cache-tree before that call, we could write the
+> index one more time after that call,
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
+and that will make an extra I/O only to write out cache-tree to the
+temporary index that we will discard immediately after for a partial
+commit.
