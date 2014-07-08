@@ -1,149 +1,67 @@
-From: Yi EungJun <semtlenori@gmail.com>
-Subject: [PATCH] http: Add Accept-Language header if possible
-Date: Wed,  9 Jul 2014 00:54:06 +0900
-Message-ID: <1404834846-11812-1-git-send-email-eungjun.yi@navercorp.com>
-Cc: Yi EungJun <eungjun.yi@navercorp.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 08 17:54:45 2014
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] diff-tree: call free_commit_list() instead of duplicating
+ its code
+Date: Tue, 08 Jul 2014 18:21:05 +0200
+Message-ID: <53BC1A71.2010904@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 08 18:21:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4XjA-00011p-I2
-	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 17:54:44 +0200
+	id 1X4Y8p-0001rM-SL
+	for gcvg-git-2@plane.gmane.org; Tue, 08 Jul 2014 18:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754020AbaGHPyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 11:54:22 -0400
-Received: from mail-pa0-f43.google.com ([209.85.220.43]:58535 "EHLO
-	mail-pa0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753916AbaGHPyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 11:54:21 -0400
-Received: by mail-pa0-f43.google.com with SMTP id lf10so7576624pab.30
-        for <git@vger.kernel.org>; Tue, 08 Jul 2014 08:54:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=Khm2hw2nnYXB5o5EnqmitkhDbXGdYRfA+g/mnj9H2o0=;
-        b=J6r29PuW7SmoYYgTKDhpjLF+UT/rbIsSl1kFjvhXsuScwPbpavfzd7Vcn+Vh6GrOV+
-         9RhkjwyAhLgUQbDxvRsvv1fbmZ6jgld4z42VeZ54Y2KJe9lm5KoerIm3JMu6CFPWf0N9
-         oBQ+WgsJNHQubQ3OAQoc/eWcZ/R3V86b4nCNevZBv6u1bAFaLMSHf6Y1v+RpcFXxRmWf
-         ryJx34HzJ1BVezBamuzZqfRZg6IP3d16LvrwfVfneB474VQ+6dCznxmmgaNu6cvuAh/6
-         vs0287mxlsWhE+2ysHSCB9nAgjAI546PBoyRcZr8e75fDEsgVjS9enZWL49P9b72bZ0I
-         punw==
-X-Received: by 10.70.138.45 with SMTP id qn13mr5961850pdb.20.1404834860678;
-        Tue, 08 Jul 2014 08:54:20 -0700 (PDT)
-Received: from gmail.com ([222.234.94.10])
-        by mx.google.com with ESMTPSA id gx10sm54352009pbd.81.2014.07.08.08.54.18
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 08 Jul 2014 08:54:20 -0700 (PDT)
-X-Google-Original-From: Yi EungJun <eungjun.yi@navercorp.com>
-X-Mailer: git-send-email 2.0.1.473.gafdefd9.dirty
+	id S1752783AbaGHQVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Jul 2014 12:21:11 -0400
+Received: from mout.web.de ([212.227.17.12]:53582 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751581AbaGHQVK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Jul 2014 12:21:10 -0400
+Received: from [192.168.178.27] ([79.253.167.50]) by smtp.web.de (mrweb103)
+ with ESMTPSA (Nemesis) id 0MLPRu-1X566T1cYs-000csy; Tue, 08 Jul 2014 18:21:07
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Provags-ID: V03:K0:VLKICmt+2jDGEwsxcViHcYstmLDbe8pSgXgWcYis9nTTfqZexkB
+ BkzKKqU+vJ2UONwGO83h0rkMOFcGtgI/MAqYtG4KsQyAHBC3o4/BzlQ/pnLOVG7RW96o6Xj
+ Z4UV61F+JA1xIRl5Adc4P+idYoaNXHwTQ1QVQJBhDjfgAa3BPGNOQQ+PJ7YHilZ0kBGzHzn
+ aeMxdesL2mLdngY68Nj7g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253031>
 
-From: Yi EungJun <eungjun.yi@navercorp.com>
-
-Add an Accept-Language header which indicates the user's preferred
-languages defined by 'LANGUAGE' environment variable if the variable is
-not empty.
-
-Example:
-  LANGUAGE= -> ""
-  LANGUAGE=ko -> "Accept-Language: ko; q=1.000, *; q=0.001"
-  LANGUAGE=ko:en -> "Accept-Language: ko; q=1.000, en; q=0.999, *; q=0.001"
-
-This gives git servers a chance to display remote error messages in
-the user's preferred language.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- http.c                     | 43 +++++++++++++++++++++++++++++++++++++++++++
- t/t5550-http-fetch-dumb.sh | 10 ++++++++++
- 2 files changed, 53 insertions(+)
+ builtin/diff-tree.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/http.c b/http.c
-index 3a28b21..c345616 100644
---- a/http.c
-+++ b/http.c
-@@ -983,6 +983,47 @@ static void extract_content_type(struct strbuf *raw, struct strbuf *type,
- 		strbuf_addstr(charset, "ISO-8859-1");
- }
+diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
+index be6417d..ce0e019 100644
+--- a/builtin/diff-tree.c
++++ b/builtin/diff-tree.c
+@@ -22,14 +22,10 @@ static int stdin_diff_commit(struct commit *commit, char *line, int len)
+ 	if (isspace(line[40]) && !get_sha1_hex(line+41, sha1)) {
+ 		/* Graft the fake parents locally to the commit */
+ 		int pos = 41;
+-		struct commit_list **pptr, *parents;
++		struct commit_list **pptr;
  
-+/*
-+ * Add an Accept-Language header which indicates user's preferred languages
-+ * defined by 'LANGUAGE' environment variable if the variable is not empty.
-+ *
-+ * Example:
-+ *   LANGUAGE= -> ""
-+ *   LANGUAGE=ko -> "Accept-Language: ko; q=1.000, *; q=0.001"
-+ *   LANGUAGE=ko:en -> "Accept-Language: ko; q=1.000, en; q=0.999, *; q=0.001"
-+ */
-+static void add_accept_language(struct strbuf *buf)
-+{
-+	const char *p1, *p2;
-+	float q = 1.000;
-+
-+	p1 = getenv("LANGUAGE");
-+
-+	if (p1 != NULL && p1[0] != '\0') {
-+		strbuf_reset(buf);
-+		strbuf_addstr(buf, "Accept-Language: ");
-+		for (p2 = p1; q > 0.001; p2++) {
-+			if ((*p2 == ':' || *p2 == '\0') && p1 != p2) {
-+				if (q < 1.0) {
-+					strbuf_addstr(buf, ", ");
-+				}
-+				strbuf_add(buf, p1, p2 - p1);
-+				strbuf_addf(buf, "; q=%.3f", q);
-+				q -= 0.001;
-+				p1 = p2 + 1;
-+
-+				if (*p2 == '\0') {
-+					break;
-+				}
-+			}
-+		}
-+		if (q < 1.0) {
-+			strbuf_addstr(buf, ", ");
-+		}
-+		strbuf_addstr(buf, "*; q=0.001\r\n");
-+	}
-+}
-+
- /* http_request() targets */
- #define HTTP_REQUEST_STRBUF	0
- #define HTTP_REQUEST_FILE	1
-@@ -1020,6 +1061,8 @@ static int http_request(const char *url,
- 					 fwrite_buffer);
- 	}
- 
-+	add_accept_language(&buf);
-+
- 	strbuf_addstr(&buf, "Pragma:");
- 	if (options && options->no_cache)
- 		strbuf_addstr(&buf, " no-cache");
-diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
-index ac71418..ea15158 100755
---- a/t/t5550-http-fetch-dumb.sh
-+++ b/t/t5550-http-fetch-dumb.sh
-@@ -196,5 +196,15 @@ test_expect_success 'reencoding is robust to whitespace oddities' '
- 	grep "this is the error message" stderr
- '
- 
-+test_expect_success 'git client sends Accept-Language' '
-+	GIT_CURL_VERBOSE=1 LANGUAGE=ko:en git clone "$HTTPD_URL/accept/language" 2>actual
-+	grep "^Accept-Language: ko; q=1.000, en; q=0.999, \*; q=0.001" actual
-+'
-+
-+test_expect_success 'git client does not send Accept-Language' '
-+	GIT_CURL_VERBOSE=1 LANGUAGE= git clone "$HTTPD_URL/accept/language" 2>actual
-+	test_must_fail grep "^Accept-Language:" actual
-+'
-+
- stop_httpd
- test_done
+ 		/* Free the real parent list */
+-		for (parents = commit->parents; parents; ) {
+-			struct commit_list *tmp = parents->next;
+-			free(parents);
+-			parents = tmp;
+-		}
++		free_commit_list(commit->parents);
+ 		commit->parents = NULL;
+ 		pptr = &(commit->parents);
+ 		while (line[pos] && !get_sha1_hex(line + pos, sha1)) {
 -- 
-2.0.1.473.gafdefd9.dirty
+2.0.0
