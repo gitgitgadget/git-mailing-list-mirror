@@ -1,94 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 1/2] add `config_set` API for caching config-like files
-Date: Wed, 09 Jul 2014 10:44:18 -0700
-Message-ID: <xmqq38ea77gt.fsf@gitster.dls.corp.google.com>
-References: <1404903454-10154-1-git-send-email-tanayabh@gmail.com>
-	<1404903454-10154-2-git-send-email-tanayabh@gmail.com>
-	<vpq61j6d92z.fsf@anie.imag.fr> <53BD3805.40504@gmail.com>
-	<vpqion68viq.fsf@anie.imag.fr>
-	<xmqqmwci7e9p.fsf@gitster.dls.corp.google.com>
+From: Fabian Ruch <bafain@gmail.com>
+Subject: Re: [PATCH RFC v2 02/19] rebase -i: reword complains about empty
+ commit despite --keep-empty
+Date: Wed, 09 Jul 2014 20:02:40 +0200
+Message-ID: <53BD83C0.20607@gmail.com>
+References: <53A258D2.7080806@gmail.com>	<cover.1404323078.git.bafain@gmail.com>	<b7ee74ddb785f0e087b30ca6be11723ca199fa03.1404323078.git.bafain@gmail.com> <xmqqpphf8u3x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Jul 09 19:44:40 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 20:02:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4vv3-0002Zh-06
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 19:44:37 +0200
+	id 1X4wCe-0007IW-AD
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 20:02:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755082AbaGIRod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 13:44:33 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63477 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751742AbaGIRoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 13:44:32 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 58874276A9;
-	Wed,  9 Jul 2014 13:44:11 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=amwGpH+4bc2NUP8BQXQxejOPTJE=; b=nHlNM3
-	7JynebDpC+8NuD2w3sXwMxpRek/DybNBDjyp6+IXRXW7CY0x64uU+nBbfYKfszzD
-	rWP/rpqnpyMy9VdPcOMP3vOcx12zwbHRy+ugSTJlOObQKV+KCAC/cIPGJHeACypM
-	JNPpntSiINRxFRQ9E3HiGuAYxMJ9FjD0MVbLk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WSgmMXsBuDAl1HgVTgzkivtbKCud5by2
-	wNfaoH6MEuvxrQ20fGD8d5jvatdhbI9VTwQeiIWezGluc5gP+TnQZ1FdxaKvhG8I
-	Vm6r9C+39DgM2zmS5EBC7/XbWe4DaEF60Kjgny99BvlIblmIKR0oBxxF+Z/YAdWR
-	Qcgq312BIQ0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4CCA1276A8;
-	Wed,  9 Jul 2014 13:44:11 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DED04276A0;
-	Wed,  9 Jul 2014 13:44:04 -0400 (EDT)
-In-Reply-To: <xmqqmwci7e9p.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 09 Jul 2014 08:17:22 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9ED2B790-0790-11E4-84A5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1756490AbaGISCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 14:02:44 -0400
+Received: from mail-we0-f173.google.com ([74.125.82.173]:57680 "EHLO
+	mail-we0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756016AbaGISCo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 14:02:44 -0400
+Received: by mail-we0-f173.google.com with SMTP id t60so7887390wes.32
+        for <git@vger.kernel.org>; Wed, 09 Jul 2014 11:02:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=BLrB98oDLvx6r1d8phnyojgAqp+6Mtj7hFpX4V19ASI=;
+        b=lkJrkzhW86yYOvSqwzARIQmU/DVIYYXco43j22RAbPZ0/mvI5yy7aJe54CiYyio8rf
+         /FZe2G4mPReeGA7D0y80sguF4yeYrTTLOhpmbtYDGWmxbDcjMgdr4R01DqoaXRKOfk7Z
+         S2SNS5cCxTBFC1ZientbrZj3I2DDTAzulXGeT7Wgc9LYtzy5Xt9sekcahr2HPAVNFnut
+         OWqqzJ9wGI9XgkUWVf+cG1B2wRZ4X+ggdDYVSKM7vVd5uC4B2bgMPZFMOmv3PUwk4+JD
+         WV87ZLMpnGtVqV2/jHxVcRQNLV9GaVqwLmAOUkHpJ+VZAEuLeQXoMZJUwcxxifIdwp8+
+         gNeA==
+X-Received: by 10.194.123.105 with SMTP id lz9mr6125468wjb.122.1404928962611;
+        Wed, 09 Jul 2014 11:02:42 -0700 (PDT)
+Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
+        by mx.google.com with ESMTPSA id n2sm17704980wix.15.2014.07.09.11.02.40
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 09 Jul 2014 11:02:41 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqpphf8u3x.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253137>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano writes:
+> Fabian Ruch <bafain@gmail.com> writes:
+>> Subject: rebase -i: reword complains about empty commit despite --keep-empty
+> 
+> I had to read the title and then the log twice before understanding
+> that the above is not "change the complaint message" (i.e. "reword
+> complaints" spelled incorrectly) but is a description of the current
+> behaviour (i.e. "the command complains when 'reword' is used on an
+> empty commit") that is not accompanied by an evaluation ("ok, it
+> complains; are you saying it is a good thing or a bad thing?") or an
+> action ("if it is a bad thing, what are you doing about it?").
+> 
+> Perhaps
+> 
+> 	rebase -i: allow rewording an empty commit
+> 
+> or something?
 
->> * Still, making sure that the (file, line) is doable later without too
->>   much change is good. So, if indeed, moving all code to another file is
->>   required, then it may make sense to do it now to avoid code move
->>   later.
->
-> Good thinking.  As long as the code is prepared, it is a good idea
-> to start small and bite off only we can chew at once, do things
-> incrementally.
+I thought "...despite --keep-empty" would already imply that "reword
+complains about empty commit" is not supposed to happen, the action
+would have been obvious. However, I understand that --keep-empty is
+first of all concerned with which commits of $upstream...$orig_head end
+up on the initial to-do list and the git-rebase manual page doesn't
+mention that it picks commits using the --allow-empty option. It is
+simply a necessity of a script not to complain about something it put on
+the to-do list itself.
 
-After thinking about it a bit more, I think <file, line> support
-needs to be done not as a mere client of the generic, uncached
-git_config() API that we have had for forever, like the current
-iteration, but needs to know a bit more about the state the caller
-of the callback (namely, git_parse_source()), and we obviously do
-not want to expose that machinery to anybody other than the
-implementation of the config subsystem (to which the new facility
-this GSoC project adds belongs to), so in that sense you have to
-have your code in the same config.c file anyway.
+The subject reads now
 
-It is somewhat dissapointing that this initial implementation was
-done as a client of the traditional git_config(), by the way.  I
-would have expected that it would be the other way around, in that
-the traditional callers of git_config() would behefit automatically
-by having the cache layer below it.
+    rebase -i: allow rewording an empty commit without complaints
 
-But we have to start from somewhere.  Perhaps the round after this
-one can rename the exisiting implementation of git_config() to
-something else internal to the caching layer and give the existing
-callers a compatible interface that is backed by this new caching
-layer in a transparent way.
+trying to convey that this is not a new feature but a bug fix.
+
+   Fabian
