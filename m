@@ -1,99 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC v2 08/19] rebase -i: Root commits are replayed with an unnecessary option
-Date: Tue, 08 Jul 2014 15:32:23 -0700
-Message-ID: <xmqqzjgj7a88.fsf@gitster.dls.corp.google.com>
-References: <53A258D2.7080806@gmail.com>
-	<cover.1404323078.git.bafain@gmail.com>
-	<606af9e165c447b59076046a4d84aecf8b4cd2b0.1404323078.git.bafain@gmail.com>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: t5150-request-pull.sh fails on newest master in Debian
+Date: Wed, 9 Jul 2014 02:52:49 +0200
+Message-ID: <CAA787r=Q5B7R1sxiVhRgobPHHPro6D5YyqVO+P_MZC=aGa+ZHw@mail.gmail.com>
+References: <CAA787r=78UWio3E==s+J2PbVqshQdWXpS9hiJrmNz+F0vLiuGg@mail.gmail.com>
+	<1404505370.3109.15.camel@stross>
+	<CAA787rmf36V1=Sd8TZrc7DboTkeJDYKuEGgCe90mZLLKSp6=tw@mail.gmail.com>
+	<1404525502.3109.25.camel@stross>
+	<CAA787rnMonCuON+C0U5FDXKzjTBdpOusCpGLeWytDWaA1torEw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
-To: Fabian Ruch <bafain@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 00:32:36 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>,
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 09 02:52:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4dwB-0001kA-C5
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 00:32:35 +0200
+	id 1X4g7z-0003Ad-AT
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 02:52:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754739AbaGHWcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Jul 2014 18:32:31 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61483 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753773AbaGHWca (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Jul 2014 18:32:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5EA1D27F9C;
-	Tue,  8 Jul 2014 18:32:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=BFVKrKWn94YeCYdD1skpJq7U1FY=; b=i/FKPU
-	qSEPluF+6l3dg+UgAlcYbvp/whLrYeQlfet8Ez2Avr+jnvKI77+yEhmjRVvjvA0G
-	DzMQf6gbzcNxNl59DnWvcUhZi+zfq+ZPIEmGEVr7xEDvi95bEmGuOgFaqolbcE9z
-	5KdtYZ0X1hzjJsP/PoyMUXI4iFM4A02LuGuz0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YgJC+IYM/xB0jf/lQMZEYbHAkcsEgwPs
-	/spLGcZSdIGEiTan8b7jrMSiUrSKSulx0M/pdTzMzIxDR3Azurf9MdaLnCtYNqvp
-	UK2A3G2xniT2sUZ2gEwyNY1dvRGBH2XDdGkR6/Ov6FW017WD++uvvvy7cebncZrq
-	dsuMm273EFA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5479E27F9B;
-	Tue,  8 Jul 2014 18:32:15 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C225627F92;
-	Tue,  8 Jul 2014 18:32:09 -0400 (EDT)
-In-Reply-To: <606af9e165c447b59076046a4d84aecf8b4cd2b0.1404323078.git.bafain@gmail.com>
-	(Fabian Ruch's message of "Wed, 2 Jul 2014 19:48:00 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B300B858-06EF-11E4-8D91-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751292AbaGIAwv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Jul 2014 20:52:51 -0400
+Received: from mail-lb0-f182.google.com ([209.85.217.182]:40075 "EHLO
+	mail-lb0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751150AbaGIAwu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Jul 2014 20:52:50 -0400
+Received: by mail-lb0-f182.google.com with SMTP id c11so4436127lbj.41
+        for <git@vger.kernel.org>; Tue, 08 Jul 2014 17:52:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=BpjwQi5zCEqlgJ7PdGpCNAz8WNZZ23mjTafBgGO/ymM=;
+        b=kg5w/7xS7hLUBPX3RaFGIcbcXGK6KIKitAsKL95WRR9JLlReFqOmG8duYah4F7nnL3
+         XgrRhyPR2ClssH415iLvWPJkGujl3B5aEgvbfsmXMnJj+14TQevqqDf0rJBeXq3XR5B9
+         vHjA6CcV9FdqsGD3j4sueDF5RZ6REyILg1eoFjxTbA724P/VPU15Cp0vgJZ1p1mtsS0g
+         dkMAGSZPdbFdlLY1Vsmjlp9xCFhQPxFg6uvZRjffeVWBOM1bppbypNtorT8Irv3EnKET
+         CR/LvPEL8XLkxD6F7vNBEt8iZFOxFmkTj0WAZ6YPdSad2jUmYIngw403n2AafGuI0Qda
+         Uasw==
+X-Received: by 10.152.120.195 with SMTP id le3mr30219086lab.16.1404867169488;
+ Tue, 08 Jul 2014 17:52:49 -0700 (PDT)
+Received: by 10.112.142.7 with HTTP; Tue, 8 Jul 2014 17:52:49 -0700 (PDT)
+In-Reply-To: <CAA787rnMonCuON+C0U5FDXKzjTBdpOusCpGLeWytDWaA1torEw@mail.gmail.com>
+X-Google-Sender-Auth: hLYXO1DC8R9PKyx4kt_2UA8v_E0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253057>
 
-Fabian Ruch <bafain@gmail.com> writes:
-
-> The command line used to recreate root commits specifies the
-> effectless option `-C`. It is used to reuse commit message and
-> authorship from the named commit but the commit being amended here,
-> which is the sentinel commit, already carries the authorship and log
-> message of the processed commit. Note that the committer email and
-> commit date fields do not match the root commit either way. Remove
-> the option. However, `-C` (other than `-c`) does not invoke the
-> editor and the `--amend` option invokes it by default. Disable editor
-> invocation again by specifying `--no-edit`.
-
-I'd say this is a no-value change, in the sense that it can be
-written either way for the same effect and if the original were
-written with "--amend --no-edit" then there would be no reason to
-change it to "-C $1" because such a change would also be equally a
-no-value change.
-
-What exactly are we gaining?  Performance?  Correctness?
-
-
-> Signed-off-by: Fabian Ruch <bafain@gmail.com>
-> ---
->  git-rebase--interactive.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On 3 July 2014 23:55, =C3=98yvind A. Holm <sunny@sunbase.org> wrote:
+> When compiling newest master (v2.0.1-472-g6f92e5f) on Debian 7.5
+> (64-bit), t5150-request-pull.sh fails when compiling with
 >
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index ff04d5d..17836d5 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -511,7 +511,7 @@ do_pick () {
->  			   --no-post-rewrite -n -q -C $1 &&
->  			pick_one -n $1 &&
->  			git commit --allow-empty \
-> -				   --amend --no-post-rewrite -n -C $1 \
-> +				   --amend --no-post-rewrite -n --no-edit \
->  				   ${gpg_sign_opt:+"$gpg_sign_opt"} ||
->  			die_with_patch $1 "Could not apply $1... $2"
->  	else
+> $ make configure
+> $ ./configure --prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f9=
+2e5f
+> $ make prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f92e5f
+> $ cd t
+> $ ./t5150-request-pull.sh
+
+=46YI, t5150-request-pull.sh passes all tests now on newest master
+(v2.0.1-474-g72c7794) in Debian. There are two new commits on master
+since I wrote this, and the commit that makes things work again is
+4602f1a ("diff-tree: call free_commit_list() instead of duplicating
+its code"). Reverting this commit brings the failure back.
+
+The whole thing is still a mystery to me, though. I can't see why this
+should have anything to do with the use of ./configure --prefix. I
+tested several variants with and without ./configure --prefix, all
+tests were run several times and were reproducible every time. Was
+this --prefix thing just a red herring, or is it linked to this in
+some way?
+
+Also, the only file this commit touches is builtin/diff-tree.c, and
+this file hasn't been modified since 2011. Does anyone know what's
+going on here?
+
+Cheers,
+=C3=98yvind
