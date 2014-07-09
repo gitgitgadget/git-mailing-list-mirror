@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v6 26/32] checkout: detach if the branch is already checked out elsewhere
-Date: Wed,  9 Jul 2014 14:33:11 +0700
-Message-ID: <1404891197-18067-27-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v6 27/32] prune: strategies for linked checkouts
+Date: Wed,  9 Jul 2014 14:33:12 +0700
+Message-ID: <1404891197-18067-28-git-send-email-pclouds@gmail.com>
 References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,220 +11,309 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 09 09:35:53 2014
+X-From: git-owner@vger.kernel.org Wed Jul 09 09:35:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4mPw-0004MP-FT
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 09:35:52 +0200
+	id 1X4mQ2-0004PY-9h
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 09:35:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755117AbaGIHfs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jul 2014 03:35:48 -0400
-Received: from mail-pd0-f179.google.com ([209.85.192.179]:45068 "EHLO
-	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755108AbaGIHfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 03:35:47 -0400
-Received: by mail-pd0-f179.google.com with SMTP id w10so8596796pde.10
-        for <git@vger.kernel.org>; Wed, 09 Jul 2014 00:35:47 -0700 (PDT)
+	id S1755086AbaGIHfy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jul 2014 03:35:54 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:49178 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753974AbaGIHfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 03:35:53 -0400
+Received: by mail-pa0-f50.google.com with SMTP id bj1so8779340pad.37
+        for <git@vger.kernel.org>; Wed, 09 Jul 2014 00:35:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=W6s2DgBtzhsqtmiHNZDi/vB2lF6kzVki/gCPVLcCvx4=;
-        b=gaPLNZtJHdRzt9RFDyv/2wouaKeR25OVF8/batI+uBCLRtVrGgBh28hwGVRBJ8rN9C
-         3p43ZtHRN2XJsZwGf9Sa/r7K+haInzfYlBg2MAR/b5PkyH3+x3o6OAgK4x+F+tOdbrGw
-         gIEshonzPP8fq9BJ8SIWEdugCLjfHgo6ZXAjg152fINFE8S/MdblsJLdZQvAFxvXVvoq
-         HLvYLKwi0m0JuXgOAlfwMZTobV5wQCNKbI24CjBQYaRGiayPEFysX/rpa6vHUyPNCvEh
-         DNpO85Qj6j5OWTUUM2Cnwelg24jtkfhxZZIwhleLmukCQJGtUs3FVskyy+q9sVfepBnb
-         0VVw==
-X-Received: by 10.68.194.229 with SMTP id hz5mr29197988pbc.91.1404891347360;
-        Wed, 09 Jul 2014 00:35:47 -0700 (PDT)
+        bh=n3luwqo48DQbyWF1rZXBwtgzWzMCCqtJI4NdMH44V9c=;
+        b=0C9+8dSdtlaKYCP5V69xBGoAI7ZriaVYqhSk6EFir/EG8odWZK54g/d8fHHEfZ/KY6
+         B0QrNJLht6FOjqV9dHk/77CJHkbCSyS/ELIJW40Sz+g1z1JKPNHA00BhODXbPjnF/6LD
+         Il3FEYphVu01/qmkvahY55Ij8LwDXSwKDcL1a3Vyb9wsn0YrPF8baGNE/WoDrztOOemI
+         cXXxRxDYAfd57AWxXaUpVhcwtGC70tF/BBoZKTQUtZxHEStqoP99rCV1WZY1DilE+uNd
+         fi/vRiwaGzEpCz3v4MzWxa1auytrRUjETOH57O/21LomflgiMEtZYVC6MvLO+hhTOaOO
+         BnRQ==
+X-Received: by 10.70.48.205 with SMTP id o13mr9792820pdn.25.1404891352886;
+        Wed, 09 Jul 2014 00:35:52 -0700 (PDT)
 Received: from lanh ([115.73.209.165])
-        by mx.google.com with ESMTPSA id ug1sm13619666pac.9.2014.07.09.00.35.44
+        by mx.google.com with ESMTPSA id co3sm57908850pbb.89.2014.07.09.00.35.49
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Jul 2014 00:35:46 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Wed, 09 Jul 2014 14:35:44 +0700
+        Wed, 09 Jul 2014 00:35:52 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Wed, 09 Jul 2014 14:35:49 +0700
 X-Mailer: git-send-email 1.9.1.346.ga2b5940
 In-Reply-To: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253102>
 
-The normal rule is anything outside refs/heads/ is detached. This
-increases strictness of the rule a bit more: if the branch is checked
-out (either in $GIT_COMMON_DIR/HEAD or any $GIT_DIR/repos/.../HEAD)
-then it's detached as well.
+(alias R=3D$GIT_COMMON_DIR/repos/<id>)
 
-A hint is given so the user knows where to go and do something there
-if they still want to checkout undetached here.
+ - linked checkouts are supposed to keep its location in $R/gitdir up
+   to date. The use case is auto fixup after a manual checkout move.
+
+ - linked checkouts are supposed to update mtime of $R/gitdir. If
+   $R/gitdir's mtime is older than a limit, and it points to nowhere,
+   repos/<id> is to be pruned.
+
+ - If $R/locked exists, repos/<id> is not supposed to be pruned. If
+   $R/locked exists and $R/gitdir's mtime is older than a really long
+   limit, warn about old unused repo.
+
+ - "git checkout --to" is supposed to make a hard link named $R/link
+   pointing to the .git file on supported file systems to help detect
+   the user manually deleting the checkout. If $R/link exists and its
+   link count is greated than 1, the repo is kept.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/checkout.c     | 80 ++++++++++++++++++++++++++++++++++++++++++=
+ Documentation/git-prune.txt            |  3 ++
+ Documentation/gitrepository-layout.txt | 19 +++++++++
+ builtin/checkout.c                     | 14 +++++++
+ builtin/prune.c                        | 74 ++++++++++++++++++++++++++=
 ++++++++
- t/t2025-checkout-to.sh | 15 ++++++++--
- 2 files changed, 92 insertions(+), 3 deletions(-)
+ setup.c                                | 13 ++++++
+ 5 files changed, 123 insertions(+)
 
+diff --git a/Documentation/git-prune.txt b/Documentation/git-prune.txt
+index 7a493c8..50e39ec 100644
+--- a/Documentation/git-prune.txt
++++ b/Documentation/git-prune.txt
+@@ -48,6 +48,9 @@ OPTIONS
+ --expire <time>::
+ 	Only expire loose objects older than <time>.
+=20
++--repos::
++	Prune directories in $GIT_DIR/repos.
++
+ <head>...::
+ 	In addition to objects
+ 	reachable from any of our references, keep objects
+diff --git a/Documentation/gitrepository-layout.txt b/Documentation/git=
+repository-layout.txt
+index 543d874..bed4f1a 100644
+--- a/Documentation/gitrepository-layout.txt
++++ b/Documentation/gitrepository-layout.txt
+@@ -256,6 +256,25 @@ repos::
+ 	$GIT_COMMON_DIR is set and "$GIT_COMMON_DIR/repos" will be
+ 	used instead.
+=20
++repos/<id>/gitdir::
++	A text file containing the absolute path back to the .git file
++	that points to here. This is used to check if the linked
++	repository has been manually removed and there is no need to
++	keep this directory any more. mtime of this file should be
++	updated every time the linked repository is accessed.
++
++repos/<id>/locked::
++	If this file exists, the linked repository may be on a
++	portable device and not available. It does not mean that the
++	linked repository is gone and `repos/<id>` could be
++	removed. The file's content contains a reason string on why
++	the repository is locked.
++
++repos/<id>/link::
++	If this file exists, it is a hard link to the linked .git
++	file. It is used to detect if the linked repository is
++	manually removed.
++
+ SEE ALSO
+ --------
+ linkgit:git-init[1],
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 5a52da4..069e803 100644
+index 069e803..98a2f5f 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -432,6 +432,11 @@ struct branch_info {
- 	const char *name; /* The short name used */
- 	const char *path; /* The full name of a real branch */
- 	struct commit *commit; /* The named commit */
-+	/*
-+	 * if not null the branch is detached because it's already
-+	 * checked out in this checkout
-+	 */
-+	char *checkout;
- };
+@@ -898,12 +898,22 @@ static int prepare_linked_checkout(const struct c=
+heckout_opts *opts,
+ 	junk_git_dir =3D sb_repo.buf;
+ 	is_junk =3D 1;
 =20
- static void setup_branch_path(struct branch_info *branch)
-@@ -640,6 +645,11 @@ static void update_refs_for_switch(const struct ch=
-eckout_opts *opts,
- 			if (old->path && advice_detached_head)
- 				detach_advice(new->name);
- 			describe_detached_head(_("HEAD is now at"), new->commit);
-+			if (new->checkout && !*new->checkout)
-+				fprintf(stderr, _("hint: the main checkout is holding this branch\=
-n"));
-+			else if (new->checkout)
-+				fprintf(stderr, _("hint: the linked checkout %s is holding this br=
-anch\n"),
-+					new->checkout);
- 		}
- 	} else if (new->path) {	/* Switch branches. */
- 		create_symref("HEAD", new->path, msg.buf);
-@@ -982,6 +992,73 @@ static const char *unique_tracking_name(const char=
- *name, unsigned char *sha1)
- 	return NULL;
++	/*
++	 * lock the incomplete repo so prune won't delete it, unlock
++	 * after the preparation is over.
++	 */
++	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
++	write_file(sb.buf, 1, "initializing\n");
++
+ 	strbuf_addf(&sb_git, "%s/.git", path);
+ 	if (safe_create_leading_directories_const(sb_git.buf))
+ 		die_errno(_("could not create leading directories of '%s'"),
+ 			  sb_git.buf);
+ 	junk_work_tree =3D path;
+=20
++	strbuf_reset(&sb);
++	strbuf_addf(&sb, "%s/gitdir", sb_repo.buf);
++	write_file(sb.buf, 1, "%s\n", real_path(sb_git.buf));
+ 	write_file(sb_git.buf, 1, "gitdir: %s/repos/%s\n",
+ 		   real_path(get_git_common_dir()), name);
+ 	/*
+@@ -912,6 +922,7 @@ static int prepare_linked_checkout(const struct che=
+ckout_opts *opts,
+ 	 * value would do because this value will be ignored and
+ 	 * replaced at the next (real) checkout.
+ 	 */
++	strbuf_reset(&sb);
+ 	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
+ 	write_file(sb.buf, 1, "%s\n", sha1_to_hex(new->commit->object.sha1));
+ 	strbuf_reset(&sb);
+@@ -930,6 +941,9 @@ static int prepare_linked_checkout(const struct che=
+ckout_opts *opts,
+ 	ret =3D run_command(&cp);
+ 	if (!ret)
+ 		is_junk =3D 0;
++	strbuf_reset(&sb);
++	strbuf_addf(&sb, "%s/locked", sb_repo.buf);
++	unlink_or_warn(sb.buf);
+ 	strbuf_release(&sb);
+ 	strbuf_release(&sb_repo);
+ 	strbuf_release(&sb_git);
+diff --git a/builtin/prune.c b/builtin/prune.c
+index 144a3bd..6db6bcc 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -112,6 +112,70 @@ static void prune_object_dir(const char *path)
+ 	}
  }
 =20
-+static int check_linked_checkout(struct branch_info *new,
-+				  const char *name, const char *path)
++static const char *prune_repo_dir(const char *id, struct stat *st)
 +{
-+	struct strbuf sb =3D STRBUF_INIT;
-+	char *start, *end;
-+	if (strbuf_read_file(&sb, path, 0) < 0)
-+		return 0;
-+	if (!starts_with(sb.buf, "ref:")) {
-+		strbuf_release(&sb);
-+		return 0;
++	char *path;
++	int fd, len;
++	if (file_exists(git_path("repos/%s/locked", id)))
++		return NULL;
++	if (stat(git_path("repos/%s/gitdir", id), st)) {
++		st->st_mtime =3D expire;
++		return _("gitdir does not exist");
 +	}
-+
-+	start =3D sb.buf + 4;
-+	while (isspace(*start))
-+		start++;
-+	end =3D start;
-+	while (*end && !isspace(*end))
-+		end++;
-+	if (!strncmp(start, new->path, end - start) &&
-+	    new->path[end - start] =3D=3D '\0') {
-+		strbuf_release(&sb);
-+		new->path =3D NULL; /* detach */
-+		new->checkout =3D xstrdup(name); /* reason */
-+		return 1;
++	fd =3D open(git_path("repos/%s/gitdir", id), O_RDONLY);
++	len =3D st->st_size;
++	path =3D xmalloc(len + 1);
++	read_in_full(fd, path, len);
++	close(fd);
++	while (path[len - 1] =3D=3D '\n' || path[len - 1] =3D=3D '\r')
++		len--;
++	path[len] =3D '\0';
++	if (!file_exists(path)) {
++		struct stat st_link;
++		free(path);
++		/*
++		 * the repo is moved manually and has not been
++		 * accessed since?
++		 */
++		if (!stat(git_path("repos/%s/link", id), &st_link) &&
++		    st_link.st_nlink > 1)
++			return NULL;
++		return _("gitdir points to non-existing file");
 +	}
-+	strbuf_release(&sb);
-+	return 0;
++	free(path);
++	return NULL;
 +}
 +
-+static void check_linked_checkouts(struct branch_info *new)
++static void prune_repos_dir(void)
 +{
-+	struct strbuf path =3D STRBUF_INIT;
-+	DIR *dir;
++	const char *reason;
++	DIR *dir =3D opendir(git_path("repos"));
 +	struct dirent *d;
-+
-+	strbuf_addf(&path, "%s/repos", get_git_common_dir());
-+	if ((dir =3D opendir(path.buf)) =3D=3D NULL) {
-+		strbuf_release(&path);
++	int removed =3D 0;
++	struct stat st;
++	if (!dir)
 +		return;
-+	}
-+
-+	strbuf_reset(&path);
-+	strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
-+	/*
-+	 * $GIT_COMMON_DIR/HEAD is practically outside
-+	 * $GIT_DIR so resolve_ref_unsafe() won't work (it
-+	 * uses git_path). Parse the ref ourselves.
-+	 */
-+	if (check_linked_checkout(new, "", path.buf)) {
-+		strbuf_release(&path);
-+		closedir(dir);
-+		return;
-+	}
-+
 +	while ((d =3D readdir(dir)) !=3D NULL) {
 +		if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, ".."))
 +			continue;
-+		strbuf_reset(&path);
-+		strbuf_addf(&path, "%s/repos/%s/HEAD",
-+			    get_git_common_dir(), d->d_name);
-+		if (check_linked_checkout(new, d->d_name, path.buf))
-+			break;
++		if ((reason =3D prune_repo_dir(d->d_name, &st)) !=3D NULL &&
++		    st.st_mtime <=3D expire) {
++			struct strbuf sb =3D STRBUF_INIT;
++			if (show_only || verbose)
++				printf(_("Removing repos/%s: %s\n"), d->d_name, reason);
++			if (show_only)
++				continue;
++			strbuf_addstr(&sb, git_path("repos/%s", d->d_name));
++			remove_dir_recursively(&sb, 0);
++			strbuf_release(&sb);
++			removed =3D 1;
++		}
 +	}
-+	strbuf_release(&path);
 +	closedir(dir);
++	if (removed)
++		rmdir(git_path("repos"));
 +}
 +
- static int parse_branchname_arg(int argc, const char **argv,
- 				int dwim_new_local_branch_ok,
- 				struct branch_info *new,
-@@ -1109,6 +1186,9 @@ static int parse_branchname_arg(int argc, const c=
-har **argv,
- 	else
- 		new->path =3D NULL; /* not an existing branch */
+ /*
+  * Write errors (particularly out of space) can result in
+  * failed temporary packs (and more rarely indexes and other
+@@ -138,10 +202,12 @@ int cmd_prune(int argc, const char **argv, const =
+char *prefix)
+ {
+ 	struct rev_info revs;
+ 	struct progress *progress =3D NULL;
++	int prune_repos =3D 0;
+ 	const struct option options[] =3D {
+ 		OPT__DRY_RUN(&show_only, N_("do not remove, show only")),
+ 		OPT__VERBOSE(&verbose, N_("report pruned objects")),
+ 		OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
++		OPT_BOOL(0, "repos", &prune_repos, N_("prune .git/repos/")),
+ 		OPT_EXPIRY_DATE(0, "expire", &expire,
+ 				N_("expire objects older than <time>")),
+ 		OPT_END()
+@@ -154,6 +220,14 @@ int cmd_prune(int argc, const char **argv, const c=
+har *prefix)
+ 	init_revisions(&revs, prefix);
 =20
-+	if (new->path)
-+		check_linked_checkouts(new);
+ 	argc =3D parse_options(argc, argv, prefix, options, prune_usage, 0);
 +
- 	new->commit =3D lookup_commit_reference_gently(rev, 1);
- 	if (!new->commit) {
- 		/* not a commit */
-diff --git a/t/t2025-checkout-to.sh b/t/t2025-checkout-to.sh
-index 5ec49e2..2d35a9b 100755
---- a/t/t2025-checkout-to.sh
-+++ b/t/t2025-checkout-to.sh
-@@ -13,13 +13,14 @@ test_expect_success 'checkout --to not updating pat=
-hs' '
- '
-=20
- test_expect_success 'checkout --to a new worktree' '
-+	git rev-parse HEAD >expect &&
- 	git checkout --to here master &&
- 	(
- 		cd here &&
- 		test_cmp ../init.t init.t &&
--		git symbolic-ref HEAD >actual &&
--		echo refs/heads/master >expect &&
--		test_cmp expect actual &&
-+		test_must_fail git symbolic-ref HEAD &&
-+		git rev-parse HEAD >actual &&
-+		test_cmp ../expect actual &&
- 		git fsck
- 	)
- '
-@@ -45,4 +46,12 @@ test_expect_success 'checkout --to a new worktree cr=
-eating new branch' '
- 	)
- '
-=20
-+test_expect_success 'detach if the same branch is already checked out'=
- '
-+	(
-+		cd here &&
-+		git checkout newmaster &&
-+		test_must_fail git symbolic-ref HEAD
-+	)
-+'
++	if (prune_repos) {
++		if (argc)
++			die(_("--repos does not take extra arguments"));
++		prune_repos_dir();
++		return 0;
++	}
 +
- test_done
+ 	while (argc--) {
+ 		unsigned char sha1[20];
+ 		const char *name =3D *argv++;
+diff --git a/setup.c b/setup.c
+index 8f90bc3..da2d669 100644
+--- a/setup.c
++++ b/setup.c
+@@ -390,6 +390,17 @@ static int check_repository_format_gently(const ch=
+ar *gitdir, int *nongit_ok)
+ 	return ret;
+ }
+=20
++static void update_linked_gitdir(const char *gitfile, const char *gitd=
+ir)
++{
++	struct strbuf path =3D STRBUF_INIT;
++	struct stat st;
++
++	strbuf_addf(&path, "%s/gitfile", gitdir);
++	if (stat(path.buf, &st) || st.st_mtime + 24 * 3600 < time(NULL))
++		write_file(path.buf, 0, "%s\n", gitfile);
++	strbuf_release(&path);
++}
++
+ /*
+  * Try to read the location of the git directory from the .git file,
+  * return path to git directory if found.
+@@ -438,6 +449,8 @@ const char *read_gitfile(const char *path)
+=20
+ 	if (!is_git_directory(dir))
+ 		die("Not a git repository: %s", dir);
++
++	update_linked_gitdir(path, dir);
+ 	path =3D real_path(dir);
+=20
+ 	free(buf);
 --=20
 1.9.1.346.ga2b5940
