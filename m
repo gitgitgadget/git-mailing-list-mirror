@@ -1,156 +1,94 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6 29/32] gc: support prune --repos
-Date: Wed, 9 Jul 2014 06:05:02 -0400
-Message-ID: <CAPig+cThYY9ERTrUrMM_JcGoALqcn1RTRGa_0k60cPJXcaLkLQ@mail.gmail.com>
-References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
-	<1404891197-18067-30-git-send-email-pclouds@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH] http: Add Accept-Language header if possible
+Date: Wed, 9 Jul 2014 11:40:05 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1407091127490.22132@ds9.cixit.se>
+References: <1404834846-11812-1-git-send-email-eungjun.yi@navercorp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 12:05:15 2014
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: git@vger.kernel.org, Yi EungJun <eungjun.yi@navercorp.com>
+To: Yi EungJun <semtlenori@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 12:40:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4okV-0007bf-8Q
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 12:05:15 +0200
+	id 1X4pIX-0002uk-Lb
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 12:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755491AbaGIKFJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jul 2014 06:05:09 -0400
-Received: from mail-lb0-f173.google.com ([209.85.217.173]:48846 "EHLO
-	mail-lb0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755352AbaGIKFE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jul 2014 06:05:04 -0400
-Received: by mail-lb0-f173.google.com with SMTP id s7so4904632lbd.32
-        for <git@vger.kernel.org>; Wed, 09 Jul 2014 03:05:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=ESybcM8RjtY1+7ARP/18b2nvfQCJZ9Yx5HAkzhzDXgk=;
-        b=x6fXPuBohafFOv7XcPYY0XuuAvDeNzCyY5X/aKrnwOWJQFI5Tdd9sDF45siQaVJEg6
-         Ur8yugJ/lbEa/kNm6H8bb/yhOYDCyK3bGjmm8Pdm+aV4Y2DVwd82ptqnf24b+KnDvOWg
-         xs7LoFT76coeBEI5a6UHvULF07rnTkneDiB7BtLjkvLfHaTK/Jt3tRo4TDjA/c+7fJpH
-         jHbO8PBNPQn54RaPQbuuR8I26GQkzRKzVwShgNy+4TsR2kubVMPfhQvrnSIQIK/Qvcex
-         mIO1kA4MpgkNMIWXE+0CPbdks1xGOLFRMNFSeFMPFc2xDIrKebcOSszoxKND08FxCRzC
-         yniA==
-X-Received: by 10.152.29.200 with SMTP id m8mr32406123lah.4.1404900302623;
- Wed, 09 Jul 2014 03:05:02 -0700 (PDT)
-Received: by 10.114.78.167 with HTTP; Wed, 9 Jul 2014 03:05:02 -0700 (PDT)
-In-Reply-To: <1404891197-18067-30-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: F4dU6aOakSj-NLfJF6M809jyfIk
+	id S1754682AbaGIKkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 06:40:20 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:48014 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753786AbaGIKkT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 06:40:19 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-9.4) with ESMTP id s69Ae7aG026195
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 9 Jul 2014 12:40:07 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id s69Ae56c026192;
+	Wed, 9 Jul 2014 12:40:05 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <1404834846-11812-1-git-send-email-eungjun.yi@navercorp.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.7 (mail.cixit.se [127.0.0.1]); Wed, 09 Jul 2014 12:40:07 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253111>
 
-On Wed, Jul 9, 2014 at 3:33 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  Documentation/config.txt |  7 +++++++
->  builtin/gc.c             | 17 +++++++++++++++++
->  2 files changed, 24 insertions(+)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 286e539..470f979 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1211,6 +1211,13 @@ gc.pruneexpire::
->         "now" may be used to disable this  grace period and always pr=
-une
->         unreachable objects immediately.
->
-> +gc.prunereposexpire::
-> +       When 'git gc' is run, it will call
-> +       'prune --repos --expire 3.months.ago'.
-> +       Override the grace period with this config variable. The valu=
-e
-> +       "now" may be used to disable the grace period and always prun=
-e
-> +       $GIT_DIR/repos immediately.
+Yi EungJun:
 
-nit: This reads very slightly better without "always":
+> Example:
+>  LANGUAGE= -> ""
+>  LANGUAGE=ko -> "Accept-Language: ko; q=1.000, *; q=0.001"
+>  LANGUAGE=ko:en -> "Accept-Language: ko; q=1.000, en; q=0.999, *; q=0.001"
 
-    ... disable the grace period and prune [...] immediately.
+Avoid adding "q=1.000". It is redundant (the default for any 
+unqualified language names is 1.0, and additionally there has 
+historically been some buggy servers that failed if it was included.
 
-More below.
+> +	p1 = getenv("LANGUAGE");
 
-> +
->  gc.reflogexpire::
->  gc.<pattern>.reflogexpire::
->         'git reflog expire' removes reflog entries older than
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 53f1302..1190183 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -33,11 +33,13 @@ static int gc_auto_threshold =3D 6700;
->  static int gc_auto_pack_limit =3D 50;
->  static int detach_auto =3D 1;
->  static const char *prune_expire =3D "2.weeks.ago";
-> +static const char *prune_repos_expire =3D "3.months.ago";
->
->  static struct argv_array pack_refs_cmd =3D ARGV_ARRAY_INIT;
->  static struct argv_array reflog =3D ARGV_ARRAY_INIT;
->  static struct argv_array repack =3D ARGV_ARRAY_INIT;
->  static struct argv_array prune =3D ARGV_ARRAY_INIT;
-> +static struct argv_array prune_repos =3D ARGV_ARRAY_INIT;
->  static struct argv_array rerere =3D ARGV_ARRAY_INIT;
->
->  static char *pidfile;
-> @@ -92,6 +94,14 @@ static int gc_config(const char *var, const char *=
-value, void *cb)
->                 }
->                 return git_config_string(&prune_expire, var, value);
->         }
-> +       if (!strcmp(var, "gc.prunereposexpire")) {
-> +               if (value && strcmp(value, "now")) {
-> +                       unsigned long now =3D approxidate("now");
-> +                       if (approxidate(value) >=3D now)
-> +                               return error(_("Invalid %s: '%s'"), v=
-ar, value);
-> +               }
-> +               return git_config_string(&prune_repos_expire, var, va=
-lue);
+You need a fallback mechanism here to parse all the possible language 
+variables. I would use the first one I find of these:
 
-This logic is copied from the "gc.pruneexpire" case immediately above
-it. Would it make sense to factor it out into a helper function (or is
-it not worth the bother for just two cases)?
+  1. LANGUAGE
+  2. LC_ALL
+  3. LC_MESSAGES
+  4. LANG
 
-> +       }
->         return git_default_config(var, value, cb);
->  }
->
-> @@ -299,6 +309,7 @@ int cmd_gc(int argc, const char **argv, const cha=
-r *prefix)
->         argv_array_pushl(&reflog, "reflog", "expire", "--all", NULL);
->         argv_array_pushl(&repack, "repack", "-d", "-l", NULL);
->         argv_array_pushl(&prune, "prune", "--expire", NULL);
-> +       argv_array_pushl(&prune_repos, "prune", "--repos", "--expire"=
-, NULL);
->         argv_array_pushl(&rerere, "rerere", "gc", NULL);
->
->         git_config(gc_config, NULL);
-> @@ -368,6 +379,12 @@ int cmd_gc(int argc, const char **argv, const ch=
-ar *prefix)
->                         return error(FAILED_RUN, prune.argv[0]);
->         }
->
-> +       if (prune_repos_expire) {
-> +               argv_array_push(&prune_repos, prune_repos_expire);
-> +               if (run_command_v_opt(prune_repos.argv, RUN_GIT_CMD))
-> +                       return error(FAILED_RUN, prune_repos.argv[0])=
-;
-> +       }
-> +
->         if (run_command_v_opt(rerere.argv, RUN_GIT_CMD))
->                 return error(FAILED_RUN, rerere.argv[0]);
->
-> --
-> 1.9.1.346.ga2b5940
+Only "LANGUAGE" holds a colon-separated list, but the same code can 
+parse all of them, just yielding a single entry for the others.
+
+> +				strbuf_add(buf, p1, p2 - p1);
+
+The tokens are on the form language_COUNTRY.encoding@identifier, whereas 
+Accept-Language wants language-COUNTRY, so you need to a) replace "_" 
+with "-", and b) chop off anything following a "." or "@".
+
+> +				strbuf_addf(buf, "; q=%.3f", q);
+> +				q -= 0.001;
+
+Three decimals seems a bit overkill, but some experimentation might be 
+necessary.
+
+> +		strbuf_addstr(buf, "*; q=0.001\r\n");
+
+You should probably also add an explicit "en" here, if none was 
+already included. I've seen some servers break horribly if "en" isn't 
+included.
+
+
+
+For reference, I have my LANGUAGE variable set to 
+"sv_SE.utf8:sv:nb_NO.utf8:nb:da_DK.utf8:da:nn_NO.utf8:nn:en_GB.utf8:en_US.utf8:en"
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
