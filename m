@@ -1,67 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Keller, Jacob E" <jacob.e.keller@intel.com>
 Subject: Re: [PATCH] makefile: add ability to run specific test files
-Date: Wed, 09 Jul 2014 15:59:21 -0700
-Message-ID: <xmqq61j69m0m.fsf@gitster.dls.corp.google.com>
+Date: Wed, 9 Jul 2014 23:49:23 +0000
+Message-ID: <1404949763.23510.42.camel@jekeller-desk1.amr.corp.intel.com>
 References: <1404945412-10197-2-git-send-email-jacob.e.keller@intel.com>
+	 <xmqq61j69m0m.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 00:59:33 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "gitster@pobox.com" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 10 01:49:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X50pp-0008LU-06
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 00:59:33 +0200
+	id 1X51c9-0007Xd-5F
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 01:49:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756508AbaGIW73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 18:59:29 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61905 "EHLO smtp.pobox.com"
+	id S1753276AbaGIXtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 19:49:25 -0400
+Received: from mga03.intel.com ([143.182.124.21]:25152 "EHLO mga03.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756217AbaGIW72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 18:59:28 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 040622852C;
-	Wed,  9 Jul 2014 18:59:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UPaBGo5QM2xYwbk79z/kSfaez0Y=; b=HPG99u
-	Ol+Rx+6XKA1SnbP3fq4Nd84vN/nxa95CtfPuI3FLxEQlWWrnyJfjpSs+YU82gL0X
-	IyR/+mQjt3dZ27p1t8Ib0PaT20kbF4TEnvHpbLIvlDm8POH/HAaeJRmjpCUWc6h/
-	zO1K0pvgPwt49mlDJl6/OmDax580wRxe10388=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fM2soetQvy1kZj2lZusixXU7RQVIKrYX
-	EnCpU2n6Doq8bqijwHSnHVHx3KmoPSF8zz7UJjyVOeIUIHD92KBrmL1+pSCBg5lc
-	2pqvy0daBGEUZZUNxJzOnezTJXOlG1MaaKq+yeIVV8IhtBNB0cO9emB2dG/M5YWE
-	TLqMbCeCjT8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ED09C2852B;
-	Wed,  9 Jul 2014 18:59:12 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B909928525;
-	Wed,  9 Jul 2014 18:59:07 -0400 (EDT)
-In-Reply-To: <1404945412-10197-2-git-send-email-jacob.e.keller@intel.com>
-	(Jacob Keller's message of "Wed, 9 Jul 2014 15:36:52 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A1CBCE1A-07BC-11E4-B6DD-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751183AbaGIXtY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 19:49:24 -0400
+Received: from azsmga001.ch.intel.com ([10.2.17.19])
+  by azsmga101.ch.intel.com with ESMTP; 09 Jul 2014 16:49:24 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.01,634,1400050800"; 
+   d="scan'208";a="455180330"
+Received: from orsmsx110.amr.corp.intel.com ([10.22.240.8])
+  by azsmga001.ch.intel.com with ESMTP; 09 Jul 2014 16:49:23 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
+ ORSMSX110.amr.corp.intel.com ([169.254.3.171]) with mapi id 14.03.0123.003;
+ Wed, 9 Jul 2014 16:49:23 -0700
+Thread-Topic: [PATCH] makefile: add ability to run specific test files
+Thread-Index: AQHPm8ZLdNa2z5Fi2Um4FWbUI/IL6JuYW1xVgACDQYA=
+In-Reply-To: <xmqq61j69m0m.fsf@gitster.dls.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.173.156]
+Content-ID: <1E846CDABC4E3242A9C4734AFA9B1BED@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253169>
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
-
-> Running a specific test file manually does not obtain the exact
-> environment setup by the Makefile.
-
-What kind of things are missing, exactly?  Perhaps that is something
-you need to fix, instead of mucking with the top-level Makefile.
-
-I recall last time when I did a patch like this I was told to look
-into "make -C t" ;-)  What is different this round?
+T24gV2VkLCAyMDE0LTA3LTA5IGF0IDE1OjU5IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
+Cj4gSmFjb2IgS2VsbGVyIDxqYWNvYi5lLmtlbGxlckBpbnRlbC5jb20+IHdyaXRlczoNCj4gDQo+
+ID4gUnVubmluZyBhIHNwZWNpZmljIHRlc3QgZmlsZSBtYW51YWxseSBkb2VzIG5vdCBvYnRhaW4g
+dGhlIGV4YWN0DQo+ID4gZW52aXJvbm1lbnQgc2V0dXAgYnkgdGhlIE1ha2VmaWxlLg0KPiANCj4g
+V2hhdCBraW5kIG9mIHRoaW5ncyBhcmUgbWlzc2luZywgZXhhY3RseT8gIFBlcmhhcHMgdGhhdCBp
+cyBzb21ldGhpbmcNCj4geW91IG5lZWQgdG8gZml4LCBpbnN0ZWFkIG9mIG11Y2tpbmcgd2l0aCB0
+aGUgdG9wLWxldmVsIE1ha2VmaWxlLg0KPiANCj4gSSByZWNhbGwgbGFzdCB0aW1lIHdoZW4gSSBk
+aWQgYSBwYXRjaCBsaWtlIHRoaXMgSSB3YXMgdG9sZCB0byBsb29rDQo+IGludG8gIm1ha2UgLUMg
+dCIgOy0pICBXaGF0IGlzIGRpZmZlcmVudCB0aGlzIHJvdW5kPw0KDQpJdCB1c2VzIHRoZSBnaXQg
+ZnJvbSBteSBlbnZpcm9ubWVudCBpbnN0ZWFkIG9mIHRoZSBnaXQgSSBoYXZlIGJ1aWx0LA0Kd2hp
+Y2ggaXMgYmFkIHNpbmNlIEkgZG9uJ3QgcmVhbGx5IHdhbnQgdG8gcnVuIG1ha2UgaW5zdGFsbC4N
+Cg0KVGhhbmtzLA0KSmFrZQ0K
