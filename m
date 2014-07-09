@@ -1,95 +1,119 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] remote-curl: mark helper-protocol errors more clearly
-Date: Wed, 9 Jul 2014 17:47:20 -0400
-Message-ID: <20140709214720.GC26999@sigill.intra.peff.net>
-References: <20140709212043.GC25854@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/14] Add submodule test harness
+Date: Wed, 09 Jul 2014 14:57:36 -0700
+Message-ID: <xmqqion69ovj.fsf@gitster.dls.corp.google.com>
+References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>
+	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>
+	<53B5C7AC.4040701@web.de>
+	<xmqqsimddrq3.fsf@gitster.dls.corp.google.com>
+	<53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de>
+	<53BD7A36.2030300@kdbg.org>
+	<xmqqr41u9w27.fsf@gitster.dls.corp.google.com>
+	<20140709195619.GA17454@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Dmitry <wipedout@yandex.ru>
-X-From: git-owner@vger.kernel.org Wed Jul 09 23:47:29 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j6t@kdbg.org>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 09 23:57:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4zi2-0002FQ-OP
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 23:47:27 +0200
+	id 1X4zs4-0001za-UG
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 23:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754576AbaGIVrX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 17:47:23 -0400
-Received: from cloud.peff.net ([50.56.180.127]:58998 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751169AbaGIVrW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 17:47:22 -0400
-Received: (qmail 10626 invoked by uid 102); 9 Jul 2014 21:47:22 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 09 Jul 2014 16:47:22 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Jul 2014 17:47:20 -0400
-Content-Disposition: inline
-In-Reply-To: <20140709212043.GC25854@sigill.intra.peff.net>
+	id S1754016AbaGIV5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 17:57:45 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63226 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751676AbaGIV5o (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 17:57:44 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 816EF2876B;
+	Wed,  9 Jul 2014 17:57:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=7rn/Cfzu/8T+2O2qliBFGpvQlzg=; b=oGpGt+
+	ik6/dxqqVM929t5mm+eBQSyVY4Pn3LjWVAVRH1+QmtNtAOvH7RTlD9WskHMe2beZ
+	WQjf/k280WeAU0GcDn62k/WwjpHNK7EMz/iERqY2ntbdogCE1/ddJuusZtKrEMJ5
+	ZD8Hs4pmn+ospcS8n3lMX4n1O95x4K7mUmwdI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=o/Ya2ngezJmScjmtYMh5GcvhZticmkY9
+	0g/misjw9WIGIekb7j81EwQ6rS1GzcarAB82TsgpQlyUu4AaFt0wPYdmFzy/W8Bh
+	IWVCPL+fy6m79nSuBJFY+X+F1KkW5HtVdCVnrnbD3N6/ofGg5Hy2u/EZ9ajAqB6F
+	YJwUT+vNQ6E=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 779952876A;
+	Wed,  9 Jul 2014 17:57:28 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EC57E28763;
+	Wed,  9 Jul 2014 17:57:22 -0400 (EDT)
+In-Reply-To: <20140709195619.GA17454@dcvr.yhbt.net> (Eric Wong's message of
+	"Wed, 9 Jul 2014 19:56:19 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 019BBF5C-07B4-11E4-92DC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253159>
 
-When we encounter an error in remote-curl, we generally just
-report it to stderr. There is no need for the user to care
-that the "could not connect to server" error was generated
-by git-remote-https rather than a function in the parent
-git-fetch process.
+Eric Wong <normalperson@yhbt.net> writes:
 
-However, when the error is in the protocol between git and
-the helper, it makes sense to clearly identify which side is
-complaining. These cases shouldn't ever happen, but when
-they do, we can make them less confusing by being more
-verbose.
+> Junio C Hamano <gitster@pobox.com> wrote:
+>> Johannes Sixt <j6t@kdbg.org> writes:
+>> > Am 08.07.2014 21:34, schrieb Jens Lehmann:
+>> >>> And Msysgit complains 
+>> >>> error: fchmod on c:/xxxt/trash directory.t7613-merge-submodule/submodule_update_repo/.git/modules/sub1/config.lock failed: Function not implemented
+>> >> 
+>> >> I'm not sure what this is about, seems to happen during the "cp -R" of
+>> >> the repo under .git/modules into the submodule.
+>> >
+>> > No. It happens because fchmod() is not implemented in our Windows port.
+>> >
+>> > Please see my band-aid patch at
+>> > http://thread.gmane.org/gmane.comp.version-control.git/248154/focus=20266
+>> > The sub-thread ended inconclusive.
+>> 
+>> We need to start somewhere, and a no-op fchmod() in your patch may
+>> be as a good place to start as anything.  At least we would then
+>> keep the old behaviour without introducing any new failure.
+>
+> Right, this likely makes the most sense for single-user systems or
+> systesm without a *nix-like permission system.
+>
+>> An alternative might be to use chmod() after we are done writing to
+>> the config.lock in order to avoid the use of fchmod() altogether,
+>> which I think can replace the existing two callsites of fchmod().
+>> That approach might be a more expedient, but may turn out to be
+>> undesirable in the longer term.
+>
+> In that case, we would need to open with mode=0600 to avoid a window
+> where the file may be world-readable with any data in it.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- remote-curl.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Yes, of course.
 
-diff --git a/remote-curl.c b/remote-curl.c
-index a619b64..1f6905d 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -949,7 +949,7 @@ int main(int argc, const char **argv)
- 	git_extract_argv0_path(argv[0]);
- 	setup_git_directory_gently(&nongit);
- 	if (argc < 2) {
--		error("remote needed");
-+		error("remote-curl: usage: git remote-curl <remote> [<url>]");
- 		return 1;
- 	}
- 
-@@ -970,14 +970,14 @@ int main(int argc, const char **argv)
- 	do {
- 		if (strbuf_getline(&buf, stdin, '\n') == EOF) {
- 			if (ferror(stdin))
--				error("error reading command stream");
-+				error("remote-curl: error reading command stream from git");
- 			return 1;
- 		}
- 		if (buf.len == 0)
- 			break;
- 		if (starts_with(buf.buf, "fetch ")) {
- 			if (nongit)
--				die("Fetch attempted without a local repo");
-+				die("remote-curl: fetch attempted without a local repo");
- 			parse_fetch(&buf);
- 
- 		} else if (!strcmp(buf.buf, "list") || starts_with(buf.buf, "list ")) {
-@@ -1014,7 +1014,7 @@ int main(int argc, const char **argv)
- 			printf("\n");
- 			fflush(stdout);
- 		} else {
--			error("unknown command '%s'", buf.buf);
-+			error("remote-curl: unknown command '%s' from git", buf.buf);
- 			return 1;
- 		}
- 		strbuf_reset(&buf);
--- 
-2.0.0.566.gfe3e6b2
+To elaborate what I was alluding to at the end of the message you
+are responding to a bit more, if we were to move this "grab perms
+from existing file (if there is any) and propagate to the new one"
+into the lockfile API, 
+
+ - in hold_lock_file_for_update(), we would record the permission of
+   the original file, if any, to a new field in "struct lock_file";
+ - open with 0600 or tighter in lock_file(), and
+
+ - either before closing the file use fchmod() or after closing and
+   moving the file use chmod() to propagate the permission.
+
+If the original did not exist, we would pass 0666 to open as before
+in lock_file() and do not bother chmod/fchmod at the end.
+
+Or something like that, perhaps.
