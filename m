@@ -1,55 +1,94 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 00/14] Add submodule test harness
-Date: Wed, 09 Jul 2014 19:21:58 +0200
-Message-ID: <53BD7A36.2030300@kdbg.org>
-References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>	<53B5C7AC.4040701@web.de> <xmqqsimddrq3.fsf@gitster.dls.corp.google.com> <53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 1/2] add `config_set` API for caching config-like files
+Date: Wed, 09 Jul 2014 10:44:18 -0700
+Message-ID: <xmqq38ea77gt.fsf@gitster.dls.corp.google.com>
+References: <1404903454-10154-1-git-send-email-tanayabh@gmail.com>
+	<1404903454-10154-2-git-send-email-tanayabh@gmail.com>
+	<vpq61j6d92z.fsf@anie.imag.fr> <53BD3805.40504@gmail.com>
+	<vpqion68viq.fsf@anie.imag.fr>
+	<xmqqmwci7e9p.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>,
-	=?ISO-8859-1?Q?Torsten_B=F6gers?= =?ISO-8859-1?Q?hausen?= 
-	<tboegi@web.de>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 19:22:10 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Jul 09 19:44:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4vZJ-0002ln-IC
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 19:22:09 +0200
+	id 1X4vv3-0002Zh-06
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 19:44:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756433AbaGIRWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 13:22:04 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:12306 "EHLO bsmtp.bon.at"
+	id S1755082AbaGIRod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 13:44:33 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63477 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755337AbaGIRWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 13:22:03 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 56DF01000B;
-	Wed,  9 Jul 2014 19:22:00 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 71CD519F364;
-	Wed,  9 Jul 2014 19:21:59 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53BC47BD.1000705@web.de>
+	id S1751742AbaGIRoc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 13:44:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 58874276A9;
+	Wed,  9 Jul 2014 13:44:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=amwGpH+4bc2NUP8BQXQxejOPTJE=; b=nHlNM3
+	7JynebDpC+8NuD2w3sXwMxpRek/DybNBDjyp6+IXRXW7CY0x64uU+nBbfYKfszzD
+	rWP/rpqnpyMy9VdPcOMP3vOcx12zwbHRy+ugSTJlOObQKV+KCAC/cIPGJHeACypM
+	JNPpntSiINRxFRQ9E3HiGuAYxMJ9FjD0MVbLk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WSgmMXsBuDAl1HgVTgzkivtbKCud5by2
+	wNfaoH6MEuvxrQ20fGD8d5jvatdhbI9VTwQeiIWezGluc5gP+TnQZ1FdxaKvhG8I
+	Vm6r9C+39DgM2zmS5EBC7/XbWe4DaEF60Kjgny99BvlIblmIKR0oBxxF+Z/YAdWR
+	Qcgq312BIQ0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4CCA1276A8;
+	Wed,  9 Jul 2014 13:44:11 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DED04276A0;
+	Wed,  9 Jul 2014 13:44:04 -0400 (EDT)
+In-Reply-To: <xmqqmwci7e9p.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 09 Jul 2014 08:17:22 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9ED2B790-0790-11E4-84A5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253136>
 
-Am 08.07.2014 21:34, schrieb Jens Lehmann:
->> And Msysgit complains 
->> error: fchmod on c:/xxxt/trash directory.t7613-merge-submodule/submodule_update_repo/.git/modules/sub1/config.lock failed: Function not implemented
-> 
-> I'm not sure what this is about, seems to happen during the "cp -R" of
-> the repo under .git/modules into the submodule.
+Junio C Hamano <gitster@pobox.com> writes:
 
-No. It happens because fchmod() is not implemented in our Windows port.
+>> * Still, making sure that the (file, line) is doable later without too
+>>   much change is good. So, if indeed, moving all code to another file is
+>>   required, then it may make sense to do it now to avoid code move
+>>   later.
+>
+> Good thinking.  As long as the code is prepared, it is a good idea
+> to start small and bite off only we can chew at once, do things
+> incrementally.
 
-Please see my band-aid patch at
-http://thread.gmane.org/gmane.comp.version-control.git/248154/focus=20266
-The sub-thread ended inconclusive.
+After thinking about it a bit more, I think <file, line> support
+needs to be done not as a mere client of the generic, uncached
+git_config() API that we have had for forever, like the current
+iteration, but needs to know a bit more about the state the caller
+of the callback (namely, git_parse_source()), and we obviously do
+not want to expose that machinery to anybody other than the
+implementation of the config subsystem (to which the new facility
+this GSoC project adds belongs to), so in that sense you have to
+have your code in the same config.c file anyway.
 
--- Hannes
+It is somewhat dissapointing that this initial implementation was
+done as a client of the traditional git_config(), by the way.  I
+would have expected that it would be the other way around, in that
+the traditional callers of git_config() would behefit automatically
+by having the cache layer below it.
+
+But we have to start from somewhere.  Perhaps the round after this
+one can rename the exisiting implementation of git_config() to
+something else internal to the caching layer and give the existing
+callers a compatible interface that is backed by this new caching
+layer in a transparent way.
