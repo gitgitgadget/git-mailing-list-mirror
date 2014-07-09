@@ -1,140 +1,68 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: t3200-branch.sh number 102 fails when run under make test
-Date: Wed, 9 Jul 2014 20:56:46 +0000
-Message-ID: <1404939405.23510.28.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1404938270.23510.13.camel@jekeller-desk1.amr.corp.intel.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: "Unexpected end of command stream" message looks irrelevant when
+ I try to pull a non-existing branch
+Date: Wed, 9 Jul 2014 16:59:02 -0400
+Message-ID: <20140709205902.GB25854@sigill.intra.peff.net>
+References: <787461404891471@web12h.yandex.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 09 22:56:53 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Dmitry <wipedout@yandex.ru>
+X-From: git-owner@vger.kernel.org Wed Jul 09 22:59:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4yv6-0004Hy-9I
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 22:56:52 +0200
+	id 1X4yxN-00064q-FS
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 22:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbaGIU4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 16:56:48 -0400
-Received: from mga03.intel.com ([143.182.124.21]:12526 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750854AbaGIU4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 16:56:47 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101.ch.intel.com with ESMTP; 09 Jul 2014 13:56:47 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,633,1400050800"; 
-   d="scan'208";a="455125782"
-Received: from orsmsx107.amr.corp.intel.com ([10.22.240.5])
-  by azsmga001.ch.intel.com with ESMTP; 09 Jul 2014 13:56:46 -0700
-Received: from orsmsx153.amr.corp.intel.com (10.22.226.247) by
- ORSMSX107.amr.corp.intel.com (10.22.240.5) with Microsoft SMTP Server (TLS)
- id 14.3.123.3; Wed, 9 Jul 2014 13:56:46 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
- ORSMSX153.amr.corp.intel.com ([169.254.12.126]) with mapi id 14.03.0123.003;
- Wed, 9 Jul 2014 13:56:46 -0700
-Thread-Topic: t3200-branch.sh number 102 fails when run under make test
-Thread-Index: AQHPm7WmAVMLR9iWJU2r1zgPpMn+VJuYroOA
-In-Reply-To: <1404938270.23510.13.camel@jekeller-desk1.amr.corp.intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <AC6A795B10EBFC41AB87A78791C18C1A@intel.com>
+	id S1753748AbaGIU7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 16:59:06 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58955 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750919AbaGIU7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 16:59:04 -0400
+Received: (qmail 6925 invoked by uid 102); 9 Jul 2014 20:59:04 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 09 Jul 2014 15:59:04 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Jul 2014 16:59:02 -0400
+Content-Disposition: inline
+In-Reply-To: <787461404891471@web12h.yandex.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253150>
 
-T24gV2VkLCAyMDE0LTA3LTA5IGF0IDEzOjM3IC0wNzAwLCBKYWNvYiBFIEtlbGxlciB3cm90ZToN
-Cj4gSGVsbG8sDQo+IA0KPiBJIHJlY2VudGx5IGNsb25lZCB0aGUgbWFzdGVyIGJyYW5jaCBvZiB0
-aGUgZ2l0IHJlcG8sIGFuZCB3aGVuIEkgcmFuIG1ha2UNCj4gdGVzdCwgaXQgZmFpbHMgb24gdGVz
-dCAxMDIgb2YgdGhlIHQzMjAwLWJyYW5jaC5zaCB0ZXN0IGNhc2VzLg0KPiANCj4gbm90IG9rIDEw
-MiAtIHRyYWNraW5nIHdpdGggdW5leHBlY3RlZCAuZmV0Y2ggcmVmc3BlYw0KPiAjDQo+ICMgICAg
-ICAgICAgICAgICBybSAtcmYgYSBiIGMgZCAmJg0KPiAjICAgICAgICAgICAgICAgZ2l0IGluaXQg
-YSAmJg0KPiAjICAgICAgICAgICAgICAgKA0KPiAjICAgICAgICAgICAgICAgICAgICAgICBjZCBh
-ICYmDQo+ICMgICAgICAgICAgICAgICAgICAgICAgIHRlc3RfY29tbWl0IGENCj4gIyAgICAgICAg
-ICAgICAgICkgJiYNCj4gIyAgICAgICAgICAgICAgIGdpdCBpbml0IGIgJiYNCj4gIyAgICAgICAg
-ICAgICAgICgNCj4gIyAgICAgICAgICAgICAgICAgICAgICAgY2QgYiAmJg0KPiAjICAgICAgICAg
-ICAgICAgICAgICAgICB0ZXN0X2NvbW1pdCBiDQo+ICMgICAgICAgICAgICAgICApICYmDQo+ICMg
-ICAgICAgICAgICAgICBnaXQgaW5pdCBjICYmDQo+ICMgICAgICAgICAgICAgICAoDQo+ICMgICAg
-ICAgICAgICAgICAgICAgICAgIGNkIGMgJiYNCj4gIyAgICAgICAgICAgICAgICAgICAgICAgdGVz
-dF9jb21taXQgYyAmJg0KPiAjICAgICAgICAgICAgICAgICAgICAgICBnaXQgcmVtb3RlIGFkZCBh
-IC4uL2EgJiYNCj4gIyAgICAgICAgICAgICAgICAgICAgICAgZ2l0IHJlbW90ZSBhZGQgYiAuLi9i
-ICYmDQo+ICMgICAgICAgICAgICAgICAgICAgICAgIGdpdCBmZXRjaCAtLWFsbA0KPiAjICAgICAg
-ICAgICAgICAgKSAmJg0KPiAjICAgICAgICAgICAgICAgZ2l0IGluaXQgZCAmJg0KPiAjICAgICAg
-ICAgICAgICAgKA0KPiAjICAgICAgICAgICAgICAgICAgICAgICBjZCBkICYmDQo+ICMgICAgICAg
-ICAgICAgICAgICAgICAgIGdpdCByZW1vdGUgYWRkIGMgLi4vYyAmJg0KPiAjICAgICAgICAgICAg
-ICAgICAgICAgICBnaXQgY29uZmlnIHJlbW90ZS5jLmZldGNoICIrcmVmcy9yZW1vdGVzLyo6cmVm
-cy9yZW1vdGVzLyoiICYmDQo+ICMgICAgICAgICAgICAgICAgICAgICAgIGdpdCBmZXRjaCBjICYm
-DQo+ICMgICAgICAgICAgICAgICAgICAgICAgIGdpdCBicmFuY2ggLS10cmFjayBsb2NhbC9hL21h
-c3RlciByZW1vdGVzL2EvbWFzdGVyICYmDQo+ICMgICAgICAgICAgICAgICAgICAgICAgIHRlc3Qg
-IiQoZ2l0IGNvbmZpZyBicmFuY2gubG9jYWwvYS9tYXN0ZXIucmVtb3RlKSIgPSAiYyIgJiYNCj4g
-IyAgICAgICAgICAgICAgICAgICAgICAgdGVzdCAiJChnaXQgY29uZmlnIGJyYW5jaC5sb2NhbC9h
-L21hc3Rlci5tZXJnZSkiID0gInJlZnMvcmVtb3Rlcy9hL21hc3RlciIgJiYNCj4gIyAgICAgICAg
-ICAgICAgICAgICAgICAgZ2l0IHJldi1wYXJzZSAtLXZlcmlmeSBhID5leHBlY3QgJiYNCj4gIyAg
-ICAgICAgICAgICAgICAgICAgICAgZ2l0IHJldi1wYXJzZSAtLXZlcmlmeSBsb2NhbC9hL21hc3Rl
-ciA+YWN0dWFsICYmDQo+ICMgICAgICAgICAgICAgICAgICAgICAgIHRlc3RfY21wIGV4cGVjdCBh
-Y3R1YWwNCj4gIyAgICAgICAgICAgICAgICkNCj4gIw0KPiAjIGZhaWxlZCAxIGFtb25nIDEwMiB0
-ZXN0KHMpDQo+IDEuLjEwMg0KPiANCj4gSG93ZXZlciwgd2hlbiBJIHJ1biB0aGUgdGVzdCBmaWxl
-IG1hbnVhbGx5IGl0IHBhc3Nlcy4gSSBhbSBjdXJyZW50bHkNCj4gcnVubmluZyB0aHJvdWdoIGEg
-dmVyYm9zZSBvdXRwdXQgdGVzdCBydW4gdG8gc2VlIGlmIEkgY2FuIGZpbmQgbW9yZQ0KPiB1c2Vm
-dWwgb3V0cHV0Li4NCj4gDQo+IEZvciByZWZlcmVuY2UsIHRoZSBjb21taXQgSSBhbSB0ZXN0aW5n
-IGFnYWluc3QgaXM6DQo+IA0KPiA3MmM3Nzk0NTdjZDcgKCJsaW5lLWxvZzogdXNlIGNvbW1pdF9s
-aXN0X2FwcGVuZCgpIGluc3RlYWQgb2YgZHVwbGljYXRpbmcgaXRzIGNvZGUiKQ0KPiANCj4gVGhh
-bmtzLA0KPiBKYWtlDQoNCkkgcmFuIHRoZSB0ZXN0IHdpdCB0aGUgR0lUX1RFU1RfT1BTIHNldCB0
-byAtLXZlcmJvc2UsIGFuZCB0aGUgb3V0cHV0IEkgZ290IGlzOg0KZXhwZWN0aW5nIHN1Y2Nlc3M6
-IA0KCXJtIC1yZiBhIGIgYyBkICYmDQoJZ2l0IGluaXQgYSAmJg0KCSgNCgkJY2QgYSAmJg0KCQl0
-ZXN0X2NvbW1pdCBhDQoJKSAmJg0KCWdpdCBpbml0IGIgJiYNCgkoDQoJCWNkIGIgJiYNCgkJdGVz
-dF9jb21taXQgYg0KCSkgJiYNCglnaXQgaW5pdCBjICYmDQoJKA0KCQljZCBjICYmDQoJCXRlc3Rf
-Y29tbWl0IGMgJiYNCgkJZ2l0IHJlbW90ZSBhZGQgYSAuLi9hICYmDQoJCWdpdCByZW1vdGUgYWRk
-IGIgLi4vYiAmJg0KCQlnaXQgZmV0Y2ggLS1hbGwNCgkpICYmDQoJZ2l0IGluaXQgZCAmJg0KCSgN
-CgkJY2QgZCAmJg0KCQlnaXQgcmVtb3RlIGFkZCBjIC4uL2MgJiYNCgkJZ2l0IGNvbmZpZyByZW1v
-dGUuYy5mZXRjaCAiK3JlZnMvcmVtb3Rlcy8qOnJlZnMvcmVtb3Rlcy8qIiAmJg0KCQlnaXQgZmV0
-Y2ggYyAmJg0KCQlnaXQgYnJhbmNoIC0tdHJhY2sgbG9jYWwvYS9tYXN0ZXIgcmVtb3Rlcy9hL21h
-c3RlciAmJg0KCQl0ZXN0ICIkKGdpdCBjb25maWcgYnJhbmNoLmxvY2FsL2EvbWFzdGVyLnJlbW90
-ZSkiID0gImMiICYmDQoJCXRlc3QgIiQoZ2l0IGNvbmZpZyBicmFuY2gubG9jYWwvYS9tYXN0ZXIu
-bWVyZ2UpIiA9ICJyZWZzL3JlbW90ZXMvYS9tYXN0ZXIiICYmDQoJCWdpdCByZXYtcGFyc2UgLS12
-ZXJpZnkgYSA+ZXhwZWN0ICYmDQoJCWdpdCByZXYtcGFyc2UgLS12ZXJpZnkgbG9jYWwvYS9tYXN0
-ZXIgPmFjdHVhbCAmJg0KCQl0ZXN0X2NtcCBleHBlY3QgYWN0dWFsDQoJKQ0KDQpJbml0aWFsaXpl
-ZCBlbXB0eSBHaXQgcmVwb3NpdG9yeSBpbiAvaG9tZS9qZWtlbGxlci9naXQvZ2l0L3QvdHJhc2gg
-ZGlyZWN0b3J5LnQzMjAwLWJyYW5jaC9hLy5naXQvDQpbbWFzdGVyIChyb290LWNvbW1pdCkgY2U0
-NTBjN10gYQ0KIEF1dGhvcjogQSBVIFRob3IgPGF1dGhvckBleGFtcGxlLmNvbT4NCiAxIGZpbGUg
-Y2hhbmdlZCwgMSBpbnNlcnRpb24oKykNCiBjcmVhdGUgbW9kZSAxMDA2NDQgYS50DQpJbml0aWFs
-aXplZCBlbXB0eSBHaXQgcmVwb3NpdG9yeSBpbiAvaG9tZS9qZWtlbGxlci9naXQvZ2l0L3QvdHJh
-c2ggZGlyZWN0b3J5LnQzMjAwLWJyYW5jaC9iLy5naXQvDQpbbWFzdGVyIChyb290LWNvbW1pdCkg
-MTlhY2VjMF0gYg0KIEF1dGhvcjogQSBVIFRob3IgPGF1dGhvckBleGFtcGxlLmNvbT4NCiAxIGZp
-bGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKykNCiBjcmVhdGUgbW9kZSAxMDA2NDQgYi50DQpJbml0
-aWFsaXplZCBlbXB0eSBHaXQgcmVwb3NpdG9yeSBpbiAvaG9tZS9qZWtlbGxlci9naXQvZ2l0L3Qv
-dHJhc2ggZGlyZWN0b3J5LnQzMjAwLWJyYW5jaC9jLy5naXQvDQpbbWFzdGVyIChyb290LWNvbW1p
-dCkgZWExYWMzOF0gYw0KIEF1dGhvcjogQSBVIFRob3IgPGF1dGhvckBleGFtcGxlLmNvbT4NCiAx
-IGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKykNCiBjcmVhdGUgbW9kZSAxMDA2NDQgYy50DQpm
-YXRhbDogSW52YWxpZCByZWZzcGVjICcrcmVmcy9oZWFkcy8qOnJlZnMvcmVtb3Rlcy9iLyonDQpu
-b3Qgb2sgMTAyIC0gdHJhY2tpbmcgd2l0aCB1bmV4cGVjdGVkIC5mZXRjaCByZWZzcGVjDQojCQ0K
-IwkJcm0gLXJmIGEgYiBjIGQgJiYNCiMJCWdpdCBpbml0IGEgJiYNCiMJCSgNCiMJCQljZCBhICYm
-DQojCQkJdGVzdF9jb21taXQgYQ0KIwkJKSAmJg0KIwkJZ2l0IGluaXQgYiAmJg0KIwkJKA0KIwkJ
-CWNkIGIgJiYNCiMJCQl0ZXN0X2NvbW1pdCBiDQojCQkpICYmDQojCQlnaXQgaW5pdCBjICYmDQoj
-CQkoDQojCQkJY2QgYyAmJg0KIwkJCXRlc3RfY29tbWl0IGMgJiYNCiMJCQlnaXQgcmVtb3RlIGFk
-ZCBhIC4uL2EgJiYNCiMJCQlnaXQgcmVtb3RlIGFkZCBiIC4uL2IgJiYNCiMJCQlnaXQgZmV0Y2gg
-LS1hbGwNCiMJCSkgJiYNCiMJCWdpdCBpbml0IGQgJiYNCiMJCSgNCiMJCQljZCBkICYmDQojCQkJ
-Z2l0IHJlbW90ZSBhZGQgYyAuLi9jICYmDQojCQkJZ2l0IGNvbmZpZyByZW1vdGUuYy5mZXRjaCAi
-K3JlZnMvcmVtb3Rlcy8qOnJlZnMvcmVtb3Rlcy8qIiAmJg0KIwkJCWdpdCBmZXRjaCBjICYmDQoj
-CQkJZ2l0IGJyYW5jaCAtLXRyYWNrIGxvY2FsL2EvbWFzdGVyIHJlbW90ZXMvYS9tYXN0ZXIgJiYN
-CiMJCQl0ZXN0ICIkKGdpdCBjb25maWcgYnJhbmNoLmxvY2FsL2EvbWFzdGVyLnJlbW90ZSkiID0g
-ImMiICYmDQojCQkJdGVzdCAiJChnaXQgY29uZmlnIGJyYW5jaC5sb2NhbC9hL21hc3Rlci5tZXJn
-ZSkiID0gInJlZnMvcmVtb3Rlcy9hL21hc3RlciIgJiYNCiMJCQlnaXQgcmV2LXBhcnNlIC0tdmVy
-aWZ5IGEgPmV4cGVjdCAmJg0KIwkJCWdpdCByZXYtcGFyc2UgLS12ZXJpZnkgbG9jYWwvYS9tYXN0
-ZXIgPmFjdHVhbCAmJg0KIwkJCXRlc3RfY21wIGV4cGVjdCBhY3R1YWwNCiMJCSkNCiMJDQoNCiMg
-ZmFpbGVkIDEgYW1vbmcgMTAyIHRlc3QocykNCjEuLjEwMg0KbWFrZVsyXTogKioqIFt0MzIwMC1i
-cmFuY2guc2hdIEVycm9yIDENCm1ha2VbMl06IExlYXZpbmcgZGlyZWN0b3J5IGAvaG9tZS9qZWtl
-bGxlci9naXQvZ2l0L3QnDQptYWtlWzFdOiAqKiogW3Rlc3RdIEVycm9yIDINCm1ha2VbMV06IExl
-YXZpbmcgZGlyZWN0b3J5IGAvaG9tZS9qZWtlbGxlci9naXQvZ2l0L3QnDQptYWtlOiAqKiogW3Rl
-c3RdIEVycm9yIDINCg0KSSBoYXZlIHRvIHJ1biB0aGlzIGFzIHBhcnQgb2YgdGhlICJtYWtlIHRl
-c3QiIHNldHVwLiBJcyB0aGVyZSBhIHdheSB0bw0KcnVuIGEgc2luZ2xlIHRlc3Qgc2NyaXB0IGlu
-c3RlYWQgb2YgdGhlIGVudGlyZSB0ZXN0IHN1aXRlPyBJZiBzbywgdGhlbiBJDQptYXkgYmUgYWJs
-ZSB0byBwZXJmb3JtIGEgYmlzZWN0IGFnYWluc3QgdGhlIHRlc3QgdG8gZmluZCB0aGUgY29tbWl0
-DQp3aGVyZSB0aGlzIGJyZWFrcy4NCg0KVGhhbmtzLA0KSmFrZQ0K
+On Wed, Jul 09, 2014 at 11:37:51AM +0400, Dmitry wrote:
+
+> I'm using Git 1.8.1 and when I run the following command:
+> 
+> git pull origin matser
+> 
+> I get the following output:
+> 
+> fatal: couldn't find remote ref matser
+> Unexpected end of command stream
+> 
+> The first line in the output is right on the money but the second one
+> looks completely irrelevant - the command is well formed except I
+> perhaps mistyped the branch name. It looks like there's some bug that
+> prevents the program from just exiting after printing the first line
+> and so the second line is being output.
+
+I imagine your origin remote is over http. For some protocols, git
+delegates the hard work to a helper program and communicates over a
+pipe. In this case, the parent git process detects a problem and dies.
+The second message comes from the helper, who is surprised that the
+parent has gone away.
+
+Probably the right solution is teaching the parent to properly hang up
+the connection with the helper before exiting (alternatively, we could
+just silence the helper; that means we would get less output when the
+parent really does unexpectedly go away, but that isn't supposed to ever
+happen).
+
+-Peff
