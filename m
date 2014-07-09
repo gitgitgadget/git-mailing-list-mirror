@@ -1,88 +1,225 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: move detection doesnt take filename into account
-Date: Wed, 09 Jul 2014 15:18:43 -0700
-Message-ID: <xmqqa98i9nwc.fsf@gitster.dls.corp.google.com>
-References: <53B105DA.30004@gmail.com>
-	<287177519.16421.1404206204124.JavaMail.zimbra@dewire.com>
-	<xmqqtx71xh27.fsf@gitster.dls.corp.google.com>
-	<53B2CE4A.9060509@gmail.com>
-	<xmqq61jhxb0g.fsf@gitster.dls.corp.google.com>
-	<20140709064521.GA14682@sigill.intra.peff.net>
-	<xmqqegxu7cpg.fsf@gitster.dls.corp.google.com>
-	<20140709220337.GF25854@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elliot Wolk <elliot.wolk@gmail.com>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 10 00:18:56 2014
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v2] tag: support configuring --sort via .gitconfig
+Date: Wed,  9 Jul 2014 15:36:51 -0700
+Message-ID: <1404945412-10197-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 10 00:37:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X50CU-0001PG-L3
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 00:18:54 +0200
+	id 1X50Tz-0007Ra-Oq
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 00:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755839AbaGIWSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 18:18:51 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51335 "EHLO smtp.pobox.com"
+	id S1756517AbaGIWgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 18:36:55 -0400
+Received: from mga11.intel.com ([192.55.52.93]:36453 "EHLO mga11.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751861AbaGIWSu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 18:18:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8DBB128C90;
-	Wed,  9 Jul 2014 18:18:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=MWlOJwkiPiaB9rpB2EspwnEBr7c=; b=V9CPTR
-	6osWd/lZB5HM6A+d88g2b/AmTy1GwnfGq0Kq5A9vHAPOrGvtfTlrpq32ZDXbSKLJ
-	y7QCIaJr3AHD4du/J16dTG6pv25x5Mu/kLQrih9OHP0f3g5K5QCy7dgvNPg23ARy
-	NXV2+nffUff2vcQpxgk+Zm4+wI8hw0kzuFcp4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yXYU1Iu+w6/GdX3p2C2PkE8t0ClS7eGn
-	NMDiEwud6nKTMYOTZ6UqkhEUKJuuRj0Q6wqFp/cawX0eSxicdtCvHbY4qXw7ZJ+8
-	U/hkjl9qDHjONzfpQrz/ac3HjwrNKzp0WvdXUIqMOzZRa4fSoplv6wiQld7B+Ax8
-	w26krA+MJlA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 838B328C8F;
-	Wed,  9 Jul 2014 18:18:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4750C28C8B;
-	Wed,  9 Jul 2014 18:18:29 -0400 (EDT)
-In-Reply-To: <20140709220337.GF25854@sigill.intra.peff.net> (Jeff King's
-	message of "Wed, 9 Jul 2014 18:03:37 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F45B2B5E-07B6-11E4-B3BA-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1755745AbaGIWgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 18:36:54 -0400
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga102.fm.intel.com with ESMTP; 09 Jul 2014 15:36:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.01,634,1400050800"; 
+   d="scan'208,217";a="567595598"
+Received: from jekeller-desk1.jf.intel.com (HELO jekeller-desk1.amr.corp.intel.com) ([134.134.173.156])
+  by fmsmga002.fm.intel.com with ESMTP; 09 Jul 2014 15:36:54 -0700
+X-Mailer: git-send-email 2.0.1.475.g9b8d714
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253166>
 
-Jeff King <peff@peff.net> writes:
+Add support for configuring default sort ordering for git tags. Command
+line option will override this configured value, using the exact same
+syntax.
 
-> I think the hash here does not collide in that way. It really is just
-> the last sixteen characters shoved into a uint32_t.
+Cc: Jeff King <peff@peff.net>
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+---
+Repost with changes suggested by Peff. These include fixing documentation to
+remove duplicatation, and having git-config reference git-tag. Directly assign
+a tag_sort global that we use for the config and option variable. 
 
-All bytes overlap with their adjacent byte because they are shifted
-by only 2 bits, not 8 bits, when a new byte is brought in.  We can
-say that the topmost two bits of the result must have come from the
-last character, but other than these, there are more than one input
-byte for each bit position to be set/unset by, so two names that human
-would not consider "similar" would be given the same hash, no?
+ Documentation/config.txt  |  6 +++++
+ Documentation/git-tag.txt |  1 +
+ builtin/tag.c             | 60 ++++++++++++++++++++++++++++++-----------------
+ t/t7004-tag.sh            | 21 +++++++++++++++++
+ 4 files changed, 67 insertions(+), 21 deletions(-)
 
-That is useful for delta code because the code only needs that
-similar things are grouped together, it does not mind things that
-are not similar is also mixed to a group, as the end result is
-primarily determined by similarity of the actual contents, not
-pathnames.
-
-What is under topic in this discussion is the other way around; we
-know two paths have contents of the same similarity to the third one
-and want to tie-break these two using how similar their pathnames
-are to the third one.  
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1d718bdb9662..ad8e75fed988 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2354,6 +2354,12 @@ submodule.<name>.ignore::
+ 	"--ignore-submodules" option. The 'git submodule' commands are not
+ 	affected by this setting.
+ 
++tag.sort::
++	This variable is used to control the sort ordering of tags. It is
++	interpreted precisely the same way as "--sort=<value>". If --sort is
++	given on the command line it will override the selection chosen in the
++	configuration. See linkgit:git-tag[1] for more details.
++
+ tar.umask::
+ 	This variable can be used to restrict the permission bits of
+ 	tar archive entries.  The default is 0002, which turns off the
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index b424a1bc48bb..2d246725aeb5 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -317,6 +317,7 @@ include::date-formats.txt[]
+ SEE ALSO
+ --------
+ linkgit:git-check-ref-format[1].
++linkgit:git-config[1].
+ 
+ GIT
+ ---
+diff --git a/builtin/tag.c b/builtin/tag.c
+index ef765563388c..a679e32db866 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -18,6 +18,8 @@
+ #include "sha1-array.h"
+ #include "column.h"
+ 
++static int tag_sort = 0;
++
+ static const char * const git_tag_usage[] = {
+ 	N_("git tag [-a|-s|-u <key-id>] [-f] [-m <msg>|-F <file>] <tagname> [<head>]"),
+ 	N_("git tag -d <tagname>..."),
+@@ -346,9 +348,39 @@ static const char tag_template_nocleanup[] =
+ 	"Lines starting with '%c' will be kept; you may remove them"
+ 	" yourself if you want to.\n");
+ 
++static int parse_sort_string(const char *arg)
++{
++	int sort = 0;
++	int flags = 0;
++
++	if (*arg == '-') {
++		flags |= REVERSE_SORT;
++		arg++;
++	}
++	if (starts_with(arg, "version:")) {
++		sort = VERCMP_SORT;
++		arg += 8;
++	} else if (starts_with(arg, "v:")) {
++		sort = VERCMP_SORT;
++		arg += 2;
++	} else
++		sort = STRCMP_SORT;
++	if (strcmp(arg, "refname"))
++		die(_("unsupported sort specification %s"), arg);
++	sort |= flags;
++
++	return sort;
++}
++
+ static int git_tag_config(const char *var, const char *value, void *cb)
+ {
+-	int status = git_gpg_config(var, value, cb);
++	int status;
++
++	if (!strcmp(var, "tag.sort")) {
++		tag_sort = parse_sort_string(value);
++	}
++
++	status = git_gpg_config(var, value, cb);
+ 	if (status)
+ 		return status;
+ 	if (starts_with(var, "column."))
+@@ -522,23 +554,9 @@ static int parse_opt_points_at(const struct option *opt __attribute__((unused)),
+ static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
+ {
+ 	int *sort = opt->value;
+-	int flags = 0;
+ 
+-	if (*arg == '-') {
+-		flags |= REVERSE_SORT;
+-		arg++;
+-	}
+-	if (starts_with(arg, "version:")) {
+-		*sort = VERCMP_SORT;
+-		arg += 8;
+-	} else if (starts_with(arg, "v:")) {
+-		*sort = VERCMP_SORT;
+-		arg += 2;
+-	} else
+-		*sort = STRCMP_SORT;
+-	if (strcmp(arg, "refname"))
+-		die(_("unsupported sort specification %s"), arg);
+-	*sort |= flags;
++	*sort = parse_sort_string(arg);
++
+ 	return 0;
+ }
+ 
+@@ -552,7 +570,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 	struct create_tag_options opt;
+ 	char *cleanup_arg = NULL;
+ 	int annotate = 0, force = 0, lines = -1;
+-	int cmdmode = 0, sort = 0;
++	int cmdmode = 0;
+ 	const char *msgfile = NULL, *keyid = NULL;
+ 	struct msg_arg msg = { 0, STRBUF_INIT };
+ 	struct commit_list *with_commit = NULL;
+@@ -578,7 +596,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 		OPT__FORCE(&force, N_("replace the tag if exists")),
+ 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
+ 		{
+-			OPTION_CALLBACK, 0, "sort", &sort, N_("type"), N_("sort tags"),
++			OPTION_CALLBACK, 0, "sort", &tag_sort, N_("type"), N_("sort tags"),
+ 			PARSE_OPT_NONEG, parse_opt_sort
+ 		},
+ 
+@@ -634,9 +652,9 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+ 			copts.padding = 2;
+ 			run_column_filter(colopts, &copts);
+ 		}
+-		if (lines != -1 && sort)
++		if (lines != -1 && tag_sort)
+ 			die(_("--sort and -n are incompatible"));
+-		ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, sort);
++		ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, tag_sort);
+ 		if (column_active(colopts))
+ 			stop_column_filter();
+ 		return ret;
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index e4ab0f5b6419..1e8300f6ed7c 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1423,6 +1423,27 @@ EOF
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'configured lexical sort' '
++	git config tag.sort "v:refname" &&
++	git tag -l "foo*" >actual &&
++	cat >expect <<EOF &&
++foo1.3
++foo1.6
++foo1.10
++EOF
++	test_cmp expect actual
++'
++
++test_expect_success 'option override configured sort' '
++	git tag -l --sort=-refname "foo*" >actual &&
++	cat >expect <<EOF &&
++foo1.6
++foo1.3
++foo1.10
++EOF
++	test_cmp expect actual
++'
++
+ run_with_limited_stack () {
+ 	(ulimit -s 64 && "$@")
+ }
+-- 
+2.0.1.475.g9b8d714
