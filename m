@@ -1,117 +1,64 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: No fchmod() under msygit - Was: Re: [PATCH 00/14] Add submodule test
- harness
-Date: Wed, 09 Jul 2014 08:39:35 +0200
-Message-ID: <53BCE3A7.8070600@web.de>
-References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>	<53B5C7AC.4040701@web.de> <xmqqsimddrq3.fsf@gitster.dls.corp.google.com> <53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de> <53BC53C3.1010304@ramsay1.demon.co.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: move detection doesnt take filename into account
+Date: Wed, 9 Jul 2014 02:45:21 -0400
+Message-ID: <20140709064521.GA14682@sigill.intra.peff.net>
+References: <53B105DA.30004@gmail.com>
+ <287177519.16421.1404206204124.JavaMail.zimbra@dewire.com>
+ <xmqqtx71xh27.fsf@gitster.dls.corp.google.com>
+ <53B2CE4A.9060509@gmail.com>
+ <xmqq61jhxb0g.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	=?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Junio C Hamano <gitster@pobox.com>, normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Wed Jul 09 08:41:36 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Elliot Wolk <elliot.wolk@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 08:45:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4lZN-0003CH-Le
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 08:41:34 +0200
+	id 1X4ld9-0005hG-BA
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 08:45:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753276AbaGIGl3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jul 2014 02:41:29 -0400
-Received: from mout.web.de ([212.227.17.11]:58067 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752795AbaGIGl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 02:41:28 -0400
-Received: from [192.168.88.199] ([194.47.243.242]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MA5v3-1Wu0zB3xHt-00BOZ1; Wed, 09 Jul 2014 08:40:25
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Icedove/24.5.0
-In-Reply-To: <53BC53C3.1010304@ramsay1.demon.co.uk>
-X-Provags-ID: V03:K0:RXY5xHMWwn3GUsCrLcqSZZvfgVUOPOtQagOlKeJFaR8sStkWd0P
- d3WBkH7DyAiAzziG0LpTxABUf0l87jLQYcVQJJpbEuUfsa1VsPqQTCTqAp4tEozoFmE3H3m
- rzRrVxzDYdr+JEozUHwvG5zBDAIgo4K9VKJ2nYoBkfLOPEv6Yvw430XDx94zH3zYV2U7mly
- ZG1uKUz3LUKqT4vXckclQ==
+	id S1751574AbaGIGpY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 02:45:24 -0400
+Received: from cloud.peff.net ([50.56.180.127]:58530 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751114AbaGIGpX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 02:45:23 -0400
+Received: (qmail 28171 invoked by uid 102); 9 Jul 2014 06:45:23 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 09 Jul 2014 01:45:23 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Jul 2014 02:45:21 -0400
+Content-Disposition: inline
+In-Reply-To: <xmqq61jhxb0g.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253071>
 
-On 07/08/2014 10:25 PM, Ramsay Jones wrote:
-> On 08/07/14 20:34, Jens Lehmann wrote:
->> Am 07.07.2014 21:40, schrieb Torsten B=F6gershausen:
->>> On 2014-07-07 19.05, Junio C Hamano wrote:
->>>> Jens Lehmann <Jens.Lehmann@web.de> writes:
->>>>
->>>>> Junio, do you want me to resend 02/14 without the non-portable "e=
-cho -n"
->>>>> or could you just squash the following diff in?
->>>> Amended locally here already; thanks, both.
->>> There seems to be some other trouble under Mac OS, not yet fully tr=
-acked down,
->>> (may be related to the "diff -r")
->> Torsten sees failures of this kind under Mac OS:
->>
->> diff -r .git/modules/sub1/config sub1/.git/config
->> 6d5
->> <     worktree =3D ../../../sub1
->> 8a8
->>>      worktree =3D ../../../sub1
->> So the config contains the same content, but the worktree setting mo=
-ved
->> to a different line. This seems to be the result of setting core.wor=
-ktree
->> in the test_git_directory_is_unchanged function just before the "dif=
-f -r",
->> but only under Mac OS.
->>
->>> And Msysgit complains
->>> error: fchmod on c:/xxxt/trash directory.t7613-merge-submodule/subm=
-odule_update_repo/.git/modules/sub1/config.lock failed: Function not im=
-plemented
->> I'm not sure what this is about, seems to happen during the "cp -R" =
-of
->> the repo under .git/modules into the submodule.
-> I haven't looked into this at all, but from the above message, and
-> noting that fchmod() is not implemented in mingw (see compat/mingw.h
-> line 91), and the following:
->
->      $ git grep -n fchmodcommit daa22c6f8da466bd7a438f1bc27375fd737ff=
-cf3
-> Author: Eric Wong <normalperson@yhbt.net>
-> Date:   Tue May 6 00:17:14 2014 +0000
->
->      config: preserve config file permissions on edits
->     =20
->
->      compat/mingw.h:91:static inline int fchmod(int fildes, mode_t mo=
-de)
->      config.c:1639:          if (fchmod(fd, st.st_mode & 07777) < 0) =
-{
->      config.c:1640:                  error("fchmod on %s failed: %s",
->      config.c:1818:  if (fchmod(out_fd, st.st_mode & 07777) < 0) {
->      config.c:1819:          ret =3D error("fchmod on %s failed: %s",
->      $
->
-> [I happen to be on the pu branch at the moment, so YMMV!]
->
-> Both calls to fchmod() above are on config lock files, one
-> in git_config_set_multivar_in_file() and the other in
-> git_config_rename_section_in_file().
->
->
+On Tue, Jul 01, 2014 at 10:08:15AM -0700, Junio C Hamano wrote:
 
-commit daa22c6f8da466bd7a438f1bc27375fd737ffcf3
-Author: Eric Wong <normalperson@yhbt.net>
-Date:   Tue May 6 00:17:14 2014 +0000
+> I didn't think it through but my gut feeling is that we could change
+> the name similarity score to be the length of the tail part that
+> matches (e.g. 1.a to a/2.a that has the same two bytes at the tail
+> is a better match than to a/2.b that does not share any tail, and to
+> a/1.a that shares the three bytes at the tail is an even better
+> match).
 
-     config: preserve config file permissions on edits
+The delta heuristics in pack-objects use pack_name_hash, which claims:
 
-(And why is it  "& 07777" and not  "& 0777")
-Can we avoid the fchmod()  all together ?
+        /*
+         * This effectively just creates a sortable number from the
+         * last sixteen non-whitespace characters. Last characters
+         * count "most", so things that end in ".c" sort together.
+         */
+
+which might be another option (and seems like a superset of the basename
+check, short of basenames that are longer than 16 characters).
+
+-Peff
