@@ -1,121 +1,79 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [PATCH v2 3/4] use new config API for worktree
- configurations of submodules
-Date: Wed, 9 Jul 2014 21:55:47 +0200
-Message-ID: <20140709195547.GA3081@sandbox-ub>
-References: <20140628095800.GA89729@book.hvoigt.net>
- <20140628100321.GD89729@book.hvoigt.net>
- <xmqqy4w38v6r.fsf@gitster.dls.corp.google.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 00/14] Add submodule test harness
+Date: Wed, 9 Jul 2014 19:56:19 +0000
+Message-ID: <20140709195619.GA17454@dcvr.yhbt.net>
+References: <539DD029.4030506@web.de>
+ <53B41D42.2090805@web.de>
+ <53B46425.3030000@web.de>
+ <53B4F0AA.10809@web.de>
+ <53B5C7AC.4040701@web.de>
+ <xmqqsimddrq3.fsf@gitster.dls.corp.google.com>
+ <53BAF7AF.4020901@web.de>
+ <53BC47BD.1000705@web.de>
+ <53BD7A36.2030300@kdbg.org>
+ <xmqqr41u9w27.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Karsten Blees <karsten.blees@gmail.com>
+Cc: Johannes Sixt <j6t@kdbg.org>, Jens Lehmann <Jens.Lehmann@web.de>,
+	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 21:56:04 2014
+X-From: git-owner@vger.kernel.org Wed Jul 09 22:04:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4xyG-000051-C6
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 21:56:04 +0200
+	id 1X4y6X-0006Um-Uf
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 22:04:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755401AbaGITz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 15:55:59 -0400
-Received: from smtprelay01.ispgateway.de ([80.67.31.24]:53490 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753276AbaGITz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 15:55:58 -0400
-Received: from [37.4.179.65] (helo=sandbox-ub)
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.68)
-	(envelope-from <hvoigt@hvoigt.net>)
-	id 1X4xy5-0003Ta-CC; Wed, 09 Jul 2014 21:55:53 +0200
+	id S1753748AbaGIUEe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 16:04:34 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:36882 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751766AbaGIUEd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 16:04:33 -0400
+X-Greylist: delayed 494 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jul 2014 16:04:33 EDT
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4572F44C1A0;
+	Wed,  9 Jul 2014 19:56:19 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <xmqqy4w38v6r.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
+In-Reply-To: <xmqqr41u9w27.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253145>
 
-On Tue, Jul 08, 2014 at 01:14:20PM -0700, Junio C Hamano wrote:
-> Heiko Voigt <hvoigt@hvoigt.net> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
+> > Am 08.07.2014 21:34, schrieb Jens Lehmann:
+> >>> And Msysgit complains 
+> >>> error: fchmod on c:/xxxt/trash directory.t7613-merge-submodule/submodule_update_repo/.git/modules/sub1/config.lock failed: Function not implemented
+> >> 
+> >> I'm not sure what this is about, seems to happen during the "cp -R" of
+> >> the repo under .git/modules into the submodule.
+> >
+> > No. It happens because fchmod() is not implemented in our Windows port.
+> >
+> > Please see my band-aid patch at
+> > http://thread.gmane.org/gmane.comp.version-control.git/248154/focus=20266
+> > The sub-thread ended inconclusive.
 > 
-> > diff --git a/builtin/checkout.c b/builtin/checkout.c
-> > index 07cf555..03ea20d 100644
-> > --- a/builtin/checkout.c
-> > +++ b/builtin/checkout.c
-> > @@ -18,6 +18,7 @@
-> >  #include "xdiff-interface.h"
-> >  #include "ll-merge.h"
-> >  #include "resolve-undo.h"
-> > +#include "submodule-config.h"
-> >  #include "submodule.h"
-> >  #include "argv-array.h"
-> >  
-> 
-> Hmph.  What is this change about?  
-> 
-> Nobody in checkout.c needs anything new, yet we add a new include?
+> We need to start somewhere, and a no-op fchmod() in your patch may
+> be as a good place to start as anything.  At least we would then
+> keep the old behaviour without introducing any new failure.
 
-This is because I moved the parse_submodule_config_option() function
-into the submodule-config.c module. This was necessary so all parsed
-submodule values are stored in the cache with the null_sha1. We use
-static functions from this module to do this and thats thats the reason
-for the move. 
+Right, this likely makes the most sense for single-user systems or
+systesm without a *nix-like permission system.
 
-> > diff --git a/diff.c b/diff.c
-> > index f72769a..f692a3c 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -13,6 +13,7 @@
-> >  #include "utf8.h"
-> >  #include "userdiff.h"
-> >  #include "sigchain.h"
-> > +#include "submodule-config.h"
-> >  #include "submodule.h"
-> >  #include "ll-merge.h"
-> >  #include "string-list.h"
-> 
-> Likewise.
+> An alternative might be to use chmod() after we are done writing to
+> the config.lock in order to avoid the use of fchmod() altogether,
+> which I think can replace the existing two callsites of fchmod().
+> That approach might be a more expedient, but may turn out to be
+> undesirable in the longer term.
 
-Same as above.
-
-> > It is somewhat unclear to me what real change that improves the life
-> of end-users this series brings to us.   The "test-submodule-config"
-> test program obviously is new but that does not really count until
-> we see real uses.
-
-Do you mean the API improvements? I split this series off from my
-recursive fetch series since this infrastructure is also needed by Jens
-recursive checkout series.
-
-I am currently working on finishing the recursive fetch series here[1].
-So until now we do not have any improvements for the end-user but only
-in the API for the developer. With my series it is possible to easily
-lookup what configuration for which submodule is in which revision. That
-makes is possible to also implement the recursive fetch logic for
-renamed submodules[2]. We are also able to decide whether (and from
-where) a new submodules repository can possibly be cloned during
-recursive fetch.
-
-A clone on recursive fetch for new submodule makes sure we have
-everything available, so a recursive checkout later can work without the
-need for an extra fetch.
-
-Does that make the improvements in my series clear for you? I would wait
-until my recursive fetch series is ready so we have real uses. Since
-there are others (namely Jens or submodule support for 'git archive')
-that need it I think it makes sense to review and merge this separately
-into master so they have a stable API to code against.
-
-Cheers Heiko
-
-[1] https://github.com/hvoigt/git/commits/hv/fetch-submodules-recursive
-[2] https://github.com/hvoigt/git/commit/975c370856c3b8f96ab0c5a3ed754e3839f4de45
+In that case, we would need to open with mode=0600 to avoid a window
+where the file may be world-readable with any data in it.
