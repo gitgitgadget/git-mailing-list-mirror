@@ -1,121 +1,94 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v7 1/2] add `config_set` API for caching config-like files
-Date: Wed, 09 Jul 2014 16:19:25 +0200
-Message-ID: <vpqion68viq.fsf@anie.imag.fr>
-References: <1404903454-10154-1-git-send-email-tanayabh@gmail.com>
-	<1404903454-10154-2-git-send-email-tanayabh@gmail.com>
-	<vpq61j6d92z.fsf@anie.imag.fr> <53BD3805.40504@gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: t5150-request-pull.sh fails on newest master in Debian
+Date: Wed, 09 Jul 2014 16:52:00 +0200
+Message-ID: <53BD5710.7040409@web.de>
+References: <CAA787r=78UWio3E==s+J2PbVqshQdWXpS9hiJrmNz+F0vLiuGg@mail.gmail.com>	 <1404505370.3109.15.camel@stross>	 <CAA787rmf36V1=Sd8TZrc7DboTkeJDYKuEGgCe90mZLLKSp6=tw@mail.gmail.com>	 <1404525502.3109.25.camel@stross>	 <CAA787rnMonCuON+C0U5FDXKzjTBdpOusCpGLeWytDWaA1torEw@mail.gmail.com>	 <CAA787r=Q5B7R1sxiVhRgobPHHPro6D5YyqVO+P_MZC=aGa+ZHw@mail.gmail.com> <1404868702.3775.2.camel@stross>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 16:19:46 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?IsOYeXZpbmQgXCJBLiBIb2xtXCIi?= <sunny@sunbase.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 16:52:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4sij-0002z2-SG
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 16:19:42 +0200
+	id 1X4tEY-00012C-5o
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 16:52:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755181AbaGIOTi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 10:19:38 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:36636 "EHLO shiva.imag.fr"
+	id S1755657AbaGIOwM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jul 2014 10:52:12 -0400
+Received: from mout.web.de ([212.227.17.12]:52469 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751313AbaGIOTh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 10:19:37 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s69EJNkG004898
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 9 Jul 2014 16:19:23 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s69EJPBJ025574;
-	Wed, 9 Jul 2014 16:19:25 +0200
-In-Reply-To: <53BD3805.40504@gmail.com> (Tanay Abhra's message of "Wed, 09 Jul
-	2014 18:09:33 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 09 Jul 2014 16:19:24 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s69EJNkG004898
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1405520366.13481@SdKF0xsHyDjNOTrFSRmhYQ
+	id S1754182AbaGIOwK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 10:52:10 -0400
+Received: from [192.168.178.27] ([79.253.169.45]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0MBkPj-1WvIBr3YNb-00Aq46; Wed, 09 Jul 2014 16:52:08
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <1404868702.3775.2.camel@stross>
+X-Provags-ID: V03:K0:V/o2WYOABvMXH+DgRn2sOpPOK1OmXuyqnpu0mUiZ17ca1KlJTiX
+ msDNTbVWJp3PUoIN/8qnak9ZIPCpyCWhKvshO253HMpwdf+E6j3Ha4do+5QpAC/j2brqdXg
+ 01+M6r3squc3ioYz5Q1wCLGQ2nNE08PFVbnKcc+wXA4l7/pOr9fruFhPwrkA1CRh5wO4cwD
+ rfPhcEWENYww0q02bwIng==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253126>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Am 09.07.2014 03:18, schrieb David Turner:
+> On Wed, 2014-07-09 at 02:52 +0200, =C3=98yvind A. Holm wrote:
+>> On 3 July 2014 23:55, =C3=98yvind A. Holm <sunny@sunbase.org> wrote:
+>>> When compiling newest master (v2.0.1-472-g6f92e5f) on Debian 7.5
+>>> (64-bit), t5150-request-pull.sh fails when compiling with
+>>>
+>>> $ make configure
+>>> $ ./configure --prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6=
+f92e5f
+>>> $ make prefix=3D/usr/local/varprg/git.master.v2.0.1-472-g6f92e5f
+>>> $ cd t
+>>> $ ./t5150-request-pull.sh
+>>
+>> FYI, t5150-request-pull.sh passes all tests now on newest master
+>> (v2.0.1-474-g72c7794) in Debian. There are two new commits on master
+>> since I wrote this, and the commit that makes things work again is
+>> 4602f1a ("diff-tree: call free_commit_list() instead of duplicating
+>> its code"). Reverting this commit brings the failure back.
+>>
+>> The whole thing is still a mystery to me, though. I can't see why th=
+is
+>> should have anything to do with the use of ./configure --prefix.
+>
+> The problem only happens when a ref with an allowed wildcard winds up=
+ on
+> a page boundary (with the wildcard before the page boundary).  This
+> depends intricately on the details of memory allocation, so pretty mu=
+ch
+> anything could make it come and go.
+>
+> Does the fix I posted work for you?  If not, let me know and I'll loo=
+k
+> into it more.
 
-> Also, I tried implementing Junio's request about saving the line
-> number and the file name for each
-> key-value pair. I had some success, but with some changes,
+Sounds fragile overall.  How could a test program look like?  All I can=
+=20
+think of is a brute force check of all combinations of three characters=
+=20
+(is that enough?), PAGE_SIZE offsets, three flags, with and without=20
+".lock" appended (and embedded?) against the old implementation, which=20
+must be quite expensive.
 
-My opinion on this:
+Some callers of check_refname_format() know the length of the string or=
+=20
+can determine it cheaply because they copy the whole string anyway.=20
+Would it make sense to do away with the page boundary magic and require=
+=20
+the callers of the fast version to pass that length?  The tailing bytes=
+=20
+(up to 15) would have to be loaded carefully, though.  Not sure.
 
-* It's low priority. I think the order of priority should be (high to
-  low)
-
-  1) Finish and get the current series into pu (we're almost there, it's
-     not time to back off and restart something new).
-
-  2) Work on the other series that uses the new API. We don't need to
-     change _all_ the uses, but we do need a few tens of them to
-     validate the fact that the new API is nice and convenient to use.
-
-  3) Get new actual features for the user (tidy up config files, give
-     error messages based on numbers).
-
-  You probably won't finish everything, so just think: if the GSoC ends
-  between 1) and 2), how serious is it? if it ends between 2) and 3),
-  how serious? If reverse the order, then the risk of having nothing
-  finished and mergeable at the end is high. If it happens, the
-  community may or may not take over and finish it ...
-
-* Still, making sure that the (file, line) is doable later without too
-  much change is good. So, if indeed, moving all code to another file is
-  required, then it may make sense to do it now to avoid code move
-  later.
-
-> 1. config-hash.c had to be shifted to config.c entirely.
-
-Why? I guess one reason is the use of struct cf (are there others?), but
-moving just
-
-config_hash_callback
-config_hash_add_value
-git_configset_add_file
-
-to config.c should do it. Then, config.c could use config-hash.c.
-
-But a cleaner way would be to allow the callback to receive the
-config_file struct without accessing it as a global variable (currently,
-we have no way to parse two config files in parallel for example).
-
-In practice, it should be possible to pass a 4th pointer argument to the
-callback, and keep compatibility with 3 arguments callback (having too
-many arguments in not a problem will all ABI I know), but I'm don't
-think this is allowed in theory.
-
-On overall, I'm not convinced we should move the code. When the argument
-"I need to merge these two things otherwise it doesn't compile" comes in
-a discussion, it usually means there's an architecture issue
-somewhere ;-).
-
-> One more thing, Karsten's string-intern API can be used for saving
-> file names as they are repeated a
-> lot.
-
-This, or storing the list of filenames in struct config_set (more or
-less as you did in previous patch), and store pointers to the same
-string in each config_hash_entry.
-
-But strdup-ing all filenames seems a bit heavy to me. Even though we're
-not talking about performance-critical part of Git, I don't like the
-idea of wasting too much ;-).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Ren=C3=A9
