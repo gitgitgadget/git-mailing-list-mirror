@@ -1,282 +1,96 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v6 27/32] prune: strategies for linked checkouts
-Date: Wed, 9 Jul 2014 07:24:22 -0400
-Message-ID: <CAPig+cTcwuwnndOBeNbOqc4oTmyC3GW2+RsAXPDRznUVvLp8Ew@mail.gmail.com>
-References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
-	<1404891197-18067-28-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?w5h5dmluZCBBLiBIb2xt?= <sunny@sunbase.org>
+Subject: Re: t5150-request-pull.sh fails on newest master in Debian
+Date: Wed, 9 Jul 2014 13:44:21 +0200
+Message-ID: <CAA787rnpHTiaV3KndmVqiTF_kzpcptbrTfWBnFVh0W_Rzyw8ww@mail.gmail.com>
+References: <CAA787r=78UWio3E==s+J2PbVqshQdWXpS9hiJrmNz+F0vLiuGg@mail.gmail.com>
+	<1404505370.3109.15.camel@stross>
+	<CAA787rmf36V1=Sd8TZrc7DboTkeJDYKuEGgCe90mZLLKSp6=tw@mail.gmail.com>
+	<1404525502.3109.25.camel@stross>
+	<CAA787rnMonCuON+C0U5FDXKzjTBdpOusCpGLeWytDWaA1torEw@mail.gmail.com>
+	<CAA787r=Q5B7R1sxiVhRgobPHHPro6D5YyqVO+P_MZC=aGa+ZHw@mail.gmail.com>
+	<1404868702.3775.2.camel@stross>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 13:24:40 2014
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 13:44:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4pzH-0006XM-6I
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 13:24:35 +0200
+	id 1X4qIb-0003DM-9w
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 13:44:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755055AbaGILY0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jul 2014 07:24:26 -0400
-Received: from mail-la0-f44.google.com ([209.85.215.44]:63979 "EHLO
-	mail-la0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751345AbaGILYY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Jul 2014 07:24:24 -0400
-Received: by mail-la0-f44.google.com with SMTP id ty20so4978841lab.31
-        for <git@vger.kernel.org>; Wed, 09 Jul 2014 04:24:22 -0700 (PDT)
+	id S1756122AbaGILoZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Jul 2014 07:44:25 -0400
+Received: from mail-la0-f42.google.com ([209.85.215.42]:39326 "EHLO
+	mail-la0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753955AbaGILoX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Jul 2014 07:44:23 -0400
+Received: by mail-la0-f42.google.com with SMTP id pn19so4967144lab.15
+        for <git@vger.kernel.org>; Wed, 09 Jul 2014 04:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type:content-transfer-encoding;
-        bh=rz5VxUHd70J0Pg8o1+S+p7FOa2ICNZqMUzxLnTkZGZ0=;
-        b=o9AjEqCxApvKZwiElylnneyMSdL+jKR4tqQvR2AJebyuORLT1IRkSoKbQovAIORQ8W
-         baGpLTFr/Q704Bxc4rB5jtO12DSLY+hYpsqVN2EItkfQy2n7nO3y62pTvN4VomNnr58b
-         0kXPORTqBVZgRVZo7JsYx8twSf0uIWehAD0rJKr2MaTyd3IedeQgeXzB6UX1QMRoAdwp
-         YD5J1LhNJOEMi+FFOTr0qi16nCXpQW1nmJD7BoWa5HtqvXQTG3jM+gCXEic6bBQ3uKtm
-         D0QY5xrFGmd1yM3R1BqCd8FkyXmrjjR87KatrklFE0eoHFYDo5y7j7PnVjH5d6yBsFsq
-         Ml9A==
-X-Received: by 10.112.167.105 with SMTP id zn9mr30303935lbb.10.1404905062496;
- Wed, 09 Jul 2014 04:24:22 -0700 (PDT)
-Received: by 10.114.78.167 with HTTP; Wed, 9 Jul 2014 04:24:22 -0700 (PDT)
-In-Reply-To: <1404891197-18067-28-git-send-email-pclouds@gmail.com>
-X-Google-Sender-Auth: T71X0mShrGKYz_RTiAXA6ylVlSY
+        bh=J2s0RT5tXI4OjUQ9WR0+KWtnls4VxFWFUFXE6I86Q+c=;
+        b=wZzUysSaqWeCAlV+CigT7M9rXv9DuoGNxgAQkf9436g6oGfOFHyfl+E6PGepPptTS6
+         mgjxxBvT+fME2LN8G3gfcjuB15jG/RDWrdLRuVZ8/pwlROG74lKpOWLKcN0Zm0+HoHNo
+         YDcE/soICyfmeJBdGubAIpUhfM6JpdtoCVHPbi8L/h3myngSFhEvIPML5RduU+Zgrz8a
+         joeGQaw8v8CyfOHb+pR9RWRMrE+qYzjOLZGathuOWW045G+Mft4ESp2OkmMlZCVnO2JV
+         ZrX/HwgccT6icObu8TpwQ2dNSJa+uVzd8Cm4Qkx0t9uix8QZxqiW9X2D1mGkivEQvua1
+         k9HQ==
+X-Received: by 10.152.25.132 with SMTP id c4mr980318lag.88.1404906262045; Wed,
+ 09 Jul 2014 04:44:22 -0700 (PDT)
+Received: by 10.112.142.7 with HTTP; Wed, 9 Jul 2014 04:44:21 -0700 (PDT)
+In-Reply-To: <1404868702.3775.2.camel@stross>
+X-Google-Sender-Auth: E00yhTB9zbMmYCXq1sv00-EksNQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253118>
 
-On Wed, Jul 9, 2014 at 3:33 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
-uy <pclouds@gmail.com> wrote:
-> (alias R=3D$GIT_COMMON_DIR/repos/<id>)
+On 9 July 2014 03:18, David Turner <dturner@twopensource.com> wrote:
+> On Wed, 2014-07-09 at 02:52 +0200, =C3=98yvind A. Holm wrote:
+> > On 3 July 2014 23:55, =C3=98yvind A. Holm <sunny@sunbase.org> wrote=
+:
+> > > When compiling newest master (v2.0.1-472-g6f92e5f) on Debian 7.5
+> > > (64-bit), t5150-request-pull.sh fails when compiling with
+> > > [snip]
+> >
+> > FYI, t5150-request-pull.sh passes all tests now on newest master
+> > (v2.0.1-474-g72c7794) in Debian. There are two new commits on maste=
+r
+> > since I wrote this, and the commit that makes things work again is
+> > 4602f1a ("diff-tree: call free_commit_list() instead of duplicating
+> > its code"). Reverting this commit brings the failure back.
+> >
+> > The whole thing is still a mystery to me, though. I can't see why
+> > this should have anything to do with the use of ./configure
+> > --prefix.
 >
->  - linked checkouts are supposed to keep its location in $R/gitdir up
->    to date. The use case is auto fixup after a manual checkout move.
->
->  - linked checkouts are supposed to update mtime of $R/gitdir. If
->    $R/gitdir's mtime is older than a limit, and it points to nowhere,
->    repos/<id> is to be pruned.
->
->  - If $R/locked exists, repos/<id> is not supposed to be pruned. If
->    $R/locked exists and $R/gitdir's mtime is older than a really long
->    limit, warn about old unused repo.
->
->  - "git checkout --to" is supposed to make a hard link named $R/link
->    pointing to the .git file on supported file systems to help detect
->    the user manually deleting the checkout. If $R/link exists and its
->    link count is greated than 1, the repo is kept.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> diff --git a/builtin/prune.c b/builtin/prune.c
-> index 144a3bd..6db6bcc 100644
-> --- a/builtin/prune.c
-> +++ b/builtin/prune.c
-> @@ -112,6 +112,70 @@ static void prune_object_dir(const char *path)
->         }
->  }
->
-> +static const char *prune_repo_dir(const char *id, struct stat *st)
-> +{
-> +       char *path;
-> +       int fd, len;
-> +       if (file_exists(git_path("repos/%s/locked", id)))
-> +               return NULL;
-> +       if (stat(git_path("repos/%s/gitdir", id), st)) {
-> +               st->st_mtime =3D expire;
-> +               return _("gitdir does not exist");
+> The problem only happens when a ref with an allowed wildcard winds up
+> on a page boundary (with the wildcard before the page boundary).  Thi=
+s
+> depends intricately on the details of memory allocation, so pretty
+> much anything could make it come and go.
 
-If a plain file exists in 'repos' for some reason, it will be caught
-by this case. Would it make sense, however, to handle that specially
-and report a more accurate message, such as "not a repo" or some such?
+Aha, that makes sense. Sheer luck that the results were that consistent
+during testing, then.
 
-> +       }
-> +       fd =3D open(git_path("repos/%s/gitdir", id), O_RDONLY);
+> Does the fix I posted work for you?  If not, let me know and I'll loo=
+k
+> into it more.
 
-If 'gitdir' fails to open for some reason (lack of permissions, it's a
-directory, etc.), the subsequent read_in_full() will crash.
+Sorry, didn't notice you posted that to the list. Today I learned that
+Gmail doesn't put mails adressed to me and the list in the inbox. :(
 
-> +       len =3D st->st_size;
-> +       path =3D xmalloc(len + 1);
-> +       read_in_full(fd, path, len);
-> +       close(fd);
+The commit fixed it, yes. Thanks for the patch. It now works on both
+Debian servers. Have run all tests on one of the servers, and will
+repeat on other machines, too.
 
-strbuf_readfile() might make this a bit cleaner (though has higher over=
-head).
-
-> +       while (path[len - 1] =3D=3D '\n' || path[len - 1] =3D=3D '\r'=
-)
-> +               len--;
-
-If, for some reason, 'gitdir' content is empty or consists only of CR
-and LF, this will access memory outside of the allocated region.
-Probably want:
-
-    while (len > 0 && (... || ...))
-
-> +       path[len] =3D '\0';
-> +       if (!file_exists(path)) {
-
-What happens if 'path' ends up empty (due to hand-editing of 'gitdir'
-by the user, for instance)? Does this case deserve an appropriate
-diagnostic ("corrupt 'gitdir' file" or something)?
-
-> +               struct stat st_link;
-> +               free(path);
-> +               /*
-> +                * the repo is moved manually and has not been
-> +                * accessed since?
-> +                */
-> +               if (!stat(git_path("repos/%s/link", id), &st_link) &&
-> +                   st_link.st_nlink > 1)
-> +                       return NULL;
-> +               return _("gitdir points to non-existing file");
-
-s/existing/existent/
-s/file/location/
-
-> +       }
-> +       free(path);
-> +       return NULL;
-> +}
-> +
-> +static void prune_repos_dir(void)
-> +{
-> +       const char *reason;
-> +       DIR *dir =3D opendir(git_path("repos"));
-> +       struct dirent *d;
-> +       int removed =3D 0;
-> +       struct stat st;
-> +       if (!dir)
-> +               return;
-> +       while ((d =3D readdir(dir)) !=3D NULL) {
-> +               if (!strcmp(d->d_name, ".") || !strcmp(d->d_name, "..=
-"))
-> +                       continue;
-> +               if ((reason =3D prune_repo_dir(d->d_name, &st)) !=3D =
-NULL &&
-> +                   st.st_mtime <=3D expire) {
-> +                       struct strbuf sb =3D STRBUF_INIT;
-> +                       if (show_only || verbose)
-> +                               printf(_("Removing repos/%s: %s\n"), =
-d->d_name, reason);
-> +                       if (show_only)
-> +                               continue;
-> +                       strbuf_addstr(&sb, git_path("repos/%s", d->d_=
-name));
-> +                       remove_dir_recursively(&sb, 0);
-
-What happens if this entry in 'repos' is a plain file (or other
-non-directory)? Based upon my reading of remove_dir_recursively(), it
-won't be deleted, yet the logic of prune_repo_dir() implies that such
-an entry should be pruned. Perhaps handle this case specially with
-unlink()?
-
-> +                       strbuf_release(&sb);
-> +                       removed =3D 1;
-> +               }
-> +       }
-> +       closedir(dir);
-> +       if (removed)
-> +               rmdir(git_path("repos"));
-
-This works, but at first glance it seems strange not to be checking
-'show_only' before calling destructive rmdir().
-
-However, stepping back, it's not quite clear what the intent is.
-Ignoring the return value of rmdir() implies that you trust it to Do
-The Right Thing: succeed when 'repos' is empty and fail when not. This
-assumption of behavior applies regardless of whether or not any
-content of 'repos' was removed, so the 'removed' flag does not seem
-beneficial.
-
-Moreover, the 'removed' flag actively prevents the 'repos' directory
-from being pruned in the corner case where the user manually emptied
-the content of 'repos' before invoking "git prune". Therefore, it
-might be simpler to drop the 'removed' variable altogether and
-rephrase as:
-
-    if (!show_only)
-        rmdir(git_path("repos"));
-
-> +}
-> +
->  /*
->   * Write errors (particularly out of space) can result in
->   * failed temporary packs (and more rarely indexes and other
-> @@ -138,10 +202,12 @@ int cmd_prune(int argc, const char **argv, cons=
-t char *prefix)
->  {
->         struct rev_info revs;
->         struct progress *progress =3D NULL;
-> +       int prune_repos =3D 0;
->         const struct option options[] =3D {
->                 OPT__DRY_RUN(&show_only, N_("do not remove, show only=
-")),
->                 OPT__VERBOSE(&verbose, N_("report pruned objects")),
->                 OPT_BOOL(0, "progress", &show_progress, N_("show prog=
-ress")),
-> +               OPT_BOOL(0, "repos", &prune_repos, N_("prune .git/rep=
-os/")),
->                 OPT_EXPIRY_DATE(0, "expire", &expire,
->                                 N_("expire objects older than <time>"=
-)),
->                 OPT_END()
-> @@ -154,6 +220,14 @@ int cmd_prune(int argc, const char **argv, const=
- char *prefix)
->         init_revisions(&revs, prefix);
->
->         argc =3D parse_options(argc, argv, prefix, options, prune_usa=
-ge, 0);
-> +
-> +       if (prune_repos) {
-> +               if (argc)
-> +                       die(_("--repos does not take extra arguments"=
-));
-> +               prune_repos_dir();
-> +               return 0;
-> +       }
-> +
->         while (argc--) {
->                 unsigned char sha1[20];
->                 const char *name =3D *argv++;
-> diff --git a/setup.c b/setup.c
-> index 8f90bc3..da2d669 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -390,6 +390,17 @@ static int check_repository_format_gently(const =
-char *gitdir, int *nongit_ok)
->         return ret;
->  }
->
-> +static void update_linked_gitdir(const char *gitfile, const char *gi=
-tdir)
-> +{
-> +       struct strbuf path =3D STRBUF_INIT;
-> +       struct stat st;
-> +
-> +       strbuf_addf(&path, "%s/gitfile", gitdir);
-> +       if (stat(path.buf, &st) || st.st_mtime + 24 * 3600 < time(NUL=
-L))
-> +               write_file(path.buf, 0, "%s\n", gitfile);
-> +       strbuf_release(&path);
-> +}
-> +
->  /*
->   * Try to read the location of the git directory from the .git file,
->   * return path to git directory if found.
-> @@ -438,6 +449,8 @@ const char *read_gitfile(const char *path)
->
->         if (!is_git_directory(dir))
->                 die("Not a git repository: %s", dir);
-> +
-> +       update_linked_gitdir(path, dir);
->         path =3D real_path(dir);
->
->         free(buf);
-> --
-> 1.9.1.346.ga2b5940
+Thanks,
+=C3=98yvind
