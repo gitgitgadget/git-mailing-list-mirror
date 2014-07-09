@@ -1,87 +1,190 @@
-From: Fabian Ruch <bafain@gmail.com>
-Subject: Re: [PATCH RFC v2 00/19] Enable options --signoff, --reset-author
- for pick, reword
-Date: Wed, 09 Jul 2014 18:08:55 +0200
-Message-ID: <53BD6917.7070700@gmail.com>
-References: <53A258D2.7080806@gmail.com>	<cover.1404323078.git.bafain@gmail.com> <xmqqha2r8trc.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] dir: remove PATH_MAX limitation
+Date: Wed, 09 Jul 2014 09:33:30 -0700
+Message-ID: <xmqqa98i7aqt.fsf@gitster.dls.corp.google.com>
+References: <53B72DAA.5050007@gmail.com> <53B72DD5.6020603@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 09 18:09:07 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 09 18:33:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X4uQb-00066k-K5
-	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 18:09:05 +0200
+	id 1X4uoS-0008GS-0i
+	for gcvg-git-2@plane.gmane.org; Wed, 09 Jul 2014 18:33:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932210AbaGIQJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 12:09:00 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:46361 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932201AbaGIQI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 12:08:59 -0400
-Received: by mail-wi0-f176.google.com with SMTP id n3so3035982wiv.9
-        for <git@vger.kernel.org>; Wed, 09 Jul 2014 09:08:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=Jvq6qbs2FKJXFAQSe6TmBnWYrNNCkZx09EFL7Yo4uI4=;
-        b=kTeTInU5WgLo9d/rVQJjhZZKop0i40aADcynhOrOpBcVqDIG/gAoett8yqYDJViAWv
-         xfZmen2Yi8p30K5huU7+/WIKRQ9Sobnm4Aa2eHbFBtQXWUwLAByrbDpzIj3i3lcl9id2
-         HBBB4lHOgKEmEJ1Tf8cKm2lGCm3p2YZFhuqnsU6BJWfyY5thcJC+hp52ZZueBnfxYhel
-         IZjQhLx08K8snXaf9OW2WYMG1tXRviJYQqjh3HeyU3wi5ZRm9dSvPGYx3UwFbaZ0gMcT
-         d7YsjyLYqrkYGCbkUjVfADHc6+KyeMQ59qklCzdXHAelM5vI7/0xhu0gL8+rynbVDmzQ
-         i8pg==
-X-Received: by 10.194.200.3 with SMTP id jo3mr13440576wjc.110.1404922138412;
-        Wed, 09 Jul 2014 09:08:58 -0700 (PDT)
-Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
-        by mx.google.com with ESMTPSA id ev9sm20879705wic.24.2014.07.09.09.08.56
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 09 Jul 2014 09:08:57 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqha2r8trc.fsf@gitster.dls.corp.google.com>
+	id S1755665AbaGIQdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 12:33:40 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64310 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755199AbaGIQdj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 12:33:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7C0A827ADA;
+	Wed,  9 Jul 2014 12:33:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mo+HcwZUJfuARcU6QWc4VkzfqG0=; b=wlx2rm
+	HyvMo8vtKe7WhDAE5QTSlJ4qWtLat6YfG13XCAUFThUVmj4eVsBlEnGXtuyTaZf5
+	ApMHnTZtN1D9Oj98d5ackTT0pjZBJmmKAA/2erptApZVBD2i06hfqfg8M1g2W/mj
+	aUfNt5cQnaj7Z3kVDrdW+kiQBxhwpNSBOAwxU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WcMywAerIl6Dbqmz+6NRiHVb6JC/3Ham
+	+D4UfN/pSytS1RdXUMoF8lssyeaDhd/RzNxLjJ5iui+aH8VFKHQ1Pyd+ur0R/CzM
+	3+J7oWZZGy+0O0Ap5o1mXUIWbKvUNcayd7SEL4OsF1D0K/TQ3BRaGof/XuR6Swk2
+	LcI+le2+Q0g=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6DFC327AD9;
+	Wed,  9 Jul 2014 12:33:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E0D0527ACF;
+	Wed,  9 Jul 2014 12:33:17 -0400 (EDT)
+In-Reply-To: <53B72DD5.6020603@gmail.com> (Karsten Blees's message of "Sat, 05
+	Jul 2014 00:42:29 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BB6B8210-0786-11E4-AE50-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253134>
 
-On 07/08/2014 10:45 PM, Junio C Hamano wrote:
-> Fabian Ruch <bafain@gmail.com> writes:
->> Fabian Ruch (19):
->>   rebase -i: Failed reword prints redundant error message
->>   rebase -i: reword complains about empty commit despite --keep-empty
->>   rebase -i: reword executes pre-commit hook on interim commit
->>   rebase -i: Teach do_pick the option --edit
->>   rebase -i: Implement reword in terms of do_pick
->>   rebase -i: Stop on root commits with empty log messages
->>   rebase -i: The replay of root commits is not shown with --verbose
->>   rebase -i: Root commits are replayed with an unnecessary option
->>   rebase -i: Commit only once when rewriting picks
->>   rebase -i: Do not die in do_pick
->>   rebase -i: Teach do_pick the option --amend
->>   rebase -i: Teach do_pick the option --file
->>   rebase -i: Prepare for squash in terms of do_pick --amend
->>   rebase -i: Implement squash in terms of do_pick
->>   rebase -i: Explicitly distinguish replay commands and exec tasks
->>   rebase -i: Parse to-do list command line options
->>   rebase -i: Teach do_pick the option --reset-author
->>   rebase -i: Teach do_pick the option --signoff
->>   rebase -i: Enable options --signoff, --reset-author for pick, reword
-> 
-> After "rebase -i:", some begin with lowercase and many begin with
-> capital, which makes the short-log output look distracting.
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-The ones that begin with lower-case letters are the ones that begin with
-the command name "reword". All first lines are typed in lower case now.
+> 'git status' segfaults if a directory is longer than PATH_MAX, because
+> processing .gitignore files in prep_exclude() writes past the end of a
+> PATH_MAX-bounded buffer.
+>
+> Remove the limitation by using strbuf instead.
+>
+> Note: this fix just 'abuses' strbuf as string allocator, len is always 0.
+> prep_exclude() can probably be simplified using more strbuf APIs.
 
-Sorry for the noise.
+In addition to what Jeff already said, I am afraid that this may
+make things a lot worse for normal case.  By sizing the strbuf to
+absolute minimum as you dig deeper at each level, wouldn't you copy
+and reallocate the buffer a lot more, compared to the case where
+everything fits in the original buffer?
 
-   Fabian
+
+> Signed-off-by: Karsten Blees <blees@dcon.de>
+> ---
+>  dir.c | 35 +++++++++++++++++++----------------
+>  dir.h |  4 ++--
+>  2 files changed, 21 insertions(+), 18 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index e65888d..8d4d83c 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -798,7 +798,7 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+>  	 * path being checked. */
+>  	while ((stk = dir->exclude_stack) != NULL) {
+>  		if (stk->baselen <= baselen &&
+> -		    !strncmp(dir->basebuf, base, stk->baselen))
+> +		    !strncmp(dir->base.buf, base, stk->baselen))
+>  			break;
+>  		el = &group->el[dir->exclude_stack->exclude_ix];
+>  		dir->exclude_stack = stk->prev;
+> @@ -833,48 +833,50 @@ static void prep_exclude(struct dir_struct *dir, const char *base, int baselen)
+>  		stk->baselen = cp - base;
+>  		stk->exclude_ix = group->nr;
+>  		el = add_exclude_list(dir, EXC_DIRS, NULL);
+> -		memcpy(dir->basebuf + current, base + current,
+> +		strbuf_grow(&dir->base, stk->baselen);
+> +		memcpy(dir->base.buf + current, base + current,
+>  		       stk->baselen - current);
+>  
+>  		/* Abort if the directory is excluded */
+>  		if (stk->baselen) {
+>  			int dt = DT_DIR;
+> -			dir->basebuf[stk->baselen - 1] = 0;
+> +			dir->base.buf[stk->baselen - 1] = 0;
+>  			dir->exclude = last_exclude_matching_from_lists(dir,
+> -				dir->basebuf, stk->baselen - 1,
+> -				dir->basebuf + current, &dt);
+> -			dir->basebuf[stk->baselen - 1] = '/';
+> +				dir->base.buf, stk->baselen - 1,
+> +				dir->base.buf + current, &dt);
+> +			dir->base.buf[stk->baselen - 1] = '/';
+>  			if (dir->exclude &&
+>  			    dir->exclude->flags & EXC_FLAG_NEGATIVE)
+>  				dir->exclude = NULL;
+>  			if (dir->exclude) {
+> -				dir->basebuf[stk->baselen] = 0;
+> +				dir->base.buf[stk->baselen] = 0;
+>  				dir->exclude_stack = stk;
+>  				return;
+>  			}
+>  		}
+>  
+> -		/* Try to read per-directory file unless path is too long */
+> -		if (dir->exclude_per_dir &&
+> -		    stk->baselen + strlen(dir->exclude_per_dir) < PATH_MAX) {
+> -			strcpy(dir->basebuf + stk->baselen,
+> +		/* Try to read per-directory file */
+> +		if (dir->exclude_per_dir) {
+> +			strbuf_grow(&dir->base, stk->baselen +
+> +				    strlen(dir->exclude_per_dir));
+> +			strcpy(dir->base.buf + stk->baselen,
+>  					dir->exclude_per_dir);
+>  			/*
+> -			 * dir->basebuf gets reused by the traversal, but we
+> +			 * dir->base gets reused by the traversal, but we
+>  			 * need fname to remain unchanged to ensure the src
+>  			 * member of each struct exclude correctly
+>  			 * back-references its source file.  Other invocations
+>  			 * of add_exclude_list provide stable strings, so we
+>  			 * strdup() and free() here in the caller.
+>  			 */
+> -			el->src = strdup(dir->basebuf);
+> -			add_excludes_from_file_to_list(dir->basebuf,
+> -					dir->basebuf, stk->baselen, el, 1);
+> +			el->src = strdup(dir->base.buf);
+> +			add_excludes_from_file_to_list(dir->base.buf,
+> +					dir->base.buf, stk->baselen, el, 1);
+>  		}
+>  		dir->exclude_stack = stk;
+>  		current = stk->baselen;
+>  	}
+> -	dir->basebuf[baselen] = '\0';
+> +	dir->base.buf[baselen] = '\0';
+>  }
+>  
+>  /*
+> @@ -1671,4 +1673,5 @@ void clear_directory(struct dir_struct *dir)
+>  		free(stk);
+>  		stk = prev;
+>  	}
+> +	strbuf_release(&dir->base);
+>  }
+> diff --git a/dir.h b/dir.h
+> index 55e5345..e870fb6 100644
+> --- a/dir.h
+> +++ b/dir.h
+> @@ -111,13 +111,13 @@ struct dir_struct {
+>  	 * per-directory exclude lists.
+>  	 *
+>  	 * exclude_stack points to the top of the exclude_stack, and
+> -	 * basebuf contains the full path to the current
+> +	 * base contains the full path to the current
+>  	 * (sub)directory in the traversal. Exclude points to the
+>  	 * matching exclude struct if the directory is excluded.
+>  	 */
+>  	struct exclude_stack *exclude_stack;
+>  	struct exclude *exclude;
+> -	char basebuf[PATH_MAX];
+> +	struct strbuf base;
+>  };
+>  
+>  /*
+> -- 
+> 1.9.4.msysgit.0.5.g1471ac1
+>
+> -- 
