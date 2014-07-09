@@ -1,98 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] tag: support configuring --sort via .gitconfig
-Date: Wed, 9 Jul 2014 18:15:06 -0400
-Message-ID: <20140709221506.GA27388@sigill.intra.peff.net>
-References: <1404940860-4004-1-git-send-email-jacob.e.keller@intel.com>
- <20140709215816.GE25854@sigill.intra.peff.net>
- <1404943640.23510.40.camel@jekeller-desk1.amr.corp.intel.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: move detection doesnt take filename into account
+Date: Wed, 09 Jul 2014 15:18:43 -0700
+Message-ID: <xmqqa98i9nwc.fsf@gitster.dls.corp.google.com>
+References: <53B105DA.30004@gmail.com>
+	<287177519.16421.1404206204124.JavaMail.zimbra@dewire.com>
+	<xmqqtx71xh27.fsf@gitster.dls.corp.google.com>
+	<53B2CE4A.9060509@gmail.com>
+	<xmqq61jhxb0g.fsf@gitster.dls.corp.google.com>
+	<20140709064521.GA14682@sigill.intra.peff.net>
+	<xmqqegxu7cpg.fsf@gitster.dls.corp.google.com>
+	<20140709220337.GF25854@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"pclouds@gmail.com" <pclouds@gmail.com>,
-	"gitster@pobox.com" <gitster@pobox.com>
-To: "Keller, Jacob E" <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 00:15:17 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Elliot Wolk <elliot.wolk@gmail.com>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 10 00:18:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X508y-0007B4-Sj
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 00:15:17 +0200
+	id 1X50CU-0001PG-L3
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 00:18:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755736AbaGIWPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Jul 2014 18:15:10 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59031 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751226AbaGIWPJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Jul 2014 18:15:09 -0400
-Received: (qmail 12572 invoked by uid 102); 9 Jul 2014 22:15:09 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 09 Jul 2014 17:15:09 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Jul 2014 18:15:06 -0400
-Content-Disposition: inline
-In-Reply-To: <1404943640.23510.40.camel@jekeller-desk1.amr.corp.intel.com>
+	id S1755839AbaGIWSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Jul 2014 18:18:51 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:51335 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751861AbaGIWSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Jul 2014 18:18:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8DBB128C90;
+	Wed,  9 Jul 2014 18:18:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=MWlOJwkiPiaB9rpB2EspwnEBr7c=; b=V9CPTR
+	6osWd/lZB5HM6A+d88g2b/AmTy1GwnfGq0Kq5A9vHAPOrGvtfTlrpq32ZDXbSKLJ
+	y7QCIaJr3AHD4du/J16dTG6pv25x5Mu/kLQrih9OHP0f3g5K5QCy7dgvNPg23ARy
+	NXV2+nffUff2vcQpxgk+Zm4+wI8hw0kzuFcp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yXYU1Iu+w6/GdX3p2C2PkE8t0ClS7eGn
+	NMDiEwud6nKTMYOTZ6UqkhEUKJuuRj0Q6wqFp/cawX0eSxicdtCvHbY4qXw7ZJ+8
+	U/hkjl9qDHjONzfpQrz/ac3HjwrNKzp0WvdXUIqMOzZRa4fSoplv6wiQld7B+Ax8
+	w26krA+MJlA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 838B328C8F;
+	Wed,  9 Jul 2014 18:18:34 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4750C28C8B;
+	Wed,  9 Jul 2014 18:18:29 -0400 (EDT)
+In-Reply-To: <20140709220337.GF25854@sigill.intra.peff.net> (Jeff King's
+	message of "Wed, 9 Jul 2014 18:03:37 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F45B2B5E-07B6-11E4-B3BA-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253165>
 
-On Wed, Jul 09, 2014 at 10:07:20PM +0000, Keller, Jacob E wrote:
+Jeff King <peff@peff.net> writes:
 
-> I only noticed the sort recently, and I first tried to add an alias like
-> "tag = tag --sort=v:refname" but git didn't pick up the alias of the
-> name already.
+> I think the hash here does not collide in that way. It really is just
+> the last sixteen characters shoved into a uint32_t.
 
-It was only added recently (v2.0.0). :)
+All bytes overlap with their adjacent byte because they are shifted
+by only 2 bits, not 8 bits, when a new byte is brought in.  We can
+say that the topmost two bits of the result must have come from the
+last character, but other than these, there are more than one input
+byte for each bit position to be set/unset by, so two names that human
+would not consider "similar" would be given the same hash, no?
 
-As you noticed, we do not allow aliases of actual git commands. I think
-it would be nice to notice and complain rather than silently ignoring
-them, though.
+That is useful for delta code because the code only needs that
+similar things are grouped together, it does not mind things that
+are not similar is also mixed to a group, as the end result is
+primarily determined by similarity of the actual contents, not
+pathnames.
 
-> I use a lot of version-style tags so I wanted this to be default. I
-> did notice that the format of the sort parameter was actually pretty
-> complex, so it seemed that more was intended to be added to it.
-
-Yeah, the complexity is in preparation for becoming more flexible. I
-think we'd consider short options for commonly-used sorts, but were
-waiting for them to prove their value in the field.
-
-> The only main issue would be the location of the sort-configure code,
-> but that is actually easy to move so I don't think it's a big deal. The
-> configuration interface should remain similar.
-
-Agreed. It's not a problem moving code around. But once a user-facing
-feature is released, we try to keep compatibility with it. So as long as
-the config option's format stays the same (or strictly increases in
-features), that is fine.
-
-> > Your link to git-tag[5] should be to git-tag[1], I think. The final
-> > number is the manpage section.
-> 
-> Which I thought was 5 for the commands? Or is it always [1]?
-
-Commands are 1. File formats are 5 (so there are some things in section
-5 in git). "man man" has more.
-
-> > I was going to complain that this is duplicating the sort documentation
-> > from git-tag, but I see you actually moved it from the --sort option to
-> > here, and refer back from there to here.
-> 
-> I actually didn't remove anything from git-tag, I only added the
-> reference to git-config. But I can keep from duplicating the
-> documentation in there. I like the idea of using an included file
-> though.
-
-Oh, sorry, I just misread the patch. Then I'll fall back to my original
-complaint. :) We should not duplicate, but just refer back to
-git-tag(1).
-
-> Alright that makes sense. I will send a v2 soon. Thanks for the
-> comments.
-
-You're welcome. Thanks for working on git (and welcome to the list, I
-think).
-
--Peff
+What is under topic in this discussion is the other way around; we
+know two paths have contents of the same similarity to the third one
+and want to tie-break these two using how similar their pathnames
+are to the third one.  
