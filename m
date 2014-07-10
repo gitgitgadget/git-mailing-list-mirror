@@ -1,164 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH RFC v2 15/19] rebase -i: Explicitly distinguish replay commands and exec tasks
-Date: Thu, 10 Jul 2014 13:03:08 -0700
-Message-ID: <xmqq1ttt7zib.fsf@gitster.dls.corp.google.com>
-References: <53A258D2.7080806@gmail.com>
-	<cover.1404323078.git.bafain@gmail.com>
-	<07e5f295c0042e78ba83ffb66925e3f09988ae3c.1404323078.git.bafain@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Topic sk/mingw-unicode-spawn-args breaks tests
+Date: Thu, 10 Jul 2014 22:05:50 +0200
+Message-ID: <53BEF21E.9090007@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
-To: Fabian Ruch <bafain@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 22:03:22 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Stepan Kasal <kasal@ucw.cz>, Git Mailing List <git@vger.kernel.org>, 
+ msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCJYV6HBKQIKHZH3TUCRUBD4TZPGU@googlegroups.com Thu Jul 10 22:06:00 2014
+Return-path: <msysgit+bncBCJYV6HBKQIKHZH3TUCRUBD4TZPGU@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f191.google.com ([209.85.212.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5KYr-0004Xb-HA
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 22:03:21 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752180AbaGJUDR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2014 16:03:17 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63204 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750988AbaGJUDR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2014 16:03:17 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E0B0C27A73;
-	Thu, 10 Jul 2014 16:03:00 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8hxcVvGKaJgOLAtJTHYWiV49PFU=; b=t5QuO2
-	Jslra+zXL7oh0qGUzlOzG7XFFw/eWFYaZqc6jRnosVBT9Wpa/tVF/cKW8Fm4U1SA
-	HYufqCKwkYZ1J7Fsg7phUxzwLM7glqS81ZWdym9+G0VGBapEZdMMNXMDUO8zP5re
-	CpEJ7gKB44ksqBhmSm8xcrxv3OPFITbyranvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gZrVE8tW5FqwseLYyQyyZqyaO3KDGS2H
-	/rAEIv3XasTSSu75IPCjJUNHV0Gi7EfkQ8pB0rcBCwtmZ0pDIdAn117Bjn059ZFL
-	BaWz0fIJv0poiMa7iMzVeRZUzuixPAiCjjrWX00m5GJ9vOqALDWoMkgJy/aprseA
-	vN+ecGP5V+I=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D33A327A72;
-	Thu, 10 Jul 2014 16:03:00 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3F79D27A67;
-	Thu, 10 Jul 2014 16:02:55 -0400 (EDT)
-In-Reply-To: <07e5f295c0042e78ba83ffb66925e3f09988ae3c.1404323078.git.bafain@gmail.com>
-	(Fabian Ruch's message of "Wed, 2 Jul 2014 19:48:07 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2E8F0EB0-086D-11E4-AE39-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253203>
+	(envelope-from <msysgit+bncBCJYV6HBKQIKHZH3TUCRUBD4TZPGU@googlegroups.com>)
+	id 1X5KbO-00075z-RG
+	for gcvm-msysgit@m.gmane.org; Thu, 10 Jul 2014 22:05:58 +0200
+Received: by mail-wi0-f191.google.com with SMTP id q5sf27923wiv.28
+        for <gcvm-msysgit@m.gmane.org>; Thu, 10 Jul 2014 13:05:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=I3TupdgTxpeNxnOD5ftlnL25D3Z0SbIusAVw8voeSAY=;
+        b=hY5mlf+7oW8P7QfDLMdUUVqEjJtudW85YPP4zerT8qAUZoGRWDV+VaSfWpZRTb9Yj/
+         bp0F5zmPbWrR22z3DCfhEpUPazGuLeF7tbrR5IY68kZWaKjhOsP41BCd+Ft9GxLQu1Nk
+         dOtwGDuy+i1LQSg9bd1KbB/JvDeGHjWIOm0Hw8xUGBIz6PDbEIdKyPdsF4HjRpBpSmui
+         JpW8OtvC6LQc0qATwkfc78HasT3ea0lFaFA0odQJP8vakpr56Ju5239LQ52yDOI0KqQh
+         a9XLhKozlyIa+U5hL6ByJjzKhiLXpF66SO21b4nHHCWoB5TMWWDN6qn9ob3KHZ8Y058T
+         yJSg==
+X-Received: by 10.152.116.17 with SMTP id js17mr5342lab.41.1405022755610;
+        Thu, 10 Jul 2014 13:05:55 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.203.200 with SMTP id ks8ls45501lac.105.gmail; Thu, 10 Jul
+ 2014 13:05:54 -0700 (PDT)
+X-Received: by 10.112.42.229 with SMTP id r5mr42605lbl.23.1405022754621;
+        Thu, 10 Jul 2014 13:05:54 -0700 (PDT)
+Received: from bsmtp.bon.at (bsmtp.bon.at. [213.33.87.14])
+        by gmr-mx.google.com with ESMTPS id gg16si644415wic.2.2014.07.10.13.05.53
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Thu, 10 Jul 2014 13:05:53 -0700 (PDT)
+Received-SPF: none (google.com: j6t@kdbg.org does not designate permitted sender hosts) client-ip=213.33.87.14;
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id C6D1B130067;
+	Thu, 10 Jul 2014 22:05:51 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 1B7C919F364;
+	Thu, 10 Jul 2014 22:05:51 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Original-Sender: j6t@kdbg.org
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: j6t@kdbg.org does not designate permitted sender hosts) smtp.mail=j6t@kdbg.org
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253204>
 
-Fabian Ruch <bafain@gmail.com> writes:
+It looks like I totally missed the topic sk/mingw-unicode-spawn-args.
+Now it's in master, and it breaks lots of test cases for me:
 
-> There are two kinds of to-do list commands available. One kind
-> replays a commit (`pick`, `reword`, `edit`, `squash` and `fixup` that
-> is) and the other executes a shell command (`exec`). We will call the
-> first kind replay commands.
->
-> The two kinds of tasks are scheduled using different line formats.
-> Replay commands expect a commit hash argument following the command
-> name and exec concatenates all arguments to assemble a command line.
->
-> Adhere to the distinction of formats by not trying to parse the
-> `sha1` field unless we are dealing with a replay command. Move the
-> replay command handling code to a new function `do_replay` which
-> assumes the first argument to be a commit hash and make no more such
-> assumptions in `do_next`.
+t0050-filesystem
+t0110-urlmatch-normalization
+t4014-format-patch
+t4041-diff-submodule-option
+t4120-apply-popt
+t4201-shortlog
+t4205-log-pretty-formats
+t4209-log-pickaxe
+t4210-log-i18n
+(I killed the test run here)
 
-In do_next(), we used read the first line of the insn sheet into
-three variables, assuming the common case of handling one of the
-replay commands, and (somewhat wastefully) re-read the same line
-into two variables when we realize that the command was "exec".
+Am I doing something wrong? Does the topic depend on a particular
+version of MSYS (or DLL)?
 
-After you split do_replay() out of do_next() with this patch, we
-seem to do exactly the same thing.
+-- Hannes
 
-What exactly is the problem this change wants to fix?
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-Puzzled...
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-
->
-> Signed-off-by: Fabian Ruch <bafain@gmail.com>
-> ---
->  git-rebase--interactive.sh | 42 ++++++++++++++++++++++++++++--------------
->  1 file changed, 28 insertions(+), 14 deletions(-)
->
-> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-> index 008f3a0..9de7441 100644
-> --- a/git-rebase--interactive.sh
-> +++ b/git-rebase--interactive.sh
-> @@ -585,13 +585,12 @@ do_pick () {
->  	fi
->  }
->  
-> -do_next () {
-> -	rm -f "$msg" "$author_script" "$amend" || exit
-> -	read -r command sha1 rest < "$todo"
-> +do_replay () {
-> +	command=$1
-> +	sha1=$2
-> +	rest=$3
-> +
->  	case "$command" in
-> -	"$comment_char"*|''|noop)
-> -		mark_action_done
-> -		;;
->  	pick|p)
->  		comment_for_reflog pick
->  
-> @@ -656,6 +655,28 @@ do_next () {
->  		esac
->  		record_in_rewritten $sha1
->  		;;
-> +	*)
-> +		read -r command <"$todo"
-> +		warn "Unknown command: $command"
-> +		fixtodo="Please fix this using 'git rebase --edit-todo'."
-> +		if git rev-parse --verify -q "$sha1" >/dev/null
-> +		then
-> +			die_with_patch $sha1 "$fixtodo"
-> +		else
-> +			die "$fixtodo"
-> +		fi
-> +		;;
-> +	esac
-> +}
-> +
-> +do_next () {
-> +	rm -f "$msg" "$author_script" "$amend" || exit
-> +	read -r command sha1 rest <"$todo"
-> +
-> +	case "$command" in
-> +	"$comment_char"*|''|noop)
-> +		mark_action_done
-> +		;;
->  	x|"exec")
->  		read -r command rest < "$todo"
->  		mark_action_done
-> @@ -695,14 +716,7 @@ do_next () {
->  		fi
->  		;;
->  	*)
-> -		warn "Unknown command: $command $sha1 $rest"
-> -		fixtodo="Please fix this using 'git rebase --edit-todo'."
-> -		if git rev-parse --verify -q "$sha1" >/dev/null
-> -		then
-> -			die_with_patch $sha1 "$fixtodo"
-> -		else
-> -			die "$fixtodo"
-> -		fi
-> +		do_replay $command $sha1 "$rest"
->  		;;
->  	esac
->  	test -s "$todo" && return
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
