@@ -1,112 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] tag: support configuring --sort via .gitconfig
-Date: Thu, 10 Jul 2014 10:59:36 -0700
-Message-ID: <xmqqa98h8587.fsf@gitster.dls.corp.google.com>
-References: <1404945412-10197-1-git-send-email-jacob.e.keller@intel.com>
-	<20140710040731.GD28401@sigill.intra.peff.net>
+From: Luke Diamand <luke@diamand.org>
+Subject: Re: git p4 diff-tree ambiguous argument error
+Date: Thu, 10 Jul 2014 19:07:57 +0100
+Message-ID: <53BED67D.8080006@diamand.org>
+References: <1405013428825-7614774.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 10 19:59:54 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Bill Door <duanemurphy@mac.com>
+X-From: git-owner@vger.kernel.org Thu Jul 10 20:08:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5IdN-0007ob-A1
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 19:59:53 +0200
+	id 1X5IlO-0007mg-Ju
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 20:08:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751628AbaGJR7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2014 13:59:49 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59599 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751294AbaGJR7t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2014 13:59:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3645F268A7;
-	Thu, 10 Jul 2014 13:59:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bFTNDs4+pGnvajMiJp/WO9jjHu8=; b=UXPq9G
-	1+KQCqkHOexwc0xC9fSS6zYjp+6WaZLOnY0ZqpW38Z/FQVrAwi9LPr3J1L549btv
-	8vV9YWb9lacWe+65C6STGqn8oihK2Ecby6q0F81pEVjU14wLGyke0jzZVFrxh615
-	usK7QzjVHOqFf29dosKDOhFMe2l4uTgZulFaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=GhX8nBctoKZMcR/OjxmnUYdG1AdPwuy5
-	RsqDkwdYhS4hkyW5ChvEzieAOwz2rkNg1KENCTe0hPIuora/AePqAt2y6WiOL1Xk
-	lTuEi/DNWKc1yho/gKkdn5weoB51DtIA3AVbKLvl8szO11yHdKerYHvM3ZlrXx3Y
-	fdzWbsZGDBU=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2C395268A6;
-	Thu, 10 Jul 2014 13:59:28 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DC98A268A1;
-	Thu, 10 Jul 2014 13:59:22 -0400 (EDT)
-In-Reply-To: <20140710040731.GD28401@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 10 Jul 2014 00:07:32 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EC669D7A-085B-11E4-8518-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751776AbaGJSIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 14:08:06 -0400
+Received: from mail-wg0-f51.google.com ([74.125.82.51]:62786 "EHLO
+	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751652AbaGJSIE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 14:08:04 -0400
+Received: by mail-wg0-f51.google.com with SMTP id y10so4655233wgg.22
+        for <git@vger.kernel.org>; Thu, 10 Jul 2014 11:08:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=diamand.org; s=google;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=4EoS7tJW6i17lIdCK26njQTPOxWMMxkHWul60C7jeec=;
+        b=Dd1/ebTBz/FVIXmv5lnrKMOvRp0S5z5FkbNVIFUcORuUYCmE9maUhc1GLIQFE27qT7
+         OZAlBf4ctEP3Ci/siBdpfzBF+vJl82s6q5bTmZn91IoMvM0ea+5RdPPMcaZ42bRSiBmJ
+         Z42OfTal26TUvfLV7JMFrGvLAudTH4xiHVdVw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:date:from:user-agent:mime-version:to
+         :cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=4EoS7tJW6i17lIdCK26njQTPOxWMMxkHWul60C7jeec=;
+        b=EKdRGDpnqjCAnKQwIg27pMvLjC2U67iDGTOwRl/N5C6l1nlL/sLaDaoqm1oDjbdg3x
+         svbsFqJWe7wrxA1ewjMt1H3Yk7kJdkSeg+jnDMlxE7NQ0Ob/55f/JWCTQd5JNzCXRsrC
+         xrDC5NLIW3PhXHdllM3eEDv83WWUTeccPBZGiz7K0Y2HA4tv37FcoLFU+1cHjgtQjnI2
+         yxas7S5mwWyxRSwgWuWuje1Q56OndXTs9IFmtDDgCMrZovTI67aGs6C8NTOw7mf7b7MD
+         Tbvu2NSCbYp4+RwQYeBC/36zSQUO+6+Rshsz359M8qFAHV5BFNv2O8USISkVRgT8tJ8c
+         K+yA==
+X-Gm-Message-State: ALoCoQk7g7KtS+0OgYvnocOxKLNuM+fI32XoykIL7f26+5TZi3dUOIBPj8IopRNQO3QTud9c0V0H
+X-Received: by 10.180.109.101 with SMTP id hr5mr21575357wib.25.1405015680287;
+        Thu, 10 Jul 2014 11:08:00 -0700 (PDT)
+Received: from [86.14.230.179] (cpc14-cmbg17-2-0-cust690.5-4.cable.virginm.net. [86.14.230.179])
+        by mx.google.com with ESMTPSA id ey16sm34364931wid.14.2014.07.10.11.07.58
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 10 Jul 2014 11:07:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20131103 Icedove/17.0.10
+In-Reply-To: <1405013428825-7614774.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253197>
 
-Jeff King <peff@peff.net> writes:
+Is this using NFS, or local storage?
 
-> I know this is existing code you are moving, but I noticed it looks ripe
-> for using skip_prefix. Perhaps while we are in the area we should do the
-> following on top of your patch (I'd also be happy for it be squashed
-> in, but that may be too much in one patch).
 
-I am tempted to suggest going the other way around, i.e. queue (an
-equivalent of) this on jk/skip-prefix and merge it to 'next' and
-then 'master' quickly.
 
-I can go either way, but I tend to prefer building new things on top
-of obviously correct clean-up, not the other way around.
-
-> -- >8 --
-> Subject: [PATCH] tag: use skip_prefix instead of magic numbers
+On 10/07/14 18:30, Bill Door wrote:
+> $ git p4 sync --detect-branches --import-labels //main@all
+> ... Lots of useful information elided
+> fatal: ambiguous argument 'git-p4-tmp/8031': unknown revision or path not in
+> the working tree.
+> Use '--' to separate paths from revisions, like this:
+> 'git <command> [<revision>...] -- [<file>...]'
+> Command failed: ['git', 'diff-tree',
+> '6b3ef26a3e2635a5ff0170e15fdadb386672f8b9', 'git-p4-tmp/8031']
 >
-> We can make the parsing of the --sort parameter a bit more
-> readable by having skip_prefix keep our pointer up to date.
+> If I re-run the command, it works the second time. Of course there are
+> 73000+ commits. This is gonna take a while.
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-
-
- builtin/tag.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/tag.c b/builtin/tag.c
-index c6e8a71..1101c19 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -524,18 +524,14 @@ static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
- 	int *sort = opt->value;
- 	int flags = 0;
- 
--	if (*arg == '-') {
-+	if (skip_prefix(arg, "-", &arg))
- 		flags |= REVERSE_SORT;
--		arg++;
--	}
--	if (starts_with(arg, "version:")) {
--		*sort = VERCMP_SORT;
--		arg += 8;
--	} else if (starts_with(arg, "v:")) {
-+
-+	if (skip_prefix(arg, "version:", &arg) || skip_prefix(arg, "v:", &arg))
- 		*sort = VERCMP_SORT;
--		arg += 2;
--	} else
-+	else
- 		*sort = STRCMP_SORT;
-+
- 	if (strcmp(arg, "refname"))
- 		die(_("unsupported sort specification %s"), arg);
- 	*sort |= flags;
+> I've done some debugging. It appears there is a timing problem between
+> git-p4 and git.
+>
+> The failure occurs in P4Sync.searchParent(). Even though a checkpoint is
+> sent to git (for fast-import) just prior to the call to searchParent() in
+> importChanges(), the file does not yet exist. I used pdb, paused the program
+> just before the call to diff-tree and the file was missing. After the
+> program exits due to the error the file exists (i.e. the OS flushed the
+> file). This is why re-running continues to work, there is an "old" file with
+> basically the same information laying around (dangerous).
+>
+> How can I get git (fast-import) to flush the file at the right time?
+>
+> $ git --version
+> git version 1.7.12.4
+> $ python --version
+> Python 2.6.6
+> OS: GNU/Linux 2.6.32-431.el6.x86_64
+>
+>
+>
+>
+> --
+> View this message in context: http://git.661346.n2.nabble.com/git-p4-diff-tree-ambiguous-argument-error-tp7614774.html
+> Sent from the git mailing list archive at Nabble.com.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
