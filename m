@@ -1,132 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/14] Add submodule test harness
-Date: Thu, 10 Jul 2014 13:52:37 -0700
-Message-ID: <xmqqsim96ine.fsf@gitster.dls.corp.google.com>
-References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>
-	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>
-	<53B5C7AC.4040701@web.de>
-	<xmqqsimddrq3.fsf@gitster.dls.corp.google.com>
-	<53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de>
-	<53BCDDE2.1080301@web.de> <53BD87B3.8050901@web.de>
-	<xmqqmwci9vn1.fsf@gitster.dls.corp.google.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: 745224e0 gcc-4.9 emmintrin.h build error
+Date: Thu, 10 Jul 2014 13:53:36 -0700
+Organization: Twitter
+Message-ID: <1405025616.3775.6.camel@stross>
+References: <CAOvwQ4hNVvzeCUczi7Qurcycp8HA8KU=u1ntu3fzBwu4fTEzPQ@mail.gmail.com>
+	 <1405024438.3775.3.camel@stross>
+	 <CAOvwQ4hq5AZ0ZhB-1etUZfLfJ4X=11_03syH2pgY_fi=FSLAPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Jul 10 22:52:54 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 10 22:53:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5LKj-0004N3-SF
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 22:52:50 +0200
+	id 1X5LLd-0005KL-5h
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 22:53:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751877AbaGJUwq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2014 16:52:46 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51645 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751846AbaGJUwp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2014 16:52:45 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F24DE2756D;
-	Thu, 10 Jul 2014 16:52:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dmDvyWwC7xyBQ4par704jUMFSqc=; b=IJpNoi
-	jbHCM5Gw/irj6/p1q15K/zxeSMCuDYJwDbMAmC/365822riKyvnAxIHoBdC+LgIs
-	54/C07SyI61Df9CoIKo/XF0W/az2wLcp5QBFy9FwVVslJ6BjINf8ollza1dXFssq
-	+wDlKLPnyIB3G0NnyJDKMlBf4P4gle9BdoM5A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MRpUJIWmn+nfai4Robb0rN+07GkZE3gJ
-	ABFEkzG30/0N0vcQaCoBP8V1yyCLHY28r3bVQcLoaxVIqiHn8+pPmUZIuPzEE+8c
-	PEaaBSW3YvQqc/MRUe6jnhiLGPUx5SLXYjFHd7oroS7+Jao8TJF4nu5DfyFJ/Vkj
-	rmuneNTDDE8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E41792756C;
-	Thu, 10 Jul 2014 16:52:29 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 60B2D27564;
-	Thu, 10 Jul 2014 16:52:24 -0400 (EDT)
-In-Reply-To: <xmqqmwci9vn1.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Wed, 09 Jul 2014 12:31:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1840A158-0874-11E4-9041-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752556AbaGJUxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 16:53:41 -0400
+Received: from mail-qa0-f54.google.com ([209.85.216.54]:47110 "EHLO
+	mail-qa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751780AbaGJUxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 16:53:40 -0400
+Received: by mail-qa0-f54.google.com with SMTP id s7so128599qap.27
+        for <git@vger.kernel.org>; Thu, 10 Jul 2014 13:53:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=vn/EjAZAYkrkkr6f+btThSV0etHrIsn7uERbgHcAYd4=;
+        b=UkBYFBl4hrEGEeXOYcA8RbDWGKbJ6RqUHaU80pPJvt8Ne6dtM44w0biDR52Kiy2nNT
+         1HJuSMozld3SJeX4yl344GiR++1n22tPckcAyokI6NjRlDkQmAhTwIsRrLwgEORFv9wi
+         UrwYMz9DO8pvSdDXSwS7L7AE1rqLXqjI02/tVAwYG+0tNTxplg14hfqY/aW9pgo7/Y4k
+         +DGDSB6NadnznVysH7mz8sIsgAUptG75HL6W8m2gjMymWi5dskpje43AwdDk70MbLcQi
+         b8sXNfYLzhlzxX+LuNZRvlGM52Pjd+dpsivBVSBxHl9/brpuCn3DNNpQsCDOEUWDkz06
+         2oAg==
+X-Gm-Message-State: ALoCoQmTQ7NfArtDgXSqsQkZz3NSnkSWTx11Lad8M+rd4HaMXyEdwgaKHdss2jfZkWW+BqMD0zjb
+X-Received: by 10.224.151.72 with SMTP id b8mr19821846qaw.95.1405025619653;
+        Thu, 10 Jul 2014 13:53:39 -0700 (PDT)
+Received: from [172.25.140.220] ([8.25.197.27])
+        by mx.google.com with ESMTPSA id d10sm489894qaq.10.2014.07.10.13.53.38
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Thu, 10 Jul 2014 13:53:38 -0700 (PDT)
+In-Reply-To: <CAOvwQ4hq5AZ0ZhB-1etUZfLfJ4X=11_03syH2pgY_fi=FSLAPQ@mail.gmail.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253218>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, 2014-07-10 at 22:44 +0200, Tuncer Ayaz wrote:
+> On Thu, Jul 10, 2014 at 10:33 PM, David Turner wrote:
+> > On Thu, 2014-07-10 at 21:59 +0200, Tuncer Ayaz wrote:
+> > > The changes in 745224e0 don't seem to build here with gcc-4.9 on
+> > > linux x64_64. Any idea what's wrong?
+> > >
+> > >     CC credential-store.o
+> > > In file included from /usr/lib/.../xmmintrin.h:31:0,
+> >
+> > What's in the ...?
+> >
+> > Because if you're using headers from a different version of gcc, that
+> > might explain it.
+> 
+> /usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.0/include/emmintrin.h
 
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
->
->> I agree, but this case is special. The test asserts that nobody
->> added, modified or removed *anything* inside the .git directory.
->> The reason for problem we are seeing here is that I have to
->> remove the core.worktree setting when moving the git directory
->> from .git/modules into the submodule work tree.
->
-> Hmph.  Comparing the files with core.worktree removed sounds like a
-> workaround that knows too much about the implementation detail of
-> what is being tested.  I am just wondering if core.worktree will
-> stay forever be the only thing that is special, or there may come
-> other things (perhaps as a fallout of integrating things like Duy's
-> multiple-worktree stuff).
->
-> But perhaps we cannot do better than this.
+That seems fine to me.
 
-One thing we should be able to do (and must do) better is to
-validate that core.worktree in the relocated config file actually
-points at the right place.  Unsetting before comparing may let us
-compare the relocated one in .git/modules/$1/config with the one
-that is embedded in the working tree (hence no .git/config), but the
-way your "how about this?" patch does, we wouldn't catch a possible
-breakage to the relocation code to point core.worktree to a bogus
-location, I'm afraid.
+It looks like the error messages are coming from inside the system's
+header files (but this is sometimes misleading).  If you just try to
+compile
 
-Perhaps squashing this to 7e8e5af9 instead?
+#include <emmintrin.h>
+int main() { }
 
- t/lib-submodule-update.sh | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
-
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index e441b98..fc1da84 100755
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -110,18 +110,23 @@ replace_gitfile_with_git_dir () {
- }
- 
- # Test that the .git directory in the submodule is unchanged (except for the
--# core.worktree setting, which we temporarily restore). Call this function
--# before test_submodule_content as the latter might write the index file
--# leading to false positive index differences.
-+# core.worktree setting, which appears only in $GIT_DIR/modules/$1/config).
-+# Call this function before test_submodule_content as the latter might
-+# write the index file leading to false positive index differences.
- test_git_directory_is_unchanged () {
- 	(
--		cd "$1" &&
--		git config core.worktree "../../../$1"
-+		cd ".git/modules/$1" &&
-+		# does core.worktree point at the right place?
-+		test "$(git config core.worktree)" = "../../../$1" &&
-+		# remove it temporarily before comparing, as
-+		# "$1/.git/config" lacks it...
-+		git config --unset core.worktree
- 	) &&
- 	diff -r ".git/modules/$1" "$1/.git" &&
- 	(
--		cd "$1" &&
--		GIT_WORK_TREE=. git config --unset core.worktree
-+		# ... and then restore.
-+		cd ".git/modules/$1" &&
-+		git config core.worktree "../../../$1"
- 	)
- }
- 
+with whatever options you use for git, does that work?  If not, I would
+say that you have a compiler setup problem.
