@@ -1,103 +1,126 @@
-From: Fabian Ruch <bafain@gmail.com>
-Subject: Re: [PATCH RFC v2 01/19] rebase -i: Failed reword prints redundant
- error message
-Date: Thu, 10 Jul 2014 18:35:08 +0200
-Message-ID: <53BEC0BC.6030600@gmail.com>
-References: <53A258D2.7080806@gmail.com>	<cover.1404323078.git.bafain@gmail.com>	<10d7fae199e4d8adec537aa377177de652badc07.1404323078.git.bafain@gmail.com>	<xmqqtx6r8uem.fsf@gitster.dls.corp.google.com> <CADgNjakNQKbA8fYJqz7n-C9aPoZdfxX+N9Xuq1irJ_ajB8Yt_w@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 1/2] add `config_set` API for caching config-like files
+Date: Thu, 10 Jul 2014 09:46:14 -0700
+Message-ID: <xmqqvbr588mh.fsf@gitster.dls.corp.google.com>
+References: <1404903454-10154-1-git-send-email-tanayabh@gmail.com>
+	<1404903454-10154-2-git-send-email-tanayabh@gmail.com>
+	<vpq61j6d92z.fsf@anie.imag.fr> <53BD3805.40504@gmail.com>
+	<vpqion68viq.fsf@anie.imag.fr>
+	<xmqqmwci7e9p.fsf@gitster.dls.corp.google.com>
+	<xmqq38ea77gt.fsf@gitster.dls.corp.google.com>
+	<vpqa98hwnxp.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
-To: Andrew Wong <andrew.kw.w@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 18:35:27 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 10 18:46:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5HJb-0002T6-Vy
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 18:35:24 +0200
+	id 1X5HUM-0004bH-Hm
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 18:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751077AbaGJQfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2014 12:35:17 -0400
-Received: from mail-wi0-f180.google.com ([209.85.212.180]:58758 "EHLO
-	mail-wi0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750781AbaGJQfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2014 12:35:16 -0400
-Received: by mail-wi0-f180.google.com with SMTP id hi2so4873676wib.13
-        for <git@vger.kernel.org>; Thu, 10 Jul 2014 09:35:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=u33Sf3bJbR4nG60Gyq1/y0TdT2rDJQ1RicukYN/MSP4=;
-        b=BpikW7qP1AB+fmMHeaQ3f6ZnBbR4aX3eMiM7vO3lTeFWlGcHWqe0oUqZpUM1QfmFf4
-         Myy6eak97C+FCtOg0kiRlvu06izErQNkYqOe6ma0A0LtfSnEVliV+FKrcvd5zpL3WSYq
-         GlWO34MRoTFNWA/14pqM/WUNuR+Y38oms9xNIKlOq4szu29jE7TTDcoWEeh4qj1Vqyy6
-         fQAfFhcxWl9+/bMAeGUpVBDsarEuvzLPHctPUIz+RUX1xUqn83rqcqphTR9mOxeTe0Qx
-         HIberhnYk1zLO2/uiLgOAz116f7ZSGHZTil+jvcFt7ll9UaULFkApiaYxHbsmbtz81Np
-         aWKw==
-X-Received: by 10.194.243.70 with SMTP id ww6mr56953446wjc.76.1405010111361;
-        Thu, 10 Jul 2014 09:35:11 -0700 (PDT)
-Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
-        by mx.google.com with ESMTPSA id x13sm11390725wib.23.2014.07.10.09.35.09
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 10 Jul 2014 09:35:10 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CADgNjakNQKbA8fYJqz7n-C9aPoZdfxX+N9Xuq1irJ_ajB8Yt_w@mail.gmail.com>
+	id S1751613AbaGJQqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 12:46:24 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64306 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751149AbaGJQqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 12:46:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 14BC426317;
+	Thu, 10 Jul 2014 12:46:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=P4YeC9Zy1+gC2MGpv2lpg37q6oI=; b=PD5leQ
+	xnNocn/76201aOBCa1MCRkZMj0fyx1gfLFGQczPZE7ZwNzHTLtuUun1/uwVc0erb
+	DclAKJJbjg9cHoD2j1xCrQASTrNBtDwG8sP8I9snESlbMZAdGzixv+twczeRwuLN
+	oXEz2AwlvIIxO6H8CMkhV2s4Kyv1vEdkkddOI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QbhBECbibGmWEWOkWWiMUjvO7S/HsPN+
+	b2nrmf4XEcyMvFtKADDboC50hZKa6vqNCdrB6929k7vW3iDgKin3X2yQMRawZZGi
+	/CTanN127DwKrjD1ky5eSlkjVOWbvr3ELyrYLVnlpauug7VcNFwmd7DHVFhM4bMu
+	KGRyr3MUoF4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0643F26316;
+	Thu, 10 Jul 2014 12:46:07 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 461BD2630A;
+	Thu, 10 Jul 2014 12:46:01 -0400 (EDT)
+In-Reply-To: <vpqa98hwnxp.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	10 Jul 2014 11:41:38 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: ACEE3E14-0851-11E4-A600-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253189>
 
-Hi Andrew,
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-thanks for your review and sorry that I forgot to cc the bug fix to you.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> After thinking about it a bit more, I think <file, line> support
+>> needs to be done not as a mere client of the generic, uncached
+>> git_config() API that we have had for forever, like the current
+>> iteration, but needs to know a bit more about the state the caller
+>> of the callback (namely, git_parse_source()), and we obviously do
+>> not want to expose that machinery to anybody other than the
+>> implementation of the config subsystem (to which the new facility
+>> this GSoC project adds belongs to), so in that sense you have to
+>> have your code in the same config.c file anyway.
+>
+> I do not buy the argument. Why would callers of the callback-style API
+> not be allowed to give <file, line> errors?
+>
+> To me, it is a weakness of the API that <file, line> information is not
+> available to callback functions, regardless of the config-cache.
 
-Andrew Wong writes:
-> On Tue, Jul 8, 2014 at 4:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> Fabian Ruch <bafain@gmail.com> writes:
->>> It is true that a failed hook script might not output any diagnosis...
->>
->> I think the message originally came from 0becb3e4 (rebase -i:
->> interrupt rebase when "commit --amend" failed during "reword",
->> 2011-11-30); it seems that the primary point of the change was to
->> make sure it exits and the warning message may not have been well
->> thought out, but before discarding the result of somebody else's
->> work, it may not be a bad idea to ask just in case you may have
->> overlooked something (Andrew Wong Cc'ed).
->>
->>> but then the generic message is not of much help either. Since this
->>> lack of information affects the built-in git commands for commit,
->>> merge and cherry-pick first, the solution would be to keep track of
->>> the failed hooks in their output so that the user knows which of her
->>> hooks require improvement.
-> 
-> Since "git commit" already prints out error messages for failing due
-> to empty commit message, the third message is really about giving
-> hints in the case where pre-commit fails. We could probably assume
-> that pre-commit would also print out error messages. So I'd be fine
-> with removing the third message. But I wonder if we need to explain
-> that the user needs to run "git rebase --continue" to resume the
-> rebase?
+I agree that it is good to allow scan-all-config-items-with-callback
+callers to learn <file, line>, but that is irrelevant.  Perhaps you
+misread what I envision as the endgame of this thing to be and that
+is where our differences come from.  One thing I think would be good
+to see in the endgame will be to give the benefit of the caching
+layer to the callback callers without having them change a single
+line of their code.
 
-That is still taken care of by exit_with_patch here. When called in the
-error case, it prints
+One possible sequence of changes to make it happen would go like
+this, roughly in this order:
 
-    You can amend the commit now, with
+ - rename the current git_config() to git_config_raw(), and
+   make it static to the config.c.
 
-    	git commit --amend
+ - write a thin wrapper git_config() around git_config_raw() in
+   config.c, until caching layer learns the iterator.
 
-    Once you are satisfied with your changes, run
+ - write caching layer to read from git_config_raw().
 
-    	git rebase --continue
+ - teach git_config_raw() feed its callback functions to learn the
+   <file, line> information.  git_configset_get_<type> can then
+   start using this in their error reporting.
 
-to standard error. I might have overlooked this in one of the later
-patches though.
+ - implement iterator in the caching layer.
 
-   Fabian
+ - rewrite git_config() that was a thin wrapper around
+   git_config_raw() by using the iterator over the cached values.
+
+ - (optional) think about ways to give <file, line> information to
+   the callback style callers.  Perhaps we need git_config_2().
+   Perhaps we can rewrite all callers of git_config().  We do not
+   have to decide it now.
+
+Between git_parse_source() and git_config_raw() we would need to
+pass the line-number information, but there is no reason for us to
+make public (all of these will be implementation details of the
+config system, including the config caching).
+
+My answer to "why shouldn't the callbacks have <file, line>
+information?" is "there is no reason why they shouldn't.  It is a
+good addition in the long run".  But the optionality of the last
+step in the above list makes it an irrelevant question.
