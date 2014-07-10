@@ -1,106 +1,102 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Topic sk/mingw-unicode-spawn-args breaks tests
-Date: Thu, 10 Jul 2014 22:05:50 +0200
-Message-ID: <53BEF21E.9090007@kdbg.org>
+From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+Subject: Re: 745224e0 gcc-4.9 emmintrin.h build error
+Date: Thu, 10 Jul 2014 22:06:58 +0200
+Message-ID: <CAOvwQ4jYkjscTXW5x+Ee=U_Ju0Pjpkkd0wQXiKvoiP3CGhUGXw@mail.gmail.com>
+References: <CAOvwQ4hNVvzeCUczi7Qurcycp8HA8KU=u1ntu3fzBwu4fTEzPQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Stepan Kasal <kasal@ucw.cz>, Git Mailing List <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCJYV6HBKQIKHZH3TUCRUBD4TZPGU@googlegroups.com Thu Jul 10 22:06:00 2014
-Return-path: <msysgit+bncBCJYV6HBKQIKHZH3TUCRUBD4TZPGU@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f191.google.com ([209.85.212.191])
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 10 22:07:47 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIKHZH3TUCRUBD4TZPGU@googlegroups.com>)
-	id 1X5KbO-00075z-RG
-	for gcvm-msysgit@m.gmane.org; Thu, 10 Jul 2014 22:05:58 +0200
-Received: by mail-wi0-f191.google.com with SMTP id q5sf27923wiv.28
-        for <gcvm-msysgit@m.gmane.org>; Thu, 10 Jul 2014 13:05:55 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X5Kd7-0000Oi-2z
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 22:07:45 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752178AbaGJUHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 16:07:40 -0400
+Received: from mail-ob0-f169.google.com ([209.85.214.169]:60039 "EHLO
+	mail-ob0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225AbaGJUHi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 16:07:38 -0400
+Received: by mail-ob0-f169.google.com with SMTP id nu7so111886obb.14
+        for <git@vger.kernel.org>; Thu, 10 Jul 2014 13:07:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=I3TupdgTxpeNxnOD5ftlnL25D3Z0SbIusAVw8voeSAY=;
-        b=hY5mlf+7oW8P7QfDLMdUUVqEjJtudW85YPP4zerT8qAUZoGRWDV+VaSfWpZRTb9Yj/
-         bp0F5zmPbWrR22z3DCfhEpUPazGuLeF7tbrR5IY68kZWaKjhOsP41BCd+Ft9GxLQu1Nk
-         dOtwGDuy+i1LQSg9bd1KbB/JvDeGHjWIOm0Hw8xUGBIz6PDbEIdKyPdsF4HjRpBpSmui
-         JpW8OtvC6LQc0qATwkfc78HasT3ea0lFaFA0odQJP8vakpr56Ju5239LQ52yDOI0KqQh
-         a9XLhKozlyIa+U5hL6ByJjzKhiLXpF66SO21b4nHHCWoB5TMWWDN6qn9ob3KHZ8Y058T
-         yJSg==
-X-Received: by 10.152.116.17 with SMTP id js17mr5342lab.41.1405022755610;
-        Thu, 10 Jul 2014 13:05:55 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.203.200 with SMTP id ks8ls45501lac.105.gmail; Thu, 10 Jul
- 2014 13:05:54 -0700 (PDT)
-X-Received: by 10.112.42.229 with SMTP id r5mr42605lbl.23.1405022754621;
-        Thu, 10 Jul 2014 13:05:54 -0700 (PDT)
-Received: from bsmtp.bon.at (bsmtp.bon.at. [213.33.87.14])
-        by gmr-mx.google.com with ESMTPS id gg16si644415wic.2.2014.07.10.13.05.53
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Thu, 10 Jul 2014 13:05:53 -0700 (PDT)
-Received-SPF: none (google.com: j6t@kdbg.org does not designate permitted sender hosts) client-ip=213.33.87.14;
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id C6D1B130067;
-	Thu, 10 Jul 2014 22:05:51 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 1B7C919F364;
-	Thu, 10 Jul 2014 22:05:51 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: j6t@kdbg.org does not designate permitted sender hosts) smtp.mail=j6t@kdbg.org
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253204>
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        bh=FGOCo4OTEEUyVls2nnco2LkvDw8BeqI0cQEZ52vmeeY=;
+        b=dHoR77CSAYMkl5f/Tf3q4taOVM5u7Gnblu/PMQxX9fXNU9Vdgas8S2c385lQWhb5dn
+         9XsBGy5D07FdyqBH2OwgspPnXxaxjrzqXDeuZRwV+lhxR0mNeLDBhWae3ea0D376Lwuu
+         swZAH+X/CqbU6U45P2OklQdpdL9VwDtgXnZ0jGrcfa5RnlltLUnn8xY0ujEW84IfcDRX
+         e6hE4OdFMdXUN1frhi9JTGPXJjIBb7aC81wl9DKlmijFuND+GNq+/EhJ/0maeTnJONGq
+         XHhgA6zk/wlJSYlvkzfjA/FEYP2m75QnWar0pX+HV8uYxm07S2jo9dltqACGdKKIAmdB
+         f2Kg==
+X-Received: by 10.182.200.132 with SMTP id js4mr55779982obc.3.1405022858212;
+ Thu, 10 Jul 2014 13:07:38 -0700 (PDT)
+Received: by 10.76.127.116 with HTTP; Thu, 10 Jul 2014 13:06:58 -0700 (PDT)
+In-Reply-To: <CAOvwQ4hNVvzeCUczi7Qurcycp8HA8KU=u1ntu3fzBwu4fTEzPQ@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253205>
 
-It looks like I totally missed the topic sk/mingw-unicode-spawn-args.
-Now it's in master, and it breaks lots of test cases for me:
+On Thu, Jul 10, 2014 at 9:59 PM, Tuncer Ayaz wrote:
+> The changes in 745224e0 don't seem to build here with gcc-4.9 on
+> linux x64_64. Any idea what's wrong?
 
-t0050-filesystem
-t0110-urlmatch-normalization
-t4014-format-patch
-t4041-diff-submodule-option
-t4120-apply-popt
-t4201-shortlog
-t4205-log-pretty-formats
-t4209-log-pickaxe
-t4210-log-i18n
-(I killed the test run here)
+s/x64_64/x86_64/
 
-Am I doing something wrong? Does the topic depend on a particular
-version of MSYS (or DLL)?
+Should have written amd64 to avoid the typo :).
 
--- Hannes
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+>     CC credential-store.o
+> In file included from /usr/lib/.../xmmintrin.h:31:0,
+>                  from /usr/lib/.../emmintrin.h:31,
+>                  from git-compat-util.h:708,
+>                  from cache.h:4,
+>                  from credential-store.c:1:
+> /usr/lib/.../mmintrin.h: In function '_mm_cvtsi32_si64':
+> /usr/lib/.../mmintrin.h:64:3: error: can't convert between vector
+> values of different size
+>    return (__m64) __builtin_ia32_vec_init_v2si (__i, 0);
+>    ^
+> /usr/lib/.../mmintrin.h: In function '_mm_cvtsi64_si32':
+> /usr/lib/.../mmintrin.h:107:10: error: incompatible type for argument
+> 1 of '__builtin_ia32_vec_ext_v2si'
+>    return __builtin_ia32_vec_ext_v2si ((__v2si)__i, 0);
+>           ^
+>
+> [...]
+>
+> In file included from /usr/lib/.../emmintrin.h:31:0,
+>                  from git-compat-util.h:708,
+>                  from cache.h:4,
+>                  from credential-store.c:1:
+> /usr/lib/.../xmmintrin.h: In function '_mm_add_ss':
+> /usr/lib/.../xmmintrin.h:127:19: error: incompatible type for argument
+> 1 of '__builtin_ia32_addss'
+>    return (__m128) __builtin_ia32_addss ((__v4sf)__A, (__v4sf)__B);
+>                    ^
+> /usr/lib/.../xmmintrin.h:127:3: note: expected '__vector(4) float' but
+> argument is of type '__m128'
+>    return (__m128) __builtin_ia32_addss ((__v4sf)__A, (__v4sf)__B);
+>    ^
+> /usr/lib/.../xmmintrin.h:127:19: error: incompatible type for argument
+> 2 of '__builtin_ia32_addss'
+>    return (__m128) __builtin_ia32_addss ((__v4sf)__A, (__v4sf)__B);
+>
+>                    ^
+>
+> [...]
+>
+> /usr/lib/.../emmintrin.h:1455:3: error: incompatible type for argument
+> 2 of '__builtin_ia32_movntpd'
+>    __builtin_ia32_movntpd (__A, (__v2df)__B);
+>    ^
+> /usr/lib/.../emmintrin.h:1455:3: note: expected '__vector(2) double'
+> but argument is of type '__m128d'
+> Makefile:1983: recipe for target 'credential-store.o' failed
+> make: *** [credential-store.o] Error 1
