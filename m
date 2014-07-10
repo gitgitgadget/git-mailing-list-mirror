@@ -1,87 +1,96 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH] makefile: add ability to run specific test files
-Date: Thu, 10 Jul 2014 22:31:27 +0000
-Message-ID: <1405031487.4925.43.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1404945412-10197-2-git-send-email-jacob.e.keller@intel.com>
-	 <xmqq61j69m0m.fsf@gitster.dls.corp.google.com>
-	 <1404949763.23510.42.camel@jekeller-desk1.amr.corp.intel.com>
-	 <CAPc5daWNB0m23tPdYxWmQEpu8PshFWwwZ3n_bSxF6evwM7-61g@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] tag: support configuring --sort via .gitconfig
+Date: Thu, 10 Jul 2014 15:46:04 -0700
+Message-ID: <xmqq38e87ryr.fsf@gitster.dls.corp.google.com>
+References: <1404945412-10197-1-git-send-email-jacob.e.keller@intel.com>
+	<20140710040731.GD28401@sigill.intra.peff.net>
+	<xmqqa98h8587.fsf@gitster.dls.corp.google.com>
+	<20140710193404.GA15615@sigill.intra.peff.net>
+	<1405029028.4925.32.camel@jekeller-desk1.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "gitster@pobox.com" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 00:31:34 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "peff\@peff.net" <peff@peff.net>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Keller\, Jacob E" <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 00:46:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5MsH-0003ph-7a
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 00:31:33 +0200
+	id 1X5N6W-0002Au-No
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 00:46:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751487AbaGJWb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2014 18:31:29 -0400
-Received: from mga09.intel.com ([134.134.136.24]:20570 "EHLO mga09.intel.com"
+	id S1752123AbaGJWqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 18:46:12 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62426 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751361AbaGJWb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2014 18:31:29 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga102.jf.intel.com with ESMTP; 10 Jul 2014 15:25:55 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,640,1400050800"; 
-   d="scan'208";a="571388986"
-Received: from orsmsx109.amr.corp.intel.com ([10.22.240.7])
-  by orsmga002.jf.intel.com with ESMTP; 10 Jul 2014 15:31:27 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
- ORSMSX109.amr.corp.intel.com ([169.254.2.243]) with mapi id 14.03.0123.003;
- Thu, 10 Jul 2014 15:31:27 -0700
-Thread-Topic: [PATCH] makefile: add ability to run specific test files
-Thread-Index: AQHPm8ZLdNa2z5Fi2Um4FWbUI/IL6JuYW1xVgACDQYCAAEoVAIABMnqA
-In-Reply-To: <CAPc5daWNB0m23tPdYxWmQEpu8PshFWwwZ3n_bSxF6evwM7-61g@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <5F03583D437E17469D06385968F9BEAC@intel.com>
+	id S1751989AbaGJWqM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 18:46:12 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 46ED1277D3;
+	Thu, 10 Jul 2014 18:45:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aCpPJ8APvYpcsWN94wVR/3G+9Mk=; b=mImD9v
+	A5goEV4cHTKzUfEGZepTfhmOyh0zpZsw1Z25f40JSDssDxbQZbsMysjH6yPHDr8A
+	X4WvJ2ahSgjaiY35GYOgWaZIiUYVZ92z5GzlhQGPTyi25nlCvcPjEtkRqh8Xpo10
+	CGD410hRqRyVZyyx7fxDbAlcI96FxkPNfQ5B0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=G9NEC9kXaiaS8NKHearVzqJ/gzwzBsBU
+	gS0HBqVXbKPIYT/J+ePLj6m7Hm5biHb/0pDIlh2djj6yxteJy9yI2cWvwrOd5ZKg
+	2gL+rkbx0wJQb1X6GMkXPfTXH5tj82Ygmj9aF9g3Ei+K9nSKuqJuBPQJpWvKSho5
+	N2o0ZzuK93Q=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3D401277D2;
+	Thu, 10 Jul 2014 18:45:56 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id ED6E2277CC;
+	Thu, 10 Jul 2014 18:45:50 -0400 (EDT)
+In-Reply-To: <1405029028.4925.32.camel@jekeller-desk1.amr.corp.intel.com>
+	(Jacob E. Keller's message of "Thu, 10 Jul 2014 21:50:29 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: F149E752-0883-11E4-BCC0-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253226>
 
-T24gVGh1LCAyMDE0LTA3LTEwIGF0IDA0OjE0ICswMDAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
-Cj4gT24gV2VkLCBKdWwgOSwgMjAxNCBhdCA0OjQ5IFBNLCBLZWxsZXIsIEphY29iIEUNCj4gPGph
-Y29iLmUua2VsbGVyQGludGVsLmNvbT4gd3JvdGU6DQo+ID4gT24gV2VkLCAyMDE0LTA3LTA5IGF0
-IDE1OjU5IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToNCj4gPj4NCj4gPj4gV2hhdCBraW5k
-IG9mIHRoaW5ncyBhcmUgbWlzc2luZywgZXhhY3RseT8gIFBlcmhhcHMgdGhhdCBpcyBzb21ldGhp
-bmcNCj4gPj4geW91IG5lZWQgdG8gZml4LCBpbnN0ZWFkIG9mIG11Y2tpbmcgd2l0aCB0aGUgdG9w
-LWxldmVsIE1ha2VmaWxlLg0KPiA+DQo+ID4gSXQgdXNlcyB0aGUgZ2l0IGZyb20gbXkgZW52aXJv
-bm1lbnQgaW5zdGVhZCBvZiB0aGUgZ2l0IEkgaGF2ZSBidWlsdCwNCj4gPiB3aGljaCBpcyBiYWQg
-c2luY2UgSSBkb24ndCByZWFsbHkgd2FudCB0byBydW4gbWFrZSBpbnN0YWxsLg0KPiANCj4gQXJl
-IHlvdSBzdXJlIGFib3V0IHRoYXQ/ICBUcnkgYWRkaW5nIHNvbWV0aGluZyBsaWtlDQo+IA0KPiAg
-IGRpZSgiSSBhbSBicm9rZW4iKTsNCj4gDQo+IGF0IHRoZSB2ZXJ5IGJlZ2lubmluZyBvZiBtYWlu
-KCkgaW4gZ2l0LmMsIHJlYnVpbGQgeW91ciBnaXQgKGkuZS4NCj4gIm1ha2UiLCBub3QgIm1ha2Ug
-aW5zdGFsbCIpDQo+IGFuZCB0aGVuDQo+IA0KPiAgICQgY2QgdA0KPiAgICQgc2ggLi90MTIzNC10
-ZXN0LnNoIC12DQo+IA0KPiBmb3IgYW55IG9mIHRoZSB0ZXN0IHNjcmlwdHMuIFlvdSBzaG91bGQg
-c2VlIGFueSB0ZXN0IHBpZWNlIHRoYXQgcnVucyAiZ2l0IiBzZWVzDQo+ICJnaXQiIGR5aW5nIHdp
-dGggdGhhdCBtZXNzYWdlLg0KPiANCj4gT3RoZXJ3aXNlLCB0aGVyZSBpcyBzb21ldGhpbmcgd3Jv
-bmcgd2l0aCBnaXQgeW91IGFyZSBidWlsZGluZy4gVW5sZXNzIHlvdSBoYXZlDQo+IGEgcGF0Y2gg
-b3IgdHdvIHRvIHQvdGVzdC1saWIuc2ggb3Igc29tZXRoaW5nIHRoYXQgYnJlYWtzIHRoZSB0ZXN0
-IGZyYW1ld29yaywgeW91DQo+IHNob3VsZCBiZSBhYmxlIHRvIHRlc3Qgd2hhdCB5b3UganVzdCBo
-YXZlIGJ1aWx0IHdpdGhvdXQgZ2V0dGluZyBhZmZlY3RlZCBieSB3aGF0DQo+IGlzIGluc3RhbGxl
-ZCBpbiB5b3VyICRQQVRILiBBZnRlciBhbGwsIHRoYXQgaXMgaG93IHdlIGJvb3RzdHJhcCBnaXQN
-Cj4gZnJvbSBhIHRhcmJhbGwNCj4gd2l0aG91dCBhbnkgaW5zdGFsbGVkIHZlcnNpb24sIGFuZCBm
-cmllbmRzIGRvIG5vdCBmb3JjZSBmcmllbmRzIGluc3RhbGwgd2l0aG91dA0KPiB0ZXN0aW5nIGZp
-cnN0IDstKQ0KDQpUaGlzIGlzIGV2ZW4gbW9yZSBpbnRlcmVzdGluZy4gSSB0cmllZCB5b3VyIGRp
-ZSBjaGVjaywgYW5kIGl0IGRlZmluaXRlbHkNCnJ1bnMgdGhlIGNvcnJlY3QgdmVyc2lvbiBvZiBn
-aXQuDQoNCkhvd2V2ZXIsIGlmIEkgcnVuIHRoZSB0ZXN0IGRpcmVjdGx5Og0KDQpjZCB0IDsgc2gg
-dDMyMDAtYnJhbmNoLnNoIC12DQoNCml0IHBhc3Nlcy4NCg0KaWYgSSBydW46DQoNCm1ha2UgdGVz
-dA0KDQp0aGF0IHBhcnRpY3VsYXIgdGVzdCBmYWlscy4gSWYgSSBoYXZlIHRoaXMgcGF0Y2ggYXBw
-bGllZCwgYW5kIEkgcnVuDQoNCm1ha2UgdC90MzIwMC1icmFuY2guc2gNCg0KaXQgYWxzbyBmYWls
-cy4NCg0KSSBoYXZlIGRvbmUgdGhpcyBkaXJlY3RseSBvbiBjdXJyZW50IG1hc3RlciBicmFuY2gu
-IFNvIHNvbWV0aGluZyBpcw0KZGlmZmVyaW5nIGJldHdlZW4gdGhlIHR3byB0ZXN0IHJ1bnMuDQoN
-CkFsc28sIGlmIEkgcnVuOg0KDQptYWtlIC1DIHQgdDMyMDAtYnJhbmNoLnNoDQoNCnRoYXQgcGFz
-c2VzLCBzbyBpdCByZWFsbHkgKmlzKiBzb21ldGhpbmcgc2V0dXAgYnkgdGhlIG1haW4gbWFrZWZp
-bGUuDQoNCkFueSBtb3JlIHN1Z2dlc3Rpb25zPw0KDQpUaGFua3MsDQpKYWtlDQo=
+"Keller, Jacob E" <jacob.e.keller@intel.com> writes:
+
+> On Thu, 2014-07-10 at 15:34 -0400, Jeff King wrote:
+>> On Thu, Jul 10, 2014 at 10:59:36AM -0700, Junio C Hamano wrote:
+>> 
+>> > Jeff King <peff@peff.net> writes:
+>> > 
+>> > > I know this is existing code you are moving, but I noticed it looks ripe
+>> > > for using skip_prefix. Perhaps while we are in the area we should do the
+>> > > following on top of your patch (I'd also be happy for it be squashed
+>> > > in, but that may be too much in one patch).
+>> > 
+>> > I am tempted to suggest going the other way around, i.e. queue (an
+>> > equivalent of) this on jk/skip-prefix and merge it to 'next' and
+>> > then 'master' quickly.
+>> > 
+>> > I can go either way, but I tend to prefer building new things on top
+>> > of obviously correct clean-up, not the other way around.
+>> 
+>> Me too. I just didn't want to make more work for Jacob (in having to
+>> rebase on top of mine) or for you (in having to do a non-obvious merge a
+>> few days from now).
+>> 
+>> -Peff
+>
+> I'm perfectly fine rebasing. :)
+
+Alright, thanks.
+
+I am still not ready to push out today's integration result, but
+when it happens, Peff's "tag: use skip_prefix" should appear at
+ce85604, as a direct follow-up to the tip of already merged
+jk/skip-prefix topic which was 67a31f61 (http-push: refactor parsing
+of remote object names, 2014-06-19).
