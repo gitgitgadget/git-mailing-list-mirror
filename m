@@ -1,120 +1,117 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v6 02/10] replace: add --graft option
-Date: Thu, 10 Jul 2014 11:30:40 +0200
-Message-ID: <CAP8UFD2X7j2TGEQfX3h8CfiZypJ5tVPqaZ2bNE0k1-jbeJj=Zw@mail.gmail.com>
-References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
-	<20140707063540.3708.51047.chriscool@tuxfamily.org>
-	<xmqqsima7f3r.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v7 1/2] add `config_set` API for caching config-like files
+Date: Thu, 10 Jul 2014 11:41:38 +0200
+Message-ID: <vpqa98hwnxp.fsf@anie.imag.fr>
+References: <1404903454-10154-1-git-send-email-tanayabh@gmail.com>
+	<1404903454-10154-2-git-send-email-tanayabh@gmail.com>
+	<vpq61j6d92z.fsf@anie.imag.fr> <53BD3805.40504@gmail.com>
+	<vpqion68viq.fsf@anie.imag.fr>
+	<xmqqmwci7e9p.fsf@gitster.dls.corp.google.com>
+	<xmqq38ea77gt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 11:30:51 2014
+X-From: git-owner@vger.kernel.org Thu Jul 10 11:41:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5Agh-0004Nn-3W
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 11:30:47 +0200
+	id 1X5ArS-0004of-FI
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 11:41:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752197AbaGJJam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2014 05:30:42 -0400
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:35328 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750793AbaGJJal (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2014 05:30:41 -0400
-Received: by mail-vc0-f169.google.com with SMTP id la4so9987740vcb.14
-        for <git@vger.kernel.org>; Thu, 10 Jul 2014 02:30:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=CUcmuqqb9Dl149xk5Mg0XQsqTLEb72ZzaqisQ6E7uxk=;
-        b=QuCMWZ49qlbcMt4aOLy5gCKl2IssIMc2GTFv9jgQNH329/TQEovGX9DAV+cUaUpLQd
-         tAs2FBctAnhu+Bg/SCFxiXc3GdZnz0R+E1MKWk3H7AZEWncfME87fxjbYxKA/0HgRVfh
-         Ax1e1fHkYUI/lD8kN0QVV18nG1dvbgmy21qD4ox7eIabDpI56enqupfQedWlNH0T60fJ
-         rBc4/OBwAnNmRYHLwfb8H3M4lgFnoxYbun7z7DBA4mdUand+4ovm24cQTFhIi6BXz1fx
-         r7PxO+/Fe+A3+byt7QdVgU/sI8cqH24JPBa6UvKAQ3Cwwa34o6zL2cZeSrfnKn/v6IfV
-         TPuA==
-X-Received: by 10.58.182.105 with SMTP id ed9mr44849590vec.16.1404984640333;
- Thu, 10 Jul 2014 02:30:40 -0700 (PDT)
-Received: by 10.58.76.137 with HTTP; Thu, 10 Jul 2014 02:30:40 -0700 (PDT)
-In-Reply-To: <xmqqsima7f3r.fsf@gitster.dls.corp.google.com>
+	id S1752905AbaGJJlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 05:41:49 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:40138 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752889AbaGJJlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 05:41:46 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6A9fbfF031304
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 10 Jul 2014 11:41:37 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6A9fct2004144;
+	Thu, 10 Jul 2014 11:41:38 +0200
+In-Reply-To: <xmqq38ea77gt.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 09 Jul 2014 10:44:18 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 10 Jul 2014 11:41:37 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6A9fbfF031304
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1405590100.11146@cYcREu/FojKTynavGVfyLQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253181>
 
-On Wed, Jul 9, 2014 at 4:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <chriscool@tuxfamily.org> writes:
->
->> +static void replace_parents(struct strbuf *buf, int argc, const char **argv)
->> +{
->> +     struct strbuf new_parents = STRBUF_INIT;
->> +     const char *parent_start, *parent_end;
->> +     int i;
->> +
->> +     /* find existing parents */
->> +     parent_start = buf->buf;
->> +     parent_start += 46; /* "tree " + "hex sha1" + "\n" */
->> +     parent_end = parent_start;
->> +
->> +     while (starts_with(parent_end, "parent "))
->> +             parent_end += 48; /* "parent " + "hex sha1" + "\n" */
->> +
->> +     /* prepare new parents */
->> +     for (i = 1; i < argc; i++) {
->
-> It looks somewhat strange that both replace_parents() and
-> create_graft() take familiar-looking <argc, argv> pair, but one
-> ignores argv[0] and uses the remainder and the other uses argv[0].
-> Shouldn't this function consume argv[] starting from [0] for
-> consistency?  You'd obviously need to update the caller to adjust
-> the arguments it gives to this function.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ok, will do.
+> After thinking about it a bit more, I think <file, line> support
+> needs to be done not as a mere client of the generic, uncached
+> git_config() API that we have had for forever, like the current
+> iteration, but needs to know a bit more about the state the caller
+> of the callback (namely, git_parse_source()), and we obviously do
+> not want to expose that machinery to anybody other than the
+> implementation of the config subsystem (to which the new facility
+> this GSoC project adds belongs to), so in that sense you have to
+> have your code in the same config.c file anyway.
 
->> +static int create_graft(int argc, const char **argv, int force)
->> +{
->> +     unsigned char old[20], new[20];
->> +     const char *old_ref = argv[0];
->> +...
->> +
->> +     replace_parents(&buf, argc, argv);
->> +
->> +     if (write_sha1_file(buf.buf, buf.len, commit_type, new))
->> +             die(_("could not write replacement commit for: '%s'"), old_ref);
->> +
->> +     strbuf_release(&buf);
->> +
->> +     if (!hashcmp(old, new))
->> +             return error("new commit is the same as the old one: '%s'", sha1_to_hex(old));
->
-> Is this really an error?  It may be a warning-worthy situation for a
-> user or a script to end up doing a no-op graft, e.g.
->
->         git replace --graft HEAD HEAD^
->
-> but I wonder if it is more convenient to signal an error (like this
-> patch does) or just ignore the request and return without adding the
-> replace ref.
+I do not buy the argument. Why would callers of the callback-style API
+not be allowed to give <file, line> errors?
 
-As the user might expect that a new replace ref was created on success
-(0 exit code), and as we should at least warn if we would create a
-commit that is the same as an existing one, I think it is just simpler
-to error out in this case.
+To me, it is a weakness of the API that <file, line> information is not
+available to callback functions, regardless of the config-cache.
 
-Though maybe we could use a special exit code (for example 2) in this
-case, so that the user might more easily ignore this error in a
-script.
+> It is somewhat dissapointing that this initial implementation was
+> done as a client of the traditional git_config(), by the way.  I
+> would have expected that it would be the other way around, in that
+> the traditional callers of git_config() would behefit automatically
+> by having the cache layer below it.
 
-> Other than these two points, looks good to me.
+I disagree, and I agree ;-).
 
-Thanks,
-Christian.
+I disagree that it is disapointing to use git_config(), and I think the
+beauty of the current implementation is to allow this cache mechanism
+without changing the parsing code.
+
+I agree that the callers of git_config() could benefit from the cache
+mechanism, i.e. use the in-memory pre-parsed config instead of
+re-parsing the file each time.
+
+> But we have to start from somewhere.  Perhaps the round after this
+> one can rename the exisiting implementation of git_config() to
+> something else internal to the caching layer and give the existing
+> callers a compatible interface that is backed by this new caching
+> layer in a transparent way.
+
+In PATCH v4, there was a git_config_iter function that did exactly that.
+I didn't notice it was gone for v5, but could be rather easily
+resurected.
+
+I suggest, on top of the current series:
+
+PATCH 3 : (re)introduce git_config_iter, compatible with git_config
+  (one variant with a configset argument, another working on the_config_set).
+
+PATCH 4 : rename git_config to e.g. git_config_parse, and
+  git_config_iter to git_config.
+
+Then, check that tests still pass (PATCH 4 automatically uses the new
+code essentially in every place where Git deals with config, so existing
+tests will start to stress the code a lot more), and check with e.g.
+"strace -e open git ..." that config files are now parsed only once
+where they used to be parsed multiple times.
+
+I'd do that as a separate series, to let the current one finally reach
+pu.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
