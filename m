@@ -1,75 +1,80 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v2] tag: support configuring --sort via .gitconfig
-Date: Thu, 10 Jul 2014 21:50:29 +0000
-Message-ID: <1405029028.4925.32.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1404945412-10197-1-git-send-email-jacob.e.keller@intel.com>
-	 <20140710040731.GD28401@sigill.intra.peff.net>
-	 <xmqqa98h8587.fsf@gitster.dls.corp.google.com>
-	 <20140710193404.GA15615@sigill.intra.peff.net>
+From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
+Subject: Re: 745224e0 gcc-4.9 emmintrin.h build error
+Date: Thu, 10 Jul 2014 23:59:00 +0200
+Message-ID: <CAOvwQ4h=uFCN36dQt4uqwJv8393iVhiCh09+71DhhzyWrbCfUA@mail.gmail.com>
+References: <CAOvwQ4hNVvzeCUczi7Qurcycp8HA8KU=u1ntu3fzBwu4fTEzPQ@mail.gmail.com>
+ <1405024438.3775.3.camel@stross> <CAOvwQ4hq5AZ0ZhB-1etUZfLfJ4X=11_03syH2pgY_fi=FSLAPQ@mail.gmail.com>
+ <1405025616.3775.6.camel@stross>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"gitster@pobox.com" <gitster@pobox.com>
-To: "peff@peff.net" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jul 10 23:50:45 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Thu Jul 10 23:59:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5MEj-0005NH-EB
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 23:50:41 +0200
+	id 1X5MNX-0006E2-1X
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 23:59:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751154AbaGJVuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2014 17:50:37 -0400
-Received: from mga02.intel.com ([134.134.136.20]:52468 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750889AbaGJVuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2014 17:50:37 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga101.jf.intel.com with ESMTP; 10 Jul 2014 14:50:36 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,639,1400050800"; 
-   d="scan'208";a="571374732"
-Received: from orsmsx103.amr.corp.intel.com ([10.22.225.130])
-  by orsmga002.jf.intel.com with ESMTP; 10 Jul 2014 14:50:32 -0700
-Received: from orsmsx111.amr.corp.intel.com (10.22.240.12) by
- ORSMSX103.amr.corp.intel.com (10.22.225.130) with Microsoft SMTP Server (TLS)
- id 14.3.123.3; Thu, 10 Jul 2014 14:50:29 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
- ORSMSX111.amr.corp.intel.com ([169.254.11.92]) with mapi id 14.03.0123.003;
- Thu, 10 Jul 2014 14:50:29 -0700
-Thread-Topic: [PATCH v2] tag: support configuring --sort via .gitconfig
-Thread-Index: AQHPnGi1HKkkgvPtB0G2Yr5/1ypgMZuaKFcAgAAmHQA=
-In-Reply-To: <20140710193404.GA15615@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <97FEA49B1E279E42954DA7B77FC9C41E@intel.com>
+	id S1751983AbaGJV7m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 17:59:42 -0400
+Received: from mail-ob0-f181.google.com ([209.85.214.181]:64095 "EHLO
+	mail-ob0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751080AbaGJV7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 17:59:41 -0400
+Received: by mail-ob0-f181.google.com with SMTP id wp4so261293obc.12
+        for <git@vger.kernel.org>; Thu, 10 Jul 2014 14:59:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=SaIclLP3jXhgK+OZIeraGnc1MyMAbLQ+qvmGRKZRSEA=;
+        b=VWSDA6wWxjII1sICCE0HvX75WWhZjriWvL+p39E7kvzfwVueUje4SmMiR95lZyvqMI
+         IEfIFlLVwFg+DoDXqBDln1BCDCk+jKySRVvMEkxbHv016XOFoOmOuIqxQhfP6y8I1wzZ
+         eGlCT8bYWAq/Ci2IRUSeZtRMzYQwxtMttcgNcMHq8kVRsIT8k6Hq193/R0oXCqtDOs5H
+         mRa83jaQ8FRKz9NsTUZ2LM87ZjYb4OC8V5t61D6b9e6W10NYjAzW4TL9L8RxGyylOYiQ
+         tfdVr/umvffYWML5Sov4mTGN+ClcCpLR1vAv1CUpHlEomBZcinTAqbXkRbrkne9fZl2o
+         N+SA==
+X-Received: by 10.182.142.69 with SMTP id ru5mr58599049obb.6.1405029580678;
+ Thu, 10 Jul 2014 14:59:40 -0700 (PDT)
+Received: by 10.76.127.116 with HTTP; Thu, 10 Jul 2014 14:59:00 -0700 (PDT)
+In-Reply-To: <1405025616.3775.6.camel@stross>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253222>
 
-T24gVGh1LCAyMDE0LTA3LTEwIGF0IDE1OjM0IC0wNDAwLCBKZWZmIEtpbmcgd3JvdGU6DQo+IE9u
-IFRodSwgSnVsIDEwLCAyMDE0IGF0IDEwOjU5OjM2QU0gLTA3MDAsIEp1bmlvIEMgSGFtYW5vIHdy
-b3RlOg0KPiANCj4gPiBKZWZmIEtpbmcgPHBlZmZAcGVmZi5uZXQ+IHdyaXRlczoNCj4gPiANCj4g
-PiA+IEkga25vdyB0aGlzIGlzIGV4aXN0aW5nIGNvZGUgeW91IGFyZSBtb3ZpbmcsIGJ1dCBJIG5v
-dGljZWQgaXQgbG9va3MgcmlwZQ0KPiA+ID4gZm9yIHVzaW5nIHNraXBfcHJlZml4LiBQZXJoYXBz
-IHdoaWxlIHdlIGFyZSBpbiB0aGUgYXJlYSB3ZSBzaG91bGQgZG8gdGhlDQo+ID4gPiBmb2xsb3dp
-bmcgb24gdG9wIG9mIHlvdXIgcGF0Y2ggKEknZCBhbHNvIGJlIGhhcHB5IGZvciBpdCBiZSBzcXVh
-c2hlZA0KPiA+ID4gaW4sIGJ1dCB0aGF0IG1heSBiZSB0b28gbXVjaCBpbiBvbmUgcGF0Y2gpLg0K
-PiA+IA0KPiA+IEkgYW0gdGVtcHRlZCB0byBzdWdnZXN0IGdvaW5nIHRoZSBvdGhlciB3YXkgYXJv
-dW5kLCBpLmUuIHF1ZXVlIChhbg0KPiA+IGVxdWl2YWxlbnQgb2YpIHRoaXMgb24gamsvc2tpcC1w
-cmVmaXggYW5kIG1lcmdlIGl0IHRvICduZXh0JyBhbmQNCj4gPiB0aGVuICdtYXN0ZXInIHF1aWNr
-bHkuDQo+ID4gDQo+ID4gSSBjYW4gZ28gZWl0aGVyIHdheSwgYnV0IEkgdGVuZCB0byBwcmVmZXIg
-YnVpbGRpbmcgbmV3IHRoaW5ncyBvbiB0b3ANCj4gPiBvZiBvYnZpb3VzbHkgY29ycmVjdCBjbGVh
-bi11cCwgbm90IHRoZSBvdGhlciB3YXkgYXJvdW5kLg0KPiANCj4gTWUgdG9vLiBJIGp1c3QgZGlk
-bid0IHdhbnQgdG8gbWFrZSBtb3JlIHdvcmsgZm9yIEphY29iIChpbiBoYXZpbmcgdG8NCj4gcmVi
-YXNlIG9uIHRvcCBvZiBtaW5lKSBvciBmb3IgeW91IChpbiBoYXZpbmcgdG8gZG8gYSBub24tb2J2
-aW91cyBtZXJnZSBhDQo+IGZldyBkYXlzIGZyb20gbm93KS4NCj4gDQo+IC1QZWZmDQoNCkknbSBw
-ZXJmZWN0bHkgZmluZSByZWJhc2luZy4gOikNCg0KVGhhbmtzLA0KSmFrZQ0K
+On Thu, Jul 10, 2014 at 10:53 PM, David Turner wrote:
+> On Thu, 2014-07-10 at 22:44 +0200, Tuncer Ayaz wrote:
+> > On Thu, Jul 10, 2014 at 10:33 PM, David Turner wrote:
+> > > On Thu, 2014-07-10 at 21:59 +0200, Tuncer Ayaz wrote:
+> > > > The changes in 745224e0 don't seem to build here with gcc-4.9 on
+> > > > linux x64_64. Any idea what's wrong?
+> > > >
+> > > >     CC credential-store.o
+> > > > In file included from /usr/lib/.../xmmintrin.h:31:0,
+> > >
+> > > What's in the ...?
+> > >
+> > > Because if you're using headers from a different version of gcc, that
+> > > might explain it.
+> >
+> > /usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.0/include/emmintrin.h
+>
+> That seems fine to me.
+>
+> It looks like the error messages are coming from inside the system's
+> header files (but this is sometimes misleading).  If you just try to
+> compile
+>
+> #include <emmintrin.h>
+> int main() { }
+>
+> with whatever options you use for git, does that work?  If not, I would
+> say that you have a compiler setup problem.
+
+The above test works on the same machine, so I'll
+investigate what's going on when building git. Thanks.
