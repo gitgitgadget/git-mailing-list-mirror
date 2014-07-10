@@ -1,85 +1,84 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: 745224e0 gcc-4.9 emmintrin.h build error
-Date: Thu, 10 Jul 2014 13:53:36 -0700
-Organization: Twitter
-Message-ID: <1405025616.3775.6.camel@stross>
-References: <CAOvwQ4hNVvzeCUczi7Qurcycp8HA8KU=u1ntu3fzBwu4fTEzPQ@mail.gmail.com>
-	 <1405024438.3775.3.camel@stross>
-	 <CAOvwQ4hq5AZ0ZhB-1etUZfLfJ4X=11_03syH2pgY_fi=FSLAPQ@mail.gmail.com>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: No fchmd. was: Re: [PATCH 00/14] Add submodule test harness
+Date: Thu, 10 Jul 2014 22:55:04 +0200
+Message-ID: <53BEFDA8.7020409@web.de>
+References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>	<53B5C7AC.4040701@web.de>	<xmqqsimddrq3.fsf@gitster.dls.corp.google.com>	<53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de>	<53BD7A36.2030300@kdbg.org>	<xmqqr41u9w27.fsf@gitster.dls.corp.google.com>	<20140709195619.GA17454@dcvr.yhbt.net>	<xmqqion69ovj.fsf@gitster.dls.corp.google.com>	<53BE3127.8020805@web.de> <xmqq61j5805g.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 22:53:48 2014
+Cc: Eric Wong <normalperson@yhbt.net>, Johannes Sixt <j6t@kdbg.org>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmc=?= =?UTF-8?B?4buNYyBEdXk=?= 
+	<pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Thu Jul 10 22:55:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5LLd-0005KL-5h
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 22:53:45 +0200
+	id 1X5LNa-0007Of-Dp
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 22:55:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752556AbaGJUxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2014 16:53:41 -0400
-Received: from mail-qa0-f54.google.com ([209.85.216.54]:47110 "EHLO
-	mail-qa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751780AbaGJUxk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2014 16:53:40 -0400
-Received: by mail-qa0-f54.google.com with SMTP id s7so128599qap.27
-        for <git@vger.kernel.org>; Thu, 10 Jul 2014 13:53:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=vn/EjAZAYkrkkr6f+btThSV0etHrIsn7uERbgHcAYd4=;
-        b=UkBYFBl4hrEGEeXOYcA8RbDWGKbJ6RqUHaU80pPJvt8Ne6dtM44w0biDR52Kiy2nNT
-         1HJuSMozld3SJeX4yl344GiR++1n22tPckcAyokI6NjRlDkQmAhTwIsRrLwgEORFv9wi
-         UrwYMz9DO8pvSdDXSwS7L7AE1rqLXqjI02/tVAwYG+0tNTxplg14hfqY/aW9pgo7/Y4k
-         +DGDSB6NadnznVysH7mz8sIsgAUptG75HL6W8m2gjMymWi5dskpje43AwdDk70MbLcQi
-         b8sXNfYLzhlzxX+LuNZRvlGM52Pjd+dpsivBVSBxHl9/brpuCn3DNNpQsCDOEUWDkz06
-         2oAg==
-X-Gm-Message-State: ALoCoQmTQ7NfArtDgXSqsQkZz3NSnkSWTx11Lad8M+rd4HaMXyEdwgaKHdss2jfZkWW+BqMD0zjb
-X-Received: by 10.224.151.72 with SMTP id b8mr19821846qaw.95.1405025619653;
-        Thu, 10 Jul 2014 13:53:39 -0700 (PDT)
-Received: from [172.25.140.220] ([8.25.197.27])
-        by mx.google.com with ESMTPSA id d10sm489894qaq.10.2014.07.10.13.53.38
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Thu, 10 Jul 2014 13:53:38 -0700 (PDT)
-In-Reply-To: <CAOvwQ4hq5AZ0ZhB-1etUZfLfJ4X=11_03syH2pgY_fi=FSLAPQ@mail.gmail.com>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
+	id S1751847AbaGJUzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 16:55:42 -0400
+Received: from mout.web.de ([212.227.17.12]:64101 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751213AbaGJUzl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 16:55:41 -0400
+Received: from [192.168.209.26] ([78.72.74.102]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0LudGm-1Wehij1XpA-00zmVt; Thu, 10 Jul 2014 22:55:30
+ +0200
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqq61j5805g.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:epkkywvDn90inKIgKv8pDmqSVfOG0TLbFVyK6G1rAvdqSHYPjwq
+ hbD9bTwrS3lerzfT7p+HUf1sQ26kmhWO+LHKXSH+k0RRv25CkM+NY+HCm7QVDhUUZVElUqi
+ 1JBeMaqtPPZ+jyIcZ89UAhR52gmLU03+ri/VtJcHRFwYb5POf97MbzzCm4IVYGW3fSwj0CX
+ ++qXhxMEP9YJQHB+NMHfw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253219>
 
-On Thu, 2014-07-10 at 22:44 +0200, Tuncer Ayaz wrote:
-> On Thu, Jul 10, 2014 at 10:33 PM, David Turner wrote:
-> > On Thu, 2014-07-10 at 21:59 +0200, Tuncer Ayaz wrote:
-> > > The changes in 745224e0 don't seem to build here with gcc-4.9 on
-> > > linux x64_64. Any idea what's wrong?
-> > >
-> > >     CC credential-store.o
-> > > In file included from /usr/lib/.../xmmintrin.h:31:0,
-> >
-> > What's in the ...?
-> >
-> > Because if you're using headers from a different version of gcc, that
-> > might explain it.
-> 
-> /usr/lib/gcc/x86_64-unknown-linux-gnu/4.9.0/include/emmintrin.h
+On 2014-07-10 21.49, Junio C Hamano wrote:
+[]
+> If we limit the case to "Inherit permissions from the file we are
+> replacing by taking a lock on it", which is the topic of discussion
+> in this thread, we do not have to worry about how to configure the
+> value (we do not have to) and adding a new parameter to tell the
+> mode to hold-lock-file-for-update is unneeded (the function will
+> have a pathname of the original and can learn the current permission
+> bits itself).
+So something like this:
+(I will probably not have the time to make a proper patch :-(
 
-That seems fine to me.
 
-It looks like the error messages are coming from inside the system's
-header files (but this is sometimes misleading).  If you just try to
-compile
-
-#include <emmintrin.h>
-int main() { }
-
-with whatever options you use for git, does that work?  If not, I would
-say that you have a compiler setup problem.
+diff --git a/lockfile.c b/lockfile.c
+index 4899270..134d5c8 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -156,6 +156,11 @@ static void resolve_symlink(struct strbuf *path)
+ /* Make sure errno contains a meaningful value on error */
+ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ {
++       int perms = 0666;
++       struct stat st;
++       if (!lstat(path, &st))
++               perms = st.st_mode & 0777;
++
+        if (!lock_file_list) {
+                /* One-time initialization */
+                sigchain_push_common(remove_lock_file_on_signal);
+@@ -179,7 +184,7 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+        if (!(flags & LOCK_NODEREF))
+                resolve_symlink(&lk->filename);
+        strbuf_addstr(&lk->filename, LOCK_SUFFIX);
+-       lk->fd = open(lk->filename.buf, O_RDWR | O_CREAT | O_EXCL, 0666);
++       lk->fd = open(lk->filename.buf, O_RDWR | O_CREAT | O_EXCL, perms);
+        if (lk->fd < 0) {
+                strbuf_reset(&lk->filename);
+                return -1;
