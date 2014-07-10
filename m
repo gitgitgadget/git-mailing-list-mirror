@@ -1,146 +1,120 @@
-From: Fabian Ruch <bafain@gmail.com>
-Subject: Re: [PATCH RFC v2 06/19] rebase -i: Stop on root commits with empty
- log messages
-Date: Thu, 10 Jul 2014 11:29:49 +0200
-Message-ID: <53BE5D0D.8090308@gmail.com>
-References: <53A258D2.7080806@gmail.com>	<cover.1404323078.git.bafain@gmail.com>	<00ca9dc0d1750301aa22c2bb78976b141233cef3.1404323078.git.bafain@gmail.com> <xmqq8uo38p28.fsf@gitster.dls.corp.google.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH v6 02/10] replace: add --graft option
+Date: Thu, 10 Jul 2014 11:30:40 +0200
+Message-ID: <CAP8UFD2X7j2TGEQfX3h8CfiZypJ5tVPqaZ2bNE0k1-jbeJj=Zw@mail.gmail.com>
+References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
+	<20140707063540.3708.51047.chriscool@tuxfamily.org>
+	<xmqqsima7f3r.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 10 11:30:07 2014
+X-From: git-owner@vger.kernel.org Thu Jul 10 11:30:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5Ag2-0003mg-2Z
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 11:30:06 +0200
+	id 1X5Agh-0004Nn-3W
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 11:30:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752743AbaGJJ37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Jul 2014 05:29:59 -0400
-Received: from mail-we0-f170.google.com ([74.125.82.170]:46004 "EHLO
-	mail-we0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752807AbaGJJ3x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Jul 2014 05:29:53 -0400
-Received: by mail-we0-f170.google.com with SMTP id w61so8706783wes.1
-        for <git@vger.kernel.org>; Thu, 10 Jul 2014 02:29:51 -0700 (PDT)
+	id S1752197AbaGJJam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 05:30:42 -0400
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:35328 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750793AbaGJJal (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 05:30:41 -0400
+Received: by mail-vc0-f169.google.com with SMTP id la4so9987740vcb.14
+        for <git@vger.kernel.org>; Thu, 10 Jul 2014 02:30:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=tAhsnFUq29Xwjuxtlf0mDlV+Ifrt47IiyJyGB1WBX/M=;
-        b=jajpM+DgmFlhBx/YMHn2VTZHYCtnzC1URTZVTzHcG0vEB9YjzGqqNpJvqC4zn7/RDl
-         agrS27gBJTVQmwRHkXgI0m2rfDLf27Pyl2uXGJK6iRqHi2EtCXm2K8mTo90dcdRZVbfu
-         I/aKhwhazhq+rdxt542SlkNaVvynyizc5j6nI8PMZkyrBflb8s7pX3A6S1T+lokjbtfv
-         DsigDFFe3iOI7psozJkc2TVckYLS8NWEMM0L4UEkQKKfJR6nYBq0QTzUzQhTGVjpyDcI
-         8Rc2B/HIZs1W1V9cbYG3jgRea+w76F48Sa7LKb1juWpvRX2Y6hhYxIOMIbr1IqXd4Ycj
-         Kpxg==
-X-Received: by 10.180.91.81 with SMTP id cc17mr17467927wib.17.1404984591745;
-        Thu, 10 Jul 2014 02:29:51 -0700 (PDT)
-Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
-        by mx.google.com with ESMTPSA id l8sm109146064wje.15.2014.07.10.02.29.49
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 10 Jul 2014 02:29:50 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq8uo38p28.fsf@gitster.dls.corp.google.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=CUcmuqqb9Dl149xk5Mg0XQsqTLEb72ZzaqisQ6E7uxk=;
+        b=QuCMWZ49qlbcMt4aOLy5gCKl2IssIMc2GTFv9jgQNH329/TQEovGX9DAV+cUaUpLQd
+         tAs2FBctAnhu+Bg/SCFxiXc3GdZnz0R+E1MKWk3H7AZEWncfME87fxjbYxKA/0HgRVfh
+         Ax1e1fHkYUI/lD8kN0QVV18nG1dvbgmy21qD4ox7eIabDpI56enqupfQedWlNH0T60fJ
+         rBc4/OBwAnNmRYHLwfb8H3M4lgFnoxYbun7z7DBA4mdUand+4ovm24cQTFhIi6BXz1fx
+         r7PxO+/Fe+A3+byt7QdVgU/sI8cqH24JPBa6UvKAQ3Cwwa34o6zL2cZeSrfnKn/v6IfV
+         TPuA==
+X-Received: by 10.58.182.105 with SMTP id ed9mr44849590vec.16.1404984640333;
+ Thu, 10 Jul 2014 02:30:40 -0700 (PDT)
+Received: by 10.58.76.137 with HTTP; Thu, 10 Jul 2014 02:30:40 -0700 (PDT)
+In-Reply-To: <xmqqsima7f3r.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253180>
 
-Hi Junio,
+On Wed, Jul 9, 2014 at 4:59 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>
+>> +static void replace_parents(struct strbuf *buf, int argc, const char **argv)
+>> +{
+>> +     struct strbuf new_parents = STRBUF_INIT;
+>> +     const char *parent_start, *parent_end;
+>> +     int i;
+>> +
+>> +     /* find existing parents */
+>> +     parent_start = buf->buf;
+>> +     parent_start += 46; /* "tree " + "hex sha1" + "\n" */
+>> +     parent_end = parent_start;
+>> +
+>> +     while (starts_with(parent_end, "parent "))
+>> +             parent_end += 48; /* "parent " + "hex sha1" + "\n" */
+>> +
+>> +     /* prepare new parents */
+>> +     for (i = 1; i < argc; i++) {
+>
+> It looks somewhat strange that both replace_parents() and
+> create_graft() take familiar-looking <argc, argv> pair, but one
+> ignores argv[0] and uses the remainder and the other uses argv[0].
+> Shouldn't this function consume argv[] starting from [0] for
+> consistency?  You'd obviously need to update the caller to adjust
+> the arguments it gives to this function.
 
-Junio C Hamano writes:
-> Fabian Ruch <bafain@gmail.com> writes:
->> The command line used to recreate root commits specifies the
->> erroneous option `--allow-empty-message`. If the root commit has an
->> empty log message, the replay of this commit should fail and the
->> rebase should be interrupted like for any other commit that is on the
->> to-do list and has an empty commit message. Remove the option.
->>
->> The option might have been introduced by copy-and-paste of the first
->> part of the command line which initializes the authorship of the
->> sentinel commit. Indeed, the sentinel commit has an empty log message
->> and this should not trigger a failure, which is why the option
->> `--allow-empty-message` is correctly specified here.
-> 
-> The first "commit --amend" uses -C "$1" to give the amended result
-> not just the authorship but also the log message taken from "$1".
-> If we are allowing a commit without any message to be used as "$1",
-> I think --allow-empty-message needs to be there.  If "$1" requires
-> the option here, why doesn't the second one, that records the
-> updated tree with the metainformation taken from the same commit
-> "$1" can successfully commit without the option?
+Ok, will do.
 
-(I realize now that the emptiness of the sentinel log message is
-irrelevant to the success of the first "commit --amend" since we are
-amending using -C. I'll rewrite the second paragraph of the patch
-description.)
+>> +static int create_graft(int argc, const char **argv, int force)
+>> +{
+>> +     unsigned char old[20], new[20];
+>> +     const char *old_ref = argv[0];
+>> +...
+>> +
+>> +     replace_parents(&buf, argc, argv);
+>> +
+>> +     if (write_sha1_file(buf.buf, buf.len, commit_type, new))
+>> +             die(_("could not write replacement commit for: '%s'"), old_ref);
+>> +
+>> +     strbuf_release(&buf);
+>> +
+>> +     if (!hashcmp(old, new))
+>> +             return error("new commit is the same as the old one: '%s'", sha1_to_hex(old));
+>
+> Is this really an error?  It may be a warning-worthy situation for a
+> user or a script to end up doing a no-op graft, e.g.
+>
+>         git replace --graft HEAD HEAD^
+>
+> but I wonder if it is more convenient to signal an error (like this
+> patch does) or just ignore the request and return without adding the
+> replace ref.
 
-The first "commit --amend" requires --allow-empty-message because we do
-not want to fail without the authorship or log message of $1 being in
-place. It's not a matter of allowing or disallowing empty log messages yet.
+As the user might expect that a new replace ref was created on success
+(0 exit code), and as we should at least warn if we would create a
+commit that is the same as an existing one, I think it is just simpler
+to error out in this case.
 
-git-rebase--interactive can come across an empty log message in three
-different ways, which are, depicted as to-do list tasks, the following.
+Though maybe we could use a special exit code (for example 2) in this
+case, so that the user might more easily ignore this error in a
+script.
 
- 1) pick --ff $1
- 2) pick --no-ff $1
- 3) reword $1
+> Other than these two points, looks good to me.
 
-This patch is concerned with consistency in the second case.
-git-rebase--root does not handle the first case yet and the third case
-is handled somewhere else in the script independent of the first two.
-
-The --root option handling was added to the script as a special case
-later in the revision history. It's that option handling which
-introduced the inconsistency that non-fast-forwards of commits with
-empty log messages succeed if they are root commits but have always
-failed otherwise.
-
-Your reply suggests that git-rebase--interactive was wrong from the
-beginning and that the replay of commits without any message should be
-allowed. This would reconcile the first case with the second. In fact,
-since neither of them alters the changes introduced by $1 or its log
-message, it might be incorrect to complain about a missing message in
-the first place.
-
-Do you want me to replace this patch with a patch
-
-    rebase -i: Always allow picking of commits with empty log messages
-
-that makes git-rebase--interactive cherry-pick commits using
---allow-empty-message? The script would still abort an empty reword with
-the new patch and the user could then still force the empty log message
-with "git commit --amend --allow-empty-message".
-
-   Fabian
-
-> Puzzled...
-> 
->> Add test.
->>
->> Signed-off-by: Fabian Ruch <bafain@gmail.com>
->> ---
->>  git-rebase--interactive.sh |  2 +-
->>  t/t3412-rebase-root.sh     | 39 +++++++++++++++++++++++++++++++++++++++
->>  2 files changed, 40 insertions(+), 1 deletion(-)
->>
->> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
->> index 4c875d5..0af96f2 100644
->> --- a/git-rebase--interactive.sh
->> +++ b/git-rebase--interactive.sh
->> @@ -510,7 +510,7 @@ do_pick () {
->>  		git commit --allow-empty --allow-empty-message --amend \
->>  			   --no-post-rewrite -n -q -C $1 &&
->>  			pick_one -n $1 &&
->> -			git commit --allow-empty --allow-empty-message \
->> +			git commit --allow-empty \
->>  				   --amend --no-post-rewrite -n -q -C $1 \
->>  				   ${gpg_sign_opt:+"$gpg_sign_opt"} ||
->>  			die_with_patch $1 "Could not apply $1... $2"
+Thanks,
+Christian.
