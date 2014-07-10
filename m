@@ -1,127 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: No fchmd. was: Re: [PATCH 00/14] Add submodule test harness
-Date: Thu, 10 Jul 2014 14:43:03 -0700
-Message-ID: <xmqqoaww7uvs.fsf@gitster.dls.corp.google.com>
-References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>
-	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>
-	<53B5C7AC.4040701@web.de>
-	<xmqqsimddrq3.fsf@gitster.dls.corp.google.com>
-	<53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de>
-	<53BD7A36.2030300@kdbg.org>
-	<xmqqr41u9w27.fsf@gitster.dls.corp.google.com>
-	<20140709195619.GA17454@dcvr.yhbt.net>
-	<xmqqion69ovj.fsf@gitster.dls.corp.google.com>
-	<53BE3127.8020805@web.de>
-	<xmqq61j5805g.fsf@gitster.dls.corp.google.com>
-	<53BEFDA8.7020409@web.de>
+From: "Keller, Jacob E" <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v2] tag: support configuring --sort via .gitconfig
+Date: Thu, 10 Jul 2014 21:50:29 +0000
+Message-ID: <1405029028.4925.32.camel@jekeller-desk1.amr.corp.intel.com>
+References: <1404945412-10197-1-git-send-email-jacob.e.keller@intel.com>
+	 <20140710040731.GD28401@sigill.intra.peff.net>
+	 <xmqqa98h8587.fsf@gitster.dls.corp.google.com>
+	 <20140710193404.GA15615@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>, Johannes Sixt <j6t@kdbg.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Thu Jul 10 23:43:18 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>
+To: "peff@peff.net" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jul 10 23:50:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5M7Y-0006EI-Ky
-	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 23:43:16 +0200
+	id 1X5MEj-0005NH-EB
+	for gcvg-git-2@plane.gmane.org; Thu, 10 Jul 2014 23:50:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359AbaGJVnN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Jul 2014 17:43:13 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62017 "EHLO smtp.pobox.com"
+	id S1751154AbaGJVuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Jul 2014 17:50:37 -0400
+Received: from mga02.intel.com ([134.134.136.20]:52468 "EHLO mga02.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750938AbaGJVnM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Jul 2014 17:43:12 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4813228005;
-	Thu, 10 Jul 2014 17:42:56 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=qpFPEnrcbvWU
-	msEvkAe4gu1fYis=; b=bjfLMreQ6yhj0dFqyLh2L2ak+W8hRBcBpG++yxLwkg+e
-	ycDOZuZN1FbMDSS5EtHrskq6NwqN3rxXwp8F02/45X0g3W6xkWRlRZav/n+PtBKM
-	FtgpWjzGXVeJle892tBbR/0rvmN997ekSKmpcHRcDKrv60YzMfi4UyYQr4ecNY8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iu6Y49
-	stoR1OqLz03wGGn59MhMb35L8ibI0Yf/WCrhOJNfXx01+q6LeY5fFdJEdj0jqdiD
-	ly4KImrzZBMNzRAko06RGpRyeLqueFAXXUNdgO6iVeChnk485gURkKZYVzl5gFoj
-	tbIXvTtSv2TiNbsYTWoJZMCUay297doSOyyPY=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3CF5B28004;
-	Thu, 10 Jul 2014 17:42:56 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 3393727FF6;
-	Thu, 10 Jul 2014 17:42:50 -0400 (EDT)
-In-Reply-To: <53BEFDA8.7020409@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
- =?utf-8?Q?en=22's?= message of
-	"Thu, 10 Jul 2014 22:55:04 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 23D1A5F6-087B-11E4-823D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750889AbaGJVuh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Jul 2014 17:50:37 -0400
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga101.jf.intel.com with ESMTP; 10 Jul 2014 14:50:36 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.01,639,1400050800"; 
+   d="scan'208";a="571374732"
+Received: from orsmsx103.amr.corp.intel.com ([10.22.225.130])
+  by orsmga002.jf.intel.com with ESMTP; 10 Jul 2014 14:50:32 -0700
+Received: from orsmsx111.amr.corp.intel.com (10.22.240.12) by
+ ORSMSX103.amr.corp.intel.com (10.22.225.130) with Microsoft SMTP Server (TLS)
+ id 14.3.123.3; Thu, 10 Jul 2014 14:50:29 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
+ ORSMSX111.amr.corp.intel.com ([169.254.11.92]) with mapi id 14.03.0123.003;
+ Thu, 10 Jul 2014 14:50:29 -0700
+Thread-Topic: [PATCH v2] tag: support configuring --sort via .gitconfig
+Thread-Index: AQHPnGi1HKkkgvPtB0G2Yr5/1ypgMZuaKFcAgAAmHQA=
+In-Reply-To: <20140710193404.GA15615@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.173.156]
+Content-ID: <97FEA49B1E279E42954DA7B77FC9C41E@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253220>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253221>
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
-
-> On 2014-07-10 21.49, Junio C Hamano wrote:
-> []
->> If we limit the case to "Inherit permissions from the file we are
->> replacing by taking a lock on it", which is the topic of discussion
->> in this thread, we do not have to worry about how to configure the
->> value (we do not have to) and adding a new parameter to tell the
->> mode to hold-lock-file-for-update is unneeded (the function will
->> have a pathname of the original and can learn the current permission
->> bits itself).
-> So something like this:
-
-Yeah, I think something along those lines may be sufficient and we
-do not have to do anything when closing/committing, at least POSIX
-systems.  I do not know if other filesystems we may care about let
-you open with 0400 and still write into it, though.
-
-> (I will probably not have the time to make a proper patch :-(
-
-That's OK.  I see many names on Cc: who are all capable of helping
-us ;-)
-
->
-> diff --git a/lockfile.c b/lockfile.c
-> index 4899270..134d5c8 100644
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -156,6 +156,11 @@ static void resolve_symlink(struct strbuf *path)
->  /* Make sure errno contains a meaningful value on error */
->  static int lock_file(struct lock_file *lk, const char *path, int fla=
-gs)
->  {
-> +       int perms =3D 0666;
-> +       struct stat st;
-> +       if (!lstat(path, &st))
-> +               perms =3D st.st_mode & 0777;
-> +
->         if (!lock_file_list) {
->                 /* One-time initialization */
->                 sigchain_push_common(remove_lock_file_on_signal);
-> @@ -179,7 +184,7 @@ static int lock_file(struct lock_file *lk, const =
-char *path, int flags)
->         if (!(flags & LOCK_NODEREF))
->                 resolve_symlink(&lk->filename);
->         strbuf_addstr(&lk->filename, LOCK_SUFFIX);
-> -       lk->fd =3D open(lk->filename.buf, O_RDWR | O_CREAT | O_EXCL, =
-0666);
-> +       lk->fd =3D open(lk->filename.buf, O_RDWR | O_CREAT | O_EXCL, =
-perms);
->         if (lk->fd < 0) {
->                 strbuf_reset(&lk->filename);
->                 return -1;
+T24gVGh1LCAyMDE0LTA3LTEwIGF0IDE1OjM0IC0wNDAwLCBKZWZmIEtpbmcgd3JvdGU6DQo+IE9u
+IFRodSwgSnVsIDEwLCAyMDE0IGF0IDEwOjU5OjM2QU0gLTA3MDAsIEp1bmlvIEMgSGFtYW5vIHdy
+b3RlOg0KPiANCj4gPiBKZWZmIEtpbmcgPHBlZmZAcGVmZi5uZXQ+IHdyaXRlczoNCj4gPiANCj4g
+PiA+IEkga25vdyB0aGlzIGlzIGV4aXN0aW5nIGNvZGUgeW91IGFyZSBtb3ZpbmcsIGJ1dCBJIG5v
+dGljZWQgaXQgbG9va3MgcmlwZQ0KPiA+ID4gZm9yIHVzaW5nIHNraXBfcHJlZml4LiBQZXJoYXBz
+IHdoaWxlIHdlIGFyZSBpbiB0aGUgYXJlYSB3ZSBzaG91bGQgZG8gdGhlDQo+ID4gPiBmb2xsb3dp
+bmcgb24gdG9wIG9mIHlvdXIgcGF0Y2ggKEknZCBhbHNvIGJlIGhhcHB5IGZvciBpdCBiZSBzcXVh
+c2hlZA0KPiA+ID4gaW4sIGJ1dCB0aGF0IG1heSBiZSB0b28gbXVjaCBpbiBvbmUgcGF0Y2gpLg0K
+PiA+IA0KPiA+IEkgYW0gdGVtcHRlZCB0byBzdWdnZXN0IGdvaW5nIHRoZSBvdGhlciB3YXkgYXJv
+dW5kLCBpLmUuIHF1ZXVlIChhbg0KPiA+IGVxdWl2YWxlbnQgb2YpIHRoaXMgb24gamsvc2tpcC1w
+cmVmaXggYW5kIG1lcmdlIGl0IHRvICduZXh0JyBhbmQNCj4gPiB0aGVuICdtYXN0ZXInIHF1aWNr
+bHkuDQo+ID4gDQo+ID4gSSBjYW4gZ28gZWl0aGVyIHdheSwgYnV0IEkgdGVuZCB0byBwcmVmZXIg
+YnVpbGRpbmcgbmV3IHRoaW5ncyBvbiB0b3ANCj4gPiBvZiBvYnZpb3VzbHkgY29ycmVjdCBjbGVh
+bi11cCwgbm90IHRoZSBvdGhlciB3YXkgYXJvdW5kLg0KPiANCj4gTWUgdG9vLiBJIGp1c3QgZGlk
+bid0IHdhbnQgdG8gbWFrZSBtb3JlIHdvcmsgZm9yIEphY29iIChpbiBoYXZpbmcgdG8NCj4gcmVi
+YXNlIG9uIHRvcCBvZiBtaW5lKSBvciBmb3IgeW91IChpbiBoYXZpbmcgdG8gZG8gYSBub24tb2J2
+aW91cyBtZXJnZSBhDQo+IGZldyBkYXlzIGZyb20gbm93KS4NCj4gDQo+IC1QZWZmDQoNCkknbSBw
+ZXJmZWN0bHkgZmluZSByZWJhc2luZy4gOikNCg0KVGhhbmtzLA0KSmFrZQ0K
