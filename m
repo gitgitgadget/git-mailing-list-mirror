@@ -1,167 +1,237 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [fixup PATCH 1/2] Call configset_clear
-Date: Fri, 11 Jul 2014 16:27:12 +0200
-Message-ID: <1405088833-5817-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqwqbk0y8n.fsf@anie.imag.fr>
-Cc: tanayabh@gmail.com, artagnon@gmail.com,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jul 11 16:37:14 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2 v4] tag: support configuring --sort via .gitconfig
+Date: Fri, 11 Jul 2014 08:04:30 -0700
+Message-ID: <xmqqion4543l.fsf@gitster.dls.corp.google.com>
+References: <1405036334-8093-1-git-send-email-jacob.e.keller@intel.com>
+	<1405036334-8093-2-git-send-email-jacob.e.keller@intel.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 17:04:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5bwn-0007FC-27
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 16:37:13 +0200
+	id 1X5cNO-00029y-UD
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 17:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753069AbaGKOhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 10:37:06 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47278 "EHLO shiva.imag.fr"
+	id S1753869AbaGKPEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 11:04:39 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50913 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751923AbaGKOhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 10:37:05 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6BEYeJ9019100
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 11 Jul 2014 16:34:40 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6BEYfv9024271;
-	Fri, 11 Jul 2014 16:34:41 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1X5buL-0002Gg-IL; Fri, 11 Jul 2014 16:34:41 +0200
-X-Mailer: git-send-email 2.0.0.262.gdafc651
-In-Reply-To: <vpqwqbk0y8n.fsf@anie.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 11 Jul 2014 16:34:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6BEYeJ9019100
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1405694082.35924@Z1FQi9qSFAtbBJYF2lHMbw
+	id S1753191AbaGKPEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 11:04:38 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5334A25704;
+	Fri, 11 Jul 2014 11:04:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=RLGEq1Ra+4o1tzMVHtCkfRhmOxk=; b=ElGgXI
+	VvZg17u+NbbIYplcXx3B5rih2AOVnpmM/S7BfFQS+MuzrMVzJLdYBloPwU4qCdp6
+	jvpkFkUFNQLMLOGcXsnWjOxLXQYokQUBxJmYHB/H36tOELUQEslgv7Co0NPrF/r0
+	jGYEYaF4gKx21iEj42RqZ1PZNnOSZKMDfV/SQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AvHu/9dFaaXJBDY/iXsBoIi4JGWlw5bH
+	WaDoZ5HjE1dH5cagGaxI04h8e6qNDiteIoe6G6EzSGg/IW2UHCdwFm5LOV1jjdd5
+	shnPKxx+nm6kN0QjoaBUvorN6nsqSV9X+QViDRLPvG43vT9kSKYBr0hxrUXLtYTS
+	qBPf4DTJfDg=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 49D7725703;
+	Fri, 11 Jul 2014 11:04:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D0B95256FA;
+	Fri, 11 Jul 2014 11:04:16 -0400 (EDT)
+In-Reply-To: <1405036334-8093-2-git-send-email-jacob.e.keller@intel.com>
+	(Jacob Keller's message of "Thu, 10 Jul 2014 16:52:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A0B8A33A-090C-11E4-B738-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253281>
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Consider squashing this into PATCH 2/2.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
- test-config.c | 42 +++++++++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 15 deletions(-)
+> Add support for configuring default sort ordering for git tags. Command
+> line option will override this configured value, using the exact same
+> syntax.
+>
+> Cc: Jeff King <peff@peff.net>
+> Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+> ---
+> - v4
+> * base on top of suggested change by Jeff King to use skip_prefix instead
+>
+>  Documentation/config.txt  |  6 ++++++
+>  Documentation/git-tag.txt |  1 +
+>  builtin/tag.c             | 46 ++++++++++++++++++++++++++++++++--------------
+>  t/t7004-tag.sh            | 21 +++++++++++++++++++++
+>  4 files changed, 60 insertions(+), 14 deletions(-)
+>
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 1d718bdb9662..ad8e75fed988 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -2354,6 +2354,12 @@ submodule.<name>.ignore::
+>  	"--ignore-submodules" option. The 'git submodule' commands are not
+>  	affected by this setting.
+>  
+> +tag.sort::
+> +	This variable is used to control the sort ordering of tags. It is
+> +	interpreted precisely the same way as "--sort=<value>". If --sort is
+> +	given on the command line it will override the selection chosen in the
+> +	configuration. See linkgit:git-tag[1] for more details.
+> +
 
-diff --git a/test-config.c b/test-config.c
-index dc313c2..07b61ef 100644
---- a/test-config.c
-+++ b/test-config.c
-@@ -41,17 +41,17 @@ int main(int argc, char **argv)
- 
- 	if (argc < 2) {
- 		fprintf(stderr, "Please, provide a command name on the command-line\n");
--		return 1;
-+		goto exit1;
- 	} else if (argc == 3 && !strcmp(argv[1], "get_value")) {
- 		if (!git_config_get_value(argv[2], &v)) {
- 			if (!v)
- 				printf("(NULL)\n");
- 			else
- 				printf("%s\n", v);
--			return 0;
-+			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			return 1;
-+			goto exit1;
- 		}
- 	} else if (argc == 3 && !strcmp(argv[1], "get_value_multi")) {
- 		strptr = git_config_get_value_multi(argv[2]);
-@@ -63,46 +63,46 @@ int main(int argc, char **argv)
- 				else
- 					printf("%s\n", v);
- 			}
--			return 0;
-+			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			return 1;
-+			goto exit1;
- 		}
- 	} else if (argc == 3 && !strcmp(argv[1], "get_int")) {
- 		if (!git_config_get_int(argv[2], &val)) {
- 			printf("%d\n", val);
--			return 0;
-+			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			return 1;
-+			goto exit1;
- 		}
- 	} else if (argc == 3 && !strcmp(argv[1], "get_bool")) {
- 		if (!git_config_get_bool(argv[2], &val)) {
- 			printf("%d\n", val);
--			return 0;
-+			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			return 1;
-+			goto exit1;
- 		}
- 	} else if (!strcmp(argv[1], "configset_get_value")) {
- 		for (i = 3; i < argc; i++) {
- 			if (git_configset_add_file(&cs, argv[i]))
--				return 2;
-+				goto exit2;
- 		}
- 		if (!git_configset_get_value(&cs, argv[2], &v)) {
- 			if (!v)
- 				printf("(NULL)\n");
- 			else
- 				printf("%s\n", v);
--			return 0;
-+			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			return 1;
-+			goto exit1;
- 		}
- 	} else if (!strcmp(argv[1], "configset_get_value_multi")) {
- 		for (i = 3; i < argc; i++) {
- 			if (git_configset_add_file(&cs, argv[i]))
--				return 2;
-+				goto exit2;
- 		}
- 		strptr = git_configset_get_value_multi(&cs, argv[2]);
- 		if (strptr) {
-@@ -113,13 +113,25 @@ int main(int argc, char **argv)
- 				else
- 					printf("%s\n", v);
- 			}
--			return 0;
-+			goto exit0;
- 		} else {
- 			printf("Value not found for \"%s\"\n", argv[2]);
--			return 1;
-+			goto exit1;
- 		}
- 	}
- 
- 	fprintf(stderr, "%s: Please check the syntax and the function name\n", argv[0]);
-+	goto exit1;
-+
-+exit0:
-+	git_configset_clear(&cs);
-+	return 0;
-+
-+exit1:
-+	git_configset_clear(&cs);
- 	return 1;
-+
-+exit2:
-+	git_configset_clear(&cs);
-+	return 2;
- }
--- 
-2.0.0.262.gdafc651
+This is not technically incorrect per-se, but the third sentence
+talks about "--sort" on "the command line" while this applies only
+to "the command line of the 'git tag' command" and nobody else's
+"--sort" option.
+
+Perhaps rephrasing it like this may be easier to understand?
+
+	When "git tag" command is used to list existing tags,
+        without "--sort=<value>" option on the command line,
+	the value of this variable is used as the default.
+
+This way, it would be clear, without explicitly saying anything,
+that the value will be spelled exactly the same way as you would
+spell the value for the --sort option on the command line.
+
+> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+> index b424a1bc48bb..2d246725aeb5 100644
+> --- a/Documentation/git-tag.txt
+> +++ b/Documentation/git-tag.txt
+> @@ -317,6 +317,7 @@ include::date-formats.txt[]
+>  SEE ALSO
+>  --------
+>  linkgit:git-check-ref-format[1].
+> +linkgit:git-config[1].
+
+It is not particularly friendly to readers to refer to
+"git-config[1]" from any other page, if done without spelling out
+which variable the reader is expected to look up.  Some addition
+to the description of the "--sort" option is needed if this SEE ALSO
+were to be any useful, I guess?
+
+	--sort=<type>::
+                ... (existing description) ...
+                When this option is not given, the sort order
+                defaults to the value configured for the `tag.sort`
+                variable, if exists, or lexicographic otherwise.
+
+or something like that, perhaps?
+
+> diff --git a/builtin/tag.c b/builtin/tag.c
+> index 7ccb6f3c581b..a53e27d4e7e4 100644
+> --- a/builtin/tag.c
+> +++ b/builtin/tag.c
+> @@ -18,6 +18,8 @@
+>  #include "sha1-array.h"
+>  #include "column.h"
+>  
+> +static int tag_sort = 0;
+
+Please do not initialize variables in bss segment to 0 by hand.
+
+If this variable is meant to take one of these *CMP_SORT values
+defined as macro later in this file, it is better to define this
+variable somewhere after and close to the definitions of the macros.
+Perhaps immediately after the "struct tag_filter" is declared?
+
+> @@ -346,9 +348,33 @@ static const char tag_template_nocleanup[] =
+>  	"Lines starting with '%c' will be kept; you may remove them"
+>  	" yourself if you want to.\n");
+>  
+> +static int parse_sort_string(const char *arg)
+> +{
+> +	int sort = 0;
+> +	int flags = 0;
+> +
+> +	if (skip_prefix(arg, "-", &arg))
+> +		flags |= REVERSE_SORT;
+> +
+> +	if (skip_prefix(arg, "version:", &arg) || skip_prefix(arg, "v:", &arg))
+> +		sort = VERCMP_SORT;
+> +
+> +	if (strcmp(arg, "refname"))
+> +		die(_("unsupported sort specification %s"), arg);
+
+Hmm.  I _thought_ we try to catch unsupported option value coming
+from the command line and die but at the same time we try *not* to
+die but warn and whatever is sensible when the value comes from the
+configuration, so that .git/config or $HOME/.gitconfig can be shared
+by those who use different versions of Git.
+
+Do we already have many precedences where we see configuration value
+that our version of Git do not yet understand?
+
+Not a very strong objection; just something that worries me.
+
+> +	sort |= flags;
+> +
+> +	return sort;
+> +}
+> +
+>  static int git_tag_config(const char *var, const char *value, void *cb)
+>  {
+> -	int status = git_gpg_config(var, value, cb);
+> +	int status;
+> +
+> +	if (!strcmp(var, "tag.sort")) {
+> +		tag_sort = parse_sort_string(value);
+> +	}
+> +
+
+Why doesn't this return success after noticing that the variable is
+to be interpreted by this block and nobody else?
+
+When there is no reason to have things in a particular order, it is
+customary to add new things at the end, not in the front, unless the
+new thing is so much more important than everything else---but then
+we are no longer talking about the case where there is no reason to
+have things in a particular order ;-).
+
+Remainder of the changes to builtin/tag.c looks good.
+
+> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+> index e4ab0f5b6419..1e8300f6ed7c 100755
+> --- a/t/t7004-tag.sh
+> +++ b/t/t7004-tag.sh
+> @@ -1423,6 +1423,27 @@ EOF
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'configured lexical sort' '
+> +	git config tag.sort "v:refname" &&
+> +	git tag -l "foo*" >actual &&
+> +	cat >expect <<EOF &&
+> +foo1.3
+> +foo1.6
+> +foo1.10
+> +EOF
+> +	test_cmp expect actual
+> +'
+
+Please write the above like so:
+
+	...
+	cat >expect <<-\EOF &&
+        foo1.3
+        ...
+        EOF
+        test_cmp expect actual
+
+The dash immediately after the here-doc redirection lets us indent
+the data with HT to allow the test boundaries easier to spot, and by
+quoting the token to end here-doc, we relieve the readers from
+having to wonder if there are variable substitutions going on that
+they need to be careful about.
+
+Overall, I think this is done well.  Thanks for working on it.
