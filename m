@@ -1,81 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] tag: use skip_prefix instead of magic numbers
-Date: Fri, 11 Jul 2014 11:42:59 -0700
-Message-ID: <xmqqvbr33ff0.fsf@gitster.dls.corp.google.com>
-References: <1405099447-27555-1-git-send-email-jacob.e.keller@intel.com>
-	<20140711175056.GE7856@sigill.intra.peff.net>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH 2/2] dir: remove PATH_MAX limitation
+Date: Fri, 11 Jul 2014 21:10:59 +0200
+Message-ID: <53C036C3.10103@gmail.com>
+References: <53B72DAA.5050007@gmail.com> <53B72DD5.6020603@gmail.com> <CACsJy8AXAusNHb5GJgrcbgzXY-1_ER2CNmah=vkJzOgPHMHudA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 11 20:43:15 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
+ Jeff King <peff@peff.net>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: msysgit+bncBCH3XYXLXQDBBQXNQCPAKGQEPIUPTSA@googlegroups.com Fri Jul 11 21:11:02 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBQXNQCPAKGQEPIUPTSA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f64.google.com ([74.125.82.64])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5fmr-0000Cv-Mv
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 20:43:14 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667AbaGKSnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 14:43:09 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63113 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751876AbaGKSnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 14:43:07 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 52B1127207;
-	Fri, 11 Jul 2014 14:42:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lgx8teOaD7VwRsaoTg972N61kvc=; b=cNw67m
-	9jc/1kyuRPIODoJYpPQXMKj5CN7iQIBICQTHZ0uqG5HIIq+91hpUGbZlGSxExjM0
-	PKnwdCTHaBnmQ1mazET7g60s66zz0OLLpZKlI5UQ+ViAU/+FQiU1aQ9joSDtZrM0
-	cAM3xWW3jcLDrsVCLOAKKVfBeqm/04ZoYwMog=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rodEgBoTiCWPPqi90SPXjLbfRoujy0pp
-	TcfX1f0Qc/XqfvKWiGne6pmrm4YjM6n6RCbwG5DC00Wj/TsiaCUFPP/tY1PfXrQT
-	Jvolrznj1Pmf7LDQjjjtazJZPP7yJKmSB/GFz/XPJZM/APUJNYXtcK897vc5z/uQ
-	REtEgE1nN9I=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 466FF27206;
-	Fri, 11 Jul 2014 14:42:51 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F1C67271F0;
-	Fri, 11 Jul 2014 14:42:45 -0400 (EDT)
-In-Reply-To: <20140711175056.GE7856@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 11 Jul 2014 13:50:56 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 265FB942-092B-11E4-954E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253314>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBQXNQCPAKGQEPIUPTSA@googlegroups.com>)
+	id 1X5gDl-00049y-5w
+	for gcvm-msysgit@m.gmane.org; Fri, 11 Jul 2014 21:11:01 +0200
+Received: by mail-wg0-f64.google.com with SMTP id m15sf139662wgh.29
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 12:10:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=DEkc+ZTTl/LhZWm6cpVEkr236ZHu13RKtnebUS1nbbM=;
+        b=eHGRF8uZLFdsoi++ku+GAi/ImflC5n77xQJ8Qemn2bBepg9UsnViade8bg3RspQf9i
+         xfAA1Y489HTyMIrQ+iL1wwxXj8ndIM5+1zUm8XxvwYL8jnGl3h1jmSzdA/tNoAD8yYm3
+         MkwOPv7fBPIF6ctOrsySSESdLOjhmt7VAVCvB0WqLRcwox7XuIKQQeXfOQYE3LNr0kuw
+         Bn/3mUQUPJ5vLvi8OsWHq167dv6z4n3XnaqU7IfH9Guasqx/yGmI9CtdSrHe0L8WAzsT
+         X5TXagAF0LqSbJxIr3NJwWktR/l7J6dVPcxDgRoCIrJ3g85jnO6H8U2oJJe15FKlAq2g
+         iXOA==
+X-Received: by 10.180.8.231 with SMTP id u7mr23841wia.10.1405105859037;
+        Fri, 11 Jul 2014 12:10:59 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.99.137 with SMTP id eq9ls142272wib.37.gmail; Fri, 11 Jul
+ 2014 12:10:58 -0700 (PDT)
+X-Received: by 10.180.90.13 with SMTP id bs13mr679143wib.6.1405105858064;
+        Fri, 11 Jul 2014 12:10:58 -0700 (PDT)
+Received: from mail-wi0-x22b.google.com (mail-wi0-x22b.google.com [2a00:1450:400c:c05::22b])
+        by gmr-mx.google.com with ESMTPS id cj4si249646wid.0.2014.07.11.12.10.58
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 11 Jul 2014 12:10:58 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22b as permitted sender) client-ip=2a00:1450:400c:c05::22b;
+Received: by mail-wi0-f171.google.com with SMTP id f8so174433wiw.4
+        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 12:10:58 -0700 (PDT)
+X-Received: by 10.194.219.225 with SMTP id pr1mr1154670wjc.34.1405105857959;
+        Fri, 11 Jul 2014 12:10:57 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id jy8sm6906700wjc.7.2014.07.11.12.10.56
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 11 Jul 2014 12:10:57 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CACsJy8AXAusNHb5GJgrcbgzXY-1_ER2CNmah=vkJzOgPHMHudA@mail.gmail.com>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22b
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253315>
 
-Jeff King <peff@peff.net> writes:
+Am 05.07.2014 12:48, schrieb Duy Nguyen:
+> On Sat, Jul 5, 2014 at 5:42 AM, Karsten Blees <karsten.blees@gmail.com> wrote:
+>> 'git status' segfaults if a directory is longer than PATH_MAX, because
+>> processing .gitignore files in prep_exclude() writes past the end of a
+>> PATH_MAX-bounded buffer.
+>>
+>> Remove the limitation by using strbuf instead.
+>>
+>> Note: this fix just 'abuses' strbuf as string allocator, len is always 0.
+>> prep_exclude() can probably be simplified using more strbuf APIs.
+> 
+> FYI I had a similar patch [1] that attempted to lazily strbuf_init()
+> instead so that strbuf_ API could be used.
+> 
+> [1] http://article.gmane.org/gmane.comp.version-control.git/248310
+> 
 
-> On Fri, Jul 11, 2014 at 10:24:05AM -0700, Jacob Keller wrote:
->
->> Make the parsing of the --sort parameter more readable by having
->> skip_prefix keep our pointer up to date.
->> 
->> Authored-by: Jeff King <peff@peff.net>
->
-> I suspect Junio may just apply this on the version of the commit he has
-> upstream, so you may not need this as part of your series.
+Sorry, I missed that one.
 
-You read me correctly ;-)  That is what I was planning to do, to
-fork jk/tag-sort topic on top of the updated jk/skip-prefix topic.
+In my version, strbuf_grow() does the lazy initialization (in fact, many
+strbuf_* functions can handle memset(0) strbufs just fine).
 
-> However, for reference, the right way to handle authorship is with a
->
->   From: Jeff King <peff@peff.net>
->
-> at the top of your message body. Git-am will pick that up and turn it
-> into the author field of the commit.
+I was simply too lazy to understand (again) how prep_exclude works exactly, and
+as string calculations like that have the tendency to be just 1 char off, I went
+for the obviously correct solution (i.e. s/dir->basebuf/dir->base.buf/ plus
+strbuf_grow() before we write the buffer).
 
-Thanks.
+But IMO your version is much cleaner already.
+
+However, api-strbuf.txt says that buf != NULL is invariant after init, and
+alloc is "somehow private" :-) , so perhaps you should
+
+-	if (!dir->basebuf.alloc)
++	if (!dir->basebuf.buf)
+		strbuf_init(&dir->basebuf, PATH_MAX);
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
