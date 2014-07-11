@@ -1,87 +1,114 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Date: Fri, 11 Jul 2014 21:08:28 +0000
-Message-ID: <1405112907.22963.48.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1405111895-17451-1-git-send-email-jacob.e.keller@intel.com>
-	 <1405111895-17451-3-git-send-email-jacob.e.keller@intel.com>
-	 <20140711210633.GA12546@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "peff@peff.net" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 11 23:08:35 2014
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH 2/3] tag: fix --sort tests to use cat<<-\EOF format
+Date: Fri, 11 Jul 2014 14:38:43 -0700
+Message-ID: <1405114724-23829-2-git-send-email-jacob.e.keller@intel.com>
+References: <1405114724-23829-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 11 23:39:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5i3V-0004mD-W2
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 23:08:34 +0200
+	id 1X5iX8-0004kg-Rh
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 23:39:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752325AbaGKVIa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 17:08:30 -0400
-Received: from mga01.intel.com ([192.55.52.88]:59366 "EHLO mga01.intel.com"
+	id S1752378AbaGKVjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 17:39:06 -0400
+Received: from mga01.intel.com ([192.55.52.88]:63326 "EHLO mga01.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751800AbaGKVI3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 17:08:29 -0400
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga101.fm.intel.com with ESMTP; 11 Jul 2014 14:08:29 -0700
+	id S1751856AbaGKVjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 17:39:04 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga101.fm.intel.com with ESMTP; 11 Jul 2014 14:38:56 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.01,645,1400050800"; 
-   d="scan'208";a="568667733"
-Received: from orsmsx110.amr.corp.intel.com ([10.22.240.8])
-  by fmsmga002.fm.intel.com with ESMTP; 11 Jul 2014 14:08:28 -0700
-Received: from orsmsx152.amr.corp.intel.com (10.22.226.39) by
- ORSMSX110.amr.corp.intel.com (10.22.240.8) with Microsoft SMTP Server (TLS)
- id 14.3.123.3; Fri, 11 Jul 2014 14:08:28 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
- ORSMSX152.amr.corp.intel.com ([169.254.8.128]) with mapi id 14.03.0123.003;
- Fri, 11 Jul 2014 14:08:28 -0700
-Thread-Topic: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Thread-Index: AQHPnUnvxsbR8A2dgEOXgE7LAeOTh5ub0sGAgAAAiIA=
-In-Reply-To: <20140711210633.GA12546@sigill.intra.peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <C052423AEA863B4CB546B9BB3E1BBF10@intel.com>
+   d="scan'208";a="560695201"
+Received: from jekeller-desk1.jf.intel.com (HELO jekeller-desk1.amr.corp.intel.com) ([134.134.173.156])
+  by fmsmga001.fm.intel.com with ESMTP; 11 Jul 2014 14:38:48 -0700
+X-Mailer: git-send-email 2.0.1.475.g9b8d714
+In-Reply-To: <1405114724-23829-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253328>
 
-T24gRnJpLCAyMDE0LTA3LTExIGF0IDE3OjA2IC0wNDAwLCBKZWZmIEtpbmcgd3JvdGU6DQo+IE9u
-IEZyaSwgSnVsIDExLCAyMDE0IGF0IDAxOjUxOjM1UE0gLTA3MDAsIEphY29iIEtlbGxlciB3cm90
-ZToNCj4gDQo+ID4gKwlpZiAoIXN0cmNtcCh2YXIsICJ0YWcuc29ydCIpKSB7DQo+ID4gKwkJaWYg
-KCF2YWx1ZSkNCj4gPiArCQkJcmV0dXJuIGNvbmZpZ19lcnJvcl9ub25ib29sKHZhcik7DQo+ID4g
-KwkJc3RhdHVzID0gcGFyc2Vfc29ydF9zdHJpbmcodmFsdWUsICZ0YWdfc29ydCk7DQo+ID4gKwkJ
-aWYgKHN0YXR1cykgew0KPiA+ICsJCQl3YXJuaW5nKCJ1c2luZyBkZWZhdWx0IGxleGljb2dyYXBo
-aWMgc29ydCBvcmRlciIpOw0KPiA+ICsJCQl0YWdfc29ydCA9IFNUUkNNUF9TT1JUOw0KPiA+ICsJ
-CX0NCj4gDQo+IEkgdGhpbmsgdGhpcyBpcyBhIGdvb2QgY29tcHJvbWlzZSBvZiB0aGUgaXNzdWVz
-IHdlIGRpc2N1c3NlZCBlYXJsaWVyLiBBcw0KPiB5b3Ugbm90ZWQsIGl0IHNob3VsZCBwcm9iYWJs
-eSBiZSBtYXJrZWQgZm9yIHRyYW5zbGF0aW9uLiBJJ20gYWxzbyBub3QNCj4gc3VyZSB0aGUgbWVz
-c2FnZSBjb250ZW50IGlzIGNsZWFyIGluIGFsbCBzaXR1YXRpb25zLiBJZiBJIGhhdmUgYSBicm9r
-ZW4NCj4gdGFnLnNvcnQsIEkgZ2V0Og0KPiANCj4gICAkIGdpdCBjb25maWcgdGFnLnNvcnQgYm9n
-dXMNCj4gICAkIGdpdCB0YWcgPi9kZXYvbnVsbA0KPiAgIGVycm9yOiB1bnN1cHBvcnRlZCBzb3J0
-IHNwZWNpZmljYXRpb24gYm9ndXMNCj4gICB3YXJuaW5nOiB1c2luZyBkZWZhdWx0IGxleGljb2dy
-YXBoaWMgc29ydCBvcmRlcg0KPiANCj4gTm90IHRvbyBiYWQsIHRob3VnaCByZW1pbmRpbmcgbWUg
-dGhhdCB0aGUgdmFsdWUgImJvZ3VzIiBjYW1lIGZyb20NCj4gdGFnLnNvcnQgd291bGQgYmUgbmlj
-ZS4gQnV0IHdoYXQgaWYgSSBvdmVycmlkZSBpdDoNCj4gDQo+ICAgJCBnaXQgdGFnIC0tc29ydD12
-OnJlZm5hbWUgPi9kZXYvbnVsbA0KPiAgIGVycm9yOiB1bnN1cHBvcnRlZCBzb3J0IHNwZWNpZmlj
-YXRpb24gYm9ndXMNCj4gICB3YXJuaW5nOiB1c2luZyBkZWZhdWx0IGxleGljb2dyYXBoaWMgc29y
-dCBvcmRlcg0KPiANCj4gVGhhdCdzIGFjdGl2ZWx5IHdyb25nLCBiZWNhdXNlIHdlIGFyZSB1c2lu
-ZyB2OnJlZm5hbWUgZnJvbSB0aGUNCj4gY29tbWFuZC1saW5lLiBQZXJoYXBzIHdlIGNvdWxkIHBo
-cmFzZSBpdCBsaWtlOg0KPiANCj4gICB3YXJuaW5nOiBpZ25vcmluZyBpbnZhbGlkIGNvbmZpZyBv
-cHRpb24gdGFnLnNvcnQNCj4gDQoNCm9rIHRoYXQgbWFrZXMgbW9yZSBzZW5zZS4gSSBjYW4ndCBy
-ZWFsbHkgYXZvaWQgcHJpbnRpbmcgdGhlIHdhcm5pbmcgYXQNCmFsbCBzaW5jZSBjb25maWcgcGFy
-c2luZyBoYXBwZW5zIGJlZm9yZSB0aGUgb3B0aW9uIHBhcnNpbmcuDQoNCkkgbGlrZSB0aGlzIHdv
-cmRpbmcuIEkgd2lsbCByZXNwaW4gYWdhaW4gOkQNCg0KVGhhbmtzLA0KSmFrZQ0KDQo+IG9yIHNp
-bWlsYXIsIHdoaWNoIGhlbHBzIGJvdGggY2FzZXMuDQo+IA0KPiBBcyBhbiBhc2lkZSwgSSBhbHNv
-IHRoaW5rIHRoZSBlcnJvciBsaW5lIGNvdWxkIG1vcmUgY2xlYXJseSBtYXJrIHRoZQ0KPiBsaXRl
-cmFsIGNvbnRlbnRzIG9mIHRoZSB2YXJpYWJsZS4gRS5nLiwgb25lIG9mOg0KPiANCj4gICBlcnJv
-cjogdW5zdXBwb3J0ZWQgc29ydCBzcGVjaWZpY2F0aW9uOiBib2d1cw0KPiANCj4gb3INCj4gDQo+
-ICAgZXJyb3I6IHVuc3VwcG9ydGVkIHNvcnQgc3BlY2lmaWNhdGlvbiAnYm9ndXMnDQo+IA0KPiAt
-UGVmZg0KDQoNCg==
+The --sort tests should use the better format for >expect to maintain
+indenting and ensure that no substitution is occurring. This makes
+parsing and understanding the tests a bit easier.
+
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+---
+ t/t7004-tag.sh | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index e4ab0f5b6419..66010b0e7066 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1385,41 +1385,41 @@ test_expect_success 'lexical sort' '
+ 	git tag foo1.6 &&
+ 	git tag foo1.10 &&
+ 	git tag -l --sort=refname "foo*" >actual &&
+-	cat >expect <<EOF &&
+-foo1.10
+-foo1.3
+-foo1.6
+-EOF
++	cat >expect <<-\EOF &&
++	foo1.10
++	foo1.3
++	foo1.6
++	EOF
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'version sort' '
+ 	git tag -l --sort=version:refname "foo*" >actual &&
+-	cat >expect <<EOF &&
+-foo1.3
+-foo1.6
+-foo1.10
+-EOF
++	cat >expect <<-\EOF &&
++	foo1.3
++	foo1.6
++	foo1.10
++	EOF
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'reverse version sort' '
+ 	git tag -l --sort=-version:refname "foo*" >actual &&
+-	cat >expect <<EOF &&
+-foo1.10
+-foo1.6
+-foo1.3
+-EOF
++	cat >expect <<-\EOF &&
++	foo1.10
++	foo1.6
++	foo1.3
++	EOF
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'reverse lexical sort' '
+ 	git tag -l --sort=-refname "foo*" >actual &&
+-	cat >expect <<EOF &&
+-foo1.6
+-foo1.3
+-foo1.10
+-EOF
++	cat >expect <<-\EOF &&
++	foo1.6
++	foo1.3
++	foo1.10
++	EOF
+ 	test_cmp expect actual
+ '
+ 
+-- 
+2.0.1.475.g9b8d714
