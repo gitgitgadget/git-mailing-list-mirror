@@ -1,84 +1,108 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3] http: Add Accept-Language header if possible
-Date: Fri, 11 Jul 2014 18:29:03 -0400
-Message-ID: <CAPig+cTHnhJjMimeHyJYm0vOb0PwNWtQArAcPZ3tPkvaGUyMzA@mail.gmail.com>
-References: <1405097573-19239-1-git-send-email-eungjun.yi@navercorp.com>
-	<20140711173544.GB7856@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] dir: remove PATH_MAX limitation
+Date: Fri, 11 Jul 2014 15:29:23 -0700
+Message-ID: <xmqq4myn34xo.fsf@gitster.dls.corp.google.com>
+References: <53B72DAA.5050007@gmail.com> <53B72DD5.6020603@gmail.com>
+	<xmqqa98i7aqt.fsf@gitster.dls.corp.google.com>
+	<53C036CD.902@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Yi EungJun <semtlenori@gmail.com>, Git List <git@vger.kernel.org>,
-	Yi EungJun <eungjun.yi@navercorp.com>,
-	Peter Krefting <peter@softwolves.pp.se>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jul 12 00:29:14 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git List <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRBSWKQGPAKGQE2E465SA@googlegroups.com Sat Jul 12 00:29:34 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBSWKQGPAKGQE2E465SA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qa0-f56.google.com ([209.85.216.56])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5jJX-0008LR-HL
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 00:29:11 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753970AbaGKW3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 18:29:07 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:61070 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752862AbaGKW3G (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 18:29:06 -0400
-Received: by mail-lb0-f171.google.com with SMTP id v6so1124522lbi.30
-        for <git@vger.kernel.org>; Fri, 11 Jul 2014 15:29:03 -0700 (PDT)
+	(envelope-from <msysgit+bncBCG77UMM3EJRBSWKQGPAKGQE2E465SA@googlegroups.com>)
+	id 1X5jJr-0000BT-Td
+	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 00:29:32 +0200
+Received: by mail-qa0-f56.google.com with SMTP id dc16sf403225qab.21
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 15:29:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=o72WNXVQTf9s4iinzSpOnzYkzuLZWlNz1AdYPlVX9Lg=;
-        b=0fiTTm7dLcAD2xjNhEIYxMFgPPrqCpUa23PocLPKVj4Au5wH/+rIwBcU7zdoPv/0k5
-         16F+dFh5aM3Ln1p3pb0PQTgzD7z0VprXcZNRFkiMj/ibUhPJ2SylDJUlzzTv9aXgwEG3
-         CijAzhNjWN0HpD6PsPhrbcfQZpNK1OldqV08P6I4IDCgFsmFKeKGN2vZvP4VCpTpl8ts
-         TVKqZ2vevz547zxRAc7qiuiXU1OEnpjYODmLTjMGvAiPtEL2pGYkFh++710pe8qgY6Aa
-         +M8pTku6k8TnVxIupK4KoWFscUpRO9o6Gh30VCAjidaT2OP2tGytewqelU8SPDeIvns0
-         ttPg==
-X-Received: by 10.112.125.102 with SMTP id mp6mr1460904lbb.12.1405117743667;
- Fri, 11 Jul 2014 15:29:03 -0700 (PDT)
-Received: by 10.114.78.167 with HTTP; Fri, 11 Jul 2014 15:29:03 -0700 (PDT)
-In-Reply-To: <20140711173544.GB7856@sigill.intra.peff.net>
-X-Google-Sender-Auth: S6LpRbtDGsVi-uzCwfOHa_BLOE8
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253337>
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=QgFZypn7BkEPqYdRXciee5mp4IFXaJ9K5dVmiCgx07s=;
+        b=M2f3r1CfcjwOImQaE1T1r2S88zngPBWHoF/hyzmFCTdpJmnN6RCIPSv9ljv3oTxNDu
+         drTKP+u4jhh7egj6pvwDqkjR+vBD5wfkXycLqMLQ2xhdU6GY4aBHJ8U3egRtz3GkghlW
+         agXcORSlgiE3vW+NS3lxhazitvm0p/a2hn2kZAOwOYDB31fREDBDSVuh4sAdh+fzBwas
+         I779poQT/HN1lSSYR+XfqiaILUtq8f84Y+nIGaRi5ui39DiLtKFuSnnzPo4kgekI667Y
+         PpeNucDVKA0wW+A+DdiYrRSOzrFNwlQpJV74e9gOb6wNxt8fPjCjR8G8QnAysYqG/Y9B
+         X5mQ==
+X-Received: by 10.182.40.233 with SMTP id a9mr373obl.36.1405117771175;
+        Fri, 11 Jul 2014 15:29:31 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.182.119.163 with SMTP id kv3ls567303obb.94.gmail; Fri, 11 Jul
+ 2014 15:29:30 -0700 (PDT)
+X-Received: by 10.182.209.37 with SMTP id mj5mr906751obc.7.1405117770270;
+        Fri, 11 Jul 2014 15:29:30 -0700 (PDT)
+Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id nv5si286963igb.3.2014.07.11.15.29.30
+        for <msysgit@googlegroups.com>;
+        Fri, 11 Jul 2014 15:29:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8556428893;
+	Fri, 11 Jul 2014 18:29:14 -0400 (EDT)
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7C7AC28892;
+	Fri, 11 Jul 2014 18:29:14 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 26F4628886;
+	Fri, 11 Jul 2014 18:29:09 -0400 (EDT)
+In-Reply-To: <53C036CD.902@gmail.com> (Karsten Blees's message of "Fri, 11 Jul
+	2014 21:11:09 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C693B354-094A-11E4-BB6E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253338>
 
-On Fri, Jul 11, 2014 at 1:35 PM, Jeff King <peff@peff.net> wrote:
-> On Sat, Jul 12, 2014 at 01:52:53AM +0900, Yi EungJun wrote:
->> Add an Accept-Language header which indicates the user's preferred
->> languages defined by $LANGUAGE, $LC_ALL, $LC_MESSAGES and $LANG.
->>
->> Examples:
->>   LANGUAGE= -> ""
->>   LANGUAGE=ko:en -> "Accept-Language: ko, en; q=0.9, *; q=0.1"
->>   LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *; q=0.1"
->>   LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *; q=0.1"
->>
->> This gives git servers a chance to display remote error messages in
->> the user's preferred language.
->
-> Thanks, this is looking much nicer. Most of my comments are on style:
->
->> +static const char* get_preferred_languages() {
->> +    const char* retval;
->
-> A few style nits:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-Also, this is C, not C++, so don't forget void:
-
-    static const char *get_preferred_languages(void)
-    {
-
->   1. We usually put a function's opening brace on a new line.
+> Anyways, I'd like to kindly withdraw this patch in favor of Duy's version.
 >
->   2. We usually put the asterisk in a pointer declaration with the
->      variable name ("const char *retval"). This one appears elsewhere in
->      the patch.
->
->   3. This line seems to be indented with spaces instead of tabs.
+> http://article.gmane.org/gmane.comp.version-control.git/248310
+
+Thanks; I've already reverted it from 'next'.
+
+Is Duy's patch still viable?
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
