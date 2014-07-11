@@ -1,108 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] tag: use skip_prefix instead of magic numbers
-Date: Fri, 11 Jul 2014 15:44:13 -0700
-Message-ID: <xmqqwqbj1poi.fsf@gitster.dls.corp.google.com>
-References: <1405114724-23829-1-git-send-email-jacob.e.keller@intel.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 3/4 v6] cache-tree: subdirectory tests
+Date: Fri, 11 Jul 2014 15:46:31 -0700
+Organization: Twitter
+Message-ID: <1405118791.3775.26.camel@stross>
+References: <1405038686-1138-1-git-send-email-dturner@twitter.com>
+	 <1405038686-1138-3-git-send-email-dturner@twitter.com>
+	 <CAPig+cQVjy5eBtGLsX3uaTEsHyvyjhqCMFaLDn9Upueis-z1eQ@mail.gmail.com>
+	 <xmqqbnsv6hmc.fsf@gitster.dls.corp.google.com>
+	 <xmqq7g3j6gzr.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Sat Jul 12 00:44:27 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>, David Turner <dturner@twitter.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 12 00:46:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5jYH-0006xx-LU
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 00:44:25 +0200
+	id 1X5jaS-0000wR-Rt
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 00:46:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753978AbaGKWoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 18:44:22 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60226 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750719AbaGKWoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 18:44:21 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 98A6028D56;
-	Fri, 11 Jul 2014 18:44:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qIgk0RYNYt6TsSfNP5pwjvT4oYE=; b=R8CvGH
-	Gxge4dc69oXvygOZUZgXFknZ1X379bBgoZ+qKdrtm4NpMEqZah9jpnVEJkXxFGOD
-	VCasTIetbVqegXDLLDy3URLEcPhwN5zwuC/nt422XMf2i19i/K5p4lU6EqBt3Xv+
-	QjelWJn1aGXDS58vsvGSxbAwF6pZ3wVumj4bk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dn5FoSgCa6um01IjQEJbJ1YO4D9a1NtI
-	Ch3V+ST/15snKaTgnPnOekAGlsfcNiLH/h2hsoglroyiND0LsW6ukQBo2QGmjPGR
-	mrin9KH2J0p9jjn5McFinpozRigKaP6OD/RWCTgHsUd7CbJNQVxaYfa60xzPU3K4
-	dx9hfmkvYz4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8EE7328D55;
-	Fri, 11 Jul 2014 18:44:05 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7E1A028D43;
-	Fri, 11 Jul 2014 18:43:59 -0400 (EDT)
-In-Reply-To: <1405114724-23829-1-git-send-email-jacob.e.keller@intel.com>
-	(Jacob Keller's message of "Fri, 11 Jul 2014 14:38:42 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D945A2F8-094C-11E4-9A5B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753371AbaGKWqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 18:46:37 -0400
+Received: from mail-qc0-f175.google.com ([209.85.216.175]:46575 "EHLO
+	mail-qc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752862AbaGKWqg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 18:46:36 -0400
+Received: by mail-qc0-f175.google.com with SMTP id i8so1586442qcq.20
+        for <git@vger.kernel.org>; Fri, 11 Jul 2014 15:46:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=Z1e6r/lHp/pokyxfEOzsnWtS3m5XueIHG66LA02pNHw=;
+        b=TpBO0NtXkzblqMvnfDeXS4YrKRTFclI+lrrvV6eWU+x6O3O7eUWxG2EjyO2p6Ni5GL
+         uWz9m/2zjdIIDL26LGmupch4DlucfJk51F1EY1VZbcevsqHynrGaSvbmSzEigeM74YSh
+         Ps2zILZUDG1AsLNCugHfp8PiIDPYsSZM2fuuaeL9KHmGjh187ODl56VQGKcS5HXiJ83I
+         027fVqqjqjiIMIXmFNPlEjpH9VGKhulV/yScjfvBKZDteQIjv5xpnTby0j3TnO16Y4VX
+         Tj3JXL0WPSutqFVhT1nCXP7kLm2lJLn1l7zFCLCYOLB8G3PmYehGrchiHPClyJua9abv
+         6n9Q==
+X-Gm-Message-State: ALoCoQkSQnkrvQak5jJlCc3KwdQWD7IPP7LsfUu4sHmAxPkKk5XZzG+WEhmWMooU0INuwF3GBzNy
+X-Received: by 10.224.103.134 with SMTP id k6mr496060qao.27.1405118795770;
+        Fri, 11 Jul 2014 15:46:35 -0700 (PDT)
+Received: from [172.25.140.220] ([8.25.197.27])
+        by mx.google.com with ESMTPSA id v10sm6513300qaj.25.2014.07.11.15.46.33
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Fri, 11 Jul 2014 15:46:34 -0700 (PDT)
+In-Reply-To: <xmqq7g3j6gzr.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253341>
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On Fri, 2014-07-11 at 08:40 -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> >>> +       sed -n -e "s/[0-9]* subtrees//" -e '/#(ref)/d' -e '/^invalid /p' >actual &&
+> >
+> > Is the second one to remove "#(ref)", which appears for a good
+> > "reference" cache tree entry shown for comparison, necessary?  Do
+> > they ever begin with "invalid"?  If they ever begin with "invalid"
+> > that itself may even be a noteworthy breakage to catch, no?
+> 
+> Answering to myself...
+> 
+> Because test-dump-cache-tree uses DRY_RUN to create only an in-core
+> copy of tree object, and we notice that the reference cache-tree
+> created in the tests contains the object name of a tree that does
+> not yet exist in the object database.  We get "invalid #(ref)" for
+> such node.
+> 
+> In the ideal world, I think whoever tries to compare two cache-trees
+> (i.e. test-dump-cache-tree) should *not* care, because we are merely
+> trying to show what the correct tree object name for the node would
+> be, but this is only for testing, so the best way forward would be
+> to:
+> 
+>  - Stop using DRY_RUN in test-dump-cache-tree.c;
+> 
+>  - Stop the code to support DRY_RUN from cache-tree.c (nobody but
+>    the test uses it); and
+> 
+>  - Drop the "-e '#(ref)/d'" from the above.
+> 
+> I would think.
 
-> From: Jeff King <peff@peff.net>
->
-> Make the parsing of the --sort parameter more readable by having
-> skip_prefix keep our pointer up to date.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-> ---
->  builtin/tag.c | 14 ++++----------
->  1 file changed, 4 insertions(+), 10 deletions(-)
->
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index ef765563388c..7ccb6f3c581b 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -524,18 +524,12 @@ static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
->  	int *sort = opt->value;
->  	int flags = 0;
->  
-> -	if (*arg == '-') {
-> +	if (skip_prefix(arg, "-", &arg))
->  		flags |= REVERSE_SORT;
-> -		arg++;
-> -	}
-> -	if (starts_with(arg, "version:")) {
-> +
-> +	if (skip_prefix(arg, "version:", &arg) || skip_prefix(arg, "v:", &arg))
->  		*sort = VERCMP_SORT;
-> -		arg += 8;
-> -	} else if (starts_with(arg, "v:")) {
-> -		*sort = VERCMP_SORT;
-> -		arg += 2;
-> -	} else
-> -		*sort = STRCMP_SORT;
-> +
+Do you mean that I should do this in this patch set, or that it's a good
+idea for the future?
 
-By losing "*sort = STRCMP_SORT", the version after this patch would
-stop clearing what is pointed by opt->value, so
-
-	git tag --sort=v:refname --sort=refname
-
-would no longer implement the "last one wins" semantics, no?
-
-Am I misreading the patch?  I somehow thought Peff's original was
-clearing the variable...
-
->  	if (strcmp(arg, "refname"))
->  		die(_("unsupported sort specification %s"), arg);
->  	*sort |= flags;
+Also, if we don't use DRY_RUN, won't test-dump-cache-tree add trees to
+the actual ODB, which would be odd for a test program?
