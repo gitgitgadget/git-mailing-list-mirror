@@ -1,132 +1,176 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH] fixup! symlinks: remove PATH_MAX limitation
-Date: Sat, 12 Jul 2014 01:02:34 +0200
-Message-ID: <53C06D0A.2000704@gmail.com>
-References: <53B72DAA.5050007@gmail.com>	<xmqqsimdc988.fsf@gitster.dls.corp.google.com>	<53C036DB.7000505@gmail.com> <xmqqd2db35dm.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCH3XYXLXQDBBB62QGPAKGQEGOO64IY@googlegroups.com Sat Jul 12 01:02:35 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBB62QGPAKGQEGOO64IY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f190.google.com ([209.85.212.190])
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v7 1/4] cache-tree: Create/update cache-tree on checkout
+Date: Fri, 11 Jul 2014 16:22:24 -0700
+Message-ID: <1405120947-3142-1-git-send-email-dturner@twitter.com>
+Cc: David Turner <dturner@twitter.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 12 01:22:54 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBB62QGPAKGQEGOO64IY@googlegroups.com>)
-	id 1X5jpq-0001Yz-W3
-	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 01:02:35 +0200
-Received: by mail-wi0-f190.google.com with SMTP id n15sf53042wiw.7
-        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 16:02:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=mK1tSRa7mGkV5Xi58H5Tn4y/JI34VHRQtVGoAxpjnw0=;
-        b=Ig3S3p57BEQ74O/Jxp0l6ZzBWUJe0viodOEnhatwjiFKHzWTpNQh/oNCiZAaNnnnJ3
-         tJwfr3kitKk9AgwLIz84tjM6VUbtjJDZu10s1nEHg5xlbWc9fPKPGnsf0LeXXWm2wtdm
-         K6reoMIT1lD7TF0qJKREpRGzmlRTOMXRipbot6UpcI2FkR18b2MeNdq4JdnKwbjF5Ehd
-         /3DEnnDwdN7jrILOgoFV3Zguq0UpJMWd5B/f2Cw5PhhqUqY1KhFFsKoCYsZcszMKZXSR
-         UVuOdy2ZxHgRlSovdrLXGBg7sLdrvt3iQUCZWwvXfyj3bjyF3+t1WaptXc61PO+OFyb6
-         hd9A==
-X-Received: by 10.180.8.36 with SMTP id o4mr29637wia.3.1405119752169;
-        Fri, 11 Jul 2014 16:02:32 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.102.33 with SMTP id fl1ls143675wib.44.canary; Fri, 11 Jul
- 2014 16:02:31 -0700 (PDT)
-X-Received: by 10.180.87.7 with SMTP id t7mr786940wiz.5.1405119751010;
-        Fri, 11 Jul 2014 16:02:31 -0700 (PDT)
-Received: from mail-wi0-x22c.google.com (mail-wi0-x22c.google.com [2a00:1450:400c:c05::22c])
-        by gmr-mx.google.com with ESMTPS id gc5si308717wic.1.2014.07.11.16.02.30
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 16:02:31 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22c as permitted sender) client-ip=2a00:1450:400c:c05::22c;
-Received: by mail-wi0-f172.google.com with SMTP id n3so393614wiv.11
-        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 16:02:30 -0700 (PDT)
-X-Received: by 10.194.157.195 with SMTP id wo3mr2477290wjb.130.1405119750934;
-        Fri, 11 Jul 2014 16:02:30 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id eo4sm12366111wid.4.2014.07.11.16.02.29
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X5k9V-00074e-Oc
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 01:22:54 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751221AbaGKXWt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 19:22:49 -0400
+Received: from mail-qc0-f172.google.com ([209.85.216.172]:43259 "EHLO
+	mail-qc0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750775AbaGKXWs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 19:22:48 -0400
+Received: by mail-qc0-f172.google.com with SMTP id l6so1626514qcy.17
+        for <git@vger.kernel.org>; Fri, 11 Jul 2014 16:22:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=MZN+HqLlnPsF8w2kchNABhp3azNgpWNm8q3eMPKqTRM=;
+        b=C4BT/NXmeC8hJI0AmcTQ9U/gbu+0YOZ7Mhfhx044EaDqy76SfirkhTeRTtbNh5wMyH
+         hWDEwK0I1LPSKw/BZ9CsY/7yaEcALn0Q9Z8bybrW7edABWFPlGBpw3e0PolZ00avCQa+
+         IAFjKkbpyhqZVzXRtsj5qfpMpZBZCQxvoAYGkDC8pVpU0nmjSHhe2H1bIuZJEg1Xky8/
+         h+0qwSvfO8NwWXd8lUCCwc9sfjnC7Cg/bHm6Paha8fLgOzc7o3N7KY3GIixmFg8TOE+v
+         iHQ2N+NUQ76w3jyN8B17wZTTO4nDtcTVgiTX0TP+IyXObQn4cwe5XDngUGCkKBGLdEOB
+         ky9w==
+X-Gm-Message-State: ALoCoQkVZAYbThvdNiOHRGVIbWd27QSLgyOTQBUQyTug+WUNwBntc0H4rn8M0dk6D+lJik4h2U5f
+X-Received: by 10.224.137.9 with SMTP id u9mr2515806qat.24.1405120967874;
+        Fri, 11 Jul 2014 16:22:47 -0700 (PDT)
+Received: from stross.twitter.corp ([8.25.197.27])
+        by mx.google.com with ESMTPSA id k7sm6652126qas.24.2014.07.11.16.22.45
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 16:02:30 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqd2db35dm.fsf@gitster.dls.corp.google.com>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22c
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253347>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 11 Jul 2014 16:22:46 -0700 (PDT)
+X-Google-Original-From: David Turner <dturner@twitter.com>
+X-Mailer: git-send-email 2.0.0.390.gcb682f8
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253348>
 
-Rename cache_def_free to cache_def_clear as it doesn't free the struct
-cache_def, but just clears its content.
+When git checkout checks out a branch, create or update the
+cache-tree so that subsequent operations are faster.
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
+update_main_cache_tree learned a new flag, WRITE_TREE_REPAIR.  When
+WRITE_TREE_REPAIR is set, portions of the cache-tree which do not
+correspond to existing tree objects are invalidated (and portions which
+do are marked as valid).  No new tree objects are created.
+
+Signed-off-by: David Turner <dturner@twitter.com>
 ---
- cache.h         | 2 +-
- preload-index.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ builtin/checkout.c    |  8 ++++++++
+ cache-tree.c          | 12 +++++++++++-
+ cache-tree.h          |  1 +
+ t/t0090-cache-tree.sh | 19 ++++++++++++++++---
+ 4 files changed, 36 insertions(+), 4 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 44aa439..378ee7f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1096,7 +1096,7 @@ struct cache_def {
- 	int prefix_len_stat_func;
- };
- #define CACHE_DEF_INIT { STRBUF_INIT, 0, 0, 0 }
--static inline void cache_def_free(struct cache_def *cache)
-+static inline void cache_def_clear(struct cache_def *cache)
- {
- 	strbuf_release(&cache->path);
- }
-diff --git a/preload-index.c b/preload-index.c
-index 79ce8a9..c1fe3a3 100644
---- a/preload-index.c
-+++ b/preload-index.c
-@@ -63,7 +63,7 @@ static void *preload_thread(void *_data)
- 			continue;
- 		ce_mark_uptodate(ce);
- 	} while (--nr > 0);
--	cache_def_free(&cache);
-+	cache_def_clear(&cache);
- 	return NULL;
- }
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 07cf555..054214f 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -553,6 +553,14 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		}
+ 	}
  
++	if (!active_cache_tree)
++		active_cache_tree = cache_tree();
++
++	if (!cache_tree_fully_valid(active_cache_tree))
++		cache_tree_update(active_cache_tree,
++				  (const struct cache_entry * const *)active_cache,
++				  active_nr, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
++
+ 	if (write_cache(newfd, active_cache, active_nr) ||
+ 	    commit_locked_index(lock_file))
+ 		die(_("unable to write new index file"));
+diff --git a/cache-tree.c b/cache-tree.c
+index 7fa524a..f951d7d 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -239,9 +239,12 @@ static int update_one(struct cache_tree *it,
+ 	struct strbuf buffer;
+ 	int missing_ok = flags & WRITE_TREE_MISSING_OK;
+ 	int dryrun = flags & WRITE_TREE_DRY_RUN;
++	int repair = flags & WRITE_TREE_REPAIR;
+ 	int to_invalidate = 0;
+ 	int i;
+ 
++	assert(!(dryrun && repair));
++
+ 	*skip_count = 0;
+ 
+ 	if (0 <= it->entry_count && has_sha1_file(it->sha1))
+@@ -374,7 +377,14 @@ static int update_one(struct cache_tree *it,
+ #endif
+ 	}
+ 
+-	if (dryrun)
++	if (repair) {
++		unsigned char sha1[20];
++		hash_sha1_file(buffer.buf, buffer.len, tree_type, sha1);
++		if (has_sha1_file(sha1))
++			hashcpy(it->sha1, sha1);
++		else
++			to_invalidate = 1;
++	} else if (dryrun)
+ 		hash_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1);
+ 	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1)) {
+ 		strbuf_release(&buffer);
+diff --git a/cache-tree.h b/cache-tree.h
+index f1923ad..666d18f 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -39,6 +39,7 @@ int update_main_cache_tree(int);
+ #define WRITE_TREE_IGNORE_CACHE_TREE 2
+ #define WRITE_TREE_DRY_RUN 4
+ #define WRITE_TREE_SILENT 8
++#define WRITE_TREE_REPAIR 16
+ 
+ /* error return codes */
+ #define WRITE_TREE_UNREADABLE_INDEX (-1)
+diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+index 6c33e28..98fb1ab 100755
+--- a/t/t0090-cache-tree.sh
++++ b/t/t0090-cache-tree.sh
+@@ -44,14 +44,14 @@ test_expect_success 'read-tree HEAD establishes cache-tree' '
+ 
+ test_expect_success 'git-add invalidates cache-tree' '
+ 	test_when_finished "git reset --hard; git read-tree HEAD" &&
+-	echo "I changed this file" > foo &&
++	echo "I changed this file" >foo &&
+ 	git add foo &&
+ 	test_invalid_cache_tree
+ '
+ 
+ test_expect_success 'update-index invalidates cache-tree' '
+ 	test_when_finished "git reset --hard; git read-tree HEAD" &&
+-	echo "I changed this file" > foo &&
++	echo "I changed this file" >foo &&
+ 	git update-index --add foo &&
+ 	test_invalid_cache_tree
+ '
+@@ -85,9 +85,22 @@ test_expect_success 'reset --hard without index gives cache-tree' '
+ 	test_shallow_cache_tree
+ '
+ 
+-test_expect_failure 'checkout gives cache-tree' '
++test_expect_success 'checkout gives cache-tree' '
++	git tag current &&
+ 	git checkout HEAD^ &&
+ 	test_shallow_cache_tree
+ '
+ 
++test_expect_success 'checkout -b gives cache-tree' '
++	git checkout current &&
++	git checkout -b prev HEAD^ &&
++	test_shallow_cache_tree
++'
++
++test_expect_success 'checkout -B gives cache-tree' '
++	git checkout current &&
++	git checkout -B prev HEAD^ &&
++	test_shallow_cache_tree
++'
++
+ test_done
 -- 
-2.0.1.563.g66f467c.dirty
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+2.0.0.390.gcb682f8
