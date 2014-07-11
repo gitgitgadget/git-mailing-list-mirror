@@ -1,121 +1,169 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH 2/2] dir: remove PATH_MAX limitation
-Date: Sat, 12 Jul 2014 01:43:52 +0200
-Message-ID: <53C076B8.9030209@gmail.com>
-References: <53B72DAA.5050007@gmail.com> <53B72DD5.6020603@gmail.com>	<xmqqa98i7aqt.fsf@gitster.dls.corp.google.com>	<53C036CD.902@gmail.com> <xmqq4myn34xo.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v7 4/4] cache-tree: Write updated cache-tree after commit
+Date: Fri, 11 Jul 2014 19:56:35 -0400
+Message-ID: <CAPig+cQpzomDmwVqgDGrP4qC1OujRXu5e1wc=EwX61k_RpLbKg@mail.gmail.com>
+References: <1405120947-3142-1-git-send-email-dturner@twitter.com>
+	<1405120947-3142-4-git-send-email-dturner@twitter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>
-X-From: msysgit+bncBCH3XYXLXQDBBNXNQGPAKGQEFRTPWVQ@googlegroups.com Sat Jul 12 01:43:57 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBNXNQGPAKGQEFRTPWVQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f183.google.com ([209.85.212.183])
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, David Turner <dturner@twitter.com>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Sat Jul 12 01:56:44 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBNXNQGPAKGQEFRTPWVQ@googlegroups.com>)
-	id 1X5kTr-00028M-LB
-	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 01:43:55 +0200
-Received: by mail-wi0-f183.google.com with SMTP id q5sf494wiv.10
-        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 16:43:52 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X5kgD-0005sh-Am
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 01:56:41 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754691AbaGKX4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 19:56:37 -0400
+Received: from mail-la0-f51.google.com ([209.85.215.51]:59132 "EHLO
+	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754622AbaGKX4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 19:56:37 -0400
+Received: by mail-la0-f51.google.com with SMTP id mc6so1339551lab.24
+        for <git@vger.kernel.org>; Fri, 11 Jul 2014 16:56:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=XY3xWv+4mLh7Y/iACIrfej/B0keiZ+aBvR4AEe+C+Ok=;
-        b=FxSaBW3J3WXjOAL8X+OcAUV8X2mlSBZY5fyH+hlAu95E9kvDam4hPzR5t8jdAMSjA2
-         A/yH8me3Ojh5MmZ1Es/1FEgVRoJ1WoHgGBbt8G8i5DHaoVWsACRYdo12r8Z1iGGwUkmV
-         S2eQV+3K3z6nGWYuvn9CuO0uqr5ZGEokDYtUcsMAzO7zcuTJmNfNmI0RzLWUubYBO2Wf
-         9kgJHTPSaRsjkSCdenYCn1lsz6ezCQu+zVh60587arrsZt59gYyCWTbcptpyU7CnIfPo
-         jbxDHN4A+cOBGhyfhG1WQEY/NL9aDR3RM/Oi4kt5neDbhD2PTIb3OW+stXTpRfGoe+qc
-         ddsA==
-X-Received: by 10.180.13.139 with SMTP id h11mr30413wic.21.1405122231380;
-        Fri, 11 Jul 2014 16:43:51 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.95.194 with SMTP id dm2ls158130wib.53.gmail; Fri, 11 Jul
- 2014 16:43:50 -0700 (PDT)
-X-Received: by 10.194.92.167 with SMTP id cn7mr207770wjb.1.1405122230549;
-        Fri, 11 Jul 2014 16:43:50 -0700 (PDT)
-Received: from mail-we0-x22b.google.com (mail-we0-x22b.google.com [2a00:1450:400c:c03::22b])
-        by gmr-mx.google.com with ESMTPS id d9si2406wie.3.2014.07.11.16.43.50
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 16:43:50 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22b as permitted sender) client-ip=2a00:1450:400c:c03::22b;
-Received: by mail-we0-f171.google.com with SMTP id q58so1781649wes.30
-        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 16:43:50 -0700 (PDT)
-X-Received: by 10.194.120.35 with SMTP id kz3mr2794408wjb.38.1405122230467;
-        Fri, 11 Jul 2014 16:43:50 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id v17sm8114706wjr.33.2014.07.11.16.43.49
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 16:43:49 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq4myn34xo.fsf@gitster.dls.corp.google.com>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22b
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253353>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=6J2cIRKIYYinWF1HdXlBzhSeEZJ84iWTOgNo6Y7es5I=;
+        b=aqoCOuOyzRQwM+F98P45lidqRVNhlLGrC1Wq1hKgwJ4rjf/nyG23Ci0trdUjF81RAP
+         KHYEre1LV0UWazFa5zDCWYfJox3h9ikbppnSVaVQYNBhdOU3Ld9FND+XZpzHP7Zt/3SI
+         fb0AkGxVdjyjD9tMcTCHT8eFGySXnps/vTUwHgn2z5t84NiHGjGFg2OcPqgeGMoUYmYL
+         8SCh6yX3SpXpfWKlP0vIH+1nl9u2dxIZVLXFZLkx+bdow6ijYDtFj0LmfHqFpF+7EPg0
+         dEepIApHuEtG0OUM4vZbiMABw+dNJKyBnNVhzdFAuQ186yFzGg0QT2qY2hN+zFx+RVyf
+         ttmA==
+X-Received: by 10.112.149.200 with SMTP id uc8mr1650509lbb.70.1405122995672;
+ Fri, 11 Jul 2014 16:56:35 -0700 (PDT)
+Received: by 10.114.78.167 with HTTP; Fri, 11 Jul 2014 16:56:35 -0700 (PDT)
+In-Reply-To: <1405120947-3142-4-git-send-email-dturner@twitter.com>
+X-Google-Sender-Auth: OU-NxPWNjC7uW4gOsj5OSO81BJs
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253354>
 
-Am 12.07.2014 00:29, schrieb Junio C Hamano:
-> Karsten Blees <karsten.blees@gmail.com> writes:
-> 
->> Anyways, I'd like to kindly withdraw this patch in favor of Duy's version.
->>
->> http://article.gmane.org/gmane.comp.version-control.git/248310
-> 
-> Thanks; I've already reverted it from 'next'.
-> 
-> Is Duy's patch still viable?
-> 
+On Fri, Jul 11, 2014 at 7:22 PM, David Turner <dturner@twopensource.com> wrote:
+> During the commit process, update the cache-tree. Write this updated
+> cache-tree so that it's ready for subsequent commands.
+>
+> Add test code which demonstrates that git commit now writes the cache
+> tree.  Make all tests test the entire cache-tree, not just the root
+> level.
+>
+> Signed-off-by: David Turner <dturner@twitter.com>
+> diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+> index 3a3342e..57f263f 100755
+> --- a/t/t0090-cache-tree.sh
+> +++ b/t/t0090-cache-tree.sh
+> @@ -90,37 +128,86 @@ test_expect_success 'test-scrap-cache-tree works' '
+>
+>  test_expect_success 'second commit has cache-tree' '
+>         test_commit bar &&
+> -       test_shallow_cache_tree
+> +       test_cache_tree
+> +'
+> +
+> +test_expect_success 'commit -i gives cache-tree' '
+> +       git checkout current &&
+> +       cat <<-\EOT >foo.c &&
+> +       int foo()
+> +       {
+> +               return 42;
+> +       }
+> +       int bar()
+> +       {
+> +               return 42;
+> +       }
+> +       EOT
+> +       git add foo.c
+> +       test_invalid_cache_tree
+> +       git commit -m "add a file"
+> +       test_cache_tree
 
-I think so. It fixes the segfault with long paths on Windows as well
-(Tested-by: <me>), uses strbuf APIs as Peff suggested, and initializes the
-strbuf with PATH_MAX (i.e. no reallocs in the common case either ;-) ).
+Broken &&-chain on all four lines above.
 
-AFAICT the first two patches of that series are also completely unrelated
-to the untracked-cache, so we may want to fast-track these?
+> +       cat <<-\EOT >foo.c &&
+> +       int foo()
+> +       {
+> +               return 43;
+> +       }
+> +       int bar()
+> +       {
+> +               return 44;
+> +       }
+> +       EOT
+> +       (echo p; echo 1; echo; echo s; echo n; echo y; echo q) | git commit --interactive -m foo
 
-[01/20] dir.c: coding style fix
-[02/20] dir.h: move struct exclude declaration to top level
-[03/20] prep_exclude: remove the artificial PATH_MAX limit
+Broken &&-chain.
 
-...perhaps with s/if (!dir->basebuf.alloc)/if (!dir->basebuf.buf)/
+Would a printf make this more readable?
 
-@Duy any reason for not signing off that series?
+    printf "p\n1\n\ns\nn\ny\nq\n" | git commt ... &&
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+Perhaps not.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> +       test_cache_tree
+> +'
+> +
+> +test_expect_success 'commit in child dir has cache-tree' '
+> +       mkdir dir &&
+> +       >dir/child.t &&
+> +       git add dir/child.t &&
+> +       git commit -m dir/child.t &&
+> +       test_cache_tree
+>  '
+>
+>  test_expect_success 'reset --hard gives cache-tree' '
+>         test-scrap-cache-tree &&
+>         git reset --hard &&
+> -       test_shallow_cache_tree
+> +       test_cache_tree
+>  '
+>
+>  test_expect_success 'reset --hard without index gives cache-tree' '
+>         rm -f .git/index &&
+>         git reset --hard &&
+> -       test_shallow_cache_tree
+> +       test_cache_tree
+>  '
+>
+>  test_expect_success 'checkout gives cache-tree' '
+>         git tag current &&
+>         git checkout HEAD^ &&
+> -       test_shallow_cache_tree
+> +       test_cache_tree
+>  '
+>
+>  test_expect_success 'checkout -b gives cache-tree' '
+>         git checkout current &&
+>         git checkout -b prev HEAD^ &&
+> -       test_shallow_cache_tree
+> +       test_cache_tree
+>  '
+>
+>  test_expect_success 'checkout -B gives cache-tree' '
+>         git checkout current &&
+>         git checkout -B prev HEAD^ &&
+> -       test_shallow_cache_tree
+> +       test_cache_tree
+> +'
+> +
+> +test_expect_success 'partial commit gives cache-tree' '
+> +       git checkout -b partial no-children &&
+> +       test_commit one &&
+> +       test_commit two &&
+> +       echo "some change" >one.t &&
+> +       git add one.t &&
+> +       echo "some other change" >two.t &&
+> +       git commit two.t -m partial &&
+> +       test_cache_tree
+>  '
+>
+>  test_done
+> --
+> 2.0.0.390.gcb682f8
