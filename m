@@ -1,160 +1,243 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 4/7] add object_as_type helper for casting objects
-Date: Fri, 11 Jul 2014 11:45:58 +0100
-Message-ID: <53BFC066.2090102@ramsay1.demon.co.uk>
-References: <20140711084141.GA5521@sigill.intra.peff.net> <20140711084823.GD5625@sigill.intra.peff.net>
+From: Ronald Bos <ronald.bos.msc@gmail.com>
+Subject: git pull crash
+Date: Fri, 11 Jul 2014 12:49:43 +0200
+Message-ID: <53BFC147.5000509@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 11 12:46:08 2014
+Content-Type: multipart/mixed;
+ boundary="------------070908020509030909090707"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 11 12:49:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5YLA-0006Yb-33
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 12:46:08 +0200
+	id 1X5YOs-000282-3G
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 12:49:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751828AbaGKKqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 06:46:03 -0400
-Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:60744 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751247AbaGKKqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 06:46:01 -0400
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 7B47B1280C4;
-	Fri, 11 Jul 2014 11:45:55 +0100 (BST)
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 2BE8D1280B3;
-	Fri, 11 Jul 2014 11:45:55 +0100 (BST)
-Received: from [192.168.254.1] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
-	Fri, 11 Jul 2014 11:45:54 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <20140711084823.GD5625@sigill.intra.peff.net>
-X-MDF-HostID: 22
+	id S1752507AbaGKKty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 06:49:54 -0400
+Received: from mail-wi0-f175.google.com ([209.85.212.175]:57615 "EHLO
+	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379AbaGKKtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 06:49:53 -0400
+Received: by mail-wi0-f175.google.com with SMTP id ho1so6058564wib.2
+        for <git@vger.kernel.org>; Fri, 11 Jul 2014 03:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type;
+        bh=0WpCkwTaehzu6vX+DoYPa9oWSINDMQUafceUyfQGBdg=;
+        b=cqW+nkl2aVqS6k2B3LvYfvjLAE9b0mP8CWaecrV7ReiLLEq99i8OLAdAMr4bDBmf05
+         4626Bq4r9XbGkVOwyly65A9j7P12fL3uPPVERJ+3ZSsWMeLWcEKiCjR/XNiE28wI+pEz
+         8sDBqR+X1gClqz61Q82hoU5e9hofCmW2lIBCZoKasbYEkPHGuxBF+ejQvAd9+FqWdCCD
+         bJaXDcOjufCRquXd86NlpE+Z4PBePbjtm28X3jB+7cw3kwPGq1zZ9Ukj/QFS2FZTKtQE
+         h1LC1JdZuXfwmnbTNjkx49VpaYgXrHNyJtkNZaUBgNgZQrGEaSyuJ+Tl29Rzl8xA1lmf
+         YnqA==
+X-Received: by 10.194.90.201 with SMTP id by9mr65879459wjb.94.1405075788957;
+        Fri, 11 Jul 2014 03:49:48 -0700 (PDT)
+Received: from [192.168.1.25] (dsl-087-195-150-137.solcon.nl. [87.195.150.137])
+        by mx.google.com with ESMTPSA id ek3sm4406402wjd.17.2014.07.11.03.49.47
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 11 Jul 2014 03:49:47 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253272>
 
-On 11/07/14 09:48, Jeff King wrote:
+This is a multi-part message in MIME format.
+--------------070908020509030909090707
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
-[snip]
+Hi all,
 
-> diff --git a/object.c b/object.c
-> index 472aa8d..b2319f6 100644
-> --- a/object.c
-> +++ b/object.c
-> @@ -158,6 +158,23 @@ void *create_object(const unsigned char *sha1, void *o)
->  	return obj;
->  }
->  
-> +void *object_as_type(struct object *obj, enum object_type type, int quiet)
-> +{
-> +	if (obj->type == type)
-> +		return obj;
-> +	else if (obj->type == OBJ_NONE) {
-> +		obj->type = type;
-> +		return obj;
-> +	}
-> +	else {
-> +		if (!quiet)
-> +			error("object %s is a %s, not a %s",
-> +			      sha1_to_hex(obj->sha1),
-> +			      typename(obj->type), typename(type));
-> +		return NULL;
-> +	}
-> +}
-> +
->  struct object *lookup_unknown_object(const unsigned char *sha1)
->  {
->  	struct object *obj = lookup_object(sha1);
-> diff --git a/object.h b/object.h
-> index 8020ace..5e8d8ee 100644
-> --- a/object.h
-> +++ b/object.h
-> @@ -81,6 +81,8 @@ struct object *lookup_object(const unsigned char *sha1);
->  
->  extern void *create_object(const unsigned char *sha1, void *obj);
->  
-> +void *object_as_type(struct object *obj, enum object_type type, int quiet);
-> +
->  /*
->   * Returns the object, having parsed it to find out what it is.
->   *
-> diff --git a/refs.c b/refs.c
-> index 20e2bf1..5a18e2d 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1729,9 +1729,8 @@ static enum peel_status peel_object(const unsigned char *name, unsigned char *sh
->  
->  	if (o->type == OBJ_NONE) {
->  		int type = sha1_object_info(name, NULL);
-> -		if (type < 0)
-> +		if (type < 0 || !object_as_type(o, type, 0))
---------------------------------------------------------^^^
+I am running git on Windows 8.1 (with all the latest updates installed), 
+and it consequently crashes when I run "git pull" in my cloned working copy.
 
-It is not possible here for object_as_type() to issue an error()
-report, but I had to go look at the code to check. (It would have
-been a change in behaviour, otherwise). So, it doesn't really matter
-what you pass to the quiet argument, but setting it to 1 _may_ help
-the next reader. (No, I'm not convinced either; the only reason I
-knew it had anything to do with error messages was because I had
-just read the code ...) Hmm, dunno.
+I attached a screen shot of the message window (it is in Dutch...)
 
->  			return PEEL_INVALID;
-> -		o->type = type;
->  	}
->  
->  	if (o->type != OBJ_TAG)
-> diff --git a/tag.c b/tag.c
-> index 79552c7..82d841b 100644
-> --- a/tag.c
-> +++ b/tag.c
-> @@ -41,14 +41,7 @@ struct tag *lookup_tag(const unsigned char *sha1)
->  	struct object *obj = lookup_object(sha1);
->  	if (!obj)
->  		return create_object(sha1, alloc_tag_node());
-> -	if (!obj->type)
-> -		obj->type = OBJ_TAG;
-> -	if (obj->type != OBJ_TAG) {
-> -		error("Object %s is a %s, not a tag",
-> -		      sha1_to_hex(sha1), typename(obj->type));
-> -		return NULL;
-> -	}
-> -	return (struct tag *) obj;
-> +	return object_as_type(obj, OBJ_TAG, 0);
->  }
->  
->  static unsigned long parse_tag_date(const char *buf, const char *tail)
-> diff --git a/tree.c b/tree.c
-> index ed66575..bb02c1c 100644
-> --- a/tree.c
-> +++ b/tree.c
-> @@ -184,14 +184,7 @@ struct tree *lookup_tree(const unsigned char *sha1)
->  	struct object *obj = lookup_object(sha1);
->  	if (!obj)
->  		return create_object(sha1, alloc_tree_node());
-> -	if (!obj->type)
-> -		obj->type = OBJ_TREE;
-> -	if (obj->type != OBJ_TREE) {
-> -		error("Object %s is a %s, not a tree",
-> -		      sha1_to_hex(sha1), typename(obj->type));
-> -		return NULL;
-> -	}
-> -	return (struct tree *) obj;
-> +	return object_as_type(obj, OBJ_TREE, 0);
->  }
->  
->  int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size)
-> 
+This is my git version:
+$ git --version
+git version 1.9.4.msysgit.0
 
-ATB,
-Ramsay Jones
+Is this a known problem? Is there something I can do to help find out 
+what is causing the problem?
+
+Regards,
+
+Ronald
+
+
+--------------070908020509030909090707
+Content-Type: image/png;
+ name="git-crash.png"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+ filename="git-crash.png"
+
+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
+E3z1BaTPoxu6T8AcTozC63FcZkw4PtNki7jX1daWlpb2dXW3/OIXh++4o3P+bW233948bdrR
+n/700jvvUMAnn3xCk3n/k0/O955ouv/+XfPmkbIf6e3taG9vaWlhyv7ee6Xz5j1bWFg6adKq
+SZP+MmlS+U03n2ltXbNmDSUPqvhgd0hi3wx2pyXWI6Bum+9e6nxijHCwKzPeiGTf3jHzCNQj
+KS+M4ZFzM7usufFv3zGccIasybv0A65bLMIZZ3uM+UivTGqGWYU4zkI8eSTUpRak4QPMUCch
+K2kMY73y0mzrMNlQ05fZhcOalplcteUMxMdRXo850EAWjfhuZ3hFRtsN09msB2wkJRQ63gob
+0TNmBXDS51HzFy4ZoWPI46xaxxCib6j7llmyRdzLy8pqamp6d1S2LPl++223HSoqOlBU1DR3
+7p7rb2z78Y8/7O//+6VL77777rnBwbPnz7916FBnZWVbdzfJesP+/SdOn/6/d99dNXv2nwsL
+1xQUvFhQ8AK3tVOmtD3//K5duyi5KJOjjP1zdvlAe6VFYMxgqpHmaYxyCTxjWUe2iHvJihXd
+3d0dzz3fXFx8cO6tB+bOaZgzp3727LpZ362cOrXpoYcGT58efP/9t06fPn78eNexY21dXc3N
+zfX19b2BshcV0Zl9bX7+6oKCVdxI4ksnT675xS8oLSUXZXIUvHgpkx1bRbNI9zRGuwSesawj
+W8T9iWXL6FTe+OTyptvmBbJeP3vm3pkzd8+YUTNr1uvXXbN78eLjjY3Heno6OzvbDh060Ny8
+f//+3hMn3nv33TW33x4oe2B0eCcjlV99xRWb5t9BaSm5KJOj4MVLAfFH7DHcKPcP+WkgfSXw
+jGUd2SLujz/22MWLF6t++MOG736XlH3vd76ze/r0mhkzqmbMqLjuus0TJrycn19VXNze2dna
+1hac2ffs3Ts4OPjXhx/+c2Eh9b4kjfQ9+Lq2oOClb3yD0lJyUQYAAHKDLBL3Cxcu7Fq6lJ3W
+SdanTauaPn3nzTe/NnnyxgkTyvLz//qlLx1ct665ra2pqYkp+549u3bvrt67t3HLltduuIGk
+nGLIyk0jcf/Wt/7+979D3AEAuUa2iPsTy5b19/XXPfGb6pkzq0jZZ0yvuP76TRMmbODKvnnK
+lINbtjQdPtzY2FhfV7eHxL22dld1dWVl5c59+w5UVGz9+tcpjILpd4JXpW0qLHx14cLBgYGc
+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
++X9xXW+mxsUl6QAAAABJRU5ErkJggg==
+--------------070908020509030909090707--
