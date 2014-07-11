@@ -1,76 +1,92 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v6 02/10] replace: add --graft option
-Date: Fri, 11 Jul 2014 18:24:50 +0200
-Message-ID: <CAP8UFD2db=ZMFSvzW6be3gBv7DP93C7Z5yfOEhs9QLNOkX0fGQ@mail.gmail.com>
-References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
-	<20140707063540.3708.51047.chriscool@tuxfamily.org>
-	<xmqqsima7f3r.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD2X7j2TGEQfX3h8CfiZypJ5tVPqaZ2bNE0k1-jbeJj=Zw@mail.gmail.com>
-	<xmqqr41t88dz.fsf@gitster.dls.corp.google.com>
-	<xmqqegxt86ba.fsf@gitster.dls.corp.google.com>
-	<CAP8UFD0_m5aFVcBQr3d9pXR=9rLjAVPGrj=UsBYFcnTQFwNKGA@mail.gmail.com>
-	<xmqqmwcg561j.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2 v4] tag: support configuring --sort via .gitconfig
+Date: Fri, 11 Jul 2014 09:28:37 -0700
+Message-ID: <xmqqtx6n507e.fsf@gitster.dls.corp.google.com>
+References: <1405036334-8093-1-git-send-email-jacob.e.keller@intel.com>
+	<1405036334-8093-2-git-send-email-jacob.e.keller@intel.com>
+	<xmqqion4543l.fsf@gitster.dls.corp.google.com>
+	<1405095622.22963.6.camel@jekeller-desk1.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 18:25:42 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	"peff\@peff.net" <peff@peff.net>
+To: "Keller\, Jacob E" <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 18:28:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5ddm-0000rk-8m
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 18:25:42 +0200
+	id 1X5dgo-0003rz-7W
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 18:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753753AbaGKQZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 12:25:38 -0400
-Received: from mail-vc0-f180.google.com ([209.85.220.180]:55871 "EHLO
-	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754702AbaGKQYw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 12:24:52 -0400
-Received: by mail-vc0-f180.google.com with SMTP id im17so2493297vcb.39
-        for <git@vger.kernel.org>; Fri, 11 Jul 2014 09:24:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=5DfapL+CahxsLtIgv1agx2e1S/71Wg6Nb65tr0q0o5A=;
-        b=JoTCx7v3XENKN6AfKk+pXegoCFRxXRg/bWyby2spVjjvpxcrOZjre7Rz4d71tsw1ap
-         txxqd+bBiPA5ysFOtKtFt0Zj1sdjubC1W0U3rlRh7J9kIgFChaMtvURR11Ud+mjo4CUg
-         JYzpY/iwC9a+LI8AuvAUfeMMS5njTIJvU1JOO/esDUyE1WBt/wDEpnmqdOfZFkpWk0EG
-         U7f3ie3JwbsbqePlM0/R1JtIXyandXc2tP/RtXcMzODVk2GC+Lykuc7uUbsGA4a+ERlU
-         aReRzWf0VAO6qGIhqC/uLP9X3+KwBf3IcTxy0nKJuOLtYRJwk8zTXhkantwYzAsbZsOa
-         uI7w==
-X-Received: by 10.220.114.140 with SMTP id e12mr2184262vcq.37.1405095891047;
- Fri, 11 Jul 2014 09:24:51 -0700 (PDT)
-Received: by 10.58.76.137 with HTTP; Fri, 11 Jul 2014 09:24:50 -0700 (PDT)
-In-Reply-To: <xmqqmwcg561j.fsf@gitster.dls.corp.google.com>
+	id S1754616AbaGKQ2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 12:28:46 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55737 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754470AbaGKQ2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 12:28:45 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6953125061;
+	Fri, 11 Jul 2014 12:28:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=xd8iJyooitmHeFbxKa+ANBmfamA=; b=ZgE4So
+	vDfjVkcbUd+xfI6QnXwzojDhgfnqfy+/DULBqSrCZS6DkieLcvy/WD84kgXLzxc0
+	mgRzUXmMs5+PaRFyQ5GRuQyujIcMuWmqK3L2ra2Esj4i2SDFOBixwBbqCe90GJEo
+	PCStOducS+DM1xqyt4dDY46NeV03jv98xLoIc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nn9ik7hGjoABakdwP1S5qzbJ2ifbkgZb
+	so2J4n4FmRpKdGQcXhcIlkYj1CLCA52uaQFIs+lNS8up3/SD+flkiEg6b9xrwDzz
+	ZoKRdLzJnPJ1aLSXrxtMkPsrYjsmW7ENBo5uQvkp781s7hcuuf+EQzYOtY/8VAa+
+	NijnpXntwsE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5DE8D2505C;
+	Fri, 11 Jul 2014 12:28:29 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DDFBC25044;
+	Fri, 11 Jul 2014 12:28:23 -0400 (EDT)
+In-Reply-To: <1405095622.22963.6.camel@jekeller-desk1.amr.corp.intel.com>
+	(Jacob E. Keller's message of "Fri, 11 Jul 2014 16:20:23 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 61000B96-0918-11E4-9174-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253288>
 
-On Fri, Jul 11, 2014 at 4:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
+"Keller, Jacob E" <jacob.e.keller@intel.com> writes:
+
+> On Fri, 2014-07-11 at 08:04 -0700, Junio C Hamano wrote:
+> ...
+>> > +static int tag_sort = 0;
+>> 
+>> Please do not initialize variables in bss segment to 0 by hand.
+>> 
+>> If this variable is meant to take one of these *CMP_SORT values
+>> defined as macro later in this file, it is better to define this
+>> variable somewhere after and close to the definitions of the macros.
+>> Perhaps immediately after the "struct tag_filter" is declared?
 >
->> On Thu, Jul 10, 2014 at 7:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>
->>>> "Making sure A's parent is B" would be an
->>>> idempotent operation, no?  Why not just make sure A's parent is
->>>> already B and report "Your wish has been granted" to the user?
->>
->> ... and here you say we should report "your wish has been granted"...
->
-> Normal way for "git replace" to report that is to exit with status 0
-> and without any noise, I would think.
+> I put it just above the struct tag_filter now, as this puts it right
+> below the #defines regarding it's value.
 
-In a similar case "git replace --edit" we error out instead of just
-exiting (with status 0), see:
+Either would be fine, but just to clarify.
 
-f22166b5fee7dc (replace: make sure --edit results in a different object)
+Because these macro definitions are for the .sort field of that
+structure, and the new tag_sort variable is the second user of that
+macro, my suggestion to put it _after_ was to be in line with "add
+new things at the end, when there is no compelling reason not to"
+below.
+
+>> When there is no reason to have things in a particular order, it is
+>> customary to add new things at the end, not in the front, unless the
+>> new thing is so much more important than everything else---but then
+>> we are no longer talking about the case where there is no reason to
+>> have things in a particular order ;-).
+
+Thanks.
