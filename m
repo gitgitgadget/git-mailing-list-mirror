@@ -1,116 +1,131 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH 3/3 v5] tag: support configuring --sort via .gitconfig
-Date: Fri, 11 Jul 2014 22:12:48 +0000
-Message-ID: <1405116767.22963.53.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1405099447-27555-1-git-send-email-jacob.e.keller@intel.com>
-	 <1405099447-27555-3-git-send-email-jacob.e.keller@intel.com>
-	 <20140711174628.GC7856@sigill.intra.peff.net>
-	 <xmqqmwcf36jy.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
+Date: Fri, 11 Jul 2014 15:17:21 -0700
+Message-ID: <xmqqha2n35hq.fsf@gitster.dls.corp.google.com>
+References: <1405111895-17451-1-git-send-email-jacob.e.keller@intel.com>
+	<1405111895-17451-3-git-send-email-jacob.e.keller@intel.com>
+	<20140711210633.GA12546@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"peff@peff.net" <peff@peff.net>
-To: "gitster@pobox.com" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 12 00:13:00 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jul 12 00:17:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5j3q-0007y3-V3
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 00:12:59 +0200
+	id 1X5j8H-0004bU-GH
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 00:17:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753967AbaGKWMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 18:12:54 -0400
-Received: from mga03.intel.com ([143.182.124.21]:49248 "EHLO mga03.intel.com"
+	id S1753325AbaGKWRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 18:17:30 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55917 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751552AbaGKWMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 18:12:53 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101.ch.intel.com with ESMTP; 11 Jul 2014 15:12:50 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,645,1400050800"; 
-   d="scan'208";a="456075498"
-Received: from orsmsx104.amr.corp.intel.com ([10.22.225.131])
-  by azsmga001.ch.intel.com with ESMTP; 11 Jul 2014 15:12:48 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
- ORSMSX104.amr.corp.intel.com ([169.254.3.57]) with mapi id 14.03.0123.003;
- Fri, 11 Jul 2014 15:12:48 -0700
-Thread-Topic: [PATCH 3/3 v5] tag: support configuring --sort via .gitconfig
-Thread-Index: AQHPnVKutKQEouEPQUqhaN0T4H7NY5ub5TGA
-In-Reply-To: <xmqqmwcf36jy.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <96880807E9DFB846A1C5A2567761B171@intel.com>
+	id S1753249AbaGKWR3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 18:17:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 793F828463;
+	Fri, 11 Jul 2014 18:17:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gEURdYHI3dQ7bzUnPIXTKtbrV9s=; b=UTWBTp
+	DGjJM98D02JPJGc3FNEtE7q7wi+5ol4yJPARnMVuIb74neq1xutdKTuS9Kr7nr1s
+	IjJeS+hYcvlXRZ6qDN7acOvJXOWyAxL2Q5Z1fhNLkeU0OGRds6A9ee2D4Lwpa59t
+	eK/CUcESaGIlKfj2pprGp2Rv1WCt+xDmUSgcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qpEeW2UO0XsP3HrbXO3SMe4D4dP+gKzc
+	5VVNDhJFzrcR5Wbhc5NnLNmwNU8x3L65Y9ClZ2YDx1aalFgkaPJ4P+M+PBjmMpOW
+	0GW15o9JbQR0uRvzJOxmS0RA7Qxy8cYmFjTe96dgW9skCaXAqyBhFSTtkzQDJUBD
+	zIMmKW+sGSo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2DD1928462;
+	Fri, 11 Jul 2014 18:17:13 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 645E928450;
+	Fri, 11 Jul 2014 18:17:07 -0400 (EDT)
+In-Reply-To: <20140711210633.GA12546@sigill.intra.peff.net> (Jeff King's
+	message of "Fri, 11 Jul 2014 17:06:33 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 1860B350-0949-11E4-9127-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253334>
 
-T24gRnJpLCAyMDE0LTA3LTExIGF0IDE0OjU0IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
-Cj4gSmVmZiBLaW5nIDxwZWZmQHBlZmYubmV0PiB3cml0ZXM6DQo+IA0KPiA+IE9uIEZyaSwgSnVs
-IDExLCAyMDE0IGF0IDEwOjI0OjA3QU0gLTA3MDAsIEphY29iIEtlbGxlciB3cm90ZToNCj4gPg0K
-PiA+PiBVcGRhdGVkIHRvIGluY2x1ZGUgY2hhbmdlcyBkdWUgdG8gSnVuaW8ncyBmZWVkYmFjay4g
-VGhpcyBoYXMgbm90IHJlc29sdmVkDQo+ID4+IHdoZXRoZXIgd2Ugc2hvdWxkIGZhaWwgb24gYSBj
-b25maWd1cmF0aW9uIGVycm9yIG9yIHNpbXBseSB3YXJuLiBJdCBhcHBlYXJzIHRoYXQNCj4gPj4g
-d2UgYWN0dWFsbHkgc2VlbSB0byBlcnJvciBvdXQgbW9yZSB0aGFuIHdhcm4sIHNvIEkgYW0gdW5z
-dXJlIHdoYXQgdGhlIGNvcnJlY3QNCj4gPj4gYWN0aW9uIGlzIGhlcmUuDQo+ID4NCj4gPiBZZWFo
-LCB3ZSdyZSBxdWl0ZSBpbmNvbnNpc3RlbnQgdGhlcmUuIEluIHNvbWUgY2FzZXMgd2Ugc2lsZW50
-bHkgaWdub3JlDQo+ID4gc29tZXRoaW5nIHVua25vd24gKGUuZy4sIGEgY29sb3IuZGlmZi4qIHNs
-b3QgdGhhdCB3ZSBkbyBub3QgdW5kZXJzdGFuZCksDQo+ID4gYnV0IGluIG1vc3QgY2FzZXMgaWYg
-aXQgaXMgYSBjb25maWcga2V5IHdlIHVuZGVyc3RhbmQgYnV0IGEgdmFsdWUgd2UgZG8NCj4gPiBu
-b3QsIHdlIGNvbXBsYWluIGFuZCBkaWUuDQo+IA0KPiBIbSwgdGhhdCdzIGJhZC0tLXdlJ3ZlIGJl
-Y29tZSBsZXNzIGFuZCBsZXNzIGNhcmVmdWwgb3ZlciB0aW1lLA0KPiBwZXJoYXBzPw0KPiANCj4g
-QXMgd2Ugd2FudCB0byBiZSBhYmxlIHRvIGVuaGFuY2Ugc2VtYW50aWNzIG9mIGV4aXN0aW5nIGNv
-bmZpZ3VyYXRpb24NCj4gdmFyaWFibGVzIHdpdGhvdXQgaGF2aW5nIHRvIGludHJvZHVjZSBuZXcg
-YnV0IHNpbWlsYXIgb25lcywgd2Ugd291bGQNCj4gcmVhbGx5IHdhbnQgdG8gbWFrZSBzdXJlIHRo
-YXQgdGhvc2Ugd2hvIHNoYXJlIHRoZSBzYW1lIC5naXQvY29uZmlnDQo+IG9yICRIT01FLy5naXRj
-b25maWcgYWNyb3NzIGRpZmZlcmVudCB2ZXJzaW9ucyBvZiBHaXQgd291bGQgbm90IGhhdmUNCj4g
-dG8gc3VmZmVyIHRvbyBtdWNoIChpLmUuIGZvcmNpbmcgdGhlbSB0byAiY29uZmlnIC0tdW5zZXQi
-IHdoZW4gdXNpbmcNCj4gdGhlaXIgb2xkZXIgR2l0IGlzIG5vdCBuaWNlKS4NCj4gDQo+ID4gSXQn
-cyBwcm9iYWJseSB1c2VyLXVuZnJpZW5kbHkgdG8gYmUgc2lsZW50IGZvciB0aG9zZSBjYXNlcywg
-dGhvdWdoLiBUaGUNCj4gPiB1c2VyIGdldHMgbm8gZmVlZGJhY2sgb24gd2h5IHRoZWlyIGNvbmZp
-ZyB2YWx1ZSBpcyBkb2luZyBub3RoaW5nLg0KPiA+DQo+ID4gSSB0ZW5kIHRvIHRoaW5rIHRoYXQg
-d2FybmluZyBpcyBub3QgbXVjaCBiZXR0ZXIgdGhhbiBlcnJvcmluZyBvdXQuIEl0IGlzDQo+ID4g
-aGVscGZ1bCBpZiB5b3UgYXJlIHJ1bm5pbmcgYSBzaW5nbGUtc2hvdCBvZiBhbiBvbGQgdmVyc2lv
-biAod2hpY2ggaXMNCj4gPiBzb21ldGhpbmcgdGhhdCBJIGRvIGEgbG90IHdoZW4gdGVzdGluZyBv
-bGQgdmVyc2lvbnMpLCBidXQgd291bGQgcXVpY2tseQ0KPiA+IGJlY29tZSBpcnJpdGF0aW5nIGlm
-IHlvdSB3ZXJlIGFjdHVhbGx5IHVzaW5nIGFuIG9sZCB2ZXJzaW9uIG9mIGdpdA0KPiA+IGRheS10
-by1kYXkuDQo+ID4NCj4gPiBJIGR1bm5vLiBNYXliZSBpdCBpcyB3b3J0aCBtYWtpbmcgbGlmZSBl
-YXNpZXIgZm9yIHBlb3BsZSBpbiB0aGUgZm9ybWVyDQo+ID4gY2F0ZWdvcnkuDQo+IA0KPiAuLi4g
-ImZvcm1lciBjYXQiIG1lYW5pbmcgImxlc3MgaXJyaXRhdGluZyBmb3Igc2luZ2xlLXNob3QgdXNl
-Ij8gIEkNCj4gZHVubm8uLi4NCj4gDQo+ID4+ICtzdGF0aWMgaW50IHBhcnNlX3NvcnRfc3RyaW5n
-KGNvbnN0IGNoYXIgKmFyZywgaW50ICpzb3J0KQ0KPiA+PiArew0KPiA+PiArCWludCB0eXBlID0g
-MCwgZmxhZ3MgPSAwOw0KPiA+PiArDQo+ID4+ICsJaWYgKHNraXBfcHJlZml4KGFyZywgIi0iLCAm
-YXJnKSkNCj4gPj4gKwkJZmxhZ3MgfD0gUkVWRVJTRV9TT1JUOw0KPiA+PiArDQo+ID4+ICsJaWYg
-KHNraXBfcHJlZml4KGFyZywgInZlcnNpb246IiwgJmFyZykgfHwgc2tpcF9wcmVmaXgoYXJnLCAi
-djoiLCAmYXJnKSkNCj4gPj4gKwkJdHlwZSA9IFZFUkNNUF9TT1JUOw0KPiA+PiArCWVsc2UNCj4g
-Pj4gKwkJdHlwZSA9IFNUUkNNUF9TT1JUOw0KPiA+PiArDQo+ID4+ICsJaWYgKHN0cmNtcChhcmcs
-ICJyZWZuYW1lIikpDQo+ID4+ICsJCXJldHVybiBlcnJvcihfKCJ1bnN1cHBvcnRlZCBzb3J0IHNw
-ZWNpZmljYXRpb24gJXMiKSwgYXJnKTsNCj4gPj4gKw0KPiA+PiArCSpzb3J0ID0gKHR5cGUgfCBm
-bGFncyk7DQo+ID4+ICsNCj4gPj4gKwlyZXR1cm4gMDsNCj4gPj4gK30NCj4gPg0KPiA+IFJlZ2Fy
-ZGxlc3Mgb2YgaG93IHdlIGhhbmRsZSB0aGUgZXJyb3IsIEkgdGhpbmsgdGhpcyB2ZXJzaW9uIHRo
-YXQNCj4gPiBhc3NlbWJsZXMgdGhlIGZpbmFsIGJpdGZpZWxkIGF0IHRoZSBlbmQgaXMgZWFzaWVy
-IHRvIHJlYWQgdGhhbiB0aGUNCj4gPiBvcmlnaW5hbC4NCj4gDQo+IFllcywgdGhpcyBwYXJ0IHJl
-YWxseSBpcyBuaWNlbHkgZG9uZSwgSSBhZ3JlZS4NCg0KVGhlIGN1cnJlbnQgcmV2aXNpb24gb2Yg
-dGhlIHBhdGNoIHByaW50cyBhbiBlcnJvciBhbmQgd2FybmluZyBhYm91dCBub3QNCnVzaW5nIHRo
-ZSBjb25maWd1cmVkIHRhZyB2YWx1ZS4gSXQgZG9lcyBzdGlsbCBydW4uIEkgYWRkZWQgYSB0ZXN0
-IHRvDQplbnN1cmUgdGhpcyBhcyB3ZWxsLg0KDQpUaGUgZWFzaWVzdCB3YXkgdG8gY2hhbmdlIG92
-ZXJhbGwgYmVoYXZpb3IgaXMgdG8gY2hhbmdlIHRoZSBnaXQtY29uZmlnJ3MNCiJkaWVfb25fZXJy
-b3IiIHRvIGJlIGZhbHNlLCBzbyB0aGF0IHdlIG5vIGxvbmdlciBkaWUgb24gY29uZmlndXJhdGlv
-bg0KZXJyb3JzLg0KDQpJdCBhcHBlYXJzIHRoaXMgd291bGQgcmVzb2x2ZSB0aGUgaXNzdWUgZm9y
-IG1hbnkgY29uZmlndXJhdGlvbiBvcHRpb25zDQoobm90IGFsbCwgYXMgSSB0aGluayBhIGZldyBh
-cmUgc3RpbGwgaGFyZCBjb2RlZCB0byBkaWUpIGJ1dCBpdCB3b3VsZCBiZQ0KYSBjaGFuZ2UgdGhh
-dCBpcyB3ZWxsIG91dHNpZGUgdGhlIHNjb3BlIG9mIHRoaXMgcGF0Y2guDQoNCkkgdGhpbmsgdGhh
-dCBmb3Igbm93IGJlaGF2aW9yIEkgYWRkZWQgaXMgZ29vZCwgYXMgd2UgKmtub3cqIHRoYXQNCnRh
-Zy5zb3J0IHdpbGwgYWRkIG5ldyBwYXJhbWV0ZXJzIGluIHRoZSBuZWFyIGZ1dHVyZSwgc28gaXQg
-bWFrZXMgbm8NCnNlbnNlIHRvIGhhdmUgaXQgZGllIG9uIGEgY29uZmlnIHRoYXQgaXMgb25seSBz
-bGlnaHRseSBuZXdlciB0aGFuIHRoZQ0KZ2l0IHZlcnNpb24uDQoNCkdsYWQgSSBjb3VsZCBoZWxw
-LiBKdW5pbyBpZiB5b3UgY291bGQgcmV2aWV3IHRoZSB2NyBJIHNlbnQgYSBiaXQgYWdvIGZvcg0K
-YW55IHBvc3NpYmxlIG1pc3Rha2VzIHRoYXQgSSBmb3Jnb3QgdG8gY2xlYW4gdXAgdGhhdCB3b3Vs
-ZCBiZSBncmVhdC4NCg0KVGhhbmtzLA0KSmFrZQ0K
+Jeff King <peff@peff.net> writes:
+
+> On Fri, Jul 11, 2014 at 01:51:35PM -0700, Jacob Keller wrote:
+>
+>> +	if (!strcmp(var, "tag.sort")) {
+>> +		if (!value)
+>> +			return config_error_nonbool(var);
+>> +		status = parse_sort_string(value, &tag_sort);
+>> +		if (status) {
+>> +			warning("using default lexicographic sort order");
+>> +			tag_sort = STRCMP_SORT;
+>> +		}
+>
+> I think this is a good compromise of the issues we discussed earlier. As
+> you noted, it should probably be marked for translation. I'm also not
+> sure the message content is clear in all situations. If I have a broken
+> tag.sort, I get:
+>
+>   $ git config tag.sort bogus
+>   $ git tag >/dev/null
+>   error: unsupported sort specification bogus
+>   warning: using default lexicographic sort order
+>
+> Not too bad, though reminding me that the value "bogus" came from
+> tag.sort would be nice. But what if I override it:
+>
+>   $ git tag --sort=v:refname >/dev/null
+>   error: unsupported sort specification bogus
+>   warning: using default lexicographic sort order
+>
+> That's actively wrong, because we are using v:refname from the
+> command-line.  Perhaps we could phrase it like:
+>
+>   warning: ignoring invalid config option tag.sort
+>
+> or similar, which helps both cases.
+
+Hmph.  Looks like a mild-enough middle ground, I guess.  As
+parse_sort_string() is private for "git tag" implementation, I
+actually would not mind if we taught a bit more context to it and
+phrase its messages differently.  Perhaps something like this, where
+the config parser will tell what variable it came from with "var"
+and the command line parser will pass NULL there.
+
+static int parse_sort_string(const char *var, const char *value, int *sort)
+{
+	...
+	if (strcmp(value, "refname")) {
+		if (!var)
+                	return error(_("unsupported sort specification '%s'"), value);
+		else {
+                	warning(_("unsupported sort specification '%s' in variable '%s'"),
+                        	var, value);
+			return -1;
+		}
+	}
+
+	*sort = (type | flags);
+
+	return 0;
+}
+
+> As an aside, I also think the error line could more clearly mark the
+> literal contents of the variable. E.g., one of:
+>
+>   error: unsupported sort specification: bogus
+>
+> or
+>
+>   error: unsupported sort specification 'bogus'
+
+Yup.
