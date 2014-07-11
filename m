@@ -1,94 +1,81 @@
-From: Olaf Hering <olaf@aepfle.de>
-Subject: pitfall with empty commits during git rebase
-Date: Fri, 11 Jul 2014 12:15:47 +0200
-Message-ID: <20140711101547.GA26050@aepfle.de>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 0/7] ensure index is set for all OBJ_COMMIT objects variable
+Date: Fri, 11 Jul 2014 11:31:48 +0100
+Message-ID: <53BFBD14.3070607@ramsay1.demon.co.uk>
+References: <53BF28F4.8050704@ramsay1.demon.co.uk> <20140711003053.GB11360@sigill.intra.peff.net> <20140711084141.GA5521@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 11 12:15:56 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jul 11 12:31:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5Xrv-00014L-Q6
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 12:15:56 +0200
+	id 1X5Y7R-0000Gn-1P
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 12:31:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753109AbaGKKPv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Jul 2014 06:15:51 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([81.169.146.220]:10917 "EHLO
-	mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753063AbaGKKPu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 06:15:50 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; t=1405073748; l=1261;
-	s=domk; d=aepfle.de;
-	h=Content-Transfer-Encoding:Content-Disposition:Content-Type:
-	MIME-Version:Subject:To:From:Date;
-	bh=vngopXZGisQsHQhYTb/HpoGzLQw=;
-	b=qt1VTjH+f5N9sOhYoJcJ7k2IxLWF0vXckA/8zqTpNimhT9JeOaoA5vM+bdtXjpe+Udb
-	d9dBWG/9Yq50QRKXxE5skVwNM88BGhwn/LIDrJUDx9MieQdwpoD2mBEcHTY0kN+8csMeu
-	n9I6aW62G9NDFpDi+AEEOEqPFL1fIav0GdU=
-X-RZG-AUTH: :P2EQZWCpfu+qG7CngxMFH1J+yackYocTD1iAi8x+OWi/zfN1cLnBYfssVYdSE5SlMz/SeUZHOvusx46dNQAHsRCe7PSMlQ==
-X-RZG-CLASS-ID: mo00
-Received: from probook.fritz.box ([2001:a60:10a9:ef01:1ec1:deff:fe91:f51c])
-	by smtp.strato.de (RZmta 35.2 AUTH)
-	with ESMTPSA id R0226cq6BAFlCGq
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	for <git@vger.kernel.org>;
-	Fri, 11 Jul 2014 12:15:47 +0200 (CEST)
-Received: by probook.fritz.box (Postfix, from userid 1000)
-	id 7C26350282; Fri, 11 Jul 2014 12:15:47 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.22.rev6346 (2013-10-29)
+	id S1753140AbaGKKbx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 06:31:53 -0400
+Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:54231 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753095AbaGKKbw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 06:31:52 -0400
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 4BE7B1280CC;
+	Fri, 11 Jul 2014 11:31:46 +0100 (BST)
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 073741280C7;
+	Fri, 11 Jul 2014 11:31:46 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
+	Fri, 11 Jul 2014 11:31:45 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140711084141.GA5521@sigill.intra.peff.net>
+X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253270>
 
+On 11/07/14 09:41, Jeff King wrote:
+> Here's a series to address the bug I mentioned earlier by catching the
+> conversion of OBJ_NONE to OBJ_COMMIT in a central location and setting
+> the index there.
+> 
+> I've included your patch 1/2 unchanged in the beginning, as I build on
+> top of it (and your patch 2/2 is no longer applicable).  The rest is
+> refactoring leading up to patch 6 to fix the bug. Patch 7 is a bonus
+> cleanup.
 
-There is an incorrect message when doing "git rebase -i remote/branch".
-I have it only in german, see below. what happend is:
+I have just read this series in my email client (I will apply and test
+them later), but this looks very good to me. :)
 
-#01 make changes on another host
-#02 copy patchfile to localhost
-#03 apply patchfile
-#04 git commit -avs # create commit#1
-#05 sleep 123456
-#06 make different changes on another host
-#07 copy patchfile to localhost
-#08 git show | patch -Rp1
-#09 git commit -avs # create commit#2
-#10 apply patchfile
-#11 git commit -avs # create commit#3
-#12 git rebase -i remote/branch
-     pick commit#1 msg
-     f    commit#2 msg
-     f    commit#3 msg
+Only one patch gave me slight pause; see later.
 
-=2E...
-".git/rebase-merge/git-rebase-todo" 21L, 707C geschrieben
-Sie fragten den j=C3=BCngsten Commit nachzubessern, aber das w=C3=BCrde=
- diesen leer
-machen. Sie k=C3=B6nnen Ihr Kommando mit --allow-empty wiederholen, ode=
-r diesen
-Commit mit "git reset HEAD^" vollst=C3=A4ndig entfernen.
-Rebase im Gange; auf c105589
-Sie sind gerade beim Rebase von Branch 'mybranch' auf 'c105589'.
+> 
+> I'd hoped to cap off the series by converting the "type" field of
+> "struct commit" to a "const unsigned type : 3", which would avoid any
+> new callers being added that would touch it without going through the
+> proper procedure.  However, it's a bitfield, which makes it hard to cast
+> the constness away in the actual setter function. My best attempt was to
+> use a union with matching const and non-const members, but that would
+> mean changing all of the sites which read the field (and there are many)
+> to use "object->type.read".
+> 
+> There may be a clever solution hiding in a dark corner of C, but I
+> suspect we are entering a realm of portability problems with older
+> compilers (I even saw one compiler's documentation claim that "const"
+> was forbidden on bitfields, even though C99 has an example which does
+> it).
 
-Keine =C3=84nderungen
+Yes, I've come across such compilers too; I wouldn't go there! ;-P
 
-Could not apply 6c5842320acc797d395afb5cdf373c2bfaebfa34... revert
-=2E...
-
-Its not clear what '--allow-empty' refers to, git rebase does not seem =
-to
-understand this option.
-
-I should have skipped step #09 to avoid the trouble.
-git version is 2.0.1. Please adjust the error msg above.
-
-
-Olaf
+ATB,
+Ramsay Jones
