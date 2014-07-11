@@ -1,123 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3 v5] tag: support configuring --sort via .gitconfig
-Date: Fri, 11 Jul 2014 14:54:25 -0700
-Message-ID: <xmqqmwcf36jy.fsf@gitster.dls.corp.google.com>
-References: <1405099447-27555-1-git-send-email-jacob.e.keller@intel.com>
-	<1405099447-27555-3-git-send-email-jacob.e.keller@intel.com>
-	<20140711174628.GC7856@sigill.intra.peff.net>
+From: Duane Murphy <duanemurphy@mac.com>
+Subject: git-fast-import bug?
+Date: Fri, 11 Jul 2014 14:58:32 -0700
+Message-ID: <424DC50C-DF9D-423E-93DC-E9E224B871D0@mac.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jul 11 23:54:38 2014
+Content-Type: text/plain; CHARSET=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 11 23:58:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5im5-0004lJ-Ia
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 23:54:37 +0200
+	id 1X5iq0-0000lm-U2
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 23:58:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390AbaGKVye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 17:54:34 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:57921 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751714AbaGKVyd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 17:54:33 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id EF54427AAD;
-	Fri, 11 Jul 2014 17:54:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vjJWVt1M6gJcHh5WyZaOVgooPmI=; b=mA9D4Z
-	FEnexm6xoihKmOBNNDCE2TDDXAe4MFLXq95ZZGFK/gnztkOcM9Alzf3OfM7BAF/f
-	xrQ6lv/no0u79aO7DrTk70gFwq4xrGK3J1JkImObfr1w/iSuHdoYkC2pg1qytqBH
-	giAJ9iUdFImz1skVhgb6kDvElXAzkwQSOD6kk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BcFlkhN1/Qnn7btMa+VKF4RxkgOXeM8L
-	B7i3XGZf+5cvy4DOSjxcCrQYhpHracdM8IViUn7/v+CRYPzhVfuyE7cfQb9RVVWp
-	JfYLpTcghobvFcsTHLmPi8YgTv1Pb/ufRc/feDE6E2kBdu5WmcfC3D2oan1yNxZL
-	RH/0QVWEuhk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E655227AAC;
-	Fri, 11 Jul 2014 17:54:16 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7606E27AA2;
-	Fri, 11 Jul 2014 17:54:11 -0400 (EDT)
-In-Reply-To: <20140711174628.GC7856@sigill.intra.peff.net> (Jeff King's
-	message of "Fri, 11 Jul 2014 13:46:28 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E4431A98-0945-11E4-8083-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753637AbaGKV6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 17:58:37 -0400
+Received: from st11p02mm-asmtp001.mac.com ([17.172.220.236]:36995 "EHLO
+	st11p02mm-asmtp001.mac.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753495AbaGKV6g (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Jul 2014 17:58:36 -0400
+Received: from [192.168.1.26]
+ (70-36-184-217.dsl.static.sonic.net [70.36.184.217])
+ by st11p02mm-asmtp001.mac.com
+ (Oracle Communications Messaging Server 7u4-27.10(7.0.4.27.9) 64bit (built Jun
+  6 2014)) with ESMTPSA id <0N8K00F9RIDLQO00@st11p02mm-asmtp001.mac.com> for
+ git@vger.kernel.org; Fri, 11 Jul 2014 21:58:35 +0000 (GMT)
+X-Mailer: Apple Mail (2.1878.6)
+X-MANTSH: 1TEIXWV4bG1oaGkdHB0lGUkdDRl5PWBoaGxEKTEMXGx0EGx0YBBIZBBsdEBseGh8
+	aEQpYTRdLEQptfhcaEQpMWRcbGhsbEQpZSRcRClleF2hjeREKQ04XSxsYGmJCH2lpH29TGXhzB
+	xxoGBsfEnAeEQpFQxcWHhgebmkfGmkHbmwTbgceGBlvBxMZbmkHbxNvGBgeaBIdG24aakdLSQR
+	JRUcUEQpYXBcZBBoEGx4HTU4cExoaHRMFGx0EGx0YBBIZBBsdEBseGh8bEQpeWRdhE01hRxEKQ
+	1oXHRoEGRwEGxIeBBgbHREKQkUXYVpCfXJbQ0dlGEURCkJOF2hGQkAfSHkdRx9kEQpCTBdhQXh
+	he0hJUxlYeREKQmwXen9OYwFIeEVSX0MRCkJAF2AfZERZbmIdE2ZCEQpCWBdsfHhNYh19GVlkH
+	REKcGgXaU1nYFliXgVyZUQRCnBoF2BbWkd4XH5MGll7EQpwaBdmQkYFYlJiRXIeHhEKcGgXbF1
+	kU0xMX2JMRkQRCnBoF2t4Wk1aXn54U25CEQpwbBdiUB9bW0thXX9lcBE=
+X-CLX-Spam: false
+X-CLX-Score: 1011
+X-Proofpoint-Virus-Version: vendor=fsecure
+ engine=2.50.10432:5.12.52,1.0.14,0.0.0000
+ definitions=2014-07-11_04:2014-07-11,2014-07-11,1970-01-01 signatures=0
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ suspectscore=52 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=7.0.1-1402240000 definitions=main-1407110267
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253332>
 
-Jeff King <peff@peff.net> writes:
+git-fast-import is not writing a commit even after a checkpoint/progress command.
 
-> On Fri, Jul 11, 2014 at 10:24:07AM -0700, Jacob Keller wrote:
->
->> Updated to include changes due to Junio's feedback. This has not resolved
->> whether we should fail on a configuration error or simply warn. It appears that
->> we actually seem to error out more than warn, so I am unsure what the correct
->> action is here.
->
-> Yeah, we're quite inconsistent there. In some cases we silently ignore
-> something unknown (e.g., a color.diff.* slot that we do not understand),
-> but in most cases if it is a config key we understand but a value we do
-> not, we complain and die.
+See my previous message "git p4 diff-tree ambiguous argument error". 
 
-Hm, that's bad---we've become less and less careful over time,
-perhaps?
+The error in git-p4 is caused by git not writing the commit even after git-fast-import has been given a checkpoint and progress command.
 
-As we want to be able to enhance semantics of existing configuration
-variables without having to introduce new but similar ones, we would
-really want to make sure that those who share the same .git/config
-or $HOME/.gitconfig across different versions of Git would not have
-to suffer too much (i.e. forcing them to "config --unset" when using
-their older Git is not nice).
+On initial use of git p4 to sync a p4 repository, the commits are written properly. But on a subsequent run the commit is not flushed to the file system during the run. Specifically, I can stop the git-p4 command directly after the progress checkpoint command (see the checkpoint() function in git-p4). The file is not found. If I abort/exit the application at that point, the file appears. 
 
-> It's probably user-unfriendly to be silent for those cases, though. The
-> user gets no feedback on why their config value is doing nothing.
->
-> I tend to think that warning is not much better than erroring out. It is
-> helpful if you are running a single-shot of an old version (which is
-> something that I do a lot when testing old versions), but would quickly
-> become irritating if you were actually using an old version of git
-> day-to-day.
->
-> I dunno. Maybe it is worth making life easier for people in the former
-> category.
+There is a pattern of behavior here that is consistent but I am unable to understand. A bare repository works fine. An already populated repository does not work until the app is quit. What would cause git-fast-import to _NOT_ flush the file?
 
-... "former cat" meaning "less irritating for single-shot use"?  I
-dunno...
+This certainly seems like a bug. But I don't know enough of the git internals to reproduce.
 
->> +static int parse_sort_string(const char *arg, int *sort)
->> +{
->> +	int type = 0, flags = 0;
->> +
->> +	if (skip_prefix(arg, "-", &arg))
->> +		flags |= REVERSE_SORT;
->> +
->> +	if (skip_prefix(arg, "version:", &arg) || skip_prefix(arg, "v:", &arg))
->> +		type = VERCMP_SORT;
->> +	else
->> +		type = STRCMP_SORT;
->> +
->> +	if (strcmp(arg, "refname"))
->> +		return error(_("unsupported sort specification %s"), arg);
->> +
->> +	*sort = (type | flags);
->> +
->> +	return 0;
->> +}
->
-> Regardless of how we handle the error, I think this version that
-> assembles the final bitfield at the end is easier to read than the
-> original.
+Suggestions on how to test or isolate this problem?
 
-Yes, this part really is nicely done, I agree.
+Thanks
+
+Reproduced consistently on two systems:
+
+$ git --version 
+git version 1.8.5.2 (Apple Git-48) 
+$ python --version 
+Python 2.7.5 
+$ uname -a 
+Darwin Kernel Version 13.3.0: Tue Jun  3 21:27:35 PDT 2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64 
+
+and 
+
+$ git --version 
+git version 1.7.12.4 
+$ python --version 
+Python 2.6.6 
+OS: GNU/Linux 2.6.32-431.el6.x86_64 
