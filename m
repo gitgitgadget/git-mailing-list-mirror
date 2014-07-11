@@ -1,81 +1,72 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 2/2] alloc.c: remove the redundant commit_count
- variable
-Date: Fri, 11 Jul 2014 04:32:20 -0400
-Message-ID: <20140711083220.GA5407@sigill.intra.peff.net>
+Subject: [PATCH 0/7] ensure index is set for all OBJ_COMMIT objects variable
+Date: Fri, 11 Jul 2014 04:41:41 -0400
+Message-ID: <20140711084141.GA5521@sigill.intra.peff.net>
 References: <53BF28F4.8050704@ramsay1.demon.co.uk>
  <20140711003053.GB11360@sigill.intra.peff.net>
- <53BF3709.6000307@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	GIT Mailing-list <git@vger.kernel.org>
 To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jul 11 10:32:30 2014
+X-From: git-owner@vger.kernel.org Fri Jul 11 10:41:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5WFo-0004mT-N3
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 10:32:29 +0200
+	id 1X5WOt-00065v-FN
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 10:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751274AbaGKIcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 04:32:23 -0400
-Received: from cloud.peff.net ([50.56.180.127]:59938 "HELO peff.net"
+	id S1752649AbaGKIlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 04:41:46 -0400
+Received: from cloud.peff.net ([50.56.180.127]:59945 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750776AbaGKIcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 04:32:22 -0400
-Received: (qmail 17659 invoked by uid 102); 11 Jul 2014 08:32:22 -0000
+	id S1752223AbaGKIln (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 04:41:43 -0400
+Received: (qmail 18110 invoked by uid 102); 11 Jul 2014 08:41:43 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Jul 2014 03:32:22 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jul 2014 04:32:20 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Jul 2014 03:41:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jul 2014 04:41:41 -0400
 Content-Disposition: inline
-In-Reply-To: <53BF3709.6000307@ramsay1.demon.co.uk>
+In-Reply-To: <20140711003053.GB11360@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253255>
 
-On Fri, Jul 11, 2014 at 01:59:53AM +0100, Ramsay Jones wrote:
+Here's a series to address the bug I mentioned earlier by catching the
+conversion of OBJ_NONE to OBJ_COMMIT in a central location and setting
+the index there.
 
-> > The code you're touching here was trying to make sure that each commit
-> > gets a unique index, under the assumption that commits only get
-> > allocated via alloc_commit_node. But I think that assumption is wrong.
-> > We can also get commit objects by allocating an OBJ_NONE (e.g., via
-> > lookup_unknown_object) and then converting it into an OBJ_COMMIT when we
-> > find out what it is.
-> 
-> Hmm, I don't know how the object is converted, but the object allocator
-> is actually allocating an 'union any_object', so it's allocating more
-> space than for a struct object anyway.
+I've included your patch 1/2 unchanged in the beginning, as I build on
+top of it (and your patch 2/2 is no longer applicable).  The rest is
+refactoring leading up to patch 6 to fix the bug. Patch 7 is a bonus
+cleanup.
 
-Right, we would generally want to avoid lookup_unknown_object where we
-can for that reason.
+I'd hoped to cap off the series by converting the "type" field of
+"struct commit" to a "const unsigned type : 3", which would avoid any
+new callers being added that would touch it without going through the
+proper procedure.  However, it's a bitfield, which makes it hard to cast
+the constness away in the actual setter function. My best attempt was to
+use a union with matching const and non-const members, but that would
+mean changing all of the sites which read the field (and there are many)
+to use "object->type.read".
 
-> If you add an 'index' field to struct object, (and remove it from
-> struct commit) it could be set in alloc_object_node(). ie _all_ node
-> types get an index field.
+There may be a clever solution hiding in a dark corner of C, but I
+suspect we are entering a realm of portability problems with older
+compilers (I even saw one compiler's documentation claim that "const"
+was forbidden on bitfields, even though C99 has an example which does
+it).
 
-That was something I considered when we did the original commit-slab
-work, as it would let you do similar tricks for any set of objects, not
-just commits. The reasons against it are:
-
-  1. It would bloat the size of blob and tree structs by at least 4
-     bytes (probably 8 for alignment). In most repos, commits make up
-     only 10-20% of the total objects (so for linux.git, we're talking
-     about 25MB extra in the working set).
-
-  2. It makes single types sparse in the index space. In cases where you
-     do just want to keep data on commits (and that is the main use),
-     you end up allocating a slab entry per object, rather than per
-     commit. That wastes memory (much worse than 25MB if your slab items
-     are large), and reduces cache locality.
-
-You could probably get around (2) by splitting the index space by type
-and allocating them in pools, but that complicates things considerably,
-as you have to guess ahead of time at reasonable maximums for each type.
+  [1/7]: alloc.c: remove the alloc_raw_commit_node() function
+  [2/7]: move setting of object->type to alloc_* functions
+  [3/7]: parse_object_buffer: do not set object type
+  [4/7]: add object_as_type helper for casting objects
+  [5/7]: alloc: factor out commit index
+  [6/7]: object_as_type: set commit index
+  [7/7]: diff-tree: avoid lookup_unknown_object
 
 -Peff
