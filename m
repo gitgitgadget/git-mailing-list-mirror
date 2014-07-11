@@ -1,107 +1,98 @@
-From: Ephrim Khong <dr.khong@gmail.com>
-Subject: [Bug] data loss with cyclic alternates
-Date: Fri, 11 Jul 2014 11:37:25 +0200
-Message-ID: <53BFB055.206@gmail.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v3 2/2] alloc.c: remove the redundant commit_count variable
+Date: Fri, 11 Jul 2014 10:41:32 +0100
+Message-ID: <53BFB14C.10000@ramsay1.demon.co.uk>
+References: <53BF28F4.8050704@ramsay1.demon.co.uk> <20140711003053.GB11360@sigill.intra.peff.net> <53BF3709.6000307@ramsay1.demon.co.uk> <20140711083220.GA5407@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 11 11:37:38 2014
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jul 11 11:41:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5XGs-0004mB-65
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 11:37:38 +0200
+	id 1X5XKm-0000WY-Vn
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 11:41:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957AbaGKJhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 05:37:33 -0400
-Received: from mail-we0-f179.google.com ([74.125.82.179]:62841 "EHLO
-	mail-we0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753073AbaGKJhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 05:37:31 -0400
-Received: by mail-we0-f179.google.com with SMTP id p10so503853wes.38
-        for <git@vger.kernel.org>; Fri, 11 Jul 2014 02:37:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        bh=DJRDuCTnA8nhUo71tbWnM8j5XHF41F3Y23UF8L3YVSw=;
-        b=oUnLf1bqQ3HjWzbkTlvkRTM8hnDtCc04IXU0xq7zR18Qw7IRoJH9jdv9pZLi4/iHpl
-         BS0j/NOMsu3dsOLEU3mQUYXNlI+efF4kMsFsWnIS4pRzeSmwqQNFlSY0LZbr9u2kCnOD
-         TKyYJskeNQ9lABnDX036admyaAkX2EKBK4a49tCGT3w5AJ854hyocqeudlZy/wHwUQnE
-         Yzg48CtjEQoeIMkNcxFy4q7KiUlnFp8o4vWBmXEHa/5LLWWcZcHMqPoXq9+8qJOpKjre
-         23/6zLHUgITpu99xswVd4aBdiH9xhC/4taFB6LMB4u8/h3X9W9GWRQUT2EDb9u8oyWo0
-         WC5g==
-X-Received: by 10.194.133.42 with SMTP id oz10mr56196777wjb.40.1405071445815;
-        Fri, 11 Jul 2014 02:37:25 -0700 (PDT)
-Received: from floh-wuff-book.speedport_w723_v_typ_a_1_01_001 (p200300624D39BA013D393F00C5E8C7E1.dip0.t-ipconnect.de. [2003:62:4d39:ba01:3d39:3f00:c5e8:c7e1])
-        by mx.google.com with ESMTPSA id fb8sm5397855wib.15.2014.07.11.02.37.24
-        for <git@vger.kernel.org>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 02:37:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+	id S1752813AbaGKJli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 05:41:38 -0400
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:39653 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751854AbaGKJlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 05:41:36 -0400
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id CB9D3400B35;
+	Fri, 11 Jul 2014 10:41:32 +0100 (BST)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 8EF17400B22;
+	Fri, 11 Jul 2014 10:41:32 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
+	Fri, 11 Jul 2014 10:41:32 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140711083220.GA5407@sigill.intra.peff.net>
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253266>
 
-Hi,
+On 11/07/14 09:32, Jeff King wrote:
+> On Fri, Jul 11, 2014 at 01:59:53AM +0100, Ramsay Jones wrote:
+> 
+>>> The code you're touching here was trying to make sure that each commit
+>>> gets a unique index, under the assumption that commits only get
+>>> allocated via alloc_commit_node. But I think that assumption is wrong.
+>>> We can also get commit objects by allocating an OBJ_NONE (e.g., via
+>>> lookup_unknown_object) and then converting it into an OBJ_COMMIT when we
+>>> find out what it is.
+>>
+>> Hmm, I don't know how the object is converted, but the object allocator
+>> is actually allocating an 'union any_object', so it's allocating more
+>> space than for a struct object anyway.
+> 
+> Right, we would generally want to avoid lookup_unknown_object where we
+> can for that reason.
+> 
+>> If you add an 'index' field to struct object, (and remove it from
+>> struct commit) it could be set in alloc_object_node(). ie _all_ node
+>> types get an index field.
+> 
+> That was something I considered when we did the original commit-slab
+> work, as it would let you do similar tricks for any set of objects, not
+> just commits. The reasons against it are:
+> 
+>   1. It would bloat the size of blob and tree structs by at least 4
+>      bytes (probably 8 for alignment). In most repos, commits make up
+>      only 10-20% of the total objects (so for linux.git, we're talking
+>      about 25MB extra in the working set).
+> 
+>   2. It makes single types sparse in the index space. In cases where you
+>      do just want to keep data on commits (and that is the main use),
+>      you end up allocating a slab entry per object, rather than per
+>      commit. That wastes memory (much worse than 25MB if your slab items
+>      are large), and reduces cache locality.
+> 
 
-git seems to have issues with alternates when cycles are present (repo A 
-has B/objects as alternates, B has A/objects as alternates). In such 
-cases, gc and repack might delete objects that are present in only one 
-of the alternates, leading to data loss.
+Ahem, yeah I keep telling myself not to post at 2am ... ;-)
 
-I understand that this is no big use case, and requires manual editing 
-of objects/info/alternates. But for the sake of preventing unneccesary 
-data loss, and since I found no warning regarding alternate cycles in 
-the documentation, it might make sense to handle such cases properly 
-(maybe it's a simple "after finding all alternates directories, remove 
-duplicates"?).
+Although I haven't given this too much extra thought, I'm beginning
+to think that your best course would be to revert commit 969eba63
+and add an convert_object_to_commit() function to commit.c which
+would set c->index. Then track down each place an OBJ_NONE gets
+converted to an OBJ_COMMIT and insert a call to
+convert_object_to_commit(). (which may do more than just set the
+index field ...)
 
-Here is a small test case that adds the object storage of a repository 
-as alternate to itsself. After git repack -adl, all objects are deleted.
+Hmm, I've just noticed a new series in my in-box. I guess I will
+discover what you decided to do shortly ... ;-P
 
----
-rm -rf test_repo &&
-mkdir test_repo &&
-cd test_repo &&
-git init &&
-touch a &&
-git add a &&
-git commit -m "c1" &&
-git repack -adl &&
-echo $PWD/.git/objects > .git/objects/info/alternates &&
-echo ">> re-packing..." &&
-git repack -adl &&
-echo ">> git fsck..." &&
-git fsck
----
-
-Output:
-
----
-Initialized empty Git repository in /somewhere/test_repo/.git/
-[master (root-commit) ab9e123] c1
-  1 file changed, 0 insertions(+), 0 deletions(-)
-  create mode 100644 a
-Counting objects: 3, done.
-Writing objects: 100% (3/3), done.
-Total 3 (delta 0), reused 0 (delta 0)
- >> re-packing...
-Nothing new to pack.
-error: refs/heads/master does not point to a valid object!
- >> git fsck...
-Checking object directories: 100% (256/256), done.
-Checking object directories: 100% (256/256), done.
-error: HEAD: invalid sha1 pointer 1494ec24356cbbbd66e19f22cef762dd83de7f54
-error: refs/heads/master does not point to a valid object!
-notice: No default references
-missing blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
----
-
-Thanks
-- Eph
+ATB,
+Ramsay Jones
