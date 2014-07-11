@@ -1,76 +1,114 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH 2/2 v4] tag: support configuring --sort via .gitconfig
-Date: Fri, 11 Jul 2014 17:20:18 +0000
-Message-ID: <1405099217.22963.11.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1405036334-8093-1-git-send-email-jacob.e.keller@intel.com>
-	 <1405036334-8093-2-git-send-email-jacob.e.keller@intel.com>
-	 <xmqqion4543l.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"peff@peff.net" <peff@peff.net>
-To: "gitster@pobox.com" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 19:20:26 2014
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH 2/3] tag: fix --sort tests to use cat<<-\EOF format
+Date: Fri, 11 Jul 2014 10:24:06 -0700
+Message-ID: <1405099447-27555-2-git-send-email-jacob.e.keller@intel.com>
+References: <1405099447-27555-1-git-send-email-jacob.e.keller@intel.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 11 19:24:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5eUj-0007Lm-Pv
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 19:20:26 +0200
+	id 1X5eYV-0002xj-OE
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 19:24:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751556AbaGKRUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 13:20:22 -0400
-Received: from mga02.intel.com ([134.134.136.20]:18100 "EHLO mga02.intel.com"
+	id S1754769AbaGKRYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 13:24:16 -0400
+Received: from mga03.intel.com ([143.182.124.21]:49479 "EHLO mga03.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751114AbaGKRUV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 13:20:21 -0400
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101.jf.intel.com with ESMTP; 11 Jul 2014 10:20:20 -0700
+	id S1751879AbaGKRYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 13:24:14 -0400
+Received: from azsmga001.ch.intel.com ([10.2.17.19])
+  by azsmga101.ch.intel.com with ESMTP; 11 Jul 2014 10:24:13 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.01,644,1400050800"; 
-   d="scan'208";a="542124311"
-Received: from orsmsx110.amr.corp.intel.com ([10.22.240.8])
-  by orsmga001.jf.intel.com with ESMTP; 11 Jul 2014 10:20:18 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
- ORSMSX110.amr.corp.intel.com ([169.254.3.171]) with mapi id 14.03.0123.003;
- Fri, 11 Jul 2014 10:20:17 -0700
-Thread-Topic: [PATCH 2/2 v4] tag: support configuring --sort via .gitconfig
-Thread-Index: AQHPnRlqSWWDJi5WWEKYCjRA7Q2n5Zubk+qA
-In-Reply-To: <xmqqion4543l.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <A532D31D1A793D438E61F9403623E703@intel.com>
+   d="scan'208";a="455989114"
+Received: from jekeller-desk1.jf.intel.com (HELO jekeller-desk1.amr.corp.intel.com) ([134.134.173.156])
+  by azsmga001.ch.intel.com with ESMTP; 11 Jul 2014 10:24:13 -0700
+X-Mailer: git-send-email 2.0.1.475.g9b8d714
+In-Reply-To: <1405099447-27555-1-git-send-email-jacob.e.keller@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253296>
 
-T24gRnJpLCAyMDE0LTA3LTExIGF0IDA4OjA0IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
-Cj4gSmFjb2IgS2VsbGVyIDxqYWNvYi5lLmtlbGxlckBpbnRlbC5jb20+IHdyaXRlczoNCj4gDQoN
-Cj4gPiArDQo+ID4gKwlpZiAoc3RyY21wKGFyZywgInJlZm5hbWUiKSkNCj4gPiArCQlkaWUoXygi
-dW5zdXBwb3J0ZWQgc29ydCBzcGVjaWZpY2F0aW9uICVzIiksIGFyZyk7DQo+IA0KPiBIbW0uICBJ
-IF90aG91Z2h0XyB3ZSB0cnkgdG8gY2F0Y2ggdW5zdXBwb3J0ZWQgb3B0aW9uIHZhbHVlIGNvbWlu
-Zw0KPiBmcm9tIHRoZSBjb21tYW5kIGxpbmUgYW5kIGRpZSBidXQgYXQgdGhlIHNhbWUgdGltZSB3
-ZSB0cnkgKm5vdCogdG8NCj4gZGllIGJ1dCB3YXJuIGFuZCB3aGF0ZXZlciBpcyBzZW5zaWJsZSB3
-aGVuIHRoZSB2YWx1ZSBjb21lcyBmcm9tIHRoZQ0KPiBjb25maWd1cmF0aW9uLCBzbyB0aGF0IC5n
-aXQvY29uZmlnIG9yICRIT01FLy5naXRjb25maWcgY2FuIGJlIHNoYXJlZA0KPiBieSB0aG9zZSB3
-aG8gdXNlIGRpZmZlcmVudCB2ZXJzaW9ucyBvZiBHaXQuDQo+IA0KPiBEbyB3ZSBhbHJlYWR5IGhh
-dmUgbWFueSBwcmVjZWRlbmNlcyB3aGVyZSB3ZSBzZWUgY29uZmlndXJhdGlvbiB2YWx1ZQ0KPiB0
-aGF0IG91ciB2ZXJzaW9uIG9mIEdpdCBkbyBub3QgeWV0IHVuZGVyc3RhbmQ/DQo+IA0KPiBOb3Qg
-YSB2ZXJ5IHN0cm9uZyBvYmplY3Rpb247IGp1c3Qgc29tZXRoaW5nIHRoYXQgd29ycmllcyBtZS4N
-Cg0KQmFzZWQgb24gYSBjdXJzb3J5IGdsYW5jZSBhdCBob3cgdGhlIGNvbmZpZyBpcyBwYXJzZWQs
-IHdlIGFjdHVhbGx5DQpkaWVfb25fZXJyb3IgZm9yIG1vc3Qgb3B0aW9ucy4gRG9lcyBpdCBtYWtl
-cyBzZW5zZSB0byB3YXJuIG9yIG5vdD8gSSBhbQ0Kbm90IHJlYWxseSBzdXJlIGhlcmUuLiBBdCBh
-bnkgcmF0ZSBJIHVwZGF0ZWQgdGhpcyB0byBiZSBhIGJpdCBjbGVhbmVyDQphbmQgdXNlIGVycm9y
-KCBpbnN0ZWFkIG9mIGRpZSwgc28gdGhhdCBpdCB3aWxsIHdvcmsgd2l0aGluIGhvdyBjb25maWcg
-aXMNCnN1cHBvc2VkIHRvLi4gUGx1cywgdGhpcyBhbHNvIG1ha2VzIGl0IHNvIHRoYXQgLS1zb3J0
-IHNob3dzIHRoZSB1c2FnZSBpZg0KaXQncyBpbnZhbGlkLg0KDQpQbGVhc2UgY29tbWVudCBtb3Jl
-IG9uIHRoZSBuZXcgc2V0IEkgYW0gc2VuZGluZyBzbyB3ZSBjYW4gcmVhbGx5DQpkZXRlcm1pbmUg
-d2hhdCB0aGUgY29ycmVjdCBjb3Vyc2Ugb2YgYWN0aW9uIGlzIGhlcmUuDQoNClJlZ2FyZHMsDQpK
-YWtlDQo=
+The --sort tests should use the better format for >expect to maintain
+indenting and ensure that no substitution is occurring. This makes
+parsing and understanding the tests a bit easier.
+
+Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+---
+ t/t7004-tag.sh | 40 ++++++++++++++++++++--------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index e4ab0f5b6419..66010b0e7066 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1385,41 +1385,41 @@ test_expect_success 'lexical sort' '
+ 	git tag foo1.6 &&
+ 	git tag foo1.10 &&
+ 	git tag -l --sort=refname "foo*" >actual &&
+-	cat >expect <<EOF &&
+-foo1.10
+-foo1.3
+-foo1.6
+-EOF
++	cat >expect <<-\EOF &&
++	foo1.10
++	foo1.3
++	foo1.6
++	EOF
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'version sort' '
+ 	git tag -l --sort=version:refname "foo*" >actual &&
+-	cat >expect <<EOF &&
+-foo1.3
+-foo1.6
+-foo1.10
+-EOF
++	cat >expect <<-\EOF &&
++	foo1.3
++	foo1.6
++	foo1.10
++	EOF
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'reverse version sort' '
+ 	git tag -l --sort=-version:refname "foo*" >actual &&
+-	cat >expect <<EOF &&
+-foo1.10
+-foo1.6
+-foo1.3
+-EOF
++	cat >expect <<-\EOF &&
++	foo1.10
++	foo1.6
++	foo1.3
++	EOF
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'reverse lexical sort' '
+ 	git tag -l --sort=-refname "foo*" >actual &&
+-	cat >expect <<EOF &&
+-foo1.6
+-foo1.3
+-foo1.10
+-EOF
++	cat >expect <<-\EOF &&
++	foo1.6
++	foo1.3
++	foo1.10
++	EOF
+ 	test_cmp expect actual
+ '
+ 
+-- 
+2.0.1.475.g9b8d714
