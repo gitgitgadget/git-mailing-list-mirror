@@ -1,82 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 02/10] replace: add --graft option
-Date: Fri, 11 Jul 2014 14:29:02 -0400
-Message-ID: <20140711182902.GH7856@sigill.intra.peff.net>
-References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
- <20140707063540.3708.51047.chriscool@tuxfamily.org>
- <xmqqsima7f3r.fsf@gitster.dls.corp.google.com>
- <CAP8UFD2X7j2TGEQfX3h8CfiZypJ5tVPqaZ2bNE0k1-jbeJj=Zw@mail.gmail.com>
- <xmqqr41t88dz.fsf@gitster.dls.corp.google.com>
- <xmqqegxt86ba.fsf@gitster.dls.corp.google.com>
- <CAP8UFD0_m5aFVcBQr3d9pXR=9rLjAVPGrj=UsBYFcnTQFwNKGA@mail.gmail.com>
- <xmqqmwcg561j.fsf@gitster.dls.corp.google.com>
- <CAP8UFD2db=ZMFSvzW6be3gBv7DP93C7Z5yfOEhs9QLNOkX0fGQ@mail.gmail.com>
- <xmqq4myn4us8.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2 v4] tag: support configuring --sort via .gitconfig
+Date: Fri, 11 Jul 2014 11:29:28 -0700
+Message-ID: <xmqqzjgf3g1j.fsf@gitster.dls.corp.google.com>
+References: <1405036334-8093-1-git-send-email-jacob.e.keller@intel.com>
+	<1405036334-8093-2-git-send-email-jacob.e.keller@intel.com>
+	<xmqqion4543l.fsf@gitster.dls.corp.google.com>
+	<1405096840.22963.8.camel@jekeller-desk1.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	git <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 20:29:16 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	"peff\@peff.net" <peff@peff.net>
+To: "Keller\, Jacob E" <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 20:29:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5fZH-0002qb-KK
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 20:29:11 +0200
+	id 1X5fZo-0003N7-DD
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 20:29:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754589AbaGKS3G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 14:29:06 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60310 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751424AbaGKS3F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 14:29:05 -0400
-Received: (qmail 16410 invoked by uid 102); 11 Jul 2014 18:29:04 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Jul 2014 13:29:04 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jul 2014 14:29:02 -0400
-Content-Disposition: inline
-In-Reply-To: <xmqq4myn4us8.fsf@gitster.dls.corp.google.com>
+	id S1755092AbaGKS3j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 14:29:39 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56304 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752387AbaGKS3h (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 14:29:37 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 91CE026726;
+	Fri, 11 Jul 2014 14:29:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M3I21gvOuf5e8qirfwS0LWa8gNU=; b=xOyqFZ
+	cVcStZdoExCHbi6W/pPTSahRxi7AapG0I0G7gcM+S73kxGg25e8Oz8ADCDDJWmDM
+	aaIyVHEwf/ApiueZy1cc4959jkbBlo1vwOzs38AmupQU8CZobYUgDnjwj1TxDyiD
+	ZBIDCiwcBfgOajxkLM5ol92w71KxX/h6PDK3c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bN/4khIovUAwQkAxu3UAJ979nxKm6dx1
+	P/UU0XftgMvGuHXYA7vRx3iLe3c+NmvLr6af28oayZSPQAuJ60sJdrslePU6glIw
+	Mz/rHaQqK260vcM5awhp2nnmSb4O7IjG7r9eN45ZIfufLRbgU8Bpsqg58LW+dea1
+	bzHdiKjkO+w=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 87A9B26725;
+	Fri, 11 Jul 2014 14:29:20 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D4BC7266F3;
+	Fri, 11 Jul 2014 14:29:14 -0400 (EDT)
+In-Reply-To: <1405096840.22963.8.camel@jekeller-desk1.amr.corp.intel.com>
+	(Jacob E. Keller's message of "Fri, 11 Jul 2014 16:40:40 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 42E8E932-0929-11E4-B52E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253313>
 
-On Fri, Jul 11, 2014 at 11:25:43AM -0700, Junio C Hamano wrote:
+"Keller, Jacob E" <jacob.e.keller@intel.com> writes:
 
-> Christian Couder <christian.couder@gmail.com> writes:
-> 
-> > On Fri, Jul 11, 2014 at 4:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >> Christian Couder <christian.couder@gmail.com> writes:
-> >>
-> >>> On Thu, Jul 10, 2014 at 7:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >>>
-> >>>>> "Making sure A's parent is B" would be an
-> >>>>> idempotent operation, no?  Why not just make sure A's parent is
-> >>>>> already B and report "Your wish has been granted" to the user?
-> >>>
-> >>> ... and here you say we should report "your wish has been granted"...
-> >>
-> >> Normal way for "git replace" to report that is to exit with status 0
-> >> and without any noise, I would think.
-> >
-> > In a similar case "git replace --edit" we error out instead of just
-> > exiting (with status 0), see:
-> >
-> > f22166b5fee7dc (replace: make sure --edit results in a different object)
-> 
-> I do not care *too* deeply, but if you ask me, that may be a mistake
-> we may want to fix before the next release.
+> This is not how the rest of the current tests work. I will submit a
+> patch which fixes up the current --sort tests (but not every test, for
+> now) as well.
 
-Yeah, I also do not care too deeply, but I mentioned in the earlier
-review that I would expect it to just remove the replacement if it ends
-up generating the same object.
-
--Peff
+I do not want to pile more work that is unrelated to the task at
+hand on your plate, i.e. clean-up work, so I would assign a very low
+priority to "fix up the current tests".  At the same time, existing
+mistakes are not excuses to introduce new similar ones, hence my
+suggestions to the added code in the patch I saw.
