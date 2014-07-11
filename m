@@ -1,186 +1,83 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Date: Fri, 11 Jul 2014 20:54:50 +0000
-Message-ID: <1405112090.22963.45.camel@jekeller-desk1.amr.corp.intel.com>
+Date: Fri, 11 Jul 2014 17:06:33 -0400
+Message-ID: <20140711210633.GA12546@sigill.intra.peff.net>
 References: <1405111895-17451-1-git-send-email-jacob.e.keller@intel.com>
-	 <1405111895-17451-3-git-send-email-jacob.e.keller@intel.com>
+ <1405111895-17451-3-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "peff@peff.net" <peff@peff.net>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Jul 11 22:54:57 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 23:06:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5hqL-0006TE-50
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 22:54:57 +0200
+	id 1X5i1j-0002ki-3q
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 23:06:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087AbaGKUyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 16:54:53 -0400
-Received: from mga02.intel.com ([134.134.136.20]:65432 "EHLO mga02.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754058AbaGKUyw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 16:54:52 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga101.jf.intel.com with ESMTP; 11 Jul 2014 13:54:51 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,645,1400050800"; 
-   d="scan'208";a="571911602"
-Received: from orsmsx105.amr.corp.intel.com ([10.22.225.132])
-  by orsmga002.jf.intel.com with ESMTP; 11 Jul 2014 13:54:51 -0700
-Received: from orsmsx160.amr.corp.intel.com (10.22.226.43) by
- ORSMSX105.amr.corp.intel.com (10.22.225.132) with Microsoft SMTP Server (TLS)
- id 14.3.123.3; Fri, 11 Jul 2014 13:54:51 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
- ORSMSX160.amr.corp.intel.com ([169.254.13.95]) with mapi id 14.03.0123.003;
- Fri, 11 Jul 2014 13:54:51 -0700
-Thread-Topic: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Thread-Index: AQHPnUnvxsbR8A2dgEOXgE7LAeOTh5ubz3sA
+	id S932146AbaGKVGi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 17:06:38 -0400
+Received: from cloud.peff.net ([50.56.180.127]:60405 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932153AbaGKVGf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 17:06:35 -0400
+Received: (qmail 26738 invoked by uid 102); 11 Jul 2014 21:06:35 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 11 Jul 2014 16:06:35 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jul 2014 17:06:33 -0400
+Content-Disposition: inline
 In-Reply-To: <1405111895-17451-3-git-send-email-jacob.e.keller@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <A1057238CEC23348A66797201585D32A@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253326>
 
-T24gRnJpLCAyMDE0LTA3LTExIGF0IDEzOjUxIC0wNzAwLCBKYWNvYiBLZWxsZXIgd3JvdGU6DQo+
-IEFkZCBzdXBwb3J0IGZvciBjb25maWd1cmluZyBkZWZhdWx0IHNvcnQgb3JkZXJpbmcgZm9yIGdp
-dCB0YWdzLiBDb21tYW5kDQo+IGxpbmUgb3B0aW9uIHdpbGwgb3ZlcnJpZGUgdGhpcyBjb25maWd1
-cmVkIHZhbHVlLCB1c2luZyB0aGUgZXhhY3Qgc2FtZQ0KPiBzeW50YXguDQo+IA0KPiBDYzogSmVm
-ZiBLaW5nIDxwZWZmQHBlZmYubmV0Pg0KPiBTaWduZWQtb2ZmLWJ5OiBKYWNvYiBLZWxsZXIgPGph
-Y29iLmUua2VsbGVyQGludGVsLmNvbT4NCj4gLS0tDQo+IFVwZGF0ZWQgYmFzZWQgb24gSnVuaW8n
-cyBzdWdnZXN0aW9ucywgYXMgd2VsbCBhcyBtYWtpbmcgc3VyZSB0aGF0IHdlIGRvbid0IGJhaWwN
-Cj4gaWYgd2UgY2FuJ3QgdW5kZXJzdGFuZCBjb25maWcncyBvcHRpb24uIFdlIHN0aWxsIHByaW50
-IGVycm9yIG1lc3NhZ2UgZm9sbG93ZWQNCj4gYnkgYSB3YXJuaW5nIGFib3V0IHVzaW5nIGRlZmF1
-bHQgb3JkZXIuIEluIGFkZGl0aW9uLCBhZGRlZCBhIGZldyBtb3JlIHRlc3RzIHRvDQo+IGVuc3Vy
-ZSB0aGF0IHRoZXNlIHdvcmsgYXMgZXhwZWN0ZWQuDQo+IA0KPiAgRG9jdW1lbnRhdGlvbi9jb25m
-aWcudHh0ICB8ICA1ICsrKysNCj4gIERvY3VtZW50YXRpb24vZ2l0LXRhZy50eHQgfCAgNSArKyst
-DQo+ICBidWlsdGluL3RhZy5jICAgICAgICAgICAgIHwgNjEgKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0NCj4gIHQvdDcwMDQtdGFnLnNoICAgICAgICAgICAg
-fCAzNiArKysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+ICA0IGZpbGVzIGNoYW5nZWQsIDkw
-IGluc2VydGlvbnMoKyksIDE3IGRlbGV0aW9ucygtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL0RvY3Vt
-ZW50YXRpb24vY29uZmlnLnR4dCBiL0RvY3VtZW50YXRpb24vY29uZmlnLnR4dA0KPiBpbmRleCAx
-ZDcxOGJkYjk2NjIuLmM1NWMyMmFiN2JlOSAxMDA2NDQNCj4gLS0tIGEvRG9jdW1lbnRhdGlvbi9j
-b25maWcudHh0DQo+ICsrKyBiL0RvY3VtZW50YXRpb24vY29uZmlnLnR4dA0KPiBAQCAtMjM1NCw2
-ICsyMzU0LDExIEBAIHN1Ym1vZHVsZS48bmFtZT4uaWdub3JlOjoNCj4gIAkiLS1pZ25vcmUtc3Vi
-bW9kdWxlcyIgb3B0aW9uLiBUaGUgJ2dpdCBzdWJtb2R1bGUnIGNvbW1hbmRzIGFyZSBub3QNCj4g
-IAlhZmZlY3RlZCBieSB0aGlzIHNldHRpbmcuDQo+ICANCj4gK3RhZy5zb3J0OjoNCj4gKwlUaGlz
-IHZhcmlhYmxlIGNvbnRyb2xzIHRoZSBzb3J0IG9yZGVyaW5nIG9mIHRhZ3Mgd2hlbiBkaXNwbGF5
-ZWQgYnkNCj4gKwlsaW5rZ2l0OmdpdC10YWdbMV0uIFdpdGhvdXQgdGhlICItLXNvcnQ9PHZhbHVl
-PiIgb3B0aW9uIHByb3ZpZGVkLCB0aGUNCj4gKwl2YWx1ZSBvZiB0aGlzIHZhcmlhYmxlIHdpbGwg
-YmUgdXNlZCBhcyB0aGUgZGVmYXVsdC4NCj4gKw0KPiAgdGFyLnVtYXNrOjoNCj4gIAlUaGlzIHZh
-cmlhYmxlIGNhbiBiZSB1c2VkIHRvIHJlc3RyaWN0IHRoZSBwZXJtaXNzaW9uIGJpdHMgb2YNCj4g
-IAl0YXIgYXJjaGl2ZSBlbnRyaWVzLiAgVGhlIGRlZmF1bHQgaXMgMDAwMiwgd2hpY2ggdHVybnMg
-b2ZmIHRoZQ0KPiBkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9naXQtdGFnLnR4dCBiL0RvY3Vt
-ZW50YXRpb24vZ2l0LXRhZy50eHQNCj4gaW5kZXggYjQyNGExYmM0OGJiLi4zMjA5MDgzNjlmMDYg
-MTAwNjQ0DQo+IC0tLSBhL0RvY3VtZW50YXRpb24vZ2l0LXRhZy50eHQNCj4gKysrIGIvRG9jdW1l
-bnRhdGlvbi9naXQtdGFnLnR4dA0KPiBAQCAtOTksNyArOTksOSBAQCBPUFRJT05TDQo+ICAJU29y
-dCBpbiBhIHNwZWNpZmljIG9yZGVyLiBTdXBwb3J0ZWQgdHlwZSBpcyAicmVmbmFtZSINCj4gIAko
-bGV4aWNvZ3JhcGhpYyBvcmRlciksICJ2ZXJzaW9uOnJlZm5hbWUiIG9yICJ2OnJlZm5hbWUiICh0
-YWcNCj4gIAluYW1lcyBhcmUgdHJlYXRlZCBhcyB2ZXJzaW9ucykuIFByZXBlbmQgIi0iIHRvIHJl
-dmVyc2Ugc29ydA0KPiAtCW9yZGVyLg0KPiArCW9yZGVyLiBXaGVuIHRoaXMgb3B0aW9uIGlzIG5v
-dCBnaXZlbiwgdGhlIHNvcnQgb3JkZXIgZGVmYXVsdHMgdG8gdGhlDQo+ICsJdmFsdWUgY29uZmln
-dXJlZCBmb3IgdGhlICd0YWcuc29ydCcgdmFyaWFibGUgaWYgaXQgZXhpc3RzLCBvcg0KPiArCWxl
-eGljb2dyYXBoaWMgb3JkZXIgb3RoZXJ3aXNlLiBTZWUgbGlua2dpdDpnaXQtY29uZmlnWzFdLg0K
-PiAgDQo+ICAtLWNvbHVtbls9PG9wdGlvbnM+XTo6DQo+ICAtLW5vLWNvbHVtbjo6DQo+IEBAIC0z
-MTcsNiArMzE5LDcgQEAgaW5jbHVkZTo6ZGF0ZS1mb3JtYXRzLnR4dFtdDQo+ICBTRUUgQUxTTw0K
-PiAgLS0tLS0tLS0NCj4gIGxpbmtnaXQ6Z2l0LWNoZWNrLXJlZi1mb3JtYXRbMV0uDQo+ICtsaW5r
-Z2l0OmdpdC1jb25maWdbMV0uDQo+ICANCj4gIEdJVA0KPiAgLS0tDQo+IGRpZmYgLS1naXQgYS9i
-dWlsdGluL3RhZy5jIGIvYnVpbHRpbi90YWcuYw0KPiBpbmRleCA3Y2NiNmYzYzU4MWIuLmNiMzdi
-MjYxNTlhNiAxMDA2NDQNCj4gLS0tIGEvYnVpbHRpbi90YWcuYw0KPiArKysgYi9idWlsdGluL3Rh
-Zy5jDQo+IEBAIC0zMiw2ICszMiw4IEBAIHN0YXRpYyBjb25zdCBjaGFyICogY29uc3QgZ2l0X3Rh
-Z191c2FnZVtdID0gew0KPiAgI2RlZmluZSBTT1JUX01BU0sgICAgICAgMHg3ZmZmDQo+ICAjZGVm
-aW5lIFJFVkVSU0VfU09SVCAgICAweDgwMDANCj4gIA0KPiArc3RhdGljIGludCB0YWdfc29ydDsN
-Cj4gKw0KPiAgc3RydWN0IHRhZ19maWx0ZXIgew0KPiAgCWNvbnN0IGNoYXIgKipwYXR0ZXJuczsN
-Cj4gIAlpbnQgbGluZXM7DQo+IEBAIC0zNDYsOSArMzQ4LDQ2IEBAIHN0YXRpYyBjb25zdCBjaGFy
-IHRhZ190ZW1wbGF0ZV9ub2NsZWFudXBbXSA9DQo+ICAJIkxpbmVzIHN0YXJ0aW5nIHdpdGggJyVj
-JyB3aWxsIGJlIGtlcHQ7IHlvdSBtYXkgcmVtb3ZlIHRoZW0iDQo+ICAJIiB5b3Vyc2VsZiBpZiB5
-b3Ugd2FudCB0by5cbiIpOw0KPiAgDQo+ICsvKg0KPiArICogUGFyc2UgYSBzb3J0IHN0cmluZywg
-YW5kIHJldHVybiAwIGlmIHBhcnNlZCBzdWNjZXNzZnVsbHkuIFdpbGwgcmV0dXJuDQo+ICsgKiBu
-b24temVybyB3aGVuIHRoZSBzb3J0IHN0cmluZyBkb2VzIG5vdCBwYXJzZSBpbnRvIGEga25vd24g
-dHlwZS4NCj4gKyAqLw0KPiArc3RhdGljIGludCBwYXJzZV9zb3J0X3N0cmluZyhjb25zdCBjaGFy
-ICphcmcsIGludCAqc29ydCkNCj4gK3sNCj4gKwlpbnQgdHlwZSA9IDAsIGZsYWdzID0gMDsNCj4g
-Kw0KPiArCWlmIChza2lwX3ByZWZpeChhcmcsICItIiwgJmFyZykpDQo+ICsJCWZsYWdzIHw9IFJF
-VkVSU0VfU09SVDsNCj4gKw0KPiArCWlmIChza2lwX3ByZWZpeChhcmcsICJ2ZXJzaW9uOiIsICZh
-cmcpIHx8IHNraXBfcHJlZml4KGFyZywgInY6IiwgJmFyZykpDQo+ICsJCXR5cGUgPSBWRVJDTVBf
-U09SVDsNCj4gKwllbHNlDQo+ICsJCXR5cGUgPSBTVFJDTVBfU09SVDsNCj4gKw0KPiArCWlmIChz
-dHJjbXAoYXJnLCAicmVmbmFtZSIpKQ0KPiArCQlyZXR1cm4gZXJyb3IoXygidW5zdXBwb3J0ZWQg
-c29ydCBzcGVjaWZpY2F0aW9uICVzIiksIGFyZyk7DQo+ICsNCj4gKwkqc29ydCA9ICh0eXBlIHwg
-ZmxhZ3MpOw0KPiArDQo+ICsJcmV0dXJuIDA7DQo+ICt9DQo+ICsNCj4gIHN0YXRpYyBpbnQgZ2l0
-X3RhZ19jb25maWcoY29uc3QgY2hhciAqdmFyLCBjb25zdCBjaGFyICp2YWx1ZSwgdm9pZCAqY2Ip
-DQo+ICB7DQo+IC0JaW50IHN0YXR1cyA9IGdpdF9ncGdfY29uZmlnKHZhciwgdmFsdWUsIGNiKTsN
-Cj4gKwlpbnQgc3RhdHVzOw0KPiArDQo+ICsJaWYgKCFzdHJjbXAodmFyLCAidGFnLnNvcnQiKSkg
-ew0KPiArCQlpZiAoIXZhbHVlKQ0KPiArCQkJcmV0dXJuIGNvbmZpZ19lcnJvcl9ub25ib29sKHZh
-cik7DQo+ICsJCXN0YXR1cyA9IHBhcnNlX3NvcnRfc3RyaW5nKHZhbHVlLCAmdGFnX3NvcnQpOw0K
-PiArCQlpZiAoc3RhdHVzKSB7DQo+ICsJCQl3YXJuaW5nKCJ1c2luZyBkZWZhdWx0IGxleGljb2dy
-YXBoaWMgc29ydCBvcmRlciIpOw0KDQpPb3BzLCBJIHNob3VsZCBhbHNvIHVzZSB3YXJuaW5nKF8o
-IiIpKSBoZXJlIGFzIHdlbGwgSSBiZWxpZXZlLi4uDQoNClNvcnJ5IGZvciB0aHJhc2guDQoNClRo
-YW5rcywNCkpha2UNCg0KPiArCQkJdGFnX3NvcnQgPSBTVFJDTVBfU09SVDsNCj4gKwkJfQ0KPiAr
-CQlyZXR1cm4gMDsNCj4gKwl9DQo+ICsNCj4gKwlzdGF0dXMgPSBnaXRfZ3BnX2NvbmZpZyh2YXIs
-IHZhbHVlLCBjYik7DQo+ICAJaWYgKHN0YXR1cykNCj4gIAkJcmV0dXJuIHN0YXR1czsNCj4gIAlp
-ZiAoc3RhcnRzX3dpdGgodmFyLCAiY29sdW1uLiIpKQ0KPiBAQCAtNTIyLDE4ICs1NjEsOCBAQCBz
-dGF0aWMgaW50IHBhcnNlX29wdF9wb2ludHNfYXQoY29uc3Qgc3RydWN0IG9wdGlvbiAqb3B0IF9f
-YXR0cmlidXRlX18oKHVudXNlZCkpLA0KPiAgc3RhdGljIGludCBwYXJzZV9vcHRfc29ydChjb25z
-dCBzdHJ1Y3Qgb3B0aW9uICpvcHQsIGNvbnN0IGNoYXIgKmFyZywgaW50IHVuc2V0KQ0KPiAgew0K
-PiAgCWludCAqc29ydCA9IG9wdC0+dmFsdWU7DQo+IC0JaW50IGZsYWdzID0gMDsNCj4gIA0KPiAt
-CWlmIChza2lwX3ByZWZpeChhcmcsICItIiwgJmFyZykpDQo+IC0JCWZsYWdzIHw9IFJFVkVSU0Vf
-U09SVDsNCj4gLQ0KPiAtCWlmIChza2lwX3ByZWZpeChhcmcsICJ2ZXJzaW9uOiIsICZhcmcpIHx8
-IHNraXBfcHJlZml4KGFyZywgInY6IiwgJmFyZykpDQo+IC0JCSpzb3J0ID0gVkVSQ01QX1NPUlQ7
-DQo+IC0NCj4gLQlpZiAoc3RyY21wKGFyZywgInJlZm5hbWUiKSkNCj4gLQkJZGllKF8oInVuc3Vw
-cG9ydGVkIHNvcnQgc3BlY2lmaWNhdGlvbiAlcyIpLCBhcmcpOw0KPiAtCSpzb3J0IHw9IGZsYWdz
-Ow0KPiAtCXJldHVybiAwOw0KPiArCXJldHVybiBwYXJzZV9zb3J0X3N0cmluZyhhcmcsIHNvcnQp
-Ow0KPiAgfQ0KPiAgDQo+ICBpbnQgY21kX3RhZyhpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3Ys
-IGNvbnN0IGNoYXIgKnByZWZpeCkNCj4gQEAgLTU0Niw3ICs1NzUsNyBAQCBpbnQgY21kX3RhZyhp
-bnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkNCj4gIAlzdHJ1
-Y3QgY3JlYXRlX3RhZ19vcHRpb25zIG9wdDsNCj4gIAljaGFyICpjbGVhbnVwX2FyZyA9IE5VTEw7
-DQo+ICAJaW50IGFubm90YXRlID0gMCwgZm9yY2UgPSAwLCBsaW5lcyA9IC0xOw0KPiAtCWludCBj
-bWRtb2RlID0gMCwgc29ydCA9IDA7DQo+ICsJaW50IGNtZG1vZGUgPSAwOw0KPiAgCWNvbnN0IGNo
-YXIgKm1zZ2ZpbGUgPSBOVUxMLCAqa2V5aWQgPSBOVUxMOw0KPiAgCXN0cnVjdCBtc2dfYXJnIG1z
-ZyA9IHsgMCwgU1RSQlVGX0lOSVQgfTsNCj4gIAlzdHJ1Y3QgY29tbWl0X2xpc3QgKndpdGhfY29t
-bWl0ID0gTlVMTDsNCj4gQEAgLTU3Miw3ICs2MDEsNyBAQCBpbnQgY21kX3RhZyhpbnQgYXJnYywg
-Y29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkNCj4gIAkJT1BUX19GT1JDRSgm
-Zm9yY2UsIE5fKCJyZXBsYWNlIHRoZSB0YWcgaWYgZXhpc3RzIikpLA0KPiAgCQlPUFRfQ09MVU1O
-KDAsICJjb2x1bW4iLCAmY29sb3B0cywgTl8oInNob3cgdGFnIGxpc3QgaW4gY29sdW1ucyIpKSwN
-Cj4gIAkJew0KPiAtCQkJT1BUSU9OX0NBTExCQUNLLCAwLCAic29ydCIsICZzb3J0LCBOXygidHlw
-ZSIpLCBOXygic29ydCB0YWdzIiksDQo+ICsJCQlPUFRJT05fQ0FMTEJBQ0ssIDAsICJzb3J0Iiwg
-JnRhZ19zb3J0LCBOXygidHlwZSIpLCBOXygic29ydCB0YWdzIiksDQo+ICAJCQlQQVJTRV9PUFRf
-Tk9ORUcsIHBhcnNlX29wdF9zb3J0DQo+ICAJCX0sDQo+ICANCj4gQEAgLTYyOCw5ICs2NTcsOSBA
-QCBpbnQgY21kX3RhZyhpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnBy
-ZWZpeCkNCj4gIAkJCWNvcHRzLnBhZGRpbmcgPSAyOw0KPiAgCQkJcnVuX2NvbHVtbl9maWx0ZXIo
-Y29sb3B0cywgJmNvcHRzKTsNCj4gIAkJfQ0KPiAtCQlpZiAobGluZXMgIT0gLTEgJiYgc29ydCkN
-Cj4gKwkJaWYgKGxpbmVzICE9IC0xICYmIHRhZ19zb3J0KQ0KPiAgCQkJZGllKF8oIi0tc29ydCBh
-bmQgLW4gYXJlIGluY29tcGF0aWJsZSIpKTsNCj4gLQkJcmV0ID0gbGlzdF90YWdzKGFyZ3YsIGxp
-bmVzID09IC0xID8gMCA6IGxpbmVzLCB3aXRoX2NvbW1pdCwgc29ydCk7DQo+ICsJCXJldCA9IGxp
-c3RfdGFncyhhcmd2LCBsaW5lcyA9PSAtMSA/IDAgOiBsaW5lcywgd2l0aF9jb21taXQsIHRhZ19z
-b3J0KTsNCj4gIAkJaWYgKGNvbHVtbl9hY3RpdmUoY29sb3B0cykpDQo+ICAJCQlzdG9wX2NvbHVt
-bl9maWx0ZXIoKTsNCj4gIAkJcmV0dXJuIHJldDsNCj4gZGlmZiAtLWdpdCBhL3QvdDcwMDQtdGFn
-LnNoIGIvdC90NzAwNC10YWcuc2gNCj4gaW5kZXggNjYwMTBiMGU3MDY2Li4wMzY2NjUzMDg4NDEg
-MTAwNzU1DQo+IC0tLSBhL3QvdDcwMDQtdGFnLnNoDQo+ICsrKyBiL3QvdDcwMDQtdGFnLnNoDQo+
-IEBAIC0xNDIzLDYgKzE0MjMsNDIgQEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAncmV2ZXJzZSBsZXhp
-Y2FsIHNvcnQnICcNCj4gIAl0ZXN0X2NtcCBleHBlY3QgYWN0dWFsDQo+ICAnDQo+ICANCj4gK3Rl
-c3RfZXhwZWN0X3N1Y2Nlc3MgJ2NvbmZpZ3VyZWQgbGV4aWNhbCBzb3J0JyAnDQo+ICsJZ2l0IGNv
-bmZpZyB0YWcuc29ydCAidjpyZWZuYW1lIiAmJg0KPiArCWdpdCB0YWcgLWwgImZvbyoiID5hY3R1
-YWwgJiYNCj4gKwljYXQgPmV4cGVjdCA8PC1cRU9GICYmDQo+ICsJZm9vMS4zDQo+ICsJZm9vMS42
-DQo+ICsJZm9vMS4xMA0KPiArCUVPRg0KPiArCXRlc3RfY21wIGV4cGVjdCBhY3R1YWwNCj4gKycN
-Cj4gKw0KPiArdGVzdF9leHBlY3Rfc3VjY2VzcyAnb3B0aW9uIG92ZXJyaWRlIGNvbmZpZ3VyZWQg
-c29ydCcgJw0KPiArCWdpdCB0YWcgLWwgLS1zb3J0PS1yZWZuYW1lICJmb28qIiA+YWN0dWFsICYm
-DQo+ICsJY2F0ID5leHBlY3QgPDwtXEVPRiAmJg0KPiArCWZvbzEuNg0KPiArCWZvbzEuMw0KPiAr
-CWZvbzEuMTANCj4gKwlFT0YNCj4gKwl0ZXN0X2NtcCBleHBlY3QgYWN0dWFsDQo+ICsnDQo+ICsN
-Cj4gK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2ludmFsaWQgc29ydCBwYXJhbWV0ZXIgb24gY29tbWFu
-ZCBsaW5lJyAnDQo+ICsJdGVzdF9tdXN0X2ZhaWwgZ2l0IHRhZyAtbCAtLXNvcnQ9bm90dmFsaWQg
-ImZvbyoiID5hY3R1YWwNCj4gKycNCj4gKw0KPiArdGVzdF9leHBlY3Rfc3VjY2VzcyAnaW52YWxp
-ZCBzb3J0IHBhcmFtZXRlciBpbiBjb25maWd1cmF0b2luJyAnDQo+ICsJZ2l0IGNvbmZpZyB0YWcu
-c29ydCAidjpub3R2YWxpZCIgJiYNCj4gKwlnaXQgdGFnIC1sICJmb28qIiA+YWN0dWFsICYmDQo+
-ICsJY2F0ID5leHBlY3QgPDwtXEVPRiAmJg0KPiArCWZvbzEuMTANCj4gKwlmb28xLjMNCj4gKwlm
-b28xLjYNCj4gKwlFT0YNCj4gKwl0ZXN0X2NtcCBleHBlY3QgYWN0dWFsDQo+ICsnDQo+ICsNCj4g
-IHJ1bl93aXRoX2xpbWl0ZWRfc3RhY2sgKCkgew0KPiAgCSh1bGltaXQgLXMgNjQgJiYgIiRAIikN
-Cj4gIH0NCg0KDQo=
+On Fri, Jul 11, 2014 at 01:51:35PM -0700, Jacob Keller wrote:
+
+> +	if (!strcmp(var, "tag.sort")) {
+> +		if (!value)
+> +			return config_error_nonbool(var);
+> +		status = parse_sort_string(value, &tag_sort);
+> +		if (status) {
+> +			warning("using default lexicographic sort order");
+> +			tag_sort = STRCMP_SORT;
+> +		}
+
+I think this is a good compromise of the issues we discussed earlier. As
+you noted, it should probably be marked for translation. I'm also not
+sure the message content is clear in all situations. If I have a broken
+tag.sort, I get:
+
+  $ git config tag.sort bogus
+  $ git tag >/dev/null
+  error: unsupported sort specification bogus
+  warning: using default lexicographic sort order
+
+Not too bad, though reminding me that the value "bogus" came from
+tag.sort would be nice. But what if I override it:
+
+  $ git tag --sort=v:refname >/dev/null
+  error: unsupported sort specification bogus
+  warning: using default lexicographic sort order
+
+That's actively wrong, because we are using v:refname from the
+command-line. Perhaps we could phrase it like:
+
+  warning: ignoring invalid config option tag.sort
+
+or similar, which helps both cases.
+
+As an aside, I also think the error line could more clearly mark the
+literal contents of the variable. E.g., one of:
+
+  error: unsupported sort specification: bogus
+
+or
+
+  error: unsupported sort specification 'bogus'
+
+-Peff
