@@ -1,130 +1,92 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: Topic sk/mingw-unicode-spawn-args breaks tests
-Date: Fri, 11 Jul 2014 21:49:15 +0200
-Message-ID: <53C03FBB.1080807@gmail.com>
-References: <53BEF21E.9090007@kdbg.org>
+From: "Keller, Jacob E" <jacob.e.keller@intel.com>
+Subject: Re: [PATCH 3/3 v5] tag: support configuring --sort via .gitconfig
+Date: Fri, 11 Jul 2014 20:36:13 +0000
+Message-ID: <1405110973.22963.43.camel@jekeller-desk1.amr.corp.intel.com>
+References: <1405099447-27555-1-git-send-email-jacob.e.keller@intel.com>
+	 <1405099447-27555-3-git-send-email-jacob.e.keller@intel.com>
+	 <20140711174628.GC7856@sigill.intra.peff.net>
+	 <1405102267.22963.35.camel@jekeller-desk1.amr.corp.intel.com>
+	 <20140711182214.GF7856@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Stepan Kasal <kasal@ucw.cz>, Git Mailing List <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: msysgit+bncBCH3XYXLXQDBBOX7QCPAKGQE235F2OQ@googlegroups.com Fri Jul 11 21:49:20 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBOX7QCPAKGQE235F2OQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f192.google.com ([74.125.82.192])
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "peff@peff.net" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jul 11 22:36:59 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBOX7QCPAKGQE235F2OQ@googlegroups.com>)
-	id 1X5gop-0002Jb-2S
-	for gcvm-msysgit@m.gmane.org; Fri, 11 Jul 2014 21:49:19 +0200
-Received: by mail-we0-f192.google.com with SMTP id u57sf150921wes.19
-        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 12:49:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=XZU4oFvTyiunHcdG0gDZfIk8sfJWXaM+GFNbGvhb6CE=;
-        b=VOwRERp65FPOBhwVW0MnYJJgPIdzHvDuEqFP1KxQ2y8lOeL5xV7GlY2vvWIxNQf5wO
-         PVvSIdOdWzb9TWgkgyHXjc/AMylJaRKHDyBajEj3mBuiPbf6i8EFcomKGtBzz05/TdaD
-         ynQB5ythHyc6ATtS+uXao5Mk3AHfD1CpWgT/99IOVvhXhkRpl6ZdUJnDi9rWcRHCpWRa
-         Iqxbu17OPVLAzm2soXs9t9X71Ta0nVRlPx8WAyJzOiiwlOEKMBkCtxk0kQZf4ZpqEZKF
-         0McfQYFnfYCSrL03YvaNI4Mpdlf5Dx+pnIoqcm+dVN7OypCdhPTelkSeLiWpJYPO2/di
-         7ljA==
-X-Received: by 10.152.36.37 with SMTP id n5mr10251laj.3.1405108155550;
-        Fri, 11 Jul 2014 12:49:15 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.216.135 with SMTP id oq7ls92605lac.39.gmail; Fri, 11 Jul
- 2014 12:49:14 -0700 (PDT)
-X-Received: by 10.112.54.169 with SMTP id k9mr94050lbp.1.1405108154449;
-        Fri, 11 Jul 2014 12:49:14 -0700 (PDT)
-Received: from mail-wi0-x236.google.com (mail-wi0-x236.google.com [2a00:1450:400c:c05::236])
-        by gmr-mx.google.com with ESMTPS id b9si255894wic.2.2014.07.11.12.49.14
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 12:49:14 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236 as permitted sender) client-ip=2a00:1450:400c:c05::236;
-Received: by mail-wi0-f182.google.com with SMTP id d1so226750wiv.3
-        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 12:49:14 -0700 (PDT)
-X-Received: by 10.194.63.228 with SMTP id j4mr1238452wjs.7.1405108154358;
-        Fri, 11 Jul 2014 12:49:14 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id ec8sm10776528wic.10.2014.07.11.12.49.12
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 12:49:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53BEF21E.9090007@kdbg.org>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253319>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X5hYw-0003J5-99
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 22:36:58 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753063AbaGKUgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 16:36:54 -0400
+Received: from mga11.intel.com ([192.55.52.93]:11744 "EHLO mga11.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752913AbaGKUgx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 16:36:53 -0400
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga102.fm.intel.com with ESMTP; 11 Jul 2014 13:36:53 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.01,645,1400050800"; 
+   d="scan'208";a="568656424"
+Received: from orsmsx105.amr.corp.intel.com ([10.22.225.132])
+  by fmsmga002.fm.intel.com with ESMTP; 11 Jul 2014 13:36:14 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
+ ORSMSX105.amr.corp.intel.com ([169.254.4.21]) with mapi id 14.03.0123.003;
+ Fri, 11 Jul 2014 13:36:14 -0700
+Thread-Topic: [PATCH 3/3 v5] tag: support configuring --sort via .gitconfig
+Thread-Index: AQHPnSzwtKQEouEPQUqhaN0T4H7NY5ubmxQAgAAG44CAAAMbAIAAJW+A
+In-Reply-To: <20140711182214.GF7856@sigill.intra.peff.net>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.173.156]
+Content-ID: <CFCD7DB5D3B35B4CA57FCAF46988F233@intel.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253320>
 
-Am 10.07.2014 22:05, schrieb Johannes Sixt:
-> It looks like I totally missed the topic sk/mingw-unicode-spawn-args.
-> Now it's in master, and it breaks lots of test cases for me:
-> 
-> t0050-filesystem
-> t0110-urlmatch-normalization
-> t4014-format-patch
-> t4041-diff-submodule-option
-> t4120-apply-popt
-> t4201-shortlog
-> t4205-log-pretty-formats
-> t4209-log-pickaxe
-> t4210-log-i18n
-> (I killed the test run here)
-> 
-> Am I doing something wrong? Does the topic depend on a particular
-> version of MSYS (or DLL)?
-> 
-> -- Hannes
-> 
-
-After commenting out fchmod in config.c, I get similar results.
-
-At first glance, t0050 seems to fail because the unicode file
-name patches are still missing.
-
-t4041 tries to pass ISO-8859-1 encoded bytes on the command line,
-which simply doesn't work on Windows (all OS APIs 'talk' UTF-16).
-We have a fix for this in the msysgit fork [1] (but unfortunately
-in another branch, so Stepan couldn't know the patch is related).
-
-I suspect the other failures also fall in these two categories.
-
-[1] https://github.com/msysgit/git/commit/ef4a733c
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+T24gRnJpLCAyMDE0LTA3LTExIGF0IDE0OjIyIC0wNDAwLCBKZWZmIEtpbmcgd3JvdGU6DQo+IE9u
+IEZyaSwgSnVsIDExLCAyMDE0IGF0IDA2OjExOjA4UE0gKzAwMDAsIEtlbGxlciwgSmFjb2IgRSB3
+cm90ZToNCj4gDQo+ID4gSSBwZXJzb25hbGx5IHByZWZlciBlcnJvciBvdXQgb24gb3B0aW9ucywg
+ZXZlbiB0aG91Z2ggaXQgY2FuIG1ha2UgaXQgYQ0KPiA+IGJpdCBtb3JlIGRpZmZpY3VsdCwgdGhv
+dWdoIGFzIGZhciBhcyBJIGtub3cgdW5rbm93biBmaWVsZHMgc2ltcGx5IHdhcm4NCj4gPiBvciBh
+cmUgaWdub3JlZC4gKGllOiBvbGQgdmVyc2lvbnMgb2YgZ2l0IGp1c3QgaWdub3JlIHVua25vd24g
+ZmllbGRzIGluDQo+ID4gY29uZmlndXJhdGlvbikuDQo+IA0KPiBSaWdodCwgd2UgX2hhdmVfIHRv
+IGlnbm9yZSB1bmtub3duIGNvbmZpZyBvcHRpb25zLCBiZWNhdXNlIHdlDQo+IHNwZWNpZmljYWxs
+eSBhbGxvdyBvdGhlciBwcm9ncmFtcyBidWlsdCBvbiBnaXQgdG8gc3RvcmUgdGhlaXIgY29uZmln
+DQo+IHdpdGggdXMgKGFuZCBhbnl3YXksIG91ciBjYWxsYmFjayBzdHlsZSBvZiBwYXJzaW5nIG1l
+YW5zIHRoYXQgbm8gc2luZ2xlDQo+IGNhbGxiYWNrIGtub3dzIGFib3V0IGFsbCBvZiB0aGUga2V5
+cykuDQo+IA0KPiBJbiB0aGUgcGFzdCB3ZSBoYXZlIHN0YWtlZCBvdXQgcGFydGljdWxhciBhcmVh
+cyBvZiB0aGUgbmFtZXNwYWNlLA0KPiB0aG91Z2guIEUuZy4sIHRoZSBkaWZmIGNvZGUgc2FpZCAi
+SSBvd24gYWxsIG9mIGNvbG9yLmRpZmYuKiwgYW5kIGlmIHlvdQ0KPiBwdXQgaW4gc29tZXRoaW5n
+IEkgZG9uJ3QgdW5kZXJzdGFuZCwgSSdsbCBjb21wbGFpbiIuIFRoYXQgZW5kZWQgdXAgYmVpbmcN
+Cj4gYW5ub3lpbmcsIGFuZCBub3cgd2UgaWdub3JlIHNsb3RzIHdlIGRvbid0IHVuZGVyc3RhbmQg
+dGhlcmUuDQo+IA0KPiBTbyBvbGQgZ2l0cyB3aWxsIGFsd2F5cyBzaWxlbnRseSBpZ25vcmUgdGFn
+LnNvcnQgaWYgdGhleSBkb24ndCBrbm93DQo+IGFib3V0IGl0LCBhbmQgd2UgY2FuJ3QgY2hhbmdl
+IHRoYXQuIFRoZSBvbmx5IHRoaW5nIHdlIGNhbiBjaGFuZ2UgaXM6DQo+IA0KPiA+IEl0J3MgcG9z
+c2libGUgd2Ugc2hvdWxkIHdhcm4gaW5zdGVhZCB0aG91Z2gsIHNvIHRoYXQgb2xkZXIgZ2l0cyB3
+b3JrDQo+ID4gd2l0aCBuZXcgc29ydHMgdGhhdCB0aGV5IGRvbid0IHVuZGVyc3RhbmQuDQo+IA0K
+PiBSaWdodC4gSSB0aGluayBvdGhlciBjb25maWcgdmFyaWFibGVzIGluIHNpbWlsYXIgc2l0dWF0
+aW9ucyB3aWxsIGJhcmYuDQo+IFRoaXMgaXMgYmFja3dhcmRzLWNvbXBhdGlibGUgYXMgbG9uZyBh
+cyB0aGUgbmV3IHZhcmlhYmxlcyBhcmUgYSBzdXBlcnNldA0KPiAoaS5lLiwgd2Ugb25seSBhZGQg
+bmV3IHVuZGVyc3Rvb2QgdmFsdWVzLCBuZXZlciByZW1vdmUgb3IgY2hhbmdlIHRoZQ0KPiBtZWFu
+aW5nIG9mIGV4aXN0aW5nIHZhbHVlcykuIEl0J3MganVzdCBub3QgZm9yd2FyZHMtY29tcGF0aWJs
+ZS4NCj4gDQoNClNvIHNob3VsZCBJIHJlc3BpbiB0aGlzIHNvIHRoYXQgY29uZmlnIG9wdGlvbiBk
+b2Vzbid0IGVycm9yIG91dD8NCg0KPiA+IEkgYW0gb2sgd2l0aCB3YXJuaW5nIGJ1dCBJIGRvbid0
+IGtub3cgdGhlIGJlc3QgcHJhY3RpY2UgZm9yIGhvdyB0byB3YXJuDQo+ID4gaGVyZSBpbnN0ZWFk
+IG9mIGZhaWxpbmcuIFJldHVybmluZyBlcnJvciBjYXVzZXMgYSBmYXRhbCAiYmFkIGNvbmZpZyIN
+Cj4gPiBtZXNzYWdlLiBBbnkgdGhvdWdodHM/DQo+IA0KPiBUaGUgc2ltcGxlc3QgdGhpbmcgaXMg
+aWdub3JpbmcgdGhlIHJldHVybiBmcm9tIHBhcnNlX3NvcnRfc3RyaW5nIGFuZA0KPiBqdXN0IGNh
+bGxpbmcgInJldHVybiAwIi4gVGhhdCB3aWxsIHN0aWxsIHNheSAiZXJyb3I6IiwgYnV0IGNvbnRp
+bnVlIG9uLg0KPiBJZiB5b3UgcmVhbGx5IHdhbnQgaXQgdG8gc2F5ICJ3YXJuaW5nOiIsIEkgdGhp
+bmsgeW91J2xsIGhhdmUgdG8gcGFzcyBhDQo+IGZsYWcgaW50byBwYXJzZV9zb3J0X3N0cmluZy4g
+SSdtIG5vdCBzdXJlIGlmIGl0J3Mgd29ydGggdGhlIGVmZm9ydC4NCj4gDQo+IC1QZWZmDQoNCk9r
+IHRoaXMgbWFrZXMgc2Vuc2UsIEkgYW0gZmluZSBsZWF2aW5nIGl0IGFzIGVycm9yLiBTaG91bGQg
+SSByZXNwaW4gdG8NCm1ha2UgaXQgbm90IGRpZSB0aG91Z2g/DQoNClRoYW5rcywNCkpha2UNCg==
