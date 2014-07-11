@@ -1,177 +1,260 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH 2/2 v4] tag: support configuring --sort via .gitconfig
-Date: Fri, 11 Jul 2014 16:40:40 +0000
-Message-ID: <1405096840.22963.8.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1405036334-8093-1-git-send-email-jacob.e.keller@intel.com>
-	 <1405036334-8093-2-git-send-email-jacob.e.keller@intel.com>
-	 <xmqqion4543l.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"peff@peff.net" <peff@peff.net>
-To: "gitster@pobox.com" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 18:40:52 2014
+From: Yi EungJun <semtlenori@gmail.com>
+Subject: [PATCH v3] http: Add Accept-Language header if possible
+Date: Sat, 12 Jul 2014 01:52:53 +0900
+Message-ID: <1405097573-19239-1-git-send-email-eungjun.yi@navercorp.com>
+Cc: Yi EungJun <eungjun.yi@navercorp.com>, Jeff King <peff@peff.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Peter Krefting <peter@softwolves.pp.se>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 11 18:54:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5dsR-0007vF-Mp
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 18:40:52 +0200
+	id 1X5e5e-0005MS-Jl
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 18:54:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753939AbaGKQks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 12:40:48 -0400
-Received: from mga09.intel.com ([134.134.136.24]:19527 "EHLO mga09.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753143AbaGKQkr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 12:40:47 -0400
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga102.jf.intel.com with ESMTP; 11 Jul 2014 09:35:08 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,644,1400050800"; 
-   d="scan'208";a="542105622"
-Received: from orsmsx104.amr.corp.intel.com ([10.22.225.131])
-  by orsmga001.jf.intel.com with ESMTP; 11 Jul 2014 09:40:41 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
- ORSMSX104.amr.corp.intel.com ([169.254.3.57]) with mapi id 14.03.0123.003;
- Fri, 11 Jul 2014 09:40:41 -0700
-Thread-Topic: [PATCH 2/2 v4] tag: support configuring --sort via .gitconfig
-Thread-Index: AQHPnRlqSWWDJi5WWEKYCjRA7Q2n5ZubiNgA
-In-Reply-To: <xmqqion4543l.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <EDF04ABBC46D1249806D8F0389DB41D4@intel.com>
+	id S1752960AbaGKQy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 12:54:26 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:36421 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752759AbaGKQyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 12:54:25 -0400
+Received: by mail-pa0-f45.google.com with SMTP id rd3so1776892pab.4
+        for <git@vger.kernel.org>; Fri, 11 Jul 2014 09:54:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=aPLQdeJ3gICcA/LvyM+jDGr5O72EuHLenRXB57MKNKc=;
+        b=L7YCBJZNAHfsCp3HbXFtk8bVSAkKtgu4f7qerL/FbY54DSUifzeC8R3xfHnv5rDDVc
+         KT+oAPhIbeMZijPXUaPZDkgzPNzU9YZ/zUKcjadnhVRGMhxijatGs/4fk2BEYf/zykpY
+         HhIGK8A0X655toGYBZGslYM8sm2/v9oz7RjAPGwqfyWmeZt2YYBPqsRuWM/2Osx43Mat
+         iml06lbqzVYhK8V9USR4fADC6kxdxuxSj7X26k/pOM0tMGzfWSjEZwKIM1OW3/HkVXd0
+         lENa+RHgvrXOkLzCYDl/Q6I2sInc3ZSWofvIaLjBh76EG+ksKd2Z6aTW84pwJW3fVHIr
+         Iz2A==
+X-Received: by 10.66.102.4 with SMTP id fk4mr55461481pab.59.1405097664249;
+        Fri, 11 Jul 2014 09:54:24 -0700 (PDT)
+Received: from gmail.com ([222.234.94.10])
+        by mx.google.com with ESMTPSA id qk9sm11267407pac.16.2014.07.11.09.54.22
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 11 Jul 2014 09:54:23 -0700 (PDT)
+X-Google-Original-From: Yi EungJun <eungjun.yi@navercorp.com>
+X-Mailer: git-send-email 2.0.1.473.g4b69a73.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253292>
 
-T24gRnJpLCAyMDE0LTA3LTExIGF0IDA4OjA0IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
-Cj4gSmFjb2IgS2VsbGVyIDxqYWNvYi5lLmtlbGxlckBpbnRlbC5jb20+IHdyaXRlczoNCj4gDQo+
-ID4gQWRkIHN1cHBvcnQgZm9yIGNvbmZpZ3VyaW5nIGRlZmF1bHQgc29ydCBvcmRlcmluZyBmb3Ig
-Z2l0IHRhZ3MuIENvbW1hbmQNCj4gPiBsaW5lIG9wdGlvbiB3aWxsIG92ZXJyaWRlIHRoaXMgY29u
-ZmlndXJlZCB2YWx1ZSwgdXNpbmcgdGhlIGV4YWN0IHNhbWUNCj4gPiBzeW50YXguDQo+ID4NCj4g
-PiBDYzogSmVmZiBLaW5nIDxwZWZmQHBlZmYubmV0Pg0KPiA+IFNpZ25lZC1vZmYtYnk6IEphY29i
-IEtlbGxlciA8amFjb2IuZS5rZWxsZXJAaW50ZWwuY29tPg0KPiA+IC0tLQ0KPiA+IC0gdjQNCj4g
-PiAqIGJhc2Ugb24gdG9wIG9mIHN1Z2dlc3RlZCBjaGFuZ2UgYnkgSmVmZiBLaW5nIHRvIHVzZSBz
-a2lwX3ByZWZpeCBpbnN0ZWFkDQo+ID4NCj4gPiAgRG9jdW1lbnRhdGlvbi9jb25maWcudHh0ICB8
-ICA2ICsrKysrKw0KPiA+ICBEb2N1bWVudGF0aW9uL2dpdC10YWcudHh0IHwgIDEgKw0KPiA+ICBi
-dWlsdGluL3RhZy5jICAgICAgICAgICAgIHwgNDYgKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKystLS0tLS0tLS0tLS0tLQ0KPiA+ICB0L3Q3MDA0LXRhZy5zaCAgICAgICAgICAgIHwgMjEg
-KysrKysrKysrKysrKysrKysrKysrDQo+ID4gIDQgZmlsZXMgY2hhbmdlZCwgNjAgaW5zZXJ0aW9u
-cygrKSwgMTQgZGVsZXRpb25zKC0pDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlv
-bi9jb25maWcudHh0IGIvRG9jdW1lbnRhdGlvbi9jb25maWcudHh0DQo+ID4gaW5kZXggMWQ3MThi
-ZGI5NjYyLi5hZDhlNzVmZWQ5ODggMTAwNjQ0DQo+ID4gLS0tIGEvRG9jdW1lbnRhdGlvbi9jb25m
-aWcudHh0DQo+ID4gKysrIGIvRG9jdW1lbnRhdGlvbi9jb25maWcudHh0DQo+ID4gQEAgLTIzNTQs
-NiArMjM1NCwxMiBAQCBzdWJtb2R1bGUuPG5hbWU+Lmlnbm9yZTo6DQo+ID4gIAkiLS1pZ25vcmUt
-c3VibW9kdWxlcyIgb3B0aW9uLiBUaGUgJ2dpdCBzdWJtb2R1bGUnIGNvbW1hbmRzIGFyZSBub3QN
-Cj4gPiAgCWFmZmVjdGVkIGJ5IHRoaXMgc2V0dGluZy4NCj4gPiAgDQo+ID4gK3RhZy5zb3J0OjoN
-Cj4gPiArCVRoaXMgdmFyaWFibGUgaXMgdXNlZCB0byBjb250cm9sIHRoZSBzb3J0IG9yZGVyaW5n
-IG9mIHRhZ3MuIEl0IGlzDQo+ID4gKwlpbnRlcnByZXRlZCBwcmVjaXNlbHkgdGhlIHNhbWUgd2F5
-IGFzICItLXNvcnQ9PHZhbHVlPiIuIElmIC0tc29ydCBpcw0KPiA+ICsJZ2l2ZW4gb24gdGhlIGNv
-bW1hbmQgbGluZSBpdCB3aWxsIG92ZXJyaWRlIHRoZSBzZWxlY3Rpb24gY2hvc2VuIGluIHRoZQ0K
-PiA+ICsJY29uZmlndXJhdGlvbi4gU2VlIGxpbmtnaXQ6Z2l0LXRhZ1sxXSBmb3IgbW9yZSBkZXRh
-aWxzLg0KPiA+ICsNCj4gDQo+IFRoaXMgaXMgbm90IHRlY2huaWNhbGx5IGluY29ycmVjdCBwZXIt
-c2UsIGJ1dCB0aGUgdGhpcmQgc2VudGVuY2UNCj4gdGFsa3MgYWJvdXQgIi0tc29ydCIgb24gInRo
-ZSBjb21tYW5kIGxpbmUiIHdoaWxlIHRoaXMgYXBwbGllcyBvbmx5DQo+IHRvICJ0aGUgY29tbWFu
-ZCBsaW5lIG9mIHRoZSAnZ2l0IHRhZycgY29tbWFuZCIgYW5kIG5vYm9keSBlbHNlJ3MNCj4gIi0t
-c29ydCIgb3B0aW9uLg0KPiANCj4gUGVyaGFwcyByZXBocmFzaW5nIGl0IGxpa2UgdGhpcyBtYXkg
-YmUgZWFzaWVyIHRvIHVuZGVyc3RhbmQ/DQo+IA0KPiAJV2hlbiAiZ2l0IHRhZyIgY29tbWFuZCBp
-cyB1c2VkIHRvIGxpc3QgZXhpc3RpbmcgdGFncywNCj4gICAgICAgICB3aXRob3V0ICItLXNvcnQ9
-PHZhbHVlPiIgb3B0aW9uIG9uIHRoZSBjb21tYW5kIGxpbmUsDQo+IAl0aGUgdmFsdWUgb2YgdGhp
-cyB2YXJpYWJsZSBpcyB1c2VkIGFzIHRoZSBkZWZhdWx0Lg0KPiANCj4gVGhpcyB3YXksIGl0IHdv
-dWxkIGJlIGNsZWFyLCB3aXRob3V0IGV4cGxpY2l0bHkgc2F5aW5nIGFueXRoaW5nLA0KPiB0aGF0
-IHRoZSB2YWx1ZSB3aWxsIGJlIHNwZWxsZWQgZXhhY3RseSB0aGUgc2FtZSB3YXkgYXMgeW91IHdv
-dWxkDQo+IHNwZWxsIHRoZSB2YWx1ZSBmb3IgdGhlIC0tc29ydCBvcHRpb24gb24gdGhlIGNvbW1h
-bmQgbGluZS4NCj4gDQo+ID4gZGlmZiAtLWdpdCBhL0RvY3VtZW50YXRpb24vZ2l0LXRhZy50eHQg
-Yi9Eb2N1bWVudGF0aW9uL2dpdC10YWcudHh0DQo+ID4gaW5kZXggYjQyNGExYmM0OGJiLi4yZDI0
-NjcyNWFlYjUgMTAwNjQ0DQo+ID4gLS0tIGEvRG9jdW1lbnRhdGlvbi9naXQtdGFnLnR4dA0KPiA+
-ICsrKyBiL0RvY3VtZW50YXRpb24vZ2l0LXRhZy50eHQNCj4gPiBAQCAtMzE3LDYgKzMxNyw3IEBA
-IGluY2x1ZGU6OmRhdGUtZm9ybWF0cy50eHRbXQ0KPiA+ICBTRUUgQUxTTw0KPiA+ICAtLS0tLS0t
-LQ0KPiA+ICBsaW5rZ2l0OmdpdC1jaGVjay1yZWYtZm9ybWF0WzFdLg0KPiA+ICtsaW5rZ2l0Omdp
-dC1jb25maWdbMV0uDQo+IA0KPiBJdCBpcyBub3QgcGFydGljdWxhcmx5IGZyaWVuZGx5IHRvIHJl
-YWRlcnMgdG8gcmVmZXIgdG8NCj4gImdpdC1jb25maWdbMV0iIGZyb20gYW55IG90aGVyIHBhZ2Us
-IGlmIGRvbmUgd2l0aG91dCBzcGVsbGluZyBvdXQNCj4gd2hpY2ggdmFyaWFibGUgdGhlIHJlYWRl
-ciBpcyBleHBlY3RlZCB0byBsb29rIHVwLiAgU29tZSBhZGRpdGlvbg0KPiB0byB0aGUgZGVzY3Jp
-cHRpb24gb2YgdGhlICItLXNvcnQiIG9wdGlvbiBpcyBuZWVkZWQgaWYgdGhpcyBTRUUgQUxTTw0K
-PiB3ZXJlIHRvIGJlIGFueSB1c2VmdWwsIEkgZ3Vlc3M/DQo+IA0KPiAJLS1zb3J0PTx0eXBlPjo6
-DQo+ICAgICAgICAgICAgICAgICAuLi4gKGV4aXN0aW5nIGRlc2NyaXB0aW9uKSAuLi4NCj4gICAg
-ICAgICAgICAgICAgIFdoZW4gdGhpcyBvcHRpb24gaXMgbm90IGdpdmVuLCB0aGUgc29ydCBvcmRl
-cg0KPiAgICAgICAgICAgICAgICAgZGVmYXVsdHMgdG8gdGhlIHZhbHVlIGNvbmZpZ3VyZWQgZm9y
-IHRoZSBgdGFnLnNvcnRgDQo+ICAgICAgICAgICAgICAgICB2YXJpYWJsZSwgaWYgZXhpc3RzLCBv
-ciBsZXhpY29ncmFwaGljIG90aGVyd2lzZS4NCj4gDQo+IG9yIHNvbWV0aGluZyBsaWtlIHRoYXQs
-IHBlcmhhcHM/DQo+IA0KPiA+IGRpZmYgLS1naXQgYS9idWlsdGluL3RhZy5jIGIvYnVpbHRpbi90
-YWcuYw0KPiA+IGluZGV4IDdjY2I2ZjNjNTgxYi4uYTUzZTI3ZDRlN2U0IDEwMDY0NA0KPiA+IC0t
-LSBhL2J1aWx0aW4vdGFnLmMNCj4gPiArKysgYi9idWlsdGluL3RhZy5jDQo+ID4gQEAgLTE4LDYg
-KzE4LDggQEANCj4gPiAgI2luY2x1ZGUgInNoYTEtYXJyYXkuaCINCj4gPiAgI2luY2x1ZGUgImNv
-bHVtbi5oIg0KPiA+ICANCj4gPiArc3RhdGljIGludCB0YWdfc29ydCA9IDA7DQo+IA0KPiBQbGVh
-c2UgZG8gbm90IGluaXRpYWxpemUgdmFyaWFibGVzIGluIGJzcyBzZWdtZW50IHRvIDAgYnkgaGFu
-ZC4NCj4gDQo+IElmIHRoaXMgdmFyaWFibGUgaXMgbWVhbnQgdG8gdGFrZSBvbmUgb2YgdGhlc2Ug
-KkNNUF9TT1JUIHZhbHVlcw0KPiBkZWZpbmVkIGFzIG1hY3JvIGxhdGVyIGluIHRoaXMgZmlsZSwg
-aXQgaXMgYmV0dGVyIHRvIGRlZmluZSB0aGlzDQo+IHZhcmlhYmxlIHNvbWV3aGVyZSBhZnRlciBh
-bmQgY2xvc2UgdG8gdGhlIGRlZmluaXRpb25zIG9mIHRoZSBtYWNyb3MuDQo+IFBlcmhhcHMgaW1t
-ZWRpYXRlbHkgYWZ0ZXIgdGhlICJzdHJ1Y3QgdGFnX2ZpbHRlciIgaXMgZGVjbGFyZWQ/DQo+IA0K
-PiA+IEBAIC0zNDYsOSArMzQ4LDMzIEBAIHN0YXRpYyBjb25zdCBjaGFyIHRhZ190ZW1wbGF0ZV9u
-b2NsZWFudXBbXSA9DQo+ID4gIAkiTGluZXMgc3RhcnRpbmcgd2l0aCAnJWMnIHdpbGwgYmUga2Vw
-dDsgeW91IG1heSByZW1vdmUgdGhlbSINCj4gPiAgCSIgeW91cnNlbGYgaWYgeW91IHdhbnQgdG8u
-XG4iKTsNCj4gPiAgDQo+ID4gK3N0YXRpYyBpbnQgcGFyc2Vfc29ydF9zdHJpbmcoY29uc3QgY2hh
-ciAqYXJnKQ0KPiA+ICt7DQo+ID4gKwlpbnQgc29ydCA9IDA7DQo+ID4gKwlpbnQgZmxhZ3MgPSAw
-Ow0KPiA+ICsNCj4gPiArCWlmIChza2lwX3ByZWZpeChhcmcsICItIiwgJmFyZykpDQo+ID4gKwkJ
-ZmxhZ3MgfD0gUkVWRVJTRV9TT1JUOw0KPiA+ICsNCj4gPiArCWlmIChza2lwX3ByZWZpeChhcmcs
-ICJ2ZXJzaW9uOiIsICZhcmcpIHx8IHNraXBfcHJlZml4KGFyZywgInY6IiwgJmFyZykpDQo+ID4g
-KwkJc29ydCA9IFZFUkNNUF9TT1JUOw0KPiA+ICsNCj4gPiArCWlmIChzdHJjbXAoYXJnLCAicmVm
-bmFtZSIpKQ0KPiA+ICsJCWRpZShfKCJ1bnN1cHBvcnRlZCBzb3J0IHNwZWNpZmljYXRpb24gJXMi
-KSwgYXJnKTsNCj4gDQo+IEhtbS4gIEkgX3Rob3VnaHRfIHdlIHRyeSB0byBjYXRjaCB1bnN1cHBv
-cnRlZCBvcHRpb24gdmFsdWUgY29taW5nDQo+IGZyb20gdGhlIGNvbW1hbmQgbGluZSBhbmQgZGll
-IGJ1dCBhdCB0aGUgc2FtZSB0aW1lIHdlIHRyeSAqbm90KiB0bw0KPiBkaWUgYnV0IHdhcm4gYW5k
-IHdoYXRldmVyIGlzIHNlbnNpYmxlIHdoZW4gdGhlIHZhbHVlIGNvbWVzIGZyb20gdGhlDQo+IGNv
-bmZpZ3VyYXRpb24sIHNvIHRoYXQgLmdpdC9jb25maWcgb3IgJEhPTUUvLmdpdGNvbmZpZyBjYW4g
-YmUgc2hhcmVkDQo+IGJ5IHRob3NlIHdobyB1c2UgZGlmZmVyZW50IHZlcnNpb25zIG9mIEdpdC4N
-Cj4gDQo+IERvIHdlIGFscmVhZHkgaGF2ZSBtYW55IHByZWNlZGVuY2VzIHdoZXJlIHdlIHNlZSBj
-b25maWd1cmF0aW9uIHZhbHVlDQo+IHRoYXQgb3VyIHZlcnNpb24gb2YgR2l0IGRvIG5vdCB5ZXQg
-dW5kZXJzdGFuZD8NCj4gDQo+IE5vdCBhIHZlcnkgc3Ryb25nIG9iamVjdGlvbjsganVzdCBzb21l
-dGhpbmcgdGhhdCB3b3JyaWVzIG1lLg0KPiANCj4gPiArCXNvcnQgfD0gZmxhZ3M7DQo+ID4gKw0K
-PiA+ICsJcmV0dXJuIHNvcnQ7DQo+ID4gK30NCj4gPiArDQo+ID4gIHN0YXRpYyBpbnQgZ2l0X3Rh
-Z19jb25maWcoY29uc3QgY2hhciAqdmFyLCBjb25zdCBjaGFyICp2YWx1ZSwgdm9pZCAqY2IpDQo+
-ID4gIHsNCj4gPiAtCWludCBzdGF0dXMgPSBnaXRfZ3BnX2NvbmZpZyh2YXIsIHZhbHVlLCBjYik7
-DQo+ID4gKwlpbnQgc3RhdHVzOw0KPiA+ICsNCj4gPiArCWlmICghc3RyY21wKHZhciwgInRhZy5z
-b3J0IikpIHsNCj4gPiArCQl0YWdfc29ydCA9IHBhcnNlX3NvcnRfc3RyaW5nKHZhbHVlKTsNCj4g
-PiArCX0NCj4gPiArDQo+IA0KPiBXaHkgZG9lc24ndCB0aGlzIHJldHVybiBzdWNjZXNzIGFmdGVy
-IG5vdGljaW5nIHRoYXQgdGhlIHZhcmlhYmxlIGlzDQo+IHRvIGJlIGludGVycHJldGVkIGJ5IHRo
-aXMgYmxvY2sgYW5kIG5vYm9keSBlbHNlPw0KPiANCj4gV2hlbiB0aGVyZSBpcyBubyByZWFzb24g
-dG8gaGF2ZSB0aGluZ3MgaW4gYSBwYXJ0aWN1bGFyIG9yZGVyLCBpdCBpcw0KPiBjdXN0b21hcnkg
-dG8gYWRkIG5ldyB0aGluZ3MgYXQgdGhlIGVuZCwgbm90IGluIHRoZSBmcm9udCwgdW5sZXNzIHRo
-ZQ0KPiBuZXcgdGhpbmcgaXMgc28gbXVjaCBtb3JlIGltcG9ydGFudCB0aGFuIGV2ZXJ5dGhpbmcg
-ZWxzZS0tLWJ1dCB0aGVuDQo+IHdlIGFyZSBubyBsb25nZXIgdGFsa2luZyBhYm91dCB0aGUgY2Fz
-ZSB3aGVyZSB0aGVyZSBpcyBubyByZWFzb24gdG8NCj4gaGF2ZSB0aGluZ3MgaW4gYSBwYXJ0aWN1
-bGFyIG9yZGVyIDstKS4NCj4gDQo+IFJlbWFpbmRlciBvZiB0aGUgY2hhbmdlcyB0byBidWlsdGlu
-L3RhZy5jIGxvb2tzIGdvb2QuDQo+IA0KPiA+IGRpZmYgLS1naXQgYS90L3Q3MDA0LXRhZy5zaCBi
-L3QvdDcwMDQtdGFnLnNoDQo+ID4gaW5kZXggZTRhYjBmNWI2NDE5Li4xZTgzMDBmNmVkN2MgMTAw
-NzU1DQo+ID4gLS0tIGEvdC90NzAwNC10YWcuc2gNCj4gPiArKysgYi90L3Q3MDA0LXRhZy5zaA0K
-PiA+IEBAIC0xNDIzLDYgKzE0MjMsMjcgQEAgRU9GDQo+ID4gIAl0ZXN0X2NtcCBleHBlY3QgYWN0
-dWFsDQo+ID4gICcNCj4gPiAgDQo+ID4gK3Rlc3RfZXhwZWN0X3N1Y2Nlc3MgJ2NvbmZpZ3VyZWQg
-bGV4aWNhbCBzb3J0JyAnDQo+ID4gKwlnaXQgY29uZmlnIHRhZy5zb3J0ICJ2OnJlZm5hbWUiICYm
-DQo+ID4gKwlnaXQgdGFnIC1sICJmb28qIiA+YWN0dWFsICYmDQo+ID4gKwljYXQgPmV4cGVjdCA8
-PEVPRiAmJg0KPiA+ICtmb28xLjMNCj4gPiArZm9vMS42DQo+ID4gK2ZvbzEuMTANCj4gPiArRU9G
-DQo+ID4gKwl0ZXN0X2NtcCBleHBlY3QgYWN0dWFsDQo+ID4gKycNCj4gDQo+IFBsZWFzZSB3cml0
-ZSB0aGUgYWJvdmUgbGlrZSBzbzoNCj4gDQo+IAkuLi4NCj4gCWNhdCA+ZXhwZWN0IDw8LVxFT0Yg
-JiYNCj4gICAgICAgICBmb28xLjMNCj4gICAgICAgICAuLi4NCj4gICAgICAgICBFT0YNCj4gICAg
-ICAgICB0ZXN0X2NtcCBleHBlY3QgYWN0dWFsDQo+IA0KPiBUaGUgZGFzaCBpbW1lZGlhdGVseSBh
-ZnRlciB0aGUgaGVyZS1kb2MgcmVkaXJlY3Rpb24gbGV0cyB1cyBpbmRlbnQNCj4gdGhlIGRhdGEg
-d2l0aCBIVCB0byBhbGxvdyB0aGUgdGVzdCBib3VuZGFyaWVzIGVhc2llciB0byBzcG90LCBhbmQg
-YnkNCj4gcXVvdGluZyB0aGUgdG9rZW4gdG8gZW5kIGhlcmUtZG9jLCB3ZSByZWxpZXZlIHRoZSBy
-ZWFkZXJzIGZyb20NCj4gaGF2aW5nIHRvIHdvbmRlciBpZiB0aGVyZSBhcmUgdmFyaWFibGUgc3Vi
-c3RpdHV0aW9ucyBnb2luZyBvbiB0aGF0DQo+IHRoZXkgbmVlZCB0byBiZSBjYXJlZnVsIGFib3V0
-Lg0KDQpUaGlzIGlzIG5vdCBob3cgdGhlIHJlc3Qgb2YgdGhlIGN1cnJlbnQgdGVzdHMgd29yay4g
-SSB3aWxsIHN1Ym1pdCBhDQpwYXRjaCB3aGljaCBmaXhlcyB1cCB0aGUgY3VycmVudCAtLXNvcnQg
-dGVzdHMgKGJ1dCBub3QgZXZlcnkgdGVzdCwgZm9yDQpub3cpIGFzIHdlbGwuDQoNClRoYW5rcywN
-Ckpha2UNCg0KPiANCj4gT3ZlcmFsbCwgSSB0aGluayB0aGlzIGlzIGRvbmUgd2VsbC4gIFRoYW5r
-cyBmb3Igd29ya2luZyBvbiBpdC4NCj4gLS0NCj4gVG8gdW5zdWJzY3JpYmUgZnJvbSB0aGlzIGxp
-c3Q6IHNlbmQgdGhlIGxpbmUgInVuc3Vic2NyaWJlIGdpdCIgaW4NCj4gdGhlIGJvZHkgb2YgYSBt
-ZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcNCj4gTW9yZSBtYWpvcmRvbW8gaW5m
-byBhdCAgaHR0cDovL3ZnZXIua2VybmVsLm9yZy9tYWpvcmRvbW8taW5mby5odG1sDQoNCg0K
+Add an Accept-Language header which indicates the user's preferred
+languages defined by $LANGUAGE, $LC_ALL, $LC_MESSAGES and $LANG.
+
+Examples:
+  LANGUAGE= -> ""
+  LANGUAGE=ko:en -> "Accept-Language: ko, en; q=0.9, *; q=0.1"
+  LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *; q=0.1"
+  LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *; q=0.1"
+
+This gives git servers a chance to display remote error messages in
+the user's preferred language.
+
+Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
+---
+ http.c                     | 125 +++++++++++++++++++++++++++++++++++++++++++++
+ remote-curl.c              |   2 +
+ t/t5550-http-fetch-dumb.sh |  21 ++++++++
+ 3 files changed, 148 insertions(+)
+
+diff --git a/http.c b/http.c
+index 3a28b21..a20f3e2 100644
+--- a/http.c
++++ b/http.c
+@@ -983,6 +983,129 @@ static void extract_content_type(struct strbuf *raw, struct strbuf *type,
+ 		strbuf_addstr(charset, "ISO-8859-1");
+ }
+ 
++/*
++ * Guess the user's preferred languages from the value in LANGUAGE environment
++ * variable and LC_MESSAGES locale category.
++ *
++ * The result can be a colon-separated list like "ko:ja:en".
++ */
++static const char* get_preferred_languages() {
++    const char* retval;
++
++	retval = getenv("LANGUAGE");
++	if (retval != NULL && retval[0] != '\0')
++		return retval;
++
++	retval = setlocale(LC_MESSAGES, NULL);
++	if (retval != NULL && retval[0] != '\0'
++		&& strcmp(retval, "C") != 0
++		&& strcmp(retval, "POSIX") != 0)
++		return retval;
++
++	return NULL;
++}
++
++/*
++ * Add an Accept-Language header which indicates user's preferred languages.
++ *
++ * Examples:
++ *   LANGUAGE= -> ""
++ *   LANGUAGE=ko:en -> "Accept-Language: ko, en; q=0.9, *; q=0.1"
++ *   LANGUAGE=ko_KR.UTF-8:sr@latin -> "Accept-Language: ko-KR, sr; q=0.9, *; q=0.1"
++ *   LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *; q=0.1"
++ *   LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *; q=0.1"
++ *   LANGUAGE= LANG=C -> ""
++ */
++static struct curl_slist* add_accept_language(struct curl_slist *headers)
++{
++	const char *p1, *p2, *p3;
++	struct strbuf buf = STRBUF_INIT;
++	float q = 1.0;
++	float q_precision = 0.1;
++	int num_langs = 1;
++	char* q_format = "; q=%.1f";
++
++	p1 = get_preferred_languages();
++
++	/* Don't add Accept-Language header if no language is preferred. */
++	if (p1 == NULL || p1[0] == '\0') {
++		strbuf_release(&buf);
++		return headers;
++	}
++
++	/* Count number of preferred languages to decide precision of q-factor */
++	for (p3 = p1; *p3 != '\0'; p3++) {
++		if (*p3 == ':') {
++			num_langs++;
++		}
++	}
++
++	/* Decide the precision for q-factor on number of preferred languages. */
++	if (num_langs + 1 > 100) { /* +1 is for '*' */
++		q_precision = 0.001;
++		q_format = "; q=%.3f";
++	} else if (num_langs + 1 > 10) { /* +1 is for '*' */
++		q_precision = 0.01;
++		q_format = "; q=%.2f";
++	}
++
++	strbuf_addstr(&buf, "Accept-Language: ");
++
++	for (p2 = p1; q > q_precision; p2++) {
++		if ((*p2 == ':' || *p2 == '\0') && p1 != p2) {
++			if (q < 1.0) {
++				strbuf_addstr(&buf, ", ");
++			}
++
++			for (p3 = p1; p3 < p2; p3++) {
++				/* Replace '_' with '-'. */
++				if (*p3 == '_') {
++					strbuf_add(&buf, p1, p3 - p1);
++					strbuf_addstr(&buf, "-");
++					p1 = p3 + 1;
++				}
++
++				/* Chop off anything after '.' or '@'. */
++				if ((*p3 == '.' || *p3 == '@')) {
++					break;
++				}
++			}
++
++			if (p3 > p1) {
++				strbuf_add(&buf, p1, p3 - p1);
++			}
++
++			/* Put the q factor if only it is less than 1.0. */
++			if (q < 1.0) {
++				strbuf_addf(&buf, q_format, q);
++			}
++
++			q -= q_precision;
++			p1 = p2 + 1;
++
++			if (*p2 == '\0') {
++				break;
++			}
++		}
++	}
++
++	/* Don't add Accept-Language header if no language is preferred. */
++	if (q >= 1.0) {
++		strbuf_release(&buf);
++		return headers;
++	}
++
++	/* Add '*' with minimum q-factor greater than 0.0. */
++	strbuf_addstr(&buf, ", *");
++	strbuf_addf(&buf, q_format, q_precision);
++
++	headers = curl_slist_append(headers, buf.buf);
++
++	strbuf_release(&buf);
++
++	return headers;
++}
++
+ /* http_request() targets */
+ #define HTTP_REQUEST_STRBUF	0
+ #define HTTP_REQUEST_FILE	1
+@@ -1020,6 +1143,8 @@ static int http_request(const char *url,
+ 					 fwrite_buffer);
+ 	}
+ 
++	headers = add_accept_language(headers);
++
+ 	strbuf_addstr(&buf, "Pragma:");
+ 	if (options && options->no_cache)
+ 		strbuf_addstr(&buf, " no-cache");
+diff --git a/remote-curl.c b/remote-curl.c
+index 4493b38..07f2a5d 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -946,6 +946,8 @@ int main(int argc, const char **argv)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int nongit;
+ 
++	git_setup_gettext();
++
+ 	git_extract_argv0_path(argv[0]);
+ 	setup_git_directory_gently(&nongit);
+ 	if (argc < 2) {
+diff --git a/t/t5550-http-fetch-dumb.sh b/t/t5550-http-fetch-dumb.sh
+index ac71418..2cc41d2 100755
+--- a/t/t5550-http-fetch-dumb.sh
++++ b/t/t5550-http-fetch-dumb.sh
+@@ -196,5 +196,26 @@ test_expect_success 'reencoding is robust to whitespace oddities' '
+ 	grep "this is the error message" stderr
+ '
+ 
++test_expect_success 'git client sends Accept-Language based on LANGUAGE, LC_ALL, LC_MESSAGES and LANG' '
++	test_must_fail env GIT_CURL_VERBOSE=1 LANGUAGE=ko_KR.UTF-8 LC_ALL=de_DE.UTF-8 LC_MESSAGES=ja_JP.UTF-8 LANG=en_US.UTF-8 git clone "$HTTPD_URL/accept/language" 2>stderr &&
++	grep "^Accept-Language: ko-KR, \\*; q=0.1" stderr &&
++	test_must_fail env GIT_CURL_VERBOSE=1 LANGUAGE= LC_ALL=de_DE.UTF-8 LC_MESSAGES=ja_JP.UTF-8 LANG=en_US.UTF-8 git clone "$HTTPD_URL/accept/language" 2>stderr &&
++	grep "^Accept-Language: de-DE, \\*; q=0.1" stderr &&
++	test_must_fail env GIT_CURL_VERBOSE=1 LANGUAGE= LC_ALL= LC_MESSAGES=ja_JP.UTF-8 LANG=en_US.UTF-8 git clone "$HTTPD_URL/accept/language" 2>stderr &&
++	grep "^Accept-Language: ja-JP, \\*; q=0.1" stderr &&
++	test_must_fail env GIT_CURL_VERBOSE=1 LANGUAGE= LC_ALL= LC_MESSAGES= LANG=en_US.UTF-8 git clone "$HTTPD_URL/accept/language" 2>stderr &&
++	grep "^Accept-Language: en-US, \\*; q=0.1" stderr
++'
++
++test_expect_success 'git client sends Accept-Language with many preferred languages' '
++	test_must_fail env GIT_CURL_VERBOSE=1 LANGUAGE=ko_KR.EUC-KR:en_US.UTF-8:fr_CA:de.UTF-8@euro:sr@latin:ja:zh:sv:pt:nb git clone "$HTTPD_URL/accept/language" 2>stderr &&
++	grep "^Accept-Language: ko-KR, en-US; q=0.99, fr-CA; q=0.98, de; q=0.97, sr; q=0.96, ja; q=0.95, zh; q=0.94, sv; q=0.93, pt; q=0.92, nb; q=0.91, \\*; q=0.01" stderr
++'
++
++test_expect_success 'git client does not send Accept-Language' '
++	test_must_fail env GIT_CURL_VERBOSE=1 LANGUAGE= git clone "$HTTPD_URL/accept/language" 2>stderr &&
++	! grep "^Accept-Language:" stderr
++'
++
+ stop_httpd
+ test_done
+-- 
+2.0.1.473.g4b69a73.dirty
+
+The only difference from the patch v2 is \-escape in the tests. Thanks to Eric Sunshine.
