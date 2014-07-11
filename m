@@ -1,174 +1,90 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v8 1/2] add `config_set` API for caching config-like files
-Date: Fri, 11 Jul 2014 16:21:00 +0200
-Message-ID: <vpqlhs02cz7.fsf@anie.imag.fr>
-References: <1405049655-4265-1-git-send-email-tanayabh@gmail.com>
-	<1405049655-4265-2-git-send-email-tanayabh@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6 02/10] replace: add --graft option
+Date: Fri, 11 Jul 2014 07:22:32 -0700
+Message-ID: <xmqqmwcg561j.fsf@gitster.dls.corp.google.com>
+References: <20140707063342.3708.83493.chriscool@tuxfamily.org>
+	<20140707063540.3708.51047.chriscool@tuxfamily.org>
+	<xmqqsima7f3r.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD2X7j2TGEQfX3h8CfiZypJ5tVPqaZ2bNE0k1-jbeJj=Zw@mail.gmail.com>
+	<xmqqr41t88dz.fsf@gitster.dls.corp.google.com>
+	<xmqqegxt86ba.fsf@gitster.dls.corp.google.com>
+	<CAP8UFD0_m5aFVcBQr3d9pXR=9rLjAVPGrj=UsBYFcnTQFwNKGA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 11 16:21:57 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 11 16:22:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5bi0-0008Av-Ia
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 16:21:56 +0200
+	id 1X5bio-0000aF-1L
+	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 16:22:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754779AbaGKOVt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 10:21:49 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46892 "EHLO shiva.imag.fr"
+	id S1754060AbaGKOWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 10:22:42 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62857 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751464AbaGKOVe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Jul 2014 10:21:34 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6BEKwBt014136
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 11 Jul 2014 16:20:59 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6BEL0k3024086;
-	Fri, 11 Jul 2014 16:21:00 +0200
-In-Reply-To: <1405049655-4265-2-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Thu, 10 Jul 2014 20:34:14 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 11 Jul 2014 16:20:59 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6BEKwBt014136
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1405693261.82626@usxCMsfxFs4UIRndGKcdkw
+	id S1753509AbaGKOWk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 10:22:40 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 136B525E16;
+	Fri, 11 Jul 2014 10:22:24 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GdK0OpurhOuEqy4AS4f56OwARhA=; b=NVonq8
+	NfKKBAvNq00iQq1WNdqN/9tktMbEGkZ96ckxzIn70bSiWOSp7PBhh6Cpnof4O+hy
+	JteLCjIkc7Zh8/LTrA+GNrMuMXM/yd3NL3e++L0FWgh3nQ/yOC9z4qTKzXTZd6MK
+	ShxqHAS9Q6AWm2WvEhcNHrdacEt8AmW60zbQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dQEwr4ZihcxZTAkpEdBVO4T/HpH52jdb
+	oCQYYlkI1gujNDq+Ux+mV/sLYj4dHU9YPasEBYH47PuP7pw7Ji/fL/2HwyAvilQp
+	FGBEh6Db/GzHp/ptx9voCfjmtRnSBb+ce22u9xqBbM88hevxk8mlqNUOZeP3M5ql
+	PA7yWGJ+4SA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0659525E15;
+	Fri, 11 Jul 2014 10:22:24 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 72ECB25E0B;
+	Fri, 11 Jul 2014 10:22:18 -0400 (EDT)
+In-Reply-To: <CAP8UFD0_m5aFVcBQr3d9pXR=9rLjAVPGrj=UsBYFcnTQFwNKGA@mail.gmail.com>
+	(Christian Couder's message of "Fri, 11 Jul 2014 10:59:32 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C3B03E94-0906-11E4-9AA7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253277>
 
-Hi,
+Christian Couder <christian.couder@gmail.com> writes:
 
-I had a closer look at error management (once more, sorry: I should have
-done this earlier...), and it seems to me that:
+> On Thu, Jul 10, 2014 at 7:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+>>> "Making sure A's parent is B" would be an
+>>> idempotent operation, no?  Why not just make sure A's parent is
+>>> already B and report "Your wish has been granted" to the user?
+>
+> ... and here you say we should report "your wish has been granted"...
 
-* Not all errors are managed properly
+Normal way for "git replace" to report that is to exit with status 0
+and without any noise, I would think.
 
-* Most error cases are untested
+>>> Why would it be simpler for the user to get an error, inspect the
+>>> situation and realize that his wish has been granted after all?
+>
+> ... but for me reporting to the user "your wish has been granted" and
+> warning (or errorring out) saying "the new commit would be the same as
+> the old one" are nearly the same thing.
+>
+> So I wonder what exactly you are not happy with.
 
-Among the cases I can think of:
-
-* Syntax error when parsing the file
-
-* Non-existant file
-
-* Unreadable file (chmod -r)
-
-Tanay Abhra <tanayabh@gmail.com> writes:
-
-> +`int git_configset_add_file(struct config_set *cs, const char *filename)`::
-> +
-> +	Parses the file and adds the variable-value pairs to the `config_set`,
-> +	dies if there is an error in parsing the file.
-
-The return value is undocumented.
-
-If I read correctly, the only codepath from this to a syntax error sets
-die_on_error, hence "dies if there is an error in parsing the file" is
-correct.
-
-Still, there are errors like "unreadable file" or "no such file" that do
-not die (nor emit any error message, which is not very good for the
-user), and lead to returning -1 here.
-
-I'm not sure this distinction is right (why die on syntax error and
-continue running on unreadable file?).
-
-In any case, it should be documented and tested. I'll send a fixup patch
-with a few more example tests (probably insufficient).
-
-> +static int git_config_check_init(void)
-> +{
-> +	int ret = 0;
-> +	if (the_config_set.hash_initialized)
-> +		return 0;
-> +	configset_init(&the_config_set);
-> +	ret = git_config(config_hash_callback, &the_config_set);
-> +	if (ret >= 0)
-> +		return 0;
-> +	else {
-> +		hashmap_free(&the_config_set.config_hash, 1);
-> +		the_config_set.hash_initialized = 0;
-> +		return -1;
-> +	}
-> +}
-
-We have the same convention for errors here. But a more serious issue is
-that the return value of this function is ignored most of the time.
-
-It seems git_config should never return a negative value, as it calls
-git_config_with_options -> git_config_early, which checks for file
-existance and permission before calling git_config_from_file. Indeed,
-Git's tests still pass after this:
-
---- a/config.c
-+++ b/config.c
-@@ -1225,7 +1225,10 @@ int git_config_with_options(config_fn_t fn, void *data,
- 
- int git_config(config_fn_t fn, void *data)
- {
--       return git_config_with_options(fn, data, NULL, 1);
-+       int ret = git_config_with_options(fn, data, NULL, 1);
-+       if (ret < 0)
-+               die("Negative return value in git_config");
-+       return ret;
- }
-
-Still, we can imagine cases like race condition between access_or_die()
-and git_config_from_file() in
-
-	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
-		ret += git_config_from_file(fn, git_etc_gitconfig(),
-					    data);
-		found += 1;
-	}
-
-where the function would indeed return -1. In any case, either we
-consider that git_config should never return -1, and we should die in
-this case, or we consider that it may happen, and that the "else" branch
-of the if/else above is not dead code, and then we can't just ignore the
-return value.
-
-I think we should just do something like this:
-
-diff --git a/config.c b/config.c
-index 74adbbd..5c023e8 100644
---- a/config.c
-+++ b/config.c
-@@ -1428,7 +1428,7 @@ int git_configset_get_pathname(struct config_set *cs, const char *key, const cha
-                return 1;
- }
- 
--static int git_config_check_init(void)
-+static void git_config_check_init(void)
- {
-        int ret = 0;
-        if (the_config_set.hash_initialized)
-@@ -1437,11 +1437,8 @@ static int git_config_check_init(void)
-        ret = git_config(config_hash_callback, &the_config_set);
-        if (ret >= 0)
-                return 0;
--       else {
--               hashmap_free(&the_config_set.config_hash, 1);
--               the_config_set.hash_initialized = 0;
--               return -1;
--       }
-+       else
-+               die("Unknown error when parsing one of the configuration files.");
- }
- 
-If not, a comment should explain what the "else" branch corresponds to,
-and why/when the return value can be safely ignored.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+See above.
