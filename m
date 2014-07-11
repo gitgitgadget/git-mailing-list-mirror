@@ -1,84 +1,116 @@
-From: Duane Murphy <duanemurphy@mac.com>
-Subject: git-fast-import bug?
-Date: Fri, 11 Jul 2014 14:58:32 -0700
-Message-ID: <424DC50C-DF9D-423E-93DC-E9E224B871D0@mac.com>
+From: "Keller, Jacob E" <jacob.e.keller@intel.com>
+Subject: Re: [PATCH 3/3 v5] tag: support configuring --sort via .gitconfig
+Date: Fri, 11 Jul 2014 22:12:48 +0000
+Message-ID: <1405116767.22963.53.camel@jekeller-desk1.amr.corp.intel.com>
+References: <1405099447-27555-1-git-send-email-jacob.e.keller@intel.com>
+	 <1405099447-27555-3-git-send-email-jacob.e.keller@intel.com>
+	 <20140711174628.GC7856@sigill.intra.peff.net>
+	 <xmqqmwcf36jy.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; CHARSET=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 11 23:58:41 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"peff@peff.net" <peff@peff.net>
+To: "gitster@pobox.com" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 12 00:13:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X5iq0-0000lm-U2
-	for gcvg-git-2@plane.gmane.org; Fri, 11 Jul 2014 23:58:41 +0200
+	id 1X5j3q-0007y3-V3
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 00:12:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753637AbaGKV6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Jul 2014 17:58:37 -0400
-Received: from st11p02mm-asmtp001.mac.com ([17.172.220.236]:36995 "EHLO
-	st11p02mm-asmtp001.mac.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753495AbaGKV6g (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 11 Jul 2014 17:58:36 -0400
-Received: from [192.168.1.26]
- (70-36-184-217.dsl.static.sonic.net [70.36.184.217])
- by st11p02mm-asmtp001.mac.com
- (Oracle Communications Messaging Server 7u4-27.10(7.0.4.27.9) 64bit (built Jun
-  6 2014)) with ESMTPSA id <0N8K00F9RIDLQO00@st11p02mm-asmtp001.mac.com> for
- git@vger.kernel.org; Fri, 11 Jul 2014 21:58:35 +0000 (GMT)
-X-Mailer: Apple Mail (2.1878.6)
-X-MANTSH: 1TEIXWV4bG1oaGkdHB0lGUkdDRl5PWBoaGxEKTEMXGx0EGx0YBBIZBBsdEBseGh8
-	aEQpYTRdLEQptfhcaEQpMWRcbGhsbEQpZSRcRClleF2hjeREKQ04XSxsYGmJCH2lpH29TGXhzB
-	xxoGBsfEnAeEQpFQxcWHhgebmkfGmkHbmwTbgceGBlvBxMZbmkHbxNvGBgeaBIdG24aakdLSQR
-	JRUcUEQpYXBcZBBoEGx4HTU4cExoaHRMFGx0EGx0YBBIZBBsdEBseGh8bEQpeWRdhE01hRxEKQ
-	1oXHRoEGRwEGxIeBBgbHREKQkUXYVpCfXJbQ0dlGEURCkJOF2hGQkAfSHkdRx9kEQpCTBdhQXh
-	he0hJUxlYeREKQmwXen9OYwFIeEVSX0MRCkJAF2AfZERZbmIdE2ZCEQpCWBdsfHhNYh19GVlkH
-	REKcGgXaU1nYFliXgVyZUQRCnBoF2BbWkd4XH5MGll7EQpwaBdmQkYFYlJiRXIeHhEKcGgXbF1
-	kU0xMX2JMRkQRCnBoF2t4Wk1aXn54U25CEQpwbBdiUB9bW0thXX9lcBE=
-X-CLX-Spam: false
-X-CLX-Score: 1011
-X-Proofpoint-Virus-Version: vendor=fsecure
- engine=2.50.10432:5.12.52,1.0.14,0.0.0000
- definitions=2014-07-11_04:2014-07-11,2014-07-11,1970-01-01 signatures=0
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- suspectscore=52 phishscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=7.0.1-1402240000 definitions=main-1407110267
+	id S1753967AbaGKWMy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Jul 2014 18:12:54 -0400
+Received: from mga03.intel.com ([143.182.124.21]:49248 "EHLO mga03.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751552AbaGKWMx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Jul 2014 18:12:53 -0400
+Received: from azsmga001.ch.intel.com ([10.2.17.19])
+  by azsmga101.ch.intel.com with ESMTP; 11 Jul 2014 15:12:50 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.01,645,1400050800"; 
+   d="scan'208";a="456075498"
+Received: from orsmsx104.amr.corp.intel.com ([10.22.225.131])
+  by azsmga001.ch.intel.com with ESMTP; 11 Jul 2014 15:12:48 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.10.193]) by
+ ORSMSX104.amr.corp.intel.com ([169.254.3.57]) with mapi id 14.03.0123.003;
+ Fri, 11 Jul 2014 15:12:48 -0700
+Thread-Topic: [PATCH 3/3 v5] tag: support configuring --sort via .gitconfig
+Thread-Index: AQHPnVKutKQEouEPQUqhaN0T4H7NY5ub5TGA
+In-Reply-To: <xmqqmwcf36jy.fsf@gitster.dls.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.173.156]
+Content-ID: <96880807E9DFB846A1C5A2567761B171@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253333>
 
-git-fast-import is not writing a commit even after a checkpoint/progress command.
-
-See my previous message "git p4 diff-tree ambiguous argument error". 
-
-The error in git-p4 is caused by git not writing the commit even after git-fast-import has been given a checkpoint and progress command.
-
-On initial use of git p4 to sync a p4 repository, the commits are written properly. But on a subsequent run the commit is not flushed to the file system during the run. Specifically, I can stop the git-p4 command directly after the progress checkpoint command (see the checkpoint() function in git-p4). The file is not found. If I abort/exit the application at that point, the file appears. 
-
-There is a pattern of behavior here that is consistent but I am unable to understand. A bare repository works fine. An already populated repository does not work until the app is quit. What would cause git-fast-import to _NOT_ flush the file?
-
-This certainly seems like a bug. But I don't know enough of the git internals to reproduce.
-
-Suggestions on how to test or isolate this problem?
-
-Thanks
-
-Reproduced consistently on two systems:
-
-$ git --version 
-git version 1.8.5.2 (Apple Git-48) 
-$ python --version 
-Python 2.7.5 
-$ uname -a 
-Darwin Kernel Version 13.3.0: Tue Jun  3 21:27:35 PDT 2014; root:xnu-2422.110.17~1/RELEASE_X86_64 x86_64 
-
-and 
-
-$ git --version 
-git version 1.7.12.4 
-$ python --version 
-Python 2.6.6 
-OS: GNU/Linux 2.6.32-431.el6.x86_64 
+T24gRnJpLCAyMDE0LTA3LTExIGF0IDE0OjU0IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
+Cj4gSmVmZiBLaW5nIDxwZWZmQHBlZmYubmV0PiB3cml0ZXM6DQo+IA0KPiA+IE9uIEZyaSwgSnVs
+IDExLCAyMDE0IGF0IDEwOjI0OjA3QU0gLTA3MDAsIEphY29iIEtlbGxlciB3cm90ZToNCj4gPg0K
+PiA+PiBVcGRhdGVkIHRvIGluY2x1ZGUgY2hhbmdlcyBkdWUgdG8gSnVuaW8ncyBmZWVkYmFjay4g
+VGhpcyBoYXMgbm90IHJlc29sdmVkDQo+ID4+IHdoZXRoZXIgd2Ugc2hvdWxkIGZhaWwgb24gYSBj
+b25maWd1cmF0aW9uIGVycm9yIG9yIHNpbXBseSB3YXJuLiBJdCBhcHBlYXJzIHRoYXQNCj4gPj4g
+d2UgYWN0dWFsbHkgc2VlbSB0byBlcnJvciBvdXQgbW9yZSB0aGFuIHdhcm4sIHNvIEkgYW0gdW5z
+dXJlIHdoYXQgdGhlIGNvcnJlY3QNCj4gPj4gYWN0aW9uIGlzIGhlcmUuDQo+ID4NCj4gPiBZZWFo
+LCB3ZSdyZSBxdWl0ZSBpbmNvbnNpc3RlbnQgdGhlcmUuIEluIHNvbWUgY2FzZXMgd2Ugc2lsZW50
+bHkgaWdub3JlDQo+ID4gc29tZXRoaW5nIHVua25vd24gKGUuZy4sIGEgY29sb3IuZGlmZi4qIHNs
+b3QgdGhhdCB3ZSBkbyBub3QgdW5kZXJzdGFuZCksDQo+ID4gYnV0IGluIG1vc3QgY2FzZXMgaWYg
+aXQgaXMgYSBjb25maWcga2V5IHdlIHVuZGVyc3RhbmQgYnV0IGEgdmFsdWUgd2UgZG8NCj4gPiBu
+b3QsIHdlIGNvbXBsYWluIGFuZCBkaWUuDQo+IA0KPiBIbSwgdGhhdCdzIGJhZC0tLXdlJ3ZlIGJl
+Y29tZSBsZXNzIGFuZCBsZXNzIGNhcmVmdWwgb3ZlciB0aW1lLA0KPiBwZXJoYXBzPw0KPiANCj4g
+QXMgd2Ugd2FudCB0byBiZSBhYmxlIHRvIGVuaGFuY2Ugc2VtYW50aWNzIG9mIGV4aXN0aW5nIGNv
+bmZpZ3VyYXRpb24NCj4gdmFyaWFibGVzIHdpdGhvdXQgaGF2aW5nIHRvIGludHJvZHVjZSBuZXcg
+YnV0IHNpbWlsYXIgb25lcywgd2Ugd291bGQNCj4gcmVhbGx5IHdhbnQgdG8gbWFrZSBzdXJlIHRo
+YXQgdGhvc2Ugd2hvIHNoYXJlIHRoZSBzYW1lIC5naXQvY29uZmlnDQo+IG9yICRIT01FLy5naXRj
+b25maWcgYWNyb3NzIGRpZmZlcmVudCB2ZXJzaW9ucyBvZiBHaXQgd291bGQgbm90IGhhdmUNCj4g
+dG8gc3VmZmVyIHRvbyBtdWNoIChpLmUuIGZvcmNpbmcgdGhlbSB0byAiY29uZmlnIC0tdW5zZXQi
+IHdoZW4gdXNpbmcNCj4gdGhlaXIgb2xkZXIgR2l0IGlzIG5vdCBuaWNlKS4NCj4gDQo+ID4gSXQn
+cyBwcm9iYWJseSB1c2VyLXVuZnJpZW5kbHkgdG8gYmUgc2lsZW50IGZvciB0aG9zZSBjYXNlcywg
+dGhvdWdoLiBUaGUNCj4gPiB1c2VyIGdldHMgbm8gZmVlZGJhY2sgb24gd2h5IHRoZWlyIGNvbmZp
+ZyB2YWx1ZSBpcyBkb2luZyBub3RoaW5nLg0KPiA+DQo+ID4gSSB0ZW5kIHRvIHRoaW5rIHRoYXQg
+d2FybmluZyBpcyBub3QgbXVjaCBiZXR0ZXIgdGhhbiBlcnJvcmluZyBvdXQuIEl0IGlzDQo+ID4g
+aGVscGZ1bCBpZiB5b3UgYXJlIHJ1bm5pbmcgYSBzaW5nbGUtc2hvdCBvZiBhbiBvbGQgdmVyc2lv
+biAod2hpY2ggaXMNCj4gPiBzb21ldGhpbmcgdGhhdCBJIGRvIGEgbG90IHdoZW4gdGVzdGluZyBv
+bGQgdmVyc2lvbnMpLCBidXQgd291bGQgcXVpY2tseQ0KPiA+IGJlY29tZSBpcnJpdGF0aW5nIGlm
+IHlvdSB3ZXJlIGFjdHVhbGx5IHVzaW5nIGFuIG9sZCB2ZXJzaW9uIG9mIGdpdA0KPiA+IGRheS10
+by1kYXkuDQo+ID4NCj4gPiBJIGR1bm5vLiBNYXliZSBpdCBpcyB3b3J0aCBtYWtpbmcgbGlmZSBl
+YXNpZXIgZm9yIHBlb3BsZSBpbiB0aGUgZm9ybWVyDQo+ID4gY2F0ZWdvcnkuDQo+IA0KPiAuLi4g
+ImZvcm1lciBjYXQiIG1lYW5pbmcgImxlc3MgaXJyaXRhdGluZyBmb3Igc2luZ2xlLXNob3QgdXNl
+Ij8gIEkNCj4gZHVubm8uLi4NCj4gDQo+ID4+ICtzdGF0aWMgaW50IHBhcnNlX3NvcnRfc3RyaW5n
+KGNvbnN0IGNoYXIgKmFyZywgaW50ICpzb3J0KQ0KPiA+PiArew0KPiA+PiArCWludCB0eXBlID0g
+MCwgZmxhZ3MgPSAwOw0KPiA+PiArDQo+ID4+ICsJaWYgKHNraXBfcHJlZml4KGFyZywgIi0iLCAm
+YXJnKSkNCj4gPj4gKwkJZmxhZ3MgfD0gUkVWRVJTRV9TT1JUOw0KPiA+PiArDQo+ID4+ICsJaWYg
+KHNraXBfcHJlZml4KGFyZywgInZlcnNpb246IiwgJmFyZykgfHwgc2tpcF9wcmVmaXgoYXJnLCAi
+djoiLCAmYXJnKSkNCj4gPj4gKwkJdHlwZSA9IFZFUkNNUF9TT1JUOw0KPiA+PiArCWVsc2UNCj4g
+Pj4gKwkJdHlwZSA9IFNUUkNNUF9TT1JUOw0KPiA+PiArDQo+ID4+ICsJaWYgKHN0cmNtcChhcmcs
+ICJyZWZuYW1lIikpDQo+ID4+ICsJCXJldHVybiBlcnJvcihfKCJ1bnN1cHBvcnRlZCBzb3J0IHNw
+ZWNpZmljYXRpb24gJXMiKSwgYXJnKTsNCj4gPj4gKw0KPiA+PiArCSpzb3J0ID0gKHR5cGUgfCBm
+bGFncyk7DQo+ID4+ICsNCj4gPj4gKwlyZXR1cm4gMDsNCj4gPj4gK30NCj4gPg0KPiA+IFJlZ2Fy
+ZGxlc3Mgb2YgaG93IHdlIGhhbmRsZSB0aGUgZXJyb3IsIEkgdGhpbmsgdGhpcyB2ZXJzaW9uIHRo
+YXQNCj4gPiBhc3NlbWJsZXMgdGhlIGZpbmFsIGJpdGZpZWxkIGF0IHRoZSBlbmQgaXMgZWFzaWVy
+IHRvIHJlYWQgdGhhbiB0aGUNCj4gPiBvcmlnaW5hbC4NCj4gDQo+IFllcywgdGhpcyBwYXJ0IHJl
+YWxseSBpcyBuaWNlbHkgZG9uZSwgSSBhZ3JlZS4NCg0KVGhlIGN1cnJlbnQgcmV2aXNpb24gb2Yg
+dGhlIHBhdGNoIHByaW50cyBhbiBlcnJvciBhbmQgd2FybmluZyBhYm91dCBub3QNCnVzaW5nIHRo
+ZSBjb25maWd1cmVkIHRhZyB2YWx1ZS4gSXQgZG9lcyBzdGlsbCBydW4uIEkgYWRkZWQgYSB0ZXN0
+IHRvDQplbnN1cmUgdGhpcyBhcyB3ZWxsLg0KDQpUaGUgZWFzaWVzdCB3YXkgdG8gY2hhbmdlIG92
+ZXJhbGwgYmVoYXZpb3IgaXMgdG8gY2hhbmdlIHRoZSBnaXQtY29uZmlnJ3MNCiJkaWVfb25fZXJy
+b3IiIHRvIGJlIGZhbHNlLCBzbyB0aGF0IHdlIG5vIGxvbmdlciBkaWUgb24gY29uZmlndXJhdGlv
+bg0KZXJyb3JzLg0KDQpJdCBhcHBlYXJzIHRoaXMgd291bGQgcmVzb2x2ZSB0aGUgaXNzdWUgZm9y
+IG1hbnkgY29uZmlndXJhdGlvbiBvcHRpb25zDQoobm90IGFsbCwgYXMgSSB0aGluayBhIGZldyBh
+cmUgc3RpbGwgaGFyZCBjb2RlZCB0byBkaWUpIGJ1dCBpdCB3b3VsZCBiZQ0KYSBjaGFuZ2UgdGhh
+dCBpcyB3ZWxsIG91dHNpZGUgdGhlIHNjb3BlIG9mIHRoaXMgcGF0Y2guDQoNCkkgdGhpbmsgdGhh
+dCBmb3Igbm93IGJlaGF2aW9yIEkgYWRkZWQgaXMgZ29vZCwgYXMgd2UgKmtub3cqIHRoYXQNCnRh
+Zy5zb3J0IHdpbGwgYWRkIG5ldyBwYXJhbWV0ZXJzIGluIHRoZSBuZWFyIGZ1dHVyZSwgc28gaXQg
+bWFrZXMgbm8NCnNlbnNlIHRvIGhhdmUgaXQgZGllIG9uIGEgY29uZmlnIHRoYXQgaXMgb25seSBz
+bGlnaHRseSBuZXdlciB0aGFuIHRoZQ0KZ2l0IHZlcnNpb24uDQoNCkdsYWQgSSBjb3VsZCBoZWxw
+LiBKdW5pbyBpZiB5b3UgY291bGQgcmV2aWV3IHRoZSB2NyBJIHNlbnQgYSBiaXQgYWdvIGZvcg0K
+YW55IHBvc3NpYmxlIG1pc3Rha2VzIHRoYXQgSSBmb3Jnb3QgdG8gY2xlYW4gdXAgdGhhdCB3b3Vs
+ZCBiZSBncmVhdC4NCg0KVGhhbmtzLA0KSmFrZQ0K
