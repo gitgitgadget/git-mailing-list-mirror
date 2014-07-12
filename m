@@ -1,58 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/7] move setting of object->type to alloc_* functions
-Date: Sat, 12 Jul 2014 14:07:19 -0400
-Message-ID: <20140712180719.GB13806@sigill.intra.peff.net>
-References: <20140711084141.GA5521@sigill.intra.peff.net>
- <20140711084611.GB5625@sigill.intra.peff.net>
- <53C14C67.60300@ramsay1.demon.co.uk>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: git p4 diff-tree ambiguous argument error
+Date: Sat, 12 Jul 2014 14:10:34 -0400
+Message-ID: <20140712181034.GB26857@padd.com>
+References: <1405013428825-7614774.post@n2.nabble.com>
+ <53BED67D.8080006@diamand.org>
+ <4EECAC73-DACA-4C0F-AE97-944F0DEE490B@mac.com>
+ <BEE93DDF-7F3E-423D-AA3F-0D72E8FD08B3@mac.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sat Jul 12 20:07:31 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Luke Diamand <luke@diamand.org>
+To: Duane Murphy <duanemurphy@mac.com>
+X-From: git-owner@vger.kernel.org Sat Jul 12 20:10:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X61hm-0007dl-Mk
-	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 20:07:27 +0200
+	id 1X61kv-0002qt-DN
+	for gcvg-git-2@plane.gmane.org; Sat, 12 Jul 2014 20:10:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752492AbaGLSHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jul 2014 14:07:22 -0400
-Received: from cloud.peff.net ([50.56.180.127]:60890 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751840AbaGLSHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jul 2014 14:07:21 -0400
-Received: (qmail 27705 invoked by uid 102); 12 Jul 2014 18:07:21 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 12 Jul 2014 13:07:21 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Jul 2014 14:07:19 -0400
+	id S1752130AbaGLSKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Jul 2014 14:10:38 -0400
+Received: from honk.padd.com ([71.19.245.7]:50220 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751452AbaGLSKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Jul 2014 14:10:37 -0400
+Received: from arf.padd.com (unknown [50.105.4.164])
+	by honk.padd.com (Postfix) with ESMTPSA id 8EC4020D5;
+	Sat, 12 Jul 2014 11:10:36 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 4E0B7202A3; Sat, 12 Jul 2014 14:10:34 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <53C14C67.60300@ramsay1.demon.co.uk>
+In-Reply-To: <BEE93DDF-7F3E-423D-AA3F-0D72E8FD08B3@mac.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253396>
 
-On Sat, Jul 12, 2014 at 03:55:35PM +0100, Ramsay Jones wrote:
-
-> >  	if (!obj) {
-> >  		struct commit *c = alloc_commit_node();
-> > -		return create_object(sha1, OBJ_COMMIT, c);
-> > +		return create_object(sha1, c);
-> >  	}
+duanemurphy@mac.com wrote on Thu, 10 Jul 2014 12:19 -0700:
+> Some additional investigation. 
 > 
-> perhaps:
-> 	if (!obj)
-> 		return create_object(sha1, alloc_commit_node());
+> I am working in a copy of a repository that was originally used to pull the data 
+> from Perforce. As part of my experiments to figure out this problem, I deleted 
+> the contents of .git/git-p4-tmp/. 
 > 
-> (increasing similarity with other calls here ...)
+> I noticed that git-p4 would continue if those files were present. I have now 
+> copied the files that were in .git/git-p4-tmp/ from the other repository. 
+> 
+> git-p4 is not crashing now, but I also noticed that none of the dates on these files
+> have changed. These files should have been touched each time that a branch is taken,
+> but these files have not changed while the sync is running.
+> 
+> That seems significant. 
+> 
+> I expect git-p4 to crash again on a new commit that is not in .git/git-p4-tmp/. 
+> Then I have to start the 8-12 hour process over again (did I mention 70k commits?).
 
-Yeah, I noticed that but didn't change it to keep the diff small. The
-one that should have is 969eba6, but it is not a big deal to do it here.
+Bizarre.  That directory is really supposed to be temporary, and
+live only during a single git p4 invocation.  It's just a bunch
+of branch heads for the temporary commits.  I don't know why
+those branches, and the git-p4-tmp directory, hang around after
+you run git p4.  Might be worth your investigation.
 
--Peff
+The second weirdness is why a new run doesn't create the branch.
+This maybe points to self.checkpoint() not really checkpointing.
+It does send a "checkpoint" down the git fast-import stream,
+which is supposed to make it write the branches out.  You might
+consider grabbing the fast-import process in a debugger and see
+why it's not writing out the branch head.
+
+There's lots of changes since v1.7.12.4, but nothing obvious I
+can see that would cause this.  Sorry,
+
+		-- Pete
