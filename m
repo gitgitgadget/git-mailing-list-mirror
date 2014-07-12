@@ -1,63 +1,63 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v8 06/17] sha1_file: change GIT_TRACE_PACK_ACCESS
- logging to use trace API
-Date: Sat, 12 Jul 2014 02:01:38 +0200
-Message-ID: <53C07AE2.4070107@gmail.com>
+Subject: [PATCH v8 07/17] trace: add infrastructure to augment trace
+ output with additional info
+Date: Sat, 12 Jul 2014 02:02:18 +0200
+Message-ID: <53C07B0A.6010709@gmail.com>
 References: <53C079C5.8090503@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>, 
  msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBBXXVQGPAKGQEVHVJFBI@googlegroups.com Sat Jul 12 02:01:36 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBXXVQGPAKGQEVHVJFBI@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBBXWQGPAKGQESAUSFPA@googlegroups.com Sat Jul 12 02:02:16 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBBXWQGPAKGQESAUSFPA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f190.google.com ([209.85.212.190])
+Received: from mail-lb0-f187.google.com ([209.85.217.187])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBXXVQGPAKGQEVHVJFBI@googlegroups.com>)
-	id 1X5kky-00026f-F1
-	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 02:01:36 +0200
-Received: by mail-wi0-f190.google.com with SMTP id n15sf806wiw.27
-        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 17:01:34 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBBXWQGPAKGQESAUSFPA@googlegroups.com>)
+	id 1X5klc-0002kT-2K
+	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 02:02:16 +0200
+Received: by mail-lb0-f187.google.com with SMTP id n15sf182666lbi.14
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 17:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
          :in-reply-to:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=pN6zqj+2a4dm/YUYEAEy3COb8pTU5U24lYRhqy4v8tI=;
-        b=a+fBL0I0ufMnmByA6TPM/kOMyorzP6ctL6EZZWf8lF48RIkXlBZ0B+Ad63Hf7H6giL
-         4I4D6yt64x5glAq0Jp/sA8l84pOVMPZLjEwviAg2DhekcUj+S7ylnwEW6m5wi87PoGPZ
-         6OsIbSFsK9UJg5sfD0pKSCGg1OuQzjk4VR+u6E1Y0lHGb897QTIefsSUOZpJy6EdDctU
-         MtzC5WtVUqJe8hhhHlsxPpFWiBq02212P8ehrWYcIPxH5lRr12wn0/v60A124pMFH+fo
-         2YywG50Xw4bhOStgbVHCQ1c0MjFX/X9dgP8+wp+la9/dprJRs9C3Olztnq0I1LRJ8b4b
-         JVwg==
-X-Received: by 10.180.205.142 with SMTP id lg14mr30447wic.1.1405123294652;
-        Fri, 11 Jul 2014 17:01:34 -0700 (PDT)
+        bh=zHVJvWgpwKPjQpu5AgLJqO2UsJNFR38zIt2pfWyes98=;
+        b=QPvtyvFUnThPnbJZHY5inJ2iJStvtIM5VM+FDMASK/f360lq0UraEVuWLuPm0fpQb8
+         lMuY+CaHBawQeOAGqu/JOZ5wzUZacUKBS0majO7eyncKI1q4SFmIYSRHE1ExB/5f9/I1
+         IUT/cfC6mzQMmbTkA60gKYGNon06bg2tJ8lVPyS2hkUSp0e7vPYL/VB7I8Tm+0grAQOx
+         Lg1u8ENPgVK2wvbvKNxo7wnVgN3FM9HeZf4Ipeg16pwmvloLBIyXJtytvel7ExKUqCLo
+         s7ePIKYBpiaUeKn572DXKYTVkeB+AiG1c82xA0xOHYfmozpMa6zdwRI/1Ze8w/Q18Asw
+         hnCg==
+X-Received: by 10.152.179.227 with SMTP id dj3mr20253lac.0.1405123335793;
+        Fri, 11 Jul 2014 17:02:15 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.20.43 with SMTP id k11ls163518wie.21.canary; Fri, 11 Jul
- 2014 17:01:33 -0700 (PDT)
-X-Received: by 10.180.87.7 with SMTP id t7mr805787wiz.5.1405123293942;
-        Fri, 11 Jul 2014 17:01:33 -0700 (PDT)
-Received: from mail-wi0-x233.google.com (mail-wi0-x233.google.com [2a00:1450:400c:c05::233])
-        by gmr-mx.google.com with ESMTPS id cj4si6504wid.0.2014.07.11.17.01.33
+Received: by 10.152.43.166 with SMTP id x6ls15951lal.100.gmail; Fri, 11 Jul
+ 2014 17:02:14 -0700 (PDT)
+X-Received: by 10.152.7.71 with SMTP id h7mr215898laa.2.1405123334465;
+        Fri, 11 Jul 2014 17:02:14 -0700 (PDT)
+Received: from mail-wg0-x233.google.com (mail-wg0-x233.google.com [2a00:1450:400c:c00::233])
+        by gmr-mx.google.com with ESMTPS id iz18si1879wic.3.2014.07.11.17.02.14
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 17:01:33 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::233 as permitted sender) client-ip=2a00:1450:400c:c05::233;
-Received: by mail-wi0-f179.google.com with SMTP id cc10so20704wib.6
-        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 17:01:33 -0700 (PDT)
-X-Received: by 10.194.60.110 with SMTP id g14mr2631919wjr.101.1405123293887;
-        Fri, 11 Jul 2014 17:01:33 -0700 (PDT)
+        Fri, 11 Jul 2014 17:02:14 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::233 as permitted sender) client-ip=2a00:1450:400c:c00::233;
+Received: by mail-wg0-f51.google.com with SMTP id y10so1730263wgg.10
+        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 17:02:14 -0700 (PDT)
+X-Received: by 10.180.188.50 with SMTP id fx18mr9072137wic.76.1405123334369;
+        Fri, 11 Jul 2014 17:02:14 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id v14sm8184749wjw.38.2014.07.11.17.01.32
+        by mx.google.com with ESMTPSA id f6sm8201330wja.25.2014.07.11.17.02.13
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 17:01:33 -0700 (PDT)
+        Fri, 11 Jul 2014 17:02:13 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 In-Reply-To: <53C079C5.8090503@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::233
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::233
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -71,93 +71,139 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253362>
 
-This changes GIT_TRACE_PACK_ACCESS functionality as follows:
- * supports the same options as GIT_TRACE (e.g. printing to stderr)
- * no longer supports relative paths
- * appends to the trace file rather than overwriting
+To be able to add a common prefix or suffix to all trace output (e.g.
+a timestamp or file:line of the caller), factor out common setup and
+cleanup tasks of the trace* functions.
+
+When adding a common prefix, it makes sense that the output of each trace
+call starts on a new line. Add '\n' in case the caller forgot.
+
+Note that this explicitly limits trace output to line-by-line, it is no
+longer possible to trace-print just part of a line. Until now, this was
+just an implicit assumption (trace-printing part of a line worked, but
+messed up the trace file if multiple threads or processes were involved).
+
+Thread-safety / inter-process-safety is also the reason why we need to do
+the prefixing and suffixing in memory rather than issuing multiple write()
+calls. Write_or_whine_pipe() / xwrite() is atomic unless the size exceeds
+MAX_IO_SIZE (8MB, see wrapper.c). In case of trace_strbuf, this costs an
+additional string copy (which should be irrelevant for performance in light
+of actual file IO).
+
+While we're at it, rename trace_strbuf's 'buf' argument, which suggests
+that the function is modifying the buffer. Trace_strbuf() currently is the
+only trace API that can print arbitrary binary data (without barfing on
+'%' or stopping at '\0'), so 'data' seems more appropriate.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git.txt |  4 ++--
- sha1_file.c           | 30 ++++--------------------------
- 2 files changed, 6 insertions(+), 28 deletions(-)
+ trace.c | 47 +++++++++++++++++++++++++++++++++--------------
+ trace.h |  2 +-
+ 2 files changed, 34 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 75633e6..9d073f6 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -925,11 +925,11 @@ Unsetting the variable, or setting it to empty, "0" or
- "false" (case insensitive) disables trace messages.
+diff --git a/trace.c b/trace.c
+index 8662b79..3d02bcc 100644
+--- a/trace.c
++++ b/trace.c
+@@ -85,17 +85,37 @@ void trace_disable(struct trace_key *key)
+ static const char err_msg[] = "Could not trace into fd given by "
+ 	"GIT_TRACE environment variable";
  
- 'GIT_TRACE_PACK_ACCESS'::
--	If this variable is set to a path, a file will be created at
--	the given path logging all accesses to any packs. For each
-+	Enables trace messages for all accesses to any packs. For each
- 	access, the pack file name and an offset in the pack is
- 	recorded. This may be helpful for troubleshooting some
- 	pack-related performance problems.
-+	See 'GIT_TRACE' for available trace output options.
- 
- 'GIT_TRACE_PACKET'::
- 	Enables trace messages for all packets coming in or out of a
-diff --git a/sha1_file.c b/sha1_file.c
-index 34d527f..7a110b5 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -36,9 +36,6 @@ static inline uintmax_t sz_fmt(size_t s) { return s; }
- 
- const unsigned char null_sha1[20];
- 
--static const char *no_log_pack_access = "no_log_pack_access";
--static const char *log_pack_access;
--
- /*
-  * This is meant to hold a *small* number of objects that you would
-  * want read_sha1_file() to be able to return, but yet you do not want
-@@ -2085,27 +2082,9 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
- 
- static void write_pack_access_log(struct packed_git *p, off_t obj_offset)
++static int prepare_trace_line(struct trace_key *key, struct strbuf *buf)
++{
++	if (!trace_want(key))
++		return 0;
++
++	set_try_to_free_routine(NULL);	/* is never reset */
++
++	/* add line prefix here */
++
++	return 1;
++}
++
++static void print_trace_line(struct trace_key *key, struct strbuf *buf)
++{
++	/* append newline if missing */
++	if (buf->len && buf->buf[buf->len - 1] != '\n')
++		strbuf_addch(buf, '\n');
++
++	write_or_whine_pipe(get_trace_fd(key), buf->buf, buf->len, err_msg);
++	strbuf_release(buf);
++}
++
+ static void trace_vprintf(struct trace_key *key, const char *format, va_list ap)
  {
--	static FILE *log_file;
--
--	if (!log_pack_access)
--		log_pack_access = getenv("GIT_TRACE_PACK_ACCESS");
--	if (!log_pack_access)
--		log_pack_access = no_log_pack_access;
--	if (log_pack_access == no_log_pack_access)
--		return;
--
--	if (!log_file) {
--		log_file = fopen(log_pack_access, "w");
--		if (!log_file) {
--			error("cannot open pack access log '%s' for writing: %s",
--			      log_pack_access, strerror(errno));
--			log_pack_access = no_log_pack_access;
--			return;
--		}
--	}
--	fprintf(log_file, "%s %"PRIuMAX"\n",
--		p->pack_name, (uintmax_t)obj_offset);
--	fflush(log_file);
-+	static struct trace_key pack_access = TRACE_KEY_INIT(PACK_ACCESS);
-+	trace_printf_key(&pack_access, "%s %"PRIuMAX"\n",
-+			 p->pack_name, (uintmax_t)obj_offset);
+ 	struct strbuf buf = STRBUF_INIT;
+ 
+-	if (!trace_want(key))
++	if (!prepare_trace_line(key, &buf))
+ 		return;
+ 
+-	set_try_to_free_routine(NULL);	/* is never reset */
+ 	strbuf_vaddf(&buf, format, ap);
+-	trace_strbuf(key, &buf);
+-	strbuf_release(&buf);
++	print_trace_line(key, &buf);
  }
  
- int do_check_packed_object_crc;
-@@ -2130,8 +2109,7 @@ void *unpack_entry(struct packed_git *p, off_t obj_offset,
- 	int delta_stack_nr = 0, delta_stack_alloc = UNPACK_ENTRY_STACK_PREALLOC;
- 	int base_from_cache = 0;
+ void trace_printf_key(struct trace_key *key, const char *format, ...)
+@@ -114,32 +134,31 @@ void trace_printf(const char *format, ...)
+ 	va_end(ap);
+ }
  
--	if (log_pack_access != no_log_pack_access)
--		write_pack_access_log(p, obj_offset);
-+	write_pack_access_log(p, obj_offset);
+-void trace_strbuf(struct trace_key *key, const struct strbuf *buf)
++void trace_strbuf(struct trace_key *key, const struct strbuf *data)
+ {
+-	int fd = get_trace_fd(key);
+-	if (!fd)
++	struct strbuf buf = STRBUF_INIT;
++
++	if (!prepare_trace_line(key, &buf))
+ 		return;
  
- 	/* PHASE 1: drill down to the innermost base object */
- 	for (;;) {
+-	write_or_whine_pipe(fd, buf->buf, buf->len, err_msg);
++	strbuf_addbuf(&buf, data);
++	print_trace_line(key, &buf);
+ }
+ 
+ void trace_argv_printf(const char **argv, const char *format, ...)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+ 	va_list ap;
+-	int fd = get_trace_fd(NULL);
+-	if (!fd)
++
++	if (!prepare_trace_line(NULL, &buf))
+ 		return;
+ 
+-	set_try_to_free_routine(NULL);	/* is never reset */
+ 	va_start(ap, format);
+ 	strbuf_vaddf(&buf, format, ap);
+ 	va_end(ap);
+ 
+ 	sq_quote_argv(&buf, argv, 0);
+-	strbuf_addch(&buf, '\n');
+-	write_or_whine_pipe(fd, buf.buf, buf.len, err_msg);
+-	strbuf_release(&buf);
++	print_trace_line(NULL, &buf);
+ }
+ 
+ static const char *quote_crnl(const char *path)
+diff --git a/trace.h b/trace.h
+index d85ac4c..28c1089 100644
+--- a/trace.h
++++ b/trace.h
+@@ -22,6 +22,6 @@ extern int trace_want(struct trace_key *key);
+ extern void trace_disable(struct trace_key *key);
+ __attribute__((format (printf, 2, 3)))
+ extern void trace_printf_key(struct trace_key *key, const char *format, ...);
+-extern void trace_strbuf(struct trace_key *key, const struct strbuf *buf);
++extern void trace_strbuf(struct trace_key *key, const struct strbuf *data);
+ 
+ #endif /* TRACE_H */
 -- 
 2.0.0.406.g2e9ef9b
 
