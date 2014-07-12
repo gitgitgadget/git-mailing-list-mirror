@@ -1,62 +1,63 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v8 09/17] trace: add current timestamp to all trace output
-Date: Sat, 12 Jul 2014 02:03:50 +0200
-Message-ID: <53C07B66.5080200@gmail.com>
+Subject: [PATCH v8 10/17] trace: move code around, in preparation to
+ file:line output
+Date: Sat, 12 Jul 2014 02:04:29 +0200
+Message-ID: <53C07B8D.9050308@gmail.com>
 References: <53C079C5.8090503@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>, 
  msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBBYXWQGPAKGQEV5M2UIQ@googlegroups.com Sat Jul 12 02:03:50 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBYXWQGPAKGQEV5M2UIQ@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBCXXQGPAKGQE3XX2HIQ@googlegroups.com Sat Jul 12 02:04:28 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBCXXQGPAKGQE3XX2HIQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f192.google.com ([74.125.82.192])
+Received: from mail-wi0-f183.google.com ([209.85.212.183])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBYXWQGPAKGQEV5M2UIQ@googlegroups.com>)
-	id 1X5kn5-0004EC-MN
-	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 02:03:47 +0200
-Received: by mail-we0-f192.google.com with SMTP id u57sf184719wes.19
-        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 17:03:47 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBCXXQGPAKGQE3XX2HIQ@googlegroups.com>)
+	id 1X5knj-0004sA-Cs
+	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 02:04:27 +0200
+Received: by mail-wi0-f183.google.com with SMTP id q5sf1022wiv.10
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 17:04:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
          :in-reply-to:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=RQfAA2PmF/RQC4Qjdrg+viwzrTdGycqumy+V3jogDSU=;
-        b=i2gzI3GNvZOHfPJ5hCfqbngMmVIeLX8iq+E3NXmh2KgdHVTSrorhbYd8Tw5isDIeR/
-         c5NelV8n0zbhsmxRvaiipns0MMtykEO2+Yrfx0B6n+pQCfx3iEp5LLyNDu6hevJKhCKM
-         3emu6qsA2IOpz8AQEexV2VIbh9Za6ADThHK3fWTQ8rc3t4ow+W4Z4Kep+6/AvmsfUAUt
-         zrbKeEqapsKWP6D3LAhjvAONdcmaDat9qQnq1fkh7uJv+jRNFZ7kOCHcPDbb3VQUbVzj
-         QKnHz9vAskmYOc2qOfbFK+YE+0FIEjnFHqB91Tjb/yIJzPpefhAnCMRGqPL3vspxDIY/
-         Areg==
-X-Received: by 10.152.20.162 with SMTP id o2mr16506lae.18.1405123427372;
-        Fri, 11 Jul 2014 17:03:47 -0700 (PDT)
+        bh=c6toQIb4FIenjLszf2tDsNZ3cJeHkqZJ7vd4iFyumbQ=;
+        b=bOJ4mlKw0g5nb/hthiudBQGudl2DNzHvQ5jZiZcQRAdXBb+3BUJEPs1iIIVnkqjcqJ
+         eLZSlH03XDgBDDHGA+WPsz5J3P3zs1aa2Ptc/QIG2l3kahW8bB9WwN+btu/2aT2IbFdC
+         FUyK778zv3SdOS8wVr0zNv/aMGtKpBl2IR/N/EErytgz9F0pmXJE2qk23YmacqJ6Hf7a
+         Bbkn85DS698EkG52Z1iLpdPg3k3rsftW9BH6cQpxElQv51V/6MiAurXUhwn8dkAheM4h
+         3K2NAT+cnM1jQKWSS16LjtR9hd4rGSydzbsbKHswhO6fYsx/zbPBmwxW8Jfs2GeW1yiR
+         q69Q==
+X-Received: by 10.180.211.111 with SMTP id nb15mr30713wic.4.1405123466545;
+        Fri, 11 Jul 2014 17:04:26 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.36.42 with SMTP id n10ls139261laj.1.gmail; Fri, 11 Jul
- 2014 17:03:46 -0700 (PDT)
-X-Received: by 10.112.140.170 with SMTP id rh10mr209435lbb.7.1405123426192;
-        Fri, 11 Jul 2014 17:03:46 -0700 (PDT)
-Received: from mail-we0-x22e.google.com (mail-we0-x22e.google.com [2a00:1450:400c:c03::22e])
-        by gmr-mx.google.com with ESMTPS id x7si7163wiw.1.2014.07.11.17.03.46
+Received: by 10.180.75.12 with SMTP id y12ls161927wiv.19.gmail; Fri, 11 Jul
+ 2014 17:04:25 -0700 (PDT)
+X-Received: by 10.180.84.8 with SMTP id u8mr808121wiy.7.1405123465802;
+        Fri, 11 Jul 2014 17:04:25 -0700 (PDT)
+Received: from mail-we0-x22f.google.com (mail-we0-x22f.google.com [2a00:1450:400c:c03::22f])
+        by gmr-mx.google.com with ESMTPS id d9si4610wie.3.2014.07.11.17.04.25
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 17:03:46 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22e as permitted sender) client-ip=2a00:1450:400c:c03::22e;
-Received: by mail-we0-f174.google.com with SMTP id u57so1802179wes.5
-        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 17:03:46 -0700 (PDT)
-X-Received: by 10.180.82.97 with SMTP id h1mr8920711wiy.30.1405123426094;
-        Fri, 11 Jul 2014 17:03:46 -0700 (PDT)
+        Fri, 11 Jul 2014 17:04:25 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22f as permitted sender) client-ip=2a00:1450:400c:c03::22f;
+Received: by mail-we0-f175.google.com with SMTP id k48so1798412wev.34
+        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 17:04:25 -0700 (PDT)
+X-Received: by 10.194.219.225 with SMTP id pr1mr2969542wjc.34.1405123465706;
+        Fri, 11 Jul 2014 17:04:25 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id fw4sm317539wib.19.2014.07.11.17.03.44
+        by mx.google.com with ESMTPSA id u10sm8190157wjz.43.2014.07.11.17.04.24
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 17:03:45 -0700 (PDT)
+        Fri, 11 Jul 2014 17:04:25 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 In-Reply-To: <53C079C5.8090503@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22e
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22f
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -70,49 +71,110 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253365>
 
-This is useful to tell apart trace output of separate test runs.
-
-It can also be used for basic, coarse-grained performance analysis. Note
-that the accuracy is tainted by writing to the trace file, and you have to
-calculate the deltas yourself (which is next to impossible if multiple
-threads or processes are involved).
+No functional changes, just move stuff around so that the next patch isn't
+that ugly...
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- trace.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ trace.c | 36 ++++++++++++++++++------------------
+ trace.h | 12 ++++++++----
+ 2 files changed, 26 insertions(+), 22 deletions(-)
 
 diff --git a/trace.c b/trace.c
-index a194b16..18e5d93 100644
+index 18e5d93..e8ce619 100644
 --- a/trace.c
 +++ b/trace.c
-@@ -88,6 +88,9 @@ static const char err_msg[] = "Could not trace into fd given by "
- static int prepare_trace_line(struct trace_key *key, struct strbuf *buf)
- {
- 	static struct trace_key trace_bare = TRACE_KEY_INIT(BARE);
-+	struct timeval tv;
-+	struct tm tm;
-+	time_t secs;
- 
- 	if (!trace_want(key))
- 		return 0;
-@@ -98,7 +101,12 @@ static int prepare_trace_line(struct trace_key *key, struct strbuf *buf)
- 	if (trace_want(&trace_bare))
- 		return 1;
- 
--	/* add line prefix here */
-+	/* print current timestamp */
-+	gettimeofday(&tv, NULL);
-+	secs = tv.tv_sec;
-+	localtime_r(&secs, &tm);
-+	strbuf_addf(buf, "%02d:%02d:%02d.%06ld ", tm.tm_hour, tm.tm_min,
-+		    tm.tm_sec, (long) tv.tv_usec);
- 
- 	return 1;
+@@ -132,20 +132,20 @@ static void trace_vprintf(struct trace_key *key, const char *format, va_list ap)
+ 	print_trace_line(key, &buf);
  }
+ 
+-void trace_printf_key(struct trace_key *key, const char *format, ...)
++void trace_argv_printf(const char **argv, const char *format, ...)
+ {
++	struct strbuf buf = STRBUF_INIT;
+ 	va_list ap;
+-	va_start(ap, format);
+-	trace_vprintf(key, format, ap);
+-	va_end(ap);
+-}
+ 
+-void trace_printf(const char *format, ...)
+-{
+-	va_list ap;
++	if (!prepare_trace_line(NULL, &buf))
++		return;
++
+ 	va_start(ap, format);
+-	trace_vprintf(NULL, format, ap);
++	strbuf_vaddf(&buf, format, ap);
+ 	va_end(ap);
++
++	sq_quote_argv(&buf, argv, 0);
++	print_trace_line(NULL, &buf);
+ }
+ 
+ void trace_strbuf(struct trace_key *key, const struct strbuf *data)
+@@ -159,20 +159,20 @@ void trace_strbuf(struct trace_key *key, const struct strbuf *data)
+ 	print_trace_line(key, &buf);
+ }
+ 
+-void trace_argv_printf(const char **argv, const char *format, ...)
++void trace_printf(const char *format, ...)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+ 	va_list ap;
+-
+-	if (!prepare_trace_line(NULL, &buf))
+-		return;
+-
+ 	va_start(ap, format);
+-	strbuf_vaddf(&buf, format, ap);
++	trace_vprintf(NULL, format, ap);
+ 	va_end(ap);
++}
+ 
+-	sq_quote_argv(&buf, argv, 0);
+-	print_trace_line(NULL, &buf);
++void trace_printf_key(struct trace_key *key, const char *format, ...)
++{
++	va_list ap;
++	va_start(ap, format);
++	trace_vprintf(key, format, ap);
++	va_end(ap);
+ }
+ 
+ static const char *quote_crnl(const char *path)
+diff --git a/trace.h b/trace.h
+index 28c1089..b4800e7 100644
+--- a/trace.h
++++ b/trace.h
+@@ -13,15 +13,19 @@ struct trace_key {
+ 
+ #define TRACE_KEY_INIT(name) { "GIT_TRACE_" #name, 0, 0, 0 }
+ 
+-__attribute__((format (printf, 1, 2)))
+-extern void trace_printf(const char *format, ...);
+-__attribute__((format (printf, 2, 3)))
+-extern void trace_argv_printf(const char **argv, const char *format, ...);
+ extern void trace_repo_setup(const char *prefix);
+ extern int trace_want(struct trace_key *key);
+ extern void trace_disable(struct trace_key *key);
++
++__attribute__((format (printf, 1, 2)))
++extern void trace_printf(const char *format, ...);
++
+ __attribute__((format (printf, 2, 3)))
+ extern void trace_printf_key(struct trace_key *key, const char *format, ...);
++
++__attribute__((format (printf, 2, 3)))
++extern void trace_argv_printf(const char **argv, const char *format, ...);
++
+ extern void trace_strbuf(struct trace_key *key, const struct strbuf *data);
+ 
+ #endif /* TRACE_H */
 -- 
 2.0.0.406.g2e9ef9b
 
