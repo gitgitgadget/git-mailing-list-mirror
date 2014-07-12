@@ -1,63 +1,63 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v8 12/17] trace: add high resolution timer function
- to debug performance issues
-Date: Sat, 12 Jul 2014 02:05:42 +0200
-Message-ID: <53C07BD6.5010008@gmail.com>
+Subject: [PATCH v8 13/17] trace: add trace_performance facility to
+ debug performance issues
+Date: Sat, 12 Jul 2014 02:06:28 +0200
+Message-ID: <53C07C04.5020708@gmail.com>
 References: <53C079C5.8090503@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>, 
  msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBBVHXQGPAKGQEQAMT7XI@googlegroups.com Sat Jul 12 02:05:41 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBVHXQGPAKGQEQAMT7XI@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBAPYQGPAKGQEI3JWCHY@googlegroups.com Sat Jul 12 02:06:26 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBAPYQGPAKGQEI3JWCHY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f184.google.com ([209.85.212.184])
+Received: from mail-we0-f186.google.com ([74.125.82.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBVHXQGPAKGQEQAMT7XI@googlegroups.com>)
-	id 1X5kov-00063n-3o
-	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 02:05:41 +0200
-Received: by mail-wi0-f184.google.com with SMTP id n3sf958wiv.11
-        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 17:05:40 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBAPYQGPAKGQEI3JWCHY@googlegroups.com>)
+	id 1X5kpe-0006jb-Nx
+	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 02:06:26 +0200
+Received: by mail-we0-f186.google.com with SMTP id t60sf171620wes.23
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 17:06:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
          :in-reply-to:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=0NHZ6rbxMp2EHsuRumyTA8MKctcQfvauU6KhAY0QlCg=;
-        b=V8DEV2wfBkWqh5t6QFgSkM/sQe+3nX+riA+LGXjdYAHTzC3p5wz0X0FD7bXQG0pE1w
-         UGdi0HFwooGG3GhU3DEn7XHWCQKfSJ087cTSf0wtd4W1B2u/Y9hDH/fQaLMmnV9Hm1u2
-         0+LtmgnZuZDb8pR2t/WOf/2yAkyK8ygbK/dBgSQ7U1smuhECQocEgb5IHOP5iJef4c63
-         KDoU+e4hFZ3rXWcgxt9Rg/N+0ksMdh3RzX/GhXTvn+mGmaqbuFSLMoVHqZ1TK+dOgOl5
-         1mBa/6Jd8WPDY8+QR/1VNe8lZ5zPJie6K0OylF271FvF01l8014+jSttWr5By7EnrBKy
-         BH5w==
-X-Received: by 10.180.184.129 with SMTP id eu1mr30818wic.14.1405123540848;
-        Fri, 11 Jul 2014 17:05:40 -0700 (PDT)
+        bh=mvs1q4wVTRpHO+T181IEqEv3FTNvMiRP1SEOL8o9hYM=;
+        b=HbD8Ag9um5UNnkSXyG3FBj8KjgHAkn94d9mcBDhDro5eNDys6hS9HIQpdq75c2cYnp
+         /EA8Vh2Nko/VSgP72eF1u3ke2M4P1pMbYsdqhtkAODDKzr9Un+kfKgIzuHqK/bv+vKmz
+         z07YQmTiW1Drnd+Fl0jJXzHMkeAEMofXDjCSezZ4zrZVHQq/z6A9mep38Hq57den3asc
+         ihdf6b8188kSP/2x9IrF0wK4t5r4sCzyzFZnxpG7ovzkDP94i1HGduykaGriy+Jt4M0D
+         LeOKYdogoYBHygW1Vs4OH6b9RBRRKHXX2LI4c7ZNkLhN0SmxvSWGBkfmbw/y0EKDJvFr
+         WRhQ==
+X-Received: by 10.152.27.162 with SMTP id u2mr16487lag.16.1405123586408;
+        Fri, 11 Jul 2014 17:06:26 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.182.45 with SMTP id eb13ls158631wic.27.gmail; Fri, 11 Jul
- 2014 17:05:40 -0700 (PDT)
-X-Received: by 10.180.89.199 with SMTP id bq7mr806187wib.3.1405123540146;
-        Fri, 11 Jul 2014 17:05:40 -0700 (PDT)
-Received: from mail-we0-x22f.google.com (mail-we0-x22f.google.com [2a00:1450:400c:c03::22f])
-        by gmr-mx.google.com with ESMTPS id iz18si2183wic.3.2014.07.11.17.05.40
+Received: by 10.152.37.65 with SMTP id w1ls123764laj.85.gmail; Fri, 11 Jul
+ 2014 17:06:25 -0700 (PDT)
+X-Received: by 10.152.7.71 with SMTP id h7mr216933laa.2.1405123585165;
+        Fri, 11 Jul 2014 17:06:25 -0700 (PDT)
+Received: from mail-wi0-x233.google.com (mail-wi0-x233.google.com [2a00:1450:400c:c05::233])
+        by gmr-mx.google.com with ESMTPS id cj4si7224wid.0.2014.07.11.17.06.25
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 17:05:40 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22f as permitted sender) client-ip=2a00:1450:400c:c03::22f;
-Received: by mail-we0-f175.google.com with SMTP id k48so1799087wev.34
-        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 17:05:40 -0700 (PDT)
-X-Received: by 10.194.7.36 with SMTP id g4mr2724090wja.37.1405123540066;
-        Fri, 11 Jul 2014 17:05:40 -0700 (PDT)
+        Fri, 11 Jul 2014 17:06:25 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::233 as permitted sender) client-ip=2a00:1450:400c:c05::233;
+Received: by mail-wi0-f179.google.com with SMTP id cc10so22124wib.12
+        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 17:06:25 -0700 (PDT)
+X-Received: by 10.180.212.12 with SMTP id ng12mr9188065wic.9.1405123585006;
+        Fri, 11 Jul 2014 17:06:25 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id ex4sm388789wic.2.2014.07.11.17.05.38
+        by mx.google.com with ESMTPSA id o12sm383546wiw.5.2014.07.11.17.06.23
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 17:05:39 -0700 (PDT)
+        Fri, 11 Jul 2014 17:06:24 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 In-Reply-To: <53C079C5.8090503@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22f
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::233
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -71,186 +71,164 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253368>
 
-Add a getnanotime() function that returns nanoseconds since 01/01/1970 as
-unsigned 64-bit integer (i.e. overflows in july 2554). This is easier to
-work with than e.g. struct timeval or struct timespec. Basing the timer on
-the epoch allows using the results with other time-related APIs.
+Add trace_performance and trace_performance_since macros that print a
+duration and an optional printf-formatted text to the file specified in
+environment variable GIT_TRACE_PERFORMANCE.
 
-To simplify adaption to different platforms, split the implementation into
-a common getnanotime() and a platform-specific highres_nanos() function.
+These macros, in conjunction with getnanotime(), are intended to simplify
+performance measurements from within the application (i.e. profiling via
+manual instrumentation, rather than using an external profiling tool).
 
-The common getnanotime() function handles errors, falling back to
-gettimeofday() if highres_nanos() isn't implemented or doesn't work.
+Unless enabled via GIT_TRACE_PERFORMANCE, these macros have no noticeable
+impact on performance, so that test code for well known time killers may
+be shipped in release builds. Alternatively, a developer could provide an
+additional performance patch (not meant for master) that allows reviewers
+to reproduce performance tests more easily, e.g. on other platforms or
+using their own repositories.
 
-getnanotime() is also responsible for normalizing to the epoch. The offset
-to the system clock is calculated only once on initialization, i.e.
-manually setting the system clock has no impact on the timer (except if
-the fallback gettimeofday() is in use). Git processes are typically short
-lived, so we don't need to handle clock drift.
+Usage examples:
 
-The highres_nanos() function returns monotonically increasing nanoseconds
-relative to some arbitrary point in time (e.g. system boot), or 0 on
-failure. Providing platform-specific implementations should be relatively
-easy, e.g. adapting to clock_gettime() as defined by the POSIX realtime
-extensions is seven lines of code.
+Simple use case (measure one code section):
 
-This version includes highres_nanos() implementations for:
- * Linux: using clock_gettime(CLOCK_MONOTONIC)
- * Windows: using QueryPerformanceCounter()
+  uint64_t start = getnanotime();
+  /* code section to measure */
+  trace_performance_since(start, "foobar");
 
-Todo:
- * enable clock_gettime() on more platforms
- * add Mac OSX version, e.g. using mach_absolute_time + mach_timebase_info
+Complex use case (measure repetitive code sections):
+
+  uint64_t t = 0;
+  for (;;) {
+    /* ignore */
+    t -= getnanotime();
+    /* code section to measure */
+    t += getnanotime();
+    /* ignore */
+  }
+  trace_performance(t, "frotz");
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Makefile         |  7 +++++
- config.mak.uname |  1 +
- trace.c          | 82 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- trace.h          |  1 +
- 4 files changed, 91 insertions(+)
+ trace.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ trace.h | 18 ++++++++++++++++++
+ 2 files changed, 65 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 07ea105..80f4390 100644
---- a/Makefile
-+++ b/Makefile
-@@ -340,6 +340,8 @@ all::
- #
- # Define GMTIME_UNRELIABLE_ERRORS if your gmtime() function does not
- # return NULL when it receives a bogus time_t.
-+#
-+# Define HAVE_CLOCK_GETTIME if your platform has clock_gettime in librt.
- 
- GIT-VERSION-FILE: FORCE
- 	@$(SHELL_PATH) ./GIT-VERSION-GEN
-@@ -1497,6 +1499,11 @@ ifdef GMTIME_UNRELIABLE_ERRORS
- 	BASIC_CFLAGS += -DGMTIME_UNRELIABLE_ERRORS
- endif
- 
-+ifdef HAVE_CLOCK_GETTIME
-+	BASIC_CFLAGS += -DHAVE_CLOCK_GETTIME
-+	EXTLIBS += -lrt
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-diff --git a/config.mak.uname b/config.mak.uname
-index 1ae675b..dad2618 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -34,6 +34,7 @@ ifeq ($(uname_S),Linux)
- 	HAVE_PATHS_H = YesPlease
- 	LIBC_CONTAINS_LIBINTL = YesPlease
- 	HAVE_DEV_TTY = YesPlease
-+	HAVE_CLOCK_GETTIME = YesPlease
- endif
- ifeq ($(uname_S),GNU/kFreeBSD)
- 	HAVE_ALLOCA_H = YesPlease
 diff --git a/trace.c b/trace.c
-index f013958..b9d7272 100644
+index b9d7272..af64dbb 100644
 --- a/trace.c
 +++ b/trace.c
-@@ -275,3 +275,85 @@ int trace_want(struct trace_key *key)
- {
- 	return !!get_trace_fd(key);
+@@ -169,6 +169,27 @@ void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
+ 	print_trace_line(key, &buf);
  }
+ 
++static struct trace_key trace_perf_key = TRACE_KEY_INIT(PERFORMANCE);
 +
-+#ifdef HAVE_CLOCK_GETTIME
-+
-+static inline uint64_t highres_nanos(void)
++static void trace_performance_vprintf_fl(const char *file, int line,
++					 uint64_t nanos, const char *format,
++					 va_list ap)
 +{
-+	struct timespec ts;
-+	if (clock_gettime(CLOCK_MONOTONIC, &ts))
-+		return 0;
-+	return (uint64_t) ts.tv_sec * 1000000000 + ts.tv_nsec;
-+}
++	struct strbuf buf = STRBUF_INIT;
 +
-+#elif defined (GIT_WINDOWS_NATIVE)
++	if (!prepare_trace_line(file, line, &trace_perf_key, &buf))
++		return;
 +
-+static inline uint64_t highres_nanos(void)
-+{
-+	static uint64_t high_ns, scaled_low_ns;
-+	static int scale;
-+	LARGE_INTEGER cnt;
++	strbuf_addf(&buf, "performance: %.9f s", (double) nanos / 1000000000);
 +
-+	if (!scale) {
-+		if (!QueryPerformanceFrequency(&cnt))
-+			return 0;
-+
-+		/* high_ns = number of ns per cnt.HighPart */
-+		high_ns = (1000000000LL << 32) / (uint64_t) cnt.QuadPart;
-+
-+		/*
-+		 * Number of ns per cnt.LowPart is 10^9 / frequency (or
-+		 * high_ns >> 32). For maximum precision, we scale this factor
-+		 * so that it just fits within 32 bit (i.e. won't overflow if
-+		 * multiplied with cnt.LowPart).
-+		 */
-+		scaled_low_ns = high_ns;
-+		scale = 32;
-+		while (scaled_low_ns >= 0x100000000LL) {
-+			scaled_low_ns >>= 1;
-+			scale--;
-+		}
++	if (format && *format) {
++		strbuf_addstr(&buf, ": ");
++		strbuf_vaddf(&buf, format, ap);
 +	}
 +
-+	/* if QPF worked on initialization, we expect QPC to work as well */
-+	QueryPerformanceCounter(&cnt);
-+
-+	return (high_ns * cnt.HighPart) +
-+	       ((scaled_low_ns * cnt.LowPart) >> scale);
++	print_trace_line(&trace_perf_key, &buf);
 +}
 +
-+#else
-+# define highres_nanos() 0
-+#endif
-+
-+static inline uint64_t gettimeofday_nanos(void)
+ #ifndef HAVE_VARIADIC_MACROS
+ 
+ void trace_printf(const char *format, ...)
+@@ -200,6 +221,23 @@ void trace_strbuf(const char *key, const struct strbuf *data)
+ 	trace_strbuf_fl(NULL, 0, key, data);
+ }
+ 
++void trace_performance(uint64_t nanos, const char *format, ...)
 +{
-+	struct timeval tv;
-+	gettimeofday(&tv, NULL);
-+	return (uint64_t) tv.tv_sec * 1000000000 + tv.tv_usec * 1000;
++	va_list ap;
++	va_start(ap, format);
++	trace_performance_vprintf_fl(NULL, 0, nanos, format, ap);
++	va_end(ap);
 +}
 +
-+/*
-+ * Returns nanoseconds since the epoch (01/01/1970), for performance tracing
-+ * (i.e. favoring high precision over wall clock time accuracy).
-+ */
-+inline uint64_t getnanotime(void)
++void trace_performance_since(uint64_t start, const char *format, ...)
 +{
-+	static uint64_t offset;
-+	if (offset > 1) {
-+		/* initialization succeeded, return offset + high res time */
-+		return offset + highres_nanos();
-+	} else if (offset == 1) {
-+		/* initialization failed, fall back to gettimeofday */
-+		return gettimeofday_nanos();
-+	} else {
-+		/* initialize offset if high resolution timer works */
-+		uint64_t now = gettimeofday_nanos();
-+		uint64_t highres = highres_nanos();
-+		if (highres)
-+			offset = now - highres;
-+		else
-+			offset = 1;
-+		return now;
-+	}
++	va_list ap;
++	va_start(ap, format);
++	trace_performance_vprintf_fl(NULL, 0, getnanotime() - start,
++				     format, ap);
++	va_end(ap);
 +}
++
+ #else
+ 
+ void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
+@@ -220,6 +258,15 @@ void trace_argv_printf_fl(const char *file, int line, const char **argv,
+ 	va_end(ap);
+ }
+ 
++void trace_performance_fl(const char *file, int line, uint64_t nanos,
++			      const char *format, ...)
++{
++	va_list ap;
++	va_start(ap, format);
++	trace_performance_vprintf_fl(file, line, nanos, format, ap);
++	va_end(ap);
++}
++
+ #endif /* HAVE_VARIADIC_MACROS */
+ 
+ 
 diff --git a/trace.h b/trace.h
-index 7a5ba2e..4b893a5 100644
+index 4b893a5..c843e68 100644
 --- a/trace.h
 +++ b/trace.h
-@@ -16,6 +16,7 @@ struct trace_key {
- extern void trace_repo_setup(const char *prefix);
- extern int trace_want(struct trace_key *key);
- extern void trace_disable(struct trace_key *key);
-+extern uint64_t getnanotime(void);
+@@ -31,6 +31,14 @@ extern void trace_argv_printf(const char **argv, const char *format, ...);
  
- #ifndef HAVE_VARIADIC_MACROS
+ extern void trace_strbuf(struct trace_key *key, const struct strbuf *data);
+ 
++/* Prints elapsed time (in nanoseconds) if GIT_TRACE_PERFORMANCE is enabled. */
++__attribute__((format (printf, 2, 3)))
++extern void trace_performance(uint64_t nanos, const char *format, ...);
++
++/* Prints elapsed time since 'start' if GIT_TRACE_PERFORMANCE is enabled. */
++__attribute__((format (printf, 2, 3)))
++extern void trace_performance_since(uint64_t start, const char *format, ...);
++
+ #else
+ 
+ /*
+@@ -79,6 +87,13 @@ extern void trace_strbuf(struct trace_key *key, const struct strbuf *data);
+ #define trace_strbuf(key, data) \
+ 	trace_strbuf_fl(TRACE_CONTEXT, __LINE__, key, data)
+ 
++#define trace_performance(nanos, ...) \
++	trace_performance_fl(TRACE_CONTEXT, __LINE__, nanos, __VA_ARGS__)
++
++#define trace_performance_since(start, ...) \
++	trace_performance_fl(TRACE_CONTEXT, __LINE__, getnanotime() - (start), \
++			     __VA_ARGS__)
++
+ /* backend functions, use non-*fl macros instead */
+ __attribute__((format (printf, 4, 5)))
+ extern void trace_printf_key_fl(const char *file, int line, struct trace_key *key,
+@@ -88,6 +103,9 @@ extern void trace_argv_printf_fl(const char *file, int line, const char **argv,
+ 				 const char *format, ...);
+ extern void trace_strbuf_fl(const char *file, int line, struct trace_key *key,
+ 			    const struct strbuf *data);
++__attribute__((format (printf, 4, 5)))
++extern void trace_performance_fl(const char *file, int line,
++				 uint64_t nanos, const char *fmt, ...);
+ 
+ #endif /* HAVE_VARIADIC_MACROS */
  
 -- 
 2.0.0.406.g2e9ef9b
