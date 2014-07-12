@@ -1,63 +1,63 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH v8 14/17] git: add performance tracing for git's
- main() function to debug scripts
-Date: Sat, 12 Jul 2014 02:07:01 +0200
-Message-ID: <53C07C25.6070002@gmail.com>
+Subject: [PATCH v8 15/17] wt-status: simplify performance
+ measurement by using getnanotime()
+Date: Sat, 12 Jul 2014 02:07:36 +0200
+Message-ID: <53C07C48.2000004@gmail.com>
 References: <53C079C5.8090503@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 To: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>, 
  msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCH3XYXLXQDBBIPYQGPAKGQEBXCYPEY@googlegroups.com Sat Jul 12 02:06:59 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBIPYQGPAKGQEBXCYPEY@googlegroups.com>
+X-From: msysgit+bncBCH3XYXLXQDBBRHYQGPAKGQEQFCKSBY@googlegroups.com Sat Jul 12 02:07:34 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBRHYQGPAKGQEQFCKSBY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f190.google.com ([209.85.212.190])
+Received: from mail-lb0-f192.google.com ([209.85.217.192])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBIPYQGPAKGQEBXCYPEY@googlegroups.com>)
-	id 1X5kqA-0007FT-F1
-	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 02:06:58 +0200
-Received: by mail-wi0-f190.google.com with SMTP id n15sf922wiw.7
-        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 17:06:58 -0700 (PDT)
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBRHYQGPAKGQEQFCKSBY@googlegroups.com>)
+	id 1X5kqj-0007oW-SW
+	for gcvm-msysgit@m.gmane.org; Sat, 12 Jul 2014 02:07:33 +0200
+Received: by mail-lb0-f192.google.com with SMTP id w7sf187070lbi.19
+        for <gcvm-msysgit@m.gmane.org>; Fri, 11 Jul 2014 17:07:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
         h=message-id:date:from:user-agent:mime-version:to:subject:references
          :in-reply-to:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=l9aHjZcHhJay7LBR1WZMJqgCFloE1VL9OCeCGUH1D5s=;
-        b=aH1FTHds50ahZX87sWAipkvYXtw+7SUNEM7bXvmhvv8uwL26/Lch7ekp8FqdSgCGPa
-         hRL1RClkN0TnwveFKmg8WsrtZhIQXTprJGwfxb5CIQrZZINb9+uvtCoNHKyaS9qu1ryQ
-         RZVrJ+VmibPeqxa5Lya7ob/xsuMcVUTcezKXJf/Q0y0h/zcQvb6X2A0SkI/v1z/3eGn9
-         TNNYDTI+jrBzTrHKl/uzA9TUSLDl+rwDIiExw7K5ZE0TX14rWlBcT1iF/yaHFMKKnN2R
-         mS+UThg+Vi68bsiC1kLnmx0eSo/a3Lfzhno+JkN6HaoSst/xj3oqWJgekJa4M+nwZtQH
-         6GNA==
-X-Received: by 10.180.73.112 with SMTP id k16mr30583wiv.5.1405123618205;
-        Fri, 11 Jul 2014 17:06:58 -0700 (PDT)
+        bh=d/PRCVB0on0HdCOc8bNUBTjULXHe8jHwMRFsn9ntqAA=;
+        b=J7ZGnI53jAA7CBbdqvHHxxTAocFBE8irsr/SiD9NkAu8j1Rb7HCdl9aLEj5FAtV+Wo
+         99dUV4X14TWyBHQDvtPbC2eJETn2NArDZ0HszHj+TzpykBLk0dU6RNq9O970371SKzHT
+         lmLhxDjSfdgmV37t1mNPYp9UxXAUQgICmYxs4w6oghQQmq860EmycYSqphEiBP/6hL7i
+         RG/p2eTTKZMp0r4ssAa48WUAZzMSVA/9Vv9TvrBwO6t2I8n7vIXHs+TpbmKcKUqeOSkf
+         16ON/mhpg8YsqskmxCCDZ/n4j8b/tNhdBReGARxkkzVlOt8SZ90LAVJzR9c1+elaBsJM
+         PUHA==
+X-Received: by 10.152.10.35 with SMTP id f3mr17873lab.6.1405123653719;
+        Fri, 11 Jul 2014 17:07:33 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.20.43 with SMTP id k11ls163923wie.21.canary; Fri, 11 Jul
- 2014 17:06:57 -0700 (PDT)
-X-Received: by 10.180.89.199 with SMTP id bq7mr806511wib.3.1405123617550;
-        Fri, 11 Jul 2014 17:06:57 -0700 (PDT)
-Received: from mail-we0-x234.google.com (mail-we0-x234.google.com [2a00:1450:400c:c03::234])
-        by gmr-mx.google.com with ESMTPS id x7si7746wiw.1.2014.07.11.17.06.57
+Received: by 10.153.6.38 with SMTP id cr6ls137630lad.7.gmail; Fri, 11 Jul 2014
+ 17:07:32 -0700 (PDT)
+X-Received: by 10.112.252.167 with SMTP id zt7mr1400lbc.19.1405123652364;
+        Fri, 11 Jul 2014 17:07:32 -0700 (PDT)
+Received: from mail-wi0-x22d.google.com (mail-wi0-x22d.google.com [2a00:1450:400c:c05::22d])
+        by gmr-mx.google.com with ESMTPS id gg16si3603wic.2.2014.07.11.17.07.32
         for <msysgit@googlegroups.com>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 17:06:57 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::234 as permitted sender) client-ip=2a00:1450:400c:c03::234;
-Received: by mail-we0-f180.google.com with SMTP id k48so853656wev.39
-        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 17:06:57 -0700 (PDT)
-X-Received: by 10.194.7.36 with SMTP id g4mr2731404wja.37.1405123617451;
-        Fri, 11 Jul 2014 17:06:57 -0700 (PDT)
+        Fri, 11 Jul 2014 17:07:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22d as permitted sender) client-ip=2a00:1450:400c:c05::22d;
+Received: by mail-wi0-f173.google.com with SMTP id cc10so22862wib.12
+        for <msysgit@googlegroups.com>; Fri, 11 Jul 2014 17:07:32 -0700 (PDT)
+X-Received: by 10.194.10.167 with SMTP id j7mr2926085wjb.100.1405123652263;
+        Fri, 11 Jul 2014 17:07:32 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id nf11sm374641wic.9.2014.07.11.17.06.56
+        by mx.google.com with ESMTPSA id pc4sm345353wic.16.2014.07.11.17.07.31
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 11 Jul 2014 17:06:56 -0700 (PDT)
+        Fri, 11 Jul 2014 17:07:31 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 In-Reply-To: <53C079C5.8090503@gmail.com>
 X-Original-Sender: karsten.blees@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::234
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::22d
  as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
  header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
 Precedence: list
@@ -71,109 +71,56 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253370>
 
-Use trace_performance to measure and print execution time and command line
-arguments of the entire main() function. In constrast to the shell's 'time'
-utility, which measures total time of the parent process, this logs all
-involved git commands recursively. This is particularly useful to debug
-performance issues of scripted commands (i.e. which git commands were
-called with which parameters, and how long did they execute).
+Calculating duration from a single uint64_t is simpler than from a struct
+timeval. Change performance measurement for 'advice.statusuoption' from
+gettimeofday() to getnanotime().
 
-Due to git's deliberate use of exit(), the implementation uses an atexit
-routine rather than just adding trace_performance_since() at the end of
-main().
-
-Usage example: > GIT_TRACE_PERFORMANCE=~/git-trace.log git stash list
-
-Creates a log file like this:
-23:57:38.638765 trace.c:405 performance: 0.000310107 s: git command: 'git' 'rev-parse' '--git-dir'
-23:57:38.644387 trace.c:405 performance: 0.000261759 s: git command: 'git' 'rev-parse' '--show-toplevel'
-23:57:38.646207 trace.c:405 performance: 0.000304468 s: git command: 'git' 'config' '--get-colorbool' 'color.interactive'
-23:57:38.648491 trace.c:405 performance: 0.000241667 s: git command: 'git' 'config' '--get-color' 'color.interactive.help' 'red bold'
-23:57:38.650465 trace.c:405 performance: 0.000243063 s: git command: 'git' 'config' '--get-color' '' 'reset'
-23:57:38.654850 trace.c:405 performance: 0.025126313 s: git command: 'git' 'stash' 'list'
+Also initialize t_begin to prevent uninitialized variable warning.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git.txt |  5 +++++
- git.c                 |  2 ++
- trace.c               | 22 ++++++++++++++++++++++
- trace.h               |  1 +
- 4 files changed, 30 insertions(+)
+ wt-status.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 9d073f6..fcb8afa 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -938,6 +938,11 @@ Unsetting the variable, or setting it to empty, "0" or
- 	starting with "PACK".
- 	See 'GIT_TRACE' for available trace output options.
+diff --git a/wt-status.c b/wt-status.c
+index 318a191..dfdc018 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -574,14 +574,11 @@ static void wt_status_collect_untracked(struct wt_status *s)
+ {
+ 	int i;
+ 	struct dir_struct dir;
+-	struct timeval t_begin;
++	uint64_t t_begin = getnanotime();
  
-+'GIT_TRACE_PERFORMANCE'::
-+	Enables performance related trace messages, e.g. total execution
-+	time of each Git command.
-+	See 'GIT_TRACE' for available trace output options.
-+
- 'GIT_TRACE_SETUP'::
- 	Enables trace messages printing the .git, working tree and current
- 	working directory after Git has completed its setup phase.
-diff --git a/git.c b/git.c
-index 7780572..d4daeb8 100644
---- a/git.c
-+++ b/git.c
-@@ -568,6 +568,8 @@ int main(int argc, char **av)
+ 	if (!s->show_untracked_files)
+ 		return;
  
- 	git_setup_gettext();
+-	if (advice_status_u_option)
+-		gettimeofday(&t_begin, NULL);
+-
+ 	memset(&dir, 0, sizeof(dir));
+ 	if (s->show_untracked_files != SHOW_ALL_UNTRACKED_FILES)
+ 		dir.flags |=
+@@ -612,13 +609,8 @@ static void wt_status_collect_untracked(struct wt_status *s)
+ 	free(dir.ignored);
+ 	clear_directory(&dir);
  
-+	trace_command_performance(argv);
-+
- 	/*
- 	 * "git-xxxx" is the same as "git xxxx", but we obviously:
- 	 *
-diff --git a/trace.c b/trace.c
-index af64dbb..e583dc6 100644
---- a/trace.c
-+++ b/trace.c
-@@ -404,3 +404,25 @@ inline uint64_t getnanotime(void)
- 		return now;
- 	}
+-	if (advice_status_u_option) {
+-		struct timeval t_end;
+-		gettimeofday(&t_end, NULL);
+-		s->untracked_in_ms =
+-			(uint64_t)t_end.tv_sec * 1000 + t_end.tv_usec / 1000 -
+-			((uint64_t)t_begin.tv_sec * 1000 + t_begin.tv_usec / 1000);
+-	}
++	if (advice_status_u_option)
++		s->untracked_in_ms = (getnanotime() - t_begin) / 1000000;
  }
-+
-+static uint64_t command_start_time;
-+static struct strbuf command_line = STRBUF_INIT;
-+
-+static void print_command_performance_atexit(void)
-+{
-+	trace_performance_since(command_start_time, "git command:%s",
-+				command_line.buf);
-+}
-+
-+void trace_command_performance(const char **argv)
-+{
-+	if (!trace_want(&trace_perf_key))
-+		return;
-+
-+	if (!command_start_time)
-+		atexit(print_command_performance_atexit);
-+
-+	strbuf_reset(&command_line);
-+	sq_quote_argv(&command_line, argv, 0);
-+	command_start_time = getnanotime();
-+}
-diff --git a/trace.h b/trace.h
-index c843e68..ae6a332 100644
---- a/trace.h
-+++ b/trace.h
-@@ -17,6 +17,7 @@ extern void trace_repo_setup(const char *prefix);
- extern int trace_want(struct trace_key *key);
- extern void trace_disable(struct trace_key *key);
- extern uint64_t getnanotime(void);
-+extern void trace_command_performance(const char **argv);
  
- #ifndef HAVE_VARIADIC_MACROS
- 
+ void wt_status_collect(struct wt_status *s)
 -- 
 2.0.0.406.g2e9ef9b
 
