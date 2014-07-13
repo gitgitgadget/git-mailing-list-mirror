@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v7 16/31] setup.c: detect $GIT_COMMON_DIR in is_git_directory()
-Date: Sun, 13 Jul 2014 11:50:53 +0700
-Message-ID: <1405227068-25506-17-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v7 17/31] setup.c: convert check_repository_format_gently to use strbuf
+Date: Sun, 13 Jul 2014 11:50:54 +0700
+Message-ID: <1405227068-25506-18-git-send-email-pclouds@gmail.com>
 References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
  <1405227068-25506-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,154 +13,96 @@ Cc: Junio C Hamano <gitster@pobox.com>, Max Kirillov <max@max630.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 13 06:54:39 2014
+X-From: git-owner@vger.kernel.org Sun Jul 13 06:54:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6Bo6-0000To-QJ
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 06:54:39 +0200
+	id 1X6BoC-0000aK-Ct
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 06:54:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752853AbaGMEyf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jul 2014 00:54:35 -0400
-Received: from mail-pa0-f48.google.com ([209.85.220.48]:56708 "EHLO
-	mail-pa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752633AbaGMEye (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2014 00:54:34 -0400
-Received: by mail-pa0-f48.google.com with SMTP id bj1so171937pad.21
-        for <git@vger.kernel.org>; Sat, 12 Jul 2014 21:54:33 -0700 (PDT)
+	id S1752863AbaGMEyl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jul 2014 00:54:41 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:42500 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633AbaGMEyj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2014 00:54:39 -0400
+Received: by mail-pa0-f46.google.com with SMTP id eu11so3606872pac.33
+        for <git@vger.kernel.org>; Sat, 12 Jul 2014 21:54:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=pEASNeHea+ivuXEYvw+p9p3AmS2B9USFE24dYYcGgz0=;
-        b=pJen7g4kvfELKXgo6rMWrRvoSfojD7UI05X2BLv3JhjdmJcgC9h4bRJ5TMsPn5wdFS
-         RdhH9TElYKet1LqRajqXp9+Id96//WO2ijZPLG/NQFtfPaD/cI1BZz74JKkNPbUqQaxO
-         9WN+xMBGbRG5XGGkPeCgjzLTZaFMAjpaNFt6HJMb9mdhWu+yzvnYukE5Pz/qhA4KZctk
-         CQV8Tr1X962sBRDlqjzt39zXQ8wtvUEhaYEVW1UigGgyzaS8SZYyhdDbdj3lfXbVcz3n
-         cFtrjw8maWEo1ybtdCs6LwdBnVFdp4r7YnnaoQUQ7wMsw+jNbe8VLYWwaakUTkRYxlnh
-         zjFw==
-X-Received: by 10.66.66.202 with SMTP id h10mr9037898pat.70.1405227273823;
-        Sat, 12 Jul 2014 21:54:33 -0700 (PDT)
+        bh=vwkmXzt7/pH6ytHE7n3iKvzR8neAex12ACTCTernrr4=;
+        b=rIoerSX9a+E+lH64ZgJff1dkQDQSZwUc5fxAD9JQfJbjEXXYphbJLYsT2mozVYlag8
+         bqBiVshBD4M/6CC6ZNP9CKQPrxrJSkynQi4MceUoy7jGQvsatA3PrxKeiyhsdh4IYaz8
+         RDIMr2lO6BbhhgE1jChNDYrl1mZwnW68nuadd1wlZ4DPR7QydByXk4u6bGeTZV+XZBkO
+         1PVQw3FhUvYOtpVhwM6Iulx7+sfjhfFriROWzrhZkiQEPI0//ui3bzWQAHR6YcP/fU2d
+         Ce8A0YmbVCntsQlkoiGKRoMSMZT/2gmEC1iKD4wCk1tVr3EfSxpRrjxpjZtQL3kiuoYC
+         kUvA==
+X-Received: by 10.68.139.137 with SMTP id qy9mr8753252pbb.11.1405227279513;
+        Sat, 12 Jul 2014 21:54:39 -0700 (PDT)
 Received: from lanh ([115.73.227.1])
-        by mx.google.com with ESMTPSA id n3sm1173675pde.47.2014.07.12.21.54.30
+        by mx.google.com with ESMTPSA id av2sm6760239pbc.16.2014.07.12.21.54.36
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 Jul 2014 21:54:33 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jul 2014 11:54:33 +0700
+        Sat, 12 Jul 2014 21:54:38 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jul 2014 11:54:39 +0700
 X-Mailer: git-send-email 1.9.1.346.ga2b5940
 In-Reply-To: <1405227068-25506-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253419>
-
-If the file "$GIT_DIR/commondir" exists, it contains the value of
-$GIT_COMMON_DIR.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253420>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/gitrepository-layout.txt |  7 ++++++
- setup.c                                | 43 ++++++++++++++++++++++++++=
-+++-----
- 2 files changed, 44 insertions(+), 6 deletions(-)
+ setup.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/gitrepository-layout.txt b/Documentation/git=
-repository-layout.txt
-index 7629e38..0f341fc 100644
---- a/Documentation/gitrepository-layout.txt
-+++ b/Documentation/gitrepository-layout.txt
-@@ -237,6 +237,13 @@ shallow::
- 	file is ignored if $GIT_COMMON_DIR is set and
- 	"$GIT_COMMON_DIR/shallow" will be used instead.
-=20
-+commondir::
-+	If this file exists, $GIT_COMMON_DIR (see linkgit:git[1]) will
-+	be set to the path specified in this file if it is not
-+	explicitly set. If the specified path is relative, it is
-+	relative to $GIT_DIR. The repository with commondir is
-+	incomplete without the repository pointed by "commondir".
-+
- modules::
- 	Contains the git-repositories of the submodules. This
- 	directory is ignored if $GIT_COMMON_DIR is set and
 diff --git a/setup.c b/setup.c
-index 425fd79..176d505 100644
+index 176d505..a17389f 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -224,6 +224,33 @@ void verify_non_filename(const char *prefix, const=
- char *arg)
- 	    "'git <command> [<revision>...] -- [<file>...]'", arg);
+@@ -342,7 +342,9 @@ void setup_work_tree(void)
+=20
+ static int check_repository_format_gently(const char *gitdir, int *non=
+git_ok)
+ {
+-	char repo_config[PATH_MAX+1];
++	struct strbuf sb =3D STRBUF_INIT;
++	const char *repo_config;
++	int ret =3D 0;
+=20
+ 	/*
+ 	 * git_config() can't be used here because it calls git_pathdup()
+@@ -353,7 +355,8 @@ static int check_repository_format_gently(const cha=
+r *gitdir, int *nongit_ok)
+ 	 * Use a gentler version of git_config() to check if this repo
+ 	 * is a good one.
+ 	 */
+-	snprintf(repo_config, PATH_MAX, "%s/config", gitdir);
++	strbuf_addf(&sb, "%s/config", gitdir);
++	repo_config =3D sb.buf;
+ 	git_config_early(check_repository_format_version, NULL, repo_config);
+ 	if (GIT_REPO_VERSION < repository_format_version) {
+ 		if (!nongit_ok)
+@@ -363,9 +366,10 @@ static int check_repository_format_gently(const ch=
+ar *gitdir, int *nongit_ok)
+ 			GIT_REPO_VERSION, repository_format_version);
+ 		warning("Please upgrade Git");
+ 		*nongit_ok =3D -1;
+-		return -1;
++		ret =3D -1;
+ 	}
+-	return 0;
++	strbuf_release(&sb);
++	return ret;
  }
 =20
-+static void get_common_dir(struct strbuf *sb, const char *gitdir)
-+{
-+	struct strbuf data =3D STRBUF_INIT;
-+	struct strbuf path =3D STRBUF_INIT;
-+	const char *git_common_dir =3D getenv(GIT_COMMON_DIR_ENVIRONMENT);
-+	if (git_common_dir) {
-+		strbuf_addstr(sb, git_common_dir);
-+		return;
-+	}
-+	strbuf_addf(&path, "%s/commondir", gitdir);
-+	if (file_exists(path.buf)) {
-+		if (strbuf_read_file(&data, path.buf, 0) <=3D 0)
-+			die_errno(_("failed to read %s"), path.buf);
-+		while (data.len && (data.buf[data.len - 1] =3D=3D '\n' ||
-+				    data.buf[data.len - 1] =3D=3D '\r'))
-+			data.len--;
-+		data.buf[data.len] =3D '\0';
-+		strbuf_reset(&path);
-+		if (!is_absolute_path(data.buf))
-+			strbuf_addf(&path, "%s/", gitdir);
-+		strbuf_addbuf(&path, &data);
-+		strbuf_addstr(sb, real_path(path.buf));
-+	} else
-+		strbuf_addstr(sb, gitdir);
-+	strbuf_release(&data);
-+	strbuf_release(&path);
-+}
-=20
  /*
-  * Test if it looks like we're at a git directory.
-@@ -242,13 +269,22 @@ int is_git_directory(const char *suspect)
- 	int ret =3D 0;
- 	size_t len;
-=20
--	strbuf_addstr(&path, suspect);
-+	/* Check worktree-related signatures */
-+	strbuf_addf(&path, "%s/HEAD", suspect);
-+	if (validate_headref(path.buf))
-+		goto done;
-+
-+	strbuf_reset(&path);
-+	get_common_dir(&path, suspect);
- 	len =3D path.len;
-+
-+	/* Check non-worktree-related signatures */
- 	if (getenv(DB_ENVIRONMENT)) {
- 		if (access(getenv(DB_ENVIRONMENT), X_OK))
- 			goto done;
- 	}
- 	else {
-+		strbuf_setlen(&path, len);
- 		strbuf_addstr(&path, "/objects");
- 		if (access(path.buf, X_OK))
- 			goto done;
-@@ -259,11 +295,6 @@ int is_git_directory(const char *suspect)
- 	if (access(path.buf, X_OK))
- 		goto done;
-=20
--	strbuf_setlen(&path, len);
--	strbuf_addstr(&path, "/HEAD");
--	if (validate_headref(path.buf))
--		goto done;
--
- 	ret =3D 1;
- done:
- 	strbuf_release(&path);
 --=20
 1.9.1.346.ga2b5940
