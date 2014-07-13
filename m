@@ -1,100 +1,179 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 2/7] move setting of object->type to alloc_* functions
-Date: Sun, 13 Jul 2014 20:27:51 +0100
-Message-ID: <53C2DDB7.2070708@ramsay1.demon.co.uk>
-References: <20140711084141.GA5521@sigill.intra.peff.net> <20140711084611.GB5625@sigill.intra.peff.net> <53C149B6.7010705@ramsay1.demon.co.uk> <20140712180539.GA13806@sigill.intra.peff.net> <20140713064116.GA4768@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jul 13 21:28:01 2014
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v9 1/4] cache-tree: Create/update cache-tree on checkout
+Date: Sun, 13 Jul 2014 13:28:16 -0700
+Message-ID: <1405283299-25636-1-git-send-email-dturner@twitter.com>
+Cc: David Turner <dturner@twopensource.com>,
+	David Turner <dturner@twitter.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 13 22:28:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6PRI-0003wb-HD
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 21:28:00 +0200
+	id 1X6QO2-00012P-4K
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 22:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442AbaGMT15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2014 15:27:57 -0400
-Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:48324 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751284AbaGMT14 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2014 15:27:56 -0400
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 3EEC7128094;
-	Sun, 13 Jul 2014 20:27:47 +0100 (BST)
-Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP id F1388128076;
-	Sun, 13 Jul 2014 20:27:46 +0100 (BST)
-Received: from [192.168.254.1] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
-	Sun, 13 Jul 2014 20:27:46 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <20140713064116.GA4768@sigill.intra.peff.net>
-X-MDF-HostID: 22
+	id S1751785AbaGMU2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2014 16:28:36 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:36555 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751563AbaGMU2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2014 16:28:34 -0400
+Received: by mail-pa0-f46.google.com with SMTP id eu11so4179298pac.5
+        for <git@vger.kernel.org>; Sun, 13 Jul 2014 13:28:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=GZPW8K168b8QUvU2UcYdrLmHWbhfVJK07yVxw1FNE6o=;
+        b=kpeik0E5itiDXcR9VXXBF3taqMEaGisHOEIoLEp7bScPESwdklTKBeoAregOq/i80u
+         Jm7aKKqxSb/3a2eX7oxr176z6ZXfIQ647FpMhXGapDQ+c6GKlzn9SOalvMoCG2+J2lBH
+         WHXDdbBQ48+vAF9LWGNUDQxIvXIB6nTVmRmLbyEK+z1Tcgd0FUIZKXDNkSnsJuaibeZb
+         q5vtqwL7ptYbTY987IypXgqLfS0++zVD2tLoTyHARP8pKD+7R6+aI35wdRkqxk9qUIcJ
+         Zh6Q1okKyip1DsZ4+chTePi4XlNNwenpCgy4XM7r8gfXuO1MtWcrJB84hArzYvQ+v3Nd
+         mrWQ==
+X-Gm-Message-State: ALoCoQmd27zexMTeLvdjG8DMFXkZdHOecEw79tSiEmqy755pDX46X8j82Pk9e6/VnvQk2zne7xcI
+X-Received: by 10.68.171.131 with SMTP id au3mr2927563pbc.125.1405283314009;
+        Sun, 13 Jul 2014 13:28:34 -0700 (PDT)
+Received: from stross.twitter.corp (mobile-166-137-185-178.mycingular.net. [166.137.185.178])
+        by mx.google.com with ESMTPSA id jb5sm8609217pbd.73.2014.07.13.13.28.31
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 13 Jul 2014 13:28:32 -0700 (PDT)
+X-Google-Original-From: David Turner <dturner@twitter.com>
+X-Mailer: git-send-email 2.0.0.390.gcb682f8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253457>
 
-On 13/07/14 07:41, Jeff King wrote:
-> On Sat, Jul 12, 2014 at 02:05:39PM -0400, Jeff King wrote:
-> 
->>> I don't particularly like 'flag' here. (not a massive dislike, mind you:)
->>>
->>> Perhaps: flag->object_type, type->node_type?
->>> Or, if that's too verbose, maybe just: flag->type, type->node?
->>
->> Me either, but as you noticed, type was taken. Your suggestions seem
->> fine. We could also just do away with the macro as discussed earlier (we
->> already do in the commit_node case, anyway...).
-> 
-> Thinking on this more, writing out the definitions is the only sane
-> thing to do here, now that alloc_commit_node does not use the macro.
-> Otherwise you are inviting people to modify the macro, but fail to
-> notice that the commit allocator also needs updating.
+From: David Turner <dturner@twopensource.com>
 
-Hmm, well I could argue that using the macro for all allocators, apart
-from alloc_commit_node(), clearly shows which allocator is the odd-man
-out (and conversely, that all others are the same)! :-P
+When git checkout checks out a branch, create or update the
+cache-tree so that subsequent operations are faster.
 
-No, I don't think this is a telling advantage; I don't think it makes
-that much difference. (six of one, half-a-dozen of the other).
+update_main_cache_tree learned a new flag, WRITE_TREE_REPAIR.  When
+WRITE_TREE_REPAIR is set, portions of the cache-tree which do not
+correspond to existing tree objects are invalidated (and portions which
+do are marked as valid).  No new tree objects are created.
 
-BTW, I tested the previous series on Linux 32-bit, Cygwin 32-bit, MinGW
-32-bit and Cygwin 64-bit. (I can't test on Linux 64-bit, since I can't
-get Linux installed on my new laptop :( ). Admittedly, the testing on
-MinGW and Cygwin was only fairly light (it takes *hours* to run the full
-testsuite, and I just don't have the time).
+Signed-off-by: David Turner <dturner@twitter.com>
+---
+ builtin/checkout.c    |  8 ++++++++
+ cache-tree.c          | 12 +++++++++++-
+ cache-tree.h          |  1 +
+ t/t0090-cache-tree.sh | 19 ++++++++++++++++---
+ 4 files changed, 36 insertions(+), 4 deletions(-)
 
-I was slightly concerned, when reading through this new series, that the
-alloc_node() function may no longer be inlined in the new allocators.
-However, I have just tested on Linux (only using gcc this time), and it
-was just fine. I will test the new series on the above systems later
-(probably tomorrow) but don't expect to find any problems.
-
-> 
-> Here's a re-roll. The interesting bit is the addition of the second
-> patch (but the rest needed to be rebased on top).
-
-Yep, this looks good. Thanks!
-
-> 
->   [1/8]: alloc.c: remove the alloc_raw_commit_node() function
->   [2/8]: alloc: write out allocator definitions
->   [3/8]: move setting of object->type to alloc_* functions
->   [4/8]: parse_object_buffer: do not set object type
->   [5/8]: add object_as_type helper for casting objects
->   [6/8]: alloc: factor out commit index
->   [7/8]: object_as_type: set commit index
->   [8/8]: diff-tree: avoid lookup_unknown_object
-
-ATB,
-Ramsay Jones
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 463cfee..4f08554 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -553,6 +553,14 @@ static int merge_working_tree(const struct checkout_opts *opts,
+ 		}
+ 	}
+ 
++	if (!active_cache_tree)
++		active_cache_tree = cache_tree();
++
++	if (!cache_tree_fully_valid(active_cache_tree))
++		cache_tree_update(active_cache_tree,
++				  (const struct cache_entry * const *)active_cache,
++				  active_nr, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
++
+ 	if (write_cache(newfd, active_cache, active_nr) ||
+ 	    commit_locked_index(lock_file))
+ 		die(_("unable to write new index file"));
+diff --git a/cache-tree.c b/cache-tree.c
+index 7fa524a..f951d7d 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -239,9 +239,12 @@ static int update_one(struct cache_tree *it,
+ 	struct strbuf buffer;
+ 	int missing_ok = flags & WRITE_TREE_MISSING_OK;
+ 	int dryrun = flags & WRITE_TREE_DRY_RUN;
++	int repair = flags & WRITE_TREE_REPAIR;
+ 	int to_invalidate = 0;
+ 	int i;
+ 
++	assert(!(dryrun && repair));
++
+ 	*skip_count = 0;
+ 
+ 	if (0 <= it->entry_count && has_sha1_file(it->sha1))
+@@ -374,7 +377,14 @@ static int update_one(struct cache_tree *it,
+ #endif
+ 	}
+ 
+-	if (dryrun)
++	if (repair) {
++		unsigned char sha1[20];
++		hash_sha1_file(buffer.buf, buffer.len, tree_type, sha1);
++		if (has_sha1_file(sha1))
++			hashcpy(it->sha1, sha1);
++		else
++			to_invalidate = 1;
++	} else if (dryrun)
+ 		hash_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1);
+ 	else if (write_sha1_file(buffer.buf, buffer.len, tree_type, it->sha1)) {
+ 		strbuf_release(&buffer);
+diff --git a/cache-tree.h b/cache-tree.h
+index f1923ad..666d18f 100644
+--- a/cache-tree.h
++++ b/cache-tree.h
+@@ -39,6 +39,7 @@ int update_main_cache_tree(int);
+ #define WRITE_TREE_IGNORE_CACHE_TREE 2
+ #define WRITE_TREE_DRY_RUN 4
+ #define WRITE_TREE_SILENT 8
++#define WRITE_TREE_REPAIR 16
+ 
+ /* error return codes */
+ #define WRITE_TREE_UNREADABLE_INDEX (-1)
+diff --git a/t/t0090-cache-tree.sh b/t/t0090-cache-tree.sh
+index 6c33e28..98fb1ab 100755
+--- a/t/t0090-cache-tree.sh
++++ b/t/t0090-cache-tree.sh
+@@ -44,14 +44,14 @@ test_expect_success 'read-tree HEAD establishes cache-tree' '
+ 
+ test_expect_success 'git-add invalidates cache-tree' '
+ 	test_when_finished "git reset --hard; git read-tree HEAD" &&
+-	echo "I changed this file" > foo &&
++	echo "I changed this file" >foo &&
+ 	git add foo &&
+ 	test_invalid_cache_tree
+ '
+ 
+ test_expect_success 'update-index invalidates cache-tree' '
+ 	test_when_finished "git reset --hard; git read-tree HEAD" &&
+-	echo "I changed this file" > foo &&
++	echo "I changed this file" >foo &&
+ 	git update-index --add foo &&
+ 	test_invalid_cache_tree
+ '
+@@ -85,9 +85,22 @@ test_expect_success 'reset --hard without index gives cache-tree' '
+ 	test_shallow_cache_tree
+ '
+ 
+-test_expect_failure 'checkout gives cache-tree' '
++test_expect_success 'checkout gives cache-tree' '
++	git tag current &&
+ 	git checkout HEAD^ &&
+ 	test_shallow_cache_tree
+ '
+ 
++test_expect_success 'checkout -b gives cache-tree' '
++	git checkout current &&
++	git checkout -b prev HEAD^ &&
++	test_shallow_cache_tree
++'
++
++test_expect_success 'checkout -B gives cache-tree' '
++	git checkout current &&
++	git checkout -B prev HEAD^ &&
++	test_shallow_cache_tree
++'
++
+ test_done
+-- 
+2.0.0.390.gcb682f8
