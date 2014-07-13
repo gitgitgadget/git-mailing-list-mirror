@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v7 08/31] reflog: avoid constructing .lock path with git_path
-Date: Sun, 13 Jul 2014 11:50:45 +0700
-Message-ID: <1405227068-25506-9-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v7 09/31] fast-import: use git_path() for accessing .git dir instead of get_git_dir()
+Date: Sun, 13 Jul 2014 11:50:46 +0700
+Message-ID: <1405227068-25506-10-git-send-email-pclouds@gmail.com>
 References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
  <1405227068-25506-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,83 +13,77 @@ Cc: Junio C Hamano <gitster@pobox.com>, Max Kirillov <max@max630.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 13 06:53:56 2014
+X-From: git-owner@vger.kernel.org Sun Jul 13 06:54:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6BnO-000854-Et
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 06:53:54 +0200
+	id 1X6BnU-0008Cy-15
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 06:54:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752588AbaGMExu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jul 2014 00:53:50 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:42073 "EHLO
+	id S1752638AbaGMEx4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jul 2014 00:53:56 -0400
+Received: from mail-pd0-f178.google.com ([209.85.192.178]:57194 "EHLO
 	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752268AbaGMExt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2014 00:53:49 -0400
-Received: by mail-pd0-f178.google.com with SMTP id r10so3442518pdi.23
-        for <git@vger.kernel.org>; Sat, 12 Jul 2014 21:53:49 -0700 (PDT)
+	with ESMTP id S1752633AbaGMExz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2014 00:53:55 -0400
+Received: by mail-pd0-f178.google.com with SMTP id r10so3517004pdi.9
+        for <git@vger.kernel.org>; Sat, 12 Jul 2014 21:53:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=67MkH1d0Zo6xqJXkPIIet2ewhntnflljwcVx9f55UDs=;
-        b=L3LT25Z+21rVhxV+siJXGPg4Qsw9t6HQmvzlvapG5EYcndia2h35QJmVTB1m63qoOl
-         kBke+B0OlzGZxcjnZ3kNSWq/ZX9WlzEHkmBZMHITFuL0twu/8VFAF8lMR8q5PnbXeAJz
-         EIywjoKlpFyxoJqih9SitKk8rRaTWJw17/obItls4S5QvEQMGEXC36+T46BrQVHAjTpm
-         WD8KHPFcTcual63LvY4ypxndvcaRGScSQhNO0fxmknCpZFPJUw6S+YnuJol8zVAImCZ0
-         bT0itgOkkpw7f6L84dIjZf/RbJyEn3s6+sWW1kS9QlvD7oZbLELtHcuoENADMz3zo1eq
-         zdiw==
-X-Received: by 10.68.136.5 with SMTP id pw5mr1382510pbb.106.1405227228992;
-        Sat, 12 Jul 2014 21:53:48 -0700 (PDT)
+        bh=58m7rrTSRcB9PZVEtbz+P7B++cT4jWXTEZD/onMCVpo=;
+        b=Ll4BKsqX34A4YiuCwlhsyaayipa81JDODEU1ueIWR4OuNpfYRLcHI0IVUgbWvT4nnE
+         rYSBeRlyvaNMvrjtQvGacMfBn623RJsHCSfW4NZa0LkxYUzQzh3U/usi3KTAABNKUtxE
+         0+3nb11mqbGM7gMLNte1XiDmjDyBrHJQcFA1ZH7C1myDKbG9Wy41r/Rv5ekmz7uW4Gik
+         y2/IHQTTUEbXUuBjyeSuZOVRUcHoLFl8ece0bno0Ib3u7SomQ2EepMmz+uRldaMJ6mJO
+         DJv2wFNxacTMBMtWTmp04L718D5petqFx8ogDSWDNtmFzCXIvIg2NtfGuHSBN9oLMPb/
+         rOxw==
+X-Received: by 10.70.48.205 with SMTP id o13mr8825935pdn.25.1405227234598;
+        Sat, 12 Jul 2014 21:53:54 -0700 (PDT)
 Received: from lanh ([115.73.227.1])
-        by mx.google.com with ESMTPSA id hs5sm6737261pbb.92.2014.07.12.21.53.45
+        by mx.google.com with ESMTPSA id q6sm816857pdp.5.2014.07.12.21.53.51
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 Jul 2014 21:53:48 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jul 2014 11:53:49 +0700
+        Sat, 12 Jul 2014 21:53:53 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jul 2014 11:53:54 +0700
 X-Mailer: git-send-email 1.9.1.346.ga2b5940
 In-Reply-To: <1405227068-25506-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253412>
 
-Among pathnames in $GIT_DIR, e.g. "index" or "packed-refs", we want to
-automatically and silently map some of them to the $GIT_DIR of the
-repository we are borrowing from via $GIT_COMMON_DIR mechanism.  When
-we formulate the pathname for its lockfile, we want it to be in the
-same location as its final destination.  "index" is not shared and
-needs to remain in the borrowing repository, while "packed-refs" is
-shared and needs to go to the borrowed repository.
-
-git_path() could be taught about the ".lock" suffix and map
-"index.lock" and "packed-refs.lock" the same way their basenames are
-mapped, but instead the caller can help by asking where the basename
-(e.g. "index") is mapped to git_path() and then appending ".lock"
-after the mapping is done.
+This allows git_path() to redirect info/fast-import to another place
+if needed
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/reflog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fast-import.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index e8a8fb1..9bd874d 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -372,7 +372,7 @@ static int expire_reflog(const char *ref, const uns=
-igned char *sha1, int unused,
- 	if (!reflog_exists(ref))
- 		goto finish;
- 	if (!cmd->dry_run) {
--		newlog_path =3D git_pathdup("logs/%s.lock", ref);
-+		newlog_path =3D mkpathdup("%s.lock", log_file);
- 		cb.newlog =3D fopen(newlog_path, "w");
- 	}
+diff --git a/fast-import.c b/fast-import.c
+index d9c068b..ea426c4 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -3103,12 +3103,9 @@ static void parse_progress(void)
 =20
+ static char* make_fast_import_path(const char *path)
+ {
+-	struct strbuf abs_path =3D STRBUF_INIT;
+-
+ 	if (!relative_marks_paths || is_absolute_path(path))
+ 		return xstrdup(path);
+-	strbuf_addf(&abs_path, "%s/info/fast-import/%s", get_git_dir(), path)=
+;
+-	return strbuf_detach(&abs_path, NULL);
++	return xstrdup(git_path("info/fast-import/%s", path));
+ }
+=20
+ static void option_import_marks(const char *marks,
 --=20
 1.9.1.346.ga2b5940
