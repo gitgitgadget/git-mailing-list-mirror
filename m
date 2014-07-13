@@ -1,96 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/4 v6] cache-tree: subdirectory tests
-Date: Sun, 13 Jul 2014 09:42:23 -0700
-Message-ID: <xmqqsim51a8g.fsf@gitster.dls.corp.google.com>
-References: <1405038686-1138-1-git-send-email-dturner@twitter.com>
-	<1405038686-1138-3-git-send-email-dturner@twitter.com>
-	<CAPig+cQVjy5eBtGLsX3uaTEsHyvyjhqCMFaLDn9Upueis-z1eQ@mail.gmail.com>
-	<xmqqbnsv6hmc.fsf@gitster.dls.corp.google.com>
-	<xmqq7g3j6gzr.fsf@gitster.dls.corp.google.com>
-	<1405118791.3775.26.camel@stross>
+Subject: Re: [PATCH v3] http: Add Accept-Language header if possible
+Date: Sun, 13 Jul 2014 09:57:12 -0700
+Message-ID: <xmqqoawt19jr.fsf@gitster.dls.corp.google.com>
+References: <1405097573-19239-1-git-send-email-eungjun.yi@navercorp.com>
+	<CAPig+cRwJhyZ=R_HGs9JKUFLuJxoS=abrD9+HuoWDiA5oJrtjw@mail.gmail.com>
+	<CAFT+Tg8pJrdoD4M1uy6A=PPJaSrq_QcRUQdxdrA-T5sJiZ7j1Q@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>, David Turner <dturner@twitter.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Sun Jul 13 18:42:42 2014
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	Git List <git@vger.kernel.org>,
+	Yi EungJun <eungjun.yi@navercorp.com>,
+	Jeff King <peff@peff.net>,
+	Peter Krefting <peter@softwolves.pp.se>
+To: semtlenori@gmail.com
+X-From: git-owner@vger.kernel.org Sun Jul 13 18:57:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6MrJ-0006lr-Lq
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 18:42:42 +0200
+	id 1X6N5Z-0003dU-Il
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 18:57:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172AbaGMQmi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2014 12:42:38 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58099 "EHLO smtp.pobox.com"
+	id S1753990AbaGMQ5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2014 12:57:22 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53068 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754073AbaGMQmg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2014 12:42:36 -0400
+	id S1753968AbaGMQ5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2014 12:57:21 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9B32225938;
-	Sun, 13 Jul 2014 12:42:13 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3643025D18;
+	Sun, 13 Jul 2014 12:57:03 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dgSd8ZXAQtnEE31zL0o62q/w42o=; b=e0mHhZ
-	Bdm8PcyGxIPQN8yu2dGH+xWOeI9e8GZB6PXhDIAuhNpXy8B8psU7gbwq2hQzULD7
-	5kCLlW3Blxg2/kWakx2E0fN1W5C9kXcShScNdJqnQUAkmKxTLUlPwSdeiWjXCUIU
-	nhj1tCOz/NwAfIMUgs/TDVBu9Yz3UtoJjDyj0=
+	:content-type; s=sasl; bh=lv1ZXsIqfAppdKMuYkS8luMNnzI=; b=icf67B
+	l6C6CFxlHM07SugAEdXT7KIruU8TmSzWXGJoDLa0kpGqeTloqw0Ms9DaUhW89M4p
+	f1HUKfbRJyvz9mYJWqTi1fQ3NhKD8M7bVAPpzolG+BL8sDtpS/ExnueCen+gZsLn
+	TNYY7qnqjaQ51m/kJtKjswCLFPQJYve+S+LMY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KKZO6SyoOvw9lBPyz0eQI0/55BtkOAcq
-	v4QIhHwfBOP9qsq5zM1KBd8tkFrvUCPC5fkarRUnbaeDfjhB/z0y7CY76MkLh2dJ
-	XolYFRHNI0P/YAK7dkernR7KoCguV5i8JXM1CNd2/Ea0LzmXu8JRsHfZhi4NRiEa
-	SvF7RuQb+5o=
+	:content-type; q=dns; s=sasl; b=jexZL4z6RZRHTuFY2ksDEDnKYqjzhAhO
+	t5Wa8ijfAYWRQ6QjR9Fu6S/GeBt13H6073795D5rXvm6FCwPKU1hiFjXvwhDqtc8
+	lb1zi0oZMRZBtOm87HIZfTGYKyaROyj++Vuss+cXP/imrS0FmolMRdn6cXvsDECA
+	8h7tGGdQUuA=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9180B25937;
-	Sun, 13 Jul 2014 12:42:13 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2BC6325D13;
+	Sun, 13 Jul 2014 12:57:03 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2E93525931;
-	Sun, 13 Jul 2014 12:42:08 -0400 (EDT)
-In-Reply-To: <1405118791.3775.26.camel@stross> (David Turner's message of
-	"Fri, 11 Jul 2014 15:46:31 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7078225D09;
+	Sun, 13 Jul 2014 12:56:56 -0400 (EDT)
+In-Reply-To: <CAFT+Tg8pJrdoD4M1uy6A=PPJaSrq_QcRUQdxdrA-T5sJiZ7j1Q@mail.gmail.com>
+	(EungJun Yi's message of "Sun, 13 Jul 2014 18:51:57 +0900")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A1235602-0AAC-11E4-8296-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: B29631D2-0AAE-11E4-A7A1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253449>
 
-David Turner <dturner@twopensource.com> writes:
+"Yi, EungJun" <semtlenori@gmail.com> writes:
 
-> On Fri, 2014-07-11 at 08:40 -0700, Junio C Hamano wrote:
+> I think it is possible like this:
 >
->> In the ideal world, I think whoever tries to compare two cache-trees
->> (i.e. test-dump-cache-tree) should *not* care, because we are merely
->> trying to show what the correct tree object name for the node would
->> be, but this is only for testing, so the best way forward would be
->> to:
->> 
->>  - Stop using DRY_RUN in test-dump-cache-tree.c;
->> 
->>  - Stop the code to support DRY_RUN from cache-tree.c (nobody but
->>    the test uses it); and
->> 
->>  - Drop the "-e '#(ref)/d'" from the above.
->> 
->> I would think.
+>     num_langs += 1; /* for '*' */
+>     decimal_places = 1 + (num_langs > 10) + (num_langs > 100);
+>     snprintf(q_format, sizeof(q_format), "; q=%%.%df", decimal_places);
+>     for (q_precision = 1.0; decimal_places-- > 0;) q_precision /= 10;
 >
-> Do you mean that I should do this in this patch set, or that it's a good
-> idea for the future?
+> Does this one look better than before? I'm not sure which one is better.
+>
+> ps. The last line can be simpler by using pow() but I'm not sure it is
+> okay to include math.h.
 
-I have no strong preference either way.  Removing DRY_RUN may
-simplify things in the code that gets used in the real life (as
-opposed to the code that is only used during the tests), so I do not
-mind it if it was done before the series as a preparation step.
+If you do not want floating point (and I think we tend to avoid it
+when we do not need it), you can realize that in your use of "0.1"
+and "0.01" and "0.001" there is nothing fundamentally floating-point;
+you can measure how many digits below the two-byte string zero-dot
+you would want upfront (by counting num_langs), and show an integer
+counter zero-padded to the left to that width.
 
-> Also, if we don't use DRY_RUN, won't test-dump-cache-tree add trees to
-> the actual ODB, which would be odd for a test program?
-
-I do not see it as odd at all; after all, nobody in the real-life
-uses dry-run and as you can see its use is broken, or at least is
-inconsistent with the rest of the system.
+That would avoid having to even worry about a possible funny case
+where subtracting 0.01 ten times from 0.1 may not yield zero (or the
+result of subtracting nine times may not reach 0.01) due to rounding
+errors accumulating, which was the first thing that came to my mind
+when I saw your loop.
