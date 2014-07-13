@@ -1,81 +1,100 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v7 4/4] cache-tree: Write updated cache-tree after commit
-Date: Sun, 13 Jul 2014 14:58:20 -0400
-Message-ID: <CAPig+cTqd8LMMA+MsSiuxnyXy+pYDj57UdVmYHNnvW5NBG8W0Q@mail.gmail.com>
-References: <1405120947-3142-1-git-send-email-dturner@twitter.com>
-	<1405120947-3142-4-git-send-email-dturner@twitter.com>
-	<CAPig+cQpzomDmwVqgDGrP4qC1OujRXu5e1wc=EwX61k_RpLbKg@mail.gmail.com>
-	<xmqqbnst18dh.fsf@gitster.dls.corp.google.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 2/7] move setting of object->type to alloc_* functions
+Date: Sun, 13 Jul 2014 20:27:51 +0100
+Message-ID: <53C2DDB7.2070708@ramsay1.demon.co.uk>
+References: <20140711084141.GA5521@sigill.intra.peff.net> <20140711084611.GB5625@sigill.intra.peff.net> <53C149B6.7010705@ramsay1.demon.co.uk> <20140712180539.GA13806@sigill.intra.peff.net> <20140713064116.GA4768@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: David Turner <dturner@twopensource.com>,
-	Git List <git@vger.kernel.org>,
-	David Turner <dturner@twitter.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jul 13 20:58:27 2014
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jul 13 21:28:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6Oyg-0000yh-6T
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 20:58:26 +0200
+	id 1X6PRI-0003wb-HD
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 21:28:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751362AbaGMS6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2014 14:58:23 -0400
-Received: from mail-lb0-f171.google.com ([209.85.217.171]:52573 "EHLO
-	mail-lb0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750954AbaGMS6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2014 14:58:21 -0400
-Received: by mail-lb0-f171.google.com with SMTP id l4so298233lbv.16
-        for <git@vger.kernel.org>; Sun, 13 Jul 2014 11:58:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=2Tyewl8NxpV+HsKPstg/5t3O96nqI0kvqun3n75yeGg=;
-        b=ecAwcyOflgsRuHUSpTdBwHWOL9cXhextz0sYE+4O03Y92Qa5+qfx1IEYoPzTY80lHU
-         xKbH0GX94voxhtNYe2XKBNJFkc43OMve46kSUUTsabRE0Ar4lytp8mqdMs/nTmvCDw0B
-         lyXreU/pngAa6aQFMo0pv0hb2hXFgnOOO8L4FXR948io8LmZNBNmTQipq6pJu4pDrENI
-         /SCbX5VNQX2PdhOsfqsS7tuio7UHK4uxyYdEA2oekycJs2ovdj5eIHXQQeFs17OxexvV
-         VgdTneMwybkIV/KYrkjRMIjTXxQogSbHSzv7BqMN5ydYJJYwCq9LMFXSiN4O0hJ7GPRV
-         H4xA==
-X-Received: by 10.112.150.65 with SMTP id ug1mr9896885lbb.46.1405277900112;
- Sun, 13 Jul 2014 11:58:20 -0700 (PDT)
-Received: by 10.114.78.167 with HTTP; Sun, 13 Jul 2014 11:58:20 -0700 (PDT)
-In-Reply-To: <xmqqbnst18dh.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: V8aCjV92-VvyVTFIuVjMwJfJTC0
+	id S1751442AbaGMT15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2014 15:27:57 -0400
+Received: from mdfmta009.mxout.tch.inty.net ([91.221.169.50]:48324 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751284AbaGMT14 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2014 15:27:56 -0400
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id 3EEC7128094;
+	Sun, 13 Jul 2014 20:27:47 +0100 (BST)
+Received: from mdfmta009.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP id F1388128076;
+	Sun, 13 Jul 2014 20:27:46 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta009.tch.inty.net (Postfix) with ESMTP;
+	Sun, 13 Jul 2014 20:27:46 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140713064116.GA4768@sigill.intra.peff.net>
+X-MDF-HostID: 22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253456>
 
-On Sun, Jul 13, 2014 at 1:22 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
->>> +       (echo p; echo 1; echo; echo s; echo n; echo y; echo q) | git commit --interactive -m foo
+On 13/07/14 07:41, Jeff King wrote:
+> On Sat, Jul 12, 2014 at 02:05:39PM -0400, Jeff King wrote:
+> 
+>>> I don't particularly like 'flag' here. (not a massive dislike, mind you:)
+>>>
+>>> Perhaps: flag->object_type, type->node_type?
+>>> Or, if that's too verbose, maybe just: flag->type, type->node?
 >>
->> Broken &&-chain.
->>
->> Would a printf make this more readable?
->>
->>     printf "p\n1\n\ns\nn\ny\nq\n" | git commt ... &&
->>
->> Perhaps not.
->
-> But
->
->         printf "%s\n" p 1 "" s n y q
->
-> is vastly more readable, I would think.
+>> Me either, but as you noticed, type was taken. Your suggestions seem
+>> fine. We could also just do away with the macro as discussed earlier (we
+>> already do in the commit_node case, anyway...).
+> 
+> Thinking on this more, writing out the definitions is the only sane
+> thing to do here, now that alloc_commit_node does not use the macro.
+> Otherwise you are inviting people to modify the macro, but fail to
+> notice that the commit allocator also needs updating.
 
-Yes, that's much nicer (and I should have thought of it myself
-considering that I made effectively the same suggestion elsewhere
-[1]).
+Hmm, well I could argue that using the macro for all allocators, apart
+from alloc_commit_node(), clearly shows which allocator is the odd-man
+out (and conversely, that all others are the same)! :-P
 
-> Don't we have test_write_lines which is exactly that, though?
+No, I don't think this is a telling advantage; I don't think it makes
+that much difference. (six of one, half-a-dozen of the other).
 
-Indeed, that's even better.
+BTW, I tested the previous series on Linux 32-bit, Cygwin 32-bit, MinGW
+32-bit and Cygwin 64-bit. (I can't test on Linux 64-bit, since I can't
+get Linux installed on my new laptop :( ). Admittedly, the testing on
+MinGW and Cygwin was only fairly light (it takes *hours* to run the full
+testsuite, and I just don't have the time).
 
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/233260/focus=234499
+I was slightly concerned, when reading through this new series, that the
+alloc_node() function may no longer be inlined in the new allocators.
+However, I have just tested on Linux (only using gcc this time), and it
+was just fine. I will test the new series on the above systems later
+(probably tomorrow) but don't expect to find any problems.
+
+> 
+> Here's a re-roll. The interesting bit is the addition of the second
+> patch (but the rest needed to be rebased on top).
+
+Yep, this looks good. Thanks!
+
+> 
+>   [1/8]: alloc.c: remove the alloc_raw_commit_node() function
+>   [2/8]: alloc: write out allocator definitions
+>   [3/8]: move setting of object->type to alloc_* functions
+>   [4/8]: parse_object_buffer: do not set object type
+>   [5/8]: add object_as_type helper for casting objects
+>   [6/8]: alloc: factor out commit index
+>   [7/8]: object_as_type: set commit index
+>   [8/8]: diff-tree: avoid lookup_unknown_object
+
+ATB,
+Ramsay Jones
