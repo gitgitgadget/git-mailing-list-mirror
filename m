@@ -1,86 +1,79 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: Re: [PATCH v3] http: Add Accept-Language header if possible
-Date: Sun, 13 Jul 2014 18:51:57 +0900
-Message-ID: <CAFT+Tg8pJrdoD4M1uy6A=PPJaSrq_QcRUQdxdrA-T5sJiZ7j1Q@mail.gmail.com>
-References: <1405097573-19239-1-git-send-email-eungjun.yi@navercorp.com>
-	<CAPig+cRwJhyZ=R_HGs9JKUFLuJxoS=abrD9+HuoWDiA5oJrtjw@mail.gmail.com>
-Reply-To: semtlenori@gmail.com
+From: Ephrim Khong <dr.khong@gmail.com>
+Subject: Re: [Bug] data loss with cyclic alternates
+Date: Sun, 13 Jul 2014 12:44:25 +0200
+Message-ID: <53C26309.5040401@gmail.com>
+References: <53BFB055.206@gmail.com> <xmqqy4vz51gb.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Yi EungJun <eungjun.yi@navercorp.com>,
-	Jeff King <peff@peff.net>,
-	Peter Krefting <peter@softwolves.pp.se>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Jul 13 11:52:04 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jul 13 12:44:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6GRu-0008E6-Re
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 11:52:03 +0200
+	id 1X6HGh-0008KY-8y
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 12:44:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753197AbaGMJv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2014 05:51:59 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:35120 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753184AbaGMJv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2014 05:51:58 -0400
-Received: by mail-ie0-f180.google.com with SMTP id at20so2376332iec.11
-        for <git@vger.kernel.org>; Sun, 13 Jul 2014 02:51:57 -0700 (PDT)
+	id S1752901AbaGMKo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2014 06:44:27 -0400
+Received: from mail-we0-f180.google.com ([74.125.82.180]:63808 "EHLO
+	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750941AbaGMKoZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2014 06:44:25 -0400
+Received: by mail-we0-f180.google.com with SMTP id k48so1990766wev.11
+        for <git@vger.kernel.org>; Sun, 13 Jul 2014 03:44:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=K12bcToxOVtnZE6b1zzuLCWlHJxwB6hG9k92Td7UhRE=;
-        b=WJ7UO0iATMw0fpAC/iz14T3eBkS4zjoymTpxflPj5rRdAfX7VW+zBTPXXtdTXj9e9V
-         X70nJUNIYk3AMI/u63etQVGA1ooY4FOX/rKzu3BLdBIjob4jzqogbCN1tejHtiJfjbNZ
-         9oGS+J5CrcyUOK/54u3bU+w770QADRSJscL7cjG4Zfa5UEYzcVVSSFNS6Rm8Za20Oo1E
-         2yzglZ0ROuKtpfrW/e/mPODEIDgKOmEjy5w/LbtkD3g0LUd1CzRqs/y7SxbSr8xIydL1
-         xpnj+x6FXlwvlvf8xQAONN42Cumd3Py7/0M0XZWnhTNmgm7Fdjr83wW1eRhNmWZuAZLU
-         leAA==
-X-Received: by 10.43.154.12 with SMTP id lc12mr217169icc.90.1405245117396;
- Sun, 13 Jul 2014 02:51:57 -0700 (PDT)
-Received: by 10.50.153.110 with HTTP; Sun, 13 Jul 2014 02:51:57 -0700 (PDT)
-In-Reply-To: <CAPig+cRwJhyZ=R_HGs9JKUFLuJxoS=abrD9+HuoWDiA5oJrtjw@mail.gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=QWoNnt8iGjNmu3h56G8HWbAeVDZ8Hg6eImoFRPBf8gs=;
+        b=DU7l3A5ZoDk1CNw4T5cUIig4fHwlZx4ILWvAcIiXych0fbDy7+agABxybGFAaaMmLO
+         ppQeshcTRI7d6hr+ISj0yznNtrAELFnSvxxRB8canKY+eClZPxFfbNUvF/4w7e+ZWMs3
+         L4sIDrBSW338oMtUv6cNty+L9u1RyQ0GfFMYygJm6SnNQCu+Bm2FsFcM3pzhrecEzIT2
+         6LytLDxb+REIwxnxfuZwEzupHnDFVwQADT3iRWp7UdDg5M6O5AL1oOgXdlh2l+v0gobX
+         +tixd2yPOFrzcNq8IPZCgkJDmftDnrFlXfxC7Ki1R6PI+7OCvMzd+7Ntaf29AfPv4s+4
+         dVAQ==
+X-Received: by 10.180.81.37 with SMTP id w5mr17061160wix.65.1405248264190;
+        Sun, 13 Jul 2014 03:44:24 -0700 (PDT)
+Received: from floh-wuff-book.speedport_w723_v_typ_a_1_01_001 (p57B36443.dip0.t-ipconnect.de. [87.179.100.67])
+        by mx.google.com with ESMTPSA id i12sm17756597wjr.32.2014.07.13.03.44.22
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 13 Jul 2014 03:44:23 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqy4vz51gb.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253446>
 
-2014-07-13 13:26 GMT+09:00 Eric Sunshine <sunshine@sunshineco.com>:
->> +       /* Decide the precision for q-factor on number of preferred languages. */
->> +       if (num_langs + 1 > 100) { /* +1 is for '*' */
->> +               q_precision = 0.001;
->> +               q_format = "; q=%.3f";
->> +       } else if (num_langs + 1 > 10) { /* +1 is for '*' */
->> +               q_precision = 0.01;
->> +               q_format = "; q=%.2f";
->> +       }
+Am 11.07.14 18:01, schrieb Junio C Hamano:
+> Ephrim Khong <dr.khong@gmail.com> writes:
 >
-> It might make sense to have a final 'else' here which sets these
-> variables for the 0.1 case so that the reader of the code doesn't have
-> to refer back to the top of the function to figure out what is going
-> on.
+>> git seems to have issues with alternates when cycles are present (repo
+>> A has B/objects as alternates, B has A/objects as alternates).
 >
->     } else {
->         q_precision = 0.1;
->         q_format = "; q=%.1f";
->     }
->
-> Better yet, would it be possible to compute these values rather than
-> having to set them manually via a cascading if-chain?
+> Yeah, don't do that.  A thinks "eh, the other guy must have it" and
+> B thinks the same.  In general, do not prune or gc a repository
+> other repositories borrow from, even if there is no cycle, because
+> the borrowee does not know anythning about objects that it itself no
+> longer needs but are still needed by its borrowers.
 
-I think it is possible like this:
+It seems that there is a safeguard against this in sha1_file.c, 
+link_alt_odb_entry(), that doesn't work as intended:
 
-    num_langs += 1; /* for '*' */
-    decimal_places = 1 + (num_langs > 10) + (num_langs > 100);
-    snprintf(q_format, sizeof(q_format), "; q=%%.%df", decimal_places);
-    for (q_precision = 1.0; decimal_places-- > 0;) q_precision /= 10;
+	if (!strcmp(ent->base, objdir)) {
+		free(ent);
+		return -1;
+	}
 
-Does this one look better than before? I'm not sure which one is better.
+However, printf-debugging tells me that ent->base is absolute and objdir 
+is relative (".git/objects") at this point, so the strings are different 
+even though the files are the same.
 
-ps. The last line can be simpler by using pow() but I'm not sure it is
-okay to include math.h.
+I never submitted a patch to git. Do you think someone can fix this 
+hickup, otherwise I'll give it a shot next week.
