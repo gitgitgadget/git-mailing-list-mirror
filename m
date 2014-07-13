@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v7 17/31] setup.c: convert check_repository_format_gently to use strbuf
-Date: Sun, 13 Jul 2014 11:50:54 +0700
-Message-ID: <1405227068-25506-18-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v7 18/31] setup.c: detect $GIT_COMMON_DIR check_repository_format_gently()
+Date: Sun, 13 Jul 2014 11:50:55 +0700
+Message-ID: <1405227068-25506-19-git-send-email-pclouds@gmail.com>
 References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
  <1405227068-25506-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -13,96 +13,81 @@ Cc: Junio C Hamano <gitster@pobox.com>, Max Kirillov <max@max630.net>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jul 13 06:54:45 2014
+X-From: git-owner@vger.kernel.org Sun Jul 13 06:54:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6BoC-0000aK-Ct
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 06:54:44 +0200
+	id 1X6BoI-0000hV-6Q
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 06:54:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863AbaGMEyl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jul 2014 00:54:41 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:42500 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752633AbaGMEyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2014 00:54:39 -0400
-Received: by mail-pa0-f46.google.com with SMTP id eu11so3606872pac.33
-        for <git@vger.kernel.org>; Sat, 12 Jul 2014 21:54:39 -0700 (PDT)
+	id S1752877AbaGMEyr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 13 Jul 2014 00:54:47 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:55074 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633AbaGMEyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2014 00:54:45 -0400
+Received: by mail-pd0-f182.google.com with SMTP id fp1so646614pdb.13
+        for <git@vger.kernel.org>; Sat, 12 Jul 2014 21:54:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=vwkmXzt7/pH6ytHE7n3iKvzR8neAex12ACTCTernrr4=;
-        b=rIoerSX9a+E+lH64ZgJff1dkQDQSZwUc5fxAD9JQfJbjEXXYphbJLYsT2mozVYlag8
-         bqBiVshBD4M/6CC6ZNP9CKQPrxrJSkynQi4MceUoy7jGQvsatA3PrxKeiyhsdh4IYaz8
-         RDIMr2lO6BbhhgE1jChNDYrl1mZwnW68nuadd1wlZ4DPR7QydByXk4u6bGeTZV+XZBkO
-         1PVQw3FhUvYOtpVhwM6Iulx7+sfjhfFriROWzrhZkiQEPI0//ui3bzWQAHR6YcP/fU2d
-         Ce8A0YmbVCntsQlkoiGKRoMSMZT/2gmEC1iKD4wCk1tVr3EfSxpRrjxpjZtQL3kiuoYC
-         kUvA==
-X-Received: by 10.68.139.137 with SMTP id qy9mr8753252pbb.11.1405227279513;
-        Sat, 12 Jul 2014 21:54:39 -0700 (PDT)
+        bh=CSgffAFZAjkMY2PTTwYgwlor0NTS/344KGlQeK+d8Gc=;
+        b=BCzX32GybUvaev4LhDgv5uj3TF49nkNjc7ba/PTBWWk/KOY+rD4IdMoBuvz2dnwL1E
+         4lRA5h2AkhsimOov0fjcJOC3x8FMDuISMuSdFxVPtYCkVbbcAnkbStvZCWiZdXbSjz1k
+         XURXkivYsOyNhzqSKY+TEP97txjoV0nt7ner4hACd0urBi6Tn4CqluBP2kcJJaXmH2bZ
+         AXtFnGflb5xXzRVUemQOjh1qpKrcB4A3q+3819Ap/luifnRVhspr9U/+36fX1KdR7hSI
+         9QvoWi9Go+yy6f4S5yTzv63T9/KEL/9uyd5JWprYp4DsvUyOA40BakRern5PnFDwYCuU
+         ivLg==
+X-Received: by 10.66.163.38 with SMTP id yf6mr9172878pab.46.1405227285166;
+        Sat, 12 Jul 2014 21:54:45 -0700 (PDT)
 Received: from lanh ([115.73.227.1])
-        by mx.google.com with ESMTPSA id av2sm6760239pbc.16.2014.07.12.21.54.36
+        by mx.google.com with ESMTPSA id a5sm9104783pdo.1.2014.07.12.21.54.42
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 12 Jul 2014 21:54:38 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jul 2014 11:54:39 +0700
+        Sat, 12 Jul 2014 21:54:44 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sun, 13 Jul 2014 11:54:45 +0700
 X-Mailer: git-send-email 1.9.1.346.ga2b5940
 In-Reply-To: <1405227068-25506-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253421>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- setup.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ setup.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/setup.c b/setup.c
-index 176d505..a17389f 100644
+index a17389f..79f79f2 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -342,7 +342,9 @@ void setup_work_tree(void)
+@@ -346,6 +346,10 @@ static int check_repository_format_gently(const ch=
+ar *gitdir, int *nongit_ok)
+ 	const char *repo_config;
+ 	int ret =3D 0;
 =20
- static int check_repository_format_gently(const char *gitdir, int *non=
-git_ok)
- {
--	char repo_config[PATH_MAX+1];
-+	struct strbuf sb =3D STRBUF_INIT;
-+	const char *repo_config;
-+	int ret =3D 0;
-=20
++	get_common_dir(&sb, gitdir);
++	strbuf_addstr(&sb, "/config");
++	repo_config =3D sb.buf;
++
  	/*
  	 * git_config() can't be used here because it calls git_pathdup()
-@@ -353,7 +355,8 @@ static int check_repository_format_gently(const cha=
+ 	 * to get $GIT_CONFIG/config. That call will make setup_git_env()
+@@ -355,8 +359,6 @@ static int check_repository_format_gently(const cha=
 r *gitdir, int *nongit_ok)
  	 * Use a gentler version of git_config() to check if this repo
  	 * is a good one.
  	 */
--	snprintf(repo_config, PATH_MAX, "%s/config", gitdir);
-+	strbuf_addf(&sb, "%s/config", gitdir);
-+	repo_config =3D sb.buf;
+-	strbuf_addf(&sb, "%s/config", gitdir);
+-	repo_config =3D sb.buf;
  	git_config_early(check_repository_format_version, NULL, repo_config);
  	if (GIT_REPO_VERSION < repository_format_version) {
  		if (!nongit_ok)
-@@ -363,9 +366,10 @@ static int check_repository_format_gently(const ch=
-ar *gitdir, int *nongit_ok)
- 			GIT_REPO_VERSION, repository_format_version);
- 		warning("Please upgrade Git");
- 		*nongit_ok =3D -1;
--		return -1;
-+		ret =3D -1;
- 	}
--	return 0;
-+	strbuf_release(&sb);
-+	return ret;
- }
-=20
- /*
 --=20
 1.9.1.346.ga2b5940
