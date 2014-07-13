@@ -1,197 +1,214 @@
 From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Date: Sat, 12 Jul 2014 23:29:40 -0400
-Message-ID: <CAPig+cR9VCtNhk-FbqDM1LTCa8VeUTYXU4XEX36Rb5CxPFfLWQ@mail.gmail.com>
-References: <1405119347-3308-1-git-send-email-jacob.e.keller@intel.com>
-	<1405119347-3308-3-git-send-email-jacob.e.keller@intel.com>
+Subject: Re: [PATCH v3] http: Add Accept-Language header if possible
+Date: Sun, 13 Jul 2014 00:26:58 -0400
+Message-ID: <CAPig+cRwJhyZ=R_HGs9JKUFLuJxoS=abrD9+HuoWDiA5oJrtjw@mail.gmail.com>
+References: <1405097573-19239-1-git-send-email-eungjun.yi@navercorp.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-To: Jacob Keller <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Sun Jul 13 05:29:52 2014
+Cc: Git List <git@vger.kernel.org>,
+	Yi EungJun <eungjun.yi@navercorp.com>,
+	Jeff King <peff@peff.net>,
+	Peter Krefting <peter@softwolves.pp.se>
+To: Yi EungJun <semtlenori@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jul 13 06:27:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6AU2-0000bK-9I
-	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 05:29:50 +0200
+	id 1X6BNU-0004hV-Ix
+	for gcvg-git-2@plane.gmane.org; Sun, 13 Jul 2014 06:27:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144AbaGMD3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Jul 2014 23:29:44 -0400
-Received: from mail-lb0-f174.google.com ([209.85.217.174]:45877 "EHLO
-	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751764AbaGMD3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Jul 2014 23:29:42 -0400
-Received: by mail-lb0-f174.google.com with SMTP id u10so1955324lbd.19
-        for <git@vger.kernel.org>; Sat, 12 Jul 2014 20:29:40 -0700 (PDT)
+	id S1751126AbaGME1C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2014 00:27:02 -0400
+Received: from mail-la0-f48.google.com ([209.85.215.48]:33424 "EHLO
+	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769AbaGME1A (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2014 00:27:00 -0400
+Received: by mail-la0-f48.google.com with SMTP id el20so1959335lab.21
+        for <git@vger.kernel.org>; Sat, 12 Jul 2014 21:26:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:sender:in-reply-to:references:date:message-id:subject
          :from:to:cc:content-type;
-        bh=IkLfKuQVyzESXnvb3qcFA0P8Ycy4drlz8kg7qKvp2VM=;
-        b=1JZ4Pc3kzKO1OlXuXclGXPoUe82DKdcwRb1I9deNlTpaKjxnjxoMXMjJe2cdgWrnqk
-         rX8RkWnrTbZlg2UZXJ/DE2WZNvHRzrh7hW9NnPjyWXXZBCiYDlZV8FtSeyOYDfuhWjY2
-         W5INkEZm92pc+YZfAeRAwdWh/XivzbNwEmPb+sfp2yUZ6YCY2yGOVEtj+8TLVVa/0T/b
-         bY+Z1oP86ZdUwBzI/umd+xN8Op3vTtURVgdlBS/zOYU/KK2wKSmpZb6BQ0Ontb8sLVxh
-         2vNrgJZB6hkke9FIQ8eHDtB26nUCYsW1FBAT5uhdHdINIlWqc8ptcNMVTvCoEvGPkloS
-         i3zw==
-X-Received: by 10.112.140.41 with SMTP id rd9mr6826586lbb.31.1405222180428;
- Sat, 12 Jul 2014 20:29:40 -0700 (PDT)
-Received: by 10.114.78.167 with HTTP; Sat, 12 Jul 2014 20:29:40 -0700 (PDT)
-In-Reply-To: <1405119347-3308-3-git-send-email-jacob.e.keller@intel.com>
-X-Google-Sender-Auth: Wb85Cn3oeal4Vcc8od-CKieB7rU
+        bh=s15J8zh1vsCI7UYXbE2xUMTZ8e/seI8ii770lzJ+7gI=;
+        b=eSAn2+ckcbNDbYn+JUZhC1zrau5tD3VksaI4MKP4NAtCxHyBD1tjr3c9esB5QqzH0m
+         PcCjMa5sfleFfo858HM7UGUOiukI/AWp/deK5yECkJZ/NnzwXKwISFBvJXb2e+nFgQ7R
+         WWQOoAJzYs8ULK+ZB5uxsDFWqZe0WREqq17DioDMEDnWbEAaPUXHDTWa5XPIzvRmwoll
+         TV2X5fBRAyGIsZ565t2ZTLZVXXXuAPeUR/KuMbFc/MVAkDKzY4iNajasNCQ2gnRJuFEC
+         NoAth1dc86bDhYQtYdph1ARJKsHmiiE5zqDuLMNxRJzHtYQdbH7mCUi/hmYgSVGMt6a1
+         nSkQ==
+X-Received: by 10.112.24.167 with SMTP id v7mr7032791lbf.19.1405225618620;
+ Sat, 12 Jul 2014 21:26:58 -0700 (PDT)
+Received: by 10.114.78.167 with HTTP; Sat, 12 Jul 2014 21:26:58 -0700 (PDT)
+In-Reply-To: <1405097573-19239-1-git-send-email-eungjun.yi@navercorp.com>
+X-Google-Sender-Auth: 3zyTCtQlRrIENdCCpHwCJ6thhuw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253401>
 
-On Fri, Jul 11, 2014 at 6:55 PM, Jacob Keller <jacob.e.keller@intel.com> wrote:
-> Add support for configuring default sort ordering for git tags. Command
-> line option will override this configured value, using the exact same
-> syntax.
+On Fri, Jul 11, 2014 at 12:52 PM, Yi EungJun <semtlenori@gmail.com> wrote:
+> Add an Accept-Language header which indicates the user's preferred
+> languages defined by $LANGUAGE, $LC_ALL, $LC_MESSAGES and $LANG.
 >
-> Cc: Jeff King <peff@peff.net>
-> Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
+> Examples:
+>   LANGUAGE= -> ""
+>   LANGUAGE=ko:en -> "Accept-Language: ko, en; q=0.9, *; q=0.1"
+>   LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *; q=0.1"
+>   LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *; q=0.1"
+>
+> This gives git servers a chance to display remote error messages in
+> the user's preferred language.
+>
+> Signed-off-by: Yi EungJun <eungjun.yi@navercorp.com>
 > ---
-> Made parse_sort_string take a "var" parameter, and if given will only warn
-> about invalid parameter, instead of error.
-
-This seems unnecessarily ugly since it's hard-coding specialized
-knowledge of the callers' error-reporting requirements into what
-should be a generalized parsing function. If you instead make
-parse_sort_string() responsible only for attempting to parse the
-value, but leave error-reporting to the callers, then this ugliness
-goes away. See below.
-
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 9d7643f127e7..97c5317c28e5 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -32,6 +32,8 @@ static const char * const git_tag_usage[] = {
->  #define SORT_MASK       0x7fff
->  #define REVERSE_SORT    0x8000
->
-> +static int tag_sort;
-> +
->  struct tag_filter {
->         const char **patterns;
->         int lines;
-> @@ -346,9 +348,49 @@ static const char tag_template_nocleanup[] =
->         "Lines starting with '%c' will be kept; you may remove them"
->         " yourself if you want to.\n");
+> diff --git a/http.c b/http.c
+> index 3a28b21..a20f3e2 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -983,6 +983,129 @@ static void extract_content_type(struct strbuf *raw, struct strbuf *type,
+>                 strbuf_addstr(charset, "ISO-8859-1");
+>  }
 >
 > +/*
-> + * Parse a sort string, and return 0 if parsed successfully. Will return
-> + * non-zero when the sort string does not parse into a known type.
+> + * Guess the user's preferred languages from the value in LANGUAGE environment
+> + * variable and LC_MESSAGES locale category.
+> + *
+> + * The result can be a colon-separated list like "ko:ja:en".
 > + */
-> +static int parse_sort_string(const char *var, const char *value, int *sort)
+> +static const char* get_preferred_languages() {
+> +    const char* retval;
+> +
+> +       retval = getenv("LANGUAGE");
+> +       if (retval != NULL && retval[0] != '\0')
+> +               return retval;
+> +
+> +       retval = setlocale(LC_MESSAGES, NULL);
+> +       if (retval != NULL && retval[0] != '\0'
+> +               && strcmp(retval, "C") != 0
+> +               && strcmp(retval, "POSIX") != 0)
+> +               return retval;
+> +
+> +       return NULL;
+> +}
+> +
+> +/*
+> + * Add an Accept-Language header which indicates user's preferred languages.
+> + *
+> + * Examples:
+> + *   LANGUAGE= -> ""
+> + *   LANGUAGE=ko:en -> "Accept-Language: ko, en; q=0.9, *; q=0.1"
+> + *   LANGUAGE=ko_KR.UTF-8:sr@latin -> "Accept-Language: ko-KR, sr; q=0.9, *; q=0.1"
+> + *   LANGUAGE=ko LANG=en_US.UTF-8 -> "Accept-Language: ko, *; q=0.1"
+> + *   LANGUAGE= LANG=en_US.UTF-8 -> "Accept-Language: en-US, *; q=0.1"
+> + *   LANGUAGE= LANG=C -> ""
+> + */
+> +static struct curl_slist* add_accept_language(struct curl_slist *headers)
 > +{
-> +       int type = 0, flags = 0;
-> +
-> +       if (skip_prefix(value, "-", &value))
-> +               flags |= REVERSE_SORT;
-> +
-> +       if (skip_prefix(value, "version:", &value) || skip_prefix(value, "v:", &value))
-> +               type = VERCMP_SORT;
-> +       else
-> +               type = STRCMP_SORT;
-> +
-> +       if (strcmp(value, "refname")) {
-> +               if (!var)
-> +                       return error(_("unsupported sort specification '%s'"), value);
-> +               else {
-> +                       warning(_("unsupported sort specification '%s' in variable '%s'"),
-> +                               var, value);
-> +                       return -1;
+> +       const char *p1, *p2, *p3;
+> +       struct strbuf buf = STRBUF_INIT;
+> +       float q = 1.0;
+> +       float q_precision = 0.1;
+> +       int num_langs = 1;
+> +       char* q_format = "; q=%.1f";
 
-Just return -1 here, but don't print any diagnostics. Let the callers
-do that. (See below.)
+This can be 'const char *'.
 
+> +
+> +       p1 = get_preferred_languages();
+> +
+> +       /* Don't add Accept-Language header if no language is preferred. */
+> +       if (p1 == NULL || p1[0] == '\0') {
+> +               strbuf_release(&buf);
+> +               return headers;
+> +       }
+> +
+> +       /* Count number of preferred languages to decide precision of q-factor */
+> +       for (p3 = p1; *p3 != '\0'; p3++) {
+> +               if (*p3 == ':') {
+> +                       num_langs++;
 > +               }
 > +       }
 > +
-> +       *sort = (type | flags);
-> +
-> +       return 0;
-> +}
-> +
->  static int git_tag_config(const char *var, const char *value, void *cb)
->  {
-> -       int status = git_gpg_config(var, value, cb);
-> +       int status;
-> +
-> +       if (!strcmp(var, "tag.sort")) {
-> +               if (!value)
-> +                       return config_error_nonbool(var);
-> +               parse_sort_string(var, value, &tag_sort);
+> +       /* Decide the precision for q-factor on number of preferred languages. */
+> +       if (num_langs + 1 > 100) { /* +1 is for '*' */
+> +               q_precision = 0.001;
+> +               q_format = "; q=%.3f";
+> +       } else if (num_langs + 1 > 10) { /* +1 is for '*' */
+> +               q_precision = 0.01;
+> +               q_format = "; q=%.2f";
+> +       }
 
-    if (parse_sort_string(value, &tag_sort))
-        warning(_("unsupported sort specification '%s' in variable '%s'"),
-            var, value);
+It might make sense to have a final 'else' here which sets these
+variables for the 0.1 case so that the reader of the code doesn't have
+to refer back to the top of the function to figure out what is going
+on.
 
-> +               return 0;
+    } else {
+        q_precision = 0.1;
+        q_format = "; q=%.1f";
+    }
+
+Better yet, would it be possible to compute these values rather than
+having to set them manually via a cascading if-chain?
+
+> +
+> +       strbuf_addstr(&buf, "Accept-Language: ");
+> +
+> +       for (p2 = p1; q > q_precision; p2++) {
+> +               if ((*p2 == ':' || *p2 == '\0') && p1 != p2) {
+> +                       if (q < 1.0) {
+> +                               strbuf_addstr(&buf, ", ");
+> +                       }
+> +
+> +                       for (p3 = p1; p3 < p2; p3++) {
+> +                               /* Replace '_' with '-'. */
+> +                               if (*p3 == '_') {
+> +                                       strbuf_add(&buf, p1, p3 - p1);
+> +                                       strbuf_addstr(&buf, "-");
+> +                                       p1 = p3 + 1;
+> +                               }
+> +
+> +                               /* Chop off anything after '.' or '@'. */
+> +                               if ((*p3 == '.' || *p3 == '@')) {
+> +                                       break;
+> +                               }
+> +                       }
+> +
+> +                       if (p3 > p1) {
+> +                               strbuf_add(&buf, p1, p3 - p1);
+> +                       }
+> +
+> +                       /* Put the q factor if only it is less than 1.0. */
+> +                       if (q < 1.0) {
+> +                               strbuf_addf(&buf, q_format, q);
+> +                       }
+> +
+> +                       q -= q_precision;
+> +                       p1 = p2 + 1;
+> +
+> +                       if (*p2 == '\0') {
+> +                               break;
+> +                       }
+> +               }
 > +       }
 > +
-> +       status = git_gpg_config(var, value, cb);
->         if (status)
->                 return status;
->         if (starts_with(var, "column."))
-> @@ -522,20 +564,8 @@ static int parse_opt_points_at(const struct option *opt __attribute__((unused)),
->  static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
->  {
->         int *sort = opt->value;
-> -       int flags = 0;
->
-> -       if (skip_prefix(arg, "-", &arg))
-> -               flags |= REVERSE_SORT;
-> -
-> -       if (skip_prefix(arg, "version:", &arg) || skip_prefix(arg, "v:", &arg))
-> -               *sort = VERCMP_SORT;
-> -       else
-> -               *sort = STRCMP_SORT;
-> -
-> -       if (strcmp(arg, "refname"))
-> -               die(_("unsupported sort specification %s"), arg);
-> -       *sort |= flags;
-> -       return 0;
-> +       return parse_sort_string(NULL, arg, sort);
-
-    if (parse_sort_string(arg, sort))
-        return error(_("unsupported sort specification '%s'"), arg);
-    return 0;
-
->  }
->
->  int cmd_tag(int argc, const char **argv, const char *prefix)
-> @@ -548,7 +578,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->         struct create_tag_options opt;
->         char *cleanup_arg = NULL;
->         int annotate = 0, force = 0, lines = -1;
-> -       int cmdmode = 0, sort = 0;
-> +       int cmdmode = 0;
->         const char *msgfile = NULL, *keyid = NULL;
->         struct msg_arg msg = { 0, STRBUF_INIT };
->         struct commit_list *with_commit = NULL;
-> @@ -574,7 +604,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->                 OPT__FORCE(&force, N_("replace the tag if exists")),
->                 OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
->                 {
-> -                       OPTION_CALLBACK, 0, "sort", &sort, N_("type"), N_("sort tags"),
-> +                       OPTION_CALLBACK, 0, "sort", &tag_sort, N_("type"), N_("sort tags"),
->                         PARSE_OPT_NONEG, parse_opt_sort
->                 },
->
-> @@ -630,9 +660,9 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
->                         copts.padding = 2;
->                         run_column_filter(colopts, &copts);
->                 }
-> -               if (lines != -1 && sort)
-> +               if (lines != -1 && tag_sort)
->                         die(_("--sort and -n are incompatible"));
-> -               ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, sort);
-> +               ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, tag_sort);
->                 if (column_active(colopts))
->                         stop_column_filter();
->                 return ret;
+> +       /* Don't add Accept-Language header if no language is preferred. */
+> +       if (q >= 1.0) {
+> +               strbuf_release(&buf);
+> +               return headers;
+> +       }
+> +
+> +       /* Add '*' with minimum q-factor greater than 0.0. */
+> +       strbuf_addstr(&buf, ", *");
+> +       strbuf_addf(&buf, q_format, q_precision);
+> +
+> +       headers = curl_slist_append(headers, buf.buf);
+> +
+> +       strbuf_release(&buf);
+> +
+> +       return headers;
+> +}
+> +
