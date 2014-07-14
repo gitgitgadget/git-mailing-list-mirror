@@ -1,111 +1,65 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH 00/14] Add submodule test harness
-Date: Mon, 14 Jul 2014 20:22:37 +0200
-Message-ID: <53C41FED.5080101@web.de>
-References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>	<53B5C7AC.4040701@web.de>	<xmqqsimddrq3.fsf@gitster.dls.corp.google.com>	<53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de>	<53BCDDE2.1080301@web.de> <53BD87B3.8050901@web.de>	<xmqqmwci9vn1.fsf@gitster.dls.corp.google.com>	<xmqqsim96ine.fsf@gitster.dls.corp.google.com> <53C17D16.80106@web.de> <xmqq4myk21o8.fsf@gitster.dls.corp.google.com>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v8 4/4] cache-tree: Write updated cache-tree after commit
+Date: Mon, 14 Jul 2014 19:41:23 +0100
+Message-ID: <53C42453.1090109@ramsay1.demon.co.uk>
+References: <1405140276-32162-1-git-send-email-dturner@twitter.com>	<1405140276-32162-4-git-send-email-dturner@twitter.com>	<CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com>	<xmqqr41oylyo.fsf@gitster.dls.corp.google.com>	<53C41456.2000006@ramsay1.demon.co.uk> <xmqqvbqzygkm.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Git Mailing List <git@vger.kernel.org>
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Turner <dturner@twitter.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 20:23:06 2014
+X-From: git-owner@vger.kernel.org Mon Jul 14 20:41:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6ku1-0001i7-HI
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 20:23:05 +0200
+	id 1X6lBt-00053p-5F
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 20:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756834AbaGNSW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 14:22:58 -0400
-Received: from mout.web.de ([212.227.17.12]:53383 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756820AbaGNSWr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 14:22:47 -0400
-Received: from [192.168.178.41] ([84.132.188.114]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0MYvxn-1X3GMK1eSJ-00VgLG; Mon, 14 Jul 2014 20:22:43
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq4myk21o8.fsf@gitster.dls.corp.google.com>
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:vwRJ3qGUVdmdRiB2ELpt/DDGY8qu9qMn+NtPYwsmjmJI4A9cCZ1
- imGEDpCYtSgQ7y1f8wA7IZ9JUU7uzTL7jlNuRTo4pNMTL/12/9tNEpZKLqJICWe3VStoPBE
- ORilapF82rk+YDzMXnJKN+LlAzN4f9LmybdCYqA9F6ChnG7Jgfy1Dxhrfc+QJlWTH1odH1i
- jNquU/9isyENWGMvzcSvQ==
+	id S1756316AbaGNSla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 14:41:30 -0400
+Received: from mdfmta004.mxout.tch.inty.net ([91.221.169.45]:46970 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752490AbaGNSl2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 14:41:28 -0400
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id 3EC06AC40B4;
+	Mon, 14 Jul 2014 19:41:40 +0100 (BST)
+Received: from mdfmta004.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP id E50ACAC40B3;
+	Mon, 14 Jul 2014 19:41:39 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta004.tch.inty.net (Postfix) with ESMTP;
+	Mon, 14 Jul 2014 19:41:39 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqvbqzygkm.fsf@gitster.dls.corp.google.com>
+X-MDF-HostID: 17
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253507>
 
-Am 14.07.2014 03:01, schrieb Junio C Hamano:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
+On 14/07/14 18:51, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 > 
->>> Perhaps squashing this to 7e8e5af9 instead?
->>
->> Yes please, this is much better than my first attempt.
+>> that the merge commit 7608c87e fails. Looking at the details of the
+>> merge resolution, made me think of Duy's split index work.
 > 
-> One thing that I found troubling is the ../../../ "three levels up"
-> is hardcoded.  Would it be always true for any value of "$1"?  If
-> the submodule is bound to the superproject at sub/dir/, not at dir/,
-> for example, would it have to change?
+> Yes, there is a deliberately dropped hunk from dt/cache-tree-repair
+> in that merge, because the topic relied on being able to say "here
+> is the file descriptor, write the index to it", which no longer is
+> available with the split-index topic.
 
-Yes. And the code currently also doesn't handle submodules whose
-name and path differ.
+Ah, OK. Sounds like everything is under control then.
 
-> I am not saying that we must support artibrary cases, but if there
-> is such a limitation in the implementation, people who will use the
-> helper in their new tests want it at least documented, I think.
+Thanks.
 
-Ah, I didn't think about other tests reusing that and only wrote
-this as a local helper. But you're right, it would make sense to
-reuse this function instead of coding that again (even though I'd
-prefer to extract the generic helpers to t/lib-submodule.sh for
-that purpose).
-
-So what about adding "Currently only submodules living in the
-root directory of the superproject with the default name (same
-as the path) are supported." to the comment above the function?
-
->>>  t/lib-submodule-update.sh | 19 ++++++++++++-------
->>>  1 file changed, 12 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
->>> index e441b98..fc1da84 100755
->>> --- a/t/lib-submodule-update.sh
->>> +++ b/t/lib-submodule-update.sh
->>> @@ -110,18 +110,23 @@ replace_gitfile_with_git_dir () {
->>>  }
->>>  
->>>  # Test that the .git directory in the submodule is unchanged (except for the
->>> -# core.worktree setting, which we temporarily restore). Call this function
->>> -# before test_submodule_content as the latter might write the index file
->>> -# leading to false positive index differences.
->>> +# core.worktree setting, which appears only in $GIT_DIR/modules/$1/config).
->>> +# Call this function before test_submodule_content as the latter might
->>> +# write the index file leading to false positive index differences.
->>>  test_git_directory_is_unchanged () {
->>>  	(
->>> -		cd "$1" &&
->>> -		git config core.worktree "../../../$1"
->>> +		cd ".git/modules/$1" &&
->>> +		# does core.worktree point at the right place?
->>> +		test "$(git config core.worktree)" = "../../../$1" &&
->>> +		# remove it temporarily before comparing, as
->>> +		# "$1/.git/config" lacks it...
->>> +		git config --unset core.worktree
->>>  	) &&
->>>  	diff -r ".git/modules/$1" "$1/.git" &&
->>>  	(
->>> -		cd "$1" &&
->>> -		GIT_WORK_TREE=. git config --unset core.worktree
->>> +		# ... and then restore.
->>> +		cd ".git/modules/$1" &&
->>> +		git config core.worktree "../../../$1"
->>>  	)
->>>  }
->>>  
->>>
-> 
+ATB,
+Ramsay Jones
