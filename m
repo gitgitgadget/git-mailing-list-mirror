@@ -1,71 +1,119 @@
-From: "Yi, EungJun" <semtlenori@gmail.com>
-Subject: Re: [PATCH v3] http: Add Accept-Language header if possible
-Date: Mon, 14 Jul 2014 09:42:49 +0900
-Message-ID: <CAFT+Tg-FmtfmhuTr8-tbbOtDs73p0qzQoT+UVdu3bZLizJbWOQ@mail.gmail.com>
-References: <1405097573-19239-1-git-send-email-eungjun.yi@navercorp.com>
-	<CAPig+cRwJhyZ=R_HGs9JKUFLuJxoS=abrD9+HuoWDiA5oJrtjw@mail.gmail.com>
-	<CAFT+Tg8pJrdoD4M1uy6A=PPJaSrq_QcRUQdxdrA-T5sJiZ7j1Q@mail.gmail.com>
-	<xmqqoawt19jr.fsf@gitster.dls.corp.google.com>
-Reply-To: semtlenori@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/14] Add submodule test harness
+Date: Sun, 13 Jul 2014 18:01:59 -0700
+Message-ID: <xmqq4myk21o8.fsf@gitster.dls.corp.google.com>
+References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de>
+	<53B46425.3030000@web.de> <53B4F0AA.10809@web.de>
+	<53B5C7AC.4040701@web.de>
+	<xmqqsimddrq3.fsf@gitster.dls.corp.google.com>
+	<53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de>
+	<53BCDDE2.1080301@web.de> <53BD87B3.8050901@web.de>
+	<xmqqmwci9vn1.fsf@gitster.dls.corp.google.com>
+	<xmqqsim96ine.fsf@gitster.dls.corp.google.com> <53C17D16.80106@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Yi EungJun <eungjun.yi@navercorp.com>,
-	Jeff King <peff@peff.net>,
-	Peter Krefting <peter@softwolves.pp.se>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 02:42:55 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Jul 14 03:02:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6UM2-0003bL-K2
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 02:42:54 +0200
+	id 1X6Ueo-0003Zq-4O
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 03:02:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752310AbaGNAmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Jul 2014 20:42:51 -0400
-Received: from mail-ie0-f175.google.com ([209.85.223.175]:39997 "EHLO
-	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751661AbaGNAmu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Jul 2014 20:42:50 -0400
-Received: by mail-ie0-f175.google.com with SMTP id x19so2739066ier.20
-        for <git@vger.kernel.org>; Sun, 13 Jul 2014 17:42:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=yd7Ot206DIANudTwv/yf1S+qMe2RnhUMJzRZbxupv6s=;
-        b=0BjVJ/N7chNX6qMDamA/WmGjMGpmQOGs3YOtVJBR6XCqJyRY9dLv7kNjoyWcUMrjhx
-         Cum6H1MJ6h5GDGKKKp+6XFhX2fx2NuIFMInBOptlp1vOvoM3jLuBH7QKhpIBedLNXVGT
-         h7jFqpcmy3y3mCnxvuqoDi9zVn88OD3CgkTePtEGkQx4q/tteOXnz6n2WulORe2+CClP
-         AvE5cgFB2M/EdbU5gsuf0FlEgKP1Tu8F0C0Byn5ngOU/S663rPzglS5rfJnuwzW5OXuj
-         SyCZ69+Hx5jl3LPVuELIEzTgpcrUkQ46T1GzU91BsgjBCgkOMXTXScUmUk4hqon3Jmfz
-         JBbQ==
-X-Received: by 10.42.212.207 with SMTP id gt15mr18523143icb.47.1405298569297;
- Sun, 13 Jul 2014 17:42:49 -0700 (PDT)
-Received: by 10.50.153.110 with HTTP; Sun, 13 Jul 2014 17:42:49 -0700 (PDT)
-In-Reply-To: <xmqqoawt19jr.fsf@gitster.dls.corp.google.com>
+	id S1751717AbaGNBCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Jul 2014 21:02:09 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61736 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751509AbaGNBCH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Jul 2014 21:02:07 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 19A8B27910;
+	Sun, 13 Jul 2014 21:01:49 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=l600KiHnk6f1j74xc9WuGbDnn3o=; b=QaVmBW
+	VPRjDbTAEaBW1nDEHG1jMPyEXQQfIIlpzBclHcZoi0L6GOmYH0rE1JJKBje6GxLV
+	njNTaEBlZAteLyHl+owCRSmZTCXsWDyz3o/J5p5vddTEKpcANMXJn8z50kGAmZCY
+	1e/IKmvZjP9l5fvO9hXlVUBAlBc8Yqb+Oev+0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=g0cYAWHCYi63qdgwWXwZPHLGFg/VUwd4
+	F5cujNulsvdkgA7w+6wRm9JsFMUwoaxIpyD/16ullRDNHV2/LJshxxCu9gyS4UdJ
+	iAaLWXGorNQg4rCIe9vnvVIuO/pHOvT3TshfbZJPBI9Qzp3ZZpUw6s1d1CRmzF8k
+	YNoqjuy5gms=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0FD9A2790F;
+	Sun, 13 Jul 2014 21:01:49 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9933C2790E;
+	Sun, 13 Jul 2014 21:01:43 -0400 (EDT)
+In-Reply-To: <53C17D16.80106@web.de> (Jens Lehmann's message of "Sat, 12 Jul
+	2014 20:23:18 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6BE35C26-0AF2-11E4-A116-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253462>
 
-2014-07-14 1:57 GMT+09:00 Junio C Hamano <gitster@pobox.com>:
->
-> If you do not want floating point (and I think we tend to avoid it
-> when we do not need it), you can realize that in your use of "0.1"
-> and "0.01" and "0.001" there is nothing fundamentally floating-point;
-> you can measure how many digits below the two-byte string zero-dot
-> you would want upfront (by counting num_langs), and show an integer
-> counter zero-padded to the left to that width.
->
-> That would avoid having to even worry about a possible funny case
-> where subtracting 0.01 ten times from 0.1 may not yield zero (or the
-> result of subtracting nine times may not reach 0.01) due to rounding
-> errors accumulating, which was the first thing that came to my mind
-> when I saw your loop.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-You're right; We don't need floating point numbers. I'll try to fix it.
+>> Perhaps squashing this to 7e8e5af9 instead?
+>
+> Yes please, this is much better than my first attempt.
+
+One thing that I found troubling is the ../../../ "three levels up"
+is hardcoded.  Would it be always true for any value of "$1"?  If
+the submodule is bound to the superproject at sub/dir/, not at dir/,
+for example, would it have to change?
+
+I am not saying that we must support artibrary cases, but if there
+is such a limitation in the implementation, people who will use the
+helper in their new tests want it at least documented, I think.
+
+>>  t/lib-submodule-update.sh | 19 ++++++++++++-------
+>>  1 file changed, 12 insertions(+), 7 deletions(-)
+>> 
+>> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+>> index e441b98..fc1da84 100755
+>> --- a/t/lib-submodule-update.sh
+>> +++ b/t/lib-submodule-update.sh
+>> @@ -110,18 +110,23 @@ replace_gitfile_with_git_dir () {
+>>  }
+>>  
+>>  # Test that the .git directory in the submodule is unchanged (except for the
+>> -# core.worktree setting, which we temporarily restore). Call this function
+>> -# before test_submodule_content as the latter might write the index file
+>> -# leading to false positive index differences.
+>> +# core.worktree setting, which appears only in $GIT_DIR/modules/$1/config).
+>> +# Call this function before test_submodule_content as the latter might
+>> +# write the index file leading to false positive index differences.
+>>  test_git_directory_is_unchanged () {
+>>  	(
+>> -		cd "$1" &&
+>> -		git config core.worktree "../../../$1"
+>> +		cd ".git/modules/$1" &&
+>> +		# does core.worktree point at the right place?
+>> +		test "$(git config core.worktree)" = "../../../$1" &&
+>> +		# remove it temporarily before comparing, as
+>> +		# "$1/.git/config" lacks it...
+>> +		git config --unset core.worktree
+>>  	) &&
+>>  	diff -r ".git/modules/$1" "$1/.git" &&
+>>  	(
+>> -		cd "$1" &&
+>> -		GIT_WORK_TREE=. git config --unset core.worktree
+>> +		# ... and then restore.
+>> +		cd ".git/modules/$1" &&
+>> +		git config core.worktree "../../../$1"
+>>  	)
+>>  }
+>>  
+>> 
