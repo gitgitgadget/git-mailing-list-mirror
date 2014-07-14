@@ -1,53 +1,66 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v8 4/4] cache-tree: Write updated cache-tree after commit
-Date: Mon, 14 Jul 2014 18:33:10 +0100
-Message-ID: <53C41456.2000006@ramsay1.demon.co.uk>
-References: <1405140276-32162-1-git-send-email-dturner@twitter.com>	<1405140276-32162-4-git-send-email-dturner@twitter.com>	<CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com> <xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
+Date: Mon, 14 Jul 2014 10:43:16 -0700
+Message-ID: <xmqqzjgbygy3.fsf@gitster.dls.corp.google.com>
+References: <1405140276-32162-1-git-send-email-dturner@twitter.com>
+	<1405140276-32162-4-git-send-email-dturner@twitter.com>
+	<CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com>
+	<xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: David Turner <dturner@twopensource.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	David Turner <dturner@twitter.com>
-To: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 19:33:20 2014
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 14 19:43:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6k7r-0001ST-TZ
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 19:33:20 +0200
+	id 1X6kHq-0000RG-FH
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 19:43:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846AbaGNRdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 13:33:16 -0400
-Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:35766 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751334AbaGNRdP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 13:33:15 -0400
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id C8F154008DE;
-	Mon, 14 Jul 2014 18:33:08 +0100 (BST)
-Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 76293400837;
-	Mon, 14 Jul 2014 18:33:08 +0100 (BST)
-Received: from [192.168.254.1] (unknown [80.176.147.220])
+	id S1756494AbaGNRnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 13:43:33 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53414 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756126AbaGNRn0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 13:43:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AC31326C7C;
+	Mon, 14 Jul 2014 13:43:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=UoJhbaM7EGg0Giq1HT3Chj19y3M=; b=Mpl7mm66UkOpZf+a62uQ
+	MsxJ8G5aG/jt7FjJybSgFguc44s5ATHmSRqR1bzEy95UJhXKKzOC+1aGjr87eQLp
+	gk16ggRako3sMrkRi/URzTDeVJWF9RbrUv95RBSmzMpED2zXfZ9jK+QDlNZf3F2V
+	/GoqqxUH5ikINpEWtMC8wmQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=DtXcM8Fkhk6hhAfDDR5HFAV+AtTtTgudPVTemmvFEcQoex
+	tx2t7qudngEcT/MJIWW+zuzOJVUwI3Qm+2H1E1VWLqfheGwEhrHY63w4xJpwYKxB
+	rexssAGWYExdI6NxVMUydyB0Xqc4bY9Fjh97j3NPXnCWj4FEFMcs3IeGAgf8c=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 64DF526C7B;
+	Mon, 14 Jul 2014 13:43:07 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
-	Mon, 14 Jul 2014 18:33:07 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
-X-MDF-HostID: 19
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F327426C6C;
+	Mon, 14 Jul 2014 13:43:00 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 4CCADE18-0B7E-11E4-95C6-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253500>
 
-On 14/07/14 16:54, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
 > Duy Nguyen <pclouds@gmail.com> writes:
-> 
+>
 >> On Sat, Jul 12, 2014 at 11:44 AM, David Turner <dturner@twopensource.com> wrote:
 >>> @@ -342,6 +342,15 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
 >>>
@@ -63,7 +76,7 @@ On 14/07/14 16:54, Junio C Hamano wrote:
 >> corrupted. Should we die() instead of moving on and returning
 >> index_lock.filename to the caller? The caller may move index.lock to
 >> index later on and officially ruin "index".
-> 
+>
 > Perhaps true, but worse yet, this will not play nicely together with
 > your split index series, no?  After taking the lock and writing and
 > closing, we spawn the interactive while still holding the lock, and
@@ -72,147 +85,135 @@ On 14/07/14 16:54, Junio C Hamano wrote:
 > index series can notice that the underlying fd in index_lock has
 > been closed earlier, realize that the call is to re-update the
 > index under the same lock and open the file again for writing?
+>
+> Then we can update the above "open() then write_cache()" sequence
+> with just a call to "write_locked_index()".
 
-Hmm, I was just about to suggest that there was some negative interplay
-between the 'dt/cache-tree-repair' and 'nd/split-index' branches as well.
+Or perhaps introduce reopen_locked_file() and have these rare
+callers that want to re-update after they closed the file call it,
+in order to avoid mistake?
 
-The pu branch fails the testsuite for me. In particular, t0090-cache-tree.sh
-fails like so:
+Perhaps something like this on top of your series?
 
-    $ ./t0090-cache-tree.sh -i -v
-    ...
-    ok 9 - second commit has cache-tree
+-- >8 --
+Subject: [PATCH] lockfile: allow reopening a closed but still locked file
 
-    expecting success: 
-    	cat <<-\EOT >foo.c &&
-    	int foo()
-    	{
-    		return 42;
-    	}
-    	int bar()
-    	{
-    		return 42;
-    	}
-    	EOT
-    	git add foo.c &&
-    	test_invalid_cache_tree &&
-    	git commit -m "add a file" &&
-    	test_cache_tree &&
-    	cat <<-\EOT >foo.c &&
-    	int foo()
-    	{
-    		return 43;
-    	}
-    	int bar()
-    	{
-    		return 44;
-    	}
-    	EOT
-    	(echo p; echo 1; echo; echo s; echo n; echo y; echo q) |
-    	git commit --interactive -m foo &&
-    	test_cache_tree
-    
-    [master d1075a6] add a file
-     Author: A U Thor <author@example.com>
-     1 file changed, 8 insertions(+)
-     create mode 100644 foo.c
-               staged     unstaged path
-      1:    unchanged        +2/-2 foo.c
-    
-    *** Commands ***
-      1: [s]tatus	  2: [u]pdate	  3: [r]evert	  4: [a]dd untracked
-      5: [p]atch	  6: [d]iff	  7: [q]uit	  8: [h]elp
-    What now>            staged     unstaged path
-      1:    unchanged        +2/-2 [f]oo.c
-    Patch update>>            staged     unstaged path
-    * 1:    unchanged        +2/-2 [f]oo.c
-    Patch update>> diff --git a/foo.c b/foo.c
-    index 75522e2..3f7f049 100644
-    --- a/foo.c
-    +++ b/foo.c
-    @@ -1,8 +1,8 @@
-     int foo()
-     {
-    -return 42;
-    +return 43;
-     }
-     int bar()
-     {
-    -return 42;
-    +return 44;
-     }
-    Stage this hunk [y,n,q,a,d,/,s,e,?]? Split into 2 hunks.
-    @@ -1,6 +1,6 @@
-     int foo()
-     {
-    -return 42;
-    +return 43;
-     }
-     int bar()
-     {
-    Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]? @@ -4,5 +4,5 @@
-     }
-     int bar()
-     {
-    -return 42;
-    +return 44;
-     }
-    Stage this hunk [y,n,q,a,d,/,K,g,e,?]? 
-    *** Commands ***
-      1: [s]tatus	  2: [u]pdate	  3: [r]evert	  4: [a]dd untracked
-      5: [p]atch	  6: [d]iff	  7: [q]uit	  8: [h]elp
-    What now> Bye.
-    [master 65d7dde] foo
-     Author: A U Thor <author@example.com>
-     1 file changed, 1 insertion(+), 1 deletion(-)
-    --- expect	2014-07-14 17:10:13.755209229 +0000
-    +++ filtered	2014-07-14 17:10:13.763209258 +0000
-    @@ -1 +1 @@
-    -SHA  (3 entries, 0 subtrees)
-    +invalid                                   (0 subtrees)
-    not ok 10 - commit --interactive gives cache-tree on partial commit
-    #	
-    #		cat <<-\EOT >foo.c &&
-    #		int foo()
-    #		{
-    #			return 42;
-    #		}
-    #		int bar()
-    #		{
-    #			return 42;
-    #		}
-    #		EOT
-    #		git add foo.c &&
-    #		test_invalid_cache_tree &&
-    #		git commit -m "add a file" &&
-    #		test_cache_tree &&
-    #		cat <<-\EOT >foo.c &&
-    #		int foo()
-    #		{
-    #			return 43;
-    #		}
-    #		int bar()
-    #		{
-    #			return 44;
-    #		}
-    #		EOT
-    #		(echo p; echo 1; echo; echo s; echo n; echo y; echo q) |
-    #		git commit --interactive -m foo &&
-    #		test_cache_tree
-    #	
-    $ 
+In some code paths (e.g. giving "add -i" to prepare the contents to
+be committed interactively inside "commit -p") where a caller takes
+a lock, writes the new content, give chance for others to use it
+while still holding the lock, and then releases the lock when all is
+done.  As an extension, allow the caller to re-update an already
+closed file while still holding the lock (i.e. not yet committed) by
+re-opening the file, to be followed by updating the contents and
+then by the usual close_lock_file() or commit_lock_file().
 
-Note that I haven't even looked at the test failure itself yet.
+This is necessary if we want to add code to rebuild the cache-tree
+and write the resulting index out after "add -i" returns the control
+to "commit -p", for example.
 
-However, I noticed that commit 002ccda ("cache-tree: write updated
-cache-tree after commit", 11-07-2014) passes that test just fine, but
-that the merge commit 7608c87e fails. Looking at the details of the
-merge resolution, made me think of Duy's split index work.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ cache.h    |  7 ++++---
+ lockfile.c | 51 +++++++++++++++++++++++++++++++++++++--------------
+ 2 files changed, 41 insertions(+), 17 deletions(-)
 
-I probably won't look at this further tonight, so this is just a
-heads-up on a possible problem.
-
-HTH
-
-ATB,
-Ramsay Jones
+diff --git a/cache.h b/cache.h
+index c6b7770..a9344cf 100644
+--- a/cache.h
++++ b/cache.h
+@@ -567,12 +567,13 @@ extern NORETURN void unable_to_lock_index_die(const char *path, int err);
+ extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
+ extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
+ extern int commit_lock_file(struct lock_file *);
+-extern void update_index_if_able(struct index_state *, struct lock_file *);
++extern int reopen_lock_file(struct lock_file *);
++extern int close_lock_file(struct lock_file *);
++extern void rollback_lock_file(struct lock_file *);
+ 
++extern void update_index_if_able(struct index_state *, struct lock_file *);
+ extern int hold_locked_index(struct lock_file *, int);
+ extern void set_alternate_index_output(const char *);
+-extern int close_lock_file(struct lock_file *);
+-extern void rollback_lock_file(struct lock_file *);
+ extern int delete_ref(const char *, const unsigned char *sha1, int delopt);
+ 
+ /* Environment bits from configuration mechanism */
+diff --git a/lockfile.c b/lockfile.c
+index b706614..618a4b2 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -120,21 +120,8 @@ static char *resolve_symlink(char *p, size_t s)
+ 	return p;
+ }
+ 
+-
+-static int lock_file(struct lock_file *lk, const char *path, int flags)
++static int lock_file_open(struct lock_file *lk)
+ {
+-	/*
+-	 * subtract 5 from size to make sure there's room for adding
+-	 * ".lock" for the lock file name
+-	 */
+-	static const size_t max_path_len = sizeof(lk->filename) - 5;
+-
+-	if (strlen(path) >= max_path_len)
+-		return -1;
+-	strcpy(lk->filename, path);
+-	if (!(flags & LOCK_NODEREF))
+-		resolve_symlink(lk->filename, max_path_len);
+-	strcat(lk->filename, ".lock");
+ 	lk->fd = open(lk->filename, O_RDWR | O_CREAT | O_EXCL, 0666);
+ 	if (0 <= lk->fd) {
+ 		if (!lock_file_list) {
+@@ -156,6 +143,23 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
+ 	return lk->fd;
+ }
+ 
++static int lock_file(struct lock_file *lk, const char *path, int flags)
++{
++	/*
++	 * subtract 5 from size to make sure there's room for adding
++	 * ".lock" for the lock file name
++	 */
++	static const size_t max_path_len = sizeof(lk->filename) - 5;
++
++	if (strlen(path) >= max_path_len)
++		return -1;
++	strcpy(lk->filename, path);
++	if (!(flags & LOCK_NODEREF))
++		resolve_symlink(lk->filename, max_path_len);
++	strcat(lk->filename, ".lock");
++	return lock_file_open(lk);
++}
++
+ static char *unable_to_lock_message(const char *path, int err)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -221,6 +225,25 @@ int hold_lock_file_for_append(struct lock_file *lk, const char *path, int flags)
+ 	return fd;
+ }
+ 
++/*
++ * After calling close_lock_file() to flush the contents to the
++ * disk, without releasing the lock, this can be called to reopen
++ * to update the contents of the file.  An expected calling sequence
++ * is
++ *
++ * hold_lock_file(lk), write(lk->fd), close_lock_file(lk),
++ * reopen_lock_file(lk), write(lk->fd), close_lock_file(lk),
++ * commit_lock_file(lk).
++ */
++int reopen_lock_file(struct lock_file *lk)
++{
++	if (0 <= lk->fd)
++		die(_("BUG: attempt to reopen an unclosed lockfile"));
++	if (!lk->filename[0])
++		die(_("BUG: attempt to reopen a committed lockfile"));
++	return lock_file_open(lk);
++}
++
+ int close_lock_file(struct lock_file *lk)
+ {
+ 	int fd = lk->fd;
+-- 
+2.0.1-812-g56968e3
