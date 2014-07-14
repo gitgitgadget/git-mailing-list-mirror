@@ -1,161 +1,82 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] paint_down_to_common: use prio_queue
-Date: Mon, 14 Jul 2014 01:53:54 -0400
-Message-ID: <20140714055354.GC4838@sigill.intra.peff.net>
-References: <20140714054021.GA4422@sigill.intra.peff.net>
+Subject: Re: [PATCH 2/7] move setting of object->type to alloc_* functions
+Date: Mon, 14 Jul 2014 01:57:27 -0400
+Message-ID: <20140714055727.GA5593@sigill.intra.peff.net>
+References: <20140711084141.GA5521@sigill.intra.peff.net>
+ <20140711084611.GB5625@sigill.intra.peff.net>
+ <53C149B6.7010705@ramsay1.demon.co.uk>
+ <20140712180539.GA13806@sigill.intra.peff.net>
+ <20140713064116.GA4768@sigill.intra.peff.net>
+ <53C2DDB7.2070708@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 14 07:54:03 2014
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Mon Jul 14 07:57:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6ZD6-0007cS-MC
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 07:54:01 +0200
+	id 1X6ZGX-000265-E9
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 07:57:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752968AbaGNFx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 01:53:57 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33424 "HELO peff.net"
+	id S1752944AbaGNF5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 01:57:30 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33429 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752966AbaGNFx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 01:53:56 -0400
-Received: (qmail 32325 invoked by uid 102); 14 Jul 2014 05:53:56 -0000
+	id S1752785AbaGNF53 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 01:57:29 -0400
+Received: (qmail 32587 invoked by uid 102); 14 Jul 2014 05:57:29 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Jul 2014 00:53:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jul 2014 01:53:54 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Jul 2014 00:57:29 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jul 2014 01:57:27 -0400
 Content-Disposition: inline
-In-Reply-To: <20140714054021.GA4422@sigill.intra.peff.net>
+In-Reply-To: <53C2DDB7.2070708@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253474>
 
-When we are traversing to find merge bases, we keep our
-usual commit_list of commits to process, sorted by their
-commit timestamp. As we add each parent to the list, we have
-to spend "O(width of history)" to do the insertion, where
-the width of history is the number of simultaneous lines of
-development.
+On Sun, Jul 13, 2014 at 08:27:51PM +0100, Ramsay Jones wrote:
 
-If we instead use a heap-based priority queue, we can do
-these insertions in "O(log width)" time. This provides minor
-speedups to merge-base calculations (timings in linux.git,
-warm cache, best-of-five):
+> > Thinking on this more, writing out the definitions is the only sane
+> > thing to do here, now that alloc_commit_node does not use the macro.
+> > Otherwise you are inviting people to modify the macro, but fail to
+> > notice that the commit allocator also needs updating.
+> 
+> Hmm, well I could argue that using the macro for all allocators, apart
+> from alloc_commit_node(), clearly shows which allocator is the odd-man
+> out (and conversely, that all others are the same)! :-P
+> 
+> No, I don't think this is a telling advantage; I don't think it makes
+> that much difference. (six of one, half-a-dozen of the other).
 
-  [before]
-  $ git merge-base HEAD v2.6.12
-  real    0m3.251s
-  user    0m3.148s
-  sys     0m0.104s
+Yeah, I agree with your final statement in parentheses. I am OK with it
+either way (but I have a slight preference for what I posted).
 
-  [after]
-  $ git merge-base HEAD v2.6.12
-  real    0m3.234s
-  user    0m3.108s
-  sys     0m0.128s
+> I was slightly concerned, when reading through this new series, that the
+> alloc_node() function may no longer be inlined in the new allocators.
+> However, I have just tested on Linux (only using gcc this time), and it
+> was just fine. I will test the new series on the above systems later
+> (probably tomorrow) but don't expect to find any problems.
 
-That's only an 0.5% speedup, but it does help protect us
-against pathological cases.
+That should not be due to my patches (which are just expanding macros),
+but rather to your 1/8, right?
 
-While we are munging the "interesting" function, we also
-take the opportunity to give it a more descriptive name, and
-convert the return value to an int (we returned the first
-interesting commit, but nobody ever looked at it).
+I do not know that it matters that much anyway. Yes, we allocate a lot
+of objects in some workloads. But I think it is not so tight a loop that
+the extra function call is going to kill us (and we tend to _read_ the
+allocated objects much more than we allocate them).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Same as what I posted a few weeks ago, but now we do not have to tweak
-t6024 to account for the lack of stability.
+> > Here's a re-roll. The interesting bit is the addition of the second
+> > patch (but the rest needed to be rebased on top).
+> 
+> Yep, this looks good. Thanks!
 
- commit.c | 42 +++++++++++++++++++-----------------------
- 1 file changed, 19 insertions(+), 23 deletions(-)
+Thanks for reviewing, as usual.
 
-diff --git a/commit.c b/commit.c
-index acb74b5..1fc60c0 100644
---- a/commit.c
-+++ b/commit.c
-@@ -786,45 +786,41 @@ void sort_in_topological_order(struct commit_list **list, enum rev_sort_order so
- 
- static const unsigned all_flags = (PARENT1 | PARENT2 | STALE | RESULT);
- 
--static struct commit *interesting(struct commit_list *list)
-+static int queue_has_nonstale(struct prio_queue *queue)
- {
--	while (list) {
--		struct commit *commit = list->item;
--		list = list->next;
--		if (commit->object.flags & STALE)
--			continue;
--		return commit;
-+	int i;
-+	for (i = 0; i < queue->nr; i++) {
-+		struct commit *commit = queue->array[i].data;
-+		if (!(commit->object.flags & STALE))
-+			return 1;
- 	}
--	return NULL;
-+	return 0;
- }
- 
- /* all input commits in one and twos[] must have been parsed! */
- static struct commit_list *paint_down_to_common(struct commit *one, int n, struct commit **twos)
- {
--	struct commit_list *list = NULL;
-+	struct prio_queue queue = { compare_commits_by_commit_date };
- 	struct commit_list *result = NULL;
- 	int i;
- 
- 	one->object.flags |= PARENT1;
--	commit_list_insert_by_date(one, &list);
--	if (!n)
--		return list;
-+	if (!n) {
-+		commit_list_append(one, &result);
-+		return result;
-+	}
-+	prio_queue_put(&queue, one);
-+
- 	for (i = 0; i < n; i++) {
- 		twos[i]->object.flags |= PARENT2;
--		commit_list_insert_by_date(twos[i], &list);
-+		prio_queue_put(&queue, twos[i]);
- 	}
- 
--	while (interesting(list)) {
--		struct commit *commit;
-+	while (queue_has_nonstale(&queue)) {
-+		struct commit *commit = prio_queue_get(&queue);
- 		struct commit_list *parents;
--		struct commit_list *next;
- 		int flags;
- 
--		commit = list->item;
--		next = list->next;
--		free(list);
--		list = next;
--
- 		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
- 		if (flags == (PARENT1 | PARENT2)) {
- 			if (!(commit->object.flags & RESULT)) {
-@@ -843,11 +839,11 @@ static struct commit_list *paint_down_to_common(struct commit *one, int n, struc
- 			if (parse_commit(p))
- 				return NULL;
- 			p->object.flags |= flags;
--			commit_list_insert_by_date(p, &list);
-+			prio_queue_put(&queue, p);
- 		}
- 	}
- 
--	free_commit_list(list);
-+	clear_prio_queue(&queue);
- 	return result;
- }
- 
--- 
-2.0.0.566.gfe3e6b2
+-Peff
