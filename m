@@ -1,118 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 1/3] dir.c: coding style fix
-Date: Mon, 14 Jul 2014 15:30:51 -0700
-Message-ID: <xmqq4myjy3ms.fsf@gitster.dls.corp.google.com>
-References: <53C3A71F.1020101@gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH v8 4/4] cache-tree: Write updated cache-tree after commit
+Date: Mon, 14 Jul 2014 15:32:08 -0700
+Organization: Twitter
+Message-ID: <1405377128.3775.34.camel@stross>
+References: <1405140276-32162-1-git-send-email-dturner@twitter.com>
+	 <1405140276-32162-4-git-send-email-dturner@twitter.com>
+	 <CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com>
+	 <xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
+	 <53C41456.2000006@ramsay1.demon.co.uk>
+	 <xmqqvbqzygkm.fsf@gitster.dls.corp.google.com>
+	 <53C42453.1090109@ramsay1.demon.co.uk>
+	 <xmqq8unvy4bf.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 00:31:05 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Turner <dturner@twitter.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 00:32:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6om0-0004Qc-P1
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 00:31:05 +0200
+	id 1X6onB-0004yv-VX
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 00:32:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757149AbaGNWbB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jul 2014 18:31:01 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64079 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756976AbaGNWa7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Jul 2014 18:30:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C620A27EE9;
-	Mon, 14 Jul 2014 18:30:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/Cf8mBxBMcon
-	F0kYicLe/+/gdZg=; b=CzzQ4f/C7c1xNgRuZla81AaW9bV2ALMJC3pNQhMmiopC
-	ixvTrZEZRkr7/UKaEA3ykJPG4sDcNvLWRu7EnqAYtJf6iv07zOzSXj/9PlpE+pxx
-	WeWkOr3SmuWew21zAFBGZr9u2GVQGkRQcwtVEhd3FRhy2iqrA4RNXYzFaQr7L0Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u8+bmL
-	F5LWU9ygLAIFSN53h4579CglfXWIoHJzJwZcK9zqpXRJkpr7p4Heo7uAdU0ilIm1
-	01dgvkjmF1db54uecO9iRw3jPZr+P695fkFYm8yKWmPQYkDWzIp0N2+L7dYt/JYk
-	+zbRxIwnjYZcQWpxq7+ln4xsyWEym4PxoPX0E=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BB2FF27EE8;
-	Mon, 14 Jul 2014 18:30:41 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F3D0C27EE6;
-	Mon, 14 Jul 2014 18:30:35 -0400 (EDT)
-In-Reply-To: <53C3A71F.1020101@gmail.com> (Karsten Blees's message of "Mon, 14
-	Jul 2014 11:47:11 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 79928F4A-0BA6-11E4-B0DF-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1757486AbaGNWcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 18:32:14 -0400
+Received: from mail-qa0-f42.google.com ([209.85.216.42]:37919 "EHLO
+	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757251AbaGNWcN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 18:32:13 -0400
+Received: by mail-qa0-f42.google.com with SMTP id j15so3851983qaq.15
+        for <git@vger.kernel.org>; Mon, 14 Jul 2014 15:32:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:content-transfer-encoding
+         :mime-version;
+        bh=/zgv7NICGjNxLRsdZNKJHD+fVCjoLL8YjhTnBdqNUeI=;
+        b=QdD1t4ei0RNvLh8iXysIlVx7RSjdtlXabiJEp/a59h9Mw1ld93uyj0WrX2fzWEsdci
+         7IfANiS511lebk3OZy1K2AQtGeyjIal+EvANNg8OyL+pVGmGyyJEL/D/l2Lq8CRqxaeJ
+         b6sREgPkflXQu8I1dgeHdLbMxINzGEYITBxwbwOFC0loeRF7sPUfEM7wjIWqqhJnGZuQ
+         3l+/c/Fjhbw6xeZ9cV/tyoWaS6dRCkK162V3+KRt8tUOQBoZJkTLtbkkU5lk/tiY6sQn
+         Sg2mDQX8F4QTdEGdT2qa6/ePlc/5b8Teopq+s5EBRsDv5Zn9imVIntyvpWpmlZ3FcUND
+         IVsw==
+X-Gm-Message-State: ALoCoQkGaY1tQ5haOjyAQyg0rk65hXR0E4ddEjkgeTxzqhU82nSZPrqvN6uXn0qVQH3d1xcocKcv
+X-Received: by 10.224.152.5 with SMTP id e5mr26424046qaw.65.1405377132506;
+        Mon, 14 Jul 2014 15:32:12 -0700 (PDT)
+Received: from [172.25.140.220] ([8.25.197.27])
+        by mx.google.com with ESMTPSA id h5sm10395382qgf.19.2014.07.14.15.32.10
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Mon, 14 Jul 2014 15:32:11 -0700 (PDT)
+In-Reply-To: <xmqq8unvy4bf.fsf@gitster.dls.corp.google.com>
+X-Mailer: Evolution 3.2.3-0ubuntu6 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253545>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+On Mon, 2014-07-14 at 15:16 -0700, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+> 
+> > On 14/07/14 18:51, Junio C Hamano wrote:
+> >> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+> >> 
+> >>> that the merge commit 7608c87e fails. Looking at the details of the
+> >>> merge resolution, made me think of Duy's split index work.
+> >> 
+> >> Yes, there is a deliberately dropped hunk from dt/cache-tree-repair
+> >> in that merge, because the topic relied on being able to say "here
+> >> is the file descriptor, write the index to it", which no longer is
+> >> available with the split-index topic.
+> >
+> > Ah, OK. Sounds like everything is under control then.
+> 
+> Wasn't, but now I think it is ;-)
+> 
+> David, could you please double check the conflict resolution at
+> 882426ea (Merge branch 'dt/cache-tree-repair' into jch, 2014-07-14),
+> at about the middle between master..pu?  By eyeballing
+> 
+>     git diff 882426ea^ 882426ea
+> 
+> we should see what your series would have done if it were based on
+> top of the nd/split-index topic.  The most iffy is the first hunk of
+> change to builtin/commit.c, which is more or less my rewrite of what
+> you did on top of 'master'.
 
-> From: =3D?UTF-8?q?Nguy=3DE1=3DBB=3D85n=3D20Th=3DC3=3DA1i=3D20Ng=3DE1=3D=
-BB=3D8Dc=3D20Duy?=3D
->  <pclouds@gmail.com>
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> Signed-off-by: Karsten Blees <blees@dcon.de>
-> ---
+LGTM.  And the tests all pass.
 
-Thanks for forwarding.   I'll fix-up the Yikes (see how these two
-lines show the same name in a very different way), but how did you
-produce the above?  Is there some fix we need in the toolchain that
-produces patch e-mails?
+> The change to builtin/checkout.c also seems somewhat iffy in that we
+> treat the_index.cache_tree (aka "active_cache_tree") as if cache
+> trees are something we can manipulate independent of a particular
+> index_state (which has been the rule for a long time), even though
+> in the world order after nd/split-index topic, cache_tree_update()
+> can no longer be used on a cache-tree that is not associated to a
+> particular index_state.  It is not a problem with your series, but
+> comes from nd/split-index topic, and it might indicate a slight
+> unevenness of the API (i.e. we may want to either insist that the
+> public API to muck with a cache-tree outside cache-tree.c must be
+> accessed via an index-state and never via a bare cache-tree
+> structure, by insisting that cache_tree_fully_valid() to take a
+> pointer to an index-state as well; or we may want to go the other
+> way and allow API users to pass a bare cache-tree without the
+> index-state when the latter is not absolutely necessary, by changing
+> cache_tree_update() to take a cache-tree, not an index-state).
 
->  dir.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/dir.c b/dir.c
-> index e65888d..3068ca8 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -557,8 +557,7 @@ int add_excludes_from_file_to_list(const char *fn=
-ame,
->  			buf =3D xrealloc(buf, size+1);
->  			buf[size++] =3D '\n';
->  		}
-> -	}
-> -	else {
-> +	} else {
->  		size =3D xsize_t(st.st_size);
->  		if (size =3D=3D 0) {
->  			close(fd);
-> @@ -793,9 +792,11 @@ static void prep_exclude(struct dir_struct *dir,=
- const char *base, int baselen)
-> =20
->  	group =3D &dir->exclude_list_group[EXC_DIRS];
-> =20
-> -	/* Pop the exclude lists from the EXCL_DIRS exclude_list_group
-> +	/*
-> +	 * Pop the exclude lists from the EXCL_DIRS exclude_list_group
->  	 * which originate from directories not in the prefix of the
-> -	 * path being checked. */
-> +	 * path being checked.
-> +	 */
->  	while ((stk =3D dir->exclude_stack) !=3D NULL) {
->  		if (stk->baselen <=3D baselen &&
->  		    !strncmp(dir->basebuf, base, stk->baselen))
-> @@ -822,8 +823,7 @@ static void prep_exclude(struct dir_struct *dir, =
-const char *base, int baselen)
->  		if (current < 0) {
->  			cp =3D base;
->  			current =3D 0;
-> -		}
-> -		else {
-> +		} else {
->  			cp =3D strchr(base + current + 1, '/');
->  			if (!cp)
->  				die("oops in prep_exclude");
+I agree that some sort of API updates like would be an improvement. But
+this seems to work for now.
