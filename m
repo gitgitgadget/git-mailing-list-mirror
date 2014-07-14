@@ -1,94 +1,218 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Date: Mon, 14 Jul 2014 10:17:40 -0700
-Message-ID: <xmqqfvi3zwp7.fsf@gitster.dls.corp.google.com>
-References: <1405119347-3308-1-git-send-email-jacob.e.keller@intel.com>
-	<1405119347-3308-3-git-send-email-jacob.e.keller@intel.com>
-	<CAPig+cR9VCtNhk-FbqDM1LTCa8VeUTYXU4XEX36Rb5CxPFfLWQ@mail.gmail.com>
-	<xmqqfvi518xo.fsf@gitster.dls.corp.google.com>
-	<20140713173356.GA8406@sigill.intra.peff.net>
-	<20140713183629.GA19293@sigill.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v8 4/4] cache-tree: Write updated cache-tree after commit
+Date: Mon, 14 Jul 2014 18:33:10 +0100
+Message-ID: <53C41456.2000006@ramsay1.demon.co.uk>
+References: <1405140276-32162-1-git-send-email-dturner@twitter.com>	<1405140276-32162-4-git-send-email-dturner@twitter.com>	<CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com> <xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Git List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Jul 14 19:17:59 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Turner <dturner@twitter.com>
+To: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 14 19:33:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6jsw-0007dy-MR
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 19:17:55 +0200
+	id 1X6k7r-0001ST-TZ
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 19:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752296AbaGNRRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 13:17:50 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51526 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751148AbaGNRRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 13:17:49 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 35A2026252;
-	Mon, 14 Jul 2014 13:17:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yk7dqfqLzDUzg4JaKPAweHKFnBU=; b=nc1YUz
-	ruAG+GuY4tV2V7tf7hMFYhl94SSqukN9sVbGt9093eGENhG+5N4Mezo6FotIDSeV
-	jJHPbple0tTwzciEjQoGa0YgZVNvOH1DyArAKK4XETF0rgRwOdki0HKUe4eVtL1T
-	e4BhlTe7qxbus9AnkP8raQRdDXVCTP/mKrIEQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e2GhuRcNywYlBL5Q1bFUNI3ud+y7vnkT
-	h5JDZi+dEooOsysGk2WjcQPWKZp2RalLVJHp7hhtXJ0EKU+huqNGtUiLmAvKvLAX
-	ZeNKbdi9oY7VCn9D5mjhpKv/FxLJrwqxwomsb0uhBJWJSej0tsy7KpqmH33Gn5dI
-	aFF/ADi75Mo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2CBE126251;
-	Mon, 14 Jul 2014 13:17:31 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
+	id S1751846AbaGNRdQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 13:33:16 -0400
+Received: from mdfmta010.mxout.tch.inty.net ([91.221.169.51]:35766 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751334AbaGNRdP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 13:33:15 -0400
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id C8F154008DE;
+	Mon, 14 Jul 2014 18:33:08 +0100 (BST)
+Received: from mdfmta010.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP id 76293400837;
+	Mon, 14 Jul 2014 18:33:08 +0100 (BST)
+Received: from [192.168.254.1] (unknown [80.176.147.220])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6DAF626242;
-	Mon, 14 Jul 2014 13:17:24 -0400 (EDT)
-In-Reply-To: <20140713183629.GA19293@sigill.intra.peff.net> (Jeff King's
-	message of "Sun, 13 Jul 2014 14:36:29 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: B8F00036-0B7A-11E4-8AC6-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	by mdfmta010.tch.inty.net (Postfix) with ESMTP;
+	Mon, 14 Jul 2014 18:33:07 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
+X-MDF-HostID: 19
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253499>
 
-Jeff King <peff@peff.net> writes:
+On 14/07/14 16:54, Junio C Hamano wrote:
+> Duy Nguyen <pclouds@gmail.com> writes:
+> 
+>> On Sat, Jul 12, 2014 at 11:44 AM, David Turner <dturner@twopensource.com> wrote:
+>>> @@ -342,6 +342,15 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
+>>>
+>>>                 discard_cache();
+>>>                 read_cache_from(index_lock.filename);
+>>> +               if (update_main_cache_tree(WRITE_TREE_SILENT) == 0) {
+>>> +                       fd = open(index_lock.filename, O_WRONLY);
+>>> +                       if (fd >= 0)
+>>> +                               if (write_cache(fd, active_cache, active_nr) == 0) {
+>>> +                                       close_lock_file(&index_lock);
+>>
+>> If write_cache() returns a negative value, index.lock is probably
+>> corrupted. Should we die() instead of moving on and returning
+>> index_lock.filename to the caller? The caller may move index.lock to
+>> index later on and officially ruin "index".
+> 
+> Perhaps true, but worse yet, this will not play nicely together with
+> your split index series, no?  After taking the lock and writing and
+> closing, we spawn the interactive while still holding the lock, and
+> the "open" we see here is because we want to further update the same
+> under the same lock.  Perhaps write_locked_index() API in the split
+> index series can notice that the underlying fd in index_lock has
+> been closed earlier, realize that the call is to re-update the
+> index under the same lock and open the file again for writing?
 
-> On Sun, Jul 13, 2014 at 01:33:56PM -0400, Jeff King wrote:
->
->> I realize that I am reinventing the error-reporting wheel on a sleepy
->> Sunday afternoon without having thought about it much, so there is
->> probably some gotcha or case that makes this ugly, or perhaps it just
->> ends up verbose in practice. But one can dream.
->
-> Just for fun...
+Hmm, I was just about to suggest that there was some negative interplay
+between the 'dt/cache-tree-repair' and 'nd/split-index' branches as well.
 
-Yes, that is fun.
+The pu branch fails the testsuite for me. In particular, t0090-cache-tree.sh
+fails like so:
 
-I actually think your "In 'version:pefname' and 'wersion:refname',
-we want be able to report 'pefname' and 'wersion' are misspelled,
-and returning -1 or enum would not cut it" is a good argument.  The
-callee wants to have flexibility on _what_ to report, just as the
-caller wants to have flexibility on _how_.  In this particular code
-path, I think the former far outweighs the latter, and my suggestion
-I called "silly" might not be so silly but may have struck the right
-balance.  I dunno.
+    $ ./t0090-cache-tree.sh -i -v
+    ...
+    ok 9 - second commit has cache-tree
 
-If you absolutely need to have both, you would need something like
-your approach, of course, but I am not sure if it is worth it.
+    expecting success: 
+    	cat <<-\EOT >foo.c &&
+    	int foo()
+    	{
+    		return 42;
+    	}
+    	int bar()
+    	{
+    		return 42;
+    	}
+    	EOT
+    	git add foo.c &&
+    	test_invalid_cache_tree &&
+    	git commit -m "add a file" &&
+    	test_cache_tree &&
+    	cat <<-\EOT >foo.c &&
+    	int foo()
+    	{
+    		return 43;
+    	}
+    	int bar()
+    	{
+    		return 44;
+    	}
+    	EOT
+    	(echo p; echo 1; echo; echo s; echo n; echo y; echo q) |
+    	git commit --interactive -m foo &&
+    	test_cache_tree
+    
+    [master d1075a6] add a file
+     Author: A U Thor <author@example.com>
+     1 file changed, 8 insertions(+)
+     create mode 100644 foo.c
+               staged     unstaged path
+      1:    unchanged        +2/-2 foo.c
+    
+    *** Commands ***
+      1: [s]tatus	  2: [u]pdate	  3: [r]evert	  4: [a]dd untracked
+      5: [p]atch	  6: [d]iff	  7: [q]uit	  8: [h]elp
+    What now>            staged     unstaged path
+      1:    unchanged        +2/-2 [f]oo.c
+    Patch update>>            staged     unstaged path
+    * 1:    unchanged        +2/-2 [f]oo.c
+    Patch update>> diff --git a/foo.c b/foo.c
+    index 75522e2..3f7f049 100644
+    --- a/foo.c
+    +++ b/foo.c
+    @@ -1,8 +1,8 @@
+     int foo()
+     {
+    -return 42;
+    +return 43;
+     }
+     int bar()
+     {
+    -return 42;
+    +return 44;
+     }
+    Stage this hunk [y,n,q,a,d,/,s,e,?]? Split into 2 hunks.
+    @@ -1,6 +1,6 @@
+     int foo()
+     {
+    -return 42;
+    +return 43;
+     }
+     int bar()
+     {
+    Stage this hunk [y,n,q,a,d,/,j,J,g,e,?]? @@ -4,5 +4,5 @@
+     }
+     int bar()
+     {
+    -return 42;
+    +return 44;
+     }
+    Stage this hunk [y,n,q,a,d,/,K,g,e,?]? 
+    *** Commands ***
+      1: [s]tatus	  2: [u]pdate	  3: [r]evert	  4: [a]dd untracked
+      5: [p]atch	  6: [d]iff	  7: [q]uit	  8: [h]elp
+    What now> Bye.
+    [master 65d7dde] foo
+     Author: A U Thor <author@example.com>
+     1 file changed, 1 insertion(+), 1 deletion(-)
+    --- expect	2014-07-14 17:10:13.755209229 +0000
+    +++ filtered	2014-07-14 17:10:13.763209258 +0000
+    @@ -1 +1 @@
+    -SHA  (3 entries, 0 subtrees)
+    +invalid                                   (0 subtrees)
+    not ok 10 - commit --interactive gives cache-tree on partial commit
+    #	
+    #		cat <<-\EOT >foo.c &&
+    #		int foo()
+    #		{
+    #			return 42;
+    #		}
+    #		int bar()
+    #		{
+    #			return 42;
+    #		}
+    #		EOT
+    #		git add foo.c &&
+    #		test_invalid_cache_tree &&
+    #		git commit -m "add a file" &&
+    #		test_cache_tree &&
+    #		cat <<-\EOT >foo.c &&
+    #		int foo()
+    #		{
+    #			return 43;
+    #		}
+    #		int bar()
+    #		{
+    #			return 44;
+    #		}
+    #		EOT
+    #		(echo p; echo 1; echo; echo s; echo n; echo y; echo q) |
+    #		git commit --interactive -m foo &&
+    #		test_cache_tree
+    #	
+    $ 
 
-I am not sure how well this meshes with i18n (I know the "for fun"
-does not even attempt to, but if we tried to, I suspect it may
-become even uglier).  We would also need to override both error and
-warning routines and have the reporter tag the errors in these two
-categories, no?
+Note that I haven't even looked at the test failure itself yet.
+
+However, I noticed that commit 002ccda ("cache-tree: write updated
+cache-tree after commit", 11-07-2014) passes that test just fine, but
+that the merge commit 7608c87e fails. Looking at the details of the
+merge resolution, made me think of Duy's split index work.
+
+I probably won't look at this further tonight, so this is just a
+heads-up on a possible problem.
+
+HTH
+
+ATB,
+Ramsay Jones
