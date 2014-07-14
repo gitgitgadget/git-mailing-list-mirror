@@ -1,145 +1,154 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] lockfile: allow reopening a closed but still locked file
-Date: Mon, 14 Jul 2014 13:19:42 -0700
-Message-ID: <xmqqr41ny9pd.fsf_-_@gitster.dls.corp.google.com>
-References: <1405140276-32162-1-git-send-email-dturner@twitter.com>
-	<1405140276-32162-4-git-send-email-dturner@twitter.com>
-	<CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com>
-	<xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
-	<xmqqzjgbygy3.fsf@gitster.dls.corp.google.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v20 39/48] refs.c: make delete_ref use a transaction
+Date: Mon, 14 Jul 2014 13:50:51 -0700
+Message-ID: <CAL=YDWmVpB3uj_was-Tyqkgxhd9-5LN6Pg0scG0JkzeWDp0pqA@mail.gmail.com>
+References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
+	<1403275409-28173-40-git-send-email-sahlberg@google.com>
+	<53BBF794.1090702@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twitter.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 22:19:58 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Mon Jul 14 22:50:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6mj8-0001yC-1y
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 22:19:58 +0200
+	id 1X6nD7-0007XH-7b
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 22:50:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757293AbaGNUTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 16:19:54 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62382 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757151AbaGNUTu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 16:19:50 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B91CF27653;
-	Mon, 14 Jul 2014 16:19:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kIfTABcO7Dn01xwK/qf94Xqkp5o=; b=fu0zmW
-	msj5ZwEdjtPHWDuRMA9QB05w8IpsZFvflT7HH2bcSP1YBfT9qS1RsRsbCpVgT4Wm
-	zjKs7cNR8L0UPayqOVjEIKluQgy4MluA2qovCKcAq7R9nGz17wlgRBWdljvSjcKV
-	rftlDLbq/m5TMBKnffB+LECFUzPJUzWqXsVLQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RVqkopszEDb26vKhh94dPJlEEL0dAeZ+
-	akDmSS4L9xz0LTEamViSZGqIaJ1lS6CU+5iyGW+lkUv+bCI65swDmpUIWBkJPYVl
-	E6ECsytSosL9Hk9NXlW6RdbGwcn4UYBZSjI2M7GSXIW8AE0ekhgtW+T5b7wdjwYw
-	/YWu3hphnr4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AEB2427650;
-	Mon, 14 Jul 2014 16:19:32 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CE19A27648;
-	Mon, 14 Jul 2014 16:19:26 -0400 (EDT)
-In-Reply-To: <xmqqzjgbygy3.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 14 Jul 2014 10:43:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 27318524-0B94-11E4-A7F8-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1756940AbaGNUuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 16:50:54 -0400
+Received: from mail-vc0-f179.google.com ([209.85.220.179]:36068 "EHLO
+	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756838AbaGNUuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 16:50:52 -0400
+Received: by mail-vc0-f179.google.com with SMTP id id10so8291714vcb.38
+        for <git@vger.kernel.org>; Mon, 14 Jul 2014 13:50:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=SzOjZVmSXLRuYyOtigjOrMisplwoNnuPPfBkJX+/YFA=;
+        b=Gg8fjRqA53sCAnHYZ7F8MuIPuxCPrT5jwybKnKIQSl8rUMZwYQtJShH78QmDkdq3bu
+         8nFng5GlgBWDGJ79PzcDjmXTmRj951VEACerLMK7gVIjAXQXD7drlt2TMxh3ThFX5f1V
+         t5XQJzRaaK86RFxcXs9Klp9RoJ5kjjrx0h+oUvuq2k4IBjbsWSEQnW5rr/2YQqx51IaD
+         R5+vF2UEhSdm6lY9ih3HSFWBAxT1Bwqwzzn5ku34cr5S/H2uKArmldPvBxNxkoF3K7Gw
+         1LN50SAz23s8iQ5eyyUeDKsRpMw8L49qJQk+SyrhOf4Mxwz8Kv6RkncMY3LECyG4xBl1
+         GlaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=SzOjZVmSXLRuYyOtigjOrMisplwoNnuPPfBkJX+/YFA=;
+        b=Vo7J0GDCO/F6xARnbqxW5xYg3QeMKY7Jr9s+0EwmUCq4xpvXDsRvlsZs0Nh5ohPB6S
+         19jTv/J+m6Qx8SmmbwpTmh0Pot9EF9t3aP7xBEDh4EZyOCrnhCcw7Yr4GuQY/q0ZMWpN
+         e42fox4a4ovMl7huKUchOrdTW3WjmEMdnWLVWD6t0LFFQBRuu+reb2k4qvpTqCdut7lM
+         r+NpUUVJNuZfQ5FsRRUNQK+KY1OZxEQIaWSmXdns0tx/gCiO0fufFg/0+1XsHGEO5c/S
+         UOs7Gi6KI/1/G/cAPouZX77yqLFxbv/P14pvDI6mFMvDL6QttBebCbzN/4WrOUPGt+Nt
+         K8cA==
+X-Gm-Message-State: ALoCoQmpMrdFzvyO4fvj6Z5mbdzDlJRUSbBQG96/udIamNuNzuqhBS9BL0v9XTjBhk+QMpxPFGWi
+X-Received: by 10.52.244.138 with SMTP id xg10mr1977421vdc.40.1405371051720;
+ Mon, 14 Jul 2014 13:50:51 -0700 (PDT)
+Received: by 10.52.136.166 with HTTP; Mon, 14 Jul 2014 13:50:51 -0700 (PDT)
+In-Reply-To: <53BBF794.1090702@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253513>
 
-In some code paths (e.g. giving "add -i" to prepare the contents to
-be committed interactively inside "commit -p") where a caller takes
-a lock, writes the new content, give chance for others to use it
-while still holding the lock, and then releases the lock when all is
-done.  As an extension, allow the caller to re-update an already
-closed file while still holding the lock (i.e. not yet committed) by
-re-opening the file, to be followed by updating the contents and
-then by the usual close_lock_file() or commit_lock_file().
+On Tue, Jul 8, 2014 at 6:52 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
+> On 06/20/2014 04:43 PM, Ronnie Sahlberg wrote:
+>> Change delete_ref to use a ref transaction for the deletion. At the same time
+>> since we no longer have any callers of repack_without_ref we can now delete
+>> this function.
+>>
+>> Change delete_ref to return 0 on success and 1 on failure instead of the
+>> previous 0 on success either 1 or -1 on failure.
+>>
+>> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+>> ---
+>>  refs.c | 34 +++++++++++++---------------------
+>>  1 file changed, 13 insertions(+), 21 deletions(-)
+>>
+>> diff --git a/refs.c b/refs.c
+>> index 3d070d5..92a06d4 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -2544,11 +2544,6 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+>>       return ret;
+>>  }
+>>
+>> -static int repack_without_ref(const char *refname)
+>> -{
+>> -     return repack_without_refs(&refname, 1, NULL);
+>> -}
+>> -
+>>  static int delete_ref_loose(struct ref_lock *lock, int flag)
+>>  {
+>>       if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
+>> @@ -2566,24 +2561,21 @@ static int delete_ref_loose(struct ref_lock *lock, int flag)
+>>
+>>  int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+>>  {
+>> -     struct ref_lock *lock;
+>> -     int ret = 0, flag = 0;
+>> +     struct ref_transaction *transaction;
+>> +     struct strbuf err = STRBUF_INIT;
+>>
+>> -     lock = lock_ref_sha1_basic(refname, sha1, delopt, &flag);
+>
+> The old code checked that the old value of refname was sha1, regardless
+> of whether sha1 was null_sha1.  Presumably callers never set sha1 to
+> null_sha1...
 
-This is necessary if we want to add code to rebuild the cache-tree
-and write the resulting index out after "add -i" returns the control
-to "commit -p", for example.
+They sometimes do.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+>
+>> -     if (!lock)
+>> +     transaction = ref_transaction_begin(&err);
+>> +     if (!transaction ||
+>> +         ref_transaction_delete(transaction, refname, sha1, delopt,
+>> +                                sha1 && !is_null_sha1(sha1), &err) ||
+>
+> ...But the new code explicitly skips the check if sha1 is null_sha1.
+> This shouldn't make a practical difference, because presumably callers
+> never set sha1 to null_sha1.
 
- * I was being silly in the first attemt as usual ;-)  There is not
-   much to be shared between the reopen and initial open code path
-   in that we do not want to give O_EXCL to open(), we know the file
-   exists so O_CREAT is not necessary, we know we have added it to
-   the unlocked-atexit list and we already know that we have futzed
-   with its permission bits.
+There are actually a few cases where callers do call delete_ref() with
+sha1 == null_sha1.
+For example fast-import.c:update_branch() will do this is the ref can
+not be resolved.
+It can also happen in builtin/update-ref.c where we are passing user
+supplied data into the call to delete_ref.
 
-   With this added on top of the nd/split-index series, the conflict
-   resolution for the "interactive" codepath in builtin/commit.c
-   with dt/cache-tree-repair topic would become like this:
+So I think the current behaviour should be ok.
 
-  @@ -340,6 +340,13 @@ static char *prepare_index(int argc, const char
+There are a few options we could do:
+We could change the semantics for ref_transaction_update|delete and
+start allowing
+   have_old==1
+   old_sha1==null_sha1
+and have this behave the same way as
+   have_old==0
+but I think that would be horrible I think.
 
-                  discard_cache();
-                  read_cache_from(index_lock.filename);
-  +               if (update_main_cache_tree(WRITE_TREE_SILENT) == 0) {
-  +                       if (reopen_lock_file(&index_lock) < 0)
-  +                               die(_("unable to write index file"));
-  +                       if (write_locked_index(&the_index, &index_lock, CLOSE_LOCK))
-  +                               die(_("unable to update temporary index"));
-  +               } else
-  +                       warning(_("Failed to update main cache tree"));
+We could also change all callers to delete_ref() to be careful to only
+specify a sha1 IFF it is not null_sha1
+but that would just mean we require all callers to do this type of check.
+But that would also be fragile since if/when we get new callers to
+delete_ref we risk breaking delete_ref if we are not careful.
 
-                  commit_style = COMMIT_NORMAL;
-                  return index_lock.filename;
 
- cache.h    |  1 +
- lockfile.c | 10 ++++++++++
- 2 files changed, 11 insertions(+)
+I think the least bad option is to just have this check in
+delete_ref() as now and have the semantics for delete_ref be that if
+sha1 is either NULL or null_sha1 then it means we don't care what the
+old value is.
 
-diff --git a/cache.h b/cache.h
-index c6b7770..b780794 100644
---- a/cache.h
-+++ b/cache.h
-@@ -567,6 +567,7 @@ extern NORETURN void unable_to_lock_index_die(const char *path, int err);
- extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
- extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
- extern int commit_lock_file(struct lock_file *);
-+extern int reopen_lock_file(struct lock_file *);
- extern void update_index_if_able(struct index_state *, struct lock_file *);
- 
- extern int hold_locked_index(struct lock_file *, int);
-diff --git a/lockfile.c b/lockfile.c
-index b706614..9c12ec5 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -228,6 +228,16 @@ int close_lock_file(struct lock_file *lk)
- 	return close(fd);
- }
- 
-+int reopen_lock_file(struct lock_file *lk)
-+{
-+	if (0 <= lk->fd)
-+		die(_("BUG: reopen a lockfile that is still open"));
-+	if (!lk->filename[0])
-+		die(_("BUG: reopen a lockfile that has been committed"));
-+	lk->fd = open(lk->filename, O_WRONLY);
-+	return lk->fd;
-+}
-+
- int commit_lock_file(struct lock_file *lk)
- {
- 	char result_file[PATH_MAX];
--- 
-2.0.1-814-g49d294e
+
+
+regards
+ronnie sahlberg
