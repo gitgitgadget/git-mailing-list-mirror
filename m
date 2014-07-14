@@ -1,91 +1,175 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH/RFH 0/3] stable priority-queue
-Date: Mon, 14 Jul 2014 01:40:22 -0400
-Message-ID: <20140714054021.GA4422@sigill.intra.peff.net>
+Subject: [PATCH 1/3] prio-queue: factor out compare and swap operations
+Date: Mon, 14 Jul 2014 01:42:50 -0400
+Message-ID: <20140714054250.GA4838@sigill.intra.peff.net>
+References: <20140714054021.GA4422@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>,
 	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 14 07:40:33 2014
+X-From: git-owner@vger.kernel.org Mon Jul 14 07:42:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6Z02-00053c-UL
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 07:40:31 +0200
+	id 1X6Z2O-000721-WF
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 07:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752274AbaGNFkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 01:40:25 -0400
-Received: from cloud.peff.net ([50.56.180.127]:33410 "HELO peff.net"
+	id S1752877AbaGNFmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 01:42:54 -0400
+Received: from cloud.peff.net ([50.56.180.127]:33414 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750844AbaGNFkY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 01:40:24 -0400
-Received: (qmail 31566 invoked by uid 102); 14 Jul 2014 05:40:24 -0000
+	id S1752616AbaGNFmw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 01:42:52 -0400
+Received: (qmail 31821 invoked by uid 102); 14 Jul 2014 05:42:52 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Jul 2014 00:40:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jul 2014 01:40:22 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 14 Jul 2014 00:42:52 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 14 Jul 2014 01:42:50 -0400
 Content-Disposition: inline
+In-Reply-To: <20140714054021.GA4422@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253471>
 
-As Junio and I discussed earlier in [1], this series makes the
-prio_queue struct stable with respect to object insertion (which in turn
-means we can use it to replace commit_list in more places).
+When manipulating the priority queue's heap, we frequently
+have to compare and swap heap entries. As we are storing
+only void pointers right now, this is quite easy to do
+inline in a few lines. However, when we start using a more
+complicated heap entry in a future patch, that will get
+longer. Factoring out these operations lets us make future
+changes in one place. It also makes the code a little
+shorter and more readable.
 
-I think everything here is correct, but the second commit fails the
-final test in t5539. I think the test is just flaky (hence the RFH and
-cc to Duy).
+Note that we actually accept indices into the queue array
+instead of pointers. This is slightly less flexible than
+passing pointers-to-pointers (we could not swap items from
+unrelated arrays, but we would not want to), but will make
+further refactoring simpler (and lets us avoid repeating
+"queue->array" at each callsite, which led to some long
+lines).
 
-That test creates some unrelated commits in two separate repositories,
-and then fetches from one to the other. Since the commit creation
-happens in a subshell, the first commit in each ends up with the same
-test_tick value. When fetch-pack looks at the two root commits
-"unrelated1" and "new-too", the exact sequence of ACKs is different
-depending on which one it pulls out of the queue first.
+And finally, note that we are cleaning up an accidental use
+of a "struct commit" pointer to hold a temporary entry
+during swap. Even though we currently only use this code for
+commits, it is supposed to be type-agnostic. In practice
+this didn't matter anyway because we never dereferenced the
+commit pointer (and on most systems, the pointer values
+themselves are interchangeable between types).
 
-With the current code, it happens to be "unrelated1" (though this is not
-at all guaranteed by the prio_queue data structure, it is deterministic
-for this particular sequence of input). We see the ready-ACK, and the
-test succeeds.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ prio-queue.c | 49 +++++++++++++++++++++++++------------------------
+ 1 file changed, 25 insertions(+), 24 deletions(-)
 
-With the stable queue, we reliably get "new-too" out (since it is our
-local tip, it is added to the queue before we even talk to the remote).
-We never see a ready-ACK, and the test fails due to the grep on the
-TRACE_PACKET output at the end (the fetch itself succeeds as expected).
-
-I'm really not quite clear on what's supposed to be going on in the
-test. I can make it pass with:
-
-diff --git a/t/t5539-fetch-http-shallow.sh b/t/t5539-fetch-http-shallow.sh
-index 94553e1..b461188 100755
---- a/t/t5539-fetch-http-shallow.sh
-+++ b/t/t5539-fetch-http-shallow.sh
-@@ -54,6 +54,7 @@ EOF
- test_expect_success 'no shallow lines after receiving ACK ready' '
- 	(
- 		cd shallow &&
-+		test_tick &&
- 		for i in $(test_seq 15)
- 		do
- 			git checkout --orphan unrelated$i &&
-
-which just bumps the timestamp for the unrelated* commits (so that they
-are always more recent than "new-too" and get picked first). I'm not
-sure if that is too hacky, or if there's a more robust way to set up the
-test.
-
-Anyway, here are the patches.
-
-  [1/3]: prio-queue: factor out compare and swap operations
-  [2/3]: prio-queue: make output stable with respect to insertion
-  [3/3]: paint_down_to_common: use prio_queue
-
--Peff
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/252472/focus=252475
+diff --git a/prio-queue.c b/prio-queue.c
+index c9f8c6d..0f4fcf2 100644
+--- a/prio-queue.c
++++ b/prio-queue.c
+@@ -1,18 +1,28 @@
+ #include "cache.h"
+-#include "commit.h"
+ #include "prio-queue.h"
+ 
++static inline int compare(struct prio_queue *queue, int i, int j)
++{
++	int cmp = queue->compare(queue->array[i], queue->array[j],
++				 queue->cb_data);
++	return cmp;
++}
++
++static inline void swap(struct prio_queue *queue, int i, int j)
++{
++	void *tmp = queue->array[i];
++	queue->array[i] = queue->array[j];
++	queue->array[j] = tmp;
++}
++
+ void prio_queue_reverse(struct prio_queue *queue)
+ {
+ 	int i, j;
+ 
+ 	if (queue->compare != NULL)
+ 		die("BUG: prio_queue_reverse() on non-LIFO queue");
+-	for (i = 0; i <= (j = (queue->nr - 1) - i); i++) {
+-		struct commit *swap = queue->array[i];
+-		queue->array[i] = queue->array[j];
+-		queue->array[j] = swap;
+-	}
++	for (i = 0; i <= (j = (queue->nr - 1) - i); i++)
++		swap(queue, i, j);
+ }
+ 
+ void clear_prio_queue(struct prio_queue *queue)
+@@ -25,37 +35,32 @@ void clear_prio_queue(struct prio_queue *queue)
+ 
+ void prio_queue_put(struct prio_queue *queue, void *thing)
+ {
+-	prio_queue_compare_fn compare = queue->compare;
+ 	int ix, parent;
+ 
+ 	/* Append at the end */
+ 	ALLOC_GROW(queue->array, queue->nr + 1, queue->alloc);
+ 	queue->array[queue->nr++] = thing;
+-	if (!compare)
++	if (!queue->compare)
+ 		return; /* LIFO */
+ 
+ 	/* Bubble up the new one */
+ 	for (ix = queue->nr - 1; ix; ix = parent) {
+ 		parent = (ix - 1) / 2;
+-		if (compare(queue->array[parent], queue->array[ix],
+-			    queue->cb_data) <= 0)
++		if (compare(queue, parent, ix) <= 0)
+ 			break;
+ 
+-		thing = queue->array[parent];
+-		queue->array[parent] = queue->array[ix];
+-		queue->array[ix] = thing;
++		swap(queue, parent, ix);
+ 	}
+ }
+ 
+ void *prio_queue_get(struct prio_queue *queue)
+ {
+-	void *result, *swap;
++	void *result;
+ 	int ix, child;
+-	prio_queue_compare_fn compare = queue->compare;
+ 
+ 	if (!queue->nr)
+ 		return NULL;
+-	if (!compare)
++	if (!queue->compare)
+ 		return queue->array[--queue->nr]; /* LIFO */
+ 
+ 	result = queue->array[0];
+@@ -67,18 +72,14 @@ void *prio_queue_get(struct prio_queue *queue)
+ 	/* Push down the one at the root */
+ 	for (ix = 0; ix * 2 + 1 < queue->nr; ix = child) {
+ 		child = ix * 2 + 1; /* left */
+-		if ((child + 1 < queue->nr) &&
+-		    (compare(queue->array[child], queue->array[child + 1],
+-			     queue->cb_data) >= 0))
++		if (child + 1 < queue->nr &&
++		    compare(queue, child, child + 1) >= 0)
+ 			child++; /* use right child */
+ 
+-		if (compare(queue->array[ix], queue->array[child],
+-			    queue->cb_data) <= 0)
++		if (compare(queue, ix, child) <= 0)
+ 			break;
+ 
+-		swap = queue->array[child];
+-		queue->array[child] = queue->array[ix];
+-		queue->array[ix] = swap;
++		swap(queue, child, ix);
+ 	}
+ 	return result;
+ }
+-- 
+2.0.0.566.gfe3e6b2
