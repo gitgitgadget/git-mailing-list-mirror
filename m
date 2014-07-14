@@ -1,161 +1,148 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v21 07/19] lockfile.c: make lock_file return a meaningful errno on failure
-Date: Mon, 14 Jul 2014 13:58:49 -0700
-Message-ID: <1405371541-32121-8-git-send-email-sahlberg@google.com>
+Subject: [PATCH v21 09/19] refs.c: make sure log_ref_setup returns a meaningful errno
+Date: Mon, 14 Jul 2014 13:58:51 -0700
+Message-ID: <1405371541-32121-10-git-send-email-sahlberg@google.com>
 References: <1405371541-32121-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 14 22:59:33 2014
+X-From: git-owner@vger.kernel.org Mon Jul 14 22:59:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6nLQ-0002z1-Re
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 22:59:33 +0200
+	id 1X6nLQ-0002z1-BU
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 22:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757167AbaGNU7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 16:59:22 -0400
-Received: from mail-qa0-f74.google.com ([209.85.216.74]:46473 "EHLO
-	mail-qa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756903AbaGNU7H (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756915AbaGNU7T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 16:59:19 -0400
+Received: from mail-yk0-f202.google.com ([209.85.160.202]:59754 "EHLO
+	mail-yk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756896AbaGNU7H (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 14 Jul 2014 16:59:07 -0400
-Received: by mail-qa0-f74.google.com with SMTP id j15so819890qaq.3
-        for <git@vger.kernel.org>; Mon, 14 Jul 2014 13:59:05 -0700 (PDT)
+Received: by mail-yk0-f202.google.com with SMTP id q9so104104ykb.1
+        for <git@vger.kernel.org>; Mon, 14 Jul 2014 13:59:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4yTyK+tKKrvYgiV7qvy8/fp+IIYPBy5+iBrNxP+E4Gg=;
-        b=kEgGbU5YH3ZRXkAne9ZRoN2tUbQOXW92Qy8BIH1HEmlW2NK4s3BWqjgYId0pyZo5Wf
-         0MRfmGetvX7eaJpyQK+u7JAdub5TrxEemA6GpUk7fzL18S82SGldA2tFUsSq8HHPP816
-         SxWB9R/Ln52SCVwIDUaDbky+CCZ3CIoUvsFCTk4OHLNS1is9kfKMa6JJGzrDR8n4MzmP
-         1SkY9XmCaIsUhtbxaJFSt1v5M0jCrGwCJYe6ACT6bgA+H2U8O2OvrBjald9L70uNMDSb
-         QzFPxJiIpJPXooEjfIgaC4CX7Wyug3Yv0aUKABk7+zP7hMb1ebH2+HmdWDoNpZlQ1mUm
-         moIA==
+        bh=/9UZxgw2XlvbQZr9m5TKuGT/8r9XIBdDNWtBqnLeQYQ=;
+        b=Lv3wbhSiLSRudct1nNbfhOG9a25DzOXSjtZYInvD1SnLZ//0ZiQQ1aWbaJcWpaDY0/
+         6YtivRGR3yZPFiXx7V9vQvm4z7c/fZ4dFcKF/bkdvas1e9wlgWYqhs6TC9K7csb3Yg3B
+         FUB78hO8YIFx/DxZ9BtyeFEArBV6Oo/p3AIz8W7dMVmGskmoHOoKhIQzE0NMF8OP46rT
+         T3UAoQNz3+LTm3oDQKaNWfiOAGB3fKKeJx3H+n+dnhy189cdPhPrHAAP6Xdx93nnGi1F
+         E5G/9CyS3VBHhBMWejd8oS5EivNgVQKmoV4tq69hZInEqceF+GkTMbXBWZ0qLqhDZwTO
+         M1ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=4yTyK+tKKrvYgiV7qvy8/fp+IIYPBy5+iBrNxP+E4Gg=;
-        b=lXLH+/uyWfivgvJBm+6ykfK86yQx0fVw3q7zYGWu59BZVFIuyXJRkPAnNF1vrVpxe/
-         LUNXw4NSnk1YWhhQQnH/ahLaf3UPdaTrAhtvfwsYooDWrel/x9HY1URZbeZJg+YWhBoG
-         Kpo2SOt5g+TRwGij/l4J2X9Wya4fWRGuWIt4A0u+QbrCxB5LzuiWqS10jYB4+PYlAzXh
-         VJP4NhuBsUz8KNxF2oyIfUFtsji/pi05zNTN/e81MNTDwptLfIMm1n91kvU9fhIsJvhd
-         eniqZZ9vG1KGmAlpOcKscfTaoXbNlh/B1UkAq7Ud4F/Wvw4yd7Jgl7PBO7H1M1hV4mqd
-         NoOQ==
-X-Gm-Message-State: ALoCoQlt+R2iB1EDodvx5gxwi5NO0raVNyna3UlTJcHHxG23rmGcmL5BsnvXS/hgX/But3SMjMXF
-X-Received: by 10.52.165.227 with SMTP id zb3mr7737145vdb.1.1405371545732;
+        bh=/9UZxgw2XlvbQZr9m5TKuGT/8r9XIBdDNWtBqnLeQYQ=;
+        b=PtuVxo5wcx+H3OAx43QlnjZfLXF/wJGP5gVvnND4SRcZG+zFJId3daOKVb7gLvCJRh
+         GqboO39Q5QvCWR80a9Sb0+Zj08RYG3Te/ZkY/ijjmwHlAZdk6mJn6VEYtGpakfA4VjHV
+         c3AVacJZe3s3DA5EC2/kzNPsb2fv3s7YD1KG3JG9vBQHFuEDrYKpCFeDhNTsoJO1VIEM
+         86cTKqRmg13XvRfZaXbEy8bur85tp4EwVgmNQ05rSm9nLImWnoSu8S1GvE7B5/RNuuVS
+         I1E823Uyb5lCTKP3iD24pCEgJMgzxhFG7n23lJcnLYRf+kYrCmgnMMKWrdnNbH2E99VB
+         41Kw==
+X-Gm-Message-State: ALoCoQk/q0uZ5tzZMO1Ssqgb1GMy5Cd/aivOKzdU6Wj6fG/nUKLnQVkSZynFgfVU5loa2GS1bsXt
+X-Received: by 10.236.161.8 with SMTP id v8mr7943671yhk.0.1405371545916;
         Mon, 14 Jul 2014 13:59:05 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id j5si822632yhi.1.2014.07.14.13.59.05
+        by gmr-mx.google.com with ESMTPS id y50si821465yhk.4.2014.07.14.13.59.05
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Mon, 14 Jul 2014 13:59:05 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 91D0B5A43D4;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id C18FD5A4309;
 	Mon, 14 Jul 2014 13:59:05 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 34BEAE0D03; Mon, 14 Jul 2014 13:59:05 -0700 (PDT)
+	id 97937E0328; Mon, 14 Jul 2014 13:59:05 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.546.gf603308
 In-Reply-To: <1405371541-32121-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253519>
 
-Making errno when returning from lock_file() meaningful, which should
-fix
-
- * an existing almost-bug in lock_ref_sha1_basic where it assumes
-   errno==ENOENT is meaningful and could waste some work on retries
-
- * an existing bug in repack_without_refs where it prints
-   strerror(errno) and picks advice based on errno, despite errno
-   potentially being zero and potentially having been clobbered by
-   that point
+Making errno when returning from log_ref_setup() meaningful,
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 Reviewed-by: Michael Haggerty <mhagger@alum.mit.edu>
 ---
- lockfile.c | 17 ++++++++++++-----
- refs.c     |  1 +
- refs.h     |  1 +
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ refs.c | 27 +++++++++++++++++++--------
+ refs.h |  4 +++-
+ 2 files changed, 22 insertions(+), 9 deletions(-)
 
-diff --git a/lockfile.c b/lockfile.c
-index 464031b..a921d77 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -121,7 +121,7 @@ static char *resolve_symlink(char *p, size_t s)
- 	return p;
+diff --git a/refs.c b/refs.c
+index 67a0217..9ea519c 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2751,6 +2751,7 @@ static int copy_msg(char *buf, const char *msg)
+ 	return cp - buf;
  }
  
--
-+/* Make sure errno contains a meaningful value on error */
- static int lock_file(struct lock_file *lk, const char *path, int flags)
++/* This function must set a meaningful errno on failure */
+ int log_ref_setup(const char *refname, char *logfile, int bufsize)
  {
- 	/*
-@@ -130,8 +130,10 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 	 */
- 	static const size_t max_path_len = sizeof(lk->filename) - 5;
- 
--	if (strlen(path) >= max_path_len)
-+	if (strlen(path) >= max_path_len) {
-+		errno = ENAMETOOLONG;
- 		return -1;
-+	}
- 	strcpy(lk->filename, path);
- 	if (!(flags & LOCK_NODEREF))
- 		resolve_symlink(lk->filename, max_path_len);
-@@ -148,9 +150,13 @@ static int lock_file(struct lock_file *lk, const char *path, int flags)
- 			lock_file_list = lk;
- 			lk->on_list = 1;
- 		}
--		if (adjust_shared_perm(lk->filename))
--			return error("cannot fix permission bits on %s",
--				     lk->filename);
-+		if (adjust_shared_perm(lk->filename)) {
+ 	int logfd, oflags = O_APPEND | O_WRONLY;
+@@ -2761,9 +2762,12 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+ 	     starts_with(refname, "refs/remotes/") ||
+ 	     starts_with(refname, "refs/notes/") ||
+ 	     !strcmp(refname, "HEAD"))) {
+-		if (safe_create_leading_directories(logfile) < 0)
+-			return error("unable to create directory for %s",
+-				     logfile);
++		if (safe_create_leading_directories(logfile) < 0) {
 +			int save_errno = errno;
-+			error("cannot fix permission bits on %s",
-+			      lk->filename);
++			error("unable to create directory for %s", logfile);
++			errno = save_errno;
++			return -1;
++		}
+ 		oflags |= O_CREAT;
+ 	}
+ 
+@@ -2774,15 +2778,22 @@ int log_ref_setup(const char *refname, char *logfile, int bufsize)
+ 
+ 		if ((oflags & O_CREAT) && errno == EISDIR) {
+ 			if (remove_empty_directories(logfile)) {
+-				return error("There are still logs under '%s'",
+-					     logfile);
++				int save_errno = errno;
++				error("There are still logs under '%s'",
++				      logfile);
++				errno = save_errno;
++				return -1;
+ 			}
+ 			logfd = open(logfile, oflags, 0666);
+ 		}
+ 
+-		if (logfd < 0)
+-			return error("Unable to append to %s: %s",
+-				     logfile, strerror(errno));
++		if (logfd < 0) {
++			int save_errno = errno;
++			error("Unable to append to %s: %s", logfile,
++			      strerror(errno));
 +			errno = save_errno;
 +			return -1;
 +		}
  	}
- 	else
- 		lk->filename[0] = 0;
-@@ -188,6 +194,7 @@ NORETURN void unable_to_lock_index_die(const char *path, int err)
- 	die("%s", buf.buf);
- }
  
-+/* This should return a meaningful errno on failure */
- int hold_lock_file_for_update(struct lock_file *lk, const char *path, int flags)
- {
- 	int fd = lock_file(lk, path, flags);
-diff --git a/refs.c b/refs.c
-index db05602..e9d53e4 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2212,6 +2212,7 @@ static int write_packed_entry_fn(struct ref_entry *entry, void *cb_data)
- 	return 0;
- }
- 
-+/* This should return a meaningful errno on failure */
- int lock_packed_refs(int flags)
- {
- 	struct packed_ref_cache *packed_ref_cache;
+ 	adjust_shared_perm(logfile);
 diff --git a/refs.h b/refs.h
-index 09d3564..64f25d9 100644
+index 65f7637..82cc5cb 100644
 --- a/refs.h
 +++ b/refs.h
-@@ -82,6 +82,7 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
- /*
-  * Lock the packed-refs file for writing.  Flags is passed to
-  * hold_lock_file_for_update().  Return 0 on success.
-+ * Errno is set to something meaningful on error.
-  */
- extern int lock_packed_refs(int flags);
+@@ -158,7 +158,9 @@ extern void unlock_ref(struct ref_lock *lock);
+ /** Writes sha1 into the ref specified by the lock. **/
+ extern int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1, const char *msg);
  
+-/** Setup reflog before using. **/
++/*
++ * Setup reflog before using. Set errno to something meaningful on failure.
++ */
+ int log_ref_setup(const char *refname, char *logfile, int bufsize);
+ 
+ /** Reads log for the value of ref during at_time. **/
 -- 
 2.0.1.546.gf603308
