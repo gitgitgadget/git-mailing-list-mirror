@@ -1,148 +1,145 @@
-From: Aleksander Nitecki <ixendr@itogi.re>
-Subject: [BUG] checkout --orphan breaks HEAD reflog
-Date: Mon, 14 Jul 2014 21:44:25 +0200
-Message-ID: <53C43319.7000208@itogi.re>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] lockfile: allow reopening a closed but still locked file
+Date: Mon, 14 Jul 2014 13:19:42 -0700
+Message-ID: <xmqqr41ny9pd.fsf_-_@gitster.dls.corp.google.com>
+References: <1405140276-32162-1-git-send-email-dturner@twitter.com>
+	<1405140276-32162-4-git-send-email-dturner@twitter.com>
+	<CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com>
+	<xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
+	<xmqqzjgbygy3.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="------------010709080901080907040409"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 14 22:00:22 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: David Turner <dturner@twopensource.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Turner <dturner@twitter.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 14 22:19:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6mQ9-0001L3-JN
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 22:00:22 +0200
+	id 1X6mj8-0001yC-1y
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 22:19:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757000AbaGNUAS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 16:00:18 -0400
-Received: from 10.mo69.mail-out.ovh.net ([46.105.73.241]:45421 "EHLO
-	mo69.mail-out.ovh.net" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757068AbaGNUAQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 16:00:16 -0400
-X-Greylist: delayed 601 seconds by postgrey-1.27 at vger.kernel.org; Mon, 14 Jul 2014 16:00:16 EDT
-Received: from mail401.ha.ovh.net (gw6.ovh.net [213.251.189.206])
-	by mo69.mail-out.ovh.net (Postfix) with SMTP id CDCB3FF99BB
-	for <git@vger.kernel.org>; Mon, 14 Jul 2014 21:44:28 +0200 (CEST)
-Received: from b0.ovh.net (HELO queueout) (213.186.33.50)
-	by b0.ovh.net with SMTP; 14 Jul 2014 21:43:00 +0200
-Received: from unknown (HELO ?192.168.2.2?) (ixendr@itogi.re@176.221.120.189)
-  by ns0.ovh.net with SMTP; 14 Jul 2014 21:42:59 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-X-Ovh-Tracer-Id: 3657767323160185822
-X-Ovh-Remote: 176.221.120.189 ()
-X-Ovh-Local: 213.186.33.20 (ns0.ovh.net)
-X-OVH-SPAMSTATE: OK
-X-OVH-SPAMSCORE: 0
-X-OVH-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejfedrvdelucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
-X-Spam-Check: DONE|U 0.5/N
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrfeejfedrvdelucetufdoteggodetrfcurfhrohhfihhlvgemucfqggfjnecuuegrihhlohhuthemuceftddtnecu
+	id S1757293AbaGNUTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 16:19:54 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:62382 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757151AbaGNUTu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 16:19:50 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B91CF27653;
+	Mon, 14 Jul 2014 16:19:32 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kIfTABcO7Dn01xwK/qf94Xqkp5o=; b=fu0zmW
+	msj5ZwEdjtPHWDuRMA9QB05w8IpsZFvflT7HH2bcSP1YBfT9qS1RsRsbCpVgT4Wm
+	zjKs7cNR8L0UPayqOVjEIKluQgy4MluA2qovCKcAq7R9nGz17wlgRBWdljvSjcKV
+	rftlDLbq/m5TMBKnffB+LECFUzPJUzWqXsVLQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RVqkopszEDb26vKhh94dPJlEEL0dAeZ+
+	akDmSS4L9xz0LTEamViSZGqIaJ1lS6CU+5iyGW+lkUv+bCI65swDmpUIWBkJPYVl
+	E6ECsytSosL9Hk9NXlW6RdbGwcn4UYBZSjI2M7GSXIW8AE0ekhgtW+T5b7wdjwYw
+	/YWu3hphnr4=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AEB2427650;
+	Mon, 14 Jul 2014 16:19:32 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CE19A27648;
+	Mon, 14 Jul 2014 16:19:26 -0400 (EDT)
+In-Reply-To: <xmqqzjgbygy3.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 14 Jul 2014 10:43:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 27318524-0B94-11E4-A7F8-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253512>
 
-This is a multi-part message in MIME format.
---------------010709080901080907040409
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In some code paths (e.g. giving "add -i" to prepare the contents to
+be committed interactively inside "commit -p") where a caller takes
+a lock, writes the new content, give chance for others to use it
+while still holding the lock, and then releases the lock when all is
+done.  As an extension, allow the caller to re-update an already
+closed file while still holding the lock (i.e. not yet committed) by
+re-opening the file, to be followed by updating the contents and
+then by the usual close_lock_file() or commit_lock_file().
 
-Hi, this is my first mail to this list (and I'm not a native English speaker), so let me apologise from the start for any slips in following message.
+This is necessary if we want to add code to rebuild the cache-tree
+and write the resulting index out after "add -i" returns the control
+to "commit -p", for example.
 
-Ok, so I think I've found a bug in git.
-It concerns orphan checkouts breaking (gapping in non-traversable way) the HEAD reflog display.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-% git --version
-git version 2.0.1
+ * I was being silly in the first attemt as usual ;-)  There is not
+   much to be shared between the reopen and initial open code path
+   in that we do not want to give O_EXCL to open(), we know the file
+   exists so O_CREAT is not necessary, we know we have added it to
+   the unlocked-atexit list and we already know that we have futzed
+   with its permission bits.
 
+   With this added on top of the nd/split-index series, the conflict
+   resolution for the "interactive" codepath in builtin/commit.c
+   with dt/cache-tree-repair topic would become like this:
 
-# Repro commands; output omitted.
+  @@ -340,6 +340,13 @@ static char *prepare_index(int argc, const char
 
-% mkdir /tmp/git-orphan-checkout-reflog-bug
-% cd /tmp/git-orphan-checkout-reflog-bug
-% git init
-% echo a  > foo; git add foo; git commit -m 'newly created master; rev. a'
-% echo b >> foo; git add foo; git commit -m 'master; rev. b'
-% echo c >> foo; git add foo; git commit -m 'master; rev. c'
-% git checkout --orphan some_orphan_branch
-% echo 1  > bar; git add bar; git commit -m 'newly created orphan branch; rev. 1'
-% echo 2 >> bar; git add bar; git commit -m 'orphan branch; rev. 2'
-% echo 3 >> bar; git add bar; git commit -m 'orphan branch; rev. 3'
+                  discard_cache();
+                  read_cache_from(index_lock.filename);
+  +               if (update_main_cache_tree(WRITE_TREE_SILENT) == 0) {
+  +                       if (reopen_lock_file(&index_lock) < 0)
+  +                               die(_("unable to write index file"));
+  +                       if (write_locked_index(&the_index, &index_lock, CLOSE_LOCK))
+  +                               die(_("unable to update temporary index"));
+  +               } else
+  +                       warning(_("Failed to update main cache tree"));
 
+                  commit_style = COMMIT_NORMAL;
+                  return index_lock.filename;
 
-# Actual (IMHO buggy) output
+ cache.h    |  1 +
+ lockfile.c | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
 
-% git reflog HEAD
-1af4e3c HEAD@{0}: commit: orphan branch; rev. 3
-6d200b4 HEAD@{1}: commit: orphan branch; rev. 2
-ed4ad67 HEAD@{2}: commit (initial): newly created orphan branch; rev. 1
-
-% git reflog HEAD@{3}
-warning: Log .git/logs/HEAD has gap after Mon, 14 Jul 2014 20:55:05 +0200.
-0cada62 HEAD@{3}: commit: master; rev. c
-42d7cc3 HEAD@{4}: commit: master; rev. b
-222a0b3 HEAD@{5}: commit (initial): newly created master; rev. a
-
-
-# Expected output:
-
-% git reflog HEAD
-1af4e3c HEAD@{0}: commit: orphan branch; rev. 3
-6d200b4 HEAD@{1}: commit: orphan branch; rev. 2
-ed4ad67 HEAD@{2}: commit (initial): newly created orphan branch; rev. 1
-warning: Log .git/logs/HEAD has gap after Mon, 14 Jul 2014 20:55:05 +0200.
-0cada62 HEAD@{3}: commit: master; rev. c
-42d7cc3 HEAD@{4}: commit: master; rev. b
-222a0b3 HEAD@{5}: commit (initial): newly created master; rev. a
-
-Well, actually git doesn't seem to show warning messages when traversing reflogs with other gaps, but only when started from point where a gap is.
-Whether those warnings should be displayed while traversing the reflog, not only when starting from gapped entries is another matter, but I think it could be useful.
-
-
-# Raw reflog file (shortened to fit in 80 columns).
-# Omissions marked with ##. Full contents in attachment.
-# (does sending attachments to mailing list even work? Sorry, if it doesn't.)
-
-% cat .git/logs/HEAD
-00000## 222a0## ## commit (initial): newly created master; rev. a
-222a0## 42d7c## ## commit: master; rev. b
-42d7c## 0cada## ## commit: master; rev. c
-00000## ed4ad## ## commit (initial): newly created orphan branch; rev. 1
-ed4ad## 6d200## ## commit: orphan branch; rev. 2
-6d200## 1af4e## ## commit: orphan branch; rev. 3
-
-So the problem seems to be that git stops traversing the reflog after finding first initial commit (all-0s hash) and completely ignores rest of log.
-The problem is that this commit is initial only to the orphaned branch, not to the whole repo.
-
-
---------------010709080901080907040409
-Content-Type: text/plain; charset=UTF-8;
- name="gitdir_logs_HEAD.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
- filename="gitdir_logs_HEAD.txt"
-
-MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCAyMjJhMGIzODY1NGQy
-YzhjZjMwMjZkYjU5MTNkMjE4NTdhNWExN2U3IEFsZWtzYW5kZXIgTml0ZWNraSA8aXhlbmRy
-QGl0b2dpLnJlPiAxNDA1MzY0MDcwICswMjAwIGNvbW1pdCAoaW5pdGlhbCk6IG5ld2x5IGNy
-ZWF0ZWQgbWFzdGVyOyByZXYuIGEKMjIyYTBiMzg2NTRkMmM4Y2YzMDI2ZGI1OTEzZDIxODU3
-YTVhMTdlNyA0MmQ3Y2MzOWNiNGU4OWUwMmU4YjA4NjhkNGJkMzJkMThjMGZjZDg0IEFsZWtz
-YW5kZXIgTml0ZWNraSA8aXhlbmRyQGl0b2dpLnJlPiAxNDA1MzY0MDg2ICswMjAwIGNvbW1p
-dDogbWFzdGVyOyByZXYuIGIKNDJkN2NjMzljYjRlODllMDJlOGIwODY4ZDRiZDMyZDE4YzBm
-Y2Q4NCAwY2FkYTYyZGYwMDdhYTllYzFlZTAwODE2YWRiMWIxZDljZTNmNTkzIEFsZWtzYW5k
-ZXIgTml0ZWNraSA8aXhlbmRyQGl0b2dpLnJlPiAxNDA1MzY0MTA1ICswMjAwIGNvbW1pdDog
-bWFzdGVyOyByZXYuIGMKMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAw
-MCBlZDRhZDY3OWQzYzY5MDNiM2JiYWQ0NzdmOGU2MWE4NWFmYTg4MmE1IEFsZWtzYW5kZXIg
-Tml0ZWNraSA8aXhlbmRyQGl0b2dpLnJlPiAxNDA1MzY0MzI0ICswMjAwIGNvbW1pdCAoaW5p
-dGlhbCk6IG5ld2x5IGNyZWF0ZWQgb3JwaGFuIGJyYW5jaDsgcmV2LiAxCmVkNGFkNjc5ZDNj
-NjkwM2IzYmJhZDQ3N2Y4ZTYxYTg1YWZhODgyYTUgNmQyMDBiNDFmMjMwNzYyNTg1ZTBjMjVi
-OWIzMzMzNmUwY2Y2OWJhOSBBbGVrc2FuZGVyIE5pdGVja2kgPGl4ZW5kckBpdG9naS5yZT4g
-MTQwNTM2NDM3MSArMDIwMCBjb21taXQ6IG9ycGhhbiBicmFuY2g7IHJldi4gMgo2ZDIwMGI0
-MWYyMzA3NjI1ODVlMGMyNWI5YjMzMzM2ZTBjZjY5YmE5IDFhZjRlM2NmMTU3NmQwNWZhNWM1
-NzljODA5MGUyOTYxZWJhZmQ0ZTkgQWxla3NhbmRlciBOaXRlY2tpIDxpeGVuZHJAaXRvZ2ku
-cmU+IDE0MDUzNjQ0MjEgKzAyMDAgY29tbWl0OiBvcnBoYW4gYnJhbmNoOyByZXYuIDMK
---------------010709080901080907040409--
+diff --git a/cache.h b/cache.h
+index c6b7770..b780794 100644
+--- a/cache.h
++++ b/cache.h
+@@ -567,6 +567,7 @@ extern NORETURN void unable_to_lock_index_die(const char *path, int err);
+ extern int hold_lock_file_for_update(struct lock_file *, const char *path, int);
+ extern int hold_lock_file_for_append(struct lock_file *, const char *path, int);
+ extern int commit_lock_file(struct lock_file *);
++extern int reopen_lock_file(struct lock_file *);
+ extern void update_index_if_able(struct index_state *, struct lock_file *);
+ 
+ extern int hold_locked_index(struct lock_file *, int);
+diff --git a/lockfile.c b/lockfile.c
+index b706614..9c12ec5 100644
+--- a/lockfile.c
++++ b/lockfile.c
+@@ -228,6 +228,16 @@ int close_lock_file(struct lock_file *lk)
+ 	return close(fd);
+ }
+ 
++int reopen_lock_file(struct lock_file *lk)
++{
++	if (0 <= lk->fd)
++		die(_("BUG: reopen a lockfile that is still open"));
++	if (!lk->filename[0])
++		die(_("BUG: reopen a lockfile that has been committed"));
++	lk->fd = open(lk->filename, O_WRONLY);
++	return lk->fd;
++}
++
+ int commit_lock_file(struct lock_file *lk)
+ {
+ 	char result_file[PATH_MAX];
+-- 
+2.0.1-814-g49d294e
