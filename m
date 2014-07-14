@@ -1,115 +1,93 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v20 00/48] Use ref transactions
-Date: Mon, 14 Jul 2014 09:16:38 -0700
-Message-ID: <CAL=YDWkQXA=XpaV=u8MbrUTkg1DARdDuNGbY_qPjyNZOF+D4Yg@mail.gmail.com>
-References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
-	<53BC1C53.9030203@alum.mit.edu>
-	<xmqqa98jadqx.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 00/31] Support multiple checkouts
+Date: Mon, 14 Jul 2014 10:05:53 -0700
+Message-ID: <xmqqmwcbzx8u.fsf@gitster.dls.corp.google.com>
+References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
+	<1405227068-25506-1-git-send-email-pclouds@gmail.com>
+	<xmqqvbr0zgy1.fsf@gitster.dls.corp.google.com>
+	<CACsJy8AAfZJtg1MBNmKJcYZ=VKaLV4NWJ0nETk=0uD9XK3+exg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 18:16:48 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Max Kirillov <max@max630.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 14 19:06:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6ivj-0008VL-Kz
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 18:16:43 +0200
+	id 1X6jhs-0007pn-1P
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 19:06:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756012AbaGNQQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 12:16:40 -0400
-Received: from mail-vc0-f178.google.com ([209.85.220.178]:45342 "EHLO
-	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755836AbaGNQQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 12:16:39 -0400
-Received: by mail-vc0-f178.google.com with SMTP id la4so953916vcb.37
-        for <git@vger.kernel.org>; Mon, 14 Jul 2014 09:16:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=TyZ9nF0n2QRwlafkfmJW7GFc6sKLx95cMF/guPKoewE=;
-        b=GarxQtdl/7lKUsY3gK6mP5zt9iPOA9chBlZY70Ee9pK2uSIWUOCBLjmGir7CyFjafy
-         IcRtoR3zHq1Bb3bZsPIBCzjhkbTm7UT52G7/lgN31ODUvfbf7Gvq4HTod7TBSjLFQcqO
-         7b222k5czqMngwcq0mfN7B8UUhASppjBu7XtfR2ItcUkf2RrQXPK3RN3SxnwBNP8mYO1
-         efJ34cqlmLao+i/QuKdmjXWn4LeLmBmQWQmQLYcqXwIMOltp51SfcyF7cHH4UmvYVIVb
-         snbOwE06i+aheBXOowjTnnvqfEkFDL+lgHNTJsyQbvs2JDTCBpQgtbQTuRVWrJIqBL8d
-         MUjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=TyZ9nF0n2QRwlafkfmJW7GFc6sKLx95cMF/guPKoewE=;
-        b=dZunbvlBsvjWROhh7yvyjIKhvp2J8nb/a3l3TNHRIGoPEbdquXotAgmOv4ciOW+H4Q
-         T7NtOQk0SoyKn9N3nFwY79DdlY9Yu663weRG7yDjCVP2GGSYOZJKgtkb6TqFvDkwcP0t
-         U1DYn9bfPJp1ZbLzS6A43x5/HvYU+8kSQDlj6ChTkRcfk9acI1HIhgIQiJDwNGZDCkdP
-         KZIWtGz12lObINPeGEteYcArY2Pc5XSQfJKbjJ+WXwfQOFkGvCoY3oYJIqTr0sg51AAo
-         CGOCo0w6y3rPgkcLr/B4VRnlIsd96bH9QLKw3iPDcS6CRxDYsAM2VwkLuCSQti4UEM2c
-         3Gvw==
-X-Gm-Message-State: ALoCoQnZTMLLampvue1ApGo2u1gWk65pNQRGZVnd3Zd5c/7de13bR/z5i1yB/nb2Qypndn8qrISX
-X-Received: by 10.58.197.193 with SMTP id iw1mr1047269vec.57.1405354598524;
- Mon, 14 Jul 2014 09:16:38 -0700 (PDT)
-Received: by 10.52.136.166 with HTTP; Mon, 14 Jul 2014 09:16:38 -0700 (PDT)
-In-Reply-To: <xmqqa98jadqx.fsf@gitster.dls.corp.google.com>
+	id S1756651AbaGNRGW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jul 2014 13:06:22 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53339 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756421AbaGNRGQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Jul 2014 13:06:16 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CE40A27DC8;
+	Mon, 14 Jul 2014 13:05:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=6XxR3wLSryLZ
+	SMBEH9qADmqmpHE=; b=emzJvLdEXmaFk3VNpkBaOLWfrs5tnXSd6rvPLRNElmbc
+	Gq1BKb1+cyJ3UHyERIubBaFuLnvPvortk9a94FUifTVakpAtUIYdR8Bqi0BrL8it
+	fkg8rbwBi/pC4bx8/WdeCWulI+/IbuAv9LpwfQnMtgObmgw9R2WPAhUvyoj9jaY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Knal1r
+	hfk37J4YWmCvzCwFISDjJNeB4wBpTxjIWNHmpMPTykXmIr9mQGqLHnrD9kvqfaWM
+	orREtHGmqWzXQnj3vVrKZ4t5Hab2+Mj18n8za1vELynVfn7jVYrbLhALbFRiD5zC
+	uUuWwY7Jtgu78NI4pNEH3glMby57LLwTWFTSM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C34C027DC7;
+	Mon, 14 Jul 2014 13:05:52 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B2FE127D87;
+	Mon, 14 Jul 2014 13:05:37 -0400 (EDT)
+In-Reply-To: <CACsJy8AAfZJtg1MBNmKJcYZ=VKaLV4NWJ0nETk=0uD9XK3+exg@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 14 Jul 2014 18:06:22 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 13B3FD62-0B79-11E4-8795-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253496>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253497>
 
-On Tue, Jul 8, 2014 at 11:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Michael Haggerty <mhagger@alum.mit.edu> writes:
->
->> Patches 01-19 -- ACK mhagger
->> Patches 20-42 -- I sent various comments, small to large, concerning
->> these patches
->> Patch 43 -- Needs more justification if it is to be acceptable
->> Patch 44 -- Depends on 43
->> Patches 45-48 -- I didn't quite get to these, but...
+Duy Nguyen <pclouds@gmail.com> writes:
+
+> On Mon, Jul 14, 2014 at 11:45 AM, Junio C Hamano <gitster@pobox.com> =
+wrote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> write=
+s:
 >>
->> Perhaps it would be more appropriate for the rules about reference name
->> conflicts to be enforced by the backend, since it is the limitations of
->> the current backend that impose the restrictions.  Would that make sense?
+>>>       fd =3D open(git_path("repos/%s/gitdir", id), O_RDONLY);
+>>> ...
+>>> -     while (path[len - 1] =3D=3D '\n' || path[len - 1] =3D=3D '\r'=
+)
+>>> +     while (len && (path[len - 1] =3D=3D '\n' || path[len - 1] =3D=
+=3D '\r'))
+>>>               len--;
 >>
->> On the other hand, removing the restrictions isn't simply a matter of
->> picking a different backend, because all Git repositories have to be
->> able to interact with each other.
->
-> I'd say that "if you have foo/bar you cannot have foo" may have
-> started as an implementation limitation, but the interoperability
-> requirement with existing versions of Git and with existing
-> repositories makes it necessary to enforce it the same way as other
-> rules such as "you cannot have double-dots in name, e.g. foo..bar"
-> or "no branches whose name begins with a dash", neither of which
-> comes from any filesystem issues.  That a rule can be loosened with
-> one new backend does not at all mean it is a good idea to loosen it
-> "because we can" in the first place.
-
-ACK.
-
->
->> I think it would be good to try to merge the first part of this patch
->> series to lock in some progress while we continue iterating on the
->> remainder.  I'm satisfied that it is all going in the right direction
->> and I am thankful to Ronnie for pushing it forward.  But handling
->> 48-patch series is very daunting and I would welcome a split.
+>> Do we anticipate (or even allow/endorse) that end users will edit
+>> this file with a random editor?  And, to a lessor degree, the same
+>> question on the reading side.  Do we encourage users to directly
+>> read from this file to learn something about their repository?
 >>
->> I'm not sure whether patches 01-19 are necessarily the right split
->> between merge-now/iterate-more; it is more or less an accident that I
->> stopped after patch 19 on an earlier review.  Maybe Ronnie could propose
->> a logical subset of the commits as being ready to be merged to next in
->> the nearish term?
+>> If we are the only tool that writes into this file, and if we are
+>> the only tool to be used to read (and use) the contents of this
+>> file, I do not see the need to cater to LF vs CRLF line endings.
 >
-> Yeah, thanks for going through this, and I agree that we would be
-> better off merging the earlier part first.
->
+> No I don't expect users to go and change these files by themselves.
+> But once directory structure is documented, other tools might appear
+> and scripts on Windows may just append CRLF by default.
 
-Ok,  01-19 is as good split as any.
-If you merge just the 01-19 part of this series I will address
-Michael's concerns and repost patches 20-48 as a separate series.
-
-regards
-ronnie sahlberg
+Essentially you are encouraging them to edit this file with a random
+editor, bypassing Git, then.
