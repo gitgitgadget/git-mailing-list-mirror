@@ -1,86 +1,98 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v20 31/48] receive-pack.c: use a reference transaction for
- updating the refs
-Date: Mon, 14 Jul 2014 11:51:25 -0700
-Message-ID: <CAL=YDW=BNCSHGSVa5N6-GC4uZZLb6BPsiEjv6jXCsAXehT+kwg@mail.gmail.com>
-References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
-	<1403275409-28173-32-git-send-email-sahlberg@google.com>
-	<53BBF016.7040107@alum.mit.edu>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: No fchmod() under msygit - Was: Re: [PATCH 00/14] Add submodule
+ test harness
+Date: Mon, 14 Jul 2014 21:30:40 +0200
+Message-ID: <53C42FE0.10904@gmail.com>
+References: <539DD029.4030506@web.de> <53B41D42.2090805@web.de> <53B46425.3030000@web.de> <53B4F0AA.10809@web.de> <53B5C7AC.4040701@web.de> <xmqqsimddrq3.fsf@gitster.dls.corp.google.com> <53BAF7AF.4020901@web.de> <53BC47BD.1000705@web.de> <53BC53C3.1010304@ramsay1.demon.co.uk> <53BCE3A7.8070600@web.de> <20140709200046.GB17454@dcvr.yhbt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 14 20:51:31 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Eric Wong <normalperson@yhbt.net>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1?= =?UTF-8?B?c2Vu?= 
+	<tboegi@web.de>
+X-From: git-owner@vger.kernel.org Mon Jul 14 21:30:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6lLW-00033F-Pj
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 20:51:31 +0200
+	id 1X6lxW-0002vo-RY
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 21:30:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756791AbaGNSv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 14:51:27 -0400
-Received: from mail-vc0-f181.google.com ([209.85.220.181]:34158 "EHLO
-	mail-vc0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756529AbaGNSv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 14:51:26 -0400
-Received: by mail-vc0-f181.google.com with SMTP id lf12so4296558vcb.12
-        for <git@vger.kernel.org>; Mon, 14 Jul 2014 11:51:25 -0700 (PDT)
+	id S1756122AbaGNTan convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Jul 2014 15:30:43 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:47312 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754870AbaGNTam (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 15:30:42 -0400
+Received: by mail-wi0-f181.google.com with SMTP id bs8so3092480wib.14
+        for <git@vger.kernel.org>; Mon, 14 Jul 2014 12:30:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=ALzEidbfAnG7r7M0fqo1HOLTpFVAdyZ6ZzyEQ54IPVI=;
-        b=Nq6om44dF7aASvZPkdq8svVhyLzYW4i2kbtwHj6G48GZEnJQ5SPLYs7TJT8TdOE2bI
-         ShVTURRxBORJsbSOYMolkDf4Nt3Q2tH3tJd9iDcz50UyE8l17NpbULgNO+SWOcXzi0Ov
-         WyME4AAZ/zlZJSWNwGvF9uBCVkgKrMGd3ORXdlRGQge6ttA9TBIfh5M3zZMt+3QSXZAO
-         tuMcuTrzQr56j1lULVXcboC4BFGaqtfbFaG6V5gBjax3Yosg0yXqiG80tJorovE/IQld
-         hxhy11WzSw4GBynrUteZY5m6MUAvxe3DsSyy314sfquCEZhiJQq9/EtWoSUaRLK95HZm
-         B/KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=ALzEidbfAnG7r7M0fqo1HOLTpFVAdyZ6ZzyEQ54IPVI=;
-        b=OTH303q7p10lT3dTrn3cxfVFRUtOI4D+nfGTT95HgpTY6lUGoIn3Yzf17B3/05etk/
-         Y+hB6bNBLKKHsqm9ioo3/jyYMYmq2C2y7Jkt80yoSrTnRgAdWkGY+K6UUwZR1xpWN618
-         sAE3KPWAJBU76DoifSecQjfcHxFZ+P840LgRz5RlwxeB4EVpwrMEmukESfI/bPc4ZbpX
-         JXuZbIdNwsVR85ScpsJna/3fgUI0LnzoZeHtaLvfQPiTmOucGFO8q63ryaRQE0BRN9Vz
-         M1WqS40S0v0afmOAElyYMlyCd0ZcevEGv9QwL4Vj3914SIirjnngsurZ4XZwhj2ij93+
-         WvPg==
-X-Gm-Message-State: ALoCoQn+qxH1Znn2G8rA/b54x9Cvh481TU4+g9JmQz2RoFIc0dfw7qzn3fKu7KS1SqYRtzmzrYx1
-X-Received: by 10.52.108.234 with SMTP id hn10mr14563233vdb.4.1405363885476;
- Mon, 14 Jul 2014 11:51:25 -0700 (PDT)
-Received: by 10.52.136.166 with HTTP; Mon, 14 Jul 2014 11:51:25 -0700 (PDT)
-In-Reply-To: <53BBF016.7040107@alum.mit.edu>
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=afNrwJTAAk+wwFhXsSy0hnBOxOiL+VxAKx3H0M0uxIQ=;
+        b=krUscok69713b+g8uMyuUZsF9xs+qsu7tNMlSgu96mrUBXvtoMQM8Ha3UUQMmGkquN
+         Z+zNsuMFdp1z/3ZspYKEmEQwWXCBxfdsl6FYZgIqLUHDXT693fqb4JNxIlBCI7/JlNfw
+         sD8axUtXq7AJ8QQQspFtnj6sXnEB2P6qgMzQSppWkFHyXsu+38U9EzXCy4RSU9dHHx9z
+         MJXCDDpkTl0r46E6mIul3zy/Z4SgFFfY/4XLJP4JZMk17/1MD+u8qYdPAAojrIxqgCcB
+         z/+p0tCljn5FS1dt0yvgXWuqXXMOW/h1jjvOHH8EhCZ+qqzIB8xiiSMD9QsdlIDl+m9y
+         JOrg==
+X-Received: by 10.180.39.144 with SMTP id p16mr170897wik.4.1405366240968;
+        Mon, 14 Jul 2014 12:30:40 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id wp6sm27406949wjb.9.2014.07.14.12.30.39
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 14 Jul 2014 12:30:40 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140709200046.GB17454@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253510>
 
-On Tue, Jul 8, 2014 at 6:20 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 06/20/2014 04:43 PM, Ronnie Sahlberg wrote:
->> Wrap all the ref updates inside a transaction.
->>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  builtin/receive-pack.c | 96 +++++++++++++++++++++++++++++++++-----------------
->>  1 file changed, 63 insertions(+), 33 deletions(-)
->>
->> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->> index c323081..b51f8ae 100644
->> --- a/builtin/receive-pack.c
->> +++ b/builtin/receive-pack.c
->> [...]
->> @@ -647,6 +654,9 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
->>       char cmd_oldh[41], cmd_newh[41], dst_oldh[41], dst_newh[41];
->>       int flag;
->>
->> +     if (cmd->error_string)
->> +             die("BUG: check_alised_update called with failed cmd");
->
-> s/check_alised_update/check_aliased_update/
+Am 09.07.2014 22:00, schrieb Eric Wong:
+> Torsten B=C3=B6gershausen <tboegi@web.de> wrote:
+>> (And why is it  "& 07777" and not  "& 0777")
+>=20
+> This is to preserve the uncommon sticky/sgid/suid bits.  Probably not
+> needed, but better to keep as much intact as possible.
+>=20
+>> Can we avoid the fchmod()  all together ?
+>=20
+> For single-user systems, sure.
+>=20
+> For multi-user systems with git-imap-send users and passwords in
+> $GIT_CONFIG, I suggest not.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
 
-Done, thanks.
+The Windows fchmod() problem is easily solved by using chmod() instead =
+of
+fchmod(). The file name is known in both cases (and even used in the er=
+ror
+message).
+
+However, IMO there are more fundamental problems with your patch (not
+related to Windows):
+
+1.) Permissions of files in .git are controlled by the core.sharedRepos=
+itory
+setting, and your patch seems to break that (i.e. if someone accidental=
+ly
+has made .git/config world readable, git-config no longer fixes that, e=
+ven
+if core.sharedRepository=3D0600).
+
+2.) Sensitive data such as passwords doesn't belong in config files in =
+the
+first place, that's what git-credentials is good for.
