@@ -1,90 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 4/4] cache-tree: Write updated cache-tree after commit
-Date: Mon, 14 Jul 2014 08:54:55 -0700
-Message-ID: <xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
-References: <1405140276-32162-1-git-send-email-dturner@twitter.com>
-	<1405140276-32162-4-git-send-email-dturner@twitter.com>
-	<CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH v20 00/48] Use ref transactions
+Date: Mon, 14 Jul 2014 09:16:38 -0700
+Message-ID: <CAL=YDWkQXA=XpaV=u8MbrUTkg1DARdDuNGbY_qPjyNZOF+D4Yg@mail.gmail.com>
+References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
+	<53BC1C53.9030203@alum.mit.edu>
+	<xmqqa98jadqx.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Turner <dturner@twopensource.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twitter.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 14 17:55:13 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 14 18:16:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6iar-0002zU-GM
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 17:55:09 +0200
+	id 1X6ivj-0008VL-Kz
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 18:16:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755926AbaGNPzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 11:55:05 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53426 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755783AbaGNPzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 11:55:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D6F46265DD;
-	Mon, 14 Jul 2014 11:54:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=o2kVyuKkXkwPUNEezK6F8EQDQpc=; b=SsAN/E
-	6w3FGzXE4X/1g+yzFhOyHp+SQWazC3LONXagzJE3DXrP/fpRpf8jN1lV/wiVLsku
-	8ZbYKflxV9MW7N5mL/wm61JBieIUOPjS6EeNh1J+K8uqVrv7r+QvUVN/NOm5MdvP
-	ks5dNEMxSg2JEvHHlOwsspgsjfpCwRhizYLEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DFg1jVaYTyTrYhSiOVwcDL4l9+8lKA7p
-	1zBrFp3lBgk2fq5/ERAXFVeucRUA2HtaWGNVh9qsXZuvdT1+BCkvgP+V7E1Dv5bi
-	t4cC4BcFMcLvH6dCmI5HHdgXZElrrZw2r243F6YbRQFsCHRHwsrQxTUEspNLLNF/
-	aLcFBrcydfo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CB223265DC;
-	Mon, 14 Jul 2014 11:54:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 40EBA265D9;
-	Mon, 14 Jul 2014 11:54:39 -0400 (EDT)
-In-Reply-To: <CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com>
-	(Duy Nguyen's message of "Sun, 13 Jul 2014 12:09:25 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 2975554C-0B6F-11E4-9E6E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1756012AbaGNQQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 12:16:40 -0400
+Received: from mail-vc0-f178.google.com ([209.85.220.178]:45342 "EHLO
+	mail-vc0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755836AbaGNQQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 12:16:39 -0400
+Received: by mail-vc0-f178.google.com with SMTP id la4so953916vcb.37
+        for <git@vger.kernel.org>; Mon, 14 Jul 2014 09:16:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=TyZ9nF0n2QRwlafkfmJW7GFc6sKLx95cMF/guPKoewE=;
+        b=GarxQtdl/7lKUsY3gK6mP5zt9iPOA9chBlZY70Ee9pK2uSIWUOCBLjmGir7CyFjafy
+         IcRtoR3zHq1Bb3bZsPIBCzjhkbTm7UT52G7/lgN31ODUvfbf7Gvq4HTod7TBSjLFQcqO
+         7b222k5czqMngwcq0mfN7B8UUhASppjBu7XtfR2ItcUkf2RrQXPK3RN3SxnwBNP8mYO1
+         efJ34cqlmLao+i/QuKdmjXWn4LeLmBmQWQmQLYcqXwIMOltp51SfcyF7cHH4UmvYVIVb
+         snbOwE06i+aheBXOowjTnnvqfEkFDL+lgHNTJsyQbvs2JDTCBpQgtbQTuRVWrJIqBL8d
+         MUjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=TyZ9nF0n2QRwlafkfmJW7GFc6sKLx95cMF/guPKoewE=;
+        b=dZunbvlBsvjWROhh7yvyjIKhvp2J8nb/a3l3TNHRIGoPEbdquXotAgmOv4ciOW+H4Q
+         T7NtOQk0SoyKn9N3nFwY79DdlY9Yu663weRG7yDjCVP2GGSYOZJKgtkb6TqFvDkwcP0t
+         U1DYn9bfPJp1ZbLzS6A43x5/HvYU+8kSQDlj6ChTkRcfk9acI1HIhgIQiJDwNGZDCkdP
+         KZIWtGz12lObINPeGEteYcArY2Pc5XSQfJKbjJ+WXwfQOFkGvCoY3oYJIqTr0sg51AAo
+         CGOCo0w6y3rPgkcLr/B4VRnlIsd96bH9QLKw3iPDcS6CRxDYsAM2VwkLuCSQti4UEM2c
+         3Gvw==
+X-Gm-Message-State: ALoCoQnZTMLLampvue1ApGo2u1gWk65pNQRGZVnd3Zd5c/7de13bR/z5i1yB/nb2Qypndn8qrISX
+X-Received: by 10.58.197.193 with SMTP id iw1mr1047269vec.57.1405354598524;
+ Mon, 14 Jul 2014 09:16:38 -0700 (PDT)
+Received: by 10.52.136.166 with HTTP; Mon, 14 Jul 2014 09:16:38 -0700 (PDT)
+In-Reply-To: <xmqqa98jadqx.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253496>
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
-> On Sat, Jul 12, 2014 at 11:44 AM, David Turner <dturner@twopensource.com> wrote:
->> @@ -342,6 +342,15 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
->>
->>                 discard_cache();
->>                 read_cache_from(index_lock.filename);
->> +               if (update_main_cache_tree(WRITE_TREE_SILENT) == 0) {
->> +                       fd = open(index_lock.filename, O_WRONLY);
->> +                       if (fd >= 0)
->> +                               if (write_cache(fd, active_cache, active_nr) == 0) {
->> +                                       close_lock_file(&index_lock);
+On Tue, Jul 8, 2014 at 11:48 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Michael Haggerty <mhagger@alum.mit.edu> writes:
 >
-> If write_cache() returns a negative value, index.lock is probably
-> corrupted. Should we die() instead of moving on and returning
-> index_lock.filename to the caller? The caller may move index.lock to
-> index later on and officially ruin "index".
+>> Patches 01-19 -- ACK mhagger
+>> Patches 20-42 -- I sent various comments, small to large, concerning
+>> these patches
+>> Patch 43 -- Needs more justification if it is to be acceptable
+>> Patch 44 -- Depends on 43
+>> Patches 45-48 -- I didn't quite get to these, but...
+>>
+>> Perhaps it would be more appropriate for the rules about reference name
+>> conflicts to be enforced by the backend, since it is the limitations of
+>> the current backend that impose the restrictions.  Would that make sense?
+>>
+>> On the other hand, removing the restrictions isn't simply a matter of
+>> picking a different backend, because all Git repositories have to be
+>> able to interact with each other.
+>
+> I'd say that "if you have foo/bar you cannot have foo" may have
+> started as an implementation limitation, but the interoperability
+> requirement with existing versions of Git and with existing
+> repositories makes it necessary to enforce it the same way as other
+> rules such as "you cannot have double-dots in name, e.g. foo..bar"
+> or "no branches whose name begins with a dash", neither of which
+> comes from any filesystem issues.  That a rule can be loosened with
+> one new backend does not at all mean it is a good idea to loosen it
+> "because we can" in the first place.
 
-Perhaps true, but worse yet, this will not play nicely together with
-your split index series, no?  After taking the lock and writing and
-closing, we spawn the interactive while still holding the lock, and
-the "open" we see here is because we want to further update the same
-under the same lock.  Perhaps write_locked_index() API in the split
-index series can notice that the underlying fd in index_lock has
-been closed earlier, realize that the call is to re-update the
-index under the same lock and open the file again for writing?
+ACK.
 
-Then we can update the above "open() then write_cache()" sequence
-with just a call to "write_locked_index()".
+>
+>> I think it would be good to try to merge the first part of this patch
+>> series to lock in some progress while we continue iterating on the
+>> remainder.  I'm satisfied that it is all going in the right direction
+>> and I am thankful to Ronnie for pushing it forward.  But handling
+>> 48-patch series is very daunting and I would welcome a split.
+>>
+>> I'm not sure whether patches 01-19 are necessarily the right split
+>> between merge-now/iterate-more; it is more or less an accident that I
+>> stopped after patch 19 on an earlier review.  Maybe Ronnie could propose
+>> a logical subset of the commits as being ready to be merged to next in
+>> the nearish term?
+>
+> Yeah, thanks for going through this, and I agree that we would be
+> better off merging the earlier part first.
+>
+
+Ok,  01-19 is as good split as any.
+If you merge just the 01-19 part of this series I will address
+Michael's concerns and repost patches 20-48 as a separate series.
+
+regards
+ronnie sahlberg
