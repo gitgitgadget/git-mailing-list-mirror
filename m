@@ -1,154 +1,121 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v20 39/48] refs.c: make delete_ref use a transaction
-Date: Mon, 14 Jul 2014 13:50:51 -0700
-Message-ID: <CAL=YDWmVpB3uj_was-Tyqkgxhd9-5LN6Pg0scG0JkzeWDp0pqA@mail.gmail.com>
-References: <1403275409-28173-1-git-send-email-sahlberg@google.com>
-	<1403275409-28173-40-git-send-email-sahlberg@google.com>
-	<53BBF794.1090702@alum.mit.edu>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH v2 3/4] use new config API for worktree
+ configurations of submodules
+Date: Mon, 14 Jul 2014 22:57:59 +0200
+Message-ID: <20140714205759.GA3682@sandbox-ub>
+References: <20140628095800.GA89729@book.hvoigt.net>
+ <20140628100321.GD89729@book.hvoigt.net>
+ <xmqqy4w38v6r.fsf@gitster.dls.corp.google.com>
+ <20140709195547.GA3081@sandbox-ub>
+ <xmqqegxu9ojh.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Mon Jul 14 22:50:58 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jul 14 22:58:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6nD7-0007XH-7b
-	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 22:50:57 +0200
+	id 1X6nKK-0002Rl-9j
+	for gcvg-git-2@plane.gmane.org; Mon, 14 Jul 2014 22:58:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756940AbaGNUuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 16:50:54 -0400
-Received: from mail-vc0-f179.google.com ([209.85.220.179]:36068 "EHLO
-	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756838AbaGNUuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 16:50:52 -0400
-Received: by mail-vc0-f179.google.com with SMTP id id10so8291714vcb.38
-        for <git@vger.kernel.org>; Mon, 14 Jul 2014 13:50:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=SzOjZVmSXLRuYyOtigjOrMisplwoNnuPPfBkJX+/YFA=;
-        b=Gg8fjRqA53sCAnHYZ7F8MuIPuxCPrT5jwybKnKIQSl8rUMZwYQtJShH78QmDkdq3bu
-         8nFng5GlgBWDGJ79PzcDjmXTmRj951VEACerLMK7gVIjAXQXD7drlt2TMxh3ThFX5f1V
-         t5XQJzRaaK86RFxcXs9Klp9RoJ5kjjrx0h+oUvuq2k4IBjbsWSEQnW5rr/2YQqx51IaD
-         R5+vF2UEhSdm6lY9ih3HSFWBAxT1Bwqwzzn5ku34cr5S/H2uKArmldPvBxNxkoF3K7Gw
-         1LN50SAz23s8iQ5eyyUeDKsRpMw8L49qJQk+SyrhOf4Mxwz8Kv6RkncMY3LECyG4xBl1
-         GlaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=SzOjZVmSXLRuYyOtigjOrMisplwoNnuPPfBkJX+/YFA=;
-        b=Vo7J0GDCO/F6xARnbqxW5xYg3QeMKY7Jr9s+0EwmUCq4xpvXDsRvlsZs0Nh5ohPB6S
-         19jTv/J+m6Qx8SmmbwpTmh0Pot9EF9t3aP7xBEDh4EZyOCrnhCcw7Yr4GuQY/q0ZMWpN
-         e42fox4a4ovMl7huKUchOrdTW3WjmEMdnWLVWD6t0LFFQBRuu+reb2k4qvpTqCdut7lM
-         r+NpUUVJNuZfQ5FsRRUNQK+KY1OZxEQIaWSmXdns0tx/gCiO0fufFg/0+1XsHGEO5c/S
-         UOs7Gi6KI/1/G/cAPouZX77yqLFxbv/P14pvDI6mFMvDL6QttBebCbzN/4WrOUPGt+Nt
-         K8cA==
-X-Gm-Message-State: ALoCoQmpMrdFzvyO4fvj6Z5mbdzDlJRUSbBQG96/udIamNuNzuqhBS9BL0v9XTjBhk+QMpxPFGWi
-X-Received: by 10.52.244.138 with SMTP id xg10mr1977421vdc.40.1405371051720;
- Mon, 14 Jul 2014 13:50:51 -0700 (PDT)
-Received: by 10.52.136.166 with HTTP; Mon, 14 Jul 2014 13:50:51 -0700 (PDT)
-In-Reply-To: <53BBF794.1090702@alum.mit.edu>
+	id S1756559AbaGNU6U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Jul 2014 16:58:20 -0400
+Received: from smtprelay03.ispgateway.de ([80.67.31.26]:38693 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756180AbaGNU6T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Jul 2014 16:58:19 -0400
+Received: from [37.4.179.65] (helo=sandbox-ub)
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1X6nK2-0002Wl-Qn; Mon, 14 Jul 2014 22:58:06 +0200
+Content-Disposition: inline
+In-Reply-To: <xmqqegxu9ojh.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253514>
 
-On Tue, Jul 8, 2014 at 6:52 AM, Michael Haggerty <mhagger@alum.mit.edu> wrote:
-> On 06/20/2014 04:43 PM, Ronnie Sahlberg wrote:
->> Change delete_ref to use a ref transaction for the deletion. At the same time
->> since we no longer have any callers of repack_without_ref we can now delete
->> this function.
->>
->> Change delete_ref to return 0 on success and 1 on failure instead of the
->> previous 0 on success either 1 or -1 on failure.
->>
->> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
->> ---
->>  refs.c | 34 +++++++++++++---------------------
->>  1 file changed, 13 insertions(+), 21 deletions(-)
->>
->> diff --git a/refs.c b/refs.c
->> index 3d070d5..92a06d4 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -2544,11 +2544,6 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
->>       return ret;
->>  }
->>
->> -static int repack_without_ref(const char *refname)
->> -{
->> -     return repack_without_refs(&refname, 1, NULL);
->> -}
->> -
->>  static int delete_ref_loose(struct ref_lock *lock, int flag)
->>  {
->>       if (!(flag & REF_ISPACKED) || flag & REF_ISSYMREF) {
->> @@ -2566,24 +2561,21 @@ static int delete_ref_loose(struct ref_lock *lock, int flag)
->>
->>  int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
->>  {
->> -     struct ref_lock *lock;
->> -     int ret = 0, flag = 0;
->> +     struct ref_transaction *transaction;
->> +     struct strbuf err = STRBUF_INIT;
->>
->> -     lock = lock_ref_sha1_basic(refname, sha1, delopt, &flag);
->
-> The old code checked that the old value of refname was sha1, regardless
-> of whether sha1 was null_sha1.  Presumably callers never set sha1 to
-> null_sha1...
+On Wed, Jul 09, 2014 at 03:04:50PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> > On Tue, Jul 08, 2014 at 01:14:20PM -0700, Junio C Hamano wrote:
+> >> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> >> 
+> >> > diff --git a/builtin/checkout.c b/builtin/checkout.c
+> >> > index 07cf555..03ea20d 100644
+> >> > --- a/builtin/checkout.c
+> >> > +++ b/builtin/checkout.c
+> >> > @@ -18,6 +18,7 @@
+> >> >  #include "xdiff-interface.h"
+> >> >  #include "ll-merge.h"
+> >> >  #include "resolve-undo.h"
+> >> > +#include "submodule-config.h"
+> >> >  #include "submodule.h"
+> >> >  #include "argv-array.h"
+> >> >  
+> >> 
+> >> Hmph.  What is this change about?  
+> >> 
+> >> Nobody in checkout.c needs anything new, yet we add a new include?
+> >
+> > This is because I moved the parse_submodule_config_option() function
+> > into the submodule-config.c module. This was necessary so all parsed
+> > submodule values are stored in the cache with the null_sha1. We use
+> > static functions from this module to do this and thats thats the reason
+> > for the move. 
+> >
+> >> > diff --git a/diff.c b/diff.c
+> >> > index f72769a..f692a3c 100644
+> >> > --- a/diff.c
+> >>  ...
+> >> Likewise.
+> >
+> > Same as above.
+> 
+> Can there be any caller that include and use submodule-config.h that
+> does not need anythjing from submodule.h?  Or vice versa?
+> 
+> It just did not look like these two headers describe independent
+> subsystems but they almost always have to go hand-in-hand.  And if
+> that is the case, perhaps it is not such a good idea to add it as a
+> new header.  That was where my question came from.
 
-They sometimes do.
+The reason for a separate module was because we add quite some lines of
+code for it.
 
->
->> -     if (!lock)
->> +     transaction = ref_transaction_begin(&err);
->> +     if (!transaction ||
->> +         ref_transaction_delete(transaction, refname, sha1, delopt,
->> +                                sha1 && !is_null_sha1(sha1), &err) ||
->
-> ...But the new code explicitly skips the check if sha1 is null_sha1.
-> This shouldn't make a practical difference, because presumably callers
-> never set sha1 to null_sha1.
+$ wc -l submodule.c
+1068 submodule.c
+$ wc -l submodule-config.c 
+435 submodule-config.c
 
-There are actually a few cases where callers do call delete_ref() with
-sha1 == null_sha1.
-For example fast-import.c:update_branch() will do this is the ref can
-not be resolved.
-It can also happen in builtin/update-ref.c where we are passing user
-supplied data into the call to delete_ref.
+Because of this I would like to keep the c-files separate.
 
-So I think the current behaviour should be ok.
+The header simply came from that. It is possible to use them
+individually but it is very likely that we will always use both. At the
+moment all occurrences of submodule-config.h also have submodule.h. The
+other way around it is not that way.
 
-There are a few options we could do:
-We could change the semantics for ref_transaction_update|delete and
-start allowing
-   have_old==1
-   old_sha1==null_sha1
-and have this behave the same way as
-   have_old==0
-but I think that would be horrible I think.
+I like it to have a header per c-module since you directly know where to
+look for definitions. Also the config topic can be considered a separate
+subsystem for submodules. And for me it feels that way. If we want to
+make it easier for the user it probably makes sense to move the
+declarations into submodule.h
 
-We could also change all callers to delete_ref() to be careful to only
-specify a sha1 IFF it is not null_sha1
-but that would just mean we require all callers to do this type of check.
-But that would also be fragile since if/when we get new callers to
-delete_ref we risk breaking delete_ref if we are not careful.
+But then how should we document it? As api-submodule.txt?
 
+I do not have a strong opinion either way. I like it in the current
+shape but if you convince me it makes more sense with one header, I
+would also be fine with it.
 
-I think the least bad option is to just have this check in
-delete_ref() as now and have the semantics for delete_ref be that if
-sha1 is either NULL or null_sha1 then it means we don't care what the
-old value is.
-
-
-
-regards
-ronnie sahlberg
+Cheers Heiko
