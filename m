@@ -1,325 +1,133 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 12/20] receive-pack.c: use a reference transaction for updating the refs
-Date: Tue, 15 Jul 2014 16:34:10 -0700
-Message-ID: <1405467258-24102-13-git-send-email-sahlberg@google.com>
+Subject: [PATCH 07/20] commit.c: use ref transactions for updates
+Date: Tue, 15 Jul 2014 16:34:05 -0700
+Message-ID: <1405467258-24102-8-git-send-email-sahlberg@google.com>
 References: <1405467258-24102-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 16 01:35:31 2014
+X-From: git-owner@vger.kernel.org Wed Jul 16 01:35:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7CFu-0003dK-Sj
+	id 1X7CFv-0003dK-If
 	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 01:35:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030194AbaGOXfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 19:35:25 -0400
-Received: from mail-pa0-f73.google.com ([209.85.220.73]:36795 "EHLO
-	mail-pa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934280AbaGOXeY (ORCPT <rfc822;git@vger.kernel.org>);
+	id S965061AbaGOXf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 19:35:28 -0400
+Received: from mail-ob0-f201.google.com ([209.85.214.201]:34864 "EHLO
+	mail-ob0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934275AbaGOXeY (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 15 Jul 2014 19:34:24 -0400
-Received: by mail-pa0-f73.google.com with SMTP id kx10so39205pab.4
-        for <git@vger.kernel.org>; Tue, 15 Jul 2014 16:34:24 -0700 (PDT)
+Received: by mail-ob0-f201.google.com with SMTP id nu7so34760obb.2
+        for <git@vger.kernel.org>; Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=FMOFOfgQIW6rjDhYzJF95Q1ttUqt6bia0BeQI9nGvBA=;
-        b=iNn0a6rj1Sh2tnrHl4bJ5niX7CCRvPhGsoOBQCH9U3BL6iUc6/nz3Fu+r47MLn5Amq
-         KUMISv6LFCQNmapikSKe1DlmLTmx0a/Soqm8mZC+bE1kGVfkCTBt0XwUopb/zWcp5p7Y
-         /c61MSQe/tZsU6FYfEF++GTb+2R/NKrdlYoOE6Vy6bZ3BIg5ifIxBLW3FkeM6dx9t4ez
-         4oXwXpZ9b3xkWigLRFyGS/MkYT4d1RoWvQJgppgkH1gjGIBsGLFA2EVN/2JxwSzgKmFY
-         O6J7XVGPQ+XX7Brvw8IRbjGAtHi5QqcWiSFh7PtSzBeuk/UMyXqVLYyZBLACBeVSNKpE
-         vvWw==
+        bh=ZBDmgLCGgNDFRUQLCfVOAQZfX+16wEt2V0gpq6gyVcM=;
+        b=juLK+QvjaLSVStFgXSh0uhJ8bRFlfumqstKdf8pC0NXRqMQRjH7p7kHTh0Eb2+WtFK
+         /b1dwDY5dtx+fg+aU7YU/+u2kGcH5FT22WC/MTzDXiMFN5JOQzGXvcBb5ewiUfGZgPRJ
+         d9+5wa3/TxrnxLpkZYfXoWk+DLvUIh0PGazsmOAsbr9xZ7+CkuJI/p4DuJo2hND7EmQQ
+         xRO6z16h2hkbPrHIV3b2LPAivTLS+EV7DUH4gBOV2liQbGLnoZzNNw9/nvgssaFqK9O0
+         E7gcJ65Qp05RXNTfxYEY4T9L4wTMa8iiyyiJXNxmCxCSsS939edtHiQ9pZm08I7U8gpF
+         CCyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=FMOFOfgQIW6rjDhYzJF95Q1ttUqt6bia0BeQI9nGvBA=;
-        b=imnWvH5XxAj3QN36h6c/wRx1BZDk5Ix+t49x8MsNOpO8s5LsKIWSp0yK6gHKt7/xkA
-         P1A5XHZrLzD1qFGMFZqY+05CdrtHf6id6Ks+SWvXS9lyevUw2BmZ8B6ARJ+P85aOq4VF
-         agGJFVzsoEPuHaw2QbdPR8ehA+lrY4BnrpUm4hdDmWFJIa1AJ+daqGUKG1cipEGThYWn
-         bHCzmmdzjtZ9GWxliUr8hBp5nNjsrkhCGBZuVyXkHzSRZp3EXHNu2Q++EYs/MTPIrJd+
-         5hEX0a+FzMueHuF9O7z78QqcpbnGdmsyfuyar9XTTtr2K6mM8PjnPio8Vc5hkRE12lP+
-         NWaA==
-X-Gm-Message-State: ALoCoQmLTKrps9Fh3q+sI9dvENcU5kMBO2j5U9pUUj8GqpYvvJJOCw7en1jEs/5GQPgZbZ9YRNpZ
-X-Received: by 10.66.151.140 with SMTP id uq12mr12772306pab.23.1405467264152;
-        Tue, 15 Jul 2014 16:34:24 -0700 (PDT)
+        bh=ZBDmgLCGgNDFRUQLCfVOAQZfX+16wEt2V0gpq6gyVcM=;
+        b=giSKCN3K62+FmouCCqWwOjBU55AyEAa06uiwm9M9kwDP6VWpPEt6opB4tMYQMvNMaC
+         tmc88PL34LqBjhQpOBXjvDQStaTFnEguJcbgnQkrUfCNAxrsc8UbN9mre3OVLL42iONO
+         sVP5KgmMsLmkDkumxAgiAqR3r2JQNoiE3YcQegmJ8DWh5MSEt17xUAsuZuZ7V6BInJuT
+         f7HjPYD/Qd0R5vKz+R/Gw9V23dKdZGCcbhyVf9s7EIA/8IK7Ybq06v84vE6mqUtpFvsf
+         bmOfHD4k+UZY2slYhcW8rpEXMgFZJ9u/UwxTQvOeYiuznZU/yEOO5cC0EhA08K/4FNHw
+         q2jA==
+X-Gm-Message-State: ALoCoQnBh881bDEglh/j33RAW/trKHI6ymdJU9+nyucXFwtODNZAyydLuDxd6TQPyqdr8pVM/nuC
+X-Received: by 10.182.28.5 with SMTP id x5mr13422507obg.44.1405467263853;
+        Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id v44si950899yhv.0.2014.07.15.16.34.24
+        by gmr-mx.google.com with ESMTPS id j43si1059800yhh.5.2014.07.15.16.34.23
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Jul 2014 16:34:24 -0700 (PDT)
+        Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id DBFC031C2EA;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id B0F9531C2D7;
 	Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id A5A5EE0A98; Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
+	id 6D147E0B27; Tue, 15 Jul 2014 16:34:22 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.481.gb244468
 In-Reply-To: <1405467258-24102-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253642>
 
-Wrap all the ref updates inside a transaction.
+Change commit.c to use ref transactions for all ref updates.
+Make sure we pass a NULL pointer to ref_transaction_update if have_old
+is false.
 
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/receive-pack.c | 96 +++++++++++++++++++++++++++++++++-----------------
- 1 file changed, 63 insertions(+), 33 deletions(-)
+ builtin/commit.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index c323081..91099ad 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -194,7 +194,7 @@ static void write_head_info(void)
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 5e2221c..668fa6a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1627,11 +1627,12 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	const char *index_file, *reflog_msg;
+ 	char *nl;
+ 	unsigned char sha1[20];
+-	struct ref_lock *ref_lock;
+ 	struct commit_list *parents = NULL, **pptr = &parents;
+ 	struct stat statbuf;
+ 	struct commit *current_head = NULL;
+ 	struct commit_extra_header *extra = NULL;
++	struct ref_transaction *transaction;
++	struct strbuf err = STRBUF_INIT;
  
- struct command {
- 	struct command *next;
--	const char *error_string;
-+	char *error_string;
- 	unsigned int skip_update:1,
- 		     did_not_exist:1;
- 	int index;
-@@ -468,19 +468,18 @@ static int update_shallow_ref(struct command *cmd, struct shallow_info *si)
- 	return 0;
- }
+ 	if (argc == 2 && !strcmp(argv[1], "-h"))
+ 		usage_with_options(builtin_commit_usage, builtin_commit_options);
+@@ -1753,16 +1754,6 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	strbuf_release(&author_ident);
+ 	free_commit_extra_headers(extra);
  
--static const char *update(struct command *cmd, struct shallow_info *si)
-+static char *update(struct command *cmd, struct shallow_info *si)
- {
- 	const char *name = cmd->ref_name;
- 	struct strbuf namespaced_name_buf = STRBUF_INIT;
- 	const char *namespaced_name;
- 	unsigned char *old_sha1 = cmd->old_sha1;
- 	unsigned char *new_sha1 = cmd->new_sha1;
--	struct ref_lock *lock;
- 
- 	/* only refs/... are allowed */
- 	if (!starts_with(name, "refs/") || check_refname_format(name + 5, 0)) {
- 		rp_error("refusing to create funny ref '%s' remotely", name);
--		return "funny refname";
-+		return xstrdup("funny refname");
- 	}
- 
- 	strbuf_addf(&namespaced_name_buf, "%s%s", get_git_namespace(), name);
-@@ -498,20 +497,20 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 			rp_error("refusing to update checked out branch: %s", name);
- 			if (deny_current_branch == DENY_UNCONFIGURED)
- 				refuse_unconfigured_deny();
--			return "branch is currently checked out";
-+			return xstrdup("branch is currently checked out");
- 		}
- 	}
- 
- 	if (!is_null_sha1(new_sha1) && !has_sha1_file(new_sha1)) {
- 		error("unpack should have generated %s, "
- 		      "but I can't find it!", sha1_to_hex(new_sha1));
--		return "bad pack";
-+		return xstrdup("bad pack");
- 	}
- 
- 	if (!is_null_sha1(old_sha1) && is_null_sha1(new_sha1)) {
- 		if (deny_deletes && starts_with(name, "refs/heads/")) {
- 			rp_error("denying ref deletion for %s", name);
--			return "deletion prohibited";
-+			return xstrdup("deletion prohibited");
- 		}
- 
- 		if (!strcmp(namespaced_name, head_name)) {
-@@ -526,7 +525,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 				if (deny_delete_current == DENY_UNCONFIGURED)
- 					refuse_unconfigured_deny_delete_current();
- 				rp_error("refusing to delete the current branch: %s", name);
--				return "deletion of the current branch prohibited";
-+				return xstrdup("deletion of the current branch prohibited");
- 			}
- 		}
- 	}
-@@ -544,19 +543,19 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 		    old_object->type != OBJ_COMMIT ||
- 		    new_object->type != OBJ_COMMIT) {
- 			error("bad sha1 objects for %s", name);
--			return "bad ref";
-+			return xstrdup("bad ref");
- 		}
- 		old_commit = (struct commit *)old_object;
- 		new_commit = (struct commit *)new_object;
- 		if (!in_merge_bases(old_commit, new_commit)) {
- 			rp_error("denying non-fast-forward %s"
- 				 " (you should pull first)", name);
--			return "non-fast-forward";
-+			return xstrdup("non-fast-forward");
- 		}
- 	}
- 	if (run_update_hook(cmd)) {
- 		rp_error("hook declined to update %s", name);
--		return "hook declined";
-+		return xstrdup("hook declined");
- 	}
- 
- 	if (is_null_sha1(new_sha1)) {
-@@ -571,24 +570,32 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 		}
- 		if (delete_ref(namespaced_name, old_sha1, 0)) {
- 			rp_error("failed to delete %s", name);
--			return "failed to delete";
-+			return xstrdup("failed to delete");
- 		}
- 		return NULL; /* good */
- 	}
- 	else {
-+		struct strbuf err = STRBUF_INIT;
-+		struct ref_transaction *transaction;
-+
- 		if (shallow_update && si->shallow_ref[cmd->index] &&
- 		    update_shallow_ref(cmd, si))
--			return "shallow error";
+-	ref_lock = lock_any_ref_for_update("HEAD",
+-					   !current_head
+-					   ? NULL
+-					   : current_head->object.sha1,
+-					   0, NULL);
+-	if (!ref_lock) {
+-		rollback_index_files();
+-		die(_("cannot lock HEAD ref"));
+-	}
 -
--		lock = lock_any_ref_for_update(namespaced_name, old_sha1,
--					       0, NULL);
--		if (!lock) {
--			rp_error("failed to lock %s", name);
--			return "failed to lock";
--		}
--		if (write_ref_sha1(lock, new_sha1, "push")) {
--			return "failed to write"; /* error() already called */
-+			return xstrdup("shallow error");
-+
-+		transaction = ref_transaction_begin(&err);
-+		if (!transaction ||
-+		    ref_transaction_update(transaction, namespaced_name,
-+					   new_sha1, old_sha1, 0, 1, &err) ||
-+		    ref_transaction_commit(transaction, "push", &err)) {
-+			char *str = strbuf_detach(&err, NULL);
-+			ref_transaction_free(transaction);
-+
-+			rp_error("%s", str);
-+			return str;
- 		}
-+
-+		ref_transaction_free(transaction);
-+		strbuf_release(&err);
- 		return NULL; /* good */
+ 	nl = strchr(sb.buf, '\n');
+ 	if (nl)
+ 		strbuf_setlen(&sb, nl + 1 - sb.buf);
+@@ -1771,10 +1762,17 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	strbuf_insert(&sb, 0, reflog_msg, strlen(reflog_msg));
+ 	strbuf_insert(&sb, strlen(reflog_msg), ": ", 2);
+ 
+-	if (write_ref_sha1(ref_lock, sha1, sb.buf) < 0) {
++	transaction = ref_transaction_begin(&err);
++	if (!transaction ||
++	    ref_transaction_update(transaction, "HEAD", sha1,
++				   current_head ?
++				   current_head->object.sha1 : NULL,
++				   0, !!current_head, &err) ||
++	    ref_transaction_commit(transaction, sb.buf, &err)) {
+ 		rollback_index_files();
+-		die(_("cannot update HEAD ref"));
++		die("%s", err.buf);
  	}
- }
-@@ -647,6 +654,9 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
- 	char cmd_oldh[41], cmd_newh[41], dst_oldh[41], dst_newh[41];
- 	int flag;
++	ref_transaction_free(transaction);
  
-+	if (cmd->error_string)
-+		die("BUG: check_aliased_update called with failed cmd");
-+
- 	strbuf_addf(&buf, "%s%s", get_git_namespace(), cmd->ref_name);
- 	dst_name = resolve_ref_unsafe(buf.buf, sha1, 0, &flag);
- 	strbuf_release(&buf);
-@@ -658,7 +668,7 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
- 	if (!dst_name) {
- 		rp_error("refusing update to broken symref '%s'", cmd->ref_name);
- 		cmd->skip_update = 1;
--		cmd->error_string = "broken symref";
-+		cmd->error_string = xstrdup("broken symref");
- 		return;
- 	}
- 
-@@ -684,8 +694,9 @@ static void check_aliased_update(struct command *cmd, struct string_list *list)
- 		 cmd->ref_name, cmd_oldh, cmd_newh,
- 		 dst_cmd->ref_name, dst_oldh, dst_newh);
- 
--	cmd->error_string = dst_cmd->error_string =
--		"inconsistent aliased update";
-+	cmd->error_string = xstrdup("inconsistent aliased update");
-+	free(dst_cmd->error_string);
-+	dst_cmd->error_string = xstrdup("inconsistent aliased update");
- }
- 
- static void check_aliased_updates(struct command *commands)
-@@ -733,7 +744,9 @@ static void set_connectivity_errors(struct command *commands,
- 		if (!check_everything_connected(command_singleton_iterator,
- 						0, &singleton))
- 			continue;
--		cmd->error_string = "missing necessary objects";
-+		if (cmd->error_string)  /* can't happen */
-+			continue;
-+		cmd->error_string = xstrdup("missing necessary objects");
- 	}
- }
- 
-@@ -770,9 +783,9 @@ static void reject_updates_to_hidden(struct command *commands)
- 		if (cmd->error_string || !ref_is_hidden(cmd->ref_name))
- 			continue;
- 		if (is_null_sha1(cmd->new_sha1))
--			cmd->error_string = "deny deleting a hidden ref";
-+			cmd->error_string = xstrdup("deny deleting a hidden ref");
- 		else
--			cmd->error_string = "deny updating a hidden ref";
-+			cmd->error_string = xstrdup("deny updating a hidden ref");
- 	}
- }
- 
-@@ -786,8 +799,11 @@ static void execute_commands(struct command *commands,
- 	struct iterate_data data;
- 
- 	if (unpacker_error) {
--		for (cmd = commands; cmd; cmd = cmd->next)
--			cmd->error_string = "unpacker error";
-+		for (cmd = commands; cmd; cmd = cmd->next) {
-+			if (cmd->error_string)  /* can't happen */
-+				continue;
-+			cmd->error_string = xstrdup("unpacker error");
-+		}
- 		return;
- 	}
- 
-@@ -800,8 +816,9 @@ static void execute_commands(struct command *commands,
- 
- 	if (run_receive_hook(commands, "pre-receive", 0)) {
- 		for (cmd = commands; cmd; cmd = cmd->next) {
--			if (!cmd->error_string)
--				cmd->error_string = "pre-receive hook declined";
-+			if (cmd->error_string)
-+				continue;
-+			cmd->error_string = xstrdup("pre-receive hook declined");
- 		}
- 		return;
- 	}
-@@ -1079,7 +1096,8 @@ static void update_shallow_info(struct command *commands,
- 		if (is_null_sha1(cmd->new_sha1))
- 			continue;
- 		if (ref_status[cmd->index]) {
--			cmd->error_string = "shallow update not allowed";
-+			free(cmd->error_string);
-+			cmd->error_string = xstrdup("shallow update not allowed");
- 			cmd->skip_update = 1;
- 		}
- 	}
-@@ -1120,6 +1138,17 @@ static int delete_only(struct command *commands)
- 	return 1;
- }
- 
-+static void free_commands(struct command *commands)
-+{
-+	while (commands) {
-+		struct command *next = commands->next;
-+
-+		free(commands->error_string);
-+		free(commands);
-+		commands = next;
-+	}
-+}
-+
- int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- {
- 	int advertise_refs = 0;
-@@ -1215,5 +1244,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		packet_flush(1);
- 	sha1_array_clear(&shallow);
- 	sha1_array_clear(&ref);
-+	free_commands(commands);
- 	return 0;
- }
+ 	unlink(git_path("CHERRY_PICK_HEAD"));
+ 	unlink(git_path("REVERT_HEAD"));
 -- 
 2.0.1.442.g7fe6834.dirty
