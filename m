@@ -1,134 +1,79 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH 2/2] config: use chmod() instead of fchmod()
-Date: Wed, 16 Jul 2014 00:54:30 +0200
-Message-ID: <53C5B126.6020404@gmail.com>
-References: <20140712075035.GA12400@ucw.cz>	<1405431797-20899-1-git-send-email-kasal@ucw.cz> <xmqq38e2wkkh.fsf@gitster.dls.corp.google.com> <53C5B0A1.4060502@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j6t@kdbg.org>, GIT Mailing-list <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>, Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBCH3XYXLXQDBBJXCS2PAKGQEAQJ4AKY@googlegroups.com Wed Jul 16 00:54:31 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBJXCS2PAKGQEAQJ4AKY@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f187.google.com ([74.125.82.187])
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: [PATCH] remove duplicate of is_branch
+Date: Tue, 15 Jul 2014 16:02:37 -0700
+Message-ID: <1405465358-27054-1-git-send-email-sahlberg@google.com>
+Cc: gitster@pobox.com, Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 16 01:02:48 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBJXCS2PAKGQEAQJ4AKY@googlegroups.com>)
-	id 1X7BcF-0006zx-0W
-	for gcvm-msysgit@m.gmane.org; Wed, 16 Jul 2014 00:54:31 +0200
-Received: by mail-we0-f187.google.com with SMTP id u57sf9206wes.24
-        for <gcvm-msysgit@m.gmane.org>; Tue, 15 Jul 2014 15:54:30 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X7BkE-0001QF-SD
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 01:02:47 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759444AbaGOXCn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 19:02:43 -0400
+Received: from mail-yh0-f73.google.com ([209.85.213.73]:37576 "EHLO
+	mail-yh0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753191AbaGOXCl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 19:02:41 -0400
+Received: by mail-yh0-f73.google.com with SMTP id f73so16825yha.4
+        for <git@vger.kernel.org>; Tue, 15 Jul 2014 16:02:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=Q99shSqwaouOmgKwm7QDgVq45jryNk845R/Xmtm5/nM=;
-        b=Y4tOHgVv+n3M9aA+XS57/S+u1AODFqvaagaMITMVSk70gx9iHcKShCgBpP/5K6Msk3
-         wkeHlZ8wY1BY1Hr3VAOM5ynwX0ccmquq0cuinMeoyxuSrHQWDBreeZ6nGwF90vgh7cnz
-         M2Z4d5y47NdREmQMDn5GAfRoj4VMb91RfAuf7C90MFTzYOLsJ+mIYoWJZJegEk4h9HaH
-         KlJVchbXhvY4d5e76UfOTYoY2MW9bJh0Cb/JEvi8W3+FS6wasdOIkUov25NWsey0jqk1
-         uMV+PaVwuaqcRY3+tSy6uyRixD/bZBOSoeZrDMqKZdSUL1fDJ64v6znVhBeoGo5GbWFx
-         b/nQ==
-X-Received: by 10.180.36.234 with SMTP id t10mr39352wij.6.1405464870436;
-        Tue, 15 Jul 2014 15:54:30 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.96.73 with SMTP id dq9ls485735wib.27.canary; Tue, 15 Jul
- 2014 15:54:29 -0700 (PDT)
-X-Received: by 10.180.212.18 with SMTP id ng18mr665289wic.3.1405464869760;
-        Tue, 15 Jul 2014 15:54:29 -0700 (PDT)
-Received: from mail-wg0-x22b.google.com (mail-wg0-x22b.google.com [2a00:1450:400c:c00::22b])
-        by gmr-mx.google.com with ESMTPS id mx7si718976wic.1.2014.07.15.15.54.29
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 15 Jul 2014 15:54:29 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22b as permitted sender) client-ip=2a00:1450:400c:c00::22b;
-Received: by mail-wg0-f43.google.com with SMTP id l18so79284wgh.14
-        for <msysgit@googlegroups.com>; Tue, 15 Jul 2014 15:54:29 -0700 (PDT)
-X-Received: by 10.194.60.110 with SMTP id g14mr16227717wjr.101.1405464869698;
-        Tue, 15 Jul 2014 15:54:29 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id o12sm48938846wiw.5.2014.07.15.15.54.28
+        d=google.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=C0iSC2cZOqQLk7NlE6b5r96YZaJGyo/wfFn3gn/bOZ0=;
+        b=aA2JoqFyOko5b/DZnpzsTbTiDFEDynUAYMIE+WLGkAuXXiECQM4Sh5Xq9VEmjq6eXY
+         qTh/b3uH9Hnk3UhULB2S/cncbM8RNAZnn+LTE1H0tKR3UGKbU0BIbyG6US6ehHS95+R6
+         /t9w1ww4w8y2YdmwI/O/vCssf73C22/igd9qtOR6gvTyYhr2zDnsKk4HS+Eda2TkVOyl
+         daFWZ6WEx9lzROb2lFdXWl28pgeuaP9Itd4TUaW7gGXsYNTHO2nqWUM2AsSRG9UkRJfg
+         reT6bB9NzF3xl2k2Yf485tQRJPkEt8Ssox9+dXnmvYU8wwQWL7VYG7ARDK8F5ooRH26+
+         iFYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=C0iSC2cZOqQLk7NlE6b5r96YZaJGyo/wfFn3gn/bOZ0=;
+        b=WH5xHxOvEdwj45y85mBCtegxzjs28g0TPRtaHjiVJIKXhbsK0splD4ls74NW273ZAl
+         nepWRjRRs0qu0W8RipFhSgAgp9ICXEjLyIco8OIn9BgYFsGNLbGfDQSd8T+j19sTuic+
+         C3m9kbfOYEys12ngyOHVt0AWCwD7VGCetlMBi+NnT9Fp4xz2kWXlxN7Y3dOUQ5bO6KPs
+         IRIj3uUiNaO+CeBogX5qyc2r66KVhIzyTJu8n59jWvN7c6sNmZGDgzxZPTKX1xszUer/
+         4ABy3+toaoplpviIST+X3jotgxB0qeG/RbQMPc+JV75TAjnW+36EXF6QETm/iRC4ZaAA
+         DHAw==
+X-Gm-Message-State: ALoCoQmsFVfd8gPXSnQOYnYqDxwl8eR74UXdw7ulDvuYjB0GHii8cVdsSizEj+YETWEfylBVInT5
+X-Received: by 10.236.99.8 with SMTP id w8mr10726940yhf.31.1405465360624;
+        Tue, 15 Jul 2014 16:02:40 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id v12si1056012yhe.2.2014.07.15.16.02.40
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 15 Jul 2014 15:54:29 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53C5B0A1.4060502@gmail.com>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::22b
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253615>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 15 Jul 2014 16:02:40 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 73A435A425F;
+	Tue, 15 Jul 2014 16:02:40 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id 11925E0B27; Tue, 15 Jul 2014 16:02:39 -0700 (PDT)
+X-Mailer: git-send-email 2.0.1.442.g7fe6834.dirty
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253616>
 
-There is no fchmod() on native Windows platforms (MinGW and MSVC), and the
-equivalent Win32 API (SetFileInformationByHandle) requires Windows Vista.
+Jun, List
 
-Use chmod() instead.
+Please find a trivial patch that makes refs.c:is_branch public.
+This allows us to delete the identical copy of is_branch in fsck.c
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
- config.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/config.c b/config.c
-index ba882a1..9767c4b 100644
---- a/config.c
-+++ b/config.c
-@@ -1636,8 +1636,8 @@ int git_config_set_multivar_in_file(const char *config_filename,
- 			MAP_PRIVATE, in_fd, 0);
- 		close(in_fd);
- 
--		if (fchmod(fd, st.st_mode & 07777) < 0) {
--			error("fchmod on %s failed: %s",
-+		if (chmod(lock->filename, st.st_mode & 07777) < 0) {
-+			error("chmod on %s failed: %s",
- 				lock->filename, strerror(errno));
- 			ret = CONFIG_NO_WRITE;
- 			goto out_free;
-@@ -1815,8 +1815,8 @@ int git_config_rename_section_in_file(const char *config_filename,
- 
- 	fstat(fileno(config_file), &st);
- 
--	if (fchmod(out_fd, st.st_mode & 07777) < 0) {
--		ret = error("fchmod on %s failed: %s",
-+	if (chmod(lock->filename, st.st_mode & 07777) < 0) {
-+		ret = error("chmod on %s failed: %s",
- 				lock->filename, strerror(errno));
- 		goto out;
- 	}
--- 
-2.0.1.779.g26aeac4.dirty
+Ronnie Sahlberg (1):
+  refs.c: add a public is_branch function
+
+ builtin/fsck.c | 5 -----
+ refs.c         | 2 +-
+ refs.h         | 2 ++
+ 3 files changed, 3 insertions(+), 6 deletions(-)
 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+2.0.1.442.g7fe6834.dirty
