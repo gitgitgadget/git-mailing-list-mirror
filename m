@@ -1,69 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] refs.c: add a public is_branch function
-Date: Tue, 15 Jul 2014 16:20:51 -0700
-Message-ID: <20140715232051.GL12427@google.com>
-References: <1405465358-27054-1-git-send-email-sahlberg@google.com>
- <1405465358-27054-2-git-send-email-sahlberg@google.com>
+From: "Keller, Jacob E" <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v8 1/4] usage: make error functions a stack
+Date: Tue, 15 Jul 2014 23:24:32 +0000
+Message-ID: <1405466672.2577.14.camel@jekeller-desk1.amr.corp.intel.com>
+References: <1405459754-4220-1-git-send-email-jacob.e.keller@intel.com>
+	 <1405459754-4220-2-git-send-email-jacob.e.keller@intel.com>
+	 <xmqq7g3etf1o.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 01:21:07 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "gitster@pobox.com" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 16 01:24:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7C1w-0007HC-Et
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 01:21:04 +0200
+	id 1X7C5V-0008Os-Pk
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 01:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759266AbaGOXU7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 19:20:59 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:57334 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756099AbaGOXU4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 19:20:56 -0400
-Received: by mail-pd0-f176.google.com with SMTP id y10so136109pdj.7
-        for <git@vger.kernel.org>; Tue, 15 Jul 2014 16:20:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=u3IUCZ2GgYb0+xdrNTclv5L2oBksy2YkIR4uNOUJajo=;
-        b=kbqPcSBmh+G3JjIXXgGOUaxIo8gFJ4NWWHVke7TberSIPkTItuf3HTTck9/vzuuZRW
-         /F4CdS4taMmXhEVTvrFoCU8rNAua96PQPh4XX6Up8YfvJ+wdjToQXa7jq56lfLQITd+w
-         lOVrk9iE1uNU2xdw+frqPSo//hrkAgerNYJy795W0rk8CKts2XObU5JAxfdZwzRqgxqb
-         8H312lmGJmEzQjfD1vMGjWeiLd4KuwbGNwzyUtBbaXrU+MVWySg6LnPsrds8uImHVS4D
-         r59736CpVGu+l6G1vdvRELjzDLpa+CGf5pB/i1FUBm736atDKkEg1qeblukU4bYsbPiV
-         mV0A==
-X-Received: by 10.66.188.5 with SMTP id fw5mr25324911pac.63.1405466454396;
-        Tue, 15 Jul 2014 16:20:54 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:888a:1e2f:d307:1d55])
-        by mx.google.com with ESMTPSA id z4sm2219486pda.84.2014.07.15.16.20.53
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Tue, 15 Jul 2014 16:20:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1405465358-27054-2-git-send-email-sahlberg@google.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S965250AbaGOXYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 19:24:36 -0400
+Received: from mga02.intel.com ([134.134.136.20]:5992 "EHLO mga02.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934155AbaGOXYe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 19:24:34 -0400
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga101.jf.intel.com with ESMTP; 15 Jul 2014 16:24:33 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.01,668,1400050800"; 
+   d="scan'208";a="543898627"
+Received: from orsmsx103.amr.corp.intel.com ([10.22.225.130])
+  by orsmga001.jf.intel.com with ESMTP; 15 Jul 2014 16:24:33 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.10.59]) by
+ ORSMSX103.amr.corp.intel.com ([169.254.2.34]) with mapi id 14.03.0123.003;
+ Tue, 15 Jul 2014 16:24:33 -0700
+Thread-Topic: [PATCH v8 1/4] usage: make error functions a stack
+Thread-Index: AQHPoH7MecXJzaW2eE+GxUkwp9ZNCpuiPDgA
+In-Reply-To: <xmqq7g3etf1o.fsf@gitster.dls.corp.google.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.173.156]
+Content-ID: <466DA04261F8EB4FA2BAB153E876A721@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253619>
 
-Ronnie Sahlberg wrote:
-
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
-> ---
->  builtin/fsck.c | 5 -----
->  refs.c         | 2 +-
->  refs.h         | 2 ++
->  3 files changed, 3 insertions(+), 6 deletions(-)
-
-Makes sense -- thanks.  (This is an old one: v1.5.4-rc4~27
-(2008-01-15), v1.5.4-rc4~30 (2008-01-15).  Most of the running time of
-fsck is per-object, not per-ref, so maintainability here seems worth
-the performance cost.)
-
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+T24gVHVlLCAyMDE0LTA3LTE1IGF0IDE1OjQ3IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
+Cj4gSmFjb2IgS2VsbGVyIDxqYWNvYi5lLmtlbGxlckBpbnRlbC5jb20+IHdyaXRlczoNCj4gDQo+
+ID4gIGV4dGVybiB2b2lkIHNldF9lcnJvcl9yb3V0aW5lKHZvaWQgKCpyb3V0aW5lKShjb25zdCBj
+aGFyICplcnIsIHZhX2xpc3QgcGFyYW1zKSk7DQo+ID4gK2V4dGVybiB2b2lkIHBvcF9lcnJvcl9y
+b3V0aW5lKHZvaWQpOw0KPiANCj4gcG9wIHRoYXQgdW5kb2VzIHNldCBzbWVsbHMgc29tZXdoYXQg
+d2VpcmQuICBQZXJoYXBzIHdlIHNob3VsZCByZW5hbWUNCj4gc2V0IHRvIHB1c2g/ICBUaGF0IHdv
+dWxkIGFsbG93IHVzIGNhdGNoIHBvc3NpYmxlIHRvcGljcyB0aGF0IGFkZCBuZXcNCj4gY2FsbHMg
+dG8gc2V0X2Vycm9yX3JvdXRpbmUoKSBhcyB3ZWxsIGJ5IGZvcmNpbmcgdGhlIHN5c3RlbSBub3Qg
+dG8NCj4gbGluayB3aGVuIHRoZXkgYXJlIG1lcmdlZCB3aXRob3V0IG5lY2Vzc2FyeSBmaXhlcy4N
+Cj4gDQoNCkkgdGhvdWdodCBhYm91dCBjaGFuZ2luZyBzZXQgdG9vLCBidXQgd2Fzbid0IHN1cmUg
+dGhhdCBtYWRlIHNlbnNlLi4/DQpUaGF0IGRvZXMgbWFrZSBtb3JlIHNlbnNlIG5vdyB0aG91Z2gu
+IFRoZXJlICphcmUqIHZhbGlkIHVzZSBjYXNlcyB3aGVyZQ0KYSBzZXRfZXJyb3Jfcm91dGluZSBp
+cyB1c2VkIHdpdGhvdXQgYSBwb3AsICh0aGUgb25lIGN1cnJlbnQgdXNlLCBJDQp0aGluaykuDQoN
+CkknbGwgdXBkYXRlIHRoaXMgcGF0Y2ggd2l0aCB0aGF0IGNoYW5nZS4NCg0KPiA+ICsvKiBwdXNo
+IGVycm9yIHJvdXRpbmUgb250byB0aGUgZXJyb3IgZnVuY3Rpb24gc3RhY2sgKi8NCj4gPiAgdm9p
+ZCBzZXRfZXJyb3Jfcm91dGluZSh2b2lkICgqcm91dGluZSkoY29uc3QgY2hhciAqZXJyLCB2YV9s
+aXN0IHBhcmFtcykpDQo+ID4gIHsNCj4gPiAtCWVycm9yX3JvdXRpbmUgPSByb3V0aW5lOw0KPiA+
+ICsJc3RydWN0IGVycm9yX2Z1bmNfbGlzdCAqZWZsID0geG1hbGxvYyhzaXplb2YoKmVmbCkpOw0K
+PiA+ICsJZWZsLT5mdW5jID0gcm91dGluZTsNCj4gPiArCWVmbC0+bmV4dCA9IGVycm9yX2Z1bmNz
+Ow0KPiA+ICsJZXJyb3JfZnVuY3MgPSBlZmw7DQo+ID4gK30NCj4gPiArDQo+ID4gKy8qIHBvcCBh
+IHNpbmdsZSBlcnJvciByb3V0aW5lIG9mZiBvZiB0aGUgZXJyb3IgZnVuY3Rpb24gc3RhY2ssIHRo
+dXMgcmV2ZXJ0aW5nDQo+ID4gKyAqIHRvIHByZXZpb3VzIGVycm9yLiBTaG91bGQgYWx3YXlzIGJl
+IHBhaXJlZCB3aXRoIGEgc2V0X2Vycm9yX3JvdXRpbmUgKi8NCj4gPiArdm9pZCBwb3BfZXJyb3Jf
+cm91dGluZSh2b2lkKQ0KPiA+ICt7DQo+ID4gKwlhc3NlcnQoZXJyb3JfZnVuY3MgIT0gJmRlZmF1
+bHRfZXJyb3JfZnVuYyk7DQo+ID4gKw0KPiA+ICsJc3RydWN0IGVycm9yX2Z1bmNfbGlzdCAqZWZs
+ID0gZXJyb3JfZnVuY3M7DQo+IA0KPiBkZWNsLWFmdGVyLXN0bXQuICBDYW4gYmUgZml4ZWQgZWFz
+aWx5IGJ5IGZsaXBwaW5nIHRoZSBhYm92ZSB0d28NCj4gbGluZXMuDQoNCk9oLCByaWdodCB5ZXMu
+IEknbGwgZml4IHRoYXQgaW4gYSByZXNlbmQgYXMgd2VsbC4NCg0KVGhhbmtzLA0KSmFrZQ0KDQoN
+Cg==
