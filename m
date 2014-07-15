@@ -1,79 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Date: Tue, 15 Jul 2014 12:12:36 -0700
-Message-ID: <xmqqha2iv3kr.fsf@gitster.dls.corp.google.com>
-References: <1405119347-3308-1-git-send-email-jacob.e.keller@intel.com>
-	<1405119347-3308-3-git-send-email-jacob.e.keller@intel.com>
-	<CAPig+cR9VCtNhk-FbqDM1LTCa8VeUTYXU4XEX36Rb5CxPFfLWQ@mail.gmail.com>
-	<xmqqfvi518xo.fsf@gitster.dls.corp.google.com>
-	<20140713173356.GA8406@sigill.intra.peff.net>
-	<20140713183629.GA19293@sigill.intra.peff.net>
-	<xmqqfvi3zwp7.fsf@gitster.dls.corp.google.com>
-	<1405435933.9147.1.camel@jekeller-desk1.amr.corp.intel.com>
-	<xmqqfvi2wqvq.fsf@gitster.dls.corp.google.com>
-	<1405445234.2577.0.camel@jekeller-desk1.amr.corp.intel.com>
-	<xmqq7g3ewkp8.fsf@gitster.dls.corp.google.com>
-	<1405449076.2577.3.camel@jekeller-desk1.amr.corp.intel.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	"peff\@peff.net" <peff@peff.net>,
-	"sunshine\@sunshineco.com" <sunshine@sunshineco.com>
-To: "Keller\, Jacob E" <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 21:12:53 2014
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 1/2] rebase--am: use --cherry-pick instead of --ignore-if-in-upstream
+Date: Tue, 15 Jul 2014 20:14:02 +0100
+Message-ID: <47e67c62fb2a8c8846f5d3a12d71aebf8fa875d7.1405451643.git.john@keeping.me.uk>
+References: <20140707211456.GA2322@serenity.lan>
+Cc: Junio C Hamano <gitster@pobox.com>, Ted Felix <ted@tedfelix.com>,
+	John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 15 21:14:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X789h-00033r-1F
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 21:12:49 +0200
+	id 1X78BK-0003e3-LD
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 21:14:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932891AbaGOTMq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 15:12:46 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52842 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932850AbaGOTMo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 15:12:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3538C29D37;
-	Tue, 15 Jul 2014 15:12:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TvALlgLkfHwcdvVN8HrBV7gW4lk=; b=AFsoxs
-	UCHBP0yhaPANt+TGJiipRzKX2A2p3dzUpvbYtGAwAX3jN2XFJSNsNI08O1jePRuN
-	VeDbuimat5u9rO7ZMDybexf+heqd69kbdle4RCx33kx46TECJvnDRxNfzmoIzbE0
-	hNkURb2Q7a8qurvSM97JOhgbbdkG2JTiWiB3U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=P1lHjvkXpJvB00fQ14bgABcFK0e+iMg5
-	JaC/kl3zKOYgPcnVSzomdBXJ4Yk+daiDK/r4zt9Gi3CHCbGNiSmmVJOrjjkoy8Rr
-	pdtyduKNAls4kSI96NMjxKK1QgV8V1eyaydtsQzc6cykRnt8SDDmIONn5F2sy54/
-	gjqx6pyU75M=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 28E4C29D36;
-	Tue, 15 Jul 2014 15:12:26 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S932906AbaGOTO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 15:14:28 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:59798 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932850AbaGOTO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 15:14:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id CD991CDA555;
+	Tue, 15 Jul 2014 20:14:25 +0100 (BST)
+X-Quarantine-ID: <7Q2uOywXEh51>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 7Q2uOywXEh51; Tue, 15 Jul 2014 20:14:24 +0100 (BST)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1CEBD29D1D;
-	Tue, 15 Jul 2014 15:12:20 -0400 (EDT)
-In-Reply-To: <1405449076.2577.3.camel@jekeller-desk1.amr.corp.intel.com>
-	(Jacob E. Keller's message of "Tue, 15 Jul 2014 18:31:16 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: F17D6C70-0C53-11E4-831B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	by jackal.aluminati.org (Postfix) with ESMTPSA id B7BF8CDA52A;
+	Tue, 15 Jul 2014 20:14:14 +0100 (BST)
+X-Mailer: git-send-email 2.0.1.472.g6f92e5f.dirty
+In-Reply-To: <20140707211456.GA2322@serenity.lan>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253587>
 
-"Keller, Jacob E" <jacob.e.keller@intel.com> writes:
+When using `git format-patch --ignore-if-in-upstream` we are only
+allowed to give a single revision range.  In the next commit we will
+want to add an additional exclusion revision in order to handle fork
+points correctly, so convert `git-rebase--am` to use a symmetric
+difference with `--cherry-pick --right-only`.
 
-> I am going to re-submit this with an enum-style return. I am also
-> changing how we parse so that we can correctly report whether the sort
-> function or sort atom is incorrect.
+This does not change the result of the format-patch invocation, just how
+we spell the arguments.
 
-Oh, our mails crossed, I guess.  As long as it will leave the door
-open for later enhancements for more context sensitive error
-diagnosis, I do not particularly mind a solution around enum.
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ git-rebase--am.sh | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+index ca20e1e..902bf2d 100644
+--- a/git-rebase--am.sh
++++ b/git-rebase--am.sh
+@@ -29,7 +29,13 @@ skip)
+ 	;;
+ esac
+ 
+-test -n "$rebase_root" && root_flag=--root
++if test -z "$rebase_root"
++	# this is now equivalent to ! -z "$upstream"
++then
++	revisions=$upstream...$orig_head
++else
++	revisions=$onto...$orig_head
++fi
+ 
+ ret=0
+ if test -n "$keep_empty"
+@@ -38,14 +44,15 @@ then
+ 	# empty commits and even if it didn't the format doesn't really lend
+ 	# itself well to recording empty patches.  fortunately, cherry-pick
+ 	# makes this easy
+-	git cherry-pick ${gpg_sign_opt:+"$gpg_sign_opt"} --allow-empty "$revisions"
++	git cherry-pick ${gpg_sign_opt:+"$gpg_sign_opt"} --allow-empty \
++		--right-only "$revisions"
+ 	ret=$?
+ else
+ 	rm -f "$GIT_DIR/rebased-patches"
+ 
+-	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
++	git format-patch -k --stdout --full-index --cherry-pick --right-only \
+ 		--src-prefix=a/ --dst-prefix=b/ --no-renames --no-cover-letter \
+-		$root_flag "$revisions" >"$GIT_DIR/rebased-patches"
++		"$revisions" >"$GIT_DIR/rebased-patches"
+ 	ret=$?
+ 
+ 	if test 0 != $ret
+-- 
+2.0.1.472.g6f92e5f.dirty
