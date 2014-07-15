@@ -1,124 +1,94 @@
-From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v8 3/4] tag: update parsing to be more precise regarding errors
-Date: Tue, 15 Jul 2014 14:29:13 -0700
-Message-ID: <1405459754-4220-4-git-send-email-jacob.e.keller@intel.com>
-References: <1405459754-4220-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 15 23:29:36 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 1/4] cache-tree: Create/update cache-tree on checkout
+Date: Tue, 15 Jul 2014 14:55:50 -0700
+Message-ID: <xmqqr41mthg9.fsf@gitster.dls.corp.google.com>
+References: <1405283299-25636-1-git-send-email-dturner@twitter.com>
+	<53C5828F.2050005@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Turner <dturner@twopensource.com>, git@vger.kernel.org,
+	David Turner <dturner@twitter.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+X-From: git-owner@vger.kernel.org Tue Jul 15 23:56:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7AI3-0001kn-DH
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 23:29:35 +0200
+	id 1X7Ahg-00047t-7b
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 23:56:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751301AbaGOV3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 17:29:22 -0400
-Received: from mga02.intel.com ([134.134.136.20]:55382 "EHLO mga02.intel.com"
+	id S933861AbaGOV4A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jul 2014 17:56:00 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53760 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752398AbaGOV3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 17:29:21 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga101.jf.intel.com with ESMTP; 15 Jul 2014 14:29:20 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,668,1400050800"; 
-   d="scan'208";a="573664236"
-Received: from jekeller-desk1.jf.intel.com (HELO jekeller-desk1.amr.corp.intel.com) ([134.134.173.156])
-  by orsmga002.jf.intel.com with ESMTP; 15 Jul 2014 14:29:20 -0700
-X-Mailer: git-send-email 2.0.1.475.g9b8d714
-In-Reply-To: <1405459754-4220-1-git-send-email-jacob.e.keller@intel.com>
+	id S933246AbaGOVz6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2014 17:55:58 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F2648270AC;
+	Tue, 15 Jul 2014 17:55:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=aTzsU8/MfODk
+	9Z3seONiso0MlwE=; b=AWRDqNB1KmNZirviwkKHeutdfVW7T2Sdx4G5ewH4qY0C
+	R+TZE5iEZYkh6FAZgrv7fNbqGaQomduqRn7kUDKudys9fOSLGd0cLbgqfl/YmhQN
+	DydiY2OYesr+WcWZMkaD/kamJbfhVFfdgQZgRvEYsjlzPegH/5gU8a4ne2SzMOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qpUJKU
+	bMe4mRjLT6ypHW8WoN9dFj97ndMzzQUZXNRHMVZQe7MLIOJbe8kbMmfjcHZFz4Fp
+	rndXXSUbnMraOGd4T/CT0b3LG6Uusnj2NZAV0BBQRDkd2Zk084QO9azW3iBf0Tq1
+	hc/uYjilSDo7fNLVCyRie7UV8Rmp7v8Pxqa7E=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E7B79270AB;
+	Tue, 15 Jul 2014 17:55:39 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2D2DF2709A;
+	Tue, 15 Jul 2014 17:55:34 -0400 (EDT)
+In-Reply-To: <53C5828F.2050005@web.de> ("Torsten =?utf-8?Q?B=C3=B6gershaus?=
+ =?utf-8?Q?en=22's?= message of
+	"Tue, 15 Jul 2014 21:35:43 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BF356EAE-0C6A-11E4-B9D2-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253607>
 
-Update the parsing of sort string specifications so that it is able to
-properly detect errors in the function type and allowed atoms.
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Cc: Jeff King <peff@peff.net>
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
----
-This function should replace the one I think is already on one of the branches.
-This version fully updates the parse_sort_opt to be like what will be the
-parse_sort_string function. I have ensured that the next patch is purely a move
-of this function, and does not contain modifications to make this easier to
-review. Instead of using skip_prefix, I use strchr and check for the separator.
+> On 07/13/2014 10:28 PM, David Turner wrote:
+>> From: David Turner <dturner@twopensource.com>
+> []
+>> diff --git a/cache-tree.c b/cache-tree.c
+>> index 7fa524a..f951d7d 100644
+>> --- a/cache-tree.c
+>> +++ b/cache-tree.c
+>> @@ -239,9 +239,12 @@ static int update_one(struct cache_tree *it,
+>>   	struct strbuf buffer;
+>>   	int missing_ok =3D flags & WRITE_TREE_MISSING_OK;
+>>   	int dryrun =3D flags & WRITE_TREE_DRY_RUN;
+>> +	int repair =3D flags & WRITE_TREE_REPAIR;
+>>   	int to_invalidate =3D 0;
+>>   	int i;
+>>   +	assert(!(dryrun && repair));
+> I think something in the spirit of
+> die("dryrun and repaiir can not be used together"\n)
+> Would be nicer to the user as well as being more reliable (as assert
+> may be a no-op in some systems)
 
- builtin/tag.c | 55 +++++++++++++++++++++++++++++++++++++++++--------------
- 1 file changed, 41 insertions(+), 14 deletions(-)
+While it is a good suggestion *not* to attempt validating the
+end-user input with assert() for the reason you state, I think for
+this particular case, these flags only come from the code and assert()
+to catch programming errors would be sufficient.
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index ef765563388c..7d82526e76be 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -522,24 +522,51 @@ static int parse_opt_points_at(const struct option *opt __attribute__((unused)),
- static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
- {
- 	int *sort = opt->value;
--	int flags = 0;
-+	char *value, *separator, *type, *atom;
-+	int flags = 0, function = 0, err = 0;
- 
--	if (*arg == '-') {
-+	/* skip the '-' prefix for reverse sort order first */
-+	if (skip_prefix(arg, "-", &arg))
- 		flags |= REVERSE_SORT;
--		arg++;
-+
-+	/* duplicate string so we can modify it in place */
-+	value = xstrdup(arg);
-+
-+	/* determine the sort function and the sorting atom */
-+	separator = strchr(value, ':');
-+	if (separator) {
-+		/* split the string at the separator with a NULL byte */
-+		*separator = '\0';
-+		type = value;
-+		atom = separator + 1;
-+	} else {
-+		/* we have no separator, so assume the whole string is the * atom */
-+		type = NULL;
-+		atom = value;
- 	}
--	if (starts_with(arg, "version:")) {
--		*sort = VERCMP_SORT;
--		arg += 8;
--	} else if (starts_with(arg, "v:")) {
--		*sort = VERCMP_SORT;
--		arg += 2;
-+
-+	if (type) {
-+		if (!strcmp(type, "version") || !strcmp(type, "v"))
-+			function = VERCMP_SORT;
-+		else {
-+			err = error(_("unsupported sort function '%s'"), type);
-+			goto abort;
-+		}
-+
- 	} else
--		*sort = STRCMP_SORT;
--	if (strcmp(arg, "refname"))
--		die(_("unsupported sort specification %s"), arg);
--	*sort |= flags;
--	return 0;
-+		function = STRCMP_SORT;
-+
-+	/* for now, only the refname is a valid atom */
-+	if (atom && strcmp(atom, "refname")) {
-+		err = error(_("unsupported sort specification '%s'"), atom);
-+		goto abort;
-+	}
-+
-+	*sort = (flags | function);
-+
-+abort:
-+	free(value);
-+	return err;
- }
- 
- int cmd_tag(int argc, const char **argv, const char *prefix)
--- 
-2.0.1.475.g9b8d714
+Besides, as discussed elsewhere, WRITE_TREE_DRY_RUN should not be
+used, and the support for it should be dropped.  It is broken in
+that the code path that leads to update_one() may correctly compute
+tree object names and stuff them in the cache-tree, higher layer
+code would then complain on such a cache-tree that records tree
+objects that do not exist.
