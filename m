@@ -1,88 +1,98 @@
-From: Karsten Blees <karsten.blees@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH v1 1/3] dir.c: coding style fix
-Date: Tue, 15 Jul 2014 20:57:56 +0200
-Message-ID: <53C579B4.2050506@gmail.com>
-References: <53C3A71F.1020101@gmail.com> <xmqq4myjy3ms.fsf@gitster.dls.corp.google.com>
+Date: Tue, 15 Jul 2014 12:10:14 -0700
+Message-ID: <xmqqpph6v3op.fsf@gitster.dls.corp.google.com>
+References: <53C3A71F.1020101@gmail.com>
+	<xmqq4myjy3ms.fsf@gitster.dls.corp.google.com>
+	<53C579B4.2050506@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 20:58:03 2014
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 21:10:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X77vO-0006Rt-GQ
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 20:58:02 +0200
+	id 1X787P-0002Cw-8w
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 21:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932843AbaGOS56 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jul 2014 14:57:58 -0400
-Received: from mail-wg0-f46.google.com ([74.125.82.46]:48554 "EHLO
-	mail-wg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932734AbaGOS55 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 14:57:57 -0400
-Received: by mail-wg0-f46.google.com with SMTP id m15so6039913wgh.17
-        for <git@vger.kernel.org>; Tue, 15 Jul 2014 11:57:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=g7+3PNoNMOP1A8FOMO3iJcPvyH41luR+ao4x/ofvTDI=;
-        b=bRrIpse86XvarspatL2aCN5JX87wqtct8YM8CzhgjtLHjRZRoaWl7NuUeYuEefBgki
-         XgHuzC+ljGQA3tiXvPul4sOjx3eON2avITwoqoxmFi/TJTisVDLAvduk7gdQJ1LmKqT2
-         EVpqnqpP5STW4RlvbMEVRtCKZ673BoxcgI4S6kPGhJgGXCmhra8KLl9ufLSMEgYe8xXG
-         SfwTHhWPBZe7MfqJ8foDRCF5op8+7HiciD6o03MOVBFsD391mdlFrXnTrXcut230+bR/
-         MMCOzonkpbwr6CG82C3Lklb7ybDFjT9MIuEnE7/zrrI/YTDwGEcM/Cbb8ngzBfbfPzqC
-         UJsA==
-X-Received: by 10.194.222.197 with SMTP id qo5mr30777348wjc.78.1405450675793;
-        Tue, 15 Jul 2014 11:57:55 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id v17sm34390812wjr.33.2014.07.15.11.57.54
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 15 Jul 2014 11:57:55 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq4myjy3ms.fsf@gitster.dls.corp.google.com>
+	id S932885AbaGOTKY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jul 2014 15:10:24 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50221 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932760AbaGOTKW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2014 15:10:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6442529C58;
+	Tue, 15 Jul 2014 15:10:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=yjWdQbRPz2io
+	QcLvLlblEitqTXk=; b=TWE5/wdYVSfo7SUdMZl+tsKyGNb4v8ZmcOViggP2NxA4
+	tACRCYkYF2mKOlFSgHM1izGs0moHvCk3CRKIEXjMfzUSBPLwJKInz04Cbw0wOetW
+	7l1h7BR7DWRMzzBGyiCyeZGXf58VhNQ4yokxbx2bBEzWBov6h5RG1OhWhHvYCq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IihNPP
+	zdIMwuQ7fOjgr4Tuv83N0K2oFAESvBMhJfN4qqGbRyFVb1TSbaucGtdaDqCTQfbH
+	pdnAEcKxA10NyEExBxMyH0EhNpipgh3mVuvCTBe2xKQ4baAM1QB1Mjrg70M3n5Ep
+	ODwgudpkcu5Pt5BIw+FwNaXcYm09zhFAehNSU=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2A17629C57;
+	Tue, 15 Jul 2014 15:10:04 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 41C3029C4C;
+	Tue, 15 Jul 2014 15:09:58 -0400 (EDT)
+In-Reply-To: <53C579B4.2050506@gmail.com> (Karsten Blees's message of "Tue, 15
+	Jul 2014 20:57:56 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9CF2AD5A-0C53-11E4-A5A2-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253584>
 
-Am 15.07.2014 00:30, schrieb Junio C Hamano:
-> Karsten Blees <karsten.blees@gmail.com> writes:
->=20
->> From: =3D?UTF-8?q?Nguy=3DE1=3DBB=3D85n=3D20Th=3DC3=3DA1i=3D20Ng=3DE1=
-=3DBB=3D8Dc=3D20Duy?=3D
->>  <pclouds@gmail.com>
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> Signed-off-by: Karsten Blees <blees@dcon.de>
->> ---
->=20
-> Thanks for forwarding.   I'll fix-up the Yikes (see how these two
-> lines show the same name in a very different way), but how did you
-> produce the above?  Is there some fix we need in the toolchain that
-> produces patch e-mails?
->=20
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-Hmmm...I simply thought that this is how its supposed to work. Mail
-headers can only contain US-ASCII, so the RFC 2047 Q-encoded-word
-generated by git-format-patch looked good to me.
+> Am 15.07.2014 00:30, schrieb Junio C Hamano:
+>> Karsten Blees <karsten.blees@gmail.com> writes:
+>>=20
+>>> From: =3D?UTF-8?q?Nguy=3DE1=3DBB=3D85n=3D20Th=3DC3=3DA1i=3D20Ng=3DE=
+1=3DBB=3D8Dc=3D20Duy?=3D
+>>>  <pclouds@gmail.com>
+>>>
+>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+>>> Signed-off-by: Karsten Blees <blees@dcon.de>
+>>> ---
+>>=20
+>> Thanks for forwarding.   I'll fix-up the Yikes (see how these two
+>> lines show the same name in a very different way), but how did you
+>> produce the above?  Is there some fix we need in the toolchain that
+>> produces patch e-mails?
+>>=20
+>
+> Hmmm...I simply thought that this is how its supposed to work. Mail
+> headers can only contain US-ASCII, so the RFC 2047 Q-encoded-word
+> generated by git-format-patch looked good to me.
 
-It seems git-mailinfo doesn't handle line breaks in header lines in
-the mail body. I.e. if you remove the LF in the 'From:' line,
-everything is fine, despite the Q-encoding.
+But that quoted one is *NOT* a mail header.  It is the first line of
+the payload of your message, and should be in plain text just like
+the remainder, e.g. S-o-b line that has the same name.
 
-Now, 'git-format-patch --from' seems to work around the problem, but
-only for the 'From:' line. AFAICT there's no such option for
-'Subject:', e.g. if you want to paste a patch after a scissors line,
-you're on your own (see the example in the git-format-patch(1)
-discussion section, with 'Subject:' both Q-encoded and line-wrapped).
+> Perhaps it should be clarified that git-format-patch output is not
+> suitable for pasting into mail clients? Or it should print headers
+> in plain text and let git-send-email handle the conversions?
 
-Perhaps it should be clarified that git-format-patch output is not
-suitable for pasting into mail clients? Or it should print headers
-in plain text and let git-send-email handle the conversions?
+If the former is missing, then we should definitely add it to the
+documentation.  We often see new people pasting the "From " line
+meant for /etc/magic and unwanted {From,Subject,Date}: in the body.
+
+We may also want to add an option to tell it to produce an output
+that is suitable for pasting into mail clients.  Hint, hint...
