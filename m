@@ -1,116 +1,117 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 11/20] refs.c: change update_ref to use a transaction
-Date: Tue, 15 Jul 2014 16:34:09 -0700
-Message-ID: <1405467258-24102-12-git-send-email-sahlberg@google.com>
+Subject: [PATCH 13/20] fast-import.c: use a ref transaction when dumping tags
+Date: Tue, 15 Jul 2014 16:34:11 -0700
+Message-ID: <1405467258-24102-14-git-send-email-sahlberg@google.com>
 References: <1405467258-24102-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 16 01:35:27 2014
+X-From: git-owner@vger.kernel.org Wed Jul 16 01:35:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7CFo-0003aH-22
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 01:35:24 +0200
+	id 1X7CFn-0003aH-I1
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 01:35:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965224AbaGOXfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 19:35:12 -0400
-Received: from mail-pd0-f201.google.com ([209.85.192.201]:54224 "EHLO
-	mail-pd0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934315AbaGOXeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 19:34:24 -0400
-Received: by mail-pd0-f201.google.com with SMTP id v10so40113pde.2
+	id S965145AbaGOXfJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 19:35:09 -0400
+Received: from mail-yk0-f202.google.com ([209.85.160.202]:65378 "EHLO
+	mail-yk0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934316AbaGOXeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 19:34:25 -0400
+Received: by mail-yk0-f202.google.com with SMTP id q9so6959ykb.3
         for <git@vger.kernel.org>; Tue, 15 Jul 2014 16:34:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8Ss3eGQHm+dflZQA5VgOXusZ7Uov5yK7kpD58Yz8wJ0=;
-        b=e2wtbViR/eyWTNkvnbRIlBEJ/I1gPSo++3crLEeqHYO0zawkr07DM6wpXyw/MZJNZe
-         CsM5X8bhi1SIijbElPr/pxGOggQsKhk4Sjm9UXbAIDZjdRO0t7Hkai3TR4uupmKaaX6L
-         2/sRE+cuN/0wUMQazK5nHFES8OBACMPK1HQt6H8raQszfM8b2fxPXVmToz08E5wiiiJu
-         1n00jVxrx8jqKMaroUw5hUNW5SEdKZZVZB44fipW0g3YWg3ikyi2h6d0oTYDoecP2UUq
-         KxV97J2GWgupXD5faIcZdkC2VbFqHySlhuZ1Ugkuii6agubxAcANTXr/tJRLw3ViigJx
-         2v9g==
+        bh=UAEANy9joWonRhUxbrUsR3UuSzwkYRFcoI+ifaoSQlU=;
+        b=DXGn4Rizk+StAqSAeILJa6EU9eAjsMso1ziD194RDJskppu88ZGVGiNI6I4NgRCY3W
+         JD0PShNNsi17dnIxjJ/JwM6sPzEnxsJoukVuw6HwmfbFJUmldF03zvMzwtbPSUK2fivS
+         peA29bkow4MOlcRSiBvq6f4l719musYTokxwvNmtMuBeFRneygBnh6Bzw2GzyVylLNaf
+         LhswMRvoPYro+Z384kwxtk0u415Gw0VyGgQk1zAMkfB5/yzZ91NXypaQPlcZAyyWJPuy
+         RIYk3KpDPyY/nHI/TxlgHk8HT0nuCJKLrT0ROeJTPwJRtJsGhHwdKY2XqAEDdMtYx72E
+         AeFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=8Ss3eGQHm+dflZQA5VgOXusZ7Uov5yK7kpD58Yz8wJ0=;
-        b=PHi6sQIgJnLXmdcAWfhKbaKuTXPBsuiF5Pq0YwbmZtw6QEcEekZAWJvts1S4ZSU8vm
-         /M/9+Srjj4MVE80+miHr3J3Qf5RLDd8cVslZaMVdkCaQcufyXRJvdREwVvHzmGmR+Z4n
-         FOm6z6gmclq3hZNKZXQkrPCFVbQpGNhfojCd+9tsyV1B/ej2ZuJLX4JT3th29oniD350
-         wy3PK4kj3Xw1YFS94xi/QcGuBpuAYpkzkwvHcQQxTOHUw4RlLCCAnrQhpqlCvKoSP9i+
-         tY31GP5Tz6EVR3OkwhYZ1l3L9SSoeolKb4sLieV48pPRoN7qTKhUi5u4mGwx/uSyD5Av
-         6DJA==
-X-Gm-Message-State: ALoCoQlCY7hjkTle/KKkwu3ejqKK/PGzlZCC8Wd2HP2yvHEQ6h7hbKkT5lqFaH60gWaudva/8A6o
-X-Received: by 10.66.182.170 with SMTP id ef10mr12977828pac.0.1405467264389;
+        bh=UAEANy9joWonRhUxbrUsR3UuSzwkYRFcoI+ifaoSQlU=;
+        b=Z6t/Jh6AINqq3raGYeH0P0pWaj6vvS4j1r4++nPI9PZJOvxhBfJ286JqNggxUDGcOv
+         r9PtMHUScZA+LS8M4AD54mGE29+f72KCxqHFi6vLt2zz+Rab7NKqxUaKSsQt2J+GWG4d
+         419UlnVjw9Cv++Hl8YetowbNBz7BP+Y0VY5MaIeP4PObY+HSmzL/3+e0z/WWf1uYrJWW
+         HcMgcAVL6FkZjZxUPHUKwD6BDzh9KOTXuW+f8zJBa4RzvDHBMo046VEbGJI5SEMJtkd3
+         7NOA7BzFCLjlWM7psfCBuKLu6V2czFogiITU+s4WA2U4MAYtyS3jmd+WFq1vNd8Ad/ap
+         5W4A==
+X-Gm-Message-State: ALoCoQnX8sgKgl5jYL6e++u/jMfZShinB/myVD3dU5YWxxpDFpV0dxsDRdJs4L3DYSOEwObOqt3X
+X-Received: by 10.236.92.69 with SMTP id i45mr11290543yhf.20.1405467264520;
         Tue, 15 Jul 2014 16:34:24 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id z50si1060588yhb.3.2014.07.15.16.34.24
+        by gmr-mx.google.com with ESMTPS id y50si1060123yhk.4.2014.07.15.16.34.24
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Tue, 15 Jul 2014 16:34:24 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 37E6D31C2D7;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 61B0831C2EA;
 	Tue, 15 Jul 2014 16:34:24 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id ED5A0E0C77; Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
+	id 20A8AE0A98; Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.481.gb244468
 In-Reply-To: <1405467258-24102-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253636>
-
-Change the update_ref helper function to use a ref transaction internally.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253637>
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 28 ++++++++++++++++++++++++----
- 1 file changed, 24 insertions(+), 4 deletions(-)
+ fast-import.c | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index d015285..ff4e799 100644
---- a/refs.c
-+++ b/refs.c
-@@ -3523,11 +3523,31 @@ int update_ref(const char *action, const char *refname,
- 	       const unsigned char *sha1, const unsigned char *oldval,
- 	       int flags, enum action_on_err onerr)
+diff --git a/fast-import.c b/fast-import.c
+index d5206ee..a95e1be 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1734,15 +1734,32 @@ static void dump_tags(void)
  {
+ 	static const char *msg = "fast-import";
+ 	struct tag *t;
 -	struct ref_lock *lock;
--	lock = update_ref_lock(refname, oldval, flags, NULL, onerr);
--	if (!lock)
-+	struct ref_transaction *t;
+-	char ref_name[PATH_MAX];
++	struct strbuf ref_name = STRBUF_INIT;
 +	struct strbuf err = STRBUF_INIT;
-+
-+	t = ref_transaction_begin(&err);
-+	if (!t ||
-+	    ref_transaction_update(t, refname, sha1, oldval, flags,
-+				   !!oldval, &err) ||
-+	    ref_transaction_commit(t, action, &err)) {
-+		const char *str = "update_ref failed for ref '%s': %s";
-+
-+		ref_transaction_free(t);
-+		switch (onerr) {
-+		case UPDATE_REFS_MSG_ON_ERR:
-+			error(str, refname, err.buf);
-+			break;
-+		case UPDATE_REFS_DIE_ON_ERR:
-+			die(str, refname, err.buf);
-+			break;
-+		case UPDATE_REFS_QUIET_ON_ERR:
-+			break;
-+		}
-+		strbuf_release(&err);
- 		return 1;
--	return update_ref_write(action, refname, sha1, lock, NULL, onerr);
++	struct ref_transaction *transaction;
+ 
++	transaction = ref_transaction_begin(&err);
++	if (!transaction) {
++		failure |= error("%s", err.buf);
++		goto cleanup;
 +	}
-+	return 0;
+ 	for (t = first_tag; t; t = t->next_tag) {
+-		sprintf(ref_name, "tags/%s", t->name);
+-		lock = lock_ref_sha1(ref_name, NULL);
+-		if (!lock || write_ref_sha1(lock, t->sha1, msg) < 0)
+-			failure |= error("Unable to update %s", ref_name);
++		strbuf_reset(&ref_name);
++		strbuf_addf(&ref_name, "refs/tags/%s", t->name);
++
++		if (ref_transaction_update(transaction, ref_name.buf, t->sha1,
++					   NULL, 0, 0, &err)) {
++			failure |= error("%s", err.buf);
++			goto cleanup;
++		}
+ 	}
++	if (ref_transaction_commit(transaction, msg, &err))
++		failure |= error("%s", err.buf);
++
++ cleanup:
++	ref_transaction_free(transaction);
++	strbuf_release(&ref_name);
++	strbuf_release(&err);
  }
  
- static int ref_update_compare(const void *r1, const void *r2)
+ static void dump_marks_helper(FILE *f,
 -- 
 2.0.1.442.g7fe6834.dirty
