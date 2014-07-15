@@ -1,30 +1,30 @@
 From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v8 4/4] tag: support configuring --sort via .gitconfig
-Date: Tue, 15 Jul 2014 14:29:14 -0700
-Message-ID: <1405459754-4220-5-git-send-email-jacob.e.keller@intel.com>
+Subject: [PATCH v8 1/4] usage: make error functions a stack
+Date: Tue, 15 Jul 2014 14:29:11 -0700
+Message-ID: <1405459754-4220-2-git-send-email-jacob.e.keller@intel.com>
 References: <1405459754-4220-1-git-send-email-jacob.e.keller@intel.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>, Jeff King <peff@peff.net>
+Cc: Jacob Keller <jacob.e.keller@intel.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 15 23:29:35 2014
+X-From: git-owner@vger.kernel.org Tue Jul 15 23:29:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7AI2-0001kn-Sp
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 23:29:35 +0200
+	id 1X7AI1-0001kn-Qz
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 23:29:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754919AbaGOV30 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 17:29:26 -0400
+	id S1754690AbaGOV3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 17:29:24 -0400
 Received: from mga02.intel.com ([134.134.136.20]:55381 "EHLO mga02.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751091AbaGOV3V (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752284AbaGOV3V (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 15 Jul 2014 17:29:21 -0400
 Received: from orsmga002.jf.intel.com ([10.7.209.21])
   by orsmga101.jf.intel.com with ESMTP; 15 Jul 2014 14:29:20 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.01,668,1400050800"; 
-   d="scan'208";a="573664238"
+   d="scan'208";a="573664229"
 Received: from jekeller-desk1.jf.intel.com (HELO jekeller-desk1.amr.corp.intel.com) ([134.134.173.156])
   by orsmga002.jf.intel.com with ESMTP; 15 Jul 2014 14:29:20 -0700
 X-Mailer: git-send-email 2.0.1.475.g9b8d714
@@ -33,281 +33,95 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253605>
 
-Add support for configuring default sort specification for git tags.
-Command line option will override the configured value. Both methods use
-the same syntax. Make use of (set/pop)_error_routine to temporarily
-modify error reporting when parsing as a configuration option.
+Let error routine be a stack of error functions so that callers can
+temporarily override the error_routine and then pop their modification
+off the stack. This enables customizing error for a small code segment.
 
-Cc: Jeff King <peff@peff.net>
 Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
 ---
- Documentation/config.txt  |   5 ++
- Documentation/git-tag.txt |   5 +-
- builtin/tag.c             | 124 ++++++++++++++++++++++++++++------------------
- t/t7004-tag.sh            |  36 ++++++++++++++
- 4 files changed, 120 insertions(+), 50 deletions(-)
+This is a modification of Peff's original idea for handling multiple error
+routines. I simplified it by not having the collect and other routines. I only
+modify set_error_routine to be a "push" operation, with pop_error_routine being
+its opposite. I don't let pop_error_routine remove all the error routines,
+instead only doing one with an assert check that we never call it too many times.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 1d718bdb9662..c55c22ab7be9 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -2354,6 +2354,11 @@ submodule.<name>.ignore::
- 	"--ignore-submodules" option. The 'git submodule' commands are not
- 	affected by this setting.
+This enables temporarily modifying the error routine and then popping back to
+the previous value.
+
+ git-compat-util.h |  1 +
+ usage.c           | 29 ++++++++++++++++++++++++++---
+ 2 files changed, 27 insertions(+), 3 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 9de318071083..6d0416c90ad8 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -344,6 +344,7 @@ static inline int const_error(void)
  
-+tag.sort::
-+	This variable controls the sort ordering of tags when displayed by
-+	linkgit:git-tag[1]. Without the "--sort=<value>" option provided, the
-+	value of this variable will be used as the default.
-+
- tar.umask::
- 	This variable can be used to restrict the permission bits of
- 	tar archive entries.  The default is 0002, which turns off the
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index b424a1bc48bb..320908369f06 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -99,7 +99,9 @@ OPTIONS
- 	Sort in a specific order. Supported type is "refname"
- 	(lexicographic order), "version:refname" or "v:refname" (tag
- 	names are treated as versions). Prepend "-" to reverse sort
--	order.
-+	order. When this option is not given, the sort order defaults to the
-+	value configured for the 'tag.sort' variable if it exists, or
-+	lexicographic order otherwise. See linkgit:git-config[1].
+ extern void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params));
+ extern void set_error_routine(void (*routine)(const char *err, va_list params));
++extern void pop_error_routine(void);
+ extern void set_die_is_recursing_routine(int (*routine)(void));
  
- --column[=<options>]::
- --no-column::
-@@ -317,6 +319,7 @@ include::date-formats.txt[]
- SEE ALSO
- --------
- linkgit:git-check-ref-format[1].
-+linkgit:git-config[1].
+ extern int starts_with(const char *str, const char *prefix);
+diff --git a/usage.c b/usage.c
+index ed146453cabe..fd9126a7ca0b 100644
+--- a/usage.c
++++ b/usage.c
+@@ -57,18 +57,41 @@ static int die_is_recursing_builtin(void)
+  * (ugh), so keep things static. */
+ static NORETURN_PTR void (*usage_routine)(const char *err, va_list params) = usage_builtin;
+ static NORETURN_PTR void (*die_routine)(const char *err, va_list params) = die_builtin;
+-static void (*error_routine)(const char *err, va_list params) = error_builtin;
+ static void (*warn_routine)(const char *err, va_list params) = warn_builtin;
+ static int (*die_is_recursing)(void) = die_is_recursing_builtin;
  
- GIT
- ---
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 7d82526e76be..603cf688368c 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -32,6 +32,8 @@ static const char * const git_tag_usage[] = {
- #define SORT_MASK       0x7fff
- #define REVERSE_SORT    0x8000
- 
-+static int tag_sort;
++struct error_func_list {
++	void (*func)(const char *, va_list);
++	struct error_func_list *next;
++};
++static struct error_func_list default_error_func = { error_builtin };
++static struct error_func_list *error_funcs = &default_error_func;
 +
- struct tag_filter {
- 	const char **patterns;
- 	int lines;
-@@ -346,9 +348,76 @@ static const char tag_template_nocleanup[] =
- 	"Lines starting with '%c' will be kept; you may remove them"
- 	" yourself if you want to.\n");
- 
-+static int parse_sort_string(const char *arg, int *sort)
-+{
-+	char *value, *separator, *type, *atom;
-+	int flags = 0, function = 0, err = 0;
-+
-+	/* skip the '-' prefix for reverse sort order first */
-+	if (skip_prefix(arg, "-", &arg))
-+		flags |= REVERSE_SORT;
-+
-+	/* duplicate string so we can modify it in place */
-+	value = xstrdup(arg);
-+
-+	/* determine the sort function and the sorting atom */
-+	separator = strchr(value, ':');
-+	if (separator) {
-+		/* split the string at the separator with a NULL byte */
-+		*separator = '\0';
-+		type = value;
-+		atom = separator + 1;
-+	} else {
-+		/* we have no separator, so assume the whole string is the * atom */
-+		type = NULL;
-+		atom = value;
-+	}
-+
-+	if (type) {
-+		if (!strcmp(type, "version") || !strcmp(type, "v"))
-+			function = VERCMP_SORT;
-+		else {
-+			err = error(_("unsupported sort function '%s'"), type);
-+			goto abort;
-+		}
-+
-+	} else
-+		function = STRCMP_SORT;
-+
-+	/* for now, only the refname is a valid atom */
-+	if (atom && strcmp(atom, "refname")) {
-+		err = error(_("unsupported sort specification '%s'"), atom);
-+		goto abort;
-+	}
-+
-+	*sort = (flags | function);
-+
-+abort:
-+	free(value);
-+	return err;
-+}
-+
-+static void error_bad_sort_config(const char *err, va_list params)
-+{
-+	vreportf("warning: tag.sort has ", err, params);
-+}
-+
- static int git_tag_config(const char *var, const char *value, void *cb)
+ void set_die_routine(NORETURN_PTR void (*routine)(const char *err, va_list params))
  {
--	int status = git_gpg_config(var, value, cb);
-+	int status;
-+
-+	if (!strcmp(var, "tag.sort")) {
-+		if (!value)
-+			return config_error_nonbool(var);
-+
-+		set_error_routine(error_bad_sort_config);
-+		parse_sort_string(value, &tag_sort);
-+		pop_error_routine();
-+
-+		return 0;
-+	}
-+
-+	status = git_gpg_config(var, value, cb);
- 	if (status)
- 		return status;
- 	if (starts_with(var, "column."))
-@@ -522,51 +591,8 @@ static int parse_opt_points_at(const struct option *opt __attribute__((unused)),
- static int parse_opt_sort(const struct option *opt, const char *arg, int unset)
- {
- 	int *sort = opt->value;
--	char *value, *separator, *type, *atom;
--	int flags = 0, function = 0, err = 0;
- 
--	/* skip the '-' prefix for reverse sort order first */
--	if (skip_prefix(arg, "-", &arg))
--		flags |= REVERSE_SORT;
--
--	/* duplicate string so we can modify it in place */
--	value = xstrdup(arg);
--
--	/* determine the sort function and the sorting atom */
--	separator = strchr(value, ':');
--	if (separator) {
--		/* split the string at the separator with a NULL byte */
--		*separator = '\0';
--		type = value;
--		atom = separator + 1;
--	} else {
--		/* we have no separator, so assume the whole string is the * atom */
--		type = NULL;
--		atom = value;
--	}
--
--	if (type) {
--		if (!strcmp(type, "version") || !strcmp(type, "v"))
--			function = VERCMP_SORT;
--		else {
--			err = error(_("unsupported sort function '%s'"), type);
--			goto abort;
--		}
--
--	} else
--		function = STRCMP_SORT;
--
--	/* for now, only the refname is a valid atom */
--	if (atom && strcmp(atom, "refname")) {
--		err = error(_("unsupported sort specification '%s'"), atom);
--		goto abort;
--	}
--
--	*sort = (flags | function);
--
--abort:
--	free(value);
--	return err;
-+	return parse_sort_string(arg, sort);
+ 	die_routine = routine;
  }
  
- int cmd_tag(int argc, const char **argv, const char *prefix)
-@@ -579,7 +605,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	struct create_tag_options opt;
- 	char *cleanup_arg = NULL;
- 	int annotate = 0, force = 0, lines = -1;
--	int cmdmode = 0, sort = 0;
-+	int cmdmode = 0;
- 	const char *msgfile = NULL, *keyid = NULL;
- 	struct msg_arg msg = { 0, STRBUF_INIT };
- 	struct commit_list *with_commit = NULL;
-@@ -605,7 +631,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 		OPT__FORCE(&force, N_("replace the tag if exists")),
- 		OPT_COLUMN(0, "column", &colopts, N_("show tag list in columns")),
- 		{
--			OPTION_CALLBACK, 0, "sort", &sort, N_("type"), N_("sort tags"),
-+			OPTION_CALLBACK, 0, "sort", &tag_sort, N_("type"), N_("sort tags"),
- 			PARSE_OPT_NONEG, parse_opt_sort
- 		},
++/* push error routine onto the error function stack */
+ void set_error_routine(void (*routine)(const char *err, va_list params))
+ {
+-	error_routine = routine;
++	struct error_func_list *efl = xmalloc(sizeof(*efl));
++	efl->func = routine;
++	efl->next = error_funcs;
++	error_funcs = efl;
++}
++
++/* pop a single error routine off of the error function stack, thus reverting
++ * to previous error. Should always be paired with a set_error_routine */
++void pop_error_routine(void)
++{
++	assert(error_funcs != &default_error_func);
++
++	struct error_func_list *efl = error_funcs;
++	if (efl->next) {
++		error_funcs = efl->next;
++		free(efl);
++	}
+ }
  
-@@ -661,9 +687,9 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 			copts.padding = 2;
- 			run_column_filter(colopts, &copts);
- 		}
--		if (lines != -1 && sort)
-+		if (lines != -1 && tag_sort)
- 			die(_("--sort and -n are incompatible"));
--		ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, sort);
-+		ret = list_tags(argv, lines == -1 ? 0 : lines, with_commit, tag_sort);
- 		if (column_active(colopts))
- 			stop_column_filter();
- 		return ret;
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 66010b0e7066..036665308841 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1423,6 +1423,42 @@ test_expect_success 'reverse lexical sort' '
- 	test_cmp expect actual
- '
+ void set_die_is_recursing_routine(int (*routine)(void))
+@@ -144,7 +167,7 @@ int error(const char *err, ...)
+ 	va_list params;
  
-+test_expect_success 'configured lexical sort' '
-+	git config tag.sort "v:refname" &&
-+	git tag -l "foo*" >actual &&
-+	cat >expect <<-\EOF &&
-+	foo1.3
-+	foo1.6
-+	foo1.10
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'option override configured sort' '
-+	git tag -l --sort=-refname "foo*" >actual &&
-+	cat >expect <<-\EOF &&
-+	foo1.6
-+	foo1.3
-+	foo1.10
-+	EOF
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'invalid sort parameter on command line' '
-+	test_must_fail git tag -l --sort=notvalid "foo*" >actual
-+'
-+
-+test_expect_success 'invalid sort parameter in configuratoin' '
-+	git config tag.sort "v:notvalid" &&
-+	git tag -l "foo*" >actual &&
-+	cat >expect <<-\EOF &&
-+	foo1.10
-+	foo1.3
-+	foo1.6
-+	EOF
-+	test_cmp expect actual
-+'
-+
- run_with_limited_stack () {
- 	(ulimit -s 64 && "$@")
+ 	va_start(params, err);
+-	error_routine(err, params);
++	error_funcs->func(err, params);
+ 	va_end(params);
+ 	return -1;
  }
 -- 
 2.0.1.475.g9b8d714
