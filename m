@@ -1,138 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] sha1_file: do not add own object directory as alternate
-Date: Tue, 15 Jul 2014 12:26:00 -0700
-Message-ID: <xmqqd2d6v2yf.fsf@gitster.dls.corp.google.com>
-References: <53BFB055.206@gmail.com>
-	<xmqqy4vz51gb.fsf@gitster.dls.corp.google.com>
-	<53C26309.5040401@gmail.com> <53C39CB0.6040909@gmail.com>
-	<CACsJy8B-QFu4SU6HHZukAmmjLrgb+L8KsHPn3GgQhcX6-LGXLg@mail.gmail.com>
-	<53C3D2AD.9050204@gmail.com> <53C4BFC7.2000507@kdbg.org>
-	<53C510A9.4010208@gmail.com>
+From: "Philip Oakley" <philipoakley@iee.org>
+Subject: Re: [PATCH] doc: State coding guideline for error message punctuation
+Date: Tue, 15 Jul 2014 20:28:06 +0100
+Organization: OPDS
+Message-ID: <93D8A848078245C2BA36B26D878B5970@PhilipOakley>
+References: <1402923357-3788-1-git-send-email-philipoakley@iee.org><1402923357-3788-2-git-send-email-philipoakley@iee.org><20140617093759.GA6267@sigill.intra.peff.net> <xmqqwqbl6jey.fsf@gitster.dls.corp.google.com>
+Reply-To: "Philip Oakley" <philipoakley@iee.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ephrim Khong <dr.khong@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 21:26:17 2014
+Content-Type: text/plain;
+	format=flowed;
+	charset="iso-8859-1";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+Cc: "GitList" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>, "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 15 21:28:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X78Mg-0007oE-4l
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 21:26:14 +0200
+	id 1X78Oc-00009V-4h
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 21:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933232AbaGOT0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 15:26:09 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52089 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932850AbaGOT0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 15:26:08 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5541028179;
-	Tue, 15 Jul 2014 15:25:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jKN8vhoufbV+1tJza0w8QGo+upE=; b=S9RmrJ
-	Bo8lA0XiqHc9l0srxkMy20N6AaI30aNgm0DOb/9eL4U1qsjNeUoTeFH5RIPQTwB7
-	dgg+2e8Z2bdzm4E8R7yxzK3DqsXlRfP2Z5jh8GCpvjq+L8v/Z6VO8rcU7SF5dL0P
-	C4TrNLHxq1BCO/XY45nyxHH7E+aRWv3lb7OC8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZhxjLhyiJyPHuceMDU5EGifSpkGbVoLQ
-	BwPPek5LA2al3zZjNA+FQ8aTCsaXRqXSMEU5SiFh1oWYuZK2W9ASAjQcib/nGcfy
-	3tl+sVg5AcM+lf7+tIF2C1cu5xL5mF2B1fQqgRQGoAVJFotmpj7gs2DVlWyD+7sx
-	OjTinApIVow=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4BEA228178;
-	Tue, 15 Jul 2014 15:25:50 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 59FB728170;
-	Tue, 15 Jul 2014 15:25:44 -0400 (EDT)
-In-Reply-To: <53C510A9.4010208@gmail.com> (Ephrim Khong's message of "Tue, 15
-	Jul 2014 13:29:45 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D0DC7310-0C55-11E4-9D4C-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S933036AbaGOT2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 15:28:10 -0400
+Received: from out1.ip02ir2.opaltelecom.net ([62.24.128.238]:53317 "EHLO
+	out1.ip02ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933003AbaGOT2J (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2014 15:28:09 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AhgmANx/xVNZ8YixPGdsb2JhbABZgw6BKYctgQTBAAUBAgEBgRAXBAEBAQE4NYN+BQEBBAEIAQEuHgEBFA0FBgIDBQIBAxEDAQEBAQklFAEEGgYHAwwIBgESCAIBAgMBiCkMuQmRJBePSw2DJ4EWBYonhm2hbjwv
+X-IPAS-Result: AhgmANx/xVNZ8YixPGdsb2JhbABZgw6BKYctgQTBAAUBAgEBgRAXBAEBAQE4NYN+BQEBBAEIAQEuHgEBFA0FBgIDBQIBAxEDAQEBAQklFAEEGgYHAwwIBgESCAIBAgMBiCkMuQmRJBePSw2DJ4EWBYonhm2hbjwv
+X-IronPort-AV: E=Sophos;i="5.01,667,1400022000"; 
+   d="scan'208";a="508856897"
+Received: from host-89-241-136-177.as13285.net (HELO PhilipOakley) ([89.241.136.177])
+  by out1.ip02ir2.opaltelecom.net with SMTP; 15 Jul 2014 20:28:06 +0100
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2900.5931
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253590>
 
-Ephrim Khong <dr.khong@gmail.com> writes:
-
-> @@ -320,7 +320,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base, int
->  			return -1;
->  		}
->  	}
-> -	if (!strcmp(ent->base, objdir)) {
-> +	if (!strcmp_icase(ent->base, normalized_objdir)) {
-
-Not a problem with your patch, but we should rethink the name of
-this function when the code base is more quiet.  It always makes me
-wonder if it is something similar to strcasecmp(), but in fact it is
-not.  It is meant to be used *only* for pathnames; pathname_cmp() or
-something that has "path" in its name would be appropriate, but it
-is wrong to call it "str"-anything.
-
-> @@ -344,6 +344,7 @@ static void link_alt_odb_entries(const char *alt, int len, int sep,
->  	struct string_list entries = STRING_LIST_INIT_NODUP;
->  	char *alt_copy;
->  	int i;
-> +	struct strbuf objdirbuf = STRBUF_INIT;
+From: "Junio C Hamano" <gitster@pobox.com>
+Sent: Thursday, July 10, 2014 9:36 PM
+> Jeff King <peff@peff.net> writes:
 >
->  	if (depth > 5) {
->  		error("%s: ignoring alternate object stores, nesting too deep.",
-> @@ -351,6 +352,9 @@ static void link_alt_odb_entries(const char *alt, int len, int sep,
->  		return;
->  	}
+>> On Mon, Jun 16, 2014 at 01:55:57PM +0100, Philip Oakley wrote:
+>>
+>>> +Error Messages
+>>> +
+>>> + - We typically do not end error messages with a full stop. While
+>>> +   we've been rather inconsistent in the past, these days we mostly
+>>> +   settle on no punctuation.
+>>
+>> Unlike Junio, I do not mind spelling out guidance for error messages.
+>> However, I do not think the second sentence is adding anything here
+>> (everything in CodingGuidelines is subject to "we did not always do 
+>> it
+>> this way, but this is the preferred way now"). So I'd drop it.
+>>
+>> And then add in more guidance. Besides "no full stop", probably:
+>>
+>>   1. do not capitalize ("unable to open %s", not "Unable to open %s"
+>>
+>>   2. maybe something on sentence structure / ordering? We tend to 
+>> prefer
+>>      "cannot open 'foo': No such file or directory" to "foo: cannot
+>>      open: No such file or directory".
+>>
+>> Perhaps there are others (we do not have to be exhaustive, but it 
+>> makes
+>> sense to think for a moment while we are here).
 >
-> +	strbuf_addstr(&objdirbuf, absolute_path(get_object_directory()));
-> +	normalize_path_copy(objdirbuf.buf, objdirbuf.buf);
-
-This is somewhat a strange usage of a strbuf.
-
- - it relies on that normalize_path_copy() only shrinks, never
-   lengthens, which is not too bad;
-
- - if the operation ever shrinks, objdirbuf.len becomes
-   meaningless.  The allocated length is objdirbuf.alloc, length
-   of the string is strlen(objdirbuf.buf).
-
- - abspath.c::absolute_path() is still restricted to PATH_MAX, so
-   you are not gaining much by using strbuf here.
-
-But at least this patch is not making things any worse, so....
-
-> @@ -361,11 +365,12 @@ static void link_alt_odb_entries(const char *alt, int len, int sep,
->  			error("%s: ignoring relative alternate object store %s",
->  					relative_base, entry);
->  		} else {
-> -			link_alt_odb_entry(entry, relative_base, depth);
-> +			link_alt_odb_entry(entry, relative_base, depth, objdirbuf.buf);
->  		}
->  	}
->  	string_list_clear(&entries, 0);
->  	free(alt_copy);
-> +	strbuf_release(&objdirbuf);
->  }
+> I do not want to forever be waiting for a reroll, so let's queue
+> this and advance it to 'next' soonish, and refine the guidelines by
+> further building on top of it as needed.
 >
->  void read_info_alternates(const char * relative_base, int depth)
-> diff --git a/t/t7702-repack-cyclic-alternate.sh b/t/t7702-repack-cyclic-alternate.sh
-> new file mode 100755
-> index 0000000..8341d46
-> --- /dev/null
-> +++ b/t/t7702-repack-cyclic-alternate.sh
 
-Do we really have to waste a new test file only for this test?
+Sorry, I've been away on vacation for the last few weeks. I hadn't been 
+sure what to include in a re-roll without it gaining too much mission 
+creep.
 
-Don't we have any test that already uses alternate that these two
-new test pieces can be added to?
+Thanks for keeping an eye on it.
 
-    $ git grep info/alternates t/
 
-seems to show a few existing ones, including 1450 (fsck) and 7700
-(repack) that look very relevant (I didn't check what the tests in
-them are about, though).
+> Thanks.
+>
+> -- >8 --
+> From: Philip Oakley <philipoakley@iee.org>
+> Date: Mon, 16 Jun 2014 13:55:57 +0100
+> Subject: [PATCH] doc: give some guidelines for error messages
+>
+> Clarify error message puntuation to reduce review workload.
+>
+> Signed-off-by: Philip Oakley <philipoakley@iee.org>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> Documentation/CodingGuidelines | 9 +++++++++
+> 1 file changed, 9 insertions(+)
+>
+> diff --git a/Documentation/CodingGuidelines 
+> b/Documentation/CodingGuidelines
+> index f424dbd..f4137c6 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -264,6 +264,15 @@ For Python scripts:
+>    documentation for version 2.6 does not mention this prefix, it has
+>    been supported since version 2.6.0.
+>
+> +Error Messages
+> +
+> + - Do not end error messages with a full stop.
+> +
+> + - Do not capitalize ("unable to open %s", not "Unable to open %s")
+> +
+> + - Say what the error is first ("cannot open %s", not "%s: cannot 
+> open")
+> +
+> +
+> Writing Documentation:
+>
+>  Most (if not all) of the documentation pages are written in the
+> -- 
+> 2.0.1-751-ge540734
+> 
