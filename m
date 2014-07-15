@@ -1,157 +1,93 @@
-From: Ephrim Khong <dr.khong@gmail.com>
-Subject: [PATCH v3] sha1_file: do not add own object directory as alternate
-Date: Tue, 15 Jul 2014 13:29:45 +0200
-Message-ID: <53C510A9.4010208@gmail.com>
-References: <53BFB055.206@gmail.com> <xmqqy4vz51gb.fsf@gitster.dls.corp.google.com> <53C26309.5040401@gmail.com> <53C39CB0.6040909@gmail.com> <CACsJy8B-QFu4SU6HHZukAmmjLrgb+L8KsHPn3GgQhcX6-LGXLg@mail.gmail.com> <53C3D2AD.9050204@gmail.com> <53C4BFC7.2000507@kdbg.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v8 1/2] add `config_set` API for caching config-like files
+Date: Tue, 15 Jul 2014 13:32:54 +0200
+Message-ID: <vpqiomy3li1.fsf@anie.imag.fr>
+References: <1405049655-4265-1-git-send-email-tanayabh@gmail.com>
+	<1405049655-4265-2-git-send-email-tanayabh@gmail.com>
+	<vpqlhs02cz7.fsf@anie.imag.fr> <53C50859.5070209@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>, Duy Nguyen <pclouds@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 15 13:30:17 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 13:33:20 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X70w2-0006Ty-Ux
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 13:30:15 +0200
+	id 1X70z1-0007dw-FC
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 13:33:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758761AbaGOLaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 07:30:11 -0400
-Received: from mail-wg0-f49.google.com ([74.125.82.49]:62751 "EHLO
-	mail-wg0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758703AbaGOLaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 07:30:09 -0400
-Received: by mail-wg0-f49.google.com with SMTP id k14so4826624wgh.32
-        for <git@vger.kernel.org>; Tue, 15 Jul 2014 04:30:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=NwaiGE1zT5MYaH5SG3lUqe4YnTOkqv3qJk8N0KCUKL4=;
-        b=tdtyDDSWqFT+F9DkNo2+5RxeuEOR+CGv3b4RH/1UprQG4DL3VPQevNC3ErfnRnVwoq
-         MKW7YfWyvrVJR0djpvOlrQ5+Tw+xjiq3g6SavzwGnMcS5cliZGBUqPAd/SKHhGObz4aH
-         ay1/ElvzSDOHRtoTE980pt8g2hAa8168ua291L+Id7cg64AMvAl9P2m9xlmdfYpZaYS/
-         wMGxUGqhqYGrN25rzNX1I2SE7l/IwjIHnx716uIy+Q9zVG0VW3gOdNbKtr/dDs7mws/K
-         ia8RDFYdHudUD6Dd3Sj1N5Gp+1w4G1SgozdTA6tf93XKUCnj/Y5BXf/OVp950XATavcb
-         /fUg==
-X-Received: by 10.180.198.173 with SMTP id jd13mr4998474wic.9.1405423807851;
-        Tue, 15 Jul 2014 04:30:07 -0700 (PDT)
-Received: from floh-wuff-book.local (valur.mvtec.com. [62.96.232.141])
-        by mx.google.com with ESMTPSA id cj8sm32039356wjb.5.2014.07.15.04.29.51
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 15 Jul 2014 04:30:07 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53C4BFC7.2000507@kdbg.org>
+	id S1758708AbaGOLdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 07:33:15 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:40424 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758628AbaGOLdO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 07:33:14 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6FBWrv9023112
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 15 Jul 2014 13:32:53 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6FBWtk0004961;
+	Tue, 15 Jul 2014 13:32:55 +0200
+In-Reply-To: <53C50859.5070209@gmail.com> (Tanay Abhra's message of "Tue, 15
+	Jul 2014 16:24:17 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 15 Jul 2014 13:32:53 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6FBWrv9023112
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1406028774.28891@bXuIQZOc1MF7veHL6IbLbg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253555>
 
-When adding alternate object directories, we try not to add the
-directory of the current repository to avoid cycles.  Unfortunately,
-that test was broken, since it compared an absolute with a relative
-path.
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-Signed-off-by: Ephrim Khong <dr.khong@gmail.com>
----
-Since v2: Added Johannes' comments.
+> I checked the whole codebase and in all of the cases if they cannot read a file
+> they return -1 and continue running.
 
- sha1_file.c                        | 13 +++++++++----
- t/t7702-repack-cyclic-alternate.sh | 24 ++++++++++++++++++++++++
- 2 files changed, 33 insertions(+), 4 deletions(-)
- create mode 100755 t/t7702-repack-cyclic-alternate.sh
+More precisely: in git_config_from_file, any fopen failure results in
+"return -1". But in git_config_early (one caller of
+git_config_from_file()), the file is checked before access, e.g.:
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 34d527f..88fd168 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -268,9 +268,9 @@ static struct alternate_object_database **alt_odb_tail;
-  * SHA1, an extra slash for the first level indirection, and the
-  * terminating NUL.
-  */
--static int link_alt_odb_entry(const char *entry, const char *relative_base, int depth)
-+static int link_alt_odb_entry(const char *entry, const char *relative_base,
-+	int depth, const char *normalized_objdir)
- {
--	const char *objdir = get_object_directory();
- 	struct alternate_object_database *ent;
- 	struct alternate_object_database *alt;
- 	int pfxlen, entlen;
-@@ -320,7 +320,7 @@ static int link_alt_odb_entry(const char *entry, const char *relative_base, int
- 			return -1;
- 		}
- 	}
--	if (!strcmp(ent->base, objdir)) {
-+	if (!strcmp_icase(ent->base, normalized_objdir)) {
- 		free(ent);
- 		return -1;
- 	}
-@@ -344,6 +344,7 @@ static void link_alt_odb_entries(const char *alt, int len, int sep,
- 	struct string_list entries = STRING_LIST_INIT_NODUP;
- 	char *alt_copy;
- 	int i;
-+	struct strbuf objdirbuf = STRBUF_INIT;
+	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
+		ret += git_config_from_file(fn, git_etc_gitconfig(),
+					    data);
+		found += 1;
+	}
 
- 	if (depth > 5) {
- 		error("%s: ignoring alternate object stores, nesting too deep.",
-@@ -351,6 +352,9 @@ static void link_alt_odb_entries(const char *alt, int len, int sep,
- 		return;
- 	}
+Essentially, if a config file does not exist, it's skipped (obviously
+desirable), but if some really weird error occur (if "err == ENOENT ||
+err == ENOTDIR || ((flag & ACCESS_EACCES_OK) && err == EACCES" is false,
+from access_eacces_ok() in wrapper.c), then the process dies.
 
-+	strbuf_addstr(&objdirbuf, absolute_path(get_object_directory()));
-+	normalize_path_copy(objdirbuf.buf, objdirbuf.buf);
-+
- 	alt_copy = xmemdupz(alt, len);
- 	string_list_split_in_place(&entries, alt_copy, sep, -1);
- 	for (i = 0; i < entries.nr; i++) {
-@@ -361,11 +365,12 @@ static void link_alt_odb_entries(const char *alt, int len, int sep,
- 			error("%s: ignoring relative alternate object store %s",
- 					relative_base, entry);
- 		} else {
--			link_alt_odb_entry(entry, relative_base, depth);
-+			link_alt_odb_entry(entry, relative_base, depth, objdirbuf.buf);
- 		}
- 	}
- 	string_list_clear(&entries, 0);
- 	free(alt_copy);
-+	strbuf_release(&objdirbuf);
- }
+"Permission denied" errors are allowed for user-wide config, but not for
+others. Read the log for commit 4698c8feb for more details.
 
- void read_info_alternates(const char * relative_base, int depth)
-diff --git a/t/t7702-repack-cyclic-alternate.sh b/t/t7702-repack-cyclic-alternate.sh
-new file mode 100755
-index 0000000..8341d46
---- /dev/null
-+++ b/t/t7702-repack-cyclic-alternate.sh
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2014 Ephrim Khong
-+#
-+
-+test_description='repack involving cyclic alternate'
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	GIT_OBJECT_DIRECTORY=.git//../.git/objects &&
-+	export GIT_OBJECT_DIRECTORY &&
-+	touch a &&
-+	git add a &&
-+	git commit -m 1 &&
-+	git repack -adl &&
-+	echo "$(pwd)"/.git/objects/../objects >.git/objects/info/alternates
-+'
-+
-+test_expect_success 're-packing repository with itsself as alternate' '
-+	git repack -adl &&
-+	git fsck
-+'
-+
-+test_done
+Anyway, this is the part of the code you're not touching.
+
+(I actually consider it as a bug that "git config --file no-such-file
+foo.bar" and "git config --file unreadable-file foo.bar" fail without
+error message, but your commit does not change this).
+
+> I think if the file is unreadable. we must continue running as no harm has been
+> done yet, worse is parsing a file with wrong syntax which can cause reading
+> wrong config values. So the decision to die on syntax error sounds alright
+> to me.
+
+In the case of git_config_check_init(), I think it makes sense to die,
+because file accesses are protected with access_or_die(), so the return
+value can be negative only if something really went wrong.
+
+If you chose not to die, then you should check the return value in the
+callers of git_config_check_init().
+
 -- 
-1.8.4.3
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
