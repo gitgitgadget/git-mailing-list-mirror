@@ -1,80 +1,92 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Date: Tue, 15 Jul 2014 21:31:09 +0000
-Message-ID: <1405459868.2577.9.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1405119347-3308-1-git-send-email-jacob.e.keller@intel.com>
-	 <1405119347-3308-3-git-send-email-jacob.e.keller@intel.com>
-	 <CAPig+cR9VCtNhk-FbqDM1LTCa8VeUTYXU4XEX36Rb5CxPFfLWQ@mail.gmail.com>
-	 <xmqqfvi518xo.fsf@gitster.dls.corp.google.com>
-	 <20140713173356.GA8406@sigill.intra.peff.net>
-	 <20140713183629.GA19293@sigill.intra.peff.net>
-	 <xmqqfvi3zwp7.fsf@gitster.dls.corp.google.com>
-	 <1405435933.9147.1.camel@jekeller-desk1.amr.corp.intel.com>
-	 <xmqqfvi2wqvq.fsf@gitster.dls.corp.google.com>
-	 <1405445234.2577.0.camel@jekeller-desk1.amr.corp.intel.com>
-	 <xmqq7g3ewkp8.fsf@gitster.dls.corp.google.com>
-	 <1405449076.2577.3.camel@jekeller-desk1.amr.corp.intel.com>
-	 <xmqqha2iv3kr.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/4] use new config API for worktree configurations of submodules
+Date: Tue, 15 Jul 2014 15:37:21 -0700
+Message-ID: <xmqqfvi2tfj2.fsf@gitster.dls.corp.google.com>
+References: <20140628095800.GA89729@book.hvoigt.net>
+	<20140628100321.GD89729@book.hvoigt.net>
+	<xmqqy4w38v6r.fsf@gitster.dls.corp.google.com>
+	<20140709195547.GA3081@sandbox-ub>
+	<xmqqegxu9ojh.fsf@gitster.dls.corp.google.com>
+	<20140714205759.GA3682@sandbox-ub>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"peff@peff.net" <peff@peff.net>,
-	"sunshine@sunshineco.com" <sunshine@sunshineco.com>
-To: "gitster@pobox.com" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 00:30:20 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Jul 16 00:37:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7BEp-0007oj-Dg
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 00:30:19 +0200
+	id 1X7BM5-0001di-LM
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 00:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760309AbaGOW1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 18:27:30 -0400
-Received: from mga02.intel.com ([134.134.136.20]:55708 "EHLO mga02.intel.com"
+	id S1757029AbaGOWhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 18:37:35 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58505 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758205AbaGOVb2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 17:31:28 -0400
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101.jf.intel.com with ESMTP; 15 Jul 2014 14:31:27 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,668,1400050800"; 
-   d="scan'208";a="543831859"
-Received: from orsmsx105.amr.corp.intel.com ([10.22.225.132])
-  by orsmga001.jf.intel.com with ESMTP; 15 Jul 2014 14:31:09 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.59]) by
- ORSMSX105.amr.corp.intel.com ([169.254.4.21]) with mapi id 14.03.0123.003;
- Tue, 15 Jul 2014 14:31:08 -0700
-Thread-Topic: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Thread-Index: AQHPoGC840BrU7LSLEikGiD9Y5cKsJuiHMUA
-In-Reply-To: <xmqqha2iv3kr.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <D3EB51392929AD4D8906395396541CE2@intel.com>
+	id S1756855AbaGOWh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 18:37:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 33F8C2940C;
+	Tue, 15 Jul 2014 18:37:11 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=85VHpbUFAl9vf18V7j0007y6baI=; b=ZHEqcw
+	SKM1M83H2K5LYqKdjkol/HXjjpArTQi2CTawBnTZ1sLbAk8Fo8rsQk4hrrjlS6ad
+	EeGF5yri7AgZtS5PH8m4pRKWp7iLq0kexBNqLFr8TC1C1owijOqOw5INTTiJN4H+
+	HqG3kd7fvWVMIjB75o8xhqZOvNb/sHellEPaA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=GswblAR9Sp7vx/xeLH1PiIw6T55tUDgr
+	BOCiaqiva3TyLhy+m5jzeqqUPDjKn5h7xg7cjopFfZCVF91L+Y6fy670zl37MKoq
+	jg7RFXPN+ylWnTqbfFn5euaZWHhDuCCfDCQAbGDul2/ObdFuHAPFBC5kPv7FC0HN
+	omfsgUAPcgw=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2ABCF2940B;
+	Tue, 15 Jul 2014 18:37:11 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 96C7229406;
+	Tue, 15 Jul 2014 18:37:05 -0400 (EDT)
+In-Reply-To: <20140714205759.GA3682@sandbox-ub> (Heiko Voigt's message of
+	"Mon, 14 Jul 2014 22:57:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8C4226C6-0C70-11E4-AFF8-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253610>
 
-T24gVHVlLCAyMDE0LTA3LTE1IGF0IDEyOjEyIC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
-Cj4gIktlbGxlciwgSmFjb2IgRSIgPGphY29iLmUua2VsbGVyQGludGVsLmNvbT4gd3JpdGVzOg0K
-PiANCj4gPiBJIGFtIGdvaW5nIHRvIHJlLXN1Ym1pdCB0aGlzIHdpdGggYW4gZW51bS1zdHlsZSBy
-ZXR1cm4uIEkgYW0gYWxzbw0KPiA+IGNoYW5naW5nIGhvdyB3ZSBwYXJzZSBzbyB0aGF0IHdlIGNh
-biBjb3JyZWN0bHkgcmVwb3J0IHdoZXRoZXIgdGhlIHNvcnQNCj4gPiBmdW5jdGlvbiBvciBzb3J0
-IGF0b20gaXMgaW5jb3JyZWN0Lg0KPiANCj4gT2gsIG91ciBtYWlscyBjcm9zc2VkLCBJIGd1ZXNz
-LiAgQXMgbG9uZyBhcyBpdCB3aWxsIGxlYXZlIHRoZSBkb29yDQo+IG9wZW4gZm9yIGxhdGVyIGVu
-aGFuY2VtZW50cyBmb3IgbW9yZSBjb250ZXh0IHNlbnNpdGl2ZSBlcnJvcg0KPiBkaWFnbm9zaXMs
-IEkgZG8gbm90IHBhcnRpY3VsYXJseSBtaW5kIGEgc29sdXRpb24gYXJvdW5kIGVudW0uDQoNCkkg
-anVzdCBzZW50IGEgdjggb2YgdGhlIHNlcmllcy4gSSB0aGluayBJIG1vc3RseSBmb2xsb3dlZCBQ
-ZWZmJ3MgaWRlYSBvZg0KdXNpbmcgYSBwb3BfZXJyb3Jfcm91dGluZSBmdW5jdGlvbiwgYnV0IG5v
-dCBhcyBjb21wbGV4IGFzIGhpcyB3YXMuIFRoaXMNCm92ZXJhbGwgcmVzdWx0cyBpbiBtb3JlIGFj
-Y3VyYXRlIGVycm9ycywgYW5kIGRvZXNuJ3QgY2x1dHRlciB0aGUNCm9yaWdpbmFsIHBhcnNlX3Nv
-cnRfc3RyaW5nIHdpdGggdG9vIG11Y2gga25vd2xlZGdlIGFib3V0IHdoYXQgcGFydGljdWxhcg0K
-dmFsdWUgaXMgYmVpbmcgcGFyc2VkLiBIb3BlZnVsbHkgd2UgY2FuIGZpbmFsbHkgY29udmVyZ2Ug
-b24gYSBnb29kIHNldA0Kb2YgcGF0Y2hlcy4NCg0KVGhhbmtzLA0KSmFrZQ0K
+Heiko Voigt <hvoigt@hvoigt.net> writes:
+
+>> Can there be any caller that include and use submodule-config.h that
+>> does not need anythjing from submodule.h?  Or vice versa?
+>> 
+>> It just did not look like these two headers describe independent
+>> subsystems but they almost always have to go hand-in-hand.  And if
+>> that is the case, perhaps it is not such a good idea to add it as a
+>> new header.  That was where my question came from.
+>
+> The reason for a separate module was because we add quite some lines of
+> code for it.
+>
+> $ wc -l submodule.c
+> 1068 submodule.c
+> $ wc -l submodule-config.c 
+> 435 submodule-config.c
+>
+> Because of this I would like to keep the c-files separate.
+
+OK.  I do not feel too strongly.  It just looked odd that a change
+needs to add a new header file without having to change the code in
+existing files at all.
+
+Any other thing that still needs fixing in the series, or is it now
+ready for 'next'?
