@@ -1,192 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v9 2/2] test-config: add tests for the config_set API
-Date: Tue, 15 Jul 2014 08:57:52 -0700
-Message-ID: <xmqqk37ewr5r.fsf@gitster.dls.corp.google.com>
-References: <1405434571-25459-1-git-send-email-tanayabh@gmail.com>
-	<1405434571-25459-3-git-send-email-tanayabh@gmail.com>
+Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
+Date: Tue, 15 Jul 2014 09:03:53 -0700
+Message-ID: <xmqqfvi2wqvq.fsf@gitster.dls.corp.google.com>
+References: <1405119347-3308-1-git-send-email-jacob.e.keller@intel.com>
+	<1405119347-3308-3-git-send-email-jacob.e.keller@intel.com>
+	<CAPig+cR9VCtNhk-FbqDM1LTCa8VeUTYXU4XEX36Rb5CxPFfLWQ@mail.gmail.com>
+	<xmqqfvi518xo.fsf@gitster.dls.corp.google.com>
+	<20140713173356.GA8406@sigill.intra.peff.net>
+	<20140713183629.GA19293@sigill.intra.peff.net>
+	<xmqqfvi3zwp7.fsf@gitster.dls.corp.google.com>
+	<1405435933.9147.1.camel@jekeller-desk1.amr.corp.intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 17:58:10 2014
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	"peff\@peff.net" <peff@peff.net>,
+	"sunshine\@sunshineco.com" <sunshine@sunshineco.com>
+To: "Keller\, Jacob E" <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 18:04:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X757J-0003Ss-89
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 17:58:09 +0200
+	id 1X75D6-0005qh-BX
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 18:04:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754716AbaGOP6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 11:58:05 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50724 "EHLO smtp.pobox.com"
+	id S1752231AbaGOQEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 12:04:04 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64883 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754557AbaGOP6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 11:58:03 -0400
+	id S1751509AbaGOQEC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 12:04:02 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1AEDB28CFE;
-	Tue, 15 Jul 2014 11:57:45 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D95BA28F02;
+	Tue, 15 Jul 2014 12:03:43 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=GsD4tW5DB+9mPxvgIylYFUvE4SQ=; b=b95s0i
-	YenVJYZSqJ/862rtllaRPDNyqixEqIZRdvk3seaILdwB9B38MRryJS+vvkxecRmq
-	D7Q20BC2DB84xEfcNX7KlTlxJjgFKtIdq2InZ/fEcDcfXLL3/jubNA4sf7EYUylq
-	OVmr8pxeabGocS6nBf0NPrF4EHT2ONoND8j4s=
+	:content-type; s=sasl; bh=Ruj9+UgqmQY78AU0PI+62Yzb7MA=; b=kITFF+
+	lhrneuleEXdSQ2T+fl9OuOxSwQgC3ip4gtXlFEF9kRrcaKgPO2v7sstCh7Hb+inu
+	jnQnH+xERVyWzfjCaFO1wPfSDLeKAlrYyXmcDIgAhotbcNXNKBX4xAEKuq6Wx/Wq
+	755LMc07BjhhORS+Paa6RM6na0EOXmz/uS9nw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WYi+Bi9aSV2SdGzwECJHGGINVoA1wOPb
-	EiwbLPP85gGMMXOx9hya0ffjnQSR0AQPrNH87rKzXMafpGwVoY7VeZy5xyG8T0HG
-	g0ODy3fZo7v7BhJ/xs+WJStVz/VAaoOJapwHixjjnG3tI0TLWTql4tarEU4jCvme
-	jcW8KWgtjUU=
+	:content-type; q=dns; s=sasl; b=ArkUKTgpLEPwRICNftxL2rB/iSxIKXJv
+	sIVU0ZcugfrCB433zZ8uiXsI3xKV2742fxcfRBGx8o5IDkq4l53AdHwwBDJFaBkR
+	0U6fn+ufJ1HRpvvBFVuziN4/qvIEEvnET9Y6hqp8XQwL/VdF0CEP4RguQGWv8IlM
+	2IfdtZmLzCE=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1113728CFD;
-	Tue, 15 Jul 2014 11:57:45 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CCE0328F01;
+	Tue, 15 Jul 2014 12:03:43 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 943EE28CF3;
-	Tue, 15 Jul 2014 11:57:36 -0400 (EDT)
-In-Reply-To: <1405434571-25459-3-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Tue, 15 Jul 2014 07:29:31 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B26D128EFA;
+	Tue, 15 Jul 2014 12:03:37 -0400 (EDT)
+In-Reply-To: <1405435933.9147.1.camel@jekeller-desk1.amr.corp.intel.com>
+	(Jacob E. Keller's message of "Tue, 15 Jul 2014 14:52:13 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: BD9CEBBC-0C38-11E4-BC95-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 94D22110-0C39-11E4-8344-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253568>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+"Keller, Jacob E" <jacob.e.keller@intel.com> writes:
 
-> Expose the `config_set` C API as a set of simple commands in order to
-> facilitate testing. Add tests for the `config_set` API as well as for
-> `git_config_get_*()` family for the usual config files.
+> On Mon, 2014-07-14 at 10:17 -0700, Junio C Hamano wrote:
+>> Jeff King <peff@peff.net> writes:
+>> 
+>> > On Sun, Jul 13, 2014 at 01:33:56PM -0400, Jeff King wrote:
+>> >
+>> >> I realize that I am reinventing the error-reporting wheel on a sleepy
+>> >> Sunday afternoon without having thought about it much, so there is
+>> >> probably some gotcha or case that makes this ugly, or perhaps it just
+>> >> ends up verbose in practice. But one can dream.
+>> >
+>> > Just for fun...
+>> 
+>> Yes, that is fun.
+>> 
+>> I actually think your "In 'version:pefname' and 'wersion:refname',
+>> we want be able to report 'pefname' and 'wersion' are misspelled,
+>> and returning -1 or enum would not cut it" is a good argument.  The
+>> callee wants to have flexibility on _what_ to report, just as the
+>> caller wants to have flexibility on _how_.  In this particular code
+>> path, I think the former far outweighs the latter, and my suggestion
+>> I called "silly" might not be so silly but may have struck the right
+>> balance.  I dunno.
+>> 
+>> If you absolutely need to have both, you would need something like
+>> your approach, of course, but I am not sure if it is worth it.
+>> 
+>> I am not sure how well this meshes with i18n (I know the "for fun"
+>> does not even attempt to, but if we tried to, I suspect it may
+>> become even uglier).  We would also need to override both error and
+>> warning routines and have the reporter tag the errors in these two
+>> categories, no?
 >
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
-> ---
->  .gitignore            |   1 +
->  Makefile              |   1 +
->  t/t1308-config-set.sh | 212 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  test-config.c         | 140 +++++++++++++++++++++++++++++++++
->  4 files changed, 354 insertions(+)
->  create mode 100755 t/t1308-config-set.sh
->  create mode 100644 test-config.c
->
-> diff --git a/.gitignore b/.gitignore
-> index 42294e5..7677533 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -177,6 +177,7 @@
->  /gitweb/static/gitweb.min.*
->  /test-chmtime
->  /test-ctype
-> +/test-config
->  /test-date
->  /test-delta
->  /test-dump-cache-tree
-> diff --git a/Makefile b/Makefile
-> index b92418d..e070eb8 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -549,6 +549,7 @@ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
->  
->  TEST_PROGRAMS_NEED_X += test-chmtime
->  TEST_PROGRAMS_NEED_X += test-ctype
-> +TEST_PROGRAMS_NEED_X += test-config
->  TEST_PROGRAMS_NEED_X += test-date
->  TEST_PROGRAMS_NEED_X += test-delta
->  TEST_PROGRAMS_NEED_X += test-dump-cache-tree
-> diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-> new file mode 100755
-> index 0000000..94085eb
-> --- /dev/null
-> +++ b/t/t1308-config-set.sh
-> @@ -0,0 +1,212 @@
-> +#!/bin/sh
-> +
-> +test_description='Test git config-set API in different settings'
-> +
-> +. ./test-lib.sh
-> +
-> +# 'check_config get_* section.key value' verifies that the entry for
-> +# section.key is 'value'
-> +check_config () {
-> +	case "$1" in
-> +	expect_code)
-> +		if [ "$#" -lt 5 ];
-> +		then
+> Do we want to go this way?
 
-Spell out "test" and drop unnecessary semicolon, i.e.
-
-	if test $# -lt 5
-        then
-
-> +			>expect
-> +		else
-> +			printf "%s\n" "$5" >expect
-
-The other "expecting success" side of this function allows to expect
-more than one line of output, but this one only allows you to expect
-at most one line?  Why?
-
-> +		fi &&
-> +		test_expect_code "$2" test-config "$3" "$4" >actual
-> +		;;
-> +	*)
-> +		op=$1 key=$2 &&
-> +		shift &&
-> +		shift &&
-> +		printf "%s\n" "$@" >expect &&
-> +		test-config "$op" "$key" >actual
-> +		;;
-> +	esac &&
-> +	test_cmp expect actual
-
-Perhaps you meant to say something like this instead?
-
-        if test "$1" = expect_code
-        then
-        	expect_code="$2" && shift && shift
-	else
-        	expect_code=0
-	fi &&
-	op=$1 key=$2 && shift && shift
-        if test $# != 0
-        then
-        	printf "%s\n" "$@"
-	fi >expect &&
-        test_expect_code $expet_code test-config "$op" "$key" >actual &&
-	test_cmp expect actual
-
-I dunno.
-
-> +test_expect_success 'setup default config' '
-> +	cat >.git/config <<\EOF
-
-So the default .git/config that was prepared by "git init" is
-discarded and replaced with this?  Shouldn't it be
-
-	cat >>.git/config <<\EOF
-
-instead?
-
-> +test_expect_success 'find multiple values' '
-> +	cat >expect <<-\EOF &&
-> +	sam
-> +	bat
-> +	hask
-> +	EOF
-> +	test-config get_value_multi "case.baz">actual &&
-> +	test_cmp expect actual
-> +'
-
-Hmmm, wasn't the whole point of the helper to allow us to make
-things like the above into a one-liner, perhaps like this?
-
-      check_config get_value_multi case.baz sam bat hask
-
-I suspect the same applies to most if not all uses of test-config
-in the remainder of this patch.
+I do not speak for Peff, but I personally think this is just a "fun"
+demonstration, nothing more, and my gut feeling is that it would
+make things unnecessary complex without much real gain to pursue it
+further.
