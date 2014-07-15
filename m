@@ -1,106 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Date: Tue, 15 Jul 2014 09:03:53 -0700
-Message-ID: <xmqqfvi2wqvq.fsf@gitster.dls.corp.google.com>
-References: <1405119347-3308-1-git-send-email-jacob.e.keller@intel.com>
-	<1405119347-3308-3-git-send-email-jacob.e.keller@intel.com>
-	<CAPig+cR9VCtNhk-FbqDM1LTCa8VeUTYXU4XEX36Rb5CxPFfLWQ@mail.gmail.com>
-	<xmqqfvi518xo.fsf@gitster.dls.corp.google.com>
-	<20140713173356.GA8406@sigill.intra.peff.net>
-	<20140713183629.GA19293@sigill.intra.peff.net>
-	<xmqqfvi3zwp7.fsf@gitster.dls.corp.google.com>
-	<1405435933.9147.1.camel@jekeller-desk1.amr.corp.intel.com>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [PATCH v9 1/2] add `config_set` API for caching config-like files
+Date: Tue, 15 Jul 2014 21:52:18 +0530
+Message-ID: <53C5553A.2090700@gmail.com>
+References: <1405434571-25459-1-git-send-email-tanayabh@gmail.com>	<1405434571-25459-2-git-send-email-tanayabh@gmail.com> <xmqqoawqwrov.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
-	"peff\@peff.net" <peff@peff.net>,
-	"sunshine\@sunshineco.com" <sunshine@sunshineco.com>
-To: "Keller\, Jacob E" <jacob.e.keller@intel.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 18:04:09 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 18:22:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X75D6-0005qh-BX
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 18:04:08 +0200
+	id 1X75Uq-0004UT-EB
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 18:22:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752231AbaGOQEE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 12:04:04 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64883 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751509AbaGOQEC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 12:04:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D95BA28F02;
-	Tue, 15 Jul 2014 12:03:43 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ruj9+UgqmQY78AU0PI+62Yzb7MA=; b=kITFF+
-	lhrneuleEXdSQ2T+fl9OuOxSwQgC3ip4gtXlFEF9kRrcaKgPO2v7sstCh7Hb+inu
-	jnQnH+xERVyWzfjCaFO1wPfSDLeKAlrYyXmcDIgAhotbcNXNKBX4xAEKuq6Wx/Wq
-	755LMc07BjhhORS+Paa6RM6na0EOXmz/uS9nw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ArkUKTgpLEPwRICNftxL2rB/iSxIKXJv
-	sIVU0ZcugfrCB433zZ8uiXsI3xKV2742fxcfRBGx8o5IDkq4l53AdHwwBDJFaBkR
-	0U6fn+ufJ1HRpvvBFVuziN4/qvIEEvnET9Y6hqp8XQwL/VdF0CEP4RguQGWv8IlM
-	2IfdtZmLzCE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CCE0328F01;
-	Tue, 15 Jul 2014 12:03:43 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id B26D128EFA;
-	Tue, 15 Jul 2014 12:03:37 -0400 (EDT)
-In-Reply-To: <1405435933.9147.1.camel@jekeller-desk1.amr.corp.intel.com>
-	(Jacob E. Keller's message of "Tue, 15 Jul 2014 14:52:13 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 94D22110-0C39-11E4-8344-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751601AbaGOQWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 12:22:25 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:38362 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751279AbaGOQWX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 12:22:23 -0400
+Received: by mail-pa0-f54.google.com with SMTP id fa1so4187881pad.13
+        for <git@vger.kernel.org>; Tue, 15 Jul 2014 09:22:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Uzv+NYgG5Xcv3wdj0BlNwRjVlsNQktEH8bgvSWcWOVQ=;
+        b=1HerIZg+C8DdpZQipH2hKeuO9dc9bHOWsUNpet2QVcFMVCXOvJhZJe0LoPMpvA6Dfl
+         To2h8pQW4mWMS16c1dQ1xlK/nJF4/uOhsTz5/A7U++0rxJZYKS/IwKQqgd56SHtA69F5
+         fnavH4n0msPLeWW0hPiUMyCW4rByp9ulS+amBPK+J0ZEIySMTTL/Um15WmA4oi9G8FgW
+         dLwXJOVi82kVz7oIhphkBwPLwXcJxBDxDRy63lZRVGUAtJOgApGmdaRtvoLP+9jpHkbK
+         +dovCwxuyS19hcmrJZOqIAZXW4GYYWZ7KC47yA2j/7DueoCABfvBd5SYtfxL696+Kh22
+         QgYQ==
+X-Received: by 10.69.26.103 with SMTP id ix7mr23552575pbd.41.1405441343174;
+        Tue, 15 Jul 2014 09:22:23 -0700 (PDT)
+Received: from [127.0.0.1] ([223.226.20.20])
+        by mx.google.com with ESMTPSA id gw8sm14414830pbc.28.2014.07.15.09.22.19
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 15 Jul 2014 09:22:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqoawqwrov.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253569>
 
-"Keller, Jacob E" <jacob.e.keller@intel.com> writes:
 
-> On Mon, 2014-07-14 at 10:17 -0700, Junio C Hamano wrote:
->> Jeff King <peff@peff.net> writes:
->> 
->> > On Sun, Jul 13, 2014 at 01:33:56PM -0400, Jeff King wrote:
->> >
->> >> I realize that I am reinventing the error-reporting wheel on a sleepy
->> >> Sunday afternoon without having thought about it much, so there is
->> >> probably some gotcha or case that makes this ugly, or perhaps it just
->> >> ends up verbose in practice. But one can dream.
->> >
->> > Just for fun...
->> 
->> Yes, that is fun.
->> 
->> I actually think your "In 'version:pefname' and 'wersion:refname',
->> we want be able to report 'pefname' and 'wersion' are misspelled,
->> and returning -1 or enum would not cut it" is a good argument.  The
->> callee wants to have flexibility on _what_ to report, just as the
->> caller wants to have flexibility on _how_.  In this particular code
->> path, I think the former far outweighs the latter, and my suggestion
->> I called "silly" might not be so silly but may have struck the right
->> balance.  I dunno.
->> 
->> If you absolutely need to have both, you would need something like
->> your approach, of course, but I am not sure if it is worth it.
->> 
->> I am not sure how well this meshes with i18n (I know the "for fun"
->> does not even attempt to, but if we tried to, I suspect it may
->> become even uglier).  We would also need to override both error and
->> warning routines and have the reporter tag the errors in these two
->> categories, no?
+
+On 7/15/2014 9:16 PM, Junio C Hamano wrote:
+> Tanay Abhra <tanayabh@gmail.com> writes:
+> 
+>> diff --git a/config.c b/config.c
+>> index ba882a1..89e2d67 100644
+>> --- a/config.c
+>> +++ b/config.c
+>> ...
+>> +const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key)
+>> +{
+>> +	struct config_set_element *e = configset_find_element(cs, key);
+>> +	return e ? &e->value_list : NULL;
+>> +}
+> 
+> Somehow I find the placement of this function out of place.  Didn't
+> you get the same impression while proofreading the entire file after
+> you are done writing this patch?
+> 
+> The right place for it would probably be immediately before
+> git_configset_get_value(), I would think.
 >
-> Do we want to go this way?
 
-I do not speak for Peff, but I personally think this is just a "fun"
-demonstration, nothing more, and my gut feeling is that it would
-make things unnecessary complex without much real gain to pursue it
-further.
+Noted. My fault, will correct in the reroll.
+
+>> +int git_configset_add_file(struct config_set *cs, const char *filename)
+>> +{
+>> +	int ret = 0;
+>> +	ret = git_config_from_file(config_hash_callback, filename, cs);
+>> +	if (!ret)
+>> +		return 0;
+>> +	else {
+>> +		git_configset_clear(cs);
+>> +		return -1;
+>> +	}
+>> +}
+> 
+> If I add contents from file "A" successfully and then attempt to
+> further add contents from file "B" which fails, I would lose
+> contents I read from "A"?
+> 
+> It would not be worth trying to make it transactional (i.e. making
+> sure cs contains what was there before the config-from-file was
+> called if it failed), so in such a case we may end up seeing a
+> mixture of full contents from A and partial contents from B, which
+> is just as useless as a cleared configset, so it is not wrong to
+> clear it per-se.  An alternative might be to return without
+> clearing, as we are leaving the configset in a useless state either
+> way and give the caller a choice between clearing it and continue,
+> and dying without even spending unnecessary cycles to clear.  That
+> might be more consistent with what git_config_check_init() does,
+> where you die without bothering to clear what was half-read into the
+> configset.
+> 
+> Whatever behaviour is chosen in the error codepath, it needs to be
+> documented.
+>
+
+Since syntactical errors in reading the file will cause a die when we
+use either `git_config_from_file` or `git_config`, I don't think
+incomplete parsing would trigger the error path, as it will die before
+reaching there.
+
+So, the best way would be just to return without clearing and let the
+user take the decision if he wants to go on with the incomplete
+config_set or clear it when he sees that configset_add_file() failed.
+
+Die in git_config_check_init() is never triggered expect in rare race
+conditions like between access_or_die() and git_config_from_file() in
+
+	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
+		ret += git_config_from_file(fn, git_etc_gitconfig(),
+					    data);
+		found += 1;
+	}
+which I think would never happen in reality, dunno. I think I will take
+out the die() in git_config_check_init(). Thus, the behavior of both
+functions git_config_check_init() & git_configset_add_file will be consistent.
+
+Thanks.
