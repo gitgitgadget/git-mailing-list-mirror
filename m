@@ -1,110 +1,164 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 06/20] replace.c: use the ref transaction functions for updates
-Date: Tue, 15 Jul 2014 16:34:04 -0700
-Message-ID: <1405467258-24102-7-git-send-email-sahlberg@google.com>
+Subject: [PATCH 19/20] refs.c: make prune_ref use a transaction to delete the ref
+Date: Tue, 15 Jul 2014 16:34:17 -0700
+Message-ID: <1405467258-24102-20-git-send-email-sahlberg@google.com>
 References: <1405467258-24102-1-git-send-email-sahlberg@google.com>
 Cc: mhagger@alum.mit.edu, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 16 01:34:58 2014
+X-From: git-owner@vger.kernel.org Wed Jul 16 01:35:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7CFN-0003Pj-MB
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 01:34:58 +0200
+	id 1X7CFP-0003Pj-Px
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 01:35:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934358AbaGOXeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 19:34:37 -0400
-Received: from mail-yh0-f74.google.com ([209.85.213.74]:51668 "EHLO
-	mail-yh0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934246AbaGOXeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 19:34:24 -0400
-Received: by mail-yh0-f74.google.com with SMTP id 29so20927yhl.5
-        for <git@vger.kernel.org>; Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
+	id S934193AbaGOXey (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 19:34:54 -0400
+Received: from mail-vc0-f201.google.com ([209.85.220.201]:49221 "EHLO
+	mail-vc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934326AbaGOXe0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 19:34:26 -0400
+Received: by mail-vc0-f201.google.com with SMTP id hu12so21036vcb.4
+        for <git@vger.kernel.org>; Tue, 15 Jul 2014 16:34:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=p2z1n13u3KGQeJ4KYoCDy3lRbHOhTuOt834D3zUDqWE=;
-        b=asrS374EfSSsfMzAlcAMAObHFScwSmM1RueyDe6PHpmp5PWxr8WOqbKlf2oRMWyUZP
-         V0PKDnFx3zlOB5Q/IJ6emr1hxshtuK8wWHBuBjWEl7Z5g094AlDbkK5x9Plmtf3VQSdq
-         ata1cShGyqedm7wWV4y82ZOgxRflEu+/VTGMmP6VFrsjI2FIwk96xWiNjfv4nDKT5K3C
-         xyY/M+Bqa/wdycA6SfjsRLyHBFIQyLsSGSMeAlim0/z7M4F/5jN51pl7gmTfmm0EC/sI
-         l8wj2bONwzavUc9RyPAiNF+GPTQ4/qzhRLVeVLUCrv9EJcOIUhfK/IIvsfGlqlTHkmLr
-         BUmA==
+        bh=Xhkc30hr1PvIYRjyTw3buhh7wSiidMGsQEAK/C3X4+k=;
+        b=InUZ6yi9IHyDQe7TFBmJ1nKWfBnr/bL7B6+iASsT9fx1WAd2AuxL4cgYoDL/aUyT8o
+         mwSBhKrqB9FjqLGp+hxrBvfGX/t4p1jFRkrDErDGiiJJyZuIANudSC70C3LDpAdIdQye
+         oTCjFuu9YZLhVOmq2zY7J1p9PdZwEU5spIdhm2pBj2A8Rs6TkLLRFLRWQkkrSL8Xzi0X
+         NrFHiZ7I8Uis4m+HzVE96GS77c5ejx45Tebob4xxNBd/XMBpfvp/vI5iZjGulYP8h4pd
+         lI72kSRMoJ7EvTvC1JhWKWcsA8w8ELF07fSdChaHxrWoKocLHiEfmaDNJc3KgG8Dzr1f
+         Aa7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=p2z1n13u3KGQeJ4KYoCDy3lRbHOhTuOt834D3zUDqWE=;
-        b=iYuC9H9RXNTPt4CC49I3TGy9hxYqPLYjs/QSsagdbT8Q8AmPQbQ2+qSqR4vohbdCun
-         /4jjlRN8YEv6ZeOUB975gAW5k4Zdhs3J+Tx6C0+AKj38kRtzvzVZO7yw/Ij7OG8oAyoe
-         51xDO0/amL5FEeDlYbHCT6vUbhp53ZqGw8a5Mre59qC+Lu2Fiv8fJgjBQeuFwNSHt83h
-         DJhe2awkvACUHqY6dKr1iPm78pclrAxgFZfjJMVsPDI/15QS2QtzZTill1UpDJeOSbhI
-         jEDUhKxVcXQKEa4hZpRc9CgEKV23OJ6vU6uUmgzxMLMrhL3PS3s8jHel7lXTk5TRMuGY
-         XW6A==
-X-Gm-Message-State: ALoCoQmZKSiaOVQwarrGaYYkvLir1Oa5VMUC2YrYB/VGy8Z+Rcft/GuXGhlkIIzL4B91AyUwEmjO
-X-Received: by 10.236.228.98 with SMTP id e92mr843783yhq.58.1405467263442;
-        Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id j43si1059797yhh.5.2014.07.15.16.34.23
+        bh=Xhkc30hr1PvIYRjyTw3buhh7wSiidMGsQEAK/C3X4+k=;
+        b=GwYmJmws0L7y6JaSo7LPguaSgioxM0lnx/ZCuGwmXmHz39ig/hStziL88x/dtCOpoS
+         81dCCxT/SbwL5jh5H0sEVjApGfOD74oMxgBn+bgxCBhNEe0MKo2agUf5DUdSYqiIVPfU
+         GRu+sFs/ElwHiTxuKlY81Kxausx7iX8lJGj2mkit22WbsXQOaAMyEwtOK8LAhNBQU7Z0
+         cmcp/afyDVWSvWWGYSXyrWo/kFEVASs2q9n/IK+iC85usDzjgA4iblyqeHeIfvFBKfBS
+         0kDU9Q53o6Yzi2s/BiSvlteshd+3mTplr+xEus1pj+gfw9gLfhoRatQ/sbelXeu8QADA
+         tY3Q==
+X-Gm-Message-State: ALoCoQnACrDu8LMYbgGPKfJmYpho3XIbLSAYiBpnOoA2ubTWVQEtslt4cGvojoldAa/OpAUTgH2S
+X-Received: by 10.236.63.197 with SMTP id a45mr12327806yhd.9.1405467265412;
+        Tue, 15 Jul 2014 16:34:25 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id c50si1058687yhl.7.2014.07.15.16.34.25
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
+        Tue, 15 Jul 2014 16:34:25 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 49D2931C2EA;
-	Tue, 15 Jul 2014 16:34:23 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 28EAF5A433E;
+	Tue, 15 Jul 2014 16:34:25 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 12643E0DBC; Tue, 15 Jul 2014 16:34:22 -0700 (PDT)
+	id D9055E0B27; Tue, 15 Jul 2014 16:34:24 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.481.gb244468
 In-Reply-To: <1405467258-24102-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253634>
 
-Update replace.c to use ref transactions for updates.
+Change prune_ref to delete the ref using a ref transaction. To do this we also
+need to add a new flag REF_ISPRUNING that will tell the transaction that we
+do not want to delete this ref from the packed refs. This flag is private to
+refs.c and not exposed to external callers.
 
 Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/replace.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ refs.c | 27 ++++++++++++++++++++-------
+ refs.h | 14 ++++++++++++--
+ 2 files changed, 32 insertions(+), 9 deletions(-)
 
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 1bb491d..7528f3d 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -153,7 +153,8 @@ static int replace_object_sha1(const char *object_ref,
- 	unsigned char prev[20];
- 	enum object_type obj_type, repl_type;
- 	char ref[PATH_MAX];
+diff --git a/refs.c b/refs.c
+index dbf6af9..186df37 100644
+--- a/refs.c
++++ b/refs.c
+@@ -25,6 +25,11 @@ static unsigned char refname_disposition[256] = {
+ };
+ 
+ /*
++ * Used as a flag to ref_transaction_delete when a loose ref is being
++ * pruned.
++ */
++#define REF_ISPRUNING	0x0100
++/*
+  * Try to read one refname component from the front of refname.
+  * Return the length of the component found, or -1 if the component is
+  * not legal.  It is legal if it is something reasonable to have under
+@@ -2379,17 +2384,24 @@ static void try_remove_empty_parents(char *name)
+ /* make sure nobody touched the ref, and unlink */
+ static void prune_ref(struct ref_to_prune *r)
+ {
 -	struct ref_lock *lock;
 +	struct ref_transaction *transaction;
 +	struct strbuf err = STRBUF_INIT;
  
- 	obj_type = sha1_object_info(object, NULL);
- 	repl_type = sha1_object_info(repl, NULL);
-@@ -166,12 +167,14 @@ static int replace_object_sha1(const char *object_ref,
+ 	if (check_refname_format(r->name + 5, 0))
+ 		return;
  
- 	check_ref_valid(object, prev, ref, sizeof(ref), force);
- 
--	lock = lock_any_ref_for_update(ref, prev, 0, NULL);
--	if (!lock)
--		die("%s: cannot lock the ref", ref);
--	if (write_ref_sha1(lock, repl, NULL) < 0)
--		die("%s: cannot update the ref", ref);
+-	lock = lock_ref_sha1_basic(r->name, r->sha1, 0, NULL);
+-	if (lock) {
+-		unlink_or_warn(git_path("%s", r->name));
+-		unlock_ref(lock);
+-		try_remove_empty_parents(r->name);
 +	transaction = ref_transaction_begin(&err);
 +	if (!transaction ||
-+	    ref_transaction_update(transaction, ref, repl, prev,
-+				   0, !is_null_sha1(prev), &err) ||
-+	    ref_transaction_commit(transaction, NULL, &err))
-+		die("%s", err.buf);
- 
++	    ref_transaction_delete(transaction, r->name, r->sha1,
++				   REF_ISPRUNING, 1, &err) ||
++	    ref_transaction_commit(transaction, NULL, &err)) {
++		ref_transaction_free(transaction);
++		error("%s", err.buf);
++		strbuf_release(&err);
++		return;
+ 	}
 +	ref_transaction_free(transaction);
- 	return 0;
++	try_remove_empty_parents(r->name);
  }
  
+ static void prune_refs(struct ref_to_prune *r)
+@@ -3598,8 +3610,9 @@ int ref_transaction_commit(struct ref_transaction *transaction,
+ 		struct ref_update *update = updates[i];
+ 
+ 		if (update->lock) {
+-			delnames[delnum++] = update->lock->ref_name;
+ 			ret |= delete_ref_loose(update->lock, update->type);
++			if (!(update->flags & REF_ISPRUNING))
++				delnames[delnum++] = update->lock->ref_name;
+ 		}
+ 	}
+ 
+diff --git a/refs.h b/refs.h
+index 65dd593..aad846c 100644
+--- a/refs.h
++++ b/refs.h
+@@ -170,9 +170,19 @@ extern int ref_exists(const char *);
+  */
+ extern int peel_ref(const char *refname, unsigned char *sha1);
+ 
+-/** Locks any ref (for 'HEAD' type refs). */
++/*
++ * Flags controlling lock_any_ref_for_update(), ref_transaction_update(),
++ * ref_transaction_create(), etc.
++ * REF_NODEREF: act on the ref directly, instead of dereferencing
++ *              symbolic references.
++ *
++ * Flags >= 0x100 are reserved for internal use.
++ */
+ #define REF_NODEREF	0x01
+-/* errno is set to something meaningful on failure */
++/*
++ * Locks any ref (for 'HEAD' type refs) and sets errno to something
++ * meaningful on failure.
++ */
+ extern struct ref_lock *lock_any_ref_for_update(const char *refname,
+ 						const unsigned char *old_sha1,
+ 						int flags, int *type_p);
 -- 
 2.0.1.442.g7fe6834.dirty
