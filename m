@@ -1,69 +1,122 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v9 4/4] tag: support configuring --sort via .gitconfig
-Date: Tue, 15 Jul 2014 23:46:14 +0000
-Message-ID: <1405467974.2577.21.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1405467179-16064-1-git-send-email-jacob.e.keller@intel.com>
-	 <1405467179-16064-4-git-send-email-jacob.e.keller@intel.com>
-	 <20140715234240.GB5572@peff.net>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH 1/2] MinGW: fix compile error due to missing ELOOP
+Date: Wed, 16 Jul 2014 01:57:38 +0200
+Message-ID: <53C5BFF2.30001@gmail.com>
+References: <20140712075035.GA12400@ucw.cz> <1405431797-20899-1-git-send-email-kasal@ucw.cz> <xmqq38e2wkkh.fsf@gitster.dls.corp.google.com> <53C5B0A1.4060502@gmail.com> <53C5B0E7.4050706@gmail.com> <20140715234257.GM12427@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "peff@peff.net" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jul 16 01:46:52 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Stepan Kasal <kasal@ucw.cz>, 
+ Johannes Sixt <j6t@kdbg.org>,
+ GIT Mailing-list <git@vger.kernel.org>, 
+ msysGit <msysgit@googlegroups.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: msysgit+bncBCH3XYXLXQDBB4X7S2PAKGQESL7TUQA@googlegroups.com Wed Jul 16 01:57:39 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBB4X7S2PAKGQESL7TUQA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f186.google.com ([209.85.217.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7CQt-0007X1-Ma
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 01:46:52 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030199AbaGOXqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 19:46:46 -0400
-Received: from mga01.intel.com ([192.55.52.88]:7701 "EHLO mga01.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753304AbaGOXqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 19:46:17 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101.fm.intel.com with ESMTP; 15 Jul 2014 16:46:16 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,668,1400050800"; 
-   d="scan'208";a="562345735"
-Received: from orsmsx101.amr.corp.intel.com ([10.22.225.128])
-  by fmsmga001.fm.intel.com with ESMTP; 15 Jul 2014 16:46:15 -0700
-Received: from orsmsx116.amr.corp.intel.com (10.22.240.14) by
- ORSMSX101.amr.corp.intel.com (10.22.225.128) with Microsoft SMTP Server (TLS)
- id 14.3.123.3; Tue, 15 Jul 2014 16:46:15 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.59]) by
- ORSMSX116.amr.corp.intel.com ([10.22.240.14]) with mapi id 14.03.0123.003;
- Tue, 15 Jul 2014 16:46:14 -0700
-Thread-Topic: [PATCH v9 4/4] tag: support configuring --sort via .gitconfig
-Thread-Index: AQHPoIUokg748ikfdUyLGGIZHkvA75uiQTwAgAAA/wA=
-In-Reply-To: <20140715234240.GB5572@peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <3E4066FD5C537845A862F4A9BC52C177@intel.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253650>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBB4X7S2PAKGQESL7TUQA@googlegroups.com>)
+	id 1X7CbL-0002qt-Ax
+	for gcvm-msysgit@m.gmane.org; Wed, 16 Jul 2014 01:57:39 +0200
+Received: by mail-lb0-f186.google.com with SMTP id v6sf11999lbi.23
+        for <gcvm-msysgit@m.gmane.org>; Tue, 15 Jul 2014 16:57:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=4/aQpvNbb60kW36NmOV7sNfOVxrh3e0opx6SJ6v1SYE=;
+        b=egaXsyRkF7Nbj6lUPMU5+N/mq/zkU6eHp+ld8DmjKpL4lyB74DdbxHnikR5LGIT+ZH
+         EyTUiQmkUX+UUlNgpFP9WciZs3/VyWWNWIQMmr0lmfIVoVyTaqvYrn95FtqypVMsV887
+         sJFegt+a241hC8855L/6NjqxjOhenlwnpd0eZIGO1MZE6qbyf8pDeFxjQhzlti/DYkj3
+         YpHtRPFeCpfQBb+tpN0isub2UA2w64+yRaMxb5rblP6vN0h8Ks54jlr4205+3icC7J66
+         nV6nYQyxxoKDpaX7asPxX7PKTGaa8FGn6y4xDNjGidq0G3bHGUDKVTnJQ8w2/PZLX1Ew
+         l5Rg==
+X-Received: by 10.180.84.66 with SMTP id w2mr39466wiy.19.1405468659136;
+        Tue, 15 Jul 2014 16:57:39 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.182.197 with SMTP id eg5ls660755wic.1.canary; Tue, 15 Jul
+ 2014 16:57:38 -0700 (PDT)
+X-Received: by 10.180.87.7 with SMTP id t7mr775628wiz.5.1405468658054;
+        Tue, 15 Jul 2014 16:57:38 -0700 (PDT)
+Received: from mail-wi0-x236.google.com (mail-wi0-x236.google.com [2a00:1450:400c:c05::236])
+        by gmr-mx.google.com with ESMTPS id o6si267874wij.1.2014.07.15.16.57.38
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 15 Jul 2014 16:57:38 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236 as permitted sender) client-ip=2a00:1450:400c:c05::236;
+Received: by mail-wi0-f182.google.com with SMTP id d1so413031wiv.3
+        for <msysgit@googlegroups.com>; Tue, 15 Jul 2014 16:57:38 -0700 (PDT)
+X-Received: by 10.180.74.82 with SMTP id r18mr9015764wiv.62.1405468657962;
+        Tue, 15 Jul 2014 16:57:37 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id fu7sm2001624wib.2.2014.07.15.16.57.36
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 15 Jul 2014 16:57:37 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140715234257.GM12427@google.com>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::236
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253651>
 
-T24gVHVlLCAyMDE0LTA3LTE1IGF0IDE5OjQyIC0wNDAwLCBKZWZmIEtpbmcgd3JvdGU6DQo+IE9u
-IFR1ZSwgSnVsIDE1LCAyMDE0IGF0IDA0OjMyOjU5UE0gLTA3MDAsIEphY29iIEtlbGxlciB3cm90
-ZToNCj4gDQo+ID4gK3N0YXRpYyB2b2lkIGVycm9yX2JhZF9zb3J0X2NvbmZpZyhjb25zdCBjaGFy
-ICplcnIsIHZhX2xpc3QgcGFyYW1zKQ0KPiA+ICt7DQo+ID4gKwl2cmVwb3J0Zigid2FybmluZzog
-dGFnLnNvcnQgaGFzICIsIGVyciwgcGFyYW1zKTsNCj4gPiArfQ0KPiANCj4gVGhpcyBmZWVscyBh
-IGxpdHRsZSBsaWtlIGFuIGFidXNlIG9mIHRoZSAicHJlZml4IiBmaWVsZCBvZiB2cmVwb3J0Ziwg
-YnV0DQo+IGFzIHlvdSBwcm9iYWJseSBzYXcgaW4gbXkgImZvciBmdW4iIHBhdGNoLCBkb2luZyBp
-dCByaWdodCBtZWFucw0KPiBmb3JtYXR0aW5nIGludG8gYSBidWZmZXIgYW5kIHRoZW4gcmVmb3Jt
-YXR0aW5nIHRoYXQgKHdoaWNoIHdlJ3JlDQo+IGFscmVhZHkgZG9pbmcgYWdhaW4gaW4gdnJlcG9y
-dGYsIGJ1dCBsZXNzIGZsZXhpYmx5KS4gSSBkdW5uby4NCj4gDQo+IEF0IGFueSByYXRlLCB0aGlz
-IHNob3VsZCBiZSBtYXJrZWQgZm9yIHRyYW5zbGF0aW9uLCBubz8NCj4gDQo+IC1QZWZmDQoNCk9o
-LCB5ZXMgaXQgcHJvYmFibHkgc2hvdWxkLiBJdCdzIGRlZmluaXRlbHkgYSBsaXR0bGUgYml0IGFi
-dXNpdmUgb2YgdGhlDQpwcmVmaXggZmllbGQsIGJ1dCB0aGF0IHNlZW1lZCBlYXNpZXIuDQoNClRo
-YW5rcywNCkpha2UNCg==
+Am 16.07.2014 01:42, schrieb Jonathan Nieder:
+> Karsten Blees wrote:
+> 
+>> MinGW and MSVC before 2010 don't define ELOOP, use EMLINK (aka "Too many
+>> links") instead.
+> [...]
+>> +#ifndef ELOOP
+>> +#define ELOOP EMLINK
+>> +#endif
+> 
+> This could use
+> 
+> 	#define ELOOP WSAELOOP
+> 
+> as an alternative.  But it shouldn't matter since git doesn't look for
+> EMLINK anywhere (EMLINK = 31, WSAELOOP = wsabaseerr+62 = 10062).
+> 
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> 
+
+It matters when we report the error to the user (i.e. via die_errno):
+
+strerror(EMLINK) -> "Too many links"
+strerror(10062)  -> "Unknown error"
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
