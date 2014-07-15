@@ -1,93 +1,113 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Date: Tue, 15 Jul 2014 14:52:13 +0000
-Message-ID: <1405435933.9147.1.camel@jekeller-desk1.amr.corp.intel.com>
-References: <1405119347-3308-1-git-send-email-jacob.e.keller@intel.com>
-	 <1405119347-3308-3-git-send-email-jacob.e.keller@intel.com>
-	 <CAPig+cR9VCtNhk-FbqDM1LTCa8VeUTYXU4XEX36Rb5CxPFfLWQ@mail.gmail.com>
-	 <xmqqfvi518xo.fsf@gitster.dls.corp.google.com>
-	 <20140713173356.GA8406@sigill.intra.peff.net>
-	 <20140713183629.GA19293@sigill.intra.peff.net>
-	 <xmqqfvi3zwp7.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 1/2] add `config_set` API for caching config-like files
+Date: Tue, 15 Jul 2014 08:46:24 -0700
+Message-ID: <xmqqoawqwrov.fsf@gitster.dls.corp.google.com>
+References: <1405434571-25459-1-git-send-email-tanayabh@gmail.com>
+	<1405434571-25459-2-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"peff@peff.net" <peff@peff.net>,
-	"sunshine@sunshineco.com" <sunshine@sunshineco.com>
-To: "gitster@pobox.com" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 16:52:37 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 17:46:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X745r-0001Ub-E2
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 16:52:35 +0200
+	id 1X74wC-0007GK-No
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 17:46:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752106AbaGOOwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 10:52:32 -0400
-Received: from mga09.intel.com ([134.134.136.24]:46853 "EHLO mga09.intel.com"
+	id S1752177AbaGOPqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 11:46:37 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58353 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750756AbaGOOwa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 10:52:30 -0400
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by orsmga102.jf.intel.com with ESMTP; 15 Jul 2014 07:46:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,665,1400050800"; 
-   d="scan'208";a="573464981"
-Received: from orsmsx107.amr.corp.intel.com ([10.22.240.5])
-  by orsmga002.jf.intel.com with ESMTP; 15 Jul 2014 07:52:14 -0700
-Received: from orsmsx111.amr.corp.intel.com (10.22.240.12) by
- ORSMSX107.amr.corp.intel.com (10.22.240.5) with Microsoft SMTP Server (TLS)
- id 14.3.123.3; Tue, 15 Jul 2014 07:52:13 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.59]) by
- ORSMSX111.amr.corp.intel.com ([169.254.11.92]) with mapi id 14.03.0123.003;
- Tue, 15 Jul 2014 07:52:13 -0700
-Thread-Topic: [PATCH 3/3] tag: support configuring --sort via .gitconfig
-Thread-Index: AQHPn4eD40BrU7LSLEikGiD9Y5cKsJuhrwOA
-In-Reply-To: <xmqqfvi3zwp7.fsf@gitster.dls.corp.google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <704554E3D9F68E4EB377C37DA66E8E80@intel.com>
+	id S1751722AbaGOPqg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 11:46:36 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F0E6B2893B;
+	Tue, 15 Jul 2014 11:46:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wnEm17GY3/eT244KBK4xBhKBEM8=; b=ffEd/I
+	++GQRVdWAMy9jc6tngp245RBbEJzrnjiprJcf2A9p058vQDgi+fdBT2wxjZ6BKUi
+	B0Tu6mnXSyoMWeVvsn4vpedtdrNcQuVb7FoSL6lRotzl7KSxDLwULfXG673kdzkX
+	fDT0xY2PkdzSn3wKqzfmjqdN2u1ST0CQRlEFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=vDMIREQplWW4FjFU6V8Zc8uUq4XXXny1
+	FehmSe1jo4x1RD+fsqNLVezK90Y7UNMDkUJSvWbHKkogtAb4xlztS96sB5wXcXMa
+	XS5V/kRYHmA5x4+IJbtwbaWx2yJZApIHjLa+ZcDanwEFYBf1Pb7yulNDGCnRXlNt
+	Vb2X6iHi2+w=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E79A92893A;
+	Tue, 15 Jul 2014 11:46:17 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C052728931;
+	Tue, 15 Jul 2014 11:46:08 -0400 (EDT)
+In-Reply-To: <1405434571-25459-2-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Tue, 15 Jul 2014 07:29:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 23A45DF2-0C37-11E4-BDC3-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253566>
 
-T24gTW9uLCAyMDE0LTA3LTE0IGF0IDEwOjE3IC0wNzAwLCBKdW5pbyBDIEhhbWFubyB3cm90ZToN
-Cj4gSmVmZiBLaW5nIDxwZWZmQHBlZmYubmV0PiB3cml0ZXM6DQo+IA0KPiA+IE9uIFN1biwgSnVs
-IDEzLCAyMDE0IGF0IDAxOjMzOjU2UE0gLTA0MDAsIEplZmYgS2luZyB3cm90ZToNCj4gPg0KPiA+
-PiBJIHJlYWxpemUgdGhhdCBJIGFtIHJlaW52ZW50aW5nIHRoZSBlcnJvci1yZXBvcnRpbmcgd2hl
-ZWwgb24gYSBzbGVlcHkNCj4gPj4gU3VuZGF5IGFmdGVybm9vbiB3aXRob3V0IGhhdmluZyB0aG91
-Z2h0IGFib3V0IGl0IG11Y2gsIHNvIHRoZXJlIGlzDQo+ID4+IHByb2JhYmx5IHNvbWUgZ290Y2hh
-IG9yIGNhc2UgdGhhdCBtYWtlcyB0aGlzIHVnbHksIG9yIHBlcmhhcHMgaXQganVzdA0KPiA+PiBl
-bmRzIHVwIHZlcmJvc2UgaW4gcHJhY3RpY2UuIEJ1dCBvbmUgY2FuIGRyZWFtLg0KPiA+DQo+ID4g
-SnVzdCBmb3IgZnVuLi4uDQo+IA0KPiBZZXMsIHRoYXQgaXMgZnVuLg0KPiANCj4gSSBhY3R1YWxs
-eSB0aGluayB5b3VyICJJbiAndmVyc2lvbjpwZWZuYW1lJyBhbmQgJ3dlcnNpb246cmVmbmFtZScs
-DQo+IHdlIHdhbnQgYmUgYWJsZSB0byByZXBvcnQgJ3BlZm5hbWUnIGFuZCAnd2Vyc2lvbicgYXJl
-IG1pc3NwZWxsZWQsDQo+IGFuZCByZXR1cm5pbmcgLTEgb3IgZW51bSB3b3VsZCBub3QgY3V0IGl0
-IiBpcyBhIGdvb2QgYXJndW1lbnQuICBUaGUNCj4gY2FsbGVlIHdhbnRzIHRvIGhhdmUgZmxleGli
-aWxpdHkgb24gX3doYXRfIHRvIHJlcG9ydCwganVzdCBhcyB0aGUNCj4gY2FsbGVyIHdhbnRzIHRv
-IGhhdmUgZmxleGliaWxpdHkgb24gX2hvd18uICBJbiB0aGlzIHBhcnRpY3VsYXIgY29kZQ0KPiBw
-YXRoLCBJIHRoaW5rIHRoZSBmb3JtZXIgZmFyIG91dHdlaWdocyB0aGUgbGF0dGVyLCBhbmQgbXkg
-c3VnZ2VzdGlvbg0KPiBJIGNhbGxlZCAic2lsbHkiIG1pZ2h0IG5vdCBiZSBzbyBzaWxseSBidXQg
-bWF5IGhhdmUgc3RydWNrIHRoZSByaWdodA0KPiBiYWxhbmNlLiAgSSBkdW5uby4NCj4gDQo+IElm
-IHlvdSBhYnNvbHV0ZWx5IG5lZWQgdG8gaGF2ZSBib3RoLCB5b3Ugd291bGQgbmVlZCBzb21ldGhp
-bmcgbGlrZQ0KPiB5b3VyIGFwcHJvYWNoLCBvZiBjb3Vyc2UsIGJ1dCBJIGFtIG5vdCBzdXJlIGlm
-IGl0IGlzIHdvcnRoIGl0Lg0KPiANCj4gSSBhbSBub3Qgc3VyZSBob3cgd2VsbCB0aGlzIG1lc2hl
-cyB3aXRoIGkxOG4gKEkga25vdyB0aGUgImZvciBmdW4iDQo+IGRvZXMgbm90IGV2ZW4gYXR0ZW1w
-dCB0bywgYnV0IGlmIHdlIHRyaWVkIHRvLCBJIHN1c3BlY3QgaXQgbWF5DQo+IGJlY29tZSBldmVu
-IHVnbGllcikuICBXZSB3b3VsZCBhbHNvIG5lZWQgdG8gb3ZlcnJpZGUgYm90aCBlcnJvciBhbmQN
-Cj4gd2FybmluZyByb3V0aW5lcyBhbmQgaGF2ZSB0aGUgcmVwb3J0ZXIgdGFnIHRoZSBlcnJvcnMg
-aW4gdGhlc2UgdHdvDQo+IGNhdGVnb3JpZXMsIG5vPw0KPiANCg0KRG8gd2Ugd2FudCB0byBnbyB0
-aGlzIHdheT8gU2hvdWxkIEkgcmVzcGluIG15IHBhdGNoIChhZ2Fpbik/IEknbSBub3QNCnN1cmUg
-d2UgcmVhbGx5IG5lZWQgdG8gZ2V0IHRoYXQgY29tcGxleC4uIEkgZG8gbGlrZSBwYXJzaW5nIGVy
-cm9ycyBhIGJpdA0KY2xlYW5lciBhbmQgaW5kaWNhdGluZyB3aGF0IHBhcnQgaXMgYmFkLi4gTm90
-ZSB0aGF0IG91ciBjdXJyZW50IHBhcnNpbmcNCm1ldGhvZCBkb2VzIG5vdCBtYWtlIGl0IHJlYWxs
-eSBwb3NzaWJsZSB0byBpbmRpY2F0ZSB3aGljaCBwYXJ0IGlzIHdyb25nLg0KDQpUaGFua3MsDQpK
-YWtlDQo=
+Tanay Abhra <tanayabh@gmail.com> writes:
+
+> diff --git a/config.c b/config.c
+> index ba882a1..89e2d67 100644
+> --- a/config.c
+> +++ b/config.c
+> ...
+> +const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key)
+> +{
+> +	struct config_set_element *e = configset_find_element(cs, key);
+> +	return e ? &e->value_list : NULL;
+> +}
+
+Somehow I find the placement of this function out of place.  Didn't
+you get the same impression while proofreading the entire file after
+you are done writing this patch?
+
+The right place for it would probably be immediately before
+git_configset_get_value(), I would think.
+
+> +int git_configset_add_file(struct config_set *cs, const char *filename)
+> +{
+> +	int ret = 0;
+> +	ret = git_config_from_file(config_hash_callback, filename, cs);
+> +	if (!ret)
+> +		return 0;
+> +	else {
+> +		git_configset_clear(cs);
+> +		return -1;
+> +	}
+> +}
+
+If I add contents from file "A" successfully and then attempt to
+further add contents from file "B" which fails, I would lose
+contents I read from "A"?
+
+It would not be worth trying to make it transactional (i.e. making
+sure cs contains what was there before the config-from-file was
+called if it failed), so in such a case we may end up seeing a
+mixture of full contents from A and partial contents from B, which
+is just as useless as a cleared configset, so it is not wrong to
+clear it per-se.  An alternative might be to return without
+clearing, as we are leaving the configset in a useless state either
+way and give the caller a choice between clearing it and continue,
+and dying without even spending unnecessary cycles to clear.  That
+might be more consistent with what git_config_check_init() does,
+where you die without bothering to clear what was half-read into the
+configset.
+
+Whatever behaviour is chosen in the error codepath, it needs to be
+documented.
+
+Thanks.
