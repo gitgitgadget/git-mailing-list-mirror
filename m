@@ -1,26 +1,26 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 3/3] tests: do not pass iso8859-1 encoded parameter
-Date: Tue, 15 Jul 2014 15:43:17 +0200
-Message-ID: <1405431797-20899-4-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 2/3] Win32: Unicode file name support (dirent)
+Date: Tue, 15 Jul 2014 15:43:16 +0200
+Message-ID: <1405431797-20899-3-git-send-email-kasal@ucw.cz>
 References: <20140712075035.GA12400@ucw.cz>
  <1405431797-20899-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: GIT Mailing-list <git@vger.kernel.org>,
 	msysGit <msysgit@googlegroups.com>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Karsten Blees <blees@dcon.de>,
 	Stepan Kasal <kasal@ucw.cz>
 To: Karsten Blees <karsten.blees@gmail.com>,
 	Johannes Sixt <j6t@kdbg.org>
-X-From: msysgit+bncBCU63DXMWULRB767SSPAKGQEKNW2XJI@googlegroups.com Tue Jul 15 15:43:28 2014
+X-From: msysgit+bncBCU63DXMWULRB767SSPAKGQEKNW2XJI@googlegroups.com Tue Jul 15 15:43:31 2014
 Return-path: <msysgit+bncBCU63DXMWULRB767SSPAKGQEKNW2XJI@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f187.google.com ([209.85.212.187])
+Received: from mail-wg0-f58.google.com ([74.125.82.58])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <msysgit+bncBCU63DXMWULRB767SSPAKGQEKNW2XJI@googlegroups.com>)
-	id 1X730y-00077O-5i
+	id 1X730y-00077M-30
 	for gcvm-msysgit@m.gmane.org; Tue, 15 Jul 2014 15:43:28 +0200
-Received: by mail-wi0-f187.google.com with SMTP id ho1sf433463wib.24
+Received: by mail-wg0-f58.google.com with SMTP id l18sf579746wgh.23
         for <gcvm-msysgit@m.gmane.org>; Tue, 15 Jul 2014 06:43:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -28,27 +28,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=+N96om9g0fDzvTkmULPGH+KngqFoWESneiUSB6B69nU=;
-        b=h5rkEVdwYhiqltVWebi47c6VXnydY27W3sDJJUlFr5if0GoFDutI4oVs9dUUVNWsHu
-         CK9RW9kzMOcszQUMDC+iFhmkyn/pnUDQzT3tfiXmV2AKRCrEXXwfuLqOu7ruNVAFan83
-         PQyD9AJgZX9oMQgTuc1l8jCPm+85Ld8LD54+7njwEWX9HFrYV8XQ/z30VkKKCv2BHO7V
-         oTjT1JBJblBPnKFqKT7wjUFKbWEr2C0TxIT8QxXa4ptmbPuLSZli59riycl3ciBq4Zs5
-         gJU7hGghoAAfApKik8Xqlxnz9B2UqMOJotSpEfwQbx921oeX3m8/ZL8RcXo9zNPnMHWq
-         XhrA==
-X-Received: by 10.180.182.4 with SMTP id ea4mr18800wic.16.1405431807918;
+        bh=Rt2aGiGSoj7UbchqKrgiK8sjitF9LnQKYlLZkXBedV8=;
+        b=hEeE9LnHBmp5r3ny+g3AtIeLLzXiNoVIriLsEteqgqZD4pUVI4GRyjfvIDaaSawnHE
+         870ypSV12dFku11SsG3b5LcXTanbWr0P3VnWVeaIgfkes1Brsdn60ay2SPe+W9XadccE
+         9UIKkMPx+FjafpbycbtnBO9ctMQNlbsVuqm326Vc3kcE2WMeRlNovYA1nIvLZzvECmO6
+         /fnnOnoNR18X6EY+XeUiS1LPRQmpk5/diMrwJ8tl1EFDj33QXM1JdfXO6NVT9OefgW3w
+         u4XMQyuzDRuaSmGp+T2zamszIiCuiqHcL1nfy//5J4a1KELDOmM1IIo49kFuKlXohq3X
+         ePTA==
+X-Received: by 10.152.45.66 with SMTP id k2mr15567lam.13.1405431807795;
         Tue, 15 Jul 2014 06:43:27 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.12.240 with SMTP id b16ls542153wic.34.canary; Tue, 15 Jul
- 2014 06:43:26 -0700 (PDT)
-X-Received: by 10.194.103.133 with SMTP id fw5mr2121992wjb.3.1405431806789;
+Received: by 10.152.23.9 with SMTP id i9ls37784laf.17.gmail; Tue, 15 Jul 2014
+ 06:43:26 -0700 (PDT)
+X-Received: by 10.112.129.170 with SMTP id nx10mr46675lbb.21.1405431806821;
         Tue, 15 Jul 2014 06:43:26 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id r13si650346wib.0.2014.07.15.06.43.26
+        by gmr-mx.google.com with ESMTP id iz18si640393wic.3.2014.07.15.06.43.26
         for <msysgit@googlegroups.com>;
         Tue, 15 Jul 2014 06:43:26 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 8F2251C0153; Tue, 15 Jul 2014 15:43:26 +0200 (CEST)
+	id 8ADAE1C0151; Tue, 15 Jul 2014 15:43:26 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1405431797-20899-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
@@ -65,103 +65,111 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253558>
 
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Date: Mon, 2 Sep 2013 15:44:54 +0100
+From: Karsten Blees <blees@dcon.de>
+Date: Sat, 14 Jan 2012 22:01:09 +0100
 
-git commit -m with some iso8859-1 encoded stuff is doomed to fail in MinGW,
-because Windows don't let you pass encoded bytes to a process (CreateProcessW
-always takes a UTF-16LE encoded string).
+Changes opendir/readdir to use Windows Unicode APIs and convert between
+UTF-8/UTF-16.
 
-It is safe to pass the iso8859-1 message using a file or a pipe.
+Removes parameter checks that are already covered by xutftowcs_path. This
+changes detection of ENAMETOOLONG from MAX_PATH - 2 to MAX_PATH (matching
+is_dir_empty in mingw.c). If name + "/*" or the resulting absolute path is
+too long, FindFirstFile fails and errno is set through err_win_to_posix.
 
-Thanks-to: Karsten Blees <blees@dcon.de>
-Author: Stepan Kasal <kasal@ucw.cz>
+Increases the size of dirent.d_name to accommodate the full
+WIN32_FIND_DATA.cFileName converted to UTF-8 (UTF-16 to UTF-8 conversion
+may grow by factor three in the worst case).
+
+Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Stepan Kasal <kasal@ucw.cz>
 ---
- t/t4041-diff-submodule-option.sh | 6 ++++--
- t/t4205-log-pretty-formats.sh    | 2 +-
- t/t6006-rev-list-format.sh       | 4 ++--
- t/t7102-reset.sh                 | 8 ++++++--
- 4 files changed, 13 insertions(+), 7 deletions(-)
+ compat/win32/dirent.c | 30 ++++++++++--------------------
+ compat/win32/dirent.h |  2 +-
+ 2 files changed, 11 insertions(+), 21 deletions(-)
 
-diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
-index 463d63b..e432896 100755
---- a/t/t4041-diff-submodule-option.sh
-+++ b/t/t4041-diff-submodule-option.sh
-@@ -26,8 +26,10 @@ add_file () {
- 			echo "$name" >"$name" &&
- 			git add "$name" &&
- 			test_tick &&
--			msg_added_iso88591=$(echo "Add $name ($added $name)" | iconv -f utf-8 -t $test_encoding) &&
--			git -c "i18n.commitEncoding=$test_encoding" commit -m "$msg_added_iso88591"
-+			# "git commit -m" would break MinGW, as Windows refuse to pass
-+			# $test_encoding encoded parameter to git.
-+			echo "Add $name ($added $name)" | iconv -f utf-8 -t $test_encoding |
-+			git -c "i18n.commitEncoding=$test_encoding" commit -F -
- 		done >/dev/null &&
- 		git rev-parse --short --verify HEAD
- 	)
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index c84ec9a..349c531 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -31,7 +31,7 @@ test_expect_success 'set up basic repos' '
- 	git add foo &&
- 	test_tick &&
- 	git config i18n.commitEncoding $test_encoding &&
--	git commit -m "$(commit_msg $test_encoding)" &&
-+	commit_msg $test_encoding | git commit -F - &&
- 	git add bar &&
- 	test_tick &&
- 	git commit -m "add bar" &&
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index 88ed319..a02a45a 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -35,13 +35,13 @@ test_expect_success 'setup' '
- 	: >foo &&
- 	git add foo &&
- 	git config i18n.commitEncoding $test_encoding &&
--	git commit -m "$added_iso88591" &&
-+	echo "$added_iso88591" | git commit -F - &&
- 	head1=$(git rev-parse --verify HEAD) &&
- 	head1_short=$(git rev-parse --verify --short $head1) &&
- 	tree1=$(git rev-parse --verify HEAD:) &&
- 	tree1_short=$(git rev-parse --verify --short $tree1) &&
- 	echo "$changed" > foo &&
--	git commit -a -m "$changed_iso88591" &&
-+	echo "$changed_iso88591" | git commit -a -F - &&
- 	head2=$(git rev-parse --verify HEAD) &&
- 	head2_short=$(git rev-parse --verify --short $head2) &&
- 	tree2=$(git rev-parse --verify HEAD:) &&
-diff --git a/t/t7102-reset.sh b/t/t7102-reset.sh
-index ee703be..98bcfe2 100755
---- a/t/t7102-reset.sh
-+++ b/t/t7102-reset.sh
-@@ -44,7 +44,9 @@ test_expect_success 'creating initial files and commits' '
+diff --git a/compat/win32/dirent.c b/compat/win32/dirent.c
+index 82a515c..52420ec 100644
+--- a/compat/win32/dirent.c
++++ b/compat/win32/dirent.c
+@@ -6,10 +6,10 @@ struct DIR {
+ 	int dd_stat;          /* 0-based index */
+ };
  
- 	echo "1st line 2nd file" >secondfile &&
- 	echo "2nd line 2nd file" >>secondfile &&
--	git -c "i18n.commitEncoding=$test_encoding" commit -a -m "$(commit_msg $test_encoding)" &&
-+	# "git commit -m" would break MinGW, as Windows refuse to pass
-+	# $test_encoding encoded parameter to git.
-+	commit_msg $test_encoding | git -c "i18n.commitEncoding=$test_encoding" commit -a -F - &&
- 	head5=$(git rev-parse --verify HEAD)
- '
- # git log --pretty=oneline # to see those SHA1 involved
-@@ -334,7 +336,9 @@ test_expect_success 'redoing the last two commits should succeed' '
+-static inline void finddata2dirent(struct dirent *ent, WIN32_FIND_DATAA *fdata)
++static inline void finddata2dirent(struct dirent *ent, WIN32_FIND_DATAW *fdata)
+ {
+-	/* copy file name from WIN32_FIND_DATA to dirent */
+-	memcpy(ent->d_name, fdata->cFileName, sizeof(ent->d_name));
++	/* convert UTF-16 name to UTF-8 */
++	xwcstoutf(ent->d_name, fdata->cFileName, sizeof(ent->d_name));
  
- 	echo "1st line 2nd file" >secondfile &&
- 	echo "2nd line 2nd file" >>secondfile &&
--	git -c "i18n.commitEncoding=$test_encoding" commit -a -m "$(commit_msg $test_encoding)" &&
-+	# "git commit -m" would break MinGW, as Windows refuse to pass
-+	# $test_encoding encoded parameter to git.
-+	commit_msg $test_encoding | git -c "i18n.commitEncoding=$test_encoding" commit -a -F - &&
- 	check_changes $head5
- '
+ 	/* Set file type, based on WIN32_FIND_DATA */
+ 	if (fdata->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+@@ -20,25 +20,15 @@ static inline void finddata2dirent(struct dirent *ent, WIN32_FIND_DATAA *fdata)
  
+ DIR *opendir(const char *name)
+ {
+-	char pattern[MAX_PATH];
+-	WIN32_FIND_DATAA fdata;
++	wchar_t pattern[MAX_PATH + 2]; /* + 2 for '/' '*' */
++	WIN32_FIND_DATAW fdata;
+ 	HANDLE h;
+ 	int len;
+ 	DIR *dir;
+ 
+-	/* check that name is not NULL */
+-	if (!name) {
+-		errno = EINVAL;
++	/* convert name to UTF-16 and check length < MAX_PATH */
++	if ((len = xutftowcs_path(pattern, name)) < 0)
+ 		return NULL;
+-	}
+-	/* check that the pattern won't be too long for FindFirstFileA */
+-	len = strlen(name);
+-	if (len + 2 >= MAX_PATH) {
+-		errno = ENAMETOOLONG;
+-		return NULL;
+-	}
+-	/* copy name to temp buffer */
+-	memcpy(pattern, name, len + 1);
+ 
+ 	/* append optional '/' and wildcard '*' */
+ 	if (len && !is_dir_sep(pattern[len - 1]))
+@@ -47,7 +37,7 @@ DIR *opendir(const char *name)
+ 	pattern[len] = 0;
+ 
+ 	/* open find handle */
+-	h = FindFirstFileA(pattern, &fdata);
++	h = FindFirstFileW(pattern, &fdata);
+ 	if (h == INVALID_HANDLE_VALUE) {
+ 		DWORD err = GetLastError();
+ 		errno = (err == ERROR_DIRECTORY) ? ENOTDIR : err_win_to_posix(err);
+@@ -72,8 +62,8 @@ struct dirent *readdir(DIR *dir)
+ 	/* if first entry, dirent has already been set up by opendir */
+ 	if (dir->dd_stat) {
+ 		/* get next entry and convert from WIN32_FIND_DATA to dirent */
+-		WIN32_FIND_DATAA fdata;
+-		if (FindNextFileA(dir->dd_handle, &fdata)) {
++		WIN32_FIND_DATAW fdata;
++		if (FindNextFileW(dir->dd_handle, &fdata)) {
+ 			finddata2dirent(&dir->dd_dir, &fdata);
+ 		} else {
+ 			DWORD lasterr = GetLastError();
+diff --git a/compat/win32/dirent.h b/compat/win32/dirent.h
+index 8838cd6..058207e 100644
+--- a/compat/win32/dirent.h
++++ b/compat/win32/dirent.h
+@@ -10,7 +10,7 @@ typedef struct DIR DIR;
+ 
+ struct dirent {
+ 	unsigned char d_type;      /* file type to prevent lstat after readdir */
+-	char d_name[MAX_PATH];     /* file name */
++	char d_name[MAX_PATH * 3]; /* file name (* 3 for UTF-8 conversion) */
+ };
+ 
+ DIR *opendir(const char *dirname);
 -- 
 2.0.0.9635.g0be03cb
 
