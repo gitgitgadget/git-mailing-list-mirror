@@ -1,93 +1,123 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v8 1/2] add `config_set` API for caching config-like files
-Date: Tue, 15 Jul 2014 13:32:54 +0200
-Message-ID: <vpqiomy3li1.fsf@anie.imag.fr>
-References: <1405049655-4265-1-git-send-email-tanayabh@gmail.com>
-	<1405049655-4265-2-git-send-email-tanayabh@gmail.com>
-	<vpqlhs02cz7.fsf@anie.imag.fr> <53C50859.5070209@gmail.com>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: [PATCH 0/3] fix test suite with mingw-unicode patches
+Date: Tue, 15 Jul 2014 15:43:14 +0200
+Message-ID: <1405431797-20899-1-git-send-email-kasal@ucw.cz>
+References: <20140712075035.GA12400@ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 13:33:20 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>,
+	Stepan Kasal <kasal@ucw.cz>
+To: Karsten Blees <karsten.blees@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+X-From: msysgit+bncBCU63DXMWULRB767SSPAKGQEKNW2XJI@googlegroups.com Tue Jul 15 15:43:28 2014
+Return-path: <msysgit+bncBCU63DXMWULRB767SSPAKGQEKNW2XJI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-we0-f189.google.com ([74.125.82.189])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X70z1-0007dw-FC
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 13:33:19 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758708AbaGOLdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 15 Jul 2014 07:33:15 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:40424 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758628AbaGOLdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 15 Jul 2014 07:33:14 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6FBWrv9023112
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 15 Jul 2014 13:32:53 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6FBWtk0004961;
-	Tue, 15 Jul 2014 13:32:55 +0200
-In-Reply-To: <53C50859.5070209@gmail.com> (Tanay Abhra's message of "Tue, 15
-	Jul 2014 16:24:17 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 15 Jul 2014 13:32:53 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6FBWrv9023112
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1406028774.28891@bXuIQZOc1MF7veHL6IbLbg
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253555>
+	(envelope-from <msysgit+bncBCU63DXMWULRB767SSPAKGQEKNW2XJI@googlegroups.com>)
+	id 1X730y-00077Q-Cd
+	for gcvm-msysgit@m.gmane.org; Tue, 15 Jul 2014 15:43:28 +0200
+Received: by mail-we0-f189.google.com with SMTP id p10sf321855wes.26
+        for <gcvm-msysgit@m.gmane.org>; Tue, 15 Jul 2014 06:43:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
+         :references:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :sender:list-subscribe:list-unsubscribe:content-type;
+        bh=Llo99zbZFwUR0MG0Sxv64IOkXRYD9R7OToaHG9EbUkc=;
+        b=DYTxFli4oBvkt2yGipFVskGXql19S7AO28NNyD54UJ2e5c6AH2wBhWalSHorsZKPhj
+         tT2AddYZAl2dUFW7Irvs5952vNbG3db8t2l4xH73LXcO5dm29OOVecI4SoLFZNuJ1v9u
+         0tMmg1xDhKVUpR/tA2G96IFX5+xyq8k1bbgQjtxqXs3SYMgA+pcpQQUTAsrYX+nVQbWs
+         5pxucNzTOsCJkNOSEqzAjJRXdRPWhEWEIS97QEfKk90TNFxw9msF/pNuFrWsK14PLHWB
+         tUixpVGImM8doAlr92v6U6cuC5BRaSiiHXf+ZxREnqV/tsnLDDNaEq3JNBc9d0v+KhSF
+         AI8Q==
+X-Received: by 10.180.73.180 with SMTP id m20mr19084wiv.14.1405431807919;
+        Tue, 15 Jul 2014 06:43:27 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.99.137 with SMTP id eq9ls97795wib.37.gmail; Tue, 15 Jul
+ 2014 06:43:27 -0700 (PDT)
+X-Received: by 10.194.143.109 with SMTP id sd13mr234754wjb.6.1405431806704;
+        Tue, 15 Jul 2014 06:43:26 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id r13si650344wib.0.2014.07.15.06.43.26
+        for <msysgit@googlegroups.com>;
+        Tue, 15 Jul 2014 06:43:26 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
+	id 8261B1C014E; Tue, 15 Jul 2014 15:43:26 +0200 (CEST)
+X-Mailer: git-send-email 1.7.10.4
+In-Reply-To: <20140712075035.GA12400@ucw.cz>
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253556>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Hello Hannes,
+attached please find the patches that Karsten pointed out:
 
-> I checked the whole codebase and in all of the cases if they cannot read a file
-> they return -1 and continue running.
+1) The unicode file name support was omitted from his unicode patch
+series; my mistake, sorry.  There is still big part missing: support
+for unicode environment; I can only hope the tests would choke on
+that.
 
-More precisely: in git_config_from_file, any fopen failure results in
-"return -1". But in git_config_early (one caller of
-git_config_from_file()), the file is checked before access, e.g.:
+2) Windows cannot pass non-UTF parameters (commit messages in this
+case): original patch by Pat Thoyts was extended to apply to other
+similar cases: the commit msg is passed through stdin.
 
-	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
-		ret += git_config_from_file(fn, git_etc_gitconfig(),
-					    data);
-		found += 1;
-	}
+If there are still problems remaining, please tell us.
 
-Essentially, if a config file does not exist, it's skipped (obviously
-desirable), but if some really weird error occur (if "err == ENOENT ||
-err == ENOTDIR || ((flag & ACCESS_EACCES_OK) && err == EACCES" is false,
-from access_eacces_ok() in wrapper.c), then the process dies.
+Thanks,
+	Stepan
 
-"Permission denied" errors are allowed for user-wide config, but not for
-others. Read the log for commit 4698c8feb for more details.
+Karsten Blees (2):
+  Win32: Unicode file name support (except dirent)
+  Win32: Unicode file name support (dirent)
 
-Anyway, this is the part of the code you're not touching.
+Pat Thoyts and Stepan Kasal(1):
+  tests: do not pass iso8859-1 encoded parameter
 
-(I actually consider it as a bug that "git config --file no-such-file
-foo.bar" and "git config --file unreadable-file foo.bar" fail without
-error message, but your commit does not change this).
-
-> I think if the file is unreadable. we must continue running as no harm has been
-> done yet, worse is parsing a file with wrong syntax which can cause reading
-> wrong config values. So the decision to die on syntax error sounds alright
-> to me.
-
-In the case of git_config_check_init(), I think it makes sense to die,
-because file accesses are protected with access_or_die(), so the return
-value can be negative only if something really went wrong.
-
-If you chose not to die, then you should check the return value in the
-callers of git_config_check_init().
+ compat/mingw.c                   | 198 +++++++++++++++++++++++++++++----------
+ compat/mingw.h                   |  18 +++-
+ compat/win32/dirent.c            |  30 ++----
+ compat/win32/dirent.h            |   2 +-
+ t/t4041-diff-submodule-option.sh |   6 +-
+ t/t4205-log-pretty-formats.sh    |   2 +-
+ t/t6006-rev-list-format.sh       |   4 +-
+ t/t7102-reset.sh                 |   8 +-
+ 8 files changed, 184 insertions(+), 84 deletions(-)
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.0.0.9635.g0be03cb
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
