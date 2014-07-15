@@ -1,98 +1,96 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v1 1/3] dir.c: coding style fix
-Date: Tue, 15 Jul 2014 12:10:14 -0700
-Message-ID: <xmqqpph6v3op.fsf@gitster.dls.corp.google.com>
-References: <53C3A71F.1020101@gmail.com>
-	<xmqq4myjy3ms.fsf@gitster.dls.corp.google.com>
-	<53C579B4.2050506@gmail.com>
+Subject: Re: [PATCH 3/3] tag: support configuring --sort via .gitconfig
+Date: Tue, 15 Jul 2014 12:10:57 -0700
+Message-ID: <xmqqlhruv3ni.fsf@gitster.dls.corp.google.com>
+References: <1405119347-3308-1-git-send-email-jacob.e.keller@intel.com>
+	<1405119347-3308-3-git-send-email-jacob.e.keller@intel.com>
+	<CAPig+cR9VCtNhk-FbqDM1LTCa8VeUTYXU4XEX36Rb5CxPFfLWQ@mail.gmail.com>
+	<xmqqfvi518xo.fsf@gitster.dls.corp.google.com>
+	<20140713173356.GA8406@sigill.intra.peff.net>
+	<20140713183629.GA19293@sigill.intra.peff.net>
+	<xmqqfvi3zwp7.fsf@gitster.dls.corp.google.com>
+	<1405435933.9147.1.camel@jekeller-desk1.amr.corp.intel.com>
+	<xmqqfvi2wqvq.fsf@gitster.dls.corp.google.com>
+	<1405445234.2577.0.camel@jekeller-desk1.amr.corp.intel.com>
+	<xmqq7g3ewkp8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 21:10:28 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	"peff\@peff.net" <peff@peff.net>,
+	"sunshine\@sunshineco.com" <sunshine@sunshineco.com>
+To: "Keller\, Jacob E" <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Tue Jul 15 21:11:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X787P-0002Cw-8w
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 21:10:27 +0200
+	id 1X7888-0002Tl-0b
+	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 21:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932885AbaGOTKY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 15 Jul 2014 15:10:24 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50221 "EHLO smtp.pobox.com"
+	id S932894AbaGOTLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 15 Jul 2014 15:11:09 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60584 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932760AbaGOTKW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 15 Jul 2014 15:10:22 -0400
+	id S932760AbaGOTLG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 15 Jul 2014 15:11:06 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6442529C58;
-	Tue, 15 Jul 2014 15:10:04 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 44BA329C96;
+	Tue, 15 Jul 2014 15:10:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=yjWdQbRPz2io
-	QcLvLlblEitqTXk=; b=TWE5/wdYVSfo7SUdMZl+tsKyGNb4v8ZmcOViggP2NxA4
-	tACRCYkYF2mKOlFSgHM1izGs0moHvCk3CRKIEXjMfzUSBPLwJKInz04Cbw0wOetW
-	7l1h7BR7DWRMzzBGyiCyeZGXf58VhNQ4yokxbx2bBEzWBov6h5RG1OhWhHvYCq0=
+	:content-type; s=sasl; bh=mSPnRieTr41ROMRLOWOwfW8aFSA=; b=BmdDUv
+	ldq6pVdomRGXInkNe0dSJmlY0DK0yHk8NziD45cz13J8ha+DGO0k5Jwp6fAueCts
+	3X/E/afO1I2aI7IZB1yHLFwAmknbtyzKCQrC+/7wQvfI2gMOOcyyd78OvtbvAleN
+	SHgLgXz8A1GqMv938g74X8YegcCfl9069wGNk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IihNPP
-	zdIMwuQ7fOjgr4Tuv83N0K2oFAESvBMhJfN4qqGbRyFVb1TSbaucGtdaDqCTQfbH
-	pdnAEcKxA10NyEExBxMyH0EhNpipgh3mVuvCTBe2xKQ4baAM1QB1Mjrg70M3n5Ep
-	ODwgudpkcu5Pt5BIw+FwNaXcYm09zhFAehNSU=
+	:content-type; q=dns; s=sasl; b=JNTVIxGS/hJbFvE79Dpo3ynp+qpPFLYq
+	odmLuYGGazmffR5COAYRfOqyPqHqYfMp+a1xWy8fa5+k208a8fDcE9dPulY9/pY+
+	u4B9oC9JtZDf9D/sBCrDmvu8mllygqjf/kUBv8dtP26EfgGX9tltqyQhZrtULR3K
+	zKpXmeS0DNg=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2A17629C57;
-	Tue, 15 Jul 2014 15:10:04 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3834529C95;
+	Tue, 15 Jul 2014 15:10:48 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 41C3029C4C;
-	Tue, 15 Jul 2014 15:09:58 -0400 (EDT)
-In-Reply-To: <53C579B4.2050506@gmail.com> (Karsten Blees's message of "Tue, 15
-	Jul 2014 20:57:56 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EB7B229C88;
+	Tue, 15 Jul 2014 15:10:40 -0400 (EDT)
+In-Reply-To: <xmqq7g3ewkp8.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 15 Jul 2014 11:17:23 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9CF2AD5A-0C53-11E4-A5A2-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: B663F08C-0C53-11E4-AE5F-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253585>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Am 15.07.2014 00:30, schrieb Junio C Hamano:
->> Karsten Blees <karsten.blees@gmail.com> writes:
->>=20
->>> From: =3D?UTF-8?q?Nguy=3DE1=3DBB=3D85n=3D20Th=3DC3=3DA1i=3D20Ng=3DE=
-1=3DBB=3D8Dc=3D20Duy?=3D
->>>  <pclouds@gmail.com>
->>>
->>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
-mail.com>
->>> Signed-off-by: Karsten Blees <blees@dcon.de>
->>> ---
->>=20
->> Thanks for forwarding.   I'll fix-up the Yikes (see how these two
->> lines show the same name in a very different way), but how did you
->> produce the above?  Is there some fix we need in the toolchain that
->> produces patch e-mails?
->>=20
+> "Keller, Jacob E" <jacob.e.keller@intel.com> writes:
 >
-> Hmmm...I simply thought that this is how its supposed to work. Mail
-> headers can only contain US-ASCII, so the RFC 2047 Q-encoded-word
-> generated by git-format-patch looked good to me.
+>> On Tue, 2014-07-15 at 09:03 -0700, Junio C Hamano wrote:
+>> ...
+>>> >> Yes, that is fun.
+>>> >> 
+>>> >> I actually think your "In 'version:pefname' and 'wersion:refname',
+>>> >> we want be able to report 'pefname' and 'wersion' are misspelled,
+>>> >> and returning -1 or enum would not cut it" is a good argument.  The
+>>> >> callee wants to have flexibility on _what_ to report, just as the
+>>> >> caller wants to have flexibility on _how_.  In this particular code
+>>> >> path, I think the former far outweighs the latter, and my suggestion
+>>> >> I called "silly" might not be so silly but may have struck the right
+>>> >> balance.  I dunno.
+>> ...
+>> I agree. But what about going back to the older setup where the caller
+>> can output correct error message? I'm ok with using an enum style
+>> return, to be completely honest. I would prefer this, actually.
+>
+> Depends on which older setup you mean, I think.  The one that does
+> not let us easily give more context dependent diagnoses that lets us
+> distinguish between version:pefname and version:refname by returning
+> only -1 or an enum?
 
-But that quoted one is *NOT* a mail header.  It is the first line of
-the payload of your message, and should be in plain text just like
-the remainder, e.g. S-o-b line that has the same name.
-
-> Perhaps it should be clarified that git-format-patch output is not
-> suitable for pasting into mail clients? Or it should print headers
-> in plain text and let git-send-email handle the conversions?
-
-If the former is missing, then we should definitely add it to the
-documentation.  We often see new people pasting the "From " line
-meant for /etc/magic and unwanted {From,Subject,Date}: in the body.
-
-We may also want to add an option to tell it to produce an output
-that is suitable for pasting into mail clients.  Hint, hint...
+In case it was not clear, I do not think -1 or enum is a good idea.
