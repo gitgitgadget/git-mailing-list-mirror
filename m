@@ -1,116 +1,126 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v8 4/4] cache-tree: Write updated cache-tree after commit
-Date: Mon, 14 Jul 2014 15:32:08 -0700
-Organization: Twitter
-Message-ID: <1405377128.3775.34.camel@stross>
-References: <1405140276-32162-1-git-send-email-dturner@twitter.com>
-	 <1405140276-32162-4-git-send-email-dturner@twitter.com>
-	 <CACsJy8D0CdS5B5xNSSCk+LToXV9FnHFLkPzJ5f-7NTWiw9yn5w@mail.gmail.com>
-	 <xmqqr41oylyo.fsf@gitster.dls.corp.google.com>
-	 <53C41456.2000006@ramsay1.demon.co.uk>
-	 <xmqqvbqzygkm.fsf@gitster.dls.corp.google.com>
-	 <53C42453.1090109@ramsay1.demon.co.uk>
-	 <xmqq8unvy4bf.fsf@gitster.dls.corp.google.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: Topic sk/mingw-unicode-spawn-args breaks tests
+Date: Tue, 15 Jul 2014 02:21:45 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1407150217300.18949@s15462909.onlinehome-server.info>
+References: <53BEF21E.9090007@kdbg.org> <53C03FBB.1080807@gmail.com> <20140712075035.GA12400@ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Turner <dturner@twitter.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 15 00:32:22 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: Karsten Blees <karsten.blees@gmail.com>, Johannes Sixt <j6t@kdbg.org>, 
+    Git Mailing List <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: msysgit+bncBCZPH74Q5YNRBG7ISGPAKGQETRG72GY@googlegroups.com Tue Jul 15 02:21:48 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBG7ISGPAKGQETRG72GY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wg0-f57.google.com ([74.125.82.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X6onB-0004yv-VX
-	for gcvg-git-2@plane.gmane.org; Tue, 15 Jul 2014 00:32:18 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757486AbaGNWcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Jul 2014 18:32:14 -0400
-Received: from mail-qa0-f42.google.com ([209.85.216.42]:37919 "EHLO
-	mail-qa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757251AbaGNWcN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Jul 2014 18:32:13 -0400
-Received: by mail-qa0-f42.google.com with SMTP id j15so3851983qaq.15
-        for <git@vger.kernel.org>; Mon, 14 Jul 2014 15:32:12 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:content-transfer-encoding
-         :mime-version;
-        bh=/zgv7NICGjNxLRsdZNKJHD+fVCjoLL8YjhTnBdqNUeI=;
-        b=QdD1t4ei0RNvLh8iXysIlVx7RSjdtlXabiJEp/a59h9Mw1ld93uyj0WrX2fzWEsdci
-         7IfANiS511lebk3OZy1K2AQtGeyjIal+EvANNg8OyL+pVGmGyyJEL/D/l2Lq8CRqxaeJ
-         b6sREgPkflXQu8I1dgeHdLbMxINzGEYITBxwbwOFC0loeRF7sPUfEM7wjIWqqhJnGZuQ
-         3l+/c/Fjhbw6xeZ9cV/tyoWaS6dRCkK162V3+KRt8tUOQBoZJkTLtbkkU5lk/tiY6sQn
-         Sg2mDQX8F4QTdEGdT2qa6/ePlc/5b8Teopq+s5EBRsDv5Zn9imVIntyvpWpmlZ3FcUND
-         IVsw==
-X-Gm-Message-State: ALoCoQkGaY1tQ5haOjyAQyg0rk65hXR0E4ddEjkgeTxzqhU82nSZPrqvN6uXn0qVQH3d1xcocKcv
-X-Received: by 10.224.152.5 with SMTP id e5mr26424046qaw.65.1405377132506;
-        Mon, 14 Jul 2014 15:32:12 -0700 (PDT)
-Received: from [172.25.140.220] ([8.25.197.27])
-        by mx.google.com with ESMTPSA id h5sm10395382qgf.19.2014.07.14.15.32.10
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Mon, 14 Jul 2014 15:32:11 -0700 (PDT)
-In-Reply-To: <xmqq8unvy4bf.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.2.3-0ubuntu6 
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253545>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBG7ISGPAKGQETRG72GY@googlegroups.com>)
+	id 1X6qVA-0004iY-IK
+	for gcvm-msysgit@m.gmane.org; Tue, 15 Jul 2014 02:21:48 +0200
+Received: by mail-wg0-f57.google.com with SMTP id n12sf522290wgh.2
+        for <gcvm-msysgit@m.gmane.org>; Mon, 14 Jul 2014 17:21:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=AtRmfpAf0e3q1m3FAwOMOgFqSPLmnPRzr+OCDEv4lwY=;
+        b=QPU+r/LGvtpDvV9K0NWICm/RQEaOTQaPdWUPwI8ufhViTDIquuAPU/91tKkz5Wlehc
+         c7RWZ1VBxgTx6GzpAPjZSlDHfqRekDjRVHWAWM9ujXXyPaXDLv0yJN8IEzPK8IB/UUPy
+         cDbtFrA70Svjs9WhKjyRk1OSdCGvJ578WZWX6/K9qtLw4d7A6SaKFJbeTUx1RIYJCs6F
+         cW6yIKlPK++zgSk2zUFfEjkIfxr/+V9bmyKxEHXIH/yq3hIaMhG3OOGdQ5HXlKNxin/Y
+         t6r1at1f05kdC6Scll4bZq58447eq1QDHn0rdye6dl2puQqk1cPLwJZmhET+a85hKiJS
+         F0jQ==
+X-Received: by 10.180.82.230 with SMTP id l6mr6698wiy.11.1405383708320;
+        Mon, 14 Jul 2014 17:21:48 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.182.197 with SMTP id eg5ls498438wic.1.canary; Mon, 14 Jul
+ 2014 17:21:47 -0700 (PDT)
+X-Received: by 10.180.89.232 with SMTP id br8mr115308wib.1.1405383707334;
+        Mon, 14 Jul 2014 17:21:47 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.15.15])
+        by gmr-mx.google.com with ESMTPS id r19si409166wik.0.2014.07.14.17.21.47
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 14 Jul 2014 17:21:47 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as permitted sender) client-ip=212.227.15.15;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx003) with ESMTPSA (Nemesis) id 0MEWkb-1XMTh232DZ-00FnET;
+ Tue, 15 Jul 2014 02:21:45 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <20140712075035.GA12400@ucw.cz>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:1FWF/NXQ5zGXoo75V2zuiuHFnbnwGT+6E9eHF+uZ+xulvgYVWhs
+ oW3Fc4rEffQ1kykr+3vnNT1G8BTucyUMsCBusUI3S7wC8yw6BTyEhiWIhGGS/v2awvJXdtd
+ 62/QChGZFGPSQYlmtOKPUAakh1iFxSmF6K6Da1dxJp8xv0+4Ac6fUg/f1uDqcs+sc4sswRv
+ l8FiYwWwvNdnBljAZLotg==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.15.15 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253546>
 
-On Mon, 2014-07-14 at 15:16 -0700, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
-> 
-> > On 14/07/14 18:51, Junio C Hamano wrote:
-> >> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
-> >> 
-> >>> that the merge commit 7608c87e fails. Looking at the details of the
-> >>> merge resolution, made me think of Duy's split index work.
-> >> 
-> >> Yes, there is a deliberately dropped hunk from dt/cache-tree-repair
-> >> in that merge, because the topic relied on being able to say "here
-> >> is the file descriptor, write the index to it", which no longer is
-> >> available with the split-index topic.
-> >
-> > Ah, OK. Sounds like everything is under control then.
-> 
-> Wasn't, but now I think it is ;-)
-> 
-> David, could you please double check the conflict resolution at
-> 882426ea (Merge branch 'dt/cache-tree-repair' into jch, 2014-07-14),
-> at about the middle between master..pu?  By eyeballing
-> 
->     git diff 882426ea^ 882426ea
-> 
-> we should see what your series would have done if it were based on
-> top of the nd/split-index topic.  The most iffy is the first hunk of
-> change to builtin/commit.c, which is more or less my rewrite of what
-> you did on top of 'master'.
+Hi Stepan,
 
-LGTM.  And the tests all pass.
+On Sat, 12 Jul 2014, Stepan Kasal wrote:
 
-> The change to builtin/checkout.c also seems somewhat iffy in that we
-> treat the_index.cache_tree (aka "active_cache_tree") as if cache
-> trees are something we can manipulate independent of a particular
-> index_state (which has been the rule for a long time), even though
-> in the world order after nd/split-index topic, cache_tree_update()
-> can no longer be used on a cache-tree that is not associated to a
-> particular index_state.  It is not a problem with your series, but
-> comes from nd/split-index topic, and it might indicate a slight
-> unevenness of the API (i.e. we may want to either insist that the
-> public API to muck with a cache-tree outside cache-tree.c must be
-> accessed via an index-state and never via a bare cache-tree
-> structure, by insisting that cache_tree_fully_valid() to take a
-> pointer to an index-state as well; or we may want to go the other
-> way and allow API users to pass a bare cache-tree without the
-> index-state when the latter is not absolutely necessary, by changing
-> cache_tree_update() to take a cache-tree, not an index-state).
+> > Am 10.07.2014 22:05, schrieb Johannes Sixt:
+> > > It looks like I totally missed the topic sk/mingw-unicode-spawn-args.
+> ...
+> > > Am I doing something wrong? Does the topic depend on a particular
+> > > version of MSYS (or DLL)?
+> 
+> unfortunately, I paused my submissions at random point.
 
-I agree that some sort of API updates like would be an improvement. But
-this seems to work for now.
+;-)
+
+> I'm sorry for breaking your setup.  I was not aware there is any
+> working Windows setup beyond msysGit.
+
+There is one other, very notable development environment relevant to Git
+for Windows: https://github.com/sschuberth/mingwGitDevEnv. It is slated to
+be the development environment to produce Git for Windows starting with
+version 2.0.0.
+
+I have pretty concrete plans to work on that switch, which will most
+likely also affect Hannes (who has so far successfully resisted to develop
+Git using the msysGit environment).
+
+Those plans to step up my efforts regarding Git for Windows imply my
+spending more time on the project again, subject to a couple of things
+that are still being hashed out.
+
+Stay tuned,
+Dscho
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
