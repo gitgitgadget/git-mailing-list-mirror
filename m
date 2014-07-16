@@ -1,174 +1,86 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 2/2] rebase: omit patch-identical commits with
- --fork-point
-Date: Wed, 16 Jul 2014 22:27:55 +0100
-Message-ID: <20140716212755.GD2322@serenity.lan>
-References: <xmqqmwcatgza.fsf@gitster.dls.corp.google.com>
- <47e67c62fb2a8c8846f5d3a12d71aebf8fa875d7.1405538598.git.john@keeping.me.uk>
- <374b26180807c67f7bd152ce5a2f52e34397e3a6.1405538598.git.john@keeping.me.uk>
- <xmqqa989rqx3.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 4/4] tag: support configuring --sort via .gitconfig
+Date: Wed, 16 Jul 2014 14:40:54 -0700
+Message-ID: <xmqq1ttlrnh5.fsf@gitster.dls.corp.google.com>
+References: <1405467179-16064-1-git-send-email-jacob.e.keller@intel.com>
+	<1405467179-16064-4-git-send-email-jacob.e.keller@intel.com>
+	<20140715234240.GB5572@peff.net>
+	<1405467974.2577.21.camel@jekeller-desk1.amr.corp.intel.com>
+	<xmqqiomxrxq2.fsf@gitster.dls.corp.google.com>
+	<1405545219.15392.17.camel@jekeller-desk1.amr.corp.intel.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ted Felix <ted@tedfelix.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 23:38:01 2014
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>,
+	"peff\@peff.net" <peff@peff.net>
+To: "Keller\, Jacob E" <jacob.e.keller@intel.com>
+X-From: git-owner@vger.kernel.org Wed Jul 16 23:41:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7Wtj-00046l-Px
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 23:38:00 +0200
+	id 1X7Wwl-0005KG-Us
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 23:41:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754090AbaGPVh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2014 17:37:56 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:58118 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754020AbaGPVhw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2014 17:37:52 -0400
-X-Greylist: delayed 589 seconds by postgrey-1.27 at vger.kernel.org; Wed, 16 Jul 2014 17:37:52 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id E43B5606538;
-	Wed, 16 Jul 2014 22:28:02 +0100 (BST)
-X-Quarantine-ID: <iq3VD1E5AdCH>
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id iq3VD1E5AdCH; Wed, 16 Jul 2014 22:28:02 +0100 (BST)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S1751399AbaGPVlD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2014 17:41:03 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61315 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751122AbaGPVlB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2014 17:41:01 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3C4CC2A09C;
+	Wed, 16 Jul 2014 17:41:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GxgK5zvlC0TpCWYZEQFbFB9ucSs=; b=w1PKuX
+	IWry0REi30ONcjX6tMyF3yR9X201tqnaaHYvVuaxqpCbtrGeHRGuGUOX4whVNc1V
+	yeWBqBL7fWDMpGavwwpaN6Qga9ohfBYNd1cL96tKq/2hzjpaf13Vb1qkbV+obpDt
+	T9wvvoIxDYPh8YHSimgWhsS6fyMgnq3AykTXw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JxME/mSFajtDTWUChM1KjmFdbA6fMKUL
+	M7VSK+mxuNP0WjkmYifF8eXu+SQic8FC+bMOe4WKnA/6J5hqF6gvv5f5tfz4m/oS
+	oL4tvQ65uF1aoBPE/LXWhn4LZ7uNWP4ZGIT+6AJu9HEIZlvoj4899U3Lbngy2X8l
+	7CTbsKaCEno=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 29F972A09B;
+	Wed, 16 Jul 2014 17:41:01 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id D15246064A5;
-	Wed, 16 Jul 2014 22:27:57 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <xmqqa989rqx3.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7A5B62A097;
+	Wed, 16 Jul 2014 17:40:55 -0400 (EDT)
+In-Reply-To: <1405545219.15392.17.camel@jekeller-desk1.amr.corp.intel.com>
+	(Jacob E. Keller's message of "Wed, 16 Jul 2014 21:13:39 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: DDE2A124-0D31-11E4-8670-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253692>
 
-On Wed, Jul 16, 2014 at 01:26:32PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > When the `--fork-point` argument was added to `git rebase`, we changed
-> > the value of $upstream to be the fork point instead of the point from
-> > which we want to rebase.  When $orig_head..$upstream is empty this does
-> > not change the behaviour, but when there are new changes in the upstream
-> > we are no longer checking if any of them are patch-identical with
-> > changes in $upstream..$orig_head.
-> >
-> > Fix this by introducing a new variable to hold the fork point and using
-> > this to restrict the range as an extra (negative) revision argument so
-> > that the set of desired revisions becomes (in fork-point mode):
-> >
-> > 	git rev-list --cherry-pick --right-only \
-> > 		$upstream...$orig_head ^$fork_point
-> >
-> > This allows us to correctly handle the scenario where we have the
-> > following topology:
-> >
-> > 	    C --- D --- E  <- dev
-> > 	   /
-> > 	  B  <- master@{1}
-> > 	 /
-> > 	o --- B' --- C* --- D*  <- master
-> >
-> > where:
-> > - B' is a fixed-up version of B that is not patch-identical with B;
-> > - C* and D* are patch-identical to C and D respectively and conflict
-> >   textually if applied in the wrong order;
-> > - E depends textually on D.
-> >
-> > The correct result of `git rebase master dev` is that B is identified as
-> > the fork-point of dev and master, so that C, D, E are the commits that
-> > need to be replayed onto master; but C and D are patch-identical with C*
-> > and D* and so can be dropped, so that the end result is:
-> >
-> > 	o --- B' --- C* --- D* --- E  <- dev
-> >
-> > If the fork-point is not identified, then picking B onto a branch
-> > containing B' results in a conflict and if the patch-identical commits
-> > are not correctly identified then picking C onto a branch containing D
-> > (or equivalently D*) results in a conflict.
-> >
-> > This change allows us to handle both of these cases, where previously we
-> > either identified the fork-point (with `--fork-point`) but not the
-> > patch-identical commits *or* (with `--no-fork-point`) identified the
-> > patch-identical commits but not the fact that master had been rewritten.
-> >
-> > Reported-by: Ted Felix <ted@tedfelix.com>
-> > Signed-off-by: John Keeping <john@keeping.me.uk>
-> > ---
-> >
-> > Change from v1:
-> >     - add a test case
-> 
-> > diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-> > index 80e0a95..47b5682 100755
-> > --- a/t/t3400-rebase.sh
-> > +++ b/t/t3400-rebase.sh
-> > @@ -169,6 +169,29 @@ test_expect_success 'default to common base in @{upstream}s reflog if no upstrea
-> >  	test_cmp expect actual
-> >  '
-> >  
-> > +test_expect_success 'cherry-picked commits and fork-point work together' '
-> > +	git checkout default-base &&
-> > +	echo Amended >A &&
-> > +	git commit -a --no-edit --amend &&
-> > +	test_commit B B &&
-> > +	test_commit new_B B "New B" &&
-> > +	test_commit C C &&
-> > +	git checkout default &&
-> > +	git reset --hard default-base@{4} &&
-> > +	test_commit D D &&
-> > +	git cherry-pick -2 default-base^ &&
-> > +	test_commit final_B B "Final B" &&
-> > +	git rebase &&
-> 
-> mental note: this rebases default (i.e. the current branch) on
-> default-base; it depends on branch.default.{remote,merge} being set
-> by the previous test piece.
-> 
-> > +	echo Amended >expect &&
-> > +	test_cmp A expect &&
-> > +	echo "Final B" >expect &&
-> > +	test_cmp B expect &&
-> > +	echo C >expect &&
-> > +	test_cmp C expect &&
-> > +	echo D >expect &&
-> > +	test_cmp D expect
-> > +'
-> 
-> Thanks.  Do these labels on the commits have any relation to the
-> topology illustrated in the log message?
+"Keller, Jacob E" <jacob.e.keller@intel.com> writes:
 
-No, I didn't consider the log message when adding the test; it simply
-uses the next letters that are unused in the test repository.
+>> After all, it seems to me that the one in
+>> 
+>>     http://thread.gmane.org/gmane.comp.version-control.git/253346
+>> 
+>> struck the right balance among various abuses; let's use the error
+>> reporter from that version, instead of going down this rabbit hole.
+>> 
+>> Thanks.
+>
+> So is that patch series version acceptable then? Or should I spin one
+> again that is in that vein?
 
-> It looks like the above produces this:
-> 
->       a'---D---B'--new_B'---final_B (default)
->      /
->     o----a---B---new_B---C (default-base)
->                           \
->                            D''---final_B''
-> 
-> where 'a' is "Modify A." from the original set-up and B and new_B
-> are the cherry-picks to be filtered out during the rebase.  Am I
-> reading the test correctly?
+I do not offhand know what other changes you had in v9 since
+$gmane/253346, so I'll leave it up to you.  If the only difference
+is the error reporting codepath, and you are happy with what I have
+in my tree
 
-Yes, that's right.  The idea is to make sure that we skip the
-cherry-picked commits, which requires two commits that will conflict if
-we try to apply the first on top of the second and to make sure that we
-don't lose the new commit on the upstream (C).
+    $ git log -p --reverse -3 a93d886b9
 
-> >  test_expect_success 'rebase -q is quiet' '
-> >  	git checkout -b quiet topic &&
-> >  	git rebase -q master >output.out 2>&1 &&
+then we can proceed with that version.  Have there been any issues
+raised on that older version other than error reporting?
