@@ -1,92 +1,105 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v9r2 1/2] add `config_set` API for caching config-like files
-Date: Wed, 16 Jul 2014 18:06:59 +0200
-Message-ID: <vpqha2h9tjw.fsf@anie.imag.fr>
-References: <1405434571-25459-1-git-send-email-tanayabh@gmail.com>
-	<1405434571-25459-3-git-send-email-tanayabh@gmail.com>
-	<xmqqk37ewr5r.fsf@gitster.dls.corp.google.com>
-	<53C665A0.2060705@gmail.com> <vpqvbqxjzfx.fsf@anie.imag.fr>
-	<53C66E70.3050507@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 16 18:07:14 2014
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 1/3] fixup for patch 2: minor style fix
+Date: Wed, 16 Jul 2014 18:09:10 +0200
+Message-ID: <1405526952-25019-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqha2h9tjw.fsf@anie.imag.fr>
+Cc: artagnon@gmail.com, tanayabh@gmail.com,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jul 16 18:09:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7Rjc-0000Rc-Rj
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 18:07:13 +0200
+	id 1X7Rlq-0001Ln-Ul
+	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 18:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1030272AbaGPQHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2014 12:07:08 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48320 "EHLO rominette.imag.fr"
+	id S1030371AbaGPQJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2014 12:09:28 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:42299 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934509AbaGPQHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2014 12:07:06 -0400
+	id S1030363AbaGPQJ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2014 12:09:26 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6GG6vmO011637
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6GG9CRb028785
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 16 Jul 2014 18:06:57 +0200
+	Wed, 16 Jul 2014 18:09:12 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6GG6xic026953;
-	Wed, 16 Jul 2014 18:06:59 +0200
-In-Reply-To: <53C66E70.3050507@gmail.com> (Tanay Abhra's message of "Wed, 16
-	Jul 2014 17:52:08 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 16 Jul 2014 18:06:58 +0200 (CEST)
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6GG9EXA027114;
+	Wed, 16 Jul 2014 18:09:14 +0200
+Received: from moy by anie.imag.fr with local (Exim 4.80)
+	(envelope-from <moy@imag.fr>)
+	id 1X7Rla-0006cJ-0M; Wed, 16 Jul 2014 18:09:14 +0200
+X-Mailer: git-send-email 2.0.0.262.gdafc651
+In-Reply-To: <vpqha2h9tjw.fsf@anie.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 16 Jul 2014 18:09:12 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6GG6vmO011637
+X-MailScanner-ID: s6GG9CRb028785
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1406131618.62319@T9h+EfmiWiwzCgu3HVG3+A
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1406131754.02642@IkKhIbWFcUocuLQLTWbgJw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253672>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ t/t1308-config-set.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-> implemented as a thin wrapper around the `config_set` API.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
->  Documentation/technical/api-config.txt | 137 +++++++++++++++++
->  cache.h                                |  30 ++++
->  config.c                               | 264 +++++++++++++++++++++++++++++++++
->  3 files changed, 431 insertions(+)
-
-(you broke the patch by removing the ---)
-
-> +static void git_config_check_init(void)
-> +{
-> +	if (the_config_set.hash_initialized)
-> +		return;
-> +	git_configset_init(&the_config_set);
-> +	git_config(config_set_callback, &the_config_set);
-> +}
-
-So, you're now ignoring the return value of git_config. What is the
-rationale for this? In particular, why did you reject the "die"
-possibility (I understood that you were inclined to take this option, so
-I'm curious why you changed your mind).
-
-OTOH, you're transmitting the return value without dying here:
-
-+int git_configset_add_file(struct config_set *cs, const char *filename)
-+{
-+	return git_config_from_file(config_set_callback, filename, cs);
-+}
-
-and I think this one is correct, as we cannot tell in advance how
-serious an error would be for any callers. And we do test this (I think
-we can improve a bit, I'll send a fixup patch).
-
+diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+index 4752fd9..ea031bf 100755
+--- a/t/t1308-config-set.sh
++++ b/t/t1308-config-set.sh
+@@ -150,8 +150,8 @@ test_expect_success 'find value from a configset' '
+ '
+ 
+ test_expect_success 'find value with highest priority from a configset' '
+-	echo hask > expect &&
+-	test-config configset_get_value case.baz config2 .git/config  >actual &&
++	echo hask >expect &&
++	test-config configset_get_value case.baz config2 .git/config >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -163,7 +163,7 @@ test_expect_success 'find value_list for a key from a configset' '
+ 	lama
+ 	ball
+ 	EOF
+-	test-config configset_get_value case.baz config2 .git/config  >actual &&
++	test-config configset_get_value case.baz config2 .git/config >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -173,7 +173,7 @@ test_expect_success 'proper error on non-existant files' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'proper error on non-accessible  files' '
++test_expect_success 'proper error on non-accessible files' '
+ 	chmod -r .git/config &&
+ 	test_when_finished "chmod +r .git/config" &&
+ 	echo "Error reading configuration file .git/config." >expect &&
+@@ -184,14 +184,14 @@ test_expect_success 'proper error on non-accessible  files' '
+ test_expect_success 'proper error on error in default config files' '
+ 	cp .git/config .git/config.old &&
+ 	test_when_finished "mv .git/config.old .git/config" &&
+-	echo "[" >> .git/config &&
++	echo "[" >>.git/config &&
+ 	echo "fatal: bad config file line 35 in .git/config" >expect &&
+ 	test_expect_code 128 test-config get_value foo.bar 2>actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'proper error on error in custom config files' '
+-	echo "[" >> syntax-error &&
++	echo "[" >>syntax-error &&
+ 	echo "fatal: bad config file line 1 in syntax-error" >expect &&
+ 	test_expect_code 128 test-config configset_get_value foo.bar syntax-error 2>actual &&
+ 	test_cmp expect actual
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.0.0.262.gdafc651
