@@ -1,92 +1,122 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 00/20] ref transactions part 2
-Date: Wed, 16 Jul 2014 15:52:10 -0700
-Message-ID: <CAL=YDWnQpLxM1TJ3dja+hGGNd1ckFUJHz83Z=WsOcfo24PT0Vg@mail.gmail.com>
-References: <1405467258-24102-1-git-send-email-sahlberg@google.com>
-	<CAL=YDW=At4isTCtwdeGZ-v3cS=vbGyC7aQ-CwAEzxKN0c_3Jyg@mail.gmail.com>
-	<xmqqegxlq799.fsf@gitster.dls.corp.google.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] strbuf: use strbuf_addstr() for adding C strings
+Date: Thu, 17 Jul 2014 01:38:18 +0200
+Message-ID: <53C70CEA.8000000@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 00:52:22 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Jul 17 01:38:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7Y3e-0006vl-Th
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 00:52:19 +0200
+	id 1X7YmM-0006Th-Pc
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 01:38:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752858AbaGPWwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2014 18:52:13 -0400
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:34607 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750935AbaGPWwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2014 18:52:11 -0400
-Received: by mail-vc0-f169.google.com with SMTP id hu12so3120433vcb.28
-        for <git@vger.kernel.org>; Wed, 16 Jul 2014 15:52:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=a6NnUyriW5FMhWQjgcjYG5NiB4GULFn4C2+O+HDU4RM=;
-        b=iY8gvlFtjfeKQT46r7FNNoLknjI39FGl3crZKtnyAiA0BaLUnRb97pXliXDYrIU3XT
-         cGe7j3tbaUMHzsMN/8jJe5A5LEJq2D+T++xqf0BNGjV1ZouF9Tbu2AniHeFg9n6Th7GG
-         yn6f4eTWgALnVZwoFJt6oC3CiaLwFWyw75lVHg2ZumMbSu8seXkPHG+PYnFKpb0E3Xt5
-         QOHgZT1FlTQcUcwDqxn0IYBMAdUt27qU316S9/MVWjOAXDYxtTuzwZDzRyd3O56lIwt8
-         yKE1UlNCl4hrbxSrICMIQk9QVphLCf/mHb6keVbKmH3rKI1g2VqsRRyfN8VjidyEj/9M
-         M1Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=a6NnUyriW5FMhWQjgcjYG5NiB4GULFn4C2+O+HDU4RM=;
-        b=WYG85NPHjWn3FSLA3wNoU8cDr/+ZkUIdm35FrdTi0QThfE+d2y2W11ltZqwiZRhZBu
-         JYoGzm/zRn0pjqArHZMmBlMd+XgEMkoEKwm5GG7RSK9JKARg28L6vfFZtrgWiw2Pa0Ok
-         aXH081GZyBCQnIrDXBdsBleloGtV/k98sAfwrREIe0gbeccixIM85Cowijv3lOEO/8Rp
-         Luv101j+ag8PgAow7ZBjqbvorkVR4O+cKhnycBchbkYCdB65cunjBNV20fyLUfjDgFfY
-         0VBzqEod4VTltI8fHm4sg67HNDFUsn3ohBwvpJgWve/HmfrB6DvlnBupFpvywC5MMR/F
-         Vfyw==
-X-Gm-Message-State: ALoCoQlxeXiOwu1CaQotL+v4KHPyL5o+J3T1EbBOzNEF3v8In+WRXoZ5dc0FgJZHc5QtcyUXl/G+
-X-Received: by 10.53.1.231 with SMTP id bj7mr10441408vdd.49.1405551130186;
- Wed, 16 Jul 2014 15:52:10 -0700 (PDT)
-Received: by 10.52.136.166 with HTTP; Wed, 16 Jul 2014 15:52:10 -0700 (PDT)
-In-Reply-To: <xmqqegxlq799.fsf@gitster.dls.corp.google.com>
+	id S1754009AbaGPXi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2014 19:38:27 -0400
+Received: from mout.web.de ([212.227.15.14]:57111 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752818AbaGPXi0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2014 19:38:26 -0400
+Received: from [192.168.178.27] ([79.250.168.234]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0LrbHJ-1WQcEH0Uxh-013Qdt; Thu, 17 Jul 2014 01:38:24
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Provags-ID: V03:K0:PBk8mytq4TKvkG9n3JiXBR4HB7qwGL3yW1aiNn9bXd8NHQkX1f5
+ 4W/VaQLZN5kjwSGJ1Q/d9bjFSHRrzqyHWjQTa2aHZTP1fGi21FMPPMg5xLQ+31fw5l4bl5I
+ JrHWmdWGyzMZp6bnZ8rDaJ+iYWIY7RXCo0M65th4DsyGW/ZvfKJNBtwEZI/zTWqbZueDIEj
+ MbpW6poQ8/NPYYtYd1inQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253716>
 
-I had a look at the changes in origin/pu and they look sane to me.
+Avoid code duplication and let strbuf_addstr() call strlen() for us.
 
-make test   passes all tests too.
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ builtin/commit.c |  2 +-
+ diff.c           | 12 ++++++------
+ path.c           |  6 +++---
+ 3 files changed, 10 insertions(+), 10 deletions(-)
 
-
-regards
-ronnie sahlberg
-
-
-On Wed, Jul 16, 2014 at 3:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
->
->> On Tue, Jul 15, 2014 at 4:33 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
->>> This is the next 20 patches from my originally big patch series and follow
->>> the previous 19 patches that is now in juns tree.
->>> These patches were numbered 20-39 in the original 48-patch series.
->>>
->>> Changes since these patches were in the original series:
->>>
->>> - Addressing concerns from mhagger's review
->
-> One patch in the series did not apply cleanly on top of the tip of
-> the previous series (now queued as rs/ref-transaction-0) and I had
-> to wiggle it.  Please check the result (queued as three topics, this
-> one is rs/ref-transaction-1 which is built on the abovementioned
-> "-0", and the remainder from the previous round is rebased on "-1"
-> as rs/ref-transaction), all of which are queued on 'jch' (which is
-> part of 'pu').
->
-> Thanks.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 72eb3be..f2d7979 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -702,7 +702,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		char *buffer;
+ 		buffer = strstr(use_message_buffer, "\n\n");
+ 		if (buffer)
+-			strbuf_add(&sb, buffer + 2, strlen(buffer + 2));
++			strbuf_addstr(&sb, buffer + 2);
+ 		hook_arg1 = "commit";
+ 		hook_arg2 = use_message;
+ 	} else if (fixup_message) {
+diff --git a/diff.c b/diff.c
+index 06bdfb8..867f034 100644
+--- a/diff.c
++++ b/diff.c
+@@ -525,9 +525,9 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 	ep += 2; /* skip over @@ */
+ 
+ 	/* The hunk header in fraginfo color */
+-	strbuf_add(&msgbuf, frag, strlen(frag));
++	strbuf_addstr(&msgbuf, frag);
+ 	strbuf_add(&msgbuf, line, ep - line);
+-	strbuf_add(&msgbuf, reset, strlen(reset));
++	strbuf_addstr(&msgbuf, reset);
+ 
+ 	/*
+ 	 * trailing "\r\n"
+@@ -541,15 +541,15 @@ static void emit_hunk_header(struct emit_callback *ecbdata,
+ 		if (*ep != ' ' && *ep != '\t')
+ 			break;
+ 	if (ep != cp) {
+-		strbuf_add(&msgbuf, plain, strlen(plain));
++		strbuf_addstr(&msgbuf, plain);
+ 		strbuf_add(&msgbuf, cp, ep - cp);
+-		strbuf_add(&msgbuf, reset, strlen(reset));
++		strbuf_addstr(&msgbuf, reset);
+ 	}
+ 
+ 	if (ep < line + len) {
+-		strbuf_add(&msgbuf, func, strlen(func));
++		strbuf_addstr(&msgbuf, func);
+ 		strbuf_add(&msgbuf, ep, line + len - ep);
+-		strbuf_add(&msgbuf, reset, strlen(reset));
++		strbuf_addstr(&msgbuf, reset);
+ 	}
+ 
+ 	strbuf_add(&msgbuf, line + len, org_len - len);
+diff --git a/path.c b/path.c
+index bc804a3..c3883d4 100644
+--- a/path.c
++++ b/path.c
+@@ -277,16 +277,16 @@ char *expand_user_path(const char *path)
+ 			const char *home = getenv("HOME");
+ 			if (!home)
+ 				goto return_null;
+-			strbuf_add(&user_path, home, strlen(home));
++			strbuf_addstr(&user_path, home);
+ 		} else {
+ 			struct passwd *pw = getpw_str(username, username_len);
+ 			if (!pw)
+ 				goto return_null;
+-			strbuf_add(&user_path, pw->pw_dir, strlen(pw->pw_dir));
++			strbuf_addstr(&user_path, pw->pw_dir);
+ 		}
+ 		to_copy = first_slash;
+ 	}
+-	strbuf_add(&user_path, to_copy, strlen(to_copy));
++	strbuf_addstr(&user_path, to_copy);
+ 	return strbuf_detach(&user_path, NULL);
+ return_null:
+ 	strbuf_release(&user_path);
+-- 
+2.0.2
