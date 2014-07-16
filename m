@@ -1,60 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jul 2014, #03; Wed, 16)
-Date: Wed, 16 Jul 2014 15:36:34 -0700
-Message-ID: <CAPc5daWUDoqsahmt3boqz-mAfOVSq8ARsOjN+_R=QGWJ4LYSAA@mail.gmail.com>
-References: <xmqqwqbdq7yb.fsf@gitster.dls.corp.google.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH 00/20] ref transactions part 2
+Date: Wed, 16 Jul 2014 15:52:10 -0700
+Message-ID: <CAL=YDWnQpLxM1TJ3dja+hGGNd1ckFUJHz83Z=WsOcfo24PT0Vg@mail.gmail.com>
+References: <1405467258-24102-1-git-send-email-sahlberg@google.com>
+	<CAL=YDW=At4isTCtwdeGZ-v3cS=vbGyC7aQ-CwAEzxKN0c_3Jyg@mail.gmail.com>
+	<xmqqegxlq799.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Jul 17 00:37:01 2014
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 00:52:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7Xor-0000q0-0n
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 00:37:01 +0200
+	id 1X7Y3e-0006vl-Th
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 00:52:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752310AbaGPWg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2014 18:36:58 -0400
-Received: from mail-lb0-f179.google.com ([209.85.217.179]:57789 "EHLO
-	mail-lb0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751179AbaGPWg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2014 18:36:56 -0400
-Received: by mail-lb0-f179.google.com with SMTP id v6so1136375lbi.10
-        for <git@vger.kernel.org>; Wed, 16 Jul 2014 15:36:55 -0700 (PDT)
+	id S1752858AbaGPWwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 16 Jul 2014 18:52:13 -0400
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:34607 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750935AbaGPWwL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 16 Jul 2014 18:52:11 -0400
+Received: by mail-vc0-f169.google.com with SMTP id hu12so3120433vcb.28
+        for <git@vger.kernel.org>; Wed, 16 Jul 2014 15:52:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:content-type;
-        bh=QEturiwPkKxTZ4oVPBZ1uekdJbVubLjrUd22IFmiH0c=;
-        b=KdX/wZc+rx2JFr0csF3+DdXIkdMGBnXEmgWPdeT8/+qrDtpn05hC+MEsooPHtyjDN2
-         eOXKff2IqNalH2nKKUwOdhD4OpgzShuMiCJ8ReBhWwFhgzm9DMdpgSoD3NVmg9+IK5vR
-         y1YmJzp2IXjQBLTFvhnBlKCfPYS4xdeoZJrDbnL3vutB1Y9UvHkjHhlwNvqAdlui8Ub2
-         35FUN5kn7uJKOcZdDgXCGFReKhXkZtNy2IiZgNsvMEKqAIIGiLtYyU2rnJ21ATlFABZV
-         IxsOqfSWMhAuIVJDNi/DOSlgo8BuDlEZtTFGJVm3B2uPkFhubjfDIkmV6+Xe1R2vi1XM
-         x9Bg==
-X-Received: by 10.152.25.132 with SMTP id c4mr5691429lag.88.1405550214931;
- Wed, 16 Jul 2014 15:36:54 -0700 (PDT)
-Received: by 10.112.26.212 with HTTP; Wed, 16 Jul 2014 15:36:34 -0700 (PDT)
-In-Reply-To: <xmqqwqbdq7yb.fsf@gitster.dls.corp.google.com>
-X-Google-Sender-Auth: i3NkM8q_xXkthL0euqCWJZtFUjY
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=a6NnUyriW5FMhWQjgcjYG5NiB4GULFn4C2+O+HDU4RM=;
+        b=iY8gvlFtjfeKQT46r7FNNoLknjI39FGl3crZKtnyAiA0BaLUnRb97pXliXDYrIU3XT
+         cGe7j3tbaUMHzsMN/8jJe5A5LEJq2D+T++xqf0BNGjV1ZouF9Tbu2AniHeFg9n6Th7GG
+         yn6f4eTWgALnVZwoFJt6oC3CiaLwFWyw75lVHg2ZumMbSu8seXkPHG+PYnFKpb0E3Xt5
+         QOHgZT1FlTQcUcwDqxn0IYBMAdUt27qU316S9/MVWjOAXDYxtTuzwZDzRyd3O56lIwt8
+         yKE1UlNCl4hrbxSrICMIQk9QVphLCf/mHb6keVbKmH3rKI1g2VqsRRyfN8VjidyEj/9M
+         M1Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=a6NnUyriW5FMhWQjgcjYG5NiB4GULFn4C2+O+HDU4RM=;
+        b=WYG85NPHjWn3FSLA3wNoU8cDr/+ZkUIdm35FrdTi0QThfE+d2y2W11ltZqwiZRhZBu
+         JYoGzm/zRn0pjqArHZMmBlMd+XgEMkoEKwm5GG7RSK9JKARg28L6vfFZtrgWiw2Pa0Ok
+         aXH081GZyBCQnIrDXBdsBleloGtV/k98sAfwrREIe0gbeccixIM85Cowijv3lOEO/8Rp
+         Luv101j+ag8PgAow7ZBjqbvorkVR4O+cKhnycBchbkYCdB65cunjBNV20fyLUfjDgFfY
+         0VBzqEod4VTltI8fHm4sg67HNDFUsn3ohBwvpJgWve/HmfrB6DvlnBupFpvywC5MMR/F
+         Vfyw==
+X-Gm-Message-State: ALoCoQlxeXiOwu1CaQotL+v4KHPyL5o+J3T1EbBOzNEF3v8In+WRXoZ5dc0FgJZHc5QtcyUXl/G+
+X-Received: by 10.53.1.231 with SMTP id bj7mr10441408vdd.49.1405551130186;
+ Wed, 16 Jul 2014 15:52:10 -0700 (PDT)
+Received: by 10.52.136.166 with HTTP; Wed, 16 Jul 2014 15:52:10 -0700 (PDT)
+In-Reply-To: <xmqqegxlq799.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253715>
 
-On Wed, Jul 16, 2014 at 3:01 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Here are the topics that have been cooking.  Commits prefixed with
-> '-' are only in 'pu' (proposed updates) while commits prefixed with
-> '+' are in 'next'.
+I had a look at the changes in origin/pu and they look sane to me.
+
+make test   passes all tests too.
+
+
+regards
+ronnie sahlberg
+
+
+On Wed, Jul 16, 2014 at 3:16 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ronnie Sahlberg <sahlberg@google.com> writes:
 >
-> We would need to start slowing down to prepare for -rc0 preview at
-> the end of this week and then feature freeze.  Some topics that
-> joined 'next' late may want to stay there for the remainder of this
-> cycle.  Many of the accumulated fixes have been flushed to 'maint'
-> and Git 2.0.2 has been tagged.
-
-Oops; I've been hoping that we will have -rc0 at the end of next week,
-not this week.
+>> On Tue, Jul 15, 2014 at 4:33 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+>>> This is the next 20 patches from my originally big patch series and follow
+>>> the previous 19 patches that is now in juns tree.
+>>> These patches were numbered 20-39 in the original 48-patch series.
+>>>
+>>> Changes since these patches were in the original series:
+>>>
+>>> - Addressing concerns from mhagger's review
+>
+> One patch in the series did not apply cleanly on top of the tip of
+> the previous series (now queued as rs/ref-transaction-0) and I had
+> to wiggle it.  Please check the result (queued as three topics, this
+> one is rs/ref-transaction-1 which is built on the abovementioned
+> "-0", and the remainder from the previous round is rebased on "-1"
+> as rs/ref-transaction), all of which are queued on 'jch' (which is
+> part of 'pu').
+>
+> Thanks.
