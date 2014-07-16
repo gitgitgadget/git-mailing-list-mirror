@@ -1,79 +1,136 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] annotate: use argv_array
-Date: Wed, 16 Jul 2014 10:51:33 +0200
-Message-ID: <53C63D15.8040204@web.de>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: [PATCH 0/3] fix test suite with mingw-unicode patches
+Date: Wed, 16 Jul 2014 11:29:59 +0200
+Message-ID: <20140716092959.GA378@ucw.cz>
+References: <20140712075035.GA12400@ucw.cz>
+ <1405431797-20899-1-git-send-email-kasal@ucw.cz>
+ <xmqq38e2wkkh.fsf@gitster.dls.corp.google.com>
+ <53C5B0A1.4060502@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 16 10:51:59 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCU63DXMWULRBGEMTGPAKGQEVSZER7I@googlegroups.com Wed Jul 16 11:30:02 2014
+Return-path: <msysgit+bncBCU63DXMWULRBGEMTGPAKGQEVSZER7I@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f62.google.com ([209.85.215.62])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7KwP-0005x1-98
-	for gcvg-git-2@plane.gmane.org; Wed, 16 Jul 2014 10:51:57 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758301AbaGPIvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 16 Jul 2014 04:51:52 -0400
-Received: from mout.web.de ([212.227.15.4]:49771 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753334AbaGPIvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 16 Jul 2014 04:51:51 -0400
-Received: from [192.168.178.27] ([79.250.168.234]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0MNc1S-1XDMYZ0CGA-007BqM; Wed, 16 Jul 2014 10:51:49
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-X-Provags-ID: V03:K0:JFr074MeBJMpdA7qMnKPXPgnLVBQuoB6H7gVBC7Dld/Yss3QviT
- /Ipp/WbjJQiO70/IMBIWeaRTYlZpFcNY+YghTQ6T4sF8E6tCPrOQODvNWFoKbsG9dLJRMGs
- 4wT79tazi9JmuEU8NjyB/6Xud36F20mjeZjw4M1EzWPFm8z31ZcLonRIyTJ32l0i7lPg6rM
- vBXuUjcx6OTXDcB/XE72w==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253658>
+	(envelope-from <msysgit+bncBCU63DXMWULRBGEMTGPAKGQEVSZER7I@googlegroups.com>)
+	id 1X7LXF-0004aT-6j
+	for gcvm-msysgit@m.gmane.org; Wed, 16 Jul 2014 11:30:01 +0200
+Received: by mail-la0-f62.google.com with SMTP id hz20sf79315lab.27
+        for <gcvm-msysgit@m.gmane.org>; Wed, 16 Jul 2014 02:30:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=ap32hmGiuQCoDAQDVXX+Z8lgA7UAswofmfhA9/SuM2w=;
+        b=Fes4G+kJk8NrfKvNuAWFpDQtt/oaU8y/LJIWFu6yVRkjYkvu6dQd5uxnV79B9ClFQP
+         c6AIbI6ntgnUSibKHtKZp/aBnwOX6n0nXcwxEOI10plCvESlPIsXvw+AxsMc2MS+9KYs
+         ItYGQc5KgQoOJC8dKzznwCiWjMBA/NEE0VqNhrwOGgORloGhsYWK/fpu73uAOixZd/Ye
+         tscsu9CMSh4gF4o9yhi3mMVnq+3iSvG+hqOmKXpFth2haduZRY9t6pKSK6uhdKrEHrIx
+         3Vo55KnWDrG0mIU2JSHFGjictngw4rtigOh/GsEy4cqbwhMpN33ziimiMfZGViuzpCZC
+         SUGQ==
+X-Received: by 10.180.212.71 with SMTP id ni7mr20947wic.6.1405503001014;
+        Wed, 16 Jul 2014 02:30:01 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.80.34 with SMTP id o2ls724833wix.39.canary; Wed, 16 Jul
+ 2014 02:29:59 -0700 (PDT)
+X-Received: by 10.180.20.140 with SMTP id n12mr1035326wie.7.1405502999844;
+        Wed, 16 Jul 2014 02:29:59 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id cj4si791383wid.0.2014.07.16.02.29.59
+        for <msysgit@googlegroups.com>;
+        Wed, 16 Jul 2014 02:29:59 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
+	id 9610C1C01D2; Wed, 16 Jul 2014 11:29:59 +0200 (CEST)
+In-Reply-To: <53C5B0A1.4060502@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253659>
 
-Simplify the code and get rid of some magic constants by using
-argv_array to build the argument list for cmd_blame.  Be lazy and let
-the OS release our allocated memory, as before.
+Hello Karsten,
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
- builtin/annotate.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+thanks for your analysis.  Most of the patches you refer to are simply
+switching off tests for MINGW; let me comment on the remaining ones:
 
-diff --git a/builtin/annotate.c b/builtin/annotate.c
-index fc43eed..da413ae 100644
---- a/builtin/annotate.c
-+++ b/builtin/annotate.c
-@@ -5,20 +5,18 @@
-  */
- #include "git-compat-util.h"
- #include "builtin.h"
-+#include "argv-array.h"
- 
- int cmd_annotate(int argc, const char **argv, const char *prefix)
- {
--	const char **nargv;
-+	struct argv_array args = ARGV_ARRAY_INIT;
- 	int i;
--	nargv = xmalloc(sizeof(char *) * (argc + 2));
- 
--	nargv[0] = "annotate";
--	nargv[1] = "-c";
-+	argv_array_pushl(&args, "annotate", "-c", NULL);
- 
- 	for (i = 1; i < argc; i++) {
--		nargv[i+1] = argv[i];
-+		argv_array_push(&args, argv[i]);
- 	}
--	nargv[argc + 1] = NULL;
- 
--	return cmd_blame(argc + 1, nargv, prefix);
-+	return cmd_blame(args.argc, args.argv, prefix);
- }
+> * t0110-urlmatch-normalization: 1
+> 
+> Passing binary data on the command line...would have to
+> teach test-urlmatch-normalization.c to read from stdin or file.
+> https://github.com/msysgit/git/commit/be0d6dee
+
+Indeed, that would be better solution.  For now, I'm going to submit the
+switch-off patch you mention.
+
+> * t4036-format-patch-signer-mime: 1
+> 
+> Passing non-ASCII by environment variable, will be fixed by Unicode
+> environment support.
+
+Will submit that patch series soon.
+
+> * t7001-mv: 6
+> cp -P fails in MinGW - perhaps use the long option forms (--no-dereference)?
+
+"cp -P" fails with our 2001-edition of cp, so msysgit had to revert:
+https://github.com/msysgit/git/commit/6d3e23d4
+
+But I was ashamed to mention that upstream; and I hope mingwGitDevEnv is
+going to solve that.
+
+> * t8001-annotate/t8002-blame: 5
+> 
+> Msys.dll thinks '-L/regex/' is an absolute path and expands to '-LC:/msysgit/regex/'.
+> https://github.com/msysgit/git/commit/2d52168a
+
+Nice!  But I'm afraid the patch cannot be submitted upstream as it is.
+
+I think the hack could be automated by processing options "-L*" this way:
+    sed 'sX\(^-L\|,\)\^\?/X&\\;*Xg'
+Then it would become only few lines at the top of the script, executed
+on mingw only.
+I hope to submit the patch in this form soon.
+
+Have a nice day,
+	Stepan
+
 -- 
-2.0.0
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
