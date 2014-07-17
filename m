@@ -1,55 +1,51 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 13/13] Enable color output in Windows cmd.exe
-Date: Thu, 17 Jul 2014 17:38:06 +0200
-Message-ID: <1405611486-10176-14-git-send-email-kasal@ucw.cz>
-References: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 00/13] mingw unicode environment
+Date: Thu, 17 Jul 2014 17:37:53 +0200
+Message-ID: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Cc: Karsten Blees <karsten.blees@gmail.com>,
 	msysGit <msysgit@googlegroups.com>,
-	Karsten Blees <blees@dcon.de>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
 	Stepan Kasal <kasal@ucw.cz>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com Thu Jul 17 17:38:18 2014
-Return-path: <msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com>
+X-From: msysgit+bncBCU63DXMWULRBZW3T6PAKGQEDK2U75A@googlegroups.com Thu Jul 17 17:38:19 2014
+Return-path: <msysgit+bncBCU63DXMWULRBZW3T6PAKGQEDK2U75A@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f188.google.com ([209.85.212.188])
+Received: from mail-lb0-f185.google.com ([209.85.217.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com>)
-	id 1X7nlA-0008Vd-03
-	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 17:38:16 +0200
-Received: by mail-wi0-f188.google.com with SMTP id z2sf305879wiv.25
+	(envelope-from <msysgit+bncBCU63DXMWULRBZW3T6PAKGQEDK2U75A@googlegroups.com>)
+	id 1X7nl9-0008VX-DT
+	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 17:38:15 +0200
+Received: by mail-lb0-f185.google.com with SMTP id w7sf185569lbi.2
         for <gcvm-msysgit@m.gmane.org>; Thu, 17 Jul 2014 08:38:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
-         :references:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=O15pfcsFbmxMPO5QQfEAyvrFNQ7FBpE5Pzfux88BAJc=;
-        b=ch3Uxqs9YmkPvg0CZK/yI12jV5mX4E79eIWLx6jdkXV+DAVzHHxM8Idzol4hwhlYbK
-         J9e/i9mR4gHit0+eWz/Gw0ZtCD3qefmKvL6Ui93X+hW6Fc6bXuTEUt3fns+SRARJmwaU
-         sktAn5M+7/Q1JXBOsa5i7gjiAAqdSGhU4hQJe1ZchFDv1SvB12idBcpZ8eYUxXekmnMP
-         a5fq9bQLKCx6zPNdQb4H/QCL296omEQdfFrv0Em/K0Pn0tjgHeHhcPADJHdQC+yiIDdN
-         M89t9QvWhFnzKxessBjKuE8NOIwXtpWpn3nDtwQQ+BeJ4E9utOl1S/6MXzmajl2uCEKE
-         vJUQ==
-X-Received: by 10.180.13.139 with SMTP id h11mr94251wic.21.1405611495666;
+        h=mime-version:from:to:cc:subject:date:message-id:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=ioYpfUiTAOZ+erUWC/3Gh9Lp5cehBzofvA7a3wGQE7w=;
+        b=hvcqphdpHXwg3+vDoe/Id0UDCZTQJLR09yYMLmHrBOxVYQeCGerUC+LnDM4QQQbOnq
+         egARaxNzY/l5hk90RhGK72LE6nIzZwNqC/J15VkBkXkzfN0tbF8G+WbigA/kzfixrIky
+         akfB+MM7iBjSpWDcEemUfOxYK/wRMwRUvijmuwvX/atGE+OjTURTn6SBZtDF0get/UJx
+         Pq/5SpiADYGMPBx+VyISSK5r+4n8gf8nFo1bgNwuUQ0BhiFlvIOMY+MertSDm+GcK9Cx
+         Dihc8gdZhkVgKkYZa/TsMxDS/xzqwKbc/RCLvXlSa8wqCcESnWNOA0RdlyN1moSUnpK8
+         4HhA==
+X-Received: by 10.180.85.232 with SMTP id k8mr94611wiz.21.1405611495162;
         Thu, 17 Jul 2014 08:38:15 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.19.68 with SMTP id c4ls449401wie.13.gmail; Thu, 17 Jul
+Received: by 10.180.81.229 with SMTP id d5ls924082wiy.5.canary; Thu, 17 Jul
  2014 08:38:14 -0700 (PDT)
-X-Received: by 10.194.243.35 with SMTP id wv3mr180177wjc.7.1405611494790;
+X-Received: by 10.180.85.39 with SMTP id e7mr2139954wiz.0.1405611494479;
         Thu, 17 Jul 2014 08:38:14 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id o6si608387wij.1.2014.07.17.08.38.14
+        by gmr-mx.google.com with ESMTP id r19si911026wik.0.2014.07.17.08.38.14
         for <msysgit@googlegroups.com>;
         Thu, 17 Jul 2014 08:38:14 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 955C01C01B0; Thu, 17 Jul 2014 17:38:14 +0200 (CEST)
+	id 51C941C0196; Thu, 17 Jul 2014 17:38:14 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
 X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
  (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
@@ -64,35 +60,50 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253749>
 
-From: Karsten Blees <blees@dcon.de>
+Hello,
 
-Git requires the TERM environment variable to be set for all color*
-settings. Simulate the TERM variable if it is not set (default on Windows).
+this is the remainder of Karsten's unicode branch, that is a time
+proven part of msysGit.  (If this code is accepted, only one patch
+would only remain: gitk and git-gui fixes.)
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
- compat/mingw.c | 4 ++++
- 1 file changed, 4 insertions(+)
+When rebasing Karsten's work, I have eliminated two commits:
+https://github.com/msysgit/git/commit/f967550
+https://github.com/msysgit/git/commit/290bf81
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 6d4ec56..19975fa 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2112,6 +2112,10 @@ void mingw_startup()
- 			setenv("TMPDIR", tmp, 1);
- 	}
- 
-+	/* simulate TERM to enable auto-color (see color.c) */
-+	if (!getenv("TERM"))
-+		setenv("TERM", "cygwin", 1);
-+
- 	/* initialize critical section for waitpid pinfo_t list */
- 	InitializeCriticalSection(&pinfo_cs);
- 
+These commits only moved code down and up; this was not necessary, one
+forward declaration was all I needed.
+
+One of the patches differs from the original version: "Enable color..."
+Following Karsten's suggestion, I have changed the value of env. var.
+TERM from "winterm" to "cygwin".  This is because the subprocesses see
+the variable and may try to find it in (their copy of) termcap.
+
+Enjoy,
+   Stepan
+
+Karsten Blees (13):
+  Revert "Windows: teach getenv to do a case-sensitive search"
+  Win32: Unicode environment (outgoing)
+  Win32: Unicode environment (incoming)
+  Win32: fix environment memory leaks
+  Win32: unify environment case-sensitivity
+  Win32: unify environment function names
+  Win32: factor out environment block creation
+  Win32: don't copy the environment twice when spawning child processes
+  Win32: reduce environment array reallocations
+  Win32: use low-level memory allocation during initialization
+  Win32: keep the environment sorted
+  Win32: patch Windows environment on startup
+  Enable color output in Windows cmd.exe
+
+ compat/mingw.c   | 290 +++++++++++++++++++++++++++++++------------------------
+ compat/mingw.h   |  11 +--
+ config.mak.uname |   2 -
+ run-command.c    |  10 +-
+ 4 files changed, 170 insertions(+), 143 deletions(-)
+
 -- 
 2.0.0.9635.g0be03cb
 
