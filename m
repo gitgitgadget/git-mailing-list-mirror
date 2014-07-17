@@ -1,93 +1,68 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH 2/2] config: use chmod() instead of fchmod()
-Date: Thu, 17 Jul 2014 10:57:58 +0200
-Message-ID: <53C79016.2020303@gmail.com>
-References: <20140712075035.GA12400@ucw.cz>	<1405431797-20899-1-git-send-email-kasal@ucw.cz>	<xmqq38e2wkkh.fsf@gitster.dls.corp.google.com>	<53C5B0A1.4060502@gmail.com> <53C5B126.6020404@gmail.com> <xmqqlhrtq7a7.fsf@gitster.dls.corp.google.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2 2/2] rebase: omit patch-identical commits with
+ --fork-point
+Date: Thu, 17 Jul 2014 10:36:22 +0100
+Message-ID: <20140717093622.GE2322@serenity.lan>
+References: <xmqqmwcatgza.fsf@gitster.dls.corp.google.com>
+ <47e67c62fb2a8c8846f5d3a12d71aebf8fa875d7.1405538598.git.john@keeping.me.uk>
+ <374b26180807c67f7bd152ce5a2f52e34397e3a6.1405538598.git.john@keeping.me.uk>
+ <53C6F043.7090209@tedfelix.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Stepan Kasal <kasal@ucw.cz>, Johannes Sixt <j6t@kdbg.org>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 10:58:23 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Ted Felix <ted@tedfelix.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 11:36:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7hWA-0007id-4b
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 10:58:22 +0200
+	id 1X7i7V-000823-4s
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 11:36:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755460AbaGQI6R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2014 04:58:17 -0400
-Received: from mail-wg0-f52.google.com ([74.125.82.52]:64635 "EHLO
-	mail-wg0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755365AbaGQI6H (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2014 04:58:07 -0400
-Received: by mail-wg0-f52.google.com with SMTP id a1so2051357wgh.11
-        for <git@vger.kernel.org>; Thu, 17 Jul 2014 01:58:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=TwubZJeDHBtqbkdvBXSm419I8kUGOEY5Igb5/vKeUMs=;
-        b=sOkM0Fs5rj1qZYjFNbuy3atd4PXIF0H2jVuZozhddFogr03NIYc5PcXVMLH1Uvouzn
-         ZoVPMCq8ME2lna6FW+TmyksOrrhRJS2MFd7tmvHEGIj46jlUVI1XlJp9ghOx0vPxcCkY
-         qEqb7pLmu9wmwVzKm9znb2DQTLu79eE899jPYlUWUrmLRbOyW7SkbTFOBgYi1SU/jUgt
-         KoxFhNFnKP4pkQGZ2nFWjIrEsLQYT6fKBkrrY3JA3Wstdgo96PQCJGk7Wn2IVKQaFMGP
-         LanTgiOJw0XX3Dlqdzj1xR3uYIyCCaveyv0Ew7muMfIkXtbSJ4phmqFM9qpyu2LX4UcF
-         fhpw==
-X-Received: by 10.180.83.8 with SMTP id m8mr20295428wiy.8.1405587483368;
-        Thu, 17 Jul 2014 01:58:03 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id r14sm18826900wik.3.2014.07.17.01.58.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Jul 2014 01:58:02 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqlhrtq7a7.fsf@gitster.dls.corp.google.com>
+	id S1755706AbaGQJgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2014 05:36:52 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:49612 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755374AbaGQJgv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2014 05:36:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 79ED4866009;
+	Thu, 17 Jul 2014 10:36:50 +0100 (BST)
+X-Quarantine-ID: <4bjtvtlQCWDE>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id 4bjtvtlQCWDE; Thu, 17 Jul 2014 10:36:42 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 300CA86602E;
+	Thu, 17 Jul 2014 10:36:24 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <53C6F043.7090209@tedfelix.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253727>
 
-Am 17.07.2014 00:16, schrieb Junio C Hamano:
-> Karsten Blees <karsten.blees@gmail.com> writes:
+On Wed, Jul 16, 2014 at 05:36:03PM -0400, Ted Felix wrote:
+> On 07/16/2014 03:23 PM, John Keeping wrote:
+> > Change from v1:
+> >      - add a test case
 > 
->> There is no fchmod() on native Windows platforms (MinGW and MSVC), and the
->> equivalent Win32 API (SetFileInformationByHandle) requires Windows Vista.
->>
->> Use chmod() instead.
->>
->> Signed-off-by: Karsten Blees <blees@dcon.de>
->> ---
-> 
-> I am wondering if it is saner to just revert the fchmod() patch and
-> replace it with something along the lines of
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/251682/focus=253219
-> 
+> Test case is working fine for me.  It passes with the patch and fails 
+> without.  However, it does seem to cause all the rest of the test cases 
+> to fail if it fails.  Is there some cleanup missing?
 
-I also think it makes a lot of sense to handle permissions centrally.
-
-However, with this patch, the permissions of the target file will
-additionally be limited by umask (by passing them to open()), and then
-overridden completely if core.sharedRepository is set.
-
-Perhaps the lockfile API should respect the location of the lock files
-(i.e. use core.sharedRepository in .git, 0666 in the work-tree, and
-copy permissions anywhere else).
-
-Another thing I find strange is that, by doing copy/replace, git silently
-overwrites readonly files. If we grab the permissions from the source
-file anyway, we should perhaps add 'if (!(perms & 0222)) error("file
-is readonly");', or even 'access(filename, W_OK)'?
-
-> Having said that, these are the only two callers of fchmod()
-> currently in our code base, so I'll queue this patch to allow us to
-> kick the problem-can down the road ;-)
-> 
-
-Thanks.
+The individual test cases in the script don't run in isolation, so I
+don't think it's surprising the the remainder fail if this one ends up
+stuck in rebase-in-progress state.  I think the same will happen with
+most of the other test cases in this script.
