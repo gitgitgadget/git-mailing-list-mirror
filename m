@@ -1,102 +1,72 @@
-From: "Kyle J. McKay" <mackyle@gmail.com>
-Subject: [PATCH] hooks/post-receive-email: do not truncate messages at a '.' line
-Date: Thu, 17 Jul 2014 12:26:29 -0700
-Message-ID: <53b2ad7801889b49f04cb0ae7b0b37b@74d39fa044aa309eaea14b9f57fe79c>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 21:26:41 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] hooks/post-receive-email: do not truncate messages at a '.' line
+Date: Thu, 17 Jul 2014 12:36:13 -0700
+Message-ID: <xmqq38dzpykx.fsf@gitster.dls.corp.google.com>
+References: <53b2ad7801889b49f04cb0ae7b0b37b@74d39fa044aa309eaea14b9f57fe79c>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 21:36:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7rKB-00018r-6Y
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 21:26:39 +0200
+	id 1X7rTf-0004wb-GS
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 21:36:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752657AbaGQT0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2014 15:26:35 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:64057 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752477AbaGQT0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2014 15:26:34 -0400
-Received: by mail-pa0-f41.google.com with SMTP id rd3so3415340pab.14
-        for <git@vger.kernel.org>; Thu, 17 Jul 2014 12:26:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=1306/yGY/7FDoCMdeXosoerwYwSigQ+PZiMXwklqzp4=;
-        b=HQL1aGE6rWvKaKQp/CMJrwf+yRdHRFgiMYWwi97Ra3kJL1/qNwHTFgNAnADymYX4Dn
-         QOzYQ9vJsXxzkKZLzSiyQjmVwFN7DoILkHUyGgm6kp+VNq1xxKl2pkTK75nBIhMevtdE
-         Yh7WBEKdR1PrIzuQGhG69Q8rViURE4+e55D4HxPfP4IGXL+1L5b6Hjdm9ehVRHF7AOYM
-         iQHTvKLVoANmY+qVwInwc0amJfOTcA0+D+7QEDcqX8/6lxKFHfQ6M02lo7Xf7jMQnBpi
-         DOGQOSa16Car5ow75xW1gale7ZbTQCGViWxzKe5iFOG7CgS6uxJt8IPALOLGHwdiZCU1
-         GAzQ==
-X-Received: by 10.66.66.225 with SMTP id i1mr39939641pat.0.1405625194347;
-        Thu, 17 Jul 2014 12:26:34 -0700 (PDT)
-Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
-        by mx.google.com with ESMTPSA id ey10sm4387173pdb.50.2014.07.17.12.26.33
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jul 2014 12:26:33 -0700 (PDT)
+	id S1752355AbaGQTgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2014 15:36:24 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55522 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751758AbaGQTgX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2014 15:36:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AED5F299A6;
+	Thu, 17 Jul 2014 15:36:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8TQ/ZHSBKjM+iznwlIkBSs6eFpg=; b=mr6Rl/
+	rRANG+lR1QrNyID+88FBkZcHqp6AhlZ6uW0QOFZniJXq0OHsClPZ3gQVswDjb0k0
+	pqjL5cuUt1VjOjk1PLf1ot9Fn9aEzFxjX0+WxqyxZjwIHf+bUBCmGcxUKjsKii4k
+	N+AJvgMyLUn+ti3FAlv0Ae1+/ldCkB81fEH2U=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=mnnSkCRoBAUAZfIOR6WlOSG31yKchbsk
+	fhpmFIsr5RyZi6ewO1vm0z3jaZwXUAICUQcWuxljIKxbNOhoC1O0pCy6zaQKBTqf
+	/8ltINzIgmRSiDDgtHTviX5aAa47+LFhJevOkScAB9z1FUEXL6ZyeS/8b7UkcCVU
+	riSJg6TVikk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A43C0299A5;
+	Thu, 17 Jul 2014 15:36:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6991F29995;
+	Thu, 17 Jul 2014 15:36:15 -0400 (EDT)
+In-Reply-To: <53b2ad7801889b49f04cb0ae7b0b37b@74d39fa044aa309eaea14b9f57fe79c>
+	(Kyle J. McKay's message of "Thu, 17 Jul 2014 12:26:29 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9DD438F0-0DE9-11E4-A29A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253775>
 
-When sendmail is reading an incoming message, by default it will
-terminate it if it reads a dot on a line by itself.
+"Kyle J. McKay" <mackyle@gmail.com> writes:
 
-The post-receive-email script can generate such a line if the
-message in a tag object contains a dot ('.') on a line by itself.
+> There are two options to turn off this behavior, -i and -oi which
+> are equivalent.
+>
+> The choice of which to use is based on the observation that -i
+> appears to be the more commonly used option for this and that all
+> current sendmail-compatible programs appear to accept both.
 
-There are two options to turn off this behavior, -i and -oi which
-are equivalent.
+OK; I suspect some just accept but ignore, though.
 
-The choice of which to use is based on the observation that -i
-appears to be the more commonly used option for this and that all
-current sendmail-compatible programs appear to accept both.
+> BTW, what is the status of post-receive-email?
 
-Therefore add the -i option to the invocations of /usr/sbin/sendmail
-to avoid prematurely terminating the input message at the occurence
-of a dot ('.') on a line by itself.
-
-Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
----
-
-BTW, what is the status of post-receive-email?
-
-I find it quite useful for a minimal server that only needs Git
-binaries and a POSIX shell.
-
-The only real issue with it I'm aware of is that if multiple
-branch heads are updated in a single push and two or more
-contain the same new revison(s), those revision(s) will be
-incorrectly omitted from the emails sent out.
-
-I have a patch to correct that, but it's not quite as simple
-as this patch and would need more review, so I don't really
-want to send it out and waste folks' time if there's no interest
-in picking up updates to contrib/hooks/post-receive-email.
-
- contrib/hooks/post-receive-email | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-index 8747b843..6207be60 100755
---- a/contrib/hooks/post-receive-email
-+++ b/contrib/hooks/post-receive-email
-@@ -704,9 +704,9 @@ limit_lines()
- send_mail()
- {
- 	if [ -n "$envelopesender" ]; then
--		/usr/sbin/sendmail -t -f "$envelopesender"
-+		/usr/sbin/sendmail -i -t -f "$envelopesender"
- 	else
--		/usr/sbin/sendmail -t
-+		/usr/sbin/sendmail -i -t
- 	fi
- }
- 
--- 
-1.8.5
+I do not use either, but some people seem to consider multimail its
+successor, so enhancements may have a wider audience there.
