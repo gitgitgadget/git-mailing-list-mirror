@@ -1,68 +1,78 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 2/2] rebase: omit patch-identical commits with
- --fork-point
-Date: Thu, 17 Jul 2014 10:36:22 +0100
-Message-ID: <20140717093622.GE2322@serenity.lan>
-References: <xmqqmwcatgza.fsf@gitster.dls.corp.google.com>
- <47e67c62fb2a8c8846f5d3a12d71aebf8fa875d7.1405538598.git.john@keeping.me.uk>
- <374b26180807c67f7bd152ce5a2f52e34397e3a6.1405538598.git.john@keeping.me.uk>
- <53C6F043.7090209@tedfelix.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v9r2 1/2] add `config_set` API for caching config-like files
+Date: Thu, 17 Jul 2014 12:01:50 +0200
+Message-ID: <vpqvbqwpalt.fsf@anie.imag.fr>
+References: <1405434571-25459-1-git-send-email-tanayabh@gmail.com>
+	<1405434571-25459-3-git-send-email-tanayabh@gmail.com>
+	<xmqqk37ewr5r.fsf@gitster.dls.corp.google.com>
+	<53C665A0.2060705@gmail.com> <vpqvbqxjzfx.fsf@anie.imag.fr>
+	<53C66E70.3050507@gmail.com> <vpqha2h9tjw.fsf@anie.imag.fr>
+	<53C6ABEB.3060205@gmail.com> <vpqzjg9z115.fsf@anie.imag.fr>
+	<53C6C2BD.3030703@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ted Felix <ted@tedfelix.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 11:36:58 2014
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 12:02:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7i7V-000823-4s
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 11:36:57 +0200
+	id 1X7iWJ-0002ye-B8
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 12:02:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755706AbaGQJgw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2014 05:36:52 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:49612 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755374AbaGQJgv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2014 05:36:51 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 79ED4866009;
-	Thu, 17 Jul 2014 10:36:50 +0100 (BST)
-X-Quarantine-ID: <4bjtvtlQCWDE>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id 4bjtvtlQCWDE; Thu, 17 Jul 2014 10:36:42 +0100 (BST)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 300CA86602E;
-	Thu, 17 Jul 2014 10:36:24 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <53C6F043.7090209@tedfelix.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1756097AbaGQKCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2014 06:02:32 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:43615 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755850AbaGQKCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2014 06:02:30 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6HA1nZx000818
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 17 Jul 2014 12:01:49 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6HA1oiH005328;
+	Thu, 17 Jul 2014 12:01:50 +0200
+In-Reply-To: <53C6C2BD.3030703@gmail.com> (Tanay Abhra's message of "Wed, 16
+	Jul 2014 23:51:49 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 17 Jul 2014 12:01:49 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6HA1nZx000818
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1406196111.63802@HTz/VlCVl7qEMaNuICvBYQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253728>
 
-On Wed, Jul 16, 2014 at 05:36:03PM -0400, Ted Felix wrote:
-> On 07/16/2014 03:23 PM, John Keeping wrote:
-> > Change from v1:
-> >      - add a test case
-> 
-> Test case is working fine for me.  It passes with the patch and fails 
-> without.  However, it does seem to cause all the rest of the test cases 
-> to fail if it fails.  Is there some cleanup missing?
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-The individual test cases in the script don't run in isolation, so I
-don't think it's surprising the the remainder fail if this one ends up
-stuck in rebase-in-progress state.  I think the same will happen with
-most of the other test cases in this script.
+> I have a question about renaming git_config() to git_config_raw().
+> I was working on a patch and I am getting stuck here.
+> It fails in t1001, t1020 & t4018. The reason for the last test failure
+> is unknown right now. For the first two, it boils down to this,
+>
+> 		git init --bare bare-ancestor-aliased.git &&
+> 		cd bare-ancestor-aliased.git &&
+> 		echo "[alias] aliasedinit = init" >>config &&
+> 		mkdir plain-nested &&
+> 		cd plain-nested &&
+> 		git aliasedinit
+
+Git tries to read .git/config relative to the current directory, and
+tries to resolve aliases from it. The problem is: if one tries to do
+this from a subdirectory inside the repo, .git/config is not the right
+path, and the alias lookup fails.
+
+I'll investigate more later.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
