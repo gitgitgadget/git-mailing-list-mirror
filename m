@@ -1,61 +1,61 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [PATCH v9r2 1/2] add `config_set` API for caching config-like
- files
-Date: Thu, 17 Jul 2014 16:36:43 +0530
-Message-ID: <53C7AE43.5080402@gmail.com>
-References: <1405434571-25459-1-git-send-email-tanayabh@gmail.com>	<1405434571-25459-3-git-send-email-tanayabh@gmail.com>	<xmqqk37ewr5r.fsf@gitster.dls.corp.google.com>	<53C665A0.2060705@gmail.com> <vpqvbqxjzfx.fsf@anie.imag.fr>	<53C66E70.3050507@gmail.com> <vpqha2h9tjw.fsf@anie.imag.fr>	<53C6ABEB.3060205@gmail.com> <vpqzjg9z115.fsf@anie.imag.fr>	<53C6C2BD.3030703@gmail.com> <vpqvbqwpalt.fsf@anie.imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v9r2 1/2] add `config_set` API for caching config-like files
+Date: Thu, 17 Jul 2014 13:13:51 +0200
+Message-ID: <vpqy4vsme4w.fsf@anie.imag.fr>
+References: <1405434571-25459-1-git-send-email-tanayabh@gmail.com>
+	<1405434571-25459-3-git-send-email-tanayabh@gmail.com>
+	<xmqqk37ewr5r.fsf@gitster.dls.corp.google.com>
+	<53C665A0.2060705@gmail.com> <vpqvbqxjzfx.fsf@anie.imag.fr>
+	<53C66E70.3050507@gmail.com> <vpqha2h9tjw.fsf@anie.imag.fr>
+	<53C6ABEB.3060205@gmail.com> <vpqzjg9z115.fsf@anie.imag.fr>
+	<53C6C2BD.3030703@gmail.com> <vpqvbqwpalt.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 17 13:06:54 2014
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 13:14:16 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7jWX-0004O7-JM
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 13:06:54 +0200
+	id 1X7jde-00078A-16
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 13:14:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757000AbaGQLGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2014 07:06:50 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:63154 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756363AbaGQLGt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2014 07:06:49 -0400
-Received: by mail-pa0-f46.google.com with SMTP id lj1so3178308pab.33
-        for <git@vger.kernel.org>; Thu, 17 Jul 2014 04:06:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=HLL7AvmIzQc9sttyYsAaUN28656nUClSDV+oUDSYS7E=;
-        b=i57lGCWKcL12HuLO0/CTxIj/GdAUx9hTayaT91ejEZ/njoJ9Mn0THoOkz2drRXWrAJ
-         QavwUld8lMw9sQn8R1+vP+3ce5c1JpoXAMbgd4vnufi5fioqjSS4OBGru5x1nnuLGtDl
-         fhihT9rIYQzHz8AbhsdtH3vr1Hj5j9SIrIk8oli5zd5BYHo3WAELCTH7nd3jnVCSb6Px
-         ipS0dxKPKWZVrf9Rrb4nMGAm0d2g4cHlwwB+s7c1Nc8/VMPxSZFzZg3WpN0mflLuSXyf
-         ShJ2+g8BAQtEkpBqNmG4mbO9cAf4ni4gE71k/R9A+TZztE/kJbbD+awzMZ2aGY+qXbNq
-         iA6Q==
-X-Received: by 10.68.134.98 with SMTP id pj2mr36130516pbb.98.1405595208391;
-        Thu, 17 Jul 2014 04:06:48 -0700 (PDT)
-Received: from [127.0.0.1] ([223.176.227.200])
-        by mx.google.com with ESMTPSA id qp12sm2900101pdb.82.2014.07.17.04.06.45
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Jul 2014 04:06:47 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <vpqvbqwpalt.fsf@anie.imag.fr>
+	id S1756172AbaGQLOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2014 07:14:09 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38247 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754657AbaGQLOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2014 07:14:08 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6HBDoDY012246
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 17 Jul 2014 13:13:50 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6HBDprm006035;
+	Thu, 17 Jul 2014 13:13:51 +0200
+In-Reply-To: <vpqvbqwpalt.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	17 Jul 2014 12:01:50 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 17 Jul 2014 13:13:50 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6HBDoDY012246
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1406200434.74538@Pf8/J6xQiGFhIlcUXbbiDQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253731>
 
-On 7/17/2014 3:31 PM, Matthieu Moy wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
 > Tanay Abhra <tanayabh@gmail.com> writes:
-> 
+>
 >> I have a question about renaming git_config() to git_config_raw().
 >> I was working on a patch and I am getting stuck here.
 >> It fails in t1001, t1020 & t4018. The reason for the last test failure
@@ -67,139 +67,44 @@ On 7/17/2014 3:31 PM, Matthieu Moy wrote:
 >> 		mkdir plain-nested &&
 >> 		cd plain-nested &&
 >> 		git aliasedinit
-> 
+>
 > Git tries to read .git/config relative to the current directory, and
 > tries to resolve aliases from it. The problem is: if one tries to do
 > this from a subdirectory inside the repo, .git/config is not the right
 > path, and the alias lookup fails.
-> 
-> I'll investigate more later.
 >
+> I'll investigate more later.
 
-Hmn, this does the trick,
--- 8< --
-diff --git a/cache.h b/cache.h
-index c67639d..66b52f1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1272,6 +1272,7 @@ extern int git_config_from_buf(config_fn_t fn, const char *name,
- 			       const char *buf, size_t len, void *data);
- extern void git_config_push_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
-+extern int git_config_raw(config_fn_t fn, void *);
- extern int git_config(config_fn_t fn, void *);
- extern int git_config_with_options(config_fn_t fn, void *,
- 				   struct git_config_source *config_source,
-diff --git a/config.c b/config.c
-index d14f761..9e3f99a 100644
---- a/config.c
-+++ b/config.c
-@@ -1222,11 +1222,36 @@ int git_config_with_options(config_fn_t fn, void *data,
- 	return ret;
- }
+This fixes the first two tests (it should be squashed into your PATCH 1
+regardless of the rename git_config -> git_config_raw):
 
--int git_config(config_fn_t fn, void *data)
-+extern int git_config_raw(config_fn_t fn, void *data)
- {
- 	return git_config_with_options(fn, data, NULL, 1);
- }
+commit 42315d10e21a1273b73671a3f8c9f7640c4feb44 (HEAD, config-v9)
+Author: Matthieu Moy <Matthieu.Moy@imag.fr>
+Date:   Thu Jul 17 13:12:21 2014 +0200
 
-+int git_configset_iter(struct config_set *cs, config_fn_t fn, void *data)
-+{
-+	int i;
-+	struct string_list *strptr;
-+	struct config_set_element *entry;
-+	struct hashmap_iter iter;
-+	hashmap_iter_init(&cs->config_hash, &iter);
-+	while ((entry = hashmap_iter_next(&iter))) {
-+		strptr = &entry->value_list;
-+		for (i = 0; i < strptr->nr; i++) {
-+			if (fn(entry->key, strptr->items[i].string, data) < 0)
-+				die("bad config file");
-+		}
-+	}
-+	return 0;
-+}
+    clear the config cache in setup_git_dir
+
+diff --git a/setup.c b/setup.c
+index 0a22f8b..c0d31f5 100644
+--- a/setup.c
++++ b/setup.c
+@@ -625,6 +625,15 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
+        int one_filesystem = 1;
+ 
+        /*
++        * We may have read an incomplete configuration before
++        * setting-up the git directory. If so, clear the cache so
++        * that the next queries to the configuration reload complete
++        * configuration (including the per-repo config file that we
++        * ignored previously).
++        */
++       git_config_clear();
 +
-+static void git_config_check_init(void);
-+
-+int git_config(config_fn_t fn, void *data)
-+{
-+	git_config_check_init();
-+	return git_configset_iter(&the_config_set, fn, data);
-+}
-+
- static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
- {
- 	struct config_set_element k;
-@@ -1409,7 +1434,7 @@ static void git_config_check_init(void)
- 	if (the_config_set.hash_initialized)
- 		return;
- 	git_configset_init(&the_config_set);
--	git_config(config_hash_callback, &the_config_set);
-+	git_config_raw(config_hash_callback, &the_config_set);
- }
++       /*
+         * Let's assume that we are in a git repository.
+         * If it turns out later that we are somewhere else, the value will be
+         * updated accordingly.
 
- void git_config_clear(void)
-diff --git a/pager.c b/pager.c
-index 8b5cbc5..b4237e6 100644
---- a/pager.c
-+++ b/pager.c
-@@ -177,7 +177,7 @@ int check_pager_config(const char *cmd)
- 	c.cmd = cmd;
- 	c.want = -1;
- 	c.value = NULL;
--	git_config(pager_command_config, &c);
-+	git_config_raw(pager_command_config, &c);
- 	if (c.value)
- 		pager_program = c.value;
- 	return c.want;
--- 8< --
-
-The offending part is in git.c, line number 540:
-
-static void execv_dashed_external(const char **argv)
-{
-	struct strbuf cmd = STRBUF_INIT;
-	const char *tmp;
-	int status;
-
-	if (use_pager == -1)
-		use_pager = check_pager_config(argv[0]);
-----------------------------^^^^^^^^^^^^^^^^^^^^^^^^^^^
-	commit_pager_choice();
-
-
-which cause git_config() to be called before handle_alias
-can call it in git.c line no 587,
-
-static int run_argv(int *argcp, const char ***argv)
-{
-	int done_alias = 0;
-
-	while (1) {
-		/* See if it's a builtin */
-		handle_builtin(*argcp, *argv);
-
-		/* .. then try the external ones */
-		execv_dashed_external(*argv);
-/* calls git_config() first, skips the .git/config file*/
-		/* It could be an alias -- this works around the insanity
-		 * of overriding "git log" with "git show" by having
-		 * alias.log = show
-		 */
-		if (done_alias)
-			break;
-		save_env();
-		if (!handle_alias(argcp, argv))
-/* does setup_git_directory_gently() before calling git_config() */
-			break;
-		done_alias = 1;
-	}
-
-	return done_alias;
-}
-
-I am searching for a more elegant solution to this problem.
-Thanks,
-Tanay Abhra.
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
