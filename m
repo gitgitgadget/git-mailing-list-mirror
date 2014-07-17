@@ -1,165 +1,93 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 06/13] Win32: unify environment function names
-Date: Thu, 17 Jul 2014 17:37:59 +0200
-Message-ID: <1405611486-10176-7-git-send-email-kasal@ucw.cz>
-References: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Syncing Git Repositories
+Date: Thu, 17 Jul 2014 09:35:24 -0700
+Message-ID: <xmqq61iwq6yb.fsf@gitster.dls.corp.google.com>
+References: <53C7343F.4090806@parikh.io> <vpqwqbcv5m0.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	msysGit <msysgit@googlegroups.com>,
-	Karsten Blees <blees@dcon.de>,
-	Stepan Kasal <kasal@ucw.cz>
-To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com Thu Jul 17 17:38:21 2014
-Return-path: <msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-we0-f192.google.com ([74.125.82.192])
+Content-Type: text/plain; charset=us-ascii
+Cc: Sajan Parikh <sajan@parikh.io>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 17 18:35:41 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com>)
-	id 1X7nl9-0008Vc-Uu
-	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 17:38:16 +0200
-Received: by mail-we0-f192.google.com with SMTP id x48sf333733wes.9
-        for <gcvm-msysgit@m.gmane.org>; Thu, 17 Jul 2014 08:38:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=mime-version:from:to:cc:subject:date:message-id:in-reply-to
-         :references:x-original-sender:x-original-authentication-results
-         :precedence:mailing-list:list-id:list-post:list-help:list-archive
-         :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=B8M659rr1xJcWjglclK0P4PkA6XEl+m4xKw6KVs9gcA=;
-        b=Lb5VkGgDF1TyjhYZ7Uc1LMqhPJkieRW9x9P1PyCpBWlaiaJ3TizXu8z4tHrBvK0AUg
-         ctvtgmRsp7FqdyQjoVkTVXAdPleYmMvQi0YhiFfZ7KcGMRoNMcUcjngD8v7TWX/XAHdb
-         3VIceI+k3TCofwWTGIyPelCut6Hkz+sH2aXdvN8Clm2pi3vWxomgE3n5I+kS5OScUXdz
-         kBEndgkXKB14qNq+0lWsEwgcN1styzGjoF6mUWrf0vCxkL1LZgl/X+5rjXO6RcgjpX/6
-         ouIYsurBElHWSNnmdLvT7OQWUUut3KSLasJ1D/donaDmvrG1/bAJ7qejFnXWuwwuNCJ4
-         zDQw==
-X-Received: by 10.152.27.162 with SMTP id u2mr10362lag.16.1405611495643;
-        Thu, 17 Jul 2014 08:38:15 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.178.162 with SMTP id cz2ls214923lac.33.gmail; Thu, 17 Jul
- 2014 08:38:14 -0700 (PDT)
-X-Received: by 10.152.203.199 with SMTP id ks7mr3770128lac.0.1405611494647;
-        Thu, 17 Jul 2014 08:38:14 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id mx7si1076316wic.1.2014.07.17.08.38.14
-        for <msysgit@googlegroups.com>;
-        Thu, 17 Jul 2014 08:38:14 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 6CA621C01A7; Thu, 17 Jul 2014 17:38:14 +0200 (CEST)
-X-Mailer: git-send-email 1.7.10.4
-In-Reply-To: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253758>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X7oeg-0001KI-0h
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 18:35:38 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S934672AbaGQQfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2014 12:35:34 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57591 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934444AbaGQQfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2014 12:35:33 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E73C72891C;
+	Thu, 17 Jul 2014 12:35:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Xn2hwqOLi1KlcFVOBd6WiYeQUQw=; b=wi5gOV
+	zzZNq4rFppTpXT36lODxvmBuI36f5GRkFTamMB6uBPNaPG5Y8xvvGBNcug9SdHwv
+	xotr6qQCaZ57UQmNvSk+lZoN2l6VNmN0nA+x0RAvI3sJBog5DrB5Lp/rAA2x7Kak
+	will2A5zbF2UVMTK1/ZMedKvtcEbrSBQBfvoc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QcK+eeocsFzDeYKEz7rinIbgEobrmjPM
+	W31FqRagcFQKFyybZ8jznEc5XS4rryi6Sk6yejR4gRChp+KFIOvO2NztBITEcYtm
+	xAN9yTXanJJE9FpuVpT6Wwz/AoaNISo4a9xL+Tu4tWmf9EMXUkEWtfFhGDU7f6jN
+	kkBJ5lK9AJk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DC4712891A;
+	Thu, 17 Jul 2014 12:35:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1432028913;
+	Thu, 17 Jul 2014 12:35:26 -0400 (EDT)
+In-Reply-To: <vpqwqbcv5m0.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	17 Jul 2014 08:53:11 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5B1CD12A-0DD0-11E4-B12D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253759>
 
-From: Karsten Blees <blees@dcon.de>
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-Environment helper functions use random naming ('env' prefix or suffix or
-both, with or without '_'). Change to POSIX naming scheme ('env' suffix,
-no '_').
+> Sajan Parikh <sajan@parikh.io> writes:
+>
+>> By syncing my code folder and git repositories in this way, do I risk
+>> borking any repositories?  I'm 99% confident I'm not, since everything
+>> is in .git/, and there are not external databases or log files that
+>> need to be updated.  Just making sure though.
+>
+> You're right that there are no external database, hence if you actually
+> sync the whole worktree+.git/, you won't have any problem.
+>
+> I synchonize a bunch of Git repositories between machines with Unison
+> (file transfer utility), it works great.
+>
+> One issue you may encounter is if you have either partial
+> synchronization (e.g. network loss in the middle of a synchronization, I
+> don't know how owncloud deals with it), or two way synchronization
+> (there's a synchronization between your laptop and owncloud ongoing, and
+> you start working on your desktop and trigger a synchronization.
+>
+> I sometimes encounter this situation with unison. The good news is that
+> in 99,999% of cases where I'd encounter a problem, Unison shows a
+> conflict on the index file (modified on both sides). So, in these cases,
+> I just use Git normally to synchronize, decide that one side becomes the
+> reference, and rsync to the other to resolve the Unison conflict.
+>
+> Also, you have to ensure that you synchronize both file
+> additions/modifications, and file deletions. I often make the mistake of
+> using rsync without --delete, and it confuses the branch storage format
+> (I keep my local unpacked branch, and the packed branch is hidden by
+> it).
 
-Env_setenv has more in common with putenv than setenv. Change to do_putenv.
-
-Signed-off-by: Karsten Blees <blees@dcon.de>
-Signed-off-by: Stepan Kasal <kasal@ucw.cz>
----
- compat/mingw.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index fe869ed..89fe62b 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -898,7 +898,7 @@ static char *path_lookup(const char *cmd, char **path, int exe_only)
- 	return prog;
- }
- 
--static int env_compare(const void *a, const void *b)
-+static int compareenv(const void *a, const void *b)
- {
- 	char *const *ea = a;
- 	char *const *eb = b;
-@@ -992,7 +992,7 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **env,
- 		/* environment must be sorted */
- 		sorted_env = xmalloc(sizeof(*sorted_env) * (count + 1));
- 		memcpy(sorted_env, env, sizeof(*sorted_env) * (count + 1));
--		qsort(sorted_env, count, sizeof(*sorted_env), env_compare);
-+		qsort(sorted_env, count, sizeof(*sorted_env), compareenv);
- 
- 		/* create environment block from temporary environment */
- 		for (e = sorted_env; *e; e++) {
-@@ -1193,7 +1193,7 @@ void free_environ(char **env)
- 	free(env);
- }
- 
--static int lookup_env(char **env, const char *name, size_t nmln)
-+static int lookupenv(char **env, const char *name, size_t nmln)
- {
- 	int i;
- 
-@@ -1208,10 +1208,10 @@ static int lookup_env(char **env, const char *name, size_t nmln)
- /*
-  * If name contains '=', then sets the variable, otherwise it unsets it
-  */
--static char **env_setenv(char **env, const char *name)
-+static char **do_putenv(char **env, const char *name)
- {
- 	char *eq = strchrnul(name, '=');
--	int i = lookup_env(env, name, eq-name);
-+	int i = lookupenv(env, name, eq-name);
- 
- 	if (i < 0) {
- 		if (*eq) {
-@@ -1242,7 +1242,7 @@ char **make_augmented_environ(const char *const *vars)
- 
- 	while (*vars) {
- 		const char *v = *vars++;
--		env = env_setenv(env, strchr(v, '=') ? xstrdup(v) : v);
-+		env = do_putenv(env, strchr(v, '=') ? xstrdup(v) : v);
- 	}
- 	return env;
- }
-@@ -1262,7 +1262,7 @@ char *mingw_getenv(const char *name)
- 
- int mingw_putenv(const char *namevalue)
- {
--	environ = env_setenv(environ, namevalue);
-+	environ = do_putenv(environ, namevalue);
- 	return 0;
- }
- 
--- 
-2.0.0.9635.g0be03cb
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+All correct but .git/index may need to be refreshed, as your
+cloudSync is unlikely to sync stat details across filesystems,
+especially inum and possibly uid.
