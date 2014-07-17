@@ -1,8 +1,7 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 01/13] Revert "Windows: teach getenv to do a
- case-sensitive search"
-Date: Thu, 17 Jul 2014 17:37:54 +0200
-Message-ID: <1405611486-10176-2-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 12/13] Win32: patch Windows environment on startup
+Date: Thu, 17 Jul 2014 17:38:05 +0200
+Message-ID: <1405611486-10176-13-git-send-email-kasal@ucw.cz>
 References: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -11,15 +10,15 @@ Cc: Karsten Blees <karsten.blees@gmail.com>,
 	Karsten Blees <blees@dcon.de>,
 	Stepan Kasal <kasal@ucw.cz>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBZW3T6PAKGQEDK2U75A@googlegroups.com Thu Jul 17 17:38:19 2014
-Return-path: <msysgit+bncBCU63DXMWULRBZW3T6PAKGQEDK2U75A@googlegroups.com>
+X-From: msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com Thu Jul 17 17:38:21 2014
+Return-path: <msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f183.google.com ([209.85.212.183])
+Received: from mail-wi0-f188.google.com ([209.85.212.188])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBZW3T6PAKGQEDK2U75A@googlegroups.com>)
-	id 1X7nl9-0008VW-EZ
-	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 17:38:15 +0200
-Received: by mail-wi0-f183.google.com with SMTP id q5sf316183wiv.10
+	(envelope-from <msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com>)
+	id 1X7nlA-0008Ve-0H
+	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 17:38:16 +0200
+Received: by mail-wi0-f188.google.com with SMTP id z2sf293631wiv.15
         for <gcvm-msysgit@m.gmane.org>; Thu, 17 Jul 2014 08:38:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -27,27 +26,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=G7eXmlQLX58fDaxFrPZ6wvqug1MLk+ajxTFPxLS74qg=;
-        b=eyqSXJKPAouLWvIgsYOwtBsT+pgaqal5bz/sAKWU6SEA1rrHjSDR/g+jmmgS3Y7vPE
-         0uGAIL+nJoVACZIH4FctSp0VEWtdN5iXr6rsVfGSAQdp/czHCUJ58kWkr22YgrvN+itM
-         s1YvCE6mBToQLIM05bEjeufq8kdZ/3oKawXUb++txgH4uwSP+170BQ17Kgoua7mW85HU
-         ZaY+vpw22YCLpxiVsgIi6CiyCayXgMwRaGWhll4RAIN+MEU8sLMHsMLAExhE1L9JGcrw
-         pMtCbK5kBrgR4sbsOdp2KzlbOmkl63q3/2GbyX0TGbgDNLHxfmo3BBEoMyL7jVSxbmn8
-         wQCw==
-X-Received: by 10.180.211.111 with SMTP id nb15mr95064wic.4.1405611495159;
+        bh=kvyQ+Jb9Jf3+EzPeTIKVMo5yGtpumVcw/I+/1gc+Oi8=;
+        b=ivjipiPh3FwqTjXpqkUeaLrg8ImRbE/8j3ztJs4Wp5NdAAOV7mKUG5P/0kCUuqYEJ6
+         sZRcloT2hF93GrXobSiU/IAeZ84rR05Nk7RQmQ9PN80C2n8UeYMk2iH4fGWKJqzFAgoi
+         4GsuGKYYPYpOe0ZXhI7BkGwxf7f/XHmD6Cb47RK1gj5WbgGETMPVM/uhb2JVReVUKzl3
+         E6FvfKhP//hRpfyJFqPYET1XlGDFnuH3G5U8m4Lj1Ftgi0anFj4pQKmGlNkYuEEeuQqB
+         Yj6FdPOaJhT1TlIIRYIP/mI83/hngaORQQk1nIVqW9JL1WR7rsqJe6pkNN5l79703iki
+         TVeg==
+X-Received: by 10.152.1.226 with SMTP id 2mr10800lap.11.1405611495678;
         Thu, 17 Jul 2014 08:38:15 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.105.169 with SMTP id gn9ls441472wib.10.gmail; Thu, 17 Jul
+Received: by 10.152.42.134 with SMTP id o6ls225488lal.4.gmail; Thu, 17 Jul
  2014 08:38:14 -0700 (PDT)
-X-Received: by 10.180.208.37 with SMTP id mb5mr2139693wic.6.1405611494480;
+X-Received: by 10.112.142.106 with SMTP id rv10mr3723290lbb.5.1405611494751;
         Thu, 17 Jul 2014 08:38:14 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id mx7si1076315wic.1.2014.07.17.08.38.14
+        by gmr-mx.google.com with ESMTP id o6si608386wij.1.2014.07.17.08.38.14
         for <msysgit@googlegroups.com>;
         Thu, 17 Jul 2014 08:38:14 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 5564C1C0197; Thu, 17 Jul 2014 17:38:14 +0200 (CEST)
+	id 914501C01AF; Thu, 17 Jul 2014 17:38:14 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
@@ -64,70 +63,72 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253751>
 
 From: Karsten Blees <blees@dcon.de>
 
-This reverts commit df599e9612788b728ce43a03159b85f1fe624d6a.
+Fix Windows specific environment settings on startup rather than checking
+for special values on every getenv call.
 
-As of 5e9637c6 "i18n: add infrastructure for translating Git with gettext",
-eval_gettext uses MinGW envsubst.exe instead of git-sh-i18n--envsubst.exe
-for variable substitution. This breaks git-submodule.sh messages and tests,
-as envsubst.exe doesn't support case-sensitive environment lookup (the same
-is true for almost everything on Windows, including MSys and Cygwin tools).
-
-30a615ac "Windows/i18n: rename $path to prevent clashes with $PATH" renames
-the conflicting variable in git-submodule.sh, so that it works on Windows
-(i.e. with case-insensitive environment, regardless of the toolset).
-
-Revert to the documented behaviour of case-insensitive environment on
-Windows.
+As a side effect, this makes the patched environment (i.e. with properly
+initialized TMPDIR and TERM) available to child processes.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Stepan Kasal <kasal@ucw.cz>
 ---
- compat/mingw.c | 23 +++--------------------
- 1 file changed, 3 insertions(+), 20 deletions(-)
+ compat/mingw.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index c19e3d9..ca1b6bd 100644
+index 9dc6bf6..6d4ec56 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -1245,31 +1245,14 @@ char **make_augmented_environ(const char *const *vars)
+@@ -1250,7 +1250,7 @@ static int do_putenv(char **env, const char *name, int size, int free_old)
+ 	return size;
  }
  
- #undef getenv
--
--/*
-- * The system's getenv looks up the name in a case-insensitive manner.
-- * This version tries a case-sensitive lookup and falls back to
-- * case-insensitive if nothing was found.  This is necessary because,
-- * as a prominent example, CMD sets 'Path', but not 'PATH'.
-- * Warning: not thread-safe.
-- */
--static char *getenv_cs(const char *name)
+-static char *do_getenv(const char *name)
++char *mingw_getenv(const char *name)
+ {
+ 	char *value;
+ 	int pos = bsearchenv(environ, name, environ_size - 1);
+@@ -1260,18 +1260,6 @@ static char *do_getenv(const char *name)
+ 	return value ? &value[1] : NULL;
+ }
+ 
+-char *mingw_getenv(const char *name)
 -{
--	size_t len = strlen(name);
--	int i = lookup_env(environ, name, len);
--	if (i >= 0)
--		return environ[i] + len + 1;	/* skip past name and '=' */
--	return getenv(name);
+-	char *result = do_getenv(name);
+-	if (!result && !strcmp(name, "TMPDIR")) {
+-		/* on Windows it is TMP and TEMP */
+-		result = do_getenv("TMP");
+-		if (!result)
+-			result = do_getenv("TEMP");
+-	}
+-	return result;
 -}
 -
- char *mingw_getenv(const char *name)
+ int mingw_putenv(const char *namevalue)
  {
--	char *result = getenv_cs(name);
-+	char *result = getenv(name);
- 	if (!result && !strcmp(name, "TMPDIR")) {
- 		/* on Windows it is TMP and TEMP */
--		result = getenv_cs("TMP");
-+		result = getenv("TMP");
- 		if (!result)
--			result = getenv_cs("TEMP");
-+			result = getenv("TEMP");
- 	}
- 	return result;
- }
+ 	ALLOC_GROW(environ, (environ_size + 1) * sizeof(char*), environ_alloc);
+@@ -2113,6 +2101,17 @@ void mingw_startup()
+ 	/* sort environment for O(log n) getenv / putenv */
+ 	qsort(environ, i, sizeof(char*), compareenv);
+ 
++	/* fix Windows specific environment settings */
++
++	/* on Windows it is TMP and TEMP */
++	if (!mingw_getenv("TMPDIR")) {
++		const char *tmp = mingw_getenv("TMP");
++		if (!tmp)
++			tmp = mingw_getenv("TEMP");
++		if (tmp)
++			setenv("TMPDIR", tmp, 1);
++	}
++
+ 	/* initialize critical section for waitpid pinfo_t list */
+ 	InitializeCriticalSection(&pinfo_cs);
+ 
 -- 
 2.0.0.9635.g0be03cb
 
