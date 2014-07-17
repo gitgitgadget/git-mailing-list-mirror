@@ -1,146 +1,108 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/13] mingw unicode environment
-Date: Thu, 17 Jul 2014 10:55:23 -0700
-Message-ID: <xmqqsilzq390.fsf@gitster.dls.corp.google.com>
-References: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
+Subject: Re: [PATCH] abspath.c: use PATH_MAX in real_path_internal()
+Date: Thu, 17 Jul 2014 11:03:16 -0700
+Message-ID: <xmqqoawnq2vv.fsf@gitster.dls.corp.google.com>
+References: <1405601143-31354-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>,  Karsten Blees <karsten.blees@gmail.com>,  msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>
-X-From: msysgit+bncBCG77UMM3EJRBFU4UCPAKGQERBOPKSQ@googlegroups.com Thu Jul 17 19:55:36 2014
-Return-path: <msysgit+bncBCG77UMM3EJRBFU4UCPAKGQERBOPKSQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qc0-f188.google.com ([209.85.216.188])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 20:03:29 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRBFU4UCPAKGQERBOPKSQ@googlegroups.com>)
-	id 1X7pu3-0007jU-KN
-	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 19:55:35 +0200
-Received: by mail-qc0-f188.google.com with SMTP id r5sf775146qcx.15
-        for <gcvm-msysgit@m.gmane.org>; Thu, 17 Jul 2014 10:55:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=qkRXqa//GOnhuAYPkr7y9z6P7YrSdI8iXhs5DOFnIIk=;
-        b=UndP4G3w9WJUuOkJkUb9GEhCacECRsuYpaK6QwHSUGHU+DEYgHwbxcRKzJrUBrdsuN
-         WIuL3xmw/vx8JiPJI3BS01gptmXVD7mRLuJ3vVoHDdhoFCgFNCysA7pH12LyLvsIkNT/
-         had+Bb5Nj+4TWgpobiioeZfMYRilYYEEG4HjFB65Z3bKOQKvlA0AEzQSQESjm8zOJYAV
-         zY+VutfKBNZVBkHDreJ6R/Heo3/39oF2Dh/gGrcZs/Na5NpHG6Or6TuWwQwg9iyrwFFK
-         GWf4Yhed2m+LymGx/9T1etfw9SQb2Uuo+o952Syl1QL00Vsxub2UBOpAfyS2eZ5aJ+ll
-         HVKg==
-X-Received: by 10.50.18.105 with SMTP id v9mr530035igd.17.1405619734848;
-        Thu, 17 Jul 2014 10:55:34 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.51.16.5 with SMTP id fs5ls3589044igd.8.canary; Thu, 17 Jul
- 2014 10:55:33 -0700 (PDT)
-X-Received: by 10.42.27.18 with SMTP id h18mr18995217icc.25.1405619733759;
-        Thu, 17 Jul 2014 10:55:33 -0700 (PDT)
-Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id o69si342830yhp.6.2014.07.17.10.55.33
-        for <msysgit@googlegroups.com>;
-        Thu, 17 Jul 2014 10:55:33 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X7q1g-0002AJ-Sb
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 20:03:29 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751410AbaGQSDZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jul 2014 14:03:25 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54172 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750964AbaGQSDY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 17 Jul 2014 14:03:24 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 620712AA23;
-	Thu, 17 Jul 2014 13:55:33 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CACC72ADF4;
+	Thu, 17 Jul 2014 14:03:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Pu+o+dZVbDHM
+	HjHd7Q0W36ba5J8=; b=dXGiQmcdvNlXKoP5rnw1UQTfeUmVAw31aNCuqnKylTEN
+	oO3Kohiuc4m77wjNP4zWLjmv7rmiitmn20U1Z08l9gapaDCDsTeArpbD7/5NIpin
+	ip3mmaO2oFC4VRwpC3lxovmPfyKypGPLtrGuvErnQJ68s0oA5zs2ESFplKhts0s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=aClBog
+	7MHsPDU79v0f+juSgMEX8Bs1EScQbCHiE3nxWuFhFGi8142DVYeJL9RhFG043e6Y
+	AT1yfTKXEqfx5HKqRMOBR8gp3pPL6sizEJDPFrDYShYWQUTogpXwN0AN92Hiuqyb
+	jKScvgEEIsNkca/Zvfs9qRCQobr8fa5SGf47w=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 555642AA22;
-	Thu, 17 Jul 2014 13:55:33 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C09292ADF3;
+	Thu, 17 Jul 2014 14:03:23 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A4AF82AA12;
-	Thu, 17 Jul 2014 13:55:24 -0400 (EDT)
-In-Reply-To: <1405611486-10176-1-git-send-email-kasal@ucw.cz> (Stepan Kasal's
-	message of "Thu, 17 Jul 2014 17:37:53 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C20E42ADE9;
+	Thu, 17 Jul 2014 14:03:17 -0400 (EDT)
+In-Reply-To: <1405601143-31354-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 17
+ Jul 2014 19:45:43 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 874C1890-0DDB-11E4-A4C1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253763>
+X-Pobox-Relay-ID: A14C9250-0DDC-11E4-BA1C-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253764>
 
-Stepan Kasal <kasal@ucw.cz> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> ... only one patch
-> would only remain: gitk and git-gui fixes.)
+> This array 'cwd' is used to store the result from getcwd() and chdir(=
+)
+> back. PATH_MAX is the right constant for the job. On systems with
+> longer PATH_MAX (eg. 4096 on Linux), hard coding 1024 fails stuff,
+> e.g. "git init". Make it static too to reduce stack usage.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
 
-Nice.
+Thanks.  It seems that this 1024 has been with us since the
+beginning of this piece of code.  I briefly wondered if there are
+strange platform that will have PATH_MAX shorter than 1024 that will
+be hurt by this change, but the result in cwd[] is used to grow the
+final result bufs[] that is sized based on PATH_MAX anyway, so it
+will not be an issue (besides, the absurdly short one seems to be
+a different macro, MAX_PATH, on Windows).
 
 Will queue.
 
-> When rebasing Karsten's work, I have eliminated two commits:
-> https://github.com/msysgit/git/commit/f967550
-> https://github.com/msysgit/git/commit/290bf81
+>  abspath.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> These commits only moved code down and up; this was not necessary, one
-> forward declaration was all I needed.
->
-> One of the patches differs from the original version: "Enable color..."
-> Following Karsten's suggestion, I have changed the value of env. var.
-> TERM from "winterm" to "cygwin".  This is because the subprocesses see
-> the variable and may try to find it in (their copy of) termcap.
->
-> Enjoy,
->    Stepan
->
-> Karsten Blees (13):
->   Revert "Windows: teach getenv to do a case-sensitive search"
->   Win32: Unicode environment (outgoing)
->   Win32: Unicode environment (incoming)
->   Win32: fix environment memory leaks
->   Win32: unify environment case-sensitivity
->   Win32: unify environment function names
->   Win32: factor out environment block creation
->   Win32: don't copy the environment twice when spawning child processes
->   Win32: reduce environment array reallocations
->   Win32: use low-level memory allocation during initialization
->   Win32: keep the environment sorted
->   Win32: patch Windows environment on startup
->   Enable color output in Windows cmd.exe
->
->  compat/mingw.c   | 290 +++++++++++++++++++++++++++++++------------------------
->  compat/mingw.h   |  11 +--
->  config.mak.uname |   2 -
->  run-command.c    |  10 +-
->  4 files changed, 170 insertions(+), 143 deletions(-)
->
-> -- 
-> 2.0.0.9635.g0be03cb
->
-> -- 
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> diff --git a/abspath.c b/abspath.c
+> index ca33558..c0c868f 100644
+> --- a/abspath.c
+> +++ b/abspath.c
+> @@ -41,7 +41,7 @@ static const char *real_path_internal(const char *p=
+ath, int die_on_error)
+>  	 * here so that we can chdir() back to it at the end of the
+>  	 * function:
+>  	 */
+> -	char cwd[1024] =3D "";
+> +	static char cwd[PATH_MAX];
+> =20
+>  	int buf_index =3D 1;
+> =20
+> @@ -49,6 +49,8 @@ static const char *real_path_internal(const char *p=
+ath, int die_on_error)
+>  	char *last_elem =3D NULL;
+>  	struct stat st;
+> =20
+> +	*cwd =3D '\0';
+> +
+>  	/* We've already done it */
+>  	if (path =3D=3D buf || path =3D=3D next_buf)
+>  		return path;
