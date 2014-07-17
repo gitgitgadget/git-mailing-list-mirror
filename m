@@ -1,94 +1,96 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH] abspath.c: use PATH_MAX in real_path_internal()
-Date: Fri, 18 Jul 2014 01:03:08 +0200
-Message-ID: <53C8562C.4000304@gmail.com>
-References: <1405601143-31354-1-git-send-email-pclouds@gmail.com> <53C80265.5030903@web.de>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] bundle: use internal argv_array of struct child_process in
+ create_bundle()
+Date: Fri, 18 Jul 2014 01:27:41 +0200
+Message-ID: <53C85BED.9060207@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-	=?UTF-8?B?Tmd1eeG7hW4=?= =?UTF-8?B?IFRow6FpIE5n4buNYyBEdXk=?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 18 01:03:14 2014
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jul 18 01:28:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7uhm-0005pt-I2
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 01:03:14 +0200
+	id 1X7v5l-0005C1-86
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 01:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758196AbaGQXDJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jul 2014 19:03:09 -0400
-Received: from mail-wi0-f176.google.com ([209.85.212.176]:45807 "EHLO
-	mail-wi0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757990AbaGQXDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2014 19:03:08 -0400
-Received: by mail-wi0-f176.google.com with SMTP id bs8so8547705wib.3
-        for <git@vger.kernel.org>; Thu, 17 Jul 2014 16:03:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=mgb9L1KZRSS2Nz8mj2h9fkWyyEYb4B9VJEBllgUVipU=;
-        b=g+SRJwoS3dWlhcKP14O+NrX9fyJ3ArnkNxVQMx/c52wiAlGnfOs9r3x/fdoof0L2R2
-         ycO4/QalvoynexpiOdck4l3jes5+6OTdhCZH09BzgkiSiVuhP7FJ5so2D/yptIwBciEc
-         cVleMXzkCPFAJ8RxpYzawXkbj38BkFu/EhkPxsAOs63zlyo+m6foNgmEqCcgrpGGAQdc
-         yORS0Z0VAdcvc0ggC7GnM6JXDfVOxoqdda3NFiNlru2A++1puGTjpgsHA8SZ3Tkul+lN
-         ElqhVOKArwYGF4mo0C7owTUFbr4yAENHFlpIpfwAxlzYBqJKDzeaKEFBEMpwnv6FH0gO
-         RF3g==
-X-Received: by 10.180.72.234 with SMTP id g10mr13596335wiv.52.1405638187307;
-        Thu, 17 Jul 2014 16:03:07 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id ut2sm9436559wjc.49.2014.07.17.16.03.05
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Jul 2014 16:03:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53C80265.5030903@web.de>
+	id S1758356AbaGQX15 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2014 19:27:57 -0400
+Received: from mout.web.de ([212.227.15.4]:51530 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758309AbaGQX14 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2014 19:27:56 -0400
+Received: from [192.168.178.27] ([79.250.176.74]) by smtp.web.de (mrweb002)
+ with ESMTPSA (Nemesis) id 0MI6JC-1X7Mam3op4-003rwz; Fri, 18 Jul 2014 01:27:50
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Provags-ID: V03:K0:kuqoojHklfOMv6qFUGrLrlVFl6KVhTCS95kVFDNvZ0GiGHeyNhJ
+ hLhN2gy5MMYRh1ydQTuoupnDiT2pCoNfHeq6TgO3yt+6gwqCdxfusEY2zdmI91cWKoZdDAH
+ F28qCQF9ZdWHmFlZPVnWDSz3S0oTSvbS/fKYTgQ7Hr7L8gi7jl6hyFraM3+z/fElKV+c/mg
+ NmrhVso9RdaKjps/tQ1/A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253788>
 
-Am 17.07.2014 19:05, schrieb Ren=C3=A9 Scharfe:
-> Am 17.07.2014 14:45, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y:
-[...]
-> "These routines have traditionally been used by programs to save the
-> name of a working directory for the purpose of returning to it. A muc=
-h
-> faster and less error-prone method of accomplishing this is to open t=
-he
-> current directory (.) and use the fchdir(2) function to return."
->=20
+Use the existing argv_array member instead of providing our own.  This
+way the argv_array is cleared after use automatically for us; it was
+leaking before.
 
-fchdir() is part of the POSIX-XSI extension, as is realpath(). So why n=
-ot
-use realpath() directly (which would also be thread-safe)?
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ bundle.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-=46or non-XSI-compliant platforms, we could keep the current implementa=
-tion.
-Or re-implement a thread-safe version, e.g. applying resolve_symlink() =
-from
-lockfile.c to all path components.
-
-
-If I may bother you with the Windows point of view:=20
-
-There is no fchdir(), and I'm pretty sure open(".") won't work either.
-
-fchdir() could be emulated using GetFileInformationByHandleEx(FileNameI=
-nfo).
-realpath() is pretty much what GetFinalPathNameByHandle() does. However=
-,
-both of these APIs require Windows Vista.
-
-Opening a handle to a directory can be done using FILE_FLAG_BACKUP_SEMA=
-NTICS,
-which AFAICT MSVCRT.dll's open() implementation does _not_ do (could be
-emulated in our mingw_open() wrapper, though).
-
-=2E..lots of work for little benefit, I would think.
+diff --git a/bundle.c b/bundle.c
+index 1222952..71a21a6 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -237,8 +237,6 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	static struct lock_file lock;
+ 	int bundle_fd = -1;
+ 	int bundle_to_stdout;
+-	struct argv_array argv_boundary = ARGV_ARRAY_INIT;
+-	struct argv_array argv_pack = ARGV_ARRAY_INIT;
+ 	int i, ref_count = 0;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct rev_info revs;
+@@ -260,14 +258,12 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	init_revisions(&revs, NULL);
+ 
+ 	/* write prerequisites */
+-	argv_array_pushl(&argv_boundary,
++	memset(&rls, 0, sizeof(rls));
++	argv_array_pushl(&rls.args,
+ 			 "rev-list", "--boundary", "--pretty=oneline",
+ 			 NULL);
+ 	for (i = 1; i < argc; i++)
+-		argv_array_push(&argv_boundary, argv[i]);
+-
+-	memset(&rls, 0, sizeof(rls));
+-	rls.argv = argv_boundary.argv;
++		argv_array_push(&rls.args, argv[i]);
+ 	rls.out = -1;
+ 	rls.git_cmd = 1;
+ 	if (start_command(&rls))
+@@ -382,12 +378,11 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	write_or_die(bundle_fd, "\n", 1);
+ 
+ 	/* write pack */
+-	argv_array_pushl(&argv_pack,
++	memset(&rls, 0, sizeof(rls));
++	argv_array_pushl(&rls.args,
+ 			 "pack-objects", "--all-progress-implied",
+ 			 "--stdout", "--thin", "--delta-base-offset",
+ 			 NULL);
+-	memset(&rls, 0, sizeof(rls));
+-	rls.argv = argv_pack.argv;
+ 	rls.in = -1;
+ 	rls.out = bundle_fd;
+ 	rls.git_cmd = 1;
+-- 
+2.0.0
