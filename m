@@ -1,132 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] abspath.c: use PATH_MAX in real_path_internal()
-Date: Thu, 17 Jul 2014 11:13:20 -0700
-Message-ID: <xmqqk37bq2f3.fsf@gitster.dls.corp.google.com>
-References: <1405601143-31354-1-git-send-email-pclouds@gmail.com>
-	<53C80265.5030903@web.de>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: [PATCH 2/6] Disable t0110's high-bit test on Windows
+Date: Thu, 17 Jul 2014 20:20:02 +0200
+Message-ID: <53C813D2.8070701@gmail.com>
+References: <20140716092959.GA378@ucw.cz> <1405611425-10009-1-git-send-email-kasal@ucw.cz> <1405611425-10009-3-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Thu Jul 17 20:13:36 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>, 
+ GIT Mailing-list <git@vger.kernel.org>,
+ msysGit <msysgit@googlegroups.com>, 
+ Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Stepan Kasal <kasal@ucw.cz>
+X-From: msysgit+bncBCH3XYXLXQDBBUNHUCPAKGQELUXWDWY@googlegroups.com Thu Jul 17 20:20:05 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBUNHUCPAKGQELUXWDWY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-la0-f64.google.com ([209.85.215.64])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7qBT-0005wW-9z
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 20:13:35 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752608AbaGQSNb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jul 2014 14:13:31 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50602 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751950AbaGQSNa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Jul 2014 14:13:30 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DF508293BB;
-	Thu, 17 Jul 2014 14:13:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=nZavTSKrIAiZ
-	TTi1ua13WEY5JwY=; b=Yko16BUFB0FcESVorCQ6dS/hAdQONWflkO2bpmVv54La
-	tWqtO0cxt5fAUO3HQpFdh+MgHEThq15lg39oDbvG32BDQF3NPuKj67ibrHdt6v0/
-	lzWPN/VBFWSKksLAe9JXae1Nj1s5JyPacYcmxxckatzHiZbGNkImQbfbxkDDcsU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=xvC4CO
-	dpXjoaoCf/U6TuPxJmB6RzFktfdXJIriWUl9MPoSeCItUZ0Q2sM0HBxU93N3qcyw
-	ZuUlHcDQP4ZdpDkc3p2C1F2VYSAFNH/f1tUt854vNO0+kGEPZIeoa2V5YPzL3Yq2
-	1PrmmoSp+eSvfYo9E8XwyQ3ZwWW9xSrulBVGU=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D4A17293BA;
-	Thu, 17 Jul 2014 14:13:29 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 65035293AD;
-	Thu, 17 Jul 2014 14:13:22 -0400 (EDT)
-In-Reply-To: <53C80265.5030903@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
- message of "Thu, 17
-	Jul 2014 19:05:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 09ADAB62-0DDE-11E4-AA34-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253766>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBUNHUCPAKGQELUXWDWY@googlegroups.com>)
+	id 1X7qHi-0008Lh-I0
+	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 20:20:02 +0200
+Received: by mail-la0-f64.google.com with SMTP id el20sf350596lab.9
+        for <gcvm-msysgit@m.gmane.org>; Thu, 17 Jul 2014 11:20:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=H123AP3WhXRTNFRLavC2vYg0+q2YPxweGWwDVWYoHsM=;
+        b=RYdM3d95xNbADmJnBYl6Its/syBFuJ72B0LC4nnwh2QDYTmvq6AyOs4K6sjLaaqqJN
+         rmYzBZMSOYbp2q7Rp+YeIIFooh3UIRRKQeoiWSEmJG6kM1fTc7EikbAVWgMvztvgMWR+
+         p9/7om8et9AsEuXh3ucrrMxYVii3lanbdQGBFveqtRn7kEk8PXGOz/dULCMIBDypl3Lk
+         5yhvtFtqc5R/eaP6jBu9OLmpBs1KLQOy48gkqRXMBQxZXyxWR6QU0aMXaR4xyGJwGLXn
+         uhZNV4NStO05g+3FN5byNmvxfMHhJ7zwPas5ZE60WIGLQMkZz9YtmpR3wrH2iQk88S/I
+         FP0Q==
+X-Received: by 10.152.183.196 with SMTP id eo4mr407lac.42.1405621202339;
+        Thu, 17 Jul 2014 11:20:02 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.27.97 with SMTP id s1ls231264lag.60.gmail; Thu, 17 Jul
+ 2014 11:20:01 -0700 (PDT)
+X-Received: by 10.152.6.200 with SMTP id d8mr3110737laa.4.1405621201412;
+        Thu, 17 Jul 2014 11:20:01 -0700 (PDT)
+Received: from mail-wi0-x230.google.com (mail-wi0-x230.google.com [2a00:1450:400c:c05::230])
+        by gmr-mx.google.com with ESMTPS id mx7si1104605wic.1.2014.07.17.11.20.01
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 17 Jul 2014 11:20:01 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::230 as permitted sender) client-ip=2a00:1450:400c:c05::230;
+Received: by mail-wi0-x230.google.com with SMTP id bs8so8244747wib.9
+        for <msysgit@googlegroups.com>; Thu, 17 Jul 2014 11:20:01 -0700 (PDT)
+X-Received: by 10.180.207.48 with SMTP id lt16mr24854765wic.32.1405621201306;
+        Thu, 17 Jul 2014 11:20:01 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id w6sm7906568wjr.4.2014.07.17.11.20.00
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 17 Jul 2014 11:20:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <1405611425-10009-3-git-send-email-kasal@ucw.cz>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c05::230
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253767>
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+Am 17.07.2014 17:37, schrieb Stepan Kasal:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> The bash Git for Windows uses (i.e. the MSys bash) cannot pass
+> command-line arguments with high bits set verbatim to non-MSys programs,
+> but instead converts those characters with high bits set to their hex
+> representation.
+> 
 
-> "These routines have traditionally been used by programs to save the
-> name of a working directory for the purpose of returning to it. A muc=
-h
-> faster and less error-prone method of accomplishing this is to open t=
-he
-> current directory (.) and use the fchdir(2) function to return."
->
-> So, how about something like this?
+The description is not entirely correct...the Unicode-enabled MSYS.dll
+expects the command line to be UTF-8. Only *invalid* UTF-8 is converted
+to hex code for convenience. So its not the high bits that cause trouble,
+but specifying 0x80 without proper UTF-8 lead byte.
 
-Yeah, I've always wanted to see us use fchdir() for coming back
-(another thing I wanted to see is to use openat() and friends).
+I believe the last line of the test may actually work:
 
-I do not offhand recall if the run of chdir() in gitdir discovery
-code has a similar "now we are done, let's go back to the original"
-use of chdir() there, but if we do, we should fix it, too.
+test "$(test-urlmatch-normalization -p "$(cat "$tu-11")")" = "x://q/%C2%80%DF%BF%E0%A0%80%EF%BF%BD%F0%90%80%80%F0%AF%BF%BD"
 
-Looks sensible from a cursory read.
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
->
-> ---
->  abspath.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/abspath.c b/abspath.c
-> index ca33558..7fff13a 100644
-> --- a/abspath.c
-> +++ b/abspath.c
-> @@ -38,10 +38,10 @@ static const char *real_path_internal(const char =
-*path, int die_on_error)
-> =20
->  	/*
->  	 * If we have to temporarily chdir(), store the original CWD
-> -	 * here so that we can chdir() back to it at the end of the
-> +	 * here so that we can fchdir() back to it at the end of the
->  	 * function:
->  	 */
-> -	char cwd[1024] =3D "";
-> +	int cwd_fd =3D -1;
-> =20
->  	int buf_index =3D 1;
-> =20
-> @@ -80,7 +80,9 @@ static const char *real_path_internal(const char *p=
-ath, int die_on_error)
->  		}
-> =20
->  		if (*buf) {
-> -			if (!*cwd && !getcwd(cwd, sizeof(cwd))) {
-> +			if (cwd_fd < 0)
-> +				cwd_fd =3D open(".", O_RDONLY);
-> +			if (cwd_fd < 0) {
->  				if (die_on_error)
->  					die_errno("Could not get current working directory");
->  				else
-> @@ -142,8 +144,11 @@ static const char *real_path_internal(const char=
- *path, int die_on_error)
->  	retval =3D buf;
->  error_out:
->  	free(last_elem);
-> -	if (*cwd && chdir(cwd))
-> -		die_errno("Could not change back to '%s'", cwd);
-> +	if (cwd_fd >=3D 0) {
-> +		if (fchdir(cwd_fd))
-> +			die_errno("Could not change back to the original working director=
-y");
-> +		close(cwd_fd);
-> +	}
-> =20
->  	return retval;
->  }
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
