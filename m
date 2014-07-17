@@ -1,68 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 22/31] checkout: support checking out into a new
- working directory
-Date: Wed, 16 Jul 2014 23:37:10 -0700
-Message-ID: <CAPc5daXiLqx6wkRFN7fs29Hu+zyZGL9kFed4jkwjJQB8hR0E-Q@mail.gmail.com>
-References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
- <1405227068-25506-1-git-send-email-pclouds@gmail.com> <1405227068-25506-23-git-send-email-pclouds@gmail.com>
- <20140717041928.GA10056@wheezy.local>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Syncing Git Repositories
+Date: Thu, 17 Jul 2014 08:53:11 +0200
+Message-ID: <vpqwqbcv5m0.fsf@anie.imag.fr>
+References: <53C7343F.4090806@parikh.io>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Max Kirillov <max@max630.net>
-X-From: git-owner@vger.kernel.org Thu Jul 17 08:37:38 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Sajan Parikh <sajan@parikh.io>
+X-From: git-owner@vger.kernel.org Thu Jul 17 08:53:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7fJw-0006RS-Nr
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 08:37:37 +0200
+	id 1X7fZK-00042t-J8
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 08:53:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752905AbaGQGhd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 17 Jul 2014 02:37:33 -0400
-Received: from mail-la0-f51.google.com ([209.85.215.51]:56844 "EHLO
-	mail-la0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802AbaGQGhc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 17 Jul 2014 02:37:32 -0400
-Received: by mail-la0-f51.google.com with SMTP id el20so1359029lab.38
-        for <git@vger.kernel.org>; Wed, 16 Jul 2014 23:37:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=8kjRZ12rea59HAxzZpejGjF/uiaAWPt3p2Ex38hEfn4=;
-        b=Qm0DZkHO54r4la1WCEZ1OK9mOu1UniEeI+Co0CsFJVyh6Ik4PHz96cTU1BRaBy2VRp
-         +g26GAjdzz5rFBVziIpMWdLMjSpzToegLdWysidGty5oti9u6FD3AMG7UOoFZB43/To1
-         qa2vzI6+17rE5sAp87xjhOoGq5Az6p40X4lk+9c2iLPaebgZ9OhyadmxeHC/rXYlIix0
-         uTYp+4a0D6pJfdbzhL654HGxNsuUS4SfL1axo0YUrCIqwrq3GfiK6u8kxC1+VBsTjOnk
-         v4TzWtc/baq+vyqWfDKRTwM2LZgyI/cUJJBEKoz0oaW8wK9/9uHT26yPnYEjvrlzM1xg
-         OBkQ==
-X-Received: by 10.152.87.207 with SMTP id ba15mr30147247lab.15.1405579050390;
- Wed, 16 Jul 2014 23:37:30 -0700 (PDT)
-Received: by 10.112.26.212 with HTTP; Wed, 16 Jul 2014 23:37:10 -0700 (PDT)
-In-Reply-To: <20140717041928.GA10056@wheezy.local>
-X-Google-Sender-Auth: OsNxUoHjjUK7U0TZ2QbkKI9uTag
+	id S1754600AbaGQGx1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2014 02:53:27 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:37700 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752990AbaGQGx0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2014 02:53:26 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6H6rAJl003484
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 17 Jul 2014 08:53:10 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6H6rBPR001801;
+	Thu, 17 Jul 2014 08:53:11 +0200
+In-Reply-To: <53C7343F.4090806@parikh.io> (Sajan Parikh's message of "Wed, 16
+	Jul 2014 21:26:07 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 17 Jul 2014 08:53:10 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6H6rAJl003484
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1406184791.95753@f/p0OALZGOz2TFik/HZMdA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253723>
 
-On Wed, Jul 16, 2014 at 9:19 PM, Max Kirillov <max@max630.net> wrote:
-> Hi.
->
-> On Sun, Jul 13, 2014 at 11:50:59AM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy wrote:
->> +MULTIPLE CHECKOUT MODE
->> +-------------------------------
->
-> This generates incorrect html for me, making all section
-> until next heading "EXAMPLES" into a preformatted text. If I
-> justify the line of dashes to be the exactly same width as
-> header it starts generating correctly looking html.
+Sajan Parikh <sajan@parikh.io> writes:
 
-Thanks; what you did is the correct AsciiDoc formatting.
+> By syncing my code folder and git repositories in this way, do I risk
+> borking any repositories?  I'm 99% confident I'm not, since everything
+> is in .git/, and there are not external databases or log files that
+> need to be updated.  Just making sure though.
+
+You're right that there are no external database, hence if you actually
+sync the whole worktree+.git/, you won't have any problem.
+
+I synchonize a bunch of Git repositories between machines with Unison
+(file transfer utility), it works great.
+
+One issue you may encounter is if you have either partial
+synchronization (e.g. network loss in the middle of a synchronization, I
+don't know how owncloud deals with it), or two way synchronization
+(there's a synchronization between your laptop and owncloud ongoing, and
+you start working on your desktop and trigger a synchronization.
+
+I sometimes encounter this situation with unison. The good news is that
+in 99,999% of cases where I'd encounter a problem, Unison shows a
+conflict on the index file (modified on both sides). So, in these cases,
+I just use Git normally to synchronize, decide that one side becomes the
+reference, and rsync to the other to resolve the Unison conflict.
+
+Also, you have to ensure that you synchronize both file
+additions/modifications, and file deletions. I often make the mistake of
+using rsync without --delete, and it confuses the branch storage format
+(I keep my local unpacked branch, and the packed branch is hidden by
+it).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
