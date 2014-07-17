@@ -1,7 +1,7 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 3/6] MinGW: disable legacy encoding tests
-Date: Thu, 17 Jul 2014 17:37:02 +0200
-Message-ID: <1405611425-10009-4-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 5/6] t9902: mingw-specific fix for gitfile link files
+Date: Thu, 17 Jul 2014 17:37:04 +0200
+Message-ID: <1405611425-10009-6-git-send-email-kasal@ucw.cz>
 References: <20140716092959.GA378@ucw.cz>
  <1405611425-10009-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
@@ -10,18 +10,18 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j6t@kdbg.org>,
 	GIT Mailing-list <git@vger.kernel.org>,
 	msysGit <msysgit@googlegroups.com>,
-	Karsten Blees <blees@dcon.de>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
 	Stepan Kasal <kasal@ucw.cz>
 To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCU63DXMWULRBMO3T6PAKGQEWZFM3IQ@googlegroups.com Thu Jul 17 17:37:24 2014
-Return-path: <msysgit+bncBCU63DXMWULRBMO3T6PAKGQEWZFM3IQ@googlegroups.com>
+X-From: msysgit+bncBCU63DXMWULRBMW3T6PAKGQE3LBL4ZY@googlegroups.com Thu Jul 17 17:37:24 2014
+Return-path: <msysgit+bncBCU63DXMWULRBMW3T6PAKGQE3LBL4ZY@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f191.google.com ([209.85.217.191])
+Received: from mail-lb0-f184.google.com ([209.85.217.184])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBMO3T6PAKGQEWZFM3IQ@googlegroups.com>)
-	id 1X7nkI-000879-HN
+	(envelope-from <msysgit+bncBCU63DXMWULRBMW3T6PAKGQE3LBL4ZY@googlegroups.com>)
+	id 1X7nkI-00087A-Lo
 	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 17:37:22 +0200
-Received: by mail-lb0-f191.google.com with SMTP id z11sf314606lbi.18
+Received: by mail-lb0-f184.google.com with SMTP id c11sf329305lbj.21
         for <gcvm-msysgit@m.gmane.org>; Thu, 17 Jul 2014 08:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -29,27 +29,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=I/YYsWcGa35U8rs/8PNdnZlTiEAXA70DI6klnZvDD2c=;
-        b=bc+/OT4mn8wURkUKWSl23epFNHdlP02/hfpxc6RmRZpz56Fbud/PkavEXvlL0S03yF
-         IuXrZPL4IHIwv2Jewcz0nIrghFRBrKVny8Z3jxWxQT3QJRnk6VwQCLuK6wT1roV3YpDO
-         fe6fyPF1m8MG11fw2kEM3YV0nsLho5JJqWjweyCDB0veLnLWVRb6rctZrqYKqd1njnxS
-         QKRFPWh2KQqcRVlZb2ZzjFMTvy5DAm5BlnxV7sm5P8ZvufReE2O2sSh/0xzvAL/oFlzc
-         bXT6P6fSznkxLSfBO72AQnv7p0xNUBhCzk3vpSWbD7kXV0smiQWEcZ+b4ezTRkFnVp6m
-         lBDQ==
-X-Received: by 10.152.204.97 with SMTP id kx1mr5659lac.41.1405611442362;
+        bh=EqaeQNwxtMXh1gmXEc92Bi2w237NF5ysJ2NQJbWz4QM=;
+        b=nFldZMjOXiJdsZ0ld+O4rAns1OW80R7HreHssGc4+gAbI+9bZIi5dUbnGPigTiTE9c
+         sEjzvkpUtSpYdBxqxjhWYn5osZE3HHU/DH7R9qB3pTdltRH3NAHytIYn05AB3lsnr61q
+         246AfK/qJSarerluh2dS16NLziTvEaavjcn78yyWtFY1X0829q1oaCUfML40euyAo6ra
+         QJbjgmgLpG4SLbTEzYM6euhTGDySAbtdk7kFXp7n384PLXetezx6DffQDyQ4IhEk+BWc
+         rthuTxqM+iuJexyNU+gVRru0JkZi74KbO6AnZQTqHTX5hK1BTtiPQGNTyU7CyNclqKT1
+         rvnA==
+X-Received: by 10.152.10.35 with SMTP id f3mr31194lab.6.1405611442509;
         Thu, 17 Jul 2014 08:37:22 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.153.4.2 with SMTP id ca2ls197370lad.94.gmail; Thu, 17 Jul 2014
- 08:37:21 -0700 (PDT)
-X-Received: by 10.112.126.196 with SMTP id na4mr515113lbb.17.1405611441297;
+Received: by 10.152.185.70 with SMTP id fa6ls232553lac.53.gmail; Thu, 17 Jul
+ 2014 08:37:21 -0700 (PDT)
+X-Received: by 10.112.142.106 with SMTP id rv10mr3722715lbb.5.1405611441382;
         Thu, 17 Jul 2014 08:37:21 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id b9si373426wic.2.2014.07.17.08.37.21
+        by gmr-mx.google.com with ESMTP id o6si608125wij.1.2014.07.17.08.37.21
         for <msysgit@googlegroups.com>;
         Thu, 17 Jul 2014 08:37:21 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 066521C0198; Thu, 17 Jul 2014 17:37:21 +0200 (CEST)
+	id 1257D1C01A4; Thu, 17 Jul 2014 17:37:21 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1405611425-10009-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
@@ -66,157 +66,56 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253739>
 
-From: Karsten Blees <blees@dcon.de>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
 
-On Windows, all native APIs are Unicode-based. It is impossible to pass
-legacy encoded byte arrays to a process via command line or environment
-variables. Disable the tests that try to do so.
+The path in a .git platform independent link file needs to be absolute
+and under mingw we need it to be a windows type path, not a unix style
+path so it should start with a drive letter and not a /.
 
-In t3901, most tests still work if we don't mess up the repository encoding
-in setup, so don't switch to ISO-8859-1 on MinGW.
-
-Note that i18n tests that do their encoding tricks via encoded files (such
-as t3900) are not affected by this.
-
-Signed-off-by: Karsten Blees <blees@dcon.de>
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
 Signed-off-by: Stepan Kasal <kasal@ucw.cz>
 ---
- t/t3901-i18n-patch.sh | 19 +++++++++++--------
- t/t4201-shortlog.sh   |  6 +++---
- t/t8005-blame-i18n.sh |  8 ++++----
- 3 files changed, 18 insertions(+), 15 deletions(-)
+ t/t9902-completion.sh | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/t/t3901-i18n-patch.sh b/t/t3901-i18n-patch.sh
-index 31a5770..55c8a2f 100755
---- a/t/t3901-i18n-patch.sh
-+++ b/t/t3901-i18n-patch.sh
-@@ -54,10 +54,13 @@ test_expect_success setup '
- 	git add yours &&
- 	git commit -s -m "Second on side" &&
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 1d1c106..f10a752 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -212,9 +212,18 @@ test_expect_success '__gitdir - non-existing $GIT_DIR' '
+ 	)
+ '
  
--	# the second one on the side branch is ISO-8859-1
--	git config i18n.commitencoding ISO8859-1 &&
--	# use author and committer name in ISO-8859-1 to match it.
--	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	if test_have_prereq NOT_MINGW
++function pwd_P_W () {
++	if test_have_prereq MINGW
 +	then
-+		# the second one on the side branch is ISO-8859-1
-+		git config i18n.commitencoding ISO8859-1 &&
-+		# use author and committer name in ISO-8859-1 to match it.
-+		. "$TEST_DIRECTORY"/t3901-8859-1.txt
-+	fi &&
- 	test_tick &&
- 	echo Yet another >theirs &&
- 	git add theirs &&
-@@ -119,7 +122,7 @@ test_expect_success 'rebase (U/L)' '
- 	check_encoding 2
++		pwd -W
++	else
++		pwd -P
++	fi
++}
++
+ test_expect_success '__gitdir - gitfile in cwd' '
+-	echo "$(pwd -P)/otherrepo/.git" >expected &&
+-	echo "gitdir: $TRASH_DIRECTORY/otherrepo/.git" >subdir/.git &&
++	echo "$(pwd_P_W)/otherrepo/.git" >expected &&
++	echo "gitdir: $(pwd_P_W)/otherrepo/.git" >subdir/.git &&
+ 	test_when_finished "rm -f subdir/.git" &&
+ 	(
+ 		cd subdir &&
+@@ -224,8 +233,8 @@ test_expect_success '__gitdir - gitfile in cwd' '
  '
  
--test_expect_success 'rebase (L/L)' '
-+test_expect_success NOT_MINGW 'rebase (L/L)' '
- 	# In this test we want ISO-8859-1 encoded commits as the result
- 	git config i18n.commitencoding ISO8859-1 &&
- 	git config i18n.logoutputencoding ISO8859-1 &&
-@@ -131,7 +134,7 @@ test_expect_success 'rebase (L/L)' '
- 	check_encoding 2 8859
- '
- 
--test_expect_success 'rebase (L/U)' '
-+test_expect_success NOT_MINGW 'rebase (L/U)' '
- 	# This is pathological -- use UTF-8 as intermediate form
- 	# to get ISO-8859-1 results.
- 	git config i18n.commitencoding ISO8859-1 &&
-@@ -159,7 +162,7 @@ test_expect_success 'cherry-pick(U/U)' '
- 	check_encoding 3
- '
- 
--test_expect_success 'cherry-pick(L/L)' '
-+test_expect_success NOT_MINGW 'cherry-pick(L/L)' '
- 	# Both the commitencoding and logoutputencoding is set to ISO-8859-1
- 
- 	git config i18n.commitencoding ISO8859-1 &&
-@@ -189,7 +192,7 @@ test_expect_success 'cherry-pick(U/L)' '
- 	check_encoding 3
- '
- 
--test_expect_success 'cherry-pick(L/U)' '
-+test_expect_success NOT_MINGW 'cherry-pick(L/U)' '
- 	# Again, the commitencoding is set to ISO-8859-1 but
- 	# logoutputencoding is set to UTF-8.
- 
-diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-index 97fcb31..565c020 100755
---- a/t/t4201-shortlog.sh
-+++ b/t/t4201-shortlog.sh
-@@ -93,7 +93,7 @@ test_expect_success 'output from user-defined format is re-wrapped' '
- 	test_cmp expect log.predictable
- '
- 
--test_expect_success 'shortlog wrapping' '
-+test_expect_success NOT_MINGW 'shortlog wrapping' '
- 	cat >expect <<\EOF &&
- A U Thor (5):
-       Test
-@@ -114,7 +114,7 @@ EOF
- 	test_cmp expect out
- '
- 
--test_expect_success 'shortlog from non-git directory' '
-+test_expect_success NOT_MINGW 'shortlog from non-git directory' '
- 	git log HEAD >log &&
- 	GIT_DIR=non-existing git shortlog -w <log >out &&
- 	test_cmp expect out
-@@ -159,7 +159,7 @@ $DSCHO (2):
- 
- EOF
- 
--test_expect_success 'shortlog encoding' '
-+test_expect_success NOT_MINGW 'shortlog encoding' '
- 	git reset --hard "$commit" &&
- 	git config --unset i18n.commitencoding &&
- 	echo 2 > a1 &&
-diff --git a/t/t8005-blame-i18n.sh b/t/t8005-blame-i18n.sh
-index cb39055..a6e73d0 100755
---- a/t/t8005-blame-i18n.sh
-+++ b/t/t8005-blame-i18n.sh
-@@ -33,7 +33,7 @@ author $SJIS_NAME
- summary $SJIS_MSG
- EOF
- 
--test_expect_success \
-+test_expect_success NOT_MINGW \
- 	'blame respects i18n.commitencoding' '
- 	git blame --incremental file | \
- 		egrep "^(author|summary) " > actual &&
-@@ -49,7 +49,7 @@ author $EUC_JAPAN_NAME
- summary $EUC_JAPAN_MSG
- EOF
- 
--test_expect_success \
-+test_expect_success NOT_MINGW \
- 	'blame respects i18n.logoutputencoding' '
- 	git config i18n.logoutputencoding eucJP &&
- 	git blame --incremental file | \
-@@ -66,7 +66,7 @@ author $UTF8_NAME
- summary $UTF8_MSG
- EOF
- 
--test_expect_success \
-+test_expect_success NOT_MINGW \
- 	'blame respects --encoding=UTF-8' '
- 	git blame --incremental --encoding=UTF-8 file | \
- 		egrep "^(author|summary) " > actual &&
-@@ -82,7 +82,7 @@ author $UTF8_NAME
- summary $UTF8_MSG
- EOF
- 
--test_expect_success \
-+test_expect_success NOT_MINGW \
- 	'blame respects --encoding=none' '
- 	git blame --incremental --encoding=none file | \
- 		egrep "^(author|summary) " > actual &&
+ test_expect_success '__gitdir - gitfile in parent' '
+-	echo "$(pwd -P)/otherrepo/.git" >expected &&
+-	echo "gitdir: $TRASH_DIRECTORY/otherrepo/.git" >subdir/.git &&
++	echo "$(pwd_P_W)/otherrepo/.git" >expected &&
++	echo "gitdir: $(pwd_P_W)/otherrepo/.git" >subdir/.git &&
+ 	test_when_finished "rm -f subdir/.git" &&
+ 	(
+ 		cd subdir/subsubdir &&
 -- 
 2.0.0.9635.g0be03cb
 
