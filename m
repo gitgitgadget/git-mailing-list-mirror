@@ -1,7 +1,7 @@
 From: Stepan Kasal <kasal@ucw.cz>
-Subject: [PATCH 04/13] Win32: fix environment memory leaks
-Date: Thu, 17 Jul 2014 17:37:57 +0200
-Message-ID: <1405611486-10176-5-git-send-email-kasal@ucw.cz>
+Subject: [PATCH 09/13] Win32: reduce environment array reallocations
+Date: Thu, 17 Jul 2014 17:38:02 +0200
+Message-ID: <1405611486-10176-10-git-send-email-kasal@ucw.cz>
 References: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
@@ -10,15 +10,15 @@ Cc: Karsten Blees <karsten.blees@gmail.com>,
 	Karsten Blees <blees@dcon.de>,
 	Stepan Kasal <kasal@ucw.cz>
 To: GIT Mailing-list <git@vger.kernel.org>
-X-From: msysgit+bncBCU63DXMWULRBZW3T6PAKGQEDK2U75A@googlegroups.com Thu Jul 17 17:38:16 2014
-Return-path: <msysgit+bncBCU63DXMWULRBZW3T6PAKGQEDK2U75A@googlegroups.com>
+X-From: msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com Thu Jul 17 17:38:16 2014
+Return-path: <msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f59.google.com ([209.85.215.59])
+Received: from mail-wg0-f63.google.com ([74.125.82.63])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBZW3T6PAKGQEDK2U75A@googlegroups.com>)
-	id 1X7nl9-0008VY-Fw
-	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 17:38:15 +0200
-Received: by mail-la0-f59.google.com with SMTP id s18sf317914lam.14
+	(envelope-from <msysgit+bncBCU63DXMWULRBZ63T6PAKGQES63JOCQ@googlegroups.com>)
+	id 1X7nlA-0008Vj-65
+	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 17:38:16 +0200
+Received: by mail-wg0-f63.google.com with SMTP id b13sf266949wgh.28
         for <gcvm-msysgit@m.gmane.org>; Thu, 17 Jul 2014 08:38:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
@@ -26,27 +26,27 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :references:x-original-sender:x-original-authentication-results
          :precedence:mailing-list:list-id:list-post:list-help:list-archive
          :sender:list-subscribe:list-unsubscribe:content-type;
-        bh=s7DJGTi1Vr3cfMmoSpoKjF3NEISlNHznZSsfX3sccX8=;
-        b=BYWU7kq4I2JtVUDzTzpabVPMhV2bHJiVDAOKNaVmG3Yj/WPzm3OP4RR6m2Vzvw4kTG
-         Nu+AdXnYreZMEiImTD64eUdcKYMXExdsM1nlPpSYufZCCo5YKjw4m3kluRgDAFyKSpp9
-         aAK4h9wwWbsBnXundFY4bGt61IMx7Xy1hlPZKYNJS2iSH2tZVH9bcT592GTwrj0xtkFP
-         Rm0Zo0UIORhFbOPvNsLzgEqyRiXEuKJZiuNQ1NZ+hsOWkow56AqbgyqXR+P7J6Jdvfh3
-         xe8E9zVT5P4ytIcP1K9JspFi5vYKlkE1aUsVkiX5Xx/HmG0VsOnZ2OjswmTbcAPYAKC3
-         a8Dg==
-X-Received: by 10.180.105.67 with SMTP id gk3mr95313wib.5.1405611495211;
+        bh=eE4AkwihWcG7qm9CGCHu61e0bpWKa3AXJ+/a4kitufU=;
+        b=hkrQ+wzWAM1St11ln5/wi+Nwcxl0XEzKg3MUPLcRgnLMVEBcv5NiXA00WmXMxzgAQG
+         yP/Ka6zvDEgHREPyGofYQQT7p2i43So590ttaJU5eSUDQANzaxWv3dNAM2twUAC1RCMa
+         lKNRXVBFwDngH3hToJboiuj8V/N2MMGyZfAMNkiR1KE70daMXaCtebUIxKvK5Mn88Xay
+         n66z1QOYQjlp9JAJZa5dP7uMyb0Gt4IpaQqRqyHC8fj7RU7pt6wi058WW9z7PeTZ6+j7
+         4tMkQog49tL6OXvvvU9cjxUToddokwNvKMurgm6qyBgjnfNb+ofH6yxDG9gC6HrJivR9
+         en9Q==
+X-Received: by 10.152.179.227 with SMTP id dj3mr393411lac.0.1405611495902;
         Thu, 17 Jul 2014 08:38:15 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.105.33 with SMTP id gj1ls448592wib.33.gmail; Thu, 17 Jul
+Received: by 10.152.42.134 with SMTP id o6ls225489lal.4.gmail; Thu, 17 Jul
  2014 08:38:14 -0700 (PDT)
-X-Received: by 10.180.89.100 with SMTP id bn4mr1353091wib.0.1405611494530;
+X-Received: by 10.152.87.226 with SMTP id bb2mr3031712lab.5.1405611494806;
         Thu, 17 Jul 2014 08:38:14 -0700 (PDT)
 Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id r13si375101wib.0.2014.07.17.08.38.14
+        by gmr-mx.google.com with ESMTP id o6si608385wij.1.2014.07.17.08.38.14
         for <msysgit@googlegroups.com>;
         Thu, 17 Jul 2014 08:38:14 -0700 (PDT)
 Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
 Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 608C31C01A4; Thu, 17 Jul 2014 17:38:14 +0200 (CEST)
+	id 7E92E1C01AB; Thu, 17 Jul 2014 17:38:14 +0200 (CEST)
 X-Mailer: git-send-email 1.7.10.4
 In-Reply-To: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
 X-Original-Sender: kasal@ucw.cz
@@ -63,100 +63,156 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253746>
 
 From: Karsten Blees <blees@dcon.de>
 
-All functions that modify the environment have memory leaks.
-
-Disable gitunsetenv in the Makefile and use env_setenv (via mingw_putenv)
-instead (this frees removed environment entries).
-
-Move xstrdup from env_setenv to make_augmented_environ, so that
-mingw_putenv no longer copies the environment entries (according to POSIX
-[1], "the string [...] shall become part of the environment"). This also
-fixes the memory leak in gitsetenv, which expects a POSIX compliant putenv.
-
-[1] http://pubs.opengroup.org/onlinepubs/009695399/functions/putenv.html
-
-Note: This patch depends on taking control of char **environ and having
-our own mingw_putenv (both introduced in "Win32: Unicode environment
-(incoming)").
+Move environment array reallocation from do_putenv to the respective
+callers. Keep track of the environment size in a global variable. Use
+ALLOC_GROW in mingw_putenv to reduce reallocations. Allocate a
+sufficiently sized environment array in make_environment_block to prevent
+reallocations.
 
 Signed-off-by: Karsten Blees <blees@dcon.de>
 Signed-off-by: Stepan Kasal <kasal@ucw.cz>
 ---
- compat/mingw.c   | 10 ++++++----
- compat/mingw.h   |  1 +
- config.mak.uname |  2 --
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ compat/mingw.c | 62 +++++++++++++++++++++++++++++++++-------------------------
+ 1 file changed, 35 insertions(+), 27 deletions(-)
 
 diff --git a/compat/mingw.c b/compat/mingw.c
-index eadba8a..47e866c 100644
+index ffff592..e63fd6a 100644
 --- a/compat/mingw.c
 +++ b/compat/mingw.c
-@@ -1219,14 +1219,14 @@ static char **env_setenv(char **env, const char *name)
- 			for (i = 0; env[i]; i++)
- 				;
- 			env = xrealloc(env, (i+2)*sizeof(*env));
--			env[i] = xstrdup(name);
-+			env[i] = (char*) name;
- 			env[i+1] = NULL;
+@@ -898,7 +898,12 @@ static char *path_lookup(const char *cmd, char **path, int exe_only)
+ 	return prog;
+ }
+ 
+-static char **do_putenv(char **env, const char *name, int free_old);
++static int do_putenv(char **env, const char *name, int size, int free_old);
++
++/* used number of elements of environ array, including terminating NULL */
++static int environ_size = 0;
++/* allocated size of environ array, in bytes */
++static int environ_alloc = 0;
+ 
+ static int compareenv(const void *a, const void *b)
+ {
+@@ -914,31 +919,28 @@ static int compareenv(const void *a, const void *b)
+ static wchar_t *make_environment_block(char **deltaenv)
+ {
+ 	wchar_t *wenvblk = NULL;
+-	int count = 0;
+-	char **e, **tmpenv;
+-	int size = 0, wenvsz = 0, wenvpos = 0;
++	char **tmpenv;
++	int i = 0, size = environ_size, wenvsz = 0, wenvpos = 0;
+ 
+-	while (environ[count])
+-		count++;
++	while (deltaenv && deltaenv[i])
++		i++;
+ 
+-	/* copy the environment */
+-	tmpenv = xmalloc(sizeof(*tmpenv) * (count + 1));
+-	memcpy(tmpenv, environ, sizeof(*tmpenv) * (count + 1));
++	/* copy the environment, leaving space for changes */
++	tmpenv = xmalloc((size + i) * sizeof(char*));
++	memcpy(tmpenv, environ, size * sizeof(char*));
+ 
+ 	/* merge supplied environment changes into the temporary environment */
+-	for (e = deltaenv; e && *e; e++)
+-		tmpenv = do_putenv(tmpenv, *e, 0);
++	for (i = 0; deltaenv && deltaenv[i]; i++)
++		size = do_putenv(tmpenv, deltaenv[i], size, 0);
+ 
+ 	/* environment must be sorted */
+-	for (count = 0; tmpenv[count]; )
+-		count++;
+-	qsort(tmpenv, count, sizeof(*tmpenv), compareenv);
++	qsort(tmpenv, size - 1, sizeof(char*), compareenv);
+ 
+ 	/* create environment block from temporary environment */
+-	for (e = tmpenv; *e; e++) {
+-		size = 2 * strlen(*e) + 2; /* +2 for final \0 */
++	for (i = 0; tmpenv[i]; i++) {
++		size = 2 * strlen(tmpenv[i]) + 2; /* +2 for final \0 */
+ 		ALLOC_GROW(wenvblk, (wenvpos + size) * sizeof(wchar_t), wenvsz);
+-		wenvpos += xutftowcs(&wenvblk[wenvpos], *e, size) + 1;
++		wenvpos += xutftowcs(&wenvblk[wenvpos], tmpenv[i], size) + 1;
+ 	}
+ 	/* add final \0 terminator */
+ 	wenvblk[wenvpos] = 0;
+@@ -1205,19 +1207,19 @@ static int lookupenv(char **env, const char *name, size_t nmln)
+ 
+ /*
+  * If name contains '=', then sets the variable, otherwise it unsets it
++ * Size includes the terminating NULL. Env must have room for size + 1 entries
++ * (in case of insert). Returns the new size. Optionally frees removed entries.
+  */
+-static char **do_putenv(char **env, const char *name, int free_old)
++static int do_putenv(char **env, const char *name, int size, int free_old)
+ {
+ 	char *eq = strchrnul(name, '=');
+ 	int i = lookupenv(env, name, eq-name);
+ 
+ 	if (i < 0) {
+ 		if (*eq) {
+-			for (i = 0; env[i]; i++)
+-				;
+-			env = xrealloc(env, (i+2)*sizeof(*env));
+-			env[i] = (char*) name;
+-			env[i+1] = NULL;
++			env[size - 1] = (char*) name;
++			env[size] = NULL;
++			size++;
  		}
  	}
  	else {
- 		free(env[i]);
+@@ -1225,11 +1227,13 @@ static char **do_putenv(char **env, const char *name, int free_old)
+ 			free(env[i]);
  		if (*eq)
--			env[i] = xstrdup(name);
-+			env[i] = (char*) name;
- 		else
+ 			env[i] = (char*) name;
+-		else
++		else {
  			for (; env[i]; i++)
  				env[i] = env[i+1];
-@@ -1241,8 +1241,10 @@ char **make_augmented_environ(const char *const *vars)
- {
- 	char **env = copy_environ();
- 
--	while (*vars)
--		env = env_setenv(env, *vars++);
-+	while (*vars) {
-+		const char *v = *vars++;
-+		env = env_setenv(env, strchr(v, '=') ? xstrdup(v) : v);
-+	}
- 	return env;
++			size--;
++		}
+ 	}
+-	return env;
++	return size;
  }
  
-diff --git a/compat/mingw.h b/compat/mingw.h
-index c3889ca..ef94194 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -212,6 +212,7 @@ char *mingw_getenv(const char *name);
- #define getenv mingw_getenv
- int mingw_putenv(const char *namevalue);
- #define putenv mingw_putenv
-+#define unsetenv mingw_putenv
+ #undef getenv
+@@ -1247,7 +1251,8 @@ char *mingw_getenv(const char *name)
  
- int mingw_gethostname(char *host, int namelen);
- #define gethostname mingw_gethostname
-diff --git a/config.mak.uname b/config.mak.uname
-index 00cf4c6..15ee15e 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -327,7 +327,6 @@ ifeq ($(uname_S),Windows)
- 	NO_IPV6 = YesPlease
- 	NO_UNIX_SOCKETS = YesPlease
- 	NO_SETENV = YesPlease
--	NO_UNSETENV = YesPlease
- 	NO_STRCASESTR = YesPlease
- 	NO_STRLCPY = YesPlease
- 	NO_MEMMEM = YesPlease
-@@ -480,7 +479,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_SYMLINK_HEAD = YesPlease
- 	NO_UNIX_SOCKETS = YesPlease
- 	NO_SETENV = YesPlease
--	NO_UNSETENV = YesPlease
- 	NO_STRCASESTR = YesPlease
- 	NO_STRLCPY = YesPlease
- 	NO_MEMMEM = YesPlease
+ int mingw_putenv(const char *namevalue)
+ {
+-	environ = do_putenv(environ, namevalue, 1);
++	ALLOC_GROW(environ, (environ_size + 1) * sizeof(char*), environ_alloc);
++	environ_size = do_putenv(environ, namevalue, environ_size, 1);
+ 	return 0;
+ }
+ 
+@@ -2047,7 +2052,9 @@ void mingw_startup()
+ 		maxlen = max(maxlen, wcslen(wenv[i]));
+ 
+ 	/* nedmalloc can't free CRT memory, allocate resizable environment list */
+-	environ = xcalloc(i + 1, sizeof(char*));
++	environ = NULL;
++	environ_size = i + 1;
++	ALLOC_GROW(environ, environ_size * sizeof(char*), environ_alloc);
+ 
+ 	/* allocate buffer (wchar_t encodes to max 3 UTF-8 bytes) */
+ 	maxlen = 3 * maxlen + 1;
+@@ -2064,6 +2071,7 @@ void mingw_startup()
+ 		len = xwcstoutf(buffer, wenv[i], maxlen);
+ 		environ[i] = xmemdupz(buffer, len);
+ 	}
++	environ[i] = NULL;
+ 	free(buffer);
+ 
+ 	/* initialize critical section for waitpid pinfo_t list */
 -- 
 2.0.0.9635.g0be03cb
 
