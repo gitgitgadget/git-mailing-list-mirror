@@ -1,116 +1,102 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: [PATCH 00/13] mingw unicode environment
-Date: Thu, 17 Jul 2014 21:24:17 +0200
-Message-ID: <53C822E1.9020003@gmail.com>
-References: <1405611486-10176-1-git-send-email-kasal@ucw.cz> <53C8115D.8040505@gmail.com> <xmqqfvhzq22x.fsf@gitster.dls.corp.google.com> <20140717190000.GA18960@ucw.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>
-To: Stepan Kasal <kasal@ucw.cz>, Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCH3XYXLXQDBBX6FUCPAKGQEHFWMXHA@googlegroups.com Thu Jul 17 21:24:18 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBBX6FUCPAKGQEHFWMXHA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wg0-f55.google.com ([74.125.82.55])
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: [PATCH] hooks/post-receive-email: do not truncate messages at a '.' line
+Date: Thu, 17 Jul 2014 12:26:29 -0700
+Message-ID: <53b2ad7801889b49f04cb0ae7b0b37b@74d39fa044aa309eaea14b9f57fe79c>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 21:26:41 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBBX6FUCPAKGQEHFWMXHA@googlegroups.com>)
-	id 1X7rHs-0008WT-RG
-	for gcvm-msysgit@m.gmane.org; Thu, 17 Jul 2014 21:24:16 +0200
-Received: by mail-wg0-f55.google.com with SMTP id b13sf309690wgh.10
-        for <gcvm-msysgit@m.gmane.org>; Thu, 17 Jul 2014 12:24:16 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X7rKB-00018r-6Y
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 21:26:39 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752657AbaGQT0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2014 15:26:35 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:64057 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752477AbaGQT0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2014 15:26:34 -0400
+Received: by mail-pa0-f41.google.com with SMTP id rd3so3415340pab.14
+        for <git@vger.kernel.org>; Thu, 17 Jul 2014 12:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=ma4aDLr9Re03Lq+pLiHbkFCQ81r9vxCcwrGDxtQgSCU=;
-        b=i1XO6X6fLeuZ3kCkKgWY8J0W7ErcFPcQrbytv1bwxPyHjTbA3fP18TjaAlTNIHHT2e
-         X2AjOdjJvfVSKWoticAY5qiGkxXrSRFAqVVvW5EXpGlkSi+osMob7nvpMn3anLT+aF/o
-         TYMezXuCnuaAcO60oS0+KLjL5GPDQ0IEu7EMAeBaSFA5SN5URREbrTY6IVgMypyeDbNX
-         4WAxQuaVHl3zTP4loUdBqOwkJ/5cUTe4NmAXxfV6oyuNio/Bf+YqVDWjWzVmmYhEBQzS
-         Wl/nwJYIrxwW6byu0BTTkIJS1ut0bwAZzCQl7J81AvZzRLIrZDG1aZ26PM7TxYl9cifU
-         nkrw==
-X-Received: by 10.152.5.168 with SMTP id t8mr21716lat.37.1405625056496;
-        Thu, 17 Jul 2014 12:24:16 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.26.130 with SMTP id l2ls177244lag.6.gmail; Thu, 17 Jul
- 2014 12:24:15 -0700 (PDT)
-X-Received: by 10.112.60.36 with SMTP id e4mr4008210lbr.9.1405625055284;
-        Thu, 17 Jul 2014 12:24:15 -0700 (PDT)
-Received: from mail-we0-x22f.google.com (mail-we0-x22f.google.com [2a00:1450:400c:c03::22f])
-        by gmr-mx.google.com with ESMTPS id x7si411910wiw.1.2014.07.17.12.24.15
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Jul 2014 12:24:15 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22f as permitted sender) client-ip=2a00:1450:400c:c03::22f;
-Received: by mail-we0-f175.google.com with SMTP id t60so3605301wes.34
-        for <msysgit@googlegroups.com>; Thu, 17 Jul 2014 12:24:15 -0700 (PDT)
-X-Received: by 10.180.211.71 with SMTP id na7mr23121608wic.55.1405625055148;
-        Thu, 17 Jul 2014 12:24:15 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id n2sm8230378wjf.40.2014.07.17.12.24.13
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=1306/yGY/7FDoCMdeXosoerwYwSigQ+PZiMXwklqzp4=;
+        b=HQL1aGE6rWvKaKQp/CMJrwf+yRdHRFgiMYWwi97Ra3kJL1/qNwHTFgNAnADymYX4Dn
+         QOzYQ9vJsXxzkKZLzSiyQjmVwFN7DoILkHUyGgm6kp+VNq1xxKl2pkTK75nBIhMevtdE
+         Yh7WBEKdR1PrIzuQGhG69Q8rViURE4+e55D4HxPfP4IGXL+1L5b6Hjdm9ehVRHF7AOYM
+         iQHTvKLVoANmY+qVwInwc0amJfOTcA0+D+7QEDcqX8/6lxKFHfQ6M02lo7Xf7jMQnBpi
+         DOGQOSa16Car5ow75xW1gale7ZbTQCGViWxzKe5iFOG7CgS6uxJt8IPALOLGHwdiZCU1
+         GAzQ==
+X-Received: by 10.66.66.225 with SMTP id i1mr39939641pat.0.1405625194347;
+        Thu, 17 Jul 2014 12:26:34 -0700 (PDT)
+Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id ey10sm4387173pdb.50.2014.07.17.12.26.33
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 17 Jul 2014 12:24:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <20140717190000.GA18960@ucw.cz>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c03::22f
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253773>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Jul 2014 12:26:33 -0700 (PDT)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253774>
 
-Am 17.07.2014 21:00, schrieb Stepan Kasal:
-> Hi,
-> 
->> Karsten Blees <karsten.blees@gmail.com> writes:
->>> I believe we prefer moving code to the right place over forward
->>> declarations (IIRC I got bashed for the latter in one of the first rounds
->>> of this patch series). If only to justify 'git-blame -M' :-D
-> 
-> indeed, my position is the same, generally.
-> 
-> But it turned out that the current ordering is sane, mostly works as it is,
-> and I needed _only one_ fwd decl to make things compile.  This is why I
-> decided to have things arranged this way.
-> 
+When sendmail is reading an incoming message, by default it will
+terminate it if it reads a dot on a line by itself.
 
-Fine with me.
+The post-receive-email script can generate such a line if the
+message in a tag object contains a dot ('.') on a line by itself.
 
-However, if it *did* compile for you, I wonder where ALLOC_GROW (as of #02/13)
-and alloc_nr (as of #10/13) came from? Or did we recently remove '#include "cache.h"'
-from upstream mingw.c?
+There are two options to turn off this behavior, -i and -oi which
+are equivalent.
 
+The choice of which to use is based on the observation that -i
+appears to be the more commonly used option for this and that all
+current sendmail-compatible programs appear to accept both.
+
+Therefore add the -i option to the invocations of /usr/sbin/sendmail
+to avoid prematurely terminating the input message at the occurence
+of a dot ('.') on a line by itself.
+
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
+
+BTW, what is the status of post-receive-email?
+
+I find it quite useful for a minimal server that only needs Git
+binaries and a POSIX shell.
+
+The only real issue with it I'm aware of is that if multiple
+branch heads are updated in a single push and two or more
+contain the same new revison(s), those revision(s) will be
+incorrectly omitted from the emails sent out.
+
+I have a patch to correct that, but it's not quite as simple
+as this patch and would need more review, so I don't really
+want to send it out and waste folks' time if there's no interest
+in picking up updates to contrib/hooks/post-receive-email.
+
+ contrib/hooks/post-receive-email | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 8747b843..6207be60 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -704,9 +704,9 @@ limit_lines()
+ send_mail()
+ {
+ 	if [ -n "$envelopesender" ]; then
+-		/usr/sbin/sendmail -t -f "$envelopesender"
++		/usr/sbin/sendmail -i -t -f "$envelopesender"
+ 	else
+-		/usr/sbin/sendmail -t
++		/usr/sbin/sendmail -i -t
+ 	fi
+ }
+ 
 -- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+1.8.5
