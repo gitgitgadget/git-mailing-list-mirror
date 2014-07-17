@@ -1,72 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] hooks/post-receive-email: do not truncate messages at a '.' line
-Date: Thu, 17 Jul 2014 12:36:13 -0700
-Message-ID: <xmqq38dzpykx.fsf@gitster.dls.corp.google.com>
-References: <53b2ad7801889b49f04cb0ae7b0b37b@74d39fa044aa309eaea14b9f57fe79c>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [PATCH v2 3/4] use new config API for worktree
+ configurations of submodules
+Date: Thu, 17 Jul 2014 21:53:46 +0200
+Message-ID: <20140717195346.GA23563@sandbox-ub>
+References: <20140628095800.GA89729@book.hvoigt.net>
+ <20140628100321.GD89729@book.hvoigt.net>
+ <xmqqy4w38v6r.fsf@gitster.dls.corp.google.com>
+ <20140709195547.GA3081@sandbox-ub>
+ <xmqqegxu9ojh.fsf@gitster.dls.corp.google.com>
+ <20140714205759.GA3682@sandbox-ub>
+ <xmqqfvi2tfj2.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>
-To: "Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 17 21:36:28 2014
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>, "W. Trevor King" <wking@tremily.us>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karsten Blees <karsten.blees@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jul 17 21:55:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X7rTf-0004wb-GS
-	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 21:36:27 +0200
+	id 1X7rm7-00042g-MV
+	for gcvg-git-2@plane.gmane.org; Thu, 17 Jul 2014 21:55:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752355AbaGQTgY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 17 Jul 2014 15:36:24 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55522 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751758AbaGQTgX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 17 Jul 2014 15:36:23 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AED5F299A6;
-	Thu, 17 Jul 2014 15:36:22 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8TQ/ZHSBKjM+iznwlIkBSs6eFpg=; b=mr6Rl/
-	rRANG+lR1QrNyID+88FBkZcHqp6AhlZ6uW0QOFZniJXq0OHsClPZ3gQVswDjb0k0
-	pqjL5cuUt1VjOjk1PLf1ot9Fn9aEzFxjX0+WxqyxZjwIHf+bUBCmGcxUKjsKii4k
-	N+AJvgMyLUn+ti3FAlv0Ae1+/ldCkB81fEH2U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mnnSkCRoBAUAZfIOR6WlOSG31yKchbsk
-	fhpmFIsr5RyZi6ewO1vm0z3jaZwXUAICUQcWuxljIKxbNOhoC1O0pCy6zaQKBTqf
-	/8ltINzIgmRSiDDgtHTviX5aAa47+LFhJevOkScAB9z1FUEXL6ZyeS/8b7UkcCVU
-	riSJg6TVikk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A43C0299A5;
-	Thu, 17 Jul 2014 15:36:22 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6991F29995;
-	Thu, 17 Jul 2014 15:36:15 -0400 (EDT)
-In-Reply-To: <53b2ad7801889b49f04cb0ae7b0b37b@74d39fa044aa309eaea14b9f57fe79c>
-	(Kyle J. McKay's message of "Thu, 17 Jul 2014 12:26:29 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9DD438F0-0DE9-11E4-A29A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753563AbaGQTz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 17 Jul 2014 15:55:27 -0400
+Received: from smtprelay02.ispgateway.de ([80.67.31.29]:50678 "EHLO
+	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752894AbaGQTz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 17 Jul 2014 15:55:27 -0400
+Received: from [37.4.179.65] (helo=sandbox-ub)
+	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <hvoigt@hvoigt.net>)
+	id 1X7rkW-0003KR-Tb; Thu, 17 Jul 2014 21:53:53 +0200
+Content-Disposition: inline
+In-Reply-To: <xmqqfvi2tfj2.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Df-Sender: aHZvaWd0QGh2b2lndC5uZXQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253776>
 
-"Kyle J. McKay" <mackyle@gmail.com> writes:
+On Tue, Jul 15, 2014 at 03:37:21PM -0700, Junio C Hamano wrote:
+> Heiko Voigt <hvoigt@hvoigt.net> writes:
+> 
+> >> Can there be any caller that include and use submodule-config.h that
+> >> does not need anythjing from submodule.h?  Or vice versa?
+> >> 
+> >> It just did not look like these two headers describe independent
+> >> subsystems but they almost always have to go hand-in-hand.  And if
+> >> that is the case, perhaps it is not such a good idea to add it as a
+> >> new header.  That was where my question came from.
+> >
+> > The reason for a separate module was because we add quite some lines of
+> > code for it.
+> >
+> > $ wc -l submodule.c
+> > 1068 submodule.c
+> > $ wc -l submodule-config.c 
+> > 435 submodule-config.c
+> >
+> > Because of this I would like to keep the c-files separate.
+> 
+> OK.  I do not feel too strongly.  It just looked odd that a change
+> needs to add a new header file without having to change the code in
+> existing files at all.
+> 
+> Any other thing that still needs fixing in the series, or is it now
+> ready for 'next'?
 
-> There are two options to turn off this behavior, -i and -oi which
-> are equivalent.
->
-> The choice of which to use is based on the observation that -i
-> appears to be the more commonly used option for this and that all
-> current sendmail-compatible programs appear to accept both.
+All comments addressed. From my side it should be ready for next.
 
-OK; I suspect some just accept but ignore, though.
-
-> BTW, what is the status of post-receive-email?
-
-I do not use either, but some people seem to consider multimail its
-successor, so enhancements may have a wider audience there.
+Cheers Heiko
