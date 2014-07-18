@@ -1,110 +1,74 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: [PATCH] checkout: indicate when a detached head is checked out
- for a branch
-Date: Fri, 18 Jul 2014 23:54:37 +0200
-Message-ID: <1405720477.13250.8.camel@spirit>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] checkout: indicate when a detached head is checked out for a branch
+Date: Fri, 18 Jul 2014 15:18:38 -0700
+Message-ID: <xmqqpph2l39d.fsf@gitster.dls.corp.google.com>
 References: <35dbe7e3f3e4566d775bea19d816adc44db8ed5c.1405676303.git.git@drmicha.warpmail.net>
-	 <xmqqr41imuwk.fsf@gitster.dls.corp.google.com>
+	<xmqqr41imuwk.fsf@gitster.dls.corp.google.com>
+	<1405720477.13250.8.camel@spirit>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	=?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc?= Duy 
-	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 23:54:46 2014
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Sat Jul 19 00:18:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8G72-00073b-Pj
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 23:54:45 +0200
+	id 1X8GUN-0008IF-Ih
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 00:18:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934840AbaGRVyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2014 17:54:41 -0400
-Received: from mail-we0-f182.google.com ([74.125.82.182]:59579 "EHLO
-	mail-we0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932112AbaGRVyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2014 17:54:40 -0400
-Received: by mail-we0-f182.google.com with SMTP id k48so3907342wev.41
-        for <git@vger.kernel.org>; Fri, 18 Jul 2014 14:54:39 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=ZYxWiAeEKw7OLvc6r28HDhqp7p91ymJuLHzrg4mwTnI=;
-        b=OayzS2ytKCDBZqybX6lp3t01jONahEGmpyUOX4BoyjqJhpiLbxoCVvTa19DdL6v9la
-         TPhy+56CYb07FlUaTB8aqpbOyOnLE4TVXzhBAYDZ97lGohrlK2dbbJ6lrCyUQqFFPis9
-         OxszIko1LxxJQUmdRM9wjtWvE2PUb7BltCJFSWD8rGZRrG3NX729oISgXVgejEdPCzEi
-         MUOFr8/V53yRfEUJLwtvtMq2iDuN3ue2cloD7ZfYLzeiZlVZ3dyWRcAVTSqBHa68xz4w
-         IN33Z/G6+XpAaMl/RrMbHqaGNKKmOFqeBZbKyNi5+g1f8vOzsHKOO1YhQR1AKjxelQKe
-         OGvg==
-X-Gm-Message-State: ALoCoQljfiUquo9mOamEW5wpXnzSQRO707qhO6zjD782DDHxLiqe15/dVFcZxERnC1TnoTUV3VcN
-X-Received: by 10.180.211.71 with SMTP id na7mr34369647wic.55.1405720479383;
-        Fri, 18 Jul 2014 14:54:39 -0700 (PDT)
-Received: from [10.42.1.3] (195-240-45-142.ip.telfort.nl. [195.240.45.142])
-        by mx.google.com with ESMTPSA id n2sm17116232wjf.40.2014.07.18.14.54.37
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 18 Jul 2014 14:54:38 -0700 (PDT)
-In-Reply-To: <xmqqr41imuwk.fsf@gitster.dls.corp.google.com>
-X-Mailer: Evolution 3.10.4-0ubuntu1 
+	id S1756981AbaGRWSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2014 18:18:47 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63084 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754958AbaGRWSq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2014 18:18:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3132E28459;
+	Fri, 18 Jul 2014 18:18:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QRqXaUwBvcBeoMs0Jkk66YQe+v0=; b=GG6DUg
+	sm4l7eoFEZEztSNn2STlR1+qPfRzW//EAacufjFl9gmRl0Z6iEMCRZHUhU5rQ+jA
+	+M+t0h9ZDASN4RWmOwdJ2bQFRckNMcHP9NippGcs2O8NxLZxtfPwb45b/3/SKRhP
+	iDRaUikO4YxFyiycE0zmhjPxW4J7ynDmxm1q0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rIb5d2wt3inC9i9HAp3vaItNIb6JqsI1
+	OmKb/goJugtrrPGxs1Q6aT1XWHD5bIxR0vig1VDN82KmerrgNRBT187lMUsksRWU
+	CGeTghQpiq5tPu/lZzzJPeFTHySMb9m2Wa0i3skJDySkbY56VmGYVts31ILu47QD
+	xSAv7ctk74g=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2821028457;
+	Fri, 18 Jul 2014 18:18:46 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4D0C42844B;
+	Fri, 18 Jul 2014 18:18:40 -0400 (EDT)
+In-Reply-To: <1405720477.13250.8.camel@spirit> (Dennis Kaarsemaker's message
+	of "Fri, 18 Jul 2014 23:54:37 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 78A56942-0EC9-11E4-AC79-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253852>
 
-On vr, 2014-07-18 at 10:36 -0700, Junio C Hamano wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
-> > I really like the new --to feature and will convert all my "new workdir"
-> > checkouts to that. But that detached checkout is so easy to miss - in fact
-> > I noticed it only when I compared "new-workdir" to "checkout --to" for a
-> > test repo with one branch, to see what a converter would need to do.
-> >
-> > I'm even wondering whether we should do this DWIMmery at all, given how
-> > "dangerous" a detached head is for those who are not aware of it
-> > before gc kicks in.
-> 
-> As long as the amount of warning about 'detached HEAD' is about the
-> same between this case and a "git checkout v1.2.3" in a normal
-> repository, I do not think there is no additional "danger" you need
-> to be worried about.
-> 
-> But I do agree that there should not be any DWIM here.
-> 
-> The reason to introduce this new set of rather intrusive changes is
-> so that working trees can be aware of branches other working trees
-> have checked out.  And the whole point of wanting to have that
-> mutual awareness is to enable us to forbid users from mucking with
-> the same branch from two different places.
-> 
-> But Git is not in the position to dictate which alternative action
-> the user would want to take, when her "git checkout foo" is
-> prevented by this mechanism.  In one scenario, she may say "I only
-> wanted to take a peek" and run "git checkout foo^0" instead.  In
-> another, she may say "Ah, I forgot I already was doing this change
-> in the other one" and run "cd ../foo".  There may be other classes
-> of alternative actions.
-> 
-> Don't make it easier for the first class of scenario and make it
-> less useful and more dangerous for the second class, especially the
-> second class involve forgetful users who are likely to forget seeing
-> the "we've warned you that we detached without being asked" message.
-> 
-> Please fix it to always just error out.
+Dennis Kaarsemaker <dennis@kaarsemaker.net> writes:
 
-I really would appreciate it if it wouldn't always error out. Erroring
-out by default is fine, but please keep it overridable. 
+> My use case for this is checking out the same branch (or commit, so
+> already on a detached HEAD) in multiple different places to run
+> independent actions (e.g. make test with different compiler options, or
+> creating several different packages) and I would really appreciate it if
+> that would keep working.
 
-My use case for this is checking out the same branch (or commit, so
-already on a detached HEAD) in multiple different places to run
-independent actions (e.g. make test with different compiler options, or
-creating several different packages) and I would really appreciate it if
-that would keep working.
-
--- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+I do not have any problem if multiple working trees have the same
+commit checked out on their own detached HEADs at all.  The "should
+error out" was solely for the case where the user asked not to detach
+but to obtain a state where a named branch is checked out.  In such
+a case, the command should not turn it into a detached HEAD, with or
+without a warning.
