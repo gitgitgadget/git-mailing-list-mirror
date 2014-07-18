@@ -1,103 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Max Kirillov <max@max630.net>
 Subject: Re: [PATCH] checkout: indicate when a detached head is checked out
  for a branch
-Date: Fri, 18 Jul 2014 15:27:50 +0200
-Message-ID: <53C920D6.80104@drmicha.warpmail.net>
-References: <35dbe7e3f3e4566d775bea19d816adc44db8ed5c.1405676303.git.git@drmicha.warpmail.net> <CACsJy8CG17tzWWO27Pv2c+CjDyYiYATzgBSFfMBaugYgQfZQ5g@mail.gmail.com>
+Date: Fri, 18 Jul 2014 17:13:29 +0300
+Message-ID: <CAF7_NFRdDi_dgsooX8o9J12h39yGamoKUW4djZ0=arMrxBZbdg@mail.gmail.com>
+References: <35dbe7e3f3e4566d775bea19d816adc44db8ed5c.1405676303.git.git@drmicha.warpmail.net>
+	<CACsJy8CG17tzWWO27Pv2c+CjDyYiYATzgBSFfMBaugYgQfZQ5g@mail.gmail.com>
+	<53C920D6.80104@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 15:28:16 2014
+X-From: git-owner@vger.kernel.org Fri Jul 18 16:13:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X88Cp-0006Ga-1L
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 15:28:11 +0200
+	id 1X88un-000051-UN
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 16:13:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935133AbaGRN2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2014 09:28:06 -0400
-Received: from out3-smtp.messagingengine.com ([66.111.4.27]:47926 "EHLO
-	out3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932093AbaGRN2D (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jul 2014 09:28:03 -0400
-Received: from compute4.internal (compute4.nyi.mail.srv.osa [10.202.2.44])
-	by gateway1.nyi.mail.srv.osa (Postfix) with ESMTP id 7B3092187B;
-	Fri, 18 Jul 2014 09:28:02 -0400 (EDT)
-Received: from frontend2 ([10.202.2.161])
-  by compute4.internal (MEProxy); Fri, 18 Jul 2014 09:28:02 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
-	messagingengine.com; h=message-id:date:from:mime-version:to:cc
-	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=qGHwpjtkpU3mhlftSBEmbd
-	hn7Zc=; b=lR46U2BghIUVnltQZ2MQigOMLjjV1dnrIJCtYq/qOukxFPO6aK9RKi
-	2rNilwvA40mNcxDsl/CCpCiMlmyAZj4D5ENi6mENgWUAUYujt/PgPtBIBCsG1i4J
-	8WjjkXsQrhKUD/pRmh7scYa5aI7zVnLzyqnwqtlwBqrKc9P2SFMfw=
-X-Sasl-enc: StcJgMWV4J2roGYghGgmTLEwHSyFmvYkdxDYRcIm2oN4 1405690081
-Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id A0DC6680156;
-	Fri, 18 Jul 2014 09:28:01 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CACsJy8CG17tzWWO27Pv2c+CjDyYiYATzgBSFfMBaugYgQfZQ5g@mail.gmail.com>
+	id S934936AbaGRONd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2014 10:13:33 -0400
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:40649 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934792AbaGRONc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2014 10:13:32 -0400
+Received: by mail-vc0-f169.google.com with SMTP id hu12so7531320vcb.0
+        for <git@vger.kernel.org>; Fri, 18 Jul 2014 07:13:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=XfJnzbYss/Spq79O5vmETuhh2m3l6M0DLahEicjQsjY=;
+        b=f3K0CkXHWqd3lmrcAvJe0IpM0WoRVt9lSbwZ4IjHsEOQpVewnd875A0oid/iGd82CE
+         jdLA2kKwbRpWTl5aDtCQuYYw0NTsnZABUCpxCacYsbUW39WUcp9a0gUMucR3Wx/IRVFJ
+         1Y5yiAbhXjDTunBV8z3KkRLOR+NrQfUMysyyPibmHxHMGWYW69hxmO0K/7MxUhocte0j
+         0Z/ApxupsVK/EyDx+lHI7FPvaEncsatm1sO1OxKFZtKTEgJY0XQMfzO0Ng7Z9C+nNxSE
+         UFVYJxqAYhobAOgXGn5pgVfythjoaWHajzo/KPQlJfWoOMSbnGDsQrKeUD31UAYOMg+n
+         vlHg==
+X-Received: by 10.52.244.138 with SMTP id xg10mr5299415vdc.40.1405692810003;
+ Fri, 18 Jul 2014 07:13:30 -0700 (PDT)
+Received: by 10.58.234.194 with HTTP; Fri, 18 Jul 2014 07:13:29 -0700 (PDT)
+In-Reply-To: <53C920D6.80104@drmicha.warpmail.net>
+X-Google-Sender-Auth: COBAYA-O71toD-bWu518QkEWmac
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253819>
 
-Duy Nguyen venit, vidit, dixit 18.07.2014 12:58:
-> On Fri, Jul 18, 2014 at 4:50 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> I really like the new --to feature and will convert all my "new workdir"
->> checkouts to that. But that detached checkout is so easy to miss - in fact
->> I noticed it only when I compared "new-workdir" to "checkout --to" for a
->> test repo with one branch, to see what a converter would need to do.
->>
->> I'm even wondering whether we should do this DWIMmery at all,
-> 
-> This is what this series needs, user's opinions (bad or good). The
-> other option is abort the checkout immediately. I think I made detach
-> behavior default is because it's more work (and needs to be proven
-> feasible). How about a config key that lets user decide what to do
-> here, abort or detach. We may change the default behavior too if
-> people think the current one is not good.
+Hi.
 
-Uh, config bloat :)
+On Fri, Jul 18, 2014 at 4:27 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Duy Nguyen venit, vidit, dixit 18.07.2014 12:58:
+>> This is what this series needs, user's opinions (bad or good).
 
-I think DWIMmery is OK if it's made clear to the user what happened, and
-it is somewhat expected/probably intended behavior.
+Actually, if options "-b branch" works with the "--to" (does it?), then user
+probably shouldn't need to create detached checkouts (I need them
+only for scripts), so this action is probably a mistake. And when user
+does want to create detached checkout he can use the "--detach" option.
 
-Do we have a precedent where a detached head is produced when a branch
-checkout is requested, or something similar? I think checking out remote
-tracking branches is somehow in that same boat.
+So I would say checkout of already checked out branch should fail, suggesting
+using "-b" or "--detach" options.
 
->> given how "dangerous" a detached head is for those who are not aware of it
->> before gc kicks in.
-> 
-> Wait, what danger are we talking about? I thought gc pays attention to
-> detached heads as well..
-
-As long as HEAD points to it, of course.
-
-I think detached head is one of the killer features of git, in both
-senses of the meaning...
-
-Don't we DWIM (or suggest) "git checkout origin/master" to "git checkout
---track origin/master" which creates master with upstream origin/master?
-
-Maybe I'm mixing things up, but I think we try to produce detached heads
-only on special requests. New users get confused by them, some don't
-understand the (well crafted) message you get when you switch away from
-them, and while you can recover them from HEAD's reflog, they are gone
-with the next gc unless they remain checked out (or get referenced).
-
-I think I've just convinced myself that we shouldn't DWIm to a detached
-head, and rather tell the user how to produce one if she really intended
-to: "git checkout --detach..." That one seems to be broken by multiple
-workdir setup (in the sense of producing an unnecessary hint).
-
-Michael
+-- 
+Max
