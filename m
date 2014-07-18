@@ -1,104 +1,87 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH v2] remote-testsvn: use internal argv_array of struct child_process
- in cmd_import()
-Date: Fri, 18 Jul 2014 21:55:16 +0200
-Message-ID: <53C97BA4.7020503@web.de>
-References: <53C93B33.5070006@web.de> <xmqq8unqmqk7.fsf@gitster.dls.corp.google.com> <53C975C5.8020709@web.de>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] Make locked paths absolute when current directory is
+ changed
+Date: Fri, 18 Jul 2014 22:44:07 +0200
+Message-ID: <53C98717.3060600@kdbg.org>
+References: <1405688937-22925-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 21:55:39 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 18 22:44:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8EFm-0005iu-23
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 21:55:38 +0200
+	id 1X8F0r-0006Pf-3k
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 22:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1946020AbaGRTze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2014 15:55:34 -0400
-Received: from mout.web.de ([212.227.15.3]:54471 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755035AbaGRTzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2014 15:55:33 -0400
-Received: from [192.168.178.27] ([79.250.167.186]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0MHpKH-1X6qg03ykH-003b7Y; Fri, 18 Jul 2014 21:55:30
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53C975C5.8020709@web.de>
-X-Provags-ID: V03:K0:M78Kfji19f+5gLWgbYe514G/yBZIHbwr7szc9Cx2w59gkkpMHUS
- FX5f1nv1uawEj40Hyr1iwBnOmRPqMU3RvWoZEuTRqvoQO3KCr6WwHWWmdsC4k1M9h/FDXhj
- oQRyiEGyXc52NfHirCfZb8eMkIhyo6LpplM+EXFrrbqIdUClLcu3nlgGQQyAk0ILEzaSFuI
- oB0x6QMIVMJawexoPRWYA==
+	id S1762178AbaGRUoM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 16:44:12 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:56725 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756032AbaGRUoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2014 16:44:12 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 1032A1300AB;
+	Fri, 18 Jul 2014 22:44:09 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 4FFE119F47C;
+	Fri, 18 Jul 2014 22:44:08 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <1405688937-22925-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253845>
 
-Use the existing argv_array member instead of providing our own.  This
-way we don't have to initialize or clean it up explicitly.  Because of
-that automatic cleanup, we need to keep our own reference to the
-command name instead of using .argv[0] to print the warning at the end.
+Am 18.07.2014 15:08, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
+> diff --git a/lockfile.c b/lockfile.c
+> index 8fbcb6a..a70d107 100644
+> --- a/lockfile.c
+> +++ b/lockfile.c
+> @@ -280,3 +280,19 @@ void rollback_lock_file(struct lock_file *lk)
+>  	}
+>  	lk->filename[0] =3D 0;
+>  }
+> +
+> +void make_locked_paths_absolute(void)
+> +{
+> +	struct lock_file *lk;
+> +	const char *abspath;
+> +	for (lk =3D lock_file_list; lk !=3D NULL; lk =3D lk->next) {
+> +		if (!lk->filename[0] || lk->filename[0] =3D=3D '/')
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-The added command pointer makes the patch more complicated, but I think
-it still counts as a cleanup.
+Please use is_absolute_path().
 
- remote-testsvn.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+> +			continue;
+> +		abspath =3D absolute_path(lk->filename);
+> +		if (strlen(abspath) >=3D sizeof(lk->filename))
+> +			warning("locked path %s is relative when current directory "
+> +				"is changed", lk->filename);
+> +		else
+> +			strcpy(lk->filename, abspath);
+> +	}
+> +}
 
-diff --git a/remote-testsvn.c b/remote-testsvn.c
-index 6be55cb..e3ad11b 100644
---- a/remote-testsvn.c
-+++ b/remote-testsvn.c
-@@ -175,8 +175,8 @@ static int cmd_import(const char *line)
- 	char *note_msg;
- 	unsigned char head_sha1[20];
- 	unsigned int startrev;
--	struct argv_array svndump_argv = ARGV_ARRAY_INIT;
- 	struct child_process svndump_proc;
-+	const char *command;
- 
- 	if (read_ref(private_ref, head_sha1))
- 		startrev = 0;
-@@ -200,17 +200,17 @@ static int cmd_import(const char *line)
- 		if(dumpin_fd < 0)
- 			die_errno("Couldn't open svn dump file %s.", url);
- 	} else {
-+		command = "svnrdump";
- 		memset(&svndump_proc, 0, sizeof(struct child_process));
- 		svndump_proc.out = -1;
--		argv_array_push(&svndump_argv, "svnrdump");
--		argv_array_push(&svndump_argv, "dump");
--		argv_array_push(&svndump_argv, url);
--		argv_array_pushf(&svndump_argv, "-r%u:HEAD", startrev);
--		svndump_proc.argv = svndump_argv.argv;
-+		argv_array_push(&svndump_proc.args, command);
-+		argv_array_push(&svndump_proc.args, "dump");
-+		argv_array_push(&svndump_proc.args, url);
-+		argv_array_pushf(&svndump_proc.args, "-r%u:HEAD", startrev);
- 
- 		code = start_command(&svndump_proc);
- 		if (code)
--			die("Unable to start %s, code %d", svndump_proc.argv[0], code);
-+			die("Unable to start %s, code %d", command, code);
- 		dumpin_fd = svndump_proc.out;
- 	}
- 	/* setup marks file import/export */
-@@ -226,8 +226,7 @@ static int cmd_import(const char *line)
- 	if (!dump_from_file) {
- 		code = finish_command(&svndump_proc);
- 		if (code)
--			warning("%s, returned %d", svndump_proc.argv[0], code);
--		argv_array_clear(&svndump_argv);
-+			warning("%s, returned %d", command, code);
- 	}
- 
- 	return 0;
--- 
-2.0.2
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -399,7 +399,7 @@ fail_pipe:
+>  			close(cmd->out);
+>  		}
+> =20
+> -		if (cmd->dir && chdir(cmd->dir))
+> +		if (cmd->dir && chdir_safe(cmd->dir))
+
+This one shouldn't be necessary: It's in the child, and the child
+process does not release the locks; see the check for the owner in
+remove_lock_file.
+
+>  			die_errno("exec '%s': cd to '%s' failed", cmd->argv[0],
+>  			    cmd->dir);
+>  		if (cmd->env) {
+
+-- Hannes
