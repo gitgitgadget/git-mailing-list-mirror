@@ -1,84 +1,114 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] fast-import: use hashcmp() for SHA1 hash comparison
-Date: Fri, 18 Jul 2014 11:42:46 -0700
-Message-ID: <20140718184246.GS12427@google.com>
-References: <53C944B3.5080106@web.de>
+From: Stepan Kasal <kasal@ucw.cz>
+Subject: Re: Re: [PATCH 00/13] mingw unicode environment
+Date: Fri, 18 Jul 2014 20:51:34 +0200
+Message-ID: <20140718185134.GA9280@ucw.cz>
+References: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
+ <53C8115D.8040505@gmail.com>
+ <xmqqfvhzq22x.fsf@gitster.dls.corp.google.com>
+ <20140717190000.GA18960@ucw.cz>
+ <53C822E1.9020003@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Fri Jul 18 20:43:05 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCU63DXMWULRBNWZUWPAKGQEZIRSCTI@googlegroups.com Fri Jul 18 20:51:36 2014
+Return-path: <msysgit+bncBCU63DXMWULRBNWZUWPAKGQEZIRSCTI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f186.google.com ([209.85.212.186])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8D7Y-0004Tc-Dj
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 20:43:04 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422724AbaGRSmx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 14:42:53 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:52317 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1030567AbaGRSmw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2014 14:42:52 -0400
-Received: by mail-pa0-f53.google.com with SMTP id kq14so5846879pab.26
-        for <git@vger.kernel.org>; Fri, 18 Jul 2014 11:42:52 -0700 (PDT)
+	(envelope-from <msysgit+bncBCU63DXMWULRBNWZUWPAKGQEZIRSCTI@googlegroups.com>)
+	id 1X8DFo-0007z9-JC
+	for gcvm-msysgit@m.gmane.org; Fri, 18 Jul 2014 20:51:36 +0200
+Received: by mail-wi0-f186.google.com with SMTP id bs8sf130164wib.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 18 Jul 2014 11:51:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
+        d=googlegroups.com; s=20120806;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=LJZ9dqply5oABxJPIy3YZh1H7VgejvtZ+hMefoSENJA=;
-        b=uXQJ2Nhsb9vZUP24t3deJ5UJunwJi3n+Cq5gnBtZq5qzd5IInAcayOly2ALw/cNLcB
-         WtTiseYlnC9PY4pYRyRHNdwYfJn488RGL0r09x7E6X7tgvEWTkMaogseZK+P1LOah1ob
-         6VEYg4lpVniInUN0+dvxXHTeo1kt0wUoHkFzczsZAxKSTQuinhgKNb9wULDZxEPIkYxm
-         XvD9ojx5y0RN+CufNnNlKVNfoPKCdW9R1WvtXzrFixb1rwx2EwZAbY0RzysBGCBemvZ9
-         Icpn0inZh/oQqRo5QvqedGKH6IAjksKXcncDHdvSFINWYMzbLY1J4m/txVbocUTSR2q+
-         TZNg==
-X-Received: by 10.67.2.73 with SMTP id bm9mr7502449pad.73.1405708969203;
-        Fri, 18 Jul 2014 11:42:49 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:6d3d:4f:6892:efc2])
-        by mx.google.com with ESMTPSA id ry10sm25722734pab.38.2014.07.18.11.42.47
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 18 Jul 2014 11:42:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <53C944B3.5080106@web.de>
+         :in-reply-to:user-agent:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type:content-disposition;
+        bh=4rKYKJ93mTfeOcZaLCJrcBTQBAF6UDfJxzaVWarKbKk=;
+        b=ReMtyo5R4fmhx7J0iJS8Quq9Yx+4pm91fj4bz2N1NfaZR7FxNnNk9mCNQy417OdONT
+         HqTNTsax+RmHsqLraBonH8o6pNjsj75UrgTftAawvpqTacG062Lnbgi67iCCnfj+YrNP
+         O6HvIL/aELrzRPoMJmO5aZqz5S0YKhoOnNMaZCagQSMLuZ+5mrBvh7vBLL82Hpp2oqH/
+         I7tMKHTPTW7IyzbV3j6RqF3/iDIGpTClZotdDhbabxQ+qjyXpWIdf6bxzdMIra8CfB8s
+         0ujUFH9V0dZ8YHP5ZE32J1D+eK/7OwDBWf6nqWkleVOp7LTk/sbooR/a2MFuJBfFlN5Z
+         saxg==
+X-Received: by 10.180.92.40 with SMTP id cj8mr29786wib.7.1405709495911;
+        Fri, 18 Jul 2014 11:51:35 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.180.36.134 with SMTP id q6ls125991wij.16.canary; Fri, 18 Jul
+ 2014 11:51:34 -0700 (PDT)
+X-Received: by 10.180.91.73 with SMTP id cc9mr2969417wib.4.1405709494556;
+        Fri, 18 Jul 2014 11:51:34 -0700 (PDT)
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
+        by gmr-mx.google.com with ESMTP id m6si177471wik.2.2014.07.18.11.51.34
+        for <msysgit@googlegroups.com>;
+        Fri, 18 Jul 2014 11:51:34 -0700 (PDT)
+Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
+Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
+	id 556C71C014F; Fri, 18 Jul 2014 20:51:34 +0200 (CEST)
+In-Reply-To: <53C822E1.9020003@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253836>
+X-Original-Sender: kasal@ucw.cz
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
+ (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Content-Disposition: inline
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253837>
 
-Ren=E9 Scharfe wrote:
+Hello Karsten,
 
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  fast-import.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+you wrote:
+> However, if it *did* compile for you, I wonder where ALLOC_GROW (as of #02/13)
+> and alloc_nr (as of #10/13) came from? Or did we recently remove '#include "cache.h"'
+> from upstream mingw.c?
 
-Before:
+you are right, the include needs to be added.
 
-  $ size git-fast-import
-     text    data     bss     dec     hex filename
-   804138    6768  754160 1565066  17e18a git-fast-import
+To test my modifications, I rebased all the rest of msysGit collection,
+built and run the test suite.
 
-After:
+As you pointed out, https://github.com/msysgit/git/commit/d85d2b75
+adds the include.
 
-  $ size git-fast-import
-     text    data     bss     dec     hex filename
-   804154    6768  754160 1565082  17e19a git-fast-import
+Unfortunately, I won't get to this for several weeks.  Could you or Hannes
+be so kind and post the fixup?
 
-So this makes the text size worse on this machine (amd64, building
-with gcc 4.8.2 -O2).  That's probably because the old code does 'call
-memcmp', while the new code inlines it.  Inlining is presumably the
-better choice.
+Thank you for this comment.  And big thanks for the orignal work.
+(I was only moving it and even that took some time. ;-)
 
-More importantly, the new code is more readable.
+Stepan
 
-=46or what it's worth,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
