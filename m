@@ -1,114 +1,76 @@
-From: Stepan Kasal <kasal@ucw.cz>
-Subject: Re: Re: [PATCH 00/13] mingw unicode environment
-Date: Fri, 18 Jul 2014 20:51:34 +0200
-Message-ID: <20140718185134.GA9280@ucw.cz>
-References: <1405611486-10176-1-git-send-email-kasal@ucw.cz>
- <53C8115D.8040505@gmail.com>
- <xmqqfvhzq22x.fsf@gitster.dls.corp.google.com>
- <20140717190000.GA18960@ucw.cz>
- <53C822E1.9020003@gmail.com>
+From: =?UTF-8?Q?Juli=C3=A1n_Landerreche?= <maniqui@gmail.com>
+Subject: a more helpful message on "git status" output
+Date: Fri, 18 Jul 2014 16:03:43 -0300
+Message-ID: <CAKQhN+rK0ftwC5hX4hDhXZbcEGAfCCBXRaQXYnMFLmR=n21OLA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: msysgit+bncBCU63DXMWULRBNWZUWPAKGQEZIRSCTI@googlegroups.com Fri Jul 18 20:51:36 2014
-Return-path: <msysgit+bncBCU63DXMWULRBNWZUWPAKGQEZIRSCTI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f186.google.com ([209.85.212.186])
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 18 21:04:14 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCU63DXMWULRBNWZUWPAKGQEZIRSCTI@googlegroups.com>)
-	id 1X8DFo-0007z9-JC
-	for gcvm-msysgit@m.gmane.org; Fri, 18 Jul 2014 20:51:36 +0200
-Received: by mail-wi0-f186.google.com with SMTP id bs8sf130164wib.3
-        for <gcvm-msysgit@m.gmane.org>; Fri, 18 Jul 2014 11:51:35 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X8DS2-0004au-6j
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 21:04:14 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753279AbaGRTEF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2014 15:04:05 -0400
+Received: from mail-oa0-f52.google.com ([209.85.219.52]:59059 "EHLO
+	mail-oa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757007AbaGRTEE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2014 15:04:04 -0400
+Received: by mail-oa0-f52.google.com with SMTP id o6so3891984oag.25
+        for <git@vger.kernel.org>; Fri, 18 Jul 2014 12:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :in-reply-to:user-agent:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-disposition;
-        bh=4rKYKJ93mTfeOcZaLCJrcBTQBAF6UDfJxzaVWarKbKk=;
-        b=ReMtyo5R4fmhx7J0iJS8Quq9Yx+4pm91fj4bz2N1NfaZR7FxNnNk9mCNQy417OdONT
-         HqTNTsax+RmHsqLraBonH8o6pNjsj75UrgTftAawvpqTacG062Lnbgi67iCCnfj+YrNP
-         O6HvIL/aELrzRPoMJmO5aZqz5S0YKhoOnNMaZCagQSMLuZ+5mrBvh7vBLL82Hpp2oqH/
-         I7tMKHTPTW7IyzbV3j6RqF3/iDIGpTClZotdDhbabxQ+qjyXpWIdf6bxzdMIra8CfB8s
-         0ujUFH9V0dZ8YHP5ZE32J1D+eK/7OwDBWf6nqWkleVOp7LTk/sbooR/a2MFuJBfFlN5Z
-         saxg==
-X-Received: by 10.180.92.40 with SMTP id cj8mr29786wib.7.1405709495911;
-        Fri, 18 Jul 2014 11:51:35 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.36.134 with SMTP id q6ls125991wij.16.canary; Fri, 18 Jul
- 2014 11:51:34 -0700 (PDT)
-X-Received: by 10.180.91.73 with SMTP id cc9mr2969417wib.4.1405709494556;
-        Fri, 18 Jul 2014 11:51:34 -0700 (PDT)
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz. [46.255.230.98])
-        by gmr-mx.google.com with ESMTP id m6si177471wik.2.2014.07.18.11.51.34
-        for <msysgit@googlegroups.com>;
-        Fri, 18 Jul 2014 11:51:34 -0700 (PDT)
-Received-SPF: none (google.com: kasal@ucw.cz does not designate permitted sender hosts) client-ip=46.255.230.98;
-Received: by jabberwock.ucw.cz (Postfix, from userid 1042)
-	id 556C71C014F; Fri, 18 Jul 2014 20:51:34 +0200 (CEST)
-In-Reply-To: <53C822E1.9020003@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Original-Sender: kasal@ucw.cz
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: kasal@ucw.cz does not designate permitted sender hosts) smtp.mail=kasal@ucw.cz
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Content-Disposition: inline
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253837>
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=aex90eHHXKGMtHMa0sAWPUixNmOAcMloG3CUBxZtgmQ=;
+        b=UnhBiPIpJlm5YA9Rv1jQ1/nPgCh+Q44lbsJNIN/z0L/HywHaH/Eks77wJYd1nJQYGd
+         e5+Wxhll1JXGNWWRX+udYImOjYILbOfbr0AyWnQrhITW4EO9O0O8D7wu8f9IHWbngNde
+         tS5d0GuDcihpym9ge9pJGwdU+oR09WwwT/2suD+Tyhydnu39rMO0VgSmGFEZsXvpX30b
+         fleTgt5QxKobHdLMzGIekQpMCUhT7VVj2oziQDy8836oE0Du6Voh9XTsEAtkCJKYinI/
+         XqPIwIqbHmSrVwuYlMy+bU85CJDFDd6NjbgPbJ5s+flfDViJtpj5DYF603pL8GrsHCdt
+         zFdA==
+X-Received: by 10.182.181.42 with SMTP id dt10mr9811239obc.69.1405710243890;
+ Fri, 18 Jul 2014 12:04:03 -0700 (PDT)
+Received: by 10.182.50.132 with HTTP; Fri, 18 Jul 2014 12:03:43 -0700 (PDT)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253838>
 
-Hello Karsten,
+Hi,
+when running "git status", if the current branch can be
+fast-forwarded, the user get this message:
 
-you wrote:
-> However, if it *did* compile for you, I wonder where ALLOC_GROW (as of #02/13)
-> and alloc_nr (as of #10/13) came from? Or did we recently remove '#include "cache.h"'
-> from upstream mingw.c?
+  On branch master
+  Your branch is behind 'origin/master' by 6 commits, and can be fast-forwarded.
+    (use "git pull" to update your local branch)
 
-you are right, the include needs to be added.
 
-To test my modifications, I rebased all the rest of msysGit collection,
-built and run the test suite.
+The suggestion of using "git pull" for updating the local branch,
+although it will work, might not be a proper choice or advice in terms
+of what is really needed to just update the local branch.
 
-As you pointed out, https://github.com/msysgit/git/commit/d85d2b75
-adds the include.
+As the user already has the newer commits locally (ie. the commits
+have been already "git fetch"ed), he just needs to merge them. Running
+"git pull" will unnecessarily try to fetch commits from upstream
+again.
+So...
 
-Unfortunately, I won't get to this for several weeks.  Could you or Hannes
-be so kind and post the fixup?
+Proposal: suggesting the user to run "git merge" or "git merge
+origin/master" seems a more helpful suggestion, imo. Also, for
+beginners, it helps for better understanding on what's going on, and
+goes in hand with the usual advice of using "git fetch" + "git merge"
+(instead of "git pull") to grasp better some Git concepts and how Git
+works.
+So, the output of git status would read like this:
 
-Thank you for this comment.  And big thanks for the orignal work.
-(I was only moving it and even that took some time. ;-)
+  On branch master
+  Your branch is behind 'origin/master' by 6 commits, and can be fast-forwarded.
+    (use "git merge origin/master" to update your local branch)
 
-Stepan
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+(it could read "git merge" too, if it defaults to merging upstream,
+tracked branch).
