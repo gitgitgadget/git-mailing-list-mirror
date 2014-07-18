@@ -1,87 +1,87 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] Make locked paths absolute when current directory is
- changed
-Date: Fri, 18 Jul 2014 22:44:07 +0200
-Message-ID: <53C98717.3060600@kdbg.org>
-References: <1405688937-22925-1-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: a more helpful message on "git status" output
+Date: Fri, 18 Jul 2014 14:05:00 -0700
+Message-ID: <20140718210500.GU12427@google.com>
+References: <CAKQhN+rK0ftwC5hX4hDhXZbcEGAfCCBXRaQXYnMFLmR=n21OLA@mail.gmail.com>
+ <xmqq38dympo8.fsf@gitster.dls.corp.google.com>
+ <CAKQhN+p5FpX-GEZeX0t-Y1Sq6+fdfRpE+ACqhKgdLWGFRj0ToA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 18 22:44:18 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?iso-8859-1?Q?Juli=E1n?= Landerreche <maniqui@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 23:05:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8F0r-0006Pf-3k
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 22:44:17 +0200
+	id 1X8FL5-0005w8-AD
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 23:05:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762178AbaGRUoM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 16:44:12 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:56725 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1756032AbaGRUoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2014 16:44:12 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 1032A1300AB;
-	Fri, 18 Jul 2014 22:44:09 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 4FFE119F47C;
-	Fri, 18 Jul 2014 22:44:08 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <1405688937-22925-1-git-send-email-pclouds@gmail.com>
+	id S935063AbaGRVFF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 17:05:05 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:63322 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932304AbaGRVFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2014 17:05:03 -0400
+Received: by mail-pd0-f181.google.com with SMTP id g10so4190838pdj.12
+        for <git@vger.kernel.org>; Fri, 18 Jul 2014 14:05:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=q4wuuPR5HIr0oW9soZrS3uy1VrDG1Ev8dEsP7IFlGHI=;
+        b=0wGC2Q8ggrW5272alkGIvbWfLT4yUc+eryg3Bn3QzqJ3xe5V2mNCLx9f6qxZaUMxC0
+         JrI4kYvbW12P2T/gUCgCfxqPK4BWSduVMKRt4TuTAtVHN1wTDKMzaIkBvFw0ZhXUIZlO
+         7BbRRZ0lGs8Mj5CagSrv8WWM7+7o2Sq0a7+7xvx4GHANbkLIoISGhdIdThGngVQ+qdp4
+         xff/9LWbvWu4fucoenTOGb7ImK02W9m0bpl+R52/xGIw2FeMAqvKqqvxJedem/PjEZXK
+         mEJzx6zS80ZhopG/DwGSc63GjrC+qrQFKewpS7kv9gZXsRpTPi2QDp7sa7C7YOSPyU9m
+         MYdw==
+X-Received: by 10.66.183.11 with SMTP id ei11mr8212694pac.116.1405717503325;
+        Fri, 18 Jul 2014 14:05:03 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:6d3d:4f:6892:efc2])
+        by mx.google.com with ESMTPSA id pm7sm8677805pdb.77.2014.07.18.14.05.02
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 18 Jul 2014 14:05:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <CAKQhN+p5FpX-GEZeX0t-Y1Sq6+fdfRpE+ACqhKgdLWGFRj0ToA@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253846>
 
-Am 18.07.2014 15:08, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy:
-> diff --git a/lockfile.c b/lockfile.c
-> index 8fbcb6a..a70d107 100644
-> --- a/lockfile.c
-> +++ b/lockfile.c
-> @@ -280,3 +280,19 @@ void rollback_lock_file(struct lock_file *lk)
->  	}
->  	lk->filename[0] =3D 0;
->  }
-> +
-> +void make_locked_paths_absolute(void)
-> +{
-> +	struct lock_file *lk;
-> +	const char *abspath;
-> +	for (lk =3D lock_file_list; lk !=3D NULL; lk =3D lk->next) {
-> +		if (!lk->filename[0] || lk->filename[0] =3D=3D '/')
+Juli=E1n Landerreche wrote:
 
-Please use is_absolute_path().
+> A more verbose, educational output could read:
+>
+>   (use "git pull" to fetch newer commits from upstream and update you=
+r local branch)
+>   (use "git merge" to update your local branch)
 
-> +			continue;
-> +		abspath =3D absolute_path(lk->filename);
-> +		if (strlen(abspath) >=3D sizeof(lk->filename))
-> +			warning("locked path %s is relative when current directory "
-> +				"is changed", lk->filename);
-> +		else
-> +			strcpy(lk->filename, abspath);
-> +	}
-> +}
+Yes, I like this idea, with a few qualifications:
 
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -399,7 +399,7 @@ fail_pipe:
->  			close(cmd->out);
->  		}
-> =20
-> -		if (cmd->dir && chdir(cmd->dir))
-> +		if (cmd->dir && chdir_safe(cmd->dir))
+ 1. The first line is long.  Is there a shorter way to say the same
+    thing?  Maybe
 
-This one shouldn't be necessary: It's in the child, and the child
-process does not release the locks; see the check for the owner in
-remove_lock_file.
+    (use "git pull" to fetch newer commits and update your local branch=
+)
 
->  			die_errno("exec '%s': cd to '%s' failed", cmd->argv[0],
->  			    cmd->dir);
->  		if (cmd->env) {
+ 2. s/from upstream/from $remote/ (e.g., "from origin") in the first
+    line?  Though that would make problem (1) worse.
 
--- Hannes
+ 3. Is there some way to make it more obvious these two hints are
+    independent suggestions and that the user doesn't need to do both?
+    Maybe something as simple as
+
+    (or use "git merge" to update your local branch)
+
+ 4. Should the advice differ based on whether the current branch is set
+    up for merging or rebasing?
+
+Thanks,
+Jonathan
