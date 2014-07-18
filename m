@@ -1,70 +1,86 @@
-From: Max Kirillov <max@max630.net>
-Subject: Re: [PATCH] checkout: indicate when a detached head is checked out
- for a branch
-Date: Fri, 18 Jul 2014 17:13:29 +0300
-Message-ID: <CAF7_NFRdDi_dgsooX8o9J12h39yGamoKUW4djZ0=arMrxBZbdg@mail.gmail.com>
-References: <35dbe7e3f3e4566d775bea19d816adc44db8ed5c.1405676303.git.git@drmicha.warpmail.net>
-	<CACsJy8CG17tzWWO27Pv2c+CjDyYiYATzgBSFfMBaugYgQfZQ5g@mail.gmail.com>
-	<53C920D6.80104@drmicha.warpmail.net>
+From: Monard Vong <travelingsoul86@gmail.com>
+Subject: [PATCH] git-svn: Initialize SVN::Client with svn config instead of,
+ auth for "git svn branch".
+Date: Fri, 18 Jul 2014 16:58:25 +0200
+Message-ID: <53C93611.7090705@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 16:13:38 2014
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 18 16:58:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X88un-000051-UN
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 16:13:38 +0200
+	id 1X89cJ-0002NZ-TA
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 16:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934936AbaGRONd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2014 10:13:33 -0400
-Received: from mail-vc0-f169.google.com ([209.85.220.169]:40649 "EHLO
-	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934792AbaGRONc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2014 10:13:32 -0400
-Received: by mail-vc0-f169.google.com with SMTP id hu12so7531320vcb.0
-        for <git@vger.kernel.org>; Fri, 18 Jul 2014 07:13:31 -0700 (PDT)
+	id S1761800AbaGRO6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2014 10:58:32 -0400
+Received: from mail-wi0-f172.google.com ([209.85.212.172]:38654 "EHLO
+	mail-wi0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756859AbaGRO6b (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2014 10:58:31 -0400
+Received: by mail-wi0-f172.google.com with SMTP id n3so1019176wiv.11
+        for <git@vger.kernel.org>; Fri, 18 Jul 2014 07:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=XfJnzbYss/Spq79O5vmETuhh2m3l6M0DLahEicjQsjY=;
-        b=f3K0CkXHWqd3lmrcAvJe0IpM0WoRVt9lSbwZ4IjHsEOQpVewnd875A0oid/iGd82CE
-         jdLA2kKwbRpWTl5aDtCQuYYw0NTsnZABUCpxCacYsbUW39WUcp9a0gUMucR3Wx/IRVFJ
-         1Y5yiAbhXjDTunBV8z3KkRLOR+NrQfUMysyyPibmHxHMGWYW69hxmO0K/7MxUhocte0j
-         0Z/ApxupsVK/EyDx+lHI7FPvaEncsatm1sO1OxKFZtKTEgJY0XQMfzO0Ng7Z9C+nNxSE
-         UFVYJxqAYhobAOgXGn5pgVfythjoaWHajzo/KPQlJfWoOMSbnGDsQrKeUD31UAYOMg+n
-         vlHg==
-X-Received: by 10.52.244.138 with SMTP id xg10mr5299415vdc.40.1405692810003;
- Fri, 18 Jul 2014 07:13:30 -0700 (PDT)
-Received: by 10.58.234.194 with HTTP; Fri, 18 Jul 2014 07:13:29 -0700 (PDT)
-In-Reply-To: <53C920D6.80104@drmicha.warpmail.net>
-X-Google-Sender-Auth: COBAYA-O71toD-bWu518QkEWmac
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=PkDXuHsX6FHKej4myuptILHAxDzi5oAvyMTWdZ7nkyM=;
+        b=DZH9xTPSQE8+156vJNd+UucKVu8Fe+6Y2e0ks7u5O3y57WzpDCnzJya4ZZu8bExjVO
+         ab2LXMoz51jiavnGeU/yqPi/QLMW+G+NyH4E0xU1pAOPRUTeIt/thBWj3fnfl/G4bJ3s
+         V4hDsosPlKaPA0afo/j3HGhZCxXVS3hgffhr3asDtHI6n8iwyjumOiLK71gf6dDVNCcV
+         vtMl0Vw4+FUe9R4i+o+MdPchC9/mfPosWtZX+9NXJAIkq8wIfpLmWp/Ndhg2xmPljBya
+         uWHLZtlSzNG89KGzuzl8bgw15/AcTBF2XaRtyWk0LFU8r8/eI7kC8BOkyM8Uh2QK3d+F
+         r1wQ==
+X-Received: by 10.180.9.202 with SMTP id c10mr33407803wib.13.1405695510052;
+        Fri, 18 Jul 2014 07:58:30 -0700 (PDT)
+Received: from [192.168.59.212] ([178.132.31.226])
+        by mx.google.com with ESMTPSA id ut2sm14759618wjc.49.2014.07.18.07.58.28
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 18 Jul 2014 07:58:29 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253820>
 
-Hi.
+If a client certificate is required to connect to svn, "git svn branch"
+always prompt the user for the certificate location and password,
+even though those parameters are stored in svn file "server"
+located in svn config dir (generally ~/.subversion).
+On the opposite, "git svn info/init/dcommit" read the config dir
+and do not prompt if the parameters are set.
 
-On Fri, Jul 18, 2014 at 4:27 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Duy Nguyen venit, vidit, dixit 18.07.2014 12:58:
->> This is what this series needs, user's opinions (bad or good).
+This commit initializes for "git svn branch", the SVN::Client with the 
+'config'
+option instead of 'auth'. As decribed in the SVN documentation,
+http://search.cpan.org/~mschwern/Alien-SVN-v1.7.17.1/src/subversion/subversion/bindings/swig/perl/native/Client.pm#METHODS
+the SVN::Client will then read cached authentication options.
 
-Actually, if options "-b branch" works with the "--to" (does it?), then user
-probably shouldn't need to create detached checkouts (I need them
-only for scripts), so this action is probably a mistake. And when user
-does want to create detached checkout he can use the "--detach" option.
+Signed-off-by: Monard Vong <travelingsoul86@gmail.com>
+---
+  git-svn.perl | 4 +++-
+  1 file changed, 3 insertions(+), 1 deletion(-)
 
-So I would say checkout of already checked out branch should fail, suggesting
-using "-b" or "--detach" options.
+diff --git a/git-svn.perl b/git-svn.perl
+index 0a32372..1f41ee1 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1161,7 +1161,9 @@ sub cmd_branch {
+      ::_req_svn();
 
+      my $ctx = SVN::Client->new(
+-        auth    => Git::SVN::Ra::_auth_providers(),
++        config => SVN::Core::config_get_config(
++            $Git::SVN::Ra::config_dir
++        ),
+          log_msg => sub {
+              ${ $_[0] } = defined $_message
+                  ? $_message
 -- 
-Max
+1.9.3
