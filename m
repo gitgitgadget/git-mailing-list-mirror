@@ -1,162 +1,125 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH v7 25/31] prune: strategies for linked checkouts
-Date: Fri, 18 Jul 2014 20:17:01 +0200
-Message-ID: <87r41i352a.fsf@thomasrast.ch>
-References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
-	<1405227068-25506-1-git-send-email-pclouds@gmail.com>
-	<1405227068-25506-26-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/6] Disable t0110's high-bit test on Windows
+Date: Fri, 18 Jul 2014 11:26:24 -0700
+Message-ID: <xmqqd2d2mskv.fsf@gitster.dls.corp.google.com>
+References: <20140716092959.GA378@ucw.cz>
+	<1405611425-10009-1-git-send-email-kasal@ucw.cz>
+	<1405611425-10009-3-git-send-email-kasal@ucw.cz>
+	<53C813D2.8070701@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Max Kirillov <max@max630.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 20:17:23 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Stepan Kasal <kasal@ucw.cz>,  Johannes Sixt <j6t@kdbg.org>,  GIT Mailing-list <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>,  Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: msysgit+bncBCG77UMM3EJRBW6NUWPAKGQEPQ2L2RI@googlegroups.com Fri Jul 18 20:26:40 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBW6NUWPAKGQEPQ2L2RI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qc0-f191.google.com ([209.85.216.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8Cig-0002Wm-2Q
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 20:17:22 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422819AbaGRSRQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 14:17:16 -0400
-Received: from ip1.thgersdorf.net ([148.251.9.194]:45116 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1422734AbaGRSRP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jul 2014 14:17:15 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id 1F4C24D65EA;
-	Fri, 18 Jul 2014 20:17:13 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 7oFyNXwqXQ-E; Fri, 18 Jul 2014 20:17:03 +0200 (CEST)
-Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id C81D94D6572;
-	Fri, 18 Jul 2014 20:17:02 +0200 (CEST)
-In-Reply-To: <1405227068-25506-26-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Sun, 13
- Jul 2014 11:51:02 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253834>
+	(envelope-from <msysgit+bncBCG77UMM3EJRBW6NUWPAKGQEPQ2L2RI@googlegroups.com>)
+	id 1X8Crd-0006IR-1z
+	for gcvm-msysgit@m.gmane.org; Fri, 18 Jul 2014 20:26:37 +0200
+Received: by mail-qc0-f191.google.com with SMTP id c9sf1165954qcz.8
+        for <gcvm-msysgit@m.gmane.org>; Fri, 18 Jul 2014 11:26:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=WmnQppIlgh9Wt8+QFffs6afJEfhPqlhHuF0CX0wl2C0=;
+        b=M55H7DFCq6dq8IQB4mEAt09BoSQYPMWtcUJ6ibFYw+fI1VMIDrl9iq9zofXpMws/oY
+         mXn/p1Qb91zARN/PcPNovDlgj/9wNvupvkRAO4Sj0+IAaQ7FXxcqO2MOfU28yqpC7geJ
+         HoXR5jOg5+1ESqqCrFfigkUfYd4+hYGvzTcjJ99weqsC77G7JOrOAB2a7ppEepiQzZWX
+         qkYV5jLqb2JQW9jIlJlhqkh1k8NjSH9VqU+0eGcruhniH6e2VJouYbhyO6ilNwuen9aP
+         8hxcqR3VgUBSaWaxqg6mGLCEKXWvpZUQc0FlPhoBEm5OfW/BvDlX/GdQhohJ7D6Tus3h
+         lt+Q==
+X-Received: by 10.140.49.144 with SMTP id q16mr85990qga.1.1405707996298;
+        Fri, 18 Jul 2014 11:26:36 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.140.29.133 with SMTP id b5ls692648qgb.43.gmail; Fri, 18 Jul
+ 2014 11:26:35 -0700 (PDT)
+X-Received: by 10.236.124.131 with SMTP id x3mr2790731yhh.14.1405707995772;
+        Fri, 18 Jul 2014 11:26:35 -0700 (PDT)
+Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id w2si726987qcl.3.2014.07.18.11.26.33
+        for <msysgit@googlegroups.com>;
+        Fri, 18 Jul 2014 11:26:33 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 93F542882C;
+	Fri, 18 Jul 2014 14:26:32 -0400 (EDT)
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 880742882B;
+	Fri, 18 Jul 2014 14:26:32 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id E092C28825;
+	Fri, 18 Jul 2014 14:26:26 -0400 (EDT)
+In-Reply-To: <53C813D2.8070701@gmail.com> (Karsten Blees's message of "Thu, 17
+	Jul 2014 20:20:02 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 07B22682-0EA9-11E4-AC38-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253835>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Karsten Blees <karsten.blees@gmail.com> writes:
 
-> (alias R=3D$GIT_COMMON_DIR/repos/<id>)
+> Am 17.07.2014 17:37, schrieb Stepan Kasal:
+>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>> 
+>> The bash Git for Windows uses (i.e. the MSys bash) cannot pass
+>> command-line arguments with high bits set verbatim to non-MSys programs,
+>> but instead converts those characters with high bits set to their hex
+>> representation.
+>> 
 >
->  - linked checkouts are supposed to keep its location in $R/gitdir up
->    to date. The use case is auto fixup after a manual checkout move.
+> The description is not entirely correct...the Unicode-enabled MSYS.dll
+> expects the command line to be UTF-8. Only *invalid* UTF-8 is converted
+> to hex code for convenience. So its not the high bits that cause trouble,
+> but specifying 0x80 without proper UTF-8 lead byte.
 >
->  - linked checkouts are supposed to update mtime of $R/gitdir. If
->    $R/gitdir's mtime is older than a limit, and it points to nowhere,
->    repos/<id> is to be pruned.
+> I believe the last line of the test may actually work:
 >
->  - If $R/locked exists, repos/<id> is not supposed to be pruned. If
->    $R/locked exists and $R/gitdir's mtime is older than a really long
->    limit, warn about old unused repo.
+> test "$(test-urlmatch-normalization -p "$(cat "$tu-11")")" = "x://q/%C2%80%DF%BF%E0%A0%80%EF%BF%BD%F0%90%80%80%F0%AF%BF%BD"
 >
->  - "git checkout --to" is supposed to make a hard link named $R/link
->    pointing to the .git file on supported file systems to help detect
->    the user manually deleting the checkout. If $R/link exists and its
->    link count is greated than 1, the repo is kept.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  Documentation/git-prune.txt                |  3 +
->  Documentation/gitrepository-layout.txt     | 19 ++++++
->  builtin/checkout.c                         | 14 +++++
->  builtin/prune.c                            | 99 ++++++++++++++++++++=
-++++++++++
->  setup.c                                    | 13 ++++
->  t/t2026-prune-linked-checkouts.sh (new +x) | 84 ++++++++++++++++++++=
-+++++
+> -- 
 
-I get this from t2026.2 under valgrind:
+Can somebody send a tested replacement then?
 
-  =3D=3D21334=3D=3D Conditional jump or move depends on uninitialised v=
-alue(s)
-  =3D=3D21334=3D=3D    at 0x46D49B: prune_repos_dir (prune.c:182)
-  =3D=3D21334=3D=3D    by 0x46D8C0: cmd_prune (prune.c:252)
-  =3D=3D21334=3D=3D    by 0x405C2F: run_builtin (git.c:351)
-  =3D=3D21334=3D=3D    by 0x405E47: handle_builtin (git.c:530)
-  =3D=3D21334=3D=3D    by 0x405F6B: run_argv (git.c:576)
-  =3D=3D21334=3D=3D    by 0x40610B: main (git.c:663)
-  =3D=3D21334=3D=3D  Uninitialised value was created by a stack allocat=
-ion
-  =3D=3D21334=3D=3D    at 0x46D3BB: prune_repos_dir (prune.c:169)
-  =3D=3D21334=3D=3D=20
-  {
-     <insert_a_suppression_name_here>
-     Memcheck:Cond
-     fun:prune_repos_dir
-     fun:cmd_prune
-     fun:run_builtin
-     fun:handle_builtin
-     fun:run_argv
-     fun:main
-  }
-  not ok 2 - prune files inside $GIT_DIR/repos
-  #
-  #               mkdir .git/repos &&
-  #               : >.git/repos/abc &&
-  #               git prune --repos --verbose >actual &&
-  #               cat >expect <<EOF &&
-  #       Removing repos/abc: not a valid directory
-  #       EOF
-  #               test_i18ncmp expect actual &&
-  #               ! test -f .git/repos/abc &&
-  #               ! test -d .git/repos
-  #
+Thanks.
 
-I think it's because of the early 'return 0' ...
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
 
-> +static int prune_repo_dir(const char *id, struct stat *st, struct st=
-rbuf *reason)
-> +{
-> +	char *path;
-> +	int fd, len;
-> +
-> +	if (!is_directory(git_path("repos/%s", id))) {
-> +		strbuf_addf(reason, _("Removing repos/%s: not a valid directory"),=
- id);
-> +		return 1;
-> +	}
-> +	if (file_exists(git_path("repos/%s/locked", id)))
-> +		return 0;
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
 
-in this line, before the stat() actually runs, which then in the
-condition ...
-
-> +	if (stat(git_path("repos/%s/gitdir", id), st)) {
-> +		st->st_mtime =3D expire;
-> +		strbuf_addf(reason, _("Removing repos/%s: gitdir file does not exi=
-st"), id);
-> +		return 1;
-> +	}
-[...]
-> +}
-> +
-> +static void prune_repos_dir(void)
-> +{
-[...]
-> +	struct stat st;
-[...]
-> +		if (!prune_repo_dir(d->d_name, &st, &reason) ||
-> +		    st.st_mtime > expire)
-
-causes the second arm to be evaluated when st.st_mtime is not
-initialized yet.  Can you look into this?
-
---=20
-Thomas Rast
-tr@thomasrast.ch
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
