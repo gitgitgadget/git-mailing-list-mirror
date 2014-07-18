@@ -1,86 +1,114 @@
 From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH RFC v2 00/19] Enable options --signoff, --reset-author for pick, reword
-Date: Fri, 18 Jul 2014 14:10:54 +0200
-Message-ID: <87zjg63m0h.fsf@thomasrast.ch>
-References: <53A258D2.7080806@gmail.com>
-	<cover.1404323078.git.bafain@gmail.com>
-	<xmqqha2r8trc.fsf@gitster.dls.corp.google.com>
-	<53BD6917.7070700@gmail.com>
+Subject: Re: [PATCH v1] rebase --root: sentinel commit cloaks empty commits
+Date: Fri, 18 Jul 2014 14:10:43 +0200
+Message-ID: <871tti50l8.fsf@thomasrast.ch>
+References: <53A18198.7070301@gmail.com>
+	<8d5cf2e1ff45e2e60072bf6c6e05371e4b265709.1405539123.git.bafain@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>, Chris Webb <chris@arachsys.com>
 To: Fabian Ruch <bafain@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 14:19:21 2014
+X-From: git-owner@vger.kernel.org Fri Jul 18 14:19:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X878D-0002xk-6U
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 14:19:21 +0200
+	id 1X878D-0002xk-Me
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 14:19:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761581AbaGRMTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2014 08:19:16 -0400
-Received: from ip1.thgersdorf.net ([148.251.9.194]:44546 "EHLO mail.psioc.net"
+	id S1761546AbaGRMTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2014 08:19:15 -0400
+Received: from ip1.thgersdorf.net ([148.251.9.194]:44547 "EHLO mail.psioc.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761467AbaGRMTO (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756922AbaGRMTO (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 18 Jul 2014 08:19:14 -0400
+X-Greylist: delayed 496 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Jul 2014 08:19:14 EDT
 Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id A34384D6572;
+	by localhost.psioc.net (Postfix) with ESMTP id 07AAE4D667A;
 	Fri, 18 Jul 2014 14:10:55 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at psioc.net
 Received: from mail.psioc.net ([127.0.0.1])
 	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id AL1x07ouLdTF; Fri, 18 Jul 2014 14:10:55 +0200 (CEST)
+	with LMTP id b0JyhGHd5yQx; Fri, 18 Jul 2014 14:10:44 +0200 (CEST)
 Received: from hexa.thomasrast.ch (46-126-8-85.dynamic.hispeed.ch [46.126.8.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id A202C4D65EA;
-	Fri, 18 Jul 2014 14:10:54 +0200 (CEST)
-In-Reply-To: <53BD6917.7070700@gmail.com> (Fabian Ruch's message of "Wed, 09
-	Jul 2014 18:08:55 +0200")
+	by mail.psioc.net (Postfix) with ESMTPSA id 07DB24D6572;
+	Fri, 18 Jul 2014 14:10:43 +0200 (CEST)
+In-Reply-To: <8d5cf2e1ff45e2e60072bf6c6e05371e4b265709.1405539123.git.bafain@gmail.com>
+	(Fabian Ruch's message of "Wed, 16 Jul 2014 21:32:45 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253815>
 
-Fabian Ruch <bafain@gmail.com> writes:
+Hi Fabian
 
-> On 07/08/2014 10:45 PM, Junio C Hamano wrote:
->> Fabian Ruch <bafain@gmail.com> writes:
->>> Fabian Ruch (19):
->>>   rebase -i: Failed reword prints redundant error message
->>>   rebase -i: reword complains about empty commit despite --keep-empty
->>>   rebase -i: reword executes pre-commit hook on interim commit
->>>   rebase -i: Teach do_pick the option --edit
->>>   rebase -i: Implement reword in terms of do_pick
->>>   rebase -i: Stop on root commits with empty log messages
->>>   rebase -i: The replay of root commits is not shown with --verbose
->>>   rebase -i: Root commits are replayed with an unnecessary option
->>>   rebase -i: Commit only once when rewriting picks
->>>   rebase -i: Do not die in do_pick
->>>   rebase -i: Teach do_pick the option --amend
->>>   rebase -i: Teach do_pick the option --file
->>>   rebase -i: Prepare for squash in terms of do_pick --amend
->>>   rebase -i: Implement squash in terms of do_pick
->>>   rebase -i: Explicitly distinguish replay commands and exec tasks
->>>   rebase -i: Parse to-do list command line options
->>>   rebase -i: Teach do_pick the option --reset-author
->>>   rebase -i: Teach do_pick the option --signoff
->>>   rebase -i: Enable options --signoff, --reset-author for pick, reword
->> 
->> After "rebase -i:", some begin with lowercase and many begin with
->> capital, which makes the short-log output look distracting.
->
-> The ones that begin with lower-case letters are the ones that begin with
-> the command name "reword". All first lines are typed in lower case now.
+Impressive analysis!
 
-You could spell it 'reword' (with the quotes), which also disambiguates
-the command from the verb.
+> Concerning the bugfix: Obviously, the patch misuses the `squash_onto`
+> flag because it assumes that the new base is empty except for the
+> sentinel commit. The variable name does not imply anything close to
+> that. An additional flag to disable the use of the git-rev-list
+> option `--cherry-pick` would work and make sense again (for instance,
+> `keep_redundant`).
+
+Seeing as there are only two existing uses of the variable, you could
+also rename it to make it more obvious what is going on.  I think either
+way is fine.
+
+[...]
+> Please take a closer look at the last two test cases that specify the
+> expected behaviour of rebasing a branch that tracks the empty tree.
+> At this point they expect the "Nothing to do" error (aborts with
+> untouched history). This is consistent with rebasing only empty
+> commits without `--root`, which also doesn't just delete them from
+> the history. Furthermore, I think the two alternatives adding a note
+> that all commits in the range were empty, and removing the empty
+> commits (thus making the branch empty) are better discussed in a
+> separate bug report.
+
+Makes sense to me, though I have never thought much about rebasing empty
+commits.  Maybe Chris has a more informed opinion?
+
+>  is_empty_commit() {
+> -	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null ||
+> -		die "$1: not a commit that can be picked")
+> -	ptree=$(git rev-parse -q --verify "$1"^^{tree} 2>/dev/null ||
+> -		ptree=4b825dc642cb6eb9a060e54bf8d69288fbee4904)
+> +	tree=$(git rev-parse -q --verify "$1"^{tree} 2>/dev/null) ||
+> +		die "$1: not a commit that can be picked"
+> +	ptree=$(git rev-parse -q --verify "$1"^^{tree} 2>/dev/null) ||
+> +		ptree=4b825dc642cb6eb9a060e54bf8d69288fbee4904
+>  	test "$tree" = "$ptree"
+>  }
+
+Nice catch!
+
+> @@ -958,7 +958,17 @@ then
+>  	revisions=$upstream...$orig_head
+>  	shortrevisions=$shortupstream..$shorthead
+>  else
+> -	revisions=$onto...$orig_head
+> +	if test -n "$squash_onto"
+> +	then
+> +		# $onto points to an empty commit (the sentinel
+> +		# commit) which was not created by the user.
+> +		# Exclude it from the rev list to avoid skipping
+> +		# empty user commits prematurely, i. e. before
+> +		# --keep-empty can take effect.
+> +		revisions=$orig_head
+> +	else
+> +		revisions=$onto...$orig_head
+> +	fi
+>  	shortrevisions=$shorthead
+
+Nit: I think this would be clearer if you phrased it using an 'elif',
+instead of nesting (but keep the comment!).
 
 -- 
 Thomas Rast
