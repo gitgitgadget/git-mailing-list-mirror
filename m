@@ -1,90 +1,133 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: a more helpful message on "git status" output
-Date: Fri, 18 Jul 2014 14:12:13 -0700
-Message-ID: <xmqqy4vql6c2.fsf@gitster.dls.corp.google.com>
-References: <CAKQhN+rK0ftwC5hX4hDhXZbcEGAfCCBXRaQXYnMFLmR=n21OLA@mail.gmail.com>
-	<xmqq38dympo8.fsf@gitster.dls.corp.google.com>
-	<CAKQhN+p5FpX-GEZeX0t-Y1Sq6+fdfRpE+ACqhKgdLWGFRj0ToA@mail.gmail.com>
+Subject: Re: [PATCH v2] remote-testsvn: use internal argv_array of struct child_process in cmd_import()
+Date: Fri, 18 Jul 2014 14:18:42 -0700
+Message-ID: <xmqqtx6el619.fsf@gitster.dls.corp.google.com>
+References: <53C93B33.5070006@web.de>
+	<xmqq8unqmqk7.fsf@gitster.dls.corp.google.com>
+	<53C975C5.8020709@web.de> <53C97BA4.7020503@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Juli=C3=A1n?= Landerreche <maniqui@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 23:12:31 2014
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Fri Jul 18 23:18:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8FSB-0008WJ-2f
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 23:12:31 +0200
+	id 1X8FYQ-0002UK-Vp
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 23:18:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932236AbaGRVM1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 17:12:27 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:62881 "EHLO smtp.pobox.com"
+	id S935228AbaGRVSx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 17:18:53 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63574 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762161AbaGRVM0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 18 Jul 2014 17:12:26 -0400
+	id S932311AbaGRVSu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jul 2014 17:18:50 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B7FA129374;
-	Fri, 18 Jul 2014 17:12:20 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CCCA229561;
+	Fri, 18 Jul 2014 17:18:49 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=lVH7SBIAnEgR
-	cGGlmg6w4C340uo=; b=Y9nI4HhNqgeMuWi+BMr5Jmft0fymlRnaiZNQ2vvm4qA0
-	WiATdJFnVQZw7vh1sH8zzohke3mKAjww53NwPU4GVP/IJpN3VoY9OuL7+/xIFjjp
-	G0fc0omRg6+FKLuXUFG2utasooZFw8dIZJUbLVf/uchwRWcvs3BZOPkntAjNvYY=
+	:content-type:content-transfer-encoding; s=sasl; bh=gWeGzpLLavOo
+	l7Pmpodrdq/Ld0w=; b=ucY8bUFMbG3QitQVpgSVE9a7YHYLgZmTXHHfLfYtb4H2
+	qnGKf8ooKGmbS3l3yKxDgyStdWlFzeLlNgDrURxVwkA1Lvjwbfa6vcpsvjoLQSSL
+	6Thbw+C8m+5mbHFBKu+ewX3FqPY0rBoAxAim+gNK0zGmeWSDsPbNpzuQ9k7+kNg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=avmJLx
-	hzu+SgX07nmfGvCJirZ29cgUWCQgBnx+uYQEwrPa5vRIBacncXR3w04DZXxnGa4a
-	gis48po/ggQaIFXv08flLpNxMFPeLYE64e6S+5ksR8cZRl7KkUrzYO0KVDnJ6BtO
-	OrXXCzr/wpoy2inb+saKsjVzeznjGHvF2fVys=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=SP3vNR
+	a9Wh1BjPexLk59US6C7SYSU00S7ZMProtTZfFW6QInR2u7e2VAu9MrZeKkwrP1xb
+	2FtkoBv4lDCs+A9osOZJnEom4A+AhsrqvyDlBRPjARqKuqa0DYMJrNQ21ZqMlM/j
+	101CYK7FgY2IQNm8DInO+cNKIuCcozRXZiZuE=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AA4B029373;
-	Fri, 18 Jul 2014 17:12:20 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C34EC29560;
+	Fri, 18 Jul 2014 17:18:49 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id F386529365;
-	Fri, 18 Jul 2014 17:12:14 -0400 (EDT)
-In-Reply-To: <CAKQhN+p5FpX-GEZeX0t-Y1Sq6+fdfRpE+ACqhKgdLWGFRj0ToA@mail.gmail.com>
-	(=?utf-8?Q?=22Juli=C3=A1n?= Landerreche"'s message of "Fri, 18 Jul 2014
- 16:47:15 -0300")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 28E992955D;
+	Fri, 18 Jul 2014 17:18:44 -0400 (EDT)
+In-Reply-To: <53C97BA4.7020503@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
+ message of "Fri, 18
+	Jul 2014 21:55:16 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 3135D6AE-0EC0-11E4-B672-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 192C96E6-0EC1-11E4-A08F-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253848>
 
-Juli=C3=A1n Landerreche <maniqui@gmail.com> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
->> By running "git pull", the user may obtain yet newer commits from
->> the upstream, which very likely will happen in an active project, or
->> "git fetch" launched by "git pull" will return without doing
->> anything after noticing there is nothing new.
->>
->> As long as the updates to the upstream is also a fast-forward, it
->> will still fast-forward you, but to an even newer state of the
->> upstream.
->>
->> There is no harm done[*1*] by suggesting "git pull" over "git
->> merge", no?
+> Use the existing argv_array member instead of providing our own.  Thi=
+s
+> way we don't have to initialize or clean it up explicitly.  Because o=
+f
+> that automatic cleanup, we need to keep our own reference to the
+> command name instead of using .argv[0] to print the warning at the en=
+d.
 >
-> OK, I'm mostly convinced.
-> A more verbose, educational output could read:
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
+> The added command pointer makes the patch more complicated, but I thi=
+nk
+> it still counts as a cleanup.
+
+Surely.  I'd move the "svnrdump" assignment to where the variable is
+defined, though; we do not switch what "command" to run depending on
+some computed conditions anyway.
+
 >
->   (use "git pull" to fetch newer commits from upstream and update you=
-r
-> local branch)
->   (use "git merge" to update your local branch)
-
-I actually do not like that, to be honest.
-
-These brief reminders should be just that, and if anything, we
-should aim to make them shorter and more concise, not longer and
-more verbose.  They will never be sufficient to replace "education"
-(otherwise why would we even have complete manual?)---they should
-just point the users clearly in the right direction.
+>  remote-testsvn.c | 17 ++++++++---------
+>  1 file changed, 8 insertions(+), 9 deletions(-)
+>
+> diff --git a/remote-testsvn.c b/remote-testsvn.c
+> index 6be55cb..e3ad11b 100644
+> --- a/remote-testsvn.c
+> +++ b/remote-testsvn.c
+> @@ -175,8 +175,8 @@ static int cmd_import(const char *line)
+>  	char *note_msg;
+>  	unsigned char head_sha1[20];
+>  	unsigned int startrev;
+> -	struct argv_array svndump_argv =3D ARGV_ARRAY_INIT;
+>  	struct child_process svndump_proc;
+> +	const char *command;
+> =20
+>  	if (read_ref(private_ref, head_sha1))
+>  		startrev =3D 0;
+> @@ -200,17 +200,17 @@ static int cmd_import(const char *line)
+>  		if(dumpin_fd < 0)
+>  			die_errno("Couldn't open svn dump file %s.", url);
+>  	} else {
+> +		command =3D "svnrdump";
+>  		memset(&svndump_proc, 0, sizeof(struct child_process));
+>  		svndump_proc.out =3D -1;
+> -		argv_array_push(&svndump_argv, "svnrdump");
+> -		argv_array_push(&svndump_argv, "dump");
+> -		argv_array_push(&svndump_argv, url);
+> -		argv_array_pushf(&svndump_argv, "-r%u:HEAD", startrev);
+> -		svndump_proc.argv =3D svndump_argv.argv;
+> +		argv_array_push(&svndump_proc.args, command);
+> +		argv_array_push(&svndump_proc.args, "dump");
+> +		argv_array_push(&svndump_proc.args, url);
+> +		argv_array_pushf(&svndump_proc.args, "-r%u:HEAD", startrev);
+> =20
+>  		code =3D start_command(&svndump_proc);
+>  		if (code)
+> -			die("Unable to start %s, code %d", svndump_proc.argv[0], code);
+> +			die("Unable to start %s, code %d", command, code);
+>  		dumpin_fd =3D svndump_proc.out;
+>  	}
+>  	/* setup marks file import/export */
+> @@ -226,8 +226,7 @@ static int cmd_import(const char *line)
+>  	if (!dump_from_file) {
+>  		code =3D finish_command(&svndump_proc);
+>  		if (code)
+> -			warning("%s, returned %d", svndump_proc.argv[0], code);
+> -		argv_array_clear(&svndump_argv);
+> +			warning("%s, returned %d", command, code);
+>  	}
+> =20
+>  	return 0;
