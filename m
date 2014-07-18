@@ -1,72 +1,109 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] checkout: indicate when a detached head is checked out
- for a branch
-Date: Fri, 18 Jul 2014 17:58:02 +0700
-Message-ID: <CACsJy8CG17tzWWO27Pv2c+CjDyYiYATzgBSFfMBaugYgQfZQ5g@mail.gmail.com>
-References: <35dbe7e3f3e4566d775bea19d816adc44db8ed5c.1405676303.git.git@drmicha.warpmail.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: [PATCH] abspath.c: use PATH_MAX in real_path_internal()
+Date: Fri, 18 Jul 2014 13:32:59 +0200
+Message-ID: <53C905EB.3010908@web.de>
+References: <1405601143-31354-1-git-send-email-pclouds@gmail.com> <53C80265.5030903@web.de> <53C8562C.4000304@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Jul 18 12:58:38 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Karsten Blees <karsten.blees@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWk=?= =?UTF-8?B?IE5n4buNYyBEdXk=?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 18 13:33:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X85s6-0003dT-11
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 12:58:38 +0200
+	id 1X86Po-0000NJ-D9
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 13:33:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761114AbaGRK6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2014 06:58:34 -0400
-Received: from mail-qa0-f50.google.com ([209.85.216.50]:36264 "EHLO
-	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752155AbaGRK6d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2014 06:58:33 -0400
-Received: by mail-qa0-f50.google.com with SMTP id s7so2850273qap.23
-        for <git@vger.kernel.org>; Fri, 18 Jul 2014 03:58:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=LpD5S8FLyJgVL/yFG/AN/vNwAsICwdSH9uqGc5//DgY=;
-        b=W8vorg5cD1WpMFtczhPpxw9bxjEhKAMDztQ2fZih2/bUf7mhQe1iZtVCd15HUM3IYZ
-         qFAFRvGyajas15ZOekfZm6G91poOAr2UzotjStCm3Q9BqhksDhuWZ0dZ2LVxhtY6SaHG
-         aNanf8tkCStvdg7+/vc2YpAQ7eS1V+XxXSp519DedAB22/76Lwe+3kAfxb/0D49Xi6V+
-         xBFHxCHsHwq8MnNIgfJdf6HplgUBe2k2QkajyPAuH5I00APCcgEzAEtG/5bVLKa1wQ4j
-         i3pHDrcQdqlaGJCgylCNIX0nseOkNSu/K+eGkbQacGlh7HYb6xorgfLb33CTui+BuHdC
-         bOow==
-X-Received: by 10.224.122.83 with SMTP id k19mr6964524qar.78.1405681112427;
- Fri, 18 Jul 2014 03:58:32 -0700 (PDT)
-Received: by 10.96.66.129 with HTTP; Fri, 18 Jul 2014 03:58:02 -0700 (PDT)
-In-Reply-To: <35dbe7e3f3e4566d775bea19d816adc44db8ed5c.1405676303.git.git@drmicha.warpmail.net>
+	id S1761529AbaGRLdX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 07:33:23 -0400
+Received: from mout.web.de ([212.227.15.3]:51775 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761516AbaGRLdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2014 07:33:22 -0400
+Received: from [192.168.178.27] ([79.250.167.186]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0Lilcj-1WXfb83dnh-00cxep; Fri, 18 Jul 2014 13:33:11
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <53C8562C.4000304@gmail.com>
+X-Provags-ID: V03:K0:Z4wu1AHTbyftMcQrVL5wFi7bLIHAA0FU94/xPTimyr/uvooTAsD
+ uMCPT1CE46Wt6skz693OTmURjRAZCZ8bes3+522bYP86tzPRXamDQI96bDJbKmW1eky1yXV
+ cSpBYBEvDw9sERxQ/ns5T4L+8+ymkUa8CSgDfRy+btmsHcdWqPK55EaCBrWqb6giHXLZgk6
+ 6QeRu4UeJRQyDWtHEcNXA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253812>
 
-On Fri, Jul 18, 2014 at 4:50 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> I really like the new --to feature and will convert all my "new workdir"
-> checkouts to that. But that detached checkout is so easy to miss - in fact
-> I noticed it only when I compared "new-workdir" to "checkout --to" for a
-> test repo with one branch, to see what a converter would need to do.
+Am 18.07.2014 01:03, schrieb Karsten Blees:
+> Am 17.07.2014 19:05, schrieb Ren=C3=A9 Scharfe:
+>> Am 17.07.2014 14:45, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc D=
+uy:
+> [...]
+>> "These routines have traditionally been used by programs to save the
+>> name of a working directory for the purpose of returning to it. A mu=
+ch
+>> faster and less error-prone method of accomplishing this is to open =
+the
+>> current directory (.) and use the fchdir(2) function to return."
+>>
 >
-> I'm even wondering whether we should do this DWIMmery at all,
+> fchdir() is part of the POSIX-XSI extension, as is realpath(). So why=
+ not
+> use realpath() directly (which would also be thread-safe)?
 
-This is what this series needs, user's opinions (bad or good). The
-other option is abort the checkout immediately. I think I made detach
-behavior default is because it's more work (and needs to be proven
-feasible). How about a config key that lets user decide what to do
-here, abort or detach. We may change the default behavior too if
-people think the current one is not good.
+That's a good question; thanks for stepping back and looking at the=20
+bigger picture.  If there is widespread OS support for a functionality=20
+then we should use it and just provide a compatibility implementation=20
+for those platforms lacking it.  The downside is that compat code gets=20
+less testing.
 
-> given how "dangerous" a detached head is for those who are not aware of it
-> before gc kicks in.
+Seeing that readlink() is left as a stub in compat/mingw.h that only=20
+errors out, would the equivalent function on Windows be PathCanonicaliz=
+e=20
+(http://msdn.microsoft.com/en-us/library/windows/desktop/bb773569%28v=3D=
+vs.85%29.aspx)?
 
-Wait, what danger are we talking about? I thought gc pays attention to
-detached heads as well..
--- 
-Duy
+> For non-XSI-compliant platforms, we could keep the current implementa=
+tion.
+
+OK, so realpath() for Linux and the BSDs, mingw_realpath() wrapping=20
+PathCanonicalize() for Windows and the current code for the rest?
+
+> Or re-implement a thread-safe version, e.g. applying resolve_symlink(=
+) from
+> lockfile.c to all path components.
+
+Thread safety sounds good.  We'd also need something like=20
+normalize_path_copy() but without the conversion of backslashes to=20
+slashes, in order to get rid of "." and ".." path components and=20
+something like absolute_path() that doesn't die on error, no?
+
+> If I may bother you with the Windows point of view:
+>
+> There is no fchdir(), and I'm pretty sure open(".") won't work either=
+=2E
+
+On Windows, there *is* an absolute path length limit of 260 in the=20
+normal case and a bit more than 32000 for some functions using the \\?\=
+=20
+namespace.  So one could get away with using a constant-sized buffer fo=
+r=20
+a "remember the place and return later" function here.
+
+Also, _getcwd can be asked to allocate an appropriately-sized buffer fo=
+r=20
+use, like GNU's get_current_dir_name, by specifying NULL as its first=20
+parameter (http://msdn.microsoft.com/en-us/library/sf98bd4y.aspx).
+
+Not having to move around at all as mentioned above is still better, of=
+=20
+course.
+
+Ren=C3=A9
