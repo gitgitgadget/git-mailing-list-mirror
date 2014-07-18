@@ -1,114 +1,159 @@
-From: Fabian Ruch <bafain@gmail.com>
-Subject: Re: [PATCH RFC v2 08/19] rebase -i: Root commits are replayed with
- an unnecessary option
-Date: Fri, 18 Jul 2014 11:16:24 +0200
-Message-ID: <53C8E5E8.4090509@gmail.com>
-References: <53A258D2.7080806@gmail.com>	<cover.1404323078.git.bafain@gmail.com>	<606af9e165c447b59076046a4d84aecf8b4cd2b0.1404323078.git.bafain@gmail.com> <xmqqzjgj7a88.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 11:16:34 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH v10 0/4] git config cache & special querying api utilizing the cache
+Date: Fri, 18 Jul 2014 02:18:58 -0700
+Message-ID: <1405675142-20300-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 18 11:19:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X84HJ-0004pG-Tt
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 11:16:34 +0200
+	id 1X84KV-00066s-DR
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 11:19:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760676AbaGRJQa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 18 Jul 2014 05:16:30 -0400
-Received: from mail-wg0-f51.google.com ([74.125.82.51]:41913 "EHLO
-	mail-wg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755451AbaGRJQ2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2014 05:16:28 -0400
-Received: by mail-wg0-f51.google.com with SMTP id b13so3232271wgh.22
-        for <git@vger.kernel.org>; Fri, 18 Jul 2014 02:16:27 -0700 (PDT)
+	id S1761062AbaGRJTr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2014 05:19:47 -0400
+Received: from mail-pa0-f45.google.com ([209.85.220.45]:58179 "EHLO
+	mail-pa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760144AbaGRJTq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2014 05:19:46 -0400
+Received: by mail-pa0-f45.google.com with SMTP id eu11so5097631pac.32
+        for <git@vger.kernel.org>; Fri, 18 Jul 2014 02:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=Tn/yBZQhU7W8wZNknHTDXVgQY+DAfjCIXowiaNAXpMA=;
-        b=zYGtue3henBeMCgsMo32AjR4JO+3PlCWSSSB6eL8ssShoGYdfuCNXlxXqjwIcqedMQ
-         c2U13itNkE3oqA0u3TmTxZr1Q6rKfLoe2tJA1RE22iY4/pIG7m1O8RkDM7fDTgUm86/d
-         aOGkr+MytpjZY+bYjy/SBkimHF/spDcANiZ4CwOMt+0NBCISGLBAbU+1OTOP3tP/rAmt
-         gnYLWQCE2rH2FQj8hsA6fx2rV6SzYG/lnhAiI/m9nF/VmEkp7UPaWMwVHHlp7903TeE4
-         wywVFhypn62Xdh59gHHcXX+EiEVOCsuwJt8ng996ib3bHhjUJs37csmoXdVWJkvcDe8N
-         cOoA==
-X-Received: by 10.194.90.77 with SMTP id bu13mr4765720wjb.92.1405674987000;
-        Fri, 18 Jul 2014 02:16:27 -0700 (PDT)
-Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
-        by mx.google.com with ESMTPSA id g8sm4501856wib.18.2014.07.18.02.16.25
+        h=from:to:cc:subject:date:message-id;
+        bh=fEtP26Qflh1uERZ77tXLzc2z7Ceui7Pugr07dGcVGbk=;
+        b=s1NiWbNRifDjZ8M1AdKBKQvcMQHlRYYyCkYNNkD4EmiB18QFnLU3gshUa2+yrRJloO
+         ecxf79iVlsBpNnVc3PI23w1AanY4JSOexF9t1HOmTL90yOgXTvjE+DlDQHJ0LJI9cYnS
+         R+x90Fz07p6YoSPOlE6ZKjtySJiK+WbtprbhAxQHrV/cK2WIOy99RDffUOM+Q6cf0eLK
+         PbOYd3qqha+s7Z8SkwHGlf1TQRiHckEIC4vDYJwlaMg0SuhviAakPRLkBGD4wox7noza
+         jGzn6IgTnB1PGqRa7k1tl3p3pe56YWxWPQEawVRM/zCgGBEv5PAI8swL1NHixVbWwnJf
+         mAuA==
+X-Received: by 10.68.69.66 with SMTP id c2mr3192728pbu.105.1405675185611;
+        Fri, 18 Jul 2014 02:19:45 -0700 (PDT)
+Received: from localhost.localdomain ([106.203.84.80])
+        by mx.google.com with ESMTPSA id wn7sm20813928pab.18.2014.07.18.02.19.39
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 18 Jul 2014 02:16:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqzjgj7a88.fsf@gitster.dls.corp.google.com>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 18 Jul 2014 02:19:44 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253799>
 
-Hi Junio,
+Hi,
 
-Junio C Hamano writes:
-> Fabian Ruch <bafain@gmail.com> writes:
->> The command line used to recreate root commits specifies the
->> effectless option `-C`. It is used to reuse commit message and
->> authorship from the named commit but the commit being amended here,
->> which is the sentinel commit, already carries the authorship and log
->> message of the processed commit. Note that the committer email and
->> commit date fields do not match the root commit either way. Remove
->> the option. However, `-C` (other than `-c`) does not invoke the
->> editor and the `--amend` option invokes it by default. Disable editor
->> invocation again by specifying `--no-edit`.
-> 
-> I'd say this is a no-value change, in the sense that it can be
-> written either way for the same effect and if the original were
-> written with "--amend --no-edit" then there would be no reason to
-> change it to "-C $1" because such a change would also be equally a
-> no-value change.
-> 
-> What exactly are we gaining?  Performance?  Correctness?
+[PATCH v10]: Minor fixes according to [12]. Re added string_list initializer function.
+	Thanks to Junio and Matthieu for their suggestions.
 
-I submitted this change separately from the next ("rebase -i: Commit
-only once when rewriting picks") for the following reasons, at least I
-thought they were.
+[PATCH v9]: Applied most of the review comments mentioned in [11]. Mostly asthetic changes.
+	test-config now clears the config_set before exiting. Most of the tests now use the
+	check-config function. check_config_init() now handles return values correctly.
+	Diff between v8 and v9 is at the bottom. Thanks to Junio and Matthieu for the review.
 
-It makes the next patch easier to understand because the finalising
-command line "git commit --allow-empty --amend --no-post-rewrite -n
---no-edit" seems to be simply moved to the end of do_pick. Substituting
---no-edit for -C there would make that log message overly long and the
-paragraph saying why this substitution is correct would be distracting
-(it's a little unfortunate that there is this special case in the first
-place). While the resulting history stays the same of course, it might
-be confusing to someone reading the code that the log message gets
-replaced with itself.
+[PATCH V8]: Moved the contents of config-set.c to config.c for future convenience. Reverted
+	test 'find value with misspelled key' to the one in v5. See [10] for the discussion.
 
-I know the last point is rather weak but aren't the two patches and log
-messages easier to read?
+[PATCH V7]: Style nits and a broken && chain corrected in `t/t1308-config-set.sh`. See
+	[9] for the nits.
 
-   Fabian
+[PATCH V6]: Style nits and mistakes corrected. Diff between v6 and v5[8] is at the bottom.
+		Thanks to Matthieu, Ramsay and Ram for their suggestions.
 
->> Signed-off-by: Fabian Ruch <bafain@gmail.com>
->> ---
->>  git-rebase--interactive.sh | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
->> index ff04d5d..17836d5 100644
->> --- a/git-rebase--interactive.sh
->> +++ b/git-rebase--interactive.sh
->> @@ -511,7 +511,7 @@ do_pick () {
->>  			   --no-post-rewrite -n -q -C $1 &&
->>  			pick_one -n $1 &&
->>  			git commit --allow-empty \
->> -				   --amend --no-post-rewrite -n -C $1 \
->> +				   --amend --no-post-rewrite -n --no-edit \
->>  				   ${gpg_sign_opt:+"$gpg_sign_opt"} ||
->>  			die_with_patch $1 "Could not apply $1... $2"
->>  	else
+[PATCH V5]: `config_set` now uses a single hashmap. Corrected style nits raised in
+			the thread[7]. Thanks to Junio and Matthieu for their suggestions.
+
+[PATCH v4]: Introduced `config_set` construct which points to a ordered set of
+	config-files cached as hashmaps. Added relevant API functions. For more
+	details see the documentation. Rewrote the git_config_get* family to use
+	`config_set` internally. Added tests for both config_set API and git_config_get
+	family. Added type specific API functions which parses the found value and
+	converts it into a specific type.
+	Most of the changes implemented are the result of discussion in [6].
+	Thanks to Eric, Ramsay, Junio, Matthieu & Karsten for their suggestions
+	and review.
+
+[PATCH v3]: Added flag for NULL values that were causing segfaults in some cases.
+	Added test-config for usage examples.
+	Minor changes and corrections. Refer to discussion thread[5] for more details.
+	Thanks to Matthieu, Jeff and Junio for their valuable suggestions.
+
+[PATCH v2]:Changed the string_list to a struct instead of pointer to a struct.
+	Added string-list initilization functions.
+	Minor mistakes corrected acoording to review comments[4]. Thanks to
+	Eric and Matthieu for their review.
+
+[PATCH V1]:Most of the invaluable suggestions by Eric Sunshine, Torsten Bogershausen and
+	Jeff King has been implemented[1]. Complete rewrite of config_cache*() family
+	using git_config() as hook as suggested by Jeff. Thanks for the review.
+
+[RFC V2]: Improved according to the suggestions by Eric Sunshine and Torsten Bogershausen.
+	Added cache invalidation when config file is changed.[2]
+	I am using git_config_set_multivar_in_file() as an update hook.
+
+This is patch is for this year's GSoC. My project is
+"Git Config API improvements". The link of my proposal is appended below [3].
+
+The aim of this patch series is to generate a cache for querying values from
+the config files in a non-callback manner as the current method reads and
+parses the config files every time a value is queried for.
+
+The cache is generated from hooking the update_cache function to the current
+parsing and callback mechanism in config.c. It is implemented as an hashmap
+using the hashmap-api with variables and its corresponding values list as
+its members. The values in the list are sorted in order of increasing priority.
+The cache is initialised the first time when any of the new query functions is
+called. It is invalidated by using git_config_set_multivar_in_file() as an
+update hook.
+
+We add two new functions to the config-api, git_config_get_string() and
+git_config_get_string_multi() for querying in a non callback manner from
+the cache.
+
+[1] http://marc.info/?t=140172066200006&r=1&w=2
+[2] http://git.661346.n2.nabble.com/RFC-PATCH-0-2-Git-config-cache-amp-special-querying-api-utilizing-the-cache-td7611691.html
+[3] https://drive.google.com/file/d/0B4suZ-aHqDcnSUZJRXVTTnZUN1E/edit?usp=sharing
+[4] http://thread.gmane.org/gmane.comp.version-control.git/251073/focus=251369
+[5] http://thread.gmane.org/gmane.comp.version-control.git/251704/
+[6] http://thread.gmane.org/gmane.comp.version-control.git/252329/
+[7] http://marc.info/?t=140428115200001&r=1&w=2
+[8] http://article.gmane.org/gmane.comp.version-control.git/252942/
+[9] http://thread.gmane.org/gmane.comp.version-control.git/252959/
+[10] http://article.gmane.org/gmane.comp.version-control.git/253113
+[11] http://thread.gmane.org/gmane.comp.version-control.git/253248
+[12] http://thread.gmane.org/gmane.comp.version-control.git/253562
+
+
+Tanay Abhra (4):
+  string-list: add string_list initialiser helper functions
+  Use string-list initializaer functions to rewrite
+  config set
+  test-config
+
+ .gitignore                                  |   1 +
+ Documentation/technical/api-config.txt      | 137 +++++++++++++++
+ Documentation/technical/api-string-list.txt |   5 +
+ Makefile                                    |   1 +
+ builtin/commit.c                            |   3 +-
+ cache.h                                     |  30 ++++
+ config.c                                    | 263 ++++++++++++++++++++++++++++
+ merge-recursive.c                           |   9 +-
+ string-list.c                               |   6 +
+ string-list.h                               |   2 +
+ submodule.c                                 |   5 +-
+ t/t1308-config-set.sh                       | 200 +++++++++++++++++++++
+ test-config.c                               | 142 +++++++++++++++
+ transport.c                                 |   4 +-
+ 14 files changed, 793 insertions(+), 15 deletions(-)
+ create mode 100755 t/t1308-config-set.sh
+ create mode 100644 test-config.c
+
+-- 
+1.9.0.GIT
