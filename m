@@ -1,80 +1,99 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH] fast-import: use hashcmp() for SHA1 hash comparison
-Date: Fri, 18 Jul 2014 21:14:05 +0200
-Message-ID: <53C971FD.6040500@web.de>
-References: <53C944B3.5080106@web.de> <20140718184246.GS12427@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: a more helpful message on "git status" output
+Date: Fri, 18 Jul 2014 12:29:11 -0700
+Message-ID: <xmqq38dympo8.fsf@gitster.dls.corp.google.com>
+References: <CAKQhN+rK0ftwC5hX4hDhXZbcEGAfCCBXRaQXYnMFLmR=n21OLA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 21:14:27 2014
+Cc: git@vger.kernel.org
+To: =?utf-8?Q?Juli=C3=A1n?= Landerreche <maniqui@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 18 21:29:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8Dbv-0008KE-2W
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 21:14:27 +0200
+	id 1X8DqP-0005Bk-Fo
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 21:29:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1945972AbaGRTOW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 15:14:22 -0400
-Received: from mout.web.de ([212.227.15.14]:52653 "EHLO mout.web.de"
+	id S1422939AbaGRT3V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 15:29:21 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63093 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932138AbaGRTOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2014 15:14:22 -0400
-Received: from [192.168.178.27] ([79.250.167.186]) by smtp.web.de (mrweb004)
- with ESMTPSA (Nemesis) id 0MTdS4-1WzJfv3JoG-00QWfY; Fri, 18 Jul 2014 21:14:19
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <20140718184246.GS12427@google.com>
-X-Provags-ID: V03:K0:rUcF7EDcXPmAXVXWsb4LSiocGbzYnv6TwVgt+NQx5sSmqnV5Dfy
- D7TN+njQpINCy5vPx3EnJ4ir/bQLiyspK2jTX5aB7y3KiYPQLnGnSE4MXU+qunlMK+rFGjJ
- yYJbTZs6DMB6fgrV0w6TjynVkTymc57O/33b17t2wsheSdieg+3vlEKlvWx+AQ0svf/XpIZ
- nVE6WxcjmZigyvbIpDfNA==
+	id S1754906AbaGRT3U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 18 Jul 2014 15:29:20 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5029428845;
+	Fri, 18 Jul 2014 15:29:20 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=SHK+AFRzyWO3
+	F29xlKKopUrV1cA=; b=v882PeObt4hymSJ7ZQh7t29M+WGDyC0OKD6ug5AkZhPy
+	dahF/HQ5dKyVybr02GJlaW9oMeTr5+9Zf0CTM8kFrIF9QYobVvYVM63kMJnw901d
+	UqQMdh6wVW94xRC4vEArDP7wthOz1ZCRRPbZqaGYYbvQvSpTV3MujOuNPZs8OUo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PVlRx7
+	2feeGJ/ZiLjZVaKRmKAHQXw3GSdK7XphpzafwGOCeittIeUOdxjlrT2sIQM3ToKM
+	l6smj4m0wsoYV9ldFqDAd0NdaM6JtjAOEP0R81BS/VnHD+4LjEzdORYQ4II1kgVz
+	4QdPY2oL7hnQbtuLixuFTNHp6JmVdvwQ8e4n0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3E01028844;
+	Fri, 18 Jul 2014 15:29:20 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 8A2E52882C;
+	Fri, 18 Jul 2014 15:29:13 -0400 (EDT)
+In-Reply-To: <CAKQhN+rK0ftwC5hX4hDhXZbcEGAfCCBXRaQXYnMFLmR=n21OLA@mail.gmail.com>
+	(=?utf-8?Q?=22Juli=C3=A1n?= Landerreche"'s message of "Fri, 18 Jul 2014
+ 16:03:43 -0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: CCCC2276-0EB1-11E4-9D28-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253841>
 
-Am 18.07.2014 20:42, schrieb Jonathan Nieder:
-> Ren=E9 Scharfe wrote:
->
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->> ---
->>   fast-import.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> Before:
->
->    $ size git-fast-import
->       text    data     bss     dec     hex filename
->     804138    6768  754160 1565066  17e18a git-fast-import
->
-> After:
->
->    $ size git-fast-import
->       text    data     bss     dec     hex filename
->     804154    6768  754160 1565082  17e19a git-fast-import
->
-> So this makes the text size worse on this machine (amd64, building
-> with gcc 4.8.2 -O2).  That's probably because the old code does 'call
-> memcmp', while the new code inlines it.  Inlining is presumably the
-> better choice.
->
-> More importantly, the new code is more readable.
+Juli=C3=A1n Landerreche <maniqui@gmail.com> writes:
 
-Yes, the latter point is the important one.
+> when running "git status", if the current branch can be
+> fast-forwarded, the user get this message:
+>
+>   On branch master
+>   Your branch is behind 'origin/master' by 6 commits, and can be fast=
+-forwarded.
+>     (use "git pull" to update your local branch)
+>
+> The suggestion of using "git pull" for updating the local branch,
+> although it will work, might not be a proper choice or advice in term=
+s
+> of what is really needed to just update the local branch.
+>
+> As the user already has the newer commits locally (ie. the commits
+> have been already "git fetch"ed), he just needs to merge them. Runnin=
+g
+> "git pull" will unnecessarily try to fetch commits from upstream
+> again.
 
-If inlining is really better is another matter; I don't understand how=20
-1a812f3a (hashcmp(): inline memcmp() by hand to optimize) could have=20
-made git gc 18% faster, as it claimed.  I would expect memcmp(), which=20
-can compare more than a byte at a time, to be significantly faster -- o=
-r=20
-at least just as fast as whatever the compiler does with the inlined=20
-version.
+By running "git pull", the user may obtain yet newer commits from
+the upstream, which very likely will happen in an active project, or
+"git fetch" launched by "git pull" will return without doing
+anything after noticing there is nothing new.
 
-Ren=E9
+As long as the updates to the upstream is also a fast-forward, it
+will still fast-forward you, but to an even newer state of the
+upstream.
+
+There is no harm done[*1*] by suggesting "git pull" over "git
+merge", no?
+
+
+[Footnote]
+
+*1* There is a bigger problem with this message, especially when the
+user sees it on 'master', but your message is about the case where
+you are strictly behind and that bigger problem will not be an
+issue, so I won't discuss it further.
