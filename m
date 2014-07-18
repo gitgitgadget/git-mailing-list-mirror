@@ -1,146 +1,78 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH] remote-testsvn: use internal argv_array of struct child_process
- in cmd_import()
-Date: Fri, 18 Jul 2014 21:30:13 +0200
-Message-ID: <53C975C5.8020709@web.de>
-References: <53C93B33.5070006@web.de> <xmqq8unqmqk7.fsf@gitster.dls.corp.google.com>
+From: =?UTF-8?Q?Juli=C3=A1n_Landerreche?= <maniqui@gmail.com>
+Subject: Re: a more helpful message on "git status" output
+Date: Fri, 18 Jul 2014 16:47:15 -0300
+Message-ID: <CAKQhN+p5FpX-GEZeX0t-Y1Sq6+fdfRpE+ACqhKgdLWGFRj0ToA@mail.gmail.com>
+References: <CAKQhN+rK0ftwC5hX4hDhXZbcEGAfCCBXRaQXYnMFLmR=n21OLA@mail.gmail.com>
+ <xmqq38dympo8.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 18 21:30:35 2014
+X-From: git-owner@vger.kernel.org Fri Jul 18 21:47:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8DrX-0005bt-9k
-	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 21:30:35 +0200
+	id 1X8E83-0002xm-TG
+	for gcvg-git-2@plane.gmane.org; Fri, 18 Jul 2014 21:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1422845AbaGRTab convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 18 Jul 2014 15:30:31 -0400
-Received: from mout.web.de ([212.227.15.4]:58903 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754909AbaGRTaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 18 Jul 2014 15:30:30 -0400
-Received: from [192.168.178.27] ([79.250.167.186]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0M57ni-1WLKhR2DFO-00zG1r; Fri, 18 Jul 2014 21:30:27
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq8unqmqk7.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:fZCXy31bPjl+VfB8yFQVImqCeYHoh9y757voPSe1Sr84S3I/g8J
- UnJTs2cP24R3QTdwpvWrYlQe4F3hR7wXDdCBYPoAcLNdeWvqru37f9h8cmNPmcPnDKdr3dg
- IqqXdiGzzIXyKy27TwnHzI3I9siob6sLqffMIQgAdh+T5jtC+uV/xK8RsW5YdvzFSp+DmNZ
- OMz0tNYmuowIwH28uoThQ==
+	id S1762124AbaGRTrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 18 Jul 2014 15:47:36 -0400
+Received: from mail-oa0-f48.google.com ([209.85.219.48]:39381 "EHLO
+	mail-oa0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762056AbaGRTrf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 18 Jul 2014 15:47:35 -0400
+Received: by mail-oa0-f48.google.com with SMTP id m1so4008181oag.35
+        for <git@vger.kernel.org>; Fri, 18 Jul 2014 12:47:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=wIzw6ceLvuKFVfp90pxc/1/a7bJvu57zzE87ccrwYX0=;
+        b=0syvpgSDI4065vjWTMg2RATYa/YtGxnLHTB3pEl+HYIPITaFW2cVZCN8QNUOzxB8nq
+         6+g8upPcpfqp6Tlm911gcGU8NDayqC6WeAKwsHis6506d8RqeF1lBuwWcdszd7IQd5UD
+         6BfzFiAdBOTDUG6grKxNwfciD53vOArHQK7JpehG1Ffbyk/64aJjD8mZp++er3J7/iiG
+         oUeFS/fJS+hDHXAsZJ79mKix0B58rsHi3jTUba3zrJGcg4jGvyQF3PO16ig2wgwqRBl6
+         REdIkMgt2nR4PYfo8ySbZOJwvnuf7tQXjIr09a1iLhO+IfwWPjabnUhLdVV6WgY8Edv4
+         JsTw==
+X-Received: by 10.182.181.42 with SMTP id dt10mr10184370obc.69.1405712855092;
+ Fri, 18 Jul 2014 12:47:35 -0700 (PDT)
+Received: by 10.182.50.132 with HTTP; Fri, 18 Jul 2014 12:47:15 -0700 (PDT)
+In-Reply-To: <xmqq38dympo8.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253843>
+
+> By running "git pull", the user may obtain yet newer commits from
+> the upstream, which very likely will happen in an active project, or
+> "git fetch" launched by "git pull" will return without doing
+> anything after noticing there is nothing new.
+>
+> As long as the updates to the upstream is also a fast-forward, it
+> will still fast-forward you, but to an even newer state of the
+> upstream.
+>
+> There is no harm done[*1*] by suggesting "git pull" over "git
+> merge", no?
+
+OK, I'm mostly convinced.
+A more verbose, educational output could read:
+
+  (use "git pull" to fetch newer commits from upstream and update your
+local branch)
+  (use "git merge" to update your local branch)
 
 
+> [Footnote]
+>
+> *1* There is a bigger problem with this message, especially when the
+> user sees it on 'master', but your message is about the case where
+> you are strictly behind and that bigger problem will not be an
+> issue, so I won't discuss it further.
 
-Am 18.07.2014 21:10, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->=20
->> Use the existing argv_array member instead of providing our own.  Th=
-is
->> way we don't have to initialize or clean it up explicitly.
->>
->> Signed-off-by: Rene Scharfe <l.s.r@web.de>
->> ---
->=20
-> The change below looks so trivial and I cannot offhand see why it
-> would break t9020 in a reproducible way.
->=20
-> Puzzled...
->=20
->>   remote-testsvn.c | 11 ++++-------
->>   1 file changed, 4 insertions(+), 7 deletions(-)
->>
->> diff --git a/remote-testsvn.c b/remote-testsvn.c
->> index 6be55cb..31415bd 100644
->> --- a/remote-testsvn.c
->> +++ b/remote-testsvn.c
->> @@ -175,7 +175,6 @@ static int cmd_import(const char *line)
->>   	char *note_msg;
->>   	unsigned char head_sha1[20];
->>   	unsigned int startrev;
->> -	struct argv_array svndump_argv =3D ARGV_ARRAY_INIT;
->>   	struct child_process svndump_proc;
->>  =20
->>   	if (read_ref(private_ref, head_sha1))
->> @@ -202,11 +201,10 @@ static int cmd_import(const char *line)
->>   	} else {
->>   		memset(&svndump_proc, 0, sizeof(struct child_process));
->>   		svndump_proc.out =3D -1;
->> -		argv_array_push(&svndump_argv, "svnrdump");
->> -		argv_array_push(&svndump_argv, "dump");
->> -		argv_array_push(&svndump_argv, url);
->> -		argv_array_pushf(&svndump_argv, "-r%u:HEAD", startrev);
->> -		svndump_proc.argv =3D svndump_argv.argv;
->> +		argv_array_push(&svndump_proc.args, "svnrdump");
->> +		argv_array_push(&svndump_proc.args, "dump");
->> +		argv_array_push(&svndump_proc.args, url);
->> +		argv_array_pushf(&svndump_proc.args, "-r%u:HEAD", startrev);
->>  =20
->>   		code =3D start_command(&svndump_proc);
->>   		if (code)
->> @@ -227,7 +225,6 @@ static int cmd_import(const char *line)
->>   		code =3D finish_command(&svndump_proc);
->>   		if (code)
->>   			warning("%s, returned %d", svndump_proc.argv[0], code);
->> -		argv_array_clear(&svndump_argv);
+No idea what's this "bigger problem with this message". Care to expand?
 
-Unfortunately I don't get a test failure, but I think I see what's
-wrong: The warning line above references the argv array after it was
-freed by finish_command.  Ouch.  Fixup below:
-
----
- remote-testsvn.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/remote-testsvn.c b/remote-testsvn.c
-index 31415bd..e3ad11b 100644
---- a/remote-testsvn.c
-+++ b/remote-testsvn.c
-@@ -176,6 +176,7 @@ static int cmd_import(const char *line)
- 	unsigned char head_sha1[20];
- 	unsigned int startrev;
- 	struct child_process svndump_proc;
-+	const char *command;
-=20
- 	if (read_ref(private_ref, head_sha1))
- 		startrev =3D 0;
-@@ -199,16 +200,17 @@ static int cmd_import(const char *line)
- 		if(dumpin_fd < 0)
- 			die_errno("Couldn't open svn dump file %s.", url);
- 	} else {
-+		command =3D "svnrdump";
- 		memset(&svndump_proc, 0, sizeof(struct child_process));
- 		svndump_proc.out =3D -1;
--		argv_array_push(&svndump_proc.args, "svnrdump");
-+		argv_array_push(&svndump_proc.args, command);
- 		argv_array_push(&svndump_proc.args, "dump");
- 		argv_array_push(&svndump_proc.args, url);
- 		argv_array_pushf(&svndump_proc.args, "-r%u:HEAD", startrev);
-=20
- 		code =3D start_command(&svndump_proc);
- 		if (code)
--			die("Unable to start %s, code %d", svndump_proc.argv[0], code);
-+			die("Unable to start %s, code %d", command, code);
- 		dumpin_fd =3D svndump_proc.out;
- 	}
- 	/* setup marks file import/export */
-@@ -224,7 +226,7 @@ static int cmd_import(const char *line)
- 	if (!dump_from_file) {
- 		code =3D finish_command(&svndump_proc);
- 		if (code)
--			warning("%s, returned %d", svndump_proc.argv[0], code);
-+			warning("%s, returned %d", command, code);
- 	}
-=20
- 	return 0;
---=20
-2.0.2
+Thanks.
