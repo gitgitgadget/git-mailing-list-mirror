@@ -1,104 +1,110 @@
-From: Charles Bailey <charles@hashpling.org>
-Subject: [PATCH 2/2] difftool: don't assume that default sh is sane
-Date: Sat, 19 Jul 2014 17:35:17 +0100
-Message-ID: <1405787717-30476-2-git-send-email-charles@hashpling.org>
-References: <1405787717-30476-1-git-send-email-charles@hashpling.org>
-To: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 19 18:38:23 2014
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] fast-import: use hashcmp() for SHA1 hash comparison
+Date: Sat, 19 Jul 2014 16:43:25 +0000
+Message-ID: <20140719164324.GA5616@vauxhall.crustytoothpaste.net>
+References: <53C944B3.5080106@web.de>
+ <20140718184246.GS12427@google.com>
+ <53C971FD.6040500@web.de>
+ <20140718235706.GA11192@peff.net>
+ <53CA6072.8000009@web.de>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="2oS5YaxWCcQjTEyO"
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Sat Jul 19 18:43:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8XeQ-0001yf-LQ
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 18:38:22 +0200
+	id 1X8XjS-0004dT-4n
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 18:43:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932089AbaGSQiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2014 12:38:18 -0400
-Received: from avasout05.plus.net ([84.93.230.250]:36766 "EHLO
-	avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755317AbaGSQiR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 12:38:17 -0400
-Received: from turing.int.hashpling.org ([212.159.69.125])
-	by avasout05 with smtp
-	id UGeF1o00Y2iA9hg01GeGlf; Sat, 19 Jul 2014 17:38:17 +0100
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.1 cv=DIIB4k9b c=1 sm=1 tr=0
- a=wpJ/2au8Z6V/NgdivHIBow==:117 a=wpJ/2au8Z6V/NgdivHIBow==:17 a=Ew9TdX-QAAAA:8
- a=0Bzu9jTXAAAA:8 a=SB3M0fYuqUAA:10 a=mSBy96HJJ2wA:10 a=BHUvooL90DcA:10
- a=BNFp--SqAAAA:8 a=2bPKHU0i3SaWKyS1YWMA:9 a=92rhvNbd_XgA:10
-Received: from charles by turing.int.hashpling.org with local (Exim 4.82)
-	(envelope-from <charles@hashpling.org>)
-	id 1X8XbR-0007xs-Da; Sat, 19 Jul 2014 17:35:17 +0100
-X-Mailer: git-send-email 2.0.2.611.g8c85416
-In-Reply-To: <1405787717-30476-1-git-send-email-charles@hashpling.org>
+	id S932220AbaGSQna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2014 12:43:30 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:48966 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932080AbaGSQn3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 19 Jul 2014 12:43:29 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:c1ea:6730:f7e1:6379])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id B74562808E;
+	Sat, 19 Jul 2014 16:43:28 +0000 (UTC)
+Mail-Followup-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Content-Disposition: inline
+In-Reply-To: <53CA6072.8000009@web.de>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16-rc5-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253897>
 
-From: Charles Bailey <cbailey32@bloomberg.net>
 
-git-difftool used to create a command list script containing $( ... )
-and explicitly call "sh -c" with this list.
+--2oS5YaxWCcQjTEyO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Instead, allow mergetool --tool-help to take a mode parameter and call
-mergetool directly to invoke the show_tool_help function. This mode
-parameter is intented for use solely by difftool.
+On Sat, Jul 19, 2014 at 02:11:30PM +0200, Ren=C3=A9 Scharfe wrote:
+> I'd say if a platform doesn't bother optimizing memcmp() then they
+> deserve the resulting performance.  And it's probably not too bad a
+> penalty because such comparisons probably won't make up a significant
+> part of most applications.
 
-Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
----
-Another issue for Solaris. Originally I had a fix for this that
-substituted "@SHELL_PATH@" even inside perl scripts but I felt that
-having an interface for show_tool_help was a little neater all round but
-I welcome alternative views.
+I tend to agree with this.  On many modern versions of GCC, the compiler
+can generate an appropriately optimized inline version when it sees a
+memcmp call, so it's more of a compiler issue then, since no actual call
+to the function will be emitted.
 
- git-difftool.perl |  6 +-----
- git-mergetool.sh  | 12 +++++++++++-
- 2 files changed, 12 insertions(+), 6 deletions(-)
+>  static inline int hashcmp(const unsigned char *sha1, const unsigned char=
+ *sha2)
+>  {
+> +	const uint32_t *p1 =3D (const uint32_t *)sha1;
+> +	const uint32_t *p2 =3D (const uint32_t *)sha2;
 
-diff --git a/git-difftool.perl b/git-difftool.perl
-index 18ca61e..598fcc2 100755
---- a/git-difftool.perl
-+++ b/git-difftool.perl
-@@ -47,13 +47,9 @@ sub find_worktree
- 
- sub print_tool_help
- {
--	my $cmd = 'TOOL_MODE=diff';
--	$cmd .= ' && . "$(git --exec-path)/git-mergetool--lib"';
--	$cmd .= ' && show_tool_help';
--
- 	# See the comment at the bottom of file_diff() for the reason behind
- 	# using system() followed by exit() instead of exec().
--	my $rc = system('sh', '-c', $cmd);
-+	my $rc = system(qw(git mergetool --tool-help=diff));
- 	exit($rc | ($rc >> 8));
- }
- 
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index e969dd0..d32b663 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -320,7 +320,17 @@ guessed_merge_tool=false
- while test $# != 0
- do
- 	case "$1" in
--	--tool-help)
-+	--tool-help*)
-+		case "$#,$1" in
-+		1,*=*)
-+			TOOL_MODE=$(expr "z$1" : 'z-[^=]*=\(.*\)')
-+			;;
-+		1,--tool-help)
-+			;;
-+		*)
-+			usage
-+			;;
-+		esac
- 		show_tool_help
- 		;;
- 	-t|--tool*)
--- 
-2.0.2.611.g8c85416
+You can't make this cast.  The guaranteed alignment for sha1 and sha2 is
+1, and for p1 and p2, it's 4.  If sha1 and sha2 are not suitably
+aligned, this will get a SIGBUS on sparc and possibly a wrong value on
+ARM[0].
+
+[0] http://www.aleph1.co.uk/chapter-10-arm-structured-alignment-faq
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--2oS5YaxWCcQjTEyO
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJTyqAsAAoJEL9TXYEfUvaLrdwQAM+CYqEauLk8BZv2FeumGh6i
+VbQp6/Ljtn7IewL56d76ytSvPJi3s1ou84e8y01crS6mHn5TEcuMFbpypBg0D7to
+ADWSR4r3AjdiVlRTNp9f1xKneloz/Pn5KU0grUgg1MZ3WJUz3IXPnMJzll25Zhzv
+5wC2wd7lMtgzmUdi1o9gWd9PDGC82JxDstyk5zCgz7jYdag/khiXSxoNyWdpSeli
+/6JbHtiwL0sFeYF83+YUtAAVjIoVmHSR8BV2ZIUauVUuQATqncujTUgtEPEl2QNQ
+7KzTOY6IsHkXjN8bHHksismKG+RP5UZ+S/dYPzJ/UezhNDpTICfgOQrS6pa1A+wP
+W+79/k67ud4WGfX2LQ2Y9++Krz976UO+yyvz2sEhXI8Pw8PzfiCgMGX8QwS4zntV
+iETjEiWiiilkFQTDeGa58fx73EedGRCRd/I/obp3wbhaMM16q3i8X3Tox751sZCe
+9sLTzY2UHboL6C6ZR7hwi5yULbpLM45MMtD1XA17yjZg+MNpSFjE0aSIFXhcfiN5
+nrQ/E0z6w/5jOfVyXqI2XlOYUlLGjxK6/Q5czHX2FOq2rVQaJNrJkw5ByHaXkoXS
+PrfBev9Nh8VDSkqtL3ts25174VZF0RUn9ywILimABaj4gMMamuY3nPlkIOKzIdfk
+cmzFH+UeA/OApCY5Pib5
+=f72Q
+-----END PGP SIGNATURE-----
+
+--2oS5YaxWCcQjTEyO--
