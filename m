@@ -1,70 +1,63 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: [PATCH 3/4] completion: add some missing options to `git push`
-Date: Sat, 19 Jul 2014 10:45:56 +0100
-Message-ID: <b7908d70349de0c542c44b4dc0dae5e10c60a2de.1405763157.git.john@keeping.me.uk>
-References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
-Cc: John Keeping <john@keeping.me.uk>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 19 11:46:34 2014
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v11 0/4] git config cache & special querying api utilizing the cache
+Date: Sat, 19 Jul 2014 11:50:56 +0200
+Message-ID: <vpqd2d1vfr3.fsf@anie.imag.fr>
+References: <1405748778-3755-1-git-send-email-tanayabh@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jul 19 11:51:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8RDr-0007zI-Hr
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 11:46:31 +0200
+	id 1X8RIP-0001ci-5E
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 11:51:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757852AbaGSJqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2014 05:46:23 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:59221 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757595AbaGSJqW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 05:46:22 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 72BA8CDA3A8;
-	Sat, 19 Jul 2014 10:46:22 +0100 (BST)
-X-Quarantine-ID: <pAx8pZ3l1bDE>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id pAx8pZ3l1bDE; Sat, 19 Jul 2014 10:46:21 +0100 (BST)
-Received: from river.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 0B513CDA54D;
-	Sat, 19 Jul 2014 10:46:15 +0100 (BST)
-X-Mailer: git-send-email 2.0.1.472.g6f92e5f.dirty
-In-Reply-To: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
-In-Reply-To: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
-References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
+	id S1757146AbaGSJvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2014 05:51:08 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48947 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755875AbaGSJvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 05:51:06 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6J9otAq011487
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 19 Jul 2014 11:50:55 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6J9ou6J000752;
+	Sat, 19 Jul 2014 11:50:56 +0200
+In-Reply-To: <1405748778-3755-1-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Fri, 18 Jul 2014 22:46:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 19 Jul 2014 11:50:55 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6J9otAq011487
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1406368258.80766@pqKQYDNyMAePUGcro8zG7A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253874>
 
-Signed-off-by: John Keeping <john@keeping.me.uk>
----
- contrib/completion/git-completion.bash | 1 +
- 1 file changed, 1 insertion(+)
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 06211a6..9dcc222 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1645,6 +1645,7 @@ _git_push ()
- 	--*)
- 		__gitcomp "
- 			--all --mirror --tags --dry-run --force --verbose
-+			--quiet --prune --delete --follow-tags
- 			--receive-pack= --repo= --set-upstream
- 			--recurse-submodules=
- 		"
+> Hi,
+>
+> [PATCH V11]: very minor fixes. check [13] for discussion.
+
+Perfect, all my remarks have been taken into account, and I guess
+Junio's too.
+
+The whole series is now
+Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+
 -- 
-2.0.1.472.g6f92e5f.dirty
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
