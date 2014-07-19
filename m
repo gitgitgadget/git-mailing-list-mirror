@@ -1,134 +1,155 @@
 From: Karsten Blees <karsten.blees@gmail.com>
-Subject: [PATCH] t0110/MinGW: skip tests that pass arbitrary bytes
- on the command line
-Date: Sat, 19 Jul 2014 21:37:19 +0200
-Message-ID: <53CAC8EF.6020707@gmail.com>
-References: <20140716092959.GA378@ucw.cz>	<1405611425-10009-1-git-send-email-kasal@ucw.cz>	<1405611425-10009-3-git-send-email-kasal@ucw.cz>	<53C813D2.8070701@gmail.com> <xmqqd2d2mskv.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH] abspath.c: use PATH_MAX in real_path_internal()
+Date: Sun, 20 Jul 2014 01:55:33 +0200
+Message-ID: <53CB0575.5020707@gmail.com>
+References: <1405601143-31354-1-git-send-email-pclouds@gmail.com> <53C80265.5030903@web.de> <53C8562C.4000304@gmail.com> <53C905EB.3010908@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Stepan Kasal <kasal@ucw.cz>, Johannes Sixt <j6t@kdbg.org>, 
- GIT Mailing-list <git@vger.kernel.org>,
- msysGit <msysgit@googlegroups.com>, 
- Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCH3XYXLXQDBB34RVOPAKGQEQSFE4TA@googlegroups.com Sat Jul 19 21:37:21 2014
-Return-path: <msysgit+bncBCH3XYXLXQDBB34RVOPAKGQEQSFE4TA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-lb0-f184.google.com ([209.85.217.184])
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
+	=?UTF-8?B?Tmd1eeG7hW4=?= =?UTF-8?B?IFRow6FpIE5n4buNYyBEdXk=?= 
+	<pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 20 01:55:42 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCH3XYXLXQDBB34RVOPAKGQEQSFE4TA@googlegroups.com>)
-	id 1X8aRc-0002rE-NF
-	for gcvm-msysgit@m.gmane.org; Sat, 19 Jul 2014 21:37:20 +0200
-Received: by mail-lb0-f184.google.com with SMTP id c11sf581342lbj.1
-        for <gcvm-msysgit@m.gmane.org>; Sat, 19 Jul 2014 12:37:20 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X8eTd-0007Ft-OO
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jul 2014 01:55:42 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1756164AbaGSXzh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jul 2014 19:55:37 -0400
+Received: from mail-wg0-f43.google.com ([74.125.82.43]:34728 "EHLO
+	mail-wg0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755961AbaGSXzg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 19:55:36 -0400
+Received: by mail-wg0-f43.google.com with SMTP id l18so4924087wgh.2
+        for <git@vger.kernel.org>; Sat, 19 Jul 2014 16:55:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
+        d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=ChUnJzibsVPX9vZq03JrpgQ3+DisuvZ1UBcPDJq3JRw=;
-        b=n/q/8rJyxB9HiR/Qc6sMjf/eN7vRmRJ8D0LYRHrE9c7WIm1wnWME9qR0nFJo/3ABm5
-         mprMmMP/LNl10lzC5OSTpHhkq/o3ABqbdgj4QcRwJKSsuV8LtneQELP1naUPB1HzTJdx
-         7bA93cSPcY70rhW2giRFKKCjrfPBPJ3btwznynT9Z72pxDgAg6yO3FD3nOLLCbQIwzup
-         uiU4FQBDy/kfAfl4lYdlNMrSXcdivBg//NY8FdTG2tu4UaLmiCFsK1gHTOynDCxDERzs
-         yeMbusJSf4reyGm4Iu2PJjwfm5I3WvdFPctSdI9loetA9YrCuBwingYOS7XALgz4ofau
-         RGGQ==
-X-Received: by 10.152.207.76 with SMTP id lu12mr113482lac.2.1405798640375;
-        Sat, 19 Jul 2014 12:37:20 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.42.134 with SMTP id o6ls375420lal.4.gmail; Sat, 19 Jul
- 2014 12:37:18 -0700 (PDT)
-X-Received: by 10.112.158.8 with SMTP id wq8mr309189lbb.12.1405798638642;
-        Sat, 19 Jul 2014 12:37:18 -0700 (PDT)
-Received: from mail-wg0-x232.google.com (mail-wg0-x232.google.com [2a00:1450:400c:c00::232])
-        by gmr-mx.google.com with ESMTPS id d9si352294wie.3.2014.07.19.12.37.18
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 19 Jul 2014 12:37:18 -0700 (PDT)
-Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::232 as permitted sender) client-ip=2a00:1450:400c:c00::232;
-Received: by mail-wg0-f50.google.com with SMTP id n12so4734009wgh.21
-        for <msysgit@googlegroups.com>; Sat, 19 Jul 2014 12:37:18 -0700 (PDT)
-X-Received: by 10.194.142.148 with SMTP id rw20mr7350186wjb.69.1405798638509;
-        Sat, 19 Jul 2014 12:37:18 -0700 (PDT)
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=d71U429xOsVDyIA3U39G93dmEa8bqeKVs+WDNPJUuug=;
+        b=mBVI9/gWPLAslRUcZBLnzjTTmX0eqegAjjZ68uVNoOV4NDM50p3E9z3rNbhHwueKSp
+         9Yb7NNdnPaGt7/EvYZGEFSQo3FRuprfpqWz+DU4hlieATe6tU5/1aHcrptQDp9Q3JStJ
+         TRRIjxNM8+KwP2LXnq97UOxO22S5aYHbkVa7JkoXBJhr+yhjRB/qy2ps071WArnr/MRa
+         A8fKZw46t49Q23J4j2wKSs8vNB6oIH3YeU9j+o19Dpgs0cP1Ra/eKTJl1AZR7A52nxBl
+         6O1BrwSxjgErZLLmCPuexYQLXPx+T/olco1VtiDFQx6VB1p9mk4hdX2YDAHf6uJCXVJc
+         Hywg==
+X-Received: by 10.194.6.10 with SMTP id w10mr8715673wjw.51.1405814135372;
+        Sat, 19 Jul 2014 16:55:35 -0700 (PDT)
 Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id hi4sm23996872wjc.27.2014.07.19.12.37.17
+        by mx.google.com with ESMTPSA id pq9sm25338608wjc.35.2014.07.19.16.55.34
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 19 Jul 2014 12:37:17 -0700 (PDT)
+        Sat, 19 Jul 2014 16:55:34 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqd2d2mskv.fsf@gitster.dls.corp.google.com>
-X-Original-Sender: karsten.blees@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::232
- as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
- header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253907>
+In-Reply-To: <53C905EB.3010908@web.de>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253908>
 
-On Windows, the command line is a Unicode string, it is not possible to
-pass arbitrary bytes to a program. Disable tests that try to do so.
+Am 18.07.2014 13:32, schrieb Ren=C3=A9 Scharfe:
+> Am 18.07.2014 01:03, schrieb Karsten Blees:
+>> Am 17.07.2014 19:05, schrieb Ren=C3=A9 Scharfe:
+>>> Am 17.07.2014 14:45, schrieb Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy:
+>> [...]
+>>> "These routines have traditionally been used by programs to save th=
+e
+>>> name of a working directory for the purpose of returning to it. A m=
+uch
+>>> faster and less error-prone method of accomplishing this is to open=
+ the
+>>> current directory (.) and use the fchdir(2) function to return."
+>>>
+>>
+>> fchdir() is part of the POSIX-XSI extension, as is realpath(). So wh=
+y not
+>> use realpath() directly (which would also be thread-safe)?
+>=20
+> That's a good question; thanks for stepping back and looking at the b=
+igger picture.  If there is widespread OS support for a functionality t=
+hen we should use it and just provide a compatibility implementation fo=
+r those platforms lacking it.  The downside is that compat code gets le=
+ss testing.
+>=20
 
-Signed-off-by: Karsten Blees <blees@dcon.de>
----
- t/t0110-urlmatch-normalization.sh | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+I just noticed that in contrast to the POSIX realpath(), our real_path(=
+) doesn't require the last path component to exist. I don't know if thi=
+s property is required by the calling code, though.
 
-diff --git a/t/t0110-urlmatch-normalization.sh b/t/t0110-urlmatch-normalization.sh
-index 8d6096d..410d576 100755
---- a/t/t0110-urlmatch-normalization.sh
-+++ b/t/t0110-urlmatch-normalization.sh
-@@ -117,7 +117,7 @@ test_expect_success 'url general escapes' '
- 	test "$(test-urlmatch-normalization -p "X://W?'\!'")" = "x://w/?'\!'"
- '
- 
--test_expect_success 'url high-bit escapes' '
-+test_expect_success !MINGW 'url high-bit escapes' '
- 	test "$(test-urlmatch-normalization -p "$(cat "$tu-1")")" = "x://q/%01%02%03%04%05%06%07%08%0E%0F%10%11%12" &&
- 	test "$(test-urlmatch-normalization -p "$(cat "$tu-2")")" = "x://q/%13%14%15%16%17%18%19%1B%1C%1D%1E%1F%7F" &&
- 	test "$(test-urlmatch-normalization -p "$(cat "$tu-3")")" = "x://q/%80%81%82%83%84%85%86%87%88%89%8A%8B%8C%8D%8E%8F" &&
-@@ -127,7 +127,10 @@ test_expect_success 'url high-bit escapes' '
- 	test "$(test-urlmatch-normalization -p "$(cat "$tu-7")")" = "x://q/%C0%C1%C2%C3%C4%C5%C6%C7%C8%C9%CA%CB%CC%CD%CE%CF" &&
- 	test "$(test-urlmatch-normalization -p "$(cat "$tu-8")")" = "x://q/%D0%D1%D2%D3%D4%D5%D6%D7%D8%D9%DA%DB%DC%DD%DE%DF" &&
- 	test "$(test-urlmatch-normalization -p "$(cat "$tu-9")")" = "x://q/%E0%E1%E2%E3%E4%E5%E6%E7%E8%E9%EA%EB%EC%ED%EE%EF" &&
--	test "$(test-urlmatch-normalization -p "$(cat "$tu-10")")" = "x://q/%F0%F1%F2%F3%F4%F5%F6%F7%F8%F9%FA%FB%FC%FD%FE%FF" &&
-+	test "$(test-urlmatch-normalization -p "$(cat "$tu-10")")" = "x://q/%F0%F1%F2%F3%F4%F5%F6%F7%F8%F9%FA%FB%FC%FD%FE%FF"
-+'
-+
-+test_expect_success 'url utf-8 escapes' '
- 	test "$(test-urlmatch-normalization -p "$(cat "$tu-11")")" = "x://q/%C2%80%DF%BF%E0%A0%80%EF%BF%BD%F0%90%80%80%F0%AF%BF%BD"
- '
- 
--- 
-2.0.2.906.g50cb2fc.dirty
+> Seeing that readlink()
 
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+You mean realpath()? We don't have a stub for that yet.
 
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
+> is left as a stub in compat/mingw.h that only errors out, would the e=
+quivalent function on Windows be PathCanonicalize (http://msdn.microsof=
+t.com/en-us/library/windows/desktop/bb773569%28v=3Dvs.85%29.aspx)?
+>=20
 
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+PathCanonicalize() doesn't return an absolute path, the realpath() equi=
+valent would be GetFullPathName() (doesn't resolve symlinks) or GetFina=
+lPathNameByHandle() (requires Vista, resolves symlinks, requires the pa=
+th to exist).
+
+>> For non-XSI-compliant platforms, we could keep the current implement=
+ation.
+>=20
+> OK, so realpath() for Linux and the BSDs, mingw_realpath() wrapping P=
+athCanonicalize() for Windows and the current code for the rest?
+>=20
+>> Or re-implement a thread-safe version, e.g. applying resolve_symlink=
+() from
+>> lockfile.c to all path components.
+>=20
+> Thread safety sounds good.  We'd also need something like normalize_p=
+ath_copy() but without the conversion of backslashes to slashes, in ord=
+er to get rid of "." and ".." path components and something like absolu=
+te_path() that doesn't die on error, no?
+>=20
+
+Windows can handle forward slashes, so normalize_path_copy works just f=
+ine.
+
+>> If I may bother you with the Windows point of view:
+>>
+>> There is no fchdir(), and I'm pretty sure open(".") won't work eithe=
+r.
+>=20
+> On Windows, there *is* an absolute path length limit of 260 in the no=
+rmal case and a bit more than 32000 for some functions using the \\?\ n=
+amespace. So one could get away with using a constant-sized buffer for =
+a "remember the place and return later" function here.
+>=20
+
+The current directory is pretty much the only exception to the \\?\ tri=
+ck [1]. So a fixed buffer for getcwd() would actually be fine on Window=
+s (although it would have to be 3 * PATH_MAX, as PATH_MAX wide chars wi=
+ll convert to at most 3 * PATH_MAX UTF-8 chars).
+
+However, a POSIX conformant getcwd must fail with ERANGE if the buffer =
+is too small. So a better alternative would be to add a strbuf_getcwd()=
+ that works similar to strbuf_readlink() (i.e. resize the buffer until =
+its large enough).
+
+Side note: the 'hard' 260 limit for the current directory also means th=
+at as long as we *simulate* realpath() via chdir()/getcwd(), long paths=
+ [1] don't work here.
+
+> Also, _getcwd can be asked to allocate an appropriately-sized buffer =
+for use, like GNU's get_current_dir_name, by specifying NULL as its fir=
+st parameter (http://msdn.microsoft.com/en-us/library/sf98bd4y.aspx).
+>=20
+
+We use nedmalloc in the Windows builds, so unfortuately we cannot free =
+memory allocated by MSVCRT.dll.
+
+
+[1] http://msdn.microsoft.com/en-us/library/windows/desktop/aa365530%28=
+v=3Dvs.85%29.aspx
+[2] https://github.com/msysgit/git/commit/84393750
