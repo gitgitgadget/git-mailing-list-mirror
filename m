@@ -1,83 +1,76 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: git_inetd_server: run git-http-backend using inetd
-Date: Sat, 19 Jul 2014 08:21:13 +0200
-Message-ID: <53CA0E59.5030103@web.de>
-References: <43923BC7-08AF-4900-AC5E-B2F0FE7CD5AC@gmail.com> <20140717221056.GO12427@google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	"Kyle J. McKay" <mackyle@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 19 08:21:37 2014
+From: John Keeping <john@keeping.me.uk>
+Subject: [PATCH 2/4] completion: complete "unstuck" `git push --recurse-submodules`
+Date: Sat, 19 Jul 2014 10:45:55 +0100
+Message-ID: <a3317a7692675483f60ee10ff98e1e95a3dc4b5a.1405763157.git.john@keeping.me.uk>
+References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
+Cc: John Keeping <john@keeping.me.uk>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 19 11:46:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8O1X-0005Ep-Em
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 08:21:35 +0200
+	id 1X8RDj-0007wL-AR
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 11:46:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756043AbaGSGVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2014 02:21:31 -0400
-Received: from mout.web.de ([212.227.17.12]:52244 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751569AbaGSGVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 02:21:31 -0400
-Received: from [192.168.1.87] ([178.165.128.194]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0Lj2I6-1WXf5s2WPG-00dGRe; Sat, 19 Jul 2014 08:21:27
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Icedove/24.6.0
-In-Reply-To: <20140717221056.GO12427@google.com>
-X-Provags-ID: V03:K0:7jUhzjFWo7dbJmf5szV4g8Uuy2X6HROGH8/lWtdRgqr+T/Nmpu7
- NM8tahU+dLSzZxyizOO5vgZDVrSwQL+0Yewcg0EXTjipBcdsc5s41OQMdJo/lAIJp2m2wZ9
- kwus28qvsfUahLC4eYp+I+2keLIBybs+WWofE6FmyIdl2o7Ahxep6gXh9icizRC0qLek2TD
- GagTST9pyCJY0XmS5KxbA==
+	id S1757495AbaGSJqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2014 05:46:17 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:38231 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756654AbaGSJqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 05:46:16 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 08D96CDA3A8;
+	Sat, 19 Jul 2014 10:46:16 +0100 (BST)
+X-Quarantine-ID: <SyPVucDWXeUM>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Amavis-Alert: BAD HEADER SECTION, Duplicate header field: "References"
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id SyPVucDWXeUM; Sat, 19 Jul 2014 10:46:15 +0100 (BST)
+Received: from river.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 5FFE8CDA56E;
+	Sat, 19 Jul 2014 10:46:08 +0100 (BST)
+X-Mailer: git-send-email 2.0.1.472.g6f92e5f.dirty
+In-Reply-To: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
+In-Reply-To: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
+References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253870>
 
-On 07/18/2014 12:10 AM, Jonathan Nieder wrote:
-> Hi,
->
-> Kyle J. McKay wrote:
->
->> When I then try to fetch using a "git://host/..." URL where "host"
->> is an mDNS host name, the 0010 patch causes git to attempt to lookup
->> a DNS SRV record on the non-mDNS regular DNS service (a violation of
->> RFC 6762 [4] section 22) and this is what has to time out before the
->> real fetch can start.
-> That patch uses res_query from libresolv to do the lookup.  It doesn't
-> know what DNS server to use and relies on system libraries to get it
-> right.
->
-> It was added to respond to a feature request within Debian but it is
-> intended to eventually go upstream.  I'm glad you found this issue
-> before that could happen. :)
->
-> Should git automatically disable the SRV lookups when it sees one of
-> the six domains named in RFC6762, or is there some system library call
-> that can use mDNS when appropriate automatically (or get partway there
-> without having to hard-code the domains)?
->
-> Thanks,
-> Jonathan
-(My apologies, if this is spamish), but just to verify what is going on:
+Since the argument to `--recurse-submodules` is mandatory, it does not
+need to be stuck to the option with `=`.
 
-git fetch git://host.local/...
-results in a DNS lookup ?
+Signed-off-by: John Keeping <john@keeping.me.uk>
+---
+ contrib/completion/git-completion.bash | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Kyle, did you verify the lookup with wireshark or a similar tool?
-
-Jonathan, (I'm good in searching, but bad in finding)
-could you point out where the source code for the git package for
-debian is ?
-
-I recently learned about mDNS, and will probably do some tests
-and experiments later, and would like to test the lookup feature
-of "0010".
-
-Thanks.
-/Torsten
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index d0b2895..06211a6 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1624,6 +1624,10 @@ __git_push_recurse_submodules="check on-demand"
+ _git_push ()
+ {
+ 	case "$prev" in
++	--recurse_submodules)
++		__gitcomp "$__git_push_recurse_submodules"
++		return
++		;;
+ 	--repo)
+ 		__gitcomp_nl "$(__git_remotes)"
+ 		return
+-- 
+2.0.1.472.g6f92e5f.dirty
