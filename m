@@ -1,129 +1,90 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH 2/2] difftool: don't assume that default sh is sane
-Date: Sat, 19 Jul 2014 18:21:32 +0100
-Message-ID: <20140719172132.GB26927@serenity.lan>
-References: <1405787717-30476-1-git-send-email-charles@hashpling.org>
- <1405787717-30476-2-git-send-email-charles@hashpling.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: [PATCH] fast-import: use hashcmp() for SHA1 hash comparison
+Date: Sat, 19 Jul 2014 19:53:04 +0200
+Message-ID: <53CAB080.8060005@web.de>
+References: <53C944B3.5080106@web.de> <20140718184246.GS12427@google.com> <53C971FD.6040500@web.de> <20140718235706.GA11192@peff.net> <53CA6072.8000009@web.de> <20140719164324.GA5616@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Sat Jul 19 19:21:49 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jul 19 19:54:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8YKS-00068u-QI
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 19:21:49 +0200
+	id 1X8YqP-0004iE-Jt
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 19:54:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932523AbaGSRVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2014 13:21:44 -0400
-Received: from jackal.aluminati.org ([72.9.247.210]:34191 "EHLO
-	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932319AbaGSRVo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 13:21:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by jackal.aluminati.org (Postfix) with ESMTP id 9843B866001;
-	Sat, 19 Jul 2014 18:21:43 +0100 (BST)
-X-Quarantine-ID: <o-XkIZ77e691>
-X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from jackal.aluminati.org ([127.0.0.1])
-	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id o-XkIZ77e691; Sat, 19 Jul 2014 18:21:42 +0100 (BST)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jackal.aluminati.org (Postfix) with ESMTPSA id 0AED3CDA563;
-	Sat, 19 Jul 2014 18:21:34 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <1405787717-30476-2-git-send-email-charles@hashpling.org>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S1755556AbaGSRxY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jul 2014 13:53:24 -0400
+Received: from mout.web.de ([212.227.15.4]:49523 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755317AbaGSRxX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 13:53:23 -0400
+Received: from [192.168.178.27] ([79.253.155.202]) by smtp.web.de (mrweb004)
+ with ESMTPSA (Nemesis) id 0MCeX4-1XGmIc2ykU-009PaY; Sat, 19 Jul 2014 19:53:20
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140719164324.GA5616@vauxhall.crustytoothpaste.net>
+X-Provags-ID: V03:K0:PuAS2NZWu+ak+yozP1dVkiwnXFwnAEd7q6EazrT5I/Y5+SsCGbS
+ rOhBGk9IAjk3gXfLnUreJnHRR1x54/udvoBAfodl+q8UULzks3zSGeBO46xWGMXawBYtf/G
+ AiAIci3t0bLDxqwastpFj9Yj/Vfm1GrcjPv6fzLPQx/mU15ejpRKJSjcN7JC0QO+fCddEqv
+ 0L1CcLcqvCfnvgSCYoyiQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253900>
 
-On Sat, Jul 19, 2014 at 05:35:17PM +0100, Charles Bailey wrote:
-> From: Charles Bailey <cbailey32@bloomberg.net>
-> 
-> git-difftool used to create a command list script containing $( ... )
-> and explicitly call "sh -c" with this list.
-> 
-> Instead, allow mergetool --tool-help to take a mode parameter and call
-> mergetool directly to invoke the show_tool_help function. This mode
-> parameter is intented for use solely by difftool.
-> 
-> Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
-> ---
-> Another issue for Solaris. Originally I had a fix for this that
-> substituted "@SHELL_PATH@" even inside perl scripts but I felt that
-> having an interface for show_tool_help was a little neater all round but
-> I welcome alternative views.
-> 
->  git-difftool.perl |  6 +-----
->  git-mergetool.sh  | 12 +++++++++++-
->  2 files changed, 12 insertions(+), 6 deletions(-)
-> 
-> diff --git a/git-difftool.perl b/git-difftool.perl
-> index 18ca61e..598fcc2 100755
-> --- a/git-difftool.perl
-> +++ b/git-difftool.perl
-> @@ -47,13 +47,9 @@ sub find_worktree
->  
->  sub print_tool_help
->  {
-> -	my $cmd = 'TOOL_MODE=diff';
-> -	$cmd .= ' && . "$(git --exec-path)/git-mergetool--lib"';
-> -	$cmd .= ' && show_tool_help';
-> -
->  	# See the comment at the bottom of file_diff() for the reason behind
->  	# using system() followed by exit() instead of exec().
-> -	my $rc = system('sh', '-c', $cmd);
-> +	my $rc = system(qw(git mergetool --tool-help=diff));
->  	exit($rc | ($rc >> 8));
->  }
->  
-> diff --git a/git-mergetool.sh b/git-mergetool.sh
-> index e969dd0..d32b663 100755
-> --- a/git-mergetool.sh
-> +++ b/git-mergetool.sh
-> @@ -320,7 +320,17 @@ guessed_merge_tool=false
->  while test $# != 0
->  do
->  	case "$1" in
-> -	--tool-help)
-> +	--tool-help*)
-> +		case "$#,$1" in
-> +		1,*=*)
+Am 19.07.2014 18:43, schrieb brian m. carlson:
+> On Sat, Jul 19, 2014 at 02:11:30PM +0200, Ren=C3=A9 Scharfe wrote:
+>> I'd say if a platform doesn't bother optimizing memcmp() then they
+>> deserve the resulting performance.  And it's probably not too bad a
+>> penalty because such comparisons probably won't make up a significan=
+t
+>> part of most applications.
+>
+> I tend to agree with this.  On many modern versions of GCC, the compi=
+ler
+> can generate an appropriately optimized inline version when it sees a
+> memcmp call, so it's more of a compiler issue then, since no actual c=
+all
+> to the function will be emitted.
 
-What's the reason for forcing `--tool-help` to be the last option?
-Wouldn't it be simpler to just change the top-level case statement to:
+I just found this open GCC bug entry about glibc memcmp being faster=20
+than the inlined version of the compiler:=20
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D43052.
 
-	--tool-help=*)
-		TOOL_MODE=${1#--tool-help=}
-		show_tool_help
-		;;
-	--tool-help)
-		show_tool_help
-		;;
+(Found through=20
+http://randomascii.wordpress.com/2012/10/31/comparing-memory-is-still-t=
+ricky/,=20
+which says that the compilers coming with Microsoft Visual Studio 2010=20
+and 2012 are not optimizing memcmp() as much as they could as well.)
 
-> +			TOOL_MODE=$(expr "z$1" : 'z-[^=]*=\(.*\)')
-> +			;;
-> +		1,--tool-help)
-> +			;;
-> +		*)
-> +			usage
-> +			;;
-> +		esac
->  		show_tool_help
->  		;;
->  	-t|--tool*)
-> -- 
-> 2.0.2.611.g8c85416
+>>   static inline int hashcmp(const unsigned char *sha1, const unsigne=
+d char *sha2)
+>>   {
+>> +	const uint32_t *p1 =3D (const uint32_t *)sha1;
+>> +	const uint32_t *p2 =3D (const uint32_t *)sha2;
+>
+> You can't make this cast.  The guaranteed alignment for sha1 and sha2=
+ is
+> 1, and for p1 and p2, it's 4.  If sha1 and sha2 are not suitably
+> aligned, this will get a SIGBUS on sparc and possibly a wrong value o=
+n
+> ARM[0].
+>
+> [0] http://www.aleph1.co.uk/chapter-10-arm-structured-alignment-faq
+
+Yeah, it was just a test balloon that happens to work on amd64.  We=20
+could invent a hash type with correct alignment (a struct with a=20
+uint32_t[5] member?) and replace all those unsigned char pointers if we=
+=20
+wanted to go with such a "vectorized" hashcmp, but that would be=20
+maximally invasive.
+
+Ren=C3=A9
