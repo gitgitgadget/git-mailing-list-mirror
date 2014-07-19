@@ -1,108 +1,100 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] use xcalloc() to allocate zero-initialized memory
-Date: Sat, 19 Jul 2014 15:56:26 +0200
-Message-ID: <53CA790A.20402@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 19 15:56:53 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH] add documentation for writing config files
+Date: Sat, 19 Jul 2014 08:05:54 -0700
+Message-ID: <1405782354-13929-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 19 17:07:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8V88-0007pM-0w
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 15:56:52 +0200
+	id 1X8WEZ-00084s-8S
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 17:07:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755023AbaGSN4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2014 09:56:48 -0400
-Received: from mout.web.de ([212.227.15.3]:51862 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754680AbaGSN4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 09:56:47 -0400
-Received: from [192.168.178.27] ([79.253.155.202]) by smtp.web.de (mrweb003)
- with ESMTPSA (Nemesis) id 0MHY0i-1X7OfG2QBA-003R6W; Sat, 19 Jul 2014 15:56:42
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-X-Provags-ID: V03:K0:hiFQBi0XxhyxzaXGIiS1kCBsXDnynd4j5/4T2IC3Um7rbUa/xz3
- TUgZIB3UKkJzV9Bd5wvmrXtL+tB8xmjrDDQOoQzhJ0YHO5/BaRNHf3f0qimjOr0YhvVjsiK
- 1neKv4BtrAiLXrM25XEkI8vKc6uiBzZPTaVQvN4IAQErhr1hto4MuArjCKcQ/a9xwfdPDwr
- KlbUAVjXpBaMFHJjvtapQ==
+	id S1754541AbaGSPHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2014 11:07:20 -0400
+Received: from mail-pa0-f54.google.com ([209.85.220.54]:62209 "EHLO
+	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754157AbaGSPHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 11:07:19 -0400
+Received: by mail-pa0-f54.google.com with SMTP id fa1so7072070pad.13
+        for <git@vger.kernel.org>; Sat, 19 Jul 2014 08:07:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=H0nnG6kanN3MbSaxbLof6B8N3y5jKza6oA7HQv8IBZY=;
+        b=QnBqb5n3v1ev2ePgQjAQlyyGLhy3nqY2xZkM9X3K9DcZce8wQFm+VP2cCOM5DUWvaK
+         0ruxSYKr+lLWvq3nO7/G+KaT8O86mla73VQGebYn1xb0WIka8xLo6tkzLw8bi1vj61Xh
+         e7CytbGr83LaSMl9/W7Mpt7+ZoO+mL819wG1H9AF2hOZjd2wZda9+S4hE2/mxoUk+T/p
+         VAhJbOIhXtrDIVNkjjfOYFg+4BgeB5Bye+evL+BXeYbZGVstkMm6552LIC1h4ekigySd
+         GAi8taJALiuw/bYl6Xd7ri3HLGNbw1nWCz9qZlRYc9Dm0y0WTcfEfeS+1lU7NwGAbRVt
+         R4+w==
+X-Received: by 10.68.191.34 with SMTP id gv2mr2012476pbc.13.1405782438639;
+        Sat, 19 Jul 2014 08:07:18 -0700 (PDT)
+Received: from localhost.localdomain ([223.176.232.60])
+        by mx.google.com with ESMTPSA id ec2sm8837124pbc.63.2014.07.19.08.07.15
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 19 Jul 2014 08:07:18 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253881>
 
-Use xcalloc() instead of xmalloc() followed by memset() to allocate
-and zero out memory because it's shorter and avoids duplicating the
-function parameters.
+Replace TODO introduced in commit 9c3c22 with documentation
+explaining Git config API functions for writing configuration
+files.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- builtin/clean.c      | 3 +--
- builtin/index-pack.c | 3 +--
- compat/mingw.c       | 3 +--
- pathspec.c           | 3 +--
- 4 files changed, 4 insertions(+), 8 deletions(-)
+ Documentation/technical/api-config.txt | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/clean.c b/builtin/clean.c
-index 27701d2..1032563 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -621,8 +621,7 @@ static int *list_and_choose(struct menu_opts *opts, struct menu_stuff *stuff)
- 				nr += chosen[i];
- 		}
+diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
+index 230b3a0..df08385 100644
+--- a/Documentation/technical/api-config.txt
++++ b/Documentation/technical/api-config.txt
+@@ -137,4 +137,33 @@ int read_file_with_include(const char *file, config_fn_t fn, void *data)
+ Writing Config Files
+ --------------------
  
--		result = xmalloc(sizeof(int) * (nr + 1));
--		memset(result, 0, sizeof(int) * (nr + 1));
-+		result = xcalloc(nr + 1, sizeof(int));
- 		for (i = 0; i < stuff->nr && j < nr; i++) {
- 			if (chosen[i])
- 				result[j++] = i;
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index fc40411..5568a5b 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -362,8 +362,7 @@ static void set_thread_data(struct thread_local *data)
- 
- static struct base_data *alloc_base_data(void)
- {
--	struct base_data *base = xmalloc(sizeof(struct base_data));
--	memset(base, 0, sizeof(*base));
-+	struct base_data *base = xcalloc(1, sizeof(struct base_data));
- 	base->ref_last = -1;
- 	base->ofs_last = -1;
- 	return base;
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 3baaa4d..ed4c61c 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1230,8 +1230,7 @@ static int WSAAPI getaddrinfo_stub(const char *node, const char *service,
- 	else
- 		ai->ai_canonname = NULL;
- 
--	sin = xmalloc(ai->ai_addrlen);
--	memset(sin, 0, ai->ai_addrlen);
-+	sin = xcalloc(1, ai->ai_addrlen);
- 	sin->sin_family = AF_INET;
- 	/* Note: getaddrinfo is supposed to allow service to be a string,
- 	 * which should be looked up using getservbyname. This is
-diff --git a/pathspec.c b/pathspec.c
-index 89f2c8f..9304ee3 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -389,8 +389,7 @@ void parse_pathspec(struct pathspec *pathspec,
- 		if (!(flags & PATHSPEC_PREFER_CWD))
- 			die("BUG: PATHSPEC_PREFER_CWD requires arguments");
- 
--		pathspec->items = item = xmalloc(sizeof(*item));
--		memset(item, 0, sizeof(*item));
-+		pathspec->items = item = xcalloc(1, sizeof(*item));
- 		item->match = prefix;
- 		item->original = prefix;
- 		item->nowildcard_len = item->len = strlen(prefix);
+-TODO
++Git gives multiple entry points in the Config API to write config values to
++files namely `git_config_set_in_file` and `git_config_set`, which write to
++a specific config file or to `.git/config` respectively. They both take a
++key/value pair as parameter.
++In the end they both all call `git_config_set_multivar_in_file` which takes
++four parameters:
++
++- the name of the file, as a string, to which key/value pairs will be written.
++
++- the name of key, as a string. This is in canonical "flat" form: the section,
++  subsection, and variable segments will be separated by dots, and the section
++  and variable segments will be all lowercase.
++  E.g., `core.ignorecase`, `diff.SomeType.textconv`.
++
++- the value of the variable, as a string. If value is equal to NULL, it will
++  remove the matching key from the config file.
++
++- the value regex, as a string. It will disregard key/value pairs where value
++  does not match.
++
++- a multi_replace value, as an int. If value is equal to zero, nothing or only
++  one matching key/value is replaced, else all matching key/values (regardless
++  how many) are removed, before the new pair is written.
++
++It returns 0 on success.
++
++Also, there are functions `git_config_rename_section` and
++`git_config_rename_section_in_file` with parameters `old_name` and `new_name`
++for renaming or removing sections in the config files. If NULL is passed
++through `new_name` parameter, the section will be removed from the config file.
 -- 
-2.0.2
+1.9.0.GIT
