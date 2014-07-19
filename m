@@ -1,125 +1,117 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH] add documentation for writing config files
-Date: Sat, 19 Jul 2014 19:35:08 +0100
-Organization: OPDS
-Message-ID: <7DFDF6A1361542EE9BA73AB52B1234AF@PhilipOakley>
-References: <1405782354-13929-1-git-send-email-tanayabh@gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: [PATCH] fixup! Win32: Unicode environment (outgoing)
+Date: Sat, 19 Jul 2014 21:13:02 +0200
+Message-ID: <53CAC33E.9000009@gmail.com>
+References: <1405611486-10176-1-git-send-email-kasal@ucw.cz> <1405611486-10176-3-git-send-email-kasal@ucw.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Tanay Abhra" <tanayabh@gmail.com>,
-	"Ramkumar Ramachandra" <artagnon@gmail.com>,
-	"Matthieu Moy" <Matthieu.Moy@grenoble-inp.fr>,
-	"Junio C Hamano" <gitster@pobox.com>
-To: "Tanay Abhra" <tanayabh@gmail.com>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jul 19 20:35:19 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: msysGit <msysgit@googlegroups.com>, Karsten Blees <blees@dcon.de>
+To: Stepan Kasal <kasal@ucw.cz>, GIT Mailing-list <git@vger.kernel.org>, 
+ Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCH3XYXLXQDBBPMGVOPAKGQEPSARNFY@googlegroups.com Sat Jul 19 21:13:04 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBBPMGVOPAKGQEPSARNFY@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-lb0-f189.google.com ([209.85.217.189])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8ZTa-00077O-MD
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 20:35:19 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932684AbaGSSfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2014 14:35:12 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:42509 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932476AbaGSSfL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 19 Jul 2014 14:35:11 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvYXAHC5ylMCYJvtPGdsb2JhbABZgw5jRocvgQTEEwUBAgEBDHoXBAEBAQE4NoN+BgEFCAEBLh4BASELAgMFAgEDFQwlFAEECBIGBwMUBgESCAIBAgMBiB0DFbIaiHINhyMXjR6BSWQ1gwCBGAWKK4QKgmeIBoodhXmJYTwvgQM
-X-IPAS-Result: AvYXAHC5ylMCYJvtPGdsb2JhbABZgw5jRocvgQTEEwUBAgEBDHoXBAEBAQE4NoN+BgEFCAEBLh4BASELAgMFAgEDFQwlFAEECBIGBwMUBgESCAIBAgMBiB0DFbIaiHINhyMXjR6BSWQ1gwCBGAWKK4QKgmeIBoodhXmJYTwvgQM
-X-IronPort-AV: E=Sophos;i="5.01,692,1400022000"; 
-   d="scan'208";a="505560187"
-Received: from host-2-96-155-237.as13285.net (HELO PhilipOakley) ([2.96.155.237])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 19 Jul 2014 19:35:09 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253905>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBBPMGVOPAKGQEPSARNFY@googlegroups.com>)
+	id 1X8a46-0008JQ-NI
+	for gcvm-msysgit@m.gmane.org; Sat, 19 Jul 2014 21:13:02 +0200
+Received: by mail-lb0-f189.google.com with SMTP id l4sf575981lbv.26
+        for <gcvm-msysgit@m.gmane.org>; Sat, 19 Jul 2014 12:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=9Sg+b4QH+hK4/7YSpUaRyARLiP/IBShr7VwFu6dhQlE=;
+        b=LYA5eOGlHuwmjvrS+KYdC+gl00xHehzGA1EP6qAcuNPfsD9IPkSrYPF8IlM9JcReHr
+         V6U8wQ4JzELUinpEIf+kVYPcedpyy0qYTQN8loFqcbMdfEP/blF1Jr06YNv0X8AOsmKk
+         CigbqNZYtSeeysyAnZjfCwuSlZ8a+iG4Ifn+Kc4PoBX1w+dIvFs7EWwBtHPYXAzcNjVg
+         wcxhkG068CBemg22IlvwQQjeryWa3bumVXuXiQGG6cxbrNeJCHfGFZJdG6PtdWw2GvM7
+         7xiqEkyNS+uLZZpOSXucpM73gmAuZzn//QtxKttCPg2RgdPpvhctFPrwO/pd/0aksGXQ
+         oBOw==
+X-Received: by 10.152.219.35 with SMTP id pl3mr348lac.7.1405797182518;
+        Sat, 19 Jul 2014 12:13:02 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.219.165 with SMTP id pp5ls325211lac.36.gmail; Sat, 19 Jul
+ 2014 12:13:01 -0700 (PDT)
+X-Received: by 10.112.145.233 with SMTP id sx9mr1124665lbb.2.1405797181167;
+        Sat, 19 Jul 2014 12:13:01 -0700 (PDT)
+Received: from mail-wg0-x232.google.com (mail-wg0-x232.google.com [2a00:1450:400c:c00::232])
+        by gmr-mx.google.com with ESMTPS id x7si354872wiw.1.2014.07.19.12.13.01
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 19 Jul 2014 12:13:01 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::232 as permitted sender) client-ip=2a00:1450:400c:c00::232;
+Received: by mail-wg0-x232.google.com with SMTP id n12so4782460wgh.33
+        for <msysgit@googlegroups.com>; Sat, 19 Jul 2014 12:13:01 -0700 (PDT)
+X-Received: by 10.180.24.66 with SMTP id s2mr42300643wif.33.1405797181065;
+        Sat, 19 Jul 2014 12:13:01 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id h3sm23883608wjn.10.2014.07.19.12.12.59
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 19 Jul 2014 12:13:00 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <1405611486-10176-3-git-send-email-kasal@ucw.cz>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::232
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253906>
 
-minor nit.
-From: "Tanay Abhra" <tanayabh@gmail.com>
-> Replace TODO introduced in commit 9c3c22 with documentation
-> explaining Git config API functions for writing configuration
-> files.
->
-> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
-> ---
-> Documentation/technical/api-config.txt | 31 
-> ++++++++++++++++++++++++++++++-
-> 1 file changed, 30 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/technical/api-config.txt 
-> b/Documentation/technical/api-config.txt
-> index 230b3a0..df08385 100644
-> --- a/Documentation/technical/api-config.txt
-> +++ b/Documentation/technical/api-config.txt
-> @@ -137,4 +137,33 @@ int read_file_with_include(const char *file, 
-> config_fn_t fn, void *data)
-> Writing Config Files
-> --------------------
->
-> -TODO
-> +Git gives multiple entry points in the Config API to write config 
-> values to
-> +files namely `git_config_set_in_file` and `git_config_set`, which 
-> write to
-> +a specific config file or to `.git/config` respectively. They both 
-> take a
-> +key/value pair as parameter.
-> +In the end they both all call `git_config_set_multivar_in_file` which 
-> takes
+compat/mingw.c needs to #include "cache.h" for ALLOC_GROW.
 
-s/both //    'both all' is a bit tautological.
+Signed-off-by: Karsten Blees <blees@dcon.de>
+---
+ compat/mingw.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> +four parameters:
-> +
-> +- the name of the file, as a string, to which key/value pairs will be 
-> written.
-> +
-> +- the name of key, as a string. This is in canonical "flat" form: the 
-> section,
-> +  subsection, and variable segments will be separated by dots, and 
-> the section
-> +  and variable segments will be all lowercase.
-> +  E.g., `core.ignorecase`, `diff.SomeType.textconv`.
-> +
-> +- the value of the variable, as a string. If value is equal to NULL, 
-> it will
-> +  remove the matching key from the config file.
-> +
-> +- the value regex, as a string. It will disregard key/value pairs 
-> where value
-> +  does not match.
-> +
-> +- a multi_replace value, as an int. If value is equal to zero, 
-> nothing or only
-> +  one matching key/value is replaced, else all matching key/values 
-> (regardless
-> +  how many) are removed, before the new pair is written.
-> +
-> +It returns 0 on success.
-> +
-> +Also, there are functions `git_config_rename_section` and
-> +`git_config_rename_section_in_file` with parameters `old_name` and 
-> `new_name`
-> +for renaming or removing sections in the config files. If NULL is 
-> passed
-> +through `new_name` parameter, the section will be removed from the 
-> config file.
-> -- 
-> 1.9.0.GIT
->
-> --
-Philip 
+diff --git a/compat/mingw.c b/compat/mingw.c
+index bd45950..c725a3e 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -4,6 +4,7 @@
+ #include <wchar.h>
+ #include "../strbuf.h"
+ #include "../run-command.h"
++#include "../cache.h"
+ 
+ static const int delay[] = { 0, 1, 10, 20, 40 };
+ 
+-- 
+2.0.2.897.g7f80809.dirty
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
