@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v7 1/9] replace: cleanup redirection style in tests
-Date: Sat, 19 Jul 2014 17:01:07 +0200
-Message-ID: <20140719150116.9564.84555.chriscool@tuxfamily.org>
+Subject: [PATCH v7 2/9] replace: add --graft option
+Date: Sat, 19 Jul 2014 17:01:08 +0200
+Message-ID: <20140719150116.9564.16480.chriscool@tuxfamily.org>
 References: <20140719145951.9564.61331.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Michael Haggerty <mhagger@alum.mit.edu>,
@@ -14,135 +14,164 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8WmF-0008Gs-Vt
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 17:42:24 +0200
+	id 1X8WmF-0008Gs-Fe
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 17:42:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755412AbaGSPlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755416AbaGSPlu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Sat, 19 Jul 2014 11:41:50 -0400
-Received: from [194.158.98.14] ([194.158.98.14]:33783 "EHLO mail-1y.bbox.fr"
+Received: from [194.158.98.14] ([194.158.98.14]:33795 "EHLO mail-1y.bbox.fr"
 	rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1754985AbaGSPlp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 11:41:45 -0400
+	id S1754987AbaGSPlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 11:41:46 -0400
 Received: from [127.0.1.1] (cha92-h01-128-78-31-246.dsl.sta.abo.bbox.fr [128.78.31.246])
-	by mail-1y.bbox.fr (Postfix) with ESMTP id 8757138;
-	Sat, 19 Jul 2014 17:41:23 +0200 (CEST)
-X-git-sha1: 1bed7939f41abba0009370403b03625d1acbcb72 
+	by mail-1y.bbox.fr (Postfix) with ESMTP id 90C1668;
+	Sat, 19 Jul 2014 17:41:24 +0200 (CEST)
+X-git-sha1: 1b0da344558b874a2e842dcfc45ba3951464e875 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20140719145951.9564.61331.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253892>
+
+The usage string for this option is:
+
+git replace [-f] --graft <commit> [<parent>...]
+
+First we create a new commit that is the same as <commit>
+except that its parents are [<parents>...]
+
+Then we create a replace ref that replace <commit> with
+the commit we just created.
+
+With this new option, it should be straightforward to
+convert grafts to replace refs.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t6050-replace.sh | 48 ++++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ builtin/replace.c | 74 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 73 insertions(+), 1 deletion(-)
 
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index 68b3cb2..fb07ad2 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -27,36 +27,36 @@ HASH6=
- HASH7=
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 1bb491d..7459359 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -17,6 +17,7 @@
+ static const char * const git_replace_usage[] = {
+ 	N_("git replace [-f] <object> <replacement>"),
+ 	N_("git replace [-f] --edit <object>"),
++	N_("git replace [-f] --graft <commit> [<parent>...]"),
+ 	N_("git replace -d <object>..."),
+ 	N_("git replace [--format=<format>] [-l [<pattern>]]"),
+ 	NULL
+@@ -294,6 +295,66 @@ static int edit_and_replace(const char *object_ref, int force)
+ 	return replace_object_sha1(object_ref, old, "replacement", new, force);
+ }
  
- test_expect_success 'set up buggy branch' '
--     echo "line 1" >> hello &&
--     echo "line 2" >> hello &&
--     echo "line 3" >> hello &&
--     echo "line 4" >> hello &&
-+     echo "line 1" >>hello &&
-+     echo "line 2" >>hello &&
-+     echo "line 3" >>hello &&
-+     echo "line 4" >>hello &&
-      add_and_commit_file hello "4 lines" &&
-      HASH1=$(git rev-parse --verify HEAD) &&
--     echo "line BUG" >> hello &&
--     echo "line 6" >> hello &&
--     echo "line 7" >> hello &&
--     echo "line 8" >> hello &&
-+     echo "line BUG" >>hello &&
-+     echo "line 6" >>hello &&
-+     echo "line 7" >>hello &&
-+     echo "line 8" >>hello &&
-      add_and_commit_file hello "4 more lines with a BUG" &&
-      HASH2=$(git rev-parse --verify HEAD) &&
--     echo "line 9" >> hello &&
--     echo "line 10" >> hello &&
-+     echo "line 9" >>hello &&
-+     echo "line 10" >>hello &&
-      add_and_commit_file hello "2 more lines" &&
-      HASH3=$(git rev-parse --verify HEAD) &&
--     echo "line 11" >> hello &&
-+     echo "line 11" >>hello &&
-      add_and_commit_file hello "1 more line" &&
-      HASH4=$(git rev-parse --verify HEAD) &&
--     sed -e "s/BUG/5/" hello > hello.new &&
-+     sed -e "s/BUG/5/" hello >hello.new &&
-      mv hello.new hello &&
-      add_and_commit_file hello "BUG fixed" &&
-      HASH5=$(git rev-parse --verify HEAD) &&
--     echo "line 12" >> hello &&
--     echo "line 13" >> hello &&
-+     echo "line 12" >>hello &&
-+     echo "line 13" >>hello &&
-      add_and_commit_file hello "2 more lines" &&
-      HASH6=$(git rev-parse --verify HEAD) &&
--     echo "line 14" >> hello &&
--     echo "line 15" >> hello &&
--     echo "line 16" >> hello &&
-+     echo "line 14" >>hello &&
-+     echo "line 15" >>hello &&
-+     echo "line 16" >>hello &&
-      add_and_commit_file hello "again 3 more lines" &&
-      HASH7=$(git rev-parse --verify HEAD)
- '
-@@ -95,7 +95,7 @@ test_expect_success 'tag replaced commit' '
- '
++static void replace_parents(struct strbuf *buf, int argc, const char **argv)
++{
++	struct strbuf new_parents = STRBUF_INIT;
++	const char *parent_start, *parent_end;
++	int i;
++
++	/* find existing parents */
++	parent_start = buf->buf;
++	parent_start += 46; /* "tree " + "hex sha1" + "\n" */
++	parent_end = parent_start;
++
++	while (starts_with(parent_end, "parent "))
++		parent_end += 48; /* "parent " + "hex sha1" + "\n" */
++
++	/* prepare new parents */
++	for (i = 0; i < argc; i++) {
++		unsigned char sha1[20];
++		if (get_sha1(argv[i], sha1) < 0)
++			die(_("Not a valid object name: '%s'"), argv[i]);
++		lookup_commit_or_die(sha1, argv[i]);
++		strbuf_addf(&new_parents, "parent %s\n", sha1_to_hex(sha1));
++	}
++
++	/* replace existing parents with new ones */
++	strbuf_splice(buf, parent_start - buf->buf, parent_end - parent_start,
++		      new_parents.buf, new_parents.len);
++
++	strbuf_release(&new_parents);
++}
++
++static int create_graft(int argc, const char **argv, int force)
++{
++	unsigned char old[20], new[20];
++	const char *old_ref = argv[0];
++	struct commit *commit;
++	struct strbuf buf = STRBUF_INIT;
++	const char *buffer;
++	unsigned long size;
++
++	if (get_sha1(old_ref, old) < 0)
++		die(_("Not a valid object name: '%s'"), old_ref);
++	commit = lookup_commit_or_die(old, old_ref);
++
++	buffer = get_commit_buffer(commit, &size);
++	strbuf_add(&buf, buffer, size);
++	unuse_commit_buffer(commit, buffer);
++
++	replace_parents(&buf, argc - 1, &argv[1]);
++
++	if (write_sha1_file(buf.buf, buf.len, commit_type, new))
++		die(_("could not write replacement commit for: '%s'"), old_ref);
++
++	strbuf_release(&buf);
++
++	if (!hashcmp(old, new))
++		return error("new commit is the same as the old one: '%s'", sha1_to_hex(old));
++
++	return replace_object_sha1(old_ref, old, "replacement", new, force);
++}
++
+ int cmd_replace(int argc, const char **argv, const char *prefix)
+ {
+ 	int force = 0;
+@@ -303,12 +364,14 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		MODE_LIST,
+ 		MODE_DELETE,
+ 		MODE_EDIT,
++		MODE_GRAFT,
+ 		MODE_REPLACE
+ 	} cmdmode = MODE_UNSPECIFIED;
+ 	struct option options[] = {
+ 		OPT_CMDMODE('l', "list", &cmdmode, N_("list replace refs"), MODE_LIST),
+ 		OPT_CMDMODE('d', "delete", &cmdmode, N_("delete replace refs"), MODE_DELETE),
+ 		OPT_CMDMODE('e', "edit", &cmdmode, N_("edit existing object"), MODE_EDIT),
++		OPT_CMDMODE('g', "graft", &cmdmode, N_("change a commit's parents"), MODE_GRAFT),
+ 		OPT_BOOL('f', "force", &force, N_("replace the ref if it exists")),
+ 		OPT_STRING(0, "format", &format, N_("format"), N_("use this format")),
+ 		OPT_END()
+@@ -325,7 +388,10 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 		usage_msg_opt("--format cannot be used when not listing",
+ 			      git_replace_usage, options);
  
- test_expect_success '"git fsck" works' '
--     git fsck master > fsck_master.out &&
-+     git fsck master >fsck_master.out &&
-      grep "dangling commit $R" fsck_master.out &&
-      grep "dangling tag $(cat .git/refs/tags/mytag)" fsck_master.out &&
-      test -z "$(git fsck)"
-@@ -217,14 +217,14 @@ test_expect_success 'fetch branch with replacement' '
-      (
- 	  cd clone_dir &&
- 	  git fetch origin refs/heads/tofetch:refs/heads/parallel3 &&
--	  git log --pretty=oneline parallel3 > output.txt &&
-+	  git log --pretty=oneline parallel3 >output.txt &&
- 	  ! grep $PARA3 output.txt &&
--	  git show $PARA3 > para3.txt &&
-+	  git show $PARA3 >para3.txt &&
- 	  grep "A U Thor" para3.txt &&
- 	  git fetch origin "refs/replace/*:refs/replace/*" &&
--	  git log --pretty=oneline parallel3 > output.txt &&
-+	  git log --pretty=oneline parallel3 >output.txt &&
- 	  grep $PARA3 output.txt &&
--	  git show $PARA3 > para3.txt &&
-+	  git show $PARA3 >para3.txt &&
- 	  grep "O Thor" para3.txt
-      )
- '
-@@ -302,7 +302,7 @@ test_expect_success 'test --format medium' '
- 		echo "$PARA3 -> $S" &&
- 		echo "$MYTAG -> $HASH1"
- 	} | sort >expected &&
--	git replace -l --format medium | sort > actual &&
-+	git replace -l --format medium | sort >actual &&
- 	test_cmp expected actual
- '
+-	if (force && cmdmode != MODE_REPLACE && cmdmode != MODE_EDIT)
++	if (force &&
++	    cmdmode != MODE_REPLACE &&
++	    cmdmode != MODE_EDIT &&
++	    cmdmode != MODE_GRAFT)
+ 		usage_msg_opt("-f only makes sense when writing a replacement",
+ 			      git_replace_usage, options);
  
-@@ -314,7 +314,7 @@ test_expect_success 'test --format long' '
- 		echo "$PARA3 (commit) -> $S (commit)" &&
- 		echo "$MYTAG (tag) -> $HASH1 (commit)"
- 	} | sort >expected &&
--	git replace --format=long | sort > actual &&
-+	git replace --format=long | sort >actual &&
- 	test_cmp expected actual
- '
+@@ -348,6 +414,12 @@ int cmd_replace(int argc, const char **argv, const char *prefix)
+ 				      git_replace_usage, options);
+ 		return edit_and_replace(argv[0], force);
  
++	case MODE_GRAFT:
++		if (argc < 1)
++			usage_msg_opt("-g needs at least one argument",
++				      git_replace_usage, options);
++		return create_graft(argc, argv, force);
++
+ 	case MODE_LIST:
+ 		if (argc > 1)
+ 			usage_msg_opt("only one pattern can be given with -l",
 -- 
 2.0.0.421.g786a89d.dirty
