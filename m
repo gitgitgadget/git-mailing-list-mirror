@@ -1,70 +1,129 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git_inetd_server: run git-http-backend using inetd
-Date: Sat, 19 Jul 2014 10:06:23 -0700
-Message-ID: <20140719170623.GA29072@google.com>
-References: <43923BC7-08AF-4900-AC5E-B2F0FE7CD5AC@gmail.com>
- <20140717221056.GO12427@google.com>
- <53CA0E59.5030103@web.de>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/2] difftool: don't assume that default sh is sane
+Date: Sat, 19 Jul 2014 18:21:32 +0100
+Message-ID: <20140719172132.GB26927@serenity.lan>
+References: <1405787717-30476-1-git-send-email-charles@hashpling.org>
+ <1405787717-30476-2-git-send-email-charles@hashpling.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Kyle J. McKay" <mackyle@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sat Jul 19 19:06:40 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Sat Jul 19 19:21:49 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8Y5o-0007RW-4Y
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 19:06:40 +0200
+	id 1X8YKS-00068u-QI
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 19:21:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932153AbaGSRGb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 19 Jul 2014 13:06:31 -0400
-Received: from mail-pa0-f41.google.com ([209.85.220.41]:57285 "EHLO
-	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752804AbaGSRGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 13:06:30 -0400
-Received: by mail-pa0-f41.google.com with SMTP id rd3so6720832pab.14
-        for <git@vger.kernel.org>; Sat, 19 Jul 2014 10:06:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=v+qpEBxfc++cCBYnR7EBn4uYrfl31Jl50P6Cp9Inerk=;
-        b=neaQNQpMaWRRZE8z8RRuKrDlSiSA0proGE8khojXye091C3Hmf4PicwNmUp2GKkn3B
-         hscW5K+8aYaYnuPv2lmqkHze/4Ba8Iy9EkI7zSYWg58Y7fNG4VqDfZfTBlvqmjsJ3zD+
-         I2GUyzbo9UxiIfePIGOtINIRTjaoKZzVj4Gr/TLIuTdI1AUvT3WGzFz1rxvB3EeQkdUr
-         i1+WQvGEbd3etfz0P1gUSDD1cUuUR3keirrVdDMKwP6ZAbDr/u62LEUZO6bktmRvmiI6
-         ElRKbSGBNJkuiLPbeAj/5FSOquk1VIzFte1V89gN+AJwRgeYFMGztDxXEiV++lwTf+fF
-         5HPg==
-X-Received: by 10.66.118.71 with SMTP id kk7mr4473pab.147.1405789589937;
-        Sat, 19 Jul 2014 10:06:29 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:5497:c624:18b:7b6c])
-        by mx.google.com with ESMTPSA id k8sm9067192pbq.94.2014.07.19.10.06.28
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sat, 19 Jul 2014 10:06:29 -0700 (PDT)
+	id S932523AbaGSRVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2014 13:21:44 -0400
+Received: from jackal.aluminati.org ([72.9.247.210]:34191 "EHLO
+	jackal.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932319AbaGSRVo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 13:21:44 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by jackal.aluminati.org (Postfix) with ESMTP id 9843B866001;
+	Sat, 19 Jul 2014 18:21:43 +0100 (BST)
+X-Quarantine-ID: <o-XkIZ77e691>
+X-Virus-Scanned: Debian amavisd-new at serval.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from jackal.aluminati.org ([127.0.0.1])
+	by localhost (jackal.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id o-XkIZ77e691; Sat, 19 Jul 2014 18:21:42 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jackal.aluminati.org (Postfix) with ESMTPSA id 0AED3CDA563;
+	Sat, 19 Jul 2014 18:21:34 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <53CA0E59.5030103@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <1405787717-30476-2-git-send-email-charles@hashpling.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253899>
 
-Torsten B=F6gershausen wrote:
+On Sat, Jul 19, 2014 at 05:35:17PM +0100, Charles Bailey wrote:
+> From: Charles Bailey <cbailey32@bloomberg.net>
+> 
+> git-difftool used to create a command list script containing $( ... )
+> and explicitly call "sh -c" with this list.
+> 
+> Instead, allow mergetool --tool-help to take a mode parameter and call
+> mergetool directly to invoke the show_tool_help function. This mode
+> parameter is intented for use solely by difftool.
+> 
+> Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
+> ---
+> Another issue for Solaris. Originally I had a fix for this that
+> substituted "@SHELL_PATH@" even inside perl scripts but I felt that
+> having an interface for show_tool_help was a little neater all round but
+> I welcome alternative views.
+> 
+>  git-difftool.perl |  6 +-----
+>  git-mergetool.sh  | 12 +++++++++++-
+>  2 files changed, 12 insertions(+), 6 deletions(-)
+> 
+> diff --git a/git-difftool.perl b/git-difftool.perl
+> index 18ca61e..598fcc2 100755
+> --- a/git-difftool.perl
+> +++ b/git-difftool.perl
+> @@ -47,13 +47,9 @@ sub find_worktree
+>  
+>  sub print_tool_help
+>  {
+> -	my $cmd = 'TOOL_MODE=diff';
+> -	$cmd .= ' && . "$(git --exec-path)/git-mergetool--lib"';
+> -	$cmd .= ' && show_tool_help';
+> -
+>  	# See the comment at the bottom of file_diff() for the reason behind
+>  	# using system() followed by exit() instead of exec().
+> -	my $rc = system('sh', '-c', $cmd);
+> +	my $rc = system(qw(git mergetool --tool-help=diff));
+>  	exit($rc | ($rc >> 8));
+>  }
+>  
+> diff --git a/git-mergetool.sh b/git-mergetool.sh
+> index e969dd0..d32b663 100755
+> --- a/git-mergetool.sh
+> +++ b/git-mergetool.sh
+> @@ -320,7 +320,17 @@ guessed_merge_tool=false
+>  while test $# != 0
+>  do
+>  	case "$1" in
+> -	--tool-help)
+> +	--tool-help*)
+> +		case "$#,$1" in
+> +		1,*=*)
 
-> Jonathan, (I'm good in searching, but bad in finding)
-> could you point out where the source code for the git package for
-> debian is ?
->
-> I recently learned about mDNS, and will probably do some tests
-> and experiments later, and would like to test the lookup feature
-> of "0010".
+What's the reason for forcing `--tool-help` to be the last option?
+Wouldn't it be simpler to just change the top-level case statement to:
 
-Thanks.  It's at git://git.debian.org/~jrnieder-guest/git branch
-release+patches and mirrored at http://repo.or.cz/r/git/debian
+	--tool-help=*)
+		TOOL_MODE=${1#--tool-help=}
+		show_tool_help
+		;;
+	--tool-help)
+		show_tool_help
+		;;
+
+> +			TOOL_MODE=$(expr "z$1" : 'z-[^=]*=\(.*\)')
+> +			;;
+> +		1,--tool-help)
+> +			;;
+> +		*)
+> +			usage
+> +			;;
+> +		esac
+>  		show_tool_help
+>  		;;
+>  	-t|--tool*)
+> -- 
+> 2.0.2.611.g8c85416
