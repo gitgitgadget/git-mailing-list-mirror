@@ -1,63 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v11 0/4] git config cache & special querying api utilizing the cache
-Date: Sat, 19 Jul 2014 11:50:56 +0200
-Message-ID: <vpqd2d1vfr3.fsf@anie.imag.fr>
-References: <1405748778-3755-1-git-send-email-tanayabh@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 2/4] completion: complete "unstuck" `git push --recurse-submodules`
+Date: Sat, 19 Jul 2014 13:37:26 +0200
+Message-ID: <53CA5876.40007@kdbg.org>
+References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk> <a3317a7692675483f60ee10ff98e1e95a3dc4b5a.1405763157.git.john@keeping.me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jul 19 11:51:14 2014
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: John Keeping <john@keeping.me.uk>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jul 19 13:37:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8RIP-0001ci-5E
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 11:51:13 +0200
+	id 1X8SxK-0008Lc-Bd
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 13:37:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757146AbaGSJvI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2014 05:51:08 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48947 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755875AbaGSJvG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 05:51:06 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6J9otAq011487
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 19 Jul 2014 11:50:55 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6J9ou6J000752;
-	Sat, 19 Jul 2014 11:50:56 +0200
-In-Reply-To: <1405748778-3755-1-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Fri, 18 Jul 2014 22:46:14 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 19 Jul 2014 11:50:55 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6J9otAq011487
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1406368258.80766@pqKQYDNyMAePUGcro8zG7A
+	id S1761582AbaGSLha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2014 07:37:30 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:50209 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1761022AbaGSLh3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 07:37:29 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 80F31130055;
+	Sat, 19 Jul 2014 13:37:27 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 8B74A19F470;
+	Sat, 19 Jul 2014 13:37:26 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <a3317a7692675483f60ee10ff98e1e95a3dc4b5a.1405763157.git.john@keeping.me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253875>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Am 19.07.2014 11:45, schrieb John Keeping:
+> Since the argument to `--recurse-submodules` is mandatory, it does not
+> need to be stuck to the option with `=`.
+> 
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+>  contrib/completion/git-completion.bash | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index d0b2895..06211a6 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1624,6 +1624,10 @@ __git_push_recurse_submodules="check on-demand"
+>  _git_push ()
+>  {
+>  	case "$prev" in
+> +	--recurse_submodules)
 
-> Hi,
->
-> [PATCH V11]: very minor fixes. check [13] for discussion.
+This would need a dash, not an underscore.
 
-Perfect, all my remarks have been taken into account, and I guess
-Junio's too.
-
-The whole series is now
-Reviewed-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> +		__gitcomp "$__git_push_recurse_submodules"
+> +		return
+> +		;;
+>  	--repo)
+>  		__gitcomp_nl "$(__git_remotes)"
+>  		return
+> 
