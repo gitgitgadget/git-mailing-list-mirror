@@ -1,100 +1,88 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH] add documentation for writing config files
-Date: Sat, 19 Jul 2014 08:05:54 -0700
-Message-ID: <1405782354-13929-1-git-send-email-tanayabh@gmail.com>
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 19 17:07:37 2014
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH 2/4] completion: complete "unstuck" `git push
+ --recurse-submodules`
+Date: Sat, 19 Jul 2014 16:10:14 +0100
+Message-ID: <20140719151014.GA26927@serenity.lan>
+References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
+ <a3317a7692675483f60ee10ff98e1e95a3dc4b5a.1405763157.git.john@keeping.me.uk>
+ <53CA5876.40007@kdbg.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Jul 19 17:18:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8WEZ-00084s-8S
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 17:07:35 +0200
+	id 1X8WOf-0004Zo-Oz
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 17:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754541AbaGSPHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2014 11:07:20 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:62209 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754157AbaGSPHT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 11:07:19 -0400
-Received: by mail-pa0-f54.google.com with SMTP id fa1so7072070pad.13
-        for <git@vger.kernel.org>; Sat, 19 Jul 2014 08:07:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=H0nnG6kanN3MbSaxbLof6B8N3y5jKza6oA7HQv8IBZY=;
-        b=QnBqb5n3v1ev2ePgQjAQlyyGLhy3nqY2xZkM9X3K9DcZce8wQFm+VP2cCOM5DUWvaK
-         0ruxSYKr+lLWvq3nO7/G+KaT8O86mla73VQGebYn1xb0WIka8xLo6tkzLw8bi1vj61Xh
-         e7CytbGr83LaSMl9/W7Mpt7+ZoO+mL819wG1H9AF2hOZjd2wZda9+S4hE2/mxoUk+T/p
-         VAhJbOIhXtrDIVNkjjfOYFg+4BgeB5Bye+evL+BXeYbZGVstkMm6552LIC1h4ekigySd
-         GAi8taJALiuw/bYl6Xd7ri3HLGNbw1nWCz9qZlRYc9Dm0y0WTcfEfeS+1lU7NwGAbRVt
-         R4+w==
-X-Received: by 10.68.191.34 with SMTP id gv2mr2012476pbc.13.1405782438639;
-        Sat, 19 Jul 2014 08:07:18 -0700 (PDT)
-Received: from localhost.localdomain ([223.176.232.60])
-        by mx.google.com with ESMTPSA id ec2sm8837124pbc.63.2014.07.19.08.07.15
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Sat, 19 Jul 2014 08:07:18 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0.GIT
+	id S1754769AbaGSPRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2014 11:17:55 -0400
+Received: from coyote.aluminati.org ([72.9.247.114]:37649 "EHLO
+	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754450AbaGSPRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 11:17:54 -0400
+X-Greylist: delayed 450 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Jul 2014 11:17:54 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by coyote.aluminati.org (Postfix) with ESMTP id 62A0560654B;
+	Sat, 19 Jul 2014 16:10:24 +0100 (BST)
+X-Quarantine-ID: <DcBMMhx1RaMx>
+X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from coyote.aluminati.org ([127.0.0.1])
+	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id DcBMMhx1RaMx; Sat, 19 Jul 2014 16:10:23 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by coyote.aluminati.org (Postfix) with ESMTPSA id DB93D606545;
+	Sat, 19 Jul 2014 16:10:20 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <53CA5876.40007@kdbg.org>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253882>
 
-Replace TODO introduced in commit 9c3c22 with documentation
-explaining Git config API functions for writing configuration
-files.
+On Sat, Jul 19, 2014 at 01:37:26PM +0200, Johannes Sixt wrote:
+> Am 19.07.2014 11:45, schrieb John Keeping:
+> > Since the argument to `--recurse-submodules` is mandatory, it does not
+> > need to be stuck to the option with `=`.
+> > 
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> > ---
+> >  contrib/completion/git-completion.bash | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> > 
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> > index d0b2895..06211a6 100644
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -1624,6 +1624,10 @@ __git_push_recurse_submodules="check on-demand"
+> >  _git_push ()
+> >  {
+> >  	case "$prev" in
+> > +	--recurse_submodules)
+> 
+> This would need a dash, not an underscore.
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
- Documentation/technical/api-config.txt | 31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+Thanks.  I'll wait to see if there are any more comments before
+re-rolling.
 
-diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
-index 230b3a0..df08385 100644
---- a/Documentation/technical/api-config.txt
-+++ b/Documentation/technical/api-config.txt
-@@ -137,4 +137,33 @@ int read_file_with_include(const char *file, config_fn_t fn, void *data)
- Writing Config Files
- --------------------
- 
--TODO
-+Git gives multiple entry points in the Config API to write config values to
-+files namely `git_config_set_in_file` and `git_config_set`, which write to
-+a specific config file or to `.git/config` respectively. They both take a
-+key/value pair as parameter.
-+In the end they both all call `git_config_set_multivar_in_file` which takes
-+four parameters:
-+
-+- the name of the file, as a string, to which key/value pairs will be written.
-+
-+- the name of key, as a string. This is in canonical "flat" form: the section,
-+  subsection, and variable segments will be separated by dots, and the section
-+  and variable segments will be all lowercase.
-+  E.g., `core.ignorecase`, `diff.SomeType.textconv`.
-+
-+- the value of the variable, as a string. If value is equal to NULL, it will
-+  remove the matching key from the config file.
-+
-+- the value regex, as a string. It will disregard key/value pairs where value
-+  does not match.
-+
-+- a multi_replace value, as an int. If value is equal to zero, nothing or only
-+  one matching key/value is replaced, else all matching key/values (regardless
-+  how many) are removed, before the new pair is written.
-+
-+It returns 0 on success.
-+
-+Also, there are functions `git_config_rename_section` and
-+`git_config_rename_section_in_file` with parameters `old_name` and `new_name`
-+for renaming or removing sections in the config files. If NULL is passed
-+through `new_name` parameter, the section will be removed from the config file.
--- 
-1.9.0.GIT
+> > +		__gitcomp "$__git_push_recurse_submodules"
+> > +		return
+> > +		;;
+> >  	--repo)
+> >  		__gitcomp_nl "$(__git_remotes)"
+> >  		return
+> > 
+> 
