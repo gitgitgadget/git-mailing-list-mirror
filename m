@@ -1,134 +1,448 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v11 2/4] replace memset with string-list initializers
-Date: Fri, 18 Jul 2014 22:46:16 -0700
-Message-ID: <1405748778-3755-3-git-send-email-tanayabh@gmail.com>
+Subject: [PATCH v11 4/4] test-config: add tests for the config_set API
+Date: Fri, 18 Jul 2014 22:46:18 -0700
+Message-ID: <1405748778-3755-5-git-send-email-tanayabh@gmail.com>
 References: <1405748778-3755-1-git-send-email-tanayabh@gmail.com>
 Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
+	Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 19 07:47:58 2014
+X-From: git-owner@vger.kernel.org Sat Jul 19 07:48:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8NV0-0001zz-29
-	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 07:47:58 +0200
+	id 1X8NV7-00022i-9Z
+	for gcvg-git-2@plane.gmane.org; Sat, 19 Jul 2014 07:48:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753750AbaGSFrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 19 Jul 2014 01:47:52 -0400
-Received: from mail-pa0-f50.google.com ([209.85.220.50]:33855 "EHLO
-	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753332AbaGSFrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 19 Jul 2014 01:47:51 -0400
-Received: by mail-pa0-f50.google.com with SMTP id et14so6711738pad.9
-        for <git@vger.kernel.org>; Fri, 18 Jul 2014 22:47:51 -0700 (PDT)
+	id S1754836AbaGSFsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 19 Jul 2014 01:48:01 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:58699 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754348AbaGSFsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 19 Jul 2014 01:48:00 -0400
+Received: by mail-pa0-f41.google.com with SMTP id rd3so6132866pab.14
+        for <git@vger.kernel.org>; Fri, 18 Jul 2014 22:47:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=akbG6CVjNmTkbNwB5ud5BXLSv+3HLvb9tC48+rcZZ4k=;
-        b=gd6Z281LJEOqvydxNEZAYpUaBZDMGJqCnAS8b3EkTAvwJeE5Xw0bU8dCYumomji78G
-         5G6Qu7yqi3bfUKRQECfUyvGg7sNaw1pRM+vzElzE2pLHR7ZMtEwZoLiL+S6YT4yyNbC7
-         pwi91k4bekdoE2G6KGFhDlzAus2JDM3OnTUkScv7tLVkZhzCbYc8VbRe3N0Mo6uVSUdj
-         NmUvLYuyyKEQwRwzruTjt0a6EQanZGqtTNutOogcYJ/LOj5A6B3f3IP8ks1lF6iG0eu5
-         oCR39Ybr16E50yk1rLE97us5eeeDC0TZcCEqCDi1XM/TMmDNRwAziOAiZivsIzEbGdli
-         unhg==
-X-Received: by 10.70.88.105 with SMTP id bf9mr10592087pdb.54.1405748871193;
-        Fri, 18 Jul 2014 22:47:51 -0700 (PDT)
+        bh=hfrkgoKO9DUVjJHcsF3sTKUPyeJssawFHO/qUc4kGt0=;
+        b=y6hjTTMZSklZoKcok+N8WKkGkwCdgPivXKS3FEe8KwIjPSbvTadBvAaMZev7d5GeVk
+         db7ePjvSy0zrUSD7AzWUhIHGDXWoekCucIW8C/GDhLkvBa8YmwdRWdeOstIlngLgF8Su
+         EDF0rTA2DIjunOupiDPITUVVHWqq4S/pbImVdb+9emtCH6l7klrB9Z9dSYJfk1nGCGBO
+         +vRnn697rHxkbTNXhilDp7842/ngbOnKP0//bkTcwCVboz46AZ5tj/sfCcXF5Fe+8580
+         +S0+w9cLJj/I9aFuTCVqUbZd1817q4LeV+5JQgmYevI1LHQ7FbQpcQ31s75oCPBingcn
+         WYWA==
+X-Received: by 10.70.96.135 with SMTP id ds7mr10200240pdb.99.1405748879101;
+        Fri, 18 Jul 2014 22:47:59 -0700 (PDT)
 Received: from localhost.localdomain ([223.176.228.151])
-        by mx.google.com with ESMTPSA id mz8sm9919087pdb.62.2014.07.18.22.47.48
+        by mx.google.com with ESMTPSA id mz8sm9919087pdb.62.2014.07.18.22.47.55
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 18 Jul 2014 22:47:50 -0700 (PDT)
+        Fri, 18 Jul 2014 22:47:58 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.GIT
 In-Reply-To: <1405748778-3755-1-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253865>
 
-Using memset and then manually setting values of the string-list
-members is not future proof as the internal representation of
-string-list may change any time.
-Use `string_list_init()` or STRING_LIST_INIT_* macros instead of
-memset.
+Expose the `config_set` C API as a set of simple commands in order to
+facilitate testing. Add tests for the `config_set` API as well as for
+`git_config_get_*()` family for the usual config files.
 
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- builtin/commit.c  | 3 +--
- merge-recursive.c | 9 +++------
- submodule.c       | 5 +----
- transport.c       | 4 +---
- 4 files changed, 6 insertions(+), 15 deletions(-)
+ .gitignore            |   1 +
+ Makefile              |   1 +
+ t/t1308-config-set.sh | 200 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ test-config.c         | 142 +++++++++++++++++++++++++++++++++++
+ 4 files changed, 344 insertions(+)
+ create mode 100755 t/t1308-config-set.sh
+ create mode 100644 test-config.c
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 72eb3be..5b196ca 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -420,8 +420,7 @@ static char *prepare_index(int argc, const char **argv, const char *prefix,
- 			die(_("cannot do a partial commit during a cherry-pick."));
- 	}
+diff --git a/.gitignore b/.gitignore
+index 81e12c0..5bfb234 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -178,6 +178,7 @@
+ /gitweb/static/gitweb.min.*
+ /test-chmtime
+ /test-ctype
++/test-config
+ /test-date
+ /test-delta
+ /test-dump-cache-tree
+diff --git a/Makefile b/Makefile
+index 840057c..8d8da72 100644
+--- a/Makefile
++++ b/Makefile
+@@ -549,6 +549,7 @@ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
  
--	memset(&partial, 0, sizeof(partial));
--	partial.strdup_strings = 1;
-+	string_list_init(&partial, 1);
- 	if (list_paths(&partial, !current_head ? NULL : "HEAD", prefix, &pathspec))
- 		exit(1);
- 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 5814d05..1d332b8 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -2059,12 +2059,9 @@ void init_merge_options(struct merge_options *o)
- 	if (o->verbosity >= 5)
- 		o->buffer_output = 0;
- 	strbuf_init(&o->obuf, 0);
--	memset(&o->current_file_set, 0, sizeof(struct string_list));
--	o->current_file_set.strdup_strings = 1;
--	memset(&o->current_directory_set, 0, sizeof(struct string_list));
--	o->current_directory_set.strdup_strings = 1;
--	memset(&o->df_conflict_file_set, 0, sizeof(struct string_list));
--	o->df_conflict_file_set.strdup_strings = 1;
-+	string_list_init(&o->current_file_set, 1);
-+	string_list_init(&o->current_directory_set, 1);
-+	string_list_init(&o->df_conflict_file_set, 1);
- }
- 
- int parse_merge_opt(struct merge_options *o, const char *s)
-diff --git a/submodule.c b/submodule.c
-index 48e3b44..c3a61e7 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -544,10 +544,7 @@ static int push_submodule(const char *path)
- int push_unpushed_submodules(unsigned char new_sha1[20], const char *remotes_name)
- {
- 	int i, ret = 1;
--	struct string_list needs_pushing;
--
--	memset(&needs_pushing, 0, sizeof(struct string_list));
--	needs_pushing.strdup_strings = 1;
-+	struct string_list needs_pushing = STRING_LIST_INIT_DUP;
- 
- 	if (!find_unpushed_submodules(new_sha1, remotes_name, &needs_pushing))
- 		return 1;
-diff --git a/transport.c b/transport.c
-index 59c9727..d32aaf2 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1188,10 +1188,8 @@ int transport_push(struct transport *transport,
- 		if ((flags & (TRANSPORT_RECURSE_SUBMODULES_ON_DEMAND |
- 			      TRANSPORT_RECURSE_SUBMODULES_CHECK)) && !is_bare_repository()) {
- 			struct ref *ref = remote_refs;
--			struct string_list needs_pushing;
-+			struct string_list needs_pushing = STRING_LIST_INIT_DUP;
- 
--			memset(&needs_pushing, 0, sizeof(struct string_list));
--			needs_pushing.strdup_strings = 1;
- 			for (; ref; ref = ref->next)
- 				if (!is_null_sha1(ref->new_sha1) &&
- 				    find_unpushed_submodules(ref->new_sha1,
+ TEST_PROGRAMS_NEED_X += test-chmtime
+ TEST_PROGRAMS_NEED_X += test-ctype
++TEST_PROGRAMS_NEED_X += test-config
+ TEST_PROGRAMS_NEED_X += test-date
+ TEST_PROGRAMS_NEED_X += test-delta
+ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
+new file mode 100755
+index 0000000..7fdf840
+--- /dev/null
++++ b/t/t1308-config-set.sh
+@@ -0,0 +1,200 @@
++#!/bin/sh
++
++test_description='Test git config-set API in different settings'
++
++. ./test-lib.sh
++
++# 'check_config get_* section.key value' verifies that the entry for
++# section.key is 'value'
++check_config () {
++	if test "$1" = expect_code
++	then
++		expect_code="$2" && shift && shift
++	else
++		expect_code=0
++	fi &&
++	op=$1 key=$2 && shift && shift &&
++	if test $# != 0
++	then
++		printf "%s\n" "$@"
++	fi >expect &&
++	test_expect_code $expect_code test-config "$op" "$key" >actual &&
++	test_cmp expect actual
++}
++
++test_expect_success 'setup default config' '
++	cat >.git/config <<\EOF
++	[case]
++		penguin = very blue
++		Movie = BadPhysics
++		UPPERCASE = true
++		MixedCase = true
++		my =
++		foo
++		baz = sam
++	[Cores]
++		WhatEver = Second
++		baz = bar
++	[cores]
++		baz = bat
++	[CORES]
++		baz = ball
++	[my "Foo bAr"]
++		hi = mixed-case
++	[my "FOO BAR"]
++		hi = upper-case
++	[my "foo bar"]
++		hi = lower-case
++	[case]
++		baz = bat
++		baz = hask
++	[lamb]
++		chop = 65
++		head = none
++	[goat]
++		legs = 4
++		head = true
++		skin = false
++		nose = 1
++		horns
++	EOF
++'
++
++test_expect_success 'get value for a simple key' '
++	check_config get_value case.penguin "very blue"
++'
++
++test_expect_success 'get value for a key with value as an empty string' '
++	check_config get_value case.my ""
++'
++
++test_expect_success 'get value for a key with value as NULL' '
++	check_config get_value case.foo "(NULL)"
++'
++
++test_expect_success 'upper case key' '
++	check_config get_value case.UPPERCASE "true" &&
++	check_config get_value case.uppercase "true"
++'
++
++test_expect_success 'mixed case key' '
++	check_config get_value case.MixedCase "true" &&
++	check_config get_value case.MIXEDCASE "true" &&
++	check_config get_value case.mixedcase "true"
++'
++
++test_expect_success 'key and value with mixed case' '
++	check_config get_value case.Movie "BadPhysics"
++'
++
++test_expect_success 'key with case sensitive subsection' '
++	check_config get_value "my.Foo bAr.hi" "mixed-case" &&
++	check_config get_value "my.FOO BAR.hi" "upper-case" &&
++	check_config get_value "my.foo bar.hi" "lower-case"
++'
++
++test_expect_success 'key with case insensitive section header' '
++	check_config get_value cores.baz "ball" &&
++	check_config get_value Cores.baz "ball" &&
++	check_config get_value CORES.baz "ball" &&
++	check_config get_value coreS.baz "ball"
++'
++
++test_expect_success 'key with case insensitive section header & variable' '
++	check_config get_value CORES.BAZ "ball" &&
++	check_config get_value cores.baz "ball" &&
++	check_config get_value cores.BaZ "ball" &&
++	check_config get_value cOreS.bAz "ball"
++'
++
++test_expect_success 'find value with misspelled key' '
++	check_config expect_code 1 get_value "my.fOo Bar.hi" "Value not found for \"my.fOo Bar.hi\""
++'
++
++test_expect_success 'find value with the highest priority' '
++	check_config get_value case.baz "hask"
++'
++
++test_expect_success 'find integer value for a key' '
++	check_config get_int lamb.chop 65
++'
++
++test_expect_success 'find integer if value is non parse-able' '
++	check_config expect_code 128 get_int lamb.head
++'
++
++test_expect_success 'find bool value for the entered key' '
++	check_config get_bool goat.head 1 &&
++	check_config get_bool goat.skin 0 &&
++	check_config get_bool goat.nose 1 &&
++	check_config get_bool goat.horns 1 &&
++	check_config get_bool goat.legs 1
++'
++
++test_expect_success 'find multiple values' '
++	check_config get_value_multi case.baz sam bat hask
++'
++
++test_expect_success 'find value from a configset' '
++	cat >config2 <<-\EOF &&
++	[case]
++		baz = lama
++	[my]
++		new = silk
++	[case]
++		baz = ball
++	EOF
++	echo silk >expect &&
++	test-config configset_get_value my.new config2 .git/config >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'find value with highest priority from a configset' '
++	echo hask >expect &&
++	test-config configset_get_value case.baz config2 .git/config >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'find value_list for a key from a configset' '
++	cat >except <<-\EOF &&
++	sam
++	bat
++	hask
++	lama
++	ball
++	EOF
++	test-config configset_get_value case.baz config2 .git/config >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'proper error on non-existent files' '
++	echo "Error (-1) reading configuration file non-existent-file." >expect &&
++	test_expect_code 2 test-config configset_get_value foo.bar non-existent-file 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success POSIXPERM,SANITY 'proper error on non-accessible files' '
++	chmod -r .git/config &&
++	test_when_finished "chmod +r .git/config" &&
++	echo "Error (-1) reading configuration file .git/config." >expect &&
++	test_expect_code 2 test-config configset_get_value foo.bar .git/config 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'proper error on error in default config files' '
++	cp .git/config .git/config.old &&
++	test_when_finished "mv .git/config.old .git/config" &&
++	echo "[" >>.git/config &&
++	echo "fatal: bad config file line 35 in .git/config" >expect &&
++	test_expect_code 128 test-config get_value foo.bar 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'proper error on error in custom config files' '
++	echo "[" >>syntax-error &&
++	echo "fatal: bad config file line 1 in syntax-error" >expect &&
++	test_expect_code 128 test-config configset_get_value foo.bar syntax-error 2>actual &&
++	test_cmp expect actual
++'
++
++test_done
+diff --git a/test-config.c b/test-config.c
+new file mode 100644
+index 0000000..9dd1b22
+--- /dev/null
++++ b/test-config.c
+@@ -0,0 +1,142 @@
++#include "cache.h"
++#include "string-list.h"
++
++/*
++ * This program exposes the C API of the configuration mechanism
++ * as a set of simple commands in order to facilitate testing.
++ *
++ * Reads stdin and prints result of command to stdout:
++ *
++ * get_value -> prints the value with highest priority for the entered key
++ *
++ * get_value_multi -> prints all values for the entered key in increasing order
++ *		     of priority
++ *
++ * get_int -> print integer value for the entered key or die
++ *
++ * get_bool -> print bool value for the entered key or die
++ *
++ * configset_get_value -> returns value with the highest priority for the entered key
++ * 			from a config_set constructed from files entered as arguments.
++ *
++ * configset_get_value_multi -> returns value_list for the entered key sorted in
++ * 				ascending order of priority from a config_set
++ * 				constructed from files entered as arguments.
++ *
++ * Examples:
++ *
++ * To print the value with highest priority for key "foo.bAr Baz.rock":
++ * 	test-config get_value "foo.bAr Baz.rock"
++ *
++ */
++
++
++int main(int argc, char **argv)
++{
++	int i, val;
++	const char *v;
++	const struct string_list *strptr;
++	struct config_set cs;
++	git_configset_init(&cs);
++
++	if (argc < 2) {
++		fprintf(stderr, "Please, provide a command name on the command-line\n");
++		goto exit1;
++	} else if (argc == 3 && !strcmp(argv[1], "get_value")) {
++		if (!git_config_get_value(argv[2], &v)) {
++			if (!v)
++				printf("(NULL)\n");
++			else
++				printf("%s\n", v);
++			goto exit0;
++		} else {
++			printf("Value not found for \"%s\"\n", argv[2]);
++			goto exit1;
++		}
++	} else if (argc == 3 && !strcmp(argv[1], "get_value_multi")) {
++		strptr = git_config_get_value_multi(argv[2]);
++		if (strptr) {
++			for (i = 0; i < strptr->nr; i++) {
++				v = strptr->items[i].string;
++				if (!v)
++					printf("(NULL)\n");
++				else
++					printf("%s\n", v);
++			}
++			goto exit0;
++		} else {
++			printf("Value not found for \"%s\"\n", argv[2]);
++			goto exit1;
++		}
++	} else if (argc == 3 && !strcmp(argv[1], "get_int")) {
++		if (!git_config_get_int(argv[2], &val)) {
++			printf("%d\n", val);
++			goto exit0;
++		} else {
++			printf("Value not found for \"%s\"\n", argv[2]);
++			goto exit1;
++		}
++	} else if (argc == 3 && !strcmp(argv[1], "get_bool")) {
++		if (!git_config_get_bool(argv[2], &val)) {
++			printf("%d\n", val);
++			goto exit0;
++		} else {
++			printf("Value not found for \"%s\"\n", argv[2]);
++			goto exit1;
++		}
++	} else if (!strcmp(argv[1], "configset_get_value")) {
++		for (i = 3; i < argc; i++) {
++			int err;
++			if ((err = git_configset_add_file(&cs, argv[i]))) {
++				fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
++				goto exit2;
++			}
++		}
++		if (!git_configset_get_value(&cs, argv[2], &v)) {
++			if (!v)
++				printf("(NULL)\n");
++			else
++				printf("%s\n", v);
++			goto exit0;
++		} else {
++			printf("Value not found for \"%s\"\n", argv[2]);
++			goto exit1;
++		}
++	} else if (!strcmp(argv[1], "configset_get_value_multi")) {
++		for (i = 3; i < argc; i++) {
++			int err;
++			if ((err = git_configset_add_file(&cs, argv[i]))) {
++				fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
++				goto exit2;
++			}
++		}
++		strptr = git_configset_get_value_multi(&cs, argv[2]);
++		if (strptr) {
++			for (i = 0; i < strptr->nr; i++) {
++				v = strptr->items[i].string;
++				if (!v)
++					printf("(NULL)\n");
++				else
++					printf("%s\n", v);
++			}
++			goto exit0;
++		} else {
++			printf("Value not found for \"%s\"\n", argv[2]);
++			goto exit1;
++		}
++	}
++
++	die("%s: Please check the syntax and the function name", argv[0]);
++
++exit0:
++	git_configset_clear(&cs);
++	return 0;
++
++exit1:
++	git_configset_clear(&cs);
++	return 1;
++
++exit2:
++	git_configset_clear(&cs);
++	return 2;
++}
 -- 
 1.9.0.GIT
