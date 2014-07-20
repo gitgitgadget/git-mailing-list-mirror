@@ -1,66 +1,83 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: git_inetd_server: run git-http-backend using inetd
-Date: Sun, 20 Jul 2014 17:25:46 +0200
-Message-ID: <53CBDF7A.5040509@web.de>
-References: <43923BC7-08AF-4900-AC5E-B2F0FE7CD5AC@gmail.com> <20140717221056.GO12427@google.com> <53CA0E59.5030103@web.de> <20140719170623.GA29072@google.com> <53CB5D64.9060801@web.de>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH v2 0/4] getcwd without PATH_MAX
+Date: Sun, 20 Jul 2014 18:46:47 +0200
+Message-ID: <53CBF277.3090101@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Kyle J. McKay" <mackyle@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jul 20 17:26:09 2014
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jul 20 18:47:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8t04-0004Ja-Px
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jul 2014 17:26:09 +0200
+	id 1X8uGb-0002I3-8a
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jul 2014 18:47:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722AbaGTP0F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jul 2014 11:26:05 -0400
-Received: from mout.web.de ([212.227.15.14]:59252 "EHLO mout.web.de"
+	id S1753104AbaGTQrN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jul 2014 12:47:13 -0400
+Received: from mout.web.de ([212.227.15.3]:62431 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752689AbaGTP0C (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2014 11:26:02 -0400
-Received: from [192.168.1.87] ([91.141.0.96]) by smtp.web.de (mrweb004) with
- ESMTPSA (Nemesis) id 0MBH5Z-1XIXW91DGP-00AF1w; Sun, 20 Jul 2014 17:26:00
+	id S1752662AbaGTQrM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2014 12:47:12 -0400
+Received: from [192.168.178.27] ([79.253.172.97]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0MYNof-1X474P0imX-00V9SO; Sun, 20 Jul 2014 18:47:08
  +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Icedove/24.6.0
-In-Reply-To: <53CB5D64.9060801@web.de>
-X-Provags-ID: V03:K0:GB55YGuq2S5rGo8Eq1jKTplkXvTEOGuEvuDlEuLUUBe4AuTKWwv
- P316qDICtL9RUmOl97gYxHBexoR2MSkjmH6wxPeMNJGSjegZ1mrLc4eCX88KRx2HBcPMjvD
- tATYTAcDGGkOkoqy7RFqMfUvXzjRSmfeUETM0iNevgdEgzZm5HmfJk5WCJdu6WyU0+rxG8F
- jHtH2mPZoUZZuc4M8LsiQ==
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Provags-ID: V03:K0:xQib3zzqjrcY3tPGGN+i6TyZaQRM8Z6MlqI069VIXOSTjJEZl0T
+ B/xuDky0yDjgu3GlYWEBG1EiSns95hRMwkTffdCylp/IFiBP3gF/auN4kEpST1NHyDFD1fe
+ 32613aoOcagETbUSsHgFUEY2oc5EarAEkCMByFA2o5i4GpI2HvcEZpeopX/4nJL5HFJwsjp
+ rQOApYYN6HhN4xpZ/+u8w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253930>
 
-On 07/20/2014 08:10 AM, Torsten B=F6gershausen wrote:
-> On 07/19/2014 07:06 PM, Jonathan Nieder wrote:
->> Torsten B=F6gershausen wrote:
->>
->>> Jonathan, (I'm good in searching, but bad in finding)
->>> could you point out where the source code for the git package for
->>> debian is ?
->>>
->>> I recently learned about mDNS, and will probably do some tests
->>> and experiments later, and would like to test the lookup feature
->>> of "0010".
->> Thanks.  It's at git://git.debian.org/~jrnieder-guest/git branch
->> release+patches and mirrored at http://repo.or.cz/r/git/debian
-I probably need to correct myself:
-Donwloaded your branch, compiled and tested.
-On my test system the lookup timed out after 1.9 sec for DNS,
-and 5 seconds for MDNS (the lookup failed in both cases)
+Paths longer than PATH_MAX can be created and used on at least on some
+file systems.  Currently we use getcwd() generally with a PATH_MAX-
+sized buffer.  This series adds two functions, strbuf_getcwd() and
+xgetcwd(), then uses them to reduce the number of fixed-sized buffers
+and to allow us to handle longer working directory paths.
 
-I'm not sure any more how to improve things here, and
-the question remains why Kyle has 15 seconds timeout ?
+Not all getcwd() calls are replaced, however.  I hope that at least
+some of the remaining ones can be avoided altogether.  If that turns
+out to be too optimistic then we can use the added function to convert
+the rest.
 
-Would it be possible to run wireshark, and give us an example
-of the URL's you have been using ?
+Changes in v2:
+  * strbuf_getcwd() instead of strbuf_add_cwd(), because the former is
+    simpler and sufficient for now; based on a suggestion by Duy
+  * added patch 2 as an example for strbuf_getcwd() usage, suggested
+    by Duy
+  * made sure strbuf_getcwd() leaves the strbuf intact, no matter
+    what getcwd() does
+  * converted an easy getcwd() call in setup.c
+
+Ren=C3=A9 Scharfe (4):
+  strbuf: add strbuf_getcwd()
+  use strbuf_getcwd() to get the current working directory without
+    fixed-sized buffers
+  wrapper: add xgetcwd()
+  use xgetcwd() get the current directory or die
+
+ Documentation/technical/api-strbuf.txt |  4 ++++
+ builtin/init-db.c                      | 25 ++++++++++++-------------
+ builtin/rev-parse.c                    |  6 +++---
+ dir.c                                  | 12 ++++++++----
+ git-compat-util.h                      |  1 +
+ git.c                                  |  6 ++++--
+ setup.c                                |  6 +++---
+ strbuf.c                               | 21 +++++++++++++++++++++
+ strbuf.h                               |  1 +
+ trace.c                                |  7 ++++---
+ wrapper.c                              |  8 ++++++++
+ 11 files changed, 69 insertions(+), 28 deletions(-)
+
+--=20
+2.0.2
