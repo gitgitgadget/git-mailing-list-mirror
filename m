@@ -1,87 +1,107 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-Subject: Re: git_inetd_server: run git-http-backend using inetd
-Date: Sun, 20 Jul 2014 08:10:44 +0200
-Message-ID: <53CB5D64.9060801@web.de>
-References: <43923BC7-08AF-4900-AC5E-B2F0FE7CD5AC@gmail.com> <20140717221056.GO12427@google.com> <53CA0E59.5030103@web.de> <20140719170623.GA29072@google.com>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH v2] add documentation for writing config files
+Date: Sun, 20 Jul 2014 12:48:13 +0530
+Message-ID: <53CB6D35.80805@gmail.com>
+References: <1405782354-13929-1-git-send-email-tanayabh@gmail.com> <7DFDF6A1361542EE9BA73AB52B1234AF@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Kyle J. McKay" <mackyle@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	=?ISO-8859-1?Q?Torsten_B=F6ge?= =?ISO-8859-1?Q?rshausen?= 
-	<tboegi@web.de>
-X-From: git-owner@vger.kernel.org Sun Jul 20 08:15:57 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Philip Oakley <philipoakley@iee.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jul 20 09:18:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X8kPc-00005C-4u
-	for gcvg-git-2@plane.gmane.org; Sun, 20 Jul 2014 08:15:56 +0200
+	id 1X8lO4-0007Hx-V5
+	for gcvg-git-2@plane.gmane.org; Sun, 20 Jul 2014 09:18:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670AbaGTGKx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 20 Jul 2014 02:10:53 -0400
-Received: from mout.web.de ([212.227.17.12]:52166 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751164AbaGTGKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 20 Jul 2014 02:10:52 -0400
-Received: from [192.168.1.87] ([178.165.128.72]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0LkhBY-1WamYm2NTo-00aX8L; Sun, 20 Jul 2014 08:10:49
- +0200
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Icedove/24.6.0
-In-Reply-To: <20140719170623.GA29072@google.com>
-X-Provags-ID: V03:K0:2UZnoMX20f5ly3H0S9LkkKazZI302iWn3Us5XD+8BPmMhHbSvTE
- LKFeZuQ0EZ1nMiT1sLZGJq7GnxmfS+nbqq9sBqJUWprkwRc+fUsVWhfjU27n9HNZBd70XMr
- SWJ46gAvAjM/gA7h5JtIE37tMZv6wClJ419206qZjAEwxa4+50ON//4hnfhM4gQHai4140R
- VPvP/8SAQkU/TKSJehfnw==
+	id S1752778AbaGTHST (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 20 Jul 2014 03:18:19 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:44078 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752481AbaGTHST (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 20 Jul 2014 03:18:19 -0400
+Received: by mail-pd0-f181.google.com with SMTP id g10so5860728pdj.40
+        for <git@vger.kernel.org>; Sun, 20 Jul 2014 00:18:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=cTg9aQrZzAaDzHqGgNsW06eKloomr0PKH1AP9ZhUHuU=;
+        b=V57r+BmP3sxSdjscDqwKGxqHbdB4bwsqVw9WISvL1wKJ6FBRBNmRkcZgQaqx2IxrHM
+         0AFyxpJIAQQjsGuBmL11eikkb1ckLdJ1fG4fk44R9PJyZ5cO7M8heZH4crkEuvM97D4O
+         eK5ofQA++SdhbqmPbaQu9QVDkXNXaqL63gBQjXTvCTl8vQVSk4ajbsKvi6YyYuJl7bSf
+         LGZyOoIhmdmreDygmi/Z6ggGKN6LAfz2eMMWEh2lbDSyCypookJrAjj4b8h1rb95hwYg
+         ZSLeUhphwYy5Lidww601Kp9Kj98VEfMlbZIAGPpHbixB3He3+0qs/QAa9XqhakKJjNqq
+         2BEw==
+X-Received: by 10.68.194.229 with SMTP id hz5mr5842220pbc.91.1405840698614;
+        Sun, 20 Jul 2014 00:18:18 -0700 (PDT)
+Received: from [127.0.0.1] ([223.176.242.60])
+        by mx.google.com with ESMTPSA id or10sm9288433pdb.26.2014.07.20.00.18.15
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sun, 20 Jul 2014 00:18:17 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <7DFDF6A1361542EE9BA73AB52B1234AF@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253912>
 
-On 07/19/2014 07:06 PM, Jonathan Nieder wrote:
-> Torsten B=F6gershausen wrote:
->
->> Jonathan, (I'm good in searching, but bad in finding)
->> could you point out where the source code for the git package for
->> debian is ?
->>
->> I recently learned about mDNS, and will probably do some tests
->> and experiments later, and would like to test the lookup feature
->> of "0010".
-> Thanks.  It's at git://git.debian.org/~jrnieder-guest/git branch
-> release+patches and mirrored at http://repo.or.cz/r/git/debian
-With my limited reading of the RFC and the code, and without having
-test environment, my spontanous (and probably incomplete) change could=20
-look like this:
-- Treat "host:9418" the same as "host"
-- When the hosts ends with .local, do not use DNS.
+Replace TODO introduced in commit 9c3c22 with documentation
+explaining Git config API functions for writing configuration
+files.
 
-static int git_tcp_connect_sock(char *host, int flags)
-{
-     struct strbuf error_message =3D STRBUF_INIT;
-     int sockfd =3D -1, gai =3D 0;
-     const char *port =3D NULL;
-     struct host *hosts =3D NULL;
-     int j, n =3D 0;
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+---
+Minor nit corrected. Thanks for the review.
 
-     get_host_and_port(&host, &port);
-     if (!port)
-         port =3D STR(DEFAULT_GIT_PORT);
+ Documentation/technical/api-config.txt | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
-     n =3D get_srv(host, &hosts);
-     if ((n <=3D 0) && ends_with(host, ".local")) {
-         /*
-           host.local is really local, do not send it to a DNS resolver
-           The user may try host without .local
-          */
-         die("Unable to look up %s", host);
-     }
-     if (!n) {
-         hosts =3D xmalloc(sizeof(*hosts));
-         hosts[0].hostname =3D xstrdup(host);
-         hosts[0].port =3D xstrdup(port);
-[snip]
+diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
+index 230b3a0..edd5018 100644
+--- a/Documentation/technical/api-config.txt
++++ b/Documentation/technical/api-config.txt
+@@ -137,4 +137,33 @@ int read_file_with_include(const char *file, config_fn_t fn, void *data)
+ Writing Config Files
+ --------------------
+
+-TODO
++Git gives multiple entry points in the Config API to write config values to
++files namely `git_config_set_in_file` and `git_config_set`, which write to
++a specific config file or to `.git/config` respectively. They both take a
++key/value pair as parameter.
++In the end they both call `git_config_set_multivar_in_file` which takes four
++parameters:
++
++- the name of the file, as a string, to which key/value pairs will be written.
++
++- the name of key, as a string. This is in canonical "flat" form: the section,
++  subsection, and variable segments will be separated by dots, and the section
++  and variable segments will be all lowercase.
++  E.g., `core.ignorecase`, `diff.SomeType.textconv`.
++
++- the value of the variable, as a string. If value is equal to NULL, it will
++  remove the matching key from the config file.
++
++- the value regex, as a string. It will disregard key/value pairs where value
++  does not match.
++
++- a multi_replace value, as an int. If value is equal to zero, nothing or only
++  one matching key/value is replaced, else all matching key/values (regardless
++  how many) are removed, before the new pair is written.
++
++It returns 0 on success.
++
++Also, there are functions `git_config_rename_section` and
++`git_config_rename_section_in_file` with parameters `old_name` and `new_name`
++for renaming or removing sections in the config files. If NULL is passed
++through `new_name` parameter, the section will be removed from the config file.
+-- 
+1.9.0.GIT
