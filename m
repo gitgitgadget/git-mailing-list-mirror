@@ -1,140 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] t4210: skip command-line encoding tests on mingw
-Date: Mon, 21 Jul 2014 09:59:21 -0700
-Message-ID: <xmqqvbqqk5qu.fsf@gitster.dls.corp.google.com>
-References: <20140716092959.GA378@ucw.cz>
-	<1405611425-10009-1-git-send-email-kasal@ucw.cz>
-	<1405611425-10009-5-git-send-email-kasal@ucw.cz>
-	<CABPQNSaiogqGryK8YOzQXs_z_syvXMBqvOpvGfMNdbLkNzRq_w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] Make locked paths absolute when current directory is changed
+Date: Mon, 21 Jul 2014 10:04:54 -0700
+Message-ID: <xmqqr41ek5hl.fsf@gitster.dls.corp.google.com>
+References: <1405688937-22925-1-git-send-email-pclouds@gmail.com>
+	<1405858399-23082-1-git-send-email-pclouds@gmail.com>
+	<1405858399-23082-2-git-send-email-pclouds@gmail.com>
+	<53CD1529.9080102@ramsay1.demon.co.uk>
+	<CACsJy8AXc4jvLPNpGyGdY9uzrnN-SbEeiksLDpS_=29gJ1KMnQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Stepan Kasal <kasal@ucw.cz>,  Karsten Blees <karsten.blees@gmail.com>,  Johannes Sixt <j6t@kdbg.org>,  GIT Mailing-list <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>,  Pat Thoyts <patthoyts@users.sourceforge.net>
-To: kusmabite@gmail.com
-X-From: msysgit+bncBCG77UMM3EJRB4UNWWPAKGQEAQ7CSZI@googlegroups.com Mon Jul 21 18:59:34 2014
-Return-path: <msysgit+bncBCG77UMM3EJRB4UNWWPAKGQEAQ7CSZI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pa0-f59.google.com ([209.85.220.59])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 19:05:13 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCG77UMM3EJRB4UNWWPAKGQEAQ7CSZI@googlegroups.com>)
-	id 1X9Gw1-0003nQ-PK
-	for gcvm-msysgit@m.gmane.org; Mon, 21 Jul 2014 18:59:34 +0200
-Received: by mail-pa0-f59.google.com with SMTP id eu11sf2184865pac.14
-        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Jul 2014 09:59:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=RgG09k8rJy1dtbgcxX/1741NsJOssuXfOOZ2khA+yvE=;
-        b=I/rIrJGjl0lcXnp39VQdDioYvvlNNvUm1PG3n6dSWqKAvInzN6L6QlpsUbHKowsE73
-         nU6gwYBkZzH/aRXm++BdK4iNVGIeXiyg2x6koos8Qj6jKLA5U3STsLddJknT1IZqE3ZR
-         RKNTuqN/S6UIMZjvWeYeDAoE4/KpO2r+5WrmGHpTThqpQe/BifsgpWNyY5oo2t7oX9tu
-         CEAZqwm6hGs3Ztizt2WERWg0qunnd8AfGu6jWRMCVHPiM2EX+lRd+UHUE2Na5ZqpJMBI
-         WBQkLOeWcPY9Cbjx2XucRJJWD0ey71Sz1aAawFbW8xGzq4TvdkOVvQTWi1eit4VH5sAj
-         us0w==
-X-Received: by 10.182.29.38 with SMTP id g6mr54095obh.12.1405961971058;
-        Mon, 21 Jul 2014 09:59:31 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.182.227.133 with SMTP id sa5ls1242183obc.89.gmail; Mon, 21 Jul
- 2014 09:59:29 -0700 (PDT)
-X-Received: by 10.182.105.230 with SMTP id gp6mr14116614obb.18.1405961969788;
-        Mon, 21 Jul 2014 09:59:29 -0700 (PDT)
-Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
-        by gmr-mx.google.com with ESMTP id l23si1060427yhg.1.2014.07.21.09.59.29
-        for <msysgit@googlegroups.com>;
-        Mon, 21 Jul 2014 09:59:29 -0700 (PDT)
-Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X9H1U-00089R-Ng
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 19:05:13 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S933005AbaGURFF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jul 2014 13:05:05 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50467 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932818AbaGURFD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jul 2014 13:05:03 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5B4CD2A285;
-	Mon, 21 Jul 2014 12:59:29 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8FDFA2A52D;
+	Mon, 21 Jul 2014 13:05:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=1rbw5ZQhyWn+
+	TxDKFhVoA4P6TlM=; b=dOhV8K0SjIo6+uWfR3iz3g/mRY6BADM3VMMZLqYOYnUh
+	f5k6ZA7yxS8/f6mTiw2Oav3vNTOuRYEzwtid9nqICdBxH6u/9nF9Ytbt6ExErkEC
+	w7aPZ52Qn3I0OYWaAb8JPGXPpRZcxz9jmEIs7a1h2uCGsh/ca8vr07swk3Lrcss=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Y6XlVa
+	JE7TxTCh3NdhT7FO+vqr/7wFpoaOz22T91ceDncNHyYtYASNZWW8n1FAXD/g9Q7t
+	4B1UFgpfE8seRQTlgudOfIrV6uymmx0coqx0tyZWU8Z8rtW6KaXh1gPBIC1mDQKl
+	gm4razYnjMBxXxwuANe3wR0cnVNoEe7WX7bY8=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4F71F2A282;
-	Mon, 21 Jul 2014 12:59:29 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 59C782A52B;
+	Mon, 21 Jul 2014 13:05:02 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 7238A2A263;
-	Mon, 21 Jul 2014 12:59:23 -0400 (EDT)
-In-Reply-To: <CABPQNSaiogqGryK8YOzQXs_z_syvXMBqvOpvGfMNdbLkNzRq_w@mail.gmail.com>
-	(Erik Faye-Lund's message of "Fri, 18 Jul 2014 11:52:39 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 802542A523;
+	Mon, 21 Jul 2014 13:04:55 -0400 (EDT)
+In-Reply-To: <CACsJy8AXc4jvLPNpGyGdY9uzrnN-SbEeiksLDpS_=29gJ1KMnQ@mail.gmail.com>
+	(Duy Nguyen's message of "Mon, 21 Jul 2014 20:47:39 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5D8DBBF6-10F8-11E4-93A5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-X-Original-Sender: gitster@pobox.com
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
- sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253976>
+X-Pobox-Relay-ID: 236F4844-10F9-11E4-AE0E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253977>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> On Thu, Jul 17, 2014 at 5:37 PM, Stepan Kasal <kasal@ucw.cz> wrote:
->> From: Pat Thoyts <patthoyts@users.sourceforge.net>
+> On Mon, Jul 21, 2014 at 8:27 PM, Ramsay Jones
+> <ramsay@ramsay1.demon.co.uk> wrote:
+>>> +void make_locked_paths_absolute(void)
+>>> +{
+>>> +     struct lock_file *lk;
+>>> +     for (lk =3D lock_file_list; lk !=3D NULL; lk =3D lk->next) {
+>>> +             if (lk->filename && !is_absolute_path(lk->filename)) =
+{
+>>> +                     char *to_free =3D lk->filename;
+>>> +                     lk->filename =3D xstrdup(absolute_path(lk->fi=
+lename));
+>>> +                     free(to_free);
+>>> +             }
+>>> +     }
+>>> +}
 >>
->> On Windows the application command line is provided as unicode and in
->> mingw-git we convert that to utf-8. So these tests that require a iso-8859-1
->> input are being subverted by the encoding transformations we perform and
->> should be skipped.
->> ...
->> -test_expect_success 'log --grep searches in log output encoding (latin1)' '
->> +test_expect_success NOT_MINGW 'log --grep searches in log output encoding (latin1)' '
->>         cat >expect <<-\EOF &&
->>         latin1
->>         utf8
->> @@ -43,7 +43,7 @@ test_expect_success 'log --grep searches in log output encoding (latin1)' '
->>         test_cmp expect actual
->>  '
->>
->> -test_expect_success 'log --grep does not find non-reencoded values (utf8)' '
->> +test_expect_success NOT_MINGW 'log --grep does not find non-reencoded values (utf8)' '
+>> I just have to ask, why are we putting relative pathnames in this
+>> list to begin with? Why not use an absolute path when taking the
+>> lock in all cases? (calling absolute_path() and using the result
+>> to take the lock, storing it in the lock_file list, should not be
+>> in the critical path, right? Not that I have measured it, of course!=
+ :)
 >
-> Perhaps these checks would be more readable a few years in the future,
-> if we make a separate capability along the lines of
-> NON_UNICODE_LOCALE?
+> Conservative :) I'm still scared from 044bbbc (Make git_dir a path
+> relative to work_tree in setup_work_tree() - 2008-06-19). But yeah
+> looking through "grep hold_" I think none of the locks is in critical
+> path. absolute_path() can die() if cwd is longer than PATH_MAX (and
+> doing this reduces the chances of that happening). But Ren=C3=A9 is a=
+dding
+> strbuf_getcwd() that can remove that PATH_MAX. So I guess we should b=
+e
+> fine with putting absolute_path() in hold_lock_file_...*
 
-I do agree that having "unicode" and possibly also "locale" and
-dropping "mingw" from the prerequisite makes sense, especially in
-the longer term.  Please make it so _after_ the dust settles.
-
-I however suspect that NON_UNICODE_LOCALE does not read quite well;
-isn't the trouble that mingw allows nothing but unicode strings on
-the command line (there is no trouble for non unicode strings that
-appear as payload)?
-
-Oh by the way, can somebody remind me why we spell these as
-NOT_MINGW,  instead of !MINGW?
-
-
-
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+OK, we should center these efforts around the strbuf_getcwd() topic,
+basing the other topic on realpath() and this one on it then?
