@@ -1,88 +1,61 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] completion: add missing terminator in case statement
-Date: Mon, 21 Jul 2014 13:09:13 -0700
-Message-ID: <xmqqk376iidy.fsf@gitster.dls.corp.google.com>
-References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
-	<xmqqmwc2k4h4.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v7 0/9] Add --graft option to git replace
+Date: Mon, 21 Jul 2014 13:09:59 -0700
+Message-ID: <xmqqfvhuiico.fsf@gitster.dls.corp.google.com>
+References: <20140719145951.9564.61331.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Jul 21 22:09:27 2014
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Jul 21 22:10:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9Jtm-0006bD-Cb
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 22:09:26 +0200
+	id 1X9Jud-0007Gp-Ch
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 22:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753428AbaGUUJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2014 16:09:22 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60727 "EHLO smtp.pobox.com"
+	id S1753456AbaGUUKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2014 16:10:14 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61796 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753284AbaGUUJV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2014 16:09:21 -0400
+	id S1753284AbaGUUKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2014 16:10:13 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 428622B637;
-	Mon, 21 Jul 2014 16:09:21 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E3402B6B3;
+	Mon, 21 Jul 2014 16:10:12 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a5BXbOyIRabawwl8qjJgLbrw9+A=; b=mKXlui
-	7fV0vuVNxMm4qbR8N9NaPfkR9fAdJYNTw7CNTGVgBXuiAHIzd4CLt+cVYbWPEt1G
-	Eyrn468KqQ7BL/298z4qsR9r8SvlHj0w4TQrgIgdlCUTOifVcGNEn2qBD4gLHEmo
-	RKXIK2Cd6dz+frtIu5ceKxnFZGzeXJidS1sOg=
+	:content-type; s=sasl; bh=N+57S4WSyjIEeGNwFjhBlI64SjU=; b=F6ud76
+	oA6UQodUcYXRRvq4xKaRNM9EzEjHma3gUUzGnudTncQtScYvoDEv7uUwu7fHdZOv
+	GpngpmTHCt9UiVNODU+e8aHzBy/4xo2gIUjnRPTVI6MMQ3xYqRLd1rhff9lSnfLa
+	SYoE0sv7ZbDLNbxHiolpwkrE4fU17afdLiW5k=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=czq+IcVT9Eb+iyWAgMPEeHYocEzqfX2E
-	zQIHwJI2kNz6Ja2JknN37dSrPGtLASS2dqqR6pONyPVsTiLHHPDOTKGz0kMtrnQx
-	pbWYLzpOavCbcOgMT2aeJVOfbPcbOhDRC4vx6vluBEP/+zeZKZX6gsZOhIVSnvHQ
-	arEciVTz46E=
+	:content-type; q=dns; s=sasl; b=fvWnj9gGgEHx6WutHWagTe6l2UlLYRcI
+	rpKJYWoU8r1+Jk5c9lCTWGr8iMPPL2FPUhVCf4ywfvCNV5kO9DXlW5bjmvStqzGF
+	ko7GEb69iCJBugaWguQo8nl//qIe5xptNzGIIXgPNO4UCiVts8EVPJ3XlPn7FPrl
+	FjmuNqXixvo=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 33A462B636;
-	Mon, 21 Jul 2014 16:09:21 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 624B22B6B1;
+	Mon, 21 Jul 2014 16:10:12 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4C06D2B62B;
-	Mon, 21 Jul 2014 16:09:15 -0400 (EDT)
-In-Reply-To: <xmqqmwc2k4h4.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Mon, 21 Jul 2014 10:26:47 -0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 46F642B68A;
+	Mon, 21 Jul 2014 16:10:02 -0400 (EDT)
+In-Reply-To: <20140719145951.9564.61331.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Sat, 19 Jul 2014 17:01:06 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E394A448-1112-11E4-B9FE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: FF9666CC-1112-11E4-A5BB-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253993>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> John Keeping <john@keeping.me.uk> writes:
->
->> Signed-off-by: John Keeping <john@keeping.me.uk>
->> ---
->
-> As these ;; are separators not terminators, this is not strictly
-> necessary.  Squashing it into a change that adds more case arms to
-> this case statement is of course not just good but necessary,
-> though.
-
-s/necessary/may be &/; if you add new arms before this one, you
-won't need it.  But if you add one after this, you would ;-).
-
->>  contrib/completion/git-completion.bash | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
->> index 7a6e1d7..d0b2895 100644
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -1627,6 +1627,7 @@ _git_push ()
->>  	--repo)
->>  		__gitcomp_nl "$(__git_remotes)"
->>  		return
->> +		;;
->>  	esac
->>  	case "$cur" in
->>  	--repo=*)
+Thanks, will replace and let's move it to 'next' this week.
