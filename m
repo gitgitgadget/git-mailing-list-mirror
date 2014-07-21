@@ -1,66 +1,71 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Re: [PATCH 4/6] t4210: skip command-line encoding tests
- on mingw
-Date: Mon, 21 Jul 2014 21:21:31 +0200
-Message-ID: <53CD683B.3080407@kdbg.org>
-References: <20140716092959.GA378@ucw.cz> <1405611425-10009-1-git-send-email-kasal@ucw.cz> <1405611425-10009-5-git-send-email-kasal@ucw.cz> <CABPQNSaiogqGryK8YOzQXs_z_syvXMBqvOpvGfMNdbLkNzRq_w@mail.gmail.com> <xmqqvbqqk5qu.fsf@gitster.dls.corp.google.com> <alpine.DEB.1.00.1407211944510.3456@s15462909.onlinehome-server.info>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/6] t4210: skip command-line encoding tests on mingw
+Date: Mon, 21 Jul 2014 13:07:24 -0700
+Message-ID: <xmqqoawiiigz.fsf@gitster.dls.corp.google.com>
+References: <20140716092959.GA378@ucw.cz>
+	<1405611425-10009-1-git-send-email-kasal@ucw.cz>
+	<1405611425-10009-5-git-send-email-kasal@ucw.cz>
+	<CABPQNSaiogqGryK8YOzQXs_z_syvXMBqvOpvGfMNdbLkNzRq_w@mail.gmail.com>
+	<xmqqvbqqk5qu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: kusmabite@gmail.com, Stepan Kasal <kasal@ucw.cz>, 
- Karsten Blees <karsten.blees@gmail.com>,
- GIT Mailing-list <git@vger.kernel.org>, 
- msysGit <msysgit@googlegroups.com>,
- Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
- Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCJYV6HBKQIL7UFVTYCRUBBYM5ZU6@googlegroups.com Mon Jul 21 21:21:40 2014
-Return-path: <msysgit+bncBCJYV6HBKQIL7UFVTYCRUBBYM5ZU6@googlegroups.com>
+Cc: Stepan Kasal <kasal@ucw.cz>,  Karsten Blees <karsten.blees@gmail.com>,  Johannes Sixt <j6t@kdbg.org>,  GIT Mailing-list <git@vger.kernel.org>,  msysGit <msysgit@googlegroups.com>,  Pat Thoyts <patthoyts@users.sourceforge.net>
+To: kusmabite@gmail.com
+X-From: msysgit+bncBCG77UMM3EJRBBHGWWPAKGQERJGUAEQ@googlegroups.com Mon Jul 21 22:07:35 2014
+Return-path: <msysgit+bncBCG77UMM3EJRBBHGWWPAKGQERJGUAEQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-la0-f64.google.com ([209.85.215.64])
+Received: from mail-vc0-f191.google.com ([209.85.220.191])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCJYV6HBKQIL7UFVTYCRUBBYM5ZU6@googlegroups.com>)
-	id 1X9J9U-0004Ce-B7
-	for gcvm-msysgit@m.gmane.org; Mon, 21 Jul 2014 21:21:36 +0200
-Received: by mail-la0-f64.google.com with SMTP id el20sf855207lab.9
-        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Jul 2014 12:21:36 -0700 (PDT)
+	(envelope-from <msysgit+bncBCG77UMM3EJRBBHGWWPAKGQERJGUAEQ@googlegroups.com>)
+	id 1X9Jrx-0005DM-VZ
+	for gcvm-msysgit@m.gmane.org; Mon, 21 Jul 2014 22:07:34 +0200
+Received: by mail-vc0-f191.google.com with SMTP id lf12sf2218595vcb.8
+        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Jul 2014 13:07:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-original-sender
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe:content-type;
-        bh=pWcX7wLUc0vWrWa2w4Wqyh6lmdzwIA9ICVtTQFsW3lA=;
-        b=P0wCoEdCwceAYEmR9waKtdDZnhtAzE3PjH8ZCOgHiMwRMt9MqKg96LInlxmhhNVqX1
-         Nj5hd5pBLOoGZ+MmVT5UJRzcqS3UohlCG0YaIsi7MrHMKeqgruk28t6cjhlhBmnj0H81
-         ry5MnajaAm9a71/BBBJvjdqyUd03c5jnWd+b5clc9tE59toeFiBqZOq/MOA0XWVkoLnF
-         6FyW1ixZwWBMj7Orc13WyJfmJVJwS9iVx/R6ROzKTBUgrK4yt8uR2YuHXhmVci9omhet
-         QvINDYc0W6M+QuTp5mfeQq27jwgwM3ezAeuwsEmyOKkLy3JfL6JKDH3GnkyOgyU6pAIS
-         1ugA==
-X-Received: by 10.152.88.3 with SMTP id bc3mr276956lab.1.1405970495750;
-        Mon, 21 Jul 2014 12:21:35 -0700 (PDT)
+        bh=tUGmw/16+Vyvhx/Ep0H6qC4lKM/ZDl3npFzXEgzLMcQ=;
+        b=l9yvz2Qxpjcu6EmnO3I0V5Unui3LQdqE/E0J4rQm4hJ1l7iwMssWIE6Np360LUq4lU
+         /fAmKlAEr0J/NGsJsIEFUqS0DYl8hiFja8K7BBydVFmLl7eQuzANfAmyO/6dEz7LGB7C
+         Cni/oSH02w9lTxNfoq2xXg8fvv4zkcD6+TfK4KSjIUqJS3CbBJZEjzZSVcUDlATzx+8H
+         ApEQO19xV+t93uebfeFQsn33MdOyifubZJJ8R+beMqoDnO8zF/woFcnWF7qSzX7Yxir9
+         jh+rry+DUQbT+07NqwSHceJDrPpBZnihdvJSbW4SOqTFJCwna/30PlsVdozfXeiih1Tf
+         NJtw==
+X-Received: by 10.50.18.105 with SMTP id v9mr129722igd.17.1405973253202;
+        Mon, 21 Jul 2014 13:07:33 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.152.25.130 with SMTP id c2ls398051lag.78.gmail; Mon, 21 Jul
- 2014 12:21:34 -0700 (PDT)
-X-Received: by 10.112.167.138 with SMTP id zo10mr43351lbb.20.1405970494537;
-        Mon, 21 Jul 2014 12:21:34 -0700 (PDT)
-Received: from bsmtp.bon.at (bsmtp1.bon.at. [213.33.87.15])
-        by gmr-mx.google.com with ESMTPS id r13si735667wib.0.2014.07.21.12.21.33
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Mon, 21 Jul 2014 12:21:33 -0700 (PDT)
-Received-SPF: none (google.com: j6t@kdbg.org does not designate permitted sender hosts) client-ip=213.33.87.15;
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 1243C130082;
-	Mon, 21 Jul 2014 21:21:33 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 5C0AB19F489;
-	Mon, 21 Jul 2014 21:21:32 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <alpine.DEB.1.00.1407211944510.3456@s15462909.onlinehome-server.info>
-X-Original-Sender: j6t@kdbg.org
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: j6t@kdbg.org does not designate permitted sender hosts) smtp.mail=j6t@kdbg.org
+Received: by 10.50.27.104 with SMTP id s8ls1789404igg.22.gmail; Mon, 21 Jul
+ 2014 13:07:32 -0700 (PDT)
+X-Received: by 10.66.66.196 with SMTP id h4mr13452139pat.22.1405973252514;
+        Mon, 21 Jul 2014 13:07:32 -0700 (PDT)
+Received: from smtp.pobox.com (smtp.pobox.com. [208.72.237.35])
+        by gmr-mx.google.com with ESMTP id p3si1116059yho.7.2014.07.21.13.07.32
+        for <msysgit@googlegroups.com>;
+        Mon, 21 Jul 2014 13:07:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted sender) client-ip=208.72.237.35;
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 168DF2B56F;
+	Mon, 21 Jul 2014 16:07:32 -0400 (EDT)
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0CF372B56E;
+	Mon, 21 Jul 2014 16:07:32 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 28EFE2B564;
+	Mon, 21 Jul 2014 16:07:26 -0400 (EDT)
+In-Reply-To: <xmqqvbqqk5qu.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 21 Jul 2014 09:59:21 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: A2907C24-1112-11E4-8D26-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Original-Sender: gitster@pobox.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of junio@pobox.com designates 208.72.237.35 as permitted
+ sender) smtp.mail=junio@pobox.com;       dkim=pass header.i=@pobox.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
 List-ID: <msysgit.googlegroups.com>
@@ -72,27 +77,21 @@ Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
  <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253991>
 
-Am 21.07.2014 19:45, schrieb Johannes Schindelin:
-> Hi Junio,
-> 
-> On Mon, 21 Jul 2014, Junio C Hamano wrote:
-> 
->> Oh by the way, can somebody remind me why we spell these as
->> NOT_MINGW,  instead of !MINGW?
-> 
-> I guess that is my mistake; when I introduced the use of NOT_MINGW I was
-> simply unaware of the !MINGW syntax.
+Junio C Hamano <gitster@pobox.com> writes:
 
-You can hardly be blamed. The first occurrence of NOT_MINGW was added
-much earlier than the ability to negate prerequisite tokens.
+> Oh by the way, can somebody remind me why we spell these as
+> NOT_MINGW,  instead of !MINGW?
 
-> Let's use the latter consistently?
+Simple answer seems to be that !ANYTHING appeared only at bdccd3c1
+(test-lib: allow negation of prerequisites, 2012-11-14) but at that
+version already 5 test files use NOT_MINGW (and a few MINGW) as
+prerequisites.  We can safely replace uses of NOT_MINGW prerequisite
+with !MINGW, it seems.
 
-Of course!
+Sorry for the noise.
 
--- Hannes
 
 -- 
 -- 
