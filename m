@@ -1,82 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] completion: add missing terminator in case statement
-Date: Mon, 21 Jul 2014 10:26:47 -0700
-Message-ID: <xmqqmwc2k4h4.fsf@gitster.dls.corp.google.com>
-References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Re: [PATCH 4/6] t4210: skip command-line encoding tests
+ on mingw
+Date: Mon, 21 Jul 2014 19:45:37 +0200 (CEST)
+Message-ID: <alpine.DEB.1.00.1407211944510.3456@s15462909.onlinehome-server.info>
+References: <20140716092959.GA378@ucw.cz> <1405611425-10009-1-git-send-email-kasal@ucw.cz> <1405611425-10009-5-git-send-email-kasal@ucw.cz> <CABPQNSaiogqGryK8YOzQXs_z_syvXMBqvOpvGfMNdbLkNzRq_w@mail.gmail.com> <xmqqvbqqk5qu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Mon Jul 21 19:27:09 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Cc: kusmabite@gmail.com, Stepan Kasal <kasal@ucw.cz>, 
+    Karsten Blees <karsten.blees@gmail.com>, Johannes Sixt <j6t@kdbg.org>, 
+    GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
+    Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: msysgit+bncBCZPH74Q5YNRBV5DWWPAKGQEV37LNBI@googlegroups.com Mon Jul 21 19:46:02 2014
+Return-path: <msysgit+bncBCZPH74Q5YNRBV5DWWPAKGQEV37LNBI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-yh0-f57.google.com ([209.85.213.57])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9HMi-0008A2-Jc
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 19:27:08 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933215AbaGUR1E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2014 13:27:04 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63945 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933190AbaGUR1C (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2014 13:27:02 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E8E0E29017;
-	Mon, 21 Jul 2014 13:27:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rdKc2pmzmK8RFKmL8bHltmue8CY=; b=YZeRWd
-	XW/7N28vZDmT3a6udEfagT/FmvgHWlCAzQmkOwt3vnEOxfO7QDOBBTPCcjtm9MYy
-	6krro337NVqi5ArPTbVPsWDjTAMIaGBoWgqdVmRkxRfs2SrPgciLFEySwIsk5DaF
-	5AEuO6fsrZ63T1IuEndIRj8hrSc1Scj1aJNHw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uC8Vk9yZoGwuziWt1D7QxmsiVh5PC9Ds
-	Tpw4MCrEZwGojRXiVO3yzxpo7lliFXNxO7f6WTaumWjflC9fvR7jgjydtMKhZP/z
-	9JWsU88BpCfEVDGnyuLdQc7z0nBrRrYAmv3W6hmZOBMyeWhkvx+nMZGSmnHqD7jj
-	zBT3ZeRu2X8=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B131D29013;
-	Mon, 21 Jul 2014 13:27:01 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A39A62AFE5;
-	Mon, 21 Jul 2014 13:26:48 -0400 (EDT)
-In-Reply-To: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
-	(John Keeping's message of "Sat, 19 Jul 2014 10:45:54 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 322175BC-10FC-11E4-8DE2-9903E9FBB39C-77302942!pb-smtp0.pobox.com
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253980>
+	(envelope-from <msysgit+bncBCZPH74Q5YNRBV5DWWPAKGQEV37LNBI@googlegroups.com>)
+	id 1X9Hey-000650-V8
+	for gcvm-msysgit@m.gmane.org; Mon, 21 Jul 2014 19:46:01 +0200
+Received: by mail-yh0-f57.google.com with SMTP id 29sf2187491yhl.2
+        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Jul 2014 10:46:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=date:from:to:cc:subject:in-reply-to:message-id:references
+         :user-agent:mime-version:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=E/izxG5UkAh7158pucWV3UkdrUGEdXGlwWU9r8vG16c=;
+        b=CnPwOt43jTr03noP/nw82J7gfz2H/mkjKoRY3RwmWnSwdsjvHTofO8mbwneRIGuEa+
+         lAZlxXnqLTcl+mtYSCo6/ls7qtgnkxaVRVr9YAU/+z9KpKSKtLkckyKuldlExmB0eyGs
+         J2VmYH/x7FenmqHXodTHT8ZMXMvuivX2U4UX5p01ltNdd29Jy1guSN619wAScMPZQ8lO
+         sz43BcEbp7GBhIafVWfKO2sTFdXgcQKGhLMOVhzcQBs+nbds4+ZCS515BF7H7mdfmTma
+         w4oPwrnYJlb25WcpHHGYG8Ty2hJOSJpGtQLHjEWipDVyvYnBw9kpIP0/he5GnHjaVKYi
+         Z2ig==
+X-Received: by 10.50.67.98 with SMTP id m2mr109857igt.15.1405964760145;
+        Mon, 21 Jul 2014 10:46:00 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.50.78.162 with SMTP id c2ls1790166igx.17.canary; Mon, 21 Jul
+ 2014 10:45:59 -0700 (PDT)
+X-Received: by 10.66.187.137 with SMTP id fs9mr5460294pac.10.1405964759487;
+        Mon, 21 Jul 2014 10:45:59 -0700 (PDT)
+Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
+        by gmr-mx.google.com with ESMTPS id y50si1073893yhk.4.2014.07.21.10.45.59
+        for <msysgit@googlegroups.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Jul 2014 10:45:59 -0700 (PDT)
+Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
+Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
+ mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MSMr9-1WyXD03NH9-00TTjG;
+ Mon, 21 Jul 2014 19:45:37 +0200
+X-X-Sender: schindelin@s15462909.onlinehome-server.info
+In-Reply-To: <xmqqvbqqk5qu.fsf@gitster.dls.corp.google.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Provags-ID: V03:K0:6jV/UsaUtQg6j/B5nxhi/OuCz+IsLLlgiXZAe5YOj1OmpFJGTIO
+ LD7J5LEmhYC6qWCtVE1cWGYUyXByWyZgTcmaBDZ59MKZX3EfL4PWMLBgADH6Vnu2uzy4eqe
+ pL7b6kqqr2mO36ldWf4dQoiJImPC/3OT1+/QDAYY7cIkelTb8kuk9nTyTBxUUEtF7F1Be9b
+ uPmW58nMMHwGhQ4af6y8Q==
+X-Original-Sender: johannes.schindelin@gmx.de
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
+ permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253981>
 
-John Keeping <john@keeping.me.uk> writes:
+Hi Junio,
 
-> Signed-off-by: John Keeping <john@keeping.me.uk>
-> ---
+On Mon, 21 Jul 2014, Junio C Hamano wrote:
 
-As these ;; are separators not terminators, this is not strictly
-necessary.  Squashing it into a change that adds more case arms to
-this case statement is of course not just good but necessary,
-though.
+> Oh by the way, can somebody remind me why we spell these as
+> NOT_MINGW,  instead of !MINGW?
 
->  contrib/completion/git-completion.bash | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 7a6e1d7..d0b2895 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1627,6 +1627,7 @@ _git_push ()
->  	--repo)
->  		__gitcomp_nl "$(__git_remotes)"
->  		return
-> +		;;
->  	esac
->  	case "$cur" in
->  	--repo=*)
+I guess that is my mistake; when I introduced the use of NOT_MINGW I was
+simply unaware of the !MINGW syntax.
+
+Let's use the latter consistently?
+
+Ciao,
+Johannes
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
