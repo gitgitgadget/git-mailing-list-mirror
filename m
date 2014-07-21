@@ -1,122 +1,125 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v3 5/6] pager.c: replace `git_config()` with `git_config_get_value()`
-Date: Mon, 21 Jul 2014 04:12:24 -0700
-Message-ID: <1405941145-12120-6-git-send-email-tanayabh@gmail.com>
+Subject: [PATCH v3 6/6] notes-util.c: replace `git_config()` with `git_config_get_value()`
+Date: Mon, 21 Jul 2014 04:12:25 -0700
+Message-ID: <1405941145-12120-7-git-send-email-tanayabh@gmail.com>
 References: <1405941145-12120-1-git-send-email-tanayabh@gmail.com>
 Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 21 13:13:50 2014
+X-From: git-owner@vger.kernel.org Mon Jul 21 13:13:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9BXQ-0008Lh-JJ
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 13:13:48 +0200
+	id 1X9BXY-0008TJ-Sk
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 13:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755076AbaGULNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2014 07:13:45 -0400
-Received: from mail-pa0-f46.google.com ([209.85.220.46]:33381 "EHLO
-	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754809AbaGULNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2014 07:13:43 -0400
-Received: by mail-pa0-f46.google.com with SMTP id lj1so9573480pab.5
-        for <git@vger.kernel.org>; Mon, 21 Jul 2014 04:13:43 -0700 (PDT)
+	id S1755082AbaGULNs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2014 07:13:48 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:38240 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754635AbaGULNr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2014 07:13:47 -0400
+Received: by mail-pd0-f177.google.com with SMTP id p10so8883030pdj.8
+        for <git@vger.kernel.org>; Mon, 21 Jul 2014 04:13:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=7sqEYn7R/P5TH6cuZ0QaNbEGRbwYmm5W/+wgn6y527c=;
-        b=Qxab8k8MZahCc1LpNHQufbNxO8VGDfYUtJmp0kieKy5Rz7u0+u9whldI9B3qaGvT7N
-         3gy8CGBow8Dg72My0VUwr8dpYAyL6X9m56W5mCZ0WCCwOhYuihIlx9XbdlDs8ZeHZYve
-         tFkG390jNUEceBQKGMlGEJEA+WX8pFEx4rLSNk8n8srsTHLPzM0Y4pXkr5XQD3LPiYvn
-         yINUTZlkkKhNYY6OafUPtZ4ngB3bjU7YOtHflObHODSj17wjOgpXeVjU16a9Bwyv75L+
-         LzOM/baMUUFMxFwZtLpDTFQQF1KDx/aRkdBEbuaawgGNIkf7oHa4nANKJ+5i2uqkKtbE
-         x6vw==
-X-Received: by 10.66.231.139 with SMTP id tg11mr24527211pac.87.1405941223556;
-        Mon, 21 Jul 2014 04:13:43 -0700 (PDT)
+        bh=hyWnAbXXxPEBTUqJWljEdbLxV8XHpSUwXYv2dddMPiw=;
+        b=nqibqLVvd5O5Rnm5Lk9XWArxvteagO9BEyO0rktiDoIV1LkbadmtbZi2lvrdPUPX39
+         9oF0FF3vmq+LdL7gGGkAzlCcBEWcIx1RxTEmd974DqyPQqofUUauv/Qh4tdAClVdBq6d
+         9kxO4w8ploDAbtPcJbVAR5mFfw6Rz+Ay0OAFUqkwPDSVn56qHTDp5aXO23nDody/dyB1
+         P15MSE/9u6ZaPHvBeCyRGnOu1QryBnltiQplP36Pvh2Ud2QIkTpI/uIrxp1SKksQ6RNt
+         eUnHxzQvGiybhk77cqx7em8tGMWk5P33rGkmtoTNNfuedK8TzsbyQatvspP3evOTLV90
+         VhWg==
+X-Received: by 10.66.237.2 with SMTP id uy2mr1197255pac.157.1405941226909;
+        Mon, 21 Jul 2014 04:13:46 -0700 (PDT)
 Received: from localhost.localdomain ([223.176.246.202])
-        by mx.google.com with ESMTPSA id bl12sm2603688pac.44.2014.07.21.04.13.40
+        by mx.google.com with ESMTPSA id bl12sm2603688pac.44.2014.07.21.04.13.43
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 21 Jul 2014 04:13:42 -0700 (PDT)
+        Mon, 21 Jul 2014 04:13:46 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.GIT
 In-Reply-To: <1405941145-12120-1-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253954>
 
 Use `git_config_get_value()` instead of `git_config()` to take advantage of
 the config-set API which provides a cleaner control flow.
+The function now raises an error instead of dying when a NULL value is found
+for key "notes.rewritemode".
 
 Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- pager.c | 40 +++++++++++++---------------------------
- 1 file changed, 13 insertions(+), 27 deletions(-)
+ notes-utils.c | 33 ++++++++++++++++-----------------
+ 1 file changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/pager.c b/pager.c
-index 8b5cbc5..b7eb7e7 100644
---- a/pager.c
-+++ b/pager.c
-@@ -6,12 +6,6 @@
- #define DEFAULT_PAGER "less"
- #endif
- 
--struct pager_config {
--	const char *cmd;
--	int want;
--	char *value;
--};
--
- /*
-  * This is split up from the rest of git so that we can do
-  * something different on Windows.
-@@ -155,30 +149,22 @@ int decimal_width(int number)
- 	return width;
+diff --git a/notes-utils.c b/notes-utils.c
+index b64dc1b..ffa2b70 100644
+--- a/notes-utils.c
++++ b/notes-utils.c
+@@ -69,22 +69,24 @@ static combine_notes_fn parse_combine_notes_fn(const char *v)
+ 		return NULL;
  }
  
--static int pager_command_config(const char *var, const char *value, void *data)
-+/* returns 0 for "no pager", 1 for "use pager", and -1 for "not specified" */
-+int check_pager_config(const char *cmd)
+-static int notes_rewrite_config(const char *k, const char *v, void *cb)
++static void notes_rewrite_config(struct notes_rewrite_cfg *c)
  {
--	struct pager_config *c = data;
--	if (starts_with(var, "pager.") && !strcmp(var + 6, c->cmd)) {
--		int b = git_config_maybe_bool(var, value);
-+	int want = -1;
+-	struct notes_rewrite_cfg *c = cb;
+-	if (starts_with(k, "notes.rewrite.") && !strcmp(k+14, c->cmd)) {
+-		c->enabled = git_config_bool(k, v);
+-		return 0;
+-	} else if (!c->mode_from_env && !strcmp(k, "notes.rewritemode")) {
++	const char *v;
 +	struct strbuf key = STRBUF_INIT;
-+	const char *value = NULL;
-+	strbuf_addf(&key, "pager.%s", cmd);
-+	if (!git_config_get_value(key.buf, &value)) {
-+		int b = git_config_maybe_bool(key.buf, value);
- 		if (b >= 0)
--			c->want = b;
-+			want = b;
- 		else {
--			c->want = 1;
--			c->value = xstrdup(value);
-+			want = 1;
-+			pager_program = xstrdup(value);
- 		}
- 	}
--	return 0;
--}
--
--/* returns 0 for "no pager", 1 for "use pager", and -1 for "not specified" */
--int check_pager_config(const char *cmd)
--{
--	struct pager_config c;
--	c.cmd = cmd;
--	c.want = -1;
--	c.value = NULL;
--	git_config(pager_command_config, &c);
--	if (c.value)
--		pager_program = c.value;
--	return c.want;
++	strbuf_addf(&key, "notes.rewrite.%s", c->cmd);
++	git_config_get_bool(key.buf, &c->enabled);
 +	strbuf_release(&key);
-+	return want;
++
++	if (!c->mode_from_env && !git_config_get_value("notes.rewritemode", &v)) {
+ 		if (!v)
+-			return config_error_nonbool(k);
+-		c->combine = parse_combine_notes_fn(v);
+-		if (!c->combine) {
+-			error(_("Bad notes.rewriteMode value: '%s'"), v);
+-			return 1;
++			config_error_nonbool("notes.rewritemode");
++		else {
++			c->combine = parse_combine_notes_fn(v);
++			if (!c->combine)
++				error(_("Bad notes.rewriteMode value: '%s'"), v);
+ 		}
+-		return 0;
+-	} else if (!c->refs_from_env && !strcmp(k, "notes.rewriteref")) {
++	}
++	if (!c->refs_from_env && !git_config_get_value("notes.rewriteref", &v)) {
+ 		/* note that a refs/ prefix is implied in the
+ 		 * underlying for_each_glob_ref */
+ 		if (starts_with(v, "refs/notes/"))
+@@ -92,10 +94,7 @@ static int notes_rewrite_config(const char *k, const char *v, void *cb)
+ 		else
+ 			warning(_("Refusing to rewrite notes in %s"
+ 				" (outside of refs/notes/)"), v);
+-		return 0;
+ 	}
+-
+-	return 0;
  }
+ 
+ 
+@@ -124,7 +123,7 @@ struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd)
+ 		c->refs_from_env = 1;
+ 		string_list_add_refs_from_colon_sep(c->refs, rewrite_refs_env);
+ 	}
+-	git_config(notes_rewrite_config, c);
++	notes_rewrite_config(c);
+ 	if (!c->enabled || !c->refs->nr) {
+ 		string_list_clear(c->refs, 0);
+ 		free(c->refs);
 -- 
 1.9.0.GIT
