@@ -1,66 +1,87 @@
-From: mimimimi <mimimimimimi159@hotmail.com>
-Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
-Date: Sun, 20 Jul 2014 23:45:31 -0700 (PDT)
-Message-ID: <1405925131451-7615524.post@n2.nabble.com>
-References: <20130104124756.GA402@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFH 0/3] stable priority-queue
+Date: Mon, 21 Jul 2014 05:07:35 -0400
+Message-ID: <20140721090735.GA14548@peff.net>
+References: <20140714054021.GA4422@sigill.intra.peff.net>
+ <87tx6k5hjz.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 21 08:45:43 2014
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Jul 21 11:07:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X97Ly-0005kT-B6
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 08:45:42 +0200
+	id 1X99ZR-0007Sb-0R
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 11:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251AbaGUGpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2014 02:45:34 -0400
-Received: from sam.nabble.com ([216.139.236.26]:47030 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751187AbaGUGpc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2014 02:45:32 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.72)
-	(envelope-from <mimimimimimi159@hotmail.com>)
-	id 1X97Ln-0001ba-FJ
-	for git@vger.kernel.org; Sun, 20 Jul 2014 23:45:31 -0700
-In-Reply-To: <20130104124756.GA402@sigill.intra.peff.net>
+	id S1754033AbaGUJHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2014 05:07:39 -0400
+Received: from cloud.peff.net ([50.56.180.127]:37421 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753302AbaGUJHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2014 05:07:37 -0400
+Received: (qmail 10960 invoked by uid 102); 21 Jul 2014 09:07:38 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 21 Jul 2014 04:07:38 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 21 Jul 2014 05:07:35 -0400
+Content-Disposition: inline
+In-Reply-To: <87tx6k5hjz.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253945>
 
-I set up a git alias like this:
+On Mon, Jul 14, 2014 at 01:02:56PM +0200, David Kastrup wrote:
 
-git config --global alias.popmerge '!git stash pop && git merge master'
+> Jeff King <peff@peff.net> writes:
+> 
+> > As Junio and I discussed earlier in [1], this series makes the
+> > prio_queue struct stable with respect to object insertion (which in turn
+> > means we can use it to replace commit_list in more places).
+> 
+> I don't think that this makes sense in general since it assumes the
+> appropriate fallback behavior to be FIFO.  Depending on the use case, it
+> might be the other way round, or something else (like topology-based)
+> entirely.
 
-Then I call it, like this:
+Remember that this is just a tie-breaker for the regular comparison
+function. If you want to represent some other ordering, you are free to
+do the tie-breaking yourself in your comparison function. The one thing
+we can easily provide but do not is LIFO ordering for the tie-breaker.
+That would be trivial to add as a flag on the prio_queue, but I'd wait
+until there is actually a caller who wants it.
 
-git popmerge
+Yes, it's a bit hacky to provide it for cases which _don't_ care about
+order (or implement their own separate tie-breaker). But the worst case
+there is that we are wasting some memory, and I wasn't able to measure a
+real slow-down. I think it's a reasonable compromise given the lack of
+generics in C.
 
-The "git stash pop" is executed, but the "git merge master" is ignored.
+But if you have a case that is measurably affected, please let me know,
+and I can look into implementing it in a type-agnostic way (so that the
+embedded insertion counter becomes just another type).
 
-If I run "git merge master" right after the "git popmerge"... it sumply runs
-as expected, performing the merge.
+> I see that struct commit already contains an integer field called
+> "index", assigned sequentially, which might conceivably be used for
+> tie-breaking independent from the actual prio_queue use at no extra
+> cost.
 
-I have other aliases with long sequences of commands... and they run
-flawlessly. It seems something at "git stash pop" makes the alias process to
-halt... Is it possible to avoid this behavior? How?
+I don't think it's a good idea to rely on that index, as it is anything
+but stable. It represents whatever order commits happened to be first
+touched in the current program run. So:
 
-Thanks.
-code 128
-<http://www.keepdynamic.com/barcoding/asp-net-barcode-generator.shtml>  
+  1. Performing the same operation in-process versus in a sub-process
+     may produce different results.
 
+  2. Arguments to a command may have unexpected effects. E.g.,
+     specifying "--tags" to "rev-list" will look up the commit at
+     each tag ref, giving them much lower index numbers than they would
+     if we reached only through the normal traversal.
 
-
-
-
-
-
---
-View this message in context: http://git.661346.n2.nabble.com/RFC-PATCH-avoid-SIGPIPE-warnings-for-aliases-tp7574160p7615524.html
-Sent from the git mailing list archive at Nabble.com.
+-Peff
