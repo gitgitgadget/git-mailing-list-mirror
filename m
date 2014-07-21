@@ -1,85 +1,310 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 2/2] Make locked paths absolute when current directory
- is changed
-Date: Mon, 21 Jul 2014 20:47:39 +0700
-Message-ID: <CACsJy8AXc4jvLPNpGyGdY9uzrnN-SbEeiksLDpS_=29gJ1KMnQ@mail.gmail.com>
-References: <1405688937-22925-1-git-send-email-pclouds@gmail.com>
- <1405858399-23082-1-git-send-email-pclouds@gmail.com> <1405858399-23082-2-git-send-email-pclouds@gmail.com>
- <53CD1529.9080102@ramsay1.demon.co.uk>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH/RFC] rewrite `git_default_config()` using config-set API
+ functions
+Date: Mon, 21 Jul 2014 14:59:35 +0100
+Message-ID: <53CD1CC7.1020004@ramsay1.demon.co.uk>
+References: <1405941145-12120-1-git-send-email-tanayabh@gmail.com> <53CCFD02.6010704@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Mon Jul 21 15:48:18 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 21 15:59:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9Dwu-0006TA-Q0
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 15:48:17 +0200
+	id 1X9E80-0006n2-Eb
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 15:59:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754996AbaGUNsN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jul 2014 09:48:13 -0400
-Received: from mail-qa0-f45.google.com ([209.85.216.45]:54776 "EHLO
-	mail-qa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754957AbaGUNsM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jul 2014 09:48:12 -0400
-Received: by mail-qa0-f45.google.com with SMTP id cm18so5041597qab.32
-        for <git@vger.kernel.org>; Mon, 21 Jul 2014 06:48:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=e3hJ3MgzQ3uXcqagm/2ZHY+D6JWT4HZYbJWCNB017/o=;
-        b=WYRnxKlifm0orAjt1aPtEq7o1LtwNcwkhPkZDIF1UB89bn63A+GfbxxJ5mj4rQsO19
-         ITAlkPUMJon6Yj9mTeNiVjS5wGGTtNZ+rzXIz6oxAn0HMgYqOQPdmq/1/kRsdbbANSD0
-         Tnh3UGBsw61Zm09V/9Y0W8smm3ddDzVZD1Iv0Oja++ngHt43KaUMAAontJ0RuC+Z6SiC
-         1JYKm5rIQ0nmhynBfkXzpZ3Dkhe4BJGkIO7XqLGos9Z1JANp5owUXx1BkN3es0wtokT/
-         nSSto5FfhEtwD+bxFaLL44FI5W2+ngk+IlrE5YYogF68aGgNJoLusjBW4U6i6lZ/zqYt
-         aHZA==
-X-Received: by 10.224.122.83 with SMTP id k19mr42905367qar.78.1405950489263;
- Mon, 21 Jul 2014 06:48:09 -0700 (PDT)
-Received: by 10.96.66.129 with HTTP; Mon, 21 Jul 2014 06:47:39 -0700 (PDT)
-In-Reply-To: <53CD1529.9080102@ramsay1.demon.co.uk>
+	id S1755123AbaGUN7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2014 09:59:40 -0400
+Received: from mdfmta005.mxout.tch.inty.net ([91.221.169.46]:59375 "EHLO
+	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1754974AbaGUN7j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2014 09:59:39 -0400
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP id DD79918CB35;
+	Mon, 21 Jul 2014 14:59:47 +0100 (BST)
+Received: from mdfmta005.tch.inty.net (unknown [127.0.0.1])
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP id 8060218CB0F;
+	Mon, 21 Jul 2014 14:59:47 +0100 (BST)
+Received: from [192.168.254.7] (unknown [80.176.147.220])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by mdfmta005.tch.inty.net (Postfix) with ESMTP;
+	Mon, 21 Jul 2014 14:59:46 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <53CCFD02.6010704@gmail.com>
+X-MDF-HostID: 18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253966>
 
-On Mon, Jul 21, 2014 at 8:27 PM, Ramsay Jones
-<ramsay@ramsay1.demon.co.uk> wrote:
->> +void make_locked_paths_absolute(void)
->> +{
->> +     struct lock_file *lk;
->> +     for (lk =3D lock_file_list; lk !=3D NULL; lk =3D lk->next) {
->> +             if (lk->filename && !is_absolute_path(lk->filename)) {
->> +                     char *to_free =3D lk->filename;
->> +                     lk->filename =3D xstrdup(absolute_path(lk->fil=
-ename));
->> +                     free(to_free);
->> +             }
->> +     }
->> +}
->
-> I just have to ask, why are we putting relative pathnames in this
-> list to begin with? Why not use an absolute path when taking the
-> lock in all cases? (calling absolute_path() and using the result
-> to take the lock, storing it in the lock_file list, should not be
-> in the critical path, right? Not that I have measured it, of course! =
-:)
+On 21/07/14 12:44, Tanay Abhra wrote:
+> Use `git_config_get_*()` family instead of `git_config()` to take advantage of
+> the config-set API which provides a cleaner control flow.
+> 
+> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+> ---
+> Consider this as a proof of concept as the others callers have to be rewritten
+> as well.
+> I think that it is not so buggy as it passes all the tests.
+> After the first six patches in the series which you have already seen there are
+> five or four left which can rewritten without touching git_default_config().
+> 
+> Thus, this rewrite will serve as the base for rewriting other git_config()
+> callers which pass control to git_default_config() at the end of the function.
+> Also there are more than thirty direct callers to git_default_config()
+> (i.e git_config(git_default_config, NULL)), so this rewrite solves them
+> in one sweep.
+> 
+> Slight behaviour change, config_error_nonbool() has been replaced with
+> die("Missing value for '%s'", var);.
+> The original code also alerted the file name and the line number which we lose here.
+> 
+> Cheers,
+> Tanay Abhra.
+> 
+>  advice.c |  18 ++--
+>  advice.h |   2 +-
+>  cache.h  |   2 +-
+>  config.c | 287 ++++++++++++++++++++-------------------------------------------
+>  ident.c  |  15 ++--
+>  5 files changed, 104 insertions(+), 220 deletions(-)
+> 
 
-Conservative :) I'm still scared from 044bbbc (Make git_dir a path
-relative to work_tree in setup_work_tree() - 2008-06-19). But yeah
-looking through "grep hold_" I think none of the locks is in critical
-path. absolute_path() can die() if cwd is longer than PATH_MAX (and
-doing this reduces the chances of that happening). But Ren=C3=A9 is add=
-ing
-strbuf_getcwd() that can remove that PATH_MAX. So I guess we should be
-fine with putting absolute_path() in hold_lock_file_...*
---=20
-Duy
+[snip]
+
+
+> diff --git a/config.c b/config.c
+> index fe9f399..72196a9 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -666,88 +666,47 @@ int git_config_pathname(const char **dest, const char *var, const char *value)
+>  	return 0;
+>  }
+> 
+> -static int git_default_core_config(const char *var, const char *value)
+> +static void git_default_core_config(void)
+>  {
+> +	const char *value = NULL;
+>  	/* This needs a better name */
+> -	if (!strcmp(var, "core.filemode")) {
+> -		trust_executable_bit = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> -	if (!strcmp(var, "core.trustctime")) {
+> -		trust_ctime = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> -	if (!strcmp(var, "core.checkstat")) {
+> +	git_config_get_bool("core.filemode", &trust_executable_bit);
+> +	git_config_get_bool("core.trustctime", &trust_ctime);
+> +
+> +	if (!git_config_get_value("core.checkstat", &value)) {
+>  		if (!strcasecmp(value, "default"))
+>  			check_stat = 1;
+>  		else if (!strcasecmp(value, "minimal"))
+>  			check_stat = 0;
+>  	}
+> 
+> -	if (!strcmp(var, "core.quotepath")) {
+> -		quote_path_fully = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.symlinks")) {
+> -		has_symlinks = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.ignorecase")) {
+> -		ignore_case = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.attributesfile"))
+> -		return git_config_pathname(&git_attributes_file, var, value);
+> -
+> -	if (!strcmp(var, "core.bare")) {
+> -		is_bare_repository_cfg = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.ignorestat")) {
+> -		assume_unchanged = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.prefersymlinkrefs")) {
+> -		prefer_symlink_refs = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.logallrefupdates")) {
+> -		log_all_ref_updates = git_config_bool(var, value);
+> -		return 0;
+> -	}
+> +	git_config_get_bool("core.quotepath", &quote_path_fully);
+> +	git_config_get_bool("core.symlinks", &has_symlinks);
+> +	git_config_get_bool("core.ignorecase", &ignore_case);
+> +	git_config_get_pathname("core.attributesfile", &git_attributes_file);
+> +	git_config_get_bool("core.bare", &is_bare_repository_cfg);
+> +	git_config_get_bool("core.ignorestat", &assume_unchanged);
+> +	git_config_get_bool("core.prefersymlinkrefs", &prefer_symlink_refs);
+> +	git_config_get_bool("core.logallrefupdates", &log_all_ref_updates);
+> +	git_config_get_bool("core.warnambiguousrefs", &warn_ambiguous_refs);
+> 
+> -	if (!strcmp(var, "core.warnambiguousrefs")) {
+> -		warn_ambiguous_refs = git_config_bool(var, value);
+> -		return 0;
+> +	int abbrev;
+
+declaration after statement.
+
+> +	if (!git_config_get_int("core.abbrev", &abbrev)) {
+> +		if (abbrev >= minimum_abbrev && abbrev <= 40)
+> +			default_abbrev = abbrev;
+>  	}
+> 
+> -	if (!strcmp(var, "core.abbrev")) {
+> -		int abbrev = git_config_int(var, value);
+> -		if (abbrev < minimum_abbrev || abbrev > 40)
+> -			return -1;
+> -		default_abbrev = abbrev;
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.loosecompression")) {
+> -		int level = git_config_int(var, value);
+> +	int level;
+
+ditto.
+
+> +	if (!git_config_get_int("core.loosecompression", &level)) {
+>  		if (level == -1)
+>  			level = Z_DEFAULT_COMPRESSION;
+>  		else if (level < 0 || level > Z_BEST_COMPRESSION)
+>  			die("bad zlib compression level %d", level);
+>  		zlib_compression_level = level;
+>  		zlib_compression_seen = 1;
+> -		return 0;
+>  	}
+> 
+> -	if (!strcmp(var, "core.compression")) {
+> -		int level = git_config_int(var, value);
+> +	if (!git_config_get_int("core.compression", &level)) {
+>  		if (level == -1)
+>  			level = Z_DEFAULT_COMPRESSION;
+>  		else if (level < 0 || level > Z_BEST_COMPRESSION)
+> @@ -756,57 +715,39 @@ static int git_default_core_config(const char *var, const char *value)
+>  		core_compression_seen = 1;
+>  		if (!zlib_compression_seen)
+>  			zlib_compression_level = level;
+> -		return 0;
+>  	}
+> 
+> -	if (!strcmp(var, "core.packedgitwindowsize")) {
+> +	if (!git_config_get_ulong("core.packedgitwindowsize", (long unsigned int*)&packed_git_window_size)) {
+>  		int pgsz_x2 = getpagesize() * 2;
+> -		packed_git_window_size = git_config_ulong(var, value);
+> 
+>  		/* This value must be multiple of (pagesize * 2) */
+>  		packed_git_window_size /= pgsz_x2;
+>  		if (packed_git_window_size < 1)
+>  			packed_git_window_size = 1;
+>  		packed_git_window_size *= pgsz_x2;
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.bigfilethreshold")) {
+> -		big_file_threshold = git_config_ulong(var, value);
+> -		return 0;
+>  	}
+> 
+> -	if (!strcmp(var, "core.packedgitlimit")) {
+> -		packed_git_limit = git_config_ulong(var, value);
+> -		return 0;
+> -	}
+> +	git_config_get_ulong("core.bigfilethreshold", &big_file_threshold);
+> +	git_config_get_ulong("core.packedgitlimit", (long unsigned int*)&packed_git_limit);
+> +	git_config_get_ulong("core.deltabasecachelimit", (long unsigned int*)&delta_base_cache_limit);
+> 
+> -	if (!strcmp(var, "core.deltabasecachelimit")) {
+> -		delta_base_cache_limit = git_config_ulong(var, value);
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.autocrlf")) {
+> +	if (!git_config_get_value("core.autocrlf", &value)) {
+>  		if (value && !strcasecmp(value, "input")) {
+>  			if (core_eol == EOL_CRLF)
+> -				return error("core.autocrlf=input conflicts with core.eol=crlf");
+> +				die("core.autocrlf=input conflicts with core.eol=crlf");
+>  			auto_crlf = AUTO_CRLF_INPUT;
+> -			return 0;
+> -		}
+> -		auto_crlf = git_config_bool(var, value);
+> -		return 0;
+> +		} else
+> +			auto_crlf = git_config_bool("core.autocrlf", value);
+>  	}
+> 
+> -	if (!strcmp(var, "core.safecrlf")) {
+> -		if (value && !strcasecmp(value, "warn")) {
+> +	if (!git_config_get_value("core.safecrlf", &value)) {
+> +		if (value && !strcasecmp(value, "warn"))
+>  			safe_crlf = SAFE_CRLF_WARN;
+> -			return 0;
+> -		}
+> -		safe_crlf = git_config_bool(var, value);
+> -		return 0;
+> +		else
+> +			safe_crlf = git_config_bool("core.safecrlf", value);
+>  	}
+> 
+> -	if (!strcmp(var, "core.eol")) {
+> +	if (!git_config_get_value("core.eol", &value)) {
+>  		if (value && !strcasecmp(value, "lf"))
+>  			core_eol = EOL_LF;
+>  		else if (value && !strcasecmp(value, "crlf"))
+> @@ -816,108 +757,74 @@ static int git_default_core_config(const char *var, const char *value)
+>  		else
+>  			core_eol = EOL_UNSET;
+>  		if (core_eol == EOL_CRLF && auto_crlf == AUTO_CRLF_INPUT)
+> -			return error("core.autocrlf=input conflicts with core.eol=crlf");
+> -		return 0;
+> +			die("core.autocrlf=input conflicts with core.eol=crlf");
+>  	}
+> 
+> -	if (!strcmp(var, "core.notesref")) {
+> -		notes_ref_name = xstrdup(value);
+> -		return 0;
+> -	}
+> -
+> -	if (!strcmp(var, "core.pager"))
+> -		return git_config_string(&pager_program, var, value);
+> -
+> -	if (!strcmp(var, "core.editor"))
+> -		return git_config_string(&editor_program, var, value);
+> +	git_config_get_string("core.notesref", (const char**)&notes_ref_name);
+> +	git_config_get_string("core.pager", &pager_program);
+> +	git_config_get_string("core.editor", &editor_program);
+> 
+> -	if (!strcmp(var, "core.commentchar")) {
+> -		const char *comment;
+> -		int ret = git_config_string(&comment, var, value);
+> -		if (ret)
+> -			return ret;
+> -		else if (!strcasecmp(comment, "auto"))
+> +	const char *comment;
+
+ditto. I gave up here.
+
+ATB,
+Ramsay Jones
