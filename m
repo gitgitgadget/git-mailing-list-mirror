@@ -1,118 +1,121 @@
-From: Jean-Francois Bouchard <jfbouchard@accedian.com>
-Subject: Git + mod_auth_kerb
-Date: Mon, 21 Jul 2014 17:06:50 -0400
-Message-ID: <CAPYmS35cgcEOfKvT17tULYyxL5GgXBavkD6anhV6yJtdoXVE9Q@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-gui: Make git-gui lib dir configurable at runtime
+Date: Mon, 21 Jul 2014 14:06:41 -0700
+Message-ID: <xmqqbnsiifq6.fsf@gitster.dls.corp.google.com>
+References: <1405966809-30882-1-git-send-email-dturner@twitter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 21 23:07:01 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Turner <dturner@twitter.com>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: David Turner <dturner@twopensource.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 23:07:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9KnS-0007V7-W2
+	id 1X9KnT-0007V7-Js
 	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 23:06:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754132AbaGUVGx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jul 2014 17:06:53 -0400
-Received: from mail-yk0-f178.google.com ([209.85.160.178]:54792 "EHLO
-	mail-yk0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753754AbaGUVGv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 21 Jul 2014 17:06:51 -0400
-Received: by mail-yk0-f178.google.com with SMTP id 142so4326449ykq.23
-        for <git@vger.kernel.org>; Mon, 21 Jul 2014 14:06:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        bh=khphWRQWtxb2JNYI0rr8rwYeThUMGcHhXE9ey0tIv1E=;
-        b=eiLVCdu+KAvHDvpeHBf9tlKog2c44LwB4kayRBQVEfJ3CY1sKHN4EDDjYcq9B7re5b
-         JktpauZrITqs7q8RGQEiMRLNGi/rUoBNpjWy8qU6XHXxkE/YdRZGje7Jtx3GKurQLHoe
-         X8kKMdLVSd9W/yMGdj2cV59BRhWVRabzF20jf9vT8BdAg0dCM4d0K24AqTMsogUy58ng
-         pMC7+z48HSvviQJcBQRDG5EElfPAyXBv/c9qYNaoJvTtwthNluKKWATY9iBr1IHeiq4n
-         /QWLHCrciJTR54rVTHf73EEz98gmhy7sCLhjcahrvilNY/mbW/sMexwhsON4iYwQH2N7
-         MkmQ==
-X-Gm-Message-State: ALoCoQmeJNvYXAhA1xMqMaD8RTA1BNP+yhFJ41G+TScHY50Byd6zQTTp0Gd2z83RLNCp6k0dlx5NcGU2asr+JjvNOMvrGq7/CdxerLxPG8yDyYC0RI3tFLE=
-X-Received: by 10.236.112.167 with SMTP id y27mr43338764yhg.60.1405976810862;
- Mon, 21 Jul 2014 14:06:50 -0700 (PDT)
-Received: by 10.170.196.150 with HTTP; Mon, 21 Jul 2014 14:06:50 -0700 (PDT)
+	id S1754143AbaGUVGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2014 17:06:55 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50528 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753928AbaGUVGx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2014 17:06:53 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1443C2BC67;
+	Mon, 21 Jul 2014 17:06:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FocwURQyKe+/hKMCbq1kuGxFQ3k=; b=TXtZpI
+	MWX291X/rM/ylneHmx+Yp5IlpBt2mhNxncvDJMLhCxnhDAbUbIVvv89/4fMLqGzv
+	d+BhfzQWq75TDTTguSHKwnYcqvh/N2e0yZO7dM/ia6crabDxtnxARkfQ4e0Dkkt+
+	ZxYpjg73mFSuVOB5f+mAOrveZAmSOlqKciCaY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U/hKf0dbpGB5lKpE0CBbXOOPYJRvnm15
+	Au4sp+jqSpPgJ/i3D0VjnYOlQxCBp5IWPOW4uL7Mw9rpSIjZvYH3hln4CA3pOspx
+	/2JNny+bauNvfs0nSVKzq9+VH010kBYOsOjW7xXo+w4HZ8mQk8Qhth72aCXmcTSC
+	tDh3sWmL95w=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 082142BC66;
+	Mon, 21 Jul 2014 17:06:53 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5C7712BC50;
+	Mon, 21 Jul 2014 17:06:43 -0400 (EDT)
+In-Reply-To: <1405966809-30882-1-git-send-email-dturner@twitter.com> (David
+	Turner's message of "Mon, 21 Jul 2014 14:20:09 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: EACA9314-111A-11E4-A553-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253996>
 
-Hello,
+David Turner <dturner@twopensource.com> writes:
 
-We are currently working on a single sign on setup for our git install.=
- We are
-using git 2.0.2 (ubuntu) plus apache/2.2.22 mod_auth_kerb on the
-server side. Here some scenario we are trying to accomplish :
+> Introduce the GIT_GUI_LIB_DIR environment variable, to tell git-gui
+> where to look for TCL libs.  This allows a git-gui which has been
+> built with a prefix of /foo to be run out of directory /bar.  This is
+> the equivalent of GIT_EXEC_PATH or GITPERLLIB but for git-gui's TCL
+> libraries.
+>
+> Signed-off-by: David Turner <dturner@twitter.com>
+> ---
+>  git-gui/Makefile   | 3 ++-
+>  git-gui/git-gui.sh | 6 +++++-
+>  2 files changed, 7 insertions(+), 2 deletions(-)
 
--Without Kerberos ticket stored.
-Git ask for username/password.
-Result =3D Authentication failed
+Would a similar change to gitk necessary/beneficial to platforms
+that would benefit from this change?
 
--Kerberos ticket in store and BAD password :
-Git ask for username/password.
-Result =3D Authentication failed
+git-gui directory in my tree comes from its upstream repository
+git://repo.or.cz/git-gui.git/, and it is maintained by Pat Thoyts
+(Cc'ed).
 
--Kerberos ticket in Store entering good password :
-Git ask for username/password.
-Result =3D Authentication failed on some host, other works
+gitk is from git://ozlabs.org/~paulus/gitk.git maintained by Paul
+Mackerras <paulus@samba.org> (not Cc'ed).
 
--Kerberos ticket in Store and embedding the username in the URI (aka
-https://username@repo)
-Git don't ask for anything or ask for password
-Result =3D Works on some host, other request the password. (Will fail i=
-f
-the kerberos ticket not in store)
+Note that these two upstream projects do not have leading
+directories git-gui and gitk-git themselves (they are merged to my
+tree while their paths being renamed).  A patch that is appliable to
+them would touch paths without them (e.g. Makefile and git-gui.sh
+for an equivalent of the patch I am responding to).
 
-This is a very strange behaviour. It seems to be cause by the way
-libcurl and git interact and the way the authentication goes
-(Negociate first, then basic auth). I have tried to use the helper to
-store invalid authentication information. With not much success.
+Thanks.
 
-
-
-Any idea ?
-
-Thanks,
-
-JF
-
---=20
-
-
-Avis de confidentialit=C3=A9
-
-Les informations contenues dans le pr=C3=A9sent message et dans toute p=
-i=C3=A8ce qui=20
-lui est jointe sont confidentielles et peuvent =C3=AAtre prot=C3=A9g=C3=
-=A9es par le secret=20
-professionnel. Ces informations sont =C3=A0 l=E2=80=99usage exclusif de=
- son ou de ses=20
-destinataires. Si vous recevez ce message par erreur, veuillez s=E2=80=99=
-il vous=20
-plait communiquer imm=C3=A9diatement avec l=E2=80=99exp=C3=A9diteur et =
-en d=C3=A9truire tout=20
-exemplaire. De plus, il vous est strictement interdit de le divulguer, =
-de=20
-le distribuer ou de le reproduire sans l=E2=80=99autorisation de l=E2=80=
-=99exp=C3=A9diteur.=20
-Merci.
-
-Confidentiality notice
-
-This e-mail message and any attachment hereto contain confidential=20
-information which may be privileged and which is intended for the exclu=
-sive=20
-use of its addressee(s). If you receive this message in error, please=20
-inform sender immediately and destroy any copy thereof. Furthermore, an=
-y=20
-disclosure, distribution or copying of this message and/or any attachme=
-nt=20
-hereto without the consent of the sender is strictly prohibited. Thank =
-you.
+> diff --git a/git-gui/Makefile b/git-gui/Makefile
+> index cde8b2e..56bf9e2 100644
+> --- a/git-gui/Makefile
+> +++ b/git-gui/Makefile
+> @@ -177,7 +177,8 @@ git-gui: GIT-VERSION-FILE GIT-GUI-VARS
+>  	echo then >>$@+ && \
+>  	echo '	'echo \'git-gui version '$(GITGUI_VERSION)'\' >>$@+ && \
+>  	echo else >>$@+ && \
+> -	echo '	'exec \''$(libdir_SQ)/Git Gui.app/Contents/MacOS/$(subst \,,$(TKEXECUTABLE))'\' \
+> +	echo '	libdir="$$(GIT_GUI_LIB_DIR:-$(libdir_SQ))"' >>$@+ && \
+> +	echo '	'exec \"'$$libdir/Git Gui.app/Contents/MacOS/$(subst \,,$(TKEXECUTABLE))'\" \
+>  		'"$$0" "$$@"' >>$@+ && \
+>  	echo fi >>$@+ && \
+>  	chmod +x $@+ && \
+> diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+> index b186329..6cbb36e 100755
+> --- a/git-gui/git-gui.sh
+> +++ b/git-gui/git-gui.sh
+> @@ -49,7 +49,11 @@ catch {rename send {}} ; # What an evil concept...
+>  ##
+>  ## locate our library
+>  
+> -set oguilib {@@GITGUI_LIBDIR@@}
+> +if { [info exists ::env(GIT_GUI_LIB_DIR) ] } {
+> +	set oguilib $::env(GIT_GUI_LIB_DIR)
+> +} else {
+> +	set oguilib {@@GITGUI_LIBDIR@@}
+> +}
+>  set oguirel {@@GITGUI_RELATIVE@@}
+>  if {$oguirel eq {1}} {
+>  	set oguilib [file dirname [file normalize $argv0]]
