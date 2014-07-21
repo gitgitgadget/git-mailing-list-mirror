@@ -1,67 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3 0/6] git_config callers rewritten with the new config cache API
-Date: Mon, 21 Jul 2014 15:45:56 +0200
-Message-ID: <vpqy4vmakq3.fsf@anie.imag.fr>
-References: <1405941145-12120-1-git-send-email-tanayabh@gmail.com>
-	<vpqegxeeuyb.fsf@anie.imag.fr> <53CD1280.1080107@gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v2 2/2] Make locked paths absolute when current directory
+ is changed
+Date: Mon, 21 Jul 2014 20:47:39 +0700
+Message-ID: <CACsJy8AXc4jvLPNpGyGdY9uzrnN-SbEeiksLDpS_=29gJ1KMnQ@mail.gmail.com>
+References: <1405688937-22925-1-git-send-email-pclouds@gmail.com>
+ <1405858399-23082-1-git-send-email-pclouds@gmail.com> <1405858399-23082-2-git-send-email-pclouds@gmail.com>
+ <53CD1529.9080102@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 21 15:46:29 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Mon Jul 21 15:48:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9Dv1-000544-JK
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 15:46:19 +0200
+	id 1X9Dwu-0006TA-Q0
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 15:48:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932418AbaGUNqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2014 09:46:11 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:39386 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932419AbaGUNqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2014 09:46:09 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6LDjsrZ008386
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 21 Jul 2014 15:45:54 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6LDjuRj025331;
-	Mon, 21 Jul 2014 15:45:56 +0200
-In-Reply-To: <53CD1280.1080107@gmail.com> (Tanay Abhra's message of "Mon, 21
-	Jul 2014 18:45:44 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 21 Jul 2014 15:45:54 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6LDjsrZ008386
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1406555157.04093@XgZlXt50HliRoWHH1eamFA
+	id S1754996AbaGUNsN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 21 Jul 2014 09:48:13 -0400
+Received: from mail-qa0-f45.google.com ([209.85.216.45]:54776 "EHLO
+	mail-qa0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754957AbaGUNsM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 21 Jul 2014 09:48:12 -0400
+Received: by mail-qa0-f45.google.com with SMTP id cm18so5041597qab.32
+        for <git@vger.kernel.org>; Mon, 21 Jul 2014 06:48:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        bh=e3hJ3MgzQ3uXcqagm/2ZHY+D6JWT4HZYbJWCNB017/o=;
+        b=WYRnxKlifm0orAjt1aPtEq7o1LtwNcwkhPkZDIF1UB89bn63A+GfbxxJ5mj4rQsO19
+         ITAlkPUMJon6Yj9mTeNiVjS5wGGTtNZ+rzXIz6oxAn0HMgYqOQPdmq/1/kRsdbbANSD0
+         Tnh3UGBsw61Zm09V/9Y0W8smm3ddDzVZD1Iv0Oja++ngHt43KaUMAAontJ0RuC+Z6SiC
+         1JYKm5rIQ0nmhynBfkXzpZ3Dkhe4BJGkIO7XqLGos9Z1JANp5owUXx1BkN3es0wtokT/
+         nSSto5FfhEtwD+bxFaLL44FI5W2+ngk+IlrE5YYogF68aGgNJoLusjBW4U6i6lZ/zqYt
+         aHZA==
+X-Received: by 10.224.122.83 with SMTP id k19mr42905367qar.78.1405950489263;
+ Mon, 21 Jul 2014 06:48:09 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Mon, 21 Jul 2014 06:47:39 -0700 (PDT)
+In-Reply-To: <53CD1529.9080102@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253965>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
-
-> On 7/21/2014 6:21 PM, Matthieu Moy wrote:
->> 2) Add a by-address parameter to git_configset_get_value that allows the
->>    user to get the file and line information. In your previous patch,
->>    that would mean returning a pointer to the corresponding struct
->>    key_source.
+On Mon, Jul 21, 2014 at 8:27 PM, Ramsay Jones
+<ramsay@ramsay1.demon.co.uk> wrote:
+>> +void make_locked_paths_absolute(void)
+>> +{
+>> +     struct lock_file *lk;
+>> +     for (lk =3D lock_file_list; lk !=3D NULL; lk =3D lk->next) {
+>> +             if (lk->filename && !is_absolute_path(lk->filename)) {
+>> +                     char *to_free =3D lk->filename;
+>> +                     lk->filename =3D xstrdup(absolute_path(lk->fil=
+ename));
+>> +                     free(to_free);
+>> +             }
+>> +     }
+>> +}
 >
-> Will this extra complexity be good for "git_configset_get_value"?
-> Instead can we provide a function like die_config(char *key)
-> which prints
-> 	die("bad config file line %d in %s", linenr, filename);?
+> I just have to ask, why are we putting relative pathnames in this
+> list to begin with? Why not use an absolute path when taking the
+> lock in all cases? (calling absolute_path() and using the result
+> to take the lock, storing it in the lock_file list, should not be
+> in the critical path, right? Not that I have measured it, of course! =
+:)
 
-Where would you call this function, and where would you take linenr and
-filename?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Conservative :) I'm still scared from 044bbbc (Make git_dir a path
+relative to work_tree in setup_work_tree() - 2008-06-19). But yeah
+looking through "grep hold_" I think none of the locks is in critical
+path. absolute_path() can die() if cwd is longer than PATH_MAX (and
+doing this reduces the chances of that happening). But Ren=C3=A9 is add=
+ing
+strbuf_getcwd() that can remove that PATH_MAX. So I guess we should be
+fine with putting absolute_path() in hold_lock_file_...*
+--=20
+Duy
