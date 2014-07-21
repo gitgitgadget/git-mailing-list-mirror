@@ -1,61 +1,111 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 0/9] Add --graft option to git replace
-Date: Mon, 21 Jul 2014 13:09:59 -0700
-Message-ID: <xmqqfvhuiico.fsf@gitster.dls.corp.google.com>
-References: <20140719145951.9564.61331.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Michael Haggerty <mhagger@alum.mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Jul 21 22:10:24 2014
+From: David Turner <dturner@twopensource.com>
+Subject: [PATCH v2] git-gui: Make git-gui lib dir configurable at runime
+Date: Mon, 21 Jul 2014 16:41:38 -0400
+Message-ID: <1405975298-16304-1-git-send-email-dturner@twitter.com>
+Cc: David Turner <dturner@twitter.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 21 22:42:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9Jud-0007Gp-Ch
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 22:10:19 +0200
+	id 1X9KPH-0005gh-1s
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 22:41:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753456AbaGUUKO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2014 16:10:14 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61796 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753284AbaGUUKN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2014 16:10:13 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6E3402B6B3;
-	Mon, 21 Jul 2014 16:10:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=N+57S4WSyjIEeGNwFjhBlI64SjU=; b=F6ud76
-	oA6UQodUcYXRRvq4xKaRNM9EzEjHma3gUUzGnudTncQtScYvoDEv7uUwu7fHdZOv
-	GpngpmTHCt9UiVNODU+e8aHzBy/4xo2gIUjnRPTVI6MMQ3xYqRLd1rhff9lSnfLa
-	SYoE0sv7ZbDLNbxHiolpwkrE4fU17afdLiW5k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fvWnj9gGgEHx6WutHWagTe6l2UlLYRcI
-	rpKJYWoU8r1+Jk5c9lCTWGr8iMPPL2FPUhVCf4ywfvCNV5kO9DXlW5bjmvStqzGF
-	ko7GEb69iCJBugaWguQo8nl//qIe5xptNzGIIXgPNO4UCiVts8EVPJ3XlPn7FPrl
-	FjmuNqXixvo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 624B22B6B1;
-	Mon, 21 Jul 2014 16:10:12 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 46F642B68A;
-	Mon, 21 Jul 2014 16:10:02 -0400 (EDT)
-In-Reply-To: <20140719145951.9564.61331.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Sat, 19 Jul 2014 17:01:06 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FF9666CC-1112-11E4-A5BB-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1754136AbaGUUlz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2014 16:41:55 -0400
+Received: from mail-qg0-f46.google.com ([209.85.192.46]:34604 "EHLO
+	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752155AbaGUUly (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2014 16:41:54 -0400
+Received: by mail-qg0-f46.google.com with SMTP id z60so6018205qgd.33
+        for <git@vger.kernel.org>; Mon, 21 Jul 2014 13:41:54 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=YM80lVaG5aMupPYPX0yDQ1JV2XSrXNhUuoSAPGMgJcA=;
+        b=Y8n03z9F4/S2Ds0y5IyDJ9jOghnCP6oEoRvBUIYe7Maxrufqxk4sKhEr25msXGcavr
+         ZK/nAjeKPtIoB1H5mzZfFU1jyZKa1Jw/GTaaVWshOVreZIRKWnMCMRVrlOEHrp76jV7z
+         0B1Is/5ZtTe/+CKZwROxi38BiqDcrzQasaa3Ig0qTW/ZyMbSqvi6PE1w/qFRy5b0jVmJ
+         Vonn+w+xeovPObFLCIDmQjTRUc2FeBSza0ZVcuqVnpsNYaDrxzF1gVpE7MTeS9jV6+u9
+         WeduOQo7tCW5R+mR3+506jOW+TOfvB45hlqlGxMtmsIKu7JXkMkxAbIP8eJJvig//O3a
+         MHQw==
+X-Gm-Message-State: ALoCoQkcivBxrauP4rCU6x9ZYPIGK+E1jzjrMbvyw/QwIB1UzHHClfoaKRPQRd8ktMXdOFJsFKWx
+X-Received: by 10.140.41.116 with SMTP id y107mr43524460qgy.78.1405975314072;
+        Mon, 21 Jul 2014 13:41:54 -0700 (PDT)
+Received: from leckie.office.twttr.net (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
+        by mx.google.com with ESMTPSA id w9sm27598416qag.48.2014.07.21.13.41.52
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 21 Jul 2014 13:41:53 -0700 (PDT)
+X-Google-Original-From: David Turner <dturner@twitter.com>
+X-Mailer: git-send-email 1.9.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253994>
 
-Thanks, will replace and let's move it to 'next' this week.
+Introduce the GIT_GUI_LIB_DIR environment variable, to tell git-gui
+where to look for TCL libs.  This allows a git-gui which has been
+built with a prefix of /foo to be run out of directory /bar.  This is
+the equivalent of GIT_EXEC_PATH or GITPERLLIB but for git-gui's TCL
+libraries.
+
+Signed-off-by: David Turner <dturner@twitter.com>
+---
+ git-gui/Makefile           | 3 ++-
+ git-gui/git-gui.sh         | 6 +++++-
+ git-gui/macosx/AppMain.tcl | 7 ++++++-
+ 3 files changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index cde8b2e..4f00bdd 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -177,7 +177,8 @@ git-gui: GIT-VERSION-FILE GIT-GUI-VARS
+ 	echo then >>$@+ && \
+ 	echo '	'echo \'git-gui version '$(GITGUI_VERSION)'\' >>$@+ && \
+ 	echo else >>$@+ && \
+-	echo '	'exec \''$(libdir_SQ)/Git Gui.app/Contents/MacOS/$(subst \,,$(TKEXECUTABLE))'\' \
++	echo '	libdir="$${GIT_GUI_LIB_DIR:-$(libdir_SQ)}"' >>$@+ && \
++	echo '	'exec \"'$$libdir/Git Gui.app/Contents/MacOS/$(subst \,,$(TKEXECUTABLE))'\" \
+ 		'"$$0" "$$@"' >>$@+ && \
+ 	echo fi >>$@+ && \
+ 	chmod +x $@+ && \
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index b186329..6cbb36e 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -49,7 +49,11 @@ catch {rename send {}} ; # What an evil concept...
+ ##
+ ## locate our library
+ 
+-set oguilib {@@GITGUI_LIBDIR@@}
++if { [info exists ::env(GIT_GUI_LIB_DIR) ] } {
++	set oguilib $::env(GIT_GUI_LIB_DIR)
++} else {
++	set oguilib {@@GITGUI_LIBDIR@@}
++}
+ set oguirel {@@GITGUI_RELATIVE@@}
+ if {$oguirel eq {1}} {
+ 	set oguilib [file dirname [file normalize $argv0]]
+diff --git a/git-gui/macosx/AppMain.tcl b/git-gui/macosx/AppMain.tcl
+index 738bdd0..b6c6dc3 100644
+--- a/git-gui/macosx/AppMain.tcl
++++ b/git-gui/macosx/AppMain.tcl
+@@ -1,5 +1,10 @@
+ set gitexecdir {@@gitexecdir@@}
+-set gitguilib  {@@GITGUI_LIBDIR@@}
++if { [info exists ::env(GIT_GUI_LIB_DIR) ] } {
++	set gitguilib $::env(GIT_GUI_LIB_DIR)
++} else {
++	set gitguilib {@@GITGUI_LIBDIR@@}
++}
++
+ set env(PATH) "$gitexecdir:$env(PATH)"
+ 
+ if {[string first -psn [lindex $argv 0]] == 0} {
+-- 
+1.9.1
