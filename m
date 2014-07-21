@@ -1,111 +1,119 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Re: [PATCH 4/6] t4210: skip command-line encoding tests
- on mingw
-Date: Mon, 21 Jul 2014 19:45:37 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1407211944510.3456@s15462909.onlinehome-server.info>
-References: <20140716092959.GA378@ucw.cz> <1405611425-10009-1-git-send-email-kasal@ucw.cz> <1405611425-10009-5-git-send-email-kasal@ucw.cz> <CABPQNSaiogqGryK8YOzQXs_z_syvXMBqvOpvGfMNdbLkNzRq_w@mail.gmail.com> <xmqqvbqqk5qu.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/6] branch.c: replace `git_config()` with `git_config_get_string()`
+Date: Mon, 21 Jul 2014 10:59:21 -0700
+Message-ID: <xmqqiomqk2yu.fsf@gitster.dls.corp.google.com>
+References: <1405941145-12120-1-git-send-email-tanayabh@gmail.com>
+	<1405941145-12120-3-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Cc: kusmabite@gmail.com, Stepan Kasal <kasal@ucw.cz>, 
-    Karsten Blees <karsten.blees@gmail.com>, Johannes Sixt <j6t@kdbg.org>, 
-    GIT Mailing-list <git@vger.kernel.org>, msysGit <msysgit@googlegroups.com>, 
-    Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: msysgit+bncBCZPH74Q5YNRBV5DWWPAKGQEV37LNBI@googlegroups.com Mon Jul 21 19:46:02 2014
-Return-path: <msysgit+bncBCZPH74Q5YNRBV5DWWPAKGQEV37LNBI@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-yh0-f57.google.com ([209.85.213.57])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 21 19:59:34 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCZPH74Q5YNRBV5DWWPAKGQEV37LNBI@googlegroups.com>)
-	id 1X9Hey-000650-V8
-	for gcvm-msysgit@m.gmane.org; Mon, 21 Jul 2014 19:46:01 +0200
-Received: by mail-yh0-f57.google.com with SMTP id 29sf2187491yhl.2
-        for <gcvm-msysgit@m.gmane.org>; Mon, 21 Jul 2014 10:46:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=date:from:to:cc:subject:in-reply-to:message-id:references
-         :user-agent:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        bh=E/izxG5UkAh7158pucWV3UkdrUGEdXGlwWU9r8vG16c=;
-        b=CnPwOt43jTr03noP/nw82J7gfz2H/mkjKoRY3RwmWnSwdsjvHTofO8mbwneRIGuEa+
-         lAZlxXnqLTcl+mtYSCo6/ls7qtgnkxaVRVr9YAU/+z9KpKSKtLkckyKuldlExmB0eyGs
-         J2VmYH/x7FenmqHXodTHT8ZMXMvuivX2U4UX5p01ltNdd29Jy1guSN619wAScMPZQ8lO
-         sz43BcEbp7GBhIafVWfKO2sTFdXgcQKGhLMOVhzcQBs+nbds4+ZCS515BF7H7mdfmTma
-         w4oPwrnYJlb25WcpHHGYG8Ty2hJOSJpGtQLHjEWipDVyvYnBw9kpIP0/he5GnHjaVKYi
-         Z2ig==
-X-Received: by 10.50.67.98 with SMTP id m2mr109857igt.15.1405964760145;
-        Mon, 21 Jul 2014 10:46:00 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.50.78.162 with SMTP id c2ls1790166igx.17.canary; Mon, 21 Jul
- 2014 10:45:59 -0700 (PDT)
-X-Received: by 10.66.187.137 with SMTP id fs9mr5460294pac.10.1405964759487;
-        Mon, 21 Jul 2014 10:45:59 -0700 (PDT)
-Received: from mout.gmx.net (mout.gmx.net. [212.227.17.21])
-        by gmr-mx.google.com with ESMTPS id y50si1073893yhk.4.2014.07.21.10.45.59
-        for <msysgit@googlegroups.com>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Jul 2014 10:45:59 -0700 (PDT)
-Received-SPF: pass (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as permitted sender) client-ip=212.227.17.21;
-Received: from s15462909.onlinehome-server.info ([87.106.4.80]) by
- mail.gmx.com (mrgmx103) with ESMTPSA (Nemesis) id 0MSMr9-1WyXD03NH9-00TTjG;
- Mon, 21 Jul 2014 19:45:37 +0200
-X-X-Sender: schindelin@s15462909.onlinehome-server.info
-In-Reply-To: <xmqqvbqqk5qu.fsf@gitster.dls.corp.google.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Provags-ID: V03:K0:6jV/UsaUtQg6j/B5nxhi/OuCz+IsLLlgiXZAe5YOj1OmpFJGTIO
- LD7J5LEmhYC6qWCtVE1cWGYUyXByWyZgTcmaBDZ59MKZX3EfL4PWMLBgADH6Vnu2uzy4eqe
- pL7b6kqqr2mO36ldWf4dQoiJImPC/3OT1+/QDAYY7cIkelTb8kuk9nTyTBxUUEtF7F1Be9b
- uPmW58nMMHwGhQ4af6y8Q==
-X-Original-Sender: johannes.schindelin@gmx.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
- (google.com: domain of Johannes.Schindelin@gmx.de designates 212.227.17.21 as
- permitted sender) smtp.mail=Johannes.Schindelin@gmx.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253981>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1X9Hs6-000814-7B
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 19:59:34 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S933153AbaGUR7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2014 13:59:30 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50153 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933022AbaGUR73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2014 13:59:29 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 208272B084;
+	Mon, 21 Jul 2014 13:59:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=9Vc50yJPea+w10uil4OaRZnH9O4=; b=FkJAlu
+	dVJ6407pPZQ5o7N4LhAhLzD1hGppK5V4wH1D9fGyXuMM6OswPw+s5Mu2aYdjmYGZ
+	CgoUz9gFvFo25+UIyGe/mGrXoR6kmc18Sv1QF+tA8C84/dFrBzqKrjCd6MnkgcE2
+	HVB+Jnv6q6MHq9cVI2ZuNv/eM9T+L2NYYUiHg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tRYt8DJuTxZFpbRiHZazYhCKeI+JjiqT
+	MJrzjpXTB5y1CemP8psXhnQJ3jCfoy3mg9oTSqj5V0+whrJoUc39wbOIOHaGx/JP
+	+0M7VcWRzxrRJaQ6K/+dOin6SxaZ3qcSzzzWqr1rhhiCfrdD1xFuYX3ZD2bLY7Bx
+	DxGpv26UKD0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 168082B083;
+	Mon, 21 Jul 2014 13:59:29 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1A56A2B07B;
+	Mon, 21 Jul 2014 13:59:23 -0400 (EDT)
+In-Reply-To: <1405941145-12120-3-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Mon, 21 Jul 2014 04:12:21 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BF110BF0-1100-11E4-8BE9-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253982>
 
-Hi Junio,
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-On Mon, 21 Jul 2014, Junio C Hamano wrote:
+> Use `git_config_get_string()` instead of `git_config()` to take advantage of
+> the config-set API which provides a cleaner control flow.
+>
+> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+> ---
+>  branch.c | 24 ++++--------------------
+>  1 file changed, 4 insertions(+), 20 deletions(-)
+>
+> diff --git a/branch.c b/branch.c
+> index 46e8aa8..827307f 100644
+> --- a/branch.c
+> +++ b/branch.c
+> @@ -140,33 +140,17 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
+>  	return 0;
+>  }
+>  
+> -struct branch_desc_cb {
+> -	const char *config_name;
+> -	const char *value;
+> -};
+> -
+> -static int read_branch_desc_cb(const char *var, const char *value, void *cb)
+> -{
+> -	struct branch_desc_cb *desc = cb;
+> -	if (strcmp(desc->config_name, var))
+> -		return 0;
+> -	free((char *)desc->value);
+> -	return git_config_string(&desc->value, var, value);
+> -}
+> -
+>  int read_branch_desc(struct strbuf *buf, const char *branch_name)
+>  {
+> -	struct branch_desc_cb cb;
+> +	const char *v = NULL;
+>  	struct strbuf name = STRBUF_INIT;
+>  	strbuf_addf(&name, "branch.%s.description", branch_name);
+> -	cb.config_name = name.buf;
+> -	cb.value = NULL;
+> -	if (git_config(read_branch_desc_cb, &cb) < 0) {
+> +	if (git_config_get_string(name.buf, &v)) {
+>  		strbuf_release(&name);
+>  		return -1;
+>  	}
+> -	if (cb.value)
+> -		strbuf_addstr(buf, cb.value);
+> +	strbuf_addstr(buf, v);
+> +	free((char*)v);
 
-> Oh by the way, can somebody remind me why we spell these as
-> NOT_MINGW,  instead of !MINGW?
+In this cast, I smell an API mistake to insist an extra constness to
+the output parameter of git_config_get_string() in [3/4] of the
+previous series.  Unlike the underlying git_config_get_value(),
+which lets the caller peek into the internal cached copy, the caller
+of git_config_get_string() is given its own copy, and I do not
+offhand see a good reason to forbid the caller from modifying it.
 
-I guess that is my mistake; when I introduced the use of NOT_MINGW I was
-simply unaware of the !MINGW syntax.
-
-Let's use the latter consistently?
-
-Ciao,
-Johannes
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+>  	strbuf_release(&name);
+>  	return 0;
+>  }
