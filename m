@@ -1,65 +1,66 @@
-From: Juan P <juandavid1707@gmail.com>
-Subject: Re: inotify support, nearly there
-Date: Mon, 21 Jul 2014 05:10:53 +0000 (UTC)
-Message-ID: <loom.20140721T070730-175@post.gmane.org>
-References: <CACsJy8CG5QUqYOM46mOHOWDKB-A45B2-fj1uS9OtgniV+P8Ktg@mail.gmail.com>
+From: mimimimi <mimimimimimi159@hotmail.com>
+Subject: Re: [RFC/PATCH] avoid SIGPIPE warnings for aliases
+Date: Sun, 20 Jul 2014 23:45:31 -0700 (PDT)
+Message-ID: <1405925131451-7615524.post@n2.nabble.com>
+References: <20130104124756.GA402@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 21 07:20:13 2014
+X-From: git-owner@vger.kernel.org Mon Jul 21 08:45:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X961E-00043G-If
-	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 07:20:12 +0200
+	id 1X97Ly-0005kT-B6
+	for gcvg-git-2@plane.gmane.org; Mon, 21 Jul 2014 08:45:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752756AbaGUFUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 21 Jul 2014 01:20:07 -0400
-Received: from plane.gmane.org ([80.91.229.3]:36578 "EHLO plane.gmane.org"
+	id S1753251AbaGUGpe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 21 Jul 2014 02:45:34 -0400
+Received: from sam.nabble.com ([216.139.236.26]:47030 "EHLO sam.nabble.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751144AbaGUFUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 21 Jul 2014 01:20:05 -0400
-Received: from list by plane.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1X9615-0003wl-KO
-	for git@vger.kernel.org; Mon, 21 Jul 2014 07:20:04 +0200
-Received: from Dynamic-IP-1868710538.cable.net.co ([Dynamic-IP-1868710538.cable.net.co])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jul 2014 07:20:03 +0200
-Received: from juandavid1707 by Dynamic-IP-1868710538.cable.net.co with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 21 Jul 2014 07:20:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 186.87.105.38 (Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36)
+	id S1751187AbaGUGpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 21 Jul 2014 02:45:32 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by sam.nabble.com with esmtp (Exim 4.72)
+	(envelope-from <mimimimimimi159@hotmail.com>)
+	id 1X97Ln-0001ba-FJ
+	for git@vger.kernel.org; Sun, 20 Jul 2014 23:45:31 -0700
+In-Reply-To: <20130104124756.GA402@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/253943>
 
-Duy Nguyen <pclouds <at> gmail.com> writes:
+I set up a git alias like this:
 
-> 
-> Just a quick update for the enthusiasts. My branch file-watcher [1]
-> has got working per-user inotify support. It's a 20 patch series so
-> I'll refrain from spamming git <at> vger for a while, even though it hurts
-> your eyes a lot less than what I have posted so far. The test suite
-> ran fine with it so it's not that buggy. It has new tests too, even
-> though real inotify is not tested in the new tests. Documentation is
-> there, either in .txt or comments. Using it is simple:
-> 
-> $ mkdir ~/.watcher
-> $ git file-watcher --detach ~/.watcher
-> $ git config --global filewatcher.path $HOME/.watcher
-> 
+git config --global alias.popmerge '!git stash pop && git merge master'
 
-Will this mean that Git would work faster with repositories with large 
-number of files or commits? I am new into this topic, but I am trying to 
-understand, any pointers are appreciated.
+Then I call it, like this:
+
+git popmerge
+
+The "git stash pop" is executed, but the "git merge master" is ignored.
+
+If I run "git merge master" right after the "git popmerge"... it sumply runs
+as expected, performing the merge.
+
+I have other aliases with long sequences of commands... and they run
+flawlessly. It seems something at "git stash pop" makes the alias process to
+halt... Is it possible to avoid this behavior? How?
+
+Thanks.
+code 128
+<http://www.keepdynamic.com/barcoding/asp-net-barcode-generator.shtml>  
+
+
+
+
+
+
+
+--
+View this message in context: http://git.661346.n2.nabble.com/RFC-PATCH-avoid-SIGPIPE-warnings-for-aliases-tp7574160p7615524.html
+Sent from the git mailing list archive at Nabble.com.
