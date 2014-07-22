@@ -1,99 +1,115 @@
-From: Jeffry Johnston <jeff@kidsquid.com>
-Subject: .gitignore and git stash -u
-Date: Tue, 22 Jul 2014 13:55:01 -0700
-Message-ID: <CAH4Lw1p4UUAH5LcrVEcXtr75Jdfp8osYN2vUk=nkAttosOOjDw@mail.gmail.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2 1/3] completion: complete "unstuck" `git push
+ --recurse-submodules`
+Date: Tue, 22 Jul 2014 21:57:30 +0100
+Message-ID: <20140722205730.GD26927@serenity.lan>
+References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
+ <8303c95dd3e3ee8d77d4b994bb2d33b6a155a17f.1406053442.git.john@keeping.me.uk>
+ <xmqqr41df8hu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 22 22:55:13 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 22:57:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9h5Z-0001zP-QO
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 22:55:10 +0200
+	id 1X9h83-0004Cy-JX
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 22:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756807AbaGVUzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2014 16:55:03 -0400
-Received: from mail-yk0-f170.google.com ([209.85.160.170]:62984 "EHLO
-	mail-yk0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751482AbaGVUzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2014 16:55:01 -0400
-Received: by mail-yk0-f170.google.com with SMTP id 9so173395ykp.29
-        for <git@vger.kernel.org>; Tue, 22 Jul 2014 13:55:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:date:message-id:subject:from:to:content-type;
-        bh=NzyCFCYm4+p7C+SUyoIEFU1KxLq1QFNglkN0jEaJ9Qg=;
-        b=K4Hq1ZyryyDJLuNPDnRAH+AYswaJLWP3wiKQn8u3yJ9p20D8wrEVSsT1F7y81bjsgi
-         3fWRjRJnLgoIzfuBVsu51C6jSqUmfnrm4bEPffKNDF/mxevzwFo24UFEhnj9OesTC4t9
-         OTWWtA4ppdtdDtPaoEgYoOCyK+VtoTEMMmPRFi3W+djUPZPxg9+bRVMIsMIhKka8Fewc
-         MvpfprKBtiHvX8X3jGoNt/CjOXeeE7l8GbW1n254l9IQhBOvVXY6gcLhj+9bBqIaFXki
-         je2dDCFDmguNLr3n1Tw7PJp72ciTe9+meL8ebxKkfk48gBZXaWCO+H4k/HvW7rEdH/i/
-         IoCg==
-X-Received: by 10.236.21.206 with SMTP id r54mr55356114yhr.88.1406062501177;
- Tue, 22 Jul 2014 13:55:01 -0700 (PDT)
-Received: by 10.170.186.194 with HTTP; Tue, 22 Jul 2014 13:55:01 -0700 (PDT)
-X-Google-Sender-Auth: orT4e7ZTTLaoH3LimgD2vEZMW4M
+	id S1756899AbaGVU5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2014 16:57:40 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:57556 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756778AbaGVU5j (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 16:57:39 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 8CB4421847;
+	Tue, 22 Jul 2014 21:57:38 +0100 (BST)
+X-Quarantine-ID: <mYonPOrVVJue>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id mYonPOrVVJue; Tue, 22 Jul 2014 21:57:37 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id 27BF02181D;
+	Tue, 22 Jul 2014 21:57:32 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqr41df8hu.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254038>
 
-We had been experiencing "random" deletions of files and directories,
-and we finally figured out what they were: git stash -u.  A coworker
-happened upon a webpage (after losing a weeks worth of experimental
-work, back to his last backup), which described our problems exactly:
+On Tue, Jul 22, 2014 at 01:23:25PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > Since the argument to `--recurse-submodules` is mandatory, it does not
+> > need to be stuck to the option with `=`.
+> >
+> > Signed-off-by: John Keeping <john@keeping.me.uk>
+> > ---
+> > Change since v1:
+> >     - Fix typo --recurse{_ => -}submodules
+> >     - Dropped previous patch 1/4 adding ";;" at the end of the "--repo" case
+> >
+> >  contrib/completion/git-completion.bash | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> > index 7a6e1d7..bed3665 100644
+> > --- a/contrib/completion/git-completion.bash
+> > +++ b/contrib/completion/git-completion.bash
+> > @@ -1624,6 +1624,10 @@ __git_push_recurse_submodules="check on-demand"
+> >  _git_push ()
+> >  {
+> >  	case "$prev" in
+> > +	--recurse-submodules)
+> > +		__gitcomp "$__git_push_recurse_submodules"
+> > +		return
+> > +		;;
+> >  	--repo)
+> >  		__gitcomp_nl "$(__git_remotes)"
+> >  		return
+> 
+> If you mimick the order they are handled in the case on "$cur", it
+> would also let us sneak in the missing-optional ";;" to case/esac to
+> keep symmetry between the two ;-)
+> 
+> In other words, like this, perhaps?
 
-http://blog.icefusion.co.uk/git-stash-can-delete-ignored-files-git-stash-u/
+Makes sense.  I don't think I noted the order in the "$cur" case, I just
+put the new one in here so that they were sorted lexicographically.
 
-The command git stash -u deletes ignored files from the hard drive..
-very dangerous! Which leads me to my first question: Why does git
-stash -u delete these files but a checkout doesn't? It seems
-inconsistent.
+Do you want me to re-roll with this change or can you replace the patch
+while applying?
 
-We have the following in .gitignore, which is directly related to the
-problems we're having (please note, we're using git on Windows, in
-case that makes a syntax difference):
-
-*/**/*
-![Ss][Rr][Cc]/**/*
-
-So what that does is ignores every file and subdirectory at the top
-level, and then un-ignores Src/ and all files/dirs under that (we have
-a few more that we unignore). The reason behind this is we have files
-that are generated in the same tree as the source code, and
-unfortunately it is infeasible to change that design. So, if someone
-creates Data and puts their own custom configuration file it in, it
-doesn't contaminate the repository. However, if course they don't want
-to lose their configuration file either.
-
-My understanding from the linked page is that our problem is having
-the /* at the end which causes the files to be ignored and not the
-directories themselves. However, I couldn't seem to find a combination
-without the trailing /* that duplicated the functionality we had,  but
-that prevented git stash from deleting our files. Can anyone provide
-me with one? This is what I am really after.
-
-I have come up with an inelegant workaround. If I add this line to .gitignore:
-
-!Data/.placeholder
-
-And then commit an empty .placeholder file, it seems to fix the
-deletion problem. After that, we can place all sorts of untracked
-files and sub-directories and they don't get deleted during a stash. I
-guess it's because that tracked file keeps the directory "alive" in
-some fashion, but I am not sure I understand why the sub-directories
-are not deleted though, can anyone enlighten me on that? I would have
-expected to have to put a .placeholder file in every sub-directory
-under Data to prevent them from getting deleted too (because of the **
-in the .gitignore line).
-
-Another thing we were considering is modifying git itself to provide a
-command-line option not to delete ignored files during a stash. Can
-someone point me to the appropriate file?
-
-Thanks a lot,
-Jeff
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 019026e..b27f385 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1617,6 +1617,11 @@ _git_push ()
+>  	--repo)
+>  		__gitcomp_nl "$(__git_remotes)"
+>  		return
+> +		;;
+> +	--recurse-submodules)
+> +		__gitcomp "$__git_push_recurse_submodules"
+> +		return
+> +		;;
+>  	esac
+>  	case "$cur" in
+>  	--repo=*)
+> -- 
+> 2.0.2-892-g223db29
