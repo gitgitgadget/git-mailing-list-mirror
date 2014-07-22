@@ -1,71 +1,90 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/4] use strbuf_getcwd() to get the current working
- directory without fixed-sized buffers
-Date: Tue, 22 Jul 2014 06:43:52 -0400
-Message-ID: <20140722104352.GB29607@peff.net>
-References: <53CBF277.3090101@web.de>
- <53CBF332.2050301@web.de>
- <20140721023312.GC22750@peff.net>
- <53CD4975.8050002@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Tue Jul 22 12:44:00 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH] config.c: change the function signature of `git_config_string()`
+Date: Tue, 22 Jul 2014 03:49:56 -0700
+Message-ID: <1406026196-17877-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 22 12:51:17 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9XY7-0004sp-0q
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 12:43:59 +0200
+	id 1X9Xf6-00024m-6Y
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 12:51:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753350AbaGVKnz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jul 2014 06:43:55 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38128 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752391AbaGVKny (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2014 06:43:54 -0400
-Received: (qmail 22942 invoked by uid 102); 22 Jul 2014 10:43:55 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 Jul 2014 05:43:55 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jul 2014 06:43:52 -0400
-Content-Disposition: inline
-In-Reply-To: <53CD4975.8050002@web.de>
+	id S1753844AbaGVKvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2014 06:51:07 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:39516 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752819AbaGVKvG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 06:51:06 -0400
+Received: by mail-pd0-f176.google.com with SMTP id y10so10871112pdj.35
+        for <git@vger.kernel.org>; Tue, 22 Jul 2014 03:51:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=JreLshngltMcWXoFoK1ERvTVQBToa0OPljXh5mFChWs=;
+        b=b+ozeJtvNo7EntgGzBHxcZT4HFPIifz7Bd5ptqLcMJEQ/J9OFOwlqmLOLGYcv4Kkfa
+         CXjaJGFAEMNfpDbtQBHTdS9nEe/LEOAb0eUGK7KxvmQhnrDrx2c/zaB/wQbsTDoxsEG/
+         /G0CryAYIuIFwpMyGGy7mAQKPOItkOpSCTGsrbv/4a/Xhd8taLWktr6+K/F6cWj4DNtG
+         32rJyA/BKVdBp+JTO7xETGFebDdWYzSKxVAfpYadasGZj/UdiaNpMSMv/QcygKQPjPIB
+         xYS847ilA9LExiM7YhmuPP49YW5ANCLGeiTlKRtM2sO67Gq4WsCFjhqzhbjyWuKnfHqs
+         +rrw==
+X-Received: by 10.68.194.229 with SMTP id hz5mr20918379pbc.91.1406026263941;
+        Tue, 22 Jul 2014 03:51:03 -0700 (PDT)
+Received: from localhost.localdomain ([182.67.207.4])
+        by mx.google.com with ESMTPSA id fb7sm26304pdb.68.2014.07.22.03.51.00
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 22 Jul 2014 03:51:03 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254011>
 
-On Mon, Jul 21, 2014 at 07:10:13PM +0200, Ren=C3=A9 Scharfe wrote:
+`git_config_string()` output parameter `dest` is declared as a const
+which is unnecessary as the caller of the function is given a strduped
+string which can be modified without causing any harm.
 
-> Probably.  And I was so glad to have found an example case for getcwd
-> without dying and without touching the get-there-and-back cases. :) G=
-uess
-> I'll have to look closer at setup.c and perhaps unix-socket.c for a
-> replacement.
+Thus, remove the const from the function signature.
 
-I think just:
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+---
+ cache.h  | 2 +-
+ config.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-  const char *x =3D xgetcwd();
-  setenv(GIT_DIR_ENVIRONMENT, x, 0);
-  free(x);
-
-would be enough?
-
-> By the way: Simply setting $GIT_DIR to "." probably won't work in the=
- two
-> cases, I guess?
-
-It might, but I'd be a little wary. For example, for the call in
-init_db, would we later then chdir to the working tree in order to do a
-checkout (since init_db is part of a clone)? Even if it works now, it
-seems like a bit of an accident waiting to happen.
-
--Peff
+diff --git a/cache.h b/cache.h
+index 92fc9f1..93d357a 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1303,7 +1303,7 @@ extern unsigned long git_config_ulong(const char *, const char *);
+ extern int git_config_bool_or_int(const char *, const char *, int *);
+ extern int git_config_bool(const char *, const char *);
+ extern int git_config_maybe_bool(const char *, const char *);
+-extern int git_config_string(const char **, const char *, const char *);
++extern int git_config_string(char **, const char *, const char *);
+ extern int git_config_pathname(const char **, const char *, const char *);
+ extern int git_config_set_in_file(const char *, const char *, const char *);
+ extern int git_config_set(const char *, const char *);
+diff --git a/config.c b/config.c
+index ba882a1..25e28a7 100644
+--- a/config.c
++++ b/config.c
+@@ -633,7 +633,7 @@ int git_config_bool(const char *name, const char *value)
+ 	return !!git_config_bool_or_int(name, value, &discard);
+ }
+ 
+-int git_config_string(const char **dest, const char *var, const char *value)
++int git_config_string(char **dest, const char *var, const char *value)
+ {
+ 	if (!value)
+ 		return config_error_nonbool(var);
+-- 
+1.9.0.GIT
