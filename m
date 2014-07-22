@@ -1,99 +1,71 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: OSX packages on git-scm.com broken on previous OSX versions?
-Date: Tue, 22 Jul 2014 06:41:27 -0400
-Message-ID: <20140722104126.GA29607@peff.net>
-References: <CA+kxMuQLUJ+sohiSGaDpz7U-fiAwaYbe5wv7XnG7UCj=tw6uyA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] use strbuf_getcwd() to get the current working
+ directory without fixed-sized buffers
+Date: Tue, 22 Jul 2014 06:43:52 -0400
+Message-ID: <20140722104352.GB29607@peff.net>
+References: <53CBF277.3090101@web.de>
+ <53CBF332.2050301@web.de>
+ <20140721023312.GC22750@peff.net>
+ <53CD4975.8050002@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Tim Harper <timcharper@gmail.com>, git@vger.kernel.org
-To: Dan Ackroyd <danack@basereality.com>
-X-From: git-owner@vger.kernel.org Tue Jul 22 12:41:37 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Tue Jul 22 12:44:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9XVo-000325-E6
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 12:41:36 +0200
+	id 1X9XY7-0004sp-0q
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 12:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752527AbaGVKlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2014 06:41:32 -0400
-Received: from cloud.peff.net ([50.56.180.127]:38124 "HELO peff.net"
+	id S1753350AbaGVKnz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jul 2014 06:43:55 -0400
+Received: from cloud.peff.net ([50.56.180.127]:38128 "HELO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750737AbaGVKlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2014 06:41:31 -0400
-Received: (qmail 22676 invoked by uid 102); 22 Jul 2014 10:41:31 -0000
+	id S1752391AbaGVKny (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 06:43:54 -0400
+Received: (qmail 22942 invoked by uid 102); 22 Jul 2014 10:43:55 -0000
 Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 Jul 2014 05:41:31 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jul 2014 06:41:27 -0400
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 22 Jul 2014 05:43:55 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jul 2014 06:43:52 -0400
 Content-Disposition: inline
-In-Reply-To: <CA+kxMuQLUJ+sohiSGaDpz7U-fiAwaYbe5wv7XnG7UCj=tw6uyA@mail.gmail.com>
+In-Reply-To: <53CD4975.8050002@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254010>
 
-On Mon, Jul 21, 2014 at 01:08:53PM +0100, Dan Ackroyd wrote:
+On Mon, Jul 21, 2014 at 07:10:13PM +0200, Ren=C3=A9 Scharfe wrote:
 
-> Apologies in advance if this is the wrong place, but it looks like the
-> OSX packages available from http://git-scm.com/download/mac are not
-> working for at least some people including myself.
+> Probably.  And I was so glad to have found an example case for getcwd
+> without dying and without touching the get-there-and-back cases. :) G=
+uess
+> I'll have to look closer at setup.c and perhaps unix-socket.c for a
+> replacement.
 
-As you noticed, those packages are done by the git-osx-installer
-project. I've cc'd Tim Harper, who runs that project (but who I don't
-think reads the list carefully).
+I think just:
+
+  const char *x =3D xgetcwd();
+  setenv(GIT_DIR_ENVIRONMENT, x, 0);
+  free(x);
+
+would be enough?
+
+> By the way: Simply setting $GIT_DIR to "." probably won't work in the=
+ two
+> cases, I guess?
+
+It might, but I'd be a little wary. For example, for the call in
+init_db, would we later then chdir to the working tree in order to do a
+checkout (since init_db is part of a clone)? Even if it works now, it
+seems like a bit of an accident waiting to happen.
 
 -Peff
-
--- >8 --
-[copious quoting of original problem below]
-> What I'm seeing is that any call to invoke git gives an illegal
-> instruction, crash report is below.
-> 
-> The other people are listed at:
-> http://sourceforge.net/p/git-osx-installer/tickets/97/
-> 
-> Apparently this may be a problem caused by the lack of the compile
-> flag "-mmacosx-version-min=10.5" according to:
-> 
-> http://stackoverflow.com/questions/14268887/what-is-the-illegal-instruction-4-error-and-why-does-mmacosx-version-min-10
-> 
-> Any chance this can be investigated and fixed please?
-> 
-> cheers
-> Dan
-> Ackroyd
-> 
-> btw I'm on OSX 10.6.8 but the other reports are on more up to date versions.
-> 
-> Process:         bash [90170]
-> Path:            /bin/bash
-> Identifier:      bash
-> Version:         ??? (???)
-> Code Type:       X86-64 (Native)
-> Parent Process:  bash [89840]
-> 
-> Date/Time:       2014-07-21 12:34:59.093 +0100
-> OS Version:      Mac OS X 10.6.8 (10K549)
-> Report Version:  6
-> 
-> Exception Type:  EXC_BAD_ACCESS (SIGILL)
-> Exception Codes: KERN_INVALID_ADDRESS at 0xfffffffffffffff8
-> Crashed Thread:  Unknown
-> 
-> Backtrace not available
-> 
-> Unknown thread crashed with X86 Thread State (64-bit):
->   rax: 0x0000000000000055  rbx: 0x0000000000000000  rcx:
-> 0x0000000000000000  rdx: 0x0000000000000000
->   rdi: 0x0000000000000000  rsi: 0x0000000000000000  rbp:
-> 0x0000000000000000  rsp: 0x0000000000000000
->    r8: 0x0000000000000000   r9: 0x0000000000000000  r10:
-> 0x0000000000000000  r11: 0x0000000000000000
->   r12: 0x0000000000000000  r13: 0x0000000000000000  r14:
-> 0x0000000000000000  r15: 0x0000000000000000
->   rip: 0x00007fff5fc01028  rfl: 0x0000000000010203  cr2: 0xfffffffffffffff8
-> 
-> Binary images description not available
