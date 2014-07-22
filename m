@@ -1,78 +1,98 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: Bug in get_pwd_cwd() in Windows?
-Date: Tue, 22 Jul 2014 21:35:47 +0200
-Message-ID: <53CEBD13.5040004@web.de>
-References: <CACsJy8BY8pyuZ0eY7qK86RGUh8Vp9FVE55TskcQhBTrwwPowEQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] completion: add missing terminator in case statement
+Date: Tue, 22 Jul 2014 13:18:17 -0700
+Message-ID: <xmqqvbqpf8qd.fsf@gitster.dls.corp.google.com>
+References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
+	<xmqqmwc2k4h4.fsf@gitster.dls.corp.google.com>
+	<xmqqk376iidy.fsf@gitster.dls.corp.google.com>
+	<20140722182207.GC26927@serenity.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 22 21:36:39 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: John Keeping <john@keeping.me.uk>
+X-From: git-owner@vger.kernel.org Tue Jul 22 22:18:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9frY-0004Aj-Sk
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 21:36:37 +0200
+	id 1X9gW7-0004lz-LA
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 22:18:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756735AbaGVTga convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jul 2014 15:36:30 -0400
-Received: from mout.web.de ([212.227.15.3]:59281 "EHLO mout.web.de"
+	id S1756835AbaGVUS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2014 16:18:27 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50126 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756777AbaGVTg2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2014 15:36:28 -0400
-Received: from [192.168.178.27] ([79.250.170.92]) by smtp.web.de (mrweb002)
- with ESMTPSA (Nemesis) id 0Lcxjk-1Wj6XC00m0-00iCJr; Tue, 22 Jul 2014 21:36:26
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CACsJy8BY8pyuZ0eY7qK86RGUh8Vp9FVE55TskcQhBTrwwPowEQ@mail.gmail.com>
-X-Provags-ID: V03:K0:pYDhUQoZUjUVLJR7rsJKQCdsYyo0mj5DpzadQHfTuzGh1Xod2ET
- 64EJuzPROAXBzevKPJp43nroIpk9ojEF5LT/jIYFmckwAz4UQU0hXU3e/87v1j7eRBZbvj0
- xIA/v/UoYWBfPAMYTtBWjvR6gbvCAYBWGjf47K25BSmaHKZ30xd5aR56e0n0+78GC+aGmHU
- zSL7HSk9XDE4LTSI4ZAwQ==
+	id S1751314AbaGVUS0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 16:18:26 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0CF112CC1E;
+	Tue, 22 Jul 2014 16:18:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=hphynGTTOI7u7JQwQmA9/D94NEU=; b=sAP0Es
+	JM4w6N5aOfe289uz+hWuUiGXfVrXVv4lZLeN+XmXzS/LN/49n7L4WMWtnXGoALuA
+	vlyRphksRFaljXakW0OVcR+oPtdEuKtNt74B1OA5GYhsll/SiZgqo2/nIKD4LeIV
+	cfx7H/qai5zkwRnFF84S+WGjm6h6ZWXoW7kmo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=DhYJ66BMkbbg+VO1w2SejH1y72a+v65F
+	Lnytz0tWWte5+beSZbFOjS35VCuz+xPqBB1+7lzqgFds9GdY8VpcQeRwQ47wF/M+
+	XX2AHW5uSrZL4pHIs7qr6O+Loq0KvPPeifprDBq3menSic4+dqNFjVSUJabs7fgK
+	pF7mz72IdGc=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E36D62CC1D;
+	Tue, 22 Jul 2014 16:18:25 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CF6732CC18;
+	Tue, 22 Jul 2014 16:18:19 -0400 (EDT)
+In-Reply-To: <20140722182207.GC26927@serenity.lan> (John Keeping's message of
+	"Tue, 22 Jul 2014 19:22:07 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 52904EEA-11DD-11E4-8149-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254034>
 
-Am 21.07.2014 16:13, schrieb Duy Nguyen:
-> This function tests if $PWD is the same as getcwd() using st_dev and
-> st_ino. But on Windows these fields are always zero
-> (mingw.c:do_lstat). If cwd is moved away, I think falling back to $PW=
-D
-> is wrong. I don't understand the use of $PWD in the first place.
-> 1b9a946 (Use nonrelative paths instead of absolute paths for cloned
-> repositories - 2008-06-05) does not explain much.
+John Keeping <john@keeping.me.uk> writes:
 
-The commit message reads:
+> On Mon, Jul 21, 2014 at 01:09:13PM -0700, Junio C Hamano wrote:
+>> Junio C Hamano <gitster@pobox.com> writes:
+>> 
+>> > John Keeping <john@keeping.me.uk> writes:
+>> >
+>> >> Signed-off-by: John Keeping <john@keeping.me.uk>
+>> >> ---
+>> >
+>> > As these ;; are separators not terminators, this is not strictly
+>> > necessary.  Squashing it into a change that adds more case arms to
+>> > this case statement is of course not just good but necessary,
+>> > though.
+>> 
+>> s/necessary/may be &/; if you add new arms before this one, you
+>> won't need it.  But if you add one after this, you would ;-).
+>
+> Hmm... POSIX describes them as terminators :-)
+>
+> 	The compound-list for each list of patterns, with the possible
+> 	exception of the last, shall be terminated with ";;".
 
-   Particularly for the "alternates" file, if one will be created, we
-   want a path that doesn't depend on the current directory, but we wan=
-t
-   to retain any symlinks in the path as given and any in the user's vi=
-ew
-   of the current directory when the path was given.
+A terminator that is optional at the end is a separator ;-).
 
-The intent of the patch seems to be to prefer $PWD if it points to the=20
-same directory as the one returned by getcwd() in order to preserve "th=
-e=20
-user's view".  That's why it introduces make_nonrelative_path() (now=20
-called absolute_path()), in contrast to make_absolute_path() (now calle=
-d=20
-real_path()).
+Having ';;' immediately before 'esac' is not wrong, but omitting it
+is exactly equally correct as having one, so it is not something we
+would want a patch to churn.
 
-I imagine it's useful e.g. if your home is accessed through a symlink:
+> I'll drop this patch in the re-roll since it isn't necessary.
 
-	/home/foo -> /some/boring/mountpoint
+This round looked good from a cursory read, except that the first
+one still makes me wonder why you chose to put it there _before_
+where we handle --repo, where the corresponding case on "$cur"
+handles --repo= first and then --recurse-submodules= next.
 
-Then real_path("bar") would give you "/some/boring/mountpoint/bar",=20
-while absolute_path("bar") returned "/home/foo/bar".  Not resolving=20
-symlinks keeps the path friendly in this case.  And it keeps working=20
-even after the user's home is migrated to /a/bigger/partition and=20
-/home/foo is updated accordingly.
-
-Ren=C3=A9
+Wouldn't the end result easier to follow if you stuck to the same
+order?
