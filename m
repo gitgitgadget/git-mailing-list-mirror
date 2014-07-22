@@ -1,174 +1,106 @@
-From: Jean-Francois Bouchard <jfbouchard@accedian.com>
-Subject: Re: Git + mod_auth_kerb
-Date: Tue, 22 Jul 2014 12:41:19 -0400
-Message-ID: <CAPYmS36r2fTeY4iB3k7VpgE7brAGxa+wt9HzfXtMStbMW4_Xvg@mail.gmail.com>
-References: <CAPYmS35cgcEOfKvT17tULYyxL5GgXBavkD6anhV6yJtdoXVE9Q@mail.gmail.com>
-	<20140721231721.GB5616@vauxhall.crustytoothpaste.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] config.c: change the function signature of `git_config_string()`
+Date: Tue, 22 Jul 2014 09:47:48 -0700
+Message-ID: <xmqqk375gx1n.fsf@gitster.dls.corp.google.com>
+References: <1406026196-17877-1-git-send-email-tanayabh@gmail.com>
+	<20140722110720.GA386@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Jean-Francois Bouchard <jfbouchard@accedian.com>,
-	git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 22 18:41:33 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 22 18:48:23 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9d82-00028w-5c
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 18:41:26 +0200
+	id 1X9dEi-0007nd-9I
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 18:48:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756181AbaGVQlW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 22 Jul 2014 12:41:22 -0400
-Received: from mail-yk0-f175.google.com ([209.85.160.175]:53073 "EHLO
-	mail-yk0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754740AbaGVQlU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 22 Jul 2014 12:41:20 -0400
-Received: by mail-yk0-f175.google.com with SMTP id q200so4953732ykb.6
-        for <git@vger.kernel.org>; Tue, 22 Jul 2014 09:41:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:content-type:content-transfer-encoding;
-        bh=W7nIvjX62PGYdW3EhhuLVzfSV77aPUZVBvtoS6CezYc=;
-        b=QEEMC0T3thXZg7OAV8eqLk9zdWZyqqtt9/wWcZDjMdxSpoJM4g3/zb+iV3uzS19AWc
-         dRBPo3hrvZb+00KLlWGOEYUrd26Tl0j5vmNkrVEiH4KLKBramAVRJzCEBPPlCUxHLWNP
-         1rV/RkeGBRoSaf3ynxTrT2pvBKRKoaw32sqEX3D1XXAJRT32yW9K8MGi6seblN/Fjff3
-         2oZvom1DDI/lGlbn5pyVojxLNOO5NrAmkGl8wbMYUVbyY2E3Xse87ldLKlZbU2enmkIq
-         GvSDEl/Ryv/X3d+UPhyhmvEztvsx10dVlxj3o9BcZULknKz3feJHgglLIPbrNDZd0n8/
-         JJ4Q==
-X-Gm-Message-State: ALoCoQkNisyWKL5gBG3kHYUohmzYCjxOQff9R+GNdVksSONC1FkOyBDWcotpeL9AbIdg95rNixjJYZIs2M0ar4Nvd1Gz564oZPmruSlQT8VTMgZGI1QSqOY=
-X-Received: by 10.236.116.202 with SMTP id g50mr5965457yhh.147.1406047279705;
- Tue, 22 Jul 2014 09:41:19 -0700 (PDT)
-Received: by 10.170.196.150 with HTTP; Tue, 22 Jul 2014 09:41:19 -0700 (PDT)
-In-Reply-To: <20140721231721.GB5616@vauxhall.crustytoothpaste.net>
+	id S1756248AbaGVQsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2014 12:48:10 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55709 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756244AbaGVQsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 12:48:09 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BCBF12992A;
+	Tue, 22 Jul 2014 12:48:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+KmzHOfkYxq1G8D7sV1vaYjNwkA=; b=vK+zxb
+	NUb7uplRfZBuslVlzU97Oy9WRucfNkFLelIgkKAHs2RSR34xck2sIqLnNgYuqH5A
+	8tlH0HAhjFyv3tt9CyZLPsB2WkqjtGergQDh0j+QGP8XFaftUjKulNXDhCP9sHH9
+	ODDXeL7LoywFILqMmbU/ksfjRpsvje0m8XlFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SIZbD8BaIy1O1z4XbpngZvaazRQBgc3H
+	YhoxuchtMLI+GPwQEq6QEw/9D5ZYt6VSlus8qNjJzGsH8DY6G6UPUWewIiZ7u/z2
+	A/Ls1Yq6XunJXVZeMdXhA6Kk/vM1SldWmqqVOXj5ZdPVNfm7mJdKSjSLh+hUDQAD
+	/Zst64EN6sI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB08929927;
+	Tue, 22 Jul 2014 12:48:02 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A766729906;
+	Tue, 22 Jul 2014 12:47:50 -0400 (EDT)
+In-Reply-To: <20140722110720.GA386@peff.net> (Jeff King's message of "Tue, 22
+	Jul 2014 07:07:20 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: EAFF27A0-11BF-11E4-A5E7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254021>
 
-Hello,
+Jeff King <peff@peff.net> writes:
 
-Thanks for this info. This make a lot of sense system wise. For a user
-point of view, it is a nightmare. Also, this break a lot of tools that
-are waiting username/password authentication via HTTPS. (I name
-Eclipse).
+> So I would not mind lifting this unnecessary restriction on
+> git_config_string, but I do not see a way to do it without making the
+> rest of the code much uglier (and I do not see a particular advantage in
+> modifying git_config_string here that would make it worth the trouble).
 
-Also, I m not able to reproduce the kerberos login on Ubuntu 14.04. I
-m asked to enter password even if a kerberos ticket is present and
-this even when I've embedded the username in the URI.
+I do not think changing the existing one is warranted, either.
 
-Is there a better way to integrate Kerberos via HTTPS for git ?
+Given that C's type system does not allow us to pass "const char *"
+as "char *" without cast (and vice versa), a function that takes an
+out parameter that points at the location to store the pointer to a
+string (instead of returning the pointer to a string as value) has
+to take either one of these forms:
 
-Thanks,
-JF
+	get_mutable(char **dest);
+        get_const(const char **dest);
 
-On Mon, Jul 21, 2014 at 7:17 PM, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> On Mon, Jul 21, 2014 at 05:06:50PM -0400, Jean-Francois Bouchard wrot=
-e:
->> Hello,
->>
->> We are currently working on a single sign on setup for our git insta=
-ll. We are
->> using git 2.0.2 (ubuntu) plus apache/2.2.22 mod_auth_kerb on the
->> server side. Here some scenario we are trying to accomplish :
->>
->> -Without Kerberos ticket stored.
->> Git ask for username/password.
->> Result =3D Authentication failed
->>
->> -Kerberos ticket in store and BAD password :
->> Git ask for username/password.
->> Result =3D Authentication failed
->>
->> -Kerberos ticket in Store entering good password :
->> Git ask for username/password.
->> Result =3D Authentication failed on some host, other works
->>
->> -Kerberos ticket in Store and embedding the username in the URI (aka
->> https://username@repo)
->> Git don't ask for anything or ask for password
->> Result =3D Works on some host, other request the password. (Will fai=
-l if
->> the kerberos ticket not in store)
->
-> So git uses libcurl with CURLAUTH_ANY.  In order for authentication t=
-o
-> work with libcurl, you have to supply a username.  If you specify it =
-in
-> the URL, the libcurl realizes that it can use Kerberos, and goes on i=
-ts
-> merry way.
->
-> If you don't specify the username in the URL, git notices that
-> authentication has failed, and asks the credential store for a userna=
-me
-> and password.  git does not know that a password is not needed, so th=
-e
-> credential subsystem prompts for one anyway.
->
-> I have mod_auth_kerb set up against Apache 2.4.9 at the moment, altho=
-ugh
-> I've used 2.2 before.  I always use a username in the URL, and if I g=
-et
-> prompted for the password, I just Ctrl-C out and run kinit before
-> pushing again.
->
-> I don't have mod_auth_kerb set up to fall back to basic auth, but if =
-you
-> do, using a username and password should work properly.  You can use
-> set the environment variable GIT_CURL_VERBOSE to 1 to see more
-> information about what's actually going over the wire.
->
->> This is a very strange behaviour. It seems to be cause by the way
->> libcurl and git interact and the way the authentication goes
->> (Negociate first, then basic auth). I have tried to use the helper t=
-o
->> store invalid authentication information. With not much success.
->
-> libcurl will always prefer something (anything) over basic auth, sinc=
-e
-> basic auth is completely insecure unless you're using HTTPS.
->
-> --
-> brian m. carlson / brian with sandals: Houston, Texas, US
-> +1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion o=
-nly
-> OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B=
-187
+and half the callers need to pass their variables with a cast, i.e.
 
---=20
+        char *mutable_string;
+	const char *const_string;
+
+	get_mutable((char **)&const_string);
+        get_mutable(&mutable_string);
+	get_const(&const_string);
+	get_const((const char **)&mutable_string);
+
+If we have to cast some [*1*], I'd prefer to see the type describe
+what it really is, and I think a function that gives a newly
+allocated storage for the callers' own use is better described by
+taking a pointer to non-const "char *" location.  So I'd encourage a
+new function being introduced that does not have existing callers to
+use that as the criterion to decide which to take.
+
+Changing the existing function with existing calling site needs two
+other pros-and-cons evaluation, in addition to the above "does the
+type describe what it really is?", which are "is it worth the
+churn?" and "does the end result make more sense than the original?"
 
 
-Avis de confidentialit=C3=A9
+[Footnote]
 
-Les informations contenues dans le pr=C3=A9sent message et dans toute p=
-i=C3=A8ce qui=20
-lui est jointe sont confidentielles et peuvent =C3=AAtre prot=C3=A9g=C3=
-=A9es par le secret=20
-professionnel. Ces informations sont =C3=A0 l=E2=80=99usage exclusif de=
- son ou de ses=20
-destinataires. Si vous recevez ce message par erreur, veuillez s=E2=80=99=
-il vous=20
-plait communiquer imm=C3=A9diatement avec l=E2=80=99exp=C3=A9diteur et =
-en d=C3=A9truire tout=20
-exemplaire. De plus, il vous est strictement interdit de le divulguer, =
-de=20
-le distribuer ou de le reproduire sans l=E2=80=99autorisation de l=E2=80=
-=99exp=C3=A9diteur.=20
-Merci.
-
-Confidentiality notice
-
-This e-mail message and any attachment hereto contain confidential=20
-information which may be privileged and which is intended for the exclu=
-sive=20
-use of its addressee(s). If you receive this message in error, please=20
-inform sender immediately and destroy any copy thereof. Furthermore, an=
-y=20
-disclosure, distribution or copying of this message and/or any attachme=
-nt=20
-hereto without the consent of the sender is strictly prohibited. Thank =
-you.
+*1* We have safe_create_leading_directories_const() that works
+around this for input parameter around its _const less counterpart,
+which is ugly but livable solution.
