@@ -1,98 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/4] completion: add missing terminator in case statement
-Date: Tue, 22 Jul 2014 13:18:17 -0700
-Message-ID: <xmqqvbqpf8qd.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH v2 1/3] completion: complete "unstuck" `git push --recurse-submodules`
+Date: Tue, 22 Jul 2014 13:23:25 -0700
+Message-ID: <xmqqr41df8hu.fsf@gitster.dls.corp.google.com>
 References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
-	<xmqqmwc2k4h4.fsf@gitster.dls.corp.google.com>
-	<xmqqk376iidy.fsf@gitster.dls.corp.google.com>
-	<20140722182207.GC26927@serenity.lan>
+	<8303c95dd3e3ee8d77d4b994bb2d33b6a155a17f.1406053442.git.john@keeping.me.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
 To: John Keeping <john@keeping.me.uk>
-X-From: git-owner@vger.kernel.org Tue Jul 22 22:18:33 2014
+X-From: git-owner@vger.kernel.org Tue Jul 22 22:23:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9gW7-0004lz-LA
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 22:18:31 +0200
+	id 1X9gbD-0000fj-98
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 22:23:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756835AbaGVUS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2014 16:18:27 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:50126 "EHLO smtp.pobox.com"
+	id S1756834AbaGVUXg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2014 16:23:36 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57690 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751314AbaGVUS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2014 16:18:26 -0400
+	id S1756663AbaGVUXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 16:23:33 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0CF112CC1E;
-	Tue, 22 Jul 2014 16:18:26 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1A9C92CE2B;
+	Tue, 22 Jul 2014 16:23:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hphynGTTOI7u7JQwQmA9/D94NEU=; b=sAP0Es
-	JM4w6N5aOfe289uz+hWuUiGXfVrXVv4lZLeN+XmXzS/LN/49n7L4WMWtnXGoALuA
-	vlyRphksRFaljXakW0OVcR+oPtdEuKtNt74B1OA5GYhsll/SiZgqo2/nIKD4LeIV
-	cfx7H/qai5zkwRnFF84S+WGjm6h6ZWXoW7kmo=
+	:content-type; s=sasl; bh=uEYAo8c4ifriLn0Ouq76jwpl5BU=; b=eaXoFn
+	31Vy97wKKrYqAZHEEemYlPo7lUkPeG9z01/ILx09xj2BE/03n06jKoAKxaoO6fAm
+	XifvBtW3sJTXb+TsFuWVpEYMgjjtrK5np96TJl5HQB6S6jrECRiRZNtCXFyFT6zb
+	5j1AfnJOxHL8iZpBtMNe+ptFoua2A7hqb3KdQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DhYJ66BMkbbg+VO1w2SejH1y72a+v65F
-	Lnytz0tWWte5+beSZbFOjS35VCuz+xPqBB1+7lzqgFds9GdY8VpcQeRwQ47wF/M+
-	XX2AHW5uSrZL4pHIs7qr6O+Loq0KvPPeifprDBq3menSic4+dqNFjVSUJabs7fgK
-	pF7mz72IdGc=
+	:content-type; q=dns; s=sasl; b=X+DFbtPd/miPFFE97MGycILcC2GMr4mc
+	wV3nuu9E4pwygN9oI3HXM8d6OJAoKE71BVikqRsh4XWL8kyVr7EGVq6+qC7r+Dpz
+	b0WX14sMEasy5unw5cXv8ANELTRaP+i+QlpzLOwx3vksWBJrW3+udx4FGO8eNeYV
+	23azHZZQGaY=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E36D62CC1D;
-	Tue, 22 Jul 2014 16:18:25 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0F6EA2CE2A;
+	Tue, 22 Jul 2014 16:23:33 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CF6732CC18;
-	Tue, 22 Jul 2014 16:18:19 -0400 (EDT)
-In-Reply-To: <20140722182207.GC26927@serenity.lan> (John Keeping's message of
-	"Tue, 22 Jul 2014 19:22:07 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DD5882CE20;
+	Tue, 22 Jul 2014 16:23:26 -0400 (EDT)
+In-Reply-To: <8303c95dd3e3ee8d77d4b994bb2d33b6a155a17f.1406053442.git.john@keeping.me.uk>
+	(John Keeping's message of "Tue, 22 Jul 2014 19:24:56 +0100")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 52904EEA-11DD-11E4-8149-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 09956FB2-11DE-11E4-8B19-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254035>
 
 John Keeping <john@keeping.me.uk> writes:
 
-> On Mon, Jul 21, 2014 at 01:09:13PM -0700, Junio C Hamano wrote:
->> Junio C Hamano <gitster@pobox.com> writes:
->> 
->> > John Keeping <john@keeping.me.uk> writes:
->> >
->> >> Signed-off-by: John Keeping <john@keeping.me.uk>
->> >> ---
->> >
->> > As these ;; are separators not terminators, this is not strictly
->> > necessary.  Squashing it into a change that adds more case arms to
->> > this case statement is of course not just good but necessary,
->> > though.
->> 
->> s/necessary/may be &/; if you add new arms before this one, you
->> won't need it.  But if you add one after this, you would ;-).
+> Since the argument to `--recurse-submodules` is mandatory, it does not
+> need to be stuck to the option with `=`.
 >
-> Hmm... POSIX describes them as terminators :-)
+> Signed-off-by: John Keeping <john@keeping.me.uk>
+> ---
+> Change since v1:
+>     - Fix typo --recurse{_ => -}submodules
+>     - Dropped previous patch 1/4 adding ";;" at the end of the "--repo" case
 >
-> 	The compound-list for each list of patterns, with the possible
-> 	exception of the last, shall be terminated with ";;".
+>  contrib/completion/git-completion.bash | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 7a6e1d7..bed3665 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1624,6 +1624,10 @@ __git_push_recurse_submodules="check on-demand"
+>  _git_push ()
+>  {
+>  	case "$prev" in
+> +	--recurse-submodules)
+> +		__gitcomp "$__git_push_recurse_submodules"
+> +		return
+> +		;;
+>  	--repo)
+>  		__gitcomp_nl "$(__git_remotes)"
+>  		return
 
-A terminator that is optional at the end is a separator ;-).
+If you mimick the order they are handled in the case on "$cur", it
+would also let us sneak in the missing-optional ";;" to case/esac to
+keep symmetry between the two ;-)
 
-Having ';;' immediately before 'esac' is not wrong, but omitting it
-is exactly equally correct as having one, so it is not something we
-would want a patch to churn.
+In other words, like this, perhaps?
 
-> I'll drop this patch in the re-roll since it isn't necessary.
-
-This round looked good from a cursory read, except that the first
-one still makes me wonder why you chose to put it there _before_
-where we handle --repo, where the corresponding case on "$cur"
-handles --repo= first and then --recurse-submodules= next.
-
-Wouldn't the end result easier to follow if you stuck to the same
-order?
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 019026e..b27f385 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1617,6 +1617,11 @@ _git_push ()
+ 	--repo)
+ 		__gitcomp_nl "$(__git_remotes)"
+ 		return
++		;;
++	--recurse-submodules)
++		__gitcomp "$__git_push_recurse_submodules"
++		return
++		;;
+ 	esac
+ 	case "$cur" in
+ 	--repo=*)
+-- 
+2.0.2-892-g223db29
