@@ -1,74 +1,68 @@
-From: Tanay Abhra <tanayabh@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] config.c: change the function signature of `git_config_string()`
-Date: Tue, 22 Jul 2014 17:18:38 +0530
-Message-ID: <53CE4F96.3000409@gmail.com>
-References: <1406026196-17877-1-git-send-email-tanayabh@gmail.com>	<20140722110720.GA386@peff.net> <vpqsiltsjm7.fsf@anie.imag.fr>
+Date: Tue, 22 Jul 2014 08:53:01 -0700
+Message-ID: <xmqqoawhgzky.fsf@gitster.dls.corp.google.com>
+References: <1406026196-17877-1-git-send-email-tanayabh@gmail.com>
+	<20140722110720.GA386@peff.net> <vpqsiltsjm7.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 22 13:48:54 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Tanay Abhra <tanayabh@gmail.com>,
+	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Jul 22 17:53:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9YYs-0004ke-2d
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 13:48:50 +0200
+	id 1X9cNQ-0004Qy-CL
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 17:53:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754022AbaGVLsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2014 07:48:46 -0400
-Received: from mail-pd0-f172.google.com ([209.85.192.172]:53375 "EHLO
-	mail-pd0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750843AbaGVLsp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2014 07:48:45 -0400
-Received: by mail-pd0-f172.google.com with SMTP id ft15so11111083pdb.31
-        for <git@vger.kernel.org>; Tue, 22 Jul 2014 04:48:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=qj8mMC6BK/NKvZT3pyy1MIJNoC48j9cpfjHxA1gXgLI=;
-        b=EO6rgE+k8mYs7s4Bf6JEDzQNtUCvmTUfOaKPR+2Z7i9qkQsbhtjimO7Jf0VdlWr4on
-         neWR5ALP+kwAkmRfuzCHB0Umgh0+1z4N6Ca1OQLlIldAsN7bkdB1ZbMEdJeasErH5Ulb
-         y+m+AzZkBOtCaXzBpJJmYgL/MYONilbU4o9Q8S9pjJzlXGJG61fSnYCjobqRAU/VhM+y
-         ND6itajoXr0JejvNx7AdT1hqYOy9hq9wqm3sxHIw66+sv2NRdoQcvWtU0ka4Jmt9+SWD
-         /Z7Gb5xgUfG6RS3Gux0Ay0yVmQXLRJePmcq/qk50FDOHmNyw1SfnMdo6NFTFrhad9++C
-         X8cg==
-X-Received: by 10.70.34.103 with SMTP id y7mr515950pdi.37.1406029725194;
-        Tue, 22 Jul 2014 04:48:45 -0700 (PDT)
-Received: from [127.0.0.1] ([182.67.207.4])
-        by mx.google.com with ESMTPSA id by7sm601046pab.35.2014.07.22.04.48.41
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 22 Jul 2014 04:48:44 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <vpqsiltsjm7.fsf@anie.imag.fr>
+	id S1755732AbaGVPxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2014 11:53:12 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52059 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755359AbaGVPxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 11:53:10 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CC5D72A028;
+	Tue, 22 Jul 2014 11:53:09 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gXXF1OpVfV5RE71GorcMYSgJ/hw=; b=XupO6A
+	nrimBvmLcndB9+YpjtbI+shLgehQkKNaWqNeaaK+/vUcYW/dFF2Jgo1oYMpEJIsW
+	wnCZipPTn2IXtntHpj2z1YdDEgQEzxPMHGnlozb4wvh6f/gCQYxsSttHN1A0CyZW
+	PI2A2HdJyrWgGHAlJkOyWXWlD+ZtLKEP7dNb8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VQI7cnR9zRAzdRcF5sNJhtnwjArjD4ve
+	HhqMfFNWR2kP0XhDd73NTLcpFju7nG9RKJL47CzPxWctwex2Jmnje8IUbfqN1xes
+	kI72cUNS61PShSqRvBWwruKhDN/gf/Xg6eAnhs0GnEHT+7JHF+u6WYYmApMkVEsD
+	dy/IDWdkz6s=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AF7D12A027;
+	Tue, 22 Jul 2014 11:53:09 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A58E12A017;
+	Tue, 22 Jul 2014 11:53:03 -0400 (EDT)
+In-Reply-To: <vpqsiltsjm7.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
+	22 Jul 2014 13:44:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 43C9D5C2-11B8-11E4-B1ED-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254017>
 
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
+> OK, it seems I got convinced too quickly by Junio ;-). The function
+> produces a char * that can be modified, but it also receives a value,
+> and the function should keep the "const" to allow passing "const char
+> *".
 
-On 7/22/2014 5:14 PM, Matthieu Moy wrote:
-> Jeff King <peff@peff.net> writes:
-> 
->> will complain that we are passing a pointer to "const char *", not a
->> pointer to "char *". And indeed, compiling with your patch introduces a
->> ton of compiler warnings.
-> 
-> Tanay: are you not compiling with gcc -Wall -Werror?
-> 
-> (see my earlier message, just create a file config.mak containing
-> 
->   CFLAGS += -Wdeclaration-after-statement -Wall -Werror
-> 
-> )
->
-
-Yes, I was. Dunno why it didn't work then.
+Don't blame me. I never suggested to touch that existing function,
+with existing call sites.
