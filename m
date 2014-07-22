@@ -1,68 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] config.c: change the function signature of `git_config_string()`
-Date: Tue, 22 Jul 2014 08:53:01 -0700
-Message-ID: <xmqqoawhgzky.fsf@gitster.dls.corp.google.com>
+Date: Tue, 22 Jul 2014 18:03:07 +0200
+Message-ID: <vpqsiltfkjo.fsf@anie.imag.fr>
 References: <1406026196-17877-1-git-send-email-tanayabh@gmail.com>
 	<20140722110720.GA386@peff.net> <vpqsiltsjm7.fsf@anie.imag.fr>
+	<xmqqoawhgzky.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
 Cc: Jeff King <peff@peff.net>, Tanay Abhra <tanayabh@gmail.com>,
 	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Jul 22 17:53:19 2014
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 22 18:03:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9cNQ-0004Qy-CL
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 17:53:16 +0200
+	id 1X9cXG-0004Nu-Lv
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 18:03:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755732AbaGVPxM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2014 11:53:12 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52059 "EHLO smtp.pobox.com"
+	id S1754785AbaGVQDW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2014 12:03:22 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:46443 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755359AbaGVPxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2014 11:53:10 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CC5D72A028;
-	Tue, 22 Jul 2014 11:53:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gXXF1OpVfV5RE71GorcMYSgJ/hw=; b=XupO6A
-	nrimBvmLcndB9+YpjtbI+shLgehQkKNaWqNeaaK+/vUcYW/dFF2Jgo1oYMpEJIsW
-	wnCZipPTn2IXtntHpj2z1YdDEgQEzxPMHGnlozb4wvh6f/gCQYxsSttHN1A0CyZW
-	PI2A2HdJyrWgGHAlJkOyWXWlD+ZtLKEP7dNb8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VQI7cnR9zRAzdRcF5sNJhtnwjArjD4ve
-	HhqMfFNWR2kP0XhDd73NTLcpFju7nG9RKJL47CzPxWctwex2Jmnje8IUbfqN1xes
-	kI72cUNS61PShSqRvBWwruKhDN/gf/Xg6eAnhs0GnEHT+7JHF+u6WYYmApMkVEsD
-	dy/IDWdkz6s=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AF7D12A027;
-	Tue, 22 Jul 2014 11:53:09 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A58E12A017;
-	Tue, 22 Jul 2014 11:53:03 -0400 (EDT)
-In-Reply-To: <vpqsiltsjm7.fsf@anie.imag.fr> (Matthieu Moy's message of "Tue,
-	22 Jul 2014 13:44:48 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 43C9D5C2-11B8-11E4-B1ED-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752205AbaGVQDW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 12:03:22 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6MG35Vq021989
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 22 Jul 2014 18:03:05 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6MG37Ko010526;
+	Tue, 22 Jul 2014 18:03:07 +0200
+In-Reply-To: <xmqqoawhgzky.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Tue, 22 Jul 2014 08:53:01 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 22 Jul 2014 18:03:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6MG35Vq021989
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1406649787.34803@fvAhXwA/I7tduQHOUYRFVg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254018>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> OK, it seems I got convinced too quickly by Junio ;-). The function
-> produces a char * that can be modified, but it also receives a value,
-> and the function should keep the "const" to allow passing "const char
-> *".
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> OK, it seems I got convinced too quickly by Junio ;-). The function
+>> produces a char * that can be modified, but it also receives a value,
+>> and the function should keep the "const" to allow passing "const char
+>> *".
+>
+> Don't blame me. I never suggested to touch that existing function,
+> with existing call sites.
 
-Don't blame me. I never suggested to touch that existing function,
-with existing call sites.
+I don't understand what you mean. The new git_config_get_string()
+function is meant to be used in essentially every places where
+git_config_string() is currently used, so removing the const from
+git_config_get_string() raises the same issue as changing the existing
+function.
+
+Dropping the const means we won't be able to write
+
+const char *v = "default";
+...
+git_config_get_string(&v, ...);
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
