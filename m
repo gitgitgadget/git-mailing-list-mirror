@@ -1,76 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git + mod_auth_kerb
-Date: Tue, 22 Jul 2014 10:00:22 -0700
-Message-ID: <xmqqfvhtgwgp.fsf@gitster.dls.corp.google.com>
-References: <CAPYmS35cgcEOfKvT17tULYyxL5GgXBavkD6anhV6yJtdoXVE9Q@mail.gmail.com>
-	<20140721231721.GB5616@vauxhall.crustytoothpaste.net>
+From: "Keller, Jacob E" <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v10] tag: support configuring --sort via .gitconfig
+Date: Tue, 22 Jul 2014 17:25:19 +0000
+Message-ID: <1406049919.30094.7.camel@jekeller-desk1.amr.corp.intel.com>
+References: <1405547282-19815-1-git-send-email-jacob.e.keller@intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jean-Francois Bouchard <jfbouchard@accedian.com>,
-	git <git@vger.kernel.org>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Tue Jul 22 19:00:38 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "gitster@pobox.com" <gitster@pobox.com>,
+	"peff@peff.net" <peff@peff.net>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 22 19:25:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9dQa-0001F2-J8
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 19:00:36 +0200
+	id 1X9dp0-00055k-JY
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 19:25:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755299AbaGVRAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2014 13:00:32 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:60247 "EHLO smtp.pobox.com"
+	id S1756280AbaGVRZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2014 13:25:44 -0400
+Received: from mga01.intel.com ([192.55.52.88]:53179 "EHLO mga01.intel.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752620AbaGVRAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2014 13:00:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2822329E75;
-	Tue, 22 Jul 2014 13:00:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9JMM67OTemmtIskdv8aUcqDKVRQ=; b=PWTkMS
-	rAz+MP4UMwEJhMHHhNkAn/LxHYg6BsyggTLwcZcw7jgh8xUMphMEXXo5uoRGetFx
-	AcxS6df/7tQjao4EsDz7b9olirDxLcUphf9HTtZl1ZLCzPMAtfj+FSRR7lNlF7C2
-	ons9QRKitf7dyJBNkbczko0ujnspNLe1q2+ss=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DtzFFyzQzFulu4x9cKnCeIzkebiahd4b
-	fHzAmBXvZYHJ2yDr/BdBrzhc60RLriO7Q+EMyVYEM8VMdqjQTAcNpYO6/1/Yzli/
-	k90rLV8vrU6DYoxciLHUKi8e8j1hw+wUocnb5foLlhVc1iFU8Z9i6YF37fjH2Z2U
-	6XThlrJi+C4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1B66029E74;
-	Tue, 22 Jul 2014 13:00:31 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6C2E229E64;
-	Tue, 22 Jul 2014 13:00:24 -0400 (EDT)
-In-Reply-To: <20140721231721.GB5616@vauxhall.crustytoothpaste.net> (brian
-	m. carlson's message of "Mon, 21 Jul 2014 23:17:21 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: AC4699E2-11C1-11E4-A6E9-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1756261AbaGVRZm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 13:25:42 -0400
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by fmsmga101.fm.intel.com with ESMTP; 22 Jul 2014 10:25:38 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.01,711,1400050800"; 
+   d="scan'208";a="573737045"
+Received: from orsmsx105.amr.corp.intel.com ([10.22.225.132])
+  by fmsmga002.fm.intel.com with ESMTP; 22 Jul 2014 10:25:20 -0700
+Received: from orsmsx114.amr.corp.intel.com (10.22.240.10) by
+ ORSMSX105.amr.corp.intel.com (10.22.225.132) with Microsoft SMTP Server (TLS)
+ id 14.3.123.3; Tue, 22 Jul 2014 10:25:20 -0700
+Received: from orsmsx115.amr.corp.intel.com ([169.254.10.251]) by
+ ORSMSX114.amr.corp.intel.com ([169.254.8.49]) with mapi id 14.03.0123.003;
+ Tue, 22 Jul 2014 10:25:19 -0700
+Thread-Topic: [PATCH v10] tag: support configuring --sort via .gitconfig
+Thread-Index: AQHPoT+hU5XbKqWzxEC5kyTbtr62Lpus1quA
+In-Reply-To: <1405547282-19815-1-git-send-email-jacob.e.keller@intel.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [134.134.173.156]
+Content-ID: <D7D8C6D35866494EA46ABDDC0C88D885@intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254023>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> So git uses libcurl with CURLAUTH_ANY.  In order for authentication to
-> work with libcurl, you have to supply a username.  If you specify it in
-> the URL, the libcurl realizes that it can use Kerberos, and goes on its
-> merry way.
->
-> If you don't specify the username in the URL, git notices that
-> authentication has failed, and asks the credential store for a username
-> and password.  git does not know that a password is not needed, so the
-> credential subsystem prompts for one anyway.
-
-Hmmm, does this hint that we might want to be able to tell the
-credential subsystem that it is sufficient to have name without
-password, or allow the credential subsystem to say "I am giving you
-sufficient information" when it returns only username without
-password?
+T24gV2VkLCAyMDE0LTA3LTE2IGF0IDE0OjQ4IC0wNzAwLCBKYWNvYiBLZWxsZXIgd3JvdGU6DQo+
+IEFkZCBzdXBwb3J0IGZvciBjb25maWd1cmluZyBkZWZhdWx0IHNvcnQgb3JkZXJpbmcgZm9yIGdp
+dCB0YWdzLiBDb21tYW5kDQo+IGxpbmUgb3B0aW9uIHdpbGwgb3ZlcnJpZGUgdGhpcyBjb25maWd1
+cmVkIHZhbHVlLCB1c2luZyB0aGUgZXhhY3Qgc2FtZQ0KPiBzeW50YXguDQo+IA0KPiBDYzogSmVm
+ZiBLaW5nIDxwZWZmQHBlZmYubmV0Pg0KPiBTaWduZWQtb2ZmLWJ5OiBKYWNvYiBLZWxsZXIgPGph
+Y29iLmUua2VsbGVyQGludGVsLmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogSnVuaW8gQyBIYW1hbm8g
+PGdpdHN0ZXJAcG9ib3guY29tPg0KPiAtLS0NCg0KSnVzdCBhIHBpbmcgb24gdGhlIHN0YXR1cyBv
+ZiB0aGlzIHBhdGNoPw0KDQpUaGFua3MsDQpKYWtlDQoNCg==
