@@ -1,106 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] config.c: change the function signature of `git_config_string()`
-Date: Tue, 22 Jul 2014 09:47:48 -0700
-Message-ID: <xmqqk375gx1n.fsf@gitster.dls.corp.google.com>
-References: <1406026196-17877-1-git-send-email-tanayabh@gmail.com>
-	<20140722110720.GA386@peff.net>
+Subject: Re: Git + mod_auth_kerb
+Date: Tue, 22 Jul 2014 10:00:22 -0700
+Message-ID: <xmqqfvhtgwgp.fsf@gitster.dls.corp.google.com>
+References: <CAPYmS35cgcEOfKvT17tULYyxL5GgXBavkD6anhV6yJtdoXVE9Q@mail.gmail.com>
+	<20140721231721.GB5616@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 22 18:48:23 2014
+Cc: Jean-Francois Bouchard <jfbouchard@accedian.com>,
+	git <git@vger.kernel.org>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Tue Jul 22 19:00:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9dEi-0007nd-9I
-	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 18:48:20 +0200
+	id 1X9dQa-0001F2-J8
+	for gcvg-git-2@plane.gmane.org; Tue, 22 Jul 2014 19:00:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756248AbaGVQsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 22 Jul 2014 12:48:10 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55709 "EHLO smtp.pobox.com"
+	id S1755299AbaGVRAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 22 Jul 2014 13:00:32 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60247 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756244AbaGVQsJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 22 Jul 2014 12:48:09 -0400
+	id S1752620AbaGVRAb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 22 Jul 2014 13:00:31 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BCBF12992A;
-	Tue, 22 Jul 2014 12:48:02 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2822329E75;
+	Tue, 22 Jul 2014 13:00:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+KmzHOfkYxq1G8D7sV1vaYjNwkA=; b=vK+zxb
-	NUb7uplRfZBuslVlzU97Oy9WRucfNkFLelIgkKAHs2RSR34xck2sIqLnNgYuqH5A
-	8tlH0HAhjFyv3tt9CyZLPsB2WkqjtGergQDh0j+QGP8XFaftUjKulNXDhCP9sHH9
-	ODDXeL7LoywFILqMmbU/ksfjRpsvje0m8XlFI=
+	:content-type; s=sasl; bh=9JMM67OTemmtIskdv8aUcqDKVRQ=; b=PWTkMS
+	rAz+MP4UMwEJhMHHhNkAn/LxHYg6BsyggTLwcZcw7jgh8xUMphMEXXo5uoRGetFx
+	AcxS6df/7tQjao4EsDz7b9olirDxLcUphf9HTtZl1ZLCzPMAtfj+FSRR7lNlF7C2
+	ons9QRKitf7dyJBNkbczko0ujnspNLe1q2+ss=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SIZbD8BaIy1O1z4XbpngZvaazRQBgc3H
-	YhoxuchtMLI+GPwQEq6QEw/9D5ZYt6VSlus8qNjJzGsH8DY6G6UPUWewIiZ7u/z2
-	A/Ls1Yq6XunJXVZeMdXhA6Kk/vM1SldWmqqVOXj5ZdPVNfm7mJdKSjSLh+hUDQAD
-	/Zst64EN6sI=
+	:content-type; q=dns; s=sasl; b=DtzFFyzQzFulu4x9cKnCeIzkebiahd4b
+	fHzAmBXvZYHJ2yDr/BdBrzhc60RLriO7Q+EMyVYEM8VMdqjQTAcNpYO6/1/Yzli/
+	k90rLV8vrU6DYoxciLHUKi8e8j1hw+wUocnb5foLlhVc1iFU8Z9i6YF37fjH2Z2U
+	6XThlrJi+C4=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id AB08929927;
-	Tue, 22 Jul 2014 12:48:02 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1B66029E74;
+	Tue, 22 Jul 2014 13:00:31 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A766729906;
-	Tue, 22 Jul 2014 12:47:50 -0400 (EDT)
-In-Reply-To: <20140722110720.GA386@peff.net> (Jeff King's message of "Tue, 22
-	Jul 2014 07:07:20 -0400")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6C2E229E64;
+	Tue, 22 Jul 2014 13:00:24 -0400 (EDT)
+In-Reply-To: <20140721231721.GB5616@vauxhall.crustytoothpaste.net> (brian
+	m. carlson's message of "Mon, 21 Jul 2014 23:17:21 +0000")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: EAFF27A0-11BF-11E4-A5E7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: AC4699E2-11C1-11E4-A6E9-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254022>
 
-Jeff King <peff@peff.net> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> So I would not mind lifting this unnecessary restriction on
-> git_config_string, but I do not see a way to do it without making the
-> rest of the code much uglier (and I do not see a particular advantage in
-> modifying git_config_string here that would make it worth the trouble).
+> So git uses libcurl with CURLAUTH_ANY.  In order for authentication to
+> work with libcurl, you have to supply a username.  If you specify it in
+> the URL, the libcurl realizes that it can use Kerberos, and goes on its
+> merry way.
+>
+> If you don't specify the username in the URL, git notices that
+> authentication has failed, and asks the credential store for a username
+> and password.  git does not know that a password is not needed, so the
+> credential subsystem prompts for one anyway.
 
-I do not think changing the existing one is warranted, either.
-
-Given that C's type system does not allow us to pass "const char *"
-as "char *" without cast (and vice versa), a function that takes an
-out parameter that points at the location to store the pointer to a
-string (instead of returning the pointer to a string as value) has
-to take either one of these forms:
-
-	get_mutable(char **dest);
-        get_const(const char **dest);
-
-and half the callers need to pass their variables with a cast, i.e.
-
-        char *mutable_string;
-	const char *const_string;
-
-	get_mutable((char **)&const_string);
-        get_mutable(&mutable_string);
-	get_const(&const_string);
-	get_const((const char **)&mutable_string);
-
-If we have to cast some [*1*], I'd prefer to see the type describe
-what it really is, and I think a function that gives a newly
-allocated storage for the callers' own use is better described by
-taking a pointer to non-const "char *" location.  So I'd encourage a
-new function being introduced that does not have existing callers to
-use that as the criterion to decide which to take.
-
-Changing the existing function with existing calling site needs two
-other pros-and-cons evaluation, in addition to the above "does the
-type describe what it really is?", which are "is it worth the
-churn?" and "does the end result make more sense than the original?"
-
-
-[Footnote]
-
-*1* We have safe_create_leading_directories_const() that works
-around this for input parameter around its _const less counterpart,
-which is ugly but livable solution.
+Hmmm, does this hint that we might want to be able to tell the
+credential subsystem that it is sufficient to have name without
+password, or allow the credential subsystem to say "I am giving you
+sufficient information" when it returns only username without
+password?
