@@ -1,93 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jul 2014, #04; Tue, 22)
-Date: Wed, 23 Jul 2014 11:24:54 -0700
-Message-ID: <xmqqa980djbd.fsf@gitster.dls.corp.google.com>
-References: <xmqq4my9f4qw.fsf@gitster.dls.corp.google.com>
-	<53CFC414.1010601@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Karsten Blees <karsten.blees@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 20:25:11 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH 0/7] Rewrite `git_config()` using config-set API
+Date: Wed, 23 Jul 2014 11:42:51 -0700
+Message-ID: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 20:43:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA1Dz-0005Rf-6m
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 20:25:11 +0200
+	id 1XA1W5-0006Op-0C
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 20:43:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932990AbaGWSZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 14:25:04 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:65000 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932766AbaGWSZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 14:25:03 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id B01F528A19;
-	Wed, 23 Jul 2014 14:25:02 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Gm4QoCykN3t1G3dduJ8owB9cbP8=; b=AzSHmz
-	86Dzs3zic9Z/9y2/MguZRhrc+PfiZmVGjS6Lm4byy8KwitYMP5kdGIotmaQqOPdL
-	7/7/lwg0D5ePSvDemEdOKcDdmLmO8UUEbLpLKbMOHtpEuEaZP9fm/Hg+kfHI5Dk6
-	DOkU4Gc6aMzVG2CBdi9lMQ0L0O/1lUV4WLLHk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=foZ3p7Roph/NRx49/oRuNIMOBVY5a0cm
-	GO6YAGG0nUktegY9lH8b3kxCFlCe1EjgQkUNlwUzg0vXviG4ICfXPvYt4RlHPO2o
-	NRNfZseltDs6d3L5HCjJw6bynuwFD1PppAnhdP077e0uEcSagsbliffOZSHJw/Kk
-	dX5+4lyDHjg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 77F0628A17;
-	Wed, 23 Jul 2014 14:25:02 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2CF9028A0D;
-	Wed, 23 Jul 2014 14:24:56 -0400 (EDT)
-In-Reply-To: <53CFC414.1010601@gmail.com> (Karsten Blees's message of "Wed, 23
-	Jul 2014 16:17:56 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: A5AD4B64-1296-11E4-9117-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S933067AbaGWSnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 14:43:49 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:47190 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932584AbaGWSns (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 14:43:48 -0400
+Received: by mail-pd0-f182.google.com with SMTP id fp1so2035594pdb.41
+        for <git@vger.kernel.org>; Wed, 23 Jul 2014 11:43:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=BTAHD9QnhaMgQpiMi97cxnNoHnLl87GzGuWIqKCkp14=;
+        b=u6h5p9vWiGpAj/qHAEk0nhkDci36ec9s7y8u07obWw7IxZrhXGRLr0sMwLR7MPxe18
+         R8EZI7wDUwKlFd3S76XinuVg99+5OL0NaN11WOYirl9ycrnInuShApmp2ot+PsazlTe6
+         AXWGP43LhB6akTZEtHb38sgsASzMXGPgRWbutHdUxkQQV1qduApmxT/msjJAGyK63LJ5
+         T2qcxNQL0Q8q6z3glw+hLumrB2e8ff8DhpPdWcMNIs0zrJEK56YSY82pzvjeASer/eSL
+         qXoE9HCwsKwLxSFJ/F1anrCCZ6IFH5mA2+SPOT7YnoQ1z73lhsXlKfcgPMi19QDNq+I2
+         kqgQ==
+X-Received: by 10.66.249.71 with SMTP id ys7mr4437960pac.112.1406141027941;
+        Wed, 23 Jul 2014 11:43:47 -0700 (PDT)
+Received: from localhost.localdomain ([27.56.89.40])
+        by mx.google.com with ESMTPSA id z10sm1067820pdo.14.2014.07.23.11.43.44
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 23 Jul 2014 11:43:47 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254101>
 
-Karsten Blees <karsten.blees@gmail.com> writes:
+This series builds on the top of 5def4132 (ta/config-set) in pu or topic[1]
+in the mailing list with name "git config cache & special querying API utilizing
+the cache".
 
-> Am 22.07.2014 23:44, schrieb Junio C Hamano:
->> 
->> * sk/mingw-uni-fix-more (2014-07-21) 14 commits
->> ...
->> * sk/mingw-tests-workaround (2014-07-21) 6 commits
->> ...
->
-> Yes, I think both series are ready.
->
-> Compiles with msysgit and MSVC (with NO_CURL=1).
+This series aims to do these three things,
 
-Thanks.
+* Use the config-set API to rewrite git_config().
 
-> With the version in pu, three tests fail. t7001 is fixed with a newer 'cp'.
+* Solve any legacy bugs in the previous system while at it.
 
-It seems that the only use of the "copy symlinks as-is" in that test
-are to move trash/submodule/.git to trash/.git/modules/submodule;
-as the longer-term direction is not to rely on symlinks in .git/
-(and we have got rid of HEAD -> refs/heads/master long time ago),
-perhaps we do not even want to have "-P" there?
+* To be feature complete compared to the previous git_config() implementation,
+  which I think it is now. (added the line number and file name info just for
+  completeness)
 
-> The other two are unrelated (introduced by nd/multiple-work-trees topic).
->
-> * t1501-worktree: failed 1
->   As of 5bbcb072 "setup.c: support multi-checkout repo setup"
->   Using $TRASH_DIRECTORY doesn't work on Windows.
->   
-> * t2026-prune-linked-checkouts: failed 1
->   As of 404a45f1 "prune: strategies for linked checkouts"
->   Dito.
->
-> * t7001-mv: failed 6
->   'cp -P' doesn't work due to outdated cp.exe.
+Also, I haven't yet checked the exact improvements but still as a teaser,
+git status now only rereads the configuration files twice instead of four
+times.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/253862
+
+Tanay Abhra (7):
+
+ Documentation/technical/api-config.txt |  5 ++
+ cache.h                                |  1 +
+ config.c                               | 93 +++++++++++++++++++++++++++++++---
+ t/t1308-config-set.sh                  | 17 +++++++
+ test-config.c                          | 10 ++++
+ userdiff.c                             | 14 ++++-
+ 6 files changed, 131 insertions(+), 9 deletions(-)
+
+-- 
+1.9.0.GIT
