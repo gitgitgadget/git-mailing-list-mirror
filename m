@@ -1,143 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/7] rewrite git_config() to use the config-set API
-Date: Wed, 23 Jul 2014 14:58:29 -0700
-Message-ID: <xmqq7g33d9fe.fsf@gitster.dls.corp.google.com>
-References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
-	<1406140978-9472-3-git-send-email-tanayabh@gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: doublecheck if really file or dir
+Date: Wed, 23 Jul 2014 22:04:14 +0000
+Message-ID: <20140723220414.GA14145@dcvr.yhbt.net>
+References: <1405657201-32035-1-git-send-email-amanduch@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 23:58:43 2014
+Cc: git@vger.kernel.org
+To: Andrej Manduch <amanduch@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 00:04:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA4Yc-0005qs-Hy
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 23:58:42 +0200
+	id 1XA4e3-0002yH-IV
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 00:04:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933585AbaGWV6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 17:58:38 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61711 "EHLO smtp.pobox.com"
+	id S933624AbaGWWEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 18:04:16 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:40576 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933437AbaGWV6i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 17:58:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 556842B7E4;
-	Wed, 23 Jul 2014 17:58:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PnS1GaL5DOKT9xG7vdA1Y7oeaVQ=; b=bqeUtM
-	iEV6+5WubusvylGdQNAZtJasagVksd6uqCa5hhRwNmDPiHcrWfwf6yuwZMIImNqv
-	/Mv+x1VNAE5IVOJNjHbrttTSDALPOYXIywr2LT8HCB+avGAv21ckb2x96765BwyM
-	4GSYx3CLNgJgrJfmer0SkGvbmh17654LsEtjs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BixW6AH3FKPluB6SVllMr7OKUBOq5+nV
-	LMZEDmrgBVFE6c++z+0Ic2Mx+QvoZqOqqJ0K00Vczdq6sgWosOHpfJAOpHc29LtQ
-	sAlbMlePceK/6k8FEQNhCWkx8CMogSTqzO3Q8EeSq5zP2DoJyf38NQy4zjp1byKN
-	uVV/4zOlsA0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4BE792B7E3;
-	Wed, 23 Jul 2014 17:58:37 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5FC702B7DD;
-	Wed, 23 Jul 2014 17:58:31 -0400 (EDT)
-In-Reply-To: <1406140978-9472-3-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Wed, 23 Jul 2014 11:42:53 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7C22F24E-12B4-11E4-B759-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S933386AbaGWWEP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 18:04:15 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1D9C11F4DD;
+	Wed, 23 Jul 2014 22:04:15 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <1405657201-32035-1-git-send-email-amanduch@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254132>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Andrej Manduch <amanduch@gmail.com> wrote:
+> * this fixes 'git svn info `pwd`' buggy behaviour
 
-> Of all the functions in `git_config*()` family, `git_config()` has the
-> most invocations in the whole code base. Each `git_config()` invocation
-> causes config file rereads which can be avoided using the config-set API.
->
-> Use the config-set API to rewrite `git_config()` to use the config caching
-> layer to avoid config file rereads on each invocation during a git process
-> lifetime. First invocation constructs the cache, and after that for each
-> successive invocation, `git_config()` feeds values from the config cache
-> instead of rereading the configuration files.
->
-> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
-> ---
->  config.c | 29 +++++++++++++++++++++++++++--
->  1 file changed, 27 insertions(+), 2 deletions(-)
+Good catch, the commit could use a better description, something like:
+--------------------------- 8< ----------------------------
+Subject: [PATCH] git-svn: "info" checks for dirs more carefully
 
-This is the natural logical conclusion ;-)
+This avoids a "Reading from filehandle failed at ..." error when
+running "git svn info `pwd`".
 
-> diff --git a/config.c b/config.c
-> index 6db8f97..a7fb9a4 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1232,11 +1232,36 @@ int git_config_with_options(config_fn_t fn, void *data,
->  	return ret;
->  }
+Signed-off-by: Andrej Manduch <amanduch@gmail.com>
+--------------------------- 8< ----------------------------
+
+While your patch avoids an error, but the output isn't right, either.
+I tried it running in /home/ew/ruby, the URL field is bogus:
+
+    ~/ruby$ git svn info `pwd`
+    Path: /home/ew/ruby
+    URL: svn+ssh://svn.ruby-lang.org/ruby/trunk/home/ew/ruby
+    Repository Root: svn+ssh://svn.ruby-lang.org/ruby
+    Repository UUID: b2dd03c8-39d4-4d8f-98ff-823fe69b080e
+    Revision: 46901
+    Node Kind: directory
+    Schedule: normal
+    Last Changed Author: hsbt
+    Last Changed Rev: 46901
+    Last Changed Date: 2014-07-22 19:06:12 +0000 (Tue, 22 Jul 2014)
+
+The URL should be:
+
+    URL: svn+ssh://svn.ruby-lang.org/ruby/trunk
+
+It's better than an error, but it'd be nice if someone who uses
+this command can fix it (*hint* :).
+
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -2029,7 +2029,7 @@ sub find_file_type_and_diff_status {
+>  	my $mode = (split(' ', $ls_tree))[0] || "";
 >  
-> -int git_config(config_fn_t fn, void *data)
-> +static int git_config_raw(config_fn_t fn, void *data)
->  {
->  	return git_config_with_options(fn, data, NULL, 1);
->  }
->  
-> +static int configset_iter(struct config_set *cs, config_fn_t fn, void *data)
-> +{
-> +	int i;
-> +	struct string_list *strptr;
+>  	return ("link", $diff_status) if $mode eq "120000";
+> -	return ("dir", $diff_status) if $mode eq "040000";
+> +	return ("dir", $diff_status) if $mode eq "040000" or -d $path;
 
-We know string_list would hold strings, so naming the variable
-strptr does not give us much information.  As this is a list of
-values you would get by querying for a variable (or "key"), perhaps
-name it "values" or something?
+"or" has a lower precedence than "||", so I would do the following:
 
-> +	struct config_set_element *entry;
-> +	struct hashmap_iter iter;
+	return ("dir", $diff_status) if $mode eq "040000" || -d $path;
 
-Have a blank line between the local variable definitions (above) and
-the first executable statement (below); it would make it easier to
-read, especially because out codebase do not have decl-after-stmt.
+The general rule I've learned is to use "||" for conditionals and
+"or" for control flow (e.g. do_something() or die("...") ).
 
-> +	hashmap_iter_init(&cs->config_hash, &iter);
-> +	while ((entry = hashmap_iter_next(&iter))) {
-> +		strptr = &entry->value_list;
-> +		for (i = 0; i < strptr->nr; i++) {
-> +			if (fn(entry->key, strptr->items[i].string, data) < 0)
-> +				die("bad config file line in (TODO: file/line info)");
-> +		}
-> +	}
-> +	return 0;
-> +}
-> +
-> +static void git_config_check_init(void);
-> +
-> +int git_config(config_fn_t fn, void *data)
-> +{
-> +	git_config_check_init();
-> +	return configset_iter(&the_config_set, fn, data);
-> +}
+I can take your patch with the above changes (no need to resend),
+but I'd be happier to see the URL field corrected if you want
+to reroll.
 
-Perhaps if you define this function at the right place in the file
-you do not have to add an forward decl of git_config_check_init()?
-
->  static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
->  {
->  	struct config_set_element k;
-> @@ -1418,7 +1443,7 @@ static void git_config_check_init(void)
->  	if (the_config_set.hash_initialized)
->  		return;
->  	git_configset_init(&the_config_set);
-> -	git_config(config_set_callback, &the_config_set);
-> +	git_config_raw(config_set_callback, &the_config_set);
->  }
->  
->  void git_config_clear(void)
+Thanks.
