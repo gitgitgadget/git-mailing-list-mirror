@@ -1,126 +1,153 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 5/7] enforce `xfuncname` precedence over `funcname`
-Date: Wed, 23 Jul 2014 17:04:52 -0400
-Message-ID: <CAPig+cRwtWMwDOxQEhLDy_eZbPuYRhiag4SwJ+A0OOu44un5MA@mail.gmail.com>
-References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
-	<1406140978-9472-6-git-send-email-tanayabh@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] checkout --to: no auto-detach if the ref is already checked out
+Date: Wed, 23 Jul 2014 14:16:15 -0700
+Message-ID: <xmqqzjfzdbds.fsf@gitster.dls.corp.google.com>
+References: <1406115795-24082-1-git-send-email-pclouds@gmail.com>
+	<1406115795-24082-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 23:05:01 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 23:16:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA3ib-0004rv-V4
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 23:04:58 +0200
+	id 1XA3tl-0007Sg-H6
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 23:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933431AbaGWVEy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 17:04:54 -0400
-Received: from mail-yh0-f53.google.com ([209.85.213.53]:61319 "EHLO
-	mail-yh0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933388AbaGWVEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 17:04:53 -0400
-Received: by mail-yh0-f53.google.com with SMTP id c41so1219880yho.40
-        for <git@vger.kernel.org>; Wed, 23 Jul 2014 14:04:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=+hFjeOVX5omK7isH1y1f1Ma9lE6RWwZT4pe/Sf3V2wQ=;
-        b=xS1QOyhoKGK+waqQbkjS9efgoKnuDorlM1yEKFS1KK3H6+UbqSdRrFmRJLndIahedP
-         wBxwC2+DcSzKv5pQIpinvbvwZOKleybJdFaiQqGWDYLfPeKDzV06nMR5j5z6YUk/b0Is
-         8Yzv7xwON5O2cxoc1I+sBZh97ptJ4DFdGGDCNV281dTlxpEHtnuuAr32yCG5dad+IUH7
-         tZt2k7CmO+HaCPvTPXxJ1HV9oWQb52INArCU5X52uqLSoz0ZL0azHGCzOFlls4RMrSWj
-         cx/YTrQDSc8ac5Co21a3mlOAyoi4fmxelyPmc+5BCz6ubEx9TORC6q+tOuLc2DVf2MVJ
-         rDSQ==
-X-Received: by 10.236.57.232 with SMTP id o68mr2611583yhc.75.1406149492932;
- Wed, 23 Jul 2014 14:04:52 -0700 (PDT)
-Received: by 10.170.163.5 with HTTP; Wed, 23 Jul 2014 14:04:52 -0700 (PDT)
-In-Reply-To: <1406140978-9472-6-git-send-email-tanayabh@gmail.com>
-X-Google-Sender-Auth: SSiQ6WjpmvT5QUQGWsDZkzmBUg0
+	id S933671AbaGWVQZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2014 17:16:25 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55313 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933664AbaGWVQY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jul 2014 17:16:24 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 55B472AB4B;
+	Wed, 23 Jul 2014 17:16:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=f8nmSMJD1q2u
+	wnK5hOMmlqghud8=; b=nZ88Bpu7sMREB52OlO7c3qT8UVm68SG3S/UWKDnUtuL3
+	winI9BGnT2+wGzOD7TB+3tHjsrgmEDxNvV1BlT5rW9YhVuGq0/OgS4v0teurNG1D
+	2xWnJ0LEuf15a/Cxn/0a+2chwpJooFTC3PoR4JXyJ3BrmZVsLEu01bpf3Axyqs8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pXblU9
+	+8a7vOA0vY1D7cu2R1DOhw66O8Bo4VPltnQh3xuFcLZoz6KA+2IAD/Uv/xY9cQoU
+	W338c3Y2yc2OifcnE5m5iFSD++cwP9x7CVknhpbDy9aMnA3/ZzOM5+lJzATsXIKt
+	FYU6+Qlqjy9M8IcizUGMf+3qi6q4eOdHMwRvE=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 477022AB4A;
+	Wed, 23 Jul 2014 17:16:23 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0461D2AB44;
+	Wed, 23 Jul 2014 17:16:16 -0400 (EDT)
+In-Reply-To: <1406115795-24082-4-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 23
+ Jul 2014 18:43:13 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 9588C6D8-12AE-11E4-A394-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254122>
 
-On Wed, Jul 23, 2014 at 2:42 PM, Tanay Abhra <tanayabh@gmail.com> wrote:
-> t4018-diff-funcname.sh fails for the new `git_config()` which uses the
-> configuration files caching layer internally.
-> The test introduced in commit d64d6cdc checks that whether `xfuncname` takes
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-s/that//
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index c83f476..d35245a 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -1006,31 +1006,52 @@ static const char *unique_tracking_name(const=
+ char *name, unsigned char *sha1)
+>  	return NULL;
+>  }
+> =20
+> -static int check_linked_checkout(struct branch_info *new,
+> -				  const char *name, const char *path)
+> +static void check_linked_checkout(struct branch_info *new, const cha=
+r *id)
+>  {
+>  	struct strbuf sb =3D STRBUF_INIT;
+> +	struct strbuf path =3D STRBUF_INIT;
+> +	struct strbuf gitdir =3D STRBUF_INIT;
+>  	const char *start, *end;
+> -	if (strbuf_read_file(&sb, path, 0) < 0 ||
+> -	    !skip_prefix(sb.buf, "ref:", &start)) {
+> -		strbuf_release(&sb);
+> -		return 0;
+> -	}
+> =20
+> +	if (id)
+> +		strbuf_addf(&path, "%s/repos/%s/HEAD", get_git_common_dir(), id);
+> +	else
+> +		strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
+> +
+> +	if (strbuf_read_file(&sb, path.buf, 0) <=3D 0 ||
+> +	    !skip_prefix(sb.buf, "ref:", &start))
+> +		goto done;
+>  	while (isspace(*start))
+>  		start++;
+>  	end =3D start;
+>  	while (*end && !isspace(*end))
+>  		end++;
 
-> precedence over `funcname` variable which was not guaranteed by config API
-> previously and worked only because values were parsed and fed in order. The
-> new  `git_config()` only guarantees precedence order for variables with the
+Not new in this round of update, and may not even be an issue, but:
 
-s/\s+/ /
+ - Earlier, the code returned early on a negative return value from
+   read-file (i.e., an error), but this round it also does so for
+   zero.  Intended?
 
-> same name.
->
-> Also `funcname` variable is deprecated and not documented properly.
-> `xfuncname` is mentioned in the docs and takes precedence over `funcname`.
-> Instead of removing `funcname` variable, enforce `xfuncname` precedence over
-> `funcname` when the variables have the same subsection. Remove dependency
-> that required values to be fed to userdiff_config() in parsing order for the
-> test to succeed.
->
-> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
-> ---
-> Note: this the only test that failed for the new git_config() rewrite.
->
->  userdiff.c | 14 ++++++++++++--
->  1 file changed, 12 insertions(+), 2 deletions(-)
->
-> diff --git a/userdiff.c b/userdiff.c
-> index fad52d6..a51bc89 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -2,6 +2,7 @@
->  #include "userdiff.h"
->  #include "cache.h"
->  #include "attr.h"
-> +#include "string-list.h"
->
->  static struct userdiff_driver *drivers;
->  static int ndrivers;
-> @@ -211,9 +212,12 @@ int userdiff_config(const char *k, const char *v)
->         struct userdiff_driver *drv;
->         const char *name, *type;
->         int namelen;
-> +       char *subsection = NULL;
-> +       static struct string_list xflag = STRING_LIST_INIT_DUP;
->
->         if (parse_config_key(k, "diff", &name, &namelen, &type) || !name)
->                 return 0;
-> +       subsection = xstrndup(name, namelen);
->
->         drv = userdiff_find_by_namelen(name, namelen);
->         if (!drv) {
-> @@ -224,10 +228,16 @@ int userdiff_config(const char *k, const char *v)
->                 drv->binary = -1;
->         }
->
-> -       if (!strcmp(type, "funcname"))
-> +       if (!strcmp(type, "funcname") && !unsorted_string_list_has_string(&xflag, subsection)) {
-> +               free (subsection);
->                 return parse_funcname(&drv->funcname, k, v, 0);
-> -       if (!strcmp(type, "xfuncname"))
-> +       }
-> +       if (!strcmp(type, "xfuncname")) {
-> +               string_list_append(&xflag, subsection);
-> +               free (subsection);
->                 return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
-> +       }
-> +       free(subsection);
->         if (!strcmp(type, "binary"))
->                 return parse_tristate(&drv->binary, k, v);
->         if (!strcmp(type, "command"))
-> --
-> 1.9.0.GIT
+ - The above duplicates the logic in resolve_ref_unsafe() and
+   resolve_gitlink_ref_recursive(); three places now knows what a
+   textual symref looks like (i.e. begins with "ref:", zero or more
+   whitespaces, the target ref and then zero or more trailing
+   whitespaces).  Perhaps we need to consolidate the code further,
+   so that this knowledge does not leak out of refs.c?
+
+> +	if (strncmp(start, new->path, end - start) ||
+> +	    new->path[end - start] !=3D '\0')
+> +		goto done;
+> +	if (id) {
+> +		strbuf_reset(&path);
+> +		strbuf_addf(&path, "%s/repos/%s/gitdir",
+> +			    get_git_common_dir(), id);
+> +		if (strbuf_read_file(&gitdir, path.buf, 0) <=3D 0)
+> +			goto done;
+> +		while (gitdir.len && (gitdir.buf[gitdir.len - 1] =3D=3D '\n' ||
+> +				      gitdir.buf[gitdir.len - 1] =3D=3D '\r'))
+> +			gitdir.buf[--gitdir.len] =3D '\0';
+
+Accepting arbitrary numbers of '\r' and '\n' sounds as if the code
+is allowing it, but text editors would not end their files with a
+nonsense sequence like "\r\r\n\r" unless the end-user works to do
+so, and if you are prepared to be lenient to noisy human input, not
+trimming trailing whitespaces does not look it is going far enough
+to help them.
+
+I do not see a good reason to allow random text editors to edit this
+file in the first place, so my preference is:
+
+	if (strbuf_read_file(...) < 0 ||
+	    gitdir.len =3D=3D 0 ||
+            gitdir.buf[gitdir.len - 1] !=3D '\n')
+            goto error_return;
+	gitdir.buf[--gitdir.len] =3D '\0';
+
+Alternatively, if you are trying to be lenient to human input, I
+would understand:
+
+	if (strbuf_read_file(...) < 0)
+        	goto error_return;
+	strbuf_rtrim(&gitdir);
+
+The code in the patch, which is something in between, does not make
+much sense to me.
