@@ -1,153 +1,165 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] checkout --to: no auto-detach if the ref is already checked out
-Date: Wed, 23 Jul 2014 14:16:15 -0700
-Message-ID: <xmqqzjfzdbds.fsf@gitster.dls.corp.google.com>
-References: <1406115795-24082-1-git-send-email-pclouds@gmail.com>
-	<1406115795-24082-4-git-send-email-pclouds@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 15/15] refs.c: allow deleting refs with a broken sha1
+Date: Wed, 23 Jul 2014 17:22:32 -0400
+Message-ID: <CAPig+cS3JETqxMi7bBvyb=kamWyqvPkLXmwsDd_G+K16EDxotw@mail.gmail.com>
+References: <1406135035-26441-1-git-send-email-sahlberg@google.com>
+	<1406135035-26441-16-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 23:16:30 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 23:22:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA3tl-0007Sg-H6
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 23:16:29 +0200
+	id 1XA3zm-0004wN-38
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 23:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933671AbaGWVQZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2014 17:16:25 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55313 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933664AbaGWVQY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 23 Jul 2014 17:16:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 55B472AB4B;
-	Wed, 23 Jul 2014 17:16:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=f8nmSMJD1q2u
-	wnK5hOMmlqghud8=; b=nZ88Bpu7sMREB52OlO7c3qT8UVm68SG3S/UWKDnUtuL3
-	winI9BGnT2+wGzOD7TB+3tHjsrgmEDxNvV1BlT5rW9YhVuGq0/OgS4v0teurNG1D
-	2xWnJ0LEuf15a/Cxn/0a+2chwpJooFTC3PoR4JXyJ3BrmZVsLEu01bpf3Axyqs8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pXblU9
-	+8a7vOA0vY1D7cu2R1DOhw66O8Bo4VPltnQh3xuFcLZoz6KA+2IAD/Uv/xY9cQoU
-	W338c3Y2yc2OifcnE5m5iFSD++cwP9x7CVknhpbDy9aMnA3/ZzOM5+lJzATsXIKt
-	FYU6+Qlqjy9M8IcizUGMf+3qi6q4eOdHMwRvE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 477022AB4A;
-	Wed, 23 Jul 2014 17:16:23 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0461D2AB44;
-	Wed, 23 Jul 2014 17:16:16 -0400 (EDT)
-In-Reply-To: <1406115795-24082-4-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 23
- Jul 2014 18:43:13 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9588C6D8-12AE-11E4-A394-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S933918AbaGWVWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 17:22:35 -0400
+Received: from mail-yk0-f182.google.com ([209.85.160.182]:57194 "EHLO
+	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933568AbaGWVWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 17:22:33 -0400
+Received: by mail-yk0-f182.google.com with SMTP id q9so1202514ykb.13
+        for <git@vger.kernel.org>; Wed, 23 Jul 2014 14:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=RHDF5E4frNrCY81iZcT9iOW0si+fl+l6oXFwJyGiF+Q=;
+        b=zYkujR1xWrxGb0WPtgImxailgGlUIiFWysB7nxflOlZDERnRyh1e4NSXFXS8+jaKGv
+         yYG7lm1MnZJuBSaypWg10zmY9eUf+eKyY1tjCWcqWJ67JyS8XwRW9tJUCNlOn02pQkGZ
+         /5nLWMNHVET0CDbjmpCI36pb8OxIUPhvcZXXlwQM4ziHfmrf0R4zIC3JURznX9nvjpiy
+         5Cdmyfdey8VO4Jj9PrkAcPtZ1i66XPbXz0LieboVvg7NKBkef+iDA2RIOJh3DIFCPI74
+         fBjz3Uq/fDqFBCa4Ts2Re2O1qTkxvrDUykEeREIOUjD5ZtU5pwEQMGa+l380/3eGKan9
+         V67g==
+X-Received: by 10.236.99.39 with SMTP id w27mr5077929yhf.109.1406150552525;
+ Wed, 23 Jul 2014 14:22:32 -0700 (PDT)
+Received: by 10.170.163.5 with HTTP; Wed, 23 Jul 2014 14:22:32 -0700 (PDT)
+In-Reply-To: <1406135035-26441-16-git-send-email-sahlberg@google.com>
+X-Google-Sender-Auth: POCoWUDaqWslQecpXKaXTJFcJJk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254123>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Wed, Jul 23, 2014 at 1:03 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
+> Add (back?) support to make it possible to delete refs that are broken.
+>
+> Add a new flag REF_ALLOWBROKEN that can be passed to the functions to
+> lock a ref. If this flag is set we allow locking the ref even if the
+> ref points to a broken sha1. For example a sha1 that is created by :
+>
+>    echo "Broken ref" > .git/refs/heads/foo-broken-1
+>
+> Use this flag when calling from branch.c dusing a ref delete so that we
 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index c83f476..d35245a 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1006,31 +1006,52 @@ static const char *unique_tracking_name(const=
- char *name, unsigned char *sha1)
->  	return NULL;
->  }
-> =20
-> -static int check_linked_checkout(struct branch_info *new,
-> -				  const char *name, const char *path)
-> +static void check_linked_checkout(struct branch_info *new, const cha=
-r *id)
->  {
->  	struct strbuf sb =3D STRBUF_INIT;
-> +	struct strbuf path =3D STRBUF_INIT;
-> +	struct strbuf gitdir =3D STRBUF_INIT;
->  	const char *start, *end;
-> -	if (strbuf_read_file(&sb, path, 0) < 0 ||
-> -	    !skip_prefix(sb.buf, "ref:", &start)) {
-> -		strbuf_release(&sb);
-> -		return 0;
-> -	}
-> =20
-> +	if (id)
-> +		strbuf_addf(&path, "%s/repos/%s/HEAD", get_git_common_dir(), id);
-> +	else
-> +		strbuf_addf(&path, "%s/HEAD", get_git_common_dir());
-> +
-> +	if (strbuf_read_file(&sb, path.buf, 0) <=3D 0 ||
-> +	    !skip_prefix(sb.buf, "ref:", &start))
-> +		goto done;
->  	while (isspace(*start))
->  		start++;
->  	end =3D start;
->  	while (*end && !isspace(*end))
->  		end++;
+Presumably: s/dusing/doing/
 
-Not new in this round of update, and may not even be an issue, but:
-
- - Earlier, the code returned early on a negative return value from
-   read-file (i.e., an error), but this round it also does so for
-   zero.  Intended?
-
- - The above duplicates the logic in resolve_ref_unsafe() and
-   resolve_gitlink_ref_recursive(); three places now knows what a
-   textual symref looks like (i.e. begins with "ref:", zero or more
-   whitespaces, the target ref and then zero or more trailing
-   whitespaces).  Perhaps we need to consolidate the code further,
-   so that this knowledge does not leak out of refs.c?
-
-> +	if (strncmp(start, new->path, end - start) ||
-> +	    new->path[end - start] !=3D '\0')
-> +		goto done;
-> +	if (id) {
-> +		strbuf_reset(&path);
-> +		strbuf_addf(&path, "%s/repos/%s/gitdir",
-> +			    get_git_common_dir(), id);
-> +		if (strbuf_read_file(&gitdir, path.buf, 0) <=3D 0)
-> +			goto done;
-> +		while (gitdir.len && (gitdir.buf[gitdir.len - 1] =3D=3D '\n' ||
-> +				      gitdir.buf[gitdir.len - 1] =3D=3D '\r'))
-> +			gitdir.buf[--gitdir.len] =3D '\0';
-
-Accepting arbitrary numbers of '\r' and '\n' sounds as if the code
-is allowing it, but text editors would not end their files with a
-nonsense sequence like "\r\r\n\r" unless the end-user works to do
-so, and if you are prepared to be lenient to noisy human input, not
-trimming trailing whitespaces does not look it is going far enough
-to help them.
-
-I do not see a good reason to allow random text editors to edit this
-file in the first place, so my preference is:
-
-	if (strbuf_read_file(...) < 0 ||
-	    gitdir.len =3D=3D 0 ||
-            gitdir.buf[gitdir.len - 1] !=3D '\n')
-            goto error_return;
-	gitdir.buf[--gitdir.len] =3D '\0';
-
-Alternatively, if you are trying to be lenient to human input, I
-would understand:
-
-	if (strbuf_read_file(...) < 0)
-        	goto error_return;
-	strbuf_rtrim(&gitdir);
-
-The code in the patch, which is something in between, does not make
-much sense to me.
+> only allow locking those broken refs IFF when called during a branch
+> delete.
+>
+> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> ---
+>  builtin/branch.c |  6 ++++--
+>  refs.c           | 10 +++++++---
+>  refs.h           |  3 ++-
+>  3 files changed, 13 insertions(+), 6 deletions(-)
+>
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 5c95656..6d70037 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -236,6 +236,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>                 name = mkpathdup(fmt, bname.buf);
+>                 target = resolve_ref_unsafe(name, sha1,
+>                                             RESOLVE_REF_ALLOW_BAD_NAME, &flags);
+> +               if (!target && (flags & REF_ISBROKEN))
+> +                       target = name;
+>                 if (!target ||
+>                     (!(flags & REF_ISSYMREF) && is_null_sha1(sha1))) {
+>                         error(remote_branch
+> @@ -245,14 +247,14 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
+>                         continue;
+>                 }
+>
+> -               if (!(flags & REF_ISSYMREF) &&
+> +               if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
+>                     check_branch_commit(bname.buf, name, sha1, head_rev, kinds,
+>                                         force)) {
+>                         ret = 1;
+>                         continue;
+>                 }
+>
+> -               if (delete_ref(name, sha1, REF_NODEREF)) {
+> +               if (delete_ref(name, sha1, REF_NODEREF|REF_ALLOWBROKEN)) {
+>                         error(remote_branch
+>                               ? _("Error deleting remote branch '%s'")
+>                               : _("Error deleting branch '%s'"),
+> diff --git a/refs.c b/refs.c
+> index 0ead11f..2662ef6 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2122,12 +2122,12 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>         int resolve_flags;
+>         int missing = 0;
+>         int attempts_remaining = 3;
+> -       int bad_refname;
+> +       int bad_ref;
+>
+>         lock = xcalloc(1, sizeof(struct ref_lock));
+>         lock->lock_fd = -1;
+>
+> -       bad_refname = check_refname_format(refname, REFNAME_ALLOW_ONELEVEL);
+> +       bad_ref = check_refname_format(refname, REFNAME_ALLOW_ONELEVEL);
+>
+>         resolve_flags = RESOLVE_REF_ALLOW_BAD_NAME;
+>         if (mustexist)
+> @@ -2150,6 +2150,10 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>                 refname = resolve_ref_unsafe(orig_refname, lock->old_sha1,
+>                                              resolve_flags, &type);
+>         }
+> +       if (!refname && (flags & REF_ALLOWBROKEN) && (type & REF_ISBROKEN)) {
+> +               bad_ref = 1;
+> +               refname = orig_refname;
+> +       }
+>         if (type_p)
+>             *type_p = type;
+>         if (!refname) {
+> @@ -2212,7 +2216,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>                 else
+>                         unable_to_lock_index_die(ref_file, errno);
+>         }
+> -       if (bad_refname)
+> +       if (bad_ref)
+>                 return lock;
+>         return old_sha1 ? verify_lock(lock, old_sha1, mustexist) : lock;
+>
+> diff --git a/refs.h b/refs.h
+> index 712fc32..0172f48 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -174,10 +174,11 @@ extern int peel_ref(const char *refname, unsigned char *sha1);
+>   * Flags controlling transaction_update_sha1(), transaction_create_sha1(), etc.
+>   * REF_NODEREF: act on the ref directly, instead of dereferencing
+>   *              symbolic references.
+> - *
+> + * REF_ALLOWBROKEN: allow locking refs that are broken.
+>   * Flags >= 0x100 are reserved for internal use.
+>   */
+>  #define REF_NODEREF    0x01
+> +#define REF_ALLOWBROKEN 0x02
+>
+>  /** Reads log for the value of ref during at_time. **/
+>  extern int read_ref_at(const char *refname, unsigned long at_time, int cnt,
+> --
+> 2.0.1.508.g763ab16
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
