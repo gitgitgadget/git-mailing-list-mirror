@@ -1,67 +1,109 @@
-From: Kevin <ikke@ikke.info>
-Subject: Re: confused about remote branch management
-Date: Wed, 23 Jul 2014 15:30:32 +0200
-Message-ID: <CAO54GHDC1rA9hNcAHw0dTcm7Ynu=QRacmnsP9ub09qSP_8NAEg@mail.gmail.com>
-References: <1406083743.29001.139.camel@localhost>
+From: Sergei Organov <osv@javad.com>
+Subject: rebase flattens history when it shouldn't?
+Date: Wed, 23 Jul 2014 17:34:25 +0400
+Message-ID: <87k374xkpq.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Ross Boylan <ross@biostat.ucsf.edu>
-X-From: git-owner@vger.kernel.org Wed Jul 23 15:31:00 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jul 23 15:34:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9wdG-0002Zd-4m
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 15:30:58 +0200
+	id 1X9wgi-00069t-MC
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 15:34:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751709AbaGWNay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 09:30:54 -0400
-Received: from mail-yh0-f45.google.com ([209.85.213.45]:63967 "EHLO
-	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751509AbaGWNax (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 09:30:53 -0400
-Received: by mail-yh0-f45.google.com with SMTP id 29so772750yhl.18
-        for <git@vger.kernel.org>; Wed, 23 Jul 2014 06:30:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=txrZFNaso0N8KYI7WZqsnmw6A6hef853UiA4eymQKEc=;
-        b=yGd8myXb1i03H9P9vODla6C4OfsvfFTTMuMl5A8fyYqGrhhY3+uLglJC3CsV0myg9h
-         zU/FcT6/iYfvAFkO4apj8YGDXxev1v3K2V7xdUTJwoq/HW2qjUbkJ7Ii8ZOcv8KPs21F
-         mrujisM2Or3EpJj81ogTXD2rhNf4dRgfhglzL/o2wHXBXT4CP7n846jX0AiFsvLVyhRz
-         cArn9V6wPzwbOELZY43KLYvjzPF5OMGc27z7zCLhIoEdzSWq/MNoqUsegcGYbs83C6dm
-         4lEkfmYUwtilbVyrOchHzQDs7DGedkp7FQxdBXJ+yP8e0FYXDrJc99ZAItZinnPOefnf
-         fwpg==
-X-Received: by 10.236.7.109 with SMTP id 73mr1800076yho.148.1406122252669;
- Wed, 23 Jul 2014 06:30:52 -0700 (PDT)
-Received: by 10.170.130.144 with HTTP; Wed, 23 Jul 2014 06:30:32 -0700 (PDT)
-In-Reply-To: <1406083743.29001.139.camel@localhost>
-X-Google-Sender-Auth: S5RSFA8US7COr7rumGB3ngJOVjM
+	id S1752877AbaGWNe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 09:34:28 -0400
+Received: from mail.javad.com ([54.86.164.124]:40415 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752208AbaGWNe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 09:34:28 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id B47996184D
+	for <git@vger.kernel.org>; Wed, 23 Jul 2014 13:34:26 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <s.organov@javad.com>)
+	id 1X9wgb-00060S-1S
+	for git@vger.kernel.org; Wed, 23 Jul 2014 17:34:25 +0400
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254075>
 
-On Jul 23, 2014 5:11 AM, "Ross Boylan" <ross@biostat.ucsf.edu> wrote:
->
-> My local master branch is the result of a merge of upstream master and
-> some local changes.  I want to merge in more recent upstream work.
-> git pull doesn't seem to have updated origin/master, and git checkout
-> origin/master also doesn't seem to work.
->
+Hello,
 
-git pull with two parameters in older versions will not update remote
-tracking branches. That's because the last parameter expects a refspec
-with a source and destination and you only specify a source.
+$ git --version
+git version 1.9.3
 
-Doing a git fetch will update them.
+Please consider the following history:
 
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git --version
-> git version 1.7.10.4
+     --C--
+    /     \
+   /   ----M topic,HEAD
+  /   /
+ A---B master
 
-Version 1.8.4 changes this behavior and will update the remote
-tracking branches.
+shouldn't
+
+$ git rebase master
+
+be a no-op here? According to my reading of the rebase manual page, it
+should be a no-op, as 'topic' is a descendant of the 'master'. Instead,
+"git rebase master" flattens the history to:
+
+       ----C topic,HEAD
+      /
+ A---B master
+
+I'd expect --force-rebase to be required for this to happen:
+
+-f, --force-rebase
+    Force the rebase even if the current branch is a descendant of the
+    commit you are rebasing onto. Normally non-interactive rebase will
+    exit with the message "Current branch is up to date" in such a
+    situation. Incompatible with the --interactive option.
+
+Also notice that:
+
+$ git rebase --preserve-merges --verbose master
+
+does perform the rebasing work, even though it does not change the
+history in the end.
+
+Here is use-case where it came from and where it gave me real surprise:
+
+I have pull.rebase=true in configuration. Being on a remote tracking
+branch, I've successfully pulled from the origin and had no any local
+changes on this branch. Then I've successfully merged another branch to
+the current one but didn't push the changes back upstream. A few hours
+later I returned to the work and issued "git pull" that instead of doing
+nothing (as it would be should pull.rebase be either "false" or
+"preserve") created a surprising mess.
+
+Do you think it's worth fixing?
+
+Here are reproduction commands for the example history:
+
+git init t
+cd t
+echo A > a
+echo B > b
+git add a b
+git commit -m A -a
+git checkout -b x
+echo A >> a
+git commit -m C -a
+git checkout master
+echo B >> b
+git commit -m B -a
+git checkout -b topic
+git merge -m M x
+git branch -d x
+git rebase master
+
+-- 
+Sergey.
