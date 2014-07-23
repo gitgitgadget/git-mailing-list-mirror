@@ -1,77 +1,108 @@
-From: Stefan Beller <stefanbeller@gmail.com>
-Subject: [PATCH 2/2] .mailmap: Combine my emails
-Date: Wed, 23 Jul 2014 14:32:10 +0200
-Message-ID: <1406118730-13224-2-git-send-email-stefanbeller@gmail.com>
-References: <1406118730-13224-1-git-send-email-stefanbeller@gmail.com>
-Cc: Stefan Beller <stefanbeller@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Jul 23 14:32:31 2014
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: Re: Bug in get_pwd_cwd() in Windows?
+Date: Wed, 23 Jul 2014 14:40:21 +0200
+Message-ID: <53CFAD35.1080604@gmail.com>
+References: <CACsJy8BY8pyuZ0eY7qK86RGUh8Vp9FVE55TskcQhBTrwwPowEQ@mail.gmail.com> <53CEBD13.5040004@web.de> <CACsJy8Ch6FvWp-pOOG4-kDVmb+kyav7oromH8EpeEesPj7B9Yg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Wed Jul 23 14:40:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9vif-0005sD-OY
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 14:32:30 +0200
+	id 1X9vqO-00055Z-Bx
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 14:40:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756665AbaGWMcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 08:32:23 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:65382 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753976AbaGWMcV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 08:32:21 -0400
-Received: by mail-wi0-f175.google.com with SMTP id ho1so7613815wib.2
-        for <git@vger.kernel.org>; Wed, 23 Jul 2014 05:32:19 -0700 (PDT)
+	id S1753903AbaGWMkY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2014 08:40:24 -0400
+Received: from mail-we0-f177.google.com ([74.125.82.177]:43684 "EHLO
+	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751753AbaGWMkY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 08:40:24 -0400
+Received: by mail-we0-f177.google.com with SMTP id w62so1090642wes.8
+        for <git@vger.kernel.org>; Wed, 23 Jul 2014 05:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=A6BhuIV0uL0kTdwT2Oaq1mm8UCyb/oFIKKpcsRqecQc=;
-        b=XuakhJL60tm9pzwQ69FtTp1JC4OZa/GlxJW9OmGb1lIr/Q1jo1TavhkGnM7Bq2pWur
-         ByTsDNx+6GK5LfVOKhdbGK+dQwMPlnBxCuVoRt0v69p492SZ7k/rRgKGIxNQr7w6G1FI
-         SAx/8GcIojkbEokiHwuA5BhfBL88hzGTncOnYr6N2rHVJwrpNsGbWjlSj+DDgh5SovB/
-         0C9k2MNY8/G1cawfsR2P++AfXDnv6yDSX2A3+CBFj5hhN/0/ElXM8Umr3REh9YPQBEnI
-         sbqUxmCqv3NszysWmfoRdArLJEC4Eu3MOJWQnSFGgK0lX3p+1eeHn0q0y5i+Gaxcyb3c
-         MeHw==
-X-Received: by 10.180.187.197 with SMTP id fu5mr9687365wic.64.1406118739452;
-        Wed, 23 Jul 2014 05:32:19 -0700 (PDT)
-Received: from localhost (ip-109-91-30-58.unitymediagroup.de. [109.91.30.58])
-        by mx.google.com with ESMTPSA id mv3sm8951548wic.21.2014.07.23.05.32.18
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=jtQMyqkWvRjynvzfQ+f1Dqqd5/Hx0vn/Lbo3yK6mm5Q=;
+        b=PQQOtW+eG80vA4FYnVNFYc0FsDfGETQFSp6oTO2B/DjfUAcWORzK2y0hCLt0P7QR+G
+         nkZ63xGgI1LdSianCxEfu4Q5U0V5Qp+IRgJ0hH3fY8jAtPP750lxnjSd1t6t/vOdwRsh
+         2o4XPgg6pHKD9jQieNyAB8FwV5YkZGn2z/zlol6LJY/Sqn6WEvjwiu9dIha6yBzxiOgr
+         cGxTo1wMnDk5e/wl9rC9FbYitqSCCiuGmR2ME7QvnG3Q16K11F7dQJh+w8jz0pypEqLO
+         S2eLsn+qbKsnCwXmj4cj8uHYMHwvC+u7fmNJoNbOIZj2DNJC2wfJbuSScNH2Nf5DOTme
+         waqA==
+X-Received: by 10.180.83.225 with SMTP id t1mr3031791wiy.28.1406119220448;
+        Wed, 23 Jul 2014 05:40:20 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id ek3sm5959837wjd.17.2014.07.23.05.40.19
         for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Wed, 23 Jul 2014 05:32:18 -0700 (PDT)
-X-Mailer: git-send-email 2.0.2.608.g398dd4b
-In-Reply-To: <1406118730-13224-1-git-send-email-stefanbeller@gmail.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 23 Jul 2014 05:40:19 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CACsJy8Ch6FvWp-pOOG4-kDVmb+kyav7oromH8EpeEesPj7B9Yg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254073>
 
-Google mail has had the extension @googlemail.com for a long time
-in Germany as @gmail.de was already taken by a competitor.
-Nowadays the original gmail company isn't there anymore(?), hence
-Googlemail also introduced @gmail.com in Germany, which I switched to.
+Am 23.07.2014 13:53, schrieb Duy Nguyen:
+> On Wed, Jul 23, 2014 at 2:35 AM, Ren=C3=A9 Scharfe <l.s.r@web.de> wro=
+te:
+>> Am 21.07.2014 16:13, schrieb Duy Nguyen:
+>>
+>>> This function tests if $PWD is the same as getcwd() using st_dev an=
+d
+>>> st_ino. But on Windows these fields are always zero
+>>> (mingw.c:do_lstat). If cwd is moved away, I think falling back to $=
+PWD
+>>> is wrong. I don't understand the use of $PWD in the first place.
+>>> 1b9a946 (Use nonrelative paths instead of absolute paths for cloned
+>>> repositories - 2008-06-05) does not explain much.
+>>
+>>
+>> The commit message reads:
+>>
+>>   Particularly for the "alternates" file, if one will be created, we
+>>   want a path that doesn't depend on the current directory, but we w=
+ant
+>>   to retain any symlinks in the path as given and any in the user's =
+view
+>>   of the current directory when the path was given.
+>>
+>> The intent of the patch seems to be to prefer $PWD if it points to t=
+he same
+>> directory as the one returned by getcwd() in order to preserve "the =
+user's
+>> view".  That's why it introduces make_nonrelative_path() (now called
+>> absolute_path()), in contrast to make_absolute_path() (now called
+>> real_path()).
+>>
+>> I imagine it's useful e.g. if your home is accessed through a symlin=
+k:
+>>
+>>         /home/foo -> /some/boring/mountpoint
+>>
+>> Then real_path("bar") would give you "/some/boring/mountpoint/bar", =
+while
+>> absolute_path("bar") returned "/home/foo/bar".  Not resolving symlin=
+ks keeps
+>> the path friendly in this case.  And it keeps working even after the=
+ user's
+>> home is migrated to /a/bigger/partition and /home/foo is updated
+>> accordingly.
+>=20
+> If it's saved back, then yes it's useful. And I think that's the case
+> in clone.c. I was tempted to remove this code (because it only works
+> if you stand at worktree's root dir anyway, else cwd is moved) but I
+> guess we can just disable this code on Windows only instead.
+>=20
 
-This changed mail address of mine first appeared in 398dd4bd039680b
-(2014-07-10, .mailmap: map different names with the same email
-address together) ironically.
-
-Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
----
- .mailmap | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/.mailmap b/.mailmap
-index 2edbeb5..8aefb5a 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -204,6 +204,7 @@ Seth Falcon <seth@userprimary.net> <sfalcon@fhcrc.org>
- Shawn O. Pearce <spearce@spearce.org>
- Simon Hausmann <hausmann@kde.org> <simon@lst.de>
- Simon Hausmann <hausmann@kde.org> <shausman@trolltech.com>
-+Stefan Beller <stefanbeller@gmail.com> <stefanbeller@googlemail.com>
- Stefan Naewe <stefan.naewe@gmail.com> <stefan.naewe@atlas-elektronik.com>
- Stefan Naewe <stefan.naewe@gmail.com> <stefan.naewe@googlemail.com>
- Stefan Sperling <stsp@elego.de> <stsp@stsp.name>
--- 
-2.0.2.608.g398dd4b
+It is disabled on Windows as of 7d092adc get_pwd_cwd(): Do not trust st=
+_dev/st_ino blindly
