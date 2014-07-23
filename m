@@ -1,167 +1,92 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: confused about remote branch management
-Date: Wed, 23 Jul 2014 19:40:04 +1200
-Message-ID: <53CF66D4.7060201@gmail.com>
-References: <1406083743.29001.139.camel@localhost>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v7 23/31] checkout: clean up half-prepared directories in
+ --to mode
+Date: Wed, 23 Jul 2014 15:02:03 +0700
+Message-ID: <CACsJy8CmKZj8soQ09h=6LYf94OVjtydbb2HXBszTPCfta0_Khg@mail.gmail.com>
+References: <1404891197-18067-1-git-send-email-pclouds@gmail.com>
+ <1405227068-25506-1-git-send-email-pclouds@gmail.com> <1405227068-25506-24-git-send-email-pclouds@gmail.com>
+ <CAPig+cRE0xOhQM4mtJQRX_gSQ3_OMr6ws87wU03TZ1eaUXui2g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Ross Boylan <ross@biostat.ucsf.edu>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 09:40:21 2014
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Max Kirillov <max@max630.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 10:02:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9r9t-00059a-7U
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 09:40:17 +0200
+	id 1X9rVZ-0000Hz-VX
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 10:02:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756518AbaGWHkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 03:40:11 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:47302 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753112AbaGWHkK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 03:40:10 -0400
-Received: by mail-pa0-f47.google.com with SMTP id kx10so1208158pab.20
-        for <git@vger.kernel.org>; Wed, 23 Jul 2014 00:40:09 -0700 (PDT)
+	id S1755658AbaGWICg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 04:02:36 -0400
+Received: from mail-qa0-f51.google.com ([209.85.216.51]:63543 "EHLO
+	mail-qa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752498AbaGWICe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 04:02:34 -0400
+Received: by mail-qa0-f51.google.com with SMTP id k15so873365qaq.10
+        for <git@vger.kernel.org>; Wed, 23 Jul 2014 01:02:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=jC08c1uc85AcPYcRFXoyRUwiiNQZy2nF22+THK9sH4M=;
-        b=SbuTerg8lYyeQAXs+8+H12rSTI0wW5cuYArXLtC9pOY5T3ekdvsslVzyyxKnduCoJ1
-         OfLQMEmPh7CQKqg0PZhAvG0/PMUqCkDDHgbRpvuI7nfx+HvG0zksiUdtc6ylstdwEOhj
-         GvtXtb1aMfNHljZJBdPjgOJ0ZWfhr9u1Ime/mKbQb1jN8rbGO2irWBRYI24rR7WTsawW
-         wccuEzTkSvaLR+r9RpLmC83beuSD3aE/UgFHsEhCNaukoT9zEL2VTdzqpmy6+c47cEbT
-         EB5YrC8uVUPYLewiuzUlLiv2sJWVkA/lDcSCQXcEqrmA7wu2x0qZakDvd7/OqAKIbFVg
-         HVWQ==
-X-Received: by 10.69.26.68 with SMTP id iw4mr18246618pbd.137.1406101209463;
-        Wed, 23 Jul 2014 00:40:09 -0700 (PDT)
-Received: from linux.site (115-188-15-163.jetstream.xtra.co.nz. [115.188.15.163])
-        by mx.google.com with ESMTPSA id dk1sm1960787pdb.20.2014.07.23.00.40.07
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Jul 2014 00:40:08 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
-In-Reply-To: <1406083743.29001.139.camel@localhost>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=YoVdl87Xxk9Co5yV9CffJFH0qAt7SJOnm18xpWkox2M=;
+        b=aaIjejteole0ediTZrDSkKKK7X9Zh9cAHywejD4uitHmgWdX9qvN0plL0OUDv+S+J/
+         KCYJrwwrzPvu2mOm/oYyqv467IcL4A3IGuMUlTkF7ZBDPkFzMMnFnqHqj8sd+RcwBY9F
+         6j4AEr/O13FV8MghF4VEt1FETbe+lYQAF/6y5JjdZZID9TRx3Irrx7xdluArpnpFsRE3
+         s+Pq312qRR+/nEbcjFsPHCVpTPIon/XtFlS4bo49W4G3vvXbp32XAul5E0u04L5C4Vvh
+         kAqArFplMPg31X5zQ3QDNKikCzJCdGTHUm2Xuddh5V8bpGJCPIQmjqAUp1D3Rhw3CCeV
+         XJGw==
+X-Received: by 10.140.82.227 with SMTP id h90mr59987981qgd.80.1406102553670;
+ Wed, 23 Jul 2014 01:02:33 -0700 (PDT)
+Received: by 10.96.66.129 with HTTP; Wed, 23 Jul 2014 01:02:03 -0700 (PDT)
+In-Reply-To: <CAPig+cRE0xOhQM4mtJQRX_gSQ3_OMr6ws87wU03TZ1eaUXui2g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254061>
 
-On 23/07/14 14:49, Ross Boylan wrote:
-> My local master branch is the result of a merge of upstream master and
-> some local changes.  I want to merge in more recent upstream work.
-> git pull doesn't seem to have updated origin/master, and git checkout
-> origin/master also doesn't seem to work.
-> 
-> Here's some info that may be relevant.
-> 
-> 
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git remote -v
-> origin	https://github.com/emacs-ess/ESS.git (fetch)
-> origin	https://github.com/emacs-ess/ESS.git (push)
-> personal	https://github.com/RossBoylan/ESS.git (fetch)
-> personal	https://github.com/RossBoylan/ESS.git (push)
-> # I think I originally cloned from what is now the "personal" remote
-> # and switched names later so origin refers to upstream.
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git branch -v
-> * master 8fa569c [ahead 340] merge from origin
-> # 340 ahead of personal is plausible, but ahead from origin seems odd
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git --version
-> git version 1.7.10.4
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git branch -a
-> * master
->   remotes/origin/S+eldoc
->   remotes/origin/gretl
->   remotes/origin/linewise_callbacks
->   remotes/origin/litprog
->   remotes/origin/master
->   remotes/origin/transmissions
->   remotes/personal/HEAD -> personal/master
->   remotes/personal/S+eldoc
->   remotes/personal/gretl
->   remotes/personal/linewise_callbacks
->   remotes/personal/litprog
->   remotes/personal/master
->   remotes/personal/transmissions
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git status
-> # On branch master
-> # Your branch is ahead of 'personal/master' by 340 commits.
-> #
-> nothing to commit (working directory clean)
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git checkout origin/master
-> Note: checking out 'origin/master'.
-> 
-> You are in 'detached HEAD' state. You can look around, make experimental
-> changes and commit them, and you can discard any commits you make in
-> this
-> state without impacting any branches by performing another checkout.
-> 
-> If you want to create a new branch to retain commits you create, you may
-> do so (now or later) by using -b with the checkout command again.
-> Example:
-> 
->   git checkout -b new_branch_name
-> 
-> HEAD is now at a33a2f9... Merge branch 'trunk'
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git checkout master
-> Previous HEAD position was a33a2f9... Merge branch 'trunk'
-> Switched to branch 'master'
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git pull origin master
-> # [messages]
-> Not committing merge; use 'git commit' to complete the merge.
+On Mon, Jul 21, 2014 at 6:55 AM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+>> @@ -848,13 +878,21 @@ static int prepare_linked_checkout(const struct checkout_opts *opts,
+>>                 strbuf_addf(&sb_repo, "%d", counter);
+>>         }
+>>         name = strrchr(sb_repo.buf, '/') + 1;
+>> +
+>> +       junk_pid = getpid();
+>> +       atexit(remove_junk);
+>> +       sigchain_push_common(remove_junk_on_signal);
+>> +
+>>         if (mkdir(sb_repo.buf, 0777))
+>>                 die_errno(_("could not create directory of '%s'"), sb_repo.buf);
+>> +       junk_git_dir = sb_repo.buf;
+>
+> I've managed to convince myself that, although junk_git_dir becomes a
+> dangling pointer by the end of prepare_linked_checkout(), it should
+> never afterward be accessed. Perhaps it would make sense to make this
+> easier to follow by clearing junk_git_dir when is_junk is cleared?
 
-I think this is the relevant message. By doing a git pull you are asking
-to merge the branch 'master' from the remote 'origin' into the current
-branch (which happens to also be called 'master').
+You're right. And the dangling junk_git_dir can be accessed if "ret"
+below is non-zero. Will strdup() both junk_*_dir and free them in "if
+(!ret)" block. Thanks for catching.
 
-What I'm guessing is in "# [messages]" is something about a merge
-conflict that needs resolving before the merge can be completed. There
-are various ways to resolve the conflict but probably the easiest would be
-
-  git mergetool
-  git commit
-
-I personally use have merge.tool set to kdiff3 but there are plenty of
-other options.
-
-Another option is to abort this attempt and try again (*warning* here be
-dragons).
-
-  git checkout master
-  git reset --hard HEAD
-  git pull
-
-Note: git uses some heuristics to determine what to merge when you don't
-specify what to pull. This should be origin/master unless
-branch.master.remote and branch.master.merge are set to something weird.
-This probably won't do away with the need to resolve your merge
-conflicts but at least you'll be starting from a clean slate.
-
-
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git status
-> # On branch master
-> # Changes to be committed:
-> # [long list]
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git show origin/master
-> commit a33a2f9e06185a225af7d72ea3896cfd260e455e
-> Merge: 136742f 6b22a88
-> Author: Vitalie Spinu <spinuvit@gmail.com>
-> Date:   Mon Jan 20 00:43:30 2014 -0800
-> 
->     Merge branch 'trunk'
-> # this was the head of origin/master BEFORE I did the pull.
-> # I think this means it has not been updated.
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git commit -m "merge in
-> upstream, probably fe7d609..8fa569c"
-> [master 59f6841] merge in upstream, probably fe7d609..8fa569c
-> ross@tempserver:~/UCSF/Choi/GitHub/ESS$ git show origin/master -v
-> # no change
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+>> @@ -879,7 +917,14 @@ static int prepare_linked_checkout(const struct checkout_opts *opts,
+>>         memset(&cp, 0, sizeof(cp));
+>>         cp.git_cmd = 1;
+>>         cp.argv = opts->saved_argv;
+>> -       return run_command(&cp);
+>> +       ret = run_command(&cp);
+>> +       if (!ret)
+>> +               is_junk = 0;
+>
+> Here: perhaps also set is_junk_dir to NULL since it otherwise is about
+> to become a dangling pointer.
+>
+>> +       strbuf_release(&sb);
+>> +       strbuf_release(&sb_repo);
+>> +       strbuf_release(&sb_git);
+>> +       return ret;
+-- 
+Duy
