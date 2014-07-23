@@ -1,123 +1,75 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] git p4 test: fix failure in 9814-git-p4-rename.sh Was:
- Re: Test failure in t9814-git-p4-rename.sh - my environment or bad test?
-Date: Wed, 23 Jul 2014 19:07:54 -0400
-Message-ID: <20140723230754.GB10722@padd.com>
-References: <CABUJjW8TFCw2wwAO83vMBPc7vQc+rvuPOAca-CNECEduUn19Ew@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/15] ref-transactions for reflogs
+Date: Wed, 23 Jul 2014 16:11:51 -0700
+Message-ID: <xmqqzjfzacw8.fsf@gitster.dls.corp.google.com>
+References: <1406135035-26441-1-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Christoph Bonitz <ml.christophbonitz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 01:08:03 2014
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 01:12:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA5di-000504-2U
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 01:08:02 +0200
+	id 1XA5hc-0008Qx-5K
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 01:12:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758495AbaGWXH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 19:07:58 -0400
-Received: from honk.padd.com ([71.19.245.7]:38601 "EHLO honk.padd.com"
+	id S933521AbaGWXL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 19:11:59 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60112 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758326AbaGWXH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 19:07:57 -0400
-Received: from arf.padd.com (unknown [50.105.24.167])
-	by honk.padd.com (Postfix) with ESMTPSA id B1A1970C8;
-	Wed, 23 Jul 2014 16:07:56 -0700 (PDT)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id A15EE201BD; Wed, 23 Jul 2014 19:07:54 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <CABUJjW8TFCw2wwAO83vMBPc7vQc+rvuPOAca-CNECEduUn19Ew@mail.gmail.com>
+	id S932179AbaGWXL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 19:11:59 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8FFAF2ACBE;
+	Wed, 23 Jul 2014 19:11:58 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ArxVcICE7uz8M1cPbzP2xvjWYj0=; b=yLLWUI
+	rUbO2MzBGkih7MBg6l78OZxOdzstFX9zzNCLWwsGpQkCLK4nC22L42UX30rnQ1vB
+	Ct5+bEEB7tvW97RzZQYegnxcogFjcCK/00hX8+N0I6lRRtrHp+iwyxWPZmAXK44P
+	hjeF3d7nTLGQo+KL0K9Q+9nfl8gLRM1AUD4BE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rDcuIEdjDNhJZ8LHZazE26J77jsiTM+P
+	rBqQVy55nNkfEt70oNGCE59CNxI7AS0vjAgV7GAzsM7CwqKtXbP918LeivzDj0gr
+	yfHxaoniaCi6ZDJV4KuW4B0pwnml9MbasjlgOOYYWo5lwyHKxBJJz1p+eWz1m4ab
+	vSGtdSRjcag=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 85F8A2ACBD;
+	Wed, 23 Jul 2014 19:11:58 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 85B9F2ACB1;
+	Wed, 23 Jul 2014 19:11:52 -0400 (EDT)
+In-Reply-To: <1406135035-26441-1-git-send-email-sahlberg@google.com> (Ronnie
+	Sahlberg's message of "Wed, 23 Jul 2014 10:03:40 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: BB6DA278-12BE-11E4-8E60-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254139>
 
-ml.christophbonitz@gmail.com wrote on Wed, 23 Jul 2014 23:28 +0200:
-> The scenario in the rename test makes unnecessary assumptions about
-> which file git file-tree will detect as a source for a copy-operations.
-> Furthermore, copy detection is not tested by checking the resulting
-> perforce revision history via p4 filelog, but via git diff-tree.
-> 
-> This patch makes the test more robust by accepting each of the possible
-> sources, and more rigorous by doing so via p4 filelog.
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-I see what you're doing here, and it all looks good.  The
-diff-tree checks were mainly debugging, and if "p4 filelog"
-shows the right "branch from", that means it works.
+> This is the next patch series for ref-transactions.
+> It is also available at 
+>
+> https://github.com/rsahlberg/git/tree/ref-transactions-reflog
+>
+> and is the same patch series that has been posted previously with one
+> exception:
 
-You might be able to firm up the "branch from" lines for file8
-and file9 too, but those aren't likely to fail.
+I've received, queued and started reading it, but it has fairly
+heavy interactions with other topics in flight when merged to 'pu',
+so today's integration result will not have this topic anywhere.
 
-Indeed, as noted in the other thread, it would be better to make
-these not so flaky, but your change here fixes a problem, and
-doesn't do any harm.  And gives you an opportunity to fix it more
-later.  :)
+https://github.com/gitster/git/ is a mirror of my primary working
+space and rs/ref-transaction-reflog topic can be seen there, though.
 
-Be sure to fix the word-wrapping you have on two of the lines
-below.  And be careful not to top post.
-
-Here's my ack for when you decide to send it back to the list,
-cc junio.
-
-Acked-by: Pete Wyckoff <pw@padd.com>
-
-> ---
->  t/t9814-git-p4-rename.sh | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
-> 
-> diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
-> index 1fc1f5f..4068510 100755
-> --- a/t/t9814-git-p4-rename.sh
-> +++ b/t/t9814-git-p4-rename.sh
-> @@ -156,18 +156,16 @@ test_expect_success 'detect copies' '
->   git diff-tree -r -C HEAD &&
->   git p4 submit &&
->   p4 filelog //depot/file10 &&
-> - p4 filelog //depot/file10 | grep -q "branch from //depot/file" &&
-> + p4 filelog //depot/file10 | grep -q "branch from //depot/file2" &&
-> 
->   cp file2 file11 &&
->   git add file11 &&
->   git commit -a -m "Copy file2 to file11" &&
->   git diff-tree -r -C --find-copies-harder HEAD &&
-> - src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
-> - test "$src" = file10 &&
->   git config git-p4.detectCopiesHarder true &&
->   git p4 submit &&
->   p4 filelog //depot/file11 &&
-> - p4 filelog //depot/file11 | grep -q "branch from //depot/file" &&
-> + p4 filelog //depot/file11 | grep -q -E "branch from //depot/file(2|10)" &&
-> 
->   cp file2 file12 &&
->   echo "some text" >>file12 &&
-> @@ -177,7 +175,7 @@ test_expect_success 'detect copies' '
->   level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut
-> -f1 | cut -d" " -f5 | sed "s/C0*//") &&
->   test -n "$level" && test "$level" -gt 0 && test "$level" -lt 98 &&
->   src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
-> - test "$src" = file10 || test "$src" = file11 &&
-> + test "$src" = file2 || test "$src" = file10 || test "$src" = file11 &&
->   git config git-p4.detectCopies $(($level + 2)) &&
->   git p4 submit &&
->   p4 filelog //depot/file12 &&
-> @@ -190,12 +188,10 @@ test_expect_success 'detect copies' '
->   git diff-tree -r -C --find-copies-harder HEAD &&
->   level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut
-> -f1 | cut -d" " -f5 | sed "s/C0*//") &&
->   test -n "$level" && test "$level" -gt 2 && test "$level" -lt 100 &&
-> - src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
-> - test "$src" = file10 || test "$src" = file11 || test "$src" = file12 &&
->   git config git-p4.detectCopies $(($level - 2)) &&
->   git p4 submit &&
->   p4 filelog //depot/file13 &&
-> - p4 filelog //depot/file13 | grep -q "branch from //depot/file"
-> + p4 filelog //depot/file13 | grep -q -E "branch from //depot/file(2|10|11|12)"
->   )
->  '
-> 
-> -- 
-> 2.0.1
+Thanks.
