@@ -1,147 +1,119 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH 6/7] config: add `git_die_config()` to the config-set API
-Date: Wed, 23 Jul 2014 11:42:57 -0700
-Message-ID: <1406140978-9472-7-git-send-email-tanayabh@gmail.com>
+Subject: [PATCH 5/7] enforce `xfuncname` precedence over `funcname`
+Date: Wed, 23 Jul 2014 11:42:56 -0700
+Message-ID: <1406140978-9472-6-git-send-email-tanayabh@gmail.com>
 References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
 Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 20:44:22 2014
+X-From: git-owner@vger.kernel.org Wed Jul 23 20:44:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA1WT-0006n7-4G
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 20:44:17 +0200
+	id 1XA1Wa-0006ui-PP
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 20:44:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933255AbaGWSoL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 14:44:11 -0400
-Received: from mail-pd0-f170.google.com ([209.85.192.170]:43183 "EHLO
-	mail-pd0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932867AbaGWSoI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 14:44:08 -0400
-Received: by mail-pd0-f170.google.com with SMTP id g10so2124479pdj.29
-        for <git@vger.kernel.org>; Wed, 23 Jul 2014 11:44:08 -0700 (PDT)
+	id S933168AbaGWSoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 14:44:10 -0400
+Received: from mail-pa0-f41.google.com ([209.85.220.41]:41643 "EHLO
+	mail-pa0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932584AbaGWSoF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 14:44:05 -0400
+Received: by mail-pa0-f41.google.com with SMTP id rd3so2263192pab.28
+        for <git@vger.kernel.org>; Wed, 23 Jul 2014 11:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xiuEE9ygyzAL2enRgtjVtWemSklLvqSsDqG9vFqPzw4=;
-        b=ueLauSza/fFLTg2a14YumCsIE2YS2KOGlKpqtBWnGuKHm3nOM1QVN5XMsERPY9dQyN
-         5u5Ls3ezSK/jgvwLSyAqMcmOZbNjWxGqwYTRTQCvX8dH+0wkW5svuWklEqiTiDwhhOwm
-         N5sB7IKFNnVJncXoiwlBgaoOsZ9Nob4Qa0FqEM4Lh/03YzHaxTVNBnNpqQrwTsrzhonn
-         lOBarxHkPyBaVJcXpYS3SLrThW4aeKzkc7yMMBUvnw/qkYixTzYK77gdpeZHV+vomtih
-         kOGrmQpUtuYyuFe4P1LqNbbGF/T89ZKjZfOAA0C9yxLoCDH9I4sASNfKK1PlZ8uxsnrQ
-         CNSg==
-X-Received: by 10.66.230.163 with SMTP id sz3mr4454600pac.136.1406141048004;
-        Wed, 23 Jul 2014 11:44:08 -0700 (PDT)
+        bh=OVKbRJkRf6cynoE0e/75iJpSBZyjkPFV9FSHKa2y5HQ=;
+        b=wxgeMWHrhbJY6xEJFMxNrVrbbvced/ti/130Gecac8jmqGqQXEBmmBQDYDoew7ZR/V
+         0LjueN4EQheURob0Rbo0eJV2vGtBD+Ak3gk9YWPU75U8QQKCGOoZ+BaMGPlsGIUjkraE
+         YqZ6rd6WAOq/qzGwryJfEOkTGAL8Hwt5GlzPndbCS49T6N71/0QDMyEPg8ZYkdYcUcVL
+         mmgl3HIKbA9bwU3R3kvCCzasMeh9dUuO1A8NSH/NrVIos5ncXCjaVc0/TxBma04DCFko
+         uJSV1OH0Cd/Blsu+tRkGovkhghfDznVQFP8Z/8XW/7QNagT82/5N7REwZ5hOWLCmsqza
+         3LLw==
+X-Received: by 10.66.153.80 with SMTP id ve16mr4258081pab.143.1406141044574;
+        Wed, 23 Jul 2014 11:44:04 -0700 (PDT)
 Received: from localhost.localdomain ([27.56.89.40])
-        by mx.google.com with ESMTPSA id z10sm1067820pdo.14.2014.07.23.11.44.04
+        by mx.google.com with ESMTPSA id z10sm1067820pdo.14.2014.07.23.11.44.01
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 23 Jul 2014 11:44:07 -0700 (PDT)
+        Wed, 23 Jul 2014 11:44:04 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.GIT
 In-Reply-To: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254108>
 
-Add `git_die_config` that dies printing the line number and the file name
-of the highest priority value for the configuration variable `key`.
+t4018-diff-funcname.sh fails for the new `git_config()` which uses the
+configuration files caching layer internally.
+The test introduced in commit d64d6cdc checks that whether `xfuncname` takes
+precedence over `funcname` variable which was not guaranteed by config API
+previously and worked only because values were parsed and fed in order. The
+new  `git_config()` only guarantees precedence order for variables with the
+same name.
 
-It has usage in non-callback based config value retrieval where we can
-raise an error and die if there is a semantic error.
-For example,
-
-	if (!git_config_get_value(key, &value)) {
-		/* NULL values not allowed */
-		if (!value)
-			git_config_die(key);
-		else
-			/* do work */
-	}
+Also `funcname` variable is deprecated and not documented properly.
+`xfuncname` is mentioned in the docs and takes precedence over `funcname`.
+Instead of removing `funcname` variable, enforce `xfuncname` precedence over
+`funcname` when the variables have the same subsection. Remove dependency
+that required values to be fed to userdiff_config() in parsing order for the
+test to succeed.
 
 Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- Documentation/technical/api-config.txt |  5 +++++
- cache.h                                |  1 +
- config.c                               | 24 ++++++++++++++++++++++--
- 3 files changed, 28 insertions(+), 2 deletions(-)
+Note: this the only test that failed for the new git_config() rewrite.
 
-diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
-index 8a86e45..14571e7 100644
---- a/Documentation/technical/api-config.txt
-+++ b/Documentation/technical/api-config.txt
-@@ -150,6 +150,11 @@ as well as retrieval for the queried variable, including:
- 	Similar to `git_config_get_string`, but expands `~` or `~user` into
- 	the user's home directory when found at the beginning of the path.
+ userdiff.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/userdiff.c b/userdiff.c
+index fad52d6..a51bc89 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -2,6 +2,7 @@
+ #include "userdiff.h"
+ #include "cache.h"
+ #include "attr.h"
++#include "string-list.h"
  
-+`void git_die_config(const char *key)`::
-+
-+	Dies printing the line number and the file name of the highest
-+	priority value for the configuration variable `key`.
-+
- See test-config.c for usage examples.
+ static struct userdiff_driver *drivers;
+ static int ndrivers;
+@@ -211,9 +212,12 @@ int userdiff_config(const char *k, const char *v)
+ 	struct userdiff_driver *drv;
+ 	const char *name, *type;
+ 	int namelen;
++	char *subsection = NULL;
++	static struct string_list xflag = STRING_LIST_INIT_DUP;
  
- Value Parsing Helpers
-diff --git a/cache.h b/cache.h
-index 2f63fd1..fc886c3 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1380,6 +1380,7 @@ extern int git_config_get_bool(const char *key, int *dest);
- extern int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest);
- extern int git_config_get_maybe_bool(const char *key, int *dest);
- extern int git_config_get_pathname(const char *key, const char **dest);
-+extern void git_die_config(const char *key);
+ 	if (parse_config_key(k, "diff", &name, &namelen, &type) || !name)
+ 		return 0;
++	subsection = xstrndup(name, namelen);
  
- extern int committer_ident_sufficiently_given(void);
- extern int author_ident_sufficiently_given(void);
-diff --git a/config.c b/config.c
-index 43a951f..f0c9805 100644
---- a/config.c
-+++ b/config.c
-@@ -1491,8 +1491,12 @@ const struct string_list *git_config_get_value_multi(const char *key)
+ 	drv = userdiff_find_by_namelen(name, namelen);
+ 	if (!drv) {
+@@ -224,10 +228,16 @@ int userdiff_config(const char *k, const char *v)
+ 		drv->binary = -1;
+ 	}
  
- int git_config_get_string(const char *key, const char **dest)
- {
-+	int ret;
- 	git_config_check_init();
--	return git_configset_get_string(&the_config_set, key, dest);
-+	ret = git_configset_get_string(&the_config_set, key, dest);
-+	if (ret < 0)
-+		git_die_config(key);
-+	return ret;
- }
- 
- int git_config_get_int(const char *key, int *dest)
-@@ -1527,8 +1531,24 @@ int git_config_get_maybe_bool(const char *key, int *dest)
- 
- int git_config_get_pathname(const char *key, const char **dest)
- {
-+	int ret;
- 	git_config_check_init();
--	return git_configset_get_pathname(&the_config_set, key, dest);
-+	ret = git_configset_get_pathname(&the_config_set, key, dest);
-+	if (ret < 0)
-+		git_die_config(key);
-+	return ret;
-+}
-+
-+void git_die_config(const char *key)
-+{
-+	const struct string_list *strptr;
-+	struct key_value_info *kv_info;
-+	strptr = git_config_get_value_multi(key);
-+	kv_info = strptr->items[strptr->nr - 1].util;
-+	if (!kv_info->linenr)
-+		die("unable to parse command-line config");
-+	else
-+		die("bad config file line %d in %s",kv_info->linenr, kv_info->filename);
- }
- 
- /*
+-	if (!strcmp(type, "funcname"))
++	if (!strcmp(type, "funcname") && !unsorted_string_list_has_string(&xflag, subsection)) {
++		free (subsection);
+ 		return parse_funcname(&drv->funcname, k, v, 0);
+-	if (!strcmp(type, "xfuncname"))
++	}
++	if (!strcmp(type, "xfuncname")) {
++		string_list_append(&xflag, subsection);
++		free (subsection);
+ 		return parse_funcname(&drv->funcname, k, v, REG_EXTENDED);
++	}
++	free(subsection);
+ 	if (!strcmp(type, "binary"))
+ 		return parse_tristate(&drv->binary, k, v);
+ 	if (!strcmp(type, "command"))
 -- 
 1.9.0.GIT
