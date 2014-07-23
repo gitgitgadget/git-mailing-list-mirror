@@ -1,109 +1,91 @@
-From: Sergei Organov <osv@javad.com>
-Subject: rebase flattens history when it shouldn't?
-Date: Wed, 23 Jul 2014 17:34:25 +0400
-Message-ID: <87k374xkpq.fsf@osv.gnss.ru>
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Unify subcommand structure; introduce double dashes for all subcommands?
+Date: Wed, 23 Jul 2014 15:35:22 +0200
+Message-ID: <53CFBA1A.8040600@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 15:34:33 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: GIT Mailing-list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Jul 23 15:35:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9wgi-00069t-MC
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 15:34:33 +0200
+	id 1X9whc-00076y-QP
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 15:35:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752877AbaGWNe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 09:34:28 -0400
-Received: from mail.javad.com ([54.86.164.124]:40415 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752208AbaGWNe2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 09:34:28 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id B47996184D
-	for <git@vger.kernel.org>; Wed, 23 Jul 2014 13:34:26 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <s.organov@javad.com>)
-	id 1X9wgb-00060S-1S
-	for git@vger.kernel.org; Wed, 23 Jul 2014 17:34:25 +0400
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1752671AbaGWNfZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 09:35:25 -0400
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:44077 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751509AbaGWNfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 09:35:24 -0400
+Received: by mail-wg0-f45.google.com with SMTP id x12so1180362wgg.28
+        for <git@vger.kernel.org>; Wed, 23 Jul 2014 06:35:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=NkBgRQ/Ygm8d5Sk5GXtTJmWKOKfulgBRc4J/qNUFNKs=;
+        b=aLGoUscuAtF5wzYx4Jes02N82BwBgq9IDBjAdHpDOteVg/Q4Jsk1qlCwV+98v2Ln5m
+         87CCncYoS8/72E3P63MqM+wzdPvncI9HvBSMXJSC6DV69jFJaDFGscbJM4SpcV2vVzpC
+         IBbi2lGAoGYeT5ONhwGi3xegf2s3/g/yJDM2TOQJ3AZTlBYvzRh9f3IUY7Z+2FZ7H0ry
+         T25JiCD0WZFxnF15F6IBKtdsWU+ULiOQk0xvs2c4BoYiUYyDiVmv0Gerp1vsvFHR/wHh
+         usrFZx99vLgzJ83E+RHHuWKnhn/jH0IL8SNHsay2Z6bdg6pzcg2iEUSZfqN734qwE39z
+         NjYA==
+X-Received: by 10.180.20.105 with SMTP id m9mr3516184wie.6.1406122522768;
+        Wed, 23 Jul 2014 06:35:22 -0700 (PDT)
+Received: from [192.168.1.7] (ip-109-91-30-58.unitymediagroup.de. [109.91.30.58])
+        by mx.google.com with ESMTPSA id u10sm6305157wjz.43.2014.07.23.06.35.22
+        for <git@vger.kernel.org>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 23 Jul 2014 06:35:22 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+X-Enigmail-Version: 1.5.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254076>
 
-Hello,
+In the user survey 2012 question 23 ("In your opinion, which areas in
+Git need improvement?"),
+the most crucial point identified was the user interface.
+I wonder if there are any more recent surveys, showing if this has changed.
+Now when we want to improve the user interface, we're likely talking
+about the porcelain
+commands only, as that's what most users perceive as the commandline
+user interface.
 
-$ git --version
-git version 1.9.3
+A git command is generally setup as:
+	git <command> [<subcommand>] [<options>] ...
 
-Please consider the following history:
+The subcommands vary wildly by the nature of the command. However all
+subcommands
+could at least follow one style. The commands bundle, notes, stash and
+submodule
+have subcommands without two leading dashes (i.e. git stash list) as
+opposed to all
+other commands (i.e. git tag --list).
 
-     --C--
-    /     \
-   /   ----M topic,HEAD
-  /   /
- A---B master
+So my proposal is to unify the structure of the subcommands to either
+have always
+leading dashes or never. This would need a longterm thinking of course
+(e.g. introduce new options with(out) dashes, but support existing
+commands until git 3.0
+or such, then drop them.)
 
-shouldn't
+Was there a discussion about this topic already?
+I'd like to read on these discussions, if any.
 
-$ git rebase master
+I could think about the following points being interesting
+ * user interface (what is more appealing to a user?)
+ * ease of transition (Is it really worth it? How long does it take to
+pay off?)
+ * ease of implementation (Could we reuse the option parser already in
+   place for the double-dashed subcommands, i.e. have less LoC)
+ * error-proneness of the transition
 
-be a no-op here? According to my reading of the rebase manual page, it
-should be a no-op, as 'topic' is a descendant of the 'master'. Instead,
-"git rebase master" flattens the history to:
-
-       ----C topic,HEAD
-      /
- A---B master
-
-I'd expect --force-rebase to be required for this to happen:
-
--f, --force-rebase
-    Force the rebase even if the current branch is a descendant of the
-    commit you are rebasing onto. Normally non-interactive rebase will
-    exit with the message "Current branch is up to date" in such a
-    situation. Incompatible with the --interactive option.
-
-Also notice that:
-
-$ git rebase --preserve-merges --verbose master
-
-does perform the rebasing work, even though it does not change the
-history in the end.
-
-Here is use-case where it came from and where it gave me real surprise:
-
-I have pull.rebase=true in configuration. Being on a remote tracking
-branch, I've successfully pulled from the origin and had no any local
-changes on this branch. Then I've successfully merged another branch to
-the current one but didn't push the changes back upstream. A few hours
-later I returned to the work and issued "git pull" that instead of doing
-nothing (as it would be should pull.rebase be either "false" or
-"preserve") created a surprising mess.
-
-Do you think it's worth fixing?
-
-Here are reproduction commands for the example history:
-
-git init t
-cd t
-echo A > a
-echo B > b
-git add a b
-git commit -m A -a
-git checkout -b x
-echo A >> a
-git commit -m C -a
-git checkout master
-echo B >> b
-git commit -m B -a
-git checkout -b topic
-git merge -m M x
-git branch -d x
-git rebase master
-
--- 
-Sergey.
+Thanks,
+Stefan
