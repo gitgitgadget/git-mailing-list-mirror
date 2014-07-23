@@ -1,89 +1,67 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: rebase flattens history when it shouldn't?
-Date: Wed, 23 Jul 2014 23:33:11 +0400
-Message-ID: <8738drj2fc.fsf@osv.gnss.ru>
-References: <87k374xkpq.fsf@osv.gnss.ru> <20140723175218.GB12427@google.com>
+From: John Keeping <john@keeping.me.uk>
+Subject: Re: [PATCH v2 1/3] completion: complete "unstuck" `git push
+ --recurse-submodules`
+Date: Wed, 23 Jul 2014 20:35:36 +0100
+Message-ID: <20140723193536.GE26927@serenity.lan>
+References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
+ <8303c95dd3e3ee8d77d4b994bb2d33b6a155a17f.1406053442.git.john@keeping.me.uk>
+ <xmqqr41df8hu.fsf@gitster.dls.corp.google.com>
+ <20140722205730.GD26927@serenity.lan>
+ <xmqqha29f606.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 21:33:21 2014
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 21:38:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA2Hv-0002up-7l
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 21:33:19 +0200
+	id 1XA2MR-0007LD-1E
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 21:37:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932921AbaGWTdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 15:33:15 -0400
-Received: from mail.javad.com ([54.86.164.124]:43476 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932674AbaGWTdO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 15:33:14 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id 781636184D;
-	Wed, 23 Jul 2014 19:33:13 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <s.organov@javad.com>)
-	id 1XA2Hn-0002Qw-MP; Wed, 23 Jul 2014 23:33:11 +0400
-In-Reply-To: <20140723175218.GB12427@google.com> (Jonathan Nieder's message of
-	"Wed, 23 Jul 2014 10:52:18 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S932997AbaGWThz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 15:37:55 -0400
+Received: from hyena.aluminati.org ([64.22.123.221]:33243 "EHLO
+	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932387AbaGWThy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 15:37:54 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by hyena.aluminati.org (Postfix) with ESMTP id 0D6E922D4C;
+	Wed, 23 Jul 2014 20:37:54 +0100 (BST)
+X-Quarantine-ID: <k4etY1Ug7t-F>
+X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
+X-Spam-Flag: NO
+X-Spam-Score: -0.2
+X-Spam-Level: 
+X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
+	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
+Received: from hyena.aluminati.org ([127.0.0.1])
+	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id k4etY1Ug7t-F; Wed, 23 Jul 2014 20:37:49 +0100 (BST)
+Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by hyena.aluminati.org (Postfix) with ESMTPSA id 7D99E22F69;
+	Wed, 23 Jul 2014 20:35:38 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <xmqqha29f606.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254113>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-> Hi Sergei,
->
-> Sergei Organov wrote:
->
->>      --C--
->>     /     \
->>    /   ----M topic,HEAD
->>   /   /
->>  A---B master
->>
->> shouldn't
->>
->> $ git rebase master
->>
->> be a no-op here?
-> [...]
->> I'd expect --force-rebase to be required for this to happen:
->>
->> -f, --force-rebase
->>     Force the rebase even if the current branch is a descendant of the
->>     commit you are rebasing onto. Normally non-interactive rebase will
->>     exit with the message "Current branch is up to date" in such a
->>     situation.
-> [...]
->> Do you think it's worth fixing?
->
-> Thanks for a clear report.
->
-> After a successful 'git rebase master', the current branch is always a
-> linear string of patches on top of 'master'.  The "already up to date"
-> behavior when -f is not passed is in a certain sense an optimization
-> --- it is about git noticing that 'git rebase' wouldn't have anything
-> to do (except for touching timestamps) and therefore doing nothing.
->
-> So I don't think requiring -f for this case would be an improvement.
+On Tue, Jul 22, 2014 at 02:17:13PM -0700, Junio C Hamano wrote:
+> John Keeping <john@keeping.me.uk> writes:
+> 
+> > Do you want me to re-roll with this change or can you replace the patch
+> > while applying?
+> 
+> I think I had to flip the third one to adjust to the change I
+> suggested to this; the result will be on 'pu', so please double
+> check when I push it out.
 
-What actually bothers me is the unfortunate consequence that "git pull"
-is not always a no-op when nothing was changed at the origin since the
-last "git pull". THIS is really surprising and probably should better be
-fixed. Requiring -f is just one (obvious) way to fix this.
-
-> I do agree that the documentation is misleading.  Any ideas for
-> wording that could make it clearer?
-
-I can't suggest anything as I don't see why -f is there in the first
-place. What are use cases?
-
--- 
-Sergey.
+The result on jk/more-push-completion looks good.  Thanks.
