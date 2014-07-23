@@ -1,67 +1,62 @@
-From: John Keeping <john@keeping.me.uk>
-Subject: Re: [PATCH v2 1/3] completion: complete "unstuck" `git push
- --recurse-submodules`
-Date: Wed, 23 Jul 2014 20:35:36 +0100
-Message-ID: <20140723193536.GE26927@serenity.lan>
-References: <e9576136c09dbf65c5e614f9272d2c2afa96f5b6.1405763157.git.john@keeping.me.uk>
- <8303c95dd3e3ee8d77d4b994bb2d33b6a155a17f.1406053442.git.john@keeping.me.uk>
- <xmqqr41df8hu.fsf@gitster.dls.corp.google.com>
- <20140722205730.GD26927@serenity.lan>
- <xmqqha29f606.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 0/7] Rewrite `git_config()` using config-set API
+Date: Wed, 23 Jul 2014 21:38:53 +0200
+Message-ID: <vpqwqb3vp9u.fsf@anie.imag.fr>
+References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 21:38:01 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 21:39:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA2MR-0007LD-1E
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 21:37:59 +0200
+	id 1XA2NR-0008LG-Oz
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 21:39:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932997AbaGWThz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 15:37:55 -0400
-Received: from hyena.aluminati.org ([64.22.123.221]:33243 "EHLO
-	hyena.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932387AbaGWThy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 15:37:54 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by hyena.aluminati.org (Postfix) with ESMTP id 0D6E922D4C;
-	Wed, 23 Jul 2014 20:37:54 +0100 (BST)
-X-Quarantine-ID: <k4etY1Ug7t-F>
-X-Virus-Scanned: Debian amavisd-new at hyena.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from hyena.aluminati.org ([127.0.0.1])
-	by localhost (hyena.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id k4etY1Ug7t-F; Wed, 23 Jul 2014 20:37:49 +0100 (BST)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by hyena.aluminati.org (Postfix) with ESMTPSA id 7D99E22F69;
-	Wed, 23 Jul 2014 20:35:38 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <xmqqha29f606.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	id S933025AbaGWTi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 15:38:58 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60514 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932387AbaGWTi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 15:38:57 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6NJcoi8003274
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 23 Jul 2014 21:38:50 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6NJcrln026178;
+	Wed, 23 Jul 2014 21:38:53 +0200
+In-Reply-To: <1406140978-9472-1-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Wed, 23 Jul 2014 11:42:51 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 23 Jul 2014 21:38:50 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6NJcoi8003274
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1406749131.48924@h+y4RZ6uhGTQjO6KTmazJQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254114>
 
-On Tue, Jul 22, 2014 at 02:17:13PM -0700, Junio C Hamano wrote:
-> John Keeping <john@keeping.me.uk> writes:
-> 
-> > Do you want me to re-roll with this change or can you replace the patch
-> > while applying?
-> 
-> I think I had to flip the third one to adjust to the change I
-> suggested to this; the result will be on 'pu', so please double
-> check when I push it out.
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-The result on jk/more-push-completion looks good.  Thanks.
+> This series builds on the top of 5def4132 (ta/config-set) in pu or
+> topic[1]
+
+Not exactly: 5def4132 has been replaced in pu, and it does not contain
+tests, hence PATCH 3 does not apply on top of 5def4132. The series
+applies to 0912a24, but does not compile, since you use strintern which
+is in master but not in 0912a24.
+
+OK, applied and compiled. Let the review begin.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
