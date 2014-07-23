@@ -1,83 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] checkout --to: no auto-detach if the ref is already checked out
-Date: Wed, 23 Jul 2014 10:46:01 -0700
-Message-ID: <xmqqmwc0dl46.fsf@gitster.dls.corp.google.com>
-References: <1406115795-24082-1-git-send-email-pclouds@gmail.com>
-	<1406115795-24082-4-git-send-email-pclouds@gmail.com>
-	<53CFBD2A.9030803@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: rebase flattens history when it shouldn't?
+Date: Wed, 23 Jul 2014 10:52:18 -0700
+Message-ID: <20140723175218.GB12427@google.com>
+References: <87k374xkpq.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Max Kirillov <max@max630.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jul 23 19:46:16 2014
+Cc: git@vger.kernel.org
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 19:52:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA0cI-0001u1-OH
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 19:46:15 +0200
+	id 1XA0iH-0007p1-M7
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 19:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932378AbaGWRqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 13:46:11 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58500 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757655AbaGWRqJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 13:46:09 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4777529677;
-	Wed, 23 Jul 2014 13:46:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Agv8/vCds+p69XcGp+ueITp5rvM=; b=QtyGjL
-	ocK01ARIaVNZZc0OaD4hKy2DF2dlkZpHh4inJZtNp8b587iAQS34Nyrkv0JKD2TV
-	do2+yoZJuqswRc6SNl7+DIp09dQr//yv0o27XMg+OlO3xrGrweZl/Tz5G0rCf/0z
-	uThRaGYx/pdVonbP+/B3oPOJgQ00WQiXcW+8k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZmFnHxK8hQMvroaUlSwBGIcwZuhJ0jhA
-	B70DumtTvmsY/n6NSU0ZhkrGnUp5AOM6uBVRdu+60mvmmshtVt8f/WAy47D/rlB+
-	EKOKis+VaaYbIOLYsbWvANq2clJfvCpgZuVfuT+bpzzuVSgDaVvbIg7O5WcAHmpM
-	hyuXjJenoec=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 391FE29676;
-	Wed, 23 Jul 2014 13:46:09 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 38A4629668;
-	Wed, 23 Jul 2014 13:46:03 -0400 (EDT)
-In-Reply-To: <53CFBD2A.9030803@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Wed, 23 Jul 2014 15:48:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 37211310-1291-11E4-B896-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932563AbaGWRwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 13:52:22 -0400
+Received: from mail-pa0-f50.google.com ([209.85.220.50]:47725 "EHLO
+	mail-pa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932241AbaGWRwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 23 Jul 2014 13:52:21 -0400
+Received: by mail-pa0-f50.google.com with SMTP id et14so2194906pad.9
+        for <git@vger.kernel.org>; Wed, 23 Jul 2014 10:52:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=agU7zD2Qgdz3Wx+L2rny2YtzFLVmsOf2IH0XwjAbudY=;
+        b=vouAWeSdWxIw87E7TXQjlOK+bR7QJfFQTuZvpqaTcBGcoo6q04K8ZbvQKvZBhNLFtv
+         6y8mga8QE0m+4ybHX3DCCVsHhhHtwU/4uoz/cV2lzafd28nxQHYjx31vsM5S8JgT1bv1
+         xXDSrhRUaEIjR/PyhAfoqnaowe1/X1ERk6v3q2ThcKnCh8mWkx2KdUcWR7H8j7BwU1wQ
+         +QJmbD5q4gFrA7ODlJAZTm4WYXFsAtE4n3/6EWb6lj0+tHGsYnUgMB4kC24hAat6s2kl
+         cU1sntRrdsAAH9Yr9UIe72UIvhtZJK9smsFt5GB+pr3wwSiwboSP3SnB/dZSIGKq2eHJ
+         X2SQ==
+X-Received: by 10.66.65.193 with SMTP id z1mr4008111pas.9.1406137941167;
+        Wed, 23 Jul 2014 10:52:21 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:44e7:c0c7:2154:3495])
+        by mx.google.com with ESMTPSA id fj2sm3980833pdb.66.2014.07.23.10.52.20
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Wed, 23 Jul 2014 10:52:20 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <87k374xkpq.fsf@osv.gnss.ru>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254097>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Hi Sergei,
 
->> +	if (advice_checkout_to)
->> +		die(_("%s is already checked out at %s.\n"
->> +		      "Either use --detach or -b together with --to "
->> +		      "or switch branch in the the other checkout."),
->
-> "or switch to a different branch in the other checkout". But maybe we
-> can be even more helpful, like:
->
-> "%s is already checked out at %s.\n"
-> "Either checkout the detached head of branch %s using\n"
-> "    git checkout --detach --to %s %s\n"
-> "or checkout a new branch based off %s using\n"
-> "    git checkout --to %s -b %s newbranch %s\n"
-> "or switch to a different branch in the other checkout."
->
-> if we can figure out the appropriate arguments at this point in the code.
+Sergei Organov wrote:
 
-Another possible alternative is "go and work there instead of
-creating yet another checkout", but is that too obvious without
-saying?
+>      --C--
+>     /     \
+>    /   ----M topic,HEAD
+>   /   /
+>  A---B master
+>
+> shouldn't
+>
+> $ git rebase master
+>
+> be a no-op here?
+[...]
+> I'd expect --force-rebase to be required for this to happen:
+>
+> -f, --force-rebase
+>     Force the rebase even if the current branch is a descendant of the
+>     commit you are rebasing onto. Normally non-interactive rebase will
+>     exit with the message "Current branch is up to date" in such a
+>     situation.
+[...]
+> Do you think it's worth fixing?
+
+Thanks for a clear report.
+
+After a successful 'git rebase master', the current branch is always a
+linear string of patches on top of 'master'.  The "already up to date"
+behavior when -f is not passed is in a certain sense an optimization
+--- it is about git noticing that 'git rebase' wouldn't have anything
+to do (except for touching timestamps) and therefore doing nothing.
+
+So I don't think requiring -f for this case would be an improvement.
+
+I do agree that the documentation is misleading.  Any ideas for
+wording that could make it clearer?
+
+Hope that helps,
+Jonathan
