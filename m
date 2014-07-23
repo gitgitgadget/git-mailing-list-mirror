@@ -1,144 +1,133 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 06/15] lockfile.c: make hold_lock_file_for_append preserve meaningful errno
-Date: Wed, 23 Jul 2014 10:03:46 -0700
-Message-ID: <1406135035-26441-7-git-send-email-sahlberg@google.com>
+Subject: [PATCH 08/15] refs.c: add a flag to allow reflog updates to truncate the log
+Date: Wed, 23 Jul 2014 10:03:48 -0700
+Message-ID: <1406135035-26441-9-git-send-email-sahlberg@google.com>
 References: <1406135035-26441-1-git-send-email-sahlberg@google.com>
 Cc: gitster@pobox.com, Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 23 19:04:35 2014
+X-From: git-owner@vger.kernel.org Wed Jul 23 19:04:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1X9zxw-0004WJ-7K
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 19:04:32 +0200
+	id 1X9zxy-0004WJ-F0
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 19:04:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932578AbaGWREH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 13:04:07 -0400
-Received: from mail-ie0-f201.google.com ([209.85.223.201]:64200 "EHLO
-	mail-ie0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932462AbaGWRD7 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S932559AbaGWREF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 23 Jul 2014 13:04:05 -0400
+Received: from mail-oi0-f73.google.com ([209.85.218.73]:44465 "EHLO
+	mail-oi0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932435AbaGWRD7 (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 23 Jul 2014 13:03:59 -0400
-Received: by mail-ie0-f201.google.com with SMTP id tr6so418580ieb.2
+Received: by mail-oi0-f73.google.com with SMTP id u20so293890oif.4
         for <git@vger.kernel.org>; Wed, 23 Jul 2014 10:03:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=nlwlI7Aau+Y09RUzdbRsnVD7dvYgPNyqHp6LqFnGdKg=;
-        b=m81tCt5ELt4aPCQizFbS3LDGrNk4MG5hbAAuWQR5ive/wxSaaeOeKVC+RGdYJ+sxhd
-         xLHPKK+5A98hrbS7J7ks0VXim7WzEpoAvUmhdTHclTiKESB3lpIo/eB4PrYgqwIPaEkg
-         iiJZpifCX6W2+rK2Y8wx1+58CtjoKmfCaDoImQGNCoSA/3rVKPszMQCeuz24s99gZ7qA
-         0Q9YeHAmQTcMCuhyPaumxui81b13LledvtQcFfAQJHvUi2CHxQaUG0g8ZTnSF+Ceg32Z
-         3NVBD1D/vCccI4Gl1lmjbCA8JTmnvDmS14vXK04ySF3JW6UKMNSWiL46KKhpXu8AMen6
-         mabQ==
+        bh=4N/ch9O7DgNeWxyB31VjNV+h0bRtLSXx+vNJ0rQfpRg=;
+        b=FwYk1DTusfE/MZo0jnU5odIi+X5N8Pl5W+5myu/kK0ZtbFgXoJ3j1DzT9an+T6s0A+
+         QsxHscJb+Lops9RJV2m5uXFChJAJ9U9o1I5Vi6EYqR4OhqWstalUKKT5RTcf7J5+tnIW
+         WLwQ+PIJyB+eEJFy3ze8il2omQMBcTd+3PEMyuVZA5nLxOTEqdl9M1dgGNVO8v/AhAYT
+         KCDLRNkRvMLfoJdIXEkRaTJPp8eh5DIgtcAEIzGeZeSy0GpEGzvr8bgS8E3a32viCNd7
+         hXUDIFRwG8xS4undAOBvIv2WJHClLLf7xJFhDw22yUp4oWCb/e9jACLcvwp7YiKP1ioJ
+         KA0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=nlwlI7Aau+Y09RUzdbRsnVD7dvYgPNyqHp6LqFnGdKg=;
-        b=DopRDAWkCNQ7q+IIXK+zKruiBiHLkezvjxhtGOEMuq5+djr2mIzquW0j3XNQyr6GAd
-         psqb3F5T7VXT/zA0RI32+Lth+zczC2H63w563CFdmxH7KJ9Tx78hJ9nhJ1dG2In8JPs4
-         7QrJwLl6b7pUdWqv1MHXWhdaCtphNrtgXUKX1zMLscMxLdyfzDADp5JNwa2lf5uHuYq1
-         Y4EQa0QcwMTN9cJWEktt8J97DmE6ZC+rdhWJi7d2QJeH0czSYWHhRAuX0V5jlidOqzdt
-         8ZP2v//CJ+5/3XSzASa7RC3rZrRB1BgPfyHxoBLYK7CgLqGCGZpOLEjRTQlpYP7yXdF4
-         4O/g==
-X-Gm-Message-State: ALoCoQkxkQWtUE4douMPIsU0iLidPlV0QNWlsetEAPB4GxCCXtxyHdbEn35EqbQeJHumkskB9gB/
-X-Received: by 10.42.207.146 with SMTP id fy18mr1415382icb.12.1406135038755;
+        bh=4N/ch9O7DgNeWxyB31VjNV+h0bRtLSXx+vNJ0rQfpRg=;
+        b=a8bdKoHbHD3WWdB1xj/B0fT4ysRiYQ2Ciu18G1D7nqwRpJQElJiqN/qxeMPZrhYJdx
+         PEzuyxh7+3NsfRF5ExY3ZOAmHcPkrcEhlyu0bzuupx4hsTbyDLFgYQ7d7juLGpo/3eLr
+         +9D726hqLhgC94Kt+K3W0OfDn7e2xR3iLnOdt/ARZtojtTLNCcTDjFRXEigMIfZV1nGF
+         eTxxCXbyQzb2oamTB/xN+4YM+77cU25mFSWz1Mp++aDYaV+8WLg8DpUcQukinwPufbmJ
+         NmiAlmCqO8WekM34YFJB8+pEaXPcyw2WthkOqUxMzH+rv+Ok/CLs+znNW3T/NjcmTAn4
+         4Q7w==
+X-Gm-Message-State: ALoCoQmkkqZhrM8BiaHzr++zani13VBxAuR+dQnrM882vDhuEHhDz1HnzyQSEKgke8GjYNzUXjWA
+X-Received: by 10.50.171.233 with SMTP id ax9mr1596989igc.6.1406135038592;
         Wed, 23 Jul 2014 10:03:58 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id v44si487006yhv.0.2014.07.23.10.03.58
+        by gmr-mx.google.com with ESMTPS id z50si487012yhb.3.2014.07.23.10.03.58
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Wed, 23 Jul 2014 10:03:58 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 95E2231C350;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 6DFDF31C34E;
 	Wed, 23 Jul 2014 10:03:58 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 4FF2CE03D9; Wed, 23 Jul 2014 10:03:57 -0700 (PDT)
+	id 2696DE0669; Wed, 23 Jul 2014 10:03:58 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.508.g763ab16
 In-Reply-To: <1406135035-26441-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254084>
 
-Update hold_lock_file_for_append and copy_fd to return a meaningful errno
-on failure.
+Add a flag that allows us to truncate the reflog before we write the
+update.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- copy.c     | 20 +++++++++++++-------
- lockfile.c |  7 ++++++-
- 2 files changed, 19 insertions(+), 8 deletions(-)
+ refs.c | 17 +++++++++++++++--
+ refs.h | 10 +++++++++-
+ 2 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/copy.c b/copy.c
-index a7f58fd..5cb8679 100644
---- a/copy.c
-+++ b/copy.c
-@@ -9,10 +9,12 @@ int copy_fd(int ifd, int ofd)
- 		if (!len)
- 			break;
- 		if (len < 0) {
--			int read_error = errno;
-+			int save_errno = errno;
- 			close(ifd);
--			return error("copy-fd: read returned %s",
--				     strerror(read_error));
-+			error("copy-fd: read returned %s",
-+			      strerror(save_errno));
-+			errno = save_errno;
-+			return -1;
- 		}
- 		while (len) {
- 			int written = xwrite(ofd, buf, len);
-@@ -22,12 +24,16 @@ int copy_fd(int ifd, int ofd)
- 			}
- 			else if (!written) {
- 				close(ifd);
--				return error("copy-fd: write returned 0");
-+				error("copy-fd: write returned 0");
-+				errno = EAGAIN;
-+				return -1;
- 			} else {
--				int write_error = errno;
-+				int save_errno = errno;
- 				close(ifd);
--				return error("copy-fd: write returned %s",
--					     strerror(write_error));
-+				error("copy-fd: write returned %s",
-+				      strerror(save_errno));
-+				errno = save_errno;
-+				return -1;
- 			}
+diff --git a/refs.c b/refs.c
+index b010d6d..181c957 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3747,7 +3747,12 @@ int transaction_commit(struct ref_transaction *transaction,
  		}
  	}
-diff --git a/lockfile.c b/lockfile.c
-index a921d77..32f4681 100644
---- a/lockfile.c
-+++ b/lockfile.c
-@@ -217,15 +217,20 @@ int hold_lock_file_for_append(struct lock_file *lk, const char *path, int flags)
- 	orig_fd = open(path, O_RDONLY);
- 	if (orig_fd < 0) {
- 		if (errno != ENOENT) {
-+			int save_errno = errno;
- 			if (flags & LOCK_DIE_ON_ERROR)
- 				die("cannot open '%s' for copying", path);
- 			close(fd);
--			return error("cannot open '%s' for copying", path);
-+			error("cannot open '%s' for copying", path);
-+			errno = save_errno;
-+			return -1;
- 		}
- 	} else if (copy_fd(orig_fd, fd)) {
-+		int save_errno = errno;
- 		if (flags & LOCK_DIE_ON_ERROR)
- 			exit(128);
- 		close(fd);
-+		errno = save_errno;
- 		return -1;
- 	}
- 	return fd;
+ 
+-	/* Update all reflog files */
++	/*
++	 * Update all reflog files
++	 * We have already done all ref updates and deletes.
++	 * There is not much we can do here if there are any reflog
++	 * update errors other than complain.
++	 */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
+@@ -3755,7 +3760,15 @@ int transaction_commit(struct ref_transaction *transaction,
+ 			continue;
+ 		if (update->reflog_fd == -1)
+ 			continue;
+-
++		if (update->flags & REFLOG_TRUNCATE)
++			if (lseek(update->reflog_fd, 0, SEEK_SET) < 0 ||
++				ftruncate(update->reflog_fd, 0)) {
++				error("Could not truncate reflog: %s. %s",
++				      update->refname, strerror(errno));
++				rollback_lock_file(&update->reflog_lock);
++				update->reflog_fd = -1;
++				continue;
++			}
+ 		if (log_ref_write_fd(update->reflog_fd, update->old_sha1,
+ 				     update->new_sha1,
+ 				     update->committer, update->msg)) {
+diff --git a/refs.h b/refs.h
+index 32bc4ae..66cf38b 100644
+--- a/refs.h
++++ b/refs.h
+@@ -321,7 +321,15 @@ int transaction_delete_sha1(struct ref_transaction *transaction,
+ 			    struct strbuf *err);
+ 
+ /*
+- * Append a reflog entry for refname.
++ * Flags controlling transaction_update_reflog().
++ * REFLOG_TRUNCATE: Truncate the reflog.
++ *
++ * Flags >= 0x100 are reserved for internal use.
++ */
++#define REFLOG_TRUNCATE 0x01
++/*
++ * Append a reflog entry for refname. If the REFLOG_TRUNCATE flag is set
++ * this update will first truncate the reflog before writing the entry.
+  */
+ int transaction_update_reflog(struct ref_transaction *transaction,
+ 			      const char *refname,
 -- 
 2.0.1.508.g763ab16
