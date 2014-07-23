@@ -1,165 +1,150 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 15/15] refs.c: allow deleting refs with a broken sha1
-Date: Wed, 23 Jul 2014 17:22:32 -0400
-Message-ID: <CAPig+cS3JETqxMi7bBvyb=kamWyqvPkLXmwsDd_G+K16EDxotw@mail.gmail.com>
-References: <1406135035-26441-1-git-send-email-sahlberg@google.com>
-	<1406135035-26441-16-git-send-email-sahlberg@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] environment.c: fix incorrect git_graft_file initialization
+Date: Wed, 23 Jul 2014 14:22:44 -0700
+Message-ID: <xmqqvbqndb2z.fsf@gitster.dls.corp.google.com>
+References: <1406115795-24082-1-git-send-email-pclouds@gmail.com>
+	<1406115795-24082-6-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed Jul 23 23:22:45 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 23 23:23:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XA3zm-0004wN-38
-	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 23:22:42 +0200
+	id 1XA409-0005JF-Fg
+	for gcvg-git-2@plane.gmane.org; Wed, 23 Jul 2014 23:23:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933918AbaGWVWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 23 Jul 2014 17:22:35 -0400
-Received: from mail-yk0-f182.google.com ([209.85.160.182]:57194 "EHLO
-	mail-yk0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933568AbaGWVWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 23 Jul 2014 17:22:33 -0400
-Received: by mail-yk0-f182.google.com with SMTP id q9so1202514ykb.13
-        for <git@vger.kernel.org>; Wed, 23 Jul 2014 14:22:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=RHDF5E4frNrCY81iZcT9iOW0si+fl+l6oXFwJyGiF+Q=;
-        b=zYkujR1xWrxGb0WPtgImxailgGlUIiFWysB7nxflOlZDERnRyh1e4NSXFXS8+jaKGv
-         yYG7lm1MnZJuBSaypWg10zmY9eUf+eKyY1tjCWcqWJ67JyS8XwRW9tJUCNlOn02pQkGZ
-         /5nLWMNHVET0CDbjmpCI36pb8OxIUPhvcZXXlwQM4ziHfmrf0R4zIC3JURznX9nvjpiy
-         5Cdmyfdey8VO4Jj9PrkAcPtZ1i66XPbXz0LieboVvg7NKBkef+iDA2RIOJh3DIFCPI74
-         fBjz3Uq/fDqFBCa4Ts2Re2O1qTkxvrDUykEeREIOUjD5ZtU5pwEQMGa+l380/3eGKan9
-         V67g==
-X-Received: by 10.236.99.39 with SMTP id w27mr5077929yhf.109.1406150552525;
- Wed, 23 Jul 2014 14:22:32 -0700 (PDT)
-Received: by 10.170.163.5 with HTTP; Wed, 23 Jul 2014 14:22:32 -0700 (PDT)
-In-Reply-To: <1406135035-26441-16-git-send-email-sahlberg@google.com>
-X-Google-Sender-Auth: POCoWUDaqWslQecpXKaXTJFcJJk
+	id S933941AbaGWVWx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 23 Jul 2014 17:22:53 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65234 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933568AbaGWVWw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 23 Jul 2014 17:22:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2ADB62AD3E;
+	Wed, 23 Jul 2014 17:22:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=IC/lWUjESC5c
+	4BpvFomUtwXez9Y=; b=tbAl4mpQPN8iiptjsYliwjSDyYoKOUmZNFGwrypFSqoP
+	G4VrE5SS09kLPybDjxts8dQzO1NcPYLox0Wa3GU7UYFFMxy3P6NI2dTJFBs/1zQl
+	x80PYYs5Ayx8BDAkwjqnF0k8GsZIUTIa7Ysx49+zdvXuWp2MMuXfQfOWBb6v0i4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=PIN/iD
+	c8dHlj0HTzeYb8s0OWrvgTWTbho9d8za5+Mlfre+oZGb38ggptVYcAvfo3RyjM+B
+	ycgdF5h0jCUScUYSNoVbxLHweIaOmhRE1JzD9NlnEitS10wPUzb4MiPCZWvGQTpq
+	syHvgNCP6S8ixw125l1wZXv1fr/Q6QK42ESGk=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1B1802AD39;
+	Wed, 23 Jul 2014 17:22:52 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1E36A2AD1F;
+	Wed, 23 Jul 2014 17:22:46 -0400 (EDT)
+In-Reply-To: <1406115795-24082-6-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 23
+ Jul 2014 18:43:15 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 7D74E27E-12AF-11E4-AD74-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254124>
 
-On Wed, Jul 23, 2014 at 1:03 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
-> Add (back?) support to make it possible to delete refs that are broken.
->
-> Add a new flag REF_ALLOWBROKEN that can be passed to the functions to
-> lock a ref. If this flag is set we allow locking the ref even if the
-> ref points to a broken sha1. For example a sha1 that is created by :
->
->    echo "Broken ref" > .git/refs/heads/foo-broken-1
->
-> Use this flag when calling from branch.c dusing a ref delete so that we
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Presumably: s/dusing/doing/
-
-> only allow locking those broken refs IFF when called during a branch
-> delete.
+> "info/grafts" should be part of the "common repository" when accessed
+> from a linked checkout (iow $GIT_COMMON_DIR/info/grafts, not
+> $GIT_DIR/info/grafts).
 >
-> Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+> git_path("info/grafts") returns correctly, even without this fix,
+> because it detects that $GIT_GRAFT_FILE is not set, so it goes with t=
+he
+> common rule: anything except sparse-checkout in 'info' belongs to com=
+mon
+> repo. But get_graft_file() would return a wrong value and that one is
+> used for setting grafts up.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
 > ---
->  builtin/branch.c |  6 ++++--
->  refs.c           | 10 +++++++---
->  refs.h           |  3 ++-
->  3 files changed, 13 insertions(+), 6 deletions(-)
+
+Thanks Eric for sharp eyes and Duy for a quick fix.
+
+Will queue all five.
+
+>  environment.c          |  2 +-
+>  t/t0060-path-utils.sh  |  1 +
+>  t/t2025-checkout-to.sh | 18 ++++++++++++++++++
+>  3 files changed, 20 insertions(+), 1 deletion(-)
 >
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 5c95656..6d70037 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -236,6 +236,8 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->                 name = mkpathdup(fmt, bname.buf);
->                 target = resolve_ref_unsafe(name, sha1,
->                                             RESOLVE_REF_ALLOW_BAD_NAME, &flags);
-> +               if (!target && (flags & REF_ISBROKEN))
-> +                       target = name;
->                 if (!target ||
->                     (!(flags & REF_ISSYMREF) && is_null_sha1(sha1))) {
->                         error(remote_branch
-> @@ -245,14 +247,14 @@ static int delete_branches(int argc, const char **argv, int force, int kinds,
->                         continue;
->                 }
->
-> -               if (!(flags & REF_ISSYMREF) &&
-> +               if (!(flags & (REF_ISSYMREF|REF_ISBROKEN)) &&
->                     check_branch_commit(bname.buf, name, sha1, head_rev, kinds,
->                                         force)) {
->                         ret = 1;
->                         continue;
->                 }
->
-> -               if (delete_ref(name, sha1, REF_NODEREF)) {
-> +               if (delete_ref(name, sha1, REF_NODEREF|REF_ALLOWBROKEN)) {
->                         error(remote_branch
->                               ? _("Error deleting remote branch '%s'")
->                               : _("Error deleting branch '%s'"),
-> diff --git a/refs.c b/refs.c
-> index 0ead11f..2662ef6 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2122,12 +2122,12 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
->         int resolve_flags;
->         int missing = 0;
->         int attempts_remaining = 3;
-> -       int bad_refname;
-> +       int bad_ref;
->
->         lock = xcalloc(1, sizeof(struct ref_lock));
->         lock->lock_fd = -1;
->
-> -       bad_refname = check_refname_format(refname, REFNAME_ALLOW_ONELEVEL);
-> +       bad_ref = check_refname_format(refname, REFNAME_ALLOW_ONELEVEL);
->
->         resolve_flags = RESOLVE_REF_ALLOW_BAD_NAME;
->         if (mustexist)
-> @@ -2150,6 +2150,10 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
->                 refname = resolve_ref_unsafe(orig_refname, lock->old_sha1,
->                                              resolve_flags, &type);
->         }
-> +       if (!refname && (flags & REF_ALLOWBROKEN) && (type & REF_ISBROKEN)) {
-> +               bad_ref = 1;
-> +               refname = orig_refname;
-> +       }
->         if (type_p)
->             *type_p = type;
->         if (!refname) {
-> @@ -2212,7 +2216,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
->                 else
->                         unable_to_lock_index_die(ref_file, errno);
->         }
-> -       if (bad_refname)
-> +       if (bad_ref)
->                 return lock;
->         return old_sha1 ? verify_lock(lock, old_sha1, mustexist) : lock;
->
-> diff --git a/refs.h b/refs.h
-> index 712fc32..0172f48 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -174,10 +174,11 @@ extern int peel_ref(const char *refname, unsigned char *sha1);
->   * Flags controlling transaction_update_sha1(), transaction_create_sha1(), etc.
->   * REF_NODEREF: act on the ref directly, instead of dereferencing
->   *              symbolic references.
-> - *
-> + * REF_ALLOWBROKEN: allow locking refs that are broken.
->   * Flags >= 0x100 are reserved for internal use.
->   */
->  #define REF_NODEREF    0x01
-> +#define REF_ALLOWBROKEN 0x02
->
->  /** Reads log for the value of ref during at_time. **/
->  extern int read_ref_at(const char *refname, unsigned long at_time, int cnt,
-> --
-> 2.0.1.508.g763ab16
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> diff --git a/environment.c b/environment.c
+> index 50ed40a..d5b0788 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -157,7 +157,7 @@ static void setup_git_env(void)
+>  					   "objects", &git_db_env);
+>  	git_index_file =3D git_path_from_env(INDEX_ENVIRONMENT, git_dir,
+>  					   "index", &git_index_env);
+> -	git_graft_file =3D git_path_from_env(GRAFT_ENVIRONMENT, git_dir,
+> +	git_graft_file =3D git_path_from_env(GRAFT_ENVIRONMENT, git_common_=
+dir,
+>  					   "info/grafts", &git_graft_env);
+>  	if (getenv(NO_REPLACE_OBJECTS_ENVIRONMENT))
+>  		check_replace_refs =3D 0;
+> diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
+> index da82aab..93605f4 100755
+> --- a/t/t0060-path-utils.sh
+> +++ b/t/t0060-path-utils.sh
+> @@ -269,6 +269,7 @@ test_git_path GIT_COMMON_DIR=3Dbar logs/HEAD     =
+           .git/logs/HEAD
+>  test_git_path GIT_COMMON_DIR=3Dbar objects                  bar/obje=
+cts
+>  test_git_path GIT_COMMON_DIR=3Dbar objects/bar              bar/obje=
+cts/bar
+>  test_git_path GIT_COMMON_DIR=3Dbar info/exclude             bar/info=
+/exclude
+> +test_git_path GIT_COMMON_DIR=3Dbar info/grafts              bar/info=
+/grafts
+>  test_git_path GIT_COMMON_DIR=3Dbar info/sparse-checkout     .git/inf=
+o/sparse-checkout
+>  test_git_path GIT_COMMON_DIR=3Dbar remotes/bar              bar/remo=
+tes/bar
+>  test_git_path GIT_COMMON_DIR=3Dbar branches/bar             bar/bran=
+ches/bar
+> diff --git a/t/t2025-checkout-to.sh b/t/t2025-checkout-to.sh
+> index 8a00310..508993f 100755
+> --- a/t/t2025-checkout-to.sh
+> +++ b/t/t2025-checkout-to.sh
+> @@ -81,4 +81,22 @@ test_expect_success 'checkout from a bare repo wit=
+hout --to' '
+>  	)
+>  '
+> =20
+> +test_expect_success 'checkout with grafts' '
+> +	test_when_finished rm .git/info/grafts &&
+> +	test_commit abc &&
+> +	SHA1=3D`git rev-parse HEAD` &&
+> +	test_commit def &&
+> +	test_commit xyz &&
+> +	echo "`git rev-parse HEAD` $SHA1" >.git/info/grafts &&
+> +	cat >expected <<-\EOF &&
+> +	xyz
+> +	abc
+> +	EOF
+> +	git log --format=3D%s -2 >actual &&
+> +	test_cmp expected actual &&
+> +	git checkout --detach --to grafted master &&
+> +	git --git-dir=3Dgrafted/.git log --format=3D%s -2 >actual &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_done
