@@ -1,61 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Tanay Abhra <tanayabh@gmail.com>
 Subject: Re: [PATCH 0/7] Rewrite `git_config()` using config-set API
-Date: Thu, 24 Jul 2014 17:39:53 +0200
-Message-ID: <vpq1ttadauu.fsf@anie.imag.fr>
-References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
-	<xmqqiomnda1y.fsf@gitster.dls.corp.google.com>
-	<53D12078.2070004@gmail.com>
+Date: Thu, 24 Jul 2014 21:29:18 +0530
+Message-ID: <53D12D56.2080505@gmail.com>
+References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>	<xmqqiomnda1y.fsf@gitster.dls.corp.google.com>	<53D12078.2070004@gmail.com> <vpq1ttadauu.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 17:40:08 2014
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Jul 24 17:59:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAL7m-00085I-W2
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 17:40:07 +0200
+	id 1XALQa-0007M5-A8
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 17:59:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759581AbaGXPkB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2014 11:40:01 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59898 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759405AbaGXPj7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2014 11:39:59 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6OFdps7013467
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 24 Jul 2014 17:39:51 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6OFdrvo007560;
-	Thu, 24 Jul 2014 17:39:53 +0200
-In-Reply-To: <53D12078.2070004@gmail.com> (Tanay Abhra's message of "Thu, 24
-	Jul 2014 20:34:24 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 24 Jul 2014 17:39:51 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6OFdps7013467
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1406821192.42505@Qt0KknkF+i5nWlI2JBu7Hg
+	id S932355AbaGXP71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2014 11:59:27 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:41223 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759767AbaGXP70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2014 11:59:26 -0400
+Received: by mail-pa0-f49.google.com with SMTP id hz1so4155117pad.22
+        for <git@vger.kernel.org>; Thu, 24 Jul 2014 08:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=CI3UuDcB+UJlbOdaqRLgFL8Erh/GNu15lappRlBTS5k=;
+        b=rdilLyBTWTy/hwG8SuYeQ7euHju73JxGwsSb9oeYA1n/RR0BfFCNi17Zj0HfZDxTjZ
+         cV2Y7Zp3RzeVRj7U0I/rC65xtQSNHC24T+k53L6wE2exfiE1h/lQ3TO/MApvSR7GQXyl
+         0RrQDrSzYckURWf1WQm3M3YYh11or2tiIel4DHqCQXQP02eT9YqUPncv7rArn4C3sPzW
+         oFNt6oFHtgIS7vt8u+sdV6gpMAhZvQ3SUI4XBuJtxIWzsseAZpJVt0k8YTDd4dTBVapK
+         K5pkqtibA4XAsU/tHZ0g2gdr+MmyWctRMWbUKwtoQ3Mu0Opyt5h3NHMz4H2PH094gbm7
+         0nUw==
+X-Received: by 10.66.117.38 with SMTP id kb6mr11644962pab.37.1406217565851;
+        Thu, 24 Jul 2014 08:59:25 -0700 (PDT)
+Received: from [127.0.0.1] ([117.96.50.136])
+        by mx.google.com with ESMTPSA id ml5sm22098768pab.10.2014.07.24.08.59.23
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 24 Jul 2014 08:59:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <vpq1ttadauu.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254164>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
 
-> I am attaching the v12 with two new functions git_configset_get_string() &
-> git_configset_get_string_const().
 
-Didn't you intend to change git_config_get_string to let it die in case
-of error instead of returning an error code?
+On 7/24/2014 9:09 PM, Matthieu Moy wrote:
+> Tanay Abhra <tanayabh@gmail.com> writes:
+> 
+>> I am attaching the v12 with two new functions git_configset_get_string() &
+>> git_configset_get_string_const().
+> 
+> Didn't you intend to change git_config_get_string to let it die in case
+> of error instead of returning an error code?
+>
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Yup, but it is the part of the new series not the old one.
+I sent this revised patch just for solving the constness
+debate.
+Also, I would need git_die_config() to print a proper
+error message which comes in the 7 part series not this one.
