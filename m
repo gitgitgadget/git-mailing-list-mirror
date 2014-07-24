@@ -1,68 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/7] add a test for semantic errors in config files
-Date: Thu, 24 Jul 2014 16:05:30 +0200
-Message-ID: <vpqha26kg2d.fsf@anie.imag.fr>
-References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
-	<1406140978-9472-4-git-send-email-tanayabh@gmail.com>
-	<vpq38drvohr.fsf@anie.imag.fr>
-	<xmqq38drd8ue.fsf@gitster.dls.corp.google.com>
-	<53D11077.10907@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: `ab | (cd cd && git apply -)' fails with v2.0.0
+Date: Thu, 24 Jul 2014 16:22:49 +0200
+Message-ID: <53D116B9.3050809@drmicha.warpmail.net>
+References: <20140724142945.iERQ798d%sdaoden@yandex.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 16:07:35 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Steffen Nurpmeso <sdaoden@yandex.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 24 16:23:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAJgD-0006rO-9z
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 16:07:33 +0200
+	id 1XAJvI-0002rZ-LT
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 16:23:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759059AbaGXOHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2014 10:07:20 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:46406 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758894AbaGXOHR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2014 10:07:17 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6OE5TuN026017
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 24 Jul 2014 16:05:30 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6OE5UmA006307;
-	Thu, 24 Jul 2014 16:05:31 +0200
-In-Reply-To: <53D11077.10907@gmail.com> (Tanay Abhra's message of "Thu, 24 Jul
-	2014 19:26:07 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 24 Jul 2014 16:05:30 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6OE5TuN026017
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1406815534.79478@7+AF/JG+Tb5dmqTAQ1vnRw
+	id S1758983AbaGXOXD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2014 10:23:03 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:48732 "EHLO
+	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758830AbaGXOXC (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 24 Jul 2014 10:23:02 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by gateway1.nyi.internal (Postfix) with ESMTP id E4EB822CCE
+	for <git@vger.kernel.org>; Thu, 24 Jul 2014 10:22:59 -0400 (EDT)
+Received: from frontend1 ([10.202.2.160])
+  by compute4.internal (MEProxy); Thu, 24 Jul 2014 10:22:59 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
+	messagingengine.com; h=message-id:date:from:mime-version:to
+	:subject:references:in-reply-to:content-type
+	:content-transfer-encoding; s=smtpout; bh=+rxGQAoH0DyvDewmZ4mtYZ
+	GmvPA=; b=q8Gr6rRsR6TNdSiCRXgLElXwJ8pKhlktS8pdueX73XlZRaYFsuAfOV
+	P4HyPnc096oklbmTY3VZ0UXMCzhep+0Of3asi5ZWYJnjZtjNDEVMd6XdIwkalWNI
+	Pl68B7wLFn1BTf1gy7+AUmxKFfcAwLUki66GIh+tkAyRtHt0J5/Do=
+X-Sasl-enc: dg6gCoqv/CDNhPaM6J9r2YjgL+bjJv0lNoWPkR8t6usz 1406211778
+Received: from localhost.localdomain (unknown [130.75.46.56])
+	by mail.messagingengine.com (Postfix) with ESMTPA id A4D02C007B9;
+	Thu, 24 Jul 2014 10:22:58 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140724142945.iERQ798d%sdaoden@yandex.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254159>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Steffen Nurpmeso venit, vidit, dixit 24.07.2014 15:29:
+> Hello (again, psssssst, after a long time),
+> 
+> it happened yesterday that i needed to do
+> 
+>   $ git diff HEAD:FILE COMMIT:SAME-FILE |
+>   > (cd src && git apply -) 
+> 
+> but found that didn't work with v2.0.0 (silently succeeds?, doing
+> nothing).  It works without the subshell and the cd(1); i had to
+> use `(cd src && patch -p2)' instead to keep in going.
+> Just in case that is not known yet (i've updated my git(1) repo,
+> but in the 1466 commits in between nothing sprung into my eye
+> regarding apply, and a Gmane search didn't, too).
+> No need to Cc: me, please just fix it; thank you.
+> Ciao,
+> 
+> --steffen
+> 
 
->>>> +	test_when_finished "mv .git/config.old .git/config" &&
->>>> +	echo "[alias]\n br" >.git/config &&
->> 
->> Is the use of \n portable?
->> 
->
-> Yes, you are right, will replace with printf in the next patch.
+Ah little more context would help. Are you diffing files in the subdir
+src, or a file at the root which happens to be present in the subdir src
+as well?
 
-... or a cat >.git/config <<\EOF, since this is the construct used
-elsewhere in the script.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Michael
