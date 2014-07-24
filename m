@@ -1,106 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v12 1/2] add `config_set` API for caching config-like files
-Date: Thu, 24 Jul 2014 11:41:43 -0700
-Message-ID: <xmqqwqb28uqg.fsf@gitster.dls.corp.google.com>
-References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
-	<xmqqiomnda1y.fsf@gitster.dls.corp.google.com>
-	<53D120FE.8000809@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH] git p4 test: fix failure in 9814-git-p4-rename.sh Was:
+ Re: Test failure in t9814-git-p4-rename.sh - my environment or bad test?
+Date: Thu, 24 Jul 2014 20:45:19 +0200
+Message-ID: <53D1543F.50508@kdbg.org>
+References: <CABUJjW8TFCw2wwAO83vMBPc7vQc+rvuPOAca-CNECEduUn19Ew@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 20:42:00 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
+To: Christoph Bonitz <ml.christophbonitz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 20:45:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XANxk-0000vJ-8C
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 20:41:56 +0200
+	id 1XAO1B-0003hw-Ad
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 20:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933322AbaGXSlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2014 14:41:52 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61469 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757603AbaGXSlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2014 14:41:51 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 408D62AD20;
-	Thu, 24 Jul 2014 14:41:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FlbNjMP6Bc7KoTy3r+JT1V/+WSc=; b=H7bHqr
-	haoaZhIdj4y7q3TGur7tgs/p9Scc5Ax9pjy7ka3B55ZjgzX1eYCvN7o++GyE43Hg
-	c/K+PY4dq4cfcBYQ+2++du9gdD4g4st0upBsoGrHUUftnBV+wWku0TDS7QWnGucb
-	RYx/RlPBKIdYgUGRXZYyKitZkuhPYKGda9z/k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V6quqjK/kXOvXkvhYijtEW4d8OTaQ7ae
-	5HrnKpB2tENG8p3d/Bwm+25e25AjDj72RJksKIQpPZHfXh+EA2VHh+ZfkyTgsG0l
-	eakt1ZUo1Hz6m1UFvkoTaOr/99lkmJw4XdNwGNNphWOzeUqi/ZqzTCD0AwAcWsnE
-	qgrJp/K5M6c=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 358E92AD1F;
-	Thu, 24 Jul 2014 14:41:51 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4A7C52AD14;
-	Thu, 24 Jul 2014 14:41:45 -0400 (EDT)
-In-Reply-To: <53D120FE.8000809@gmail.com> (Tanay Abhra's message of "Thu, 24
-	Jul 2014 20:36:38 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 299266B4-1362-11E4-8C42-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S934200AbaGXSpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2014 14:45:25 -0400
+Received: from bsmtp1.bon.at ([213.33.87.15]:39147 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S933154AbaGXSpY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2014 14:45:24 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 8312610012;
+	Thu, 24 Jul 2014 20:45:20 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id E869719F546;
+	Thu, 24 Jul 2014 20:45:19 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CABUJjW8TFCw2wwAO83vMBPc7vQc+rvuPOAca-CNECEduUn19Ew@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254177>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Am 23.07.2014 23:28, schrieb Christoph Bonitz:
+> The scenario in the rename test makes unnecessary assumptions about
+> which file git file-tree will detect as a source for a copy-operations.
+> Furthermore, copy detection is not tested by checking the resulting
+> perforce revision history via p4 filelog, but via git diff-tree.
+> 
+> This patch makes the test more robust by accepting each of the possible
+> sources, and more rigorous by doing so via p4 filelog.
+> ---
 
-> +int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest)
-> +{
-> +	const char *value;
-> +	if (!git_configset_get_value(cs, key, &value))
-> +		return git_config_string(dest, key, value);
-> +	else
-> +		return 1;
-> +}
-> +
-> +int git_configset_get_string(struct config_set *cs, const char *key, char **dest)
-> +{
-> +	const char *value;
-> +	if (!git_configset_get_value(cs, key, &value)) {
-> +		if (!value)
-> +			return config_error_nonbool(key);
-> +		*dest = xstrdup(value);
-> +		return 0;
-> +	}
-> +	else
-> +		return 1;
-> +}
+Please sign off your patch.
 
-Hmm, do we really need duplicate and an almost identical
-implementations?
+>  t/t9814-git-p4-rename.sh | 12 ++++--------
+>  1 file changed, 4 insertions(+), 8 deletions(-)
+> 
+> diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
+> index 1fc1f5f..4068510 100755
+> --- a/t/t9814-git-p4-rename.sh
+> +++ b/t/t9814-git-p4-rename.sh
+> @@ -156,18 +156,16 @@ test_expect_success 'detect copies' '
+>   git diff-tree -r -C HEAD &&
+>   git p4 submit &&
+>   p4 filelog //depot/file10 &&
+> - p4 filelog //depot/file10 | grep -q "branch from //depot/file" &&
+> + p4 filelog //depot/file10 | grep -q "branch from //depot/file2" &&
+> 
+>   cp file2 file11 &&
+>   git add file11 &&
+>   git commit -a -m "Copy file2 to file11" &&
+>   git diff-tree -r -C --find-copies-harder HEAD &&
+> - src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+> - test "$src" = file10 &&
+>   git config git-p4.detectCopiesHarder true &&
+>   git p4 submit &&
+>   p4 filelog //depot/file11 &&
+> - p4 filelog //depot/file11 | grep -q "branch from //depot/file" &&
+> + p4 filelog //depot/file11 | grep -q -E "branch from //depot/file(2|10)" &&
+> 
+>   cp file2 file12 &&
+>   echo "some text" >>file12 &&
+> @@ -177,7 +175,7 @@ test_expect_success 'detect copies' '
+>   level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
+>   test -n "$level" && test "$level" -gt 0 && test "$level" -lt 98 &&
+>   src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+> - test "$src" = file10 || test "$src" = file11 &&
+> + test "$src" = file2 || test "$src" = file10 || test "$src" = file11 &&
 
-I would have expected either one of these two (expecting the latter
-more than the former from the discussion):
+You can't test for alternatives in this way. It's already wrong in the
+original line, which is from 795fcb0e (avoid "test <cond> -a/-o <cond>"),
+and breaks the && chain. You need braces like this:
 
- 1. Because git_configset_get_string_const() returns a const string
-    not to be touched by the caller, it does not even xstrdup(),
-    while git_configset_get_string() does.
+  { test "$src" = file2 || test "$src" = file10 || test "$src" = file11; } &&
 
- 2. These behave identically, and the only reason we have two is
-    because some callers want to receive the string in "char *"
-    while others want to use "const char *".
+or you wrap it up in a case statement.
 
-If you were going route #1, then you would need duplicate but subtly
-different implementations; get_string_const() variant would not be
-calling git_config_string() because it does xstrdup() the value and
-give the caller a new string the caller has to free.
+>   git config git-p4.detectCopies $(($level + 2)) &&
+>   git p4 submit &&
+>   p4 filelog //depot/file12 &&
+> @@ -190,12 +188,10 @@ test_expect_success 'detect copies' '
+>   git diff-tree -r -C --find-copies-harder HEAD &&
+>   level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
+>   test -n "$level" && test "$level" -gt 2 && test "$level" -lt 100 &&
+> - src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
+> - test "$src" = file10 || test "$src" = file11 || test "$src" = file12 &&
+>   git config git-p4.detectCopies $(($level - 2)) &&
+>   git p4 submit &&
+>   p4 filelog //depot/file13 &&
+> - p4 filelog //depot/file13 | grep -q "branch from //depot/file"
+> + p4 filelog //depot/file13 | grep -q -E "branch from //depot/file(2|10|11|12)"
+>   )
+>  '
+> 
 
-If you were going route #2, the I would have expected there is only
-one implementation, _get_string(), and _get_string_const() would
-call it while casting the dest parameter it receives.
+I see a few other no-nos in the context of the changes, in particular,
+pipelines where git is not the last command; these would not catch
+failures in the git commands. But a fix for that is certainly outside
+the scope of this patch.
+
+-- Hannes
