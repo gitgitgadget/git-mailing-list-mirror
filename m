@@ -1,119 +1,88 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] git p4 test: fix failure in 9814-git-p4-rename.sh Was:
- Re: Test failure in t9814-git-p4-rename.sh - my environment or bad test?
-Date: Thu, 24 Jul 2014 20:45:19 +0200
-Message-ID: <53D1543F.50508@kdbg.org>
-References: <CABUJjW8TFCw2wwAO83vMBPc7vQc+rvuPOAca-CNECEduUn19Ew@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 5/7] enforce `xfuncname` precedence over `funcname`
+Date: Thu, 24 Jul 2014 20:47:45 +0200
+Message-ID: <vpqegxa386m.fsf@anie.imag.fr>
+References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
+	<1406140978-9472-6-git-send-email-tanayabh@gmail.com>
+	<xmqqtx67bt78.fsf@gitster.dls.corp.google.com>
+	<vpqlhrjqmyw.fsf@anie.imag.fr>
+	<xmqqiommadl0.fsf@gitster.dls.corp.google.com>
+	<53D15188.2010209@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
-To: Christoph Bonitz <ml.christophbonitz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 20:45:30 2014
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 20:48:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAO1B-0003hw-Ad
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 20:45:29 +0200
+	id 1XAO3e-0005kH-SA
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 20:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934200AbaGXSpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2014 14:45:25 -0400
-Received: from bsmtp1.bon.at ([213.33.87.15]:39147 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S933154AbaGXSpY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2014 14:45:24 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 8312610012;
-	Thu, 24 Jul 2014 20:45:20 +0200 (CEST)
-Received: from dx.sixt.local (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id E869719F546;
-	Thu, 24 Jul 2014 20:45:19 +0200 (CEST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CABUJjW8TFCw2wwAO83vMBPc7vQc+rvuPOAca-CNECEduUn19Ew@mail.gmail.com>
+	id S934483AbaGXSry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2014 14:47:54 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35134 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934456AbaGXSrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2014 14:47:53 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6OIlhip012866
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 24 Jul 2014 20:47:43 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6OIlj29009664;
+	Thu, 24 Jul 2014 20:47:45 +0200
+In-Reply-To: <53D15188.2010209@gmail.com> (Tanay Abhra's message of "Fri, 25
+	Jul 2014 00:03:44 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 24 Jul 2014 20:47:43 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6OIlhip012866
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1406832465.64624@uS0/ZvrUgLUH/NOdZGprtQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254178>
 
-Am 23.07.2014 23:28, schrieb Christoph Bonitz:
-> The scenario in the rename test makes unnecessary assumptions about
-> which file git file-tree will detect as a source for a copy-operations.
-> Furthermore, copy detection is not tested by checking the resulting
-> perforce revision history via p4 filelog, but via git diff-tree.
-> 
-> This patch makes the test more robust by accepting each of the possible
-> sources, and more rigorous by doing so via p4 filelog.
-> ---
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-Please sign off your patch.
+> For core the only test failing was xfuncname vs funcname,
 
->  t/t9814-git-p4-rename.sh | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
-> 
-> diff --git a/t/t9814-git-p4-rename.sh b/t/t9814-git-p4-rename.sh
-> index 1fc1f5f..4068510 100755
-> --- a/t/t9814-git-p4-rename.sh
-> +++ b/t/t9814-git-p4-rename.sh
-> @@ -156,18 +156,16 @@ test_expect_success 'detect copies' '
->   git diff-tree -r -C HEAD &&
->   git p4 submit &&
->   p4 filelog //depot/file10 &&
-> - p4 filelog //depot/file10 | grep -q "branch from //depot/file" &&
-> + p4 filelog //depot/file10 | grep -q "branch from //depot/file2" &&
-> 
->   cp file2 file11 &&
->   git add file11 &&
->   git commit -a -m "Copy file2 to file11" &&
->   git diff-tree -r -C --find-copies-harder HEAD &&
-> - src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
-> - test "$src" = file10 &&
->   git config git-p4.detectCopiesHarder true &&
->   git p4 submit &&
->   p4 filelog //depot/file11 &&
-> - p4 filelog //depot/file11 | grep -q "branch from //depot/file" &&
-> + p4 filelog //depot/file11 | grep -q -E "branch from //depot/file(2|10)" &&
-> 
->   cp file2 file12 &&
->   echo "some text" >>file12 &&
-> @@ -177,7 +175,7 @@ test_expect_success 'detect copies' '
->   level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
->   test -n "$level" && test "$level" -gt 0 && test "$level" -lt 98 &&
->   src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
-> - test "$src" = file10 || test "$src" = file11 &&
-> + test "$src" = file2 || test "$src" = file10 || test "$src" = file11 &&
+Being a little pessimistic: there may be other cases where the hashtable
+magically gives the right order for existing tests, but that would fail
+for untested use-cases.
 
-You can't test for alternatives in this way. It's already wrong in the
-original line, which is from 795fcb0e (avoid "test <cond> -a/-o <cond>"),
-and breaks the && chain. You need braces like this:
+But I can't think of any such case.
 
-  { test "$src" = file2 || test "$src" = file10 || test "$src" = file11; } &&
+> so the situation is not as bad as you think. One course of action
+> would be leave git_config() as it is, so that third party apps
+> may not be broken. Provide a function like git_config_cache(),
+> then rename all the git_config() calls in core to git_config_cache(),
+> fallback to git_config() where it is not applicable (for example,
+> git config -l).
 
-or you wrap it up in a case statement.
+I think Junio's point about "git config -l" is correct: we should just
+keep git_config_raw there.
 
->   git config git-p4.detectCopies $(($level + 2)) &&
->   git p4 submit &&
->   p4 filelog //depot/file12 &&
-> @@ -190,12 +188,10 @@ test_expect_success 'detect copies' '
->   git diff-tree -r -C --find-copies-harder HEAD &&
->   level=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f1 | cut -d" " -f5 | sed "s/C0*//") &&
->   test -n "$level" && test "$level" -gt 2 && test "$level" -lt 100 &&
-> - src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
-> - test "$src" = file10 || test "$src" = file11 || test "$src" = file12 &&
->   git config git-p4.detectCopies $(($level - 2)) &&
->   git p4 submit &&
->   p4 filelog //depot/file13 &&
-> - p4 filelog //depot/file13 | grep -q "branch from //depot/file"
-> + p4 filelog //depot/file13 | grep -q -E "branch from //depot/file(2|10|11|12)"
->   )
->  '
-> 
+OTOH, renaming git_config to git_config_cache seems a lot of code churn,
+so I'd keep the name git_config. Perhaps git_config_raw is no longer a
+good name and it could be called git_config_ordered.
 
-I see a few other no-nos in the context of the changes, in particular,
-pipelines where git is not the last command; these would not catch
-failures in the git commands. But a fix for that is certainly outside
-the scope of this patch.
+If we keep one call to git_config_raw there, then maybe we can use it
+for xfuncname/funcname too, and keep the behavior unchanged.
 
--- Hannes
+> Also can you name any third party apps that use the git_config()
+> system on which I can test the patches.
+
+There are probably tons of. I can think of git-multimail.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
