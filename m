@@ -1,115 +1,106 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [PATCH 1/7] config.c: fix accuracy of line number in errors
-Date: Fri, 25 Jul 2014 00:10:07 +0530
-Message-ID: <53D15307.4060601@gmail.com>
-References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>	<1406140978-9472-2-git-send-email-tanayabh@gmail.com>	<xmqqegxbd9u0.fsf@gitster.dls.corp.google.com>	<53D10B37.3000403@gmail.com> <xmqq1ttaa9sa.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v12 1/2] add `config_set` API for caching config-like files
+Date: Thu, 24 Jul 2014 11:41:43 -0700
+Message-ID: <xmqqwqb28uqg.fsf@gitster.dls.corp.google.com>
+References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
+	<xmqqiomnda1y.fsf@gitster.dls.corp.google.com>
+	<53D120FE.8000809@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 20:40:22 2014
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 24 20:42:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XANwD-00081v-Do
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 20:40:21 +0200
+	id 1XANxk-0000vJ-8C
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 20:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934364AbaGXSkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2014 14:40:15 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:47654 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933437AbaGXSkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2014 14:40:14 -0400
-Received: by mail-pa0-f51.google.com with SMTP id ey11so4474412pad.38
-        for <git@vger.kernel.org>; Thu, 24 Jul 2014 11:40:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=YUHXSi2yVWhSnj1+XrirxfY3vvcvEyGamltGyx1cY2o=;
-        b=RxfPlGHODYzmmi1MFl6fKJO0zfej9hIThcuTquo/4n5G/uC6bLsx+8ZGmh8TMLkkC3
-         iI8YmZHQD6K7n53pA6sOF5poG8OsxN6DPkgIaDufc2qE9hn8lWY4TK/b+ij1/w1TQf8j
-         OMabELe0qq4i28R1/z4zjrTdP6C9gQSJ9ooTrYu/8q5WtHRsrwc/y1ORHzJTaKCExVSi
-         1UO74y4/V/lXF7urrvmLQcqA2pAveIXV2ZNR//UP5oY+drv0ev0EgVgKb476L6w7uZMI
-         EZk9egcaEV5l3v7PmVfDVNtO7aEnj1UfRz4ApVpT4eOfFE3hGo9jyZjBCNa67peixqeL
-         4woA==
-X-Received: by 10.66.123.36 with SMTP id lx4mr12962394pab.21.1406227213652;
-        Thu, 24 Jul 2014 11:40:13 -0700 (PDT)
-Received: from [127.0.0.1] ([117.96.50.136])
-        by mx.google.com with ESMTPSA id i10sm23363577pat.36.2014.07.24.11.40.11
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 24 Jul 2014 11:40:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqq1ttaa9sa.fsf@gitster.dls.corp.google.com>
+	id S933322AbaGXSlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2014 14:41:52 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:61469 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757603AbaGXSlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2014 14:41:51 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 408D62AD20;
+	Thu, 24 Jul 2014 14:41:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FlbNjMP6Bc7KoTy3r+JT1V/+WSc=; b=H7bHqr
+	haoaZhIdj4y7q3TGur7tgs/p9Scc5Ax9pjy7ka3B55ZjgzX1eYCvN7o++GyE43Hg
+	c/K+PY4dq4cfcBYQ+2++du9gdD4g4st0upBsoGrHUUftnBV+wWku0TDS7QWnGucb
+	RYx/RlPBKIdYgUGRXZYyKitZkuhPYKGda9z/k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=V6quqjK/kXOvXkvhYijtEW4d8OTaQ7ae
+	5HrnKpB2tENG8p3d/Bwm+25e25AjDj72RJksKIQpPZHfXh+EA2VHh+ZfkyTgsG0l
+	eakt1ZUo1Hz6m1UFvkoTaOr/99lkmJw4XdNwGNNphWOzeUqi/ZqzTCD0AwAcWsnE
+	qgrJp/K5M6c=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 358E92AD1F;
+	Thu, 24 Jul 2014 14:41:51 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 4A7C52AD14;
+	Thu, 24 Jul 2014 14:41:45 -0400 (EDT)
+In-Reply-To: <53D120FE.8000809@gmail.com> (Tanay Abhra's message of "Thu, 24
+	Jul 2014 20:36:38 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 299266B4-1362-11E4-8C42-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254176>
 
+Tanay Abhra <tanayabh@gmail.com> writes:
 
+> +int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest)
+> +{
+> +	const char *value;
+> +	if (!git_configset_get_value(cs, key, &value))
+> +		return git_config_string(dest, key, value);
+> +	else
+> +		return 1;
+> +}
+> +
+> +int git_configset_get_string(struct config_set *cs, const char *key, char **dest)
+> +{
+> +	const char *value;
+> +	if (!git_configset_get_value(cs, key, &value)) {
+> +		if (!value)
+> +			return config_error_nonbool(key);
+> +		*dest = xstrdup(value);
+> +		return 0;
+> +	}
+> +	else
+> +		return 1;
+> +}
 
-On 7/25/2014 12:01 AM, Junio C Hamano wrote:
-> Tanay Abhra <tanayabh@gmail.com> writes:
-> 
->> On 7/24/2014 3:19 AM, Junio C Hamano wrote:
->>> Tanay Abhra <tanayabh@gmail.com> writes:
->>>
->>>> If a callback returns a negative value to `git_config*()` family,
->>>> they call `die()` while printing the line number and the file name.
->>>> Currently the printed line number is off by one, thus printing the
->>>> wrong line number.
->>>>
->>>> Make `linenr` point to the line we just parsed during the call
->>>> to callback to get accurate line number in error messages.
->>>>
->>>> Discovered-by: Tanay Abhra <tanayabh@gmail.com>
->>>> Signed-off-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Hmm, do we really need duplicate and an almost identical
+implementations?
 
-This patch should have looked like,
+I would have expected either one of these two (expecting the latter
+more than the former from the discussion):
 
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+ 1. Because git_configset_get_string_const() returns a const string
+    not to be touched by the caller, it does not even xstrdup(),
+    while git_configset_get_string() does.
 
-<commit message>
+ 2. These behave identically, and the only reason we have two is
+    because some callers want to receive the string in "char *"
+    while others want to use "const char *".
 
-Commit-message-by: Tanay Abhra <tanayabh@gmail.com>
+If you were going route #1, then you would need duplicate but subtly
+different implementations; get_string_const() variant would not be
+calling git_config_string() because it does xstrdup() the value and
+give the caller a new string the caller has to free.
 
->>>
->>> Thanks.
->>>
->>> I am not sure what to read in these two lines.  Was the fix done by
->>> you or Matthieu?
->>>
->>
->> I misunderstood the meaning of the message trailers. I will correct
->> it in the next re roll.
-> 
-> Well, that does not really answer my question, and it does not tell
-> us if you now understand the meaning of trailers correctly, or
-> replaced an earlier misunderstanding with a different
-> misunderstanding ;-)
-> 
-> More importantly, it would not help me interpret what you mean when
-> you write a sequence like this:
-> 
-> 	From: tanay
->         S-o-b: matthieu
->         S-o-b: tanay
->
-
-Actually it was because that patch contained fixup patch from Matthieu
-squashed into it, that is why there were two signoffs.
-
-> which does not quite make sense and leave the reader puzzled.
-> 
-> If the patch was authored by you and helped by matthieu, the first
-> S-o-b would be lying.  If the patch was written by matthieu and you
-> are merely relaying, then the authorship From is lying.  If the
-> patch was written by you and matthieu is relaying, then the two
-> S-o-bs are in incorrect order.
-> 
+If you were going route #2, the I would have expected there is only
+one implementation, _get_string(), and _get_string_const() would
+call it while casting the dest parameter it receives.
