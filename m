@@ -1,81 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 0/7] Rewrite `git_config()` using config-set API
-Date: Thu, 24 Jul 2014 18:17:09 +0200
-Message-ID: <vpqsilq7muy.fsf@anie.imag.fr>
-References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
-	<xmqqiomnda1y.fsf@gitster.dls.corp.google.com>
-	<53D12078.2070004@gmail.com> <vpq1ttadauu.fsf@anie.imag.fr>
-	<53D12D56.2080505@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 24 18:17:41 2014
+From: Monard Vong <travelingsoul86@gmail.com>
+Subject: [PATCH] git-svn: Avoid systematic prompt for client certificate when using "git svn branch"
+Date: Thu, 24 Jul 2014 18:25:59 +0200
+Message-ID: <1406219159-4644-1-git-send-email-travelingsoul86@gmail.com>
+References: <254135>
+Cc: Monard Vong <travelingsoul86@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jul 24 18:26:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XALi6-0005VJ-EF
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 18:17:38 +0200
+	id 1XALqa-0004Hi-UH
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 18:26:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933581AbaGXQRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2014 12:17:33 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:60710 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932207AbaGXQRd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2014 12:17:33 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6OGH8W0019879
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 24 Jul 2014 18:17:08 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6OGH9WR008028;
-	Thu, 24 Jul 2014 18:17:09 +0200
-In-Reply-To: <53D12D56.2080505@gmail.com> (Tanay Abhra's message of "Thu, 24
-	Jul 2014 21:29:18 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 24 Jul 2014 18:17:08 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6OGH8W0019879
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1406823430.21683@BF60BBZICdchLgzsbsQi5A
+	id S1759544AbaGXQ0V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2014 12:26:21 -0400
+Received: from mail-we0-f177.google.com ([74.125.82.177]:37942 "EHLO
+	mail-we0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759438AbaGXQ0U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2014 12:26:20 -0400
+Received: by mail-we0-f177.google.com with SMTP id w62so3046610wes.36
+        for <git@vger.kernel.org>; Thu, 24 Jul 2014 09:26:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=G8fIXVm0VFTnHmfCxPG0zZBw1rWksVSpSYYc02M+GKk=;
+        b=UPxVQ+cx+Xe9ALbzjnvStjwAG4oHqwGUF4wYoPLP2yHaFo92HL1RZLJD7ZxjHH/qMF
+         MY5J4diUo32aJczEqi4+uEwvGzbyZYEmtmQqabeD6vIANOK4rzuAXeYbTxuoprk/d19T
+         qPUV+XGztN7fd2aHsjMYUhSK6rCM9xpX5efPxzdwJCUCOJKEOWGLckn8ltQxw1YLH9tb
+         VmVavBOVWGrUcbYNYpn6lKMiBX4ZSX+y+4RI465LgHtbitSubWqE1ooAIRJAqvqAc02v
+         Mj2vmdGJ2Lz0rlnYYPgNIfm0H/aWFeW9wEZgM+IF5xCuwS+jlmfnqCSZsPBT3tUflXSZ
+         r/ig==
+X-Received: by 10.180.75.197 with SMTP id e5mr14644457wiw.76.1406219178869;
+        Thu, 24 Jul 2014 09:26:18 -0700 (PDT)
+Received: from fedora.localdomain (keyconsulting-31-226.fib.nerim.net. [178.132.31.226])
+        by mx.google.com with ESMTPSA id ex4sm24795455wic.2.2014.07.24.09.26.17
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Jul 2014 09:26:17 -0700 (PDT)
+X-Mailer: git-send-email 1.9.3
+In-Reply-To: <254135>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254166>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+When a client certificate is required to connect to a Subversion repository,
+the certificate location and password may be stored in Subversion config directory.
+Commands like "git svn init/fetch/dcommit" do not prompt for client certificate/password
+if the location is set in SVN config file, but "git svn branch" does not use the config
+directory, resulting in prompting for certificate location/password all the time.
 
-> On 7/24/2014 9:09 PM, Matthieu Moy wrote:
->> Tanay Abhra <tanayabh@gmail.com> writes:
->> 
->>> I am attaching the v12 with two new functions git_configset_get_string() &
->>> git_configset_get_string_const().
->> 
->> Didn't you intend to change git_config_get_string to let it die in case
->> of error instead of returning an error code?
->>
->
-> Yup, but it is the part of the new series not the old one.
-> I sent this revised patch just for solving the constness
-> debate.
-> Also, I would need git_die_config() to print a proper
-> error message which comes in the 7 part series not this one.
+Build instance of SVN::Client in branch_cmd() with SVN config directory option instead
+of authentication baton. SVN::Client then builds its own authentication baton
+using information from the config directory.
 
-Ah, right, you don't have line numbers yet, so you can't die properly.
+Signed-off-by: Monard Vong <travelingsoul86@gmail.com>
+---
+ git-svn.perl | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-So, hopefully, this part can be considered done, and we can continue
-building on top.
-
-As a side effect, I guess Junio will apply this on top of master so the
-string interning API will be available immediately at the tip of the
-branch.
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 0a32372..1f41ee1 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1161,7 +1161,9 @@ sub cmd_branch {
+ 	::_req_svn();
+ 
+ 	my $ctx = SVN::Client->new(
+-		auth    => Git::SVN::Ra::_auth_providers(),
++		config => SVN::Core::config_get_config(
++			$Git::SVN::Ra::config_dir
++		),
+ 		log_msg => sub {
+ 			${ $_[0] } = defined $_message
+ 				? $_message
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.9.3
