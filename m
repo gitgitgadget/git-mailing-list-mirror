@@ -1,71 +1,106 @@
-From: John Keeping <john@keeping.me.uk>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 5/7] enforce `xfuncname` precedence over `funcname`
-Date: Thu, 24 Jul 2014 20:04:03 +0100
-Message-ID: <20140724190403.GF26927@serenity.lan>
+Date: Thu, 24 Jul 2014 12:20:24 -0700
+Message-ID: <xmqqppgu8sxz.fsf@gitster.dls.corp.google.com>
 References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
- <1406140978-9472-6-git-send-email-tanayabh@gmail.com>
- <xmqqtx67bt78.fsf@gitster.dls.corp.google.com>
- <vpqlhrjqmyw.fsf@anie.imag.fr>
- <xmqqiommadl0.fsf@gitster.dls.corp.google.com>
- <53D15188.2010209@gmail.com>
- <vpqegxa386m.fsf@anie.imag.fr>
+	<1406140978-9472-6-git-send-email-tanayabh@gmail.com>
+	<xmqqtx67bt78.fsf@gitster.dls.corp.google.com>
+	<vpqlhrjqmyw.fsf@anie.imag.fr>
+	<xmqqiommadl0.fsf@gitster.dls.corp.google.com>
+	<53D15188.2010209@gmail.com> <vpqegxa386m.fsf@anie.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
 	Ramkumar Ramachandra <artagnon@gmail.com>
 To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Jul 24 21:11:37 2014
+X-From: git-owner@vger.kernel.org Thu Jul 24 21:20:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAOQR-0000EW-23
-	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 21:11:35 +0200
+	id 1XAOZC-0007q0-UF
+	for gcvg-git-2@plane.gmane.org; Thu, 24 Jul 2014 21:20:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759505AbaGXTLb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 24 Jul 2014 15:11:31 -0400
-Received: from coyote.aluminati.org ([72.9.247.114]:43306 "EHLO
-	coyote.aluminati.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759440AbaGXTLa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 24 Jul 2014 15:11:30 -0400
-X-Greylist: delayed 436 seconds by postgrey-1.27 at vger.kernel.org; Thu, 24 Jul 2014 15:11:30 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by coyote.aluminati.org (Postfix) with ESMTP id E234D6064CF;
-	Thu, 24 Jul 2014 20:04:13 +0100 (BST)
-X-Quarantine-ID: <OhxVEueq12jI>
-X-Virus-Scanned: Debian amavisd-new at caracal.aluminati.org
-X-Spam-Flag: NO
-X-Spam-Score: -0.2
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.2 tagged_above=-9999 required=6.31
-	tests=[ALL_TRUSTED=-1, BAYES_50=0.8] autolearn=no
-Received: from coyote.aluminati.org ([127.0.0.1])
-	by localhost (coyote.aluminati.org [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id OhxVEueq12jI; Thu, 24 Jul 2014 20:04:12 +0100 (BST)
-Received: from serenity.lan (chimera.aluminati.org [10.0.16.60])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	id S934078AbaGXTUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 24 Jul 2014 15:20:35 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:56124 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932195AbaGXTUe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 24 Jul 2014 15:20:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E4F802A0C0;
+	Thu, 24 Jul 2014 15:20:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=435Ux7RaQiN3EBPFFKEttVPGYEo=; b=gY8KNv
+	Cqo8lZ1EWIATSSKcB/D8MW8wf/z09XkEJjLUTiCLBVKrLY3zJR7MA+4wXS20bvjs
+	ZfBnJgjH5cLWf15RvzJq925J4DfDXGzuAdHZpxoURxUV9Vm31jZCQ/i2InZcdSOo
+	YMr6LqwaBJ7peT1W2humUsrSUq4bmak02Pghw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KJFMGKgGd0llHSycry4K29w40F1yHMRR
+	qK5GYaza/1zO6j63ESdJD8KAaFQHZUoHSVrBksyDdeLVWzdIqNMPEabXd3k3ZRFo
+	1AFz1Am4Nib+HlO1G7W7TDJwCFga34/THSJXlXRqDgXpCugJXA4Qk1P05wHFpxKg
+	1eiGoXjMZaM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id DA8352A0BD;
+	Thu, 24 Jul 2014 15:20:33 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by coyote.aluminati.org (Postfix) with ESMTPSA id 924756064D4;
-	Thu, 24 Jul 2014 20:04:05 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <vpqegxa386m.fsf@anie.imag.fr>
-User-Agent: Mutt/1.5.23 (2014-03-12)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 2F7E62A09B;
+	Thu, 24 Jul 2014 15:20:26 -0400 (EDT)
+In-Reply-To: <vpqegxa386m.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	24 Jul 2014 20:47:45 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 90EE4062-1367-11E4-A4F1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254181>
 
-On Thu, Jul 24, 2014 at 08:47:45PM +0200, Matthieu Moy wrote:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+
 > Tanay Abhra <tanayabh@gmail.com> writes:
-> > Also can you name any third party apps that use the git_config()
-> > system on which I can test the patches.
-> 
+>
+>> For core the only test failing was xfuncname vs funcname,
+>
+> Being a little pessimistic: there may be other cases where the hashtable
+> magically gives the right order for existing tests, but that would fail
+> for untested use-cases.
+>
+> But I can't think of any such case.
+>
+>> so the situation is not as bad as you think. One course of action
+>> would be leave git_config() as it is, so that third party apps
+>> may not be broken. Provide a function like git_config_cache(),
+>> then rename all the git_config() calls in core to git_config_cache(),
+>> fallback to git_config() where it is not applicable (for example,
+>> git config -l).
+>
+> I think Junio's point about "git config -l" is correct: we should just
+> keep git_config_raw there.
+
+I have a slight preference of making git_config() do the right thing
+and take advantage of caching behaviour, to be honest.  How much
+extra effort is necessary in your code to carry a piece of
+information, in addition to what lets you say "here are the values
+associated with that key in the order we read from the files", in
+order to be able to say "by the way, here is the order of key-value
+pairs, if you want to show everything we read in the same order"?
+If it would be excessive, using _raw() could be an easy way to punt,
+but because we know it is easy to decide to punt, I'd like to see us
+see if a real solution is feasible first before punting.
+
+>> Also can you name any third party apps that use the git_config()
+>> system on which I can test the patches.
+>
 > There are probably tons of. I can think of git-multimail.
 
-CGit [1] is probably the only one that links with libgit.a and uses the
-internal C API.
+This question does not really matter.
 
-[1] http://git.zx2c4.com/cgit/
+Among the various points, I actually think the last one you omitted
+from your quote, closing door to one useful way to fix UI mistakes
+in the future, is the most serious one.
