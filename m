@@ -1,62 +1,70 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
+From: Sheldon Els <sheldon@easyfundraising.org.uk>
 Subject: Re: git feature-branch
-Date: Fri, 25 Jul 2014 09:41:56 +0530
-Message-ID: <53D1D90C.5040704@gmail.com>
+Date: Fri, 25 Jul 2014 06:40:47 +0100
+Message-ID: <CAJnDmGLaXPFYSVteehdz66C-kiDcBpAkQpW-uX8x-s9Qe_+kNA@mail.gmail.com>
 References: <CAJnDmGJ16NRV7kUuwE7Cr6Pc202yq8YuXdUB-5=aXRQWCDfK2g@mail.gmail.com>
+ <53D1D90C.5040704@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Sheldon Els <sheldon@easyfundraising.org.uk>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jul 25 06:12:14 2014
+Cc: git@vger.kernel.org
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 07:41:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAWrZ-0000rd-VA
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 06:12:10 +0200
+	id 1XAYG9-0004Cz-NB
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 07:41:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750961AbaGYEMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2014 00:12:01 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:46551 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750749AbaGYEMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2014 00:12:00 -0400
-Received: by mail-pa0-f53.google.com with SMTP id kq14so5185213pab.26
-        for <git@vger.kernel.org>; Thu, 24 Jul 2014 21:12:00 -0700 (PDT)
+	id S1750999AbaGYFlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2014 01:41:10 -0400
+Received: from mail-vc0-f175.google.com ([209.85.220.175]:55173 "EHLO
+	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750869AbaGYFlJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2014 01:41:09 -0400
+Received: by mail-vc0-f175.google.com with SMTP id hu12so6608618vcb.34
+        for <git@vger.kernel.org>; Thu, 24 Jul 2014 22:41:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=bXSj5QQ4XCzB4l4jAi4lTXWeP0l5Hd7K+fr58WS/gko=;
-        b=O2O2NPCnPLhVgb6Va43ugcO5QsreWAlRma9QjvpUDJyM44Z2iYkjO0/YKMtQKQgbZU
-         AVkdF+Rkn+ofAmm1QDFRM3QKHVPTAwN512qzL1kGEeySiw2w3YwUMahbu1gj4FVXJTek
-         YwPbPdvZQ5kM696NzEG60ly/ELzJiQ+4xn8mNXpKyPUsneIbpz+DxiJPdin4IWM/oy8W
-         50hU7mXfJZffsz3vEA5CaDtYdYi6j9S2PxAqNSZVfUs/Pa5JFewT4GU2vxNXdTZAuqE3
-         3OElKlj0asmJotObh8C27bNgPLBXwA3WAf9rG74nlRZH7iVbatjgHtu6XR07G7mXcMrs
-         yHgg==
-X-Received: by 10.66.148.137 with SMTP id ts9mr5935805pab.45.1406261520197;
-        Thu, 24 Jul 2014 21:12:00 -0700 (PDT)
-Received: from sita-lt.atc.tcs.com (atcmail.atc.tcs.com. [203.200.212.145])
-        by mx.google.com with ESMTPSA id pl3sm7273043pbc.20.2014.07.24.21.11.58
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 24 Jul 2014 21:11:59 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CAJnDmGJ16NRV7kUuwE7Cr6Pc202yq8YuXdUB-5=aXRQWCDfK2g@mail.gmail.com>
-X-Enigmail-Version: 1.6
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=DJsx/C7WLA1Uzy4AzyKA+wA+KT17VrLTL7h2rXBubbs=;
+        b=RtRkDY5Yh5tGOKjFiDwcbPYAI9+U5xmbxqBm0GGT1/etoZqHcCKK59T9VX6JS8zqHi
+         ZS8cMkqJluTYgRecRaZTcWyyqxXUkLakDYciP+c4dhDi7Iw12lPwwIr9/5NaoIKAAwQg
+         IiZGYeddHhvQbsPIuXF7sygf1hHfxlLNiOO6pjPtH8kcPb6eBx/JqN6zJsFQp+muRV9r
+         upaZjIe7yrUdJVHnLB216fkn37Ac9UhRCaaZ4bvY4szj8Xs+3nFy4a4nRDbmQCdslk+i
+         perAI5+CPjxZX/SZgpm0Ia9SRVKtB2Udx1YJtpm8io+LT02je5xke3YORvYiTTH6x748
+         qCtw==
+X-Received: by 10.221.9.72 with SMTP id ov8mr18251902vcb.27.1406266868575;
+ Thu, 24 Jul 2014 22:41:08 -0700 (PDT)
+Received: by 10.58.212.71 with HTTP; Thu, 24 Jul 2014 22:40:47 -0700 (PDT)
+In-Reply-To: <53D1D90C.5040704@gmail.com>
+X-Google-Sender-Auth: WdnVP5EvHjvFNGQRBAQqfwTF_GI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254196>
 
-On 07/25/2014 03:45 AM, Sheldon Els wrote:
-> Hi
-> 
-> A small tool I wrote that is useful for some workflows. I thought it'd
-> be worth sharing. https://github.com/sheldon/git-feature-branch/
+It is just a shell script yes, and a man page to make things a bit
+more discoverable for "git help feature-branch".
 
-As far as I can tell it's just a shell script; does it really need
-installation instructions, and if so can they not be more generic than
-"brew install"?  Speaking for myself I have NO clue what that is.
+The brew command comes from homebrew, a popular OSX package manager.
+My platform of choice.
+
+Perhaps I can get support for an easy install for your platform. Do
+you think a Makefile that installs to /usr/local/bin and
+/usr/local/share/man would fit, or are you on windows?
+
+
+On 25 July 2014 05:11, Sitaram Chamarty <sitaramc@gmail.com> wrote:
+> On 07/25/2014 03:45 AM, Sheldon Els wrote:
+>> Hi
+>>
+>> A small tool I wrote that is useful for some workflows. I thought it'd
+>> be worth sharing. https://github.com/sheldon/git-feature-branch/
+>
+> As far as I can tell it's just a shell script; does it really need
+> installation instructions, and if so can they not be more generic than
+> "brew install"?  Speaking for myself I have NO clue what that is.
