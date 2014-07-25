@@ -1,112 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 1/3] config --global --edit: create a template file if needed
-Date: Fri, 25 Jul 2014 10:36:57 -0700
-Message-ID: <xmqqioml732e.fsf@gitster.dls.corp.google.com>
-References: <1406295891-7316-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 5/7] enforce `xfuncname` precedence over `funcname`
+Date: Fri, 25 Jul 2014 19:45:16 +0200
+Message-ID: <vpqlhrh9vtf.fsf@anie.imag.fr>
+References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
+	<1406140978-9472-6-git-send-email-tanayabh@gmail.com>
+	<xmqqtx67bt78.fsf@gitster.dls.corp.google.com>
+	<vpqlhrjqmyw.fsf@anie.imag.fr>
+	<xmqqiommadl0.fsf@gitster.dls.corp.google.com>
+	<53D15188.2010209@gmail.com> <vpqegxa386m.fsf@anie.imag.fr>
+	<xmqqppgu8sxz.fsf@gitster.dls.corp.google.com>
+	<53D15EB4.1050303@gmail.com>
+	<xmqqlhri8rdb.fsf@gitster.dls.corp.google.com>
+	<53D17919.4020702@ramsay1.demon.co.uk> <53D1CBFA.3020107@gmail.com>
+	<vpqlhriyll6.fsf@anie.imag.fr>
+	<xmqqr41974cl.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Jul 25 19:37:16 2014
+Content-Type: text/plain
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 19:45:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAjQh-0003jz-P2
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 19:37:16 +0200
+	id 1XAjYj-0002Co-6x
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 19:45:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935044AbaGYRhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2014 13:37:08 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56577 "EHLO smtp.pobox.com"
+	id S934625AbaGYRp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2014 13:45:28 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:51470 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934791AbaGYRhG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2014 13:37:06 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DF1FF2AA6C;
-	Fri, 25 Jul 2014 13:37:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lJEsaxdsJpGOsqK+M0aXqitNSxM=; b=kekkf8
-	jN8d8OHr6ap18EJGUX68QVNOl66pZ/lCBlZRYBU3Lz6zMsomS+SLpewdSZ0yUm9f
-	p2ueaTRHge9L54Yd32LW5Sv7G8w3MhqEf5ctWrkTPTu9Utn/Epz1Vwq8rMCZ7wT0
-	o1aZwUfOH/extyv8Z/FywEp3Bqi9UWIA7kPzY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ApMsMick5RoQrkwEOm0dNUscVBFykMp1
-	8/RdoPMGsfrbsoFK6UjSw7JUZ/EZlrTi3Vf91dDIB04Fr7dqbrhpm2oayL29CRX5
-	BomW2WqfZwCojRWO+kzsEvFdVrOjFoou0OdcxNgUr6a2q6ok4pY8dnQ9Cl0HjMTs
-	dGYPA+tf5NI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D52BF2AA6B;
-	Fri, 25 Jul 2014 13:37:05 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BD6832AA62;
-	Fri, 25 Jul 2014 13:36:59 -0400 (EDT)
-In-Reply-To: <1406295891-7316-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu
-	Moy's message of "Fri, 25 Jul 2014 15:44:49 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4807AECC-1422-11E4-BD4A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S933322AbaGYRp2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2014 13:45:28 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6PHjErC011407
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 25 Jul 2014 19:45:14 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6PHjGL6022727;
+	Fri, 25 Jul 2014 19:45:16 +0200
+In-Reply-To: <xmqqr41974cl.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Fri, 25 Jul 2014 10:09:14 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 25 Jul 2014 19:45:14 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6PHjErC011407
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1406915117.90872@NCALEX/nU+TylpneG3ksiA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254241>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> When the user has no ~/.gitconfig file, git config --global --edit used
-> to launch an editor on an nonexistant file name.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 >
-> Instead, create a file with a default content before launching the
-> editor. The template contains only commented-out entries, to save a few
-> keystrokes for the user. If the values are guessed properly, the user
-> will only have to uncomment the entries.
+>> Tanay Abhra <tanayabh@gmail.com> writes:
+>>
+>>> On 7/25/2014 2:52 AM, Ramsay Jones wrote:
+>>>> However, I think it you could create a list of <pointer to hash-table
+>>>> entry, string-list index> pairs in the config_set and use that to do
+>>>> the iteration. A bit ugly, but it should work.
+>>>
+>>> Thanks for the advice, that is exactly what I am doing.
+>>
+>> I'd just replace "list" with "array" and use
+>> Documentation/technical/api-allocation-growing.txt.
+>>
+>> But I can't think of a better way.
 >
-> Advanced users teaching newbies can create a minimalistic configuration
-> faster for newbies. Beginners reading a tutorial advising to run "git
-> config --global --edit" as a first step will be slightly more guided for
-> their first contact with Git.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
+> Presumably this array will reflect the order the source file told us
+> about the keys and their values; I wonder if the <filename, lineno>
+> information we already have can be used (or unified) with it?
 
-Probably a good idea; I do not think of any possible interactions we
-have to worry about with the configuration file init-db creates with
-possible templating.
+I've thought about this too, and I think it would be really hard.
 
-Do we use "user-wide" as a phrase to refer to these?  It sounds
-somewhat funny to call anything specific to $frotz "$frotz-wide", at
-least to me.
+First, there are several files in the picture (eg. /etc/gitconfig,
+~/.gitconfig and .git/config), and even included files hence it's not
+even a lexical order (file, line).
 
-Surely, /etc/gitconfig is called "site-wide".  But .git/config is
-per-project (or project-specific), and I would always have thought
-that ~/.gitconfig was "per-user".
+Then, even if we had a way to order elements with (file, line),
+iterating over the hashtable in this order wouldn't be easy (the naive
+way, "get the smallest, get the second smallest, ..." would be O(n^2)).
 
->  builtin/config.c | 30 +++++++++++++++++++++++++++---
->  cache.h          |  1 +
->  ident.c          |  2 +-
->  3 files changed, 29 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/config.c b/builtin/config.c
-> index fcd8474..3821697 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -445,6 +445,20 @@ static int get_urlmatch(const char *var, const char *url)
->  	return 0;
->  }
->  
-> +static char *default_user_config()
-
-static char *default_user_config(void)
-
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +	strbuf_addf(&buf,
-> +		    _("# This is Git's user-wide configuration file.\n"
-> +		      "[core]\n"
-> +		      "# Please, adapt and uncomment the following lines:\n"
-
-tangent: is it a French tradition to always have comma after please?
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
