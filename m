@@ -1,380 +1,130 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 3/4] refs.c: move ref parsing code out of resolve_ref()
-Date: Fri, 25 Jul 2014 09:12:53 -0700
-Message-ID: <CAL=YDWnWAoCrJn28vGKb=xrKKO=fCN=Uz+nM+eh+dYbHCFYpgQ@mail.gmail.com>
-References: <1406285039-22469-1-git-send-email-pclouds@gmail.com>
-	<1406285039-22469-4-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 18:13:04 2014
+Subject: [PATCH 1/5] refs.c: allow passing raw git_committer_info as email to _update_reflog
+Date: Fri, 25 Jul 2014 09:58:37 -0700
+Message-ID: <1406307521-10339-2-git-send-email-sahlberg@google.com>
+References: <1406307521-10339-1-git-send-email-sahlberg@google.com>
+Cc: gitster@pobox.com, Ronnie Sahlberg <sahlberg@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 25 18:58:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAi7A-0001LP-Qv
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 18:13:01 +0200
+	id 1XAipb-0005al-T9
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 18:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753239AbaGYQMz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2014 12:12:55 -0400
-Received: from mail-vc0-f175.google.com ([209.85.220.175]:53351 "EHLO
-	mail-vc0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752783AbaGYQMy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Jul 2014 12:12:54 -0400
-Received: by mail-vc0-f175.google.com with SMTP id hu12so7574071vcb.6
-        for <git@vger.kernel.org>; Fri, 25 Jul 2014 09:12:53 -0700 (PDT)
+	id S934656AbaGYQ6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2014 12:58:53 -0400
+Received: from mail-qa0-f74.google.com ([209.85.216.74]:62838 "EHLO
+	mail-qa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934604AbaGYQ6t (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2014 12:58:49 -0400
+Received: by mail-qa0-f74.google.com with SMTP id j15so769642qaq.5
+        for <git@vger.kernel.org>; Fri, 25 Jul 2014 09:58:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        bh=XYDUyP4uSkkoCiuAOYmM7RrfJklk8ZPUst0cI8ENd8s=;
-        b=A6hVnd01P4BSDyUVKP825ApHjFvptqLYqUZ7Cn8orTVegY56F0sxTZGlTQnfsnV0pW
-         FI845JuHGNshngFom5t6RkT/aCs+dJKpxAh/xhSIjTqte/1gXkgVZYTVh9MgZJj5UUwp
-         Gl2WdJapARVUmUsHpCXqsHOMmLKAb27NoTpyKntBF04hNofAzXlRYkVR6/eqJsielGCJ
-         5cUqE0FDNTIhy/aTUK5Cfrv40+INeAAFWna2xYg/cMiYzu18QFp+3z0BweApbFxY3Jri
-         QecEMXzCT7704Ydo9D512N2lCmFobkLD/Dy5pKBgjRrMYIzBJchKU31a9m2THv2/BoF5
-         sJRQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=37VdBckZ4Tsr8upMgHPguXub9EHqnOgyn8yJ9FszFl8=;
+        b=UUc6aFM2bszRMdW4b4T2aaVbLIuS+SakdU11H06ifiKk3H/fFNvIWbJY0G9RC6MQRR
+         SjmPLlpvgX7pHf0fod+YpWg3hTNSYB7oAufsmWWeqCF/mQX1qSGCyAo65J7r3ATD7jv6
+         BoXQIrnYfkUjORaiQT3vZZ352iUAm6ntyGfFyhytXABhuWOzH3ln2yk32I+qOaLceBh9
+         rCOz03x2fEobH1SxHM7YiTT4OdWomARIGxtB6rfgTCO9XZ25P6ol48RVztFOoSMTN3ra
+         Zna7dTyLhvGKLxSb6kU3IANB9Ufw9M1cybE882EbW+qGgqcgxBW7braattdfPDqZHgV3
+         Fegw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=XYDUyP4uSkkoCiuAOYmM7RrfJklk8ZPUst0cI8ENd8s=;
-        b=KsZRIrw8Ddy0hMgTBsuu4UskkRd+v7dHCm9aZxUSl1cKhsdhlGinTAAte6+UauHl8f
-         xCxQqI1hN1hNPZn5EcEyDKxOzEaNeiS7uckcXwmNRf8LYx5h0NERXJYFmrPGF2gcYLGn
-         oIuv1TyLY9yGxrzmsTR1Gn8mwXcCcAmIOTtNAqpKZkbi7LnvNI+gdVlDv4JKoRrr7RtR
-         LJdNLZ6BmSPO8c1JFxHVb5PwsvNYr3sReXN21epsFbUwxFgqPnIs9ea7g9HlhoQ/jmqZ
-         HnXumgE+JL2uf+iBbK5CZMRqIC1xpf7NAc3pdNkRN2lffjMvEOoxBXmGsSWn52L7eCaH
-         LL8Q==
-X-Gm-Message-State: ALoCoQndVEcs2LLZjXUog29oaTHKPbpp7DslulBBELPqmnJuFFIDuFJJmgxgWMeQb3V8am6q56Q5
-X-Received: by 10.52.148.2 with SMTP id to2mr18768223vdb.38.1406304773595;
- Fri, 25 Jul 2014 09:12:53 -0700 (PDT)
-Received: by 10.52.180.6 with HTTP; Fri, 25 Jul 2014 09:12:53 -0700 (PDT)
-In-Reply-To: <1406285039-22469-4-git-send-email-pclouds@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=37VdBckZ4Tsr8upMgHPguXub9EHqnOgyn8yJ9FszFl8=;
+        b=N5UWGk6dZ6zn90wqm0e9J5tSikGIqgtVStkgqjn3Hr0RUxkUEVM/QZ/3xHpDn79v8t
+         lQQC9POSIqUCBt9VRdHkWTVM4bC5KiitzKyabcEWviBWwHcni4p8NIRevfrUtpuJnqaJ
+         WXP1XANrMmStT0t5D+1Fi6HNZbrmZ9Y0VO0DVqjgE6Pni/xU9lxmaZjH3iIsQs2vZ8V5
+         8nnCqs6H1YgUkxV7e8Hj/XSQTQZB7zimEtBDKkrw9CQlQxyfBGvPlMBpYZK1isLBf/aJ
+         D+68npp8Q90M+VTRYcr8mCIb4TIhyQwWEWYA6dVP7zd/FL50xtnUj5oNstfIj2r+17hH
+         NViw==
+X-Gm-Message-State: ALoCoQnLXIS2gr+pl41xNCf/SbkKCHgbVbs/aqJqVsszhUVzL+q1qaIttIW7YtT/81P7szaMZT01
+X-Received: by 10.236.102.239 with SMTP id d75mr6290513yhg.21.1406307528463;
+        Fri, 25 Jul 2014 09:58:48 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id p3si1291707yho.7.2014.07.25.09.58.48
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 25 Jul 2014 09:58:48 -0700 (PDT)
+Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 536215A42F2;
+	Fri, 25 Jul 2014 09:58:48 -0700 (PDT)
+Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
+	id E888AE0CED; Fri, 25 Jul 2014 09:58:47 -0700 (PDT)
+X-Mailer: git-send-email 2.0.1.508.g763ab16
+In-Reply-To: <1406307521-10339-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254232>
 
-Nice.
+In many places in the code we do not have access to the individual fields
+in the committer data. Instead we might only have access to prebaked data
+such as what is returned by git_committer_info() containing a string
+that consists of email, timestamp, zone etc.
 
-On Fri, Jul 25, 2014 at 3:43 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
-Duy <pclouds@gmail.com> wrote:
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  cache.h |  11 ++++
->  refs.c  | 204 ++++++++++++++++++++++++++++++++++--------------------=
-----------
->  2 files changed, 120 insertions(+), 95 deletions(-)
->
-> diff --git a/cache.h b/cache.h
-> index 5ffbafb..40a63d9 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1003,6 +1003,17 @@ extern int read_ref(const char *refname, unsig=
-ned char *sha1);
->  extern const char *resolve_ref_unsafe(const char *ref, unsigned char=
- *sha1, int reading, int *flag);
->  extern char *resolve_refdup(const char *ref, unsigned char *sha1, in=
-t reading, int *flag);
->  extern int resolve_ref(const char *refname, struct strbuf *result, u=
-nsigned char *sha1, int reading, int *flag);
-> +/*
-> + * Given a ref in "ref" and its path, returns
-> + *
-> + * -2  failed to open with ENOENT, the caller is responsible for
-> + *     checking missing loose ref (see resolve_ref for example)
-> + * -1  if there's an error, "ref" can no longer be trusted, "flag" m=
-ay
-> + *     be set. errno is valid.
-> + *  0  this is a symref, "ref" now contains the linked ref
-> + * +1  normal ref, "sha1" is valid
-> + */
-> +extern int parse_ref(const char *path, struct strbuf *ref, unsigned =
-char *sha1, int *flag);
->
->  extern int dwim_ref(const char *str, int len, unsigned char *sha1, c=
-har **ref);
->  extern int dwim_log(const char *str, int len, unsigned char *sha1, c=
-har **ref);
-> diff --git a/refs.c b/refs.c
-> index bec2bb1..2769f20 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1533,6 +1533,105 @@ static int handle_missing_loose_ref(const cha=
-r *refname,
->         }
->  }
->
-> +int parse_ref(const char *path, struct strbuf *ref,
-> +             unsigned char *sha1, int *flag)
+This makes it inconvenient to use transaction_update_reflog since it means
+you would have to first parse git_committer_info before you can call
+update_reflog.
 
-Can you make this function static?
-It is not used by anything outside of this series and thus making it
-static avoids growing the public refs api.
+Add a new flag REFLOG_EMAIL_IS_COMMITTER to _update_reflog to tell it
+that what we pass in as email is already the fully baked committer string
+we can use as-is.
 
+Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
+---
+ refs.c | 20 ++++++++++++--------
+ refs.h |  1 +
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
-> +{
-> +       struct strbuf buffer =3D STRBUF_INIT;
-> +       struct stat st;
-> +       const char *buf;
-> +
-> +       /*
-> +        * We might have to loop back here to avoid a race condition:
-> +        * first we lstat() the file, then we try to read it as a lin=
-k
-> +        * or as a file.  But if somebody changes the type of the fil=
-e
-> +        * (file <-> directory <-> symlink) between the lstat() and
-> +        * reading, then we don't want to report that as an error but
-> +        * rather try again starting with the lstat().
-> +        */
-> +stat_ref:
-> +       if (lstat(path, &st) < 0)
-> +               return errno =3D=3D ENOENT ? -2 : -1;
-> +
-> +       /* Follow "normalized" - ie "refs/.." symlinks by hand */
-> +       if (S_ISLNK(st.st_mode)) {
-> +               struct strbuf new_path =3D STRBUF_INIT;
-> +               if (strbuf_readlink(&new_path, path, 256) < 0) {
-> +                       strbuf_release(&new_path);
-> +                       if (errno =3D=3D ENOENT || errno =3D=3D EINVA=
-L)
-> +                               /* inconsistent with lstat; retry */
-> +                               goto stat_ref;
-> +                       else
-> +                               return -1;
-> +               }
-> +               if (starts_with(new_path.buf, "refs/") &&
-> +                   !check_refname_format(new_path.buf, 0)) {
-> +                       strbuf_reset(ref);
-> +                       strbuf_addbuf(ref, &new_path);
-> +                       if (flag)
-> +                               *flag |=3D REF_ISSYMREF;
-> +                       strbuf_release(&new_path);
-> +                       return 0;
-> +               }
-> +               strbuf_release(&new_path);
-> +       }
-> +
-> +       /* Is it a directory? */
-> +       if (S_ISDIR(st.st_mode)) {
-> +               errno =3D EISDIR;
-> +               return -1;
-> +       }
-> +
-> +       /*
-> +        * Anything else, just open it and try to use it as
-> +        * a ref
-> +        */
-> +       if (strbuf_read_file(&buffer, path, 256) < 0) {
-> +               strbuf_release(&buffer);
-> +               if (errno =3D=3D ENOENT)
-> +                       /* inconsistent with lstat; retry */
-> +                       goto stat_ref;
-> +               else
-> +                       return -1;
-> +       }
-> +       strbuf_rtrim(&buffer);
-> +
-> +       /*
-> +        * Is it a symbolic ref?
-> +        */
-> +       if (!skip_prefix(buffer.buf, "ref:", &buf)) {
-> +               int ret;
-> +               /*
-> +                * Please note that FETCH_HEAD has a second line
-> +                * containing other data.
-> +                */
-> +               if (get_sha1_hex(buffer.buf, sha1) ||
-> +                   (buffer.buf[40] !=3D '\0' && !isspace(buffer.buf[=
-40]))) {
-> +                       if (flag)
-> +                               *flag |=3D REF_ISBROKEN;
-> +                       errno =3D EINVAL;
-> +                       ret =3D -1;
-> +               } else
-> +                       ret =3D 1;
-> +               strbuf_release(&buffer);
-> +               return ret;
-> +       }
-> +       if (flag)
-> +               *flag |=3D REF_ISSYMREF;
-> +       while (isspace(*buf))
-> +               buf++;
-> +       if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)) {
-> +               if (flag)
-> +                       *flag |=3D REF_ISBROKEN;
-> +               strbuf_release(&buffer);
-> +               errno =3D EINVAL;
-> +               return -1;
-> +       }
-> +       strbuf_reset(ref);
-> +       strbuf_addstr(ref, buf);
-> +       strbuf_release(&buffer);
-> +       return 0;
-> +}
-> +
->  /*
->   * 'result' content will be destroyed. Its value may be undefined if
->   * resolve_ref returns -1.
-> @@ -1542,9 +1641,8 @@ static int handle_missing_loose_ref(const char =
-*refname,
->  int resolve_ref(const char *refname, struct strbuf *result,
->                 unsigned char *sha1, int reading, int *flag)
->  {
-> -       struct strbuf buffer =3D STRBUF_INIT;
->         int depth =3D MAXDEPTH;
-> -       int ret =3D -1;
-> +       int ret =3D 0;
->
->         if (flag)
->                 *flag =3D 0;
-> @@ -1557,108 +1655,24 @@ int resolve_ref(const char *refname, struct =
-strbuf *result,
->         strbuf_reset(result);
->         strbuf_addstr(result, refname);
->
-> -       for (;;) {
-> +       while (!ret) {
->                 char path[PATH_MAX];
-> -               const char *ref =3D result->buf;
-> -               struct stat st;
-> -               const char *buf;
->
->                 if (--depth < 0) {
->                         errno =3D ELOOP;
-> +                       ret =3D -1;
->                         break;
->                 }
->
-> -               git_snpath(path, sizeof(path), "%s", ref);
-> -
-> -               /*
-> -                * We might have to loop back here to avoid a race
-> -                * condition: first we lstat() the file, then we try
-> -                * to read it as a link or as a file.  But if somebod=
-y
-> -                * changes the type of the file (file <-> directory
-> -                * <-> symlink) between the lstat() and reading, then
-> -                * we don't want to report that as an error but rathe=
-r
-> -                * try again starting with the lstat().
-> -                */
-> -       stat_ref:
-> -               if (lstat(path, &st) < 0) {
-> -                       if (errno =3D=3D ENOENT)
-> -                               ret =3D handle_missing_loose_ref(ref,=
- sha1,
-> -                                                              readin=
-g, flag);
-> -                       break;
-> +               git_snpath(path, sizeof(path), "%s", result->buf);
-> +               ret =3D parse_ref(path, result, sha1, flag);
-> +               if (ret =3D=3D -2) {
-> +                       ret =3D handle_missing_loose_ref(result->buf,=
- sha1,
-> +                                                      reading, flag)=
-;
-> +                       ret =3D ret ? -1 : 1;
->                 }
-> -
-> -               /* Follow "normalized" - ie "refs/.." symlinks by han=
-d */
-> -               if (S_ISLNK(st.st_mode)) {
-> -                       /* no need to reset buffer, strbuf_readlink d=
-oes that */
-> -                       if (strbuf_readlink(&buffer, path, 256) < 0) =
-{
-> -                               if (errno =3D=3D ENOENT || errno =3D=3D=
- EINVAL)
-> -                                       /* inconsistent with lstat; r=
-etry */
-> -                                       goto stat_ref;
-> -                               else
-> -                                       break;
-> -                       }
-> -                       if (starts_with(buffer.buf, "refs/") &&
-> -                           !check_refname_format(buffer.buf, 0)) {
-> -                               strbuf_reset(result);
-> -                               strbuf_addbuf(result, &buffer);
-> -                               if (flag)
-> -                                       *flag |=3D REF_ISSYMREF;
-> -                               continue;
-> -                       }
-> -               }
-> -
-> -               /* Is it a directory? */
-> -               if (S_ISDIR(st.st_mode)) {
-> -                       errno =3D EISDIR;
-> -                       break;
-> -               }
-> -
-> -               /*
-> -                * Anything else, just open it and try to use it as
-> -                * a ref
-> -                */
-> -               strbuf_reset(&buffer);
-> -               if (strbuf_read_file(&buffer, path, 256) < 0) {
-> -                       if (errno =3D=3D ENOENT)
-> -                               /* inconsistent with lstat; retry */
-> -                               goto stat_ref;
-> -                       else
-> -                               break;
-> -               }
-> -               strbuf_rtrim(&buffer);
-> -
-> -               /*
-> -                * Is it a symbolic ref?
-> -                */
-> -               if (!skip_prefix(buffer.buf, "ref:", &buf)) {
-> -                       /*
-> -                        * Please note that FETCH_HEAD has a second
-> -                        * line containing other data.
-> -                        */
-> -                       if (get_sha1_hex(buffer.buf, sha1) ||
-> -                           (buffer.buf[40] !=3D '\0' && !isspace(buf=
-fer.buf[40]))) {
-> -                               if (flag)
-> -                                       *flag |=3D REF_ISBROKEN;
-> -                               errno =3D EINVAL;
-> -                       } else
-> -                               ret =3D 0;
-> -                       break;
-> -               }
-> -               if (flag)
-> -                       *flag |=3D REF_ISSYMREF;
-> -               while (isspace(*buf))
-> -                       buf++;
-> -               if (check_refname_format(buf, REFNAME_ALLOW_ONELEVEL)=
-) {
-> -                       if (flag)
-> -                               *flag |=3D REF_ISBROKEN;
-> -                       errno =3D EINVAL;
-> -                       break;
-> -               }
-> -               strbuf_reset(result);
-> -               strbuf_addstr(result, buf);
->         }
-> -       strbuf_release(&buffer);
-> -       return ret;
-> +       return ret > 0 ? 0 : -1;
->  }
->
->  const char *resolve_ref_unsafe(const char *refname, unsigned char *s=
-ha1, int reading, int *flag)
-> --
-> 1.9.1.346.ga2b5940
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/refs.c b/refs.c
+index 2662ef6..6c55032 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3522,14 +3522,18 @@ int transaction_update_reflog(struct ref_transaction *transaction,
+ 	hashcpy(update->old_sha1, old_sha1);
+ 	update->reflog_fd = -1;
+ 	if (email) {
+-		struct strbuf buf = STRBUF_INIT;
+-		char sign = (tz < 0) ? '-' : '+';
+-		int zone = (tz < 0) ? (-tz) : tz;
+-
+-		strbuf_addf(&buf, "%s %lu %c%04d", email, timestamp, sign,
+-			    zone);
+-		update->committer = xstrdup(buf.buf);
+-		strbuf_release(&buf);
++		if (flags & REFLOG_EMAIL_IS_COMMITTER)
++			update->committer = xstrdup(email);
++		else {
++			struct strbuf buf = STRBUF_INIT;
++			char sign = (tz < 0) ? '-' : '+';
++			int zone = (tz < 0) ? (-tz) : tz;
++
++			strbuf_addf(&buf, "%s %lu %c%04d", email, timestamp,
++				    sign, zone);
++			update->committer = xstrdup(buf.buf);
++			strbuf_release(&buf);
++		}
+ 	}
+ 	if (msg)
+ 		update->msg = xstrdup(msg);
+diff --git a/refs.h b/refs.h
+index 0172f48..eb918a0 100644
+--- a/refs.h
++++ b/refs.h
+@@ -309,6 +309,7 @@ int transaction_delete_sha1(struct ref_transaction *transaction,
+  * Flags >= 0x100 are reserved for internal use.
+  */
+ #define REFLOG_TRUNCATE 0x01
++#define REFLOG_EMAIL_IS_COMMITTER 0x02
+ /*
+  * Append a reflog entry for refname. If the REFLOG_TRUNCATE flag is set
+  * this update will first truncate the reflog before writing the entry.
+-- 
+2.0.1.508.g763ab16
