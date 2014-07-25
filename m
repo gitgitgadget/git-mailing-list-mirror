@@ -1,103 +1,113 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: `ab | (cd cd && git apply -)' fails with v2.0.0
-Date: Fri, 25 Jul 2014 08:49:06 +0200
-Message-ID: <53D1FDE2.8030309@drmicha.warpmail.net>
-References: <20140724142945.iERQ798d%sdaoden@yandex.com>	<53D116B9.3050809@drmicha.warpmail.net> <xmqqegxaad3r.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH 3/5] checkout --to: no auto-detach if the ref is already
+ checked out
+Date: Fri, 25 Jul 2014 08:51:34 +0200
+Message-ID: <53D1FE76.5080708@drmicha.warpmail.net>
+References: <1406115795-24082-1-git-send-email-pclouds@gmail.com>	<1406115795-24082-4-git-send-email-pclouds@gmail.com>	<53CFBD2A.9030803@drmicha.warpmail.net>	<CACsJy8DwPM68j-=LDDbq1H_bT1gD=aLQ8x6C1qiwF79=ai14dg@mail.gmail.com> <xmqq8uni8mx4.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Steffen Nurpmeso <sdaoden@yandex.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 08:49:46 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Max Kirillov <max@max630.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Junio C Hamano <gitster@pobox.com>, Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jul 25 08:51:42 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAZK3-00085Q-Dr
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 08:49:43 +0200
+	id 1XAZLx-0001Fz-Pl
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 08:51:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759639AbaGYGtj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2014 02:49:39 -0400
-Received: from out2-smtp.messagingengine.com ([66.111.4.26]:37634 "EHLO
+	id S1758027AbaGYGvi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2014 02:51:38 -0400
+Received: from out2-smtp.messagingengine.com ([66.111.4.26]:58434 "EHLO
 	out2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757587AbaGYGtO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Jul 2014 02:49:14 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-	by gateway1.nyi.internal (Postfix) with ESMTP id 60302215AC
-	for <git@vger.kernel.org>; Fri, 25 Jul 2014 02:49:07 -0400 (EDT)
+	by vger.kernel.org with ESMTP id S1753086AbaGYGvh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 25 Jul 2014 02:51:37 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by gateway1.nyi.internal (Postfix) with ESMTP id 2209321BFF
+	for <git@vger.kernel.org>; Fri, 25 Jul 2014 02:51:37 -0400 (EDT)
 Received: from frontend2 ([10.202.2.161])
-  by compute2.internal (MEProxy); Fri, 25 Jul 2014 02:49:08 -0400
+  by compute1.internal (MEProxy); Fri, 25 Jul 2014 02:51:37 -0400
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=
 	messagingengine.com; h=message-id:date:from:mime-version:to:cc
 	:subject:references:in-reply-to:content-type
-	:content-transfer-encoding; s=smtpout; bh=/dxTN+mnsPuWeNsFysvwHu
-	Egi4Q=; b=euURcKW1Qoapb7vj56zEj78aS69dOcW7AuwZrndOszuJrqFb5ktPBy
-	8HBUVmHqfaQb8eycwelCzhQEQRWsbxqR1ppoZf5gmr3YjlyqggfCtpMaW4lYnVie
-	qjClpyARWoHD0ADf4XU0O1r56fmkvp6zmbvNEys59mMJLc0wxg2IA=
-X-Sasl-enc: Kz1Mu5LzEwgfmItZ8DxX7l8mWm3GFBQzlaMoKQAj2TxF 1406270947
+	:content-transfer-encoding; s=smtpout; bh=nNYFt/P+N8pR8VdA41PH3X
+	ki1+g=; b=b5LsSdd706KBk0tJTVymVdA3qvCC4YQWeCbUm7K88q90Ycp1TNLzVy
+	jbAYacdRDU/OQBMd2ao0jLsKJHWUso1bA3f8CfMo0vrvrsfaovIfXcFnp56u9cDo
+	Qin8CKaQnS9YGliCE4FcTan9Wf49lcba3jnT1SykaVt1TrL8k1RX4=
+X-Sasl-enc: DZEa0johvHnAVPJKmhge7mo7z83Hu99qSJMWNKT5hjBy 1406271096
 Received: from localhost.localdomain (unknown [130.75.46.56])
-	by mail.messagingengine.com (Postfix) with ESMTPA id 03E78680224;
-	Fri, 25 Jul 2014 02:49:06 -0400 (EDT)
+	by mail.messagingengine.com (Postfix) with ESMTPA id 4B89168014B;
+	Fri, 25 Jul 2014 02:51:36 -0400 (EDT)
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <xmqqegxaad3r.fsf@gitster.dls.corp.google.com>
+In-Reply-To: <xmqq8uni8mx4.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254199>
 
-Junio C Hamano venit, vidit, dixit 24.07.2014 19:19:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Steffen Nurpmeso venit, vidit, dixit 24.07.2014 15:29:
->>> Hello (again, psssssst, after a long time),
+Junio C Hamano venit, vidit, dixit 24.07.2014 23:30:
+> Duy Nguyen <pclouds@gmail.com> writes:
+>=20
+>> On Wed, Jul 23, 2014 at 8:48 PM, Michael J Gruber
+>> <git@drmicha.warpmail.net> wrote:
+>>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy venit, vidit, dixit 23.07=
+=2E2014 13:43:
+>>>> +     if (advice_checkout_to)
+>>>> +             die(_("%s is already checked out at %s.\n"
+>>>> +                   "Either use --detach or -b together with --to =
+"
+>>>> +                   "or switch branch in the the other checkout.")=
+,
 >>>
->>> it happened yesterday that i needed to do
+>>> "or switch to a different branch in the other checkout". But maybe =
+we
+>>> can be even more helpful, like:
 >>>
->>>   $ git diff HEAD:FILE COMMIT:SAME-FILE |
->>>   > (cd src && git apply -) 
->>> ...
+>>> "%s is already checked out at %s.\n"
+>>> "Either checkout the detached head of branch %s using\n"
+>>> "    git checkout --detach --to %s %s\n"
+>>> "or checkout a new branch based off %s using\n"
+>>> "    git checkout --to %s -b %s newbranch %s\n"
+>>> "or switch to a different branch in the other checkout."
+>>>
+>>> if we can figure out the appropriate arguments at this point in the=
+ code.
 >>
->> Ah little more context would help. Are you diffing files in the subdir
->> src, or a file at the root which happens to be present in the subdir src
->> as well?
-> 
-> As the <treeish>:<path> form is not meant to produce "git apply"
-> applicable patch in the first place, I am not sure what the OP is
-> trying to achieve in the first place.  Not just "how many leading
-> levels to strip?" but "which file is being modified?" does not
-> appear in a usable form.  For example, here is what you would see:
-> 
->     $ git diff HEAD:GIT-VERSION-GEN maint:GIT-VERSION-GEN
->     diff --git a/HEAD:GIT-VERSION-GEN b/maint:GIT-VERSION-GEN
->     index 40adbf7..0d1a86c 100755
->     --- a/HEAD:GIT-VERSION-GEN
->     +++ b/maint:GIT-VERSION-GEN
->     @@ -1,7 +1,7 @@
->     ...
-> 
-> and neither "HEAD:GIT-VERSION-GEN" nor "maint:GIT-VERSION-GEN" is
-> the file being modified ("GIT-VERSION-GEN" is).
+>> We would not be able to construct the exact command that the user ha=
+s
+>> entered, so perhaps
+>>
+>>   git checkout --detach <more options> %s
+>>   git checkout -b <new branch> <more options> %s
+>>
+>> ?
+>>
+>> Note that this does not only occur when --to is given. If you have t=
+wo
+>> checkouts associated to the same repo, "git checkout foo" on one
+>> checkout when "foo" is held by another checkout would cause the same
+>> error. I'll need to think of a better name than advice.checkoutTo.
+>=20
+> I am not sure if we need to say anything more than the first line of
+> the message you have in your patch.  To fork a new branch at the
+> commit the user is interested in to check it out, or not bothering
+> with the branch and detach, are both very normal parts of user's Git
+> toolchest, nothing particularly special.  As long as the most
+> important point, i.e. "in the new world order, unlike the
+> contrib/workdir hack, you cannot check out the same branch at two
+> different places", is clearly conveyed and understood, everything
+> else should follow naturally, no?
 
-I thought "git apply" knows how to strip the rev part.
+As an error message that is completely sufficient.
 
-> I would understand if the upstream of the pipe were
-> 
->     $ git diff HEAD maint -- GIT-VERSION-GEN | ...
-> 
-> though.
-> 
-> Needless to say, if the place "cd" goes is not a worktree controlled
-> by git, then "git apply" would not know where the top-level of the
-> target tree is, so even though the input with the corrected command
-> on the upstream side of the pipe tells it which file is being
-> modified, it needs to be told with the proper -p<n> parameter how
-> many leading levels to strip.
-
-I think it's a common mistake to think of "git apply" as some sort of
-magic extension of "patch" which can do anything that "patch" does and
-more, and can be fed anything that "git diff" produces", figuring out by
-itself what to do with it :)
+The advice messages are meant to teach the user about the normal parts
+of the toolchest to use in a situation of "conflict", aren't they? Mayb=
+e
+we should ask someone who hasn't turned them off...
 
 Michael
