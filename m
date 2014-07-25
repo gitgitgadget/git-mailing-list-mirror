@@ -1,85 +1,121 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH v3 2/3] home_config_paths(): let the caller ignore xdg path
-Date: Fri, 25 Jul 2014 21:11:35 +0200
-Message-ID: <1406315496-10237-2-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH v3 3/3] commit: advertise config --global --edit on guessed identity
+Date: Fri, 25 Jul 2014 21:11:36 +0200
+Message-ID: <1406315496-10237-3-git-send-email-Matthieu.Moy@imag.fr>
 References: <xmqq1tt96yyh.fsf@gitster.dls.corp.google.com>
  <1406315496-10237-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Jul 25 21:11:55 2014
+X-From: git-owner@vger.kernel.org Fri Jul 25 21:12:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAkuH-0005Uv-Ee
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 21:11:53 +0200
+	id 1XAkuV-0005fd-6d
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 21:12:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761078AbaGYTLt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2014 15:11:49 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52839 "EHLO shiva.imag.fr"
+	id S1761086AbaGYTLw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2014 15:11:52 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36341 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761050AbaGYTLr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2014 15:11:47 -0400
+	id S1761057AbaGYTLu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2014 15:11:50 -0400
 Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6PJBc6W025863
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6PJBdm8020226
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 25 Jul 2014 21:11:38 +0200
+	Fri, 25 Jul 2014 21:11:39 +0200
 Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6PJBeXe023312;
-	Fri, 25 Jul 2014 21:11:40 +0200
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6PJBfUJ023315;
+	Fri, 25 Jul 2014 21:11:41 +0200
 Received: from moy by anie.imag.fr with local (Exim 4.80)
 	(envelope-from <moy@imag.fr>)
-	id 1XAku4-0002nk-7E; Fri, 25 Jul 2014 21:11:40 +0200
+	id 1XAku5-0002nx-K9; Fri, 25 Jul 2014 21:11:41 +0200
 X-Mailer: git-send-email 2.0.2.737.gfb43bde
 In-Reply-To: <1406315496-10237-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 25 Jul 2014 21:11:38 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 25 Jul 2014 21:11:39 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6PJBc6W025863
+X-MailScanner-ID: s6PJBdm8020226
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1406920301.21938@/zWtbTkuJo0neK1SRlBKRA
+MailScanner-NULL-Check: 1406920302.55179@b/vlrerM8lFDZApLaWfQVg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254260>
 
-The caller can signal that it is not interested in learning
-the location of $HOME/.gitconfig by passing global=NULL, but
-there is no way to decline the path to the configuration
-file based on $XDG_CONFIG_HOME.
+When the user has no user-wide configuration file, it's faster to use the
+newly introduced config file template than to run two commands to set
+user.name and user.email. Advise this to the user.
 
-Allow the caller to pass xdg=NULL to signal that it is not
-interested in the XDG location.
+The old advice is kept if the user already has a configuration file since
+the template feature would not trigger in this case.
 
-Commit-message-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- path.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ builtin/commit.c | 34 ++++++++++++++++++++++++++++++++--
+ 1 file changed, 32 insertions(+), 2 deletions(-)
 
-diff --git a/path.c b/path.c
-index 3afcdb4..f68df0c 100644
---- a/path.c
-+++ b/path.c
-@@ -148,10 +148,12 @@ void home_config_paths(char **global, char **xdg, char *file)
- 			*global = mkpathdup("%s/.gitconfig", home);
- 	}
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 5ed6036..7502b0e 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -42,7 +42,20 @@ static const char * const builtin_status_usage[] = {
+ 	NULL
+ };
  
--	if (!xdg_home)
--		*xdg = NULL;
--	else
--		*xdg = mkpathdup("%s/git/%s", xdg_home, file);
-+	if (xdg) {
-+		if (!xdg_home)
-+			*xdg = NULL;
-+		else
-+			*xdg = mkpathdup("%s/git/%s", xdg_home, file);
-+	}
- 
- 	free(to_free);
+-static const char implicit_ident_advice[] =
++static const char implicit_ident_advice_noconfig[] =
++N_("Your name and email address were configured automatically based\n"
++"on your username and hostname. Please check that they are accurate.\n"
++"You can suppress this message by setting them explicitly. Run the\n"
++"following command and follow the instructions in your editor to edit\n"
++"your configuration file:\n"
++"\n"
++"    git config --global --edit\n"
++"\n"
++"After doing this, you may fix the identity used for this commit with:\n"
++"\n"
++"    git commit --amend --reset-author\n");
++
++static const char implicit_ident_advice_config[] =
+ N_("Your name and email address were configured automatically based\n"
+ "on your username and hostname. Please check that they are accurate.\n"
+ "You can suppress this message by setting them explicitly:\n"
+@@ -1402,6 +1415,23 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	return 0;
  }
+ 
++static const char *implicit_ident_advice() {
++	char *user_config = NULL;
++	char *xdg_config = NULL;
++	int config_exists;
++
++	home_config_paths(&user_config, &xdg_config, "config");
++	config_exists = file_exists(user_config) || file_exists(xdg_config);
++	free(user_config);
++	free(xdg_config);
++
++	if (config_exists)
++		return _(implicit_ident_advice_config);
++	else
++		return _(implicit_ident_advice_noconfig);
++
++}
++
+ static void print_summary(const char *prefix, const unsigned char *sha1,
+ 			  int initial_commit)
+ {
+@@ -1440,7 +1470,7 @@ static void print_summary(const char *prefix, const unsigned char *sha1,
+ 		strbuf_addbuf_percentquote(&format, &committer_ident);
+ 		if (advice_implicit_identity) {
+ 			strbuf_addch(&format, '\n');
+-			strbuf_addstr(&format, _(implicit_ident_advice));
++			strbuf_addstr(&format, implicit_ident_advice());
+ 		}
+ 	}
+ 	strbuf_release(&author_ident);
 -- 
 2.0.2.737.gfb43bde
