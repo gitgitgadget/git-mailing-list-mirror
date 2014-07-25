@@ -1,95 +1,109 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 5/7] enforce `xfuncname` precedence over `funcname`
-Date: Fri, 25 Jul 2014 19:45:16 +0200
-Message-ID: <vpqlhrh9vtf.fsf@anie.imag.fr>
-References: <1406140978-9472-1-git-send-email-tanayabh@gmail.com>
-	<1406140978-9472-6-git-send-email-tanayabh@gmail.com>
-	<xmqqtx67bt78.fsf@gitster.dls.corp.google.com>
-	<vpqlhrjqmyw.fsf@anie.imag.fr>
-	<xmqqiommadl0.fsf@gitster.dls.corp.google.com>
-	<53D15188.2010209@gmail.com> <vpqegxa386m.fsf@anie.imag.fr>
-	<xmqqppgu8sxz.fsf@gitster.dls.corp.google.com>
-	<53D15EB4.1050303@gmail.com>
-	<xmqqlhri8rdb.fsf@gitster.dls.corp.google.com>
-	<53D17919.4020702@ramsay1.demon.co.uk> <53D1CBFA.3020107@gmail.com>
-	<vpqlhriyll6.fsf@anie.imag.fr>
-	<xmqqr41974cl.fsf@gitster.dls.corp.google.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [RFC PATCH 1/3] config --global --edit: create a template file if needed
+Date: Fri, 25 Jul 2014 13:51:54 -0400
+Message-ID: <CAPig+cRpcA15_FQj1Cs6M8MFUhvh0UGd2RtAf9aXLQus-mLp6g@mail.gmail.com>
+References: <1406295891-7316-1-git-send-email-Matthieu.Moy@imag.fr>
+	<CAPig+cSyLtUmkxAcO+iatKSS2t2T5byXRrJYq=MSuBoZ3m=hcw@mail.gmail.com>
+	<vpqtx65ctqm.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jul 25 19:45:35 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Jul 25 19:52:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAjYj-0002Co-6x
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 19:45:33 +0200
+	id 1XAjey-0007Vx-34
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 19:52:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934625AbaGYRp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2014 13:45:28 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:51470 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933322AbaGYRp2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 25 Jul 2014 13:45:28 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6PHjErC011407
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 25 Jul 2014 19:45:14 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6PHjGL6022727;
-	Fri, 25 Jul 2014 19:45:16 +0200
-In-Reply-To: <xmqqr41974cl.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Fri, 25 Jul 2014 10:09:14 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 25 Jul 2014 19:45:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6PHjErC011407
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1406915117.90872@NCALEX/nU+TylpneG3ksiA
+	id S1753597AbaGYRv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 25 Jul 2014 13:51:56 -0400
+Received: from mail-yk0-f179.google.com ([209.85.160.179]:43148 "EHLO
+	mail-yk0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753270AbaGYRvz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2014 13:51:55 -0400
+Received: by mail-yk0-f179.google.com with SMTP id 142so3013590ykq.38
+        for <git@vger.kernel.org>; Fri, 25 Jul 2014 10:51:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:date:message-id:subject
+         :from:to:cc:content-type;
+        bh=U8xBo/jYWa73EL0SOa9NfpdQ/HonGcD2GBs57X80Prk=;
+        b=BfYeC5UQRd6Ou0P/ZY5OLvx/BHoRRdQjH/gIR27mITb8DeX9OR+UPeXy7T8iljF0uq
+         Db+KjLmmVFiUbFJkGEfdw6CxIhYU7lkFDrc6vtV6p5FJs3fEMBkHgkqAtcbq96jEM6Nt
+         0o6NfaEDE9SCZBdLQTL4YJW6ywOiEJsqWMiTXpg5oz7iepb5fJgRX2w0kZuXDrZZK6kE
+         4T/sa6NFPJPLIVEkteuFJYWTbIo0tBJcPXwKpteCtMOhSQZDN9/1ifWVipWMu+BcCuUR
+         saZQgYd91WvmPH142N7Ld2BTeGegXdsBAEy5b3EZlXXYGyk5SdCJWM0KwqvGSTHKDmUN
+         mZQg==
+X-Received: by 10.236.150.70 with SMTP id y46mr25321310yhj.52.1406310714855;
+ Fri, 25 Jul 2014 10:51:54 -0700 (PDT)
+Received: by 10.170.163.5 with HTTP; Fri, 25 Jul 2014 10:51:54 -0700 (PDT)
+In-Reply-To: <vpqtx65ctqm.fsf@anie.imag.fr>
+X-Google-Sender-Auth: yJrZL1WMMmfIJ0ooMSQlXbjlplg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254242>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Fri, Jul 25, 2014 at 12:01 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
 >
->> Tanay Abhra <tanayabh@gmail.com> writes:
+>>> +static char *default_user_config()
+>>> +{
+>>> +       struct strbuf buf = STRBUF_INIT;
+>>> +       strbuf_addf(&buf,
+>>> +                   _("# This is Git's user-wide configuration file.\n"
+>>> +                     "[core]\n"
+>>> +                     "# Please, adapt and uncomment the following lines:\n"
+>>> +                     "#        user = %s\n"
+>>> +                     "#        email = %s\n"),
 >>
->>> On 7/25/2014 2:52 AM, Ramsay Jones wrote:
->>>> However, I think it you could create a list of <pointer to hash-table
->>>> entry, string-list index> pairs in the config_set and use that to do
->>>> the iteration. A bit ugly, but it should work.
->>>
->>> Thanks for the advice, that is exactly what I am doing.
->>
->> I'd just replace "list" with "array" and use
->> Documentation/technical/api-allocation-growing.txt.
->>
->> But I can't think of a better way.
+>> "[core]", "user =", "email =" should not be translated. Would it make
+>> sense to keep these outside of _()?
 >
-> Presumably this array will reflect the order the source file told us
-> about the keys and their values; I wonder if the <filename, lineno>
-> information we already have can be used (or unified) with it?
+> I would say no, as the code and the string to translate would be much
+> less readable without core, user and email inline.
+>
+> Were you suggesting stg like
+>
+> _("# This is Git's user-wide configuration file.\n"
+>   "[%s]\n"
+>   "# Please, adapt and uncomment the following lines:\n"
+>   "#        %s = %s\n"
+>   "#        %s = %s\n"),
+>   "core", "name", ..., "email", ...
+>
+> ?
 
-I've thought about this too, and I think it would be really hard.
+That or some equivalent variation. I'm not a translator, but the above
+seems to convey sufficient context for a translator to understand what
+needs to be said, while preventing accidental translations of those
+strings which should not be translated.
 
-First, there are several files in the picture (eg. /etc/gitconfig,
-~/.gitconfig and .git/config), and even included files hence it's not
-even a lexical order (file, line).
-
-Then, even if we had a way to order elements with (file, line),
-iterating over the hashtable in this order wouldn't be easy (the naive
-way, "get the smallest, get the second smallest, ..." would be O(n^2)).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>>> +                       if (fd) {
+>>> +                               char *content = default_user_config();
+>>> +                               write_str_in_full(fd, content);
+>>
+>> close(fd);
+>
+> Indeed.
+>
+>>> +                               free(content);
+>>> +                       }
+>>> +                       else if (errno != EEXIST)
+>>> +                               die_errno(_("Cannot create configuration file %s"), config_file);
+>>
+>> Other error messages in this file (including those just above this
+>> block) begin with a lowercase letter.
+>
+> Applied.
+>
+> Thanks,
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
