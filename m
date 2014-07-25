@@ -1,140 +1,89 @@
-From: Steffen Nurpmeso <sdaoden@yandex.com>
-Subject: Re: `ab | (cd cd && git apply -)' fails with v2.0.0
-Date: Fri, 25 Jul 2014 12:31:51 +0200
-Message-ID: <20140725113151.1k4Xqb6C%sdaoden@yandex.com>
-References: <20140724142945.iERQ798d%sdaoden@yandex.com>
- <53D116B9.3050809@drmicha.warpmail.net>
- <xmqqegxaad3r.fsf@gitster.dls.corp.google.com>
- <53D1FDE2.8030309@drmicha.warpmail.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/4] Consolidate ref parsing code
+Date: Fri, 25 Jul 2014 17:43:55 +0700
+Message-ID: <1406285039-22469-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Fri Jul 25 12:32:22 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jul 25 12:44:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XAcnU-0002kq-J9
-	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 12:32:20 +0200
+	id 1XAcyy-0003v9-WD
+	for gcvg-git-2@plane.gmane.org; Fri, 25 Jul 2014 12:44:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760128AbaGYKcQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 25 Jul 2014 06:32:16 -0400
-Received: from forward12.mail.yandex.net ([95.108.130.94]:37893 "EHLO
-	forward12.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760122AbaGYKcP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 25 Jul 2014 06:32:15 -0400
-Received: from smtp14.mail.yandex.net (smtp14.mail.yandex.net [95.108.131.192])
-	by forward12.mail.yandex.net (Yandex) with ESMTP id 590EDC218C9;
-	Fri, 25 Jul 2014 14:31:58 +0400 (MSK)
-Received: from smtp14.mail.yandex.net (localhost [127.0.0.1])
-	by smtp14.mail.yandex.net (Yandex) with ESMTP id E5B6C1B610B9;
-	Fri, 25 Jul 2014 14:31:57 +0400 (MSK)
-Received: from unknown (unknown [89.204.155.37])
-	by smtp14.mail.yandex.net (nwsmtp/Yandex) with ESMTPSA id iKdoIieDgl-Vuu4VgkT;
-	Fri, 25 Jul 2014 14:31:56 +0400
-	(using TLSv1.2 with cipher AES256-GCM-SHA384 (256/256 bits))
-	(Client certificate not present)
-X-Yandex-Uniq: 2bc487bf-bcaf-4b4d-9b0b-c7602b4a1bfd
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.com; s=mail; t=1406284317;
-	bh=wI86/D1Gf2nfdRffLr9M54/bFo/tDvMaivOS2Mi7QQY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:In-Reply-To:
-	 User-Agent:MIME-Version:Content-Type:Content-Transfer-Encoding;
-	b=ZOzhflRMe0UZ6BJptDZ7VJCuAAELXxRETvgu1UIgyEgWLC3qhPBuSwkiWFHkvy6jT
-	 yrOfIb0/Jiz5nrcSLXq9FsJsRSbsdZt9sGhwZBJVuWGJDqhGYxfGGDx8e/ub2tH4e0
-	 53Vi9I7EYx+EVtSc7k/kkgVFhPsbi5ZB8iH8lePM=
-Authentication-Results: smtp14.mail.yandex.net; dkim=pass header.i=@yandex.com
-In-Reply-To: <53D1FDE2.8030309@drmicha.warpmail.net>
-User-Agent: s-nail v14.7.4-3-g32d76ea
+	id S1760045AbaGYKoI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 25 Jul 2014 06:44:08 -0400
+Received: from mail-pd0-f175.google.com ([209.85.192.175]:33719 "EHLO
+	mail-pd0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751478AbaGYKoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 25 Jul 2014 06:44:06 -0400
+Received: by mail-pd0-f175.google.com with SMTP id r10so5491918pdi.20
+        for <git@vger.kernel.org>; Fri, 25 Jul 2014 03:44:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:mime-version:content-type
+         :content-transfer-encoding;
+        bh=8gs2EEUpl1GPgAmL1TSKe9WhZzFMeoyrhiDTf4Pe3FQ=;
+        b=MKiRGIDVBV10/+wdOv/SYvK7t0zij6WSoGG8W4EqhcLlx+SbzI3qKYDVLkUpbNsmZj
+         RbTZmbeCXnCuCkeIYDOIU9pzc3lHqEjD1W3dmPeprYVgwoMPWD6B0K7MYGloFsu/9YSr
+         6Ib732ZcBl62ZTbSAweIZGcXQayPKRJJkO+gkqGGJLbwJ3Y3Jop31VJY5/rulhX4HkfS
+         vUNC9/KfgPyfJEDA6Z639N1URLE2CDVa9hoZ7RgSP2LoZTYqg0T8ADhD4MfR6KVpU3Yq
+         F+18JusMyZpPOscM4un1+yqmh9WUl/MoKxv5xPbfqSW4L4BD2Xvu4tdOlS7Dxi00FaDC
+         0tKg==
+X-Received: by 10.66.176.97 with SMTP id ch1mr9662979pac.101.1406285046122;
+        Fri, 25 Jul 2014 03:44:06 -0700 (PDT)
+Received: from lanh ([115.73.251.194])
+        by mx.google.com with ESMTPSA id dk1sm11166572pdb.20.2014.07.25.03.44.02
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 25 Jul 2014 03:44:05 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Fri, 25 Jul 2014 17:44:02 +0700
+X-Mailer: git-send-email 1.9.1.346.ga2b5940
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254203>
 
-Hello and good morning,
+On Thu, Jul 24, 2014 at 4:16 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>  - .... three places now knows what a
+>    textual symref looks like (i.e. begins with "ref:", zero or more
+>    whitespaces, the target ref and then zero or more trailing
+>    whitespaces).  Perhaps we need to consolidate the code further,
+>    so that this knowledge does not leak out of refs.c?
 
-Michael J Gruber <git@drmicha.warpmail.net> wrote:
- |Junio C Hamano venit, vidit, dixit 24.07.2014 19:19:
- |> Michael J Gruber <git@drmicha.warpmail.net> writes:
- |>> Steffen Nurpmeso venit, vidit, dixit 24.07.2014 15:29:
- |>>> Hello (again, psssssst, after a long time),
- |>>>
- |>>> it happened yesterday that i needed to do
- |>>>
- |>>>   $ git diff HEAD:FILE COMMIT:SAME-FILE |
- |>>>> (cd src && git apply -) 
- |>>> ...
- |>>
- |>> Ah little more context would help. Are you diffing files in the subdir
- |>> src, or a file at the root which happens to be present in the subdir src
- |>> as well?
- |> 
- |> As the <treeish>:<path> form is not meant to produce "git apply"
- |> applicable patch in the first place, I am not sure what the OP is
- |> trying to achieve in the first place.  Not just "how many leading
- |> levels to strip?" but "which file is being modified?" does not
- |> appear in a usable form.  For example, here is what you would see:
- |> 
- |>     $ git diff HEAD:GIT-VERSION-GEN maint:GIT-VERSION-GEN
- |>     diff --git a/HEAD:GIT-VERSION-GEN b/maint:GIT-VERSION-GEN
- |>     index 40adbf7..0d1a86c 100755
- |>     --- a/HEAD:GIT-VERSION-GEN
- |>     +++ b/maint:GIT-VERSION-GEN
- |>     @@ -1,7 +1,7 @@
- |>     ...
- |> 
- |> and neither "HEAD:GIT-VERSION-GEN" nor "maint:GIT-VERSION-GEN" is
- |> the file being modified ("GIT-VERSION-GEN" is).
- |
- |I thought "git apply" knows how to strip the rev part.
+I started on top of nd/multiple-work-trees but it conflicts badly with
+rs/ref-transaction-0 because this is basically code move. So I think
+we should make it a separate topic instead, based on latest 'master'.
+Junio, you still hit conflicts when merging this with nd/multiple-work-=
+trees,
+but that's simpler to resolve (git_snpath -> strbuf_git_path). I
+promise to replace the "ref:" code in checkout.c later when both
+topics graduate.
 
-That would brighten the sky of the glorious future.  Perfect!
+So.. first cut. The end result looks nice.
 
- |> I would understand if the upstream of the pipe were
- |> 
- |>     $ git diff HEAD maint -- GIT-VERSION-GEN | ...
- |> 
- |> though.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
+  strbuf.c: keep errno in strbuf_read_file()
+  refs.c: refactor resolve_ref_unsafe() to use strbuf internally
+  refs.c: move ref parsing code out of resolve_ref()
+  refs.c: rewrite resolve_gitlink_ref() to use parse_ref()
 
-Yes, in this case it applies the patch.
+ cache.h  |  12 +++
+ refs.c   | 332 ++++++++++++++++++++++++++++++++-----------------------=
+--------
+ strbuf.c |   7 +-
+ 3 files changed, 188 insertions(+), 163 deletions(-)
 
- |> Needless to say, if the place "cd" goes is not a worktree controlled
- |> by git, then "git apply" would not know where the top-level of the
- |> target tree is, so even though the input with the corrected command
- |> on the upstream side of the pipe tells it which file is being
- |> modified, it needs to be told with the proper -p<n> parameter how
- |> many leading levels to strip.
- |
- |I think it's a common mistake to think of "git apply" as some sort of
- |magic extension of "patch" which can do anything that "patch" does and
- |more, and can be fed anything that "git diff" produces", figuring out by
- |itself what to do with it :)
-
-This was indeed my mistake.
-But regardless i think the current behaviour sucks:
-
-  ?0[steffen@sherwood x.git]$ git diff HEAD:XY 5d0d74:XY |
-  > (cd src && patch -p4)
-  can't find file to patch at input line 5
-  Perhaps you used the wrong -p or --strip option?
-  The text leading up to this was:
-  ?130[steffen@sherwood x.git]$ git diff HEAD:XY 5d0d74:XY |
-  > (cd src && git apply -p4)
-  ?0[steffen@sherwood x.git]$
-
-and
-
-  ?0[steffen@sherwood groff.git]$ git diff HEAD:XY 5d0d74:XY |
-  > (cd src && git apply -p2)
-  ?0[steffen@sherwood groff.git]$ git diff HEAD:XY 5d0d74:XY |
-  > (cd src && patch -p2)
-  patching file XY
-  ?0[steffen@sherwood groff.git]$ 
-
-The number after `?' is the exit status of the last command, btw.
-Ciao (and yes, thanks a lot for git(1)!)
-
---steffen
+--=20
+1.9.1.346.ga2b5940
