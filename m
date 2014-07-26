@@ -1,70 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] valgrind: also ignore Addr16 in check_refname_format
-Date: Sat, 26 Jul 2014 07:38:49 -0400
-Message-ID: <20140726113849.GA23117@peff.net>
+From: "Andreas T.Auer" <andreas.t.auer_gtml_37453@ursus.ath.cx>
+Subject: Bug: git pull --rebase rewinds without applying commits in special
+ workflow.
+Date: Sat, 26 Jul 2014 15:17:29 +0200
+Message-ID: <53D3AA69.9040205@ursus.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: David Turner <dturner@twitter.com>
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jul 26 13:39:04 2014
+X-From: git-owner@vger.kernel.org Sat Jul 26 15:27:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XB0JZ-0002OL-0t
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Jul 2014 13:39:01 +0200
+	id 1XB204-00016t-T0
+	for gcvg-git-2@plane.gmane.org; Sat, 26 Jul 2014 15:27:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751243AbaGZLi5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2014 07:38:57 -0400
-Received: from cloud.peff.net ([50.56.180.127]:40782 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750732AbaGZLi4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 26 Jul 2014 07:38:56 -0400
-Received: (qmail 24404 invoked by uid 102); 26 Jul 2014 11:38:56 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sat, 26 Jul 2014 06:38:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 26 Jul 2014 07:38:49 -0400
-Content-Disposition: inline
+	id S1751319AbaGZN05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2014 09:26:57 -0400
+Received: from brln-4dba7733.pool.mediaWays.net ([77.186.119.51]:30610 "EHLO
+	here" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751302AbaGZN04 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2014 09:26:56 -0400
+X-Greylist: delayed 550 seconds by postgrey-1.27 at vger.kernel.org; Sat, 26 Jul 2014 09:26:55 EDT
+Received: from [192.168.0.14] (unknown [192.168.0.14])
+	by here (Postfix) with ESMTP id 7F96C266F7D
+	for <git@vger.kernel.org>; Sat, 26 Jul 2014 15:17:36 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254280>
 
-We already suppress Addr8 warnings, but t1402 reliably
-triggers Addr16 on my machine.
+Hi,
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I didn't look at the code, so I'm not sure if we could similarly trigger
-Addr32, etc. This is enough for my machine.
+in our workflow commits can be removed from from the tip of the branch 
+in the
+central repo. After this git pull --rebase on the "client" side may "lose"
+commits, because the rewinding takes place without an fast-forwarding.
 
- t/valgrind/default.supp | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/t/valgrind/default.supp b/t/valgrind/default.supp
-index 9d51c92..d49a8b2 100644
---- a/t/valgrind/default.supp
-+++ b/t/valgrind/default.supp
-@@ -50,11 +50,16 @@
- 	fun:copy_ref
- }
- {
--	ignore-sse-check_refname_format-addr
-+	ignore-sse-check_refname_format-addr8
- 	Memcheck:Addr8
- 	fun:check_refname_format
- }
- {
-+	ignore-sse-check_refname_format-addr16
-+	Memcheck:Addr16
-+	fun:check_refname_format
-+}
-+{
- 	ignore-sse-check_refname_format-cond
- 	Memcheck:Cond
- 	fun:check_refname_format
--- 
-2.0.0.566.gfe3e6b2
+$ git log --oneline master           # example repo with 3 commits
+b52b381 c3
+faf6bbe c2
+2ad3897 c1
+
+$ git push origin master             # let the remote be up-to-date
+
+$ git push origin +master^^:master   # simulate removal on remote
+
+$ git pull --no-rebase               # pull without rebase works fine
+Already up-to-date.                  # master points still to c3
+
+$ git pull --rebase --prune          # pull --rebase with pruning also works
+Current branch master is up to date. # master points still to c3
+
+$ git pull --rebase                  # git pull --rebase does part of 
+its job
+First, rewinding head to replay your work on top of it...
+
+$ git log --oneline master           # commits c2 and c3 are "lost" on 
+master
+2ad3897 c1
+
+
+The actual workflow is that the commits are removed in the post-receive
+hook of the central repo and send to an automatic test. After this passes
+the commit is sent to svn and the result is then put to the top of the
+branch.In case of a failure, the user should still have his commits in
+his repo, so he could amend it and send again.
+Using -p with git pull is currently the workaround to this.
+
+Regards
+Andreas
