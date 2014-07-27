@@ -1,116 +1,132 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Git + mod_auth_kerb
-Date: Sat, 26 Jul 2014 20:57:16 +0000
-Message-ID: <20140726205716.GB155979@vauxhall.crustytoothpaste.net>
-References: <CAPYmS35cgcEOfKvT17tULYyxL5GgXBavkD6anhV6yJtdoXVE9Q@mail.gmail.com>
- <20140721231721.GB5616@vauxhall.crustytoothpaste.net>
- <xmqqfvhtgwgp.fsf@gitster.dls.corp.google.com>
+From: Andrej Manduch <amanduch@gmail.com>
+Subject: Re: [PATCH] git-svn: doublecheck if really file or dir
+Date: Sun, 27 Jul 2014 04:46:42 +0200
+Message-ID: <53D46812.3020706@gmail.com>
+References: <1405657201-32035-1-git-send-email-amanduch@gmail.com> <20140723220414.GA14145@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gatW/ieO32f1wygP"
-Cc: Jean-Francois Bouchard <jfbouchard@accedian.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jul 26 22:57:31 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Jul 27 04:46:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XB923-0002rM-C7
-	for gcvg-git-2@plane.gmane.org; Sat, 26 Jul 2014 22:57:31 +0200
+	id 1XBEUE-0006ND-Td
+	for gcvg-git-2@plane.gmane.org; Sun, 27 Jul 2014 04:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131AbaGZU50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 26 Jul 2014 16:57:26 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:49129 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751616AbaGZU5Z (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 26 Jul 2014 16:57:25 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:9409:d75d:4b48:c101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id E95182808F;
-	Sat, 26 Jul 2014 20:57:22 +0000 (UTC)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>,
-	Jean-Francois Bouchard <jfbouchard@accedian.com>,
-	git <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <xmqqfvhtgwgp.fsf@gitster.dls.corp.google.com>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.16-rc5-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S1751319AbaG0Cqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 26 Jul 2014 22:46:50 -0400
+Received: from mail-wi0-f177.google.com ([209.85.212.177]:61775 "EHLO
+	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751219AbaG0Cqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 26 Jul 2014 22:46:49 -0400
+Received: by mail-wi0-f177.google.com with SMTP id ho1so2698394wib.4
+        for <git@vger.kernel.org>; Sat, 26 Jul 2014 19:46:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=yGWzsxPaGSksR8UWGno1EnqG2M9B726eKnseZJqC3tk=;
+        b=LkiuMeaL6nG5GkxTC683F2DnJaotGQTf3TNoxMAvB41zaGmhonPhSxkT6wwNcmJH2I
+         YPyFx5RyU1HEuF/9RDR+joE01Rbyr3YX0cRhUMZxasM5/gwQIGX53KN1EjwJbfvdRLww
+         aZZXS+5H4o1Sk586TZonpJloGhYLoT7EpRpcndsUrVsLrPCE2WnZfAXnfXEfJgX7QbL6
+         HQkI6vSwLsvZ9SybAqwYQk0Nlrn7VTL8TEwFvr3/QPdfWIOvXe2SAtFl1fhjmCyGKmq3
+         tdxTRYtmpgl4DF/SBhs5Ygthd7mBn+cJlngNpt7LKXDIUC2nraS4N5wqVVXFRB1hkxAX
+         qcrQ==
+X-Received: by 10.194.91.228 with SMTP id ch4mr34708860wjb.59.1406429208098;
+        Sat, 26 Jul 2014 19:46:48 -0700 (PDT)
+Received: from [192.168.1.3] ([80.242.44.116])
+        by mx.google.com with ESMTPSA id o2sm14016668wij.24.2014.07.26.19.46.46
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 26 Jul 2014 19:46:46 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <20140723220414.GA14145@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254282>
 
+Hi,
 
---gatW/ieO32f1wygP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 07/24/2014 12:04 AM, Eric Wong wrote:
+> Andrej Manduch <amanduch@gmail.com> wrote:
+>> * this fixes 'git svn info `pwd`' buggy behaviour
+> 
+> Good catch, the commit could use a better description, something like:
+> --------------------------- 8< ----------------------------
+> Subject: [PATCH] git-svn: "info" checks for dirs more carefully
+> 
+> This avoids a "Reading from filehandle failed at ..." error when
+> running "git svn info `pwd`".
+> 
+> Signed-off-by: Andrej Manduch <amanduch@gmail.com>
+> --------------------------- 8< ----------------------------
+> 
+> While your patch avoids an error, but the output isn't right, either.
+> I tried it running in /home/ew/ruby, the URL field is bogus:
+> 
+>     ~/ruby$ git svn info `pwd`
+>     Path: /home/ew/ruby
+>     URL: svn+ssh://svn.ruby-lang.org/ruby/trunk/home/ew/ruby
+>     Repository Root: svn+ssh://svn.ruby-lang.org/ruby
+>     Repository UUID: b2dd03c8-39d4-4d8f-98ff-823fe69b080e
+>     Revision: 46901
+>     Node Kind: directory
+>     Schedule: normal
+>     Last Changed Author: hsbt
+>     Last Changed Rev: 46901
+>     Last Changed Date: 2014-07-22 19:06:12 +0000 (Tue, 22 Jul 2014)
+> 
+> The URL should be:
+> 
+>     URL: svn+ssh://svn.ruby-lang.org/ruby/trunk
+> 
+> It's better than an error, but it'd be nice if someone who uses
+> this command can fix it (*hint* :).
 
-On Tue, Jul 22, 2014 at 10:00:22AM -0700, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > So git uses libcurl with CURLAUTH_ANY.  In order for authentication to
-> > work with libcurl, you have to supply a username.  If you specify it in
-> > the URL, the libcurl realizes that it can use Kerberos, and goes on its
-> > merry way.
-> >
-> > If you don't specify the username in the URL, git notices that
-> > authentication has failed, and asks the credential store for a username
-> > and password.  git does not know that a password is not needed, so the
-> > credential subsystem prompts for one anyway.
->=20
-> Hmmm, does this hint that we might want to be able to tell the
-> credential subsystem that it is sufficient to have name without
-> password, or allow the credential subsystem to say "I am giving you
-> sufficient information" when it returns only username without
-> password?
+Thx, I missed this. However this bug was not introduced with my patch,
+it was there before. If you try use `git svn info full_path` and
+directory is not a root dir this bug will occour even wihout my patch.
 
-I just did some testing here, and on my configuration (mod_auth_kerb
-without Basic authentication fallback), hitting enter at both the
-username and password prompts results in a successful connection with
-stock git.  This makes sense, because with GSSAPI authentication, your
-ticket is tied to your username, so no explicit username is needed.
+However I'll try to find some time to fix this too.
 
-If I turn on KrbMethodK5Passwd and try to push without credentials, I
-can confirm that git refuses, even if the correct password is set.  It
-looks like libcurl really doesn't want to use Basic authentication if
-there's a "better" choice.
+On 07/24/2014 12:04 AM, Eric Wong wrote:
+> 
+>> --- a/git-svn.perl
+>> +++ b/git-svn.perl
+>> @@ -2029,7 +2029,7 @@ sub find_file_type_and_diff_status {
+>>  	my $mode = (split(' ', $ls_tree))[0] || "";
+>>  
+>>  	return ("link", $diff_status) if $mode eq "120000";
+>> -	return ("dir", $diff_status) if $mode eq "040000";
+>> +	return ("dir", $diff_status) if $mode eq "040000" or -d $path;
+> 
+> "or" has a lower precedence than "||", so I would do the following:
+> 
+> 	return ("dir", $diff_status) if $mode eq "040000" || -d $path;
+> 
+> The general rule I've learned is to use "||" for conditionals and
+> "or" for control flow (e.g. do_something() or die("...") ).
+> 
+> I can take your patch with the above changes (no need to resend),
+> but I'd be happier to see the URL field corrected if you want
+> to reroll.
 
-Jean-Francois, do you have KrbMethodK5Passwd set to on (the default)?
-If so, you might try turning it off and forcing Kerberos authentication
-all the time.
+I'll try to fix whis url bug, but it will be different patch 'cause I
+think, this is different kind of a problem.
 
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+On 07/24/2014 12:04 AM, Eric Wong wrote:
+> 
+> Thanks.
+> 
 
---gatW/ieO32f1wygP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+I thanks to you for great review.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJT1BYsAAoJEL9TXYEfUvaLdSwP/2zmDXxtbJLkOBsc25zaX5y7
-ys5IzDZCWJL6UyTI1Th4YMt+Dwx/2cLk1oimi60bjqVRR1vKBNZFvUtL0ZapF7+Z
-Yu8fwZqN4n8omDSlO8kjLnR38Ve+aWIdupkpJNTZLSpNKRhvZxpjSd++DWQ5MJPk
-5IVA31VK77r4aoR5bxttobVOf5wm6eKYFm8Hulb0Hj0VBSQiUJ9H2rN6Jf3KQC72
-0rpTT3SpvtVbogCcvGmJ1Q//jD6q6bf3A6Y7y7KQPxodg54NREEQ+m3XYTrqdK4O
-MNvi3S7mn51RrB9TqbYS2P7feEeCIRdJO3/VAHi012AzRIAUdxY8ki6NNH1sdcUg
-U7OBi7GOkgFdTsVAQXbH+pvYw6mYgs5EuDPkzreZSKlFkFGGC0fwiERq5KGK3TyN
-AEN4NA/C6VHzCEyyHt8aI16EgjbLQFQW+Q6HvdS7/4V6OCuCqpVeGG9Asfar0rLb
-Mc9tID1N0UZ42mTPoZgvwDurQ1pIKTG2+ZrSWnl8/1pnCOGGl8BBck5wsbHgiJF8
-GQjScseBJiVGwO38483JQM5fDD1NWSw17g5OfgTN0+GQyoneIUqhqKoaZIsK480A
-jx75gYiKXkVL57ojeJGCTYX6xVWs7ZhkD1cFc3EDLVaCHGVcC0LIFb98q+9UBDqR
-suYhsAAwjbnHi+CI0rMB
-=iHey
------END PGP SIGNATURE-----
-
---gatW/ieO32f1wygP--
+--
+Best Regards,
+b.
