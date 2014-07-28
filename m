@@ -1,110 +1,101 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: Amending merge commits?
-Date: Tue, 29 Jul 2014 00:53:24 +0400
-Message-ID: <87lhrdb3y3.fsf@osv.gnss.ru>
-References: <22F01493C523F940B4B5E53BB6D0F5352275F207@G5W2738.americas.hpqcorp.net>
-	<20140725221911.GL12427@google.com>
-	<22F01493C523F940B4B5E53BB6D0F5352275F25B@G5W2738.americas.hpqcorp.net>
-	<20140725223146.GM12427@google.com> <87vbqhb7g9.fsf@osv.gnss.ru>
-	<20140728200037.GN12427@google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 05/10] abspath: convert real_path_internal() to strbuf
+Date: Mon, 28 Jul 2014 14:42:13 -0700
+Message-ID: <xmqqiomh40ui.fsf@gitster.dls.corp.google.com>
+References: <53D694A2.8030007@web.de> <53D6964E.1070100@web.de>
+	<20140728191649.GE11265@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Besen\, David" <david.besen@hp.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jul 28 22:53:31 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jul 28 23:42:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBrvH-0002pb-A4
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 22:53:31 +0200
+	id 1XBsgd-0005DH-9V
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 23:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbaG1Ux1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 16:53:27 -0400
-Received: from mail.javad.com ([54.86.164.124]:36652 "EHLO mail.javad.com"
+	id S1751587AbaG1VmX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2014 17:42:23 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:65247 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751064AbaG1Ux1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 16:53:27 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id AE44061855;
-	Mon, 28 Jul 2014 20:53:25 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <s.organov@javad.com>)
-	id 1XBrvA-0008GO-1Y; Tue, 29 Jul 2014 00:53:24 +0400
-In-Reply-To: <20140728200037.GN12427@google.com> (Jonathan Nieder's message of
-	"Mon, 28 Jul 2014 13:00:37 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1750708AbaG1VmW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2014 17:42:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id AEC462DD48;
+	Mon, 28 Jul 2014 17:42:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=37gOUcxGiUSX
+	B8exD8BvvagzQZk=; b=s+E8fIZ9vhiK25fwcBFuRSFss/GlCMh7anZmQoPuWJWt
+	p5gT33SzU4InjTfWGIUms5ZL/eZZNeTA4wc9VPso+TaASBdMm466gXyj8Otubb+e
+	wLNGivlXtkDJxo2u1MkdgTpqD+8KLJeyL5MbLcL1SitWkFhfHA52etgUultqVq8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=x9+hvl
+	qC5k+gRa1/1nVjxHsye1Vi0P5w41zZxqI9Y98QJ5YyqD3nE3Q20WqAZtx/pEW1ns
+	aeMsP2inu7BHIoKJ2gp4kGoaE/n3KJWaBORrMVHQ9ggwsRe2qKY4qPqe7QXKJw8k
+	hrkleQmDpgF6UWhMJGDnHotr4DjioX9iBdM8Y=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A3CEE2DD47;
+	Mon, 28 Jul 2014 17:42:21 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 189B62DD39;
+	Mon, 28 Jul 2014 17:42:15 -0400 (EDT)
+In-Reply-To: <20140728191649.GE11265@peff.net> (Jeff King's message of "Mon,
+	28 Jul 2014 15:16:49 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 0A4972DE-16A0-11E4-8CC9-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254356>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Sergei Organov wrote:
+> On Mon, Jul 28, 2014 at 08:28:30PM +0200, Ren=C3=A9 Scharfe wrote:
 >
->> Is there any scenario at all where pull --rebase=true wins over
->> preserve?
+>> @@ -60,26 +58,22 @@ static const char *real_path_internal(const char=
+ *path, int die_on_error)
+>>  			goto error_out;
+>>  	}
+>> =20
+>> -	if (strlcpy(buf, path, PATH_MAX) >=3D PATH_MAX) {
+>> -		if (die_on_error)
+>> -			die("Too long path: %.*s", 60, path);
+>> -		else
+>> -			goto error_out;
+>> -	}
+>> +	strbuf_init(&sb, 0);
+>> +	strbuf_addstr(&sb, path);
 >
-> Basically always in my book. ;-)
+> As with the other patch I just mentioned, should this be strbuf_reset=
+,
+> not strbuf_init? We want to reset the static buffer back to zero-size=
+,
+> not throw it away and leak whatever was there.
 >
-> When people turn on 'pull --rebase', they are asking for a clean,
-> simplified history where their changes are small discrete patches in a
-> clump on top of upstream.
+> -Peff
 
-I think they rather ask for avoiding tons of meaningless automatic
-merges resulting from periodic pulling from upstream.
+Yes, this one seems to be leaking.
 
-Those subset of the above who only do small discrete patches don't do
-merges to their tracking branches, except by mistake, right? If so,
-'pull --rebase=preserve' makes no difference compared to --rebase=true
-to their normal workflow. Moreover,if someone merges something to his
-tracking branch by mistake, how is it different from making merge to any
-other branch by mistake? Just fix the mistake by resetting to previous
-state.
+"Next call to the function invalidates the return value the last
+caller received" feels like playing with fire.  Most existing
+callers are safe in that the first thing they do to the returned
+string is xstrdup() it, but we would need to check all the other
+callers.
 
-On the other hand, if someone decides to merge something else to his
-tracking branch by purpose, both --rebase=preserve and --rebase=false
-perform as expected, while --rebase=true may easily lead to huge
-surprise. Please refer also to this thread for one such case:
-
-http://www.mail-archive.com/git%40vger.kernel.org/msg55605.html
-
-> When someone has made a merge by mistake (with 'git pull' before
-> remembering to do an autosetuprebase, or with 'git merge' instead of
-> cherry-picking some patches they needed), the current --rebase=true
-> behavior can be a good way of cleaning up.
-
-Once again, in case of mistake they are free to use --rebase=true, and
-even then using 'git rebase' directly is probably cleaner. That said, I
-don't argue --rebase=true could be sometimes useful. It's just that I
-think --rebase=preserve is safer, so it should be a good idea to suggest
-to use it (in favor of --rebase=true) in general.
-
-> That said, in some specific workflows, --rebase=preserve may work
-> better than --rebase=true.
-
-It does indeed, and I don't think my aforementioned workflow is too
-specific.
-
-> My hunch is that even those workflows are not currently handled well
-> with --rebase=preserve, alas.
-
---rebase=preserve works fine for the aforementioned workflow. At least
-simple tests I performed so far ran fine. I'd like to learn though which
-nasty drawbacks --rebase=preserve has for tracking branches compared to
---rebase=true, if any.
-
-> A clearer explanation of --rebase (maybe with sub-headings for each
-> choice *true*, *false*, and *preserve*?) sounds useful.  An
-> illustration in the EXAMPLES section of git-pull(1) of the difference
-> between these three modes and when to use them would be even more
-> helpful.
-
-That would be an improvement anyway, indeed.
-
--- 
-Sergey.
+I briefly thought it is not OK for set_git_work_tree(), which gets
+new_work_tree, calls real_path() to receive the value from the
+function, and then calls real_path() again on it.  The "We've
+already done it" optimization is the only thing that makes it safe,
+which feels overly fragile.
