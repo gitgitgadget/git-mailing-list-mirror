@@ -1,7 +1,7 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v13 2/2] test-config: add tests for the config_set API
-Date: Mon, 28 Jul 2014 03:10:39 -0700
-Message-ID: <1406542239-17024-3-git-send-email-tanayabh@gmail.com>
+Subject: [PATCH v13 1/2] add `config_set` API for caching config-like files
+Date: Mon, 28 Jul 2014 03:10:38 -0700
+Message-ID: <1406542239-17024-2-git-send-email-tanayabh@gmail.com>
 References: <1406542239-17024-1-git-send-email-tanayabh@gmail.com>
 Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -9,440 +9,615 @@ Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 28 12:11:50 2014
+X-From: git-owner@vger.kernel.org Mon Jul 28 12:11:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBhuG-0007bI-K3
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:11:49 +0200
+	id 1XBhuF-0007bI-NO
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:11:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752318AbaG1KLq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 06:11:46 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:46562 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752189AbaG1KLp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 06:11:45 -0400
-Received: by mail-pa0-f53.google.com with SMTP id kq14so10077857pab.26
-        for <git@vger.kernel.org>; Mon, 28 Jul 2014 03:11:42 -0700 (PDT)
+	id S1752314AbaG1KLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 06:11:41 -0400
+Received: from mail-pa0-f46.google.com ([209.85.220.46]:42847 "EHLO
+	mail-pa0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752157AbaG1KLk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 06:11:40 -0400
+Received: by mail-pa0-f46.google.com with SMTP id lj1so10208632pab.19
+        for <git@vger.kernel.org>; Mon, 28 Jul 2014 03:11:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Ky6PGoxRlTsj6myt2oGvvZ46Dz/9uxXlwX+P8u/LNQs=;
-        b=m/Y+2UObGBP7h+uq6Wu1reRkTTZGc5VN4Hqs87DDDQsRnCgpFzXRd8X07yjQg39/oo
-         MxS5yh7Hd14wd6IyW2DIKIaMrtBUXYYtzGOrU6uOgP01ywjUnWXsWV2JRAWz/mPMDgX0
-         aONBc44gWpbKaMOIxejO4bi3TubJ8hFR77XaUpn4JxPnsUkvCKVWlp42pWv7Xau/tFG6
-         bbUylN0bprE/m/pfYLIcTUy3uB0EAbzAEIVKjPuxrlL90gjXSqB5Bo1U8jEAwmNG3T89
-         mPdhqoYz0Ot43slsioAuHO+bATPkLbCej9fKQ0FtG6eHZd+mv1HV8cDTlkmgrU1p11gl
-         9vgQ==
-X-Received: by 10.70.100.131 with SMTP id ey3mr37225976pdb.60.1406542302679;
-        Mon, 28 Jul 2014 03:11:42 -0700 (PDT)
+        bh=jv2r2iOv+C7cWv5sMAgpEVyakNl1MT1X/T6PImbaF5I=;
+        b=h/stkvAFO44XQen5EGwSdhkoppdqFI9QeN6FaF7dN3in3gKV8o+HHWnbLkzH3u4Dhd
+         w1s3k0t0lTcdZY9nLJeVNDgpYdXGFTbCtaL1dmEPmj9Cv+4YTazw14AdF+bDN0+IYdlq
+         X/PuCsdOsddm0uZFHQxU7QRQpmph+ZeD4MICVDIcOcUq8uH5zdQyIF1oW7/wkE8Svhs7
+         Ip6PekMNJFEk4l8ogYykp1UFiiI5ap03rqhJ72JVq64YFO0QfnBb01R64sOFs8GfcjXs
+         Q7MfdGFAI2r4Mh/ew/IEwwsN8ODjuyoX+y7kvdZgA3NwJavNKfcF6v0IZjnvoTVaUfDH
+         14hA==
+X-Received: by 10.66.66.237 with SMTP id i13mr2732627pat.126.1406542298995;
+        Mon, 28 Jul 2014 03:11:38 -0700 (PDT)
 Received: from localhost.localdomain ([106.211.56.253])
-        by mx.google.com with ESMTPSA id rz4sm65251240pab.13.2014.07.28.03.11.39
+        by mx.google.com with ESMTPSA id rz4sm65251240pab.13.2014.07.28.03.11.35
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Jul 2014 03:11:42 -0700 (PDT)
+        Mon, 28 Jul 2014 03:11:38 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.GIT
 In-Reply-To: <1406542239-17024-1-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254288>
 
-Expose the `config_set` C API as a set of simple commands in order to
-facilitate testing. Add tests for the `config_set` API as well as for
-`git_config_get_*()` family for the usual config files.
+Currently `git_config()` uses a callback mechanism and file rereads for
+config values. Due to this approach, it is not uncommon for the config
+files to be parsed several times during the run of a git program, with
+different callbacks picking out different variables useful to themselves.
+
+Add a `config_set`, that can be used to construct an in-memory cache for
+config-like files that the caller specifies (i.e., files like `.gitmodules`,
+`~/.gitconfig` etc.). Add two external functions `git_configset_get_value`
+and `git_configset_get_value_multi` for querying from the config sets.
+`git_configset_get_value` follows `last one wins` semantic (i.e. if there
+are multiple matches for the queried key in the files of the configset the
+value returned will be the last entry in `value_list`).
+`git_configset_get_value_multi` returns a list of values sorted in order of
+increasing priority (i.e. last match will be at the end of the list). Add
+type specific query functions like `git_configset_get_bool` and similar.
+
+Add a default `config_set`, `the_config_set` to cache all key-value pairs
+read from usual config files (repo specific .git/config, user wide
+~/.gitconfig, XDG config and the global /etc/gitconfig). `the_config_set`
+is populated using `git_config()`.
+
+Add two external functions `git_config_get_value` and
+`git_config_get_value_multi` for querying in a non-callback manner from
+`the_config_set`. Also, add type specific query functions that are
+implemented as a thin wrapper around the `config_set` API.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- .gitignore            |   1 +
- Makefile              |   1 +
- t/t1308-config-set.sh | 200 ++++++++++++++++++++++++++++++++++++++++++++++++++
- test-config.c         | 142 +++++++++++++++++++++++++++++++++++
- 4 files changed, 344 insertions(+)
- create mode 100755 t/t1308-config-set.sh
- create mode 100644 test-config.c
+ Documentation/technical/api-config.txt | 142 +++++++++++++++++
+ cache.h                                |  32 ++++
+ config.c                               | 274 +++++++++++++++++++++++++++++++++
+ setup.c                                |   9 ++
+ 4 files changed, 457 insertions(+)
 
-diff --git a/.gitignore b/.gitignore
-index 81e12c0..5bfb234 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -178,6 +178,7 @@
- /gitweb/static/gitweb.min.*
- /test-chmtime
- /test-ctype
-+/test-config
- /test-date
- /test-delta
- /test-dump-cache-tree
-diff --git a/Makefile b/Makefile
-index 2320de5..b7462e3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -551,6 +551,7 @@ PROGRAMS += $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
+index 230b3a0..815c1ee 100644
+--- a/Documentation/technical/api-config.txt
++++ b/Documentation/technical/api-config.txt
+@@ -77,6 +77,86 @@ To read a specific file in git-config format, use
+ `git_config_from_file`. This takes the same callback and data parameters
+ as `git_config`.
  
- TEST_PROGRAMS_NEED_X += test-chmtime
- TEST_PROGRAMS_NEED_X += test-ctype
-+TEST_PROGRAMS_NEED_X += test-config
- TEST_PROGRAMS_NEED_X += test-date
- TEST_PROGRAMS_NEED_X += test-delta
- TEST_PROGRAMS_NEED_X += test-dump-cache-tree
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-new file mode 100755
-index 0000000..7fdf840
---- /dev/null
-+++ b/t/t1308-config-set.sh
-@@ -0,0 +1,200 @@
-+#!/bin/sh
++Querying For Specific Variables
++-------------------------------
 +
-+test_description='Test git config-set API in different settings'
++For programs wanting to query for specific variables in a non-callback
++manner, the config API provides two functions `git_config_get_value`
++and `git_config_get_value_multi`. They both read values from an internal
++cache generated previously from reading the config files.
 +
-+. ./test-lib.sh
++`int git_config_get_value(const char *key, const char **value)`::
 +
-+# 'check_config get_* section.key value' verifies that the entry for
-+# section.key is 'value'
-+check_config () {
-+	if test "$1" = expect_code
-+	then
-+		expect_code="$2" && shift && shift
-+	else
-+		expect_code=0
-+	fi &&
-+	op=$1 key=$2 && shift && shift &&
-+	if test $# != 0
-+	then
-+		printf "%s\n" "$@"
-+	fi >expect &&
-+	test_expect_code $expect_code test-config "$op" "$key" >actual &&
-+	test_cmp expect actual
++	Finds the highest-priority value for the configuration variable `key`,
++	stores the pointer to it in `value` and returns 0. When the
++	configuration variable `key` is not found, returns 1 without touching
++	`value`. The caller should not free or modify `value`, as it is owned
++	by the cache.
++
++`const struct string_list *git_config_get_value_multi(const char *key)`::
++
++	Finds and returns the value list, sorted in order of increasing priority
++	for the configuration variable `key`. When the configuration variable
++	`key` is not found, returns NULL. The caller should not free or modify
++	the returned pointer, as it is owned by the cache.
++
++`void git_config_clear(void)`::
++
++	Resets and invalidates the config cache.
++
++The config API also provides type specific API functions which do conversion
++as well as retrieval for the queried variable, including:
++
++`int git_config_get_int(const char *key, int *dest)`::
++
++	Finds and parses the value to an integer for the configuration variable
++	`key`. Dies on error; otherwise, stores the value of the parsed integer in
++	`dest` and returns 0. When the configuration variable `key` is not found,
++	returns 1 without touching `dest`.
++
++`int git_config_get_ulong(const char *key, unsigned long *dest)`::
++
++	Similar to `git_config_get_int` but for unsigned longs.
++
++`int git_config_get_bool(const char *key, int *dest)`::
++
++	Finds and parses the value into a boolean value, for the configuration
++	variable `key` respecting keywords like "true" and "false". Integer
++	values are converted into true/false values (when they are non-zero or
++	zero, respectively). Other values cause a die(). If parsing is successful,
++	stores the value of the parsed result in `dest` and returns 0. When the
++	configuration variable `key` is not found, returns 1 without touching
++	`dest`.
++
++`int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest)`::
++
++	Similar to `git_config_get_bool`, except that integers are copied as-is,
++	and `is_bool` flag is unset.
++
++`int git_config_get_maybe_bool(const char *key, int *dest)`::
++
++	Similar to `git_config_get_bool`, except that it returns -1 on error
++	rather than dying.
++
++`int git_config_get_string_const(const char *key, const char **dest)`::
++
++	Allocates and copies the retrieved string into the `dest` parameter for
++	the configuration variable `key`; if NULL string is given, prints an
++	error message and returns -1. When the configuration variable `key` is
++	not found, returns 1 without touching `dest`.
++
++`int git_config_get_string(const char *key, char **dest)`::
++
++	Similar to `git_config_get_string_const`, except that retrieved value
++	copied into the `dest` parameter is a mutable string.
++
++`int git_config_get_pathname(const char *key, const char **dest)`::
++
++	Similar to `git_config_get_string`, but expands `~` or `~user` into
++	the user's home directory when found at the beginning of the path.
++
++See test-config.c for usage examples.
++
+ Value Parsing Helpers
+ ---------------------
+ 
+@@ -134,6 +214,68 @@ int read_file_with_include(const char *file, config_fn_t fn, void *data)
+ `git_config` respects includes automatically. The lower-level
+ `git_config_from_file` does not.
+ 
++Custom Configsets
++-----------------
++
++A `config_set` can be used to construct an in-memory cache for
++config-like files that the caller specifies (i.e., files like `.gitmodules`,
++`~/.gitconfig` etc.). For example,
++
++---------------------------------------
++struct config_set gm_config;
++git_configset_init(&gm_config);
++int b;
++/* we add config files to the config_set */
++git_configset_add_file(&gm_config, ".gitmodules");
++git_configset_add_file(&gm_config, ".gitmodules_alt");
++
++if (!git_configset_get_bool(gm_config, "submodule.frotz.ignore", &b)) {
++	/* hack hack hack */
 +}
 +
-+test_expect_success 'setup default config' '
-+	cat >.git/config <<\EOF
-+	[case]
-+		penguin = very blue
-+		Movie = BadPhysics
-+		UPPERCASE = true
-+		MixedCase = true
-+		my =
-+		foo
-+		baz = sam
-+	[Cores]
-+		WhatEver = Second
-+		baz = bar
-+	[cores]
-+		baz = bat
-+	[CORES]
-+		baz = ball
-+	[my "Foo bAr"]
-+		hi = mixed-case
-+	[my "FOO BAR"]
-+		hi = upper-case
-+	[my "foo bar"]
-+		hi = lower-case
-+	[case]
-+		baz = bat
-+		baz = hask
-+	[lamb]
-+		chop = 65
-+		head = none
-+	[goat]
-+		legs = 4
-+		head = true
-+		skin = false
-+		nose = 1
-+		horns
-+	EOF
-+'
++/* when we are done with the configset */
++git_configset_clear(&gm_config);
++----------------------------------------
 +
-+test_expect_success 'get value for a simple key' '
-+	check_config get_value case.penguin "very blue"
-+'
++Configset API provides functions for the above mentioned work flow, including:
 +
-+test_expect_success 'get value for a key with value as an empty string' '
-+	check_config get_value case.my ""
-+'
++`void git_configset_init(struct config_set *cs)`::
 +
-+test_expect_success 'get value for a key with value as NULL' '
-+	check_config get_value case.foo "(NULL)"
-+'
++	Initializes the config_set `cs`.
 +
-+test_expect_success 'upper case key' '
-+	check_config get_value case.UPPERCASE "true" &&
-+	check_config get_value case.uppercase "true"
-+'
++`int git_configset_add_file(struct config_set *cs, const char *filename)`::
 +
-+test_expect_success 'mixed case key' '
-+	check_config get_value case.MixedCase "true" &&
-+	check_config get_value case.MIXEDCASE "true" &&
-+	check_config get_value case.mixedcase "true"
-+'
++	Parses the file and adds the variable-value pairs to the `config_set`,
++	dies if there is an error in parsing the file. Returns 0 on success, or
++	-1 if the file does not exist or is inaccessible. The user has to decide
++	if he wants to free the incomplete configset or continue using it when
++	the function returns -1.
 +
-+test_expect_success 'key and value with mixed case' '
-+	check_config get_value case.Movie "BadPhysics"
-+'
++`int git_configset_get_value(struct config_set *cs, const char *key, const char **value)`::
 +
-+test_expect_success 'key with case sensitive subsection' '
-+	check_config get_value "my.Foo bAr.hi" "mixed-case" &&
-+	check_config get_value "my.FOO BAR.hi" "upper-case" &&
-+	check_config get_value "my.foo bar.hi" "lower-case"
-+'
++	Finds the highest-priority value for the configuration variable `key`
++	and config set `cs`, stores the pointer to it in `value` and returns 0.
++	When the configuration variable `key` is not found, returns 1 without
++	touching `value`. The caller should not free or modify `value`, as it
++	is owned by the cache.
 +
-+test_expect_success 'key with case insensitive section header' '
-+	check_config get_value cores.baz "ball" &&
-+	check_config get_value Cores.baz "ball" &&
-+	check_config get_value CORES.baz "ball" &&
-+	check_config get_value coreS.baz "ball"
-+'
++`const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key)`::
 +
-+test_expect_success 'key with case insensitive section header & variable' '
-+	check_config get_value CORES.BAZ "ball" &&
-+	check_config get_value cores.baz "ball" &&
-+	check_config get_value cores.BaZ "ball" &&
-+	check_config get_value cOreS.bAz "ball"
-+'
++	Finds and returns the value list, sorted in order of increasing priority
++	for the configuration variable `key` and config set `cs`. When the
++	configuration variable `key` is not found, returns NULL. The caller
++	should not free or modify the returned pointer, as it is owned by the cache.
 +
-+test_expect_success 'find value with misspelled key' '
-+	check_config expect_code 1 get_value "my.fOo Bar.hi" "Value not found for \"my.fOo Bar.hi\""
-+'
++`void git_configset_clear(struct config_set *cs)`::
 +
-+test_expect_success 'find value with the highest priority' '
-+	check_config get_value case.baz "hask"
-+'
++	Clears `config_set` structure, removes all saved variable-value pairs.
 +
-+test_expect_success 'find integer value for a key' '
-+	check_config get_int lamb.chop 65
-+'
++In addition to above functions, the `config_set` API provides type specific
++functions in the vein of `git_config_get_int` and family but with an extra
++parameter, pointer to struct `config_set`.
++They all behave similarly to the `git_config_get*()` family described in
++"Querying For Specific Variables" above.
 +
-+test_expect_success 'find integer if value is non parse-able' '
-+	check_config expect_code 128 get_int lamb.head
-+'
+ Writing Config Files
+ --------------------
+ 
+diff --git a/cache.h b/cache.h
+index fcb511d..7292aef 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1351,6 +1351,38 @@ extern int parse_config_key(const char *var,
+ 			    const char **subsection, int *subsection_len,
+ 			    const char **key);
+ 
++struct config_set {
++	struct hashmap config_hash;
++	int hash_initialized;
++};
 +
-+test_expect_success 'find bool value for the entered key' '
-+	check_config get_bool goat.head 1 &&
-+	check_config get_bool goat.skin 0 &&
-+	check_config get_bool goat.nose 1 &&
-+	check_config get_bool goat.horns 1 &&
-+	check_config get_bool goat.legs 1
-+'
++extern void git_configset_init(struct config_set *cs);
++extern int git_configset_add_file(struct config_set *cs, const char *filename);
++extern int git_configset_get_value(struct config_set *cs, const char *key, const char **value);
++extern const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key);
++extern void git_configset_clear(struct config_set *cs);
++extern int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest);
++extern int git_configset_get_string(struct config_set *cs, const char *key, char **dest);
++extern int git_configset_get_int(struct config_set *cs, const char *key, int *dest);
++extern int git_configset_get_ulong(struct config_set *cs, const char *key, unsigned long *dest);
++extern int git_configset_get_bool(struct config_set *cs, const char *key, int *dest);
++extern int git_configset_get_bool_or_int(struct config_set *cs, const char *key, int *is_bool, int *dest);
++extern int git_configset_get_maybe_bool(struct config_set *cs, const char *key, int *dest);
++extern int git_configset_get_pathname(struct config_set *cs, const char *key, const char **dest);
 +
-+test_expect_success 'find multiple values' '
-+	check_config get_value_multi case.baz sam bat hask
-+'
++extern int git_config_get_value(const char *key, const char **value);
++extern const struct string_list *git_config_get_value_multi(const char *key);
++extern void git_config_clear(void);
++extern void git_config_iter(config_fn_t fn, void *data);
++extern int git_config_get_string_const(const char *key, const char **dest);
++extern int git_config_get_string(const char *key, char **dest);
++extern int git_config_get_int(const char *key, int *dest);
++extern int git_config_get_ulong(const char *key, unsigned long *dest);
++extern int git_config_get_bool(const char *key, int *dest);
++extern int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest);
++extern int git_config_get_maybe_bool(const char *key, int *dest);
++extern int git_config_get_pathname(const char *key, const char **dest);
 +
-+test_expect_success 'find value from a configset' '
-+	cat >config2 <<-\EOF &&
-+	[case]
-+		baz = lama
-+	[my]
-+		new = silk
-+	[case]
-+		baz = ball
-+	EOF
-+	echo silk >expect &&
-+	test-config configset_get_value my.new config2 .git/config >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'find value with highest priority from a configset' '
-+	echo hask >expect &&
-+	test-config configset_get_value case.baz config2 .git/config >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'find value_list for a key from a configset' '
-+	cat >except <<-\EOF &&
-+	sam
-+	bat
-+	hask
-+	lama
-+	ball
-+	EOF
-+	test-config configset_get_value case.baz config2 .git/config >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'proper error on non-existent files' '
-+	echo "Error (-1) reading configuration file non-existent-file." >expect &&
-+	test_expect_code 2 test-config configset_get_value foo.bar non-existent-file 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success POSIXPERM,SANITY 'proper error on non-accessible files' '
-+	chmod -r .git/config &&
-+	test_when_finished "chmod +r .git/config" &&
-+	echo "Error (-1) reading configuration file .git/config." >expect &&
-+	test_expect_code 2 test-config configset_get_value foo.bar .git/config 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'proper error on error in default config files' '
-+	cp .git/config .git/config.old &&
-+	test_when_finished "mv .git/config.old .git/config" &&
-+	echo "[" >>.git/config &&
-+	echo "fatal: bad config file line 35 in .git/config" >expect &&
-+	test_expect_code 128 test-config get_value foo.bar 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'proper error on error in custom config files' '
-+	echo "[" >>syntax-error &&
-+	echo "fatal: bad config file line 1 in syntax-error" >expect &&
-+	test_expect_code 128 test-config configset_get_value foo.bar syntax-error 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
-diff --git a/test-config.c b/test-config.c
-new file mode 100644
-index 0000000..9dd1b22
---- /dev/null
-+++ b/test-config.c
-@@ -0,0 +1,142 @@
-+#include "cache.h"
+ extern int committer_ident_sufficiently_given(void);
+ extern int author_ident_sufficiently_given(void);
+ 
+diff --git a/config.c b/config.c
+index 9767c4b..d3ad661 100644
+--- a/config.c
++++ b/config.c
+@@ -9,6 +9,8 @@
+ #include "exec_cmd.h"
+ #include "strbuf.h"
+ #include "quote.h"
++#include "hashmap.h"
 +#include "string-list.h"
+ 
+ struct config_source {
+ 	struct config_source *prev;
+@@ -33,10 +35,23 @@ struct config_source {
+ 	long (*do_ftell)(struct config_source *c);
+ };
+ 
++struct config_set_element {
++	struct hashmap_entry ent;
++	char *key;
++	struct string_list value_list;
++};
 +
+ static struct config_source *cf;
+ 
+ static int zlib_compression_seen;
+ 
 +/*
-+ * This program exposes the C API of the configuration mechanism
-+ * as a set of simple commands in order to facilitate testing.
-+ *
-+ * Reads stdin and prints result of command to stdout:
-+ *
-+ * get_value -> prints the value with highest priority for the entered key
-+ *
-+ * get_value_multi -> prints all values for the entered key in increasing order
-+ *		     of priority
-+ *
-+ * get_int -> print integer value for the entered key or die
-+ *
-+ * get_bool -> print bool value for the entered key or die
-+ *
-+ * configset_get_value -> returns value with the highest priority for the entered key
-+ * 			from a config_set constructed from files entered as arguments.
-+ *
-+ * configset_get_value_multi -> returns value_list for the entered key sorted in
-+ * 				ascending order of priority from a config_set
-+ * 				constructed from files entered as arguments.
-+ *
-+ * Examples:
-+ *
-+ * To print the value with highest priority for key "foo.bAr Baz.rock":
-+ * 	test-config get_value "foo.bAr Baz.rock"
-+ *
++ * Default config_set that contains key-value pairs from the usual set of config
++ * config files (i.e repo specific .git/config, user wide ~/.gitconfig, XDG
++ * config file and the global /etc/gitconfig)
 + */
++static struct config_set the_config_set;
 +
-+
-+int main(int argc, char **argv)
+ static int config_file_fgetc(struct config_source *conf)
+ {
+ 	return fgetc(conf->u.file);
+@@ -1212,6 +1227,262 @@ int git_config(config_fn_t fn, void *data)
+ 	return git_config_with_options(fn, data, NULL, 1);
+ }
+ 
++static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
 +{
-+	int i, val;
-+	const char *v;
-+	const struct string_list *strptr;
-+	struct config_set cs;
-+	git_configset_init(&cs);
++	struct config_set_element k;
++	struct config_set_element *found_entry;
++	char *normalized_key;
++	int ret;
++	/*
++	 * `key` may come from the user, so normalize it before using it
++	 * for querying entries from the hashmap.
++	 */
++	ret = git_config_parse_key(key, &normalized_key, NULL);
 +
-+	if (argc < 2) {
-+		fprintf(stderr, "Please, provide a command name on the command-line\n");
-+		goto exit1;
-+	} else if (argc == 3 && !strcmp(argv[1], "get_value")) {
-+		if (!git_config_get_value(argv[2], &v)) {
-+			if (!v)
-+				printf("(NULL)\n");
-+			else
-+				printf("%s\n", v);
-+			goto exit0;
-+		} else {
-+			printf("Value not found for \"%s\"\n", argv[2]);
-+			goto exit1;
-+		}
-+	} else if (argc == 3 && !strcmp(argv[1], "get_value_multi")) {
-+		strptr = git_config_get_value_multi(argv[2]);
-+		if (strptr) {
-+			for (i = 0; i < strptr->nr; i++) {
-+				v = strptr->items[i].string;
-+				if (!v)
-+					printf("(NULL)\n");
-+				else
-+					printf("%s\n", v);
-+			}
-+			goto exit0;
-+		} else {
-+			printf("Value not found for \"%s\"\n", argv[2]);
-+			goto exit1;
-+		}
-+	} else if (argc == 3 && !strcmp(argv[1], "get_int")) {
-+		if (!git_config_get_int(argv[2], &val)) {
-+			printf("%d\n", val);
-+			goto exit0;
-+		} else {
-+			printf("Value not found for \"%s\"\n", argv[2]);
-+			goto exit1;
-+		}
-+	} else if (argc == 3 && !strcmp(argv[1], "get_bool")) {
-+		if (!git_config_get_bool(argv[2], &val)) {
-+			printf("%d\n", val);
-+			goto exit0;
-+		} else {
-+			printf("Value not found for \"%s\"\n", argv[2]);
-+			goto exit1;
-+		}
-+	} else if (!strcmp(argv[1], "configset_get_value")) {
-+		for (i = 3; i < argc; i++) {
-+			int err;
-+			if ((err = git_configset_add_file(&cs, argv[i]))) {
-+				fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
-+				goto exit2;
-+			}
-+		}
-+		if (!git_configset_get_value(&cs, argv[2], &v)) {
-+			if (!v)
-+				printf("(NULL)\n");
-+			else
-+				printf("%s\n", v);
-+			goto exit0;
-+		} else {
-+			printf("Value not found for \"%s\"\n", argv[2]);
-+			goto exit1;
-+		}
-+	} else if (!strcmp(argv[1], "configset_get_value_multi")) {
-+		for (i = 3; i < argc; i++) {
-+			int err;
-+			if ((err = git_configset_add_file(&cs, argv[i]))) {
-+				fprintf(stderr, "Error (%d) reading configuration file %s.\n", err, argv[i]);
-+				goto exit2;
-+			}
-+		}
-+		strptr = git_configset_get_value_multi(&cs, argv[2]);
-+		if (strptr) {
-+			for (i = 0; i < strptr->nr; i++) {
-+				v = strptr->items[i].string;
-+				if (!v)
-+					printf("(NULL)\n");
-+				else
-+					printf("%s\n", v);
-+			}
-+			goto exit0;
-+		} else {
-+			printf("Value not found for \"%s\"\n", argv[2]);
-+			goto exit1;
-+		}
-+	}
++	if (ret)
++		return NULL;
 +
-+	die("%s: Please check the syntax and the function name", argv[0]);
-+
-+exit0:
-+	git_configset_clear(&cs);
-+	return 0;
-+
-+exit1:
-+	git_configset_clear(&cs);
-+	return 1;
-+
-+exit2:
-+	git_configset_clear(&cs);
-+	return 2;
++	hashmap_entry_init(&k, strhash(normalized_key));
++	k.key = normalized_key;
++	found_entry = hashmap_get(&cs->config_hash, &k, NULL);
++	free(normalized_key);
++	return found_entry;
 +}
++
++static int configset_add_value(struct config_set *cs, const char *key, const char *value)
++{
++	struct config_set_element *e;
++	e = configset_find_element(cs, key);
++	/*
++	 * Since the keys are being fed by git_config*() callback mechanism, they
++	 * are already normalized. So simply add them without any further munging.
++	 */
++	if (!e) {
++		e = xmalloc(sizeof(*e));
++		hashmap_entry_init(e, strhash(key));
++		e->key = xstrdup(key);
++		string_list_init(&e->value_list, 1);
++		hashmap_add(&cs->config_hash, e);
++	}
++	string_list_append_nodup(&e->value_list, value ? xstrdup(value) : NULL);
++
++	return 0;
++}
++
++static int config_set_element_cmp(const struct config_set_element *e1,
++				 const struct config_set_element *e2, const void *unused)
++{
++	return strcmp(e1->key, e2->key);
++}
++
++void git_configset_init(struct config_set *cs)
++{
++	hashmap_init(&cs->config_hash, (hashmap_cmp_fn)config_set_element_cmp, 0);
++	cs->hash_initialized = 1;
++}
++
++void git_configset_clear(struct config_set *cs)
++{
++	struct config_set_element *entry;
++	struct hashmap_iter iter;
++	if (!cs->hash_initialized)
++		return;
++
++	hashmap_iter_init(&cs->config_hash, &iter);
++	while ((entry = hashmap_iter_next(&iter))) {
++		free(entry->key);
++		string_list_clear(&entry->value_list, 0);
++	}
++	hashmap_free(&cs->config_hash, 1);
++	cs->hash_initialized = 0;
++}
++
++static int config_set_callback(const char *key, const char *value, void *cb)
++{
++	struct config_set *cs = cb;
++	configset_add_value(cs, key, value);
++	return 0;
++}
++
++int git_configset_add_file(struct config_set *cs, const char *filename)
++{
++	return git_config_from_file(config_set_callback, filename, cs);
++}
++
++int git_configset_get_value(struct config_set *cs, const char *key, const char **value)
++{
++	const struct string_list *values = NULL;
++	/*
++	 * Follows "last one wins" semantic, i.e., if there are multiple matches for the
++	 * queried key in the files of the configset, the value returned will be the last
++	 * value in the value list for that key.
++	 */
++	values = git_configset_get_value_multi(cs, key);
++
++	if (!values)
++		return 1;
++	assert(values->nr > 0);
++	*value = values->items[values->nr - 1].string;
++	return 0;
++}
++
++const struct string_list *git_configset_get_value_multi(struct config_set *cs, const char *key)
++{
++	struct config_set_element *e = configset_find_element(cs, key);
++	return e ? &e->value_list : NULL;
++}
++
++int git_configset_get_string_const(struct config_set *cs, const char *key, const char **dest)
++{
++	const char *value;
++	if (!git_configset_get_value(cs, key, &value))
++		return git_config_string(dest, key, value);
++	else
++		return 1;
++}
++
++int git_configset_get_string(struct config_set *cs, const char *key, char **dest)
++{
++	return git_configset_get_string_const(cs, key, (const char **)dest);
++}
++
++int git_configset_get_int(struct config_set *cs, const char *key, int *dest)
++{
++	const char *value;
++	if (!git_configset_get_value(cs, key, &value)) {
++		*dest = git_config_int(key, value);
++		return 0;
++	} else
++		return 1;
++}
++
++int git_configset_get_ulong(struct config_set *cs, const char *key, unsigned long *dest)
++{
++	const char *value;
++	if (!git_configset_get_value(cs, key, &value)) {
++		*dest = git_config_ulong(key, value);
++		return 0;
++	} else
++		return 1;
++}
++
++int git_configset_get_bool(struct config_set *cs, const char *key, int *dest)
++{
++	const char *value;
++	if (!git_configset_get_value(cs, key, &value)) {
++		*dest = git_config_bool(key, value);
++		return 0;
++	} else
++		return 1;
++}
++
++int git_configset_get_bool_or_int(struct config_set *cs, const char *key,
++				int *is_bool, int *dest)
++{
++	const char *value;
++	if (!git_configset_get_value(cs, key, &value)) {
++		*dest = git_config_bool_or_int(key, value, is_bool);
++		return 0;
++	} else
++		return 1;
++}
++
++int git_configset_get_maybe_bool(struct config_set *cs, const char *key, int *dest)
++{
++	const char *value;
++	if (!git_configset_get_value(cs, key, &value)) {
++		*dest = git_config_maybe_bool(key, value);
++		if (*dest == -1)
++			return -1;
++		return 0;
++	} else
++		return 1;
++}
++
++int git_configset_get_pathname(struct config_set *cs, const char *key, const char **dest)
++{
++	const char *value;
++	if (!git_configset_get_value(cs, key, &value))
++		return git_config_pathname(dest, key, value);
++	else
++		return 1;
++}
++
++static void git_config_check_init(void)
++{
++	if (the_config_set.hash_initialized)
++		return;
++	git_configset_init(&the_config_set);
++	git_config(config_set_callback, &the_config_set);
++}
++
++void git_config_clear(void)
++{
++	if (!the_config_set.hash_initialized)
++		return;
++	git_configset_clear(&the_config_set);
++}
++
++int git_config_get_value(const char *key, const char **value)
++{
++	git_config_check_init();
++	return git_configset_get_value(&the_config_set, key, value);
++}
++
++const struct string_list *git_config_get_value_multi(const char *key)
++{
++	git_config_check_init();
++	return git_configset_get_value_multi(&the_config_set, key);
++}
++
++int git_config_get_string_const(const char *key, const char **dest)
++{
++	git_config_check_init();
++	return git_configset_get_string_const(&the_config_set, key, dest);
++}
++
++int git_config_get_string(const char *key, char **dest)
++{
++	git_config_check_init();
++	return git_config_get_string_const(key, (const char **)dest);
++}
++
++int git_config_get_int(const char *key, int *dest)
++{
++	git_config_check_init();
++	return git_configset_get_int(&the_config_set, key, dest);
++}
++
++int git_config_get_ulong(const char *key, unsigned long *dest)
++{
++	git_config_check_init();
++	return git_configset_get_ulong(&the_config_set, key, dest);
++}
++
++int git_config_get_bool(const char *key, int *dest)
++{
++	git_config_check_init();
++	return git_configset_get_bool(&the_config_set, key, dest);
++}
++
++int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest)
++{
++	git_config_check_init();
++	return git_configset_get_bool_or_int(&the_config_set, key, is_bool, dest);
++}
++
++int git_config_get_maybe_bool(const char *key, int *dest)
++{
++	git_config_check_init();
++	return git_configset_get_maybe_bool(&the_config_set, key, dest);
++}
++
++int git_config_get_pathname(const char *key, const char **dest)
++{
++	git_config_check_init();
++	return git_configset_get_pathname(&the_config_set, key, dest);
++}
++
+ /*
+  * Find all the stuff for git_config_set() below.
+  */
+@@ -1707,6 +1978,9 @@ int git_config_set_multivar_in_file(const char *config_filename,
+ 	lock = NULL;
+ 	ret = 0;
+ 
++	/* Invalidate the config cache */
++	git_config_clear();
++
+ out_free:
+ 	if (lock)
+ 		rollback_lock_file(lock);
+diff --git a/setup.c b/setup.c
+index 0a22f8b..793369d 100644
+--- a/setup.c
++++ b/setup.c
+@@ -625,6 +625,15 @@ static const char *setup_git_directory_gently_1(int *nongit_ok)
+ 	int one_filesystem = 1;
+ 
+ 	/*
++	 * We may have read an incomplete configuration before
++	 * setting-up the git directory. If so, clear the cache so
++	 * that the next queries to the configuration reload complete
++	 * configuration (including the per-repo config file that we
++	 * ignored previously).
++	 */
++	git_config_clear();
++
++	/*
+ 	 * Let's assume that we are in a git repository.
+ 	 * If it turns out later that we are somewhere else, the value will be
+ 	 * updated accordingly.
 -- 
 1.9.0.GIT
