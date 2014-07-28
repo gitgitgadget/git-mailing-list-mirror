@@ -1,133 +1,93 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: git diff-tree commit detail bug in 2.0.2 and 2.0.3
-Date: Mon, 28 Jul 2014 11:18:04 +0100
-Message-ID: <53D6235C.90608@ramsay1.demon.co.uk>
-References: <CAGyf7-HKpfyi5OqXS9BhtfXUEZXbisawpTPK9UFOQObz1qhRUw@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: Bryan Turner <bturner@atlassian.com>,
-	Git Users <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 12:18:16 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH v3 0/6] Rewrite `git_config()` using config-set API
+Date: Mon, 28 Jul 2014 03:33:49 -0700
+Message-ID: <1406543635-19281-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 28 12:34:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBi0V-0001mI-LK
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:18:15 +0200
+	id 1XBiGK-0008Fh-9y
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:34:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985AbaG1KSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 06:18:11 -0400
-Received: from mdfmta009.mxout.tbr.inty.net ([91.221.168.50]:42550 "EHLO
-	smtp.demon.co.uk" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751095AbaG1KSK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 06:18:10 -0400
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 4A78038407C;
-	Mon, 28 Jul 2014 09:40:31 +0100 (BST)
-Received: from mdfmta009.tbr.inty.net (unknown [127.0.0.1])
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP id 02806384089;
-	Mon, 28 Jul 2014 09:40:31 +0100 (BST)
-Received: from [192.168.254.10] (unknown [80.176.147.220])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mdfmta009.tbr.inty.net (Postfix) with ESMTP;
-	Mon, 28 Jul 2014 09:40:30 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <CAGyf7-HKpfyi5OqXS9BhtfXUEZXbisawpTPK9UFOQObz1qhRUw@mail.gmail.com>
-X-MDF-HostID: 4
+	id S1751784AbaG1Kec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 06:34:32 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:33613 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751478AbaG1Kec (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 06:34:32 -0400
+Received: by mail-pa0-f53.google.com with SMTP id kq14so10267256pab.12
+        for <git@vger.kernel.org>; Mon, 28 Jul 2014 03:34:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=ljIBb80u7oesYpG3SSnH7cXkWKCw2mnhG7eDjzl2wg8=;
+        b=EEM+fupryzB+qf9CkfEZkyCCNWzx4aPkaRqCyYNBK3QZKCgtknm3kY/VKwekeplKXS
+         8io8yKHi13Nml7HIIkJSmuYUo8RC2PehG2DikFDm9H4kYqQo8Rors9ZLnunZwUQl7rIu
+         LBmvSIoadkJ/C2SYzjRTFFA42Z1eplJMJttbsRNQuV74qnLum1nVVKexi/XG3jOlQ1+9
+         zmaavKnGnQZPBSCMg2auswwSQ9mMhkkQuVt2/YOO0jWGjybNZo7nMsk+r0vXrGxlb4Xz
+         1tsIZckgP6xYFb8CKtxn7DVmJPjCSO05iddJGWBXrV7Pye/VoUtaH8t2o+kPUmoydzJB
+         c23w==
+X-Received: by 10.70.35.169 with SMTP id i9mr34375061pdj.36.1406543671581;
+        Mon, 28 Jul 2014 03:34:31 -0700 (PDT)
+Received: from localhost.localdomain ([106.211.56.253])
+        by mx.google.com with ESMTPSA id v8sm23639483pdr.45.2014.07.28.03.34.28
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 28 Jul 2014 03:34:31 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254290>
 
-On 28/07/14 10:42, Bryan Turner wrote:
-> Using git diff-tree --stdin on 2.0.2 and 2.0.3 produces incorrect
-> commit messages.
-> 
-> Here's an example to reproduce the issue:
-> 
-> bturner@ubuntu:/tmp$ git init --bare test.git
-> Initialized empty Git repository in /tmp/test.git/
-> bturner@ubuntu:/tmp$ git clone test.git
-> Cloning into 'test'...
-> warning: You appear to have cloned an empty repository.
-> done.
-> bturner@ubuntu:/tmp$ cd test
-> bturner@ubuntu:/tmp/test$ echo "Hello" > file.txt
-> bturner@ubuntu:/tmp/test$ git add file.txt
-> bturner@ubuntu:/tmp/test$ git commit -m "Initial commit"
-> [master (root-commit) c5e16f3] Initial commit
->  1 file changed, 1 insertion(+)
->  create mode 100644 file.txt
-> bturner@ubuntu:/tmp/test$ echo "World" >> file.txt
-> bturner@ubuntu:/tmp/test$ git commit -am "Second commit"
-> [master 9214ac7] Second commit
->  1 file changed, 1 insertion(+)
-> bturner@ubuntu:/tmp/test$ git push origin HEAD
-> Counting objects: 6, done.
-> Delta compression using up to 4 threads.
-> Compressing objects: 100% (2/2), done.
-> Writing objects: 100% (6/6), 446 bytes | 0 bytes/s, done.
-> Total 6 (delta 0), reused 0 (delta 0)
-> To /tmp/test.git
->  * [new branch]      HEAD -> master
-> bturner@ubuntu:/tmp/test$ cd ../test.git/
-> bturner@ubuntu:/tmp/test.git$ git rev-list -1
-> --format="%H|%h|%P|%p|%aN|%aE|%at%n%B%n" 9214ac7
-> commit 9214ac79728424a971244c34432c6d948754198d
-> 9214ac79728424a971244c34432c6d948754198d|9214ac7|c5e16f37164f1b7411685def64d7390775437f07|c5e16f3|Bryan
-> Turner|bturner@atlassian.com|1406539558
-> Second commit
-> 
-> 
-> bturner@ubuntu:/tmp/test.git$ /opt/git/2.0.3/bin/git diff-tree
-----------------------------------------^^^^^^^
+[PATCH V3]:All the suggestions in [3] applied. Built on top of [1].
 
-You appear to have used v2.0.3 on both invocations of diff-tree
-(see also below); cut-n-paste error?
+[PATCH V2]: All the suggestions in [2] incorporated. git_config() now follows
+	correct parsing order. Reordered the patches. Removed xfuncname patch
+	as it was unnecssary.
 
-> --no-renames --always --format="commit
-> %H%n%H|%h|%P|%p|%aN|%aE|%at|%B%n" --root
-> 9214ac79728424a971244c34432c6d948754198d
-> commit 9214ac79728424a971244c34432c6d948754198d
-> 9214ac79728424a971244c34432c6d948754198d|9214ac79728424a971244c34432c6d948754198d|c5e16f37164f1b7411685def64d7390775437f07|c5e16f37164f1b7411685def64d7390775437f07|Bryan
-> Turner|bturner@atlassian.com|1406539558|Second commit
-> 
-> 
-> 
-> :100644 100644 e965047ad7c57865823c7d992b1d046ea66edf78
-> f9264f7fbd31ae7a18b7931ed8946fb0aebb0af3 M    file.txt
-> bturner@ubuntu:/tmp/test.git$ /opt/git/2.0.3/bin/git diff-tree
-> --no-renames --always --format="commit
-> %H%n%H|%h|%P|%p|%aN|%aE|%at|%B%n" --root --stdin
-> --9214ac79728424a971244c34432c6d948754198d
-> commit 9214ac79728424a971244c34432c6d948754198d
-> 9214ac79728424a971244c34432c6d948754198d|9214ac79728424a971244c34432c6d948754198d|c5e16f37164f1b7411685def64d7390775437f07|c5e16f37164f1b7411685def64d7390775437f07|Bryan
-> Turner|bturner@atlassian.com|1406539543|Initial commit
----------------------------------------^^
+This series builds on the top of topic[1] in the mailing list with name
+"git config cache & special querying API utilizing the cache".
 
-The timestamp is also different than the above.
+This series aims to do these three things,
 
-> 
-> 
-> 
-> :100644 100644 e965047ad7c57865823c7d992b1d046ea66edf78
-> f9264f7fbd31ae7a18b7931ed8946fb0aebb0af3 M    file.txt
-> bturner@ubuntu:/tmp/test.git$
-> 
-> Running a git bisect between v2.0.1, which does not manifest this
-> issue, and v2.0.2 fingers the following commit:
-> bturner@ubuntu:~/Development/oss/git/git$ git bisect bad
-> c1b3c71f4b4571abb2b2a457122fd100dc9f7eb0 is the first bad commit
-> commit c1b3c71f4b4571abb2b2a457122fd100dc9f7eb0
-> Author: Jeff King <peff@peff.net>
-> Date:   Tue Jun 10 17:43:02 2014 -0400
-> 
->     commit: convert commit->buffer to a slab
-> 
+* Use the config-set API to rewrite git_config().
 
-ATB,
-Ramsay Jones
+* Solve any legacy bugs in the previous system while at it.
+
+* To be feature complete compared to the previous git_config() implementation,
+  which I think it is now. (added the line number and file name info just for
+  completeness)
+
+Also, I haven't yet checked the exact improvements but still as a teaser,
+git status now only rereads the configuration files twice instead of four
+times.
+
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/254286
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/254101
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/254211
+
+Tanay Abhra (6):
+  config.c: fix accuracy of line number in errors
+  add line number and file name info to `config_set`
+  rewrite git_config() to use the config-set API
+  add a test for semantic errors in config files
+  config: add `git_die_config()` to the config-set API
+  add tests for `git_config_get_string()`
+
+ Documentation/technical/api-config.txt |   5 ++
+ cache.h                                |  25 ++++++++
+ config.c                               | 114 +++++++++++++++++++++++++++++----
+ t/t1308-config-set.sh                  |  20 ++++++
+ test-config.c                          |  10 +++
+ 5 files changed, 161 insertions(+), 13 deletions(-)
+
+-- 
+1.9.0.GIT
