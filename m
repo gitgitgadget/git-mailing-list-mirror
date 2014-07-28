@@ -1,65 +1,180 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git diff-tree commit detail bug in 2.0.2 and 2.0.3
-Date: Mon, 28 Jul 2014 06:44:09 -0400
-Message-ID: <20140728104409.GC10737@peff.net>
-References: <CAGyf7-HKpfyi5OqXS9BhtfXUEZXbisawpTPK9UFOQObz1qhRUw@mail.gmail.com>
- <20140728103504.GB10737@peff.net>
+From: Tony Finch <dot@dotat.at>
+Subject: [PATCH] imap-send: create target mailbox if it is missing
+Date: Mon, 28 Jul 2014 11:48:46 +0100
+Message-ID: <alpine.LSU.2.00.1407281148410.13901@hermes-1.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-To: Bryan Turner <bturner@atlassian.com>
-X-From: git-owner@vger.kernel.org Mon Jul 28 12:44:18 2014
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 28 12:48:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBiPg-0003EV-Mi
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:44:17 +0200
+	id 1XBiU8-0004xI-6M
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940AbaG1KoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 06:44:13 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41640 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751664AbaG1KoM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 06:44:12 -0400
-Received: (qmail 30186 invoked by uid 102); 28 Jul 2014 10:44:13 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Jul 2014 05:44:13 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jul 2014 06:44:09 -0400
-Content-Disposition: inline
-In-Reply-To: <20140728103504.GB10737@peff.net>
+	id S1752083AbaG1Kss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 06:48:48 -0400
+Received: from ppsw-52.csi.cam.ac.uk ([131.111.8.152]:44413 "EHLO
+	ppsw-52.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059AbaG1Ksr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 06:48:47 -0400
+X-Greylist: delayed 625 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jul 2014 06:48:47 EDT
+X-Cam-AntiVirus: no malware found
+X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
+Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:51443)
+	by ppsw-52.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.159]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1XBiU2-0002Zs-Du (Exim 4.82_3-c0e5623) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 28 Jul 2014 11:48:46 +0100
+Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
+	with local id 1XBiU2-0006KE-6n (Exim 4.72) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Mon, 28 Jul 2014 11:48:46 +0100
+X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
+User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254301>
 
-On Mon, Jul 28, 2014 at 06:35:04AM -0400, Jeff King wrote:
+Some MUAs delete their "drafts" folder when it is empty, so
+git imap-send should be able to create it if necessary.
 
-> I haven't reproduced here yet, but this is almost certainly the bug
-> where lookup_unknown_object causes a bogus commit->index field (and
-> prior to the commit you found, diff-tree did not use commit->index).
-> 
-> The series that Junio has in jk/alloc-commit-id should fix the problem
-> (it's in master already, and slated for v2.1.0).
+This change checks that the folder exists immediately after
+login and tries to create it if it is missing.
 
-Yep, that's definitely it. Here's the minimum reproduction:
+There was some vestigial code to handle a [TRYCREATE] response
+from the server when an APPEND target is missing. However this
+code never ran (the create and trycreate flags were never set)
+and when I tried to make it run I found that the code had already
+thrown away the contents of the message it was trying to append.
+---
+ imap-send.c | 56 +++++++++++++++++++++++++-------------------------------
+ 1 file changed, 25 insertions(+), 31 deletions(-)
 
-  git init
-  git commit --allow-empty -m one
-  git commit --allow-empty -m two
-  git rev-list HEAD | git diff-tree --stdin --always --format=%s
+diff --git a/imap-send.c b/imap-send.c
+index 524fbab..5e4a24e 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -128,7 +128,6 @@ struct imap_cmd_cb {
+ 	char *data;
+ 	int dlen;
+ 	int uid;
+-	unsigned create:1, trycreate:1;
+ };
 
-That yields:
+ struct imap_cmd {
+@@ -714,8 +713,8 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
+ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
+ {
+ 	struct imap *imap = ctx->imap;
+-	struct imap_cmd *cmdp, **pcmdp, *ncmdp;
+-	char *cmd, *arg, *arg1, *p;
++	struct imap_cmd *cmdp, **pcmdp;
++	char *cmd, *arg, *arg1;
+ 	int n, resp, resp2, tag;
 
-  one
-  one
+ 	for (;;) {
+@@ -801,30 +800,9 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
+ 			if (!strcmp("OK", arg))
+ 				resp = DRV_OK;
+ 			else {
+-				if (!strcmp("NO", arg)) {
+-					if (cmdp->cb.create && cmd && (cmdp->cb.trycreate || !memcmp(cmd, "[TRYCREATE]", 11))) { /* SELECT, APPEND or UID COPY */
+-						p = strchr(cmdp->cmd, '"');
+-						if (!issue_imap_cmd(ctx, NULL, "CREATE \"%.*s\"", (int)(strchr(p + 1, '"') - p + 1), p)) {
+-							resp = RESP_BAD;
+-							goto normal;
+-						}
+-						/* not waiting here violates the spec, but a server that does not
+-						   grok this nonetheless violates it too. */
+-						cmdp->cb.create = 0;
+-						if (!(ncmdp = issue_imap_cmd(ctx, &cmdp->cb, "%s", cmdp->cmd))) {
+-							resp = RESP_BAD;
+-							goto normal;
+-						}
+-						free(cmdp->cmd);
+-						free(cmdp);
+-						if (!tcmd)
+-							return 0;	/* ignored */
+-						if (cmdp == tcmd)
+-							tcmd = ncmdp;
+-						continue;
+-					}
++				if (!strcmp("NO", arg))
+ 					resp = RESP_NO;
+-				} else /*if (!strcmp("BAD", arg))*/
++				else /*if (!strcmp("BAD", arg))*/
+ 					resp = RESP_BAD;
+ 				fprintf(stderr, "IMAP command '%s' returned response (%s) - %s\n",
+ 					 memcmp(cmdp->cmd, "LOGIN", 5) ?
+@@ -833,7 +811,6 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
+ 			}
+ 			if ((resp2 = parse_response_code(ctx, &cmdp->cb, cmd)) > resp)
+ 				resp = resp2;
+-		normal:
+ 			if (cmdp->cb.done)
+ 				cmdp->cb.done(ctx, cmdp, resp);
+ 			free(cmdp->cb.data);
+@@ -944,7 +921,7 @@ static int auth_cram_md5(struct imap_store *ctx, struct imap_cmd *cmd, const cha
+ 	return 0;
+ }
 
-on v2.0.3, but merging in jk/alloc-commit-id yields:
+-static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
++static struct imap_store *imap_open_store(struct imap_server_conf *srvc, char *folder)
+ {
+ 	struct credential cred = CREDENTIAL_INIT;
+ 	struct imap_store *ctx;
+@@ -1156,6 +1133,25 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
+ 		credential_approve(&cred);
+ 	credential_clear(&cred);
 
-  two
-  one
++	/* check the target mailbox exists */
++	ctx->name = folder;
++	switch (imap_exec(ctx, NULL, "EXAMINE \"%s\"", ctx->name)) {
++	case RESP_OK:
++		/* ok */
++		break;
++	case RESP_BAD:
++		fprintf(stderr, "IMAP error: could not check mailbox\n");
++		goto bail;
++	case RESP_NO:
++		if (imap_exec(ctx, NULL, "CREATE \"%s\"", ctx->name) == RESP_OK) {
++			imap_info("Created missing mailbox\n");
++		} else {
++			fprintf(stderr, "IMAP error: could not create missing mailbox\n");
++			goto bail;
++		}
++		break;
++	}
++
+ 	ctx->prefix = "";
+ 	return ctx;
 
--Peff
+@@ -1219,7 +1215,6 @@ static int imap_store_msg(struct imap_store *ctx, struct strbuf *msg)
+
+ 	box = ctx->name;
+ 	prefix = !strcmp(box, "INBOX") ? "" : ctx->prefix;
+-	cb.create = 0;
+ 	ret = imap_exec_m(ctx, &cb, "APPEND \"%s%s\" ", prefix, box);
+ 	imap->caps = imap->rcaps;
+ 	if (ret != DRV_OK)
+@@ -1418,14 +1413,13 @@ int main(int argc, char **argv)
+ 	}
+
+ 	/* write it to the imap server */
+-	ctx = imap_open_store(&server);
++	ctx = imap_open_store(&server, imap_folder);
+ 	if (!ctx) {
+ 		fprintf(stderr, "failed to open store\n");
+ 		return 1;
+ 	}
+
+ 	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" : "");
+-	ctx->name = imap_folder;
+ 	while (1) {
+ 		unsigned percent = n * 100 / total;
+
+-- 
+2.0.3.dirty
