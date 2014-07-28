@@ -1,53 +1,100 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: "error: Tweaking file descriptors doesn't work with this MSVCRT.dll"
- on wine
-Date: Mon, 28 Jul 2014 17:39:32 +0700
-Message-ID: <CACsJy8DFvTHieQc-nZL2h7JbQYc4Qkbx+Ouc297VpNeU=kNaoQ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 12:40:08 2014
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH v2] add documentation for writing config files
+Date: Mon, 28 Jul 2014 03:42:26 -0700
+Message-ID: <1406544146-19404-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jul 28 12:43:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBiLg-0001m7-2T
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:40:08 +0200
+	id 1XBiP0-0002yg-R9
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751802AbaG1KkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 06:40:04 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:33720 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751703AbaG1KkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 06:40:03 -0400
-Received: by mail-ie0-f180.google.com with SMTP id at20so6462628iec.39
-        for <git@vger.kernel.org>; Mon, 28 Jul 2014 03:40:02 -0700 (PDT)
+	id S1751701AbaG1Kna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 06:43:30 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:39527 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751095AbaG1Kna (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 06:43:30 -0400
+Received: by mail-pa0-f42.google.com with SMTP id lf10so10358589pab.29
+        for <git@vger.kernel.org>; Mon, 28 Jul 2014 03:43:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        bh=jeCS4ZXhXRGROEtbUCa6kSbmayykGp1pzLYHlh6VeQU=;
-        b=pnrQ2/ldu/r/jRFwgk+UXQLe4D0pYMTbFvFLqof2+J+sWMMNryiX+YIgVmrksvBwiX
-         p4J9vnnjc5RGnKfhIu6i+v6MHumgJBsJDaaGwG16MlaaU7DzRMhU4rv13qwOddtlCaWI
-         T9lzMugfNpW35tnaD+qmh2MOUcUbWa5EdwbqpmFEgDNnQBrHgB5YmGFWzdP5LtYLHvjY
-         KoO3Efhpw9AkNYDNo3pPrWGKueSb+ETYBdcb7fl/ty1YtorW7271PcR+9yOyGFr8mZCX
-         aAVRZxusfVDMx1QkyBL7hSAHHulLKK7DPUjvdlJ6DS6fxB78sksRXnbDLrNNgHd0de8y
-         gy1g==
-X-Received: by 10.50.114.226 with SMTP id jj2mr31386448igb.27.1406544002482;
- Mon, 28 Jul 2014 03:40:02 -0700 (PDT)
-Received: by 10.107.13.80 with HTTP; Mon, 28 Jul 2014 03:39:32 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id;
+        bh=gUemk9kj2VzFvYAcIU9PzQ/Gtbi2jZdmAEWw9uMUsMQ=;
+        b=QvWILiV7p1jUdbJz6+8vPZiCvcpZkUHgoe6IXQAQ2HdlmZCQZxYGNObhe217o7vuU/
+         zMbrVYDGrlhtGix7M4Yn4mYon8OpYO9ZcTb88soOdnKk7QXTIZ+uj669BmkGWVIcQ5s1
+         aklFn0+SVHn/SyMBU1yBsS59G0ch16cHu7Gl9kyRS0alrhF2jYQH9OhmM/oSWN+xZD4F
+         /kgLpEIe5ONBkeBwOpveLVD2dtRiL/zw4nbXENPFVDEYg62t8UhAM/87jGhFRuSl8TXv
+         mdRL9dPWgNSdCPfIAIj8pFnSd6yQiTXB/VV2069gU1Y1aSyvda0BXHMia/5VxaBJYqmo
+         Ot4A==
+X-Received: by 10.70.40.131 with SMTP id x3mr38235647pdk.22.1406544209582;
+        Mon, 28 Jul 2014 03:43:29 -0700 (PDT)
+Received: from localhost.localdomain ([106.211.56.253])
+        by mx.google.com with ESMTPSA id cm7sm23663499pdb.74.2014.07.28.03.43.25
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 28 Jul 2014 03:43:28 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254299>
 
-I know wine is kind of second citizen but is there a cheap trick to
-make it work on wine? Reverting fcd428f (Win32: fix broken pipe
-detection - 2012-03-01) could result in conflicts in compat that I'm
-not comfortable resolving. I don't have Windows at home. Wine is the
-only option for me (or if somebody has a modern.ie image for KVM, or a
-simple recipe to make one, that'd be great). "Fix wine" is not really
-an option.
+Replace TODO introduced in commit 9c3c22 with documentation
+explaining Git config API functions for writing configuration
+files.
+
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+---
+ Documentation/technical/api-config.txt | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
+index 230b3a0..edd5018 100644
+--- a/Documentation/technical/api-config.txt
++++ b/Documentation/technical/api-config.txt
+@@ -137,4 +137,33 @@ int read_file_with_include(const char *file, config_fn_t fn, void *data)
+ Writing Config Files
+ --------------------
+ 
+-TODO
++Git gives multiple entry points in the Config API to write config values to
++files namely `git_config_set_in_file` and `git_config_set`, which write to
++a specific config file or to `.git/config` respectively. They both take a
++key/value pair as parameter.
++In the end they both call `git_config_set_multivar_in_file` which takes four
++parameters:
++
++- the name of the file, as a string, to which key/value pairs will be written.
++
++- the name of key, as a string. This is in canonical "flat" form: the section,
++  subsection, and variable segments will be separated by dots, and the section
++  and variable segments will be all lowercase.
++  E.g., `core.ignorecase`, `diff.SomeType.textconv`.
++
++- the value of the variable, as a string. If value is equal to NULL, it will
++  remove the matching key from the config file.
++
++- the value regex, as a string. It will disregard key/value pairs where value
++  does not match.
++
++- a multi_replace value, as an int. If value is equal to zero, nothing or only
++  one matching key/value is replaced, else all matching key/values (regardless
++  how many) are removed, before the new pair is written.
++
++It returns 0 on success.
++
++Also, there are functions `git_config_rename_section` and
++`git_config_rename_section_in_file` with parameters `old_name` and `new_name`
++for renaming or removing sections in the config files. If NULL is passed
++through `new_name` parameter, the section will be removed from the config file.
 -- 
-Duy
+1.9.0.GIT
