@@ -1,8 +1,7 @@
 From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: [PATCH 04/10] abspath: use strbuf_getcwd() to remember original working
- directory
-Date: Mon, 28 Jul 2014 20:27:34 +0200
-Message-ID: <53D69616.60303@web.de>
+Subject: [PATCH v3 06/10] wrapper: add xgetcwd()
+Date: Mon, 28 Jul 2014 20:29:50 +0200
+Message-ID: <53D6969E.1070202@web.de>
 References: <53D694A2.8030007@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -12,77 +11,73 @@ Cc: Karsten Blees <karsten.blees@gmail.com>,
 	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
 	<pclouds@gmail.com>, Jeff King <peff@peff.net>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Jul 28 20:27:55 2014
+X-From: git-owner@vger.kernel.org Mon Jul 28 20:30:11 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBpeJ-000366-Iw
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 20:27:51 +0200
+	id 1XBpgZ-00040x-DD
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 20:30:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393AbaG1S1s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 14:27:48 -0400
-Received: from mout.web.de ([212.227.17.11]:52444 "EHLO mout.web.de"
+	id S1751726AbaG1SaF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 14:30:05 -0400
+Received: from mout.web.de ([212.227.17.12]:53529 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750933AbaG1S1r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 14:27:47 -0400
-Received: from [192.168.178.27] ([79.253.140.83]) by smtp.web.de (mrweb102)
- with ESMTPSA (Nemesis) id 0MWRzK-1X0NLB2D9e-00Xb6L; Mon, 28 Jul 2014 20:27:35
+	id S1752030AbaG1S3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 14:29:55 -0400
+Received: from [192.168.178.27] ([79.253.140.83]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0Meje0-1Ws5tn1BTk-00ODcx; Mon, 28 Jul 2014 20:29:51
  +0200
 User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
 In-Reply-To: <53D694A2.8030007@web.de>
-X-Provags-ID: V03:K0:HAGcIPDhkIAcINQ5Gu9zpd0AKHWCIqE9Bt7cpKSKDpRLOxAJf/Y
- cwtbQgAAs4aT/fZtnY3jMx8DX40w/P0xTm7WtqefcK4nD1e4lvkbr3dUa9F1du7jcKxqJQn
- byGxV4l+XNvXzE0cB6YUfMPZR/KyDyfoEndfWmvVeH3oDvDg6SCp67OUD1SLQxXxUt53JMv
- 7TqI2gIEtA+ZdsQYD92Gg==
+X-Provags-ID: V03:K0:MpMauL9IKF4WfHU/S/3Ip2Zxo703D7nLcBT+wMlociYjB6qoV6z
+ ArlUHt71vxc5Om/kCRgNz04LjhmRA7TZ3o8IQ77QnIp62ar6fbK9RDDJChpjNuQgkP10lui
+ Ww6DBWqcZr+P3RZ5OEcsJjwh+dOYu68cPLrLRJLmcgRwKo0yKxoXoI5Ebp7LdI32BJII0Ue
+ HFG+gwsC9Y9clylNVhiFQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254338>
 
-Store the original working directory in a strbuf instead of in a
-fixed-sized buffer, in order to be able to handle longer paths.
+Add the helper function xgetcwd(), which returns the current directory
+or dies.  The returned string has to be free()d after use.
 
+Helped-by: Duy Nguyen <pclouds@gmail.com>
 Signed-off-by: Rene Scharfe <l.s.r@web.de>
 ---
- abspath.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ git-compat-util.h | 1 +
+ wrapper.c         | 8 ++++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/abspath.c b/abspath.c
-index ca33558..911e931 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -41,7 +41,7 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 	 * here so that we can chdir() back to it at the end of the
- 	 * function:
- 	 */
--	char cwd[1024] = "";
-+	struct strbuf cwd = STRBUF_INIT;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 26e92f1..4d6edea 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -607,6 +607,7 @@ extern int xmkstemp(char *template);
+ extern int xmkstemp_mode(char *template, int mode);
+ extern int odb_mkstemp(char *template, size_t limit, const char *pattern);
+ extern int odb_pack_keep(char *name, size_t namesz, const unsigned char *sha1);
++extern char *xgetcwd(void);
  
- 	int buf_index = 1;
- 
-@@ -80,7 +80,7 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 		}
- 
- 		if (*buf) {
--			if (!*cwd && !getcwd(cwd, sizeof(cwd))) {
-+			if (!cwd.len && strbuf_getcwd(&cwd)) {
- 				if (die_on_error)
- 					die_errno("Could not get current working directory");
- 				else
-@@ -142,8 +142,9 @@ static const char *real_path_internal(const char *path, int die_on_error)
- 	retval = buf;
- error_out:
- 	free(last_elem);
--	if (*cwd && chdir(cwd))
--		die_errno("Could not change back to '%s'", cwd);
-+	if (cwd.len && chdir(cwd.buf))
-+		die_errno("Could not change back to '%s'", cwd.buf);
-+	strbuf_release(&cwd);
- 
- 	return retval;
+ static inline size_t xsize_t(off_t len)
+ {
+diff --git a/wrapper.c b/wrapper.c
+index bc1bfb8..bd24cda 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -493,3 +493,11 @@ struct passwd *xgetpwuid_self(void)
+ 		    errno ? strerror(errno) : _("no such user"));
+ 	return pw;
  }
++
++char *xgetcwd(void)
++{
++	struct strbuf sb = STRBUF_INIT;
++	if (strbuf_getcwd(&sb))
++		die_errno(_("unable to get current working directory"));
++	return strbuf_detach(&sb, NULL);
++}
 -- 
 2.0.2
