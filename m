@@ -1,87 +1,123 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH v3 09/10] abspath: convert absolute_path() to strbuf
-Date: Tue, 29 Jul 2014 00:34:41 +0200
-Message-ID: <53D6D001.8050304@web.de>
-References: <53D694A2.8030007@web.de> <53D69793.3010307@web.de> <20140728191500.GD11265@peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
-	<pclouds@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 29 00:35:03 2014
+From: Fabian Ruch <bafain@gmail.com>
+Subject: [PATCH v1 00/19] Enable options --signoff, --reset-author for pick, reword
+Date: Tue, 29 Jul 2014 01:18:00 +0200
+Message-ID: <cover.1406589435.git.bafain@gmail.com>
+References: <53A258D2.7080806@gmail.com>
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jul 29 01:20:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBtVR-0006yw-6t
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 00:34:57 +0200
+	id 1XBuDB-0005vq-6H
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 01:20:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbaG1Wex convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2014 18:34:53 -0400
-Received: from mout.web.de ([212.227.15.3]:55372 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751425AbaG1Wew (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 18:34:52 -0400
-Received: from [192.168.178.27] ([79.253.140.83]) by smtp.web.de (mrweb001)
- with ESMTPSA (Nemesis) id 0M7blv-1WF6kn0Xgd-00xNMn; Tue, 29 Jul 2014 00:34:42
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <20140728191500.GD11265@peff.net>
-X-Provags-ID: V03:K0:5IKYQDhOQ/8NLS7bsiayuDk0VAGuatFEOkOE6HyKnzVOPrHE4Zq
- PJbA3yZZ5YE/m6yO3FqfY8Pmxy9AeV+ZTUwcNrzCDJeBxyhNXBYb0OnTUSDvKXITpPPnW6Y
- 38oFQmHYe8vHABZqnCap5Z+2MRISCwasL52BmkXSvqFhsYoM3Z3uGTqTwZNCm5xgQIKkR1i
- z8jexwoAKAaYrSisUGNeA==
+	id S1751072AbaG1XUE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 19:20:04 -0400
+Received: from mail-wi0-f174.google.com ([209.85.212.174]:39637 "EHLO
+	mail-wi0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750727AbaG1XUD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 19:20:03 -0400
+Received: by mail-wi0-f174.google.com with SMTP id d1so5320157wiv.1
+        for <git@vger.kernel.org>; Mon, 28 Jul 2014 16:20:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=CjyOFiiCpCyXQ2FQVJiA8dzPW8zBuqBN89VD8fnr6c0=;
+        b=buTtApeQ4Ph8gNqBjTvORyJuZ8wEDOkE+xTYtv6cNzZBnV67ps0F/y0i6f1gyODw6b
+         08+8WVW+AWfoXUYbdaP1Sx5zET27ouTn7RVAm3ONdrYsZAZOTsXZWKo/lB2yH8aKZAT1
+         6PHnTtgdlA0+DnezDsNNXGuj+wYCp7yqFme0449+vnmHOuJlbBQUPZuYi2Dd/LST9QRM
+         HaCdME0aJUmLc6lkkMP0o+LVpog/XKvQTVp18wGEG5wE+1L3rA7o+3IwherVpgiTluGr
+         OrcIB3iaFR0xrwe8nzJ9UorDiC1UIf48nxwfjii+3FK7HXA0o7XXs5jn1WuDzKwySCMv
+         o+qw==
+X-Received: by 10.180.85.101 with SMTP id g5mr35602032wiz.51.1406589601534;
+        Mon, 28 Jul 2014 16:20:01 -0700 (PDT)
+Received: from puffy.de (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
+        by mx.google.com with ESMTPSA id pj6sm52914690wjb.21.2014.07.28.16.19.59
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 28 Jul 2014 16:20:00 -0700 (PDT)
+X-Mailer: git-send-email 2.0.1
+In-Reply-To: <53A258D2.7080806@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254361>
 
-Am 28.07.2014 um 21:15 schrieb Jeff King:
-> On Mon, Jul 28, 2014 at 08:33:55PM +0200, Ren=C3=A9 Scharfe wrote:
->
->>   const char *absolute_path(const char *path)
->>   {
->> -	static char buf[PATH_MAX + 1];
->> -
->> -	if (!*path) {
->> -		die("The empty string is not a valid path");
->> -	} else if (is_absolute_path(path)) {
->> -		if (strlcpy(buf, path, PATH_MAX) >=3D PATH_MAX)
->> -			die("Too long path: %.*s", 60, path);
->> -	} else {
->> -		size_t len;
->> -		const char *fmt;
->> -		const char *cwd =3D get_pwd_cwd();
->> -		if (!cwd)
->> -			die_errno("Cannot determine the current working directory");
->> -		len =3D strlen(cwd);
->> -		fmt =3D (len > 0 && is_dir_sep(cwd[len - 1])) ? "%s%s" : "%s/%s";
->> -		if (snprintf(buf, PATH_MAX, fmt, cwd, path) >=3D PATH_MAX)
->> -			die("Too long path: %.*s", 60, path);
->> -	}
->> -	return buf;
->> +	static struct strbuf sb;
->> +	strbuf_init(&sb, 0);
->> +	strbuf_add_absolute_path(&sb, path);
->> +	return sb.buf;
->>   }
->
-> Is it right to strbuf_init here? That means that we are throwing away
-> the old buffer for each call. I would think you want instead:
->
->    static struct strbuf sb =3D STRBUF_INIT;
->    strbuf_reset(&sb);
->    ...
+Hi,
 
-I changed it from _reset to _init, but I can't remember why. :(  Perhap=
-s=20
-it's the summer heat.  Your version makes more sense to me now.
+this is a reroll of the patch series that enables rudimentary support
+of line options for git-rebase's to-do list commands and reimplements
+the well-known commands `reword` and `squash` in terms of a
+parameterised `do_pick`.
 
-Ren=C3=A9
+I tried to address all the issues raised by Junio in this reroll.
+Here is a short summary.
+
+ - Test that `reword` behaves like `pick` regarding the `pre-commit`
+   hook and executes `commit-msg` for the new log message.
+
+ - Instead of disallowing empty log messages for root commits allow
+   empty log messages for all unchanged commits.
+
+ - The patch "root commits are replayed with an unnecessary option"
+   does not change the behaviour of git-rebase but it makes the
+   subsequent patch easier to read.
+
+   The hidden agenda is to have one git-commit command line in
+   `do_pick` that takes care of rewriting commits as they are being
+   replayed, be they parentless or not. The advantage of having one
+   rewrite command instead of one for root commits and one for
+   non-root commits is that changes to the rewrite mechanism entail
+   less code changes. As more rewriting mechanisms are being added to
+   `do_pick`, it becomes important that they compose well with each
+   other to avoid having a series of amending commits. The `-C`
+   option conflicts with other ways of substituting the log message,
+   like files and strings, which is why it seems not to compose so
+   well.
+
+ - The patch "explicitly distinguish replay commands and exec tasks"
+   does not change behaviour either but is again a separated
+   refactoring patch.
+
+   The distinction of the `exec` command and the replay commands,
+   which all share the same line format `command args sha1 rest`,
+   allows us to employ the positional parameters feature of the shell
+   without introducing another indentation level in `do_pick`.
+
+Thanks for your time,
+   Fabian
+
+Fabian Ruch (19):
+  rebase -i: failed reword prints redundant error message
+  rebase -i: allow rewording an empty commit without complaints
+  rebase -i: reword executes pre-commit hook on interim commit
+  rebase -i: teach do_pick the option --edit
+  rebase -i: implement reword in terms of do_pick
+  rebase -i: allow replaying commits with empty log messages
+  rebase -i: log the replay of root commits
+  rebase -i: root commits are replayed with an unnecessary option
+  rebase -i: commit only once when rewriting picks
+  rebase -i: do not die in do_pick
+  rebase -i: teach do_pick the option --amend
+  rebase -i: teach do_pick the option --file
+  rebase -i: prepare for squash in terms of do_pick --amend
+  rebase -i: implement squash in terms of do_pick
+  rebase -i: explicitly distinguish replay commands and exec tasks
+  rebase -i: parse to-do list command line options
+  rebase -i: teach do_pick the option --reset-author
+  rebase -i: teach do_pick the option --signoff
+  rebase -i: enable options --signoff, --reset-author for pick, reword
+
+ git-rebase--interactive.sh    | 284 ++++++++++++++++++++++++++++++++++--------
+ t/t3404-rebase-interactive.sh |  70 +++++++++++
+ t/t3412-rebase-root.sh        |  19 +++
+ t/test-lib-functions.sh       |   6 +-
+ 4 files changed, 325 insertions(+), 54 deletions(-)
+
+-- 
+2.0.1
