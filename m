@@ -1,87 +1,94 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [PATCH v3 4/6] add a test for semantic errors in config files
-Date: Mon, 28 Jul 2014 16:57:05 +0530
-Message-ID: <53D63389.5090205@gmail.com>
-References: <1406543635-19281-1-git-send-email-tanayabh@gmail.com>	<1406543635-19281-5-git-send-email-tanayabh@gmail.com> <vpqmwbtu3rh.fsf@anie.imag.fr>
+From: David Braden <David.Braden@softwire.com>
+Subject: =?Windows-1252?Q?git-svn_authors_file_and_SVN_users_with_=91=3D=92_in_the?=
+ =?Windows-1252?Q?_username?=
+Date: Mon, 28 Jul 2014 11:33:23 +0000
+Message-ID: <dc3fda62c3e94eba9d29fd4b34f2e7cc@EXCHLONDON2013.zoo.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Jul 28 13:27:17 2014
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 28 13:33:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBj5I-00055a-Ex
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 13:27:16 +0200
+	id 1XBjBR-0007lo-1e
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 13:33:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752354AbaG1L1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 07:27:12 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:50550 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752233AbaG1L1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 07:27:11 -0400
-Received: by mail-pa0-f54.google.com with SMTP id fa1so10420054pad.27
-        for <git@vger.kernel.org>; Mon, 28 Jul 2014 04:27:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=LF4NHZoTmrs56tqfe+/TctyOkfkma7031fkIFtj0QFE=;
-        b=BpfdkXdlGrSxw7/iDGkZBkpLWRbmbcNcG0mhfr73rYURJbSXdz0N7D+vbClBqvtQtO
-         YR/9BRI+8ZVAeiOkwz1MbQEZaZTN21MUnTXCgrUmG6IywiVDiyWVTiFGmhVvV9CYSJSU
-         ApYBEY/yyGUnyxjdefbRUQiPSOc+EL7Y0UtsFa/DwX3rtYjBPxMNDTddiAl0t38Q2zmw
-         flfcJOyk6+0hSPUrNs6Hlg8t+b8Fdv5YtjFeDPtdkryD9lV5mkTXVYkm0nNonTGl9rKU
-         ZogRxiBVwcoMfgaw0FS12nNChV43V0w23oQgPwv/qRIQHheCm6UZIXlcQ+KASXqjruK5
-         zyOA==
-X-Received: by 10.67.4.234 with SMTP id ch10mr37690186pad.3.1406546831372;
-        Mon, 28 Jul 2014 04:27:11 -0700 (PDT)
-Received: from [127.0.0.1] ([106.211.56.253])
-        by mx.google.com with ESMTPSA id z5sm17354659pbt.81.2014.07.28.04.27.08
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 28 Jul 2014 04:27:10 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <vpqmwbtu3rh.fsf@anie.imag.fr>
+	id S1752300AbaG1Ldd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2014 07:33:33 -0400
+Received: from eu-smtp-delivery-179.mimecast.com ([207.82.80.179]:31005 "EHLO
+	eu-smtp-delivery-179.mimecast.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751940AbaG1Ldc convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 07:33:32 -0400
+Received: from smtp.softwire.com (31.221.86.188 [31.221.86.188]) (Using TLS)
+ by uk-mta-10.uk.mimecast.lan; Mon, 28 Jul 2014 12:33:30 +0100
+Received: from EXCHLONDON2013.zoo.lan (10.210.10.43) by EXCHLONDON2013.zoo.lan
+ (10.210.10.43) with Microsoft SMTP Server (TLS) id 15.0.847.32; Mon, 28 Jul
+ 2014 12:33:29 +0100
+Received: from EXCHLONDON2013.zoo.lan ([10.210.10.43]) by
+ EXCHLONDON2013.zoo.lan ([10.210.10.43]) with mapi id 15.00.0847.030; Mon, 28
+ Jul 2014 12:33:23 +0100
+Thread-Topic: =?Windows-1252?Q?git-svn_authors_file_and_SVN_users_with_=91=3D=92_in_the?=
+ =?Windows-1252?Q?_username?=
+Thread-Index: Ac+qT4BAEiiNLVa0Q+6wF2/MtvAhegACC38g
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.210.11.235]
+X-MC-Unique: PTVj1jovRxaKsKyBC0qkqQ-1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254312>
+
+I=92m creating a git clone of a svn repository and am trying to set up =
+an authors file to map between the svn users and our git usernames. The=
+ svn repository uses the full subject line of a ssl certificate for the=
+ user id and so it contains =91=3D=92 which causes the authors file to =
+be parsed incorrectly as it splits on the first equals.
+
+The code that does the parsing is:
+
+# '<svn username> =3D real-name <email address>' mapping based on git-s=
+vnimport:
+sub load_authors {
+                open my $authors, '<', $_authors or die "Can't open $_a=
+uthors $!\n";
+                my $log =3D $cmd eq 'log';
+                while (<$authors>) {
+                                chomp;
+                                next unless /^(.+?|\(no author\))\s*=3D=
+\s*(.+?)\s*<(.+)>\s*$/;
+                                my ($user, $name, $email) =3D ($1, $2, =
+$3);
+                                if ($log) {
+                                                $Git::SVN::Log::rusers{=
+"$name <$email>"} =3D $user;
+                                } else {
+                                                $users{$user} =3D [$nam=
+e, $email];
+                                }
+                }
+                close $authors or croak $!;
+}
 
 
+How can I work around this limitation?
 
-On 7/28/2014 4:52 PM, Matthieu Moy wrote:
-> Tanay Abhra <tanayabh@gmail.com> writes:
-> 
->> +test_expect_success 'check line errors for malformed values' '
->> +	mv .git/config .git/config.old &&
->> +	test_when_finished "mv .git/config.old .git/config" &&
->> +	cat >.git/config <<-\EOF &&
->> +	[alias]
->> +		br
->> +	EOF
->> +	test_expect_code 128 git br 2>result &&
->> +	grep "fatal: bad config file line 2 in .git/config" result
->> +'
-> 
-> This is PATCH 4, and it tests a bug fixed in PATCH 1. It would have
-> eased review to group both patches, either
-> 
-> PATCH 1: introduce test_expect_failure test to demonstrate the failure
+Thanks
 
-Didn't Junio comment that he wouldn't recommend inserting a test_expect_failure
-for new tests and then flipping them after in the series.
+David
+David Braden
+Tel : 020 7485 7500 ext 3199 | Fax : 020 7485 7575
 
-> PATCH 2: fix the bug and change test_expect_failure to test_expect_success
-> 
-> Or putting both in the same patch.
->
-
-Much better, thanks for the advice.
-
-> I think the series is OK like this, my comment is just to be read as
-> "next time, here's how to do better".
-> 
+softwire
+Sunday Times Best Small Companies - UK top 25 four years running
+Web : www.softwire.com<http://www.softwire.com/> | Addr : 325 Highgate =
+Studios, 53-79 Highgate Road, London NW5 1TL
+Softwire Technology Limited. Registered in England no. 3824658. Registe=
+red Office : 13 Station Road, London N3 2SB
