@@ -1,83 +1,95 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 02/10] unix-sockets: use strbuf_getcwd()
-Date: Mon, 28 Jul 2014 14:51:09 -0400
-Message-ID: <20140728185109.GB11265@peff.net>
-References: <53D694A2.8030007@web.de>
- <53D695A4.2030403@web.de>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH 2/5] refs.c: return error instead of dying when locking
+ fails during transaction
+Date: Mon, 28 Jul 2014 12:01:34 -0700
+Message-ID: <CAL=YDWmCGMKgmc6NOhHuf-1QXFvnF25yT-WgxJBntu+DGAbBmg@mail.gmail.com>
+References: <1406307521-10339-1-git-send-email-sahlberg@google.com>
+	<1406307521-10339-3-git-send-email-sahlberg@google.com>
+	<20140725194023.GH12427@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Karsten Blees <karsten.blees@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Mon Jul 28 20:51:27 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jul 28 21:01:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBq18-0003ut-Ou
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 20:51:27 +0200
+	id 1XBqB1-00080n-DC
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 21:01:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751881AbaG1SvS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2014 14:51:18 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41911 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751553AbaG1SvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 14:51:14 -0400
-Received: (qmail 26824 invoked by uid 102); 28 Jul 2014 18:51:14 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Jul 2014 13:51:14 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jul 2014 14:51:09 -0400
-Content-Disposition: inline
-In-Reply-To: <53D695A4.2030403@web.de>
+	id S1751550AbaG1TBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 15:01:35 -0400
+Received: from mail-vc0-f176.google.com ([209.85.220.176]:55348 "EHLO
+	mail-vc0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751324AbaG1TBf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 15:01:35 -0400
+Received: by mail-vc0-f176.google.com with SMTP id id10so11880124vcb.7
+        for <git@vger.kernel.org>; Mon, 28 Jul 2014 12:01:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=71RSzZ6DXvVu0aCXSklnPaDRL6haQeT3/YIng922xSg=;
+        b=AEbXMIS7NDLk4hrAJgFaAV7Ir2qkGOlyRBXkm5eTpzQhvaPUcy0aYYw0cuEj7+ZlxG
+         E1so5S65wjIVzYIlIwI3AZ1MrUHjjf+ZC82MijZFcPfKtWxWkrxe9D9d/IWHUD3wtDS7
+         RjeGouRtda8stVTss8GVMOdb/f+7H5rGM4N/148cuE5+wWRoytCaFAucYUbXCpHT1TSr
+         39NJ0sDHxc5eKmW2y4tQ6V/qDrF5NgpBYYC7UGN+xUjlCCY8gD9gXoLOHRUCJ2A1zfoU
+         qbWIlKdceTycRMtQc8LWgZgpAUzUuLiowlWpJC9yeyYW2KyXXV4i9RfvmBxhUKNpgzEl
+         hd6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=71RSzZ6DXvVu0aCXSklnPaDRL6haQeT3/YIng922xSg=;
+        b=EdaJGgNqPm/cIfo7HlGPZrGKdr4PGhkcBZ5rURUdTrCqDoJxQNtKoEz3NBLZbKDLFc
+         z0S/ZKlpYGSuKadMbPRAE1yvLl6zIx+9+Uqm+o/Wqo494YvKm6Ol+NCoqjBdDkVWg8yG
+         bxrozvPYQtBU9vPGQAcK4bzp2oynqsXaIEgU7J2/hMvJFpfHXA1S1uo+WcC9+/mD9lZy
+         wZTj7wGWNzca+KhhTjAVxbcufKpda61qdN3XXlB/KwIUvICutzil8hHgIuWFZrhXSf0y
+         EYcBTerdk7J5hyH7RPSBXU7r7tq3Rbw9bajtqW+ijID7RsVRmkiQoc10HcPgFNls1SRQ
+         P1rA==
+X-Gm-Message-State: ALoCoQknOHR4IYhESsWp4GeUjopde0Ce97p0XivG27RIEZN1thzgccp6ZNmnbsXe1bDlVkF6hGbU
+X-Received: by 10.221.69.8 with SMTP id ya8mr2943367vcb.39.1406574094230; Mon,
+ 28 Jul 2014 12:01:34 -0700 (PDT)
+Received: by 10.52.180.6 with HTTP; Mon, 28 Jul 2014 12:01:34 -0700 (PDT)
+In-Reply-To: <20140725194023.GH12427@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254347>
 
-On Mon, Jul 28, 2014 at 08:25:40PM +0200, Ren=C3=A9 Scharfe wrote:
+On Fri, Jul 25, 2014 at 12:40 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ronnie Sahlberg wrote:
+>
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -2214,7 +2214,7 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
+>>                        */
+>>                       goto retry;
+>>               else
+>> -                     unable_to_lock_index_die(ref_file, errno);
+>> +                     goto error_return;
+>
+> Should probably save last_errno so error_return can pass that
+> information back.
 
-> Instead of using a PATH_MAX-sized buffer, which can be too small on s=
-ome
-> file systems, use strbuf_getcwd(), which handles any path getcwd()
-> returns.  Also preserve the errno set by strbuf_getcwd() instead of
-> setting it to ENAMETOOLONG; that way a more appropriate error message
-> can be shown based on the actual reason for failing.
->=20
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  unix-socket.c | 14 +++++++-------
->  1 file changed, 7 insertions(+), 7 deletions(-)
->=20
-> diff --git a/unix-socket.c b/unix-socket.c
-> index 91bd6b8..19ed48b 100644
-> --- a/unix-socket.c
-> +++ b/unix-socket.c
-> @@ -18,12 +18,12 @@ static int chdir_len(const char *orig, int len)
->  }
-> =20
->  struct unix_sockaddr_context {
-> -	char orig_dir[PATH_MAX];
-> +	char *orig_dir;
->  };
+Done. Thanks.
 
-I would have expected this to just convert to a strbuf. I guess, though
-that you were making this...
+>
+> Can the caller recover from this error?  Does it have enough information
+> to produce the same helpful message as unable_to_lock_index_die?
+>
+> If this could be done without regressing behavior (e.g., by passing
+> back error information as a message instead of through errno) then I
+> think it would make sense.
 
-> =20
->  static void unix_sockaddr_cleanup(struct unix_sockaddr_context *ctx)
->  {
-> -	if (!ctx->orig_dir[0])
-> +	if (!ctx->orig_dir)
->  		return;
+The callers should all be able to cope with this returning error (and
+now logging error() since this function is only called from within
+transaction_commit() and it knows how to deal with these errors.
 
-=2E..a little nicer by using the pointer to check for validity. Looks g=
-ood
-to me.
 
--Peff
+>
+> Jonathan
