@@ -1,62 +1,53 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git diff-tree commit detail bug in 2.0.2 and 2.0.3
-Date: Mon, 28 Jul 2014 06:35:04 -0400
-Message-ID: <20140728103504.GB10737@peff.net>
-References: <CAGyf7-HKpfyi5OqXS9BhtfXUEZXbisawpTPK9UFOQObz1qhRUw@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: "error: Tweaking file descriptors doesn't work with this MSVCRT.dll"
+ on wine
+Date: Mon, 28 Jul 2014 17:39:32 +0700
+Message-ID: <CACsJy8DFvTHieQc-nZL2h7JbQYc4Qkbx+Ouc297VpNeU=kNaoQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-To: Bryan Turner <bturner@atlassian.com>
-X-From: git-owner@vger.kernel.org Mon Jul 28 12:35:14 2014
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jul 28 12:40:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBiGv-0008Tt-78
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:35:13 +0200
+	id 1XBiLg-0001m7-2T
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 12:40:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752226AbaG1KfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 06:35:08 -0400
-Received: from cloud.peff.net ([50.56.180.127]:41631 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752134AbaG1KfH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 06:35:07 -0400
-Received: (qmail 29740 invoked by uid 102); 28 Jul 2014 10:35:07 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 28 Jul 2014 05:35:07 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 28 Jul 2014 06:35:04 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGyf7-HKpfyi5OqXS9BhtfXUEZXbisawpTPK9UFOQObz1qhRUw@mail.gmail.com>
+	id S1751802AbaG1KkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 06:40:04 -0400
+Received: from mail-ie0-f180.google.com ([209.85.223.180]:33720 "EHLO
+	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751703AbaG1KkD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 06:40:03 -0400
+Received: by mail-ie0-f180.google.com with SMTP id at20so6462628iec.39
+        for <git@vger.kernel.org>; Mon, 28 Jul 2014 03:40:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        bh=jeCS4ZXhXRGROEtbUCa6kSbmayykGp1pzLYHlh6VeQU=;
+        b=pnrQ2/ldu/r/jRFwgk+UXQLe4D0pYMTbFvFLqof2+J+sWMMNryiX+YIgVmrksvBwiX
+         p4J9vnnjc5RGnKfhIu6i+v6MHumgJBsJDaaGwG16MlaaU7DzRMhU4rv13qwOddtlCaWI
+         T9lzMugfNpW35tnaD+qmh2MOUcUbWa5EdwbqpmFEgDNnQBrHgB5YmGFWzdP5LtYLHvjY
+         KoO3Efhpw9AkNYDNo3pPrWGKueSb+ETYBdcb7fl/ty1YtorW7271PcR+9yOyGFr8mZCX
+         aAVRZxusfVDMx1QkyBL7hSAHHulLKK7DPUjvdlJ6DS6fxB78sksRXnbDLrNNgHd0de8y
+         gy1g==
+X-Received: by 10.50.114.226 with SMTP id jj2mr31386448igb.27.1406544002482;
+ Mon, 28 Jul 2014 03:40:02 -0700 (PDT)
+Received: by 10.107.13.80 with HTTP; Mon, 28 Jul 2014 03:39:32 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254298>
 
-On Mon, Jul 28, 2014 at 07:42:16PM +1000, Bryan Turner wrote:
-
-> Running a git bisect between v2.0.1, which does not manifest this
-> issue, and v2.0.2 fingers the following commit:
-> bturner@ubuntu:~/Development/oss/git/git$ git bisect bad
-> c1b3c71f4b4571abb2b2a457122fd100dc9f7eb0 is the first bad commit
-> commit c1b3c71f4b4571abb2b2a457122fd100dc9f7eb0
-> Author: Jeff King <peff@peff.net>
-> Date:   Tue Jun 10 17:43:02 2014 -0400
-> 
->     commit: convert commit->buffer to a slab
-
-I haven't reproduced here yet, but this is almost certainly the bug
-where lookup_unknown_object causes a bogus commit->index field (and
-prior to the commit you found, diff-tree did not use commit->index).
-
-The series that Junio has in jk/alloc-commit-id should fix the problem
-(it's in master already, and slated for v2.1.0).
-
-Junio, we should consider a v2.0.4 with that series, I think. This is a
-pretty serious regression in diff-tree (I didn't even realize that the
-buffer-slab work went into the maint series; that may have been a little
-ambitious).
-
--Peff
+I know wine is kind of second citizen but is there a cheap trick to
+make it work on wine? Reverting fcd428f (Win32: fix broken pipe
+detection - 2012-03-01) could result in conflicts in compat that I'm
+not comfortable resolving. I don't have Windows at home. Wine is the
+only option for me (or if somebody has a modern.ie image for KVM, or a
+simple recipe to make one, that'd be great). "Fix wine" is not really
+an option.
+-- 
+Duy
