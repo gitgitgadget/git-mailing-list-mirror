@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v3 5/9] trace.c: add GIT_TRACE_INDEX_STATS for index  statistics
-Date: Mon, 28 Jul 2014 19:03:11 +0700
-Message-ID: <1406548995-28549-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v3 6/9] index-helper: add --strict
+Date: Mon, 28 Jul 2014 19:03:12 +0700
+Message-ID: <1406548995-28549-7-git-send-email-pclouds@gmail.com>
 References: <1406548995-28549-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,164 +10,205 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jul 28 14:04:24 2014
+X-From: git-owner@vger.kernel.org Mon Jul 28 14:04:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBjfD-000315-6u
-	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 14:04:23 +0200
+	id 1XBjfG-00033O-VF
+	for gcvg-git-2@plane.gmane.org; Mon, 28 Jul 2014 14:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655AbaG1MER convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2014 08:04:17 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:50987 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751365AbaG1MEQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 08:04:16 -0400
-Received: by mail-pd0-f181.google.com with SMTP id g10so9788081pdj.40
-        for <git@vger.kernel.org>; Mon, 28 Jul 2014 05:04:16 -0700 (PDT)
+	id S1752661AbaG1MEW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2014 08:04:22 -0400
+Received: from mail-pa0-f49.google.com ([209.85.220.49]:36631 "EHLO
+	mail-pa0-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751365AbaG1MEV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 08:04:21 -0400
+Received: by mail-pa0-f49.google.com with SMTP id hz1so10244781pad.8
+        for <git@vger.kernel.org>; Mon, 28 Jul 2014 05:04:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=hJ0+vuyF94btTLLAAGFOGxCmvRnaMlge+QaCcVZig+I=;
-        b=Xy2n3N8CxNHFfHSgO293fq1VIfesQp3j4ODOaP3VqAmdKlhPHcuZPrrXX98Uprz8/J
-         MLSEpbzGreLm6g/ngP7imKW+ve6//KAtEnOkzyTUa6/Jr8LIw1ZPOXdo8lYLrXmEskvq
-         lqB2UA/CI+LyZzq/0eHTTWQLWy1GXCB+3sPJVL+s165o3A8NKGLDcOSPJ7ol3Hkx/f0E
-         FrQ6Ny6LBCWr25X2f73PixQ81ozJvth+2m7owdqe4Z6/fP4W4iQZ4t4J5cAnNwWJgD4e
-         5Qd5E2J3Cx5hpUTKHcFaAPC6VUAZat8n5xQXcWhUbkF8O9ft+ng0PRLN/SRfSARQzzMP
-         uj+A==
-X-Received: by 10.66.102.70 with SMTP id fm6mr23009587pab.55.1406549056073;
-        Mon, 28 Jul 2014 05:04:16 -0700 (PDT)
+        bh=p9w2HWXlDnX0/+3Sk2YpD8W8bv6EjkiFOgAUo1zLhpI=;
+        b=RfvE0Pe/ZhUtuk8xU2jw/ok+C1FPh+ImNAJc6OtuhjyUr2Gi8vLT9GwKkVp7zMgug/
+         rlVnhB9wqntKtIyItA7H3qKQf1zcQFacOgoIqg0MZYmC2PEqnOxf4RnnFPlFyN+z3S3H
+         /Utm58wve+sXxHSjeFkAszYzcn+ZnNDS9kbi05Ga2D7voSXD0L9BewctEXi+evyXrkji
+         /Jvn/pWNDml0GuYndQO67wilMu0MtCMUJ6UICyPZWINZvStpOkU8jt7QLIZBL9UTcTd9
+         VvGGGwfbwCOFz+7vKvpj5O1nvPl4TVIqA1pIIa5OpxgsHqbz0nkdr6erFStbi5K+amSC
+         ScpQ==
+X-Received: by 10.66.218.137 with SMTP id pg9mr13707391pac.28.1406549061538;
+        Mon, 28 Jul 2014 05:04:21 -0700 (PDT)
 Received: from lanh ([115.73.211.176])
-        by mx.google.com with ESMTPSA id ce13sm23985171pdb.76.2014.07.28.05.04.13
+        by mx.google.com with ESMTPSA id vk5sm17471270pbc.44.2014.07.28.05.04.19
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Jul 2014 05:04:15 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Mon, 28 Jul 2014 19:04:18 +0700
+        Mon, 28 Jul 2014 05:04:21 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Mon, 28 Jul 2014 19:04:24 +0700
 X-Mailer: git-send-email 2.1.0.rc0.66.gb9187ad
 In-Reply-To: <1406548995-28549-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254320>
+
+There's are "holes" in the index-helper approach because the shared
+memory is not verified again by git. If $USER is compromised, shared
+memory could be modified. But then they can already modify
+$GIT_DIR/index. A more realistic risk is some bugs in index-helper
+produce corrupt shared memory. --strict is added to avoid that
+
+Strictly speaking there's still a very small gap where corrupt shared
+memory could still be read by git: after we write the trailing SHA-1 in
+the shared memory (thus signaling "this shm is ready") and before
+verify_shm() detects an error.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/git.txt |  1 +
- cache.h               |  1 +
- read-cache.c          | 16 ++++++++++++++++
- trace.c               |  5 ++++-
- 4 files changed, 22 insertions(+), 1 deletion(-)
+ Documentation/git-index-helper.txt |  9 ++++++++
+ cache.h                            |  1 +
+ index-helper.c                     | 47 ++++++++++++++++++++++++++++++=
+++++++++
+ read-cache.c                       |  9 +++++---
+ 4 files changed, 63 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index a124612..7077386 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -947,6 +947,7 @@ Unsetting the variable, or setting it to empty, "0"=
- or
- 	See 'GIT_TRACE' for available trace output options.
+diff --git a/Documentation/git-index-helper.txt b/Documentation/git-ind=
+ex-helper.txt
+index da41c4d..406856d 100644
+--- a/Documentation/git-index-helper.txt
++++ b/Documentation/git-index-helper.txt
+@@ -22,6 +22,15 @@ OPTIONS
+ 	Exit if the cached index is not accessed for `<n>`
+ 	minutes. Specify 0 to wait forever. Default is 10.
 =20
- 'GIT_TRACE_PACK_STATS'::
-+'GIT_TRACE_INDEX_STATS'::
- 	Print various statistics.
-=20
- 'GIT_TRACE_SETUP'::
++--strict::
++--no-strict::
++	Strict mode makes index-helper verify the shared memory after
++	it's created. If the result does not match what's read from
++	$GIT_DIR/index, the shared memory is destroyed. This makes
++	index-helper take more than double the amount of time required
++	for reading an index, but because it will happen in the
++	background, it's not noticable. `--strict` is enabled by default.
++
+ NOTES
+ -----
+ On UNIX-like systems, $GIT_DIR/index-helper.pid contains the process
 diff --git a/cache.h b/cache.h
-index 29a0c53..4266771 100644
+index 4266771..0f515e5 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1508,5 +1508,6 @@ void stat_validity_update(struct stat_validity *s=
-v, int fd);
- int versioncmp(const char *s1, const char *s2);
+@@ -307,6 +307,7 @@ struct index_state {
+ 	struct cache_time timestamp;
+ 	unsigned name_hash_initialized : 1,
+ 		 keep_mmap : 1,
++		 always_verify_trailing_sha1 : 1,
+ 		 initialized : 1;
+ 	struct hashmap name_hash;
+ 	struct hashmap dir_hash;
+diff --git a/index-helper.c b/index-helper.c
+index 8fa0af9..c82d307 100644
+--- a/index-helper.c
++++ b/index-helper.c
+@@ -13,6 +13,7 @@ struct index_shm {
 =20
- void report_pack_stats(struct trace_key *key);
-+void report_index_stats(struct trace_key *key);
+ static struct index_shm shm_index;
+ static struct index_shm shm_base_index;
++static int to_verify =3D 1;
 =20
- #endif /* CACHE_H */
+ static void free_index_shm(struct index_shm *is)
+ {
+@@ -68,6 +69,48 @@ static void share_index(struct index_state *istate, =
+struct index_shm *is)
+ 	hashcpy((unsigned char *)new_mmap + istate->mmap_size - 20, is->sha1)=
+;
+ }
+=20
++static int verify_shm(void)
++{
++	int i;
++	struct index_state istate;
++	memset(&istate, 0, sizeof(istate));
++	istate.always_verify_trailing_sha1 =3D 1;
++	i =3D read_index(&istate);
++	if (i !=3D the_index.cache_nr)
++		goto done;
++	for (; i < the_index.cache_nr; i++) {
++		struct cache_entry *base, *ce;
++		/* namelen is checked separately */
++		const unsigned int ondisk_flags =3D
++			CE_STAGEMASK | CE_VALID | CE_EXTENDED_FLAGS;
++		unsigned int ce_flags, base_flags, ret;
++		base =3D the_index.cache[i];
++		ce =3D istate.cache[i];
++		if (ce->ce_namelen !=3D base->ce_namelen ||
++		    strcmp(ce->name, base->name)) {
++			warning("mismatch at entry %d", i);
++			break;
++		}
++		ce_flags =3D ce->ce_flags;
++		base_flags =3D base->ce_flags;
++		/* only on-disk flags matter */
++		ce->ce_flags   &=3D ondisk_flags;
++		base->ce_flags &=3D ondisk_flags;
++		ret =3D memcmp(&ce->ce_stat_data, &base->ce_stat_data,
++			     offsetof(struct cache_entry, name) -
++			     offsetof(struct cache_entry, ce_stat_data));
++		ce->ce_flags =3D ce_flags;
++		base->ce_flags =3D base_flags;
++		if (ret) {
++			warning("mismatch at entry %d", i);
++			break;
++		}
++	}
++done:
++	discard_index(&istate);
++	return i =3D=3D the_index.cache_nr;
++}
++
+ static void refresh(int sig)
+ {
+ 	the_index.keep_mmap =3D 1;
+@@ -76,6 +119,8 @@ static void refresh(int sig)
+ 	if (the_index.split_index && the_index.split_index->base)
+ 		share_index(the_index.split_index->base, &shm_base_index);
+ 	share_index(&the_index, &shm_index);
++	if (to_verify && !verify_shm())
++		cleanup_shm();
+ 	discard_index(&the_index);
+ }
+=20
+@@ -123,6 +168,8 @@ int main(int argc, char **argv)
+ 	struct option options[] =3D {
+ 		OPT_INTEGER(0, "exit-after", &idle_in_minutes,
+ 			    N_("exit if not used after some minutes")),
++		OPT_BOOL(0, "strict", &to_verify,
++			 "verify shared memory after creating"),
+ 		OPT_END()
+ 	};
+=20
 diff --git a/read-cache.c b/read-cache.c
-index ff28142..4bd2abe 100644
+index 4bd2abe..d6eb17f 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -48,6 +48,10 @@ struct index_state the_index;
- static const char *alternate_index_output;
- int dont_poke_index_helper;
+@@ -1568,9 +1568,12 @@ int do_read_index(struct index_state *istate, co=
+nst char *path, int must_exist)
 =20
-+static unsigned int nr_read_index;
-+static unsigned int nr_read_shm_index;
-+static unsigned int nr_write_index;
-+
- static void set_index_entry(struct index_state *istate, int nr, struct=
- cache_entry *ce)
- {
- 	istate->cache[nr] =3D ce;
-@@ -1523,6 +1527,7 @@ static int try_shm(struct index_state *istate)
- 	istate->mmap =3D new_mmap;
- 	istate->mmap_size =3D new_length;
- 	poke_daemon(&st, 0);
-+	nr_read_shm_index++;
- 	return 0;
- }
-=20
-@@ -1619,6 +1624,7 @@ int do_read_index(struct index_state *istate, con=
-st char *path, int must_exist)
- 	}
+ 	istate->mmap =3D mmap;
+ 	istate->mmap_size =3D mmap_size;
+-	if (try_shm(istate) &&
+-	    verify_hdr(istate->mmap, istate->mmap_size) < 0)
+-		goto unmap;
++	if (try_shm(istate)) {
++		if (verify_hdr(istate->mmap, istate->mmap_size) < 0)
++			goto unmap;
++	} else if (istate->always_verify_trailing_sha1 &&
++		   verify_hdr(istate->mmap, istate->mmap_size) < 0)
++			goto unmap;
+ 	hdr =3D mmap =3D istate->mmap;
+ 	mmap_size =3D istate->mmap_size;
  	if (!istate->keep_mmap)
- 		munmap(mmap, mmap_size);
-+	nr_read_index++;
- 	return istate->cache_nr;
-=20
- unmap:
-@@ -2087,6 +2093,7 @@ static int do_write_index(struct index_state *ist=
-ate, int newfd,
- 		return -1;
- 	istate->timestamp.sec =3D (unsigned int)st.st_mtime;
- 	istate->timestamp.nsec =3D ST_MTIME_NSEC(st);
-+	nr_write_index++;
- 	return 0;
- }
-=20
-@@ -2346,3 +2353,12 @@ void stat_validity_update(struct stat_validity *=
-sv, int fd)
- 		fill_stat_data(sv->sd, &st);
- 	}
- }
-+
-+void report_index_stats(struct trace_key *key)
-+{
-+	trace_printf_key(key, "\n"
-+			 "index stats: file reads        =3D %10u\n"
-+			 "index stats: cache reads       =3D %10u\n"
-+			 "index stats: file writes       =3D %10u\n",
-+			 nr_read_index, nr_read_shm_index, nr_write_index);
-+}
-diff --git a/trace.c b/trace.c
-index c52da0f..eb3a11a 100644
---- a/trace.c
-+++ b/trace.c
-@@ -428,14 +428,17 @@ void trace_command_performance(const char **argv)
- }
-=20
- static struct trace_key trace_pack_stats =3D TRACE_KEY_INIT(PACK_STATS=
-);
-+static struct trace_key trace_index_stats =3D TRACE_KEY_INIT(INDEX_STA=
-TS);
-=20
- static void print_stats_atexit(void)
- {
- 	report_pack_stats(&trace_pack_stats);
-+	report_index_stats(&trace_index_stats);
- }
-=20
- void trace_stats(void)
- {
--	if (trace_want(&trace_pack_stats))
-+	if (trace_want(&trace_pack_stats) ||
-+	    trace_want(&trace_index_stats))
- 		atexit(print_stats_atexit);
- }
 --=20
 2.1.0.rc0.66.gb9187ad
