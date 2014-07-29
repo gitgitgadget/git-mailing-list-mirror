@@ -1,99 +1,66 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: [PATCH 2/2] difftool: don't assume that default sh is sane
-Date: Tue, 29 Jul 2014 00:53:29 -0700
-Message-ID: <20140729075328.GA20724@gmail.com>
-References: <1405787717-30476-1-git-send-email-charles@hashpling.org>
- <1405787717-30476-2-git-send-email-charles@hashpling.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git diff-tree commit detail bug in 2.0.2 and 2.0.3
+Date: Tue, 29 Jul 2014 03:54:54 -0400
+Message-ID: <20140729075454.GA4114@peff.net>
+References: <CAGyf7-HKpfyi5OqXS9BhtfXUEZXbisawpTPK9UFOQObz1qhRUw@mail.gmail.com>
+ <20140728103504.GB10737@peff.net>
+ <xmqqtx614cea.fsf@gitster.dls.corp.google.com>
+ <20140728173734.GA10309@peff.net>
+ <20140728180157.GA11265@peff.net>
+ <xmqqppgp4a7x.fsf@gitster.dls.corp.google.com>
+ <xmqqegx53txe.fsf@gitster.dls.corp.google.com>
+ <CAGyf7-HK74YuqhrRDJ46qti17UNAd6Bp6if4y+ZwUV_PZs2ujQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Charles Bailey <charles@hashpling.org>
-X-From: git-owner@vger.kernel.org Tue Jul 29 09:53:02 2014
+Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
+To: Bryan Turner <bturner@atlassian.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 09:55:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XC2DT-0005Um-CZ
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 09:52:59 +0200
+	id 1XC2FQ-0006EO-JB
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 09:55:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752061AbaG2Hww (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 03:52:52 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:61931 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751778AbaG2Hww (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2014 03:52:52 -0400
-Received: by mail-pd0-f171.google.com with SMTP id z10so11248197pdj.16
-        for <git@vger.kernel.org>; Tue, 29 Jul 2014 00:52:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=R1uEO2ohQ+FP36Q5CsNz3ZlNqDUnrAE3tQC9EBMqWPo=;
-        b=BqKfZKnNYHyIgbvma9/pXAtTGcZhifjfTwnVEwPlemvOaLSCHXr8m5glXs3Pb/S3Uh
-         bDBSRTqFlXSIdBkfFqI4O/7e2vW1nsANmlW3z40ZhxvvbrjFX3yFq/UPEzoHVK+GqdQ1
-         VbRWmZuqT9fJxvVju5ZgQ4Kj6kyhypVRZlnUZ0cQCIFaGsczfA/l3MaSXQQyqdrgkTKa
-         03cVAyseGxT06dPn+wZcTKLEFZvpcuzWLQ0qRmd4l0z8X/mysTr0pgZn2R2y+cKfREgQ
-         BqRnhc8Q022URisYLIXrlnZfwocZUfsCP5e14c/nVkFpalXjXWviNIojoCQnVv3JzFIf
-         OUog==
-X-Received: by 10.66.142.42 with SMTP id rt10mr326890pab.1.1406620371540;
-        Tue, 29 Jul 2014 00:52:51 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.sonic.net. [208.106.56.2])
-        by mx.google.com with ESMTPSA id xq3sm75071256pab.0.2014.07.29.00.52.50
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Tue, 29 Jul 2014 00:52:50 -0700 (PDT)
+	id S1752074AbaG2Hy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2014 03:54:57 -0400
+Received: from cloud.peff.net ([50.56.180.127]:42293 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751038AbaG2Hy4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2014 03:54:56 -0400
+Received: (qmail 1433 invoked by uid 102); 29 Jul 2014 07:54:56 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Jul 2014 02:54:56 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jul 2014 03:54:54 -0400
 Content-Disposition: inline
-In-Reply-To: <1405787717-30476-2-git-send-email-charles@hashpling.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <CAGyf7-HK74YuqhrRDJ46qti17UNAd6Bp6if4y+ZwUV_PZs2ujQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254401>
 
-On Sat, Jul 19, 2014 at 05:35:17PM +0100, Charles Bailey wrote:
-> From: Charles Bailey <cbailey32@bloomberg.net>
-> 
-> git-difftool used to create a command list script containing $( ... )
-> and explicitly call "sh -c" with this list.
-> 
-> Instead, allow mergetool --tool-help to take a mode parameter and call
-> mergetool directly to invoke the show_tool_help function. This mode
-> parameter is intented for use solely by difftool.
-> 
-> Signed-off-by: Charles Bailey <cbailey32@bloomberg.net>
-> ---
-> Another issue for Solaris. Originally I had a fix for this that
-> substituted "@SHELL_PATH@" even inside perl scripts but I felt that
-> having an interface for show_tool_help was a little neater all round but
-> I welcome alternative views.
+On Tue, Jul 29, 2014 at 11:06:25AM +1000, Bryan Turner wrote:
 
-I definitely agree that having an interface is nice and tidy.
+> On Tue, Jul 29, 2014 at 10:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> > OK, I pushed out updated 'maint' and 'master'.  The former merges
+> > a rebased version of jk/alloc-commit-id in to make the "reorganize
+> > the way we manage the in-core commit data" topic, and the latter
+> > reverts the "Use SSE to micro-optimize a leaf function to check the
+> > format of a ref string".
+> >
+> > Please give them some quick sanity check.
 
->  git-difftool.perl |  6 +-----
->  git-mergetool.sh  | 12 +++++++++++-
->  2 files changed, 12 insertions(+), 6 deletions(-)
-> 
-> diff --git a/git-difftool.perl b/git-difftool.perl
-> index 18ca61e..598fcc2 100755
-> --- a/git-difftool.perl
-> +++ b/git-difftool.perl
-> @@ -47,13 +47,9 @@ sub find_worktree
->  
->  sub print_tool_help
->  {
-> -	my $cmd = 'TOOL_MODE=diff';
-> -	$cmd .= ' && . "$(git --exec-path)/git-mergetool--lib"';
-> -	$cmd .= ' && show_tool_help';
-> -
->  	# See the comment at the bottom of file_diff() for the reason behind
->  	# using system() followed by exit() instead of exec().
-> -	my $rc = system('sh', '-c', $cmd);
-> +	my $rc = system(qw(git mergetool --tool-help=diff));
+They both look OK to me.
 
-I believe qw() in list context is considered deprecated.
+> Thanks both of you; I appreciate your efforts! I've run my suite of
+> tests against the tips of master and maint and all 681 pass for each.
+> Looks good to me.
 
-cheers,
--- 
-David
+So what suite of tests is this? Is it worth getting you to fold it into
+our regular test suite? :)
+
+-Peff
