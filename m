@@ -1,72 +1,76 @@
-From: David Braden <David.Braden@softwire.com>
-Subject: =?utf-8?B?UkU6IGdpdC1zdm4gYXV0aG9ycyBmaWxlIGFuZCBTVk4gdXNlcnMgd2l0aCA=?=
- =?utf-8?B?4oCYPeKAmSBpbiB0aGUgdXNlcm5hbWU=?=
-Date: Tue, 29 Jul 2014 09:32:12 +0000
-Message-ID: <b81d706aa8bd42f391dcc26b4b7f7fbf@EXCHLONDON2013.zoo.lan>
-References: <dc3fda62c3e94eba9d29fd4b34f2e7cc@EXCHLONDON2013.zoo.lan>
- <20140728200744.GA18098@peff.net>
- <49f272949fef4122b2eb83a7a242e366@EXCHLONDON2013.zoo.lan>
- <20140729092637.GB13134@peff.net>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: Amending merge commits?
+Date: Tue, 29 Jul 2014 13:58:35 +0400
+Message-ID: <87r4147agk.fsf@osv.gnss.ru>
+References: <CAK3OfOjr6ej5VdGU=bLmtag9cca1=ogLxVakCFTMG7b-A2uBiA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 29 11:32:34 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"Besen\, David" <david.besen@hp.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Nico Williams <nico@cryptonector.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 11:58:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XC3lg-00054j-HH
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 11:32:24 +0200
+	id 1XC4B9-0008D6-EO
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 11:58:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753120AbaG2JcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 05:32:18 -0400
-Received: from eu-smtp-delivery-179.mimecast.com ([207.82.80.179]:60502 "EHLO
-	eu-smtp-delivery-179.mimecast.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751950AbaG2JcR (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2014 05:32:17 -0400
-Received: from smtp.softwire.com (31.221.86.188 [31.221.86.188]) (Using TLS)
- by uk-mta-10.uk.mimecast.lan; Tue, 29 Jul 2014 10:32:14 +0100
-Received: from EXCHLONDON2013.zoo.lan (10.210.10.43) by EXCHLONDON2013.zoo.lan
- (10.210.10.43) with Microsoft SMTP Server (TLS) id 15.0.847.32; Tue, 29 Jul
- 2014 10:32:13 +0100
-Received: from EXCHLONDON2013.zoo.lan ([10.210.10.43]) by
- EXCHLONDON2013.zoo.lan ([10.210.10.43]) with mapi id 15.00.0847.030; Tue, 29
- Jul 2014 10:32:13 +0100
-Thread-Topic: =?utf-8?B?Z2l0LXN2biBhdXRob3JzIGZpbGUgYW5kIFNWTiB1c2VycyB3aXRoIOKAmD0=?=
- =?utf-8?B?4oCZIGluIHRoZSB1c2VybmFtZQ==?=
-Thread-Index: Ac+qT4BAEiiNLVa0Q+6wF2/MtvAhegACC38gAA/h8QAAG/qzEP///1+A///t1bA=
-In-Reply-To: <20140729092637.GB13134@peff.net>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.210.11.235]
-X-MC-Unique: ym4u_3YySO65UyXtUWAzug-1
+	id S1753217AbaG2J6j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2014 05:58:39 -0400
+Received: from mail.javad.com ([54.86.164.124]:51624 "EHLO mail.javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753184AbaG2J6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2014 05:58:38 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id D687961814;
+	Tue, 29 Jul 2014 09:58:36 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <s.organov@javad.com>)
+	id 1XC4B1-0000Fm-5U; Tue, 29 Jul 2014 13:58:35 +0400
+In-Reply-To: <CAK3OfOjr6ej5VdGU=bLmtag9cca1=ogLxVakCFTMG7b-A2uBiA@mail.gmail.com>
+	(Nico Williams's message of "Mon, 28 Jul 2014 16:47:41 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254411>
 
-WWVhaCwgdGhhdCB3b3Jrcy4gVGhhbmsgeW91IHZlcnkgbXVjaA0KDQpEYXZpZA0KDQoNCi0tLS0t
-T3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBKZWZmIEtpbmcgW21haWx0bzpwZWZmQHBlZmYu
-bmV0XQ0KU2VudDogMjkgSnVseSAyMDE0IDEwOjI3DQpUbzogRGF2aWQgQnJhZGVuDQpDYzogZ2l0
-QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDogUmU6IGdpdC1zdm4gYXV0aG9ycyBmaWxlIGFuZCBT
-Vk4gdXNlcnMgd2l0aCDigJg94oCZIGluIHRoZSB1c2VybmFtZQ0KDQpPbiBUdWUsIEp1bCAyOSwg
-MjAxNCBhdCAwODozNToyNkFNICswMDAwLCBEYXZpZCBCcmFkZW4gd3JvdGU6DQoNCj4gWWVhaCwg
-dGhlIC0tYXV0aG9ycy1wcm9nIGRvZXMgd29yay4gIElzIHRoZXJlIGEgd2F5IHRvIHNhdmUgdGhl
-DQo+IGNvbmZpZ3VyYXRpb24gdGhvdWdoIHNvIHlvdSBkb24ndCBoYXZlIHRvIGFkZCBpdCBldmVy
-eXRpbWUgdGltZSB5b3UNCj4gcmViYXNlIG9yIGRjb21taXQ/DQoNCkkgdGhpbmsgdGhhdCBnaXQt
-c3ZuJ3MgY29uZmlnIHJlYWRlciB1c2VzIHRoZSBjb21tYW5kLWxpbmUgb3B0aW9ucyBhcyBhIHRl
-bXBsYXRlLCBhbmQgYXV0b21hdGljYWxseSByZWFkcyAiLS1hdXRob3JzLXByb2ciIGZyb20gInN2
-bi5hdXRob3JzcHJvZyIuIEkgZGlkbid0IHRlc3QgaXQsIHRob3VnaC4NCg0KLVBlZmYNCg0KRGF2
-aWQgQnJhZGVuDQpUZWwgOiAwMjAgNzQ4NSA3NTAwIGV4dCAzMTk5IHwgRmF4IDogMDIwIDc0ODUg
-NzU3NQ0KDQpzb2Z0d2lyZQ0KU3VuZGF5IFRpbWVzIEJlc3QgU21hbGwgQ29tcGFuaWVzIC0gVUsg
-dG9wIDI1IGZvdXIgeWVhcnMgcnVubmluZw0KV2ViIDogd3d3LnNvZnR3aXJlLmNvbTxodHRwOi8v
-d3d3LnNvZnR3aXJlLmNvbS8+IHwgQWRkciA6IDMyNSBIaWdoZ2F0ZSBTdHVkaW9zLCA1My03OSBI
-aWdoZ2F0ZSBSb2FkLCBMb25kb24gTlc1IDFUTA0KU29mdHdpcmUgVGVjaG5vbG9neSBMaW1pdGVk
-LiBSZWdpc3RlcmVkIGluIEVuZ2xhbmQgbm8uIDM4MjQ2NTguIFJlZ2lzdGVyZWQgT2ZmaWNlIDog
-MTMgU3RhdGlvbiBSb2FkLCBMb25kb24gTjMgMlNCDQo=
+Nico Williams <nico@cryptonector.com> writes:
+
+> On Mon, Jul 28, 2014 at 3:00 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Sergei Organov wrote:
+>>
+>>> Is there any scenario at all where pull --rebase=true wins over
+>>> preserve?
+>>
+>> Basically always in my book. ;-)
+>>
+>> When people turn on 'pull --rebase', they are asking for a clean,
+>> simplified history where their changes are small discrete patches in a
+>> clump on top of upstream.
+>
+> +1.  Words to develop by.
+>
+> There are exceptions.  E.g., when you pull commits from multiple
+> [forked] upstreams, then you can't keep your local commits on top.
+>
+> That exception aside, keeping all local commits "on top" by always
+> rebasing them onto the upstream is extremely useful: a) in simplifying
+> conflict resolution, b) making it easy to identify as-yet-unintegrated
+> local commits, c) making it easy to contribute local commits.
+
+But 'pull --rebase=preserve' does rebase local commits onto the
+upstream, and result is exactly the same as 'pull --rebase=true', unless
+you have some of your own merges to be rebased. That's where the
+difference between these two options appears. It's --rebase=false that
+performs merges rather than rebase.
+
+Overall, I still can't see where '--rebase=true' wins over
+'--rebase=preserve'.
+
+-- 
+Sergey.
