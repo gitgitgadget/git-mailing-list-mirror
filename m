@@ -1,102 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH v2 6/6] stash: show combined diff with "stash show"
-Date: Tue, 29 Jul 2014 13:58:20 -0400
-Message-ID: <20140729175820.GF31181@peff.net>
-References: <20140729175300.GA21536@peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 3/2] stash: show combined diff with "stash show"
+Date: Tue, 29 Jul 2014 11:13:37 -0700
+Message-ID: <xmqq1tt43uem.fsf@gitster.dls.corp.google.com>
+References: <20140729115334.GA8976@peff.net> <20140729120732.GA9302@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 19:58:33 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 29 20:13:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCBfR-0001xC-SD
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 19:58:30 +0200
+	id 1XCBuJ-000146-OD
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 20:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751586AbaG2R60 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 13:58:26 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42618 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750980AbaG2R6Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2014 13:58:25 -0400
-Received: (qmail 2605 invoked by uid 102); 29 Jul 2014 17:58:25 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Jul 2014 12:58:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jul 2014 13:58:20 -0400
-Content-Disposition: inline
-In-Reply-To: <20140729175300.GA21536@peff.net>
+	id S1751582AbaG2SNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2014 14:13:47 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64657 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751268AbaG2SNq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2014 14:13:46 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D56B02C5D4;
+	Tue, 29 Jul 2014 14:13:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eKGeF++vH0vjQkWp+jH8rLtFcbs=; b=vmD890
+	cwVEWPSgrE7VJB9y9Flz65yzMJCFBUSLS8apYvV+C+80aZT0296l2kYKWr5/7c8e
+	tHwFrXU1J3vjaDsDESTmkIkA4KZkT06UGBiDO8M/V2N9V6H7JwROyHocsBWSGihP
+	8SBzYaZmpMOoZim0eZHCFB4kbK2tyzDSyY3vI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=dfJ/1SLWL6Q7tC+h+toJAnmF3itbx+vA
+	4unarJ5PwsHqfbrKperyRRsvnMvy+oCQDQ+s1c6U+e9Wga763EJDrPYAMBtnIU1Z
+	01xpdCleqTzWW6VjBJcN11IWGwrL0S3SFaMOtAC9EMmzf786YAF87HsaLKvh9OJg
+	D1Va+EEVsQ0=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id CAE822C5D3;
+	Tue, 29 Jul 2014 14:13:45 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 883EC2C5CF;
+	Tue, 29 Jul 2014 14:13:39 -0400 (EDT)
+In-Reply-To: <20140729120732.GA9302@peff.net> (Jeff King's message of "Tue, 29
+	Jul 2014 08:07:33 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 10DA955E-174C-11E4-9ED8-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254458>
 
-A stash may store not only working tree changes, but also
-changes to the index. However, "git stash show" will only
-ever show the working tree changes. We can instead show both
-as a combined diff, but use "--simplify-combined-diff" so
-that we show a normal pairwise diff in the common case that
-there were no index changes.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I'm still a little iffy on this one in case somebody really doesn't want
-to see the saved index state. But with the earlier cleanups, you can at
-least see that it doesn't even impact any existing tests.
+> ... People might be doing things like "git stash show | git
+> apply", and would want to ignore the index content ...
 
- git-stash.sh     |  3 ++-
- t/t3903-stash.sh | 22 ++++++++++++++++++++++
- 2 files changed, 24 insertions(+), 1 deletion(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index a0246d5..ae73ba4 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -304,7 +304,8 @@ list_stash () {
- show_stash () {
- 	assert_stash_like "$@"
- 
--	git diff ${FLAGS:---stat} $b_commit $w_commit
-+	git show --format= --simplify-combined-diff \
-+		${FLAGS:---stat} $w_commit
- }
- 
- #
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 465f824..36b97a4 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -537,6 +537,28 @@ test_expect_success 'stash show -p - no stashes on stack, stash-like argument' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'stash show -p will show modified index' '
-+	git stash clear &&
-+	test_when_finished "git reset --hard HEAD" &&
-+	git reset --hard &&
-+	echo index >file &&
-+	git add file &&
-+	echo working >file &&
-+	git stash &&
-+	cat >expect <<-\EOF &&
-+	diff --cc file
-+	index 7601807,9015a7a..d26b33d
-+	--- a/file
-+	+++ b/file
-+	@@@ -1,1 -1,1 +1,1 @@@
-+	- baz
-+	 -index
-+	++working
-+	EOF
-+	git stash show -p >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'stash drop - fail early if specified stash is not a stash reference' '
- 	git stash clear &&
- 	test_when_finished "git reset --hard HEAD && git stash clear" &&
--- 
-2.1.0.rc0.286.g5c67d74
+FWIW, that is exactly how I use "git stash show -p" most of the time.
