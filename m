@@ -1,76 +1,94 @@
-From: Nico Williams <nico@cryptonector.com>
-Subject: Re: Amending merge commits?
-Date: Tue, 29 Jul 2014 10:44:11 -0500
-Message-ID: <CAK3OfOhFzbUA7gZbox84W=VC+0aSuiNc-XRP_MTyYy1UeFFzZQ@mail.gmail.com>
-References: <CAK3OfOjr6ej5VdGU=bLmtag9cca1=ogLxVakCFTMG7b-A2uBiA@mail.gmail.com>
-	<87r4147agk.fsf@osv.gnss.ru>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 05/10] abspath: convert real_path_internal() to strbuf
+Date: Tue, 29 Jul 2014 09:44:06 -0700
+Message-ID: <xmqqa97s3yjt.fsf@gitster.dls.corp.google.com>
+References: <53D694A2.8030007@web.de> <53D6964E.1070100@web.de>
+	<20140728191649.GE11265@peff.net>
+	<xmqqiomh40ui.fsf@gitster.dls.corp.google.com>
+	<53D6E52B.1050006@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"Besen, David" <david.besen@hp.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 17:44:25 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
+	<pclouds@gmail.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Tue Jul 29 18:44:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XC9Zd-0002Vq-5X
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 17:44:21 +0200
+	id 1XCAVn-0007cp-Re
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 18:44:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752161AbaG2PoP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 11:44:15 -0400
-Received: from sub4.mail.dreamhost.com ([69.163.253.135]:60470 "EHLO
-	homiemail-a85.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751048AbaG2PoM (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2014 11:44:12 -0400
-Received: from homiemail-a85.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a85.g.dreamhost.com (Postfix) with ESMTP id 35B30BBA06B
-	for <git@vger.kernel.org>; Tue, 29 Jul 2014 08:44:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=
-	mime-version:in-reply-to:references:date:message-id:subject:from
-	:to:cc:content-type; s=cryptonector.com; bh=js85CGsDdQO6TMyQ36rl
-	GaH8zaY=; b=luaRo8QzFyH1K/nsxMyfyjOCyJypBcsdkpXMod0nf5cYsaYMNKxs
-	fu9OSlWpayEPRpHCOPx4clhoB+49bFbsYEG3UfoBTTP1mcFf8wFV000WIi0LcFRj
-	MBEQhdMZeSEGDG5mTlfDF4A/PPtEgP+cHR28XMHvJZi1jen+/lLCdqM=
-Received: from mail-ie0-f178.google.com (mail-ie0-f178.google.com [209.85.223.178])
-	(using TLSv1 with cipher RC4-SHA (128/128 bits))
+	id S1752527AbaG2QoW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2014 12:44:22 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50019 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751890AbaG2QoS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2014 12:44:18 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 146F62BA1E;
+	Tue, 29 Jul 2014 12:44:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=CZV3IsKtrFcH
+	55UI3Q+qMsjbd8U=; b=aBW2bWWuVFe8XMjLhqwlUUmbQTci1b+nxDeQByo4KMbF
+	EC8z52df/e4TCH4IFlzhME2IRXfgvlWIOVFSQ08DutTduYZWZ0SZZGPuvy6rqciu
+	0qamIb6cqb8GCO4vqfm39am4Quh4W+6JB2IUFoQWwcnanoW94ndSElsQ1adxRL4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fdNQec
+	tfEzfRCmhfGyk8oVxrOy61MLPjdOnhufh3oYwhDCgPImEmAbZ64RR+0q6zYQfE3w
+	DqqlmenTFKBjEzMaLDmeaNF28jNjyAevmhUgOKPhZl8ECaU6eN/s3e1rtIDk6Fed
+	ivIh610Mse4lp+3Ah6BuQPRD8RDOC84Y+ERJM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 03AA42BA1C;
+	Tue, 29 Jul 2014 12:44:17 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by homiemail-a85.g.dreamhost.com (Postfix) with ESMTPSA id 0FFB4BBA06A
-	for <git@vger.kernel.org>; Tue, 29 Jul 2014 08:44:11 -0700 (PDT)
-Received: by mail-ie0-f178.google.com with SMTP id rd18so8788951iec.37
-        for <git@vger.kernel.org>; Tue, 29 Jul 2014 08:44:11 -0700 (PDT)
-X-Received: by 10.42.252.201 with SMTP id mx9mr6771933icb.78.1406648651291;
- Tue, 29 Jul 2014 08:44:11 -0700 (PDT)
-Received: by 10.107.128.169 with HTTP; Tue, 29 Jul 2014 08:44:11 -0700 (PDT)
-In-Reply-To: <87r4147agk.fsf@osv.gnss.ru>
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 27FC62BA0B;
+	Tue, 29 Jul 2014 12:44:08 -0400 (EDT)
+In-Reply-To: <53D6E52B.1050006@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
+ message of "Tue, 29
+	Jul 2014 02:04:59 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 8F416D3A-173F-11E4-BE3D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254446>
 
-On Tue, Jul 29, 2014 at 4:58 AM, Sergei Organov <osv@javad.com> wrote:
-> Nico Williams <nico@cryptonector.com> writes:
->> That exception aside, keeping all local commits "on top" by always
->> rebasing them onto the upstream is extremely useful: a) in simplifying
->> conflict resolution, b) making it easy to identify as-yet-unintegrated
->> local commits, c) making it easy to contribute local commits.
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+
+>> "Next call to the function invalidates the return value the last
+>> caller received" feels like playing with fire.  Most existing
+>> callers are safe in that the first thing they do to the returned
+>> string is xstrdup() it, but we would need to check all the other
+>> callers.
 >
-> But 'pull --rebase=preserve' does rebase local commits onto the
-> upstream, and result is exactly the same as 'pull --rebase=true', unless
-> you have some of your own merges to be rebased. That's where the
-> difference between these two options appears. It's --rebase=false that
-> performs merges rather than rebase.
+> That's the price we pay for using static variables, no?  Callers need
+> to consume them as long as they're fresh and multi-threading is not
+> allowed.
 
-Local merge commits mean that you either didn't rebase to keep all
-your local commits on top of the upstream, or that you have multiple
-upstreams (the example exception I gave).
+Yes, I didn't mean to say that fixing this leak by a static whose
+lifetime rule is "alive until next call" is introducing a new
+brittleness.  The existing callers have lived with that lifetime
+rule with the callee without the changes in this series, and fixing
+the leak by replacing _init() with _reset() will make the callee
+give the same old "alive until next call" lifetime rule to its
+callers.
 
-Conversely, if you always rebase your local commits on top of the
-upstream then you won't have merge commits to worry about.
+> Getting a strbuf_add_real_path() in order to avoid static variables
+> would be nice.  And it would also be nice if it worked without callin=
+g
+> chdir().  Nice topics for follow-up patches. :)
 
-Nico
---
+Yup.  Nice, but outside the scope.  Of course it is related and can
+be done as a "while we know about the issue" close follow-up.
+
+Thanks.
