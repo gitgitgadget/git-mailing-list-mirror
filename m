@@ -1,70 +1,129 @@
-From: Karsten Blees <karsten.blees@gmail.com>
-Subject: Re: "error: Tweaking file descriptors doesn't work with this MSVCRT.dll"
- on wine
-Date: Tue, 29 Jul 2014 21:55:39 +0200
-Message-ID: <53D7FC3B.9070001@gmail.com>
-References: <CACsJy8DFvTHieQc-nZL2h7JbQYc4Qkbx+Ouc297VpNeU=kNaoQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] utf8.c: fix strbuf_utf8_replace copying the last NUL to dst string
+Date: Tue, 29 Jul 2014 12:56:24 -0700
+Message-ID: <xmqqha202b2v.fsf@gitster.dls.corp.google.com>
+References: <1406639429-28748-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jul 29 21:55:47 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 21:56:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCDUv-0004QW-8B
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 21:55:45 +0200
+	id 1XCDVm-0004si-I3
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 21:56:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbaG2Tzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 15:55:41 -0400
-Received: from mail-wi0-f170.google.com ([209.85.212.170]:44271 "EHLO
-	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751234AbaG2Tzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2014 15:55:41 -0400
-Received: by mail-wi0-f170.google.com with SMTP id f8so5961019wiw.5
-        for <git@vger.kernel.org>; Tue, 29 Jul 2014 12:55:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=Kpz88qElPdVu1nGNVYs8i2MMfXcDaGo7HQ9XL9Ee/Mk=;
-        b=ZQvK4bv+XRwHXlT2iMfTqo9SUr0sdZImMbj9kslYD/TyThvGxVgxk96OxqwKk9Wf94
-         5cfv+0QFmQ8+yJRwEtPHsAVz3UvjFyG3ON6Ba6IRgxDr5dcs3Mfklh6OEPQSm6P4u1Vb
-         3SoXP1QbU2N9x4+9uoZ8g5bpsh1B+38O1ufGn/NUV9tGJhIfYhOsuEs/OxAreZT2BPll
-         NWRhyrL6tKvuytFkRzaiJCUkWSK1WPPrArBSa/TmuA6WlyD+bfN0xDcQ3KVgtVcsJibH
-         hAxnnbAL/wSqKY/PAdLJ/Sh6lkvZKK3nvouCI/7Vuumtohv1r8LyEEJcmTpjpUXPo44W
-         Svzg==
-X-Received: by 10.180.88.167 with SMTP id bh7mr290475wib.12.1406663739645;
-        Tue, 29 Jul 2014 12:55:39 -0700 (PDT)
-Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
-        by mx.google.com with ESMTPSA id ut2sm59781878wjc.49.2014.07.29.12.55.38
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 29 Jul 2014 12:55:38 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <CACsJy8DFvTHieQc-nZL2h7JbQYc4Qkbx+Ouc297VpNeU=kNaoQ@mail.gmail.com>
+	id S1751771AbaG2T4f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2014 15:56:35 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50614 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751459AbaG2T4e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2014 15:56:34 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 543522D58A;
+	Tue, 29 Jul 2014 15:56:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=W/4R8Wpdi2gs
+	hSry+heWC+f9o0I=; b=lClc2ZumU3JZ+JJ7iRo81Q5AbQm0x9Sir+BLuIfDOZow
+	7YLFM7ranGe6EYuJP67FuckKHh5yrwYdDKEGlcbU2Ll9NMwxd4QxYWA9ER4N+f09
+	yAFGaqlK3TmKeMqBHX5cr+Dh0enNslb3MI1rgbHVGf/MH1qevEcu7AScMT9cyJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XM9YsX
+	l7MZHEPQrLodU8emYTMaNBN+sNRht5WRZGFl3DfSk8AyUdtMYkewGJwZhPiOEnNd
+	MJoYkiY3BqjZ8bPC021YcS4X21t5t245PsS7+Z2URfA3238FAVWg13b40BdORV1r
+	kbeSKkfWR77ngCrspmK3dW0BSh/bq6OLL8h8g=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 4A36D2D589;
+	Tue, 29 Jul 2014 15:56:33 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DAFD02D57A;
+	Tue, 29 Jul 2014 15:56:25 -0400 (EDT)
+In-Reply-To: <1406639429-28748-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 29
+ Jul 2014 20:10:29 +0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 6C478628-175A-11E4-BE79-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254465>
 
-Am 28.07.2014 12:39, schrieb Duy Nguyen:
-> I know wine is kind of second citizen but is there a cheap trick to
-> make it work on wine? Reverting fcd428f (Win32: fix broken pipe
-> detection - 2012-03-01) could result in conflicts in compat that I'm
-> not comfortable resolving. I don't have Windows at home. Wine is the
-> only option for me (or if somebody has a modern.ie image for KVM, or a
-> simple recipe to make one, that'd be great). "Fix wine" is not really
-> an option.
-> 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Have you tried using a native msvcrt.dll instead of the Wine stub?
-Downloading msvcrt.dll 7.0.2600 from dll-files.com and extracting it to
-~/.wine/drive_c/Windows/System32 fixed the error message for me.
+> When utf8_width(&src) is called with *src =3D=3D NULL (because the
+> source string ends with an ansi sequence),
 
-(The newest versions don't work as they depend on a bunch of other
-dlls that you'd need too.)
+I am not sure what you mean by "because" here.  Do you mean somebody
+(who?) decides to call the utf8_width() with NULL pointer stored in
+*src because of "ansi sequence"?
+
+What do you mean by "ansi sequence"?  I'll assume that you mean
+those terminal control that all use bytes with hi-bit clear.
+
+At the very beginning of utf8_width(), *start can be cleared to
+point at a NULL pointer by pick_one_utf8_char() if the pointer that
+comes into utf8_width() originally points at an invalid UTF-8
+string, but as far as I can see, ESC (or any bytes that would be
+used in those terminal control sequences like colors and cursor
+control) will simply be returned as a single byte, without going
+into error path that clears *start =3D NULL.
+
+Puzzled...
+
+> it returns 0 and steps
+> 'src' by one.=20
+
+Here "it" refers to utf8_width()?  Who steps 'src' by one?
+
+Ahh, did you mean *src =3D=3D NUL, i.e. "already at the end of the
+string"?
+
+I think utf8_width() called with an empty string should not move the
+pointer past that end-of-string NUL in the first place.  It makes me
+wonder if it would be a better fix to make it not to do that (and
+return 0), but if we declare it is the caller's fault, perhaps we
+may want to add
+
+	if (!**start)
+        	die("BUG: empty string to utf8_width()???");
+
+at the very beginning of utf8_width(), even before it calls
+pick-one-utf8-char.
+
+Still puzzled...
+
+> This stepping makes strbuf_utf8_replace add NUL to the
+> destination string at the end of the loop. Check and break the loop
+> early.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  utf8.c | 2 ++
+>  1 file changed, 2 insertions(+)
+
+Tests?
+
+> diff --git a/utf8.c b/utf8.c
+> index b30790d..cd090a1 100644
+> --- a/utf8.c
+> +++ b/utf8.c
+> @@ -381,6 +381,8 @@ void strbuf_utf8_replace(struct strbuf *sb_src, i=
+nt pos, int width,
+>  			src +=3D n;
+>  			dst +=3D n;
+>  		}
+> +		if (src >=3D end)
+> +			break;
+> =20
+>  		old =3D src;
+>  		n =3D utf8_width((const char**)&src, NULL);
