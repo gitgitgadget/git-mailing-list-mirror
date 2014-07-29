@@ -1,73 +1,62 @@
-From: Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH 0/5] coverity mixed bag
-Date: Tue, 29 Jul 2014 07:36:44 +0200
-Message-ID: <53D732EC.8010302@gmail.com>
-References: <20140724043940.GA31282@peff.net>
+From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
+Subject: Re: "error: Tweaking file descriptors doesn't work with this MSVCRT.dll"
+ on wine
+Date: Tue, 29 Jul 2014 08:30:21 +0200
+Message-ID: <53D73F7D.1010902@web.de>
+References: <CACsJy8DFvTHieQc-nZL2h7JbQYc4Qkbx+Ouc297VpNeU=kNaoQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 07:36:47 2014
+To: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 29 08:30:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XC05f-0005BX-8W
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 07:36:47 +0200
+	id 1XC0vn-0000RP-In
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 08:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547AbaG2Fgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 01:36:43 -0400
-Received: from mail-wi0-f175.google.com ([209.85.212.175]:48807 "EHLO
-	mail-wi0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750973AbaG2Fgn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2014 01:36:43 -0400
-Received: by mail-wi0-f175.google.com with SMTP id ho1so5514706wib.8
-        for <git@vger.kernel.org>; Mon, 28 Jul 2014 22:36:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=w8wfwFS+z8eyjeMGmR1C8dRKhl8df/pKToy7kqoUhN0=;
-        b=CyX28+QkMAUCR61IVurkdr6BA0qQBig5AclppqFxKWK7E9JNkLnH5yiqFxGMEGsRLv
-         UYZBMygPDRYsPAcXlLnZJ23WVwQqEYTEDu5O59/5CaQdvY49nB/DdWNvQBZTU72KHClH
-         zojMB6HgjArOdgyLMERctADzR23eEKakq64NXPemynWruaSxc8y/Uci54r5P/6+l2RE+
-         vh3JVhyt+HYK6RcSG4apxGYx1Smxw3BzKxc5akW2WM+ZyMiBgyKgL9eElTtbUwwSowqO
-         uMMFNjGFQ88eJWzdt5oGO7lIJx30r1x1t9ESgw5intr69GY/+q8Eky1TN6Ft1aUNZ1AH
-         T2Fg==
-X-Received: by 10.180.73.6 with SMTP id h6mr2602424wiv.65.1406612201955;
-        Mon, 28 Jul 2014 22:36:41 -0700 (PDT)
-Received: from [192.168.1.7] (ip-109-91-30-58.hsi12.unitymediagroup.de. [109.91.30.58])
-        by mx.google.com with ESMTPSA id f6sm54776741wja.25.2014.07.28.22.36.41
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 28 Jul 2014 22:36:41 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <20140724043940.GA31282@peff.net>
+	id S1752712AbaG2Gaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2014 02:30:35 -0400
+Received: from mout.web.de ([212.227.17.11]:58578 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752637AbaG2Gaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2014 02:30:35 -0400
+Received: from [192.168.1.87] ([77.119.129.132]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0M5Oct-1WHGVz2bgl-00zTnx; Tue, 29 Jul 2014 08:30:33
+ +0200
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:24.0) Gecko/20100101 Icedove/24.6.0
+In-Reply-To: <CACsJy8DFvTHieQc-nZL2h7JbQYc4Qkbx+Ouc297VpNeU=kNaoQ@mail.gmail.com>
+X-Provags-ID: V03:K0:XXevZtZeYxXmboWRtkl2NFq4kmsAj2m/uZB8GaSXhK06vjm7nVw
+ EBWSU5xwVKd8iEAmkevjir2b3ZbVnqTlyCZ1qM0WVHSyt2KnZy+PP21BJg5rw0mtIJEqSSt
+ eELlyUfJA74d+F8XNw8tlOgRyeClWc+NJCA3LsaHwuLhOVilUkegp6KHvEgrDEF/hduhVQ8
+ ZwHQYblO/ZbAJwbMq4bjg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254394>
 
-On 24.07.2014 06:39, Jeff King wrote:
-> Since Stefan has recently started feeding git builds to coverity, I
-> spent a few minutes poking through the results. There are tons of false
-> positives, so there is some work to be done there with tweaking our
-> coverity models. But there are some real issues, too. Here are fixes for
-> the handful that I looked at.
-> 
->   [1/5]: receive-pack: don't copy "dir" parameter
->   [2/5]: free ref string returned by dwim_ref
->   [3/5]: transport: fix leaks in refs_from_alternate_cb
->   [4/5]: fix memory leak parsing core.commentchar
->   [5/5]: apply: avoid possible bogus pointer
-> 
-> -Peff
-> 
+On 07/28/2014 12:39 PM, Duy Nguyen wrote:
+> I know wine is kind of second citizen but is there a cheap trick to
+> make it work on wine? Reverting fcd428f (Win32: fix broken pipe
+> detection - 2012-03-01) could result in conflicts in compat that I'm
+> not comfortable resolving. I don't have Windows at home. Wine is the
+> only option for me (or if somebody has a modern.ie image for KVM, or a
+> simple recipe to make one, that'd be great). "Fix wine" is not really
+> an option.
+Is it only that patch that needs to be reverted to make things work got 
+wine?
+For me It seems as if the patch is not that huge, and manually do a 
+copy-paste
+with the help of a diff tool can be done.
 
-As this patchset is in, we have coverity scan now finding
-10 defects fixed.
+It seems as if even both implemenations can live side-by-side in the code.
+And if there is a run-time detection for wine, we could switch between the
+old one and the new one which is dependent on how MSVCRT.dll has layed out
+internal data structures:
+  "ioinfo structure (exposed by MSVCRT.dll via  __pioinfo"
 
-Thanks,
-Stefan
+Sorry being not more helpful
