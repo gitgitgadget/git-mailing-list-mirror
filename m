@@ -1,89 +1,99 @@
-From: Bryan Turner <bturner@atlassian.com>
-Subject: Re: git diff-tree commit detail bug in 2.0.2 and 2.0.3
-Date: Tue, 29 Jul 2014 11:06:25 +1000
-Message-ID: <CAGyf7-HK74YuqhrRDJ46qti17UNAd6Bp6if4y+ZwUV_PZs2ujQ@mail.gmail.com>
-References: <CAGyf7-HKpfyi5OqXS9BhtfXUEZXbisawpTPK9UFOQObz1qhRUw@mail.gmail.com>
-	<20140728103504.GB10737@peff.net>
-	<xmqqtx614cea.fsf@gitster.dls.corp.google.com>
-	<20140728173734.GA10309@peff.net>
-	<20140728180157.GA11265@peff.net>
-	<xmqqppgp4a7x.fsf@gitster.dls.corp.google.com>
-	<xmqqegx53txe.fsf@gitster.dls.corp.google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: stash-p broken?
+Date: Tue, 29 Jul 2014 02:59:40 +0000
+Message-ID: <20140729025940.GA8640@vauxhall.crustytoothpaste.net>
+References: <CAJWZfo6j2E2qu1n6JTmtPw109tAjnEfWBvKxwGfTrKSF6MZ2Uw@mail.gmail.com>
+ <CAJWZfo741u8KqZax4ReTEg8hy1BKWR2_PofxAQtE4wU=ikRsPw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jeff King <peff@peff.net>, Git Users <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 03:06:31 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
+Cc: git@vger.kernel.org
+To: Michael Migdol <michael-spam@migdol.net>
+X-From: git-owner@vger.kernel.org Tue Jul 29 04:59:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBvs7-0001lt-C3
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 03:06:31 +0200
+	id 1XBxdr-0006Ig-63
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 04:59:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752594AbaG2BG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 21:06:27 -0400
-Received: from na3sys009aog102.obsmtp.com ([74.125.149.69]:40480 "HELO
-	na3sys009aog102.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752495AbaG2BG1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2014 21:06:27 -0400
-Received: from mail-oa0-f42.google.com ([209.85.219.42]) (using TLSv1) by na3sys009aob102.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKU9bzkhw7IPlfbTR1pykWtz4rmlo0GsCH@postini.com; Mon, 28 Jul 2014 18:06:26 PDT
-Received: by mail-oa0-f42.google.com with SMTP id n16so9689533oag.1
-        for <git@vger.kernel.org>; Mon, 28 Jul 2014 18:06:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=dVNmZAulTqivjnepQ1aSwUEgPtoaaS0bJ7j7Sc1ExJc=;
-        b=dJ/BTT2PO6LoDqb9rmSecFfztSxGyAAF8cmvRYpUrvL3lcbEApC7jrabPwxRHlcj34
-         hw8Xxk/FQHM4JjbEwGTDjSlHoA3d8s7GCcWIB7VwibXak8EOFSaJ2lNUWwqmvcZagBeN
-         5hy8xmRZWXLMbhETDuwGItiKf6FR2tRd8CyGaRAHL6G94SjMolnF7l8gq6OzypVdIGqo
-         h7fxXcZmUzndlcNk7tn/k7rtnzPWtWATxNolNPLf2y5K3hqNyLb+ZXBJVuj7kJ3qbWcB
-         aliIC8kqhFKlW/RPSfeARnF/QQPIne5p8Lyq8jOAxIy68rUoUkSRhZgDMTJ929u0iozY
-         U3Cg==
-X-Gm-Message-State: ALoCoQk2ormvBvC5sD6qK2G6eNzEnSEQwb3+fZGh89Ozeaj8EX11y32dHpSIJYPNdewWIE28k7+ZkEzB3fweaxNe7D6lRn4T6Ffzsli9P5HihceI1fCp0RbpyK2HGS4GIeQTfi7PNni8
-X-Received: by 10.182.199.5 with SMTP id jg5mr54970453obc.75.1406595986143;
-        Mon, 28 Jul 2014 18:06:26 -0700 (PDT)
-X-Received: by 10.182.199.5 with SMTP id jg5mr54970448obc.75.1406595986032;
- Mon, 28 Jul 2014 18:06:26 -0700 (PDT)
-Received: by 10.182.51.130 with HTTP; Mon, 28 Jul 2014 18:06:25 -0700 (PDT)
-In-Reply-To: <xmqqegx53txe.fsf@gitster.dls.corp.google.com>
+	id S1752264AbaG2C7u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 22:59:50 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:49162 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751702AbaG2C7t (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2014 22:59:49 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:84c3:81a6:6259:5e7b])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 4453E2808F;
+	Tue, 29 Jul 2014 02:59:46 +0000 (UTC)
+Mail-Followup-To: Michael Migdol <michael-spam@migdol.net>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <CAJWZfo741u8KqZax4ReTEg8hy1BKWR2_PofxAQtE4wU=ikRsPw@mail.gmail.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16-rc6-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254390>
 
-On Tue, Jul 29, 2014 at 10:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>>> Yeah, I'm fine with a straight revert, too (I think it is fine to keep
->>>> in master, though). I think jk/alloc-commit-id is built right on top of
->>>> the original commit-slab topic, so it should be easy to do either way.
->>>>
->>>> Thanks for dealing with it.
->>>
->>> Whatever we do, perhaps it is worth applying the test below on top?
->>
->> Yeah, thanks.  I think that is a good idea.  I was preparing a patch
->> to tuck your minimum reproduction at the end of 4202, but your version
->> and placement makes good sense.
->
-> OK, I pushed out updated 'maint' and 'master'.  The former merges
-> a rebased version of jk/alloc-commit-id in to make the "reorganize
-> the way we manage the in-core commit data" topic, and the latter
-> reverts the "Use SSE to micro-optimize a leaf function to check the
-> format of a ref string".
->
-> Please give them some quick sanity check.
->
-> Thanks.
 
-Thanks both of you; I appreciate your efforts! I've run my suite of
-tests against the tips of master and maint and all 681 pass for each.
-Looks good to me.
+--jRHKVT23PllUwdXP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Best regards,
-Bryan Turner
+On Mon, Jul 28, 2014 at 05:56:28PM -0700, Michael Migdol wrote:
+> Sorry for error -- I meant: git stash list -p, not git stash -p.
+>=20
+> On Mon, Jul 28, 2014 at 5:38 PM, Michael Migdol <michael-spam@migdol.net>=
+ wrote:
+> > I recently upgraded from Ubuntu 13.10 to Ubuntu 14.04.  After doing so,
+> > "git stash -p" stopped working.  (It apparently is ignoring the -p
+> > parameter).  I'm not sure what version I was using previously, but after
+> > some experimentation, I see that:
+> >
+> > version 1.7.12.2 : stash -p DOES work
+> > version 1.9.3 : doesn't work
+> > version 2.0.3 : doesn't work
+
+Under the hood, we do:
+
+  git log --format=3D"%gd: %gs" -g "$@" refs/stash --
+
+But it looks like git log ignores -p if -g is provided.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--jRHKVT23PllUwdXP
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJT1w4cAAoJEL9TXYEfUvaLqqIP/39fos9CAefOlkp0z2ILLeMU
+GBcSmYAQvITpX++4jo7Qv0vhLJypEdQETmK8+t4LsslsCudYdrvih6ioZv+3qp45
+XIX0J1p7D8krAw75NcFD3hj3TMS95/Li0ZTs7LnoCNlbP+7Ap+wrAg4xsghDQrfE
+dH8fLaCj47gbCTRFSvB+h/SwV0jsZmKZuyx/UvNe0urRLgblCy4EtYW5/Mhm9rjZ
+82YmsQrn34m2A4WK465MMvUh0QhILnRQGW/CP1CDnL274+PEDkoY40YUxljtTO/1
+MvYjiF9DBQrMvRbHbz/ZuGpBLgVYhdwj9HNKacu7DtQXLTRDtqaNV8svzC+CIDrn
+qJYTwGLOeRQNhUo7IHWy0ij8cC4IwSBCLzQvim7xyrcEaIgGANfak7bXduNlt5td
+uufxRfMpyn6/YGZ4mmdjYNW6oH2+Xg4zS/WVGnidqisOJ191iscdSv3qNzO7jpad
+aFL+52PloduJaBxudVlFi1aZ6bq1RMJW5nZ7h6Lqi8sIfbjcfKnJl46gN2O77+82
+GbEyx2RK38Q/4mqgYFv8xTwe2Ly9zhr063Xb+UFdLjOM4BxOvAPqElTcUcavNx5c
+PjuJh/oQubfSkFgjmgLx8n4nsNurp3180it+5/MFHwwMPPtUdzl3hKQs/yVBX71N
+4TQ7c7T1TDwwl/sjAXQ9
+=nF/w
+-----END PGP SIGNATURE-----
+
+--jRHKVT23PllUwdXP--
