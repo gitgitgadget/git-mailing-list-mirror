@@ -1,82 +1,202 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Amending merge commits?
-Date: Tue, 29 Jul 2014 20:29:20 +0100
-Organization: OPDS
-Message-ID: <DFE66A48CBC646E795B3B4A0903AB19E@PhilipOakley>
-References: <CAK3OfOjr6ej5VdGU=bLmtag9cca1=ogLxVakCFTMG7b-A2uBiA@mail.gmail.com><87r4147agk.fsf@osv.gnss.ru> <CAK3OfOhFzbUA7gZbox84W=VC+0aSuiNc-XRP_MTyYy1UeFFzZQ@mail.gmail.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Karsten Blees <karsten.blees@gmail.com>
+Subject: [RFC/PATCH] Windows tests: let $TRASH_DIRECTORY point to
+ native Windows path
+Date: Tue, 29 Jul 2014 21:43:55 +0200
+Message-ID: <53D7F97B.7060607@gmail.com>
+References: <xmqq4my9f4qw.fsf@gitster.dls.corp.google.com> <53CFC414.1010601@gmail.com> <CACsJy8DqdTWqVimK0o4rcBXL==iZCsu1OgX2W9ZbgebcSDaKxg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="utf-8";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "Jonathan Nieder" <jrnieder@gmail.com>,
-	"Besen, David" <david.besen@hp.com>, <git@vger.kernel.org>
-To: "Nico Williams" <nico@cryptonector.com>,
-	"Sergei Organov" <osv@javad.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 21:29:26 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ Git Mailing List <git@vger.kernel.org>,
+ msysGit <msysgit@googlegroups.com>
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: msysgit+bncBCH3XYXLXQDBB7HS36PAKGQEITS7EOI@googlegroups.com Tue Jul 29 21:43:59 2014
+Return-path: <msysgit+bncBCH3XYXLXQDBB7HS36PAKGQEITS7EOI@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-wi0-f185.google.com ([209.85.212.185])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCD5S-0007MQ-10
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 21:29:26 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751724AbaG2T3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 15:29:22 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:54239 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751321AbaG2T3V (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2014 15:29:21 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AiUaAFT111NOl3UmPGdsb2JhbABPCoMOgSmCeIQ3gQTKfwUBAgEBgREXBQEBAQE4NoN+BQEBBQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBBoGBwMUBgESCAIBAgMBiDWndoZ/kF6BLI1EXIMANoEbBZE1ojI8Lw
-X-IPAS-Result: AiUaAFT111NOl3UmPGdsb2JhbABPCoMOgSmCeIQ3gQTKfwUBAgEBgREXBQEBAQE4NoN+BQEBBQgBARkVHgEBIQsCAwUCAQMVAwICBSECAhQBBBoGBwMUBgESCAIBAgMBiDWndoZ/kF6BLI1EXIMANoEbBZE1ojI8Lw
-X-IronPort-AV: E=Sophos;i="5.01,759,1400022000"; 
-   d="scan'208";a="642171268"
-Received: from host-78-151-117-38.as13285.net (HELO PhilipOakley) ([78.151.117.38])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 29 Jul 2014 20:29:19 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254462>
+	(envelope-from <msysgit+bncBCH3XYXLXQDBB7HS36PAKGQEITS7EOI@googlegroups.com>)
+	id 1XCDJV-0006f8-W1
+	for gcvm-msysgit@m.gmane.org; Tue, 29 Jul 2014 21:43:58 +0200
+Received: by mail-wi0-f185.google.com with SMTP id f8sf69917wiw.12
+        for <gcvm-msysgit@m.gmane.org>; Tue, 29 Jul 2014 12:43:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=20120806;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        bh=jtnAGz5CYnzM3CmzgK7Tj5feWqUlKrU/MiQfkDSVZc0=;
+        b=H447kJ2cs1icrCavLAklYzI7+Vy8SxbQvrSVgbY4tr6I+l5Ah+XCedm3Nvs+1Zg5Gl
+         DMjRCBK8FMJxS8EtBWF/nnWcvEGrCpvY4PrZ43z0J909X5eYdPgGI1yIA8KuCq40aX0S
+         vsHI4RuV4/rZCEY4X+ZdiidDgSqqzZjGwiS85ReBd/SRQDwdHKo/rIbGU7iqQJdZlbfh
+         aXypYVgiPQlpU1iVbSG0x9Dq3UIVQXqknLYCgem5XzxP/WTB14a5KOKzh1fJfWQ0BlZ4
+         36QJTLBXEl+PXwLGlrefTiaWTXKOm39l0gBDqVLj7bYJ9sTLsUUvGwjCVTA5czvvBcya
+         rkfQ==
+X-Received: by 10.152.22.132 with SMTP id d4mr20694laf.29.1406663037723;
+        Tue, 29 Jul 2014 12:43:57 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.152.44.227 with SMTP id h3ls78267lam.49.gmail; Tue, 29 Jul
+ 2014 12:43:55 -0700 (PDT)
+X-Received: by 10.152.7.71 with SMTP id h7mr498258laa.2.1406663035947;
+        Tue, 29 Jul 2014 12:43:55 -0700 (PDT)
+Received: from mail-wg0-x231.google.com (mail-wg0-x231.google.com [2a00:1450:400c:c00::231])
+        by gmr-mx.google.com with ESMTPS id o6si753821wij.1.2014.07.29.12.43.55
+        for <msysgit@googlegroups.com>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 29 Jul 2014 12:43:55 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::231 as permitted sender) client-ip=2a00:1450:400c:c00::231;
+Received: by mail-wg0-f49.google.com with SMTP id k14so141884wgh.20
+        for <msysgit@googlegroups.com>; Tue, 29 Jul 2014 12:43:55 -0700 (PDT)
+X-Received: by 10.194.3.74 with SMTP id a10mr6499842wja.85.1406663035800;
+        Tue, 29 Jul 2014 12:43:55 -0700 (PDT)
+Received: from [10.1.116.52] (ns.dcon.de. [77.244.111.149])
+        by mx.google.com with ESMTPSA id gi15sm59748594wjc.20.2014.07.29.12.43.54
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 29 Jul 2014 12:43:55 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CACsJy8DqdTWqVimK0o4rcBXL==iZCsu1OgX2W9ZbgebcSDaKxg@mail.gmail.com>
+X-Original-Sender: karsten.blees@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com;       spf=pass
+ (google.com: domain of karsten.blees@gmail.com designates 2a00:1450:400c:c00::231
+ as permitted sender) smtp.mail=karsten.blees@gmail.com;       dkim=pass
+ header.i=@gmail.com;       dmarc=pass (p=NONE dis=NONE) header.from=gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+X-Google-Group-Id: 152234828034
+List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
+ <http://groups.google.com/group/msysgit/subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254463>
 
-From: "Nico Williams" <nico@cryptonector.com>
-> On Tue, Jul 29, 2014 at 4:58 AM, Sergei Organov <osv@javad.com> wrote:
->> Nico Williams <nico@cryptonector.com> writes:
->>> That exception aside, keeping all local commits "on top" by always
->>> rebasing them onto the upstream is extremely useful: a) in 
->>> simplifying
->>> conflict resolution, b) making it easy to identify 
->>> as-yet-unintegrated
->>> local commits, c) making it easy to contribute local commits.
+MSYS programs typically understand native Windows paths (e.g C:/git), but
+native Windows programs (including MinGW) don't understand MSYS paths (e.g.
+/c/git).
+
+On Windows, set TRASH_DIRECTORY to the absolute native path so that it can
+be used more easily in tests.
+
+MSYS 'tar -f' interprets everything before ':' as hostname, not as drive
+letter. Change respective tests to use stdin / stdout instead of '-f'. Also
+use $TAR from GIT-BUILD-OPTIONS rather than hardcoded tar.
+
+Signed-off-by: Karsten Blees <blees@dcon.de>
+---
+
+Am 25.07.2014 14:30, schrieb Duy Nguyen:
+> On Wed, Jul 23, 2014 at 9:17 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
+>> With the version in pu, three tests fail. t7001 is fixed with a newer 'cp'.
+>> The other two are unrelated (introduced by nd/multiple-work-trees topic).
 >>
->> But 'pull --rebase=preserve' does rebase local commits onto the
->> upstream, and result is exactly the same as 'pull --rebase=true', 
->> unless
->> you have some of your own merges to be rebased. That's where the
->> difference between these two options appears. It's --rebase=false 
->> that
->> performs merges rather than rebase.
->
-> Local merge commits mean that you either didn't rebase to keep all
-> your local commits on top of the upstream, or that you have multiple
-> upstreams (the example exception I gave).
->
-> Conversely, if you always rebase your local commits on top of the
-> upstream then you won't have merge commits to worry about.
->
-Whilst it may not be "the Git Way", I'd expect that in many less well 
-informed companies, the need to keep merge commits fom other lines of 
-development would be quite a common (political ) technique where some 
-preparatory branch needs to be merged in before one's feature can be 
-completed (similar to all those cases on the list when folk say 'builds 
-on top of xy's commit deadbeaf)
+>> * t1501-worktree: failed 1
+>>   As of 5bbcb072 "setup.c: support multi-checkout repo setup"
+>>   Using $TRASH_DIRECTORY doesn't work on Windows.
+>>
+>> * t2026-prune-linked-checkouts: failed 1
+>>   As of 404a45f1 "prune: strategies for linked checkouts"
+>>   Dito.
+> 
+> I need your help here. Would saving $(pwd) to a variable and using it
+> instead of $TRASH_DIRECTORY work? Some tests "cd" around and $(pwd)
+> may not be the same as $TRASH_DIRECTORY.
+> 
 
-Philip 
+Yes, that would work.
+
+(Actually, you'd only need to change 'echo "$TRASH_DIR..."' in two places (both
+before cd'ing away). The other instances are parameters to non-msys programs and
+are thus automatically mangled by msys.dll.)
+
+However, I wonder why we don't set up TRASH_DIRECTORY to the native Windows path.
+I believe we'd get much fewer 'special' cases that way. Ideally, you shouldn't
+have to worry about the intricacies of MSYS path mangling when writing tests...
+
+[CCing msysgit for opinions]
+
+
+ t/t3513-revert-submodule.sh | 4 ++--
+ t/t6041-bisect-submodule.sh | 4 ++--
+ t/test-lib.sh               | 1 +
+ 3 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/t/t3513-revert-submodule.sh b/t/t3513-revert-submodule.sh
+index a1c4e02..4a44dd6 100755
+--- a/t/t3513-revert-submodule.sh
++++ b/t/t3513-revert-submodule.sh
+@@ -14,11 +14,11 @@ test_description='revert can handle submodules'
+ git_revert () {
+ 	git status -su >expect &&
+ 	ls -1pR * >>expect &&
+-	tar czf "$TRASH_DIRECTORY/tmp.tgz" * &&
++	"$TAR" cz * >"$TRASH_DIRECTORY/tmp.tgz" &&
+ 	git checkout "$1" &&
+ 	git revert HEAD &&
+ 	rm -rf * &&
+-	tar xzf "$TRASH_DIRECTORY/tmp.tgz" &&
++	"$TAR" xz <"$TRASH_DIRECTORY/tmp.tgz" &&
+ 	git status -su >actual &&
+ 	ls -1pR * >>actual &&
+ 	test_cmp expect actual &&
+diff --git a/t/t6041-bisect-submodule.sh b/t/t6041-bisect-submodule.sh
+index c6b7aa6..0de614f 100755
+--- a/t/t6041-bisect-submodule.sh
++++ b/t/t6041-bisect-submodule.sh
+@@ -8,7 +8,7 @@ test_description='bisect can handle submodules'
+ git_bisect () {
+ 	git status -su >expect &&
+ 	ls -1pR * >>expect &&
+-	tar czf "$TRASH_DIRECTORY/tmp.tgz" * &&
++	"$TAR" cz * > "$TRASH_DIRECTORY/tmp.tgz" &&
+ 	GOOD=$(git rev-parse --verify HEAD) &&
+ 	git checkout "$1" &&
+ 	echo "foo" >bar &&
+@@ -20,7 +20,7 @@ git_bisect () {
+ 	git bisect start &&
+ 	git bisect good $GOOD &&
+ 	rm -rf * &&
+-	tar xzf "$TRASH_DIRECTORY/tmp.tgz" &&
++	"$TAR" xz <"$TRASH_DIRECTORY/tmp.tgz" &&
+ 	git status -su >actual &&
+ 	ls -1pR * >>actual &&
+ 	test_cmp expect actual &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 5102340..5f6397b 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -868,6 +868,7 @@ case $(uname -s) in
+ 		md5sum "$@"
+ 	}
+ 	# git sees Windows-style pwd
++	TRASH_DIRECTORY=$(pwd -W)
+ 	pwd () {
+ 		builtin pwd -W
+ 	}
+-- 
+2.0.2.897.g7f80809.dirty
+
+-- 
+-- 
+*** Please reply-to-all at all times ***
+*** (do not pretend to know who is subscribed and who is not) ***
+*** Please avoid top-posting. ***
+The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
+
+You received this message because you are subscribed to the Google
+Groups "msysGit" group.
+To post to this group, send email to msysgit@googlegroups.com
+To unsubscribe from this group, send email to
+msysgit+unsubscribe@googlegroups.com
+For more options, and view previous threads, visit this group at
+http://groups.google.com/group/msysgit?hl=en_US?hl=en
+
+--- 
+You received this message because you are subscribed to the Google Groups "msysGit" group.
+To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
+For more options, visit https://groups.google.com/d/optout.
