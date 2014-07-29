@@ -1,127 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 4/6] add --simplify-combined-diff option
-Date: Tue, 29 Jul 2014 13:02:39 -0700
-Message-ID: <xmqqd2co2asg.fsf@gitster.dls.corp.google.com>
-References: <20140729175300.GA21536@peff.net>
-	<20140729175712.GD31181@peff.net>
+From: Nico Williams <nico@cryptonector.com>
+Subject: Re: Amending merge commits?
+Date: Tue, 29 Jul 2014 15:19:14 -0500
+Message-ID: <CAK3OfOgZt55+tKv5455Jk-F=buULtftmCasbxHYcxGzppbWcfg@mail.gmail.com>
+References: <CAK3OfOjr6ej5VdGU=bLmtag9cca1=ogLxVakCFTMG7b-A2uBiA@mail.gmail.com>
+	<87r4147agk.fsf@osv.gnss.ru>
+	<CAK3OfOhFzbUA7gZbox84W=VC+0aSuiNc-XRP_MTyYy1UeFFzZQ@mail.gmail.com>
+	<DFE66A48CBC646E795B3B4A0903AB19E@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jul 29 22:02:55 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Sergei Organov <osv@javad.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Besen, David" <david.besen@hp.com>,
+	git discussion list <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Tue Jul 29 22:19:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCDbo-00088O-QX
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 22:02:53 +0200
+	id 1XCDrl-00016m-Eh
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 22:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752272AbaG2UCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 16:02:48 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54678 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751397AbaG2UCr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2014 16:02:47 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 463E62D7E9;
-	Tue, 29 Jul 2014 16:02:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QH4KtpXNVOyagsETefmpiveYkFY=; b=cUqPm+
-	qpJg76sdKHNbCu23+hXxXKuGHxgzY6sZICTZ7P8+cQC1XvrRU/ViSnH0UghHNmjF
-	uxYeJ+aRpJUSt6rrvskdqsOVf1z7l/lLeMZft/sV9OMfEd7UDDfLnFBxy/PtDz5X
-	59XwulwTDh3EhABK7Lkb8azUcD15wTxPPGJ3Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=WjvmJ2U9Eb3Sx4l52BrdBnvNQEtrpi9n
-	QwS13ith1FykVmrowTC1sSZKEEa82LLHJ7VoROSuDbPOfFbPhi6+H2iDnFYQfIRN
-	HEQnGnMCI0tNECLRh7AZT5ZdL+sGp4IuMERUGtg6PNrEHqvWoTgjSz2mhkcfpqlg
-	3tR8ZUI054g=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3CED82D7E8;
-	Tue, 29 Jul 2014 16:02:47 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	id S1751680AbaG2UTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2014 16:19:16 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:43625 "EHLO
+	homiemail-a104.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751212AbaG2UTP (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2014 16:19:15 -0400
+Received: from homiemail-a104.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a104.g.dreamhost.com (Postfix) with ESMTP id 5223220047B8C
+	for <git@vger.kernel.org>; Tue, 29 Jul 2014 13:19:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=
+	mime-version:in-reply-to:references:date:message-id:subject:from
+	:to:cc:content-type; s=cryptonector.com; bh=nxXNa6c8mS/74rWXmV5X
+	dlSjphU=; b=Seh+UJJQSPMcS5fjRfnvDElCf0mZE9mWJ6QAENBiRKjXI8q80dtr
+	EJudGmM+apeir8fsB4fbeqyggGL0LwJruGgPRJO/bMJFE+dkAL+65cHMlUsKs41N
+	PeOfMDd/RQSbrYZbjEFW92egoKNOPQ115IqePZNJGwB4Xx3L6j5UsDk=
+Received: from mail-ig0-f182.google.com (mail-ig0-f182.google.com [209.85.213.182])
+	(using TLSv1 with cipher ECDHE-RSA-RC4-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C8C3C2D7D2;
-	Tue, 29 Jul 2014 16:02:40 -0400 (EDT)
-In-Reply-To: <20140729175712.GD31181@peff.net> (Jeff King's message of "Tue,
-	29 Jul 2014 13:57:12 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 4BC0B612-175B-11E4-9A5E-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	(Authenticated sender: nico@cryptonector.com)
+	by homiemail-a104.g.dreamhost.com (Postfix) with ESMTPSA id 34A7A20047B8A
+	for <git@vger.kernel.org>; Tue, 29 Jul 2014 13:19:15 -0700 (PDT)
+Received: by mail-ig0-f182.google.com with SMTP id c1so1652466igq.9
+        for <git@vger.kernel.org>; Tue, 29 Jul 2014 13:19:14 -0700 (PDT)
+X-Received: by 10.50.138.11 with SMTP id qm11mr439616igb.18.1406665154705;
+ Tue, 29 Jul 2014 13:19:14 -0700 (PDT)
+Received: by 10.107.128.169 with HTTP; Tue, 29 Jul 2014 13:19:14 -0700 (PDT)
+In-Reply-To: <DFE66A48CBC646E795B3B4A0903AB19E@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254467>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Jul 29, 2014 at 2:29 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> From: "Nico Williams" <nico@cryptonector.com>
+>> Local merge commits mean that you either didn't rebase to keep all
+>> your local commits on top of the upstream, or that you have multiple
+>> upstreams (the example exception I gave).
+>>
+>> Conversely, if you always rebase your local commits on top of the
+>> upstream then you won't have merge commits to worry about.
+>>
+> Whilst it may not be "the Git Way", I'd expect that in many less well
+> informed companies, the need to keep merge commits fom other lines of
+> development would be quite a common (political ) technique where some
+> preparatory branch needs to be merged in before one's feature can be
+> completed (similar to all those cases on the list when folk say 'builds on
+> top of xy's commit deadbeaf)
 
-> When showing a combined diff, we are comparing two (or more)
-> parents to a final state, and some of these states may be
-> the same.  Here's a table of the possible contents for a
-> given path (for two parents, but we will generalize to more
-> in a moment; we also omit isomorphic cases where the parents
-> are swapped):
->
->   case | M | P1 | P2
->   -------------------
->   1    | A | A  | A
->   2    | A | A  | B
->   3    | A | B  | B
->   4    | A | B  | C
->
-> In case 1, the path was not relevant to the merge at all,
-> and we omit it as uninteresting. In case 2, we did resolve
-> the path, but in favor of one side. We also consider this
-> uninteresting and do not show the diff.
->
-> In case 4, we had a real content-level merge, and the
-> combined diff is interesting. We show it.
->
-> That leaves case 3, in which both parents are the same, but
-> the merge picks a new content. This should be rare in
-> normal merges, though it could happen if you updated an
-> unrelated file due to a resolution elsewhere (i.e., an evil
-> merge that crosses a file boundary). But it happens
-> frequently in the fake merge commits we create for stashes,
-> in which one parent is the base of the stash and the other
-> is the index (in which case it simply means that the index
-> entry for the path was not touched).
->
-> Right now, we treat it the same as case 4, and show a normal
-> combined diff. However, the result is harder to read, and
-> the combined nature of the diff gives no extra information;
-> every marker in the combined diff will be identical for both
-> parents.
->
-> This patch adds a new option, "--simplify-combined-diff",
-> which converts this case into a normal, non-combined diff.
-> It would not be correct to simply omit it, because there
-> really is an interesting change going from B..A. It's just
-> that there are not two interesting changes, which the
-> combined diff would show.
->
-> When generalizing this to more than two parents, we have two
-> options:
->
->   1. Either simply to a single parent content, or not at all.
->
->   2. Omit parents whose contents are duplicates of other
->      parents.
->
-> For a case like "A B B C", option (2) would still result in
-> a combined diff, but one with fewer sources. However, it
-> would also be ambiguous. The parents in a combined diff are
-> marked only by their position, so omitting a position means
-> that a reader can no longer tell which line goes with which
-> parent.
->
-> Instead, we choose option (1). Either you get the full
-> combined diff, or you get a normal non-combined diff.
+The way we did this at Sun, first with Teamware, then later with
+Mercurial, was as follows:
 
-Very nicely analyzed.  The changes to the code looked also good from
-a cursory read.
+ - "projects" kept their own clone repos of the upstream
+ - engineers working on a project cloned the project repo ("project gate")
+ - engineers pushed/pulled to/from the project gate
+ - each project gate had a gatekeeper whose job it was to periodically
+rebase onto the latest upstream
+ - then engineers would rebase onto the new project gate
 
-Thanks.
+No "merge turds" (Sun speak) were ever allowed in any upstream,
+whether a project gate or the ultimate upstream.  All commits had to
+be organized according to specific rules, and squashed.  These rules
+applied at the project gate and in the upstream.
+
+ - when the project was ready for integration the gatekeeper would
+rebase and squash as necessary, then push to the upstream
+
+(I'm eliding some details.  In particular when an intermediate
+upstream rebased the previous head was left available as a "snapshot"
+to make the equivalent of git rebase --onto possible.)
+
+The upshot was: all local commits were always on top of whatever the
+next upstream in the chain was.  Always.  No merge commits ever.
+
+That workflow works just fine with git.  It worked really well at Sun
+(with thousands of engineers working on Solaris alone).  And it should
+work well for anyone who doesn't have two or more forked upstreams to
+follow.
+
+Nico
+--
