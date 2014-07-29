@@ -1,66 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git diff-tree commit detail bug in 2.0.2 and 2.0.3
-Date: Tue, 29 Jul 2014 03:54:54 -0400
-Message-ID: <20140729075454.GA4114@peff.net>
-References: <CAGyf7-HKpfyi5OqXS9BhtfXUEZXbisawpTPK9UFOQObz1qhRUw@mail.gmail.com>
- <20140728103504.GB10737@peff.net>
- <xmqqtx614cea.fsf@gitster.dls.corp.google.com>
- <20140728173734.GA10309@peff.net>
- <20140728180157.GA11265@peff.net>
- <xmqqppgp4a7x.fsf@gitster.dls.corp.google.com>
- <xmqqegx53txe.fsf@gitster.dls.corp.google.com>
- <CAGyf7-HK74YuqhrRDJ46qti17UNAd6Bp6if4y+ZwUV_PZs2ujQ@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] use a hashmap to make remotes faster
+Date: Tue, 29 Jul 2014 09:57:45 +0200
+Message-ID: <vpqoaw8ha12.fsf@anie.imag.fr>
+References: <305063.319715799-sendEmail@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, Git Users <git@vger.kernel.org>
-To: Bryan Turner <bturner@atlassian.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 09:55:02 2014
+Content-Type: text/plain
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: "patrick.reynolds\@github.com" <patrick.reynolds@github.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 09:57:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XC2FQ-0006EO-JB
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 09:55:00 +0200
+	id 1XC2IH-0007QH-L9
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 09:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752074AbaG2Hy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 03:54:57 -0400
-Received: from cloud.peff.net ([50.56.180.127]:42293 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751038AbaG2Hy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2014 03:54:56 -0400
-Received: (qmail 1433 invoked by uid 102); 29 Jul 2014 07:54:56 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Tue, 29 Jul 2014 02:54:56 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 29 Jul 2014 03:54:54 -0400
-Content-Disposition: inline
-In-Reply-To: <CAGyf7-HK74YuqhrRDJ46qti17UNAd6Bp6if4y+ZwUV_PZs2ujQ@mail.gmail.com>
+	id S1752759AbaG2H5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2014 03:57:54 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:59696 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752150AbaG2H5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2014 03:57:53 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6T7viHj009450
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 29 Jul 2014 09:57:45 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6T7vjM5025949;
+	Tue, 29 Jul 2014 09:57:45 +0200
+In-Reply-To: <305063.319715799-sendEmail@debian> (patrick's message of "Tue,
+	29 Jul 2014 03:53:42 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 29 Jul 2014 09:57:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6T7viHj009450
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1407225467.08256@QfXVLZqqlMJf/X7BS9M6Uw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254402>
 
-On Tue, Jul 29, 2014 at 11:06:25AM +1000, Bryan Turner wrote:
+"patrick.reynolds@github.com" <patrick.reynolds@github.com> writes:
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-> On Tue, Jul 29, 2014 at 10:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> > OK, I pushed out updated 'maint' and 'master'.  The former merges
-> > a rebased version of jk/alloc-commit-id in to make the "reorganize
-> > the way we manage the in-core commit data" topic, and the latter
-> > reverts the "Use SSE to micro-optimize a leaf function to check the
-> > format of a ref string".
-> >
-> > Please give them some quick sanity check.
+It seems you mixed your name and email address in your config file. I
+guess your name is "Patrick Reynolds", not
+"patrick.reynolds@github.com".
 
-They both look OK to me.
+> Remotes are stored as an array, so looking one up or adding one without
+> duplication is an O(n) operation.  Reading an entire config file full of
+> remotes is O(n^2) in the number of remotes.  For a repository with tens of
+> thousands of remotes, the running time can hit multiple minutes.
 
-> Thanks both of you; I appreciate your efforts! I've run my suite of
-> tests against the tips of master and maint and all 681 pass for each.
-> Looks good to me.
+Just being curious: in which senario do you have tens of thousands of
+remotes?
 
-So what suite of tests is this? Is it worth getting you to fold it into
-our regular test suite? :)
+(not an objection, it's a good thing anyway)
 
--Peff
+> +static inline void init_remotes_hash()
+
+static inline void init_remotes_hash(void)
+
+Not a detailed review, but the patch sounds good other than that.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
