@@ -1,207 +1,210 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v4 3/6] rewrite git_config() to use the config-set API
-Date: Tue, 29 Jul 2014 16:03:53 +0200
-Message-ID: <vpq4my045yu.fsf@anie.imag.fr>
-References: <1406633302-23144-1-git-send-email-tanayabh@gmail.com>
-	<1406633302-23144-4-git-send-email-tanayabh@gmail.com>
-	<vpqlhrc8hif.fsf@anie.imag.fr> <53D7A280.6080201@gmail.com>
+From: "Patrick Reynolds" <patrick.reynolds@github.com>
+Subject: [PATCH v2] use a hashmap to make remotes faster
+Date: Tue, 29 Jul 2014 14:43:39 +0000
+Message-ID: <25222.0938886865-sendEmail@debian>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 16:04:23 2014
+Content-Type: multipart/related; boundary="----MIME delimiter for sendEmail-128858.688128279"
+To: "Git" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jul 29 16:43:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XC80s-0002AZ-U0
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 16:04:23 +0200
+	id 1XC8d1-00041P-9x
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 16:43:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751345AbaG2OES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 29 Jul 2014 10:04:18 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52553 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750960AbaG2OER (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 29 Jul 2014 10:04:17 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s6TE3qBG007451
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 29 Jul 2014 16:03:52 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6TE3rbF030199;
-	Tue, 29 Jul 2014 16:03:53 +0200
-In-Reply-To: <53D7A280.6080201@gmail.com> (Tanay Abhra's message of "Tue, 29
-	Jul 2014 19:02:48 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 29 Jul 2014 16:03:52 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6TE3qBG007451
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1407247433.2053@Beqa3wFmSnEZKZxDgmarMw
+	id S1753606AbaG2Onn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2014 10:43:43 -0400
+Received: from mail-qa0-f52.google.com ([209.85.216.52]:63740 "EHLO
+	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752719AbaG2Onm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2014 10:43:42 -0400
+Received: by mail-qa0-f52.google.com with SMTP id j15so9349117qaq.25
+        for <git@vger.kernel.org>; Tue, 29 Jul 2014 07:43:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=message-id:from:to:subject:date:mime-version:content-type;
+        bh=dl5wcZGjz4Uq2B52X07F9zlw22k/2aepcPrEG8oekIU=;
+        b=ZHPY2Sxwv0Dnj0KPRW1RX1OM9j94MF5kuMzaPOjIlhloYv4V04+VSoO5DD+Ha4YhfY
+         WAKZEBXxlq4fGcftMySMy/DUwOuDstNR1cnXMg76PMHjEk0wzu1Ahjw0lgO7osJ2zeOD
+         g8qjRW4H6hKgZVr7wQc3bKjMPei60V4HXrW8Y=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:from:to:subject:date:mime-version
+         :content-type;
+        bh=dl5wcZGjz4Uq2B52X07F9zlw22k/2aepcPrEG8oekIU=;
+        b=Q7NoEPCML2i/NYpzf+TKCvQcCWZGagq01+YbidbME1c+ASX/k0+/Z+rJOuHbSZ2ZFX
+         V7G6qryuxZ0ipcvIK6JG4yKEp2KhB+f5a9ALVe/1PSQBSQiFU0fWiSx8IT7muHzmbY1g
+         pqUqwnDCjXEV0LSwGgsbqsps5VFpOOZLTmcqzXeAdHpV7ulkwu9wMsmZUCnaOP0GdVYz
+         +FNbOKNO8pSEYJn5Ow9e9bV9Pd+NBVGG+42390+vHllCQN4mkPS4TPfxa3lv95s2+sk5
+         nYMBYxNgxpBIajzNJUzK9vRddRWHQHNoyRdNDoe3dYlslvpuQgJ/R0uXXnbVf0AmMxWq
+         qGJA==
+X-Gm-Message-State: ALoCoQkTlPqaXTCPRfsyKHkxOESScQmoxX2d1AN6kiCnTZNzrosTjnPzfxmPbVp7NxwQ/MwXq/mX
+X-Received: by 10.224.65.196 with SMTP id k4mr4425757qai.56.1406645021720;
+        Tue, 29 Jul 2014 07:43:41 -0700 (PDT)
+Received: from debian (ip68-1-72-35.pn.at.cox.net. [68.1.72.35])
+        by mx.google.com with ESMTPSA id y79sm26526773qgy.18.2014.07.29.07.43.40
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 29 Jul 2014 07:43:41 -0700 (PDT)
+X-Mailer: sendEmail-1.56
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254444>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+This is a multi-part message in MIME format. To properly display this message you need a MIME-Version 1.0 compliant Email program.
 
-> On 7/29/2014 6:10 PM, Matthieu Moy wrote:
->> So, I think it's time to make it official that git_config() does not
->> return an error code, and make it return void. I would do that in a
->> patch before the git_config() -> git_config_raw() rewrite.
->> 
->> My preference would be to get the return value from
->> git_config_with_options and die() if it's negative, but I can also live
->
-> Doesn't git_config_with_options() only return positive values, we checked it
-> pretty intensively last time.
+------MIME delimiter for sendEmail-128858.688128279
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 
-In normal cases, yes.
+Remotes are stored as an array, so looking one up or adding one without
+duplication is an O(n) operation.  Reading an entire config file full of
+remotes is O(n^2) in the number of remotes.  For a repository with tens of
+thousands of remotes, the running time can hit multiple minutes.
 
-But the value comes from lines like
+Hash tables are way faster.  So we add a hashmap from remote name to
+struct remote and use it for all lookups.  The time to add a new remote to
+a repo that already has 50,000 remotes drops from ~2 minutes to < 1
+second.
 
-	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
-		ret += git_config_from_file(fn, git_etc_gitconfig(),
-					    data);
-		found += 1;
-	}
+We retain the old array of remotes so iterators proceed in config-file
+order.
 
-and git_config_from_file returns either 0 or -1.
+Signed-off-by: Patrick Reynolds <patrick.reynolds@github.com>
+---
+mark function with no arguments as taking void
 
-So, either we consider that git_config_from_file always returns 0, and
-the "ret +=" part is dead code that should be removed as it only
-confuses the reader, or we consider cases where git_config_from_file
-returns -1, and we should do something with ret.
+ remote.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
+ remote.h |  3 +++
+ 2 files changed, 49 insertions(+), 17 deletions(-)
 
-As we already discussed, "return -1" is possible in case of race
-condition between access_or_die() and git_config_from_file(). Very, very
-unlikely in practice, but may happen in theory. That's why I suggest to
-die() in these cases: the user will never see it in practice, but it
-guarantees that we won't try to proceed if such case happen.
-
-My point is not to improve the behavior, but to improve the code, by
-documenting properly where the error code is lost in the path from
-git_parse_source() to the caller of git_config().
-
-We wouldn't have such discussion if the code was clear. I spent quite
-some time trying to understand why an error code could be returned by
-e.g. git_config_early(), and I'd like future readers to avoid wasting
-such time.
-
-> Where can the die() statement be inserted? Again, I am confused.
-
-I mean, changing the corresponding hunk to this:
-
---- a/config.c
-+++ b/config.c
-@@ -1223,9 +1223,21 @@ int git_config_with_options(config_fn_t fn, void *data,
-        return ret;
+diff --git a/remote.c b/remote.c
+index a0701f6..52533e4 100644
+--- a/remote.c
++++ b/remote.c
+@@ -42,6 +42,7 @@ struct rewrites {
+ static struct remote **remotes;
+ static int remotes_alloc;
+ static int remotes_nr;
++static struct hashmap remotes_hash;
+ 
+ static struct branch **branches;
+ static int branches_alloc;
+@@ -136,26 +137,51 @@ static void add_url_alias(struct remote *remote, const char *url)
+ 	add_pushurl_alias(remote, url);
  }
  
--int git_config(config_fn_t fn, void *data)
-+void git_config(config_fn_t fn, void *data)
++struct remotes_hash_key {
++	const char *str;
++	int len;
++};
++
++static int remotes_hash_cmp(const struct remote *a, const struct remote *b, const struct remotes_hash_key *key)
++{
++	if (key)
++		return strncmp(a->name, key->str, key->len) || a->name[key->len];
++	else
++		return strcmp(a->name, b->name);
++}
++
++static inline void init_remotes_hash(void)
++{
++	if (!remotes_hash.cmpfn)
++		hashmap_init(&remotes_hash, (hashmap_cmp_fn)remotes_hash_cmp, 0);
++}
++
+ static struct remote *make_remote(const char *name, int len)
  {
--       return git_config_with_options(fn, data, NULL, 1);
-+       if (git_config_with_options(fn, data, NULL, 1) < 0)
-+               /*
-+                * git_config_with_options() normally returns only
-+                * positive values, as most errors are fatal, and
-+                * non-fatal potential errors are guarded by "if"
-+                * statements that are entered only when no error is
-+                * possible.
-+                *
-+                * If we ever encounter a non-fatal error, it means
-+                * something went really wrong and we should stop
-+                * immediately.
-+                */
-+               die("Unknown error occured while reading the user's configuration");
+-	struct remote *ret;
+-	int i;
++	struct remote *ret, *replaced;
++	struct remotes_hash_key lookup;
++	struct hashmap_entry lookup_entry;
+ 
+-	for (i = 0; i < remotes_nr; i++) {
+-		if (len ? (!strncmp(name, remotes[i]->name, len) &&
+-			   !remotes[i]->name[len]) :
+-		    !strcmp(name, remotes[i]->name))
+-			return remotes[i];
+-	}
++	if (!len)
++		len = strlen(name);
++
++	init_remotes_hash();
++	lookup.str = name;
++	lookup.len = len;
++	hashmap_entry_init(&lookup_entry, memhash(name, len));
++
++	if ((ret = hashmap_get(&remotes_hash, &lookup_entry, &lookup)) != NULL)
++		return ret;
+ 
+ 	ret = xcalloc(1, sizeof(struct remote));
+ 	ret->prune = -1;  /* unspecified */
+ 	ALLOC_GROW(remotes, remotes_nr + 1, remotes_alloc);
+ 	remotes[remotes_nr++] = ret;
+-	if (len)
+-		ret->name = xstrndup(name, len);
+-	else
+-		ret->name = xstrdup(name);
++	ret->name = xstrndup(name, len);
++
++	hashmap_entry_init(ret, lookup_entry.hash);
++	replaced = hashmap_put(&remotes_hash, ret);
++	assert(replaced == NULL);  /* no previous entry overwritten */
+ 	return ret;
  }
  
- static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
-
->> with a solution where the return value from git_config_with_options() is
->> ignored. It's the same discussion we already had about the call to
->> git_config() in git_config_check_init() actually, but I now think a
->> die() statement should be within git_config(), not after, so that every
->> callers benefit from it.
->
-> The above patch works like that, doesn't it?
-
-Except, it ignores the return code silently.
-
-If you chose not to use a die() here, then ignoring the return value
-must be justified, or readers of the code will just assume a programming
-error, and will be tempted to repair the code by not ignoring the return
-value. If so, there is no point in counting errors in git_config_early()
-anymore, and a cleanup patch should be applied, something like:
-
---- a/config.c
-+++ b/config.c
-@@ -1147,30 +1147,30 @@ int git_config_system(void)
+@@ -722,13 +748,16 @@ struct remote *pushremote_get(const char *name)
  
- int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ int remote_is_configured(const char *name)
  {
--       int ret = 0, found = 0;
-+       int found = 0;
-        char *xdg_config = NULL;
-        char *user_config = NULL;
+-	int i;
++	struct remotes_hash_key lookup;
++	struct hashmap_entry lookup_entry;
+ 	read_config();
  
-        home_config_paths(&user_config, &xdg_config, "config");
- 
-        if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0)) {
--               ret += git_config_from_file(fn, git_etc_gitconfig(),
-+               git_config_from_file(fn, git_etc_gitconfig(),
-                                            data);
-                found += 1;
-        }
- 
-        if (xdg_config && !access_or_die(xdg_config, R_OK, ACCESS_EACCES_OK)) {
--               ret += git_config_from_file(fn, xdg_config, data);
-+               git_config_from_file(fn, xdg_config, data);
-                found += 1;
-        }
- 
-        if (user_config && !access_or_die(user_config, R_OK, ACCESS_EACCES_OK)) {
--               ret += git_config_from_file(fn, user_config, data);
-+               git_config_from_file(fn, user_config, data);
-                found += 1;
-        }
- 
-        if (repo_config && !access_or_die(repo_config, R_OK, 0)) {
--               ret += git_config_from_file(fn, repo_config, data);
-+               git_config_from_file(fn, repo_config, data);
-                found += 1;
-        }
- 
-@@ -1187,7 +1187,7 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
- 
-        free(xdg_config);
-        free(user_config);
--       return ret == 0 ? found : ret;
-+       return found;
+-	for (i = 0; i < remotes_nr; i++)
+-		if (!strcmp(name, remotes[i]->name))
+-			return 1;
+-	return 0;
++	init_remotes_hash();
++	lookup.str = name;
++	lookup.len = strlen(name);
++	hashmap_entry_init(&lookup_entry, memhash(name, lookup.len));
++
++	return hashmap_get(&remotes_hash, &lookup_entry, &lookup) != NULL;
  }
  
- int git_config_with_options(config_fn_t fn, void *data,
-
-(untested)
-
-My preference goes for the defensive one, using a proper die() statement
-(or even an assert()).
-
->> In any case, doing this in a separate patch means the commit message
->> (and possibly a comment next to the git_config() call) should explain
->> the situation clearly and justify the choice.
->>
->
-> The choice being not to return a error code for git_config()?
-> I am pretty much confused by now.
-
-The choice of which of the two patches above you'll prefer.
-
+ int for_each_remote(each_remote_fn fn, void *priv)
+diff --git a/remote.h b/remote.h
+index 917d383..81cb5ff 100644
+--- a/remote.h
++++ b/remote.h
+@@ -1,6 +1,7 @@
+ #ifndef REMOTE_H
+ #define REMOTE_H
+ 
++#include "hashmap.h"
+ #include "parse-options.h"
+ 
+ enum {
+@@ -10,6 +11,8 @@ enum {
+ };
+ 
+ struct remote {
++	struct hashmap_entry ent;  /* must be first */
++
+ 	const char *name;
+ 	int origin;
+ 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+2.0.0.rc4
+
+
+
+------MIME delimiter for sendEmail-128858.688128279--
