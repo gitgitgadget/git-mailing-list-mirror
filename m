@@ -1,66 +1,89 @@
-From: Michael Migdol <michael-spam@migdol.net>
-Subject: Re: stash-p broken?
-Date: Mon, 28 Jul 2014 17:56:28 -0700
-Message-ID: <CAJWZfo741u8KqZax4ReTEg8hy1BKWR2_PofxAQtE4wU=ikRsPw@mail.gmail.com>
-References: <CAJWZfo6j2E2qu1n6JTmtPw109tAjnEfWBvKxwGfTrKSF6MZ2Uw@mail.gmail.com>
+From: Bryan Turner <bturner@atlassian.com>
+Subject: Re: git diff-tree commit detail bug in 2.0.2 and 2.0.3
+Date: Tue, 29 Jul 2014 11:06:25 +1000
+Message-ID: <CAGyf7-HK74YuqhrRDJ46qti17UNAd6Bp6if4y+ZwUV_PZs2ujQ@mail.gmail.com>
+References: <CAGyf7-HKpfyi5OqXS9BhtfXUEZXbisawpTPK9UFOQObz1qhRUw@mail.gmail.com>
+	<20140728103504.GB10737@peff.net>
+	<xmqqtx614cea.fsf@gitster.dls.corp.google.com>
+	<20140728173734.GA10309@peff.net>
+	<20140728180157.GA11265@peff.net>
+	<xmqqppgp4a7x.fsf@gitster.dls.corp.google.com>
+	<xmqqegx53txe.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jul 29 02:56:37 2014
+Cc: Jeff King <peff@peff.net>, Git Users <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 03:06:31 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBviT-0006jH-AU
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 02:56:33 +0200
+	id 1XBvs7-0001lt-C3
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 03:06:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752146AbaG2A43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 20:56:29 -0400
-Received: from mail-qg0-f51.google.com ([209.85.192.51]:39372 "EHLO
-	mail-qg0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779AbaG2A43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 20:56:29 -0400
-Received: by mail-qg0-f51.google.com with SMTP id a108so9744204qge.10
-        for <git@vger.kernel.org>; Mon, 28 Jul 2014 17:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:content-type;
-        bh=+7sM3R9sZJWas2WnBQ/keaCq67J2Ui4Ei/1qhTMPFpk=;
-        b=Z6JkJoONC+xfxCl/zqXbk5xkxN4z25L51Ufa9hRmcZpBWxiYb5FucqcqBhFG38iARs
-         9iNaeCrx+WN+3bbTRP18vEPpT3rgNoIVffFjsv3udb1r6NTb7KW4qiaDdFQ02IpjWrom
-         3df2AfDljIzGZEQnJ4ead/NkLNsiyGlzH/cOiDTSkHqp1nBKXDO3YqNOaEB+Z/xHBbKy
-         OPH8Xh2A6IRKWxSBCqmzM3Z+oH8Hl11RPgVTu3f01FBat2AzdUOlIpSRBE9bnpny+4Kp
-         url28NCYDJpt+qfbjuqMjNOYHD+rLUrUPBqQYki/tPdYNfUNjTmt0AQBmpYRuEZoVksn
-         HNOg==
-X-Received: by 10.140.30.180 with SMTP id d49mr65888878qgd.63.1406595388599;
- Mon, 28 Jul 2014 17:56:28 -0700 (PDT)
-Received: by 10.96.103.70 with HTTP; Mon, 28 Jul 2014 17:56:28 -0700 (PDT)
-In-Reply-To: <CAJWZfo6j2E2qu1n6JTmtPw109tAjnEfWBvKxwGfTrKSF6MZ2Uw@mail.gmail.com>
-X-Google-Sender-Auth: qgtc0FV7RTkunJL95JEuaPOqQ5I
+	id S1752594AbaG2BG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 28 Jul 2014 21:06:27 -0400
+Received: from na3sys009aog102.obsmtp.com ([74.125.149.69]:40480 "HELO
+	na3sys009aog102.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752495AbaG2BG1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 28 Jul 2014 21:06:27 -0400
+Received: from mail-oa0-f42.google.com ([209.85.219.42]) (using TLSv1) by na3sys009aob102.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKU9bzkhw7IPlfbTR1pykWtz4rmlo0GsCH@postini.com; Mon, 28 Jul 2014 18:06:26 PDT
+Received: by mail-oa0-f42.google.com with SMTP id n16so9689533oag.1
+        for <git@vger.kernel.org>; Mon, 28 Jul 2014 18:06:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=dVNmZAulTqivjnepQ1aSwUEgPtoaaS0bJ7j7Sc1ExJc=;
+        b=dJ/BTT2PO6LoDqb9rmSecFfztSxGyAAF8cmvRYpUrvL3lcbEApC7jrabPwxRHlcj34
+         hw8Xxk/FQHM4JjbEwGTDjSlHoA3d8s7GCcWIB7VwibXak8EOFSaJ2lNUWwqmvcZagBeN
+         5hy8xmRZWXLMbhETDuwGItiKf6FR2tRd8CyGaRAHL6G94SjMolnF7l8gq6OzypVdIGqo
+         h7fxXcZmUzndlcNk7tn/k7rtnzPWtWATxNolNPLf2y5K3hqNyLb+ZXBJVuj7kJ3qbWcB
+         aliIC8kqhFKlW/RPSfeARnF/QQPIne5p8Lyq8jOAxIy68rUoUkSRhZgDMTJ929u0iozY
+         U3Cg==
+X-Gm-Message-State: ALoCoQk2ormvBvC5sD6qK2G6eNzEnSEQwb3+fZGh89Ozeaj8EX11y32dHpSIJYPNdewWIE28k7+ZkEzB3fweaxNe7D6lRn4T6Ffzsli9P5HihceI1fCp0RbpyK2HGS4GIeQTfi7PNni8
+X-Received: by 10.182.199.5 with SMTP id jg5mr54970453obc.75.1406595986143;
+        Mon, 28 Jul 2014 18:06:26 -0700 (PDT)
+X-Received: by 10.182.199.5 with SMTP id jg5mr54970448obc.75.1406595986032;
+ Mon, 28 Jul 2014 18:06:26 -0700 (PDT)
+Received: by 10.182.51.130 with HTTP; Mon, 28 Jul 2014 18:06:25 -0700 (PDT)
+In-Reply-To: <xmqqegx53txe.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254389>
 
-Sorry for error -- I meant: git stash list -p, not git stash -p.
+On Tue, Jul 29, 2014 at 10:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>>> Yeah, I'm fine with a straight revert, too (I think it is fine to keep
+>>>> in master, though). I think jk/alloc-commit-id is built right on top of
+>>>> the original commit-slab topic, so it should be easy to do either way.
+>>>>
+>>>> Thanks for dealing with it.
+>>>
+>>> Whatever we do, perhaps it is worth applying the test below on top?
+>>
+>> Yeah, thanks.  I think that is a good idea.  I was preparing a patch
+>> to tuck your minimum reproduction at the end of 4202, but your version
+>> and placement makes good sense.
+>
+> OK, I pushed out updated 'maint' and 'master'.  The former merges
+> a rebased version of jk/alloc-commit-id in to make the "reorganize
+> the way we manage the in-core commit data" topic, and the latter
+> reverts the "Use SSE to micro-optimize a leaf function to check the
+> format of a ref string".
+>
+> Please give them some quick sanity check.
+>
+> Thanks.
 
-On Mon, Jul 28, 2014 at 5:38 PM, Michael Migdol <michael-spam@migdol.net> wrote:
-> I recently upgraded from Ubuntu 13.10 to Ubuntu 14.04.  After doing so,
-> "git stash -p" stopped working.  (It apparently is ignoring the -p
-> parameter).  I'm not sure what version I was using previously, but after
-> some experimentation, I see that:
->
-> version 1.7.12.2 : stash -p DOES work
-> version 1.9.3 : doesn't work
-> version 2.0.3 : doesn't work
->
-> Osse on the IRC channel was helping out with this and saw some very odd
-> behavior while trying to bisect where the regression occurred;  he said
-> he'd comment further tomorrow.  But I thought I would send a note to the
-> list for archival...
->
-> Cheers,
-> Michael
+Thanks both of you; I appreciate your efforts! I've run my suite of
+tests against the tips of master and maint and all 681 pass for each.
+Looks good to me.
+
+Best regards,
+Bryan Turner
