@@ -1,93 +1,94 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 7/8] checkout: prefix --to argument properly when cwd is moved
-Date: Tue, 29 Jul 2014 13:51:25 -0700
-Message-ID: <xmqq8unb3n3m.fsf@gitster.dls.corp.google.com>
-References: <1406115795-24082-1-git-send-email-pclouds@gmail.com>
-	<1406641831-2390-1-git-send-email-pclouds@gmail.com>
-	<1406641831-2390-8-git-send-email-pclouds@gmail.com>
+Subject: Re: [PATCH 2/5] refs.c: write updates to packed refs when a transaction has more than one ref
+Date: Tue, 29 Jul 2014 14:09:57 -0700
+Message-ID: <xmqq4mxz3m8q.fsf@gitster.dls.corp.google.com>
+References: <1406310926-4080-1-git-send-email-sahlberg@google.com>
+	<1406310926-4080-3-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Max Kirillov <max@max630.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	git@drmicha.warpmail.net
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 22:51:40 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Tue Jul 29 23:10:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCEN1-0002WG-JZ
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 22:51:39 +0200
+	id 1XCEez-0004eV-JB
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 23:10:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753914AbaG2Uvf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 29 Jul 2014 16:51:35 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52026 "EHLO smtp.pobox.com"
+	id S1753470AbaG2VKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 29 Jul 2014 17:10:07 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57430 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751753AbaG2Uve convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 29 Jul 2014 16:51:34 -0400
+	id S1752030AbaG2VKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 29 Jul 2014 17:10:06 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 2B1D62C8DD;
-	Tue, 29 Jul 2014 16:51:34 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6D18F2CF83;
+	Tue, 29 Jul 2014 17:10:05 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=BixtEOMRo7ue
-	Yn9FMCJUOsaJVNs=; b=S5F8DIcx34RkqOY5t13HkSVxS0HWtlFAkHzLk9ETQKlF
-	VmpYA+3k0qXQm2ZqP9zkVApzmCqTA5m5mEymibN992QxAh0xOigx7OyTxjmEXzco
-	bwPJ98XOAhR5TPacfEAgjmj99KzY4Uqbj41qFhNjItus8tmwt7/SheMheLcoZBg=
+	:content-type; s=sasl; bh=itIeBg1jHtSQQECwbrDlVUqyZd8=; b=BJhSKu
+	liHphybiv7r88+gRlBVVCohOGAtT+QN5UdGHP0oGKVDUSd3QRyGesxNIatcizTWA
+	4edskpN/I58hX9cXk3B3yqhBsk9vgGevnTgS/qPZBukwebr9uUfX7FkQVoEMmML9
+	lFnRg7oJu3LG9rmtTJheMs5DPzhHylptER18A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XRz+Vb
-	dWLvFgkLzXiJUUTq7GClVRVAw4TVDD3iB2AuckIS4TwnW1vTmjpSchLaOYRj4PsO
-	uTTaJN+qqOIXk7Ah4Q5kHJC6pnIz1f90HYJioGY9T0RFf4BrWCCUWHQuR4Q16S8E
-	QDm47ZAy4Y9zNX+gPlm1ws557CSmWYMySH5zA=
+	:content-type; q=dns; s=sasl; b=dfaMz71fxWWaHBcwRbpdTEf9bdFtQcdg
+	Mt0HI61zYr0Qpr6cTm+kltrqF8Y/iOhT8Kwrh6p4z/c7agItr/pJBzBkPTfgraLw
+	QKrGTSQRcbF2vBn1Bd4EplJLX5tUrxHvefbuGmAD2MktO6zjpgNMqRYEgS9p9Al7
+	CGmi7RPTUek=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 20D662C8DC;
-	Tue, 29 Jul 2014 16:51:34 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 61FA32CF82;
+	Tue, 29 Jul 2014 17:10:05 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 478132C8CD;
-	Tue, 29 Jul 2014 16:51:27 -0400 (EDT)
-In-Reply-To: <1406641831-2390-8-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Tue, 29
- Jul 2014 20:50:30 +0700")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id CAC812CF74;
+	Tue, 29 Jul 2014 17:09:58 -0400 (EDT)
+In-Reply-To: <1406310926-4080-3-git-send-email-sahlberg@google.com> (Ronnie
+	Sahlberg's message of "Fri, 25 Jul 2014 10:55:23 -0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1C10D54E-1762-11E4-BCF5-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: B2979CA8-1764-11E4-9C33-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254470>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Ronnie Sahlberg <sahlberg@google.com> writes:
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  builtin/checkout.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 173aab1..4fbb9c1 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -1342,7 +1342,7 @@ int cmd_checkout(int argc, const char **argv, c=
-onst char *prefix)
->  			 N_("do not limit pathspecs to sparse entries only")),
->  		OPT_HIDDEN_BOOL(0, "guess", &dwim_new_local_branch,
->  				N_("second guess 'git checkout no-such-branch'")),
-> -		OPT_STRING(0, "to", &opts.new_worktree, N_("path"),
-> +		OPT_FILENAME(0, "to", &opts.new_worktree,
->  			   N_("check a branch out in a separate working directory")),
->  		OPT_END(),
->  	};
+> +	/*
+> +	 * Always copy loose refs that are to be deleted to the packed refs.
+> +	 * If we are updating multiple refs then copy all non symref refs
+> +	 * to the packed refs too.
+> +	 */
+>  	for (i = 0; i < n; i++) {
+>  		struct ref_update *update = updates[i];
+>  		unsigned char sha1[20];
+> +		int flag;
+>  
+>  		if (update->update_type != UPDATE_SHA1)
+>  			continue;
+> -		if (!is_null_sha1(update->new_sha1))
+> +		if (num_updates < 2 && !is_null_sha1(update->new_sha1))
+>  			continue;
+>  		if (get_packed_ref(update->refname))
+>  			continue;
+>  		if (!resolve_ref_unsafe(update->refname, sha1,
+> -					RESOLVE_REF_READING, NULL))
+> +					RESOLVE_REF_READING, &flag))
+> +			continue;
+> +		if (flag & REF_ISSYMREF)
+>  			continue;
 
-Good thinking.  Otherwise this would not work from within a
-subdirectory.  Perhaps you would want a test for it?
+This skipping of symref didn't use to be here.
 
-An unrelated tangent, but would we want to further enhance
-OPT_FILENAME() to understand ~/path and ~user/path perhaps?
-It is easy to rely on users' shells to do so, so it is not a big
-deal and it certainly is unrelated to this particular topic.
+Is this an enhancement needed to implement the new "feature"
+(i.e. use packed refs to represent multi-update as an atomic
+operation)?  It looks to me more like an unrelated "oops, forgot
+that we cannot use packed refs to store symrefs" fix-up, unless no
+caller passed symref in updates[] in the original code, and now we
+have callers that do.
+
+Puzzled...
