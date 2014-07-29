@@ -1,102 +1,105 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/5] refs.c: allow passing raw git_committer_info as email
- to _update_reflog
-Date: Mon, 28 Jul 2014 19:39:55 -0400
-Message-ID: <CAPig+cRWanM7fUR-fJ7r-zTrTj5jbkKik0=12WOiNGrWwA-JNw@mail.gmail.com>
-References: <1406307521-10339-1-git-send-email-sahlberg@google.com>
-	<1406307521-10339-2-git-send-email-sahlberg@google.com>
-	<20140725193728.GG12427@google.com>
-	<CAL=YDWmSKBnjXiBUJjOb-+M7R8d==mMsN11DjDTDxU2+WAh+vQ@mail.gmail.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: [PATCH v3 05/10] abspath: convert real_path_internal() to strbuf
+Date: Tue, 29 Jul 2014 02:04:59 +0200
+Message-ID: <53D6E52B.1050006@web.de>
+References: <53D694A2.8030007@web.de> <53D6964E.1070100@web.de>	<20140728191649.GE11265@peff.net> <xmqqiomh40ui.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Tue Jul 29 01:40:03 2014
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Karsten Blees <karsten.blees@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jul 29 02:05:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XBuWP-0004Uf-Ci
-	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 01:40:01 +0200
+	id 1XBuuk-0004pG-CX
+	for gcvg-git-2@plane.gmane.org; Tue, 29 Jul 2014 02:05:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751777AbaG1Xj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 28 Jul 2014 19:39:57 -0400
-Received: from mail-yh0-f43.google.com ([209.85.213.43]:48500 "EHLO
-	mail-yh0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750840AbaG1Xj4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 28 Jul 2014 19:39:56 -0400
-Received: by mail-yh0-f43.google.com with SMTP id 29so5335046yhl.30
-        for <git@vger.kernel.org>; Mon, 28 Jul 2014 16:39:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:date:message-id:subject
-         :from:to:cc:content-type;
-        bh=FmDga6GpTY6P1urNbsm+rJd2y67P22+wAYS79QWylpU=;
-        b=fTJeA7VjuJzcsoPlwO06kYdN8r5dDLMfC+NPSjwA221sFVkWoUml8zfmBCcHaoeqWP
-         1V+kuTA7awFs1oNFNbu68cz7BD3Na7BKUhYIa5PmqrzTeO+h0zW5yatHOC1qBlCXDm3T
-         y3nRTYg7JEG1IG/bpIaCpCM2TA+ytnedAdbVmOfzxskVQ1HP5snX6kj8p70OEHfhJ+qW
-         Xa5iNBds7C57AqnmJkiD+gwaNgyTdEgoxJxx+4iXqipcTfxsYgbSsVVEO1GvZ2mrCf+K
-         GYBxbZ/av6ySAVhOLvGoiMc7NXgItTE/PW3R61KkjmnxHyIsAPaxt/PNlHZfnBRFCzAF
-         oVjQ==
-X-Received: by 10.236.185.132 with SMTP id u4mr45453663yhm.95.1406590795901;
- Mon, 28 Jul 2014 16:39:55 -0700 (PDT)
-Received: by 10.170.163.5 with HTTP; Mon, 28 Jul 2014 16:39:55 -0700 (PDT)
-In-Reply-To: <CAL=YDWmSKBnjXiBUJjOb-+M7R8d==mMsN11DjDTDxU2+WAh+vQ@mail.gmail.com>
-X-Google-Sender-Auth: BV8c5rsCQF6ZP_U_10-pLxhvE2o
+	id S1752382AbaG2AFF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 28 Jul 2014 20:05:05 -0400
+Received: from mout.web.de ([212.227.17.12]:54716 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752169AbaG2AFF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 28 Jul 2014 20:05:05 -0400
+Received: from [192.168.178.27] ([79.253.140.83]) by smtp.web.de (mrweb102)
+ with ESMTPSA (Nemesis) id 0LuuS5-1WTxC03wrx-0104Bt; Tue, 29 Jul 2014 02:05:02
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <xmqqiomh40ui.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:Ku6wGVCJ7egP+YJnWsgeLIICu+PeTvwflJGQh5fPstDLgDblv1T
+ iqz0Igpnuba7XUCBnuH2HllyFC9eaReh1huji+pJRKxDrk22vKCKReS4qjUm/1GYGk+OGDw
+ fU+xqM8CDf+59hx/8wvYPk/q2TKmaBDhh2xh6VDuoau/3fZtd9xq7B3EzFlx9y6IyVZZNQW
+ yOYpLQOdo6tN+CYmcCJpw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254383>
 
-On Mon, Jul 28, 2014 at 2:01 PM, Ronnie Sahlberg <sahlberg@google.com> wrote:
-> On Fri, Jul 25, 2014 at 12:37 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Ronnie Sahlberg wrote:
->>>  /*
->>>   * Append a reflog entry for refname. If the REFLOG_TRUNCATE flag is set
->>>   * this update will first truncate the reflog before writing the entry.
->>>   * If msg is NULL no update will be written to the log.
->>>   */
->>>  int transaction_update_reflog(struct ref_transaction *transaction,
->>>                                const char *refname,
->>>                                const unsigned char *new_sha1,
->>>                                const unsigned char *old_sha1,
->>>                                const char *email,
->>>                                unsigned long timestamp, int tz,
->>>                                const char *msg, int flags,
->>>                                struct strbuf *err);
+Am 28.07.2014 um 23:42 schrieb Junio C Hamano:
+> Jeff King <peff@peff.net> writes:
+>
+>> On Mon, Jul 28, 2014 at 08:28:30PM +0200, Ren=C3=A9 Scharfe wrote:
 >>
->> This is a lot of parameters, some optional, not all documented.  Would
->> it make sense to pack some into a struct?
->
-> I changed email,timestamp,tz into a struct
-> /*
->  * Committer data provided to reflog updates.
->  * If flags contain REFLOG_COMMITTER_DATA_IS_VALID then
->  * then the structure contains a prebaked committer string
-
-s/then then/then/
-
->  * just like git_committer_info() would return.
->  *
->  * If flags does not contain REFLOG_COMMITTER_DATA_IS_VALID
->  * then the committer info string will be generated using the passed
->  * email, timestamp and tz fields.
->  * This is useful for example from reflog iterators where you are passed
->  * these fields individually and not as a prebaked git_committer_info()
->  * string.
->  */
-> struct reflog_committer_info {
-> const char *committer_info;
->
-> const char *id;
-> unsigned long timestamp;
-> int tz;
-> };
->
+>>> @@ -60,26 +58,22 @@ static const char *real_path_internal(const cha=
+r *path, int die_on_error)
+>>>   			goto error_out;
+>>>   	}
+>>>
+>>> -	if (strlcpy(buf, path, PATH_MAX) >=3D PATH_MAX) {
+>>> -		if (die_on_error)
+>>> -			die("Too long path: %.*s", 60, path);
+>>> -		else
+>>> -			goto error_out;
+>>> -	}
+>>> +	strbuf_init(&sb, 0);
+>>> +	strbuf_addstr(&sb, path);
 >>
->> Thanks and hope that helps,
->> Jonathan
+>> As with the other patch I just mentioned, should this be strbuf_rese=
+t,
+>> not strbuf_init? We want to reset the static buffer back to zero-siz=
+e,
+>> not throw it away and leak whatever was there.
+>>
+>> -Peff
+>
+> Yes, this one seems to be leaking.
+>
+> "Next call to the function invalidates the return value the last
+> caller received" feels like playing with fire.  Most existing
+> callers are safe in that the first thing they do to the returned
+> string is xstrdup() it, but we would need to check all the other
+> callers.
+
+That's the price we pay for using static variables, no?  Callers need t=
+o=20
+consume them as long as they're fresh and multi-threading is not=20
+allowed.  Before, callers could use wrong buffer contents, after the=20
+patch they could still have a pointer to freed memory, which should be=20
+more noticeable in tests.
+
+Getting a strbuf_add_real_path() in order to avoid static variables=20
+would be nice.  And it would also be nice if it worked without calling=20
+chdir().  Nice topics for follow-up patches. :)
+
+> I briefly thought it is not OK for set_git_work_tree(), which gets
+> new_work_tree, calls real_path() to receive the value from the
+> function, and then calls real_path() again on it.  The "We've
+> already done it" optimization is the only thing that makes it safe,
+> which feels overly fragile.
+
+It wasn't introduced as an optimization, but to silence valgrind=20
+(1d679de5: make_absolute_path: return the input path if it points to ou=
+r=20
+buffer).  set_git_work_tree() calls real_path() only once in each of it=
+s=20
+two branches.  However, one caller (init) hands it a path returned by=20
+real_path(); we can change that (sent a patch).
+
+Ren=C3=A9
