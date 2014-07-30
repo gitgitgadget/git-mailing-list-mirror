@@ -1,106 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git p4 test: fix failure in 9814-git-p4-rename.sh Was: Re: Test failure in t9814-git-p4-rename.sh - my environment or bad test?
-Date: Wed, 30 Jul 2014 12:09:48 -0700
-Message-ID: <xmqq4mxyzmrm.fsf@gitster.dls.corp.google.com>
-References: <CABUJjW8TFCw2wwAO83vMBPc7vQc+rvuPOAca-CNECEduUn19Ew@mail.gmail.com>
-	<53D1543F.50508@kdbg.org>
-	<xmqq4my68la5.fsf@gitster.dls.corp.google.com>
-	<CABUJjW_tnf2SRCyjRw1n+UbzLzTbmqW6XAJSJnZ5qszdpJ3SYA@mail.gmail.com>
+From: Ronnie Sahlberg <sahlberg@google.com>
+Subject: Re: [PATCH 2/5] refs.c: write updates to packed refs when a
+ transaction has more than one ref
+Date: Wed, 30 Jul 2014 12:19:42 -0700
+Message-ID: <CAL=YDWn60wSnY3cKBDgZYdCnNDzyF9VyJ72CbBcHSi7kM2uY2A@mail.gmail.com>
+References: <1406310926-4080-1-git-send-email-sahlberg@google.com>
+	<1406310926-4080-3-git-send-email-sahlberg@google.com>
+	<xmqq4mxz3m8q.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, Pete Wyckoff <pw@padd.com>,
-	git@vger.kernel.org
-To: Christoph Bonitz <ml.christophbonitz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 21:10:06 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jul 30 21:20:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCZGF-0001xM-Fc
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 21:10:03 +0200
+	id 1XCZPf-0002KT-FI
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 21:19:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755705AbaG3TJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2014 15:09:59 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59621 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755500AbaG3TJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2014 15:09:58 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 62A0F2C2A1;
-	Wed, 30 Jul 2014 15:09:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fhnG8nwg3+DKQFFugERZaSwEpdM=; b=KnQOgV
-	byPYHGdx/gv+ieacC6aVE5n8EA9KKCUzI2gb3bT7EpUx3pkuQymE1I/Y0gbgDalT
-	8u2vn7ooaDJ1PqH/7JYI1IktVBhI59nAYBteDGbIPuvldPAFKCdIx4xZWC3hV3Fo
-	LkEgnXJl8ieURPZbCoqdteZ3k6XQyQ2+r100o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Uwd+ityEmmknWVIksbNMyTI4imR+rtbY
-	4rfXx1Q3EyiwEP6npRjto7nvRvM8ni63MoigDAsnqP3UMAASZsqLf0fAfZBMvadU
-	6p0DiSVgww0zgOkwWvk9+5FzUUtZl2JLbYZADaHpgICGvADnaw7DrLiZ/qhV0aW1
-	QR3AcoTMF/A=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 567672C2A0;
-	Wed, 30 Jul 2014 15:09:57 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id A438B2C297;
-	Wed, 30 Jul 2014 15:09:50 -0400 (EDT)
-In-Reply-To: <CABUJjW_tnf2SRCyjRw1n+UbzLzTbmqW6XAJSJnZ5qszdpJ3SYA@mail.gmail.com>
-	(Christoph Bonitz's message of "Wed, 30 Jul 2014 09:08:26 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 149C087C-181D-11E4-B646-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1755769AbaG3TTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2014 15:19:43 -0400
+Received: from mail-vc0-f177.google.com ([209.85.220.177]:62846 "EHLO
+	mail-vc0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755537AbaG3TTn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2014 15:19:43 -0400
+Received: by mail-vc0-f177.google.com with SMTP id hy4so2572720vcb.8
+        for <git@vger.kernel.org>; Wed, 30 Jul 2014 12:19:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        bh=lnBIKZdlZ45txkL4RFwtKRQNw6bFxuF67Da1r8uwRrc=;
+        b=eu8iG9SNaLyyMUVo5kUJqHyPiHt3jzeBGU184IwtC0uXE+khA3KrEgCrn9985Le+wS
+         VPDJfpI64jC1/+VmZEdDe8tRPfo7wCwmDFZT0QrQ7tXhcWtIQG7IMC5pPIIFuKLCQWhb
+         PDdDI4r8XglWEC0u21vc5+z/LBy6lUc0cZa66SQNlT9UzocAHy2X/zMYbvLcekvUXGon
+         xTd9vrFGMDZqt+EUi/DrrZ833q/p+d/qcOvbtrKvNy5RYMg6TE9aZSF+Sp9q9H7OgLj0
+         4f4VErELsCXJAGCjQ28wBtKHqcgsKgetcEopLJmCQkcLJd8LrepX2F72gAaMXuoT8tXz
+         1fyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=lnBIKZdlZ45txkL4RFwtKRQNw6bFxuF67Da1r8uwRrc=;
+        b=bgfo7iKeVb3A8hlYKLI0BWMaaODPzEQJ0LwRbgZexhLT5VF5u6Vw4FqrTvcXXuUaYU
+         EXMwTH7QuM5BMvhcaDNSxOkWDbTIZGlcV2RLbsRYyvcFFz0USkmp6mJG4i8Z7Ady9wD0
+         +2PnMaGYmXe+264RghoUBd96nopMo2vU5a3Qi5Pqxir3XkKYNvMnmBcCZMyuZSB3idrv
+         vTG1m1jxamnsMRP/gbOms24Y2Edeloe2LXqMDFpLDehk9Giqb3VHETFaNx31uvcLMt5v
+         6imRcDrJebLgYIFqvQ/kg8exKDmo5F75yffa5WebRfJcw6F6DORVhYc60YpPdA612rVM
+         F9+w==
+X-Gm-Message-State: ALoCoQmdJhjWTX4/k3BPA+JCxZfzDobph1l9O2bVGTNVZxX0dcI6xzyRCGFRM64rwqHzZD4n6BIt
+X-Received: by 10.52.228.40 with SMTP id sf8mr4791533vdc.78.1406747982181;
+ Wed, 30 Jul 2014 12:19:42 -0700 (PDT)
+Received: by 10.52.180.6 with HTTP; Wed, 30 Jul 2014 12:19:42 -0700 (PDT)
+In-Reply-To: <xmqq4mxz3m8q.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254511>
 
-Christoph Bonitz <ml.christophbonitz@gmail.com> writes:
+On Tue, Jul 29, 2014 at 2:09 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Ronnie Sahlberg <sahlberg@google.com> writes:
+>
+>> +     /*
+>> +      * Always copy loose refs that are to be deleted to the packed refs.
+>> +      * If we are updating multiple refs then copy all non symref refs
+>> +      * to the packed refs too.
+>> +      */
+>>       for (i = 0; i < n; i++) {
+>>               struct ref_update *update = updates[i];
+>>               unsigned char sha1[20];
+>> +             int flag;
+>>
+>>               if (update->update_type != UPDATE_SHA1)
+>>                       continue;
+>> -             if (!is_null_sha1(update->new_sha1))
+>> +             if (num_updates < 2 && !is_null_sha1(update->new_sha1))
+>>                       continue;
+>>               if (get_packed_ref(update->refname))
+>>                       continue;
+>>               if (!resolve_ref_unsafe(update->refname, sha1,
+>> -                                     RESOLVE_REF_READING, NULL))
+>> +                                     RESOLVE_REF_READING, &flag))
+>> +                     continue;
+>> +             if (flag & REF_ISSYMREF)
+>>                       continue;
+>
+> This skipping of symref didn't use to be here.
+>
+> Is this an enhancement needed to implement the new "feature"
+> (i.e. use packed refs to represent multi-update as an atomic
+> operation)?  It looks to me more like an unrelated "oops, forgot
+> that we cannot use packed refs to store symrefs" fix-up, unless no
+> caller passed symref in updates[] in the original code, and now we
+> have callers that do.
+>
+> Puzzled...
 
-> Apart from your change and the word wrap adjustments suggested by
-> Pete, would the following also make sense, to fix the other flaw
-> Johannes pointed out? With regards to failing, git diff-tree should be
-> idempotent. I think those are the two occurrences in this file:
+It was mainly as an enhancement.
+Prior to this patch we were only using the packed-refs trick for the
+delete+rename operation part of a rename_ref() call.
+And for that case we already explicitly test for and disallow symbolic
+refs already in rename_ref().
 
-As a band-aid, that might be OK, but I think these pipelines are
-unnecessarily and overly wasteful in the first place.
+I added this just for extra safety for "now that we possibly delete
+multiple refs in one transaction, should I special case/disallow the
+packed refs trick for symrefs?"
+Looking at it again I don't think we need this special casing and it
+only makes the code more complex and confusing.
+I will review the use of this a little and run some tests and if all
+looks sane I will remove this ISSYMREF special casing.
 
-All the "sed 1d" you see here is only because the upstream uses
-the one-tree form "diff-tree <options> $commit"; by comparing two,
-i.e. "diff-tree <options> $commit^ $commit", they can be dropped.
-
-All the "cut -f2" is to grab the pathname; we have "--name-only"
-these days.
-
-I.e.
-
->  src=$(git diff-tree -r -C --find-copies-harder HEAD | sed 1d | cut -f2) &&
-
-should become
-
-    src=$(git diff-tree --name-only -r -C --find-copies-harder HEAD^ HEAD) &&
-
-I would think.
-
-Extracting C[0-9]* manually with sed is bad, and expecting that the
-score is within certain range is even worse, because there is no
-formal guarantee that the definition of similarity indices will not
-improve in the future.  --diff-filter=C to limit the output to only
-copied paths, without looking at the similarity index, would be more
-appropriate, e.g. 
-
-    git diff-tree --name-only --diff-filter=C -r -C HEAD^ HEAD
-
-or something along those lines.
-
-Otherwise, run them outside $(), keep the result in a temporary
-file, and process the temporary file with the pipeline.  That has an
-added benefit that lets you inspect the file when something goes
-wrong.  I.e.
-
-	git diff-tree ... >diff-tree-out &&
-        level=$( sed 1d <diff-tree-out | cut -f1 | ... )
+Thank!
+ronnie sahlberg
