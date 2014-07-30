@@ -1,81 +1,128 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] checkout --to: no auto-detach if the ref is already checked out
-Date: Wed, 30 Jul 2014 11:03:42 -0700
-Message-ID: <xmqqmwbqzptt.fsf@gitster.dls.corp.google.com>
-References: <1406115795-24082-1-git-send-email-pclouds@gmail.com>
-	<1406115795-24082-4-git-send-email-pclouds@gmail.com>
-	<53CFBD2A.9030803@drmicha.warpmail.net>
-	<CACsJy8DwPM68j-=LDDbq1H_bT1gD=aLQ8x6C1qiwF79=ai14dg@mail.gmail.com>
-	<xmqq8uni8mx4.fsf@gitster.dls.corp.google.com>
-	<53D1FE76.5080708@drmicha.warpmail.net>
+Subject: Re: [PATCH] utf8.c: fix strbuf_utf8_replace copying the last NUL to dst string
+Date: Wed, 30 Jul 2014 11:23:24 -0700
+Message-ID: <xmqqha1yzowz.fsf@gitster.dls.corp.google.com>
+References: <1406639429-28748-1-git-send-email-pclouds@gmail.com>
+	<xmqqha202b2v.fsf@gitster.dls.corp.google.com>
+	<20140730102022.GA5653@lanh>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Duy Nguyen <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Max Kirillov <max@max630.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Jul 30 20:03:58 2014
+Cc: git@vger.kernel.org
+To: Duy Nguyen <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jul 30 20:23:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCYEF-0003OV-T2
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 20:03:56 +0200
+	id 1XCYXK-0003U7-Hc
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 20:23:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755477AbaG3SDw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2014 14:03:52 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61465 "EHLO smtp.pobox.com"
+	id S1755459AbaG3SXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2014 14:23:34 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:58294 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755021AbaG3SDv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2014 14:03:51 -0400
+	id S1753333AbaG3SXe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2014 14:23:34 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 00FC22A952;
-	Wed, 30 Jul 2014 14:03:51 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 201D52B187;
+	Wed, 30 Jul 2014 14:23:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Mp+rudDMbPCvidmeU9uyg7mBVdo=; b=bnRWf6
-	gBRk+HH4y1p+Oq/w2kh03IRwTqLpUzHK20sfICR0fDVDHM5cjPij5dT17VfBORb4
-	QEkkqWmplJkkExvI8KsrIpbeEo1849o5fQQKqaFGV/oYfx+AsQitZ34b3lUcClXY
-	GYJS9ZJLXY8KM5YyMSo2r8fZXHN1A9rgFbp4A=
+	:content-type; s=sasl; bh=Nm9oHDEY4uW/rPZFK0hW6vek0ow=; b=UwKvqD
+	5wsPl8jgl8P2jsBGqIkzUUIZSO+Uydwxz6evZ8K/3OEUo+DWQfdvw7tRVGBXpnp9
+	r9fv9ixjpZQZkc33OCzWCm0Cwu7rP5DHqZIGYl8LNNn8bZf36rwBfC0F1UZwlN0M
+	750/dC3pFjK4O4fNEhexGOHRF0c3pziKDV2Dc=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mMHqT/ADAioV+dHr/QmEl3Gwhp9Z2cq3
-	q9H+e2fFLVDSkkG03tu5koG7Sj2CSkJ+hKoIGc2z76hizyypzFqie9SWVG8CYazD
-	7mT4xJyFIqo5vLS2zxsuCJUKXnJKHFwhrDCvRUNVCr27owS4NODGYRRZA53PRjy5
-	F2HX3O9ywAM=
+	:content-type; q=dns; s=sasl; b=lusbLMYne4KBxB+KFFz90XPHN0lcKniG
+	gQLfxDcQwDPI6ahthmtUvPUfXPplMAWVrFZ/hQ9b2kmMqs93Ttl2DflZeY2hpnA2
+	O3ekm40dcVvT4a6GITJ27pPUJll7SLAPoptInbBKFR4EMrN5UQdx2aailn1Dtu2M
+	kPstZRxr1LQ=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E99A22A951;
-	Wed, 30 Jul 2014 14:03:50 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 158EE2B186;
+	Wed, 30 Jul 2014 14:23:33 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 75E472A94D;
-	Wed, 30 Jul 2014 14:03:44 -0400 (EDT)
-In-Reply-To: <53D1FE76.5080708@drmicha.warpmail.net> (Michael J. Gruber's
-	message of "Fri, 25 Jul 2014 08:51:34 +0200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AE7972B182;
+	Wed, 30 Jul 2014 14:23:26 -0400 (EDT)
+In-Reply-To: <20140730102022.GA5653@lanh> (Duy Nguyen's message of "Wed, 30
+	Jul 2014 17:20:22 +0700")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D8935938-1813-11E4-8C5B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 993D4AB6-1816-11E4-A54A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254506>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> As an error message that is completely sufficient.
+>> > it returns 0 and steps 'src' by one. 
+>> 
+>> Here "it" refers to utf8_width()?  Who steps 'src' by one?
 >
-> The advice messages are meant to teach the user about the normal parts
-> of the toolchest to use in a situation of "conflict", aren't they?
+> utf8_width() steps 'src'.
+>
+>> 
+>> Ahh, did you mean *src == NUL, i.e. "already at the end of the
+>> string"?
+>
+> Yes.. I guess you have a better commit message prepared for me now :)
 
-Not really.  They are to remind (to those who learned but forgot)
-and to hint (to those who haven't realized they have things to learn
-in this area).  Wall of text that tries to do more than that, like
-"teaching", risks not getting read by anybody.
+Heh.  At least you realized that the log message was uninformative ;-)
 
-> Maybe
-> we should ask someone who hasn't turned them off...
+>> I think utf8_width() called with an empty string should not move the
+>> pointer past that end-of-string NUL in the first place.  It makes me
+>> wonder if it would be a better fix to make it not to do that (and
+>> return 0), but if we declare it is the caller's fault, perhaps we
+>> may want to add
+>> 
+>> 	if (!**start)
+>>         	die("BUG: empty string to utf8_width()???");
+>> 
+>> at the very beginning of utf8_width(), even before it calls
+>> pick-one-utf8-char.
+>> 
+>> Still puzzled...
+>
+> I don't know. I mean, in a UTF-8 byte sequence, NUL is a valid
+> character (part of the ASCII subset), so advancing '*start' by one
+> makes sense.
 
-Actually, I run without most of the 'advice.*' turned off.
+Dubious.  NUL may be valid but it is valid only in the sense that it
+will mark the end of the string, i.e. the caller is expected to do:
+
+        const char *string = ...;
+
+        while (not reached the end of the string) {
+                this_char = pick_one_char(&string);
+                do something to this_char;
+        }
+
+and there are two ways to structure such a loop:
+
+ (1) Make pick-one-char signal the termination condition.  i.e.
+
+	while ((this_char = pick_one(&string)) != EOF)
+		do something to this_char;
+
+     That's a typical getchar()-style loop.  It would better not
+     advance string when it returns EOF.
+
+ (2) Make it the responsibility of the caller not to call beyond the
+     end. i.e.
+
+	while (string < end) {
+        	this_char = pick_one_char(&string);
+		do something to this char;
+	}
+
+and your patch takes the latter, which I think is in line with the
+way how existing callchain works.  So the addition of "BUG" merely
+is to make sure that everybody follows that same convention.
+
+We cannot declare that it is caller's responsibility to feed
+sensible input to the function only at one callsite and allow other
+callsites feed garbage to the same function, after all, no?
