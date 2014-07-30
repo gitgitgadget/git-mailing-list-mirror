@@ -1,349 +1,205 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Transaction patch series overview
-Date: Wed, 30 Jul 2014 10:10:37 -0700
-Message-ID: <CAL=YDWmtitT7kHsZqXmojbv8eKYwKwVn7c+gC180FPQN1uxBvQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Everyday contents (was Re: What's cooking in git.git (Jul 2014, #04; Tue, 22))
+Date: Wed, 30 Jul 2014 10:13:07 -0700
+Message-ID: <xmqqvbqezs64.fsf@gitster.dls.corp.google.com>
+References: <xmqq4my9f4qw.fsf@gitster.dls.corp.google.com>
+	<B6FB0C239E6E4E2489FAB9EF1C902988@PhilipOakley>
+	<xmqqegxcdjzl.fsf@gitster.dls.corp.google.com>
+	<7ACC0F5AD23E4C839D2F819B23DA9564@PhilipOakley>
+	<xmqqvbqm74v7.fsf@gitster.dls.corp.google.com>
+	<xmqqegx95bxc.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jul 30 19:10:48 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Wed Jul 30 19:13:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCXOp-0007g0-TN
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 19:10:48 +0200
+	id 1XCXRP-0001bU-Mn
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 19:13:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755785AbaG3RKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2014 13:10:41 -0400
-Received: from mail-vc0-f180.google.com ([209.85.220.180]:47681 "EHLO
-	mail-vc0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755592AbaG3RKi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2014 13:10:38 -0400
-Received: by mail-vc0-f180.google.com with SMTP id ij19so2304024vcb.11
-        for <git@vger.kernel.org>; Wed, 30 Jul 2014 10:10:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=7bsLCTuCNJ00JspF8VTFduRVauLnGpFwLndQqKox2tA=;
-        b=hOp3lB443W00pW20/TW1QLHqhAcdX7FMG8SY+RosALYEU0Cr7A2psRSna9/XodR60Z
-         F6Ag+0RUkeH6WNbncR0oEtUa+WfaIgaxJl90xq7lmwbnAYWfJBaG81mMqL+6xRvVW1a9
-         bnExbM3Zdk+kpBBRzvtLEX78gWg9CprY+rmp5Qm8R01+aL8hy/y4p8vuyCVnU1eH6uW5
-         z/WO/vXXqd/ZA3W/G/nqoVpBB72JGk53zt8SYEt1z+LVe2RPwtWmZjPmLaUhuEEN4Lt8
-         IXvefr1sUCf1Mhws6AAZd4djPe6rnOQ5NFByxysMf4XuXM6wrsERcFeBzTP/tywbtxYb
-         o6pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=7bsLCTuCNJ00JspF8VTFduRVauLnGpFwLndQqKox2tA=;
-        b=EbZJ+1mqDOmXRGleKhp79G3vTkPWl1W0ztLev6S00UA9/oLyzAPsA8kYrVDJfqncxX
-         /3wylU7Y3RcFsK88/QhilG996aO99HkmeROosB5XXfbboM3LyGCkgW0/1M7Zci4a/U8t
-         nECB/jvkunXxHRSYlNCK9BvJHhihF9MAh6sQo3xEW9MqqmMBAsmpkriKp+O95x9Vz3oj
-         IY1UmOdsXp4KAtGOig8s0QasB6eYT+4O9o9SJg1aY+0t/uwtJfNN1wG54iJ5ekgzSzH9
-         LjNwHLv+YuKopmd1JAv4DHpStV1//bCH9rlKa+XJAaoum1+pPkmCuP8ahPsVXZrMmpHS
-         5lOQ==
-X-Gm-Message-State: ALoCoQlJJL9QpFnIQr/dED4yQLnhuHiJPpm7e4zddw22J7kpKpZPiGsv20CXav49jpwNafhZFD3q
-X-Received: by 10.220.17.145 with SMTP id s17mr1641448vca.77.1406740237458;
- Wed, 30 Jul 2014 10:10:37 -0700 (PDT)
-Received: by 10.52.180.6 with HTTP; Wed, 30 Jul 2014 10:10:37 -0700 (PDT)
+	id S1755184AbaG3RNY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2014 13:13:24 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55369 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754662AbaG3RNX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2014 13:13:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 15B0E2B7DD;
+	Wed, 30 Jul 2014 13:13:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 s=sasl; bh=IIepsV/Eo9qlJw3aFVsftu1ttps=; b=cLOI1xYNf+eUk3mUhJws
+	Yj55MZDP5bLD1j6UCv9QtfW+oGjSc3Gz5WH6dOS7iOOEeLGp8gAjJa0WFjiIDpvq
+	XK58DoEafqRrmxONr96xrghzcS1KhgqbYY4S74IfXQQLL7EXHOmz8wbMlrOhrpz2
+	vNCKJGB8QFhFfbDnBlle4yY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:message-id:mime-version:content-type;
+	 q=dns; s=sasl; b=wp74fsV3AB+iBT4GEJ7nFW0uhVupo1mK+RAcLo/r22wPu2
+	YWddze8BZzWNa86ZEgwxJYhGAflVHoN+3b0YT4BdWU70V9nnSuU1fXdtk61N2Fq4
+	JkcnNq0wpz1BN8GnnyVS+jHoIPvEuVzQQIs87bA6Rkb2mQtnA9g4cOYbKB7Yo=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E19822B7D9;
+	Wed, 30 Jul 2014 13:13:16 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 5F5E52B7CF;
+	Wed, 30 Jul 2014 13:13:09 -0400 (EDT)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C784BC38-180C-11E4-9130-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254501>
-
-List, please see here an overview and ordering of the ref transaction
-patch series.
-These series build on each other and needs to be applied in the order
-listed below.
-
-
-rs/ref-transaction-0
----------------------------
-    Early part of the "ref transaction" topic.
-
-    * rs/ref-transaction-0:
-      refs.c: change ref_transaction_update() to do error checking and
-return status
-      refs.c: remove the onerr argument to ref_transaction_commit
-      update-ref: use err argument to get error from ref_transaction_commit
-      refs.c: make update_ref_write update a strbuf on failure
-      refs.c: make ref_update_reject_duplicates take a strbuf argument
-for errors
-      refs.c: log_ref_write should try to return meaningful errno
-      refs.c: make resolve_ref_unsafe set errno to something meaningful on error
-      refs.c: commit_packed_refs to return a meaningful errno on failure
-      refs.c: make remove_empty_directories always set errno to something sane
-      refs.c: verify_lock should set errno to something meaningful
-      refs.c: make sure log_ref_setup returns a meaningful errno
-      refs.c: add an err argument to repack_without_refs
-      lockfile.c: make lock_file return a meaningful errno on failurei
-      lockfile.c: add a new public function unable_to_lock_message
-      refs.c: add a strbuf argument to ref_transaction_commit for error logging
-      refs.c: allow passing NULL to ref_transaction_free
-      refs.c: constify the sha arguments for
-ref_transaction_create|delete|update
-      refs.c: ref_transaction_commit should not free the transaction
-      refs.c: remove ref_transaction_rollback
-
-Has been merged into next.
-
-
-
-ref-transaction-1 (2014-07-16) 20 commits
--------------------------------------------------------------
-Second batch of ref transactions
-
- - refs.c: make delete_ref use a transaction
- - refs.c: make prune_ref use a transaction to delete the ref
- - refs.c: remove lock_ref_sha1
- - refs.c: remove the update_ref_write function
- - refs.c: remove the update_ref_lock function
- - refs.c: make lock_ref_sha1 static
- - walker.c: use ref transaction for ref updates
- - fast-import.c: use a ref transaction when dumping tags
- - receive-pack.c: use a reference transaction for updating the refs
- - refs.c: change update_ref to use a transaction
- - branch.c: use ref transaction for all ref updates
- - fast-import.c: change update_branch to use ref transactions
- - sequencer.c: use ref transactions for all ref updates
- - commit.c: use ref transactions for updates
- - replace.c: use the ref transaction functions for updates
- - tag.c: use ref transactions when doing updates
- - refs.c: add transaction.status and track OPEN/CLOSED/ERROR
- - refs.c: make ref_transaction_begin take an err argument
- - refs.c: update ref_transaction_delete to check for error and return status
- - refs.c: change ref_transaction_create to do error checking and return status
- (this branch is used by rs/ref-transaction, rs/ref-transaction-multi,
-rs/ref-transaction-reflog and rs/ref-transaction-rename.)
-
- The second batch of the transactional ref update series.
-
-Has been merged into pu
-
-
-
-rs/ref-transaction (2014-07-17) 12 commits
------------------------------------------------------------------
- - refs.c: fix handling of badly named refs
- - refs.c: make write_ref_sha1 static
- - fetch.c: change s_update_ref to use a ref transaction
- - refs.c: propagate any errno==ENOTDIR from _commit back to the callers
- - refs.c: pass a skip list to name_conflict_fn
- - refs.c: call lock_ref_sha1_basic directly from commit
- - refs.c: move the check for valid refname to lock_ref_sha1_basic
- - refs.c: pass NULL as *flags to read_ref_full
- - refs.c: pass the ref log message to _create/delete/update instead of _commit
- - refs.c: add an err argument to delete_ref_loose
- - wrapper.c: add a new function unlink_or_msg
- - wrapper.c: simplify warn_if_unremovable
- (this branch is used by rs/ref-transaction-multi,
-rs/ref-transaction-reflog and rs/ref-transaction-rename; uses
-rs/ref-transaction-1.)
-
-The third and final part of the basic ref-transaction work.
-
-Has been merged into pu.
-
-
-
-
-rs/ref-transaction-reflog (2014-07-23) 15 commits
------------------------------------------------------------------------
- - refs.c: allow deleting refs with a broken sha1
- - refs.c: remove lock_any_ref_for_update
- - refs.c: make unlock_ref/close_ref/commit_ref static
- - refs.c: rename log_ref_setup to create_reflog
- - reflog.c: use a reflog transaction when writing during expire
- - refs.c: allow multiple reflog updates during a single transaction
- - refs.c: only write reflog update if msg is non-NULL
- - refs.c: add a flag to allow reflog updates to truncate the log
- - refs.c: add a transaction function to append a reflog entry
- - lockfile.c: make hold_lock_file_for_append preserve meaningful errno
- - refs.c: add a function to append a reflog entry to a fd
- - refs.c: add a new update_type field to ref_update
- - refs.c: rename the transaction functions
- - refs.c: make ref_transaction_delete a wrapper for ref_transaction_update
- - refs.c: make ref_transaction_create a wrapper to ref_transaction_update
- (this branch is used by rs/ref-transaction-multi and
-rs/ref-transaction-rename; uses rs/ref-transaction and
-rs/ref-transaction-1.)
-
-This patch series adds support for reflog updates to the transaction subsystem.
-Once it has refactored the builtin/reflog.c to use a transaction
-instead of accessing the refs and
-reflogs directly it allows us to remove
-unlock_ref/close_ref/commit_ref/lock_any_ref_for_update
-from the public API.
-
-As part of the reflog work I also refactor how reflog creation works
-renaming log_ref_setup to create_reflog. These changes allow us then
-to reduce the number of places where
-we expose the global log_all_ref_updates to the callers.
-This leads to a much cleaner api for reflog creation and avoids completely the
-"manipulate the global log_all_ref_updates before calling
-log_ref_setup" thing that was done
-in checkout.c. Now checkout.c can just call create_reflog() and the
-right thing will happen.
-
-At the end of the patch series is an unrelated patch for repairing the
-"allow deletion of a broken ref" functionality that was lost a while
-back. This patch is independent of the reflog work but is placed here
-just to avoid creating additional conflicts with this series and
-series that follow.
-
-Has been merged to pu.
-
-
-
-
-
-Following are the patch series that has not yet made its way into pu.
-
-
-
-
-ref-transactions-rename
------------------------------------
-refs.c: allow passing raw git_committer_info as email to _update_reflog
-refs.c: return error instead of dying when locking fails during transaction
-refs.c: use packed refs when deleting refs during a transaction
-refs.c: update rename_ref to use a transaction
-refs.c: rollback the lockfile before we die() in repack_without_refs
-
-This series focuses on reworking how rename_ref works and to make it
-use an atomic transaction for the rename.
-The first three patches lead up to a point where we can now perform
-the "delete the old ref and add the new ref" as a single atomic
-operation to the packed refs file followed by the fourth patch where
-we rework rename_ref() completely to perform the rename and the reflog
-updates as a single atomic transaction.
-
-As part of this the rename_ref logic is greatly simplified and we
-reach several nice goals:
-* no need to disallow rename_ref() if the reflog is a symlink
-* no need to rename the reflog via a third filename
-* make the rename become completely atomic both for the caller but
-also for any external observers.
-
-The fifth patch is independent to the rename work itself but was
-discovered during the work for this patch. It could be applied
-separately but I did not see any urgency to push it separetely and
-left it as a patch in this series.
-
-
-
-
-
-ref-transactions-req-packed-refs
-----------------------------------------------
-refs.c: move reflog updates into its own function
-refs.c: write updates to packed refs when a transaction has more than one ref
-remote.c: use a transaction for deleting refs
-refs.c: make repack_without_refs static
-refs.c: make the *_packed_refs functions static
-
-These patches expands on the "perform ref operations as a packed refs
-file commit" and changes the transaction subsystem to always perform
-multi-ref updates as a packed ref commit instead of discreete
-operations on loose refs.
-
-The new logic is basically:
-IF the transaction only touches a single ref, then just do the normal
-loose ref operation as before.
-   This is to make sure that the very common "git commit" command will
-still always be fast.
-
-IF the transaction touches multiple refs, then
- * first copy/move all affected refs to the packed refs file and
-commit, then re-lock the packed
-   refs file until the transaction has completed.
- * then delete any affected loose refs files (they are already in the
-packed refs file)
- * perform the operation by adding/removing/updating packed refs entries
- * finally, commit the packed refs file
-
-This leads to several new nice properties.
-First, the transaction subsystem will now do the "right thing" and
-automatically convert any
-multi-ref updates to use the packed refs file. This then means that we
-no longer need to have
-special casing for clone.c to use a special packed_refs api. Clone.c
-can now just use a transaction for its "add all refs" and the right
-thing will happen.
-Similar optimizations can be done for remote.c which now also can just
-use a transaction
-and know that the right thing will happen.
-As we now no longer need to expose the special purpose packed-refs api
-to external callers we can now make all the packed refs functions
-private to refs.c and shrink the size of the public api.
-
-Note: we still do have packed refs and they still work the same way as
-before. It is just that the packed refs are now an internal
-optimization for the refs code and no longer part of the public api.
-
-Second, all transaction that affects multiple refs will now also
-become atomic for any external observer regardless of whether they
-used the packed refs api or not.
-
-
-The following functions are now static to refs.c and no longer part of
-the public api:
- add_packed_ref/lock_packed_refs/commit_packed_refs/rollback_packed_refs/repack_without_refs
-
-
-
-
-ref-transactions-req-strbuf-err
--------------------------------------------
-This series just contains various changes internally to refs.c to
-expand on the use of a strbuf *err as argument for passing error
-messages back to the caller.
-Only thing by note here is tgat by doing this to update_ref() we can
-finally get rid of the action_on_err enum:
-
--enum action_on_err {
--       UPDATE_REFS_MSG_ON_ERR,
--       UPDATE_REFS_DIE_ON_ERR,
--       UPDATE_REFS_QUIET_ON_ERR
--};
-
-wooohooo
-
-As part of this patch series I noticed that there were two places in
-transport*.c where we were calling update_ref() and passing '0' as
-argument instead of UPDATE_REFS_MSG_ON_ERR.
-Not a bug and not a change in functionality but it would be nice if
-the compiler could warn for this.
-
-
-
-ref-transactions-send-pack
----------------------------------------
-Various changes to allow a new argument  --atomic-push, and protocol
-changes, to allow a client to request/negotiate that a multi-ref push
-should be atomic. I.e. apply all changes or none.
-
-Not sent to the list yet.
-
-
-ref-transactions-send-pack-post
-----------------------------------------------
-Various other changes to add a strbuf *err argument to error handling.
-
-Not sent to the list yet.
-
-
-
-And that concludes the basic ref-transaction stuff.
-
-
-Once this is in I have a very large patch series that is mainly
-rearranging code and to add support for pluggable ref backends.
-But that is for when the ref transaction patches are in.
-
-
-
-regards
-ronnie sahlberg
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254502>
+
+Continued: this message only covers the third part (out of the four sections).
+
+| Integrator[[Integrator]]
+| ------------------------
+| 
+| A fairly central person acting as the integrator in a group
+| project receives changes made by others, reviews and integrates
+| them and publishes the result for others to use, using these
+| commands in addition to the ones needed by participants.
+
+This definition of who an "integrator" is, and it being a separate
+role when we discuss various workflows, are still sound, I think.
+
+|   * linkgit:git-pull[1] to merge from your trusted lieutenants.
+
+Among these enumerated items, we may want to reword this a little
+bit to hint that this section also applies to GitHub pull-request
+workflow.  However, I am not sure how their "merge without first
+locally checking" action on their website fits in the picture.
+
+| Examples
+| ~~~~~~~~
+| 
+| My typical Git day.::
+
+This probably shouldn't talk about "My" in the first place, but in
+any case I work somewhat differently (cf. howto/maintain-git.txt)
+these days.
+
+| +
+| ------------
+| $ git status <1>
+| $ git show-branch <2>
+
+This is more like "git branch --no-merged master" (and similarly for
+'next' and 'pu'), and is helped by "Meta/cook -w" but this document
+is a wrong place to talk about the latter.
+
+| $ mailx <3>
+| & s 2 3 4 5 ./+to-apply
+| & s 7 8 ./+hold-linus
+| & q
+| $ git checkout -b topic/one master
+| $ git am -3 -i -s -u ./+to-apply <4>
+
+No need to give -u these days.
+
+| $ compile/test
+| $ git checkout -b hold/linus && git am -3 -i -s -u ./+hold-linus <5>
+
+Again, no "-u" necessary.
+
+| $ git checkout topic/one && git rebase master <6>
+| $ git checkout pu && git reset --hard next <7>
+| $ git merge topic/one topic/two && git merge hold/linus <8>
+| $ git checkout maint
+| $ git cherry-pick master~4 <9>
+| $ compile/test
+| $ git tag -s -m "GIT 0.99.9x" v0.99.9x <10>
+| $ git fetch ko && git show-branch master maint 'tags/ko-*' <11>
+
+This step I still use show-branch, but like this:
+
+    for branch in master maint next pu
+    do
+        git show-branch ko/$branch $branch
+    done
+
+and the purpose explained in the footnote is still valid.
+
+| $ git push ko <12>
+| $ git push ko v0.99.9x <13>
+
+I no longer have to do the last step <13>, instead the step <12>
+reads more like
+
+	git push --follow-tags ko
+
+| ------------
+| +
+| <1> see what I was in the middle of doing, if any.
+| <2> see what topic branches I have and think about how ready
+| they are.
+
+With "show-branch" replaced with "branch --no-merged", the purpose
+of this step is still the same.
+
+| <3> read mails, save ones that are applicable, and save others
+| that are not quite ready.
+| <4> apply them, interactively, with my sign-offs.
+| <5> create topic branch as needed and apply, again with my
+| sign-offs.
+| <6> rebase internal topic branch that has not been merged to the
+| master or exposed as a part of a stable branch.
+| <7> restart `pu` every time from the next.
+| <8> and bundle topic branches still cooking.
+| <9> backport a critical fix.
+| <10> create a signed tag.
+| <11> make sure I did not accidentally rewind master beyond what I
+| already pushed out.  `ko` shorthand points at the repository I have
+| at kernel.org, and looks like this:
+
+No longer it looks like that ;-)
+
+| +
+| ------------
+| $ cat .git/remotes/ko
+| URL: kernel.org:/pub/scm/git/git.git
+| Pull: master:refs/tags/ko-master
+| Pull: next:refs/tags/ko-next
+| Pull: maint:refs/tags/ko-maint
+| Push: master
+| Push: next
+| Push: +pu
+| Push: maint
+| ------------
+| +
+
+... because we encourage people to use in-config description of
+remotes these days, which should look like this:
+
+	(in .git/config)
+	[remote "ko"]
+        	url = kernel.org:/pub/scm/git/git.git
+                fetch = refs/heads/*:refs/remotes/ko/*
+                push = refs/heads/master
+                push = refs/heads/next
+                push = +refs/heads/pu
+                push = refs/heads/maint
+
+Also tracking is done via refs/remotes/ko/, no longer with tags/.
+
+| In the output from `git show-branch`, `master` should have
+| everything `ko-master` has, and `next` should have
+| everything `ko-next` has.
+
+With s|ko-master|ko/master| and s|ko-next|ko/next|, the above is
+still valid.
+
+| <12> push out the bleeding edge.
+
+s/edge./edge, together with new tags that point into my history./
+
+| <13> push the tag out, too.
+
+Drop this.
