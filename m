@@ -1,102 +1,87 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: Amending merge commits?
-Date: Wed, 30 Jul 2014 22:28:23 +0400
-Message-ID: <877g2uu2ew.fsf@osv.gnss.ru>
-References: <CAK3OfOjr6ej5VdGU=bLmtag9cca1=ogLxVakCFTMG7b-A2uBiA@mail.gmail.com>
-	<87r4147agk.fsf@osv.gnss.ru>
-	<CAK3OfOhFzbUA7gZbox84W=VC+0aSuiNc-XRP_MTyYy1UeFFzZQ@mail.gmail.com>
-	<87siljxmnh.fsf@osv.gnss.ru>
-	<CAK3OfOgcO9dmePtXCu9gUSf2bdQytJf9-RCZDXhv9Gy8UVyDOQ@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] checkout --to: no auto-detach if the ref is already checked out
+Date: Wed, 30 Jul 2014 11:52:03 -0700
+Message-ID: <xmqq8unaznl8.fsf@gitster.dls.corp.google.com>
+References: <1406115795-24082-1-git-send-email-pclouds@gmail.com>
+	<1406115795-24082-4-git-send-email-pclouds@gmail.com>
+	<53CFBD2A.9030803@drmicha.warpmail.net>
+	<CACsJy8DwPM68j-=LDDbq1H_bT1gD=aLQ8x6C1qiwF79=ai14dg@mail.gmail.com>
+	<xmqq8uni8mx4.fsf@gitster.dls.corp.google.com>
+	<53D1FE76.5080708@drmicha.warpmail.net>
+	<xmqqmwbqzptt.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"Besen\, David" <david.besen@hp.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Nico Williams <nico@cryptonector.com>
-X-From: git-owner@vger.kernel.org Wed Jul 30 20:28:31 2014
+Cc: Duy Nguyen <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Max Kirillov <max@max630.net>,
+	Eric Sunshine <sunshine@sunshineco.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Jul 30 20:52:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCYc3-0007ob-7Z
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 20:28:31 +0200
+	id 1XCYz3-0003Iu-Mv
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 20:52:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755595AbaG3S21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2014 14:28:27 -0400
-Received: from mail.javad.com ([54.86.164.124]:45956 "EHLO mail.javad.com"
+	id S1755473AbaG3SwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2014 14:52:14 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53709 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753333AbaG3S21 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2014 14:28:27 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id 7867B617FA;
-	Wed, 30 Jul 2014 18:28:25 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <s.organov@javad.com>)
-	id 1XCYbv-0001uT-D3; Wed, 30 Jul 2014 22:28:23 +0400
-In-Reply-To: <CAK3OfOgcO9dmePtXCu9gUSf2bdQytJf9-RCZDXhv9Gy8UVyDOQ@mail.gmail.com>
-	(Nico Williams's message of "Wed, 30 Jul 2014 12:43:14 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1752501AbaG3SwN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2014 14:52:13 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BE24E2BBE5;
+	Wed, 30 Jul 2014 14:52:12 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=gytTKWsZ2kvbNandpJmyC3lhfR4=; b=VCYuqS
+	cv7A3xgFTNdleb6Wq76ScOcpEOOcX9HphP3epXNXJBlbPIbCDA7kID33JM4wyoop
+	BjTK95m/DWt8+Oks9DmlWdIsS3mYNBocRyqdBtwNhs9BY66FrvRZ8weh15uyCc4g
+	CNxWZCVrLwG/5apHq4V4HbFF60UbBW0m4P7is=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nau4bfEqG0ODJUzXLHvaNZQQxZeAe6R2
+	P1NEET7BOuXcZXzN4ysmzktweObCOD2GCoicQnzUbBQfL1GVS82HNtWfuTXoDptD
+	B3+yTvxvCRmnFgjszMVlezvIm6fKxqFvnEqZveQ+fp4wXpnKfYtg2TrId2xqM7eV
+	KQagPWv4FTY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B197E2BBE4;
+	Wed, 30 Jul 2014 14:52:12 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 630BF2BBDC;
+	Wed, 30 Jul 2014 14:52:05 -0400 (EDT)
+In-Reply-To: <xmqqmwbqzptt.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Wed, 30 Jul 2014 11:03:42 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 99A9C566-181A-11E4-B3AE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254509>
 
-Nico Williams <nico@cryptonector.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Wed, Jul 30, 2014 at 3:42 AM, Sergei Organov <osv@javad.com> wrote:
->> Nico Williams <nico@cryptonector.com> writes:
->>> Local merge commits mean that you either didn't rebase to keep all
->>> your local commits on top of the upstream, or that you have multiple
->>> upstreams (the example exception I gave).
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>
+>> As an error message that is completely sufficient.
 >>
->> I rather have multiple (release) branches on single upstream, say, v2.3
->> and v2.4. When something needs to be fixed in 2.3, it's fixed there and
->> pushed upstream, then, on 2.4, the 2.3 is merged to it, and result is
->> pushed upstream. When I do this merge, I need to push the merge
+>> The advice messages are meant to teach the user about the normal parts
+>> of the toolchest to use in a situation of "conflict", aren't they?
 >
-> Hmm, why not cherry-pick the fix?  That's how every project I know
-> that ports fixes across release branches does it.
-
-Cherry-pick? Why bother? What problem do we solve, having no merges
-whatsoever? Why? GIT is so good at merges!
-
-My impression is that people mostly rather do topic branches, and merge
-them wherever they need the fixes, no?
-
->> upstream, and this won't work reliably when --rebase=true is acitve
->> (through pull.merge=rebase). If nothing changes upstream, I can simply
->> push this, and the merge is correctly preserved. However, if somebody
->> makes any changes upstream while I perform the merge, I'll need to pull
->> before pushing, and this immediately flattens-out my merge, that is
->> absolutely not what is needed here. Or I can simply pull before push,
->> just in case, and this flattens history even when there are no any
->> changes upstream!
+> Not really.  They are to remind (to those who learned but forgot)
+> and to hint (to those who haven't realized they have things to learn
+> in this area).  Wall of text that tries to do more than that, like
+> "teaching", risks not getting read by anybody.
 >
-> Does this change if you give your merge commits an different commit
-> message?
-
-Different from what? I'm almost sure commit message has nothing to do
-with it. Please refer to this explanation to see for yourself how git
-behaves when rebasing:
-
-http://www.mail-archive.com/git%40vger.kernel.org/msg55605.html
-
+>> Maybe
+>> we should ask someone who hasn't turned them off...
 >
->>> Conversely, if you always rebase your local commits on top of the
->>> upstream then you won't have merge commits to worry about.
->>
->> Wrong. I do alwys rebase my local commits on top of upstream, but I
->> still do have my own merge commits to worry about, as explained above.
->
-> If you cherry-pick the cross-release-branch commits you'll not have a
-> merge commit to worry about.
+> Actually, I run without most of the 'advice.*' turned off.
 
-I fail to see why do you consider merge commits to be an evil, really. I
-didn't think about cherry-picking carefully, but I don't feel
-cherry-picking is the best tool for the job here. I suspect random
-cherry-picking would create a mess, sooner or later.
-
--- 
-Sergey.
+Ehh, what I meant was that I do not have "advice.foo = false" for
+most of 'foo', i.e. I run with most of them still active.
