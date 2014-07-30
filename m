@@ -1,7 +1,7 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v4 3/5] imap-send.c: replace `git_config()` with `git_config_get_*()` family
-Date: Wed, 30 Jul 2014 06:39:07 -0700
-Message-ID: <1406727549-22334-4-git-send-email-tanayabh@gmail.com>
+Subject: [PATCH v4 1/5] pager.c: replace `git_config()` with `git_config_get_value()`
+Date: Wed, 30 Jul 2014 06:39:05 -0700
+Message-ID: <1406727549-22334-2-git-send-email-tanayabh@gmail.com>
 References: <1406727549-22334-1-git-send-email-tanayabh@gmail.com>
 Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -13,132 +13,110 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCU7M-0000pi-GK
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 15:40:32 +0200
+	id 1XCU7L-0000pi-Fz
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 15:40:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752842AbaG3Nk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2014 09:40:27 -0400
-Received: from mail-pa0-f53.google.com ([209.85.220.53]:57077 "EHLO
-	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751059AbaG3NkZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 30 Jul 2014 09:40:25 -0400
-Received: by mail-pa0-f53.google.com with SMTP id rd3so1532085pab.40
-        for <git@vger.kernel.org>; Wed, 30 Jul 2014 06:40:24 -0700 (PDT)
+	id S1752823AbaG3NkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2014 09:40:20 -0400
+Received: from mail-pd0-f177.google.com ([209.85.192.177]:53539 "EHLO
+	mail-pd0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752695AbaG3NkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 30 Jul 2014 09:40:18 -0400
+Received: by mail-pd0-f177.google.com with SMTP id p10so1467587pdj.22
+        for <git@vger.kernel.org>; Wed, 30 Jul 2014 06:40:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=JiMNPFhjkXatRknl1h4bRyexpFnRY9wgcelnR+CouQU=;
-        b=ubI/EyujBdoJkg8MsBDJ0rOBJ5JYplaJYqHqJnLSCTOlIVsi548W5nWb8b+IdXZSq2
-         n8KTse44xcD1sVYzxsGkk9V8NcFJzY9hjuJzBbG9woc15N8Qu6+irSvLkhXf+4DvID2W
-         USpVY4EUgcWc/mlZvs95WSaPGClNmamBnUuzPhfZPPVeI25Y2YEZXONyf4BVQBg+oNrC
-         lSD3ISCv/ADtT5PhawzGx/G/zwXhlJiXsQKrFsxPA26aF1wUzM0GfpMDhHue3vfbykeX
-         JUurYQwiFac6yzIw00YZpSqBiJK8rtWOzts3g4ts3gCiNZFBlZFs+jhSCu+yACzQuFYD
-         CFlQ==
-X-Received: by 10.68.173.65 with SMTP id bi1mr4828636pbc.130.1406727624242;
-        Wed, 30 Jul 2014 06:40:24 -0700 (PDT)
+        bh=7sqEYn7R/P5TH6cuZ0QaNbEGRbwYmm5W/+wgn6y527c=;
+        b=KjRV1ZLFcl8p3kU2c7sVhcvvlujLltZ10htCvae4gpq6sFMjEgHA8BJsy0NdbXe/W2
+         ac/gGhfEHAKAcE1VgxKzRDe0Rh/mybmo14uPJm16JTwZUqZxQOiR0RvqtIEjVAkWb9bq
+         wLaObXsFYUwtfv92yrVOfajdTifo9u306PaM2OjvT2J0jeXYnSmapYp2wt8ochCDYsJb
+         WKVIDP3ySU0nHnLQCOpaCVF1XE9sJzh6BjoWZWjFYAOBQHjXaNWHJu+UwNLhTc9+FQXP
+         qx+QLtU8djQiAO++gzoKBvhwxfqfNF29Yd0FTlwyROf1ws/gHEhGAcgpffzpvXn1t0w6
+         la9g==
+X-Received: by 10.68.192.106 with SMTP id hf10mr4873401pbc.30.1406727617997;
+        Wed, 30 Jul 2014 06:40:17 -0700 (PDT)
 Received: from localhost.localdomain ([223.184.63.185])
-        by mx.google.com with ESMTPSA id y4sm2397686pbt.60.2014.07.30.06.40.21
+        by mx.google.com with ESMTPSA id y4sm2397686pbt.60.2014.07.30.06.40.15
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 30 Jul 2014 06:40:23 -0700 (PDT)
+        Wed, 30 Jul 2014 06:40:17 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.GIT
 In-Reply-To: <1406727549-22334-1-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254492>
 
-Use `git_config_get_*()` family instead of `git_config()` to take advantage of
+Use `git_config_get_value()` instead of `git_config()` to take advantage of
 the config-set API which provides a cleaner control flow.
 
 Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- imap-send.c | 61 +++++++++++++++++++++++++++----------------------------------
- 1 file changed, 27 insertions(+), 34 deletions(-)
+ pager.c | 40 +++++++++++++---------------------------
+ 1 file changed, 13 insertions(+), 27 deletions(-)
 
-diff --git a/imap-send.c b/imap-send.c
-index 524fbab..586bdd8 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1326,43 +1326,36 @@ static int split_msg(struct strbuf *all_msgs, struct strbuf *msg, int *ofs)
+diff --git a/pager.c b/pager.c
+index 8b5cbc5..b7eb7e7 100644
+--- a/pager.c
++++ b/pager.c
+@@ -6,12 +6,6 @@
+ #define DEFAULT_PAGER "less"
+ #endif
  
- static char *imap_folder;
- 
--static int git_imap_config(const char *key, const char *val, void *cb)
-+static void git_imap_config(void)
- {
--	if (!skip_prefix(key, "imap.", &key))
--		return 0;
-+	const char *val = NULL;
-+
-+	git_config_get_bool("imap.sslverify", &server.ssl_verify);
-+	git_config_get_bool("imap.preformattedhtml", &server.use_html);
-+	git_config_get_string("imap.folder", &imap_folder);
- 
--	/* check booleans first, and barf on others */
--	if (!strcmp("sslverify", key))
--		server.ssl_verify = git_config_bool(key, val);
--	else if (!strcmp("preformattedhtml", key))
--		server.use_html = git_config_bool(key, val);
--	else if (!val)
--		return config_error_nonbool(key);
+-struct pager_config {
+-	const char *cmd;
+-	int want;
+-	char *value;
+-};
 -
--	if (!strcmp("folder", key)) {
--		imap_folder = xstrdup(val);
--	} else if (!strcmp("host", key)) {
--		if (starts_with(val, "imap:"))
--			val += 5;
--		else if (starts_with(val, "imaps:")) {
--			val += 6;
--			server.use_ssl = 1;
-+	if (!git_config_get_value("imap.host", &val)) {
-+		if (!val) {
-+			config_error_nonbool("imap.host");
-+			git_die_config("imap.host");
-+		} else {
-+			if (starts_with(val, "imap:"))
-+				val += 5;
-+			else if (starts_with(val, "imaps:")) {
-+				val += 6;
-+				server.use_ssl = 1;
-+			}
-+			if (starts_with(val, "//"))
-+				val += 2;
-+			server.host = xstrdup(val);
- 		}
--		if (starts_with(val, "//"))
--			val += 2;
--		server.host = xstrdup(val);
--	} else if (!strcmp("user", key))
--		server.user = xstrdup(val);
--	else if (!strcmp("pass", key))
--		server.pass = xstrdup(val);
--	else if (!strcmp("port", key))
--		server.port = git_config_int(key, val);
--	else if (!strcmp("tunnel", key))
--		server.tunnel = xstrdup(val);
--	else if (!strcmp("authmethod", key))
--		server.auth_method = xstrdup(val);
-+	}
- 
--	return 0;
-+	git_config_get_string("imap.user", &server.user);
-+	git_config_get_string("imap.pass", &server.pass);
-+	git_config_get_int("imap.port", &server.port);
-+	git_config_get_string("imap.tunnel", &server.tunnel);
-+	git_config_get_string("imap.authmethod", &server.auth_method);
+ /*
+  * This is split up from the rest of git so that we can do
+  * something different on Windows.
+@@ -155,30 +149,22 @@ int decimal_width(int number)
+ 	return width;
  }
  
- int main(int argc, char **argv)
-@@ -1383,7 +1376,7 @@ int main(int argc, char **argv)
- 		usage(imap_send_usage);
- 
- 	setup_git_directory_gently(&nongit_ok);
--	git_config(git_imap_config, NULL);
-+	git_imap_config();
- 
- 	if (!server.port)
- 		server.port = server.use_ssl ? 993 : 143;
+-static int pager_command_config(const char *var, const char *value, void *data)
++/* returns 0 for "no pager", 1 for "use pager", and -1 for "not specified" */
++int check_pager_config(const char *cmd)
+ {
+-	struct pager_config *c = data;
+-	if (starts_with(var, "pager.") && !strcmp(var + 6, c->cmd)) {
+-		int b = git_config_maybe_bool(var, value);
++	int want = -1;
++	struct strbuf key = STRBUF_INIT;
++	const char *value = NULL;
++	strbuf_addf(&key, "pager.%s", cmd);
++	if (!git_config_get_value(key.buf, &value)) {
++		int b = git_config_maybe_bool(key.buf, value);
+ 		if (b >= 0)
+-			c->want = b;
++			want = b;
+ 		else {
+-			c->want = 1;
+-			c->value = xstrdup(value);
++			want = 1;
++			pager_program = xstrdup(value);
+ 		}
+ 	}
+-	return 0;
+-}
+-
+-/* returns 0 for "no pager", 1 for "use pager", and -1 for "not specified" */
+-int check_pager_config(const char *cmd)
+-{
+-	struct pager_config c;
+-	c.cmd = cmd;
+-	c.want = -1;
+-	c.value = NULL;
+-	git_config(pager_command_config, &c);
+-	if (c.value)
+-		pager_program = c.value;
+-	return c.want;
++	strbuf_release(&key);
++	return want;
+ }
 -- 
 1.9.0.GIT
