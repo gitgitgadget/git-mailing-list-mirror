@@ -1,334 +1,376 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 4/5] refs.c: update rename_ref to use a transaction
-Date: Wed, 30 Jul 2014 14:52:47 -0700
-Message-ID: <1406757168-3729-5-git-send-email-sahlberg@google.com>
+Subject: [PATCH v2 3/5] refs.c: use packed refs when deleting refs during a transaction
+Date: Wed, 30 Jul 2014 14:52:46 -0700
+Message-ID: <1406757168-3729-4-git-send-email-sahlberg@google.com>
 References: <1406757168-3729-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jul 30 23:53:15 2014
+X-From: git-owner@vger.kernel.org Wed Jul 30 23:53:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCbo5-0005lM-Fs
-	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 23:53:10 +0200
+	id 1XCboC-0005qk-LL
+	for gcvg-git-2@plane.gmane.org; Wed, 30 Jul 2014 23:53:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752224AbaG3Vw4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 30 Jul 2014 17:52:56 -0400
-Received: from mail-pd0-f202.google.com ([209.85.192.202]:40988 "EHLO
-	mail-pd0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751600AbaG3Vwz (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752579AbaG3VxJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 30 Jul 2014 17:53:09 -0400
+Received: from mail-pa0-f73.google.com ([209.85.220.73]:42383 "EHLO
+	mail-pa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751986AbaG3Vwz (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 30 Jul 2014 17:52:55 -0400
-Received: by mail-pd0-f202.google.com with SMTP id w10so345715pde.5
-        for <git@vger.kernel.org>; Wed, 30 Jul 2014 14:52:54 -0700 (PDT)
+Received: by mail-pa0-f73.google.com with SMTP id kx10so347369pab.2
+        for <git@vger.kernel.org>; Wed, 30 Jul 2014 14:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=mesTaL08ZR9mp/XDqwE/ooGIJ4W8HWUTse5ZQMMp3Gc=;
-        b=T35OHNtSPK2SjZ0TjlggrrOz7rTqWbtAmfmne0zaPJ3jWJhiqNFyxy0LQPPxmF0cnq
-         IxfAK7YvhsKQxp678mzwUtbECjblpFp3eewn6eTsBhnPJSNsS9qwQ7x8pWqAjC7jqkmx
-         phNnW7ZDR4nd22b4vmDWWGBnWSKK9xV9ijiVr8g4dwefGmD2jg7jKYt2gSxtEwAqL5Kt
-         uE5WlXcNrYSrQiKLGhgLW0OXLr8m+GnqeP7KXb5aWdKqmLFzAaGF0wL6D05m2kqxrdtk
-         Szjh+MSgwCLvd9rFTtZ62Je6E9aj9x7VqG2JmfuituKGfjqgso3h+SuEnOs5v3am2OI/
-         9fbQ==
+        bh=WrxPCM1Dztte3HBJNzX0QcORHajNwqEGvgEU70Bp+Wg=;
+        b=AN6E0KtCyZrcxK2GMgTObXCPH3rywcLfEwu8rbu+P72Itb0CzM6d1u8QIuEVJZtd5m
+         vNp1/pTOOUxGhQ4ly7mnKfVaugyTDmymWSJi/30I3kvtF++mWFrLCypyJqga7jq7yRyb
+         hSjaDliOSS5wydqlI+5PfJzY207hAxKx91IahImn0qchToaENx14bCHIyRgyXTuYKmPC
+         l6JRiTKr/NxrXoOUM9o41Q8fpzeuSzRIQbkcvtnScqeSOHxy1fLsScdaEyHYHLXAFQVJ
+         ferC233dl/zWlvwbeSCooHhE7pt9yKQ6AD6woRX0jzzgtcUgm3AOx391CIQpDdHE81sp
+         9row==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=mesTaL08ZR9mp/XDqwE/ooGIJ4W8HWUTse5ZQMMp3Gc=;
-        b=DCjIO+LI3r1RXGCSk4zX+FwLxPccYhNok5PY0oRhBOe0Xu55Gj0PcHkrqjuw0IKy0p
-         Cztf9rTgq4rzeX/X7jXamJR/yMOCBO8Wg6DmmbTBLKj3PokpcuALI4DGo2m6te5mOfdY
-         YE9y3Lnhz30eXYHTa1KnJUPzPyz7CdNECB9OTlCY0W5791nWjRBWnB6H+oZ9Rrt7aIIm
-         z/rj2ssxlLMF+H4+JKfCEsdKGP2iqOVDfUxeoGZ5IPbKFMa/2WXLM4kD/QpLM1CTiE/Y
-         pck1r70JTMkxZs0vomvwY2yjmsJ8smrbZyO/D79oqftxWW6rW39nd6z8sLfhSO8qzGO5
-         rL5w==
-X-Gm-Message-State: ALoCoQkrdbfbkEoI7rZ+ngniu0Tns1JD3F4CyARg81lTEGjF/PWX9LA+91pCU8mcH37nnpgK2xoR
-X-Received: by 10.68.222.194 with SMTP id qo2mr2915514pbc.6.1406757174455;
-        Wed, 30 Jul 2014 14:52:54 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id o69si223973yhp.6.2014.07.30.14.52.54
+        bh=WrxPCM1Dztte3HBJNzX0QcORHajNwqEGvgEU70Bp+Wg=;
+        b=G7H2eHjLXEpV+4wvC+tK0quV1WH7wMU+AoPAVqYWzPcaG783WiijQmygpKiAKdcACK
+         GR7w/pHwdPyuN5MGAyqoNIAeACCX1gXIITR5i1kQWsjbwm6gmm651GGOjX6MMQGH0B8j
+         K12vZ+JVJhwFL7BEtpzcjYkHE0J7ScNb5ExcbS5Vn7cm83x7rIqlmRa+dZGG+7sH9uG7
+         E5GhhF/XlsStSSJeiz3rQN69CGxFprL463VxXBxx+uo1TAEnIA1Updg/ViVj8EvmTcMa
+         4nyXu0BtS+Dl7N1mpAnWlMyN5DUbOYHlJF1RcFTIhaYqDs8Q3y36qy/p+ElDlHlWw6kD
+         hVvA==
+X-Gm-Message-State: ALoCoQl44+kXw1r39HXZ2tOjDadeSBg/v529K8SZW7h1UMeXOqA9HM0TAN6Ep0nRgQ8K8v9K795+
+X-Received: by 10.66.163.41 with SMTP id yf9mr2933941pab.36.1406757175182;
+        Wed, 30 Jul 2014 14:52:55 -0700 (PDT)
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id y50si225305yhk.4.2014.07.30.14.52.55
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 30 Jul 2014 14:52:54 -0700 (PDT)
+        Wed, 30 Jul 2014 14:52:55 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 3271E5A4266;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 64AB631C542;
 	Wed, 30 Jul 2014 14:52:54 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id D12FCE04BE; Wed, 30 Jul 2014 14:52:53 -0700 (PDT)
+	id E9FBEE0959; Wed, 30 Jul 2014 14:52:53 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.523.g0041e8a
 In-Reply-To: <1406757168-3729-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254522>
 
-Change refs.c to use a single transaction to copy/rename both the refs and
-its reflog. Since we are no longer using rename() to move the reflog file
-we no longer need to disallow rename_ref for refs with a symlink for its
-reflog so we can remove that test from the testsuite.
+Make the deletion of refs during a transaction more atomic.
+Start by first copying all loose refs we will be deleting to the packed
+refs file and then commit the packed refs file. Then re-lock the packed refs
+file to stop anyone else from modifying these refs and keep it locked until
+we are finished.
+Since all refs we are about to delete are now safely held in the packed refs
+file we can proceed to immediately unlink any corresponding loose refs
+and still be fully rollback-able.
 
-Change the function to return 1 on failure instead of either -1 or 1.
+The exception is for refs that can not be resolved. Those refs are never
+added to the packed refs and will just be un-rollback-ably deleted during
+commit.
 
-These changes make the rename_ref operation atomic. This also eliminates the
-need to use rename() to shift the reflog around via a temporary filename.
-As an extension to this, since we no longer use rename() on the reflog file,
-we can now safely perform renames even if the reflog is a symbolic link
-and thus can remove the check and fail for that condition.
+By deleting all the loose refs at the start of the transaction we make make
+it possible to both delete one ref and then re-create a different ref in
+the same transaction even if the two refs would normally conflict.
+
+Example: rename m->m/m
+
+In that example we want to delete the file 'm' so that we make room so
+that we can create a directory with the same name in order to lock and
+write to the ref m/m and its lock-file m/m.lock.
+
+If there is a failure during the commit phase we can rollback without losing
+any refs since we have so far only deleted loose refs that that are
+guaranteed to also have a corresponding entry in the packed refs file.
+Once we have finished all updates for refs and their reflogs we can repack
+the packed refs file and remove the to-be-deleted refs from the packed refs,
+at which point all the deleted refs will disappear in one atomic rename
+operation.
+
+This also means that for an outside observer, deletion of multiple refs
+in a single transaction will look atomic instead of one ref being deleted
+at a time.
+
+In order to do all this we need to change the semantics for the
+repack_without_refs function so that we can lock the packed refs file,
+do other stuff, and later be able to call repack_without_refs with the
+lock already taken.
+This means we need some additional changes in remote.c to reflect the
+changes to the repack_without_refs semantics.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c            | 197 ++++++++++++++++++++----------------------------------
- t/t3200-branch.sh |   7 --
- 2 files changed, 71 insertions(+), 133 deletions(-)
+ builtin/remote.c |  14 ++++--
+ refs.c           | 148 +++++++++++++++++++++++++++++++++++++++++++------------
+ 2 files changed, 128 insertions(+), 34 deletions(-)
 
+diff --git a/builtin/remote.c b/builtin/remote.c
+index be8ebac..bfcc823 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -753,6 +753,9 @@ static int remove_branches(struct string_list *branches)
+ 	const char **branch_names;
+ 	int i, result = 0;
+ 
++	if (lock_packed_refs(0))
++		return unable_to_lock_error(git_path("packed-refs"), errno);
++
+ 	branch_names = xmalloc(branches->nr * sizeof(*branch_names));
+ 	for (i = 0; i < branches->nr; i++)
+ 		branch_names[i] = branches->items[i].string;
+@@ -1333,9 +1336,14 @@ static int prune_remote(const char *remote, int dry_run)
+ 		delete_refs = xmalloc(states.stale.nr * sizeof(*delete_refs));
+ 		for (i = 0; i < states.stale.nr; i++)
+ 			delete_refs[i] = states.stale.items[i].util;
+-		if (!dry_run)
+-			result |= repack_without_refs(delete_refs,
+-						      states.stale.nr, NULL);
++		if (!dry_run) {
++			if (lock_packed_refs(0))
++				result |= unable_to_lock_error(
++					git_path("packed-refs"), errno);
++			else
++				result |= repack_without_refs(delete_refs,
++							states.stale.nr, NULL);
++		}
+ 		free(delete_refs);
+ 	}
+ 
 diff --git a/refs.c b/refs.c
-index 32f48ea..9c813f9 100644
+index 35f6db1..32f48ea 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -2620,82 +2620,52 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
+@@ -2535,6 +2535,9 @@ static int curate_packed_ref_fn(struct ref_entry *entry, void *cb_data)
  	return 0;
  }
  
--/*
-- * People using contrib's git-new-workdir have .git/logs/refs ->
-- * /some/other/path/.git/logs/refs, and that may live on another device.
-- *
-- * IOW, to avoid cross device rename errors, the temporary renamed log must
-- * live into logs/refs.
-- */
--#define TMP_RENAMED_LOG  "logs/refs/.tmp-renamed-log"
-+struct rename_reflog_cb {
-+	struct ref_transaction *transaction;
-+	const char *refname;
-+	struct strbuf *err;
-+};
- 
--static int rename_tmp_log(const char *newrefname)
-+static int rename_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+			     const char *id, unsigned long timestamp, int tz,
-+			     const char *message, void *cb_data)
++/*
++ * Must be called with packed refs already locked (and sorted)
++ */
+ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
  {
--	int attempts_remaining = 4;
-+	struct rename_reflog_cb *cb = cb_data;
-+	struct reflog_committer_info ci;
+ 	struct ref_dir *packed;
+@@ -2547,19 +2550,12 @@ int repack_without_refs(const char **refnames, int n, struct strbuf *err)
+ 		if (get_packed_ref(refnames[i]))
+ 			break;
  
-- retry:
--	switch (safe_create_leading_directories(git_path("logs/%s", newrefname))) {
--	case SCLD_OK:
--		break; /* success */
--	case SCLD_VANISHED:
--		if (--attempts_remaining > 0)
--			goto retry;
--		/* fall through */
--	default:
--		error("unable to create directory for %s", newrefname);
--		return -1;
--	}
+-	/* Avoid locking if we have nothing to do */
+-	if (i == n)
++	/* Avoid processing if we have nothing to do */
++	if (i == n) {
++		rollback_packed_refs();
+ 		return 0; /* no refname exists in packed refs */
 -
--	if (rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", newrefname))) {
--		if ((errno==EISDIR || errno==ENOTDIR) && --attempts_remaining > 0) {
--			/*
--			 * rename(a, b) when b is an existing
--			 * directory ought to result in ISDIR, but
--			 * Solaris 5.8 gives ENOTDIR.  Sheesh.
--			 */
--			if (remove_empty_directories(git_path("logs/%s", newrefname))) {
--				error("Directory not empty: logs/%s", newrefname);
--				return -1;
--			}
--			goto retry;
--		} else if (errno == ENOENT && --attempts_remaining > 0) {
--			/*
--			 * Maybe another process just deleted one of
--			 * the directories in the path to newrefname.
--			 * Try again from the beginning.
--			 */
--			goto retry;
--		} else {
--			error("unable to move logfile "TMP_RENAMED_LOG" to logs/%s: %s",
--				newrefname, strerror(errno));
+-	if (lock_packed_refs(0)) {
+-		if (err) {
+-			unable_to_lock_message(git_path("packed-refs"), errno,
+-					       err);
 -			return -1;
 -		}
--	}
--	return 0;
-+	memset(&ci, 0, sizeof(ci));
-+	ci.id = id;
-+	ci.timestamp = timestamp;
-+	ci.tz = tz;
-+	return transaction_update_reflog(cb->transaction, cb->refname,
-+					 nsha1, osha1, &ci, message, 0,
-+					 cb->err);
- }
+-		unable_to_lock_error(git_path("packed-refs"), errno);
+-		return error("cannot delete '%s' from packed refs", refnames[i]);
+ 	}
++
+ 	packed = get_packed_refs(&ref_cache);
  
--static int write_ref_sha1(struct ref_lock *lock, const unsigned char *sha1,
--			  const char *logmsg);
--
- int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
+ 	/* Remove refnames from the cache */
+@@ -3671,10 +3667,12 @@ static int ref_update_reject_duplicates(struct ref_update **updates, int n,
+ int transaction_commit(struct ref_transaction *transaction,
+ 		       struct strbuf *err)
  {
--	unsigned char sha1[20], orig_sha1[20];
--	int flag = 0, logmoved = 0;
--	struct ref_lock *lock;
--	struct stat loginfo;
--	int log = !lstat(git_path("logs/%s", oldrefname), &loginfo);
-+	unsigned char sha1[20];
-+	int flag = 0, log;
-+	struct ref_transaction *transaction = NULL;
-+	struct strbuf err = STRBUF_INIT;
- 	const char *symref = NULL;
-+	struct rename_reflog_cb cb;
-+	struct reflog_committer_info ci;
+-	int ret = 0, delnum = 0, i, df_conflict = 0;
++	int ret = 0, delnum = 0, i, df_conflict = 0, need_repack = 0;
+ 	const char **delnames;
+ 	int n = transaction->nr;
++	struct packed_ref_cache *packed_ref_cache;
+ 	struct ref_update **updates = transaction->updates;
++	struct ref_dir *packed;
  
--	if (log && S_ISLNK(loginfo.st_mode))
--		return error("reflog for %s is a symlink", oldrefname);
-+	memset(&ci, 0, sizeof(ci));
-+	ci.committer_info = git_committer_info(0);
+ 	if (transaction->state != REF_TRANSACTION_OPEN)
+ 		die("BUG: commit called for transaction that is not open");
+@@ -3694,12 +3692,100 @@ int transaction_commit(struct ref_transaction *transaction,
+ 		goto cleanup;
+ 	}
  
--	symref = resolve_ref_unsafe(oldrefname, orig_sha1,
-+	symref = resolve_ref_unsafe(oldrefname, sha1,
- 				    RESOLVE_REF_READING, &flag);
--	if (flag & REF_ISSYMREF)
--		return error("refname %s is a symbolic ref, renaming it is not supported",
-+	if (flag & REF_ISSYMREF) {
-+		error("refname %s is a symbolic ref, renaming it is not supported",
- 			oldrefname);
--	if (!symref)
--		return error("refname %s not found", oldrefname);
-+		return 1;
+-	/* Acquire all ref locks while verifying old values */
++	/* Lock packed refs during commit */
++	if (lock_packed_refs(0)) {
++		if (err)
++			unable_to_lock_message(git_path("packed-refs"),
++					       errno, err);
++		ret = -1;
++		goto cleanup;
 +	}
-+	if (!symref) {
-+		error("refname %s not found", oldrefname);
-+		return 1;
++
++	/* any loose refs are to be deleted are first copied to packed refs */
++	for (i = 0; i < n; i++) {
++		struct ref_update *update = updates[i];
++		unsigned char sha1[20];
++
++		if (update->update_type != UPDATE_SHA1)
++			continue;
++		if (!is_null_sha1(update->new_sha1))
++			continue;
++		if (get_packed_ref(update->refname))
++			continue;
++		if (!resolve_ref_unsafe(update->refname, sha1, 1, NULL))
++			continue;
++
++		add_packed_ref(update->refname, sha1);
++		need_repack = 1;
 +	}
++	if (need_repack) {
++		packed = get_packed_refs(&ref_cache);;
++		sort_ref_dir(packed);
++		if (commit_packed_refs()){
++			strbuf_addf(err, "unable to overwrite old ref-pack "
++				    "file");
++			ret = -1;
++			goto cleanup;
++		}
++		/* lock the packed refs again so no one can change it */
++		if (lock_packed_refs(0)) {
++			if (err)
++				unable_to_lock_message(git_path("packed-refs"),
++						       errno, err);
++			ret = -1;
++			goto cleanup;
++		}
++	}
++
++	/*
++	 * At this stage any refs that are to be deleted have been moved to the
++	 * packed refs file anf the packed refs file is deleted. We can now
++	 * safely delete these loose refs.
++	 */
++
++	/* Unlink any loose refs scheduled for deletion */
++	for (i = 0; i < n; i++) {
++		struct ref_update *update = updates[i];
++
++		if (update->update_type != UPDATE_SHA1)
++			continue;
++		if (!is_null_sha1(update->new_sha1))
++			continue;
++		update->lock = lock_ref_sha1_basic(update->refname,
++						   (update->have_old ?
++						    update->old_sha1 :
++						    NULL),
++						   update->flags,
++						   &update->type,
++						   delnames, delnum);
++		if (!update->lock) {
++			if (errno == ENOTDIR)
++				df_conflict = 1;
++			if (err)
++				strbuf_addf(err, "Cannot lock the ref '%s'.",
++					    update->refname);
++			ret = -1;
++			goto cleanup;
++		}
++		if (delete_ref_loose(update->lock, update->type, err)) {
++			ret = -1;
++			goto cleanup;
++		}
++		try_remove_empty_parents((char *)update->refname);
++		if (!(update->flags & REF_ISPRUNING))
++			  delnames[delnum++] = xstrdup(update->lock->ref_name);
++		unlock_ref(update->lock);
++		update->lock = NULL;
++	}
++
++	/* Acquire all ref locks for updates while verifying old values */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
  
- 	if (!is_refname_available(newrefname, get_packed_refs(&ref_cache),
- 				  &oldrefname, 1))
-@@ -2705,70 +2675,45 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 				  &oldrefname, 1))
- 		return 1;
+ 		if (update->update_type != UPDATE_SHA1)
+ 			continue;
++		if (is_null_sha1(update->new_sha1))
++			continue;
+ 		update->lock = lock_ref_sha1_basic(update->refname,
+ 						   (update->have_old ?
+ 						    update->old_sha1 :
+@@ -3718,6 +3804,10 @@ int transaction_commit(struct ref_transaction *transaction,
+ 		}
+ 	}
  
--	if (log && rename(git_path("logs/%s", oldrefname), git_path(TMP_RENAMED_LOG)))
--		return error("unable to move logfile logs/%s to "TMP_RENAMED_LOG": %s",
--			oldrefname, strerror(errno));
++	/* delete reflog for all deleted refs */
++	for (i = 0; i < delnum; i++)
++		unlink_or_warn(git_path("logs/%s", delnames[i]));
++
+ 	/* Lock all reflog files */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+@@ -3729,6 +3819,16 @@ int transaction_commit(struct ref_transaction *transaction,
+ 			update->reflog_lock = update->orig_update->reflog_lock;
+ 			continue;
+ 		}
++		if (log_all_ref_updates && !reflog_exists(update->refname) &&
++		    create_reflog(update->refname)) {
++			ret = -1;
++			if (err)
++				strbuf_addf(err, "Failed to setup reflog for "
++					    "%s", update->refname);
++			goto cleanup;
++		}
++		if (!reflog_exists(update->refname))
++			continue;
+ 		update->reflog_fd = hold_lock_file_for_append(
+ 					update->reflog_lock,
+ 					git_path("logs/%s", update->refname),
+@@ -3744,7 +3844,7 @@ int transaction_commit(struct ref_transaction *transaction,
+ 		}
+ 	}
+ 
+-	/* Perform ref updates first so live commits remain referenced */
++	/* Perform ref updates */
+ 	for (i = 0; i < n; i++) {
+ 		struct ref_update *update = updates[i];
+ 
+@@ -3765,21 +3865,6 @@ int transaction_commit(struct ref_transaction *transaction,
+ 		}
+ 	}
+ 
+-	/* Perform deletes now that updates are safely completed */
+-	for (i = 0; i < n; i++) {
+-		struct ref_update *update = updates[i];
 -
--	if (delete_ref(oldrefname, orig_sha1, REF_NODEREF)) {
--		error("unable to delete old %s", oldrefname);
--		goto rollback;
--	}
+-		if (update->update_type != UPDATE_SHA1)
+-			continue;
+-		if (update->lock) {
+-			if (delete_ref_loose(update->lock, update->type, err))
+-				ret = -1;
 -
--	if (!read_ref_full(newrefname, sha1, RESOLVE_REF_READING, NULL) &&
--	    delete_ref(newrefname, sha1, REF_NODEREF)) {
--		if (errno==EISDIR) {
--			if (remove_empty_directories(git_path("%s", newrefname))) {
--				error("Directory not empty: %s", newrefname);
--				goto rollback;
--			}
--		} else {
--			error("unable to delete existing %s", newrefname);
--			goto rollback;
+-			if (!(update->flags & REF_ISPRUNING))
+-				delnames[delnum++] = update->lock->ref_name;
 -		}
 -	}
 -
--	if (log && rename_tmp_log(newrefname))
--		goto rollback;
--
--	logmoved = log;
--
--	lock = lock_ref_sha1_basic(newrefname, NULL, 0, NULL, NULL, 0);
--	if (!lock) {
--		error("unable to lock %s for update", newrefname);
--		goto rollback;
--	}
--	lock->force_write = 1;
--	hashcpy(lock->old_sha1, orig_sha1);
--	if (write_ref_sha1(lock, orig_sha1, logmsg)) {
--		error("unable to write current sha1 into %s", newrefname);
--		goto rollback;
--	}
--
-+	log = reflog_exists(oldrefname);
-+	transaction = transaction_begin(&err);
-+	if (!transaction)
-+		goto fail;
-+
-+	if (strcmp(oldrefname, newrefname)) {
-+		if (log && transaction_update_reflog(transaction, newrefname,
-+						     sha1, sha1, &ci, NULL,
-+						     REFLOG_TRUNCATE, &err))
-+			goto fail;
-+		cb.transaction = transaction;
-+		cb.refname = newrefname;
-+		cb.err = &err;
-+		if (log && for_each_reflog_ent(oldrefname, rename_reflog_ent,
-+					       &cb))
-+			goto fail;
-+
-+		if (transaction_delete_sha1(transaction, oldrefname, sha1,
-+					    REF_NODEREF,
-+					    1, NULL, &err))
-+			goto fail;
-+	}
-+	if (transaction_update_sha1(transaction, newrefname, sha1,
-+				    NULL, 0, 0, NULL, &err))
-+		goto fail;
-+	if (log && transaction_update_reflog(transaction, newrefname, sha1,
-+					     sha1, &ci, logmsg,
-+					     REFLOG_COMMITTER_INFO_IS_VALID,
-+					     &err))
-+		goto fail;
-+	if (transaction_commit(transaction, &err))
-+		goto fail;
-+	transaction_free(transaction);
- 	return 0;
+ 	/*
+ 	 * Update all reflog files
+ 	 * We have already committed all ref updates and deletes.
+@@ -3832,11 +3917,12 @@ int transaction_commit(struct ref_transaction *transaction,
  
-- rollback:
--	lock = lock_ref_sha1_basic(oldrefname, NULL, 0, NULL, NULL, 0);
--	if (!lock) {
--		error("unable to lock %s for rollback", oldrefname);
--		goto rollbacklog;
--	}
--
--	lock->force_write = 1;
--	flag = log_all_ref_updates;
--	log_all_ref_updates = 0;
--	if (write_ref_sha1(lock, orig_sha1, NULL))
--		error("unable to write current sha1 into %s", oldrefname);
--	log_all_ref_updates = flag;
--
-- rollbacklog:
--	if (logmoved && rename(git_path("logs/%s", newrefname), git_path("logs/%s", oldrefname)))
--		error("unable to restore logfile %s from %s: %s",
--			oldrefname, newrefname, strerror(errno));
--	if (!logmoved && log &&
--	    rename(git_path(TMP_RENAMED_LOG), git_path("logs/%s", oldrefname)))
--		error("unable to restore logfile %s from "TMP_RENAMED_LOG": %s",
--			oldrefname, strerror(errno));
--
-+ fail:
-+	error("rename_ref failed: %s", err.buf);
-+	strbuf_release(&err);
-+	transaction_free(transaction);
- 	return 1;
- }
+ 	if (repack_without_refs(delnames, delnum, err))
+ 		ret = -1;
+-	for (i = 0; i < delnum; i++)
+-		unlink_or_warn(git_path("logs/%s", delnames[i]));
+ 	clear_loose_ref_cache(&ref_cache);
  
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index ac31b71..64f5bf2 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -293,13 +293,6 @@ test_expect_success 'renaming a symref is not allowed' '
- 	test_path_is_missing .git/refs/heads/master3
- '
+ cleanup:
++	packed_ref_cache = get_packed_ref_cache(&ref_cache);
++	if (packed_ref_cache->lock)
++		rollback_packed_refs();
+ 	transaction->state = ret ? REF_TRANSACTION_ERROR
+ 		: REF_TRANSACTION_CLOSED;
  
--test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
--	git branch -l u &&
--	mv .git/logs/refs/heads/u real-u &&
--	ln -s real-u .git/logs/refs/heads/u &&
--	test_must_fail git branch -m u v
--'
--
- test_expect_success 'test tracking setup via --track' '
- 	git config remote.local.url . &&
- 	git config remote.local.fetch refs/heads/*:refs/remotes/local/* &&
 -- 
 2.0.1.523.g0041e8a
