@@ -1,183 +1,101 @@
-From: Tony Finch <dot@dotat.at>
-Subject: [PATCH 2/2] imap-send: create target mailbox if it is missing
-Date: Thu, 31 Jul 2014 09:14:34 +0100
-Message-ID: <alpine.LSU.2.00.1407310914320.13901@hermes-1.csi.cam.ac.uk>
-References: <alpine.LSU.2.00.1407310910230.10413@hermes-1.csi.cam.ac.uk>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH v5 0/7] Rewrite `git_config()` using config-set API
+Date: Thu, 31 Jul 2014 02:44:10 -0700
+Message-ID: <1406799857-28048-1-git-send-email-tanayabh@gmail.com>
+Cc: Tanay Abhra <tanayabh@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 31 10:14:45 2014
+X-From: git-owner@vger.kernel.org Thu Jul 31 11:45:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XClVc-0005LW-Fy
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 10:14:44 +0200
+	id 1XCmvY-0004Yn-Ug
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 11:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756089AbaGaIOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2014 04:14:40 -0400
-Received: from ppsw-41.csi.cam.ac.uk ([131.111.8.141]:47013 "EHLO
-	ppsw-41.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756040AbaGaIOi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2014 04:14:38 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:36171)
-	by ppsw-41.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1XClVS-0002Kf-ST (Exim 4.82_3-c0e5623) for git@vger.kernel.org
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 31 Jul 2014 09:14:34 +0100
-Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1XClVS-00060d-NI (Exim 4.72) for git@vger.kernel.org
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 31 Jul 2014 09:14:34 +0100
-X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
-In-Reply-To: <alpine.LSU.2.00.1407310910230.10413@hermes-1.csi.cam.ac.uk>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S932299AbaGaJpd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2014 05:45:33 -0400
+Received: from mail-pd0-f179.google.com ([209.85.192.179]:43572 "EHLO
+	mail-pd0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932265AbaGaJpc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2014 05:45:32 -0400
+Received: by mail-pd0-f179.google.com with SMTP id ft15so3165405pdb.24
+        for <git@vger.kernel.org>; Thu, 31 Jul 2014 02:45:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=JjdpKoDhh9dIF3v28Qt/yaJ6TmbqJUEFYwUhPl+WRPo=;
+        b=tpVsfZcrGEdvV9szb/Yc9aWPXc8JENtPw1je3A1YbfsJXum2zH7RaMcxAn5do3/2cD
+         fuemwlNwFICwnPkE++sWuhcUWyEo+ThrR5sQZaFKO60XabAjaN9VHHdK38AkcoC2245g
+         tJFCSXkzPhdjn+d3CD8atotoFh/ndZVK3q54Np4WcG5s0nU6ga1lrJAIIVKErcyRGhgV
+         FHJi+AqRPPHpYDjZ7JG1BaAGURk5XkMPUa1uxlNMo9AH0vn3vLUIflZQ4aMl1NngmdWj
+         cOznpCT5MUfg4ZqBoGazGyjHzq/0rRbG6OfWKQbfECQ/zgfGgW1eACj6PuPMvxTSuwS+
+         auIg==
+X-Received: by 10.70.38.4 with SMTP id c4mr11057546pdk.108.1406799931745;
+        Thu, 31 Jul 2014 02:45:31 -0700 (PDT)
+Received: from localhost.localdomain ([106.201.156.106])
+        by mx.google.com with ESMTPSA id zq5sm4933551pbb.37.2014.07.31.02.45.28
+        for <multiple recipients>
+        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 31 Jul 2014 02:45:30 -0700 (PDT)
+X-Mailer: git-send-email 1.9.0.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254541>
 
-Some MUAs delete their "drafts" folder when it is empty, so
-git imap-send should be able to create it if necessary.
+[PATCH v5]: New patch added (3/7). git_config() now returns void.
 
-This change checks that the folder exists immediately after
-login and tries to create it if it is missing.
+[PATCH v4]: One style nit corrected, also added key to error messages.
+	Diff with v3 at the bottom for easy review.
 
-There was some vestigial code to handle a [TRYCREATE] response
-from the server when an APPEND target is missing. However this
-code never ran (the create and trycreate flags were never set)
-and when I tried to make it run I found that the code had already
-thrown away the contents of the message it was trying to append.
+[PATCH V3]:All the suggestions in [3] applied. Built on top of [1].
 
-Signed-off-by: Tony Finch <dot@dotat.at>
----
- imap-send.c | 56 +++++++++++++++++++++++++-------------------------------
- 1 file changed, 25 insertions(+), 31 deletions(-)
+[PATCH V2]: All the suggestions in [2] incorporated. git_config() now follows
+	correct parsing order. Reordered the patches. Removed xfuncname patch
+	as it was unnecssary.
 
-diff --git a/imap-send.c b/imap-send.c
-index 524fbab..5e4a24e 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -128,7 +128,6 @@ struct imap_cmd_cb {
- 	char *data;
- 	int dlen;
- 	int uid;
--	unsigned create:1, trycreate:1;
- };
+This series builds on the top of topic[1] in the mailing list with name
+"git config cache & special querying API utilizing the cache".
 
- struct imap_cmd {
-@@ -714,8 +713,8 @@ static int parse_response_code(struct imap_store *ctx, struct imap_cmd_cb *cb,
- static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- {
- 	struct imap *imap = ctx->imap;
--	struct imap_cmd *cmdp, **pcmdp, *ncmdp;
--	char *cmd, *arg, *arg1, *p;
-+	struct imap_cmd *cmdp, **pcmdp;
-+	char *cmd, *arg, *arg1;
- 	int n, resp, resp2, tag;
+This series aims to do these three things,
 
- 	for (;;) {
-@@ -801,30 +800,9 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- 			if (!strcmp("OK", arg))
- 				resp = DRV_OK;
- 			else {
--				if (!strcmp("NO", arg)) {
--					if (cmdp->cb.create && cmd && (cmdp->cb.trycreate || !memcmp(cmd, "[TRYCREATE]", 11))) { /* SELECT, APPEND or UID COPY */
--						p = strchr(cmdp->cmd, '"');
--						if (!issue_imap_cmd(ctx, NULL, "CREATE \"%.*s\"", (int)(strchr(p + 1, '"') - p + 1), p)) {
--							resp = RESP_BAD;
--							goto normal;
--						}
--						/* not waiting here violates the spec, but a server that does not
--						   grok this nonetheless violates it too. */
--						cmdp->cb.create = 0;
--						if (!(ncmdp = issue_imap_cmd(ctx, &cmdp->cb, "%s", cmdp->cmd))) {
--							resp = RESP_BAD;
--							goto normal;
--						}
--						free(cmdp->cmd);
--						free(cmdp);
--						if (!tcmd)
--							return 0;	/* ignored */
--						if (cmdp == tcmd)
--							tcmd = ncmdp;
--						continue;
--					}
-+				if (!strcmp("NO", arg))
- 					resp = RESP_NO;
--				} else /*if (!strcmp("BAD", arg))*/
-+				else /*if (!strcmp("BAD", arg))*/
- 					resp = RESP_BAD;
- 				fprintf(stderr, "IMAP command '%s' returned response (%s) - %s\n",
- 					 memcmp(cmdp->cmd, "LOGIN", 5) ?
-@@ -833,7 +811,6 @@ static int get_cmd_result(struct imap_store *ctx, struct imap_cmd *tcmd)
- 			}
- 			if ((resp2 = parse_response_code(ctx, &cmdp->cb, cmd)) > resp)
- 				resp = resp2;
--		normal:
- 			if (cmdp->cb.done)
- 				cmdp->cb.done(ctx, cmdp, resp);
- 			free(cmdp->cb.data);
-@@ -944,7 +921,7 @@ static int auth_cram_md5(struct imap_store *ctx, struct imap_cmd *cmd, const cha
- 	return 0;
- }
+* Use the config-set API to rewrite git_config().
 
--static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
-+static struct imap_store *imap_open_store(struct imap_server_conf *srvc, char *folder)
- {
- 	struct credential cred = CREDENTIAL_INIT;
- 	struct imap_store *ctx;
-@@ -1156,6 +1133,25 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
- 		credential_approve(&cred);
- 	credential_clear(&cred);
+* Solve any legacy bugs in the previous system while at it.
 
-+	/* check the target mailbox exists */
-+	ctx->name = folder;
-+	switch (imap_exec(ctx, NULL, "EXAMINE \"%s\"", ctx->name)) {
-+	case RESP_OK:
-+		/* ok */
-+		break;
-+	case RESP_BAD:
-+		fprintf(stderr, "IMAP error: could not check mailbox\n");
-+		goto bail;
-+	case RESP_NO:
-+		if (imap_exec(ctx, NULL, "CREATE \"%s\"", ctx->name) == RESP_OK) {
-+			imap_info("Created missing mailbox\n");
-+		} else {
-+			fprintf(stderr, "IMAP error: could not create missing mailbox\n");
-+			goto bail;
-+		}
-+		break;
-+	}
-+
- 	ctx->prefix = "";
- 	return ctx;
+* To be feature complete compared to the previous git_config() implementation,
+  which I think it is now. (added the line number and file name info just for
+  completeness)
 
-@@ -1219,7 +1215,6 @@ static int imap_store_msg(struct imap_store *ctx, struct strbuf *msg)
+Also, I haven't yet checked the exact improvements but still as a teaser,
+git status now only rereads the configuration files twice instead of four
+times.
 
- 	box = ctx->name;
- 	prefix = !strcmp(box, "INBOX") ? "" : ctx->prefix;
--	cb.create = 0;
- 	ret = imap_exec_m(ctx, &cb, "APPEND \"%s%s\" ", prefix, box);
- 	imap->caps = imap->rcaps;
- 	if (ret != DRV_OK)
-@@ -1418,14 +1413,13 @@ int main(int argc, char **argv)
- 	}
+[1]: http://thread.gmane.org/gmane.comp.version-control.git/254286
+[2]: http://thread.gmane.org/gmane.comp.version-control.git/254101
+[3]: http://thread.gmane.org/gmane.comp.version-control.git/254211
 
- 	/* write it to the imap server */
--	ctx = imap_open_store(&server);
-+	ctx = imap_open_store(&server, imap_folder);
- 	if (!ctx) {
- 		fprintf(stderr, "failed to open store\n");
- 		return 1;
- 	}
+Tanay Abhra (7):
+  config.c: fix accuracy of line number in errors
+  add line number and file name info to `config_set`
+  change `git_config()` return value to void
+  rewrite git_config() to use the config-set API
+  add a test for semantic errors in config files
+  config: add `git_die_config()` to the config-set API
+  add tests for `git_config_get_string_const()`
 
- 	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" : "");
--	ctx->name = imap_folder;
- 	while (1) {
- 		unsigned percent = n * 100 / total;
+ Documentation/technical/api-config.txt |   5 ++
+ branch.c                               |   5 +-
+ cache.h                                |  27 ++++++-
+ config.c                               | 131 +++++++++++++++++++++++++++++----
+ t/t1308-config-set.sh                  |  21 ++++++
+ t/t4055-diff-context.sh                |   2 +-
+ test-config.c                          |  10 +++
+ 7 files changed, 181 insertions(+), 20 deletions(-)
 
 -- 
-2.1.0.rc0.229.gaee38de
+1.9.0.GIT
