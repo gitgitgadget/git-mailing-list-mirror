@@ -1,71 +1,78 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH 0/5] nd/multiple-work-trees follow-ups
-Date: Thu, 31 Jul 2014 17:13:01 +0700
-Message-ID: <CACsJy8AambnVfbchGrvV0rgN1JyzCXBGgJxbV8JD1BF1DeDdHA@mail.gmail.com>
-References: <1406115795-24082-1-git-send-email-pclouds@gmail.com> <xmqqr412zqdo.fsf@gitster.dls.corp.google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v5 3/7] change `git_config()` return value to void
+Date: Thu, 31 Jul 2014 13:22:29 +0200
+Message-ID: <vpqoaw5epsa.fsf@anie.imag.fr>
+References: <1406799857-28048-1-git-send-email-tanayabh@gmail.com>
+	<1406799857-28048-4-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Max Kirillov <max@max630.net>,
-	Eric Sunshine <sunshine@sunshineco.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 12:13:40 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jul 31 13:23:36 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCnMe-0005pW-Sw
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 12:13:37 +0200
+	id 1XCoSN-0004Nm-DU
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 13:23:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756261AbaGaKNd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 31 Jul 2014 06:13:33 -0400
-Received: from mail-ie0-f180.google.com ([209.85.223.180]:38149 "EHLO
-	mail-ie0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756210AbaGaKNc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2014 06:13:32 -0400
-Received: by mail-ie0-f180.google.com with SMTP id at20so3400389iec.39
-        for <git@vger.kernel.org>; Thu, 31 Jul 2014 03:13:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=kBb8QmIs+JlAZlyIAVSKQKodnFlCRNzxjIUNTF6vOyE=;
-        b=cz+0Vdd58q4mJnsRzwJ/lrbQbu515xEpAMb/OiWeBHWGN1qTaV4fyC6CvLwpshMa+O
-         oNrDPrBSjlKzeNnVqqQWE8ne8uN1CXex++62vRsyTt62PzNQmshWTJtAA/n39ZVABjuy
-         q/fa+bVddF8K/I2dcOHB+K1wRZ3lR1HNLSiInIb9IHkOJTFGAk8vxalWbJfiy3X1h7lz
-         f+yDp5fajhipD4AEV6VvLw3NF1FmvaD0Kpg08nFopwh2fFlnEZ6ebU01MZTfeQiKwHgs
-         DSPpl8d6CZCPocH1mMzvTf5jmP2+cMKd22SOp/p4koJX51xs63BuC+0ihSrh8R10eiwV
-         7S2A==
-X-Received: by 10.43.129.74 with SMTP id hh10mr13669645icc.48.1406801611397;
- Thu, 31 Jul 2014 03:13:31 -0700 (PDT)
-Received: by 10.107.13.80 with HTTP; Thu, 31 Jul 2014 03:13:01 -0700 (PDT)
-In-Reply-To: <xmqqr412zqdo.fsf@gitster.dls.corp.google.com>
+	id S1754623AbaGaLXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2014 07:23:30 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:50704 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752466AbaGaLWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2014 07:22:32 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6VBMR2W001714
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 31 Jul 2014 13:22:27 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6VBMTPp024816;
+	Thu, 31 Jul 2014 13:22:29 +0200
+In-Reply-To: <1406799857-28048-4-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Thu, 31 Jul 2014 02:44:13 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 31 Jul 2014 13:22:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s6VBMR2W001714
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1407410548.31902@/ymOvwlud/RLYWM1T/Przg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254551>
 
-On Thu, Jul 31, 2014 at 12:51 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
->
->> The series has entered 'next' so I can't replace patches any more.
->> Besides the brown paper bag fixes, checkout now rejects if a branch =
-is
->> already checked out elsewhere.
->
-> I do not think we would want to rush the entire series to 'master'
-> before the upcoming release, so we could squash these fixes into the
-> original when we rewind 'next' post release, if you wanted to.
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-Great. Please remove it from next at the next rewind.
+> Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 
-> The fix-ups are easier to review than wholesale replacements; keep
-> them coming as needed.
+I think I deserve a bit of credit here ;-).
 
-Will do.
---=20
-Duy
+>  {
+> -	return git_config_with_options(fn, data, NULL, 1);
+> +	if (git_config_with_options(fn, data, NULL, 1) < 0)
+> +		/*
+> +		 * git_config_with_options() normally returns only
+> +		 * positive values, as most errors are fatal, and
+> +		 * non-fatal potential errors are guarded by "if"
+> +		 * statements that are entered only when no error is
+> +		 * possible.
+> +		 *
+> +		 * If we ever encounter a non-fatal error, it means
+> +		 * something went really wrong and we should stop
+> +		 * immediately.
+> +		 */
+> +		die("Unknown error occured while reading the configuration files");
+>  }
+
+My bad, but this should be die(_("..."));, so that the message can be
+translated. Not really serious since it's not really meant to be seen by
+the user, though.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
