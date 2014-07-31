@@ -1,163 +1,191 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 2/5] send-pack.c: add an --atomic-push command line argument
-Date: Thu, 31 Jul 2014 14:39:08 -0700
-Message-ID: <1406842751-6657-3-git-send-email-sahlberg@google.com>
+Subject: [PATCH 3/5] receive-pack.c: use a single transaction when atomic-push is negotiated
+Date: Thu, 31 Jul 2014 14:39:09 -0700
+Message-ID: <1406842751-6657-4-git-send-email-sahlberg@google.com>
 References: <1406842751-6657-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 31 23:39:34 2014
+X-From: git-owner@vger.kernel.org Thu Jul 31 23:39:35 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCy4T-0005Ge-UP
+	id 1XCy4U-0005Ge-Eu
 	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 23:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703AbaGaVjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2014 17:39:21 -0400
-Received: from mail-qa0-f73.google.com ([209.85.216.73]:35545 "EHLO
-	mail-qa0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752553AbaGaVjP (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752796AbaGaVjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2014 17:39:22 -0400
+Received: from mail-vc0-f201.google.com ([209.85.220.201]:39556 "EHLO
+	mail-vc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752522AbaGaVjP (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 31 Jul 2014 17:39:15 -0400
-Received: by mail-qa0-f73.google.com with SMTP id s7so344194qap.2
+Received: by mail-vc0-f201.google.com with SMTP id le20so447086vcb.0
         for <git@vger.kernel.org>; Thu, 31 Jul 2014 14:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Q86awS0JZt0xeQgOr53iM3NacJL/uDiEfSaFlinBipE=;
-        b=A8v9oWkwqsfCgQUqfUYFsPXwtJaQMai+VlYxBo+tCilcFgCxpNg17yzyifOR34eO/7
-         jH5gHbn17Tv6kC5MYrpgxz8ZpQdOo+4V051FSkB1RwJwTrBEvRk0WHrPvQFuyAQiTUdD
-         woB3bllQH337ZJsOQd65pHb7dFGkQuPY7XqZ9O7VWmjReUXvbrgnExJbyg8rjYOQpuPp
-         GAgjlWlOQkrRdKi19OqM/D1fEtTfR1Id4ChrTPMJ+bAQOXzsj3DeruItgTAjC819017b
-         TcezOL7QN5pGD8V28D2MtGdYd2eO9RW4K7n8RVHZX4fNkj3pRp9AXfk0Fogh8LtdX5+R
-         DuTA==
+        bh=whhSQH+Y2q4pPyQ2mhubE29Il8Q84snWeH3XPwhyF6o=;
+        b=ED5H6OJnhEVLjdZEAvvYq8kggkXDWn2y+6Fy22AYlJuqR2pth2VJBpy4gzY6gocST2
+         uPSAfse0uTGR9GNHJ1NVO9pbEQ63wjCPv5ECEfhnWs3XY6JCQ1dmbPuPayrZKmgNiozb
+         tIA8We84Ds33Djir8ywvVNjWBGlajXqRurDS+FB5RlkbaoO4H8JcluEY70mBbhoiMavh
+         Tlh8hRVNJ2FdqARHhz8Gher98X1jvuXSRGtXdqZTZ42jcBQWw7UU+xXSCQEIQZNHofqG
+         /dXR5+0MNf/5CmiBf5VdO7/ed4LhnEorbStbnqaD/POX71gFW29n58J7rRPZFNQsYDxi
+         ze0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Q86awS0JZt0xeQgOr53iM3NacJL/uDiEfSaFlinBipE=;
-        b=itpXweLiNJkQkP9FcpM1DpOIzOc+uRnBKSmHt9MWKRAWOpeKAZTiVHqEoVmw7H/IBp
-         2i6N/1d4Q0ytxkwMvNzRs4zkcYU2X+nXluNZRg+pB+Ga1m4TvkOtmGn0DGgQXitk/d2g
-         476X3ID5EIkJZw7VodaAan86g3ZCof/ETSDXpBMrI7nXumUWy9zdKfr+fStP3guRN92s
-         frmQo1TVoFBQoSqhQUzVgftKswdWV/vEr1GoEsUNxrU6oUiItb/jqmxxP3of2PbhqN50
-         B/mA70mvHRTDNddlMUkrlDZifbnGL5f++MzKp9QYE8Fu3Blnf1zH1lB6aGe1ulM52mx7
-         YI9A==
-X-Gm-Message-State: ALoCoQnEPbeiF9mSVk3aMc6Z8mODbe8pba80OWUjzuPl8TJcBSSO3A0Ejov7lGuabK6CpRXwYJfi
-X-Received: by 10.236.66.105 with SMTP id g69mr394465yhd.11.1406842754688;
+        bh=whhSQH+Y2q4pPyQ2mhubE29Il8Q84snWeH3XPwhyF6o=;
+        b=nDpTwgrbuLFyR2i44hiTp9+/Ch7whVFAr1ouaCqD8nyPvYKrx3HkGk8ISebGZWt1mE
+         KthqTxx6Vz3Oqa55isy6+07aRccnuorGt2kfCGKEnsUZIpOmrNCoHjX8w4EQ1VIeRPTN
+         ReM7lXj4xsQ7x8ACx3L/hX90A5lAQKYMR7FPiF55zvbHS3bJHcZAiw04/H+/xrCPoM82
+         +yEGt7n1c8V3zrYfMgHESxWV2sEH0sK8EcJ+j1Ye7j5yuE4+ojHxikIIkwOVoYbrjkvD
+         1t3HINJuR3s6IhYNbM3SQpXVqNsvxfKd3ZvFvN5SL+2Md0dUWm7PqBQEN+keqVoovVyb
+         zVjA==
+X-Gm-Message-State: ALoCoQmwSQDuLW3CkcWtATqtcaoVq4giCUsITE5Xy6alxPTFmjfNBmxxVGpexrOILQisLeM2Bcuz
+X-Received: by 10.236.171.234 with SMTP id r70mr385065yhl.45.1406842754508;
         Thu, 31 Jul 2014 14:39:14 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id y50si422522yhk.4.2014.07.31.14.39.14
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id z50si423231yhb.3.2014.07.31.14.39.14
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Thu, 31 Jul 2014 14:39:14 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 5E7795A42FD;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 3CCD131C611;
 	Thu, 31 Jul 2014 14:39:14 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id EB34FE055C; Thu, 31 Jul 2014 14:39:13 -0700 (PDT)
+	id DECD3E0528; Thu, 31 Jul 2014 14:39:13 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.528.gd0e7a84
 In-Reply-To: <1406842751-6657-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254611>
+
+Update receive-pack to use an atomic transaction IFF the client negotiated
+that it wanted atomic-push.
+This leaves the default behaviour to be the old non-atomic one ref at a
+time update. This is to cause as little disruption as possible to existing
+clients. It is unknown if there are client scripts that depend on the old
+non-atomic behaviour so we make it opt-in for now.
+
+Later patch in this series also adds a configuration variable where you can
+override the atomic push behaviour on the receiving repo and force it
+to use atomic updates always.
+
+If it turns out over time that there are no client scripts that depend on the
+old behaviour we can change git to default to use atomic pushes by default
+and instead offer an opt-out argument for people that do not want atomic
+updates at all.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- Documentation/git-send-pack.txt | 7 ++++++-
- builtin/send-pack.c             | 6 +++++-
- send-pack.c                     | 8 +++++++-
- send-pack.h                     | 1 +
- 4 files changed, 19 insertions(+), 3 deletions(-)
+ builtin/receive-pack.c | 55 ++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 44 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-index dc3a568..4ee2ca1 100644
---- a/Documentation/git-send-pack.txt
-+++ b/Documentation/git-send-pack.txt
-@@ -9,7 +9,7 @@ git-send-pack - Push objects over Git protocol to another repository
- SYNOPSIS
- --------
- [verse]
--'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]
-+'git send-pack' [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [--atomic-push] [<host>:]<directory> [<ref>...]
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index f6b20cb..47f778d 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -47,6 +47,8 @@ static void *head_name_to_free;
+ static int sent_capabilities;
+ static int shallow_update;
+ static const char *alt_shallow_file;
++struct strbuf err = STRBUF_INIT;
++struct ref_transaction *transaction;
  
- DESCRIPTION
- -----------
-@@ -52,6 +52,11 @@ OPTIONS
- 	Send a "thin" pack, which records objects in deltified form based
- 	on objects not included in the pack to reduce network traffic.
- 
-+--atomic-push::
-+	With atomic-push all refs are updated in one single atomic transaction.
-+	This means that if any of the refs fails then the entire push will
-+	fail without changing any refs.
+ static enum deny_action parse_deny_action(const char *var, const char *value)
+ {
+@@ -577,26 +579,38 @@ static char *update(struct command *cmd, struct shallow_info *si)
+ 		return NULL; /* good */
+ 	}
+ 	else {
+-		struct strbuf err = STRBUF_INIT;
+-		struct ref_transaction *transaction;
+-
+ 		if (shallow_update && si->shallow_ref[cmd->index] &&
+ 		    update_shallow_ref(cmd, si))
+ 			return xstrdup("shallow error");
+-
+-		transaction = transaction_begin(&err);
+-		if (!transaction ||
+-		    transaction_update_sha1(transaction, namespaced_name,
++		if (!use_atomic_push) {
++			transaction = transaction_begin(&err);
++			if (!transaction) {
++				char *str = xstrdup(err.buf);
 +
- <host>::
- 	A remote host to house the repository.  When this
- 	part is specified, 'git-receive-pack' is invoked via
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index f420b74..78e7d8f 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -13,7 +13,7 @@
- #include "sha1-array.h"
- 
- static const char send_pack_usage[] =
--"git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
-+"git send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [--atomic-push] [<host>:]<directory> [<ref>...]\n"
- "  --all and explicit <ref> specification are mutually exclusive.";
- 
- static struct send_pack_args args;
-@@ -165,6 +165,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 				args.use_thin_pack = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--atomic-push")) {
-+				args.use_atomic_push = 1;
-+				continue;
++				strbuf_release(&err);
++				transaction_free(transaction);
++				rp_error("%s", str);
++				return str;
 +			}
- 			if (!strcmp(arg, "--stateless-rpc")) {
- 				args.stateless_rpc = 1;
- 				continue;
-diff --git a/send-pack.c b/send-pack.c
-index f91b8d9..66f3724 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -228,6 +228,11 @@ int send_pack(struct send_pack_args *args,
- 	if (server_supports("atomic-push"))
- 		atomic_push_supported = 1;
++		}
++		if (transaction_update_sha1(transaction, namespaced_name,
+ 					    new_sha1, old_sha1, 0, 1, "push",
+-					    &err) ||
+-		    transaction_commit(transaction, &err)) {
+-			char *str = strbuf_detach(&err, NULL);
+-			transaction_free(transaction);
++					    &err)) {
++			char *str = xstrdup(err.buf);
  
-+	if (args->use_atomic_push && !atomic_push_supported) {
-+		fprintf(stderr, "Server does not support atomic-push.");
-+		return -1;
++			strbuf_release(&err);
++			transaction_free(transaction);
+ 			rp_error("%s", str);
+ 			return str;
+ 		}
++		if (!use_atomic_push && transaction_commit(transaction, &err)) {
++			char *str = xstrdup(err.buf);
+ 
++			strbuf_release(&err);
++			transaction_free(transaction);
++			rp_error("%s", str);
++			return str;
++		}
+ 		transaction_free(transaction);
+ 		strbuf_release(&err);
+ 		return NULL; /* good */
+@@ -810,6 +824,16 @@ static void execute_commands(struct command *commands,
+ 		return;
+ 	}
+ 
++	if (use_atomic_push) {
++		transaction = transaction_begin(&err);
++		if (!transaction) {
++			error("%s", err.buf);
++			strbuf_release(&err);
++			for (cmd = commands; cmd; cmd = cmd->next)
++				cmd->error_string = "transaction error";
++			return;
++		}
 +	}
-+
- 	if (!remote_refs) {
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
- 			"Perhaps you should specify a branch such as 'master'.\n");
-@@ -272,7 +277,8 @@ int send_pack(struct send_pack_args *args,
- 			char *old_hex = sha1_to_hex(ref->old_sha1);
- 			char *new_hex = sha1_to_hex(ref->new_sha1);
- 			int quiet = quiet_supported && (args->quiet || !args->progress);
--			int atomic_push = atomic_push_supported;
-+			int atomic_push = atomic_push_supported &&
-+				args->use_atomic_push;
+ 	data.cmds = commands;
+ 	data.si = si;
+ 	if (check_everything_connected(iterate_receive_command_list, 0, &data))
+@@ -848,6 +872,14 @@ static void execute_commands(struct command *commands,
+ 		}
+ 	}
  
- 			if (!cmds_sent && (status_report || use_sideband ||
- 					   quiet || agent_supported ||
-diff --git a/send-pack.h b/send-pack.h
-index 8e84392..0374ed8 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -10,6 +10,7 @@ struct send_pack_args {
- 		force_update:1,
- 		use_thin_pack:1,
- 		use_ofs_delta:1,
-+		use_atomic_push:1,
- 		dry_run:1,
- 		stateless_rpc:1;
- };
++	if (use_atomic_push) {
++		if (transaction_commit(transaction, &err)) {
++			rp_error("%s", err.buf);
++			for (cmd = commands; cmd; cmd = cmd->next)
++				cmd->error_string = err.buf;
++		}
++		transaction_free(transaction);
++	}
+ 	if (shallow_update && !checked_connectivity)
+ 		error("BUG: run 'git fsck' for safety.\n"
+ 		      "If there are errors, try to remove "
+@@ -1250,5 +1282,6 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	sha1_array_clear(&shallow);
+ 	sha1_array_clear(&ref);
+ 	free_commands(commands);
++	strbuf_release(&err);
+ 	return 0;
+ }
 -- 
 2.0.1.528.gd0e7a84
