@@ -1,102 +1,77 @@
 From: Tony Finch <dot@dotat.at>
-Subject: [PATCH 2/5] gitweb: if the PATH_INFO is incomplete, use it as a
- project_filter
-Date: Thu, 31 Jul 2014 13:53:41 +0100
-Message-ID: <alpine.LSU.2.00.1407311353400.23775@hermes-1.csi.cam.ac.uk>
+Subject: [PATCH 3/5] gitweb: add a link under the search box to clear a
+ project filter
+Date: Thu, 31 Jul 2014 13:53:45 +0100
+Message-ID: <alpine.LSU.2.00.1407311353440.23775@hermes-1.csi.cam.ac.uk>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 31 14:53:54 2014
+X-From: git-owner@vger.kernel.org Thu Jul 31 14:53:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCpre-00071R-19
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 14:53:46 +0200
+	id 1XCprm-00077B-QZ
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 14:53:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321AbaGaMxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2014 08:53:43 -0400
-Received: from ppsw-50.csi.cam.ac.uk ([131.111.8.150]:57475 "EHLO
-	ppsw-50.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751071AbaGaMxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2014 08:53:42 -0400
+	id S1751322AbaGaMxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2014 08:53:47 -0400
+Received: from ppsw-41.csi.cam.ac.uk ([131.111.8.141]:38932 "EHLO
+	ppsw-41.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751071AbaGaMxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2014 08:53:47 -0400
 X-Cam-AntiVirus: no malware found
 X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:43451)
-	by ppsw-50.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.158]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1XCprZ-0005Bd-rx (Exim 4.82_3-c0e5623) for git@vger.kernel.org
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 31 Jul 2014 13:53:41 +0100
+Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:45695)
+	by ppsw-41.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:25)
+	with esmtpa (EXTERNAL:fanf2) id 1XCprd-0007Ta-Rr (Exim 4.82_3-c0e5623) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 31 Jul 2014 13:53:45 +0100
 Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1XCprZ-0005jp-Ky (Exim 4.72) for git@vger.kernel.org
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 31 Jul 2014 13:53:41 +0100
+	with local id 1XCprd-0005k4-Gq (Exim 4.72) for git@vger.kernel.org
+	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 31 Jul 2014 13:53:45 +0100
 X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
 User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254567>
 
-Previously gitweb would ignore partial PATH_INFO. For example,
-it would produce a project list for the top URL
-	https://www.example.org/projects/
-and a project summary for
-	https://www.example.org/projects/git/git.git
-but if you tried to list just the git-related projects with
-	https://www.example.org/projects/git/
-you would get a list of all projects, same as the top URL.
+Previously when a project filter was active, the only simple way
+to clear it was by clicking the home link in the breadcrumbs, which
+is not very obvious.
 
-As well as fixing that omission, this change also makes gitweb
-generate PATH_INFO-style URLs for project filter links, such
-as in the breadcrumbs.
+This change adds another home link under the search box which clears
+both project filter and search, next to the existing link that
+clears the search and keeps the project filter.
 
 Signed-off-by: Tony Finch <dot@dotat.at>
 ---
- gitweb/gitweb.perl | 24 +++++++++++++++++++++++-
- 1 file changed, 23 insertions(+), 1 deletion(-)
+ gitweb/gitweb.perl | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a9f57d6..12aba8f 100755
+index 12aba8f..d1e6b79 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -891,7 +891,17 @@ sub evaluate_path_info {
- 	while ($project && !check_head_link("$projectroot/$project")) {
- 		$project =~ s,/*[^/]*$,,;
- 	}
--	return unless $project;
-+	# If there is no project, use the PATH_INFO as a project filter if it
-+	# is a directory in the projectroot. (It can't be a subdirectory of a
-+	# repo because we just verified that isn't the case.)
-+	unless ($project) {
-+		if (-d "$projectroot/$path_info") {
-+			$path_info =~ s,/+$,,;
-+			$input_params{'project_filter'} = $path_info;
-+			$path_info = "";
-+		}
-+		return;
-+	}
- 	$input_params{'project'} = $project;
+@@ -5545,10 +5545,13 @@ sub git_project_search_form {
+ 	      "</span>\n" .
+ 	      $cgi->submit(-name => 'btnS', -value => 'Search') .
+ 	      $cgi->end_form() . "\n" .
+-	      $cgi->a({-href => href(project => undef, searchtext => undef,
+-	                             project_filter => $project_filter)},
+-	              esc_html("List all projects$limit")) . "<br />\n";
+-	print "</div>\n";
++	      $cgi->a({-href => $my_uri}, esc_html("List all projects"));
++	print " / " .
++	      $cgi->a({-href => href(project => undef, action => "project_list",
++				     project_filter => $project_filter)},
++	              esc_html("List projects$limit"))
++	    if $project_filter;
++	print "<br />\n</div>\n";
+ }
 
- 	# do not change any parameters if an action is given using the query string
-@@ -1356,6 +1366,18 @@ sub href {
- 	}
-
- 	my $use_pathinfo = gitweb_check_feature('pathinfo');
-+
-+	# we have to check for a project_filter first because handling the full
-+	# project-plus-parameters deletes some of the paramaters we check here
-+	if (!defined $params{'project'} && $params{'project_filter'} &&
-+	    $params{'action'} eq "project_list" &&
-+	    (exists $params{-path_info} ? $params{-path_info} : $use_pathinfo)) {
-+		$href =~ s,/$,,;
-+		$href .= "/".esc_path_info($params{'project_filter'})."/";
-+		delete $params{'project_filter'};
-+		delete $params{'action'};
-+	}
-+
- 	if (defined $params{'project'} &&
- 	    (exists $params{-path_info} ? $params{-path_info} : $use_pathinfo)) {
- 		# try to put as many parameters as possible in PATH_INFO:
+ # entry for given @keys needs filling if at least one of keys in list
 -- 
 2.1.0.rc0.229.gaee38de
