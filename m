@@ -1,157 +1,150 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 5/5] refs.c: add an err argument to pack_refs
-Date: Thu, 31 Jul 2014 14:25:10 -0700
-Message-ID: <1406841910-3278-6-git-send-email-sahlberg@google.com>
-References: <1406841910-3278-1-git-send-email-sahlberg@google.com>
+Subject: [PATCH 1/5] receive-pack.c: add protocol support to negotiate atomic-push
+Date: Thu, 31 Jul 2014 14:39:07 -0700
+Message-ID: <1406842751-6657-2-git-send-email-sahlberg@google.com>
+References: <1406842751-6657-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jul 31 23:25:44 2014
+X-From: git-owner@vger.kernel.org Thu Jul 31 23:39:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCxr0-0000bc-MQ
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 23:25:39 +0200
+	id 1XCy4G-00055i-Lx
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 23:39:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063AbaGaVZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2014 17:25:27 -0400
-Received: from mail-oi0-f73.google.com ([209.85.218.73]:44988 "EHLO
-	mail-oi0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752977AbaGaVZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2014 17:25:17 -0400
-Received: by mail-oi0-f73.google.com with SMTP id u20so961176oif.0
-        for <git@vger.kernel.org>; Thu, 31 Jul 2014 14:25:16 -0700 (PDT)
+	id S1752624AbaGaVjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2014 17:39:17 -0400
+Received: from mail-pd0-f201.google.com ([209.85.192.201]:51788 "EHLO
+	mail-pd0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751336AbaGaVjP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2014 17:39:15 -0400
+Received: by mail-pd0-f201.google.com with SMTP id g10so612274pdj.0
+        for <git@vger.kernel.org>; Thu, 31 Jul 2014 14:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=+x5nod9SLfxK3/7FoPu/q0XZUuYUNIRDhpqKNjcT+3E=;
-        b=ccjWqyGf4n6rr7tVgKGs6Y/s9cOp6Szj3o6INU/MSmCCNhGKnWLZi2UXsMiJeMY+LK
-         K9a9KeQoIteief5XAk4zkXzBgy7YNC2nUMGHbjXRvUZaV/buneEQPXP8XBlf4CFwZfun
-         xqm5MbDbjw9gfmEwA8iGB9A8zOKpVu9cPCLdvpYc4sF04B3+xUQXkG8VvThdBtzVpRA1
-         H9QvRd52NoCBOuEIv9HIsMsNurq/J1f+7zSCFs5QqdjT8Lag25L9bHjeyEqY278DzVzQ
-         eu92nHyRWMg4iKUjuPQft1BPWKS0Y3aLgia37YYZ6EHccdnKD25zXmSJNuL6Bpd7VRAn
-         6oLA==
+        bh=buqdstRAB6NVpxwUyxTv8iRMrShqnC2P2pKhqN1S7G0=;
+        b=iFwjHyZCtUdDXUN3cFwWS37pEVutc1bGPV84Qm5CXiyy30TSa5Qo23HxGXHe8TsdKV
+         IwMIIJsUjqsE+rgzxNXpL3vZ89UwZhzhw6FITUDtexK1ISYZjBVLB2gTWjMNGh/HZBNy
+         PG3NS/L6aRQn3omnWkbKmiEC5SzC2a8Lix8yHtDnJ2jP7OZtEzIJit2tVnAW2Ti3bkOT
+         I1aL21jF9jKIOxGrP/DhmC6Q8cnrvMv3mh63dRntdAXMQI1/Cw3iUehOMgr6YU7QSZ76
+         2e6XQveRTaFKRKFVp8YGdVszb+ioGhxBVZ2yMkmVdlGPfOiCLoyNcI3sIvrC1KSnMmyH
+         MEyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=+x5nod9SLfxK3/7FoPu/q0XZUuYUNIRDhpqKNjcT+3E=;
-        b=JFRIQ3Oni4lUx++VwBbKqm/djW5O03bABhehpi6hBYXfHI08mUvo47FkiLyWy15mm6
-         ouZfgRHtSDqTlmr3QqnDNgB6C5wp7+ig/WamUZnBM2mcQ8SKlgmBodwmFck9G4jKtOe4
-         65AUpTeiqJOIn2yrl5DBj5Ir2SMu9gOd+F2V0sI58g7NiJiBBa7UdYrYaAvdtf3I+k8c
-         jJ+fiIaX4OwNaJthkHCV2yY3Jmt01BgSfas4fSgZKMqX/z9a1X9vY2i3caDpwPhVzkR5
-         xIenCa1hirLAMqbubPUeZhwd3Mwdpf3G4DIU8Zd1luEhRaVzlIGcQJmHLo2pXjMb2FJV
-         4S/g==
-X-Gm-Message-State: ALoCoQlgpcm/4jhBSH9btj5RZ8WypjN/sBPlsFpMISL7a7YD0aAidigg5nqSQaV4NCPcz5RGlopg
-X-Received: by 10.42.85.142 with SMTP id q14mr999707icl.16.1406841916697;
-        Thu, 31 Jul 2014 14:25:16 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id 4si55595igj.0.2014.07.31.14.25.16
+        bh=buqdstRAB6NVpxwUyxTv8iRMrShqnC2P2pKhqN1S7G0=;
+        b=cQuBq6Q8DUOtZemRsblCRNQZgFWDpMWjl11jH269Jp6Skym4okLoTZdZyfT3gRl1K0
+         oMA6nlvQRFIkCnkvljDSODXVnr807awso7P04y4+QKR8/UR9XFelYD6EfV6Djh7T9bop
+         33TMrZiHeR95CiLt8UblRcTZbFDzp3O9SoCZ27s7/GQ17IaTr2aOZU7g6ZUxCNzVkMHu
+         HuDTJwIN0wMhwG4CsXDtGZCjllK1YSgj7mNc5hflDH2kOGY9WnTeYkBsjidyCwIHFwuU
+         4pJqvA1AoMQSeq4OzHPRg/kNbeW8LNcdBo4e7h1aQ0sbQtfmj9+iWOpJLV6avDnADCtE
+         p58w==
+X-Gm-Message-State: ALoCoQko9uatCFxSBlxdCJOZHLMTFoPlNbS1zzs3HDYZVj4P5Tic9SUCZ+tiJ1XgZtcO/WdIp2dJ
+X-Received: by 10.66.141.48 with SMTP id rl16mr444707pab.1.1406842754500;
+        Thu, 31 Jul 2014 14:39:14 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id l23si424324yhg.1.2014.07.31.14.39.14
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 31 Jul 2014 14:25:16 -0700 (PDT)
+        Thu, 31 Jul 2014 14:39:14 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 3DE3531C60E;
-	Thu, 31 Jul 2014 14:25:16 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 4EB2F5A42D3;
+	Thu, 31 Jul 2014 14:39:14 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 93A95E0669; Thu, 31 Jul 2014 14:25:15 -0700 (PDT)
-X-Mailer: git-send-email 2.0.1.523.g70700c9
-In-Reply-To: <1406841910-3278-1-git-send-email-sahlberg@google.com>
+	id E5015E0669; Thu, 31 Jul 2014 14:39:13 -0700 (PDT)
+X-Mailer: git-send-email 2.0.1.528.gd0e7a84
+In-Reply-To: <1406842751-6657-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254608>
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- builtin/pack-refs.c |  8 +++++++-
- refs.c              | 13 ++++++-------
- refs.h              |  3 ++-
- 3 files changed, 15 insertions(+), 9 deletions(-)
+ builtin/receive-pack.c |  6 +++++-
+ send-pack.c            | 12 +++++++++---
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
-index b20b1ec..da5d46a 100644
---- a/builtin/pack-refs.c
-+++ b/builtin/pack-refs.c
-@@ -10,6 +10,7 @@ static char const * const pack_refs_usage[] = {
- int cmd_pack_refs(int argc, const char **argv, const char *prefix)
- {
- 	unsigned int flags = PACK_REFS_PRUNE;
-+	struct strbuf err = STRBUF_INIT;
- 	struct option opts[] = {
- 		OPT_BIT(0, "all",   &flags, N_("pack everything"), PACK_REFS_ALL),
- 		OPT_BIT(0, "prune", &flags, N_("prune loose refs (default)"), PACK_REFS_PRUNE),
-@@ -17,5 +18,10 @@ int cmd_pack_refs(int argc, const char **argv, const char *prefix)
- 	};
- 	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
- 		usage_with_options(pack_refs_usage, opts);
--	return pack_refs(flags);
-+	if (pack_refs(flags, &err)) {
-+		error("%s", err.buf);
-+		strbuf_release(&err);
-+		return 1;
-+	}
-+	return 0;
- }
-diff --git a/refs.c b/refs.c
-index 19e73f3..5875c29 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2328,7 +2328,7 @@ static int commit_packed_refs(struct strbuf *err)
- 		strbuf_addf(err, "error writing packed-refs. %s",
- 			    strerror(errno));
- 		return -1;
--       }
-+	}
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 0565b94..f6b20cb 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -36,6 +36,7 @@ static int transfer_unpack_limit = -1;
+ static int unpack_limit = 100;
+ static int report_status;
+ static int use_sideband;
++static int use_atomic_push;
+ static int quiet;
+ static int prefer_ofs_delta = 1;
+ static int auto_update_server_info;
+@@ -142,7 +143,8 @@ static void show_ref(const char *path, const unsigned char *sha1)
+ 	else
+ 		packet_write(1, "%s %s%c%s%s agent=%s\n",
+ 			     sha1_to_hex(sha1), path, 0,
+-			     " report-status delete-refs side-band-64k quiet",
++			     " report-status delete-refs side-band-64k quiet"
++			     " atomic-push",
+ 			     prefer_ofs_delta ? " ofs-delta" : "",
+ 			     git_user_agent_sanitized());
+ 	sent_capabilities = 1;
+@@ -892,6 +894,8 @@ static struct command *read_head_info(struct sha1_array *shallow)
+ 				use_sideband = LARGE_PACKET_MAX;
+ 			if (parse_feature_request(feature_list, "quiet"))
+ 				quiet = 1;
++			if (parse_feature_request(feature_list, "atomic-push"))
++				use_atomic_push = 1;
+ 		}
+ 		cmd = xcalloc(1, sizeof(struct command) + len - 80);
+ 		hashcpy(cmd->old_sha1, old_sha1);
+diff --git a/send-pack.c b/send-pack.c
+index 6129b0f..f91b8d9 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -205,6 +205,7 @@ int send_pack(struct send_pack_args *args,
+ 	int use_sideband = 0;
+ 	int quiet_supported = 0;
+ 	int agent_supported = 0;
++	int atomic_push_supported = 0;
+ 	unsigned cmds_sent = 0;
+ 	int ret;
+ 	struct async demux;
+@@ -224,6 +225,8 @@ int send_pack(struct send_pack_args *args,
+ 		agent_supported = 1;
+ 	if (server_supports("no-thin"))
+ 		args->use_thin_pack = 0;
++	if (server_supports("atomic-push"))
++		atomic_push_supported = 1;
  
- 	data.fd = packed_ref_cache->lock->fd;
- 	data.err = err;
-@@ -2482,24 +2482,23 @@ static void prune_refs(struct ref_to_prune *r)
- 	}
- }
+ 	if (!remote_refs) {
+ 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n"
+@@ -269,17 +272,20 @@ int send_pack(struct send_pack_args *args,
+ 			char *old_hex = sha1_to_hex(ref->old_sha1);
+ 			char *new_hex = sha1_to_hex(ref->new_sha1);
+ 			int quiet = quiet_supported && (args->quiet || !args->progress);
++			int atomic_push = atomic_push_supported;
  
--int pack_refs(unsigned int flags)
-+int pack_refs(unsigned int flags, struct strbuf *err)
- {
- 	struct pack_refs_cb_data cbdata;
--	struct strbuf err = STRBUF_INIT;
- 
- 	memset(&cbdata, 0, sizeof(cbdata));
- 	cbdata.flags = flags;
- 
--	if (lock_packed_refs(&err))
--		die("%s", err.buf);
-+	if (lock_packed_refs(err))
-+		return -1;
- 
- 	cbdata.packed_refs = get_packed_refs(&ref_cache);
- 
- 	do_for_each_entry_in_dir(get_loose_refs(&ref_cache), 0,
- 				 pack_if_possible_fn, &cbdata);
- 
--	if (commit_packed_refs(&err))
--		die("%s", err.buf);
-+	if (commit_packed_refs(err))
-+		return -1;
- 
- 	prune_refs(cbdata.ref_to_prune);
- 	return 0;
-diff --git a/refs.h b/refs.h
-index dee9a98..1a98e27 100644
---- a/refs.h
-+++ b/refs.h
-@@ -122,8 +122,9 @@ extern void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct st
- /*
-  * Write a packed-refs file for the current repository.
-  * flags: Combination of the above PACK_REFS_* flags.
-+ * Returns 0 on success and fills in err on failure.
-  */
--int pack_refs(unsigned int flags);
-+int pack_refs(unsigned int flags, struct strbuf *err);
- 
- extern int ref_exists(const char *);
- 
+ 			if (!cmds_sent && (status_report || use_sideband ||
+-					   quiet || agent_supported)) {
++					   quiet || agent_supported ||
++					   atomic_push)) {
+ 				packet_buf_write(&req_buf,
+-						 "%s %s %s%c%s%s%s%s%s",
++						 "%s %s %s%c%s%s%s%s%s%s",
+ 						 old_hex, new_hex, ref->name, 0,
+ 						 status_report ? " report-status" : "",
+ 						 use_sideband ? " side-band-64k" : "",
+ 						 quiet ? " quiet" : "",
+ 						 agent_supported ? " agent=" : "",
+-						 agent_supported ? git_user_agent_sanitized() : ""
++						 agent_supported ? git_user_agent_sanitized() : "",
++						 atomic_push ? " atomic-push" : ""
+ 						);
+ 			}
+ 			else
 -- 
-2.0.1.523.g70700c9
+2.0.1.528.gd0e7a84
