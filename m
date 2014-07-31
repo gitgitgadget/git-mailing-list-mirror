@@ -1,132 +1,119 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v6 6/7] config: add `git_die_config()` to the config-set API
-Date: Thu, 31 Jul 2014 20:41:57 +0200
-Message-ID: <vpqoaw55q16.fsf@anie.imag.fr>
-References: <1406821662-1570-1-git-send-email-tanayabh@gmail.com>
-	<1406821662-1570-7-git-send-email-tanayabh@gmail.com>
-	<vpqr411h69h.fsf@anie.imag.fr> <53DA7281.8060403@gmail.com>
-	<vpqr411bhd5.fsf@anie.imag.fr> <53DA7C23.3090603@gmail.com>
-	<vpqa97p8koq.fsf@anie.imag.fr> <53DA8A54.6060208@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] imap-send: create target mailbox if it is missing
+Date: Thu, 31 Jul 2014 11:57:35 -0700
+Message-ID: <xmqqy4v9we3k.fsf@gitster.dls.corp.google.com>
+References: <alpine.LSU.2.00.1407310910230.10413@hermes-1.csi.cam.ac.uk>
+	<alpine.LSU.2.00.1407310914320.13901@hermes-1.csi.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jul 31 20:42:14 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Tony Finch <dot@dotat.at>
+X-From: git-owner@vger.kernel.org Thu Jul 31 20:57:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XCvIo-0002P5-5m
-	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 20:42:10 +0200
+	id 1XCvY6-0000y0-MV
+	for gcvg-git-2@plane.gmane.org; Thu, 31 Jul 2014 20:57:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234AbaGaSmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2014 14:42:05 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:33856 "EHLO rominette.imag.fr"
+	id S1751721AbaGaS5x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2014 14:57:53 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:60892 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751066AbaGaSmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 31 Jul 2014 14:42:04 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s6VIftVM002514
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 31 Jul 2014 20:41:55 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s6VIfv0J029373;
-	Thu, 31 Jul 2014 20:41:57 +0200
-In-Reply-To: <53DA8A54.6060208@gmail.com> (Tanay Abhra's message of "Thu, 31
-	Jul 2014 23:56:28 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 31 Jul 2014 20:41:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s6VIftVM002514
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1407436919.20518@rEd7v4fyC4hTZCFr8dLjkQ
+	id S1751350AbaGaS5w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2014 14:57:52 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B92AB2EB02;
+	Thu, 31 Jul 2014 14:57:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=l4WUFAYICxHRaP+hxmPWQt+qTMU=; b=H87Qll
+	lNJgCBmQGnSkC7KpvdHAFDIuqgEhg6CxsZkODOl8Fs9tpov9Drl+oxiNb1FxoOoZ
+	OQ3ogDbSJ/iD+dbhglIy4w2T/rMMPZw7ABoRpcJqfTZ3Md6cDFwvS2HwBC7rnulW
+	2R+2d2icCUF0+FbbsaIBBtsYnt4MrLht7BQPM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=q31apr4KiuR9ES5+sX6w/sG6aRAObPjP
+	W82Yy5KFmMFdFTuCB7dnkWHpseBdsdD1tWPr9szJCCHRQv5HPePi0FKPOjysPbko
+	5bAycpF8CPSIlw+IW57icV1fR8M8vJKRSid0y8FoaWSzhikqLES2Jhx6zTWN8GHv
+	H16YppOCw3o=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B08112EB01;
+	Thu, 31 Jul 2014 14:57:46 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 03D3B2EAE1;
+	Thu, 31 Jul 2014 14:57:36 -0400 (EDT)
+In-Reply-To: <alpine.LSU.2.00.1407310914320.13901@hermes-1.csi.cam.ac.uk>
+	(Tony Finch's message of "Thu, 31 Jul 2014 09:14:34 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 89BA6262-18E4-11E4-98EA-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254598>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Tony Finch <dot@dotat.at> writes:
 
-> On 7/31/2014 11:39 PM, Matthieu Moy wrote:
+> Some MUAs delete their "drafts" folder when it is empty, so
+> git imap-send should be able to create it if necessary.
 >
->> This is the part I find weird. You're calling git_die_config_exact() on
->> the first boggus value, and git_die_config_exact() will notify an error
->> at the line of the last boggus value.
+> This change checks that the folder exists immediately after
+> login and tries to create it if it is missing.
 >
-> Hmn, we may have some confusion here. I meant the implementation of
-> git_config_exact() to look like this,
+> There was some vestigial code to handle a [TRYCREATE] response
+> from the server when an APPEND target is missing. However this
+> code never ran (the create and trycreate flags were never set)
+> and when I tried to make it run I found that the code had already
+> thrown away the contents of the message it was trying to append.
 >
-> void git_die_config_exact(const char *key, const char *value)
-> {
-> 	int i;
-> 	const struct string_list *values;
-> 	struct key_value_info *kv_info;
-> 	values = git_config_get_value_multi(key);
-> 	for (i = 0; i < values.nr; i++) {
-> 		kv_info = values->items[i].util;
-> 		/* A null check will be here also */
-> 		if (!strcmp(value, values->items[i].string)) {
-> 			if (!kv_info->linenr)
-> 				die(_("unable to parse '%s' from command-line config"), key);
-> 			else
-> 				die(_("bad config variable '%s' at file line %d in %s"),
-> 					key,
-> 					kv_info->linenr,
-> 					kv_info->filename);
-> 		}
-> 	}
-> }
+> Signed-off-by: Tony Finch <dot@dotat.at>
+> ---
+
+The basic idea looks good, but I have doubts on one point.
+
+> diff --git a/imap-send.c b/imap-send.c
+> index 524fbab..5e4a24e 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -1156,6 +1133,25 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc)
+>  		credential_approve(&cred);
+>  	credential_clear(&cred);
 >
-> The above code would print the info on first bogus value.
+> +	/* check the target mailbox exists */
+> +	ctx->name = folder;
+> +	switch (imap_exec(ctx, NULL, "EXAMINE \"%s\"", ctx->name)) {
+> +	case RESP_OK:
+> +		/* ok */
+> +		break;
+> +	case RESP_BAD:
+> +		fprintf(stderr, "IMAP error: could not check mailbox\n");
+> +		goto bail;
+> +	case RESP_NO:
+> +		if (imap_exec(ctx, NULL, "CREATE \"%s\"", ctx->name) == RESP_OK) {
+> +			imap_info("Created missing mailbox\n");
+> +		} else {
+> +			fprintf(stderr, "IMAP error: could not create missing mailbox\n");
+> +			goto bail;
+> +		}
+> +		break;
+> +	}
 
-OK, I got confused because git_die_config() errors out at the first
-error. So, your version works, but I do not see any added value in this
-extra complexity.
+At any and all the existing places that "goto bail" in the function,
+we know we failed to authenticate.  I think they are all sensible
+places to call credential_reject().
 
-To be cleary, my version would be
+On the other hand, at this point before you try to "check the target
+mailbox exists", we have authenticated sucessfully, we know the
+credential used was good, and called credential_approve() to mark it
+as such.  I do agree that you would want to signal an error to the
+caller upon these two failures, but I do not think you want to "goto
+bail" and reject the credential.  The error you observed in the new
+codepath is caused by something else, not authentication failure,
+and in such a case you do not want to cause the credential helper to
+evict the user/pass pair from the keyring, no?
 
-NORETURN static /* not sure about the "static" */
-void git_die_config_linenr(const char *key,
-                           const char *filename, int linenr)
-{
-	if (!linenr)
-		die(_("unable to parse '%s' from command-line config"), key);
-	else
-		die(_("bad config variable '%s' at file line %d in %s"),
-			key,
-			linenr,
-			filename);
-}
-
-(hmm, I actually do not need the value, it's not printed)
-
-NORETURN
-void git_die_config(const char *key)
-{
-	const struct string_list *values;
-	struct key_value_info *kv_info;
-	values = git_config_get_value_multi(key);
-	kv_info = values->items[values->nr - 1].util;
-	git_die_config_linenr(key, kv_info->linenr, kv_info->filename);
-}
-
-(we forgot the NORETURN in previous version BTW. It should be there in
-both functions here and in the .h file)
-
-In my version, git_die_config uses git_die_config_linenr, and there's no
-issue with first/last boggus value. Callers of git_die_config_linenr
-have all the information to call it directly.
-
-There are 3 code path that leads to the final die() calls, and having
-this little helper allows making sure the messages are the same for
-every callers, by construction (as opposed to cut-and-pasting).
-
-Really, I don't see any reason to do anything more complex.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thanks.
