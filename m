@@ -1,64 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] imap-send: create target mailbox if it is missing
-Date: Fri, 01 Aug 2014 15:30:36 -0700
-Message-ID: <xmqqppgju9kj.fsf@gitster.dls.corp.google.com>
-References: <alpine.LSU.2.00.1407312034410.25674@hermes-1.csi.cam.ac.uk>
-	<alpine.LSU.2.00.1408010915500.23775@hermes-1.csi.cam.ac.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Mike Stump <mikestump@comcast.net>
+Subject: Re: cherry picking and merge
+Date: Fri, 1 Aug 2014 15:35:28 -0700
+Message-ID: <05976673-8F8A-41FE-81C3-606CAA45BC52@comcast.net>
+References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801200201.GS12427@google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Tony Finch <dot@dotat.at>
-X-From: git-owner@vger.kernel.org Sat Aug 02 00:30:52 2014
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 02 00:35:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDLLe-0006N3-TB
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Aug 2014 00:30:51 +0200
+	id 1XDLQS-00042W-Pz
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Aug 2014 00:35:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687AbaHAWar (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2014 18:30:47 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59605 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751460AbaHAWaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2014 18:30:46 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1338D2EDC7;
-	Fri,  1 Aug 2014 18:30:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ado6ImIvxmjs246QkBnodu53pho=; b=rvMZ9A
-	/w0W+PmA4yZ+/QETiB6uD9Ld/wguHnmDwW2yvugObToUImsEQ5cm4WX1XWpR+pA5
-	le/y3iJR21WmlZ7pMss+MtBmjwcsKNV/sQ8CwZRUQ0WtHXNww9DJPbmLLQTSyY35
-	/tIdjPmxCV5LqYxCpdNFMJCDzUg5k9x3xke1w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ma9TatVTXTpknfZ1wa2wKQhyrn+nBTmk
-	1olOsPrcj/A/lhh7FomIUH506mAKU7TLXecDIgst+52m5wyHrYXBrbVENvSO+dbf
-	G+SxgYNownFAXrj4jJjEy/K/R2QyY2PSOv4lUbHxeHTMPbRN3d2XPVqjg5Gz1ih3
-	xfyzRfHVISI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0A2812EDC6;
-	Fri,  1 Aug 2014 18:30:44 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9FA642EDBC;
-	Fri,  1 Aug 2014 18:30:37 -0400 (EDT)
-In-Reply-To: <alpine.LSU.2.00.1408010915500.23775@hermes-1.csi.cam.ac.uk>
-	(Tony Finch's message of "Fri, 1 Aug 2014 09:15:52 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 75FEDF5E-19CB-11E4-9E0B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1756295AbaHAWfp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2014 18:35:45 -0400
+Received: from qmta11.westchester.pa.mail.comcast.net ([76.96.59.211]:60823
+	"EHLO QMTA11.westchester.pa.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756106AbaHAWfo convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 18:35:44 -0400
+Received: from omta09.westchester.pa.mail.comcast.net ([76.96.62.20])
+	by QMTA11.westchester.pa.mail.comcast.net with comcast
+	id ZYlY1o0040SCNGk5BabjWX; Fri, 01 Aug 2014 22:35:43 +0000
+Received: from [IPv6:2001:558:6045:a4:40c6:7199:cd03:b02d] ([IPv6:2001:558:6045:a4:40c6:7199:cd03:b02d])
+	by omta09.westchester.pa.mail.comcast.net with comcast
+	id Zabh1o00K2ztT3H3Vabi9W; Fri, 01 Aug 2014 22:35:43 +0000
+In-Reply-To: <20140801200201.GS12427@google.com>
+X-Mailer: Apple Mail (2.1878.6)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1406932543;
+	bh=e7kYkUm8QkRY64xAppZqqbPEXRVfIATK9tjNYRk6BKs=;
+	h=Received:Received:Content-Type:Mime-Version:Subject:From:Date:
+	 Message-Id:To;
+	b=IKX/X1zT0cr9Hda9XrEF+H/IIhy97/7mZd0Yh40zcvY2XH88jF6YEnldeIKm3o2/7
+	 TFpYY3LZXLr9DiuPe7ZAhNRUXPH+I9sBHaQKCHIp621QZDkcQNbGaz5gGtJ9EBSP7w
+	 Y4h9ZNfivJnIi0WRPchqOhMCwfRn3p2dzfc68ALpFFHxpLBfQA0DyQyIrQ3qBQ9+X/
+	 ontd4b/Sxoh4znDICP2t/TGDg8Gzz+Oq0Kh1svxnxus3f+IJ8OUJeVZsJ13zRnWeKg
+	 EfWKKbYC65zE7IoAJIUXX3w0dXuBPLLqdW8d1N0b7vm54XneoJWTAqflUgJsQjN+pb
+	 iFyNbuC6FZysA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254677>
 
-Tony Finch <dot@dotat.at> writes:
+On Aug 1, 2014, at 1:02 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>=20
+> Do you mean that "git merge" should be aware of what changes you have
+> already cherry-picked?
 
-> Some MUAs delete their "drafts" folder when it is empty, so
-> git imap-send should be able to create it if necessary.
+Yes, it amounts to that.
 
-Thanks for an update; queued.
+> It isn't, and that's deliberate
+
+Deliberate bugs are still bugs.  In time, users will either wear you do=
+wn until you fix it, or they will move on to other systems that work be=
+tter.
+
+> ("git merge" is designed to be simple as possible, though no more sim=
+ple than that).
+
+I sketched a solution that retains a simple git merge=85
+
+> This way, if on a side branch someone makes a change that would confl=
+ict with "master" and
+> then backs it out, then the branch can still merge cleanly.
+
+Yeah, my solution doesn=92t impinge upon that working nicely.  In it, I=
+ make cherry use scratch branches to record meta information so that th=
+e existing git merge just works.  git cherry is free to do the same.  H=
+aving a git cherry that fully interoperates with git merge, is a featur=
+e.
+
+> Even in those workflows, it's possible to have conflicts due to
+
+> genuinely conflicting changes, even with no cherry-pick involved.  I
+> find the '[merge] conflictstyle =3D diff3' setting (see git-config(1)=
+)
+> and git-rerere(1) to be helpful in making that less painful.
+
+I think those two should be the default, but it is easy enough to turn =
+them on that it doesn=92t matter much.  In my environment, I have both =
+on.
