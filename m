@@ -1,151 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/3] lockfile.c: remove PATH_MAX limitation (except in resolve_symlink)
-Date: Fri, 01 Aug 2014 09:53:50 -0700
-Message-ID: <xmqqfvhgw3q9.fsf@gitster.dls.corp.google.com>
-References: <1405858399-23082-1-git-send-email-pclouds@gmail.com>
-	<1406814214-21725-1-git-send-email-pclouds@gmail.com>
-	<1406814214-21725-2-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Mike Stump <mikestump@comcast.net>
+Subject: Re: cherry picking and merge
+Date: Fri, 1 Aug 2014 09:56:51 -0700
+Message-ID: <AC750A73-4FE9-4BCB-9A51-4DE28F2110A7@comcast.net>
+References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801024329.GA28914@vauxhall.crustytoothpaste.net>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, ramsay@ramsay1.demon.co.uk,
-	yuelinho777@gmail.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 01 18:54:08 2014
+Cc: git@vger.kernel.org
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Fri Aug 01 19:03:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDG5l-0003UO-SG
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 18:54:06 +0200
+	id 1XDGEd-0005oW-Gp
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 19:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574AbaHAQyA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2014 12:54:00 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63725 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750851AbaHAQx7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 12:53:59 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 05E6F2D81E;
-	Fri,  1 Aug 2014 12:53:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=BOjOkxDXZGCn
-	mPNjXKSUOmsSodg=; b=aAPa7SvlOHsSDMECa6RFQ62EwUg1ILTyZ7YXBqSIC+Rx
-	DdoKCRxQpASmg5a0RLUzUWPoKjCsc3OVj0xugSJ74GeVq1ui+BRmWah1YqatRV4W
-	53hB89mjugdIYfVshzy+rJzB/hHU7dz+HfE/ENAgX2ty5Wat/J7bPdVFsRzOMTw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=lpRGs8
-	RUU4BEPgY/FqgORqJo7IZdNqm130/0rD0SRtL0DtUeWmnrzh+mV8jislcW0iHv1/
-	N22pgFAxDz+kxExz4ma3i1DD364Jwjb36Y+O1SiyHKRjUJAvLnsYqGECeCxhis8k
-	kNYUyDXVTIznN8AbU3/ZxMi+nk3zKak5CDU/o=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id ECA292D81D;
-	Fri,  1 Aug 2014 12:53:58 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 59DEB2D814;
-	Fri,  1 Aug 2014 12:53:52 -0400 (EDT)
-In-Reply-To: <1406814214-21725-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Thu, 31
- Jul 2014 20:43:32 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6AB572C2-199C-11E4-AABC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1754827AbaHARDL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2014 13:03:11 -0400
+Received: from qmta06.emeryville.ca.mail.comcast.net ([76.96.30.56]:53643 "EHLO
+	qmta06.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751460AbaHARDK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 13:03:10 -0400
+X-Greylist: delayed 365 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 Aug 2014 13:03:10 EDT
+Received: from omta07.emeryville.ca.mail.comcast.net ([76.96.30.59])
+	by qmta06.emeryville.ca.mail.comcast.net with comcast
+	id ZU2M1o0041GXsucA6Ux40Z; Fri, 01 Aug 2014 16:57:04 +0000
+Received: from [IPv6:2001:558:6045:a4:40c6:7199:cd03:b02d] ([IPv6:2001:558:6045:a4:40c6:7199:cd03:b02d])
+	by omta07.emeryville.ca.mail.comcast.net with comcast
+	id ZUx31o00s2ztT3H8UUx4cp; Fri, 01 Aug 2014 16:57:04 +0000
+In-Reply-To: <20140801024329.GA28914@vauxhall.crustytoothpaste.net>
+X-Mailer: Apple Mail (2.1878.6)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1406912224;
+	bh=9M1xP1c4ao9a+XXNmOrxoE/DjVEHT5V6uFuy+eB221Q=;
+	h=Received:Received:Content-Type:Mime-Version:Subject:From:Date:
+	 Message-Id:To;
+	b=byglpUPpsCKBsgQHw2X9/qsLn/oSJxLEUrd+u94nut+F6OWJC89J1dAS1MhpxjljF
+	 wDXAcYFnFUvzrujIZuu46WvMDxhGxxNrGZwpxOGTpPo/zGL0KOav0bZV47R3sAHA5K
+	 o0t0dIIvH1s4pmhEsROSkln6O5KKo1c/Ut5AOYZR/iGsFpEPEO3hBhNVXz6SWkQSZ7
+	 IQgoccytsccY/0/BQ7xgJ2Mq1mM4ABLYaO3yZFe8PbVFeQqGQV8x0Xqjmfc7fx6108
+	 zzRxIlnm8rHpW0k1wyL1RZM6joFaRuSk8QD3V463fnY+OnwCPyd0YzkE7MuLYWhsVE
+	 kviuY67OBfuew==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254632>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Jul 31, 2014, at 7:43 PM, brian m. carlson <sandals@crustytoothpaste=
+=2Enet> wrote:
+>=20
+> You're not the first person to be surprised by the way merge works.
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+I=92m not the first, because the merge command is broken.  Once fixed, =
+I would be happy to be the last.  Until then, the bug remains unfixed. =
+ I=92m sending the mail to petition for this bug to be fixed.
 
-Somewhat underexplained, given that it seems to add some new
-semantics.
+> From the git-merge manage:
+>=20
+>  [This behavior] occurs because only the heads and the merge base are
+>  considered when performing a merge, not the individual commits.
 
-> +static void clear_filename(struct lock_file *lk)
-> +{
-> +	free(lk->filename);
-> +	lk->filename =3D NULL;
-> +}
+=46rom:
 
-It is good to abstract out lk->filename[0] =3D '\0', which used to be
-the way we say that we are done with the lock.  But I am somewhat
-surprised to see that there aren't so many locations that used to
-check !!lk->filename[0] to see if we are done with the lock to require
-a corresponding wrapper.
+google(=94git merge=94):
 
->  static void remove_lock_file(void)
->  {
->  	pid_t me =3D getpid();
-> =20
->  	while (lock_file_list) {
->  		if (lock_file_list->owner =3D=3D me &&
-> -		    lock_file_list->filename[0]) {
-> +		    lock_file_list->filename) {
+> git-merge - Join two or more development histories together
 
-=2E.. and this seems to be the only location?
+Either, the command should do as documented, or be fixed.  In that refe=
+rence, there is no mention that merge will not merge.  There is no ment=
+ion that merge isn=92t the command I want to merge, but that I should u=
+se rebase.
 
-> @@ -124,17 +136,12 @@ static char *resolve_symlink(char *p, size_t s)
-> =20
->  static int lock_file(struct lock_file *lk, const char *path, int fla=
-gs)
->  {
-> -	/*
-> -	 * subtract 5 from size to make sure there's room for adding
-> -	 * ".lock" for the lock file name
-> -	 */
-> -	static const size_t max_path_len =3D sizeof(lk->filename) - 5;
-> -
-> -	if (strlen(path) >=3D max_path_len)
-> +	int len;
-> +	if (!(flags & LOCK_NODEREF) && !(path =3D resolve_symlink(path)))
->  		return -1;
+=46urther, google(=93git rebase=94) says:
 
-Somehow I found it unnecessarily denser; had to read it twice before
-caffeine kicked in ;-)
+> There is no difference in the end product of the integration,
 
-> @@ -231,16 +238,17 @@ int close_lock_file(struct lock_file *lk)
-> =20
->  int commit_lock_file(struct lock_file *lk)
->  {
-> -	char result_file[PATH_MAX];
-> -	size_t i;
-> -	if (lk->fd >=3D 0 && close_lock_file(lk))
-> +	char *result_file;
-> +	if ((lk->fd >=3D 0 && close_lock_file(lk)) || !lk->filename)
->  		return -1;
+Clearly, this is a lie.  There is a difference.
 
-We did not protect against somebody calling this with an already
-closed lock, but we now return early without attempting renameing
-etc., which is a good change but is not explained.  Was there a
-specific code path that you needed this change for?
+Now, about rebase:
 
-Also the order of the check is not consistent with how the same
-check is done in rollback_lock_file().  The order you use in this
-new code (and also in commit_locked_index()) may be better than the
-existing order in the rollback code path; we want to see the fd
-closed, if it is open, even if lk->filename has already been
-cleared.  On the other hand, one could argue that anything such a
-broken caller tells this function is suspicious, and we shouldn't
-close random file descriptor that is likely not owned by the caller
-in the first place.  I dunno.
+> Do not rebase commits that you have pushed to a public repository.
+>=20
+> If you follow that guideline, you=92ll be fine. If you don=92t, peopl=
+e will hate you, and you=92ll be scorned by friends and family.
 
-> @@ -273,10 +281,10 @@ int commit_locked_index(struct lock_file *lk)
-> =20
->  void rollback_lock_file(struct lock_file *lk)
->  {
-> -	if (lk->filename[0]) {
-> +	if (lk->filename) {
->  		if (lk->fd >=3D 0)
->  			close(lk->fd);
->  		unlink_or_warn(lk->filename);
->  	}
-> -	lk->filename[0] =3D 0;
-> +	clear_filename(lk);
->  }
+
+Since everything I do goes up and down into repositories and I don=92t =
+want my friends and family to scorn me, rebase isn=92t the command I wa=
+nt to use.
+
+I want to use the simple, it works, named for the operation I want to p=
+erform, merge.  I=92m a simple user, and the simple command I want to w=
+ork.  You can name the old merge command, merge-mostly or merge-fast an=
+d the new one can be called merge.
+
+> (That was added after 1.7.9.5.)
+
+I don=92t want bugs documented, I want them fixed.  I=92m not reporting=
+ a doc bug, the doc is correct.
+
+> If you want the behavior of applying multiple patches in a row, you w=
+ant
+> to use git rebase, not git merge.  Since rebase re-applies the patche=
+s
+> of each of your commits on top of another branch, the identical chang=
+e
+> won't cause conflicts.
+
+But, I don=92t want the series of patches, I just want a simple,  merge=
+d feature X on trunk single commit that merge does.
+
+Given branch B, master M, and cherry picked C, what I want merged is B-=
+(M+C), not B-M.  The problem with B-M, is that when you do B +=3D C (ak=
+a cherry pick from master onto your branch), then M +=3D B-M (merge you=
+r branch into master), that C is then replicated.  This replication is =
+wrong, always wrong, never right, incorrect, broken.  This is the bug I=
+ want fixed.
