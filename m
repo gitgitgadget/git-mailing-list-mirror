@@ -1,121 +1,118 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: cherry picking and merge
-Date: Fri, 01 Aug 2014 13:12:57 -0700
-Message-ID: <53DBF4C9.2090905@vilain.net>
-References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801024329.GA28914@vauxhall.crustytoothpaste.net> <53DBBFE8.8060607@gmail.com> <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net>
+From: RaviKiranGoud_Palpanoori@vfc.com
+Subject: RE: Git Help needed
+Date: Fri, 1 Aug 2014 20:21:15 +0000
+Message-ID: <9e5557972ca14b1db1bc23a19ee01ebe@DM2PR08MB477.namprd08.prod.outlook.com>
+References: <898fcfcd0c4f41da805abdd41622058f@DM2PR08MB477.namprd08.prod.outlook.com>
+ <CAL=YDWmOSQaJ9NrgK_kOOv5_3hXhcQL65BhJeG=UtY1+RExOCA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-To: Mike Stump <mikestump@comcast.net>,
-	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 01 22:21:55 2014
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: git@vger.kernel.org
+To: sahlberg@google.com
+X-From: git-owner@vger.kernel.org Fri Aug 01 22:37:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDJKs-0007JV-5m
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 22:21:54 +0200
+	id 1XDJaD-0000YC-S4
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 22:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755979AbaHAUVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2014 16:21:50 -0400
-Received: from tx.vilain.net ([74.50.57.245]:48762 "EHLO tx.vilain.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754822AbaHAUVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2014 16:21:48 -0400
-X-Greylist: delayed 529 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 Aug 2014 16:21:48 EDT
-Received: from [10.10.100.181] (unknown [38.104.194.154])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by tx.vilain.net (Postfix) with ESMTPSA id C36AE8284;
-	Fri,  1 Aug 2014 21:12:58 +0100 (BST)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net>
+	id S1756098AbaHAUhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2014 16:37:42 -0400
+Received: from itxf2aln14.vfc.com ([167.64.248.24]:4826 "EHLO
+	ITXF2ALN14.VFC.COM" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756024AbaHAUhl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2014 16:37:41 -0400
+Received: from na01-by2-obe.outbound.protection.outlook.com ([167.64.245.242])
+          by itgc2abb1.vfc.com (Lotus Domino Release 8.5.3FP2 HF23)
+          with ESMTP id 2014080116211798-143442 ;
+          Fri, 1 Aug 2014 16:21:17 -0400 
+Received: from DM2PR08MB477.namprd08.prod.outlook.com (10.141.86.146) by
+ DM2PR08MB479.namprd08.prod.outlook.com (10.141.86.151) with Microsoft SMTP
+ Server (TLS) id 15.0.995.14; Fri, 1 Aug 2014 20:21:15 +0000
+Received: from DM2PR08MB477.namprd08.prod.outlook.com ([10.141.86.146]) by
+ DM2PR08MB477.namprd08.prod.outlook.com ([10.141.86.146]) with mapi id
+ 15.00.0995.014; Fri, 1 Aug 2014 20:21:15 +0000
+Thread-Topic: Git Help needed
+Thread-Index: Ac+tvs0jfY/57SfCRUmWblNnsOxG7AABCOGAAACgIjA=
+In-Reply-To: <CAL=YDWmOSQaJ9NrgK_kOOv5_3hXhcQL65BhJeG=UtY1+RExOCA@mail.gmail.com>
+Accept-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [167.64.57.10]
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:
+x-forefront-prvs: 029097202E
+x-forefront-antispam-report: SFV:NSPM;SFS:(6009001)(13464003)(24454002)(51874003)(377454003)(189002)(51704005)(199002)(99286002)(95666004)(76482001)(33646002)(110136001)(106356001)(74316001)(74502001)(4396001)(31966008)(46102001)(85306004)(86362001)(81542001)(77982001)(50986999)(101416001)(2656002)(15975445006)(15202345003)(19580395003)(21056001)(19580405001)(83322001)(92566001)(76176999)(54356999)(79102001)(74662001)(66066001)(76576001)(85852003)(20776003)(85182001)(64706001)(105586002)(87936001)(83072002)(99396002)(81342001)(80022001)(107046002)(24736002)(108616003)(422495003);DIR:OUT;SFP:;SCL:1;SRVR:DM2PR08MB479;H:DM2PR08MB477.namprd08.prod.outlook.com;FPR:;MLV:sfv;PTR:InfoNoRecords;MX:1;LANG:en;
+X-OriginatorOrg: vfc.com
+X-MIMETrack: Itemize by SMTP Server on ITGC2ABB1/VFITS/VF Corporation(Release 8.5.3FP2
+ HF23|July 24, 2012) at 08/01/2014 04:21:17 PM,
+	Serialize by Router on ITXF2ALN14/InternetMail(Release 8.5.3|September 15, 2011) at
+ 08/01/2014 04:37:40 PM,
+	Serialize complete at 08/01/2014 04:37:40 PM
+X-TNEFEvaluated: 1
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254661>
 
-On 08/01/2014 10:48 AM, Mike Stump wrote:
->> There is also git-imerge, third party tool that is intended to help
->> merging changes (and make it possible to do it in incremental way).
-> Then remove git merge and replace it with git-imerge.  :-)  Anyway, I read that, and I can see some beauty of that that might be nice in complex merges.  The problem is, I want git merge to work.
-
-
-Git merge has a notion of discrete "merge strategies".  The default,
-"recursive" merge strategy isn't completely oblivious to history; in the
-event that the two branches don't have a single merge bases, it performs
-3-way merges (strangely enough) recursively, with the merge bases of the
-branch you're trying to merge until it completes.  In general, this
-works pretty well.  Some systems even simpler than that (eg, github's
-green merge button) work acceptably as well.
-
-There's no particular reason that you couldn't implement a merge
-strategy which works more like SVN's approach, which essentially does an
-internal rebase and then commits the result.  The advantages of a rebase
-in this situation is that you get to eliminate changes which don't need
-to be applied, either because (in SVN's case), it had some
-metadata/hearsay information that told it that it could skip that
-change, or (in git's case), because it found content/facts that the
-change already was applied on one side.
-
-However, there are corresponding disadvantages to this strategy.  It's
-just as easy to contrive a situation where this "internal rebasing"
-doesn't do the right thing, even without cheating by getting the
-metadata wrong.  And besides, there's already a way to do this: do an
-actual rebase.  You could also do a rebase, and then if, say, the
-original branch you're rebasing is published and you don't want to
-rewrite, then you can easily enough use squash merging, merge -s ours,
-etc to make it look like the strategy you wanted was a built-in git
-merge strategy.  Or, in the spirit of open source, you could contribute
-the code required to make 'imerge' a built-in strategy.
-
-> I was curious if svn handles this better the same or worse, and it did it just fine.  I know that a while ago, svn could not handle this, it would do what git does currently.  Apparently they figured out it was a bug and fixed it.  Have you guys figured out it is a bug yet?  The first step in solving a problem, is admitting you have a problem.
-
-So, I have to chuckle when I read this indignant comment.  There's a
-funny story to the "while ago" you refer to.  This refers to the time
-period during which SVN was relevant; about versions 1.4 and earlier
-(being generous).  Back in those days, SVN projects for the most part
-avoided merging, because it was so problematic and not tracked at all. 
-As one core SVN developer said to me, they found "teams collaborate more
-closely if they're all working on the same branch".  Sure, you could do
-it, and I even know of a few communities who did, but by and large, it
-was avoided.  Then, the new wave of version control systems including
-Git, bzr and Mercurial were cropping up, and their merges were actually
-good enough that you could practically use them.
-
-The SVN core team had to keep pace to match.  So, in 1.5 the "merge
-tracking" system, previously only supplied as a "contrib" script, became
-core.  This is ironic, because the version control system which SVN
-imitated poorly--Perforce--had a very sophisticated, if
-over-complicated, merge tracking system which was also based on
-metadata.  Per-branch, per-patch, per-file entries for whether or not a
-patch had been "integrated" into the target branch.  I can only guess
-that the reason they didn't implement this in the original SVN version
-was that it was something of a pain point for users in Perforce. 
-Possibly something to do with the way that Perforce would store double
-entries for each merge (yes: two rows in a relational store, one
-representing the mirror image of the other), and differentiated between
-many different forms of "integrated" (ie, 2 rows and 4 states instead
-of, say, a single bit).  So the underlying data model wasn't as simple
-as it could have been, and this was reflected in the difficult to use
-command-line tools.  Plus, they were using BerkeleyDB for metadata
-instead of the relational ISAM library, and debugging a rabbit's nest of
-merge record as Perforce used would have been a nightmare.  They didn't
-go there.  And besides, they found that often, detecting patches as
-already applied based on content, like 'patch' did, worked.
-
-Prior to 1.5, the Perl community developed SVK, an offline version of
-SVN, and this had a far simpler model for merge tracking, more similar
-to git's: just tracking whole-branch merges rather than individual
-files, patches, and branches.  SVN eventually added two separate ways of
-tracking merges: either a per-file, per-branch, per-commit or a
-per-branch, per-commit model.
-
-Anyway, I'm not sure where I'm going with this, but I guess a little
-extra perspective would be useful!
-
-Sam
+SGkgUm9ubmllIFNhaGxiZXJnLA0KVGhhbmtzIGZvciB5b3VyIHF1aWNrIHJlcGx5Lg0KDQpJIGRv
+d25sb2FkZWQgZ2l0IDEuOS4wIGZyb20gdGhlIHNpdGUgaHR0cHM6Ly9jb2RlLmdvb2dsZS5jb20v
+cC9naXQtY29yZS9kb3dubG9hZHMvbGlzdC4NCkRvZXMgaXQgbWVhbiB0aGUgcGFja2FnZSBhdmFp
+bGFibGUgYXQgYWJvdmUgbG9jYXRpb24gaGFzIGlzc3VlPyBPUg0KVGhlIHBlcnNvbiAgd2hvIGJ1
+aWx0L2luc3RhbGxlZCBnaXQgaW4gQUlYIHNldmVyIGRpZCBzb21ldGhpbmcgd3JvbmcgYnkgYnVp
+bGRpbmcgaXQgYWdhaW5zdCBhIHNwZWNpZmljIE9wZW5TU0wgbGlicmFyeQ0KDQoNCkNvdWxkIHlv
+dSBwbGVhc2Ugc3VnZ2VzdCB0aGUgc2l0ZSBmcm9tIHdoZXJlIEkgbmVlZCB0byBkb3dubG9hZCBn
+aXQgZm9yIEFJWCBPUy4NCg0KUmVnYXJkcywNClJhdmkuDQoNCi0tLS0tT3JpZ2luYWwgTWVzc2Fn
+ZS0tLS0tDQpGcm9tOiBSb25uaWUgU2FobGJlcmcgW21haWx0bzpzYWhsYmVyZ0Bnb29nbGUuY29t
+XSANClNlbnQ6IEZyaWRheSwgQXVndXN0IDAxLCAyMDE0IDM6NTggUE0NClRvOiBSYXZpwqBLaXJh
+bsKgR291ZCBQYWxwYW5vb3JpDQpDYzogZ2l0QHZnZXIua2VybmVsLm9yZw0KU3ViamVjdDogUmU6
+IEdpdCBIZWxwIG5lZWRlZA0KDQpUaGlzIGxvb2tzIG1vcmUgbGlrZSBhIHBhY2thZ2luZy9idWls
+ZCBpc3N1ZSB0aGFuIGEgZ2l0IGlzc3VlLg0KDQpJdCBsb29rcyBsaWtlIHdob21ldmVyIGJ1aWx0
+IHlvdXIgdmVyc2lvbiBvZiBnaXQgYnVpbHQgaXQgYWdhaW5zdCBhIHNwZWNpZmljIHZlcnNpb24g
+b2YgdGhlIE9wZW5TU0wgbGlicmFyeS4NCllvdSBzaG91bGQgcHJvYmFibHkgY29udGFjdCB0aGUg
+Zm9sa3MgdGhhdCBidWlsdCB5b3VyIGJpbmFyeSBhbmQgYXNrIHRoZW0gdG8gdXBkYXRlIGFuZCBi
+dWlsZCBhZ2FpbnN0IHRoZSB2ZXJzaW9uIHRoYXQgdGhlIG5ldyB2ZXJzaW9uIG9mIGFpeCBzaGlw
+cyB3aXRoLg0KDQpBbHRlcm5hdGl2ZWx5IGlmIHlvdSBidWlsZCBnaXQgeW91cnNlbGYgb24gdGhh
+dCBob3N0IHlvdSBzaG91bGQgZW5kIHVwIHdpdGggYSBiaW5hcnkgdGhhdCBsaW5rcyB3aXRoIHRo
+ZSB2ZXJzaW9uIG9mIHRoZSBsaWJyYXJ5IHRoYXQgeW91IGN1cnJlbnRseSBoYXZlLg0KDQoNCg0K
+T24gRnJpLCBBdWcgMSwgMjAxNCBhdCAxMjozMCBQTSwgIDxSYXZpS2lyYW5Hb3VkX1BhbHBhbm9v
+cmlAdmZjLmNvbT4gd3JvdGU6DQo+IEhpLA0KPiBJIGFtIHdyaXRpbmcgYmVsb3cgY291cGxlIG9m
+IHF1ZXN0aW9ucy4gSWYgaXQgaXMgbm90IHRoZSByaWdodCBwbGFjZSB0byBhc2sgcGxlYXNlIGln
+bm9yZSBhbmQgc3VnZ2VzdCBtZSB3aGF0IHRvIGRvIHRvIGdldCB0aGUgaGVscCBvbiB0aGVzZSBx
+dWVzdGlvbnMuDQo+DQo+IDEpIFdoYXQgdmVyc2lvbiBvZiBTU0wgaXMgc3VwcG9ydGVkIGJ5IEdJ
+VCAxLjguMyBvciBHSVQgMS45LjANCj4NCj4gMikgSSBoYXZlIGluc3RhbGxlZCBnaXQgMS44LjMg
+aW4gQUlYIHNlcnZlciA2LjEgVEw4IFNQMi4gSXQgd29ya2VkIGZpbmUgYW5kIGFibGUgdG8gZXh0
+cmFjdCBjb2RlIGZyb20gZ2l0IHJlcG9zaXRvcnkgZGlyZWN0bHkgYXMgd2VsbCBhcyBmcm9tIGFu
+dC4gRXZlcnl0aGluZyB3ZW50IHdlbGwuDQo+IFJlY2VudGx5IEFpeCBPUyB1cGdyYWRlZCB0byA2
+MTAwLTA5LTAxLTEzNDEuIEFmdGVyIE9TIHVwZ3JhZGUgbXkgZ2l0IGNvbW1hbmRzIGFyZSBub3Qg
+d29ya2luZy4gQmFzaWMgaGVscCBhbmQgdmVyc2lvbiB3b3JrcyBmaW5lIGFzIGV4cGVjdGVkLiBX
+aGVuIEkgdHJ5IHRvIHB1bGwgdGhlIGNvZGUgZnJvbSBnaXQgcmVwb3NpdG9yeSBpdCBnaXZlIFNT
+TCBsaWJyYXJ5IGNvbXBhdGliaWxpdHkgaXNzdWUuDQo+DQo+IFRoZSBlcnJvciBpcw0KPiBPcGVu
+U1NMIHZlcnNpb24gbWlzbWF0Y2guIEJ1aWx0IGFnYWlucyAxMDAwMTA1ZiwgeW91IGhhdmUgMTAw
+MDAwYmYNCj4gZmF0YWw6IENvdWxkIG5vdCByZWFkIGZyb20gcmVtb3RlIHJlcG9zaXRvcnkNCj4N
+Cj4gSW4gb3JkZXIgdG8gZ2V0IHJpZCBvZiB0aGlzLCBJIHVwZ3JhZGVkIGdpdCB0byAxLjkuMCBH
+SVQuIEJ1dCBzdGlsbCBpdCBkaWRuJ3Qgd29yay4gVGhlIGlzc3VlIGlzIHN0aWxsIGNvbWluZy4N
+Cj4NCj4gZ2l0IGhlbHAsIHZlcnNpb24gd29ya3MuDQo+IFdoZW4gSSB0cmllZCBkaXJlY3RseSBw
+dWxsaW5nIGNvZGUgdXNpbmcgZ2l0IHB1bGwgY29tbWFuZCAtIGRpZG4ndCB3b3JrLg0KPiBXaGVu
+IEkgdHJ5IHRvIHB1bGwgdGhlIGNvZGUgdGhyb3VnaCB0aGUgYW50IC0gZGlkbid0IHdvcmsNCj4N
+Cj4gVGhlIGFudCB2ZXJzaW9uIGlzIDEuOC4wUkMxDQo+DQo+IEFJWCBhZG1pbiB3b3JrZWQgb24g
+dGhpcyBhbmQgcHJvdmlkZWQgYmVsb3cgY29tbWVudHMNCj4NCj4gQ29tbWVudHMgZm9ybSBBSVgg
+c3lzdGVtIGFkbWluICAoUGFzdGVkIGFzIGl0IGlzKSBFdmVuIGFmdGVyIA0KPiBpbnN0YWxsaW5n
+IDEuOS4wIHZlcnNpb24gb2YgR0lUIHRoZSBsaWJyYXJ5IGZpbGVzIGFyZSBub3QgY29tcGF0aWJs
+ZSB3aXRoIHRoZSBsYXRlc3QgdmVyc2lvbiBvZiBTU0wgKDEuMC41LjEpLg0KPiBTU0wgd29ya3Mg
+ZmluZSBhcyBhIHJvb3QgdXNlciBhbmQgb3RoZXIgdXNlcnMuIFRoaXMgY29tcGF0aWJpbGl0eSBp
+c3N1ZSBvbmx5IGEgcmFpc2VzIHdoZW4gdGhlIExJQlBBVEggZm9yIEdJVCBpcyBzZXQgYW5kIHRo
+ZSBTU0wgcGlja3MgdXAgaXRzIExJQlBBVEggZnJvbSB0aGUgc2FtZSBsb2NhdGlvbiBhcyBHSVQg
+YW5kIHRoaXMgY2F1c2VzIHRoZSBpbmNvbXBhdGliaWxpdHkuDQo+IENhbiB5b3UgZmluZCBvdXQg
+ZnJvbSB0aGUgR0lUL0FOVCBzdXBwb3J0IHRlYW0gb24gd2hhdCB2ZXJzaW9uIG9mIFNTTCBHSVQg
+c3VwcG9ydHMgZXhhY3RseS4gLSBUaGUgaXMgc3BlY2lmaWNhbGx5IHdpdGggdGhlIEdJVC9TU0wg
+YXMgdGhlIHVzZXIgInh5emFiYyIgLiBUaGUgU1NMIG90aGVyd2lzZSB3b3JrcyBwZXJmZWN0bHkg
+ZmluZS4NCj4gWW91IHdpbGwgaGF2ZSB0byByZS1jb21waWxlIHRoZSBBTlQgbGlicmFyaWVzIHRv
+IHVzZSB0aGUgbGF0ZXN0IGxpYnJhcnkgZmlsZXMuDQo+DQo+IFRoYW5rcyBpbiBhZHZhbmNlLg0K
+Pg0KPiBSZWdhcmRzLA0KPiBSYXZpLg0KPiAtLQ0KPiBUbyB1bnN1YnNjcmliZSBmcm9tIHRoaXMg
+bGlzdDogc2VuZCB0aGUgbGluZSAidW5zdWJzY3JpYmUgZ2l0IiBpbiB0aGUgDQo+IGJvZHkgb2Yg
+YSBtZXNzYWdlIHRvIG1ham9yZG9tb0B2Z2VyLmtlcm5lbC5vcmcgTW9yZSBtYWpvcmRvbW8gaW5m
+byBhdCAgDQo+IGh0dHA6Ly92Z2VyLmtlcm5lbC5vcmcvbWFqb3Jkb21vLWluZm8uaHRtbA0K
