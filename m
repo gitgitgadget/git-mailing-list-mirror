@@ -1,136 +1,72 @@
-From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-Subject: Re: Bug report about symlinks
-Date: Fri, 01 Aug 2014 21:10:59 +0200
-Message-ID: <1406920259.3253.7.camel@spirit>
-References: <1406719800.686251712@f362.i.mail.ru>
+From: Nico Williams <nico@cryptonector.com>
+Subject: Re: Is there a way to mark a branch as published?
+Date: Fri, 1 Aug 2014 14:17:34 -0500
+Message-ID: <CAK3OfOgxngLhh7FjrBT9NcK=LhEH9TAz+18LAvXJtt_bV=96wA@mail.gmail.com>
+References: <CAK3OfOjPQ1fcoA7O6EDcQ3iW_AdsjitK4WKSdLwpRRXm8xfrVA@mail.gmail.com>
+	<1406919490.3253.3.camel@spirit>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: NickKolok <nickkolok@mail.ru>
-X-From: git-owner@vger.kernel.org Fri Aug 01 21:11:26 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: git discussion list <git@vger.kernel.org>
+To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+X-From: git-owner@vger.kernel.org Fri Aug 01 21:17:41 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDIEf-0008D4-De
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 21:11:25 +0200
+	id 1XDIKi-0007Fs-Ju
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 21:17:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754684AbaHATLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2014 15:11:08 -0400
-Received: from mail-wi0-f179.google.com ([209.85.212.179]:38936 "EHLO
-	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751460AbaHATLH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2014 15:11:07 -0400
-Received: by mail-wi0-f179.google.com with SMTP id f8so1866235wiw.0
-        for <git@vger.kernel.org>; Fri, 01 Aug 2014 12:11:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:content-type:mime-version:content-transfer-encoding;
-        bh=QuEB7XakfVIKkjBSTgU5Z+13E1dHcviVlrDohEq4nMQ=;
-        b=dEHjDnOSlGW38yUZxKCDs1XxTnVpx6zBr0dgzm1lXZBtCoYUvqe8vp1dijRDq5yA+j
-         6DkUriunOYYuUJDK4tN1yg5ttAAxPl7TbdGgUMh/qhSmpEFf8bvrq/dUEXdBZ1iZkYGL
-         WZzxOozL7aEyC6cKI8NOn9bQ4zEj/k45UQFTBvUZwIq5WgJYThUnUidHTfCeyZOA2lQO
-         vSojt9BjS3rpJiWzEWd2qJ/8NtZinVrURNCgMKyB0m0Vgdh7WIDCunCnhv9ERCsfyaiz
-         6ASbKz20Kclyfpil3mKheS7HwDqTSmqU/HK0z7OKt9Q8QLU0Fnm8TcHbWEkg6DB6MbaV
-         1HDA==
-X-Gm-Message-State: ALoCoQl2Brrmns1dgfoD93j1QW3YlmSNjNYtoKKrouAb1JZBzuV+bvnNllousEVfg3yvztCfLpPt
-X-Received: by 10.180.94.34 with SMTP id cz2mr9665213wib.74.1406920263455;
-        Fri, 01 Aug 2014 12:11:03 -0700 (PDT)
-Received: from [10.0.0.24] (80-121-71-233.adsl.highway.telekom.at. [80.121.71.233])
-        by mx.google.com with ESMTPSA id w7sm11374598wiy.6.2014.08.01.12.11.02
-        for <multiple recipients>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 01 Aug 2014 12:11:02 -0700 (PDT)
-In-Reply-To: <1406719800.686251712@f362.i.mail.ru>
-X-Mailer: Evolution 3.10.4-0ubuntu1 
+	id S1754822AbaHATRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2014 15:17:36 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:42798 "EHLO
+	homiemail-a64.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750851AbaHATRg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 15:17:36 -0400
+Received: from homiemail-a64.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a64.g.dreamhost.com (Postfix) with ESMTP id CED3E43807F
+	for <git@vger.kernel.org>; Fri,  1 Aug 2014 12:17:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=
+	mime-version:in-reply-to:references:date:message-id:subject:from
+	:to:cc:content-type; s=cryptonector.com; bh=NExQtqwsVv7q8RKFO9XC
+	E9KYOnc=; b=MRpIv0/+MHrWWrahoL1tb4zAejein34rF99KmI4e29CYRtgO4TZ3
+	G/afDuyMGgs5jtOqSCxnvSnt4kb1WoDJJS7eqlMGKkqJAqkjPvOR+tcVI9heVJv5
+	ax4REt8oqpEaQoxLBFFHHjnutQxYKkM4LARb/+nwLTOqW+Ttvv532Sw=
+Received: from mail-we0-f172.google.com (mail-we0-f172.google.com [74.125.82.172])
+	(using TLSv1 with cipher RC4-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by homiemail-a64.g.dreamhost.com (Postfix) with ESMTPSA id 82C0143807C
+	for <git@vger.kernel.org>; Fri,  1 Aug 2014 12:17:35 -0700 (PDT)
+Received: by mail-we0-f172.google.com with SMTP id x48so4819078wes.31
+        for <git@vger.kernel.org>; Fri, 01 Aug 2014 12:17:34 -0700 (PDT)
+X-Received: by 10.194.103.38 with SMTP id ft6mr10735308wjb.18.1406920654285;
+ Fri, 01 Aug 2014 12:17:34 -0700 (PDT)
+Received: by 10.217.98.6 with HTTP; Fri, 1 Aug 2014 12:17:34 -0700 (PDT)
+In-Reply-To: <1406919490.3253.3.camel@spirit>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254651>
 
-On wo, 2014-07-30 at 15:30 +0400, NickKolok wrote:
-> Greetings from Russia, comrads!
-> 
-> I've noticed something strange with git status when replacing a folder with symlink to another folder.
-> There is a git repo with script with demo in the attachment.
+On Friday, August 1, 2014, Dennis Kaarsemaker <dennis@kaarsemaker.net> wrote:
+>
+> On di, 2014-07-29 at 17:40 -0500, Nico Williams wrote:
+> > (or all of a repo's branches)
+> >
+> > Teamware recorded whether it had any "children" and warned about
+> > rebasing published contents.  Perhaps git could do the same.
+>
+> Git doesn't record this directly, but you can see which known remote
+> branches contain the tip of a branch:
 
-I think there is a bug here:
+Yes, but that says nothing about whether they accept non-ff merge
+pushes, or should reject them, and it says nothing about whether they
+are intended to be seen as "published" in the sense of having stable
+history.  (Teamware would mark repos as published when cloned, but
+that often meant needing to reset that flag [it wasn't a flag, but i'm
+eliding irrelevant details].)
 
-+ mkdir bug
-+ cd bug
-+ git init
-Initialized empty Git repository in /tmp/bug/.git/
-+ mkdir dir1 dir2
-+ echo 1
-+ echo 1
-+ echo 2a
-+ echo 2b
-+ git add dir1/1.txt dir1/2.txt dir2/1.txt dir2/2.txt
-+ git commit -m first
-[master (root-commit) b60ecc8] first
- 4 files changed, 4 insertions(+)
- create mode 100644 dir1/1.txt
- create mode 100644 dir1/2.txt
- create mode 100644 dir2/1.txt
- create mode 100644 dir2/2.txt
-+ rm -r dir2
-+ ln -s dir1 dir2
-+ git status
-On branch master
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working
-directory)
-
-	deleted:    dir2/2.txt
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	dir2
-
-no changes added to commit (use "git add" and/or "git commit -a")
-
-It looks like git status is thinking dir2/1.txt still exists with the
-same content, even though dir2 is gone, and now an untracked symlink. 
-
-Moreover, git diff and git status disagree with each other:
-
-dennis@spirit:/tmp/bug$ git status
-On branch master
-Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working
-directory)
-
-	deleted:    dir2/2.txt
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-
-	dir2
-
-no changes added to commit (use "git add" and/or "git commit -a")
-dennis@spirit:/tmp/bug$ git --no-pager diff
-diff --git a/dir2/1.txt b/dir2/1.txt
-deleted file mode 100644
-index d00491f..0000000
---- a/dir2/1.txt
-+++ /dev/null
-@@ -1 +0,0 @@
--1
-diff --git a/dir2/2.txt b/dir2/2.txt
-deleted file mode 100644
-index b8a4cf4..0000000
---- a/dir2/2.txt
-+++ /dev/null
-@@ -1 +0,0 @@
--2b
-
--- 
-Dennis Kaarsemaker
-www.kaarsemaker.net
+Yes, non-fast-forward pushes can be rejected with a hook, but a flag
+that could be set with a git command would be more convenient.
