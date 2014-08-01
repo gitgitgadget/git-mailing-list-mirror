@@ -1,97 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] doc: format-patch: don't use origin as a branch name
-Date: Fri, 01 Aug 2014 13:08:30 -0700
-Message-ID: <xmqq8un8ug5d.fsf@gitster.dls.corp.google.com>
-References: <1406920826-4680-1-git-send-email-philipoakley@iee.org>
-	<20140801193614.GR12427@google.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: cherry picking and merge
+Date: Fri, 01 Aug 2014 13:12:57 -0700
+Message-ID: <53DBF4C9.2090905@vilain.net>
+References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801024329.GA28914@vauxhall.crustytoothpaste.net> <53DBBFE8.8060607@gmail.com> <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Philip Oakley <philipoakley@iee.org>, GitList <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 01 22:08:49 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
+To: Mike Stump <mikestump@comcast.net>,
+	=?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 01 22:21:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDJ8D-0000Vn-7o
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 22:08:49 +0200
+	id 1XDJKs-0007JV-5m
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 22:21:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755933AbaHAUIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2014 16:08:45 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:53363 "EHLO smtp.pobox.com"
+	id S1755979AbaHAUVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2014 16:21:50 -0400
+Received: from tx.vilain.net ([74.50.57.245]:48762 "EHLO tx.vilain.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754842AbaHAUIo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2014 16:08:44 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8DAD02C28D;
-	Fri,  1 Aug 2014 16:08:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=EKhuXD7vI3blwEdEaXZ7JnWYD5g=; b=glJ4WK
-	i+nibz4xdniKAGX4Ylh6ziKJG5EYPCsItyON+smdZS8aG2HzXFn8KCTUUNKVQiFc
-	x9Of4yjEHSJaCL7AwPe9QrfLbwQG/77X/cLsSh4uv/evBQUbF4OsxK/uN/fdD5Nw
-	QYGR7HLnWwZTFiVqz7ZqlsbP88uLYlzPO7sW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fNKk8B+EgOS/lknewyULjbO69CjGkj8Q
-	1dwYEa0NqTitG2ZbrlVdosL0QJ+aUnKTGQiUsI4NkPiLc3XzJ73FpdVnmMA/gxiK
-	ofgw2H1fEpGGdwxEJ9HfpDJkklWus+9MHrl4xg42j5LMSBihHu9igvnK/DyJtA/n
-	12YbUmzyoOg=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8310F2C28B;
-	Fri,  1 Aug 2014 16:08:38 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
+	id S1754822AbaHAUVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2014 16:21:48 -0400
+X-Greylist: delayed 529 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 Aug 2014 16:21:48 EDT
+Received: from [10.10.100.181] (unknown [38.104.194.154])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 17FDB2C287;
-	Fri,  1 Aug 2014 16:08:32 -0400 (EDT)
-In-Reply-To: <20140801193614.GR12427@google.com> (Jonathan Nieder's message of
-	"Fri, 1 Aug 2014 12:36:14 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9C5E24D4-19B7-11E4-A0D3-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	by tx.vilain.net (Postfix) with ESMTPSA id C36AE8284;
+	Fri,  1 Aug 2014 21:12:58 +0100 (BST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254660>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Philip Oakley wrote:
->
->> Historically (5 Nov 2005 v0.99.9-46-g28ffb89) the git-format-patch used
->> 'origin' as the upstream branch name. This is now used to name the remote.
->> Use the more modern 'master' as the branch name.
->
-> Would 'origin/master' make sense?
-
-It would make a lot more sense than 'master', I think.
-
-The 'origin' will be DWIMmed to whatever the remote designated as
-its primary branch, i.e. refs/remotes/origin/HEAD, and the
-assumption the examples in question makes is that the user is
-following along the simplest workflow to fork from it and upstream
-her changes.  Between 'origin' and 'origin/master', there isn't much
-difference because of it.  In the same spirit of following the
-simplest workflow, that primary branch is likely to be their
-'master', so 'origin/master' is OK but longer than 'origin' [*1*].
-
-On the other hand, 'master' names the local 'master', which may be
-very stale with respect to 'origin/master', or may have tons of
-unrelated things that are not in origin/master, some of which may
-have come from the branch the user is running format-patch to grab
-patches to upstream.  For this reason, changing 'origin' to 'master'
-is not an improvement at all, I would have to say.
-
-We could further adjust the underlying assumption to more modern
-"checkout -t -b" era, and use "format-patch @{u}", but I suspect
-that the readers of these examples are not yet ready for magic
-before the basics to spell out things more explicitly is covered.
+On 08/01/2014 10:48 AM, Mike Stump wrote:
+>> There is also git-imerge, third party tool that is intended to help
+>> merging changes (and make it possible to do it in incremental way).
+> Then remove git merge and replace it with git-imerge.  :-)  Anyway, I read that, and I can see some beauty of that that might be nice in complex merges.  The problem is, I want git merge to work.
 
 
-[Footnote]
+Git merge has a notion of discrete "merge strategies".  The default,
+"recursive" merge strategy isn't completely oblivious to history; in the
+event that the two branches don't have a single merge bases, it performs
+3-way merges (strangely enough) recursively, with the merge bases of the
+branch you're trying to merge until it completes.  In general, this
+works pretty well.  Some systems even simpler than that (eg, github's
+green merge button) work acceptably as well.
 
-*1* Also using 'origin' will cover the case when the primary branch
-at the remote were not named 'master', so in that sense it is
-slightly better and more generally applicable.
+There's no particular reason that you couldn't implement a merge
+strategy which works more like SVN's approach, which essentially does an
+internal rebase and then commits the result.  The advantages of a rebase
+in this situation is that you get to eliminate changes which don't need
+to be applied, either because (in SVN's case), it had some
+metadata/hearsay information that told it that it could skip that
+change, or (in git's case), because it found content/facts that the
+change already was applied on one side.
+
+However, there are corresponding disadvantages to this strategy.  It's
+just as easy to contrive a situation where this "internal rebasing"
+doesn't do the right thing, even without cheating by getting the
+metadata wrong.  And besides, there's already a way to do this: do an
+actual rebase.  You could also do a rebase, and then if, say, the
+original branch you're rebasing is published and you don't want to
+rewrite, then you can easily enough use squash merging, merge -s ours,
+etc to make it look like the strategy you wanted was a built-in git
+merge strategy.  Or, in the spirit of open source, you could contribute
+the code required to make 'imerge' a built-in strategy.
+
+> I was curious if svn handles this better the same or worse, and it did it just fine.  I know that a while ago, svn could not handle this, it would do what git does currently.  Apparently they figured out it was a bug and fixed it.  Have you guys figured out it is a bug yet?  The first step in solving a problem, is admitting you have a problem.
+
+So, I have to chuckle when I read this indignant comment.  There's a
+funny story to the "while ago" you refer to.  This refers to the time
+period during which SVN was relevant; about versions 1.4 and earlier
+(being generous).  Back in those days, SVN projects for the most part
+avoided merging, because it was so problematic and not tracked at all. 
+As one core SVN developer said to me, they found "teams collaborate more
+closely if they're all working on the same branch".  Sure, you could do
+it, and I even know of a few communities who did, but by and large, it
+was avoided.  Then, the new wave of version control systems including
+Git, bzr and Mercurial were cropping up, and their merges were actually
+good enough that you could practically use them.
+
+The SVN core team had to keep pace to match.  So, in 1.5 the "merge
+tracking" system, previously only supplied as a "contrib" script, became
+core.  This is ironic, because the version control system which SVN
+imitated poorly--Perforce--had a very sophisticated, if
+over-complicated, merge tracking system which was also based on
+metadata.  Per-branch, per-patch, per-file entries for whether or not a
+patch had been "integrated" into the target branch.  I can only guess
+that the reason they didn't implement this in the original SVN version
+was that it was something of a pain point for users in Perforce. 
+Possibly something to do with the way that Perforce would store double
+entries for each merge (yes: two rows in a relational store, one
+representing the mirror image of the other), and differentiated between
+many different forms of "integrated" (ie, 2 rows and 4 states instead
+of, say, a single bit).  So the underlying data model wasn't as simple
+as it could have been, and this was reflected in the difficult to use
+command-line tools.  Plus, they were using BerkeleyDB for metadata
+instead of the relational ISAM library, and debugging a rabbit's nest of
+merge record as Perforce used would have been a nightmare.  They didn't
+go there.  And besides, they found that often, detecting patches as
+already applied based on content, like 'patch' did, worked.
+
+Prior to 1.5, the Perl community developed SVK, an offline version of
+SVN, and this had a far simpler model for merge tracking, more similar
+to git's: just tracking whole-branch merges rather than individual
+files, patches, and branches.  SVN eventually added two separate ways of
+tracking merges: either a per-file, per-branch, per-commit or a
+per-branch, per-commit model.
+
+Anyway, I'm not sure where I'm going with this, but I guess a little
+extra perspective would be useful!
+
+Sam
