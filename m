@@ -1,115 +1,70 @@
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: cherry picking and merge
-Date: Fri, 1 Aug 2014 02:43:29 +0000
-Message-ID: <20140801024329.GA28914@vauxhall.crustytoothpaste.net>
-References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: article: Using a rolling hash to break up binary files
+Date: Thu, 31 Jul 2014 20:26:30 -0700
+Message-ID: <CAJo=hJtQXb_0G0iqSdVWFwvWnCvowiL94S3UeG18BAkp2ih57Q@mail.gmail.com>
+References: <D7F507613B1F45379A43C1BCF2F088B0@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="azLHFNyN32YCQGCU"
-Cc: git@vger.kernel.org
-To: Mike Stump <mikestump@comcast.net>
-X-From: git-owner@vger.kernel.org Fri Aug 01 04:43:46 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git List <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Fri Aug 01 05:26:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XD2or-0004eW-3T
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 04:43:45 +0200
+	id 1XD3Ue-0002ZT-MF
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 05:26:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753244AbaHACnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 31 Jul 2014 22:43:41 -0400
-Received: from castro.crustytoothpaste.net ([173.11.243.49]:49226 "EHLO
-	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751663AbaHACnk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 31 Jul 2014 22:43:40 -0400
-Received: from vauxhall.crustytoothpaste.net (unknown [IPv6:2001:470:1f05:79:84c3:81a6:6259:5e7b])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 819322808F;
-	Fri,  1 Aug 2014 02:43:33 +0000 (UTC)
-Mail-Followup-To: Mike Stump <mikestump@comcast.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net>
-X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
- 3.16-rc6-amd64)
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
+	id S1753374AbaHAD0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 31 Jul 2014 23:26:52 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:51842 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753279AbaHAD0v (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 31 Jul 2014 23:26:51 -0400
+Received: by mail-ig0-f171.google.com with SMTP id l13so808643iga.10
+        for <git@vger.kernel.org>; Thu, 31 Jul 2014 20:26:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=spearce.org; s=google;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=KOwoURqd9+sxEpmQZodxMJTJazS9pznEi+E4y5gK4QU=;
+        b=BgqpBzXMWiOjqujtkrnFBkLClIG0oTDBx513mThwkc9MEjCKyTngTCGtR1iE4vOh4p
+         iYLVpH2lECaxTOhBMmDEEpTLxu77zr1RevELcXWnChcJenLHK4o/Nj9E2Da9ovNLE+VW
+         ZxK3/5dEUD1DbPED1+aCCreUmnzCrl7H2XCfk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=KOwoURqd9+sxEpmQZodxMJTJazS9pznEi+E4y5gK4QU=;
+        b=TfgcOrBxtXFFaTsBYMBjMOTa51nRHCgN10bLbhGwsjhk8wjN17Bjf7zI3xnW//NuN+
+         7pSvKosdluwXdEc2Vhy7DND20xPxOAUsxAqPZq1FNfor9mUjqdwvUdD+RZ75KFAvSImf
+         56JWAMSzpT1Rb7hTtYYQWse0u/Lfr49N47LknHr6caH9AyJixxTLuNwJbHIEDtHpsLfc
+         KHqwuujjsM2Yi8xPgj8l9o8SXoCgaSMft3xzma7b/72tn8dVTkSK0W4t3jlC7bnhmWft
+         b5D4TWR6K/Qhksb9IWhYYfPSwyv2YTmsC6ElScfJ46XROt+3SKDq+Qo4pfDLGsAA+jXx
+         c+WA==
+X-Gm-Message-State: ALoCoQl1tRWwcVrpQtT37GBrpV+l/IwysFvda6JO9CvdrvBpQ3QjaW4jgKMm6LIdksSuPVvtlF23
+X-Received: by 10.50.2.42 with SMTP id 10mr2670697igr.33.1406863610490; Thu,
+ 31 Jul 2014 20:26:50 -0700 (PDT)
+Received: by 10.64.208.38 with HTTP; Thu, 31 Jul 2014 20:26:30 -0700 (PDT)
+In-Reply-To: <D7F507613B1F45379A43C1BCF2F088B0@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254619>
 
+On Thu, Jul 31, 2014 at 3:31 PM, Philip Oakley <philipoakley@iee.org> wrote:
+> I thought it worth bring to the list's attention a  recent article on
+> CodeProject that may be of interest to those looking at splitting binary
+> files into deterministic hunks.
+>
+> http://www.codeproject.com/Articles/801608/Using-a-rolling-hash-to-break-up-binary-files
+>
+> It's based on Rabin and Karp's algorithm
+> http://en.wikipedia.org/wiki/Rabin%E2%80%93Karp_algorithm.
 
---azLHFNyN32YCQGCU
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+If I remember right, this is how bup[1] works. Its certainly what we
+do for delta compressing files.
 
-On Thu, Jul 31, 2014 at 05:58:17PM -0700, Mike Stump wrote:
-> Cherry picking doesn=E2=80=99t work as well as it should.  I was testing =
-on
-> git version 1.7.9.5.
->=20
-> Put in a line in a file, call it:
->=20
-> first version
->=20
-> then cherry pick this into your branch. Then update on master and transfo=
-rm that into:
->=20
-> second version
->=20
-> then, merge that branch back to master.  Death in the form of conflicts.
->=20
-> In gcc land, I do this sort of thing all the time, and I need a
-> merging subsystem to actually keep track of things.  I can manage this
-> will diff and patch and it works flawlessly.  The point of using
-> something better than diff and patch is for it to be better than diff
-> and patch.
->=20
-> I=E2=80=99d like for merge to merge in the work that has yet to be merged.
-> Not that, plus blindly try and apply or reapply cherry picked items.
-
-You're not the first person to be surprised by the way merge works.
-=46rom the git-merge manpage:
-
-  [This behavior] occurs because only the heads and the merge base are
-  considered when performing a merge, not the individual commits.
-
-(That was added after 1.7.9.5.)
-
-If you want the behavior of applying multiple patches in a row, you want
-to use git rebase, not git merge.  Since rebase re-applies the patches
-of each of your commits on top of another branch, the identical change
-won't cause conflicts.
-
---=20
-brian m. carlson / brian with sandals: Houston, Texas, US
-+1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
-OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
-
---azLHFNyN32YCQGCU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQIcBAEBCgAGBQJT2v7RAAoJEL9TXYEfUvaLwXEP/jZPp/8TCimH8hWzvmkHX8ME
-+lqrfKruTYoWUkXp5EgGJCUQ6Dv2LkUiUGz1Goy8FHIshSmLJDdD/o+L7zzBkk/z
-3M8ZP9f/Akgz0ZPSY9lKNCS11gifSuiJlFCOJzWeqtKTHjP+BBLjS4h1K2Ln3OuM
-Xl8W6MB7C3IwhfMMu1zIqxifg1y9nIRc/1uKTRMwjfivYgHtDrcC9fEAXs+4h8dX
-iB2MdlF/o+Ax4lpvlNNlDilBG9Z5k+t50tKBxqmG1DU6yNu3lx4YJb3FYj2l55r3
-ph3GgkNceYLff9IizeSftAtAW0CWlwlwZuqTsh8/drCJTTG6/sotsIwgqygtVq/l
-HiwTVzrTyjiydUKclnHs6jXx2yMHrxtcdl23h0RJxKopI9Hw5DHN+foXy+mV35cy
-x4KXExVlbkCw1XWwpeRtkkDuiQE3kL3/VUjkRW0RULLIAtHVuHRrHJvDX06FfwLN
-jSXE2e6YnfN8tLlqh17xUcs98qliSNFGwMljsbg/wr8QbPU5M4GqLb0riLR3HCvd
-goM5IofLTTxlHEtEEMRLug8RMxFRYQePqBZBU72h/R++UNtCll24yOmy8GtEsdIH
-AF6dg4yEwUzJnw5vcYvsqhgvL86i28JzVgHocOCPFppNyQNafQ5xFp0aOitQkH7B
-/H2rzlDxW0XCaaZhSyrT
-=sVkW
------END PGP SIGNATURE-----
-
---azLHFNyN32YCQGCU--
+[1] https://github.com/bup/bup
