@@ -1,90 +1,206 @@
-From: Mike Stump <mikestump@comcast.net>
-Subject: Re: cherry picking and merge
-Date: Fri, 1 Aug 2014 16:06:10 -0700
-Message-ID: <4E372CD5-33CA-4AF5-8647-F6BBC64BABA8@comcast.net>
-References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801024329.GA28914@vauxhall.crustytoothpaste.net> <53DBBFE8.8060607@gmail.com> <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net> <53DBF4C9.2090905@vilain.net>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sat Aug 02 01:06:31 2014
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] pack-bitmap: do not use gcc packed attribute
+Date: Fri, 1 Aug 2014 19:10:44 -0400
+Message-ID: <20140801231044.GA17960@peff.net>
+References: <20140728171743.GA1927@peff.net>
+ <53D806AC.3070806@gmail.com>
+ <20140801223739.GA15649@peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 02 01:11:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDLu9-0007iF-RJ
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Aug 2014 01:06:30 +0200
+	id 1XDLyR-0004cm-NE
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Aug 2014 01:10:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755979AbaHAXG0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2014 19:06:26 -0400
-Received: from qmta06.emeryville.ca.mail.comcast.net ([76.96.30.56]:58317 "EHLO
-	qmta06.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755889AbaHAXGZ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 19:06:25 -0400
-Received: from omta01.emeryville.ca.mail.comcast.net ([76.96.30.11])
-	by qmta06.emeryville.ca.mail.comcast.net with comcast
-	id Zayx1o00A0EPchoA6b6RnF; Fri, 01 Aug 2014 23:06:25 +0000
-Received: from [IPv6:2001:558:6045:a4:40c6:7199:cd03:b02d] ([IPv6:2001:558:6045:a4:40c6:7199:cd03:b02d])
-	by omta01.emeryville.ca.mail.comcast.net with comcast
-	id Zb6P1o00L2ztT3H8Mb6QHG; Fri, 01 Aug 2014 23:06:24 +0000
-In-Reply-To: <53DBF4C9.2090905@vilain.net>
-X-Mailer: Apple Mail (2.1878.6)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-	s=q20140121; t=1406934385;
-	bh=SD1NQu9TJB6Mtz8CJkDgcl9CbiQUhjPwjQhHUUrPLKA=;
-	h=Received:Received:Content-Type:Mime-Version:Subject:From:Date:
-	 Message-Id:To;
-	b=iPzJTPIYUGM/OVWQswa26oem7/RtJKwbOu3fycRLaqLppJ5Mx8leMCaPTCRbULZAU
-	 m0FsQKM3SciFlpFjrafUuL57Bibs3wz+6/p9SlybOOwJiYUTB504S2XHnIPDPvZ5rS
-	 rYaJSXbbnICwSq0SYkH8NE7BKa/38tC9+Vk6my2PaWFqHasCHYIj1XtZOilB5z4LR6
-	 yM3ZsrZ5CoehwvRO/VB3AthbPq9nNAnO9CQV/gG9w3iZ2yKYmR0YMl2ZG6uMb/suC6
-	 /EgCybJzaw0ywCxYgTKCsz6QO/P0HGa5BPlua0V47tX3sl/PtJWHo49uh6+AZe7qZ/
-	 WNBRKcXY2zawA==
+	id S1755889AbaHAXKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2014 19:10:51 -0400
+Received: from cloud.peff.net ([50.56.180.127]:44525 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754620AbaHAXKu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2014 19:10:50 -0400
+Received: (qmail 16013 invoked by uid 102); 1 Aug 2014 23:10:50 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Fri, 01 Aug 2014 18:10:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 01 Aug 2014 19:10:44 -0400
+Content-Disposition: inline
+In-Reply-To: <20140801223739.GA15649@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254681>
 
-On Aug 1, 2014, at 1:12 PM, Sam Vilain <sam@vilain.net> wrote:
-> Git merge has a notion of discrete "merge strategies=94.
+On Fri, Aug 01, 2014 at 06:37:39PM -0400, Jeff King wrote:
 
-> There's no particular reason that you couldn't implement a merge
-> strategy which works more like SVN's approach, which essentially does=
- an
-> internal rebase and then commits the result.
+> > Btw.: Using struct-packing on 'struct bitmap_disk_entry' means that the
+> > binary format of .bitmap files is incompatible between GCC and other
+> > builds, correct?
+> 
+> The on-disk format is defined by JGit; if there are differences between
+> the builds, that's a bug (and I would not be too surprised if there is
+> one, as bitmaps have gotten very extensive testing on 32- and 64-bit
+> gcc, but probably not much elsewhere).
+> 
+> We do use structs to represent disk structures in other bits of the
+> packfile code (e.g., struct pack_idx_header), but the struct is vanilla
+> enough that we assume every compiler gives us two tightly-packed 32-bit
+> integers without having to bother with the "packed" attribute (and it
+> seems to have worked in practice).
+> 
+> We should probably be more careful with that bitmap code. It looks like
+> it wouldn't be too bad to drop it. I'll see if I can come up with a
+> patch.
 
-Well, being a simple user, wanting to do a simple thing, I want the def=
-ault strategy to just work.  The expert that wants it to work faster, b=
-ut less well, well, they can use a merge -s faster, or cherry-pick -s f=
-aster.
+I confirmed that this does break horribly without the packed attribute
+(as you'd expect; it's asking for 48-bit alignment!). p5310 notices it,
+_if_ you have jgit installed to check against.
 
-> However, there are corresponding disadvantages to this strategy.  It'=
-s
-> just as easy to contrive a situation where this "internal rebasing"
-> doesn't do the right thing, even without cheating by getting the
-> metadata wrong.
+Here's a fix.
 
-I sketched a solution using branches=85  A large portion of the failure=
-s that happen when a cherry is remerged are gone.  I feel that benefit =
-easily swamps the problem you sketched.
+-- >8 --
+Subject: pack-bitmap: do not use gcc packed attribute
 
-> And besides, there's already a way to do this: do an actual rebase.
+The "__attribute__" flag may be a noop on some compilers.
+That's OK as long as the code is correct without the
+attribute, but in this case it is not. We would typically
+end up with a struct that is 2 bytes too long due to struct
+padding, breaking both reading and writing of bitmaps.
 
-One problem is that rebase doesn=92t work with co-workers nicely=85  Th=
-e other is that it isn=92t spelled merge.  I am a simple user.
+We can work around this by using an array of unsigned char
+to represent the data, and relying on get/put_be32 to handle
+alignment issues as we interact with the array.
 
->> I was curious if svn handles this better the same or worse, and it d=
-id it just fine.  I know that a while ago, svn could not handle this, i=
-t would do what git does currently.  Apparently they figured out it was=
- a bug and fixed it.  Have you guys figured out it is a bug yet?  The f=
-irst step in solving a problem, is admitting you have a problem.
->=20
-> So, I have to chuckle when I read this indignant comment.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+The accessors may be overkill; each function is called only a single
+time in the whole codebase. But doing it this way rather than accessing
+entry[4] inline at least puts the magic constants all in one place.
 
-:-)  Yeah, a chuckle, good.  Actually, no anger is involved.  I=92d jus=
-t like for git to work better in this regard.
+ pack-bitmap-write.c | 10 ++++------
+ pack-bitmap.c       | 12 ++++++------
+ pack-bitmap.h       | 42 +++++++++++++++++++++++++++++++++++++-----
+ 3 files changed, 47 insertions(+), 17 deletions(-)
+
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 5f1791a..f885a7a 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -473,7 +473,7 @@ static void write_selected_commits_v1(struct sha1file *f,
+ 
+ 	for (i = 0; i < writer.selected_nr; ++i) {
+ 		struct bitmapped_commit *stored = &writer.selected[i];
+-		struct bitmap_disk_entry on_disk;
++		unsigned char on_disk[BITMAP_DISK_ENTRY_LEN];
+ 
+ 		int commit_pos =
+ 			sha1_pos(stored->commit->object.sha1, index, index_nr, sha1_access);
+@@ -481,11 +481,9 @@ static void write_selected_commits_v1(struct sha1file *f,
+ 		if (commit_pos < 0)
+ 			die("BUG: trying to write commit not in index");
+ 
+-		on_disk.object_pos = htonl(commit_pos);
+-		on_disk.xor_offset = stored->xor_offset;
+-		on_disk.flags = stored->flags;
+-
+-		sha1write(f, &on_disk, sizeof(on_disk));
++		bitmap_disk_entry_create(on_disk, commit_pos,
++					 stored->xor_offset, stored->flags);
++		sha1write(f, on_disk, sizeof(on_disk));
+ 		dump_bitmap(f, stored->write_as);
+ 	}
+ }
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 91e4101..1b2a473 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -203,7 +203,7 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+ 
+ 	uint32_t i;
+ 	struct stored_bitmap **recent_bitmaps;
+-	struct bitmap_disk_entry *entry;
++	unsigned char *entry;
+ 
+ 	recent_bitmaps = xcalloc(MAX_XOR_OFFSET, sizeof(struct stored_bitmap));
+ 
+@@ -214,14 +214,14 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+ 		uint32_t commit_idx_pos;
+ 		const unsigned char *sha1;
+ 
+-		entry = (struct bitmap_disk_entry *)(index->map + index->map_pos);
+-		index->map_pos += sizeof(struct bitmap_disk_entry);
++		entry = index->map + index->map_pos;
++		index->map_pos += BITMAP_DISK_ENTRY_LEN;
+ 
+-		commit_idx_pos = ntohl(entry->object_pos);
++		commit_idx_pos = bitmap_disk_entry_object_pos(entry);
+ 		sha1 = nth_packed_object_sha1(index->pack, commit_idx_pos);
+ 
+-		xor_offset = (int)entry->xor_offset;
+-		flags = (int)entry->flags;
++		xor_offset = (int)bitmap_disk_entry_xor_offset(entry);
++		flags = (int)bitmap_disk_entry_flags(entry);
+ 
+ 		bitmap = read_bitmap_1(index);
+ 		if (!bitmap)
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 8b7f4e9..0d57706 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -5,11 +5,43 @@
+ #include "khash.h"
+ #include "pack-objects.h"
+ 
+-struct bitmap_disk_entry {
+-	uint32_t object_pos;
+-	uint8_t xor_offset;
+-	uint8_t flags;
+-} __attribute__((packed));
++/*
++ * This is the equivalent of:
++ *
++ *	uint32_t object_pos;
++ *	uint8_t xor_offset;
++ *	uint8_t flags;
++ *
++ * but due to the funny sizing, we cannot rely on the compiler to give us the
++ * exact struct packing we want. So let's treat it as an array and just provide
++ * a few helpers for accessing the components.
++ */
++#define BITMAP_DISK_ENTRY_LEN 6
++
++static inline void bitmap_disk_entry_create(unsigned char *on_disk,
++					    uint32_t object_pos,
++					    uint8_t xor_offset,
++					    uint8_t flags)
++{
++	put_be32(on_disk, object_pos);
++	on_disk[4] = xor_offset;
++	on_disk[5] = flags;
++}
++
++static inline uint32_t bitmap_disk_entry_object_pos(unsigned char *on_disk)
++{
++	return get_be32(on_disk);
++}
++
++static inline uint8_t bitmap_disk_entry_xor_offset(unsigned char *on_disk)
++{
++	return on_disk[4];
++}
++
++static inline uint8_t bitmap_disk_entry_flags(unsigned char *on_disk)
++{
++	return on_disk[5];
++}
+ 
+ struct bitmap_disk_header {
+ 	char magic[4];
+-- 
+2.1.0.rc0.286.g5c67d74
