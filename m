@@ -1,78 +1,108 @@
-From: Nico Williams <nico@cryptonector.com>
-Subject: Re: cherry picking and merge
-Date: Fri, 1 Aug 2014 15:55:23 -0500
-Message-ID: <CAK3OfOhbJJqLB4yPbuJyufytxNUSBLzKF6axc4jeU7eAjvXtgA@mail.gmail.com>
-References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net>
-	<20140801200201.GS12427@google.com>
-	<20140801205040.GT12427@google.com>
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: Git Help needed
+Date: Fri, 1 Aug 2014 20:59:41 +0000
+Message-ID: <20140801205939.GA57436@vauxhall.crustytoothpaste.net>
+References: <898fcfcd0c4f41da805abdd41622058f@DM2PR08MB477.namprd08.prod.outlook.com>
+ <20140801200459.GA53075@vauxhall.crustytoothpaste.net>
+ <6a7fe740d5bd4e4fb3a3f6d8a81b4c26@DM2PR08MB477.namprd08.prod.outlook.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Mike Stump <mikestump@comcast.net>,
-	git discussion list <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 01 22:55:31 2014
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="J2SCkAp4GZ/dPZZf"
+Cc: git@vger.kernel.org
+To: RaviKiranGoud_Palpanoori@vfc.com
+X-From: git-owner@vger.kernel.org Fri Aug 01 23:00:02 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDJrO-0004kC-Ub
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 22:55:31 +0200
+	id 1XDJvh-00018B-5Q
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 22:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756119AbaHAUz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2014 16:55:27 -0400
-Received: from sub4.mail.dreamhost.com ([69.163.253.135]:56121 "EHLO
-	homiemail-a34.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754966AbaHAUz0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 16:55:26 -0400
-Received: from homiemail-a34.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a34.g.dreamhost.com (Postfix) with ESMTP id A24CC10062
-	for <git@vger.kernel.org>; Fri,  1 Aug 2014 13:55:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=
-	mime-version:in-reply-to:references:date:message-id:subject:from
-	:to:cc:content-type; s=cryptonector.com; bh=DunSs8UK41CaIa9YStHR
-	jOGuQrQ=; b=YAqURPROcKJRuJImpjo7v8me1dHsRlUifsfueIBZXdQU4MR6cBPz
-	iPBQFtAgNSmaKLdA0+2C0zq4ztMAV+pYUHyn9802DOm/MwGArMlx7gC56T74Mn3x
-	AvFjUkYc4U208nSQgcipTr8mJ69GtrafhWwqbKYrrKd71fN5wDsKtqo=
-Received: from mail-wi0-f177.google.com (mail-wi0-f177.google.com [209.85.212.177])
-	(using TLSv1 with cipher RC4-SHA (128/128 bits))
+	id S1755960AbaHAU7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2014 16:59:53 -0400
+Received: from castro.crustytoothpaste.net ([173.11.243.49]:49259 "EHLO
+	castro.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755270AbaHAU7w (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 16:59:52 -0400
+Received: from vauxhall.crustytoothpaste.net (unknown [107.141.156.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by homiemail-a34.g.dreamhost.com (Postfix) with ESMTPSA id 4FA7A1005D
-	for <git@vger.kernel.org>; Fri,  1 Aug 2014 13:55:25 -0700 (PDT)
-Received: by mail-wi0-f177.google.com with SMTP id ho1so2007812wib.4
-        for <git@vger.kernel.org>; Fri, 01 Aug 2014 13:55:24 -0700 (PDT)
-X-Received: by 10.194.103.38 with SMTP id ft6mr11464288wjb.18.1406926524026;
- Fri, 01 Aug 2014 13:55:24 -0700 (PDT)
-Received: by 10.217.98.6 with HTTP; Fri, 1 Aug 2014 13:55:23 -0700 (PDT)
-In-Reply-To: <20140801205040.GT12427@google.com>
+	by castro.crustytoothpaste.net (Postfix) with ESMTPSA id 6047A2808F;
+	Fri,  1 Aug 2014 20:59:44 +0000 (UTC)
+Mail-Followup-To: RaviKiranGoud_Palpanoori@vfc.com, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <6a7fe740d5bd4e4fb3a3f6d8a81b4c26@DM2PR08MB477.namprd08.prod.outlook.com>
+X-Machine: Running on vauxhall using GNU/Linux on x86_64 (Linux kernel
+ 3.16-rc6-amd64)
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Spam-Score: -0.272 () BAYES_00,RDNS_NONE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254665>
 
-On Fri, Aug 1, 2014 at 3:50 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Jonathan Nieder wrote:
->
->> Do you mean that "git merge" should be aware of what changes you have
->> already cherry-picked?
->>
->> It isn't, and that's deliberate
->
-> That said, when today's "git merge" fails to resolve conflicts, it's
-> easily possible that we could do better at resolving the merge by
-> walking through both sides and understanding what happened.
 
-It would help if cherry-pick history where recorded somewhere (beyond
-the reflog)...
+--J2SCkAp4GZ/dPZZf
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Cherry-picks should record two parents, like merges.
+On Fri, Aug 01, 2014 at 08:27:24PM +0000, RaviKiranGoud_Palpanoori@vfc.com =
+wrote:
+> Hi brian,
+> Thanks for your quick reply.
+>=20
+> I downloaded git 1.9.0 from the site
+> https://code.google.com/p/git-core/downloads/list.
 
-(Of course, it does no good to know about an unreachable parent, when
-a commit with two parents is pushed to a repo that doesn't have one of
-those parents, which can happen when topic branches aren't pushed
-upstream.)
+That URL is obsolete.  Try https://www.kernel.org/pub/software/scm/git/
+Google Code no longer allows anyone to upload tarballs.
 
-Nico
---
+> Does it mean the package available at above location has built with
+> specific version of OpenSSL. How can I find out which OpenSSL version
+> is used in the packages available at the above location.
+
+If you're downloading the source tarball and building it yourself, then
+it's whatever version of OpenSSL is on your system.  To my knowledge,
+nobody provides pre-built packages of git for AIX.
+
+> Could you please suggest the site from where I need to download git
+> for AIX OS.
+
+As I mentioned above, you'll probably need to build it yourself.
+
+> Who are the vendors of git so that I will check how to proceed on this.
+
+When I referred to having your vendor patch the check out, I meant your
+vendor of OpenSSL.
+
+--=20
+brian m. carlson / brian with sandals: Houston, Texas, US
++1 832 623 2791 | http://www.crustytoothpaste.net/~bmc | My opinion only
+OpenPGP: RSA v4 4096b: 88AC E9B2 9196 305B A994 7552 F1BA 225C 0223 B187
+
+--J2SCkAp4GZ/dPZZf
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJT2/+7AAoJEL9TXYEfUvaLuV8P/jvaLOI416Y1JYz6lVo5kSfB
+pU1Ob28VuqUg1M4W2XnYCcnK5531+92/Qw9W9I2p/CCGSb03sOas/JzGAN05G9ta
+H3hzzfFBsIUXcSejugASl+Oio95XXz4z1tQw/jSiq5QnV6BlIiC08VlpMmr6tai8
+PNrtdy3rn4uo1rvj/joE7hVnQpaWTSe2798/QsrQ5M0sjNVFahmF9UnQ0BQlFvgj
+cGFJAhiwcAVi0qvYGSGNkvaX+yLRfmkYQmPzda6Rl8x9DU6e86iUVxe6xAonaSRI
+0J3XAWvKREflXvS4PV6X3rsGZqY0PekV3kZScAvFD2DZc8YMVnvrSRXyuCauMFUX
+j8itHptmvNh44CLNbXg/0oIuFqgA+fK3Qn7tklbmywpUXk7oA0AtrsSRfvwy37SA
+qjaTxXRlr58EjBTpMldGMNfFxrZ9bjXM1YYgzJAaFaZMzemM2WVTTDYQkITdT8A5
+Fqf0F4mTwbBofelThjUFWlZMG+GMwqlA798LXDWIFFgUNBrfbcZbjPlIx8BjFKah
+sNBCSaBMN9zEcyj8KnF68DTYxU8Wxl+xffR7PKuah+ILC1k20ieOMUoQjALUKPiZ
+rcDoIh/JsP7tpr+68+6Nn/jCv4JKkvrbNO+OHBwSVP4FyMLcjjieWDoRzqPMDZB6
+GerPNAXMly2FdgGJydAA
+=iPW9
+-----END PGP SIGNATURE-----
+
+--J2SCkAp4GZ/dPZZf--
