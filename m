@@ -1,72 +1,87 @@
-From: Nico Williams <nico@cryptonector.com>
-Subject: Re: Is there a way to mark a branch as published?
-Date: Fri, 1 Aug 2014 14:17:34 -0500
-Message-ID: <CAK3OfOgxngLhh7FjrBT9NcK=LhEH9TAz+18LAvXJtt_bV=96wA@mail.gmail.com>
-References: <CAK3OfOjPQ1fcoA7O6EDcQ3iW_AdsjitK4WKSdLwpRRXm8xfrVA@mail.gmail.com>
-	<1406919490.3253.3.camel@spirit>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git discussion list <git@vger.kernel.org>
-To: Dennis Kaarsemaker <dennis@kaarsemaker.net>
-X-From: git-owner@vger.kernel.org Fri Aug 01 21:17:41 2014
+From: Philip Oakley <philipoakley@iee.org>
+Subject: [PATCH] doc: format-patch: don't use origin as a branch name
+Date: Fri,  1 Aug 2014 20:20:26 +0100
+Message-ID: <1406920826-4680-1-git-send-email-philipoakley@iee.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: GitList <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 01 21:20:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDIKi-0007Fs-Ju
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 21:17:40 +0200
+	id 1XDINT-0002N2-IS
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 21:20:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754822AbaHATRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2014 15:17:36 -0400
-Received: from sub4.mail.dreamhost.com ([69.163.253.135]:42798 "EHLO
-	homiemail-a64.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750851AbaHATRg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 15:17:36 -0400
-Received: from homiemail-a64.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a64.g.dreamhost.com (Postfix) with ESMTP id CED3E43807F
-	for <git@vger.kernel.org>; Fri,  1 Aug 2014 12:17:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=
-	mime-version:in-reply-to:references:date:message-id:subject:from
-	:to:cc:content-type; s=cryptonector.com; bh=NExQtqwsVv7q8RKFO9XC
-	E9KYOnc=; b=MRpIv0/+MHrWWrahoL1tb4zAejein34rF99KmI4e29CYRtgO4TZ3
-	G/afDuyMGgs5jtOqSCxnvSnt4kb1WoDJJS7eqlMGKkqJAqkjPvOR+tcVI9heVJv5
-	ax4REt8oqpEaQoxLBFFHHjnutQxYKkM4LARb/+nwLTOqW+Ttvv532Sw=
-Received: from mail-we0-f172.google.com (mail-we0-f172.google.com [74.125.82.172])
-	(using TLSv1 with cipher RC4-SHA (128/128 bits))
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by homiemail-a64.g.dreamhost.com (Postfix) with ESMTPSA id 82C0143807C
-	for <git@vger.kernel.org>; Fri,  1 Aug 2014 12:17:35 -0700 (PDT)
-Received: by mail-we0-f172.google.com with SMTP id x48so4819078wes.31
-        for <git@vger.kernel.org>; Fri, 01 Aug 2014 12:17:34 -0700 (PDT)
-X-Received: by 10.194.103.38 with SMTP id ft6mr10735308wjb.18.1406920654285;
- Fri, 01 Aug 2014 12:17:34 -0700 (PDT)
-Received: by 10.217.98.6 with HTTP; Fri, 1 Aug 2014 12:17:34 -0700 (PDT)
-In-Reply-To: <1406919490.3253.3.camel@spirit>
+	id S932100AbaHATU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2014 15:20:28 -0400
+Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:55470 "EHLO
+	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932088AbaHATU1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 15:20:27 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: ArgTAPnn21MCYJjrPGdsb2JhbABbgwwBAWIBRYInhQirHpk5h1sMfxcFAQEBATg2hGAjGIECChoTiEbJD49MNYQdBbQePC8
+X-IPAS-Result: ArgTAPnn21MCYJjrPGdsb2JhbABbgwwBAWIBRYInhQirHpk5h1sMfxcFAQEBATg2hGAjGIECChoTiEbJD49MNYQdBbQePC8
+X-IronPort-AV: E=Sophos;i="5.01,781,1400022000"; 
+   d="scan'208";a="506465770"
+Received: from host-2-96-152-235.as13285.net (HELO localhost) ([2.96.152.235])
+  by out1.ip03ir2.opaltelecom.net with ESMTP; 01 Aug 2014 20:20:25 +0100
+X-Mailer: git-send-email 1.9.4.msysgit.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254652>
 
-On Friday, August 1, 2014, Dennis Kaarsemaker <dennis@kaarsemaker.net> wrote:
->
-> On di, 2014-07-29 at 17:40 -0500, Nico Williams wrote:
-> > (or all of a repo's branches)
-> >
-> > Teamware recorded whether it had any "children" and warned about
-> > rebasing published contents.  Perhaps git could do the same.
->
-> Git doesn't record this directly, but you can see which known remote
-> branches contain the tip of a branch:
+Historically (5 Nov 2005 v0.99.9-46-g28ffb89) the git-format-patch used
+'origin' as the upstream branch name. This is now used to name the remote.
+Use the more modern 'master' as the branch name.
 
-Yes, but that says nothing about whether they accept non-ff merge
-pushes, or should reject them, and it says nothing about whether they
-are intended to be seen as "published" in the sense of having stable
-history.  (Teamware would mark repos as published when cloned, but
-that often meant needing to reset that flag [it wasn't a flag, but i'm
-eliding irrelevant details].)
+Signed-off-by: Philip Oakley <philipoakley@iee.org>
+---
 
-Yes, non-fast-forward pushes can be rejected with a hook, but a flag
-that could be set with a git command would be more convenient.
+I noticed this while cross-checking details for updating the guide
+Documentation/(git)everyday.txt
+--
+Philip
+
+ Documentation/git-format-patch.txt | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index c0fd470..b0f041f 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -523,25 +523,25 @@ $ git format-patch -k --stdout R1..R2 | git am -3 -k
+ ------------
+ 
+ * Extract all commits which are in the current branch but not in the
+-origin branch:
++master branch:
+ +
+ ------------
+-$ git format-patch origin
++$ git format-patch master
+ ------------
+ +
+ For each commit a separate file is created in the current directory.
+ 
+-* Extract all commits that lead to 'origin' since the inception of the
++* Extract all commits that lead to 'master' since the inception of the
+ project:
+ +
+ ------------
+-$ git format-patch --root origin
++$ git format-patch --root master
+ ------------
+ 
+ * The same as the previous one:
+ +
+ ------------
+-$ git format-patch -M -B origin
++$ git format-patch -M -B master
+ ------------
+ +
+ Additionally, it detects and handles renames and complete rewrites
+-- 
+1.9.4.msysgit.0
