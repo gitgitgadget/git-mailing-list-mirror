@@ -1,117 +1,104 @@
-From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
-Subject: Re: cherry picking and merge
-Date: Fri, 01 Aug 2014 18:27:20 +0200
-Message-ID: <53DBBFE8.8060607@gmail.com>
-References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801024329.GA28914@vauxhall.crustytoothpaste.net>
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: Re: [PATCH] l10n: de.po: fix typo
+Date: Fri, 1 Aug 2014 18:34:37 +0200
+Message-ID: <CAN0XMOJhiRUMtTxn1irJnUTi+WwaNS9taqogw490XorqKwt0HQ@mail.gmail.com>
+References: <1402503455-20503-1-git-send-email-ralf.thielow@gmail.com>
+	<alpine.DEB.2.02.1408011535110.18761@hahepc.vhs>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mike Stump <mikestump@comcast.net>, git@vger.kernel.org
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Fri Aug 01 18:27:38 2014
+Cc: git <git@vger.kernel.org>, Thomas Rast <tr@thomasrast.ch>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>
+To: Hartmut Henkel <henkel@vh-s.de>
+X-From: git-owner@vger.kernel.org Fri Aug 01 18:34:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDFg8-0006Aj-Qt
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 18:27:37 +0200
+	id 1XDFn2-00066Z-Ju
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 18:34:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754729AbaHAQ1d convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2014 12:27:33 -0400
-Received: from mail-wg0-f45.google.com ([74.125.82.45]:45400 "EHLO
-	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751303AbaHAQ1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2014 12:27:32 -0400
-Received: by mail-wg0-f45.google.com with SMTP id x12so4448833wgg.4
-        for <git@vger.kernel.org>; Fri, 01 Aug 2014 09:27:29 -0700 (PDT)
+	id S1754621AbaHAQel convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2014 12:34:41 -0400
+Received: from mail-we0-f180.google.com ([74.125.82.180]:42320 "EHLO
+	mail-we0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750851AbaHAQek convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 12:34:40 -0400
+Received: by mail-we0-f180.google.com with SMTP id w61so4635899wes.39
+        for <git@vger.kernel.org>; Fri, 01 Aug 2014 09:34:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=OKu5tb4q18yi4gPwjqadqzR+T2YyIDplrPiyGvJJ+Fw=;
-        b=PKnb49WcSNYGaQr9ylPEC97jia4uNjd93R6iFCpTvB1OrzwViPFrQOevLbpdMdAhGi
-         z7VWukb9wF3jCw/+lc8o+W0DWmEINhZRZjQEon2pshrzIvS3U8bYJddEppSMKARifaZT
-         OtqNddXEI0DRdeV6g88C9GjGf+Yv/MDfv9ThONnClcfDE+1FT+DG4/8BZLM2yQOXHv3b
-         jyZ5upEqA+AJik6nwnc8VNwC1P5Jf9zeZBf++ver7Bp0HhNpYNLlhFxpOFhLEsYGzdnd
-         dOjTc7H/MhNEGsF4HjeaMyTy8EMXNX3ogpX+T9bYi0IeLflwDqK41Z94aFoJyEE7v8ZM
-         +cqg==
-X-Received: by 10.194.24.2 with SMTP id q2mr9326386wjf.91.1406910449440;
-        Fri, 01 Aug 2014 09:27:29 -0700 (PDT)
-Received: from [192.168.130.241] ([158.75.2.130])
-        by mx.google.com with ESMTPSA id gc1sm10108360wib.22.2014.08.01.09.27.27
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Fri, 01 Aug 2014 09:27:27 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <20140801024329.GA28914@vauxhall.crustytoothpaste.net>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        bh=0H/5eTKce3SF1+DC09BDrAkW+bGxRzBsXSKia2wA5yM=;
+        b=CQtLqyPTXXdobAxh6AnmqaZkZlaphX83oCA4INMJ7k/1giL8I4rHjR3cLttaGvFhht
+         FB1aHS/0P9una24BQtMKIwLksgInX52mapk2O3FhCgdHXJVwy7eJBcfDN5V2SFVv8/o0
+         bg3RTWAqE7u216VxP11UJhK4u+kpyvD+gG+ejXCmhpHnTdQ1O7RjPHEexnPJO70sXeYT
+         0ILkdpQl9tefHkNfNFcyg1DU78E3zYTWdMiVKCSFZTvQqxN5kWJTgJK9bn840QVDskXJ
+         97Pvue5R1NOYtCC6O/pQXKfmksspjWJqVYBG2U2kF7NKMigmnAfD3eBM5O2nYOmhEKeJ
+         54Gw==
+X-Received: by 10.180.19.227 with SMTP id i3mr8398994wie.45.1406910877947;
+ Fri, 01 Aug 2014 09:34:37 -0700 (PDT)
+Received: by 10.194.203.199 with HTTP; Fri, 1 Aug 2014 09:34:37 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.02.1408011535110.18761@hahepc.vhs>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254630>
 
-W dniu 2014-08-01 04:43, brian m. carlson pisze:
-> On Thu, Jul 31, 2014 at 05:58:17PM -0700, Mike Stump wrote:
+Hi Hartmut,
 
->> Cherry picking doesn=E2=80=99t work as well as it should.  I was tes=
-ting on
->> git version 1.7.9.5.
->>
->> Put in a line in a file, call it:
->>
->> first version
->>
->> then cherry pick this into your branch. Then update on master and tr=
-ansform that into:
->>
->> second version
->>
->> then, merge that branch back to master.  Death in the form of confli=
-cts.
->>
->> In gcc land, I do this sort of thing all the time, and I need a
->> merging subsystem to actually keep track of things.  I can manage th=
-is
->> will diff and patch and it works flawlessly.  The point of using
->> something better than diff and patch is for it to be better than dif=
-f
->> and patch.
->>
->> I=E2=80=99d like for merge to merge in the work that has yet to be m=
-erged.
->> Not that, plus blindly try and apply or reapply cherry picked items.
-
-Note that you should try to avoid cherry-picking, as they do not
-leave trace in the graph of revisions.
-
-=46or example if you are creating a bugfix, instead of putting it
-directly on maint, and then cherry-picking to master, it is better
-to create a separate feature branch for this fix (based at an early
-version), and then merge said branch into maint, then into master.
-It is described in blog post by Junio Hamano (which I cannot find now).
-
-> You're not the first person to be surprised by the way merge works.
->  From the git-merge manpage:
+2014-08-01 15:37 GMT+02:00 Hartmut Henkel <henkel@vh-s.de>:
+> Dear Ralf,
 >
->    [This behavior] occurs because only the heads and the merge base a=
-re
->    considered when performing a merge, not the individual commits.
+> thanks a lot for signing off the tiny patch below. Yet somehow it did=
+n't
+> make it into git version 2.1.0.rc0.52.gaa544bf.
 >
-> (That was added after 1.7.9.5.)
+
+my plan is to make this patch be part of the translations
+for the 2.1.0 release. I'll be sending a pull request
+(containing this patch) to the l10n coordinator when the
+other translations for this release are done.
+
+Ralf
+
+> Regards, Hartmut
 >
-> If you want the behavior of applying multiple patches in a row, you w=
-ant
-> to use git rebase, not git merge.  Since rebase re-applies the patche=
-s
-> of each of your commits on top of another branch, the identical chang=
-e
-> won't cause conflicts.
-
-There is also git-imerge, third party tool that is intended to help
-merging changes (and make it possible to do it in incremental way).
-
-HTH
---=20
-Jakub Nar=C4=99bski
+>
+> On Wed, 11 Jun 2014, Ralf Thielow wrote:
+>
+>> Reported-by: Hartmut Henkel
+>> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+>> ---
+>>  po/de.po | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/po/de.po b/po/de.po
+>> index b777ef4..88d10ed 100644
+>> --- a/po/de.po
+>> +++ b/po/de.po
+>> @@ -10551,13 +10551,13 @@ msgstr "Bitte committen Sie die =C3=84nder=
+ungen oder benutzen Sie \"stash\"."
+>>  #: git-rebase.sh:577
+>>  #, sh-format
+>>  msgid "Current branch $branch_name is up to date."
+>> -msgstr "Aktueller Branch $branch_name ist auf dem neusten Stand."
+>> +msgstr "Aktueller Branch $branch_name ist auf dem neuesten Stand."
+>>
+>>  #: git-rebase.sh:581
+>>  #, sh-format
+>>  msgid "Current branch $branch_name is up to date, rebase forced."
+>>  msgstr ""
+>> -"Aktueller Branch $branch_name ist auf dem neusten Stand, Rebase er=
+zwungen."
+>> +"Aktueller Branch $branch_name ist auf dem neuesten Stand, Rebase e=
+rzwungen."
+>>
+>>  #: git-rebase.sh:592
+>>  #, sh-format
+>> --
+>> 2.0.0.415.g8cd8cf8
