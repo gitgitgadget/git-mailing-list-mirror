@@ -1,91 +1,136 @@
-From: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-Subject: Fwd: cherry picking and merge
-Date: Fri, 1 Aug 2014 21:01:31 +0200
-Message-ID: <CANQwDwdKbmqLSLGsiyHTfGNZGfbeNZM3TN6Zk0G5G-8twRc_JQ@mail.gmail.com>
-References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net>
- <20140801024329.GA28914@vauxhall.crustytoothpaste.net> <53DBBFE8.8060607@gmail.com>
- <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net> <CANQwDwc4YPdK+a0Oc-jWPTRyM5GiP-CMuRY1inxJY41GwUGBvQ@mail.gmail.com>
+From: Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: Bug report about symlinks
+Date: Fri, 01 Aug 2014 21:10:59 +0200
+Message-ID: <1406920259.3253.7.camel@spirit>
+References: <1406719800.686251712@f362.i.mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git <git@vger.kernel.org>
-To: Mike Stump <mikestump@comcast.net>
-X-From: git-owner@vger.kernel.org Fri Aug 01 21:02:17 2014
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: NickKolok <nickkolok@mail.ru>
+X-From: git-owner@vger.kernel.org Fri Aug 01 21:11:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDI5o-0005mX-QT
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 21:02:17 +0200
+	id 1XDIEf-0008D4-De
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 21:11:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755671AbaHATCN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2014 15:02:13 -0400
-Received: from mail-ob0-f175.google.com ([209.85.214.175]:45320 "EHLO
-	mail-ob0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754822AbaHATCM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 15:02:12 -0400
-Received: by mail-ob0-f175.google.com with SMTP id wp18so2895515obc.34
-        for <git@vger.kernel.org>; Fri, 01 Aug 2014 12:02:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=pdmeHe7sDcLrezwYW5/a/eIVOsT4dj9k8p6R0LO506o=;
-        b=qaQfRqVwClzqQMM35aVzIrU3HCR6UcoNwVvgspmpqH/R5o2vW9/hFzTKWNW0E9OyLj
-         J0vsK1aK9NZcjSNfhrmZwyzl1/xJHwd1f+cSuYPMljFzKTHyhg/QgellvREuQ58VPG+X
-         IkQ26Q/tkxjXTQbmduiP91LH+e676N8Z7gwXClZsIWJgheOkwxZTE+mcocyWqfyPAV0o
-         6RqpC4sfRTKeN7F4NVJOBQxJ26RTJ7afBh73kCAT1levKUVC7xw/bdozdG1DhuIz9SRW
-         4ZX1C3QNB8dOFF0eK8PDhEAnqNc26cf8ac09Q05xqNEfyYCfr2lTjmPIxQkJwmZhUCDf
-         IcaQ==
-X-Received: by 10.60.52.178 with SMTP id u18mr11459871oeo.68.1406919731914;
- Fri, 01 Aug 2014 12:02:11 -0700 (PDT)
-Received: by 10.76.103.146 with HTTP; Fri, 1 Aug 2014 12:01:31 -0700 (PDT)
-In-Reply-To: <CANQwDwc4YPdK+a0Oc-jWPTRyM5GiP-CMuRY1inxJY41GwUGBvQ@mail.gmail.com>
+	id S1754684AbaHATLI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2014 15:11:08 -0400
+Received: from mail-wi0-f179.google.com ([209.85.212.179]:38936 "EHLO
+	mail-wi0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751460AbaHATLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2014 15:11:07 -0400
+Received: by mail-wi0-f179.google.com with SMTP id f8so1866235wiw.0
+        for <git@vger.kernel.org>; Fri, 01 Aug 2014 12:11:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:content-type:mime-version:content-transfer-encoding;
+        bh=QuEB7XakfVIKkjBSTgU5Z+13E1dHcviVlrDohEq4nMQ=;
+        b=dEHjDnOSlGW38yUZxKCDs1XxTnVpx6zBr0dgzm1lXZBtCoYUvqe8vp1dijRDq5yA+j
+         6DkUriunOYYuUJDK4tN1yg5ttAAxPl7TbdGgUMh/qhSmpEFf8bvrq/dUEXdBZ1iZkYGL
+         WZzxOozL7aEyC6cKI8NOn9bQ4zEj/k45UQFTBvUZwIq5WgJYThUnUidHTfCeyZOA2lQO
+         vSojt9BjS3rpJiWzEWd2qJ/8NtZinVrURNCgMKyB0m0Vgdh7WIDCunCnhv9ERCsfyaiz
+         6ASbKz20Kclyfpil3mKheS7HwDqTSmqU/HK0z7OKt9Q8QLU0Fnm8TcHbWEkg6DB6MbaV
+         1HDA==
+X-Gm-Message-State: ALoCoQl2Brrmns1dgfoD93j1QW3YlmSNjNYtoKKrouAb1JZBzuV+bvnNllousEVfg3yvztCfLpPt
+X-Received: by 10.180.94.34 with SMTP id cz2mr9665213wib.74.1406920263455;
+        Fri, 01 Aug 2014 12:11:03 -0700 (PDT)
+Received: from [10.0.0.24] (80-121-71-233.adsl.highway.telekom.at. [80.121.71.233])
+        by mx.google.com with ESMTPSA id w7sm11374598wiy.6.2014.08.01.12.11.02
+        for <multiple recipients>
+        (version=TLSv1 cipher=RC4-SHA bits=128/128);
+        Fri, 01 Aug 2014 12:11:02 -0700 (PDT)
+In-Reply-To: <1406719800.686251712@f362.i.mail.ru>
+X-Mailer: Evolution 3.10.4-0ubuntu1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254650>
 
-[sorry for duplicate sent as private mail; I forgot to turn off HTML
-when sending to the git mailing list]
+On wo, 2014-07-30 at 15:30 +0400, NickKolok wrote:
+> Greetings from Russia, comrads!
+> 
+> I've noticed something strange with git status when replacing a folder with symlink to another folder.
+> There is a git repo with script with demo in the attachment.
 
-On Fri, Aug 1, 2014 at 7:48 PM, Mike Stump <mikestump@comcast.net> wrot=
-e:
-[...]
->
-> I was curious if svn handles this better the same or worse, and it di=
-d it just fine.  I know that a while ago, svn could not handle this, it=
- would do what git does currently.  Apparently they figured out it was =
-a bug and fixed it.  Have you guys figured out it is a bug yet?  The fi=
-rst step in solving a problem, is admitting you have a problem.
+I think there is a bug here:
 
++ mkdir bug
++ cd bug
++ git init
+Initialized empty Git repository in /tmp/bug/.git/
++ mkdir dir1 dir2
++ echo 1
++ echo 1
++ echo 2a
++ echo 2b
++ git add dir1/1.txt dir1/2.txt dir2/1.txt dir2/2.txt
++ git commit -m first
+[master (root-commit) b60ecc8] first
+ 4 files changed, 4 insertions(+)
+ create mode 100644 dir1/1.txt
+ create mode 100644 dir1/2.txt
+ create mode 100644 dir2/1.txt
+ create mode 100644 dir2/2.txt
++ rm -r dir2
++ ln -s dir1 dir2
++ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working
+directory)
 
-It can work in Subversion because Subversion stores information about
-what was merged in (and this includes cherry-picks, or whatever it is
-named in svn) in svn:mergeinfo property. Git does not track what was
-merged in, instead it represent the history as the graph of revisions,
-and tracks merges (by storing that it came from two or more commits)
-and not merged-in information.
+	deleted:    dir2/2.txt
 
-When merging Git uses only what is being merged and its common
-ancestor (3-point merge). It is simple, and simple works!!!
-Unfortunately, it does not see cherry-picked commits - it is invisible
-to merge as being on the chain from one of merged commits to the
-common ancestor.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
 
-The rebase command handles cherry-picked commits by detecting that the
-change was already applied. I think that git-imerge does the same (but
-I have not used it myself).
+	dir2
 
-Have you tried git-imerge?
+no changes added to commit (use "git add" and/or "git commit -a")
 
---=20
-Jakub Nar=C4=99bski
+It looks like git status is thinking dir2/1.txt still exists with the
+same content, even though dir2 is gone, and now an untracked symlink. 
 
+Moreover, git diff and git status disagree with each other:
 
+dennis@spirit:/tmp/bug$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working
+directory)
 
---=20
-Jakub Narebski
+	deleted:    dir2/2.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	dir2
+
+no changes added to commit (use "git add" and/or "git commit -a")
+dennis@spirit:/tmp/bug$ git --no-pager diff
+diff --git a/dir2/1.txt b/dir2/1.txt
+deleted file mode 100644
+index d00491f..0000000
+--- a/dir2/1.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-1
+diff --git a/dir2/2.txt b/dir2/2.txt
+deleted file mode 100644
+index b8a4cf4..0000000
+--- a/dir2/2.txt
++++ /dev/null
+@@ -1 +0,0 @@
+-2b
+
+-- 
+Dennis Kaarsemaker
+www.kaarsemaker.net
