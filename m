@@ -1,114 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug report about symlinks
-Date: Fri, 01 Aug 2014 09:23:07 -0700
-Message-ID: <xmqqppgkw55g.fsf@gitster.dls.corp.google.com>
-References: <web-416867478@relay1.vsu.ru> <53DABD69.7010004@web.de>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: cherry picking and merge
+Date: Fri, 01 Aug 2014 18:27:20 +0200
+Message-ID: <53DBBFE8.8060607@gmail.com>
+References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801024329.GA28914@vauxhall.crustytoothpaste.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nikolay Avdeev <avdeev@math.vsu.ru>, git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-X-From: git-owner@vger.kernel.org Fri Aug 01 18:23:21 2014
+Cc: Mike Stump <mikestump@comcast.net>, git@vger.kernel.org
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-From: git-owner@vger.kernel.org Fri Aug 01 18:27:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDFc1-00016b-3m
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 18:23:21 +0200
+	id 1XDFg8-0006Aj-Qt
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 18:27:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbaHAQXR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2014 12:23:17 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:54480 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750851AbaHAQXQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Aug 2014 12:23:16 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id CAC582CBDA;
-	Fri,  1 Aug 2014 12:23:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=vKDzB6Zl3p+m
-	BaNuGSHDT2U6cwI=; b=BilZ17HbHU5bCW2Yeayjsoa8bVByM3IXyaCPPFkssria
-	X+SPfiEugBKZkqzh07jImthTpfaf0VOuobaP/bsYP+ViaDC2REEJS1AUlWWcn30+
-	qgsxSPL4puv9AIpyvi6jcXfYTXSNe2BHrRHaOjtGUDd38wdMg290msw3NP3jnks=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=pwjLQ8
-	TpmVZw8alVEegpl4WtDhxqZY4nMJJj74T7cg7qCuVgN4KuKsCao43xlt3hj9uePL
-	3EJssNv0hieu3WVXV2Pf34u2hyYSsrgsvObWnREVoKMhq/yjSaRrW3uphEtb8UyU
-	s1erMnBKKyiCqOnGdTD4wpe07fj9UP+qBmIg0=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BE5462CBD9;
-	Fri,  1 Aug 2014 12:23:15 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 49B272CBD3;
-	Fri,  1 Aug 2014 12:23:09 -0400 (EDT)
-In-Reply-To: <53DABD69.7010004@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
- message of "Fri, 01
-	Aug 2014 00:04:25 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 20274E46-1998-11E4-9DB7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1754729AbaHAQ1d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Aug 2014 12:27:33 -0400
+Received: from mail-wg0-f45.google.com ([74.125.82.45]:45400 "EHLO
+	mail-wg0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751303AbaHAQ1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2014 12:27:32 -0400
+Received: by mail-wg0-f45.google.com with SMTP id x12so4448833wgg.4
+        for <git@vger.kernel.org>; Fri, 01 Aug 2014 09:27:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=OKu5tb4q18yi4gPwjqadqzR+T2YyIDplrPiyGvJJ+Fw=;
+        b=PKnb49WcSNYGaQr9ylPEC97jia4uNjd93R6iFCpTvB1OrzwViPFrQOevLbpdMdAhGi
+         z7VWukb9wF3jCw/+lc8o+W0DWmEINhZRZjQEon2pshrzIvS3U8bYJddEppSMKARifaZT
+         OtqNddXEI0DRdeV6g88C9GjGf+Yv/MDfv9ThONnClcfDE+1FT+DG4/8BZLM2yQOXHv3b
+         jyZ5upEqA+AJik6nwnc8VNwC1P5Jf9zeZBf++ver7Bp0HhNpYNLlhFxpOFhLEsYGzdnd
+         dOjTc7H/MhNEGsF4HjeaMyTy8EMXNX3ogpX+T9bYi0IeLflwDqK41Z94aFoJyEE7v8ZM
+         +cqg==
+X-Received: by 10.194.24.2 with SMTP id q2mr9326386wjf.91.1406910449440;
+        Fri, 01 Aug 2014 09:27:29 -0700 (PDT)
+Received: from [192.168.130.241] ([158.75.2.130])
+        by mx.google.com with ESMTPSA id gc1sm10108360wib.22.2014.08.01.09.27.27
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Fri, 01 Aug 2014 09:27:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140801024329.GA28914@vauxhall.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254629>
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+W dniu 2014-08-01 04:43, brian m. carlson pisze:
+> On Thu, Jul 31, 2014 at 05:58:17PM -0700, Mike Stump wrote:
 
-> # Create test repo with two directories with two files each.
-> $ git init
-> Initialized empty Git repository in /tmp/.git/
-> $ mkdir a b
-> $ echo x >a/equal
-> $ echo x >b/equal
-> $ echo y >a/different
-> $ echo z >b/different
-> $ git add a b
-> $ git commit -minitial
-> [master (root-commit) 6d36895] initial
->  4 files changed, 4 insertions(+)
->  create mode 100644 a/different
->  create mode 100644 a/equal
->  create mode 100644 b/different
->  create mode 100644 b/equal
->
-> # Replace one directory with a symlink to the other.
-> $ rm -rf b
-> $ ln -s a b
->
-> # First git status call.
-> $ git status
-> On branch master
-> Changes not staged for commit:
->   (use "git add/rm <file>..." to update what will be committed)
->   (use "git checkout -- <file>..." to discard changes in working dire=
-ctory)
->
->         deleted:    b/different
->
-> Untracked files:
->   (use "git add <file>..." to include in what will be committed)
->
->         b
->
-> no changes added to commit (use "git add" and/or "git commit -a")
-> ...
->
-> It could be debated if the first git status call should also report
-> b/equal as deleted.
+>> Cherry picking doesn=E2=80=99t work as well as it should.  I was tes=
+ting on
+>> git version 1.7.9.5.
+>>
+>> Put in a line in a file, call it:
+>>
+>> first version
+>>
+>> then cherry pick this into your branch. Then update on master and tr=
+ansform that into:
+>>
+>> second version
+>>
+>> then, merge that branch back to master.  Death in the form of confli=
+cts.
+>>
+>> In gcc land, I do this sort of thing all the time, and I need a
+>> merging subsystem to actually keep track of things.  I can manage th=
+is
+>> will diff and patch and it works flawlessly.  The point of using
+>> something better than diff and patch is for it to be better than dif=
+f
+>> and patch.
+>>
+>> I=E2=80=99d like for merge to merge in the work that has yet to be m=
+erged.
+>> Not that, plus blindly try and apply or reapply cherry picked items.
 
-Hmph.
+Note that you should try to avoid cherry-picking, as they do not
+leave trace in the graph of revisions.
 
-I wonder if "could be" is an understatement.  The difference of
-reporting between b/equal and b/different may indicate that somebody
-is mistakenly comparing the index with these paths, without first
-checking each path with has_symlink_leading_path(), or something,
-no?
+=46or example if you are creating a bugfix, instead of putting it
+directly on maint, and then cherry-picking to master, it is better
+to create a separate feature branch for this fix (based at an early
+version), and then merge said branch into maint, then into master.
+It is described in blog post by Junio Hamano (which I cannot find now).
 
-Or am I misreading the report and codepath?
+> You're not the first person to be surprised by the way merge works.
+>  From the git-merge manpage:
+>
+>    [This behavior] occurs because only the heads and the merge base a=
+re
+>    considered when performing a merge, not the individual commits.
+>
+> (That was added after 1.7.9.5.)
+>
+> If you want the behavior of applying multiple patches in a row, you w=
+ant
+> to use git rebase, not git merge.  Since rebase re-applies the patche=
+s
+> of each of your commits on top of another branch, the identical chang=
+e
+> won't cause conflicts.
 
-Puzzled...
+There is also git-imerge, third party tool that is intended to help
+merging changes (and make it possible to do it in incremental way).
+
+HTH
+--=20
+Jakub Nar=C4=99bski
