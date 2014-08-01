@@ -1,104 +1,101 @@
-From: Martin von Gagern <Martin.vGagern@gmx.net>
-Subject: [BUG] Assertion failed: (child->real_type == OBJ_REF_DELTA), function
- find_unresolved_deltas_1, file builtin/index-pack.c
-Date: Fri, 01 Aug 2014 14:24:27 +0200
-Message-ID: <53DB86FB.9080204@gmx.net>
+From: Hartmut Henkel <henkel@vh-s.de>
+Subject: Re: [PATCH] l10n: de.po: fix typo
+Date: Fri, 1 Aug 2014 15:37:07 +0200 (CEST)
+Message-ID: <alpine.DEB.2.02.1408011535110.18761@hahepc.vhs>
+References: <1402503455-20503-1-git-send-email-ralf.thielow@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="HGeShXcluVN0u55IJwxfOHE5FberrfpDm"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 01 14:24:41 2014
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-311820639-1406900227=:18761"
+Cc: git@vger.kernel.org, tr@thomasrast.ch, jk@jk.gs, stimming@tuhh.de
+To: Ralf Thielow <ralf.thielow@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 01 16:01:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDBt2-0002pS-F3
-	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 14:24:40 +0200
+	id 1XDDOM-0006bh-5S
+	for gcvg-git-2@plane.gmane.org; Fri, 01 Aug 2014 16:01:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754405AbaHAMYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Aug 2014 08:24:36 -0400
-Received: from mout.gmx.net ([212.227.17.20]:64714 "EHLO mout.gmx.net"
+	id S1754398AbaHAOBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Aug 2014 10:01:00 -0400
+Received: from vh-s.de ([176.9.63.7]:45040 "EHLO vh-s.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750876AbaHAMYf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Aug 2014 08:24:35 -0400
-Received: from [192.168.71.20] ([178.27.35.248]) by mail.gmx.com (mrgmx103)
- with ESMTPSA (Nemesis) id 0Lz3JU-1WQmH40Ee8-0149Tb for <git@vger.kernel.org>;
- Fri, 01 Aug 2014 14:24:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.7.0
-X-Enigmail-Version: 1.6
-X-Provags-ID: V03:K0:5/jAws2UeQjPplDLZeafoTIHLFNN6/kwGNHAc5xq52gi10LeBgf
- gEYqdWXVVKUT39bYtlbeYNjQ2gFZK9m27R3LXJCBPR6RTOn4gRWG9fH8K/oW75+v568q2nE
- nzdgmmCGbhLOswioQbOJ8Q/M8PZJDF2V9kS8SIBRr8biBMOr8bmWILgjSH4fJY+V03D7Xid
- SfijuGxNNttZlzhryuA1g==
+	id S1754327AbaHAOA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Aug 2014 10:00:59 -0400
+X-Greylist: delayed 1423 seconds by postgrey-1.27 at vger.kernel.org; Fri, 01 Aug 2014 10:00:59 EDT
+Received: from p5dcc4fbc.dip0.t-ipconnect.de ([93.204.79.188] helo=vhssv2.vhs)
+	by vh-s.de with esmtpsa (TLS1.2:DHE_RSA_AES_128_CBC_SHA1:128)
+	(Exim 4.80)
+	(envelope-from <henkel@vh-s.de>)
+	id 1XDD19-0000CE-Dk; Fri, 01 Aug 2014 15:37:13 +0200
+Received: from hahepc.vhs ([192.168.0.3])
+	by vhssv2.vhs with esmtp (Exim 4.80)
+	(envelope-from <henkel@vh-s.de>)
+	id 1XDD19-0000Ew-Ix; Fri, 01 Aug 2014 15:37:07 +0200
+Received: from hahe (helo=localhost)
+	by hahepc.vhs with local-esmtp (Exim 4.80)
+	(envelope-from <henkel@vh-s.de>)
+	id 1XDD19-0004un-Ep; Fri, 01 Aug 2014 15:37:07 +0200
+In-Reply-To: <1402503455-20503-1-git-send-email-ralf.thielow@gmail.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+X-SA-Exim-Connect-IP: 93.204.79.188
+X-SA-Exim-Mail-From: henkel@vh-s.de
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on mailserver
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED shortcircuit=no
+	autolearn=disabled version=3.3.2
+X-Spam-Report: * -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
+X-SA-Exim-Scanned: Yes (on vh-s.de)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254627>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---HGeShXcluVN0u55IJwxfOHE5FberrfpDm
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Hi!
+--8323329-311820639-1406900227=:18761
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-See also https://code.google.com/p/support/issues/detail?id=3D31571
+Dear Ralf,
 
-Executing the command
+thanks a lot for signing off the tiny patch below. Yet somehow it didn't 
+make it into git version 2.1.0.rc0.52.gaa544bf.
 
-git clone https://code.google.com/p/mapsforge/
-
-fails with the error message
-
-Assertion failed: (child->real_type =3D=3D OBJ_REF_DELTA),
-function find_unresolved_deltas_1, file builtin/index-pack.c
-
-Bisecting the code I found that 7218a215efc7ae46f7ca8d82 (from 2011,
-first released in git 1.7.7) is the first bad commit. It is also the one
-to introduce that assertion.
-
-The idea behind that commit seems simple: instead of just sorting by
-base hash, also sort by type. Then when iterating over the matching
-objects, we can rely on the type and don't have to check that.
-
-So far, so good. But the problem here is that the sorting is based on
-the "type" attribute, while the assertion and the case distinction it
-replaces was based on "real_type". I guess that at the point where the
-sorting takes place, these two should be identical. But once
-resolve_delta gets called, the real_type is changed to that of the base
-object. Which means that the original case distinction did more than
-just drop deltas of the wrong type: it also prevented resolution of
-already-resolved deltas. Therefore the change caused stuff to fail which
-used to work before. In this particular instance, the real_type changed
-from OBJ_REF_DELTA to OBJ_TREE which caused the assertion to fail.
-
-I'm not sure whether this kind of duplicate resolution is something
-normal or indicates some breakage in the repository in question. If it
-is considered normal (although rare, otherwise others would have
-complained by now), then someone should likely turn the assertion back
-into a normal conditional. If this is a broken repository, then I think
-it should be reported as such, since in my book a failed assertion
-indicates a problem with the program itself, not its input data.
-
-Thank you very much,
- Martin von Gagern
+Regards, Hartmut
 
 
---HGeShXcluVN0u55IJwxfOHE5FberrfpDm
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+On Wed, 11 Jun 2014, Ralf Thielow wrote:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Using GnuPG with Thunderbird - http://www.enigmail.net/
-
-iEYEARECAAYFAlPbhwEACgkQRhp6o4m9dFsYPACePaoMbh3MfOwV2Awu6yFQ1S/4
-BMgAnR6x23SH65qwK+DrC9NEpb0is/ve
-=t8vZ
------END PGP SIGNATURE-----
-
---HGeShXcluVN0u55IJwxfOHE5FberrfpDm--
+> Reported-by: Hartmut Henkel
+> Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+> ---
+>  po/de.po | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/po/de.po b/po/de.po
+> index b777ef4..88d10ed 100644
+> --- a/po/de.po
+> +++ b/po/de.po
+> @@ -10551,13 +10551,13 @@ msgstr "Bitte committen Sie die Änderungen oder benutzen Sie \"stash\"."
+>  #: git-rebase.sh:577
+>  #, sh-format
+>  msgid "Current branch $branch_name is up to date."
+> -msgstr "Aktueller Branch $branch_name ist auf dem neusten Stand."
+> +msgstr "Aktueller Branch $branch_name ist auf dem neuesten Stand."
+>  
+>  #: git-rebase.sh:581
+>  #, sh-format
+>  msgid "Current branch $branch_name is up to date, rebase forced."
+>  msgstr ""
+> -"Aktueller Branch $branch_name ist auf dem neusten Stand, Rebase erzwungen."
+> +"Aktueller Branch $branch_name ist auf dem neuesten Stand, Rebase erzwungen."
+>  
+>  #: git-rebase.sh:592
+>  #, sh-format
+> -- 
+> 2.0.0.415.g8cd8cf8
+--8323329-311820639-1406900227=:18761--
