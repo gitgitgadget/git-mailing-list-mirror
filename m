@@ -1,83 +1,63 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Everday contents (was part of Re: What's cooking in git.git (Jul 2014, #04; Tue, 22))
-Date: Sat, 2 Aug 2014 18:28:58 +0100
-Organization: OPDS
-Message-ID: <35435A61F3C04DC8924B2E2329F9461E@PhilipOakley>
-References: <xmqq4my9f4qw.fsf@gitster.dls.corp.google.com><B6FB0C239E6E4E2489FAB9EF1C902988@PhilipOakley><xmqqegxcdjzl.fsf@gitster.dls.corp.google.com><7ACC0F5AD23E4C839D2F819B23DA9564@PhilipOakley><xmqqvbqm74v7.fsf@gitster.dls.corp.google.com> <xmqqegx95bxc.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 02 19:29:14 2014
+From: Linus Arver <linusarver@gmail.com>
+Subject: [PATCH] lots of documentation fixes/rewordings in git-init(1)
+Date: Sat,  2 Aug 2014 11:06:50 -0700
+Message-ID: <1407002817-29221-1-git-send-email-linusarver@gmail.com>
+Cc: Steven Drake <sdrake@xnet.co.nz>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Johan Herland <johan@herland.net>,
+	Nanako Shiraishi <nanako3@lavabit.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 02 20:07:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDd7F-0006Ao-Fx
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Aug 2014 19:29:09 +0200
+	id 1XDdiJ-00078X-GM
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Aug 2014 20:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754712AbaHBR27 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Aug 2014 13:28:59 -0400
-Received: from out1.ip03ir2.opaltelecom.net ([62.24.128.239]:45704 "EHLO
-	out1.ip03ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754547AbaHBR27 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Aug 2014 13:28:59 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: An0rAIge3VMCYJjrPGdsb2JhbABZgw1SEQFFhy+BBMNdh0oFAQIBAQx4FwUBAQEBODaDfgUBAQUIAQEuHgEBIQsCAwUCARgBCyUUAQQaBgcDFAYTCAIBAgMBiDW2TJA2F4wdgk0RAVA1gwGBHAWKVYcIlh2KcoFHPC+BDQ
-X-IPAS-Result: An0rAIge3VMCYJjrPGdsb2JhbABZgw1SEQFFhy+BBMNdh0oFAQIBAQx4FwUBAQEBODaDfgUBAQUIAQEuHgEBIQsCAwUCARgBCyUUAQQaBgcDFAYTCAIBAgMBiDW2TJA2F4wdgk0RAVA1gwGBHAWKVYcIlh2KcoFHPC+BDQ
-X-IronPort-AV: E=Sophos;i="5.01,787,1400022000"; 
-   d="scan'208";a="506505590"
-Received: from host-2-96-152-235.as13285.net (HELO PhilipOakley) ([2.96.152.235])
-  by out1.ip03ir2.opaltelecom.net with SMTP; 02 Aug 2014 18:28:57 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S932101AbaHBSHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Aug 2014 14:07:10 -0400
+Received: from mail-yh0-f52.google.com ([209.85.213.52]:39464 "EHLO
+	mail-yh0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754712AbaHBSHJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Aug 2014 14:07:09 -0400
+Received: by mail-yh0-f52.google.com with SMTP id t59so3365461yho.25
+        for <git@vger.kernel.org>; Sat, 02 Aug 2014 11:07:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Q8flmod4IqCGfPDH8JfMiDhH76N1zWv4IMCnqPwr1HQ=;
+        b=rTvEQpBrC883l6K+1w2IICUrXQJslrlio6t8p1ZHcCXdP3JWaZtg67Tq2uiz0PmCvr
+         KtW50sgoH/rc/Y2kK9pv5BmFIArTSRmBBQFKtZyfvwhGQWz+DPt3j7Tyl0V70Ba+CnBM
+         t1y5qbxL7HQdibz/K9iuns4tLKNOswWOh2Kc7XBNU4cnBFt4djyygBYt4FjUqQ2DBATC
+         cjuPgw4JKIBVhNtpYwtr+h5GTQGq3/UzPLkpPTsSg/C3xi2nGFRiDSWzxJNy1FiRPd7L
+         UKhiTUn+urrQawaSt9p5vuft93Z2LFxZcjnXufjW6JpcY0z3drntIw74wa9ChTwOsd92
+         hI7A==
+X-Received: by 10.236.120.130 with SMTP id p2mr4129195yhh.166.1407002828043;
+        Sat, 02 Aug 2014 11:07:08 -0700 (PDT)
+Received: from k0.localdomain (107-223-14-32.lightspeed.sntcca.sbcglobal.net. [107.223.14.32])
+        by mx.google.com with ESMTPSA id i24sm20618668yha.12.2014.08.02.11.07.05
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 02 Aug 2014 11:07:06 -0700 (PDT)
+X-Mailer: git-send-email 2.0.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254705>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-Sent: Friday, July 25, 2014 11:08 PM
-...
->
-> | Individual Developer (Participant)[[Individual Developer 
-> (Participant)]]
-> | ------------------------------------------------------------------------
+Hello,
 
-...
-> | $ git pull git://git.kernel.org/pub/.../jgarzik/libata-dev.git ALL 
-> <5>
+I noticed a typo in git-init(1), which led me to some related changes. All
+changes are in Documentation/git-init.txt. I have cc'ed the people involved
+(thanks git-blame), just to make sure that my changes maintain technical
+accuracy.
 
-Would I be right that "ALL" can simply be dropped as something from 
-'back then' (13 Dec 2005 v0.99.9-516-g44db136) that I'm ignorant of?
+I've tested out the compiled man/html/etc. files and everything seems to look
+correct.
 
-...
-> | <5> fetch from a specific branch from a specific repository and 
-> merge.
-> | <6> revert the pull.
-> | <7> garbage collect leftover objects from reverted pull.
-> | <8> from time to time, obtain official tags from the `origin`
-> | and store them under `.git/refs/tags/`.
->
-> This example works directly on 'master', which is not ideal.  If I
-> were writing this today, I would have made it work on 'mine' branch,
-> produced a patch series out of that branch relative to @{u}, threw
-> in 'git send-email' invocation, and had "git pull" update the
-> pristine 'mater' branch after "git checkout master".  Merging of
-> work by jgarzik (i.e. not your upstream) would also have gone to its
-> own branch, not to 'master'.
->
-Slowly working through it ;-)
+This is my first patch submission to the git project, thanks!
 
-Ta.
-
-Philip 
+-L
