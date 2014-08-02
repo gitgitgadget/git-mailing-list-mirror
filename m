@@ -1,124 +1,98 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: cherry picking and merge
-Date: Sat, 2 Aug 2014 12:44:51 +0100
-Organization: OPDS
-Message-ID: <40F24BA38E03454A9BA152F6AFDE56C4@PhilipOakley>
-References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801024329.GA28914@vauxhall.crustytoothpaste.net> <53DBBFE8.8060607@gmail.com> <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net> <CANQwDwc4YPdK+a0Oc-jWPTRyM5GiP-CMuRY1inxJY41GwUGBvQ@mail.gmail.com> <CANQwDwdKbmqLSLGsiyHTfGNZGfbeNZM3TN6Zk0G5G-8twRc_JQ@mail.gmail.com> <13DDD21A-F683-4116-9E07-F0D8AEF06A66@comcast.net>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Monard Vong <travelingsoul86@gmail.com>
+Subject: Re: [PATCH] git-svn: Avoid systematic prompt for client certificate
+ when using "git svn branch"
+Date: Sat, 02 Aug 2014 15:26:15 +0200
+Message-ID: <53DCE6F7.9040405@gmail.com>
+References: <254135> <1406219159-4644-1-git-send-email-travelingsoul86@gmail.com> <20140802100719.GA13095@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	reply-type=original
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"git" <git@vger.kernel.org>
-To: "Mike Stump" <mikestump@comcast.net>,
-	=?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 02 13:51:30 2014
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Aug 02 15:26:21 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDXqU-0002ve-3E
-	for gcvg-git-2@plane.gmane.org; Sat, 02 Aug 2014 13:51:30 +0200
+	id 1XDZKG-0007dW-U5
+	for gcvg-git-2@plane.gmane.org; Sat, 02 Aug 2014 15:26:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754489AbaHBLow convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Aug 2014 07:44:52 -0400
-Received: from out1.ip06ir2.opaltelecom.net ([62.24.128.242]:24286 "EHLO
-	out1.ip06ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754324AbaHBLov (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Aug 2014 07:44:51 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: ApcfAOXN3FMCYJjrPGdsb2JhbABZgw1jAUWCeIQ3gQTLKwECAQEMeRcFAQEBATg2g34FAQEEAQgBARkPAQUeAQEhCwIDBQIBAxUBAgICBSECAhQBBAgSBgcDFAYBEggCAQIDAQqIEwMJDK8lhn+JLQgFhw8XgSyLc4FLEQFQNYJLNoEcBZFciCKQPol2PC+BDQ
-X-IPAS-Result: ApcfAOXN3FMCYJjrPGdsb2JhbABZgw1jAUWCeIQ3gQTLKwECAQEMeRcFAQEBATg2g34FAQEEAQgBARkPAQUeAQEhCwIDBQIBAxUBAgICBSECAhQBBAgSBgcDFAYBEggCAQIDAQqIEwMJDK8lhn+JLQgFhw8XgSyLc4FLEQFQNYJLNoEcBZFciCKQPol2PC+BDQ
-X-IronPort-AV: E=Sophos;i="5.01,786,1400022000"; 
-   d="scan'208";a="642443686"
-Received: from host-2-96-152-235.as13285.net (HELO PhilipOakley) ([2.96.152.235])
-  by out1.ip06ir2.opaltelecom.net with SMTP; 02 Aug 2014 12:44:50 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1754751AbaHBN0R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Aug 2014 09:26:17 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:59808 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754676AbaHBN0Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Aug 2014 09:26:16 -0400
+Received: by mail-wg0-f50.google.com with SMTP id n12so5514751wgh.33
+        for <git@vger.kernel.org>; Sat, 02 Aug 2014 06:26:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=awcyMNBGvolH9bPnTTNvS4//krbrnLG5hGsYjlfQESk=;
+        b=fbmgmeQ6pawc7GGgNixJmLv68+nHJZ3mEGp2sE5RBdnyUJv8rcING45Fys0H/O4RGO
+         tkOQLbbi8XpNCkJRFIB1jQ+f/+94PsNwdsy/kmBpmnJSNxOiXMpJKwri16ZQrXqwS8C3
+         zJGvkEGXZIkNgHND7lh+6LqaTcOyeV5STqUXWx4dyQ761cTsX2rEQelcjZgLI0NFDovu
+         +dyDlJKvZUoVWAyzC9DqZI4ic2d3drx4TC995zBqJFLyKM79mFIFU8/SiZSIixKhWrn4
+         Ku8205KpWAWOJGHvbXE8U3iPbdBye2OvhrrBjAr44B4oozsAFHA2MmmZNOzwzzEKm848
+         nf1A==
+X-Received: by 10.194.200.229 with SMTP id jv5mr17573231wjc.90.1406985974812;
+        Sat, 02 Aug 2014 06:26:14 -0700 (PDT)
+Received: from [127.0.0.1] (tra78-5-88-172-129-43.fbx.proxad.net. [88.172.129.43])
+        by mx.google.com with ESMTPSA id di7sm28311887wjb.34.2014.08.02.06.26.13
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Sat, 02 Aug 2014 06:26:14 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <20140802100719.GA13095@dcvr.yhbt.net>
+X-Antivirus: avast! (VPS 140801-1, 01/08/2014), Outbound message
+X-Antivirus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254696>
 
-=46rom: "Mike Stump" <mikestump@comcast.net>
-Sent: Friday, August 01, 2014 11:24 PM
-> On Aug 1, 2014, at 12:01 PM, Jakub Nar=C4=99bski <jnareb@gmail.com> w=
-rote:
->> It can work in Subversion because Subversion stores information abou=
+Le 02/08/2014 12:07, Eric Wong a =E9crit :
+> Thanks.  In the future, it's expected to Cc: anybody who showed inter=
+est
+> in previous versions of your patch.
+>
+> Monard Vong <travelingsoul86@gmail.com> wrote:
+>> When a client certificate is required to connect to a Subversion rep=
+ository,
+>> the certificate location and password may be stored in Subversion co=
+nfig directory.
+>> Commands like "git svn init/fetch/dcommit" do not prompt for client =
+certificate/password
+>> if the location is set in SVN config file, but "git svn branch" does=
+ not use the config
+>> directory, resulting in prompting for certificate location/password =
+all the time.
+> The commit message is probably too long, and needs to be line-wrapped=
+=2E
+>
+> Perhaps something like:
+> ---------------------------8<---------------------------
+> Subject: [PATCH] git-svn: branch: avoid systematic prompt for cert/pa=
+ss
+>
+> Commands such as "git svn init/fetch/dcommit" do not prompt for clien=
 t
->> what was merged in (and this includes cherry-picks, or whatever it i=
-s
->> named in svn) in svn:mergeinfo property. Git does not track what was
->> merged in, instead it represent the history as the graph of=20
->> revisions,
->> and tracks merges (by storing that it came from two or more commits)
->> and not merged-in information.
+> certificate/password if they are stored in SVN config file.  Make "gi=
+t
+> svn branch" consistent with the other commands, as SVN::Client is
+> capable of building its own authentication baton from information in =
+the
+> SVN config directory.
 >
-> So, as a dumb user that just wants it to work, I am unsympathetic to=20
-> the `but software is hard=E2=80=99 excuse.  I am aware that some bugs=
- are=20
-> harder to fix than others.  svn took a long time to fix this bug, but=
-=20
-> they did.  I can wait, the only question is, will it be a week, a=20
-> month, a year, or a decade.
+> Signed-off-by: Monard Vong <travelingsoul86@gmail.com>
+> ---------------------------8<---------------------------
 >
->> When merging Git uses only what is being merged and its common
->> ancestor (3-point merge). It is simple, and simple works!!!
->
-> I gave a solution for git using branches and it works just fine.  It=20
-> retains the simple 3-point merge as well.
+> I can push the above with my Signed-off-by if you are happy with it.
+> Thanks again!
+Please do, all pleasure is mine, and thanks a lot for your feedback.
 
-At the moment there is no formal way for Git to record within the commi=
-t=20
-metadata the inclusion of the cherry-picked diff (the 'merge' of the=20
-fix).
-
-Thinking out of the box, the issue is that the commit parents list does=
-=20
-not have a formal mechanism to allow the recording that the 'merged'=20
-change was the patch change from a specific commit fom somewhere else=20
-(which may be missing from the local repo).
-
-Perhaps it needs a style of merging-rebase where a second (last) parent=
-=20
-is added but it isn't the straight <sha1>, but says 'patch-<sha1>', suc=
-h=20
-that readers with the capability could check if that <sha1> history is=20
-present locally, and if so if it's correct, so that you can now 'track'=
-=20
-your fixes between releases, and (hopefully) older Gits don't barf on=20
-that extra 'fake' parent. Somehow I suspect that older Git's would=20
-barf.. (not enough time to create and test such a fake commit)
-
->
->> Unfortunately, it does not see cherry-picked commits - it is=20
->> invisible
->> to merge as being on the chain from one of merged commits to the
->> common ancestor.
->
-> Im the solution that I sketched in my previous email, that informatio=
-n=20
-> is then exposed so that the right merge happens.
->
->> The rebase command handles
->
-> I can=E2=80=99t use rebase as it is unfriendly to coworkers.
->
->> cherry-picked commits by detecting that the
->> change was already applied. I think that git-imerge does the same=20
->> (but
->> I have not used it myself).
->>
->> Have you tried git-imerge?
->
-> No, not yet.  I=E2=80=99m not as interested in using it, as I would l=
-ike git=20
-> itself to just work.
-
---
-Philip=20
+Monard
