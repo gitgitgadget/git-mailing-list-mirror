@@ -1,374 +1,190 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] convert: Stream from fd to required clean filter instead of mmap
-Date: Sun,  3 Aug 2014 10:56:16 +0200
-Message-ID: <1407056176-8231-1-git-send-email-prohaska@zib.de>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Scott Chacon <schacon@gmail.com>,
-	Steffen Prohaska <prohaska@zib.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 03 12:28:55 2014
+From: Andrej Manduch <amanduch@gmail.com>
+Subject: Re: [PATCH] git-svn: doublecheck if really file or dir
+Date: Sun, 03 Aug 2014 14:22:34 +0200
+Message-ID: <53DE298A.9090505@gmail.com>
+References: <1405657201-32035-1-git-send-email-amanduch@gmail.com> <20140723220414.GA14145@dcvr.yhbt.net> <53D46812.3020706@gmail.com> <20140803024520.GA12880@dcvr.yhbt.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Aug 03 14:23:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDt25-0007t9-O6
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Aug 2014 12:28:54 +0200
+	id 1XDuom-0005C4-Tl
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Aug 2014 14:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751636AbaHCK2s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2014 06:28:48 -0400
-Received: from mailer.zib.de ([130.73.108.11]:55660 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750746AbaHCK2r (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2014 06:28:47 -0400
-X-Greylist: delayed 5526 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Aug 2014 06:28:46 EDT
-Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
-	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s738uYte008194;
-	Sun, 3 Aug 2014 10:56:34 +0200 (CEST)
-Received: from vss6.zib.de (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s738uX1b008136;
-	Sun, 3 Aug 2014 10:56:34 +0200 (CEST)
-X-Mailer: git-send-email 2.0.1.448.g1eafa63
-X-Miltered: at mailer.zib.de with ID 53DDF942.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
-X-j-chkmail-Enveloppe: 53DDF942.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
-X-j-chkmail-Score: MSGID : 53DDF942.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
-X-j-chkmail-Status: Ham
+	id S1751881AbaHCMWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Aug 2014 08:22:52 -0400
+Received: from mail-wi0-f182.google.com ([209.85.212.182]:38396 "EHLO
+	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751477AbaHCMWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2014 08:22:51 -0400
+Received: by mail-wi0-f182.google.com with SMTP id d1so3578282wiv.15
+        for <git@vger.kernel.org>; Sun, 03 Aug 2014 05:22:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=OvU8sytbple8chVlzagmxX+P7vnw8uCLkkSL2IIgn6Y=;
+        b=S91jOboIgHGdSjyylq4VCQ9PruIuLdEYVRwSJgNHDRkc3aVkMlJshn+DLbCVkMb4yT
+         JEIX/TRHgGuJ0Q2UCLiLoTCn6P2F5nWP0PEITdHui13sSQ7wSM58JwVW/1t4S+8qepH2
+         w+uEY7UxOILdWxMFHmsFhYVTLusrcH+8EcCkx4OA9mDMEh2PrXUOAze5Onb8yuGz81A3
+         S2IGdjHo9ALmDityL7jpm5/KleUBJhbLTDODKvG/l4pNb4j8XgwU05WnWSfCnLSt2spq
+         FGJVNKkkNeXXqx5cQmou1Kg1HTwWR8Alr+C4W1LZUWi/L+l7nja769u3UJXAzqLdRynS
+         Ao4A==
+X-Received: by 10.194.189.230 with SMTP id gl6mr2667966wjc.118.1407068569193;
+        Sun, 03 Aug 2014 05:22:49 -0700 (PDT)
+Received: from [192.168.1.7] ([80.242.44.116])
+        by mx.google.com with ESMTPSA id l7sm35501583wjx.7.2014.08.03.05.22.47
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 03 Aug 2014 05:22:48 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <20140803024520.GA12880@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254722>
 
-The data is streamed to the filter process anyway.  Better avoid mapping
-the file if possible.  This is especially useful if a clean filter
-reduces the size, for example if it computes a sha1 for binary data,
-like git media.  The file size that the previous implementation could
-handle was limited by the available address space; large files for
-example could not be handled with (32-bit) msysgit.  The new
-implementation can filter files of any size as long as the filter output
-is small enough.
+Hi Eric,
 
-The new code path is only taken if the filter is required.  The filter
-consumes data directly from the fd.  The original data is not available
-to git, so it must fail if the filter fails.
+Nice touch, It works like charm. However unfortunatelly now I think you
+introduced new bug :)
 
-The test that exercises required filters is modified to verify that the
-data actually has been modified on its way from the file system to the
-object store.
+On 08/03/2014 04:45 AM, Eric Wong wrote:
+> Hi Andrej, I could not help thinking your patch was obscuring
+> another bug.  I think I have an alternative to your patch which
+> fixes both our bugs.  Can you give this a shot?  Thanks.
+> 
+> --------------------------- 8< ----------------------------
+> Subject: [PATCH] git svn: info: correctly handle absolute path args
+> 
+> Calling "git svn info $(pwd)" would hit:
+>   "Reading from filehandle failed at ..."
+> errors due to improper prefixing and canonicalization.
+> 
+> Strip the toplevel path from absolute filesystem paths to ensure
+> downstream canonicalization routines are only exposed to paths
+> tracked in git (or SVN).
+> 
+> Noticed-by: Andrej Manduch <amanduch@gmail.com>
+> Signed-off-by: Eric Wong <normalperson@yhbt.net>
+> ---
+>  git-svn.perl            | 21 +++++++++++++++------
+>  t/t9119-git-svn-info.sh | 10 ++++++++++
+>  2 files changed, 25 insertions(+), 6 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 1f41ee1..1f9582b 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1477,10 +1477,19 @@ sub cmd_commit_diff {
+>  	}
+>  }
+>  
+> -
+>  sub cmd_info {
+> -	my $path = canonicalize_path(defined($_[0]) ? $_[0] : ".");
+> -	my $fullpath = canonicalize_path($cmd_dir_prefix . $path);
+> +	my $path_arg = defined($_[0]) ? $_[0] : '.';
+> +	my $path = $path_arg;
+> +	if ($path =~ m!\A/!) {
+> +		my $toplevel = eval {
+> +			my @cmd = qw/rev-parse --show-toplevel/;
+> +			command_oneline(\@cmd, STDERR => 0);
+> +		};
+> +		$path =~ s!\A\Q$toplevel\E/?!!;
+I have problem with this line ^^^
 
-The expectation on the process size is tested using /usr/bin/time.  An
-alternative would have been tcsh, which could be used to print memory
-information as follows:
+Suppose your $toplevel is "/sometning" and you type in command line
+something like that: "git svn info /somethingsrc" and as you see this
+should end up with error. However "$path =~ s!\A\Q$toplevel\E/?!!;"
+will just cut "/sometning" from "/somethingsrc" and and up with same
+answer as for "svn git info src" which is not equivalent query.
 
-    tcsh -c 'set time=(0 "%M"); <cmd>'
+Second scenario is something which worries me more: If your query look
+like this: "git svn info /something//src" it will just end up with error
+because it will set $path to "/src" witch is outside of repository.
 
-Although the logic could perhaps be simplified with tcsh, I chose to use
-'time' to avoid a dependency on tcsh.
+Second scenario can be fixed with this:
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- convert.c             | 58 ++++++++++++++++++++++++++++++++++++++-----
- convert.h             | 10 +++++---
- sha1_file.c           | 29 ++++++++++++++++++++--
- t/t0021-conversion.sh | 68 +++++++++++++++++++++++++++++++++++++++++++++++----
- 4 files changed, 149 insertions(+), 16 deletions(-)
+diff --git a/git-svn.perl b/git-svn.perl
+index a69f0fc..00f9d01 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1483,7 +1483,7 @@ sub cmd_info {
+ 			my @cmd = qw/rev-parse --show-toplevel/;
+ 			command_oneline(\@cmd, STDERR => 0);
+ 		};
+-		$path =~ s!\A\Q$toplevel\E/?!!;
++		$path =~ s!\A\Q$toplevel\E/*!!;
+ 		$path = canonicalize_path($path);
+ 	} else {
+ 		$path = canonicalize_path($cmd_dir_prefix . $path);
 
-diff --git a/convert.c b/convert.c
-index cb5fbb4..58a516a 100644
---- a/convert.c
-+++ b/convert.c
-@@ -312,11 +312,12 @@ static int crlf_to_worktree(const char *path, const char *src, size_t len,
- struct filter_params {
- 	const char *src;
- 	unsigned long size;
-+	int fd;
- 	const char *cmd;
- 	const char *path;
- };
- 
--static int filter_buffer(int in, int out, void *data)
-+static int filter_buffer_or_fd(int in, int out, void *data)
- {
- 	/*
- 	 * Spawn cmd and feed the buffer contents through its stdin.
-@@ -325,6 +326,7 @@ static int filter_buffer(int in, int out, void *data)
- 	struct filter_params *params = (struct filter_params *)data;
- 	int write_err, status;
- 	const char *argv[] = { NULL, NULL };
-+	int fd;
- 
- 	/* apply % substitution to cmd */
- 	struct strbuf cmd = STRBUF_INIT;
-@@ -355,7 +357,17 @@ static int filter_buffer(int in, int out, void *data)
- 
- 	sigchain_push(SIGPIPE, SIG_IGN);
- 
--	write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
-+	if (params->src) {
-+	    write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
-+	} else {
-+	    /* dup(), because copy_fd() closes the input fd. */
-+	    fd = dup(params->fd);
-+	    if (fd < 0)
-+		write_err = error("failed to dup file descriptor.");
-+	    else
-+		write_err = copy_fd(fd, child_process.in);
-+	}
-+
- 	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
-@@ -371,7 +383,7 @@ static int filter_buffer(int in, int out, void *data)
- 	return (write_err || status);
- }
- 
--static int apply_filter(const char *path, const char *src, size_t len,
-+static int apply_filter(const char *path, const char *src, size_t len, int fd,
-                         struct strbuf *dst, const char *cmd)
- {
- 	/*
-@@ -392,11 +404,12 @@ static int apply_filter(const char *path, const char *src, size_t len,
- 		return 1;
- 
- 	memset(&async, 0, sizeof(async));
--	async.proc = filter_buffer;
-+	async.proc = filter_buffer_or_fd;
- 	async.data = &params;
- 	async.out = -1;
- 	params.src = src;
- 	params.size = len;
-+	params.fd = fd;
- 	params.cmd = cmd;
- 	params.path = path;
- 
-@@ -747,6 +760,22 @@ static void convert_attrs(struct conv_attrs *ca, const char *path)
- 	}
- }
- 
-+int would_convert_to_git_filter_fd(const char *path) {
-+	struct conv_attrs ca;
-+	convert_attrs(&ca, path);
-+
-+	if (!ca.drv)
-+	    return 0;
-+
-+	/* Apply a filter to an fd only if the filter is required to succeed.
-+	 * We must die if the filter fails, because the original data before
-+	 * filtering is not available. */
-+	if (!ca.drv->required)
-+	    return 0;
-+
-+	return apply_filter(path, 0, 0, -1, 0, ca.drv->clean);
-+}
-+
- int convert_to_git(const char *path, const char *src, size_t len,
-                    struct strbuf *dst, enum safe_crlf checksafe)
- {
-@@ -761,7 +790,7 @@ int convert_to_git(const char *path, const char *src, size_t len,
- 		required = ca.drv->required;
- 	}
- 
--	ret |= apply_filter(path, src, len, dst, filter);
-+	ret |= apply_filter(path, src, len, -1, dst, filter);
- 	if (!ret && required)
- 		die("%s: clean filter '%s' failed", path, ca.drv->name);
- 
-@@ -778,6 +807,23 @@ int convert_to_git(const char *path, const char *src, size_t len,
- 	return ret | ident_to_git(path, src, len, dst, ca.ident);
- }
- 
-+void convert_to_git_filter_fd(const char *path, int fd, struct strbuf *dst,
-+			      enum safe_crlf checksafe)
-+{
-+	struct conv_attrs ca;
-+	convert_attrs(&ca, path);
-+
-+	assert(ca.drv);
-+	assert(ca.drv->clean);
-+
-+	if (!apply_filter(path, 0, 0, fd, dst, ca.drv->clean))
-+		die("%s: clean filter '%s' failed", path, ca.drv->name);
-+
-+	ca.crlf_action = input_crlf_action(ca.crlf_action, ca.eol_attr);
-+	crlf_to_git(path, dst->buf, dst->len, dst, ca.crlf_action, checksafe);
-+	ident_to_git(path, dst->buf, dst->len, dst, ca.ident);
-+}
-+
- static int convert_to_working_tree_internal(const char *path, const char *src,
- 					    size_t len, struct strbuf *dst,
- 					    int normalizing)
-@@ -811,7 +857,7 @@ static int convert_to_working_tree_internal(const char *path, const char *src,
- 		}
- 	}
- 
--	ret_filter = apply_filter(path, src, len, dst, filter);
-+	ret_filter = apply_filter(path, src, len, -1, dst, filter);
- 	if (!ret_filter && required)
- 		die("%s: smudge filter %s failed", path, ca.drv->name);
- 
-diff --git a/convert.h b/convert.h
-index 0c2143c..d9d853c 100644
---- a/convert.h
-+++ b/convert.h
-@@ -40,11 +40,15 @@ extern int convert_to_working_tree(const char *path, const char *src,
- 				   size_t len, struct strbuf *dst);
- extern int renormalize_buffer(const char *path, const char *src, size_t len,
- 			      struct strbuf *dst);
--static inline int would_convert_to_git(const char *path, const char *src,
--				       size_t len, enum safe_crlf checksafe)
-+static inline int would_convert_to_git(const char *path)
- {
--	return convert_to_git(path, src, len, NULL, checksafe);
-+	return convert_to_git(path, NULL, 0, NULL, 0);
- }
-+/* Precondition: would_convert_to_git_filter_fd(path) == true */
-+extern void convert_to_git_filter_fd(const char *path, int fd,
-+				     struct strbuf *dst,
-+				     enum safe_crlf checksafe);
-+extern int would_convert_to_git_filter_fd(const char *path);
- 
- /*****************************************************************
-  *
-diff --git a/sha1_file.c b/sha1_file.c
-index 3f70b1d..eaf3220 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -3074,6 +3074,29 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
- 	return ret;
- }
- 
-+static int index_stream_convert_blob(unsigned char *sha1, int fd,
-+				     const char *path, unsigned flags)
-+{
-+	int ret;
-+	const int write_object = flags & HASH_WRITE_OBJECT;
-+	struct strbuf sbuf = STRBUF_INIT;
-+
-+	assert(path);
-+	assert(would_convert_to_git_filter_fd(path));
-+
-+	convert_to_git_filter_fd(path, fd, &sbuf,
-+				 write_object ? safe_crlf : SAFE_CRLF_FALSE);
-+
-+	if (write_object)
-+		ret = write_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
-+				      sha1);
-+	else
-+		ret = hash_sha1_file(sbuf.buf, sbuf.len, typename(OBJ_BLOB),
-+				     sha1);
-+	strbuf_release(&sbuf);
-+	return ret;
-+}
-+
- static int index_pipe(unsigned char *sha1, int fd, enum object_type type,
- 		      const char *path, unsigned flags)
- {
-@@ -3141,10 +3164,12 @@ int index_fd(unsigned char *sha1, int fd, struct stat *st,
- 	int ret;
- 	size_t size = xsize_t(st->st_size);
- 
--	if (!S_ISREG(st->st_mode))
-+	if (type == OBJ_BLOB && path && would_convert_to_git_filter_fd(path))
-+		ret = index_stream_convert_blob(sha1, fd, path, flags);
-+	else if (!S_ISREG(st->st_mode))
- 		ret = index_pipe(sha1, fd, type, path, flags);
- 	else if (size <= big_file_threshold || type != OBJ_BLOB ||
--		 (path && would_convert_to_git(path, NULL, 0, 0)))
-+		 (path && would_convert_to_git(path)))
- 		ret = index_core(sha1, fd, size, type, path, flags);
- 	else
- 		ret = index_stream(sha1, fd, size, type, path, flags);
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index f890c54..2cb2414 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -153,17 +153,23 @@ test_expect_success 'filter shell-escaped filenames' '
- 	:
- '
- 
--test_expect_success 'required filter success' '
--	git config filter.required.smudge cat &&
--	git config filter.required.clean cat &&
-+test_expect_success 'required filter should filter data' '
-+	git config filter.required.smudge ./rot13.sh &&
-+	git config filter.required.clean ./rot13.sh &&
- 	git config filter.required.required true &&
- 
- 	echo "*.r filter=required" >.gitattributes &&
- 
--	echo test >test.r &&
-+	cat test.o >test.r &&
- 	git add test.r &&
-+
- 	rm -f test.r &&
--	git checkout -- test.r
-+	git checkout -- test.r &&
-+	cmp test.o test.r &&
-+
-+	./rot13.sh <test.o >expected &&
-+	git cat-file blob :test.r >actual &&
-+	cmp expected actual
- '
- 
- test_expect_success 'required filter smudge failure' '
-@@ -190,6 +196,58 @@ test_expect_success 'required filter clean failure' '
- 	test_must_fail git add test.fc
- '
- 
-+# Handle differences in /usr/bin/time.
-+#
-+#  - Linux: call with '-v'.
-+#    output: <spaces><description>:<space><value-in-KBytes>
-+#
-+#  - Mac: call with '-l'.
-+#    output: <spaces><value-in-Bytes><spaces><description>
-+#    Strip three digits to get to KB (base 10 is good enough).
-+#
-+case $(uname -s) in
-+Linux)
-+	test_set_prereq HAVE_MAX_MEM_USAGE
-+	max_mem_usage_KB () {
-+	    /usr/bin/time -v "$@" 2>&1 |
-+	    grep 'Maximum resident set size' |
-+	    cut -d ':' -f 2
-+	}
-+	;;
-+Darwin)
-+	test_set_prereq HAVE_MAX_MEM_USAGE
-+	max_mem_usage_KB () {
-+		/usr/bin/time -l "$@" 2>&1 |
-+		grep 'maximum resident set size' |
-+		sed -e 's/  */ /' |
-+		cut -d ' ' -f 2 |
-+		sed -e 's/...$//'
-+	}
-+	;;
-+esac
-+
-+max_mem_usage_is_lt_KB () {
-+	limit=$1
-+	shift
-+	mem_usage=$(max_mem_usage_KB "$@")
-+	if [ $mem_usage -lt $limit ]; then
-+		true
-+	else
-+		printf 'Command used too much memory (expected limit %dKB, actual usage %dKB).\n' \
-+			$limit $mem_usage
-+		false
-+	fi
-+}
-+
-+test_expect_success HAVE_MAX_MEM_USAGE \
-+'filtering large input to small output should use little memory' '
-+	git config filter.devnull.clean "cat >/dev/null" &&
-+	git config filter.devnull.required true &&
-+	for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
-+	echo "30MB filter=devnull" >.gitattributes &&
-+	max_mem_usage_is_lt_KB 15000 git add 30MB
-+'
-+
- test_expect_success EXPENSIVE 'filter large file' '
- 	git config filter.largefile.smudge cat &&
- 	git config filter.largefile.clean cat &&
--- 
-2.1.0.rc0.58.ga8a34bf
+
+However I'm not sure if this will work on windows (where slashes are in
+different orientation).
+
+
+On 08/03/2014 04:45 AM, Eric Wong wrote:
+> +		$path = canonicalize_path($path);
+> +	} else {
+> +		$path = canonicalize_path($cmd_dir_prefix . $path);
+> +	}
+>  	if (exists $_[1]) {
+>  		die "Too many arguments specified\n";
+>  	}
+> @@ -1501,14 +1510,14 @@ sub cmd_info {
+>  	# canonicalize_path() will return "" to make libsvn 1.5.x happy,
+>  	$path = "." if $path eq "";
+>  
+> -	my $full_url = canonicalize_url( add_path_to_url( $url, $fullpath ) );
+> +	my $full_url = canonicalize_url( add_path_to_url( $url, $path ) );
+>  
+>  	if ($_url) {
+>  		print "$full_url\n";
+>  		return;
+>  	}
+>  
+> -	my $result = "Path: $path\n";
+> +	my $result = "Path: $path_arg\n";
+>  	$result .= "Name: " . basename($path) . "\n" if $file_type ne "dir";
+>  	$result .= "URL: $full_url\n";
+>  
+> @@ -1539,7 +1548,7 @@ sub cmd_info {
+>  	}
+>  
+>  	my ($lc_author, $lc_rev, $lc_date_utc);
+> -	my @args = Git::SVN::Log::git_svn_log_cmd($rev, $rev, "--", $fullpath);
+> +	my @args = Git::SVN::Log::git_svn_log_cmd($rev, $rev, "--", $path);
+>  	my $log = command_output_pipe(@args);
+>  	my $esc_color = qr/(?:\033\[(?:(?:\d+;)*\d*)?m)*/;
+>  	while (<$log>) {
+> diff --git a/t/t9119-git-svn-info.sh b/t/t9119-git-svn-info.sh
+> index ff19695..4f6e669 100755
+> --- a/t/t9119-git-svn-info.sh
+> +++ b/t/t9119-git-svn-info.sh
+> @@ -74,6 +74,16 @@ test_expect_success 'info .' "
+>  	test_cmp_info expected.info-dot actual.info-dot
+>  	"
+>  
+> +test_expect_success 'info $(pwd)' '
+> +	(cd svnwc; svn info "$(pwd)") >expected.info-pwd &&
+> +	(cd gitwc; git svn info "$(pwd)") >actual.info-pwd &&
+> +	grep -v ^Path: <expected.info-pwd >expected.info-np &&
+> +	grep -v ^Path: <actual.info-pwd >actual.info-np &&
+> +	test_cmp_info expected.info-np actual.info-np &&
+> +	test "$(sed -ne \"/^Path:/ s!/svnwc!!\" <expected.info-pwd)" = \
+> +	     "$(sed -ne \"/^Path:/ s!/gitwc!!\" <actual.info-pwd)"
+> +	'
+> +
+>  test_expect_success 'info --url .' '
+>  	test "$(cd gitwc; git svn info --url .)" = "$quoted_svnrepo"
+>  	'
+> 
