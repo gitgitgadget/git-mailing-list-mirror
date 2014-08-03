@@ -1,94 +1,85 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: Everday contents
-Date: Sun, 3 Aug 2014 19:41:30 +0100
-Organization: OPDS
-Message-ID: <E675F06626AA430EB89D68FF67734824@PhilipOakley>
-References: <xmqq4my9f4qw.fsf@gitster.dls.corp.google.com><B6FB0C239E6E4E2489FAB9EF1C902988@PhilipOakley><xmqqegxcdjzl.fsf@gitster.dls.corp.google.com><7ACC0F5AD23E4C839D2F819B23DA9564@PhilipOakley><xmqqvbqm74v7.fsf@gitster.dls.corp.google.com><xmqqegx95bxc.fsf@gitster.dls.corp.google.com><35435A61F3C04DC8924B2E2329F9461E@PhilipOakley> <xmqqfvhdtrbj.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: Re: Bug report about symlinks
+Date: Mon, 04 Aug 2014 00:59:51 +0200
+Message-ID: <53DEBEE7.6070009@web.de>
+References: <web-416867478@relay1.vsu.ru> <53DABD69.7010004@web.de>	<xmqqppgkw55g.fsf@gitster.dls.corp.google.com>	<53DCF14D.8040705@web.de> <xmqqk36ptrs6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 03 20:44:34 2014
+Content-Type: text/plain; charset=utf-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nikolay Avdeev <avdeev@math.vsu.ru>, git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 01:00:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XE0ll-0007YN-Le
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Aug 2014 20:44:34 +0200
+	id 1XE4l1-0002TT-Ft
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 01:00:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512AbaHCSld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2014 14:41:33 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:31006 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751252AbaHCSld (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Aug 2014 14:41:33 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AhMXABGC3lNOl3lZPGdsb2JhbABagw1SV4cvgQTDXYdKBQECAQGBBxcFAQEBATg2g34FAQEEAQgBAS4eAQEhBQYCAwUCAQMVAQslFAEEGgYHAxQGEwgCAQIDAYgpDLVlkCKPTIM2gRwFilWEIoJmolY8Lw
-X-IPAS-Result: AhMXABGC3lNOl3lZPGdsb2JhbABagw1SV4cvgQTDXYdKBQECAQGBBxcFAQEBATg2g34FAQEEAQgBAS4eAQEhBQYCAwUCAQMVAQslFAEEGgYHAxQGEwgCAQIDAYgpDLVlkCKPTIM2gRwFilWEIoJmolY8Lw
-X-IronPort-AV: E=Sophos;i="5.01,793,1400022000"; 
-   d="scan'208";a="710859169"
-Received: from host-78-151-121-89.as13285.net (HELO PhilipOakley) ([78.151.121.89])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 03 Aug 2014 19:41:31 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1752335AbaHCW76 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Aug 2014 18:59:58 -0400
+Received: from mout.web.de ([212.227.17.11]:51174 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751851AbaHCW76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Aug 2014 18:59:58 -0400
+Received: from [192.168.178.27] ([79.250.184.163]) by smtp.web.de (mrweb101)
+ with ESMTPSA (Nemesis) id 0LoHTx-1WYOHY03y5-00gITw; Mon, 04 Aug 2014 00:59:53
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <xmqqk36ptrs6.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:QulFlCpZKASIEgi1E8PVLuRO9S7GYM7J7YVS3hR9g/MSS6Ihbg2
+ J2cx/ICNfG9EY5Vct3OVFDl//IuIEdRxtqQy+7ZHP5K1+PanjrXXzd5/2NRIjWEAPt8NNms
+ Pd0B7tB0X1oFYWQz15gptaBWm4E+2jhKJYaVeHQQsgurvk0rnBiJ77IWk9uVdJd+melAomR
+ CE1Kp7+lj8lAWQ8dIYnnA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254731>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> "Philip Oakley" <philipoakley@iee.org> writes:
+Am 03.08.2014 um 19:19 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
->> From: "Junio C Hamano" <gitster@pobox.com>
->> Sent: Friday, July 25, 2014 11:08 PM
->> ...
->>>
->>> | Individual Developer (Participant)[[Individual Developer
->>> (Participant)]]
->>> | ------------------------------------------------------------------------
->>
->> ...
->>> | $ git pull git://git.kernel.org/pub/.../jgarzik/libata-dev.git ALL
->>> <5>
->>
->> Would I be right that "ALL" can simply be dropped as something from
->> back then' (13 Dec 2005 v0.99.9-516-g44db136) that I'm ignorant of?
+>> How about the patch below?  Before it checks if an index entry exist=
+s
+>> in the work tree, it checks if its path includes a symlink.
 >
-> The answer depends on the reason why you want to drop it from the
-> example.
+> Honestly, I didn't expect the fix to be in the refresh-index code
+> path, but doing this there sort of makes sense.
+
+I found it through observation, not understanding.  Just looked for=20
+stat/lstat calls executed by git status for b/different and b/equal=20
+using strace; debugging printfs told me where they came from.
+
+>> And do we need to use the threaded_ variant of the function here?
 >
-> That "ALL" is merely a branch name, like "master", etc.
+> Hmmm, this is a tangent, but you comment made me wonder if we also
+> need to adjust preload_thread() in preload-index.c somehow, but we
+> do not touch CE_UPTODATE there, so it probably is not necessary.
 
-That was the bit I was missing. I had it in my head that it was possibly 
-some historic option as it was in caps.
+The function calls ce_mark_uptodate(), which does set CE_UPTODATE.  It=20
+calls threaded_has_symlink_leading_path() before lstat() already,=20
+however.  (Since f62ce3de: Make index preloading check the whole path t=
+o=20
+the file.)
 
->  I do not
-> know how jgarzik names his published branches these days, but back
-> then ALL there was something that contained all the topics he wanted
-> others to look at.  And the description of <5> explains it to be
-> fetching a "specific branch", so that needs to be reworded if we are
+> The caller of refresh_cache_ent() is walking an array of sorted
+> pathnames aka istate->cache[] in a single-threaded fashion, possibly
+> with a pathspec to limit the scan.
 
-I eventually went with using a lower case 'dev' as a nominal branch 
-name, and also named it in the updated <5>. However I hadn't actually 
-checked if the repos is still active.
+There are two direct callers (refresh_index(), refresh_cache_entry())=20
+and several indirect ones.  Do we have a way to detect unsynchronized=20
+parallel access to the has_symlink_leading_path()-cache?  Checking the=20
+full callers-of-callers tree manually looks a bit scary to me.
 
-> to change the example to "from the default branch of a specific
-> repository" or something.
->
->> ...
->>> | <5> fetch from a specific branch from a specific repository and
->>> merge.
->
+> Do you mean that we may want to
+> make istate->cache[] scanned by multiple threads?  I am not sure.
 
-Thanks.
+No, I didn't want to suggest any performance improvements.  I'm only=20
+interested in correctness for now.
 
-Philip 
+Ren=C3=A9
