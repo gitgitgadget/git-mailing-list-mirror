@@ -1,219 +1,126 @@
-From: Andrej Manduch <amanduch@gmail.com>
-Subject: Re: [PATCH] git-svn: doublecheck if really file or dir
-Date: Sun, 03 Aug 2014 15:12:10 +0200
-Message-ID: <53DE352A.5050505@gmail.com>
-References: <53DE31E8.3070405@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Bug report about symlinks
+Date: Sun, 03 Aug 2014 10:19:21 -0700
+Message-ID: <xmqqk36ptrs6.fsf@gitster.dls.corp.google.com>
+References: <web-416867478@relay1.vsu.ru> <53DABD69.7010004@web.de>
+	<xmqqppgkw55g.fsf@gitster.dls.corp.google.com>
+	<53DCF14D.8040705@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1252
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Aug 03 15:12:31 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nikolay Avdeev <avdeev@math.vsu.ru>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+X-From: git-owner@vger.kernel.org Sun Aug 03 19:19:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XDvaO-0004rK-4o
-	for gcvg-git-2@plane.gmane.org; Sun, 03 Aug 2014 15:12:28 +0200
+	id 1XDzRd-0006LO-6i
+	for gcvg-git-2@plane.gmane.org; Sun, 03 Aug 2014 19:19:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752244AbaHCNMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Aug 2014 09:12:20 -0400
-Received: from mail-we0-f181.google.com ([74.125.82.181]:54217 "EHLO
-	mail-we0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752115AbaHCNMT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2014 09:12:19 -0400
-Received: by mail-we0-f181.google.com with SMTP id k48so6352902wev.26
-        for <git@vger.kernel.org>; Sun, 03 Aug 2014 06:12:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=1ZIClymWWFRTvFvK134ZGohSNIOLu93ygvUzpL6uDVg=;
-        b=GpRBSYr9ANnhSblOEhJP5lqkEkGlroQndoGwI9tR0Y3hPL91rPu2z2wwiZJijVUvFG
-         NdLWjxVxHVltFcEjkGMdqM+kyFpBgnrEemPOOff/Roi0fOoqVGEQmo6BGmYl35aNpwXz
-         ZqbqYvYeU2Qo6hd+PRkNtXXeqB2XNgBj/qERSXCk/LzloLUlvDsNb/XJ4x7c9XUI+bl0
-         s9HJfZ+34XzzDbvAErCyPbxVGeHLVRSRnHz46Gf+uZcUCBqmfwKY0VbryLNO1FqQlr8L
-         ET9zCT9lXiww/czrUgrI0eBOGNU80hsjdJ1ueJvqjWqHQLQlfyF1rz0xHDmoySftW1Qh
-         a7Ag==
-X-Received: by 10.180.185.228 with SMTP id ff4mr22173709wic.76.1407071537790;
-        Sun, 03 Aug 2014 06:12:17 -0700 (PDT)
-Received: from [192.168.1.7] ([80.242.44.116])
-        by mx.google.com with ESMTPSA id fs3sm29803084wic.20.2014.08.03.06.12.14
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 03 Aug 2014 06:12:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <53DE31E8.3070405@gmail.com>
-X-Forwarded-Message-Id: <53DE31E8.3070405@gmail.com>
+	id S1752003AbaHCRTb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Aug 2014 13:19:31 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:50032 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751769AbaHCRTa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Aug 2014 13:19:30 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id F30162CB57;
+	Sun,  3 Aug 2014 13:19:29 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=up2q89kLVdcW
+	8YFpIqgtUyZcJ1k=; b=LtuQotXRaKU7yOFSGCKk0vFMuxYPbdmg5jaHxUs+vk5y
+	FpqhBL0nCaDA3N1aW6Ygw80dfE98E4mCs0NkONQm9jLjnHcHrznvR3ZZOHIA8oHI
+	fnCmlDAMifanhKwws/4lCXlwbTcGC2dk2sWYlFsp/QzLo4LLsNLgZZjG06QbxhE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=WSt5Di
+	giiBjJAqWlhyy5szkKlirg1jdMJKhJvybC+HADjx+Ux4vhHrDj9np3/Pafs3GJ3k
+	7sN6B6fQFdCXiS4JdQSIYmIBe9TxO23rwECRp24JqNI2BZcCTnyZmRfFCNviVIO/
+	73lDKjpDk+oXuJrDEWrX7YJC8Zrr5ivqs5TUY=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id D2D962CB56;
+	Sun,  3 Aug 2014 13:19:29 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 489322CB4E;
+	Sun,  3 Aug 2014 13:19:23 -0400 (EDT)
+In-Reply-To: <53DCF14D.8040705@web.de> (=?utf-8?Q?=22Ren=C3=A9?= Scharfe"'s
+ message of "Sat, 02
+	Aug 2014 16:10:21 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5009D4D0-1B32-11E4-86C7-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254728>
 
-On 08/03/2014 02:22 PM, Andrej Manduch wrote:
-> Hi Eric,
-> 
-> Nice touch, It works like charm. However unfortunatelly now I think you
-> introduced new bug :)
-> 
-> On 08/03/2014 04:45 AM, Eric Wong wrote:
->> Hi Andrej, I could not help thinking your patch was obscuring
->> another bug.  I think I have an alternative to your patch which
->> fixes both our bugs.  Can you give this a shot?  Thanks.
->>
->> --------------------------- 8< ----------------------------
->> Subject: [PATCH] git svn: info: correctly handle absolute path args
->>
->> Calling "git svn info $(pwd)" would hit:
->>   "Reading from filehandle failed at ..."
->> errors due to improper prefixing and canonicalization.
->>
->> Strip the toplevel path from absolute filesystem paths to ensure
->> downstream canonicalization routines are only exposed to paths
->> tracked in git (or SVN).
->>
->> Noticed-by: Andrej Manduch <amanduch@gmail.com>
->> Signed-off-by: Eric Wong <normalperson@yhbt.net>
->> ---
->>  git-svn.perl            | 21 +++++++++++++++------
->>  t/t9119-git-svn-info.sh | 10 ++++++++++
->>  2 files changed, 25 insertions(+), 6 deletions(-)
->>
->> diff --git a/git-svn.perl b/git-svn.perl
->> index 1f41ee1..1f9582b 100755
->> --- a/git-svn.perl
->> +++ b/git-svn.perl
->> @@ -1477,10 +1477,19 @@ sub cmd_commit_diff {
->>  	}
->>  }
->>  
->> -
->>  sub cmd_info {
->> -	my $path = canonicalize_path(defined($_[0]) ? $_[0] : ".");
->> -	my $fullpath = canonicalize_path($cmd_dir_prefix . $path);
->> +	my $path_arg = defined($_[0]) ? $_[0] : '.';
->> +	my $path = $path_arg;
->> +	if ($path =~ m!\A/!) {
->> +		my $toplevel = eval {
->> +			my @cmd = qw/rev-parse --show-toplevel/;
->> +			command_oneline(\@cmd, STDERR => 0);
->> +		};
->> +		$path =~ s!\A\Q$toplevel\E/?!!;
-> I have problem with this line ^^^
-> 
-> Suppose your $toplevel is "/sometning" and you type in command line
-> something like that: "git svn info /somethingsrc" and as you see this
-> should end up with error. However "$path =~ s!\A\Q$toplevel\E/?!!;"
-> will just cut "/sometning" from "/somethingsrc" and and up with same
-> answer as for "svn git info src" which is not equivalent query.
-> 
-> Second scenario is something which worries me more: If your query look
-> like this: "git svn info /something//src" it will just end up with error
-> because it will set $path to "/src" witch is outside of repository.
-> 
-> Second scenario can be fixed with this:
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index a69f0fc..00f9d01 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -1483,7 +1483,7 @@ sub cmd_info {
->  			my @cmd = qw/rev-parse --show-toplevel/;
->  			command_oneline(\@cmd, STDERR => 0);
->  		};
-> -		$path =~ s!\A\Q$toplevel\E/?!!;
-> +		$path =~ s!\A\Q$toplevel\E/*!!;
->  		$path = canonicalize_path($path);
->  	} else {
->  		$path = canonicalize_path($cmd_dir_prefix . $path);
-> 
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-Actualy this will be even better:
+> How about the patch below?  Before it checks if an index entry exists
+> in the work tree, it checks if its path includes a symlink.
 
+Honestly, I didn't expect the fix to be in the refresh-index code
+path, but doing this there sort of makes sense.
 
-Signed-off-by: Andrej Manduch <amanduch@gmail.com>
----
- git-svn.perl | 1 +
- 1 file changed, 1 insertion(+)
+I think you, who dug to find out where to add the check, already
+know this, and I am writing this mainly for myself and for the list
+archive, but when the knee-jerk "has-syjmlink-leading-path missing?"
+reaction came to me, two obvious optimizations also came to my mind:
 
-diff --git a/git-svn.perl b/git-svn.perl
-index a69f0fc..58df866 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1483,6 +1483,7 @@ sub cmd_info {
- 			my @cmd = qw/rev-parse --show-toplevel/;
- 			command_oneline(\@cmd, STDERR => 0);
- 		};
-+		$path = canonicalize_path($path);
- 		$path =~ s!\A\Q$toplevel\E/?!!;
- 		$path = canonicalize_path($path);
- 	} else {
--- 
-2.0.0.GIT
+ - When checking a cache entry "a/b/c/d/e" and we find out "a/b/c"
+   is a symbolic link, we mark it as ~CE_VALID, but at the same
+   time, we learn "a/b/c/any/thing" are also ~CE_VALID with that
+   check, so we _could_, after the has_symlink_leading_path once
+   returns true, so there may be an opportunity to fast-forward the
+   scan, marking all paths under "a/b/c" as ~CE_VALID.
 
-Because this will have not problem with really weird query like: "git
-svn info /media/../media/something//src"
+ - After finding out "a/b/c" is a symbolic link to cause anything
+   underneath marked as ~CE_VALID, we also know "a/" and "a/b/"
+   exists as real directories, so a later check for "a/b/some/thing"
+   can start checking at "a/b/some/" without checking "a/" and "a/b/".
 
-> 
-> However I'm not sure if this will work on windows (where slashes are in
-> different orientation).
-> 
-> 
-> On 08/03/2014 04:45 AM, Eric Wong wrote:
->> +		$path = canonicalize_path($path);
->> +	} else {
->> +		$path = canonicalize_path($cmd_dir_prefix . $path);
->> +	}
->>  	if (exists $_[1]) {
->>  		die "Too many arguments specified\n";
->>  	}
->> @@ -1501,14 +1510,14 @@ sub cmd_info {
->>  	# canonicalize_path() will return "" to make libsvn 1.5.x happy,
->>  	$path = "." if $path eq "";
->>  
->> -	my $full_url = canonicalize_url( add_path_to_url( $url, $fullpath ) );
->> +	my $full_url = canonicalize_url( add_path_to_url( $url, $path ) );
->>  
->>  	if ($_url) {
->>  		print "$full_url\n";
->>  		return;
->>  	}
->>  
->> -	my $result = "Path: $path\n";
->> +	my $result = "Path: $path_arg\n";
->>  	$result .= "Name: " . basename($path) . "\n" if $file_type ne "dir";
->>  	$result .= "URL: $full_url\n";
->>  
->> @@ -1539,7 +1548,7 @@ sub cmd_info {
->>  	}
->>  
->>  	my ($lc_author, $lc_rev, $lc_date_utc);
->> -	my @args = Git::SVN::Log::git_svn_log_cmd($rev, $rev, "--", $fullpath);
->> +	my @args = Git::SVN::Log::git_svn_log_cmd($rev, $rev, "--", $path);
->>  	my $log = command_output_pipe(@args);
->>  	my $esc_color = qr/(?:\033\[(?:(?:\d+;)*\d*)?m)*/;
->>  	while (<$log>) {
->> diff --git a/t/t9119-git-svn-info.sh b/t/t9119-git-svn-info.sh
->> index ff19695..4f6e669 100755
->> --- a/t/t9119-git-svn-info.sh
->> +++ b/t/t9119-git-svn-info.sh
->> @@ -74,6 +74,16 @@ test_expect_success 'info .' "
->>  	test_cmp_info expected.info-dot actual.info-dot
->>  	"
->>  
->> +test_expect_success 'info $(pwd)' '
->> +	(cd svnwc; svn info "$(pwd)") >expected.info-pwd &&
->> +	(cd gitwc; git svn info "$(pwd)") >actual.info-pwd &&
->> +	grep -v ^Path: <expected.info-pwd >expected.info-np &&
->> +	grep -v ^Path: <actual.info-pwd >actual.info-np &&
->> +	test_cmp_info expected.info-np actual.info-np &&
->> +	test "$(sed -ne \"/^Path:/ s!/svnwc!!\" <expected.info-pwd)" = \
->> +	     "$(sed -ne \"/^Path:/ s!/gitwc!!\" <actual.info-pwd)"
->> +	'
->> +
->>  test_expect_success 'info --url .' '
->>  	test "$(cd gitwc; git svn info --url .)" = "$quoted_svnrepo"
->>  	'
->>
+The latter is more important as it is a much more common case that
+the shape of the working tree not to change.
+
+But I think the implementation of has_symlink_leading_path() already
+has these optimizations built inside around the (unfortunately named)
+"struct cache_def", so it probably would not give us much boost to
+implement such a fast-forwarding of the scan.
+
+> And do we need to use the threaded_ variant of the function here?
+
+Hmmm, this is a tangent, but you comment made me wonder if we also
+need to adjust preload_thread() in preload-index.c somehow, but we
+do not touch CE_UPTODATE there, so it probably is not necessary.
+
+The caller of refresh_cache_ent() is walking an array of sorted
+pathnames aka istate->cache[] in a single-threaded fashion, possibly
+with a pathspec to limit the scan.  Do you mean that we may want to
+make istate->cache[] scanned by multiple threads?  I am not sure.
+
+> diff --git a/read-cache.c b/read-cache.c
+> index 5d3c8bd..6f0057f 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1064,6 +1064,14 @@ static struct cache_entry *refresh_cache_ent(s=
+truct index_state *istate,
+>  		return ce;
+>  	}
+> =20
+> +	if (has_symlink_leading_path(ce->name, ce_namelen(ce))) {
+> +		if (ignore_missing)
+> +			return ce;
+> +		if (err)
+> +			*err =3D ENOENT;
+> +		return NULL;
+> +	}
+> +
+>  	if (lstat(ce->name, &st) < 0) {
+>  		if (ignore_missing && errno =3D=3D ENOENT)
+>  			return ce;
