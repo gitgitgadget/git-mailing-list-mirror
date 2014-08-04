@@ -1,76 +1,82 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH] pretty.c: make git_pretty_formats_config return -1 on git_config_string failure
-Date: Mon,  4 Aug 2014 07:41:15 -0700
-Message-ID: <1407163275-3006-1-git-send-email-tanayabh@gmail.com>
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 04 16:50:05 2014
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH RFC v2 05/19] rebase -i: Implement reword in terms of do_pick
+Date: Mon, 04 Aug 2014 17:16:51 +0200
+Message-ID: <vpqzjfki8t8.fsf@anie.imag.fr>
+References: <53A258D2.7080806@gmail.com>
+	<cover.1404323078.git.bafain@gmail.com>
+	<a82fd64f943d4b59a01509ae52fc2d7a05d51f4a.1404323078.git.bafain@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
+To: Fabian Ruch <bafain@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 17:17:43 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEJaO-0001oQ-MC
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 16:50:05 +0200
+	id 1XEK16-0003Hg-Pv
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 17:17:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752650AbaHDOuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2014 10:50:00 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:37645 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752357AbaHDOt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2014 10:49:59 -0400
-Received: by mail-pa0-f51.google.com with SMTP id ey11so10147311pad.38
-        for <git@vger.kernel.org>; Mon, 04 Aug 2014 07:49:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=QeKdt4wQir8cmLlbIB6VmiNAmFIo4rniw3p2brHsHWE=;
-        b=ccSqAzbJQEN2KHaRVMydcvW2wE/PdrCZft9WosRw3NasQXIVkHFP7260vJCoqxiYH/
-         bEvpcbyZJO6SiMl6LLNLUMCUPgnB0oifQDAHHsm5ZfOz4FNP6sbFPABrePjvXchdeDbV
-         G/W+FbGtjItK7VEiNwLuPkWowxdOy5vy4u3Aqi9FCLQ57IYJOL+DNY2IxTciHWxOgS/S
-         7NUbobyipgoT+FUkmbhuydDNcPtNKjZJUeMTpzbgUkb/+qTR8gcUz5oFx0u7SvQZvB96
-         sbCzhJOTkZdW61i3+FJlcYGXxiYLZd03xTLnn+x07P57m5KA/lVyeZh6m3p5wMhQKQXa
-         Uy7g==
-X-Received: by 10.68.223.1 with SMTP id qq1mr24559933pbc.62.1407163798603;
-        Mon, 04 Aug 2014 07:49:58 -0700 (PDT)
-Received: from localhost.localdomain ([106.211.107.187])
-        by mx.google.com with ESMTPSA id fw3sm1959421pbb.2.2014.08.04.07.49.53
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 04 Aug 2014 07:49:57 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0.GIT
+	id S1751563AbaHDPRh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2014 11:17:37 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:47504 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751224AbaHDPRg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2014 11:17:36 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s74FGoXh031702
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 4 Aug 2014 17:16:50 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s74FGpRf003170;
+	Mon, 4 Aug 2014 17:16:51 +0200
+In-Reply-To: <a82fd64f943d4b59a01509ae52fc2d7a05d51f4a.1404323078.git.bafain@gmail.com>
+	(Fabian Ruch's message of "Wed, 2 Jul 2014 19:47:57 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 04 Aug 2014 17:16:50 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s74FGoXh031702
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1407770213.82024@2qppt4FnhumSe1AY320npQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254740>
 
-`git_pretty_formats_config()` continues without checking git_config_string's
-return value which can lead to a SEGFAULT. Instead return -1 when
-git_config_string fails signalling `git_config()` to die printing the location
-of the erroneous variable.
+Fabian Ruch <bafain@gmail.com> writes:
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
- pretty.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+> --- a/git-rebase--interactive.sh
+> +++ b/git-rebase--interactive.sh
+> @@ -555,20 +555,7 @@ do_next () {
+>  		comment_for_reflog reword
+>  
+>  		mark_action_done
+> -		do_pick $sha1 "$rest"
+> -		# TODO: Work around the fact that git-commit lets us
+> -		# disable either both the pre-commit and the commit-msg
+> -		# hook or none. Disable the pre-commit hook because the
+> -		# tree is left unchanged but run the commit-msg hook
+> -		# from here because the log message is altered.
+> -		git commit --allow-empty --amend --no-post-rewrite -n ${gpg_sign_opt:+"$gpg_sign_opt"} &&
+> -			if test -x "$GIT_DIR"/hooks/commit-msg
+> -			then
+> -				"$GIT_DIR"/hooks/commit-msg "$GIT_DIR"/COMMIT_EDITMSG
+> -			fi || {
+> -				warn "Could not amend commit after successfully picking $sha1... $rest"
+> -				exit_with_patch $sha1 1
+> -			}
+> +		do_pick --edit $sha1 "$rest"
 
-diff --git a/pretty.c b/pretty.c
-index 3a1da6f..72dbf55 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -65,7 +65,9 @@ static int git_pretty_formats_config(const char *var, const char *value, void *c
- 
- 	commit_format->name = xstrdup(name);
- 	commit_format->format = CMIT_FMT_USERFORMAT;
--	git_config_string(&fmt, var, value);
-+	if (git_config_string(&fmt, var, value))
-+		return -1;
-+
- 	if (starts_with(fmt, "format:") || starts_with(fmt, "tformat:")) {
- 		commit_format->is_tformat = fmt[0] == 't';
- 		fmt = strchr(fmt, ':') + 1;
+I would have found this easier to review if squashed into the previous
+patch. My reaction reading the previous patch was "Uh, why duplicate
+code?", and reading this one "Ah, that's OK". A single patch doing both
+would have avoided the confusion.
+
 -- 
-1.9.0.GIT
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
