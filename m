@@ -1,85 +1,126 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: Bug report about symlinks
-Date: Mon, 04 Aug 2014 00:59:51 +0200
-Message-ID: <53DEBEE7.6070009@web.de>
-References: <web-416867478@relay1.vsu.ru> <53DABD69.7010004@web.de>	<xmqqppgkw55g.fsf@gitster.dls.corp.google.com>	<53DCF14D.8040705@web.de> <xmqqk36ptrs6.fsf@gitster.dls.corp.google.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: doublecheck if really file or dir
+Date: Mon, 4 Aug 2014 04:02:12 +0000
+Message-ID: <20140804040212.GA14629@dcvr.yhbt.net>
+References: <53DE31E8.3070405@gmail.com>
+ <53DE352A.5050505@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nikolay Avdeev <avdeev@math.vsu.ru>, git@vger.kernel.org,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 04 01:00:04 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Andrej Manduch <amanduch@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 06:02:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XE4l1-0002TT-Ft
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 01:00:03 +0200
+	id 1XE9TV-00088G-8g
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 06:02:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752335AbaHCW76 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Aug 2014 18:59:58 -0400
-Received: from mout.web.de ([212.227.17.11]:51174 "EHLO mout.web.de"
+	id S1750993AbaHDECN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2014 00:02:13 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:39364 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751851AbaHCW76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Aug 2014 18:59:58 -0400
-Received: from [192.168.178.27] ([79.250.184.163]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0LoHTx-1WYOHY03y5-00gITw; Mon, 04 Aug 2014 00:59:53
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <xmqqk36ptrs6.fsf@gitster.dls.corp.google.com>
-X-Provags-ID: V03:K0:QulFlCpZKASIEgi1E8PVLuRO9S7GYM7J7YVS3hR9g/MSS6Ihbg2
- J2cx/ICNfG9EY5Vct3OVFDl//IuIEdRxtqQy+7ZHP5K1+PanjrXXzd5/2NRIjWEAPt8NNms
- Pd0B7tB0X1oFYWQz15gptaBWm4E+2jhKJYaVeHQQsgurvk0rnBiJ77IWk9uVdJd+melAomR
- CE1Kp7+lj8lAWQ8dIYnnA==
+	id S1750714AbaHDECM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2014 00:02:12 -0400
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 399E71FB36;
+	Mon,  4 Aug 2014 04:02:12 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <53DE352A.5050505@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254732>
 
-Am 03.08.2014 um 19:19 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> How about the patch below?  Before it checks if an index entry exist=
-s
->> in the work tree, it checks if its path includes a symlink.
->
-> Honestly, I didn't expect the fix to be in the refresh-index code
-> path, but doing this there sort of makes sense.
+Andrej Manduch <amanduch@gmail.com> wrote:
+> On 08/03/2014 02:22 PM, Andrej Manduch wrote:
+> > Nice touch, It works like charm. However unfortunatelly now I think you
+> > introduced new bug :)
 
-I found it through observation, not understanding.  Just looked for=20
-stat/lstat calls executed by git status for b/different and b/equal=20
-using strace; debugging printfs told me where they came from.
+Good catch!
 
->> And do we need to use the threaded_ variant of the function here?
->
-> Hmmm, this is a tangent, but you comment made me wonder if we also
-> need to adjust preload_thread() in preload-index.c somehow, but we
-> do not touch CE_UPTODATE there, so it probably is not necessary.
+> > On 08/03/2014 04:45 AM, Eric Wong wrote:
+> >>  sub cmd_info {
+> >> -	my $path = canonicalize_path(defined($_[0]) ? $_[0] : ".");
+> >> -	my $fullpath = canonicalize_path($cmd_dir_prefix . $path);
+> >> +	my $path_arg = defined($_[0]) ? $_[0] : '.';
+> >> +	my $path = $path_arg;
+> >> +	if ($path =~ m!\A/!) {
+> >> +		my $toplevel = eval {
+> >> +			my @cmd = qw/rev-parse --show-toplevel/;
+> >> +			command_oneline(\@cmd, STDERR => 0);
+> >> +		};
+> >> +		$path =~ s!\A\Q$toplevel\E/?!!;
+> > I have problem with this line ^^^
+> > 
+> > Suppose your $toplevel is "/sometning" and you type in command line
+> > something like that: "git svn info /somethingsrc" and as you see this
+> > should end up with error. However "$path =~ s!\A\Q$toplevel\E/?!!;"
+> > will just cut "/sometning" from "/somethingsrc" and and up with same
+> > answer as for "svn git info src" which is not equivalent query.
+> > 
+> > Second scenario is something which worries me more: If your query look
+> > like this: "git svn info /something//src" it will just end up with error
+> > because it will set $path to "/src" witch is outside of repository.
+> > 
+> > Second scenario can be fixed with this:
+> > 
+> 
+> Actualy this will be even better:
 
-The function calls ce_mark_uptodate(), which does set CE_UPTODATE.  It=20
-calls threaded_has_symlink_leading_path() before lstat() already,=20
-however.  (Since f62ce3de: Make index preloading check the whole path t=
-o=20
-the file.)
+Thanks Andrej.  I'll queue that on top of mine.
+Can you turn that into a proper commit message with Subject?
+Thanks.
+(The English-generating part of my brain is too tired)
 
-> The caller of refresh_cache_ent() is walking an array of sorted
-> pathnames aka istate->cache[] in a single-threaded fashion, possibly
-> with a pathspec to limit the scan.
+> Signed-off-by: Andrej Manduch <amanduch@gmail.com>
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1483,6 +1483,7 @@ sub cmd_info {
+>  			my @cmd = qw/rev-parse --show-toplevel/;
+>  			command_oneline(\@cmd, STDERR => 0);
+>  		};
+> +		$path = canonicalize_path($path);
+>  		$path =~ s!\A\Q$toplevel\E/?!!;
+>  		$path = canonicalize_path($path);
+>  	} else {
 
-There are two direct callers (refresh_index(), refresh_cache_entry())=20
-and several indirect ones.  Do we have a way to detect unsynchronized=20
-parallel access to the has_symlink_leading_path()-cache?  Checking the=20
-full callers-of-callers tree manually looks a bit scary to me.
+> Because this will have not problem with really weird query like: "git
+> svn info /media/../media/something//src"
 
-> Do you mean that we may want to
-> make istate->cache[] scanned by multiple threads?  I am not sure.
+I've also started working on the following test cases,
+will squash:
 
-No, I didn't want to suggest any performance improvements.  I'm only=20
-interested in correctness for now.
-
-Ren=C3=A9
+diff --git a/t/t9119-git-svn-info.sh b/t/t9119-git-svn-info.sh
+index 4f6e669..f16f323 100755
+--- a/t/t9119-git-svn-info.sh
++++ b/t/t9119-git-svn-info.sh
+@@ -84,6 +84,26 @@ test_expect_success 'info $(pwd)' '
+ 	     "$(sed -ne \"/^Path:/ s!/gitwc!!\" <actual.info-pwd)"
+ 	'
+ 
++test_expect_success 'info $(pwd)/../___wc' '
++	(cd svnwc; svn info "$(pwd)/../svnwc") >expected.info-pwd &&
++	(cd gitwc; git svn info "$(pwd)/../gitwc") >actual.info-pwd &&
++	grep -v ^Path: <expected.info-pwd >expected.info-np &&
++	grep -v ^Path: <actual.info-pwd >actual.info-np &&
++	test_cmp_info expected.info-np actual.info-np &&
++	test "$(sed -ne \"/^Path:/ s!/svnwc!!\" <expected.info-pwd)" = \
++	     "$(sed -ne \"/^Path:/ s!/gitwc!!\" <actual.info-pwd)"
++	'
++
++test_expect_success 'info $(pwd)/../___wc//file' '
++	(cd svnwc; svn info "$(pwd)/../svnwc//file") >expected.info-pwd &&
++	(cd gitwc; git svn info "$(pwd)/../gitwc//file") >actual.info-pwd &&
++	grep -v ^Path: <expected.info-pwd >expected.info-np &&
++	grep -v ^Path: <actual.info-pwd >actual.info-np &&
++	test_cmp_info expected.info-np actual.info-np &&
++	test "$(sed -ne \"/^Path:/ s!/svnwc!!\" <expected.info-pwd)" = \
++	     "$(sed -ne \"/^Path:/ s!/gitwc!!\" <actual.info-pwd)"
++	'
++
+ test_expect_success 'info --url .' '
+ 	test "$(cd gitwc; git svn info --url .)" = "$quoted_svnrepo"
+ 	'
