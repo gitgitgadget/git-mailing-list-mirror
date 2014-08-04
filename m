@@ -1,63 +1,97 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 01/11] daemon.c: replace `git_config()` with `git_config_get_bool()` family
-Date: Mon, 04 Aug 2014 22:23:37 +0200
-Message-ID: <vpq38dcatrq.fsf@anie.imag.fr>
-References: <1407177229-30081-1-git-send-email-tanayabh@gmail.com>
-	<1407177229-30081-2-git-send-email-tanayabh@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] t5704: Fix the test that checks for excluded tags
+Date: Mon, 04 Aug 2014 13:28:22 -0700
+Message-ID: <xmqqmwbkq9sp.fsf@gitster.dls.corp.google.com>
+References: <1406968747-16100-1-git-send-email-git@cryptocrack.de>
+	<xmqqzjfkqap5.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 04 22:23:49 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Lukas Fleischer <git@cryptocrack.de>
+X-From: git-owner@vger.kernel.org Mon Aug 04 22:28:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEOnM-0003cv-Pa
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 22:23:49 +0200
+	id 1XEOs0-0001gf-I7
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 22:28:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751551AbaHDUXp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2014 16:23:45 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:52833 "EHLO rominette.imag.fr"
+	id S1752103AbaHDU2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2014 16:28:32 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:57566 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751417AbaHDUXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2014 16:23:44 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s74KNZ2n015923
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 4 Aug 2014 22:23:35 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s74KNbkD005301;
-	Mon, 4 Aug 2014 22:23:37 +0200
-In-Reply-To: <1407177229-30081-2-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Mon, 4 Aug 2014 11:33:39 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 04 Aug 2014 22:23:35 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s74KNZ2n015923
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1407788619.54614@yLhC2B9i5IhG6fU+FSb28Q
+	id S1750714AbaHDU2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2014 16:28:32 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9B6F82F2D0;
+	Mon,  4 Aug 2014 16:28:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ni1Fm4ajGdFgVvT5Rt5hGt4Mbkk=; b=npq5X5
+	3dtgYfUmI8GQi1pU+KtMK1uL1ta4kmz2omxX5vVjjbpfwt+L44rEE1x4Q2TCe7Yd
+	prqsed1/zrC4IEPG5E8ZlbCQoOtaaBOScmATRKJIxg4FUeglImyXiDqU7sRQuvIi
+	YX+J02O1x051byH5PGOFtvb16/3D58/1pRzTM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HBrgvuPArEPYcybaFrgDbt1UBwBWqYfk
+	JJR5GDiaxBr4dXlvOQQGXLKmvf92E97vfNfxy97FPARR701oGTUh9opI6Sw7TZZx
+	Tdb+VmHTszT6SkPG4TrhWsnafh45DjqkWixZNJs3edwo+vj7ut1pWJNdDoH9VgkG
+	wQyvQMEBc8k=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 908C52F2CE;
+	Mon,  4 Aug 2014 16:28:31 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id EC7DF2F2C9;
+	Mon,  4 Aug 2014 16:28:24 -0400 (EDT)
+In-Reply-To: <xmqqzjfkqap5.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
+	message of "Mon, 04 Aug 2014 13:08:54 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: E29CF708-1C15-11E4-8308-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254776>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> @@ -354,12 +338,11 @@ static int run_service(const char *dir, struct daemon_service *service)
-[...]
->  	}
-> +
->  	if (!enabled) {
->  		logerror("'%s': service not enabled for '%s'",
->  			 service->name, path);
+>> diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
+>> index a45c316..2f063ea 100755
+>> --- a/t/t5704-bundle.sh
+>> +++ b/t/t5704-bundle.sh
+>> @@ -6,7 +6,7 @@ test_description='some bundle related tests'
+>>  test_expect_success 'setup' '
+>>  	test_commit initial &&
+>>  	test_tick &&
+>> -	git tag -m tag tag &&
+>> +	git tag -am tag tag &&
+> ...
+> Oh, wait.
 
-Avoid whitespace-only change like this one.
+In any case, the fix in 2/2 is real, and applying both and then
+reverting the above hunk passes the test.  Also, applying both,
+reverting the above hunk *and* reverting the fix to bundle.c of
+course makes the rest fail.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+So I would be tempted to squash these two patches into one using the
+log message from the latter one, while excluding the change in the
+above hunk.
+
+Thanks.
+
+>> @@ -14,7 +14,10 @@ test_expect_success 'setup' '
+>>  	git tag -d third
+>>  '
+>>  
+>> -test_expect_success 'tags can be excluded by rev-list options' '
+>> +test_expect_failure 'annotated tags can be excluded by rev-list options' '
+>> +	git bundle create bundle --all --since=7.Apr.2005.15:14:00.-0700 &&
+>> +	git ls-remote bundle > output &&
+>> +	grep tag output &&
+>>  	git bundle create bundle --all --since=7.Apr.2005.15:16:00.-0700 &&
+>>  	git ls-remote bundle > output &&
+>>  	! grep tag output
