@@ -1,168 +1,177 @@
-From: "Philip Oakley" <philipoakley@iee.org>
-Subject: Re: [PATCH v2 1/1] doc: format-patch: don't use origin as a branch name
-Date: Mon, 4 Aug 2014 22:51:52 +0100
-Organization: OPDS
-Message-ID: <F97E9146985F4449A937B9C5CCA1D7F5@PhilipOakley>
-References: <1406994383-5076-1-git-send-email-philipoakley@iee.org><1406994383-5076-2-git-send-email-philipoakley@iee.org> <xmqq38dctcmz.fsf@gitster.dls.corp.google.com>
-Reply-To: "Philip Oakley" <philipoakley@iee.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] config: teach "git -c" to recognize an empty string
+Date: Mon, 4 Aug 2014 17:56:44 -0400
+Message-ID: <20140804215644.GA21510@peff.net>
+References: <1407163275-3006-1-git-send-email-tanayabh@gmail.com>
+ <vpqmwbki7h3.fsf@anie.imag.fr>
+ <20140804203351.GA12898@peff.net>
+ <vpqtx5s7yo4.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-Cc: "GitList" <git@vger.kernel.org>,
-	"Jonathan Nieder" <jrnieder@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 04 23:52:01 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Aug 04 23:56:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEQAh-0006Nw-W1
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 23:52:00 +0200
+	id 1XEQFP-0004UB-U0
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 23:56:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752497AbaHDVv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2014 17:51:56 -0400
-Received: from out1.ip01ir2.opaltelecom.net ([62.24.128.237]:46387 "EHLO
-	out1.ip01ir2.opaltelecom.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751855AbaHDVvz (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Aug 2014 17:51:55 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AkUoAOv+31MCYJ75PGdsb2JhbABbgw1jAUWHL4EEy0sFAQIBAQyBCRcFAQEBATg2g34FAQEEAQgBAS4eAQEhCwIDBQIBAxUMJRQBBBoGBwMUBhMIAgECAwGIKQy0B5BGj0w1gwGBHAWKVYQigmaiVjwv
-X-IPAS-Result: AkUoAOv+31MCYJ75PGdsb2JhbABbgw1jAUWHL4EEy0sFAQIBAQyBCRcFAQEBATg2g34FAQEEAQgBAS4eAQEhCwIDBQIBAxUMJRQBBBoGBwMUBhMIAgECAwGIKQy0B5BGj0w1gwGBHAWKVYQigmaiVjwv
-X-IronPort-AV: E=Sophos;i="5.01,800,1400022000"; 
-   d="scan'208";a="710971779"
-Received: from host-2-96-158-249.as13285.net (HELO PhilipOakley) ([2.96.158.249])
-  by out1.ip01ir2.opaltelecom.net with SMTP; 04 Aug 2014 22:51:53 +0100
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.6157
+	id S1753117AbaHDV4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2014 17:56:48 -0400
+Received: from cloud.peff.net ([50.56.180.127]:45886 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752723AbaHDV4r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2014 17:56:47 -0400
+Received: (qmail 30298 invoked by uid 102); 4 Aug 2014 21:56:47 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 04 Aug 2014 16:56:47 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Aug 2014 17:56:44 -0400
+Content-Disposition: inline
+In-Reply-To: <vpqtx5s7yo4.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254788>
 
-From: "Junio C Hamano" <gitster@pobox.com>
-> Philip Oakley <philipoakley@iee.org> writes:
->
->> Historically (5 Nov 2005 v0.99.9-46-g28ffb89) the git-format-patch 
->> used
->> 'origin' as the upstream branch name. That name is now used as the 
->> nominal
->> name for the upstream remote.
->>
->> While 'origin' would be DWIMmed (do what I mean) to be that remote's
->> primary branch, do not assume the reader is ready for such magic.
->
-> Good thinking.
->
->> Likewise, do not use 'origin/master' which may not be up to date with 
->> the
->> remote, nor reflect the reader's master branch. The patch series 
->> should be
->> relative to the reader's view of 'git show-branch HEAD master'.
->
-> This however is backwards, no?  The history on 'origin/master' may
-> not be up-to-date in the sense that if you run 'git fetch' you might
-> get more, but it absolutely is up-to-date in the sense that it shows
-> what the origin has to the best of your repository's current
-> knowledge.
+On Mon, Aug 04, 2014 at 11:06:03PM +0200, Matthieu Moy wrote:
 
-I still think that the user/reader shouldn't be creating patches based 
-on wherever someone else had got to, rather it should just be patches 
-from their own feature branch. However the rest of your argument still 
-stands with regard to accidental/unexpected conflicts with other 
-upstream work, and the reader should ensure they are already up to 
-date - maybe it needs a comment line to state that.
+> > Hmm. Not related to the original patch, but that really looks like a
+> > bug. Shouldn't "git -c pretty.my= ..." set pretty.my to the empty string?
+> >
+> > I'd expect "git -c pretty.my ..." to set it to NULL (i.e., the "implicit
+> > true" you get from omitting the "=" in the config files themselves).
+> 
+> Indeed.
+> 
+> strbuf_split_buf() does not seem to distinguish between x= and x. No
+> time to debug this further, sorry.
 
->
-> Compared to that, what the user's local 'master' has is much less
-> relevant.  For one thing, if a more recent commit that is on the
-> remote repository is missing on 'origin/master' because you haven't
-> fetched recently, by definition that commit will not be on your
-> 'master' either, so you have the same staleness issue to the exact
-> degree.  Even worse, when you are developing a topic to upstream, it
-> is a good practice to merge your topic to your own 'master' to check
-> it with the wider project codebase that is more recent than where
-> your topic earlier forked from, and it makes little sense to tell
-> 'exclude what I have on my master' to format-patch when extracting
-> changes to upstream out of such a topic.  You send what the other
-> side has, not what you do not have on your local 'master' branch.
->
->> Use the more modern 'master' as the reference branch name.
->
-> There is nothing 'modern' in 'master'.
+Oh, I didn't expect you to work on it. The bug is totally my fault. :)
+Your email just made me realize it was there.
 
-Noted.
+Here's a patch to fix it.
 
->
-> I think the original description was written before we switched to
-> the separate remote layout.  What is in 'refs/remote/origin/master'
-> these days was stored and updated at 'refs/heads/origin' and no
-> other branch from the remote repository was tracked back then.  The
-> changes to be upstreamed are output by grabbing what are not in
-> 'origin', whose modern equivalent is 'origin/master'.
->
-> In short, if your patch were s|origin|origin/master|, instead of
-> s|origin|master|, that would be an adjustment to the more modern
-> world that is still faithful to the intent of the original.
+-- >8 --
+Subject: config: teach "git -c" to recognize an empty string
 
-I think we would need to clarify that (the intent) for the reader. I'll 
-see what I can do. (suggestion below)
+In a config file, you can do:
 
->
->> Signed-off-by: Philip Oakley <philipoakley@iee.org>
->> ---
->>  Documentation/git-format-patch.txt | 10 +++++-----
->>  1 file changed, 5 insertions(+), 5 deletions(-)
->>
->> diff --git a/Documentation/git-format-patch.txt 
->> b/Documentation/git-format-patch.txt
->> index c0fd470..b0f041f 100644
->> --- a/Documentation/git-format-patch.txt
->> +++ b/Documentation/git-format-patch.txt
->> @@ -523,25 +523,25 @@ $ git format-patch -k --stdout R1..R2 | git 
->> am -3 -k
->>  ------------
->>
->>  * Extract all commits which are in the current branch but not in the
->> -origin branch:
->> +master branch:
->>  +
->>  ------------
->> -$ git format-patch origin
->> +$ git format-patch master
->>  ------------
->>  +
->>  For each commit a separate file is created in the current directory.
+  [foo]
+  bar
 
-Perhaps insert "Note: Your 'master' should be up to date with respect to 
-'origin/master' before creating and sending patches upstream to avoid 
-unexpected conflicts." ?
+to turn the "foo.bar" boolean flag on, and you can do:
 
->>
->> -* Extract all commits that lead to 'origin' since the inception of 
->> the
->> +* Extract all commits that lead to 'master' since the inception of 
->> the
->>  project:
->>  +
->>  ------------
->> -$ git format-patch --root origin
->> +$ git format-patch --root master
->>  ------------
->>
->>  * The same as the previous one:
->>  +
->>  ------------
->> -$ git format-patch -M -B origin
->> +$ git format-patch -M -B master
->>  ------------
->>  +
->>  Additionally, it detects and handles renames and complete rewrites
-> --
-Philip 
+  [foo]
+  bar=
+
+to set "foo.bar" to the empty string. However, git's "-c"
+parameter treats both:
+
+  git -c foo.bar
+
+and
+
+  git -c foo.bar=
+
+as the boolean flag, and there is no way to set a variable
+to the empty string. This patch enables the latter form to
+do that.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This is technically a backwards incompatibility, but I'd consider it a
+simple bugfix. The existing behavior was unintentional, made no sense,
+and was never documented.
+
+Looking over strbuf_split's interface, I think it's rather
+counter-intuitive, and I was tempted to change it. But there are several
+other callers that rely on it, and the chance for introducing a subtle
+bug is high. This is the least invasive fix (and it really is not any
+less readable than what was already there :) ).
+
+ Documentation/git.txt  |  5 +++++
+ config.c               | 12 ++++++++++--
+ t/t1300-repo-config.sh | 11 +++++++++++
+ 3 files changed, 26 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git.txt b/Documentation/git.txt
+index b1c4f7a..e7783f0 100644
+--- a/Documentation/git.txt
++++ b/Documentation/git.txt
+@@ -447,6 +447,11 @@ example the following invocations are equivalent:
+ 	given will override values from configuration files.
+ 	The <name> is expected in the same format as listed by
+ 	'git config' (subkeys separated by dots).
+++
++Note that omitting the `=` in `git -c foo.bar ...` is allowed and sets
++`foo.bar` to the boolean true value (just like `[foo]bar` would in a
++config file). Including the equals but with an empty value (like `git -c
++foo.bar= ...`) sets `foo.bar` to the empty string.
+ 
+ --exec-path[=<path>]::
+ 	Path to wherever your core Git programs are installed.
+diff --git a/config.c b/config.c
+index 058505c..fe6216f 100644
+--- a/config.c
++++ b/config.c
+@@ -162,19 +162,27 @@ void git_config_push_parameter(const char *text)
+ int git_config_parse_parameter(const char *text,
+ 			       config_fn_t fn, void *data)
+ {
++	const char *value;
+ 	struct strbuf **pair;
++
+ 	pair = strbuf_split_str(text, '=', 2);
+ 	if (!pair[0])
+ 		return error("bogus config parameter: %s", text);
+-	if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '=')
++
++	if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '=') {
+ 		strbuf_setlen(pair[0], pair[0]->len - 1);
++		value = pair[1] ? pair[1]->buf : "";
++	} else
++		value = NULL;
++
+ 	strbuf_trim(pair[0]);
+ 	if (!pair[0]->len) {
+ 		strbuf_list_free(pair);
+ 		return error("bogus config parameter: %s", text);
+ 	}
++
+ 	strbuf_tolower(pair[0]);
+-	if (fn(pair[0]->buf, pair[1] ? pair[1]->buf : NULL, data) < 0) {
++	if (fn(pair[0]->buf, value, data) < 0) {
+ 		strbuf_list_free(pair);
+ 		return -1;
+ 	}
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index 3f80ff0..46f6ae2 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -1010,6 +1010,17 @@ test_expect_success 'git -c "key=value" support' '
+ 	test_must_fail git -c name=value config core.name
+ '
+ 
++# We just need a type-specifier here that cares about the
++# distinction internally between a NULL boolean and a real
++# string (because most of git's internal parsers do care).
++# Using "--path" works, but we do not otherwise care about
++# its semantics.
++test_expect_success 'git -c can represent empty string' '
++	echo >expect &&
++	git -c foo.empty= config --path foo.empty >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'key sanity-checking' '
+ 	test_must_fail git config foo=bar &&
+ 	test_must_fail git config foo=.bar &&
+-- 
+2.1.0.rc0.286.g5c67d74
