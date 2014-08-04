@@ -1,83 +1,75 @@
-From: Fabian Ruch <bafain@gmail.com>
-Subject: Re: [PATCH v1 00/19] Enable options --signoff, --reset-author for
- pick, reword
-Date: Mon, 04 Aug 2014 10:37:33 +0200
-Message-ID: <53DF464D.5020403@gmail.com>
-References: <53A258D2.7080806@gmail.com> <cover.1406589435.git.bafain@gmail.com> <20140802135255.GA4185@peff.net>
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Startup of Git 2.1.0 l10n round 1
+Date: Mon, 4 Aug 2014 17:11:42 +0800
+Message-ID: <CANYiYbGPBZpYqh_C59-FxZ7HfHGGwxKQAHatBuAiJ4W87D+LEw@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Thomas Rast <tr@thomasrast.ch>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Aug 04 10:37:43 2014
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>
+To: Alexander Shopov <ash@kambanaria.org>,
+	Ralf Thielow <ralf.thielow@googlemail.com>,
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+	Marco Paolone <marcopaolone@gmail.com>,
+	Marco Sousa <marcomsousa@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+	"worldhello.net" <worldhello.net@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 04 11:11:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEDm2-00066e-HV
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 10:37:42 +0200
+	id 1XEEJ6-0006n8-HV
+	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 11:11:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809AbaHDIhi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2014 04:37:38 -0400
-Received: from mail-wi0-f182.google.com ([209.85.212.182]:51502 "EHLO
-	mail-wi0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751796AbaHDIhh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2014 04:37:37 -0400
-Received: by mail-wi0-f182.google.com with SMTP id d1so4563162wiv.15
-        for <git@vger.kernel.org>; Mon, 04 Aug 2014 01:37:36 -0700 (PDT)
+	id S1751397AbaHDJLs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Aug 2014 05:11:48 -0400
+Received: from mail-wg0-f48.google.com ([74.125.82.48]:41041 "EHLO
+	mail-wg0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751262AbaHDJLr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Aug 2014 05:11:47 -0400
+Received: by mail-wg0-f48.google.com with SMTP id x13so7294592wgg.31
+        for <git@vger.kernel.org>; Mon, 04 Aug 2014 02:11:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=WcM5b/pTSOakkfAKlkXQR0A2c1BwipRtinq+FJdfo2o=;
-        b=CHpmUVgz/LWShnmQf7ahT+/m0HDZGuI5GH4CqQnFOGDk5Skrh9JBgvL+2QtlNBVAaO
-         e0RM9NNmCUrkWfITY3OODVaohG23XbxoNTTHt1vQ4Q5wkFugmHbg+didA7mEjfDFoj3D
-         OzY12pDKFFUSd2lVfHZH6zkPkBiGtDqix7UIkZ5ZGq76r5nlwqm/id5YU6/6z08uO0w1
-         L6mSg2+O/wQOyCZ3pHm4IHdtqqXLGQkqc28Fs76wOU6Tqp567qPHMGwk9Fogz3XO6hJH
-         fa+NV1ENQynRjh1Ak5y+GjMwRvkI8JnHt6i4KTezbvh6jDdSJXZxBlKQAURcxE37cize
-         zZig==
-X-Received: by 10.180.19.200 with SMTP id h8mr27966061wie.32.1407141456470;
-        Mon, 04 Aug 2014 01:37:36 -0700 (PDT)
-Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
-        by mx.google.com with ESMTPSA id wi9sm41862296wjc.23.2014.08.04.01.37.34
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Mon, 04 Aug 2014 01:37:35 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <20140802135255.GA4185@peff.net>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2sdjmDz2W992MhTW+cnhYJGLksqvITUNIoH8cXQYCzA=;
+        b=pmC5PYrUUmQgSV7di3q/5nO63CpBMNyurD6LZnU48yB8tGw4U4xc2L6tR+XqqdKCNm
+         hhPXm5i1aDX+5qoqc56WuN3g6KeOkV5KNkXnutq/2+bDbJmvn4vw90Dd/0SQxAhuWQN6
+         8BJ6w+8jOqpXn6YpLYdNn7PzKs/xN4BmZ005km/cobyW1SrfaXGbFwrtDwMoq9+QvCs/
+         o4oEDLJcA+OPra5ojOjf42zhVGU6hW26NEWdaNcugc6dUGyfBPhRi64CkegFDADCa2ok
+         sl0II3k0OKa/+ebkOMrutdsHPg1cyHQtCgAw5nhvmr1CLxlTr5L472Pu/anXNUEU2hnv
+         CuLg==
+X-Received: by 10.194.192.201 with SMTP id hi9mr29870599wjc.28.1407143502222;
+ Mon, 04 Aug 2014 02:11:42 -0700 (PDT)
+Received: by 10.194.58.200 with HTTP; Mon, 4 Aug 2014 02:11:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254733>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254734>
 
-Hi Peff,
+Hi,
 
-Jeff King writes:
-> On Tue, Jul 29, 2014 at 01:18:00AM +0200, Fabian Ruch wrote:
->> this is a reroll of the patch series that enables rudimentary support
->> of line options for git-rebase's to-do list commands and reimplements
->> the well-known commands `reword` and `squash` in terms of a
->> parameterised `do_pick`.
-> 
-> I just finished reading over the whole series (which is my first real
-> exposure to it). With the exception of the comments I already sent, it
-> looks pretty reasonable to me.
-> 
-> Thanks for splitting it and writing good commit messages; that made it
-> relatively easy to follow what was going on.
+Git v2.1.0-rc0 has been released for one week, and I'm sorry it's a bit=
+ late to
+announce the startup of new round of l10n.  This time there are 38 new
+messages need to be translated since last update for v2.0.0:
 
-Thanks a lot for taking the time.
+    l10n: git.pot: v2.1.0 round 1 (38 new, 9 removed)
 
-Your review revealed more shortcomings of the patch series. Now that the
-replay of root commits is logged, the log is dumped on the console even
-in non-verbose mode. And, I must admit that the fact that `--no-edit`
-hasn't been a (documented) feature of git-commit for all time didn't
-struck me at all as a possible reason for using `-C`, which is a little
-embarrassing.
+    Generate po/git.pot from v2.1.0-rc0 for git v2.1.0 l10n round 1.
 
-I will include more details in separate replies to your comments later.
+    Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
 
-   Fabian
+You can get it from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+As how to update your XX.po and help to translate Git, please see
+"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
+
+--
+Jiang Xin
