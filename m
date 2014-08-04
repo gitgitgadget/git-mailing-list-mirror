@@ -1,177 +1,127 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] config: teach "git -c" to recognize an empty string
-Date: Mon, 4 Aug 2014 17:56:44 -0400
-Message-ID: <20140804215644.GA21510@peff.net>
-References: <1407163275-3006-1-git-send-email-tanayabh@gmail.com>
- <vpqmwbki7h3.fsf@anie.imag.fr>
- <20140804203351.GA12898@peff.net>
- <vpqtx5s7yo4.fsf@anie.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/1] doc: format-patch: don't use origin as a branch name
+Date: Mon, 04 Aug 2014 15:12:13 -0700
+Message-ID: <xmqqa97jrjk2.fsf@gitster.dls.corp.google.com>
+References: <1406994383-5076-1-git-send-email-philipoakley@iee.org>
+	<1406994383-5076-2-git-send-email-philipoakley@iee.org>
+	<xmqq38dctcmz.fsf@gitster.dls.corp.google.com>
+	<F97E9146985F4449A937B9C5CCA1D7F5@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 04 23:56:52 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: "GitList" <git@vger.kernel.org>,
+	"Jonathan Nieder" <jrnieder@gmail.com>
+To: "Philip Oakley" <philipoakley@iee.org>
+X-From: git-owner@vger.kernel.org Tue Aug 05 00:12:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEQFP-0004UB-U0
-	for gcvg-git-2@plane.gmane.org; Mon, 04 Aug 2014 23:56:52 +0200
+	id 1XEQUV-0001GV-2d
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Aug 2014 00:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753117AbaHDV4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Aug 2014 17:56:48 -0400
-Received: from cloud.peff.net ([50.56.180.127]:45886 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752723AbaHDV4r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Aug 2014 17:56:47 -0400
-Received: (qmail 30298 invoked by uid 102); 4 Aug 2014 21:56:47 -0000
-Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 04 Aug 2014 16:56:47 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 04 Aug 2014 17:56:44 -0400
-Content-Disposition: inline
-In-Reply-To: <vpqtx5s7yo4.fsf@anie.imag.fr>
+	id S1752581AbaHDWMX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Aug 2014 18:12:23 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:59088 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751641AbaHDWMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Aug 2014 18:12:22 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A13182FCB1;
+	Mon,  4 Aug 2014 18:12:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QOfpGV9YrX2vkdWG2iqhNPKRyok=; b=b6cnRk
+	x5ApRZRFzr+DRKeFboUJ8B4ov5X1DQHs3/pZt9skjShIhqBMKfSL+Yipx9p+y9vn
+	DC8OxWHDhN2N4c3xAdwIlW6vK7/uWdnMz2axAs4A5QcfbDZYd8kcEH97HYPOVrD8
+	BhikEw6YehdmAsX1AUR0qFhQ8gFzwYhjqKl7c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fXbPQnqsS9EUgJPv7ehA+CHJwEuKO/Xv
+	s0/OW7ENGOtLGGiMcZyxmR6O/n053M/Gf4i2WLtpgDQwA8jY7twV6Pdpk5Q46Axt
+	X0ICzJEFJUa4nyIfbgRXonSE7HbhVYFojGBY5lzLIu1660o2Btc6855uB445HrB5
+	WYDtyCYswPA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 95A822FCB0;
+	Mon,  4 Aug 2014 18:12:21 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id AC4C32FCA0;
+	Mon,  4 Aug 2014 18:12:14 -0400 (EDT)
+In-Reply-To: <F97E9146985F4449A937B9C5CCA1D7F5@PhilipOakley> (Philip Oakley's
+	message of "Mon, 4 Aug 2014 22:51:52 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 63D345EE-1C24-11E4-A42F-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254789>
 
-On Mon, Aug 04, 2014 at 11:06:03PM +0200, Matthieu Moy wrote:
+"Philip Oakley" <philipoakley@iee.org> writes:
 
-> > Hmm. Not related to the original patch, but that really looks like a
-> > bug. Shouldn't "git -c pretty.my= ..." set pretty.my to the empty string?
-> >
-> > I'd expect "git -c pretty.my ..." to set it to NULL (i.e., the "implicit
-> > true" you get from omitting the "=" in the config files themselves).
-> 
-> Indeed.
-> 
-> strbuf_split_buf() does not seem to distinguish between x= and x. No
-> time to debug this further, sorry.
+>> This however is backwards, no?  The history on 'origin/master' may
+>> not be up-to-date in the sense that if you run 'git fetch' you might
+>> get more, but it absolutely is up-to-date in the sense that it shows
+>> what the origin has to the best of your repository's current
+>> knowledge.
+>
+> I still think that the user/reader shouldn't be creating patches based
+> on wherever someone else had got to, rather it should just be patches
+> from their own feature branch.
 
-Oh, I didn't expect you to work on it. The bug is totally my fault. :)
-Your email just made me realize it was there.
+You forked your topic branch off of the shared project history aka
+origin/master and built some.  You may have sent some patches off of
+your previous work to the upstream, and origin/master may or may not
+have applied some of them since your topic forked from it.  The
+patches you are sending out is from your own topic branch.
 
-Here's a patch to fix it.
+You may be cooking multiple topics, and your local 'master' branch,
+which you never push back to 'origin/master', may contain any of
+these branches.  You do not fork off a new topic out of there.  Best
+case, you would fork from 'origin/master'; a bit worse case, you
+have to fork from another of your topic branch that your new topic
+has to depend on.
 
--- >8 --
-Subject: config: teach "git -c" to recognize an empty string
+Nowhere I am assuming that "the reader is creating paches based on
+wherever someone else had got to".  Sorry, but I have no idea what
+you are complaining about.
 
-In a config file, you can do:
+> However the rest of your argument still
+> stands with regard to accidental/unexpected conflicts with other
+> upstream work, and the reader should ensure they are already up to
+> date - maybe it needs a comment line to state that.
 
-  [foo]
-  bar
+Sorry, but I am not sure how much you understood what I wrote.
 
-to turn the "foo.bar" boolean flag on, and you can do:
+The primary reason why 'origin' in the example should be replaced
+with 'origin/master' is because that is the literal adjustment from
+the pre-separate-remote world order to today's world order.  The
+local branch 'origin' (more specifically, 'refs/heads/origin') used
+to be what we used to keep track of 'master' of the upstream, which
+we use 'refs/remotes/origin/master' these days.
 
-  [foo]
-  bar=
+	Side note: DWIMming origin to remotes/origin/HEAD to
+	remotes/origin/master was invented to keep supporting this
+	"'origin' keeps track of the default upstream" convention
+	when we transitioned from the old world order to
+	separate-remote layout.
 
-to set "foo.bar" to the empty string. However, git's "-c"
-parameter treats both:
+And the reason why 'origin' should not be replaced with 'master' is
+because your 'master' may already have patches from the topic you
+are working on, i.e. in your current branch, that the upstream does
+not yet have.  Running "git format-patch origin/master" will show
+what needs to be accepted by the upstream from you to reproduce your
+work in full; if you run "git format-patch master", it may miss some
+parts that you already have in your local 'master' but not yet in
+the upstream.
 
-  git -c foo.bar
+I never talked about conflicts, and I still think that it is
+completely outside the scope of these examples.  Avoidance of
+conflicts with the work that is already commited to your upstream
+since you forked is the job for "rebase", not "format-patch".  The
+reason why it is wrong to replace 'origin' in that text with 'master'
+does not have anything to do with conflict avoidance.
 
-and
-
-  git -c foo.bar=
-
-as the boolean flag, and there is no way to set a variable
-to the empty string. This patch enables the latter form to
-do that.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is technically a backwards incompatibility, but I'd consider it a
-simple bugfix. The existing behavior was unintentional, made no sense,
-and was never documented.
-
-Looking over strbuf_split's interface, I think it's rather
-counter-intuitive, and I was tempted to change it. But there are several
-other callers that rely on it, and the chance for introducing a subtle
-bug is high. This is the least invasive fix (and it really is not any
-less readable than what was already there :) ).
-
- Documentation/git.txt  |  5 +++++
- config.c               | 12 ++++++++++--
- t/t1300-repo-config.sh | 11 +++++++++++
- 3 files changed, 26 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index b1c4f7a..e7783f0 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -447,6 +447,11 @@ example the following invocations are equivalent:
- 	given will override values from configuration files.
- 	The <name> is expected in the same format as listed by
- 	'git config' (subkeys separated by dots).
-++
-+Note that omitting the `=` in `git -c foo.bar ...` is allowed and sets
-+`foo.bar` to the boolean true value (just like `[foo]bar` would in a
-+config file). Including the equals but with an empty value (like `git -c
-+foo.bar= ...`) sets `foo.bar` to the empty string.
- 
- --exec-path[=<path>]::
- 	Path to wherever your core Git programs are installed.
-diff --git a/config.c b/config.c
-index 058505c..fe6216f 100644
---- a/config.c
-+++ b/config.c
-@@ -162,19 +162,27 @@ void git_config_push_parameter(const char *text)
- int git_config_parse_parameter(const char *text,
- 			       config_fn_t fn, void *data)
- {
-+	const char *value;
- 	struct strbuf **pair;
-+
- 	pair = strbuf_split_str(text, '=', 2);
- 	if (!pair[0])
- 		return error("bogus config parameter: %s", text);
--	if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '=')
-+
-+	if (pair[0]->len && pair[0]->buf[pair[0]->len - 1] == '=') {
- 		strbuf_setlen(pair[0], pair[0]->len - 1);
-+		value = pair[1] ? pair[1]->buf : "";
-+	} else
-+		value = NULL;
-+
- 	strbuf_trim(pair[0]);
- 	if (!pair[0]->len) {
- 		strbuf_list_free(pair);
- 		return error("bogus config parameter: %s", text);
- 	}
-+
- 	strbuf_tolower(pair[0]);
--	if (fn(pair[0]->buf, pair[1] ? pair[1]->buf : NULL, data) < 0) {
-+	if (fn(pair[0]->buf, value, data) < 0) {
- 		strbuf_list_free(pair);
- 		return -1;
- 	}
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 3f80ff0..46f6ae2 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -1010,6 +1010,17 @@ test_expect_success 'git -c "key=value" support' '
- 	test_must_fail git -c name=value config core.name
- '
- 
-+# We just need a type-specifier here that cares about the
-+# distinction internally between a NULL boolean and a real
-+# string (because most of git's internal parsers do care).
-+# Using "--path" works, but we do not otherwise care about
-+# its semantics.
-+test_expect_success 'git -c can represent empty string' '
-+	echo >expect &&
-+	git -c foo.empty= config --path foo.empty >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'key sanity-checking' '
- 	test_must_fail git config foo=bar &&
- 	test_must_fail git config foo=.bar &&
--- 
-2.1.0.rc0.286.g5c67d74
+Puzzled...
