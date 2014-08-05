@@ -1,88 +1,129 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: Re: [PATCH] cache.h: add missing NORETURN on git_die_config*()
-Date: Tue, 05 Aug 2014 19:39:47 +0530
-Message-ID: <53E0E5AB.9050404@gmail.com>
-References: <53E0E2E0.2070709@ramsay1.demon.co.uk>
+Subject: Re: [PATCH v7 5/8] config: add `git_die_config()` to the config-set
+ API
+Date: Tue, 05 Aug 2014 20:25:19 +0530
+Message-ID: <53E0F057.1040706@gmail.com>
+References: <1406912756-15517-1-git-send-email-tanayabh@gmail.com>	<1406912756-15517-6-git-send-email-tanayabh@gmail.com>	<xmqqoaw0ruwf.fsf@gitster.dls.corp.google.com>	<53DFD729.8090307@gmail.com> <vpqegwwauo2.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Aug 05 16:10:00 2014
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Aug 05 16:55:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEfR8-0006Zx-GO
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Aug 2014 16:09:58 +0200
+	id 1XEg9J-0007vI-Od
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Aug 2014 16:55:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753597AbaHEOJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2014 10:09:54 -0400
-Received: from mail-pa0-f54.google.com ([209.85.220.54]:44455 "EHLO
-	mail-pa0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751818AbaHEOJx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2014 10:09:53 -0400
-Received: by mail-pa0-f54.google.com with SMTP id fa1so1499616pad.27
-        for <git@vger.kernel.org>; Tue, 05 Aug 2014 07:09:53 -0700 (PDT)
+	id S1755688AbaHEOza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2014 10:55:30 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:35306 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755678AbaHEOz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2014 10:55:26 -0400
+Received: by mail-pd0-f182.google.com with SMTP id fp1so1491440pdb.27
+        for <git@vger.kernel.org>; Tue, 05 Aug 2014 07:55:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=message-id:date:from:user-agent:mime-version:to:cc:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=BBD1MLBS+Z5QvKxKmcyO3Vs2CozG02MPs+G8uP3w2GE=;
-        b=AmR5FGfne8YZrTtSuxw6IQsujwI9xea+Co6hF1vT982zY3zSjw2Se3JFpxVdlRKb/D
-         eW6a/IoCu9JuuRq5dTRD6Axi2JRObIpHXh7iPkbu7Vf4S/HbJy1LAbX+zYAUDV+QDZCP
-         hwZBs8MPOymsQlMKApeDivM2U0PAIlklrEKRTofehqqu0BKfkyc5CQB3dk6u2Qt+c9jm
-         zYyvlqMWVazgETvJF+qVKzfu3xlek5kw6/6KXUz79/5KYFSUu6rxiTC7RcoYCZI2yofa
-         q15jMz6TaAlRKThe/TUTIDGa9Q9u59tXnR4oQPSmiP64O29+qpreXMd+p2iWRRV1J5Vn
-         0DAQ==
-X-Received: by 10.68.204.102 with SMTP id kx6mr825708pbc.140.1407247792853;
-        Tue, 05 Aug 2014 07:09:52 -0700 (PDT)
+        bh=EiL1k8LATqvZ8P/U6fTPGy6ga7ygo7iguDgMpHUd5Xo=;
+        b=B59fIJ9tf2W5IBYawbU2o2gLJAZU5RBSp1Ili68kV9wniQPi9SILfWQRpHxtwPh7S2
+         JBhQ/trhP5gjoBecPcej3otUoPVSBhiw88L3eY47lfFD2aFvZcn3KBPaxn8Cu/WtyJId
+         z2Rir4K1Pwq9rGlXhrOS/Z0Rk+NMA9buM3sfyB4XBz3+okULvpwX0f6Xn5l+6HwnssKK
+         mQHtYiJQLv1mxKdSds5S8LOAwpZbQ4MUk+fGE0mc/ITAj0+FEAViCo6hON0YCRnZmSip
+         0TBhTcJMv1qD/QSR6OJ7rJS3zdnJCQVQyoZ88fjF8TEzlXz1+iPEnrjNPZKPdsuPBu+O
+         5kcw==
+X-Received: by 10.68.242.103 with SMTP id wp7mr4785092pbc.131.1407250524197;
+        Tue, 05 Aug 2014 07:55:24 -0700 (PDT)
 Received: from [127.0.0.1] ([223.176.236.62])
-        by mx.google.com with ESMTPSA id i8sm2201717pbq.12.2014.08.05.07.09.50
+        by mx.google.com with ESMTPSA id g6sm7171061pat.2.2014.08.05.07.55.21
         for <multiple recipients>
         (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Tue, 05 Aug 2014 07:09:52 -0700 (PDT)
+        Tue, 05 Aug 2014 07:55:23 -0700 (PDT)
 User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <53E0E2E0.2070709@ramsay1.demon.co.uk>
+In-Reply-To: <vpqegwwauo2.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254806>
 
-
-
-On 8/5/2014 7:27 PM, Ramsay Jones wrote:
+On 8/5/2014 1:34 AM, Matthieu Moy wrote:
+> Tanay Abhra <tanayabh@gmail.com> writes:
 > 
-> Commit 3a2a9527 ("config: add `git_die_config()` to the config-set
-> API", 01-08-2014) added git_die_config() and git_die_config_linenr()
-> functions, but forgot to include the NORETURN attribute in their
-> declarations. Sparse complains like so:
+>> I was aping the old git_config() system, it also does exactly what you described
+>> above. for example, builtin/gc.c line 91,
+>>
+>> 		if (!strcmp(var, "gc.pruneexpire")) {
+>> 		if (value && strcmp(value, "now")) {
+>> 			unsigned long now = approxidate("now");
+>> 			if (approxidate(value) >= now)
+>> 				return error(_("Invalid %s: '%s'"), var, value);
+>> 		}
+>>
+>> would print,
+>>  	error: Invalid gc.pruneexpire: 'value'
+>> 	fatal: bad config variable 'gc.pruneexpire' at file line 15 in .git/config
 > 
->         SP config.c
->     config.c:1567:6: error: symbol 'git_die_config_linenr' redeclared \
->         with different type (originally declared at cache.h:1419) \
->         - different modifiers
->     config.c:1579:6: error: symbol 'git_die_config' redeclared with \
->         different type (originally declared at cache.h:1418) \
->         - different modifiers
+> It's good to do at least as well as the old system, but I agree with
+> Junio that it's suboptimal.
 > 
-> Suppress the sparse errors by adding NORETURN to the function
-> declarations in the cache.h header file.
+> Having a single API call to replace
 > 
-> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-> ---
+>         error("'%s' must be between 1 and 3");
+>         git_config_die(key);
 > 
-> Hi Tanay,
+> with stg like:
 > 
-> If you need to re-roll the patches in the 'ta/config-set-1' branch,
-> could you please squash this into the relevant patch. Thanks!
+>         git_config_die(key, "'%s' must be between 1 and 3");
 >
 
-Sorry, my bad. I will squash it in the relevant patch for my next re roll.
+Matthieu, I have finished the new version, but instead of flooding the mailing list with
+a series again, I wanted to confirm if the new git_config_die() is alright.
 
-Thanks,
+	NORETURN __attribute__((format(printf, 2, 3)))
+	void git_die_config(const char *key, const char *err, ...)
+	{
+		const struct string_list *values;
+		struct key_value_info *kv_info;
+
+		if (err) {
+			va_list params;
+			va_start(params, err);
+			vreportf("error: ", err, params);
+			va_end(params);
+		}
+		values = git_config_get_value_multi(key);
+		kv_info = values->items[values->nr - 1].util;
+		git_die_config_linenr(key, kv_info->filename, kv_info->linenr);
+	}
+
+Currently works like the old git_config() error reporting path. If err is set to "NULL",
+it would print no error message and just the die message. If given something like,
+
+	 git_config_die(key, "value '%s' is not allowed", value);
+
+it would print,
+
+	error: value '3' is not allowed
+	fatal: bad config variable 'core.frotz' at file line 15 in .git/config
+
+Cheers,
 Tanay Abhra.
+
+> in Junio's example would allow git_config_die to format the error
+> message the way it likes (i.e. it can be the same as before when you
+> introduce it, and improve afterwards).
+> 
+> I've never been disturbed by the quality of Git's error messages wrt
+> config files (it's not a compiler!), so having good quality messages is
+> not a high priority IMHO, but having a good API that as a side effect
+> can produce good error messages is important. If changing the error
+> messages requires rewritting all callers later, then we've missed the
+> point doing the refactoring now.
+> 
