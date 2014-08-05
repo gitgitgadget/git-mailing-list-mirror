@@ -1,93 +1,105 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v7 5/8] config: add `git_die_config()` to the config-set API
-Date: Tue, 05 Aug 2014 17:15:27 +0200
-Message-ID: <vpqiom72cj4.fsf@anie.imag.fr>
-References: <1406912756-15517-1-git-send-email-tanayabh@gmail.com>
-	<1406912756-15517-6-git-send-email-tanayabh@gmail.com>
-	<xmqqoaw0ruwf.fsf@gitster.dls.corp.google.com>
-	<53DFD729.8090307@gmail.com> <vpqegwwauo2.fsf@anie.imag.fr>
-	<53E0F057.1040706@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v3 1/3] lockfile.c: remove PATH_MAX limitation (except
+ in resolve_symlink)
+Date: Tue, 05 Aug 2014 09:10:24 -0700
+Message-ID: <53E101F0.5090408@alum.mit.edu>
+References: <1405858399-23082-1-git-send-email-pclouds@gmail.com> <1406814214-21725-1-git-send-email-pclouds@gmail.com> <1406814214-21725-2-git-send-email-pclouds@gmail.com> <xmqqfvhgw3q9.fsf@gitster.dls.corp.google.com> <xmqqtx5wuma8.fsf@gitster.dls.corp.google.com> <53DD2A54.1030403@web.de> <CACsJy8BAB3n5BRVaveTBrhdSDpiPBtm==TRjiv4ZR2P6iMne_w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 05 17:16:45 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Yue Lin Ho <yuelinho777@gmail.com>
+To: Duy Nguyen <pclouds@gmail.com>,
+	=?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 05 18:10:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEgTk-0006Gk-ED
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Aug 2014 17:16:44 +0200
+	id 1XEhJo-0001ns-7d
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Aug 2014 18:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754748AbaHEPQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2014 11:16:39 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:56822 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752364AbaHEPQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2014 11:16:39 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s75FFPJJ009530
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 5 Aug 2014 17:15:26 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s75FFRNd014100;
-	Tue, 5 Aug 2014 17:15:27 +0200
-In-Reply-To: <53E0F057.1040706@gmail.com> (Tanay Abhra's message of "Tue, 05
-	Aug 2014 20:25:19 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 05 Aug 2014 17:15:26 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s75FFPJJ009530
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1407856527.82305@r1O32EBriMVg9NOTzArp/g
+	id S1753583AbaHEQK2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Aug 2014 12:10:28 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:43272 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753179AbaHEQK1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Aug 2014 12:10:27 -0400
+X-AuditID: 1207440e-f79da6d0000002fc-62-53e101f28fa1
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 71.DF.00764.2F101E35; Tue,  5 Aug 2014 12:10:27 -0400 (EDT)
+Received: from [192.168.1.18] (cpe-24-94-3-86.san.res.rr.com [24.94.3.86])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s75GAO9S026179
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Tue, 5 Aug 2014 12:10:25 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
+In-Reply-To: <CACsJy8BAB3n5BRVaveTBrhdSDpiPBtm==TRjiv4ZR2P6iMne_w@mail.gmail.com>
+X-Enigmail-Version: 1.6
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrCKsWRmVeSWpSXmKPExsUixO6iqPuZ8WGwwZGjrBZdV7qZLBp6rzBb
+	dE95y2ixe9oCNovOjq+MFm07jzA5sHnsnHWX3ePiJWWPxxNPsHp83iTncfvZNpYA1ihum6TE
+	krLgzPQ8fbsE7ozVe+6yFbTxVJy+95KpgfEBZxcjJ4eEgInE4dvH2CFsMYkL99azgdhCApcZ
+	Ja5P1O5i5AKyTzJJPHp3kgkkwSugLfF9+2GwIhYBVYmGw6eZQWw2AV2JRT3NYDWiAkESsz/P
+	Y4eoF5Q4OfMJC8ggEYEpjBKTbvUzgjjMAt2MEn9OnQabJCyQILF2SQcrxOpXTBIt2/lBbE6B
+	QIn5DW+BGjiAzhOX6GkMAjGZBdQl1s8TAqlgFpCXaN46m3kCo+AsJOtmIVTNQlK1gJF5FaNc
+	Yk5prm5uYmZOcWqybnFyYl5eapGusV5uZoleakrpJkZIDPDtYGxfL3OIUYCDUYmHV0DtfrAQ
+	a2JZcWXuIUZJDiYlUd7vvx8EC/El5adUZiQWZ8QXleakFh9ilOBgVhLhZb8NlONNSaysSi3K
+	h0lJc7AoifOqLVH3ExJITyxJzU5NLUgtgsnKcHAoSfDGAGNdSLAoNT21Ii0zpwQhzcTBCTKc
+	S0qkODUvJbUosbQkIx4Uv/HFwAgGSfEA7VUFaectLkjMBYpCtJ5iVJQS59VnAEoIgCQySvPg
+	xsIS2ytGcaAvhXkNQdp5gEkRrvsV0GAmoMFmOvdBBpckIqSkGhjdbpyq1P9wwyFl/1eBJqWd
+	/c53Kkz8t1WWSmTO8Z88cUJS9KwVT/eYnbzTtSjo7PQM0fjk0huP5v2a8GmV5Lll 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254809>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+On 08/04/2014 03:13 AM, Duy Nguyen wrote:
+> On Sun, Aug 3, 2014 at 1:13 AM, Torsten B=C3=B6gershausen <tboegi@web=
+=2Ede> wrote:
+> [...]
+>> My first impression reading this patch was to rename
+>> clear_filename() into free_and_clear_filename() or better free_filen=
+ame(),
+>> but I never pressed the send button ;-)
+>>
+>> Reading the discussion above makes me wonder if lk->filename may be =
+replaced
+>> by a strbuf
+>> some day, and in this case clear_filename() will become reset_filenm=
+ae() ?
+>=20
+> I didn't realize Mike is making a lot more changes in lockfile.c, par=
+t
+> of that is converting lk->filename to use strbuf [1]. Perhaps I shoul=
+d
+> just withdraw this series, wait until Mike's series is merged, then
+> redo 3/3 on top. Or Mike could just take 3/3 in as part of his series=
+=2E
+>=20
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/246222/foc=
+us=3D246232
 
-> Matthieu, I have finished the new version, but instead of flooding the mailing list with
-> a series again, I wanted to confirm if the new git_config_die() is alright.
->
-> 	NORETURN __attribute__((format(printf, 2, 3)))
-> 	void git_die_config(const char *key, const char *err, ...)
-> 	{
-> 		const struct string_list *values;
-> 		struct key_value_info *kv_info;
->
-> 		if (err) {
-> 			va_list params;
-> 			va_start(params, err);
-> 			vreportf("error: ", err, params);
-> 			va_end(params);
-> 		}
-> 		values = git_config_get_value_multi(key);
-> 		kv_info = values->items[values->nr - 1].util;
-> 		git_die_config_linenr(key, kv_info->filename, kv_info->linenr);
-> 	}
->
-> Currently works like the old git_config() error reporting path. If err is set to "NULL",
-> it would print no error message and just the die message. If given something like,
->
-> 	 git_config_die(key, "value '%s' is not allowed", value);
->
-> it would print,
->
-> 	error: value '3' is not allowed
-> 	fatal: bad config variable 'core.frotz' at file line 15 in .git/config
+I've neglected my patch series for ages (sorry!)  The last round of
+review pointed out a couple of places where lock_file objects were stil=
+l
+being left in undefined states, and since then it also bit-rotted.
 
-That seems to be a good step forward.
+Over the past few days I re-rolled the patch series and fixed some more
+code paths.  I still want to check it over before submitting it to the
+list, but if you are interested the current version is here [1].
 
-I think we would also want to improve the error message, but that
-shouldn't block your series from inclusion: we can do that later without
-API change.
+Duy, I'll try to look at your patches, but probably won't get to it
+until next week when I return from vacation.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Michael
+
+[1] https://github.com/mhagger/git branch "lock-correctness"
+
+--=20
+Michael Haggerty
+mhagger@alum.mit.edu
