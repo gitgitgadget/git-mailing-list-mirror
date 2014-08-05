@@ -1,104 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] imap-send doc: omit confusing "to use imap-send" modifier
-Date: Tue, 05 Aug 2014 13:48:21 -0700
-Message-ID: <xmqqvbq6oe7e.fsf@gitster.dls.corp.google.com>
-References: <20140805025108.GW12427@google.com>
-	<1407207410-26443-1-git-send-email-sandals@crustytoothpaste.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-From: git-owner@vger.kernel.org Tue Aug 05 22:48:37 2014
+From: Ralf Thielow <ralf.thielow@gmail.com>
+Subject: [PATCH] rebase: introduce "rebase.preserve" configuration option
+Date: Tue,  5 Aug 2014 22:48:34 +0200
+Message-ID: <1407271714-1624-1-git-send-email-ralf.thielow@gmail.com>
+Cc: Ralf Thielow <ralf.thielow@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 05 22:48:46 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEleu-0005Uy-Bs
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Aug 2014 22:48:36 +0200
+	id 1XElf1-0005hq-Uz
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Aug 2014 22:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753742AbaHEUsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2014 16:48:32 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52575 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753683AbaHEUsb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2014 16:48:31 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id DC3692EEB6;
-	Tue,  5 Aug 2014 16:48:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=TDn1qy9RPDzQXMpv5gYjvmfesuE=; b=V0Rul+
-	gU32YZZeVaK2iNMtSJr6aNNqSjx9qzoqc0A/awQn54LlLAGFmdoF+j5YTJTpKEMa
-	Bmv2zTkNYgpj7WsUvSiz6e7UihkcPMCi60xtReAvSKb8LLJe31YWgVaIBHySvNSc
-	AiVTDiwl3V0JoY+lYHt0jXd/XZTCfkQLUFB6Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jO5wZ7UOFvBeE1666fNdNdcKtIhYIdT+
-	lj6Xc/OcR5nvbX82enXGKrMtO6j6PjzNuJTrGglBxlUvJDNjHrG2hoNWxU4X/8A7
-	2DaFnCDX0dFevGGd5aAw5RJJ1lLr9lYvzrXFD5TkHFr8Lznr3+hbvHan5RzsQbKO
-	+uoyt9vRiyI=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D11412EEB5;
-	Tue,  5 Aug 2014 16:48:30 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 160EB2EEA1;
-	Tue,  5 Aug 2014 16:48:23 -0400 (EDT)
-In-Reply-To: <1407207410-26443-1-git-send-email-sandals@crustytoothpaste.net>
-	(brian m. carlson's message of "Tue, 5 Aug 2014 02:56:50 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: D729E99A-1CE1-11E4-B67B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753836AbaHEUsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2014 16:48:40 -0400
+Received: from mail-we0-f175.google.com ([74.125.82.175]:45854 "EHLO
+	mail-we0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753763AbaHEUsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2014 16:48:39 -0400
+Received: by mail-we0-f175.google.com with SMTP id t60so1652758wes.20
+        for <git@vger.kernel.org>; Tue, 05 Aug 2014 13:48:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=Hc8TElpBSggAL3kcpQBDGcHxIvFXiGzPQ/lu9QuXnRk=;
+        b=E6H94lv0PIdyjK/PGMPB2LFqns/nOUyxr4P+Y3yTGtk8kgpt3vcvtHKhOdvKqXbyHo
+         ehmS8Y8jZR93OCk4BsjND+GdePbm0BYB26fgz8qtTAXrXlK8KnptDW2DGlQPeBS9ucEK
+         vTgbSgEISk2qKc+K2p7pJlUTfMe8oErzL8SAaopKiTqxML47ZTKFyhlWdhZJotV8V/n/
+         C678zjqg4CMKyH4DO/fIDMd5+zoBF96CKWtpgx05GGXATnyEBr8MpY8evcCK6FAqc/d3
+         X+BaLlzdl2QQirqcg53WO3Cn1eXZXP8rAh9a4zKSponYndVaYDdFH0xwgDItQK9KPGuR
+         No5w==
+X-Received: by 10.194.9.228 with SMTP id d4mr9075192wjb.99.1407271717871;
+        Tue, 05 Aug 2014 13:48:37 -0700 (PDT)
+Received: from localhost (dslb-088-073-244-207.088.073.pools.vodafone-ip.de. [88.73.244.207])
+        by mx.google.com with ESMTPSA id ex2sm11043937wic.24.2014.08.05.13.48.37
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 05 Aug 2014 13:48:37 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.rc1.205.gf9880d1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254827>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+There are several ways to configure Git to preserve merges.
+There is "pull.rebase=preserve" for all branches and
+"branch.<name>.rebase=preserve" for individual branches.
+However, there is no configuration option to preserve merges
+for all branches when running git-rebase.
 
-> It wouldn't make sense for these configuration variables to be
-> required for Git in general to function.  'Required' in this context
-> means required for git imap-send to work.
->
-> Noticed while trying to figure out what the sentence describing
-> imap.tunnel meant.
->
-> [jn: expanded to also simplify explanation of imap.folder and
->  imap.host in the same way]
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
+This patch introduces a new configuration variable
+"rebase.preserve". If set to true, "--preserve-merges" option
+will be enabled in git-rebase by default.
 
-Thanks, both.  Will queue and squash the "required. otherwise." fix in.
+Signed-off-by: Ralf Thielow <ralf.thielow@gmail.com>
+---
+ Documentation/config.txt          |  3 +++
+ git-rebase.sh                     |  1 +
+ t/t3409-rebase-preserve-merges.sh | 20 ++++++++++++++++++++
+ 3 files changed, 24 insertions(+)
 
->  Documentation/git-imap-send.txt | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-imap-send.txt b/Documentation/git-imap-send.txt
-> index 875d283..d3b465d 100644
-> --- a/Documentation/git-imap-send.txt
-> +++ b/Documentation/git-imap-send.txt
-> @@ -38,17 +38,17 @@ Variables
->  imap.folder::
->  	The folder to drop the mails into, which is typically the Drafts
->  	folder. For example: "INBOX.Drafts", "INBOX/Drafts" or
-> -	"[Gmail]/Drafts". Required to use imap-send.
-> +	"[Gmail]/Drafts". Required.
->  
->  imap.tunnel::
->  	Command used to setup a tunnel to the IMAP server through which
->  	commands will be piped instead of using a direct network connection
-> -	to the server. Required when imap.host is not set to use imap-send.
-> +	to the server. Required when imap.host is not set.
->  
->  imap.host::
->  	A URL identifying the server. Use a `imap://` prefix for non-secure
->  	connections and a `imaps://` prefix for secure connections.
-> -	Ignored when imap.tunnel is set, but required to use imap-send
-> +	Ignored when imap.tunnel is set, but required.
->  	otherwise.
->  
->  imap.user::
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c08286e..4166be0 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -2031,6 +2031,9 @@ rebase.autostash::
+ 	successful rebase might result in non-trivial conflicts.
+ 	Defaults to false.
+ 
++rebase.preserve::
++	If set to true enable '--preserve-merges' option by default.
++
+ receive.autogc::
+ 	By default, git-receive-pack will run "git-gc --auto" after
+ 	receiving data from git-push and updating refs.  You can stop
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 47ca3b9..e0b3e05 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -83,6 +83,7 @@ state_dir=
+ # One of {'', continue, skip, abort}, as parsed from command line
+ action=
+ preserve_merges=
++test "$(git config --bool rebase.preserve)" = "true" && preserve_merges=t && interactive_rebase=implied
+ autosquash=
+ keep_empty=
+ test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
+diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
+index 8c251c5..3a02240 100755
+--- a/t/t3409-rebase-preserve-merges.sh
++++ b/t/t3409-rebase-preserve-merges.sh
+@@ -76,6 +76,16 @@ test_expect_success 'setup for merge-preserving rebase' \
+ 		git merge --no-ff topic2
+ 	) &&
+ 
++	git clone ./. clone5 &&
++	(
++		cd clone5 &&
++		git checkout -b topic2 origin/topic &&
++		echo Sixth > A &&
++		git commit -a -m "Modify A3" &&
++		git checkout -b topic origin/topic &&
++		git merge --no-ff topic2
++	) &&
++
+ 	git checkout topic &&
+ 	echo Fourth >> B &&
+ 	git commit -a -m "Modify B2"
+@@ -119,4 +129,14 @@ test_expect_success 'rebase -p ignores merge.log config' '
+ 	)
+ '
+ 
++test_expect_success 'config rebase.preserve preserves no-ff merges' '
++	(
++	cd clone5 &&
++	git fetch &&
++	git -c rebase.preserve=true rebase origin/topic &&
++	test 3 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
++	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge branch" | wc -l)
++	)
++'
++
+ test_done
+-- 
+2.1.0.rc1.205.gf9880d1
