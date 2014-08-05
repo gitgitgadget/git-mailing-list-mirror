@@ -1,95 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Release notes grammatical fixes.
-Date: Tue, 05 Aug 2014 11:29:25 -0700
-Message-ID: <xmqqha1qpz7e.fsf@gitster.dls.corp.google.com>
-References: <xmqqy4v3q43r.fsf@gitster.dls.corp.google.com>
-	<1407257445-18363-1-git-send-email-marcnarc@xiplink.com>
+From: =?UTF-8?Q?Vicent_Mart=C3=AD?= <tanoku@gmail.com>
+Subject: Re: [PATCH] pack-bitmap: do not use gcc packed attribute
+Date: Tue, 5 Aug 2014 20:38:21 +0200
+Message-ID: <CAFFjANRwnd4u1Axs64xZNvc1kHynjswX_t4pS3EjBsTsZP0Y7w@mail.gmail.com>
+References: <20140728171743.GA1927@peff.net> <53D806AC.3070806@gmail.com>
+ <20140801223739.GA15649@peff.net> <20140801231044.GA17960@peff.net> <53DFDCD2.2090803@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Tue Aug 05 20:36:01 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>
+To: Karsten Blees <karsten.blees@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 05 20:38:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEjaZ-0002L0-WC
-	for gcvg-git-2@plane.gmane.org; Tue, 05 Aug 2014 20:36:00 +0200
+	id 1XEjdQ-0005wS-9N
+	for gcvg-git-2@plane.gmane.org; Tue, 05 Aug 2014 20:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753973AbaHESfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2014 14:35:53 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59227 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755740AbaHES3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2014 14:29:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 78E7C2EC3B;
-	Tue,  5 Aug 2014 14:29:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IZdsZRALGnLcmE/iinJ5Ds9fM/c=; b=YnuReW
-	nuIf2drDjAdsDB+gKbTJ4Oi+iu5Y0Ap8P0mjfYnmkgTl4FEY4McBnbE8WpiDPYzH
-	LvZ31wlDUEFuLoTktoCdElu/4fjfU+Tei1tCjvleGC6lK2BvGWEKfSJSQsM3eOnc
-	lmZgpaiXB7A0gLdY6nDX3P+78hMXsJsQdwOsA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l4DCFY1eji7SLXq+nXd7Txokbt118IfC
-	TO21OMPvl+r6+aAwHIQkkDyX6QJgeLeMGLNxISUfgfgwYcjoj7NCs6Uqh+glp2wr
-	rejFat+1xJdUwIKwZeshWSZeIHGxbKauAiWvrWGIZxw4Tsa2QC8ifVAFQkc5jTfO
-	pfsLGF0zX0A=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6D6AE2EC39;
-	Tue,  5 Aug 2014 14:29:34 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6CB462EC20;
-	Tue,  5 Aug 2014 14:29:27 -0400 (EDT)
-In-Reply-To: <1407257445-18363-1-git-send-email-marcnarc@xiplink.com> (Marc
-	Branchaud's message of "Tue, 5 Aug 2014 12:50:45 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 6EBB00FA-1CCE-11E4-A003-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1755232AbaHESio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Aug 2014 14:38:44 -0400
+Received: from mail-vc0-f170.google.com ([209.85.220.170]:65216 "EHLO
+	mail-vc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753951AbaHESim (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Aug 2014 14:38:42 -0400
+Received: by mail-vc0-f170.google.com with SMTP id lf12so2264220vcb.15
+        for <git@vger.kernel.org>; Tue, 05 Aug 2014 11:38:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=ifnt+Q72Ar0+TyovQ8AeWvAf19QndgESp4giAzAJJZg=;
+        b=bJ/R9HHVG/rkh07+aeIW78GX08bExzhxeLtG8ajxfBmd931M549Fs8dN2AOLXFTHJL
+         zjI/hRq3KjOZp7l3zR0veWES0a7x3/dRQW95HzLNvDC9X63yBHjQclQNwu31PvtnzXqs
+         ZYBIty2m93RKWixbUeqk3YybRm7rUh5RfciI3k87r+FobB7qgNK/wA9IOy+sNEkrj0Zh
+         N58Aictf2mtO0uSgklNS9sonj+RFvbLW59b/ckej4FVh6Kog814ow8Tp/CgcF/5OG6/A
+         CJwDjDQWGShbdKDtzW4qJIExZYwZAh4VV+UY7D3VzjQ+V5jgGIPepkceKqbi+/aZkHZ1
+         0HoA==
+X-Received: by 10.220.172.8 with SMTP id j8mr5972187vcz.32.1407263921848; Tue,
+ 05 Aug 2014 11:38:41 -0700 (PDT)
+Received: by 10.221.30.15 with HTTP; Tue, 5 Aug 2014 11:38:21 -0700 (PDT)
+In-Reply-To: <53DFDCD2.2090803@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254819>
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+On Mon, Aug 4, 2014 at 9:19 PM, Karsten Blees <karsten.blees@gmail.com> wrote:
+> This raises the question why we read via mmap at all
 
-> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
-> diff --git a/Documentation/RelNotes/2.1.0.txt b/Documentation/RelNotes/2.1.0.txt
+The first version of the pack bitmap format I wrote for GitHub was 50%
+faster to load than this one because it was designed to be mmapable.
+Eventually we moved to the JGit-compatible bitmap format (because I
+get paid a lot of money to do as I'm told -- not because of some
+inherent benefit of the JGit format), which needs to be read
+sequentially, but I never bothered to change the mmap reading code.
 
-Many are indeed grammatical errors, and many others make the result
-easier to read, even if the original weren't incorrect per-se.
+I believe your patch makes a lot of sense -- at this point we could as
+well remove the mmaping altogether and read the file sequentially.
 
-> @@ -87,22 +87,20 @@ UI, Workflows & Features
->   * "git mergetool" learned to drive the vimdiff3 backend.
->  
->   * mergetool.prompt used to default to 'true', always asking "do you
-> -   really want to run the tool on this path?".  Among the two
-> -   purposes this prompt serves, ignore the use case to confirm that
-> -   the user wants to view particular path with the named tool, and
-> -   redefine the meaning of the prompt only to confirm the choice of
-> -   the tool made by the autodetection (for those who configured the
-> -   tool explicitly, the prompt shown for the latter purpose is
-> -   simply annoying).
-> -
-> -   Strictly speaking, this is a backward incompatible change and the
-> +   really want to run the tool on this path?".  The default has been
-> +   changed to 'false'.  However, the prompt will still appear if
-> +   mergetool used its autodetection system to guess which tool to use.
-> +   Users who explicitly specify or configure a tool will no longer see
-> +   the prompt by default.
-> +
-> +   Strictly speaking, this is a backward incompatible change and
->     users need to explicitly set the variable to 'true' if they want
-> -   to resurrect the now-ignored use case.
-> +   to resurrect the old behaviour.
-
-I however think you are losing information here.  It is unclear in
-the rewritten one why you would ever want the "old" behaviour, i.e.
-what you may be missing by following along with this change.
-
-Thanks. 
+Cheers,
+vmg
