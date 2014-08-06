@@ -1,73 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v8 8/8] add tests for `git_config_get_string_const()`
-Date: Wed, 06 Aug 2014 17:32:14 +0200
-Message-ID: <vpqmwbhvdkx.fsf@anie.imag.fr>
-References: <1407336792-16962-1-git-send-email-tanayabh@gmail.com>
-	<1407336792-16962-9-git-send-email-tanayabh@gmail.com>
+From: Sergey Organov <sorganov@gmail.com>
+Subject: Re: rebase flattens history when it shouldn't?
+Date: Wed, 06 Aug 2014 19:34:55 +0400
+Message-ID: <8738d91vj4.fsf@osv.gnss.ru>
+References: <87k374xkpq.fsf@osv.gnss.ru> <20140723175218.GB12427@google.com>
+	<8738drj2fc.fsf@osv.gnss.ru> <53E2452D.6000109@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 06 17:32:40 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Holger Hellmuth <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Wed Aug 06 17:35:05 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XF3CZ-0005bG-Gl
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 17:32:31 +0200
+	id 1XF3F1-0000KR-Pw
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 17:35:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752913AbaHFPcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2014 11:32:23 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52721 "EHLO shiva.imag.fr"
+	id S1753255AbaHFPe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2014 11:34:58 -0400
+Received: from mail.javad.com ([54.86.164.124]:51919 "EHLO mail.javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751276AbaHFPcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2014 11:32:22 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s76FWDab009852
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 6 Aug 2014 17:32:13 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s76FWEXo024848;
-	Wed, 6 Aug 2014 17:32:14 +0200
-In-Reply-To: <1407336792-16962-9-git-send-email-tanayabh@gmail.com> (Tanay
-	Abhra's message of "Wed, 6 Aug 2014 07:53:12 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 06 Aug 2014 17:32:13 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s76FWDab009852
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1407943936.32576@FHP/O0i2BJSFJ6GRZHelKQ
+	id S1751557AbaHFPe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2014 11:34:58 -0400
+Received: from osv.gnss.ru (unknown [89.175.180.246])
+	by mail.javad.com (Postfix) with ESMTPSA id CF6826184E;
+	Wed,  6 Aug 2014 15:34:56 +0000 (UTC)
+Received: from osv by osv.gnss.ru with local (Exim 4.72)
+	(envelope-from <s.organov@javad.com>)
+	id 1XF3Et-0002HC-4K; Wed, 06 Aug 2014 19:34:55 +0400
+In-Reply-To: <53E2452D.6000109@ira.uka.de> (Holger Hellmuth's message of "Wed,
+	06 Aug 2014 17:09:33 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254868>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
+Holger Hellmuth <hellmuth@ira.uka.de> writes:
 
-> +test_expect_success 'find string value for a key' '
-> +	check_config get_string case.baz hask &&
-> +	check_config expect_code 1 get_string case.ba "Value not found for \"case.ba\""
-> +'
-> +
-> +test_expect_success 'check line error when NULL string is queried' '
-> +	test_expect_code 128 test-config get_string case.foo 2>result &&
-> +	grep "line 7.*.git/config\|.git/config.*line 7" result
-> +'
+> On 23.07.2014 21:33, Sergei Organov wrote:
+>> What actually bothers me is the unfortunate consequence that "git pull"
+>> is not always a no-op when nothing was changed at the origin since the
+>> last "git pull". THIS is really surprising and probably should better be
+>> fixed. Requiring -f is just one (obvious) way to fix this.
+>
+> That would invalidate the simple rule that "git pull" is equivalent to
+> "git fetch" + "git rebase".
 
-This is still dependant on the locale ("line" is translated). You need
-to use test_i18ngrep instead of grep here (see its definition and
-comment in t/test-lib.sh).
+Sorry, I don't see how it would invalidate this. My suggestion even
+won't change git-pull source code at all, only git-rebase code.
 
-I don't think you need these two alternatives OTOH.
+> git rebase depends on both branches it operates on, not just one. The
+> same goes for "git merge", I assume it is just a coincidence that git
+> merge does have this characteristic you now expect both to have.
 
-BTW, Junio, I don't understand your remark "This test is too tight (the
-full string)" in the previous iteration. Can you elaborate?
+git pull --reabse=false
+git pull --rebase=preserve
+
+both have this property.
+
+git pull --rebase=true
+
+almost always has this property, unless there are local merge commits to 
+be rebased.
+
+So, I'd rather say it's likely behavior of "git pull --rebase=true" that
+is a coincidence.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Sergey.
