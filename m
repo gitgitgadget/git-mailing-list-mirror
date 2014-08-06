@@ -1,116 +1,132 @@
 From: Fabian Ruch <bafain@gmail.com>
-Subject: [PATCH v2 15/23] rebase -i: teach do_pick the option --amend
-Date: Thu,  7 Aug 2014 01:59:22 +0200
-Message-ID: <6621ca6a43bda212653ba63e7ca0cbc1d5d3a3c5.1407368621.git.bafain@gmail.com>
+Subject: [PATCH v2 16/23] rebase -i: teach do_pick the option --file
+Date: Thu,  7 Aug 2014 01:59:23 +0200
+Message-ID: <c5314115f5b9e32b38821dfff9c8549ee8d77e87.1407368621.git.bafain@gmail.com>
 References: <53A258D2.7080806@gmail.com> <cover.1407368621.git.bafain@gmail.com>
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 02:01:06 2014
+X-From: git-owner@vger.kernel.org Thu Aug 07 02:01:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFB8j-0004DU-R2
+	id 1XFB8k-0004DU-Ak
 	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 02:01:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754500AbaHGAAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754512AbaHGAAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2014 20:00:53 -0400
+Received: from mail-qg0-f54.google.com ([209.85.192.54]:33877 "EHLO
+	mail-qg0-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754495AbaHGAAw (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 6 Aug 2014 20:00:52 -0400
-Received: from mail-qa0-f52.google.com ([209.85.216.52]:51311 "EHLO
-	mail-qa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754444AbaHGAAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2014 20:00:50 -0400
-Received: by mail-qa0-f52.google.com with SMTP id j15so3186399qaq.25
-        for <git@vger.kernel.org>; Wed, 06 Aug 2014 17:00:49 -0700 (PDT)
+Received: by mail-qg0-f54.google.com with SMTP id z60so3562925qgd.41
+        for <git@vger.kernel.org>; Wed, 06 Aug 2014 17:00:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=s6XB7xN8+M9WokUKsut8Z/rYO958V7VZW895zTV6JbE=;
-        b=KXujDtBQDfnBGFpbAli7X1ARXL1/yVsbZerWjQkBmpjWDwhBo+qki4qRZhCLz4uyUW
-         8nZaC+2GTgPMGcIt4mUVYngmGZ+gxmmDGdXKayO940RJnw8z2U4KiU+yPyxa2Y2Ugcor
-         kwFdcAo55NIcDKO1F3Lj6oPrYO+p5/3a02Blgz1GCMEuwmogWfx7wrabRcgQzUH55EOm
-         BeFrmvGJ+WN6Dyn5nKLQEOUqbk39SOA+2T6rcw6rrsEqjNLDw4pKjDOwXIY7mB+tU8Le
-         ERBV8ADB5bqFKvI9f3hj10xG3f/ndVvxKze9QWiP4/6D+R0S21WL07hob9g62uUjMLUX
-         Ha7g==
-X-Received: by 10.140.36.118 with SMTP id o109mr12348081qgo.25.1407369649765;
-        Wed, 06 Aug 2014 17:00:49 -0700 (PDT)
+        bh=9oTOMB3BX83kEswqsLsWSzHagwdZ/YaVGk4UQE08b24=;
+        b=hHwgYUtvMhS9JUn87DdWeYN1gBV7vhaXjdukXKZVKXfOBuyz58mCEDDwEHFJ6uf+pm
+         3RWBSDT5tmZJrvGGqSKYNqNszsvKX6OE1umFnyqLAn1MO7ll11TsbBL1wo161YLr/B7k
+         qCnLuAoHTXe9hzF8d+oLGeiso8pYtB35G3ckR84assMedYXgvAufPkj3aE/6YcVV29tM
+         v7yaaAHo4fTKZ4EpzpFFJ+XCWXc5TCh56ByBucmCQUauwoBTXt1x//d7C6MuiHYiBtWK
+         6chh6EZAlJXvNYzK6dKQKGC1YkWH6++mGyOhdD7nlKf8aGBYROO4z6oxOW42qXuXaOkD
+         jAPg==
+X-Received: by 10.140.40.84 with SMTP id w78mr8001628qgw.87.1407369651448;
+        Wed, 06 Aug 2014 17:00:51 -0700 (PDT)
 Received: from puffy.localdomain (HSI-KBW-046-005-203-106.hsi8.kabel-badenwuerttemberg.de. [46.5.203.106])
-        by mx.google.com with ESMTPSA id n74sm2637391qga.34.2014.08.06.17.00.48
+        by mx.google.com with ESMTPSA id n74sm2637391qga.34.2014.08.06.17.00.49
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 06 Aug 2014 17:00:49 -0700 (PDT)
+        Wed, 06 Aug 2014 17:00:50 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1
 In-Reply-To: <cover.1407368621.git.bafain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254931>
 
 `do_pick` is the git-cherry-pick wrapper in git-rebase--interactive
-that is used to implement the to-do list commands `pick`, `reword`
-and `edit`. To cater for the different pick behaviours (like
-`squash`), `do_pick` accepts several options not only from the
-git-cherry-pick but also the git-commit interface.
+that is used to implement the to-do list command `pick`, `reword` and
+`edit`. To cater for the different pick behaviours (like `squash`),
+`do_pick` accepts several options not only from the git-cherry-pick
+but also the git-commit interface.
 
-Add the option `--amend` from the git-commit interface to the options
-pool of `do_pick`. It creates a new commit for the changes introduced
-by the picked commit and the previous one. The previous commit is
-then replaced with the new commit. If no other options are specified,
-the log message of the previous commit is used.
+Add the option `--file` from the git-commit interface to the options
+pool of `do_pick`. It expects an argument itself which is interpreted
+as a file path and takes the commit message from the given file. If
+`--file` is passed to `do_pick`, assign the given file path to the
+local variable `rewrite_message` and relay the option
 
-Be careful when `--amend` is used to pick a root commit because HEAD
-might point to the sentinel commit but there is still nothing to
-amend. Be sure to initialize `amend` so that commits are squashed
-even when git-rebase--interactive is interrupted for resolving
-conflicts. It is not a mistake to do the initialization regardless of
-any conflicts because `amend` is always cleared before the next to-do
-item is processed.
+    --file "$rewrite_message"
+
+to the git-commit command line which creates the commit.
 
 Signed-off-by: Fabian Ruch <bafain@gmail.com>
 ---
- git-rebase--interactive.sh | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ git-rebase--interactive.sh | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index d812bad..0871302 100644
+index 0871302..0fbf773 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -464,10 +464,16 @@ record_in_rewritten() {
+@@ -464,7 +464,7 @@ record_in_rewritten() {
  
  # Apply the changes introduced by the given commit to the current head.
  #
--# do_pick [--edit] <commit>
-+# do_pick [--amend] [--edit] <commit>
+-# do_pick [--amend] [--edit] <commit>
++# do_pick [--amend] [--file <file>] [--edit] <commit>
  #
  # Wrapper around git-cherry-pick.
  #
-+# --amend
-+#     After picking <commit>, replace the current head commit with a new
-+#     commit that also introduces the changes of <commit>.
+@@ -474,6 +474,12 @@ record_in_rewritten() {
+ #
+ #     _This is not a git-cherry-pick option._
+ #
++# -F <file>, --file <file>
++#     Take the commit message from the given file. This creates a fresh
++#     commit.
 +#
 +#     _This is not a git-cherry-pick option._
 +#
  # -e, --edit
  #     After picking <commit>, open an editor and let the user edit the
  #     commit message. The editor contents becomes the commit message of
-@@ -489,6 +495,16 @@ do_pick () {
+@@ -492,6 +498,7 @@ do_pick () {
+ 	rewrite=
+ 	rewrite_amend=
+ 	rewrite_edit=
++	rewrite_message=
  	while test $# -gt 0
  	do
  		case "$1" in
-+		--amend)
-+			if test "$(git rev-parse HEAD)" = "$squash_onto" || ! git rev-parse -q --verify HEAD >/dev/null
+@@ -505,6 +512,16 @@ do_pick () {
+ 			rewrite_amend=y
+ 			git rev-parse --verify HEAD >"$amend"
+ 			;;
++		-F|--file)
++			if test $# -eq 0
 +			then
-+				warn "do_pick: nothing to amend"
++				warn "do_pick: option --file specified but no <file> given"
 +				return 2
 +			fi
 +			rewrite=y
-+			rewrite_amend=y
-+			git rev-parse --verify HEAD >"$amend"
++			rewrite_message=$2
++			shift
 +			;;
  		-e|--edit)
  			rewrite=y
  			rewrite_edit=y
+@@ -553,6 +570,7 @@ do_pick () {
+ 			   ${allow_empty_message:+--allow-empty-message} \
+ 			   ${rewrite_amend:+--amend} \
+ 			   ${rewrite_edit:+--edit --commit-msg} \
++			   ${rewrite_message:+--file "$rewrite_message"} \
+ 			   ${gpg_sign_opt:+"$gpg_sign_opt"} || return 3
+ 	fi
+ }
 -- 
 2.0.1
