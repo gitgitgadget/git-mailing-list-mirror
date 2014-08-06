@@ -1,92 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] rebase: introduce "rebase.preserve" configuration option
-Date: Tue, 05 Aug 2014 15:39:15 -0700
-Message-ID: <xmqq61i6o92k.fsf@gitster.dls.corp.google.com>
-References: <1407271714-1624-1-git-send-email-ralf.thielow@gmail.com>
-Mime-Version: 1.0
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH] convert: Stream from fd to required clean filter instead of mmap
+Date: Wed, 6 Aug 2014 06:22:58 +0200
+Message-ID: <36DA9A8E-2F61-4DD3-9F82-427976C710A6@zib.de>
+References: <1407056176-8231-1-git-send-email-prohaska@zib.de> <xmqq4mxsrsao.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 06 00:39:31 2014
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Scott Chacon <schacon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 06 06:23:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XEnOD-0001E6-5B
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 00:39:29 +0200
+	id 1XEsl8-0008GD-PW
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 06:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753539AbaHEWjZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Aug 2014 18:39:25 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:59115 "EHLO smtp.pobox.com"
+	id S1750811AbaHFEXU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2014 00:23:20 -0400
+Received: from mailer.zib.de ([130.73.108.11]:53213 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753026AbaHEWjY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Aug 2014 18:39:24 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 250A22F6FB;
-	Tue,  5 Aug 2014 18:39:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IP0qnp+uXHDGEymDlfjn2fPWK2U=; b=Z2zDEx
-	Z3j+P8I4e3vHRg+JQpQGYd1gGEiKAt8lvegXzxu2kbT358HZAlKPkOyw8LkzLnk5
-	Hr0ov6C8l/kQ403L5cY69M66HH2fZ4apD1Mk+lDVU1lh93R4vndIstch9lnjUKzx
-	rvvBl99Spq2CUrjxS9C01TPk63S2OcD/ePWzo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tLEUrBpgLlKNrqiIUE868Q9rhBzXwGRW
-	HLQ547E5RsKN+LpfCRXNdGtEUPistfIN1krcPPMelY+VYK5TK+aokiaqNgzP/iLj
-	U8+zSUmUfN2ViP9zYU7hMJQsoc6MqWPMQfg1MhX8xd7hBFqhU3U22MVvQz1v2Jr2
-	P5tMX1hD7JE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 1B5D02F6FA;
-	Tue,  5 Aug 2014 18:39:24 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 690882F6F8;
-	Tue,  5 Aug 2014 18:39:17 -0400 (EDT)
-In-Reply-To: <1407271714-1624-1-git-send-email-ralf.thielow@gmail.com> (Ralf
-	Thielow's message of "Tue, 5 Aug 2014 22:48:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 557552B2-1CF1-11E4-8C83-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1750750AbaHFEXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2014 00:23:19 -0400
+Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
+	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s764N6jR013362;
+	Wed, 6 Aug 2014 06:23:06 +0200 (CEST)
+Received: from [192.168.1.200] (95-91-208-111-dynip.superkabel.de [95.91.208.111])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s764N4VO013161
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 6 Aug 2014 06:23:05 +0200 (CEST)
+In-Reply-To: <xmqq4mxsrsao.fsf@gitster.dls.corp.google.com>
+X-Mailer: Apple Mail (2.1878.6)
+X-Miltered: at mailer.zib.de with ID 53E1ADAA.001 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
+X-j-chkmail-Enveloppe: 53E1ADAA.001 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
+X-j-chkmail-Score: MSGID : 53E1ADAA.001 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-j-chkmail-Status: Ham
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254840>
 
-Ralf Thielow <ralf.thielow@gmail.com> writes:
+I'll address the comments about style in a revised patch.
 
-> There are several ways to configure Git to preserve merges.
-> There is "pull.rebase=preserve" for all branches and
-> "branch.<name>.rebase=preserve" for individual branches.
-> However, there is no configuration option to preserve merges
-> for all branches when running git-rebase.
 
-How should this interact with pull.rebase?  Specifically, what
-should happen with these settings?
+On Aug 4, 2014, at 9:03 PM, Junio C Hamano <gitster@pobox.com> wrote:
 
-	[rebase] preserve = true
-        [pull] rebase = true
+>> +	return apply_filter(path, 0, 0, -1, 0, ca.drv->clean);
+> 
+> What's the significance of "-1" here?  Does somebody in the
+> callchain from apply_filter() check if fd < 0 and act differently
+> (not a complaint nor rhetoric question)?
 
-Historically, the variable was a way to tell 'pull' to use 'rebase'
-to integrate (if true) or use 'merge' to integrate (if false), and
-then the third value that is clearly not 'false' was added to say
-"How should the underlying 'rebase' integrate the local and the
-remote histories?".
+The decision in apply_filter() to return before the real work is
+taken on the first 0.  Any value for fd would be ok.  The -1 is
+only a reminder that the fd is invalid.
 
-In that light, one can argue 'git pull' with the above two should
-run 'rebase --preserve'.  In other words, rebase.preserve tells us
-"When 'rebase' is told to run, it should do the 'preserving'
-variant."
-
-But then when somebody sets pull.rebase to true, expecting that
-'true' does not just mean "Yup, please use rebase, I do not like
-merges", but means "Use rebase without preserve", it would be hard
-to debug if the behaviour of 'git pull' is affected by a separate
-variable rebase.preserve that may be defined in a far-away place in
-the configuration file.
-
-I dunno.  This kind of complications is one reason why I wouldn't
-encourage adding these configurations to affect the behaviours of
-commands.
+	Steffen
