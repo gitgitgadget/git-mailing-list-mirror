@@ -1,283 +1,523 @@
 From: Fabian Ruch <bafain@gmail.com>
-Subject: [PATCH v2 04/23] rebase -i: hide interactive command messages in verbose mode
-Date: Thu,  7 Aug 2014 01:59:11 +0200
-Message-ID: <6d4f66b21315661e4f267f59341ebb798232a381.1407368621.git.bafain@gmail.com>
+Subject: [PATCH v2 06/23] commit: allow disabling pre-commit and commit-msg separately
+Date: Thu,  7 Aug 2014 01:59:13 +0200
+Message-ID: <7b3f91d5d079de10aebedcf6d6e7f43c0e7f1fce.1407368621.git.bafain@gmail.com>
 References: <53A258D2.7080806@gmail.com> <cover.1407368621.git.bafain@gmail.com>
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 02:00:44 2014
+X-From: git-owner@vger.kernel.org Thu Aug 07 02:00:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFB8N-0003kY-Gv
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 02:00:44 +0200
+	id 1XFB8P-0003kY-6W
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 02:00:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754261AbaHGAAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2014 20:00:33 -0400
-Received: from mail-qa0-f47.google.com ([209.85.216.47]:52267 "EHLO
-	mail-qa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753556AbaHGAAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2014 20:00:31 -0400
-Received: by mail-qa0-f47.google.com with SMTP id i13so3200881qae.20
-        for <git@vger.kernel.org>; Wed, 06 Aug 2014 17:00:31 -0700 (PDT)
+	id S1754326AbaHGAAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2014 20:00:37 -0400
+Received: from mail-qa0-f53.google.com ([209.85.216.53]:37508 "EHLO
+	mail-qa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754283AbaHGAAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2014 20:00:35 -0400
+Received: by mail-qa0-f53.google.com with SMTP id v10so3327478qac.12
+        for <git@vger.kernel.org>; Wed, 06 Aug 2014 17:00:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=qY0g0DyCwYDB7j8UIso5SWLYW1EWaqpEMLtBxvH9AeQ=;
-        b=tcG/hLntotg4wMbLP3FWr67ZOM41yP99v5J+8/BWxlTiOnI2gD40Z7c+K9E6us/udz
-         Q35wWoH/Q2m7rZ1MJE6+n0q768I9DrmQa0/4sUhuxHS5Rtp4sauwDGuYkxh3QbzcwWvT
-         0q5yV3G7Ii/8ovMKvooZEY3tD2paG3XS3iTzwBGM6TH6TgHUizBrxQqS6p6ribFUS1oE
-         tILLmZDhomVsHT8m8c6g/duPTML7jNd2PtW3YyrrBKSlkOBPgb6QQ5KStD52QfU5A8lc
-         0HZPwBVdP1q6cRkzcJPdkwnCR6JrY4iaL+wB0iVkmof+oOpDFU00TlpX9MR+X6fg4SlX
-         8KyA==
-X-Received: by 10.224.53.137 with SMTP id m9mr21931235qag.66.1407369631272;
-        Wed, 06 Aug 2014 17:00:31 -0700 (PDT)
+        bh=J8RpPD4nI6qf4dLelv/PjoiNsPoyaycG36HpnfPSoRQ=;
+        b=A5xtnVh/UrX/wQ05lMFQrVjbdlT95cTvvLyjfK6DPzU1KQ7TUzVbG5fZVHgw87aj51
+         i0lp6wxbOWnq5txblVS0fkGa/1D4KjaxfqWPyEYX1ZxkA+Nw4jRTYZAQq8ozYP1Uqejl
+         vRpfnmpQUb2SFrKsnitbe4ajsKWAjYe/GoPA+yCJlZPGrWdGPZr2OMgKtTcTp/mT9Tec
+         zv9kcJ8npbwmsFq/RJhCZne6huhE4uc9rUswFNbQXJqf9MhEHrbiBAFIL0Wfmt43v3Xj
+         eJHbQ/m+a/ZreFzIKmsYdmSNofM6udxOCdlnnj0wt7gfgtFeNLE2+mgDC8vO2Yq6GebU
+         dyJA==
+X-Received: by 10.224.172.129 with SMTP id l1mr21997162qaz.90.1407369634851;
+        Wed, 06 Aug 2014 17:00:34 -0700 (PDT)
 Received: from puffy.localdomain (HSI-KBW-046-005-203-106.hsi8.kabel-badenwuerttemberg.de. [46.5.203.106])
-        by mx.google.com with ESMTPSA id n74sm2637391qga.34.2014.08.06.17.00.29
+        by mx.google.com with ESMTPSA id n74sm2637391qga.34.2014.08.06.17.00.33
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 06 Aug 2014 17:00:30 -0700 (PDT)
+        Wed, 06 Aug 2014 17:00:34 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1
 In-Reply-To: <cover.1407368621.git.bafain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254922>
 
-git-rebase--interactive prints summary messages of the commits it
-creates in the final history only if the `--verbose` option is
-specified by the user and suppresses them otherwise. This behaviour
-is implemented by wrapping git-commit calls in a shell function named
-`output` which redirects stderr to stdout, captures stdout in a shell
-variable and ignores its contents unless the command exits with an
-error status.
+Introduce the git-commit command line options `--no-pre-commit` and
+`--no-commit-msg` to disable the pre-commit and commit-msg hooks,
+respectively. Make `--no-verify` a synonym for specifying both at the
+same time.
 
-The command lines used to implement the to-do list commands `reword`
-and `squash` print diagnostic messages even in non-verbose mode. The
-reason for this inconsistency is that both commands launch the log
-message editor which usually requires a working terminal attached to
-stdin. Temporarily redirect the editor output to a third file
-descriptor in order to ship it around the capture stream. Wrap the
-respective git-commit command lines in `output`.
+This change is motivated by an internal usage of git-commit in
+git-rebase--interactive to disable pre-commit while keeping
+commit-msg enabled when rewording a commit.
 
-fake_editor prints the to-do list before and after applying the
-`FAKE_LINES` rewrite rules to it. Redirect this debug output to
-stderr so that it does not interfere with the git-rebase status
-output. Add test.
+Make `test_commit` forward unknown options to git-commit instead of
+teaching it all possible options. In order to support leading double
+dashes in `<message>`, stop interpreting `test_commit` arguments
+following a `--` argument as options. This wasn't a problem before
+because the first unknown option would be used as `<message>`.
+
+Allow disabling tag creation to avoid name clashes when using
+`test_commit` with the same arguments several times from the same
+test suite. By default, `test_commit` tags successful commits using
+git-tag for easy reference. The `--notag` option skips this step.
+
+Add tests.
 
 Signed-off-by: Fabian Ruch <bafain@gmail.com>
 ---
- git-rebase--interactive.sh    |  9 +++++----
- git-rebase.sh                 | 12 ++++++++++--
- t/lib-rebase.sh               |  8 ++++----
- t/t3404-rebase-interactive.sh | 18 ++++++------------
- t/t3406-rebase-message.sh     | 18 ++++++++++++++++++
- 5 files changed, 43 insertions(+), 22 deletions(-)
+ Documentation/git-commit.txt |  8 ++++-
+ builtin/commit.c             | 32 ++++++++++++++---
+ t/t7503-pre-commit-hook.sh   | 65 ++++++++++++++++++++++++++++-----
+ t/t7504-commit-msg-hook.sh   | 85 ++++++++++++++++++++++++++++++++++----------
+ t/test-lib-functions.sh      | 23 ++++++++----
+ 5 files changed, 176 insertions(+), 37 deletions(-)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 89ef5e2..5dfdf13 100644
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -504,7 +504,7 @@ do_next () {
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 0bbc8f5..28a2c5c 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -158,7 +158,7 @@ OPTIONS
  
- 		mark_action_done
- 		do_pick $sha1 "$rest"
--		git commit --allow-empty --amend --no-post-rewrite ${gpg_sign_opt:+"$gpg_sign_opt"} || {
-+		output git commit --allow-empty --amend --no-post-rewrite ${gpg_sign_opt:+"$gpg_sign_opt"} || {
- 			warn "Could not amend commit after successfully picking $sha1... $rest"
- 			warn "This is most likely due to an empty commit message, or the pre-commit hook"
- 			warn "failed. If the pre-commit hook failed, you may need to resolve the issue before"
-@@ -558,14 +558,14 @@ do_next () {
- 			# This is the final command of this squash/fixup group
- 			if test -f "$fixup_msg"
- 			then
--				do_with_author git commit --allow-empty-message --allow-empty \
-+				do_with_author output git commit --allow-empty-message --allow-empty \
- 					--amend --no-verify -F "$fixup_msg" \
- 					${gpg_sign_opt:+"$gpg_sign_opt"} ||
- 					die_failed_squash $sha1 "$rest"
- 			else
- 				cp "$squash_msg" "$GIT_DIR"/SQUASH_MSG || exit
- 				rm -f "$GIT_DIR"/MERGE_MSG
--				do_with_author git commit --allow-empty --amend --no-verify -F "$GIT_DIR"/SQUASH_MSG -e \
-+				do_with_author output git commit --allow-empty --amend --no-verify -F "$GIT_DIR"/SQUASH_MSG -e \
- 					${gpg_sign_opt:+"$gpg_sign_opt"} ||
- 					die_failed_squash $sha1 "$rest"
- 			fi
-@@ -923,6 +923,8 @@ EOF
- 	;;
- esac
+ -n::
+ --no-verify::
+-	This option bypasses the pre-commit and commit-msg hooks.
++	A synonym for `--no-pre-commit --no-commit-msg`.
+ 	See also linkgit:githooks[5].
  
-+mkdir -p "$state_dir" || die "Could not create temporary $state_dir"
+ --allow-empty::
+@@ -238,6 +238,12 @@ You should understand the implications of rewriting history if you
+ amend a commit that has already been published.  (See the "RECOVERING
+ FROM UPSTREAM REBASE" section in linkgit:git-rebase[1].)
+ 
++--no-pre-commit::
++	This option bypasses the pre-commit hook.
 +
- git var GIT_COMMITTER_IDENT >/dev/null ||
- 	die "You need to set your committer info first"
- 
-@@ -938,7 +940,6 @@ then
- fi
- 
- orig_head=$(git rev-parse --verify HEAD) || die "No HEAD?"
--mkdir -p "$state_dir" || die "Could not create temporary $state_dir"
- 
- : > "$state_dir"/interactive || die "Could not mark as interactive"
- write_basic_state
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 55da9db..f90541e 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -131,9 +131,17 @@ write_basic_state () {
- output () {
- 	case "$verbose" in
- 	'')
--		output=$("$@" 2>&1 )
-+		cat >"$state_dir"/editor.sh <<EOF
-+#!/bin/sh
-+$(git var GIT_EDITOR) "\$@" >&3
-+EOF
-+		chmod +x "$state_dir"/editor.sh
-+		(
-+			export GIT_EDITOR=\""$state_dir"/editor.sh\"
-+			"$@" 3>&1 >"$state_dir"/output 2>&1
-+		)
- 		status=$?
--		test $status != 0 && printf "%s\n" "$output"
-+		test $status != 0 && cat "$state_dir"/output
- 		return $status
- 		;;
- 	*)
-diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-index 6bd2522..0cd1193 100644
---- a/t/lib-rebase.sh
-+++ b/t/lib-rebase.sh
-@@ -41,8 +41,8 @@ set_fake_editor () {
- 	test -z "$FAKE_LINES" && exit
- 	grep -v '^#' < "$1" > "$1".tmp
- 	rm -f "$1"
--	echo 'rebase -i script before editing:'
--	cat "$1".tmp
-+	echo 'rebase -i script before editing:' >&2
-+	cat "$1".tmp >&2
- 	action=pick
- 	for line in $FAKE_LINES; do
- 		case $line in
-@@ -59,8 +59,8 @@ set_fake_editor () {
- 			action=pick;;
- 		esac
- 	done
--	echo 'rebase -i script after editing:'
--	cat "$1"
-+	echo 'rebase -i script after editing:' >&2
-+	cat "$1" >&2
- 	EOF
- 
- 	test_set_editor "$(pwd)/fake-editor.sh"
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 3e64280..c6578c3 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -873,9 +873,8 @@ test_expect_success 'running "git rebase -i --exec git show HEAD"' '
- 	(
- 		FAKE_LINES="1 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
- 		export FAKE_LINES &&
--		git rebase -i HEAD~2 >expect
-+		git rebase -i HEAD~2 >expected
- 	) &&
--	sed -e "1,9d" expect >expected &&
- 	test_cmp expected actual
- '
- 
-@@ -887,9 +886,8 @@ test_expect_success 'running "git rebase --exec git show HEAD -i"' '
- 	(
- 		FAKE_LINES="1 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
- 		export FAKE_LINES &&
--		git rebase -i HEAD~2 >expect
-+		git rebase -i HEAD~2 >expected
- 	) &&
--	sed -e "1,9d" expect >expected &&
- 	test_cmp expected actual
- '
- 
-@@ -901,9 +899,8 @@ test_expect_success 'running "git rebase -ix git show HEAD"' '
- 	(
- 		FAKE_LINES="1 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
- 		export FAKE_LINES &&
--		git rebase -i HEAD~2 >expect
-+		git rebase -i HEAD~2 >expected
- 	) &&
--	sed -e "1,9d" expect >expected &&
- 	test_cmp expected actual
- '
- 
-@@ -915,9 +912,8 @@ test_expect_success 'rebase -ix with several <CMD>' '
- 	(
- 		FAKE_LINES="1 exec_git_show_HEAD;_pwd 2 exec_git_show_HEAD;_pwd" &&
- 		export FAKE_LINES &&
--		git rebase -i HEAD~2 >expect
-+		git rebase -i HEAD~2 >expected
- 	) &&
--	sed -e "1,9d" expect >expected &&
- 	test_cmp expected actual
- '
- 
-@@ -930,9 +926,8 @@ test_expect_success 'rebase -ix with several instances of --exec' '
- 		FAKE_LINES="1 exec_git_show_HEAD exec_pwd 2
- 				exec_git_show_HEAD exec_pwd" &&
- 		export FAKE_LINES &&
--		git rebase -i HEAD~2 >expect
-+		git rebase -i HEAD~2 >expected
- 	) &&
--	sed -e "1,11d" expect >expected &&
- 	test_cmp expected actual
- '
- 
-@@ -956,9 +951,8 @@ test_expect_success 'rebase -ix with --autosquash' '
- 		git checkout -b autosquash_expected &&
- 		FAKE_LINES="1 fixup 3 fixup 4 exec_git_show_HEAD 2 exec_git_show_HEAD" &&
- 		export FAKE_LINES &&
--		git rebase -i HEAD~4 >expect
-+		git rebase -i HEAD~4 >expected
- 	) &&
--	sed -e "1,13d" expect >expected &&
- 	test_cmp expected actual
- '
- 
-diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-index 0392e36..d7003a9 100755
---- a/t/t3406-rebase-message.sh
-+++ b/t/t3406-rebase-message.sh
-@@ -4,6 +4,8 @@ test_description='messages from rebase operation'
- 
- . ./test-lib.sh
- 
-+. "$TEST_DIRECTORY"/lib-rebase.sh
++--no-commit-msg::
++	This option bypasses the commit-msg hook.
 +
- test_expect_success 'setup' '
- 	test_commit O fileO &&
- 	test_commit X fileX &&
-@@ -84,4 +86,20 @@ test_expect_success 'rebase --onto outputs the invalid ref' '
- 	test_i18ngrep "invalid-ref" err
+ --no-post-rewrite::
+ 	Bypass the post-rewrite hook.
+ 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 5ed6036..dfd354e 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -98,12 +98,27 @@ static char *edit_message, *use_message;
+ static char *fixup_message, *squash_message;
+ static int all, also, interactive, patch_interactive, only, amend, signoff;
+ static int edit_flag = -1; /* unspecified */
+-static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
++static int quiet, verbose, allow_empty, dry_run, renew_authorship;
+ static int no_post_rewrite, allow_empty_message;
+ static char *untracked_files_arg, *force_date, *ignore_submodule_arg;
+ static char *sign_commit;
+ 
+ /*
++ * The verify variable is interpreted as a bitmap of enabled commit
++ * verification hooks according to the legend below.
++ *
++ * By default, the pre-commit and commit-msg hooks are enabled. This
++ * is represented by both the PRE_COMMIT and COMMIT_MSG bits being
++ * set.
++ *
++ * The bitmap is changed through the command line options
++ * --no-verify, --no-pre-commit and --no-commit-msg.
++ */
++#define PRE_COMMIT (1<<0)
++#define COMMIT_MSG (1<<1)
++static int verify = PRE_COMMIT | COMMIT_MSG;
++
++/*
+  * The default commit message cleanup mode will remove the lines
+  * beginning with # (shell comments) and leading and trailing
+  * whitespaces (empty lines or containing only whitespaces)
+@@ -661,7 +676,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	/* This checks and barfs if author is badly specified */
+ 	determine_author_info(author_ident);
+ 
+-	if (!no_verify && run_commit_hook(use_editor, index_file, "pre-commit", NULL))
++	if (verify & PRE_COMMIT &&
++	    run_commit_hook(use_editor, index_file, "pre-commit", NULL))
+ 		return 0;
+ 
+ 	if (squash_message) {
+@@ -962,7 +978,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		}
+ 	}
+ 
+-	if (!no_verify &&
++	if (verify & COMMIT_MSG &&
+ 	    run_commit_hook(use_editor, index_file, "commit-msg", git_path(commit_editmsg), NULL)) {
+ 		return 0;
+ 	}
+@@ -1590,7 +1606,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL(0, "interactive", &interactive, N_("interactively add files")),
+ 		OPT_BOOL('p', "patch", &patch_interactive, N_("interactively add changes")),
+ 		OPT_BOOL('o', "only", &only, N_("commit only specified files")),
+-		OPT_BOOL('n', "no-verify", &no_verify, N_("bypass pre-commit hook")),
++		OPT_NEGBIT('n', "no-verify", &verify,
++			   N_("synonym for --no-pre-commit --no-commit-msg"),
++			   PRE_COMMIT | COMMIT_MSG),
+ 		OPT_BOOL(0, "dry-run", &dry_run, N_("show what would be committed")),
+ 		OPT_SET_INT(0, "short", &status_format, N_("show status concisely"),
+ 			    STATUS_FORMAT_SHORT),
+@@ -1603,6 +1621,12 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL('z', "null", &s.null_termination,
+ 			 N_("terminate entries with NUL")),
+ 		OPT_BOOL(0, "amend", &amend, N_("amend previous commit")),
++		OPT_NEGBIT(0, "no-pre-commit", &verify,
++			   N_("bypass pre-commit hook"),
++			   PRE_COMMIT),
++		OPT_NEGBIT(0, "no-commit-msg", &verify,
++			   N_("bypass commit-msg hook"),
++			   COMMIT_MSG),
+ 		OPT_BOOL(0, "no-post-rewrite", &no_post_rewrite, N_("bypass post-rewrite hook")),
+ 		{ OPTION_STRING, 'u', "untracked-files", &untracked_files_arg, N_("mode"), N_("show untracked files, optional modes: all, normal, no. (Default: all)"), PARSE_OPT_OPTARG, NULL, (intptr_t)"all" },
+ 		/* end commit contents options */
+diff --git a/t/t7503-pre-commit-hook.sh b/t/t7503-pre-commit-hook.sh
+index 984889b..db5de1c 100755
+--- a/t/t7503-pre-commit-hook.sh
++++ b/t/t7503-pre-commit-hook.sh
+@@ -12,11 +12,11 @@ test_expect_success 'with no hook' '
+ 
  '
  
-+test_expect_success 'commit summary is suppressed in non-verbose mode' '
-+	git checkout --detach Y &&
-+	cat >expected.out <<-EOF &&
-+	Rebasing (1/5)\r
-+	Rebasing (2/5)\r
-+	Rebasing (3/5)\r
-+	Rebasing (4/5)\r
-+	Rebasing (5/5)\r
+-test_expect_success '--no-verify with no hook' '
++test_expect_success '--no-pre-commit with no hook' '
+ 
+ 	echo "bar" > file &&
+ 	git add file &&
+-	git commit --no-verify -m "bar"
++	git commit --no-pre-commit -m "bar"
+ 
+ '
+ 
+@@ -38,11 +38,11 @@ test_expect_success 'with succeeding hook' '
+ 
+ '
+ 
+-test_expect_success '--no-verify with succeeding hook' '
++test_expect_success '--no-pre-commit with succeeding hook' '
+ 
+ 	echo "even more" >> file &&
+ 	git add file &&
+-	git commit --no-verify -m "even more"
++	git commit --no-pre-commit -m "even more"
+ 
+ '
+ 
+@@ -60,11 +60,11 @@ test_expect_success 'with failing hook' '
+ 
+ '
+ 
+-test_expect_success '--no-verify with failing hook' '
++test_expect_success '--no-pre-commit with failing hook' '
+ 
+ 	echo "stuff" >> file &&
+ 	git add file &&
+-	git commit --no-verify -m "stuff"
++	git commit --no-pre-commit -m "stuff"
+ 
+ '
+ 
+@@ -77,15 +77,64 @@ test_expect_success POSIXPERM 'with non-executable hook' '
+ 
+ '
+ 
+-test_expect_success POSIXPERM '--no-verify with non-executable hook' '
++test_expect_success POSIXPERM '--no-pre-commit with non-executable hook' '
+ 
+ 	echo "more content" >> file &&
+ 	git add file &&
+-	git commit --no-verify -m "more content"
++	git commit --no-pre-commit -m "more content"
+ 
+ '
+ chmod +x "$HOOK"
+ 
++test_hook_enabled () {
++	git checkout --detach master &&
++	output="running failing pre-commit hook with ${*:-(none)}..." &&
++	>actual.output &&
++	cat >"$HOOK" <<-EOF &&
++	#!/bin/sh
++	echo "$output" >>actual.output
++	exit 1
 +	EOF
-+	set_fake_editor &&
-+	FAKE_LINES="reword 1 fixup 2 fixup 3 4 squash 5" \
-+	git rebase -i --root >actual.out.tmp &&
-+	sed -e "s/\r/\\\\r\n/g" <actual.out.tmp >actual.out &&
-+	test_cmp expected.out actual.out
++	chmod +x "$HOOK" &&
++	echo "$output" >expected.output &&
++	test_must_fail test_commit $* file &&
++	test_cmp expected.output actual.output
++}
++
++test_hook_disabled () {
++	git checkout --detach master &&
++	output="running failing pre-commit hook with ${*:-(none)}..." &&
++	>actual.output &&
++	cat >"$HOOK" <<-EOF &&
++	#!/bin/sh
++	echo "$output" >>actual.output
++	exit 1
++	EOF
++	chmod +x "$HOOK" &&
++	test_commit --notag $* file &&
++	test_must_be_empty actual.output
++}
++
++test_expect_success 'command line options combinations' '
++	test_hook_enabled &&
++	test_hook_enabled --pre-commit &&
++	test_hook_enabled --no-pre-commit --pre-commit &&
++	test_hook_enabled --no-verify --pre-commit &&
++	test_hook_enabled --verify &&
++	test_hook_enabled --no-pre-commit --verify &&
++	test_hook_enabled --no-verify --verify &&
++	test_hook_enabled --verify --no-commit-msg &&
++	test_hook_enabled --verify --commit-msg &&
++	test_hook_disabled --no-pre-commit &&
++	test_hook_disabled --pre-commit --no-pre-commit &&
++	test_hook_disabled --pre-commit --no-verify &&
++	test_hook_disabled --no-verify &&
++	test_hook_disabled --verify --no-pre-commit &&
++	test_hook_disabled --verify --no-verify &&
++	test_hook_disabled --no-verify --no-commit-msg &&
++	test_hook_disabled --no-verify --commit-msg
 +'
 +
- test_done
+ # a hook that checks $GIT_PREFIX and succeeds inside the
+ # success/ subdirectory only
+ cat > "$HOOK" <<EOF
+diff --git a/t/t7504-commit-msg-hook.sh b/t/t7504-commit-msg-hook.sh
+index 1f53ea8..59642a3 100755
+--- a/t/t7504-commit-msg-hook.sh
++++ b/t/t7504-commit-msg-hook.sh
+@@ -34,20 +34,20 @@ test_expect_success 'with no hook (editor)' '
+ 
+ '
+ 
+-test_expect_success '--no-verify with no hook' '
++test_expect_success '--no-commit-msg with no hook' '
+ 
+ 	echo "bar" > file &&
+ 	git add file &&
+-	git commit --no-verify -m "bar"
++	git commit --no-commit-msg -m "bar"
+ 
+ '
+ 
+-test_expect_success '--no-verify with no hook (editor)' '
++test_expect_success '--no-commit-msg with no hook (editor)' '
+ 
+ 	echo "more bar" > file &&
+ 	git add file &&
+ 	echo "more bar" > FAKE_MSG &&
+-	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-verify
++	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-commit-msg
+ 
+ '
+ 
+@@ -78,20 +78,20 @@ test_expect_success 'with succeeding hook (editor)' '
+ 
+ '
+ 
+-test_expect_success '--no-verify with succeeding hook' '
++test_expect_success '--no-commit-msg with succeeding hook' '
+ 
+ 	echo "even more" >> file &&
+ 	git add file &&
+-	git commit --no-verify -m "even more"
++	git commit --no-commit-msg -m "even more"
+ 
+ '
+ 
+-test_expect_success '--no-verify with succeeding hook (editor)' '
++test_expect_success '--no-commit-msg with succeeding hook (editor)' '
+ 
+ 	echo "even more more" >> file &&
+ 	git add file &&
+ 	echo "even more more" > FAKE_MSG &&
+-	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-verify
++	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-commit-msg
+ 
+ '
+ 
+@@ -118,20 +118,20 @@ test_expect_success 'with failing hook (editor)' '
+ 
+ '
+ 
+-test_expect_success '--no-verify with failing hook' '
++test_expect_success '--no-commit-msg with failing hook' '
+ 
+ 	echo "stuff" >> file &&
+ 	git add file &&
+-	git commit --no-verify -m "stuff"
++	git commit --no-commit-msg -m "stuff"
+ 
+ '
+ 
+-test_expect_success '--no-verify with failing hook (editor)' '
++test_expect_success '--no-commit-msg with failing hook (editor)' '
+ 
+ 	echo "more stuff" >> file &&
+ 	git add file &&
+ 	echo "more stuff" > FAKE_MSG &&
+-	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-verify
++	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-commit-msg
+ 
+ '
+ 
+@@ -153,23 +153,72 @@ test_expect_success POSIXPERM 'with non-executable hook (editor)' '
+ 
+ '
+ 
+-test_expect_success POSIXPERM '--no-verify with non-executable hook' '
++test_expect_success POSIXPERM '--no-commit-msg with non-executable hook' '
+ 
+ 	echo "more content" >> file &&
+ 	git add file &&
+-	git commit --no-verify -m "more content"
++	git commit --no-commit-msg -m "more content"
+ 
+ '
+ 
+-test_expect_success POSIXPERM '--no-verify with non-executable hook (editor)' '
++test_expect_success POSIXPERM '--no-commit-msg with non-executable hook (editor)' '
+ 
+ 	echo "even more content" >> file &&
+ 	git add file &&
+ 	echo "even more content" > FAKE_MSG &&
+-	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-verify
++	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-commit-msg
+ 
+ '
+ 
++test_hook_enabled () {
++	git checkout --detach master &&
++	output="running failing commit-msg hook with ${*:-(none)}..." &&
++	>actual.output &&
++	cat >"$HOOK" <<-EOF &&
++	#!/bin/sh
++	echo "$output" >>actual.output
++	exit 1
++	EOF
++	chmod +x "$HOOK" &&
++	echo "$output" >expected.output &&
++	test_must_fail test_commit $* file &&
++	test_cmp expected.output actual.output
++}
++
++test_hook_disabled () {
++	git checkout --detach master &&
++	output="running failing commit-msg hook with ${*:-(none)}..." &&
++	>actual.output &&
++	cat >"$HOOK" <<-EOF &&
++	#!/bin/sh
++	echo "$output" >>actual.output
++	exit 1
++	EOF
++	chmod +x "$HOOK" &&
++	test_commit --notag $* file &&
++	test_must_be_empty actual.output
++}
++
++test_expect_success 'command line options combinations' '
++	test_hook_enabled &&
++	test_hook_enabled --commit-msg &&
++	test_hook_enabled --no-commit-msg --commit-msg &&
++	test_hook_enabled --no-verify --commit-msg &&
++	test_hook_enabled --verify &&
++	test_hook_enabled --no-commit-msg --verify &&
++	test_hook_enabled --no-verify --verify &&
++	test_hook_enabled --verify --no-pre-commit &&
++	test_hook_enabled --verify --pre-commit &&
++	test_hook_disabled --no-commit-msg &&
++	test_hook_disabled --commit-msg --no-commit-msg &&
++	test_hook_disabled --commit-msg --no-verify &&
++	test_hook_disabled --no-verify &&
++	test_hook_disabled --verify --no-commit-msg &&
++	test_hook_disabled --verify --no-verify &&
++	test_hook_disabled --no-verify --no-pre-commit &&
++	test_hook_disabled --no-verify --pre-commit
++'
++
+ # now a hook that edits the commit message
+ cat > "$HOOK" <<'EOF'
+ #!/bin/sh
+@@ -205,7 +254,7 @@ test_expect_success "hook doesn't edit commit message" '
+ 
+ 	echo "plus" >> file &&
+ 	git add file &&
+-	git commit --no-verify -m "plus" &&
++	git commit --no-commit-msg -m "plus" &&
+ 	commit_msg_is "plus"
+ 
+ '
+@@ -215,7 +264,7 @@ test_expect_success "hook doesn't edit commit message (editor)" '
+ 	echo "more plus" >> file &&
+ 	git add file &&
+ 	echo "more plus" > FAKE_MSG &&
+-	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-verify &&
++	GIT_EDITOR="\"\$FAKE_EDITOR\"" git commit --no-commit-msg &&
+ 	commit_msg_is "more plus"
+ 
+ '
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index dafd6ad..a107073 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -154,20 +154,28 @@ test_pause () {
+ 
+ test_commit () {
+ 	notick= &&
+-	signoff= &&
++	notag= &&
++	commit_opts= &&
+ 	while test $# != 0
+ 	do
+ 		case "$1" in
+ 		--notick)
+ 			notick=yes
+ 			;;
+-		--signoff)
+-			signoff="$1"
++		--notag)
++			notag=yes
++			;;
++		--)
++			shift &&
++			break
++			;;
++		-*)
++			commit_opts="$commit_opts $1"
+ 			;;
+ 		*)
+ 			break
+ 			;;
+-		esac
++		esac &&
+ 		shift
+ 	done &&
+ 	file=${2:-"$1.t"} &&
+@@ -177,8 +185,11 @@ test_commit () {
+ 	then
+ 		test_tick
+ 	fi &&
+-	git commit $signoff -m "$1" &&
+-	git tag "${4:-$1}"
++	git commit $commit_opts -m "$1" &&
++	if test -z "$notag"
++	then
++		git tag "${4:-$1}"
++	fi
+ }
+ 
+ # Call test_merge with the arguments "<message> <commit>", where <commit>
 -- 
 2.0.1
