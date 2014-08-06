@@ -1,131 +1,194 @@
 From: Fabian Ruch <bafain@gmail.com>
-Subject: [PATCH v2 21/23] rebase -i: teach do_pick the option --reset-author
-Date: Thu,  7 Aug 2014 01:59:28 +0200
-Message-ID: <cebc51133186e31f3d46edbbd42d60d61b5b6c7b.1407368621.git.bafain@gmail.com>
+Subject: [PATCH v2 20/23] rebase -i: parse to-do list command line options
+Date: Thu,  7 Aug 2014 01:59:27 +0200
+Message-ID: <8d01ff53a49647906c9008620435a62f08a1f76f.1407368621.git.bafain@gmail.com>
 References: <53A258D2.7080806@gmail.com> <cover.1407368621.git.bafain@gmail.com>
 Cc: Michael Haggerty <mhagger@alum.mit.edu>,
 	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 02:01:25 2014
+X-From: git-owner@vger.kernel.org Thu Aug 07 02:01:24 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFB91-0004eT-3i
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 02:01:23 +0200
+	id 1XFB90-0004eT-3P
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 02:01:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754612AbaHGABM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2014 20:01:12 -0400
-Received: from mail-qa0-f44.google.com ([209.85.216.44]:48726 "EHLO
-	mail-qa0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754556AbaHGABA (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754569AbaHGABA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Wed, 6 Aug 2014 20:01:00 -0400
-Received: by mail-qa0-f44.google.com with SMTP id f12so3211227qad.17
-        for <git@vger.kernel.org>; Wed, 06 Aug 2014 17:00:59 -0700 (PDT)
+Received: from mail-qa0-f50.google.com ([209.85.216.50]:39343 "EHLO
+	mail-qa0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754522AbaHGAA6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2014 20:00:58 -0400
+Received: by mail-qa0-f50.google.com with SMTP id s7so3310488qap.9
+        for <git@vger.kernel.org>; Wed, 06 Aug 2014 17:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Jh0FQNui9AES/LJu3zrq39e9p5SeSRcdyc0ldnAHjfQ=;
-        b=kcE7hqBx3MybJn/bDWIGuGnPIF9GGgM997cBMiNjzvRgBalPfWgrCCZ8PtxmnLld4k
-         B9cSP4CyWhzlbGat3Yv1XykOZ2GXUErOiTCh+UoF8w/9YdpsgFYcsvhn1diwOxc4nxwq
-         WWC6bp2scddYFniGNZUnE8bOWG06vpuOfcjrj6xClDxwLrTfGRb4ALwPhiSyrvnv22+f
-         Ctc+KAGkG9mO+EfDfI+NQ2ElAv0rCdLnGEacHFLV8BdmgVVTBvHx1tyLh+B7NrsD2nS9
-         eNMvl08gZ7rRQ7eXXQZAs/MElhoWpdMUQzTHnB1sJQASoctBmXRSGwwOBqRR/UfDagj3
-         VW4Q==
-X-Received: by 10.224.21.9 with SMTP id h9mr21202799qab.67.1407369659537;
-        Wed, 06 Aug 2014 17:00:59 -0700 (PDT)
+        bh=OoeKRxWnpc7fvvchrmjVJhImPcmPJFN3gBjN4nrc6xM=;
+        b=sVJXxkXzNSQMUnSc/5+OQs6nOtmF0Xg1XJJLECr2+mlBLNiugjhxHQF+U3Raoa8HmU
+         qsX1pOPwoqFZbU7koX871s7jniRO78+3DTerB8iPsoxoTr1x5mhBn/JEj3kYaSPnQthX
+         rv3amPO0r/N8AP3/PaqI2jVbIHwWn/cn6qK9E3ABaj/oVIr0AUrbh7U0ixXZr70rBTem
+         swdmnjAnJ+QN36WjLcl7mXZFa7M+ooBQWKaD+UzZ79auSilDe1VGHOQQMamvgGI2feBR
+         i5q4M6OxLYS2/hkVwPtNZpEMFVRvDPne7mcw1ECRIlbq9188Zh6rgo3F6po/JN+E+C06
+         Ia3g==
+X-Received: by 10.229.212.138 with SMTP id gs10mr21584994qcb.7.1407369657922;
+        Wed, 06 Aug 2014 17:00:57 -0700 (PDT)
 Received: from puffy.localdomain (HSI-KBW-046-005-203-106.hsi8.kabel-badenwuerttemberg.de. [46.5.203.106])
-        by mx.google.com with ESMTPSA id n74sm2637391qga.34.2014.08.06.17.00.58
+        by mx.google.com with ESMTPSA id n74sm2637391qga.34.2014.08.06.17.00.56
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 06 Aug 2014 17:00:58 -0700 (PDT)
+        Wed, 06 Aug 2014 17:00:57 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1
 In-Reply-To: <cover.1407368621.git.bafain@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254936>
 
-`do_pick` is the git-cherry-pick wrapper in git-rebase--interactive
-that is used to implement many of the to-do list commands.
-Eventually, the complete `do_pick` interface will be exposed to the
-user in some form or another and those commands will become simple
-aliases for the `do_pick` options now used to implement them.
+Read in to-do list lines as
 
-Add the git-commit option `--reset-author` to the options pool of
-`do_pick`. It rewrites the author date and name of the picked commit
-to match the committer date and name.
+    command args
 
-If `--reset-author` is passed to `do_pick`, set the `rewrite` flag
-and relay the option to the git-commit command line which creates the
-final commit. If `--amend` is not passed as well, the fresh
-authorship effect is achieved by the mere fact that we are creating a
-new commit.
+instead of
+
+    command sha1 rest
+
+so that to-do list command lines can specify additional arguments
+apart from the commit hash and the log message title, which become
+the non-options in `args`. Loop over `args`, put all options (an
+argument beginning with a dash) in `opts`, stop the loop on the first
+non-option and assign it to `sha1`. The loop does not know the
+options it parses so that options that take an argument themselves
+are not supported at the moment. Neither are options that contain
+spaces because the shell expansion of `args` in `do_next` interprets
+white space characters as argument separator, that is a command line
+like
+
+    pick --author "A U Thor" fa1afe1 Some change
+
+is parsed as the pick command
+
+    pick --author
+
+and the commit hash
+
+    "A
+
+which obviously results in an unknown revision error. For the sake of
+completeness, in the example above the message title variable `rest`
+is assigned the string 'U Thor" fa1afe1 Some change' (without the
+single quotes).
+
+Print an error message for unknown or unsupported command line
+options, which means an error for all specified options at the
+moment. Cleanly break the `do_next` loop by assigning the special
+value 'unknown' to the local variable `command`, which triggers the
+unknown command case in `do_cmd`.
+
+The to-do list is also parsed when the commit hashes are translated
+between long and short format before and after the to-do list is
+edited. Apply the same procedure as in `do_cmd` with the exception
+that we only care about where the options stop and the commit hash
+begins. Do not reject any options when transforming the commit
+hashes.
 
 Signed-off-by: Fabian Ruch <bafain@gmail.com>
 ---
- git-rebase--interactive.sh | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ git-rebase--interactive.sh | 49 ++++++++++++++++++++++++++++++++++++++--------
+ 1 file changed, 41 insertions(+), 8 deletions(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index da435cb..d6c99ea 100644
+index 6ecd4d7..da435cb 100644
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -464,10 +464,18 @@ record_in_rewritten() {
+@@ -577,8 +577,26 @@ do_pick () {
  
- # Apply the changes introduced by the given commit to the current head.
- #
--# do_pick [--amend] [--file <file>] [--edit] <commit>
-+# do_pick [--reset-author] [--amend] [--file <file>] [--edit] <commit>
- #
- # Wrapper around git-cherry-pick.
- #
-+# --reset-author
-+#     Pretend the changes were made for the first time. Declare that the
-+#     authorship of the resulting commit now belongs to the committer.
-+#     This also renews the author timestamp. This creates a fresh
-+#     commit.
-+#
-+#     _This is not a git-cherry-pick option._
-+#
- # --amend
- #     After picking <commit>, replace the current head commit with a new
- #     commit that also introduces the changes of <commit>.
-@@ -502,6 +510,10 @@ do_pick () {
- 	while test $# -gt 0
- 	do
- 		case "$1" in
-+		--reset-author)
-+			rewrite=y
-+			rewrite_author=y
-+			;;
- 		--amend)
- 			if test "$(git rev-parse HEAD)" = "$squash_onto" || ! git rev-parse -q --verify HEAD >/dev/null
- 			then
-@@ -564,6 +576,14 @@ do_pick () {
- 		pick_one ${rewrite:+-n} $1 || return 1
- 	fi
- 
-+	if test -n "$rewrite_author" && test -z "$rewrite_amend"
-+	then
-+		# keep rewrite flag to create a new commit, rewrite
-+		# without --reset-author though because it can only be
-+		# used with -C, -c or --amend
-+		rewrite_author=
-+	fi
+ do_replay () {
+ 	command=$1
+-	sha1=$2
+-	rest=$3
++	shift
 +
- 	if test -n "$rewrite"
- 	then
- 		output git commit --allow-empty --no-post-rewrite -n --no-edit \
-@@ -571,6 +591,7 @@ do_pick () {
- 			   ${rewrite_amend:+--amend} \
- 			   ${rewrite_edit:+--edit --commit-msg} \
- 			   ${rewrite_message:+--file "$rewrite_message"} \
-+			   ${rewrite_author:+--reset-author} \
- 			   ${gpg_sign_opt:+"$gpg_sign_opt"} || return 3
- 	fi
++	opts=
++	while test $# -gt 0
++	do
++		case "$1" in
++		-*)
++			warn "Unknown option: $1"
++			command=unknown
++			;;
++		*)
++			break
++			;;
++		esac
++		opts="$opts $(git rev-parse --sq-quote "$1")"
++		shift
++	done
++	sha1=$1
++	shift
++	rest=$*
+ 
+ 	case "$command" in
+ 	pick|p)
+@@ -675,7 +693,7 @@ do_replay () {
+ 
+ do_next () {
+ 	rm -f "$msg" "$author_script" "$amend" || exit
+-	read -r command sha1 rest <"$todo"
++	read -r command args <"$todo"
+ 
+ 	case "$command" in
+ 	"$comment_char"*|''|noop)
+@@ -720,7 +738,7 @@ do_next () {
+ 		fi
+ 		;;
+ 	*)
+-		do_replay $command $sha1 "$rest"
++		do_replay $command $args
+ 		;;
+ 	esac
+ 	test -s "$todo" && return
+@@ -800,19 +818,34 @@ skip_unnecessary_picks () {
+ }
+ 
+ transform_todo_ids () {
+-	while read -r command rest
++	while read -r command args
+ 	do
+ 		case "$command" in
+ 		"$comment_char"* | exec)
+ 			# Be careful for oddball commands like 'exec'
+ 			# that do not have a SHA-1 at the beginning of $rest.
++			newargs=\ $args
+ 			;;
+ 		*)
+-			sha1=$(git rev-parse --verify --quiet "$@" ${rest%% *}) &&
+-			rest="$sha1 ${rest#* }"
++			newargs=
++			sha1=
++			for arg in $args
++			do
++				case "$arg" in
++				-*)
++					newargs="$newargs $arg"
++					;;
++				*)
++					test -z "$sha1" &&
++						sha1=$(git rev-parse --verify --quiet "$@" $arg) &&
++						arg=$sha1
++					newargs="$newargs $arg"
++					;;
++				esac
++			done
+ 			;;
+ 		esac
+-		printf '%s\n' "$command${rest:+ }$rest"
++		printf '%s\n' "$command$newargs"
+ 	done <"$todo" >"$todo.new" &&
+ 	mv -f "$todo.new" "$todo"
  }
 -- 
 2.0.1
