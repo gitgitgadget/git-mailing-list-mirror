@@ -1,109 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 02/11] http-backend.c: replace `git_config()` with `git_config_get_bool()` family
-Date: Wed, 06 Aug 2014 17:44:10 +0200
-Message-ID: <vpqfvh9tygl.fsf@anie.imag.fr>
-References: <1407177229-30081-1-git-send-email-tanayabh@gmail.com>
-	<1407177229-30081-3-git-send-email-tanayabh@gmail.com>
-	<CAPig+cRpf9fc4HhNWpJ9Su+hSVEDc2+m4QmhY38zLD3RO8pGnA@mail.gmail.com>
-	<53E24750.4000602@gmail.com>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: Re: [PATCH v8 8/8] add tests for `git_config_get_string_const()`
+Date: Wed, 06 Aug 2014 21:14:31 +0530
+Message-ID: <53E24D5F.6010104@gmail.com>
+References: <1407336792-16962-1-git-send-email-tanayabh@gmail.com>	<1407336792-16962-9-git-send-email-tanayabh@gmail.com> <vpqmwbhvdkx.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Git List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Tanay Abhra <tanayabh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 06 17:44:29 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 06 17:44:45 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XF3O8-0003tI-OI
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 17:44:29 +0200
+	id 1XF3OK-00048v-MT
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 17:44:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753729AbaHFPoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2014 11:44:25 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:42556 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753392AbaHFPoY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2014 11:44:24 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s76Fi8sm006681
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 6 Aug 2014 17:44:08 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s76FiA8S024929;
-	Wed, 6 Aug 2014 17:44:10 +0200
-In-Reply-To: <53E24750.4000602@gmail.com> (Tanay Abhra's message of "Wed, 06
-	Aug 2014 20:48:40 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 06 Aug 2014 17:44:08 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s76Fi8sm006681
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1407944649.85919@Sc0Se6P1l2GX54JBU2O1/A
+	id S1754092AbaHFPog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2014 11:44:36 -0400
+Received: from mail-pd0-f182.google.com ([209.85.192.182]:62118 "EHLO
+	mail-pd0-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753963AbaHFPog (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2014 11:44:36 -0400
+Received: by mail-pd0-f182.google.com with SMTP id fp1so3492344pdb.41
+        for <git@vger.kernel.org>; Wed, 06 Aug 2014 08:44:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=sbXz7mu4RNUHWI7MzmRnTt5YneWXpp3Ghyw0q2yFfFU=;
+        b=AYzY/HVoJfxCBbpoaSQ7Gh2AGyO3k4GkzA1V0qDhbnwNlENTGGvuJwSvf+f6T8i9SJ
+         sVpCh3L4QtiWhGnbTBvdQdLAt5pGZ+fB1Pc1zsrR16bEa31mttKJBj3Gg9mbrpM1jeNq
+         OE3Z5cOlGQubXabi1hscyVsYp8koxE6lxgktmjpWEtmhsSHRsatrer8Ljdv37pFiDrbe
+         N1flQj9JWk2u6RKPsHLlxWVZ/jojVToHHna6goee4PwlfNQBqE6gwYPififsfA3x0eBB
+         Q6g5aPdFZrHAC1U0c3zMPkTlQCqprSeGCw3pPeI0EI6NiMtDkgiPilugmSlIuEX+i6dk
+         Y3NA==
+X-Received: by 10.69.26.134 with SMTP id iy6mr12086191pbd.115.1407339875876;
+        Wed, 06 Aug 2014 08:44:35 -0700 (PDT)
+Received: from [127.0.0.1] ([223.176.214.188])
+        by mx.google.com with ESMTPSA id vk5sm1651106pbc.44.2014.08.06.08.44.33
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 06 Aug 2014 08:44:35 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <vpqmwbhvdkx.fsf@anie.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254871>
 
-Tanay Abhra <tanayabh@gmail.com> writes:
 
-> On 8/5/2014 12:29 AM, Eric Sunshine wrote:
->> On Mon, Aug 4, 2014 at 2:33 PM, Tanay Abhra <tanayabh@gmail.com> wrote:
->>> -       if (skip_prefix(var, "http.", &p)) {
->>> -               int i;
->>> -
->>> -               for (i = 0; i < ARRAY_SIZE(rpc_service); i++) {
->>> -                       struct rpc_service *svc = &rpc_service[i];
->>> -                       if (!strcmp(p, svc->config_name)) {
->>> -                               svc->enabled = git_config_bool(var, value);
->>> -                               return 0;
->>> -                       }
->>> -               }
->>> +       for (i = 0; i < ARRAY_SIZE(rpc_service); i++) {
->>> +               struct rpc_service *svc = &rpc_service[i];
->>> +               strbuf_addf(&var, "http.%s", svc->config_name);
->>> +               if (!git_config_get_bool(var.buf, &value))
->>> +                       svc->enabled = value;
->>> +               strbuf_reset(&var);
->>>         }
->> 
->> There is a behavior change here. The original code set svc->enabled to
->> the first matching rpc_service[] entry, whereas the new code sets it
->> to the last matching entry. Is this change intentional?
->>
+
+On 8/6/2014 9:02 PM, Matthieu Moy wrote:
+> Tanay Abhra <tanayabh@gmail.com> writes:
+> 
+>> +test_expect_success 'find string value for a key' '
+>> +	check_config get_string case.baz hask &&
+>> +	check_config expect_code 1 get_string case.ba "Value not found for \"case.ba\""
+>> +'
+>> +
+>> +test_expect_success 'check line error when NULL string is queried' '
+>> +	test_expect_code 128 test-config get_string case.foo 2>result &&
+>> +	grep "line 7.*.git/config\|.git/config.*line 7" result
+>> +'
+> 
+> This is still dependant on the locale ("line" is translated). You need
+> to use test_i18ngrep instead of grep here (see its definition and
+> comment in t/test-lib.sh).
 >
-> I was preparing the reroll and I saw that I had missed your mail.
-> I think that I haven't changed the behaviour, the original one is
-> written in callback form so it has to go through the array every time for each
-> new value.
-> When there are multiple entries for a service say,
+
+Oh, and I was searching t/README for a hint. Maybe we should add a line there
+to hint future readers.
+Thanks. :)
+
+> I don't think you need these two alternatives OTOH.
+> 
+> BTW, Junio, I don't understand your remark "This test is too tight (the
+> full string)" in the previous iteration. Can you elaborate?
 >
-> http.receivepack = 1
-> http.receivepack = 0
 
-I first got convinced by Eric, but I now think you're right.
-
-Eric's point was (I think) not about multiple entries for the same
-variable, but about multiple entries for different services, like
-
-http.receivepack = 1
-http.uploadpack = 0
-
-The order of assignments to svn->enabled change, but it doesn't matter
-because svc is just a local variable pointing to the right element of
-rpc_service[i]. So in both cases, you'll assign
-
-rpc_service[<index of service>].enabled = <last occurence of variable http.<service> >
-
-even though the order of assignments will change.
-
-Eric, am I interpreting right?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I think he meant we must search for the relevant snippets instead of the whole string.
