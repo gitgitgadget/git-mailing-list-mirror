@@ -1,73 +1,156 @@
-From: Sergey Organov <sorganov@gmail.com>
-Subject: Re: rebase flattens history when it shouldn't?
-Date: Wed, 06 Aug 2014 19:34:55 +0400
-Message-ID: <8738d91vj4.fsf@osv.gnss.ru>
-References: <87k374xkpq.fsf@osv.gnss.ru> <20140723175218.GB12427@google.com>
-	<8738drj2fc.fsf@osv.gnss.ru> <53E2452D.6000109@ira.uka.de>
+From: =?UTF-8?B?SmFrdWIgTmFyxJlic2tp?= <jnareb@gmail.com>
+Subject: Re: cherry picking and merge
+Date: Wed, 06 Aug 2014 17:43:03 +0200
+Message-ID: <53E24D07.9010105@gmail.com>
+References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801024329.GA28914@vauxhall.crustytoothpaste.net> <53DBBFE8.8060607@gmail.com> <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net> <CANQwDwc4YPdK+a0Oc-jWPTRyM5GiP-CMuRY1inxJY41GwUGBvQ@mail.gmail.com> <CANQwDwdKbmqLSLGsiyHTfGNZGfbeNZM3TN6Zk0G5G-8twRc_JQ@mail.gmail.com> <13DDD21A-F683-4116-9E07-F0D8AEF06A66@comcast.net> <40F24BA38E03454A9BA152F6AFDE56C4@PhilipOakley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Holger Hellmuth <hellmuth@ira.uka.de>
-X-From: git-owner@vger.kernel.org Wed Aug 06 17:35:05 2014
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git <git@vger.kernel.org>
+To: Philip Oakley <philipoakley@iee.org>,
+	Mike Stump <mikestump@comcast.net>
+X-From: git-owner@vger.kernel.org Wed Aug 06 17:43:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XF3F1-0000KR-Pw
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 17:35:04 +0200
+	id 1XF3N2-0002dc-C1
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 17:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753255AbaHFPe6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2014 11:34:58 -0400
-Received: from mail.javad.com ([54.86.164.124]:51919 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751557AbaHFPe6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2014 11:34:58 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id CF6826184E;
-	Wed,  6 Aug 2014 15:34:56 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <s.organov@javad.com>)
-	id 1XF3Et-0002HC-4K; Wed, 06 Aug 2014 19:34:55 +0400
-In-Reply-To: <53E2452D.6000109@ira.uka.de> (Holger Hellmuth's message of "Wed,
-	06 Aug 2014 17:09:33 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1753060AbaHFPnQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2014 11:43:16 -0400
+Received: from mail-wg0-f47.google.com ([74.125.82.47]:40135 "EHLO
+	mail-wg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751857AbaHFPnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2014 11:43:15 -0400
+Received: by mail-wg0-f47.google.com with SMTP id b13so2730794wgh.6
+        for <git@vger.kernel.org>; Wed, 06 Aug 2014 08:43:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=xNGDI5EVl8lwSdnz0yZ04iORA/XOv7iNDFx0UBO2PcM=;
+        b=CASXhw+h7Zb4ZRr0QLTUpj/ah4npudsQmFV/CT3spuhCwniXD/O4gL2d91v5hMZHRh
+         g2Mc2Ibo4MIDNYQi6PacwKDh6yQllbkvxQ487Gzl5yJ9txxlxjvcPdm7W2XIa6JYbOiF
+         ghoWIO7TNUp1/DWAhnsAnKugIG0CKvzYDeXPR2jtgQllKVgbdx/gvVPCwniCTe1dzgQa
+         8UPwhR9mYtoSWKFXrg715vF25hk0cCiXm3HTAURZvPM4kAcPVrvWE37IovPHViFWXh2H
+         Rv7Xb/BQhx9RkJnLlSdqawS7u0QyJzQaTb7mODppM6BAAkPVQO3BK9s6uoBpS5SmsHeL
+         VYZg==
+X-Received: by 10.180.12.79 with SMTP id w15mr18166638wib.35.1407339793789;
+        Wed, 06 Aug 2014 08:43:13 -0700 (PDT)
+Received: from [192.168.130.241] ([158.75.2.130])
+        by mx.google.com with ESMTPSA id do6sm7236557wib.22.2014.08.06.08.43.12
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Wed, 06 Aug 2014 08:43:12 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <40F24BA38E03454A9BA152F6AFDE56C4@PhilipOakley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254869>
 
-Holger Hellmuth <hellmuth@ira.uka.de> writes:
+Philip Oakley wrote:
+> From: "Mike Stump" <mikestump@comcast.net>
+> Sent: Friday, August 01, 2014 11:24 PM
+>> On Aug 1, 2014, at 12:01 PM, Jakub Nar=C4=99bski <jnareb@gmail.com> =
+wrote:
 
-> On 23.07.2014 21:33, Sergei Organov wrote:
->> What actually bothers me is the unfortunate consequence that "git pull"
->> is not always a no-op when nothing was changed at the origin since the
->> last "git pull". THIS is really surprising and probably should better be
->> fixed. Requiring -f is just one (obvious) way to fix this.
+>>> It can work in Subversion because Subversion stores information abo=
+ut
+>>> what was merged in (and this includes cherry-picks, or whatever it =
+is
+>>> named in svn) in svn:mergeinfo property. Git does not track what wa=
+s
+>>> merged in, instead it represent the history as the graph of revisio=
+ns,
+>>> and tracks merges (by storing that it came from two or more commits=
+)
+>>> and not merged-in information.
+>>
+>> So, as a dumb user that just wants it to work, I am unsympathetic to
+>> the `but software is hard=E2=80=99 excuse.  I am aware that some bug=
+s are
+>> harder to fix than others.  svn took a long time to fix this bug, bu=
+t
+>> they did.  I can wait, the only question is, will it be a week, a
+>> month, a year, or a decade.
+
+Here Git and Subversion went in different directions, and use
+different mechanisms (merge tracking vs merged-on tracking).
+Both have their advantages and disadvantages.
+
+git-merge (in the most usual case) depends only on three revisions:
+the revision you merge into (current branch, ours), the revision
+you are merging (merged branch, theirs), and merge base (common
+ancestor).  We could have another merge strategy that examines
+contents of revisions to handle cherry-picks and reverts... but
+it would be more complicated, and much slower.
+
+>>> When merging Git uses only what is being merged and its common
+>>> ancestor (3-point merge). It is simple, and simple works!!!
+>>
+>> I gave a solution for git using branches and it works just fine.  It
+>> retains the simple 3-point merge as well.
+
+It works for this simple case, but I think it has unfortunate potential
+to go silently wrong.
+
+Also, it prevents fully removing (commits, not only refs) the branch
+you cherry-picked from.  The commit you cherry picked may no longer
+be (or may no longer should be) in the repository.
+
+> At the moment there is no formal way for Git to record within the com=
+mit
+> metadata the inclusion of the cherry-picked diff (the 'merge' of the =
+fix).
 >
-> That would invalidate the simple rule that "git pull" is equivalent to
-> "git fetch" + "git rebase".
+> Thinking out of the box, the issue is that the commit parents list do=
+es
+> not have a formal mechanism to allow the recording that the 'merged'
+> change was the patch change from a specific commit fom somewhere else
+> (which may be missing from the local repo).
+>
+> Perhaps it needs a style of merging-rebase where a second (last) pare=
+nt
+> is added but it isn't the straight <sha1>, but says 'patch-<sha1>', s=
+uch
+> that readers with the capability could check if that <sha1> history i=
+s
+> present locally, and if so if it's correct, so that you can now 'trac=
+k'
+> your fixes between releases, and (hopefully) older Gits don't barf on
+> that extra 'fake' parent. Somehow I suspect that older Git's would
+> barf.. (not enough time to create and test such a fake commit).
 
-Sorry, I don't see how it would invalidate this. My suggestion even
-won't change git-pull source code at all, only git-rebase code.
+Sometime ago there was long discussion about adding 'weak' references
+to commit object header.
 
-> git rebase depends on both branches it operates on, not just one. The
-> same goes for "git merge", I assume it is just a coincidence that git
-> merge does have this characteristic you now expect both to have.
+Beside the problem of backward compatibility, there was also the proble=
+m
+of semantics of said reference - what does it mean?  It should work as
+well for cherry-picks, for interactive rebase (maybe?), and for reverts
+(which are also a problem).
 
-git pull --reabse=false
-git pull --rebase=preserve
+Also, this could be avoided by using feature branches and merging
+instead of committing to one branch and cherry-picking to other
+branches. Also, git-rerere is your friend... sometimes.
 
-both have this property.
+>>> Have you tried git-imerge?
+>>
+>> No, not yet.  I=E2=80=99m not as interested in using it, as I would =
+like git
+>> itself to just work.
 
-git pull --rebase=true
+Maybe this command would make it into git proper, though probably
+not written in Python (there was once merge strategy written in Python,
+but currently git does not depend on Python).
 
-almost always has this property, unless there are local merge commits to 
-be rebased.
-
-So, I'd rather say it's likely behavior of "git pull --rebase=true" that
-is a coincidence.
-
--- 
-Sergey.
+--=20
+Jakub Nar=C4=99bski
