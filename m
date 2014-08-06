@@ -1,85 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Bug v1.9.3: Spurious whitespace warnings when using git apply with the --exclude option
-Date: Wed, 06 Aug 2014 13:12:21 -0700
-Message-ID: <xmqq8un1ml7e.fsf@gitster.dls.corp.google.com>
-References: <332C033B-7809-45A9-9F91-CC3A92090B86@apple.com>
+From: Nico Williams <nico@cryptonector.com>
+Subject: Re: Rebase safely (Re: cherry picking and merge)
+Date: Wed, 6 Aug 2014 15:13:46 -0500
+Message-ID: <20140806201340.GF23449@localhost>
+References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net>
+ <20140801024329.GA28914@vauxhall.crustytoothpaste.net>
+ <53DBBFE8.8060607@gmail.com>
+ <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net>
+ <53DBF4C9.2090905@vilain.net>
+ <4E372CD5-33CA-4AF5-8647-F6BBC64BABA8@comcast.net>
+ <CAK3OfOiG8kzKYRUGZJW90t-DyjWf775MfMDxzin0gw94ATS7nw@mail.gmail.com>
+ <96B703A6-58B0-458A-8A2D-699EA8F1941B@comcast.net>
+ <20140806194457.GD23449@localhost>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Peyton Randolph <prandolph@apple.com>
-X-From: git-owner@vger.kernel.org Wed Aug 06 22:12:41 2014
+Cc: Sam Vilain <sam@vilain.net>,
+	Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	git discussion list <git@vger.kernel.org>
+To: Mike Stump <mikestump@comcast.net>
+X-From: git-owner@vger.kernel.org Wed Aug 06 22:13:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XF7Zg-0004xi-By
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 22:12:40 +0200
+	id 1XF7ap-0006OB-SG
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 22:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753282AbaHFUMg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2014 16:12:36 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58160 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751908AbaHFUMf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2014 16:12:35 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 297B32F209;
-	Wed,  6 Aug 2014 16:12:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=zMMPQGeBB3sODbVjZDKWL5WmiTQ=; b=XIWSck
-	CR8EudtggiFeAqXg/ie4J9PKC5jYGQTJNpn5D3sAR+mZ2hFEc1wxw6uolZdE72wa
-	fpg43l5tgZtXHQzxn4ZWGZuRCrg0lO5PY8RVpyI2iB6QFB2yRFWTzZQM4VMZQetU
-	c1G6vesF+NziCzRANGzjv7KNA/zO9bXJYgruA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l+2JjLv9EYWeIY2kk0PHNQ6F7lWQMY7b
-	P+V3ws3wILOWquZX4dDsqM5+SCb3Q0iwnvYIUS+kQmf0CjmpYtVIwlGUza+1uy55
-	PLnygA1/5MtXzhbgsP8NcVb95G9iKoQ3B1RRaJFWu116788SdvkixhqCTSrIpHLf
-	/pnNwRHyhoE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 201842F208;
-	Wed,  6 Aug 2014 16:12:35 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 30CC52F1E0;
-	Wed,  6 Aug 2014 16:12:23 -0400 (EDT)
-In-Reply-To: <332C033B-7809-45A9-9F91-CC3A92090B86@apple.com> (Peyton
-	Randolph's message of "Wed, 06 Aug 2014 10:13:34 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FA2E16FE-1DA5-11E4-AB7D-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1753445AbaHFUNs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2014 16:13:48 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:58125 "EHLO
+	homiemail-a108.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752343AbaHFUNr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Aug 2014 16:13:47 -0400
+Received: from homiemail-a108.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a108.g.dreamhost.com (Postfix) with ESMTP id 274122005D82E;
+	Wed,  6 Aug 2014 13:13:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=date
+	:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=cryptonector.com; bh=FChE1mwJQ+X19n
+	cFF7xu1cAfXYw=; b=RmIZD4E/X+ewyZc1RdzeNlgtpoIdVz2J9h3QlLz3ETuTYw
+	IKW1IbL6/67Mgdb7fWwHDuUx4grkOLmlhk20/3Q3/8KWC3RvW/vSLXzcEW2idUo/
+	OKg7qvimfC/Cguk28Zn4TanROfLopDLyzVFEYYOuiYgq+0RvYyyK68VE/mfLI=
+Received: from localhost (108-207-244-174.lightspeed.austtx.sbcglobal.net [108.207.244.174])
+	(Authenticated sender: nico@cryptonector.com)
+	by homiemail-a108.g.dreamhost.com (Postfix) with ESMTPA id A781C2005D807;
+	Wed,  6 Aug 2014 13:13:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20140806194457.GD23449@localhost>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254899>
 
-Peyton Randolph <prandolph@apple.com> writes:
+On Wed, Aug 06, 2014 at 02:44:59PM -0500, Nico Williams wrote:
+> That means that you have/maintain an intermediate upstream, yes?
+> 
+> This is a bit trickier since once in a while that intermediate upstream
+> and everyone downstream of it has to catch up with the real upstream.
+> 
+> Here you have two options:
+> 
+>  - the intermediate diverges from the real upstream, and then you
+>    merge/cherry-pick from the upstream as needed
+>    
+>    The intermediate's maintainer must still merge/rebase/cherry-pick
+>    from the intermediate branch and onto a branch of the upstream in
+>    order to push to the upstream.
 
-> Bug v1.9.3: Spurious whitespace warnings when using git apply with the --exclude option
-> ...
-> EXPECTED RESULT:
-> No warning about adding whitespace errors because no whitespace
-> errors are added to the tree since A is excluded and B has no
-> whitespace errors.
+I should add something important here.
 
-By reading the way the code is structured, I would expect (I didn't
-check) that all versions of apply that supports whitespace error
-detection with include/exclude option to share this symptom, and
-this bug is not specific to 1.9.3.
+Rebasing makes life easier for the intermediate maintainer, and for any
+upstream maintainer who has to merge "pull requests" or patches sent in
+email.  Rebasing puts the onus for merging on the contributor, exactly
+where it belongs!
 
-In order to decide if a hunk with a new whitespace error should be
-reported, the program needs to parse the patch input to at least
-find out what path the part being parsed is to be applied, and the
-whitespace error detection and reporting is done when the patch
-input is parsed.  After the part that applies to one path is fully
-parsed, it then checks to see if the path is included/excluded and
-omits it from the --stat output and also actual application.
+(Granted, for an e-mail based workflow one's patches might have made for
+a fast-forward merge when sent but not when the upstream gets to them.
+With long enough latency this gets painful.  Which is why I don't
+recommend an e-mail based commit integration workflow.)
 
-That part of the code needs to be restructured so that at least
-error reporting (and preferrably error detection) is not done when
-the path is known to be excluded.  Let me see if this can be easily
-done.
-
-Thanks.
+Nico
+-- 
