@@ -1,86 +1,67 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v8 7/8] add a test for semantic errors in config files
-Date: Wed,  6 Aug 2014 07:53:11 -0700
-Message-ID: <1407336792-16962-8-git-send-email-tanayabh@gmail.com>
-References: <1407336792-16962-1-git-send-email-tanayabh@gmail.com>
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 06 17:01:30 2014
+From: Jared Brank <jared.brank@skaletech.com>
+Subject: Git detects changes after new branch created and switched even though
+ files have not been changed
+Date: Wed, 6 Aug 2014 15:04:15 +0000
+Message-ID: <a2546f9109674431820b7a98f9570433@BL2PR05MB180.namprd05.prod.outlook.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 06 17:04:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XF2iM-0000Os-Lc
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 17:01:19 +0200
+	id 1XF2lN-00043q-1M
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 17:04:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755144AbaHFPBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2014 11:01:12 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:56238 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755101AbaHFPBL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2014 11:01:11 -0400
-Received: by mail-pd0-f178.google.com with SMTP id w10so3451282pde.37
-        for <git@vger.kernel.org>; Wed, 06 Aug 2014 08:01:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6J84A8d7SA4s+ioXYwDFc2Ho0m6XtdpdzFEBl94j3r8=;
-        b=NkKU59G/Z56VYd1GKowzLMVnhB89EECsE0CUMT2RnPcBcPdyjdPP4rlvqwwPf5K7Nl
-         6wyPyVA7H2x2UzkFOvx/Vx8dTkJ5JpkBxTraq1iIerPxxUhLwRs/FFR1CBm6xlnNhIq0
-         UDCzswFanfRYxtbj0LIiqcswJDkp43qpAi50FdXFvhhe2elusYIvK/OevdIgoFAP0z7d
-         8VxAxK82w6Ardoz4qvLTCQ4BcUF9LeRzSh7SnKnV+YOylU0TBiMhWKRHt0QeubUT4tPU
-         yUcA4R+J7o4HIRRb8kdpyjkTrBb4AdJhzJUeQcvKhxCdOOPW1sZdwoCXAKa8VxEwfC6M
-         pF4Q==
-X-Received: by 10.67.14.193 with SMTP id fi1mr11850268pad.17.1407337269466;
-        Wed, 06 Aug 2014 08:01:09 -0700 (PDT)
-Received: from localhost.localdomain ([223.176.214.188])
-        by mx.google.com with ESMTPSA id u2sm1547305pbs.42.2014.08.06.08.01.04
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 06 Aug 2014 08:01:09 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0.GIT
-In-Reply-To: <1407336792-16962-1-git-send-email-tanayabh@gmail.com>
+	id S1754070AbaHFPEV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2014 11:04:21 -0400
+Received: from mail-bn1blp0183.outbound.protection.outlook.com ([207.46.163.183]:44342
+	"EHLO na01-bn1-obe.outbound.protection.outlook.com"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752615AbaHFPEU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Aug 2014 11:04:20 -0400
+Received: from BL2PR05MB180.namprd05.prod.outlook.com (10.242.198.20) by
+ BL2PR05MB180.namprd05.prod.outlook.com (10.242.198.20) with Microsoft SMTP
+ Server (TLS) id 15.0.995.14; Wed, 6 Aug 2014 15:04:16 +0000
+Received: from BL2PR05MB180.namprd05.prod.outlook.com ([169.254.10.152]) by
+ BL2PR05MB180.namprd05.prod.outlook.com ([169.254.10.152]) with mapi id
+ 15.00.0995.014; Wed, 6 Aug 2014 15:04:16 +0000
+Thread-Topic: Git detects changes after new branch created and switched even
+ though files have not been changed
+Thread-Index: Ac+xhwx/Vn7uPytbSP2f0lIw3EyUEQAAFz8A
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [216.228.71.74]
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:
+x-forefront-prvs: 02951C14DC
+x-forefront-antispam-report: SFV:NSPM;SFS:(6009001)(189002)(199002)(107886001)(74662001)(76482001)(110136001)(85306004)(2351001)(107046002)(74502001)(229853001)(74316001)(76576001)(50986999)(77982001)(46102001)(87936001)(2656002)(86362001)(83072002)(101416001)(31966008)(85852003)(92566001)(79102001)(77096002)(99396002)(83322001)(33646002)(106356001)(64706001)(81342001)(99286002)(95666004)(81542001)(21056001)(4396001)(105586002)(66066001)(80022001)(54356999)(20776003)(24736002)(108616003);DIR:OUT;SFP:;SCL:1;SRVR:BL2PR05MB180;H:BL2PR05MB180.namprd05.prod.outlook.com;FPR:;MLV:sfv;PTR:InfoNoRecords;MX:1;LANG:en;
+X-OriginatorOrg: skaletech.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254863>
 
-Semantic errors (for example, for alias.* variables NULL values are
-not allowed) in configuration files cause a die printing the line
-number and file name of the offending value.
+Running on Windows with latest version of Git. 1.9.4. Also had this tro=
+uble with 1.8.2 but upgraded hoping it would fix the problem.
 
-Add a test documenting that such errors cause a die printing the
-accurate line number and file name.
+When I do a reset on several files, it says they were successfully reve=
+rted they still show up as modified when I do a git status. In this cas=
+e it's just a newline character at the end of the file. I also tried a =
+reset -- hard and they files still show up! What the heck! Help please.
+In trying to reproduce this, I re-cloned the git repo from the server, =
+which was in the exact clean state before I started last time. No files=
+ have been modified after cloning, all are identical. Then, I created a=
+ new branch (totally new, not tracking a remote branch). Viola - I now =
+have these files show up in my git status as modified. Please note that=
+ these are files that have been tracked for several previous commits.
+Just to clarify - the only command I ran to make this happen is:=A0git =
+checkout -b newbranch
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
- t/t1308-config-set.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/t/t1308-config-set.sh b/t/t1308-config-set.sh
-index 7fdf840..5ea0aa4 100755
---- a/t/t1308-config-set.sh
-+++ b/t/t1308-config-set.sh
-@@ -197,4 +197,15 @@ test_expect_success 'proper error on error in custom config files' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'check line errors for malformed values' '
-+	mv .git/config .git/config.old &&
-+	test_when_finished "mv .git/config.old .git/config" &&
-+	cat >.git/config <<-\EOF &&
-+	[alias]
-+		br
-+	EOF
-+	test_expect_code 128 git br 2>result &&
-+	grep "line 2.*.git/config\|.git/config.*line 2" result
-+'
-+
- test_done
--- 
-1.9.0.GIT
+And GitGui shows the files as identical even when compare whitespace is=
+ turned on.
