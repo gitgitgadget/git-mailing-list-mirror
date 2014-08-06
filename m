@@ -1,99 +1,121 @@
-From: Peyton Randolph <prandolph@apple.com>
-Subject: Bug v1.9.3: Spurious whitespace warnings when using git apply with the
- --exclude option
-Date: Wed, 06 Aug 2014 10:13:34 -0700
-Message-ID: <332C033B-7809-45A9-9F91-CC3A92090B86@apple.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/7] Documentation: git-init: --separate-git-dir: clarify
+Date: Wed, 06 Aug 2014 10:35:31 -0700
+Message-ID: <xmqqsil9msgs.fsf@gitster.dls.corp.google.com>
+References: <1407002817-29221-1-git-send-email-linusarver@gmail.com>
+	<1407002817-29221-5-git-send-email-linusarver@gmail.com>
+	<xmqqiom6oabe.fsf@gitster.dls.corp.google.com>
+	<20140806052129.GC12559@k0>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 06 19:28:51 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Arver <linusarver@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 06 19:35:54 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XF518-0003MI-7X
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 19:28:50 +0200
+	id 1XF57t-0003XQ-N9
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 19:35:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757775AbaHFR2j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Aug 2014 13:28:39 -0400
-Received: from mail-out6.apple.com ([17.151.62.28]:52340 "EHLO
-	mail-in6.apple.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757733AbaHFR2g convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Aug 2014 13:28:36 -0400
-X-Greylist: delayed 901 seconds by postgrey-1.27 at vger.kernel.org; Wed, 06 Aug 2014 13:28:36 EDT
-DKIM-Signature: v=1; a=rsa-sha256; d=apple.com; s=mailout2048s; c=relaxed/simple;
-	q=dns/txt; i=@apple.com; t=1407345215; x=2271258815;
-	h=From:Sender:Reply-To:Subject:Date:Message-id:To:Cc:MIME-version:Content-type:
-	Content-transfer-encoding:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=dK+12Kv66GDGGuBQY0SHrVsv2o8P7DlcAtZ9GyEFN0k=;
-	b=zE27sTe2nycCjMeEY7DViJW8/sHEZPWOeIBh0jxdLrhu3Hnj2RCnz0hKETMAoeS3
-	i/LEXtgtJCSqgy3m8UVnYQHF9Jc9q7GIznjz6k6PiOf54b7s0k85e0IjwKpFBAc1
-	F8Rep87VlALm9KwrHnnA9XN2vTW4Xj1XfFxxwGxgYQQrfA0gk0WN7WioTC429mMp
-	tfm2iNhFrcd3l7SuLV76Yt9RqavhoB7n0iHUgHtFPchrCslrv90l5U17PBb9AAvf
-	12p594C1zocuwPDd5LPS3o7E1b/dk1uh+s8UAgN+Qlk+hE8BoRqNFgHiFYfyOPQp
-	V+QRg9kGNzITivuBE3Mn0g==;
-Received: from mail-out.apple.com (bramley.apple.com [17.151.62.49])
-	(using TLS with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)
-	by mail-in6.apple.com (Apple Secure Mail Relay) with SMTP id A4.4C.32596.F3262E35; Wed,  6 Aug 2014 10:13:35 -0700 (PDT)
-Received: from relay4.apple.com ([17.128.113.87]) by local.mail-out.apple.com
- (Oracle Communications Messaging Server 7.0.5.30.0 64bit (built Oct 22 2013))
- with ESMTP id <0N9W00AXMADX6L03@local.mail-out.apple.com> for
- git@vger.kernel.org; Wed, 06 Aug 2014 10:13:35 -0700 (PDT)
-X-AuditID: 11973e15-f79d66d000007f54-b1-53e2623f13a9
-Received: from sesame.apple.com (sesame.apple.com [17.128.115.128])
-	(using TLS with cipher RC4-MD5 (128/128 bits))
-	(Client did not present a certificate)	by relay4.apple.com (Apple SCV relay)
- with SMTP id FD.D8.03493.34262E35; Wed,  6 Aug 2014 10:13:39 -0700 (PDT)
-Received: from [17.202.50.58] by sesame.apple.com
- (Oracle Communications Messaging Server 7.0.5.30.0 64bit (built Oct 22 2013))
- with ESMTPSA id <0N9W00KG3AIMHH40@sesame.apple.com> for git@vger.kernel.org;
- Wed, 06 Aug 2014 10:13:35 -0700 (PDT)
-X-Mailer: Apple Mail (2.1972.3)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprOLMWRmVeSWpSXmKPExsUiON3OUNc+6VGwwakuaYuuK91MDowenzfJ
-	BTBGcdmkpOZklqUW6dslcGU03VjLXDCLteLdt4OMDYyTWboYOTgkBEwklm3V7GLkBDLFJC7c
-	W8/WxcjFISQwk0li84SZbCAJXgFBiR+T74HVMwuoS0yZkgtRM4tJ4urkQ6wQzSYSqxZsZ4JI
-	9AEl1qxkhXB+MEocn/+MEaSKTUBb4uWCg2AdzED2k3cXWEGmCgskSWzYZAmxzEbi6sFLzCA2
-	i4CqRO/OvewgtoiAuMTb4zPZIZbJS5w68A/sUgmB86wS7a0T2SYwCs5CcuwshGNnIdm2gJF5
-	FaNQbmJmjm5mnpleYkFBTqpecn7uJkZISIruYDyzyuoQowAHoxIPb4bpw2Ah1sSy4srcQ4zS
-	HCxK4rxHzB8FCwmkJ5akZqemFqQWxReV5qQWH2Jk4uCUamCMuRX060qMo1LE5LfcNVdj/9eJ
-	/28Qy9VWEW3UXmt5sOqCS95UBqfj/WcvTa3JjLwpOnv6DO7QF/K24Y0TDN48nVEzyyP1Y4Pm
-	vQmHq6+vnPm9T1/8QqLykZOfkuak+vMLbOQ68nGG0r+Ce3qXT5+6sWWlxPka/Y32z1M19zFZ
-	mOzyfnJtygJZJZbijERDLeai4kQAFZp+CSoCAAA=
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrHJMWRmVeSWpSXmKPExsUi2FDcoOuc9CjY4MJaDYuuK91MDowenzfJ
-	BTBGcdmkpOZklqUW6dslcGU03VjLXDCLteLdt4OMDYyTWboYOTkkBEwkVi3YzgRhi0lcuLee
-	rYuRi0NIoI9J4u7bL1DOD0aJ4/OfMYJUsQloS7xccJC1i5GDg1lAXWLKlFyQMDNQ+Mm7C2Bh
-	YYEkiQ2bLEHCvAI2ElcPXmIGsVkEVCV6d+5lB7FFBMQl3h6fyQ5RYyBx9e9iZogb5CVOHfjH
-	NoGRdxbCgllIFsxC0rGAkXkVo0BRak5ipYleYkFBTqpecn7uJkZwqBSG72D8t8zqEKMAB6MS
-	D+8B84fBQqyJZcWVuYcYJTiYlUR4xW0eBQvxpiRWVqUW5ccXleakFh9ilOZgURLnvZh7O1hI
-	ID2xJDU7NbUgtQgmy8TBKdXAWJL9x+jNnL5vH2Ym7fmTuO0eV5Tepr/7prRMPfavOejmskwN
-	gcVNAtzO+/OWuJ9+WLAmeE3vzrZ1uXKZy1Qc3viv4r857bX1T1ZVFuUOXze2r3fZXhZUbvg9
-	V3qX6v7ZRsIzFNr+TUgsuf/dWI6dcTlX2THGnLnP09SYH/6a9Phs/elTl5S2eiixFGckGmox
-	FxUnAgDPvO2uEQIAAA==
+	id S1754457AbaHFRfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2014 13:35:43 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:63528 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754004AbaHFRfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2014 13:35:41 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9863D2EA75;
+	Wed,  6 Aug 2014 13:35:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=UaJFBXHhXz2f1WamoDnHPzTZ9NU=; b=N/Rt7N
+	roaHxpJvaOPS/aRkidmP+RPICQCtd9k9Z5DiF2+MKf8VX35lIu7Ic/9qWBSfyhro
+	vZx6ed/g7SWKBdFDEa4lF6MCkMmHO3n3R6BYEWJd4pN3LLmJvC0LHtxmUY0NrO3X
+	T3mxLIo9G8TWtxye8BSfUI7tnzD+UW4Kn1EVQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NPyDMLJpeM7EPwb050VdrbqCpWhIh2LG
+	nzR50J57TRkoR7e7i1OtlsCPyz1wm/Aqr0JANVS4L1mj2U9jSssApDCxuUWRiLD5
+	toEH8ZTMn5HF2KH4AIGjpsKlkXDHhTZpkLuls50G97bKtd8rYvcrwo/wA11FwvFg
+	xqVAnVMCu3A=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8D45F2EA74;
+	Wed,  6 Aug 2014 13:35:40 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id BC1F02EA62;
+	Wed,  6 Aug 2014 13:35:33 -0400 (EDT)
+In-Reply-To: <20140806052129.GC12559@k0> (Linus Arver's message of "Tue, 5 Aug
+	2014 22:21:30 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 11B9261C-1D90-11E4-A92B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254881>
 
-Bug v1.9.3: Spurious whitespace warnings when using git apply with the =
---exclude option
+Linus Arver <linusarver@gmail.com> writes:
 
-REPRO STEPS:
-1. Create a patch PATCH that modifies two files, A and B. Make sure the=
- modifications to file A add whitespace errors and the modifications to=
- file B do not.
-2. Apply that patch to a repo using git apply PATCH --exclude A
+> On Tue, Aug 05, 2014 at 03:12:21PM -0700, Junio C Hamano wrote:
+>> Linus Arver <linusarver@gmail.com> writes:
+>> 
+>> > Signed-off-by: Linus Arver <linusarver@gmail.com>
+>> > ---
+>> 
+>> You would need to work on your justification skills ;-) in the log
+>> message.  What does this change "clarify" and in what way?
+>
+> Oops, sorry. I guess I should have written some more information in the
+> commit message, something like this:
+>
+>     Use shorter sentences to describe what actually happens. We describe
+>     what the term "Git symbolic link" actually means.
+>
+>     Also, we separate out the description of the behavioral change upon
+>     reinitialization into its own paragraph.
 
-ACTUAL RESULT:
-git apply outputs a "warning: n lines add whitespace errors.=E2=80=9D w=
-here n is the number of lines with whitespace errors in A.=20
+Sounds very sensible.
 
-EXPECTED RESULT:
-No warning about adding whitespace errors because no whitespace errors =
-are added to the tree since A is excluded and B has no whitespace error=
-s.
+>> >  Documentation/git-init.txt | 12 ++++++------
+>> >  1 file changed, 6 insertions(+), 6 deletions(-)
+>> >
+>> > diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+>> > index f21b85b..bf0a7ae 100644
+>> > --- a/Documentation/git-init.txt
+>> > +++ b/Documentation/git-init.txt
+>> > @@ -57,12 +57,12 @@ DIRECTORY" section below.)
+>> >  
+>> >  --separate-git-dir=<git dir>::
+>> >  
+>> > -Instead of initializing the repository where it is supposed to be,
+>> > -place a filesytem-agnostic Git symbolic link there, pointing to the
+>> > -specified path, and initialize a Git repository at the path. The
+>> > -result is Git repository can be separated from working tree. If this
+>> > -is reinitialization, the repository will be moved to the specified
+>> > -path.
+>> > +Separate the Git repository from your working tree.  Instead of initializing the
+>> > +repository as a directory to either `$GIT_DIR` or `./.git/`, create a text file
+>> > +there containing the path to the actual repository.  This file acts as
+>> > +filesystem-agnostic Git symbolic link to the repository.
+
+While I agree that it is a very good idea to state "what it does,
+what it is for" with the very first sentence of the paragraph,
+"separate the git repository from your working tree" does not say
+much more than the name of the option "--separate-git-dir" already
+tells the reader.  And I do not offhand think of a better version
+(and obviously I didn't think of any when the current text was
+reviewed and committed).  The second sentence in your version is
+definitely an improvement over the first and the second sentences of
+the original ("where it is supposed to be" does not give any new
+information to those who don't know, and does not help those who
+already know).
+
+Perhaps we can simply remove the first sentence from your version?
+
+>> > +If this is reinitialization, the repository will be moved to the specified path.
+>> >  
+>> >  --shared[=(false|true|umask|group|all|world|everybody|0xxx)]::
