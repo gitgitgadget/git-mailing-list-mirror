@@ -1,74 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Subtree with submodule inside?
-Date: Wed, 06 Aug 2014 10:51:50 -0700
-Message-ID: <xmqqk36lmrpl.fsf@gitster.dls.corp.google.com>
-References: <CAHd499CaCeHYGZSQeY8MRVnnjXBTgDy=OUqBYqNd1e5GiKre_A@mail.gmail.com>
+From: Robert P Fischer <rpf2116@columbia.edu>
+Subject: Apple violating git LGPL?
+Date: Wed, 6 Aug 2014 14:10:08 -0400
+Message-ID: <CAC_jL3wO9jkE4HapvJjn-4uW4RtSxubFthrxzQJ87EQ4Gq-9Ug@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git <git@vger.kernel.org>
-To: Robert Dailey <rcdailey.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 06 19:52:16 2014
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 06 20:10:22 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XF5Nl-00007O-T7
-	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 19:52:14 +0200
+	id 1XF5fG-000815-QR
+	for gcvg-git-2@plane.gmane.org; Wed, 06 Aug 2014 20:10:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753300AbaHFRwC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2014 13:52:02 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:64097 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752027AbaHFRwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2014 13:52:00 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id F1AB82F1FA;
-	Wed,  6 Aug 2014 13:51:59 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4IXH5rd4WChjzRK6+/ra/N88N7g=; b=i9Vw6G
-	IPnbprc0uksOTkOyUl74jh3qqRrPVxoa57Jy/lWjJpThoPK51vIUvEcQf98u0rjh
-	Nki+mb/ypJmx85VnKxbWvH00SFuPjP8ftTX+y24bYKXnBAcm6/vIOWhTjai3S6ID
-	R0QHoOblnU0tGOOhAT/p5CwuQF3SrVpIDO/MI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nxvMiDXT8xvBwRyrwbPUwQZ4T4wjitNf
-	83XKoh/qFNZZjdIzGV3Xi2HIjTpicaTef8hBX8utbXI+hiIr6cEFJOOubB3n9CZr
-	rGxaF8s0pNU44wERi9ea3Xm+bUsgUPZ6mXcV/CXCyaEu+GKvdRdJ0dZoYPZXQ4Qr
-	QqFxKZVp0Uo=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id E1DB22F1F9;
-	Wed,  6 Aug 2014 13:51:59 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 40A5C2F1E8;
-	Wed,  6 Aug 2014 13:51:53 -0400 (EDT)
-In-Reply-To: <CAHd499CaCeHYGZSQeY8MRVnnjXBTgDy=OUqBYqNd1e5GiKre_A@mail.gmail.com>
-	(Robert Dailey's message of "Wed, 6 Aug 2014 12:20:26 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 598C2FC8-1D92-11E4-BF5A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1754425AbaHFSKL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2014 14:10:11 -0400
+Received: from buckwheat.cc.columbia.edu ([128.59.72.251]:40181 "EHLO
+	buckwheat.cc.columbia.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754420AbaHFSKK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2014 14:10:10 -0400
+Received: from hazelnut (hazelnut.cc.columbia.edu [128.59.213.250])
+	by buckwheat.cc.columbia.edu (8.13.8/8.13.8) with ESMTP id s76I9lKv000742
+	for <git@vger.kernel.org>; Wed, 6 Aug 2014 14:10:09 -0400
+Received: from hazelnut (localhost.localdomain [127.0.0.1])
+	by hazelnut (Postfix) with ESMTP id C1BD538
+	for <git@vger.kernel.org>; Wed,  6 Aug 2014 14:10:09 -0400 (EDT)
+Received: from tarap.cc.columbia.edu (tarap.cc.columbia.edu [128.59.29.7])
+	by hazelnut (Postfix) with ESMTP id B660F38
+	for <git@vger.kernel.org>; Wed,  6 Aug 2014 14:10:09 -0400 (EDT)
+Received: from mail-qg0-f45.google.com (mail-qg0-f45.google.com [209.85.192.45])
+	by tarap.cc.columbia.edu (8.14.4/8.14.3) with ESMTP id s76IA9dQ029158
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 6 Aug 2014 14:10:09 -0400 (EDT)
+Received: by mail-qg0-f45.google.com with SMTP id f51so3124157qge.18
+        for <git@vger.kernel.org>; Wed, 06 Aug 2014 11:10:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=sVbK1ttqOCJf2EOHPJXmqSi3wUHfmyCiemKUWEVhyBE=;
+        b=BLMmYYmuD83TEp7TJmTia7mOCRfDrleaGmFKFRVcuWNaSSEzZwu9W1Aov4MW6ZmgTr
+         /WsuRS4JOiThd7YNPzBgdZnI62oTvlpBzTxeTOO3IszsL9heLt6Sh8CEpBbZvJ/UJRoz
+         4sxrWJIa+zjny7wyUej3L8wac8dW/AZlv5gTLLbUPNTXe6Vp44+rDKIDdISCinClxKli
+         6PysX75o0rVXuCJerTV1Ix/CH5W9WCcvmT8GFXibEE/wmZ/7y7tml1qm9EFQmBhmwuJo
+         DIoi6aqsf3MDUS9Q1LIWoyHROVXbK0aJ2CCHVHC38M+du45Ot7nacOJQQVPj9iEyJCI5
+         5UOg==
+X-Gm-Message-State: ALoCoQn1cuEm4OLJNvURKlhniVm+2t3plnFH3BcoVH/Tie1fnOPUW2oHiGeTc28oRu4YmTdRREqW7G96UDAPhKOAeNJocCVBPdapxmetBVOmUwwp5KTfBOA=
+X-Received: by 10.140.97.131 with SMTP id m3mr5645006qge.80.1407348609119;
+        Wed, 06 Aug 2014 11:10:09 -0700 (PDT)
+X-Received: by 10.140.97.131 with SMTP id m3mr5644961qge.80.1407348608812;
+ Wed, 06 Aug 2014 11:10:08 -0700 (PDT)
+Received: by 10.224.176.17 with HTTP; Wed, 6 Aug 2014 11:10:08 -0700 (PDT)
+X-No-Spam-Score: Local
+X-Scanned-By: MIMEDefang 2.68 on 128.59.29.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254884>
 
-Robert Dailey <rcdailey.lists@gmail.com> writes:
+Hello,
 
-> Is this even possible? The .gitmodule file has to be at the root of
-> the repository, AFAIK. So if the subtree is inherently not at the
-> root, how does it manage its own submodules?
->
-> Basically I have a common library that also keeps a submodule of third
-> party dependencies (binaries). Each super project that depends on this
-> common library (each super project has its own repository) will add it
-> as a subtree. So what happens to the submodule with this setup?
+I ran git on my newly-set-up OS X Mavericks machine, and get:
 
-My knee-jerk reaction would be "subtree would break submodules
-badly, don't use it" ;-).
+        $ git
+         Agreeing to the Xcode/iOS license requires admin privileges,
+please re-run as root via sudo.
 
-After all, I invented subtree merge as an ugly interim workaround
-before submodule subsystem got into a usable shape, hoping that new
-projects can use submodules without resorting to subtree merges.
+Running 'git --verision' gives the same result.  This seems
+problematic in a few ways, and I am wondering if the git community is
+interested in addressing it:
+
+1. Why do I have to agree to Apple's licensing terms to use an LGPL
+program?  Is this appropriate?  Is it allowed under the LGPL?
+
+2. This is a significant problem for me, because I'm using a work
+machine and do not have admin access.
+
+3. The version of git I ran is clearly NOT a plain vanilla "official"
+git, it is a derivative work.  Has Apple provided the source code of
+the special version that I just ran?  If not, that would seem to be a
+violation of the LGPL.
+
+Thanks,
+Bob
