@@ -1,80 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] builtin/log.c: fix minor memory leak
-Date: Thu,  7 Aug 2014 19:13:37 +0200
-Message-ID: <1407431617-4156-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 07 19:13:51 2014
+From: Nico Williams <nico@cryptonector.com>
+Subject: Re: "Branch objects" (was: Re: cherry picking and merge)
+Date: Thu, 7 Aug 2014 12:22:08 -0500
+Message-ID: <20140807172207.GP23449@localhost>
+References: <CANQwDwcHSO+KwhZbo4BTcWnAWGWbJzNQ7CY2m3nq+p0t9uDeqg@mail.gmail.com>
+ <20140806200726.GE23449@localhost>
+ <alpine.LSU.2.00.1408071222510.13901@hermes-1.csi.cam.ac.uk>
+ <20140807155828.GM23449@localhost>
+ <alpine.LSU.2.00.1408071735410.23775@hermes-1.csi.cam.ac.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub =?utf-8?B?TmFyxJlic2tp?= <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Mike Stump <mikestump@comcast.net>,
+	git discussion list <git@vger.kernel.org>
+To: Tony Finch <dot@dotat.at>
+X-From: git-owner@vger.kernel.org Thu Aug 07 19:22:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFRGA-00057U-Oe
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 19:13:51 +0200
+	id 1XFROK-0001MC-PD
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 19:22:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757533AbaHGRNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2014 13:13:45 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:48964 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757335AbaHGRNn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2014 13:13:43 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id s77HDbFI023435
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 7 Aug 2014 19:13:37 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s77HDdO2004019;
-	Thu, 7 Aug 2014 19:13:39 +0200
-Received: from moy by anie.imag.fr with local (Exim 4.80)
-	(envelope-from <moy@imag.fr>)
-	id 1XFRFz-0001CT-4p; Thu, 07 Aug 2014 19:13:39 +0200
-X-Mailer: git-send-email 2.0.2.737.gfb43bde
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 07 Aug 2014 19:13:37 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s77HDbFI023435
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1408036417.98432@SICVEjATJ0ybSLQBy9G9+g
+	id S932422AbaHGRWN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2014 13:22:13 -0400
+Received: from sub4.mail.dreamhost.com ([69.163.253.135]:34200 "EHLO
+	homiemail-a86.g.dreamhost.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932263AbaHGRWK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Aug 2014 13:22:10 -0400
+Received: from homiemail-a86.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a86.g.dreamhost.com (Postfix) with ESMTP id 260C5360075;
+	Thu,  7 Aug 2014 10:22:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=cryptonector.com; h=date
+	:from:to:cc:subject:message-id:references:mime-version
+	:content-type:in-reply-to; s=cryptonector.com; bh=KoPpxgE6GowD7k
+	/rXWjswWzW0Ks=; b=wJS3raPQTBgUcZvlVxwYRAKdncTDaVg/O+jTVpYUXMB7/5
+	PzhOpRzUKTU30luMqVYBW1nuZZ5YWBp2bjxtGWRRfz8zx0puq1S0HmZOMEHVihr5
+	afRYWyIxOALfY7rj8ce4pekns6DoT+7CU/X9rQGlYPkQGXC0XLdW8+Z/PlH/k=
+Received: from localhost (108-207-244-174.lightspeed.austtx.sbcglobal.net [108.207.244.174])
+	(Authenticated sender: nico@cryptonector.com)
+	by homiemail-a86.g.dreamhost.com (Postfix) with ESMTPA id 4AB5136006B;
+	Thu,  7 Aug 2014 10:22:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.LSU.2.00.1408071735410.23775@hermes-1.csi.cam.ac.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254981>
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Valgrind confirms, one less unreachable block ;-).
+On Thu, Aug 07, 2014 at 05:42:34PM +0100, Tony Finch wrote:
+> Nico Williams <nico@cryptonector.com> wrote:
+> > On Thu, Aug 07, 2014 at 12:38:48PM +0100, Tony Finch wrote:
+> > > But [a rebasing workflow] is inconvenient for deploying the patched
+> > > version to production (which is the point of developing the fixes) - I
+> > > want a fast-forwarding branch for that.
+> >
+> > I'm not sure I follow this.  You deploy what you build, and you build
+> > the HEAD of the production branch, whatever that is.  If it gets
+> > rebased, so it it does.
+> 
+> The problem is that the production branch gets copied around: pushed to
+> the repo server, pulled by other team members, etc. Forced pushes
+> are accident-prone, as is resetting a rebased branch after a pull.
 
- builtin/log.c | 1 +
- 1 file changed, 1 insertion(+)
+When I rebase and I need the old HEAD around I do something like this:
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 4389722..e4d8122 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -857,20 +857,21 @@ static void add_branch_description(struct strbuf *buf, const char *branch_name)
- {
- 	struct strbuf desc = STRBUF_INIT;
- 	if (!branch_name || !*branch_name)
- 		return;
- 	read_branch_desc(&desc, branch_name);
- 	if (desc.len) {
- 		strbuf_addch(buf, '\n');
- 		strbuf_addbuf(buf, &desc);
- 		strbuf_addch(buf, '\n');
- 	}
-+	strbuf_release(&desc);
- }
- 
- static char *find_branch_name(struct rev_info *rev)
- {
- 	int i, positive = -1;
- 	unsigned char branch_sha1[20];
- 	const unsigned char *tip_sha1;
- 	const char *ref, *v;
- 	char *full_ref, *branch = NULL;
- 
+$ git checkout $branch_to_rebase
+$ ver=${branch_to_rebase##*-}
+$ git checkout -b ${branch_to_rebase%-${ver}}-$((ver+1))
+$ git rebase ...
+
+or like this:
+
+$ git checkout $branch_to_rebase
+$ git branch ${branch_to_rebase}-$(date +%Y-%m-%d)
+$ git rebase ...
+
+Either way I retain the old HEAD with some name.  This requires
+discipline, so scripting it is useful.  But if you want discipline then
+you want git to know that "for this branch, don't prune/gc old HEADs
+orphaned after rebases" and "push the rebase history for this branch".
+
+> > > https://git.csx.cam.ac.uk/x/ucs/git/git-repub.git
+> >
+> > Yeah, that's useful.
+> 
+> Glad you think so :-)
+
+Thank you.
+
+Nico
 -- 
-2.0.2.737.gfb43bde
