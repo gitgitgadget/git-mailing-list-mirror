@@ -1,74 +1,63 @@
-From: Alan Grover <alan.grover@gmail.com>
-Subject: glob escaping doesn't work with git mv
-Date: Wed, 6 Aug 2014 19:52:10 -0600
-Message-ID: <CA+cJFMm_vJwk=D0dkhEvfXwWk1S74hONb_g7O9W0iMZD3yAdLg@mail.gmail.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: glob escaping doesn't work with git mv
+Date: Thu, 7 Aug 2014 09:10:09 +0700
+Message-ID: <CACsJy8APd6JH=32eWqK0m3e9bEWcrme3xZUewCyQxv08w=CyUQ@mail.gmail.com>
+References: <CA+cJFMm_vJwk=D0dkhEvfXwWk1S74hONb_g7O9W0iMZD3yAdLg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 03:52:18 2014
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Alan Grover <alan.grover@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 07 04:10:52 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFCsL-0005de-2R
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 03:52:17 +0200
+	id 1XFDAI-0005wW-OF
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 04:10:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755032AbaHGBwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Aug 2014 21:52:12 -0400
-Received: from mail-qg0-f53.google.com ([209.85.192.53]:57450 "EHLO
-	mail-qg0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755022AbaHGBwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Aug 2014 21:52:11 -0400
-Received: by mail-qg0-f53.google.com with SMTP id q107so3757392qgd.12
-        for <git@vger.kernel.org>; Wed, 06 Aug 2014 18:52:10 -0700 (PDT)
+	id S1754505AbaHGCKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Aug 2014 22:10:41 -0400
+Received: from mail-ie0-f175.google.com ([209.85.223.175]:58467 "EHLO
+	mail-ie0-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754420AbaHGCKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Aug 2014 22:10:40 -0400
+Received: by mail-ie0-f175.google.com with SMTP id x19so3948476ier.34
+        for <git@vger.kernel.org>; Wed, 06 Aug 2014 19:10:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=FWkwNV8h0hfTljQ2zZs/FwF0V5vjunRZeLy6SOognyo=;
-        b=Hcw6LrCUwn1KqgyHRMh0CzkEikpdS0dFxE4I5jBlsunBwRREKK8Lc4F0dxZM8lLI2f
-         dWfqmWfpm3sera0LXPoGbsAnDeYiGFx4xn7tuhrcvbWn79WWfGbh/mnsjNMmLqaOVxs/
-         bE/Pnc35cwWJuWcc81z51KrbsS0FfTTMLGr8tD6WdP04fkarTtECAAFNButcj8X6uHxM
-         ad6P9cWpgJr6xajmZCR+NvRh5GBTtjucVFZqtGVZywKdkiVJEJ5RIqAiCf10/93EO1SR
-         vb+88fuaGGvxQof2/xthTFHcEITFzVrZ6XJUm/mxwj3t8KqsvGc1XRTIoH+tm+1Bc0FO
-         lQVQ==
-X-Received: by 10.140.23.37 with SMTP id 34mr9532430qgo.2.1407376330540; Wed,
- 06 Aug 2014 18:52:10 -0700 (PDT)
-Received: by 10.140.41.213 with HTTP; Wed, 6 Aug 2014 18:52:10 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=sLGhM3enh7MnS0wfbj+9CuQR2CmpKwLqMVueDsrLTxI=;
+        b=na39/EM6JRqsywOqoJetus1M+PZwYdUsDXpFdwZbYnnZrj52D2n0BKZFlt2yCZJ3Ii
+         1XNWNxNIZKVkIcRZYSYXgfhKPAtOrIzRv/31Wf+usg6Ls2hEUxIyP4KsY2II7XQVu+7u
+         aKoKIT6X0Qto5XnuX/W+t20SjOLDyCu6ipB7PkiZl2dC5QRNquBWuZVvZ3KbHqK0lS2Y
+         MiHUqRGH+Pwb9kEnit9hXoCmSbGaXCY4W/wKEMvI+EZbO6uD2vOSwsMbRjwUOgMjmQlN
+         VMpawZztuEcHe7ohs6PtVYzldsJggExUKa/1TvhC4ae4K6i0CCrLLhuWZYRiIjRUJ5CF
+         FIlA==
+X-Received: by 10.50.124.102 with SMTP id mh6mr937834igb.27.1407377439521;
+ Wed, 06 Aug 2014 19:10:39 -0700 (PDT)
+Received: by 10.107.13.80 with HTTP; Wed, 6 Aug 2014 19:10:09 -0700 (PDT)
+In-Reply-To: <CA+cJFMm_vJwk=D0dkhEvfXwWk1S74hONb_g7O9W0iMZD3yAdLg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254944>
 
-I tried using escaped globs with git mv, but globs don't seem to be
-expanded with git mv.
+On Thu, Aug 7, 2014 at 8:52 AM, Alan Grover <alan.grover@gmail.com> wrote:
+> Since we can do git add file\*, I tried:
+>
+> $ git mv file\* newdir
+>
+> I get a 'bad source, source=file* destination=file*' error. It seems
+> to be looking for a file named 'file*' rather than performing glob
+> expansion.
 
-So, for example, I've got files file1 & file2, and have been editing
-them, so I've got file1~ and file2~ also, and *~ is in .gitignore.
-
-If I do:
-
-$ mkdir newdir
-$ git mv file* newdir
-
-I get a 'fatal: not in repository' error because I'm trying to move
-untracked files.
-
-Since we can do git add file\*, I tried:
-
-$ git mv file\* newdir
-
-I get a 'bad source, source=file* destination=file*' error. It seems
-to be looking for a file named 'file*' rather than performing glob
-expansion.
-
-If I do:
-
-$ rm *~
-$ git mv file* newdir
-
-Everything works as expected. It would be convenient if git mv
-expanded escaped globs.
-
-Thanks!
+This is a known problem (to me at least). Source path processing in
+git-mv is a bit complicated and it scared me away from converting to
+using pathspec (which supports globbing and stuff). But perhaps if I
+just expand pathspec and feed the final path list to git-mv (pretty
+much like how shells expand glob) then it probably works..
+-- 
+Duy
