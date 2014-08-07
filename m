@@ -1,112 +1,92 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v3 11/11] branch.c: replace `git_config()` with `git_config_get_string()
-Date: Thu, 07 Aug 2014 23:26:42 +0530
-Message-ID: <53E3BDDA.1090208@gmail.com>
-References: <1407428486-19049-1-git-send-email-tanayabh@gmail.com> <1407428486-19049-12-git-send-email-tanayabh@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] builtin/log.c: fix minor memory leak
+Date: Thu, 7 Aug 2014 11:04:35 -0700
+Message-ID: <20140807180435.GD12427@google.com>
+References: <1407431617-4156-1-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 19:56:56 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 07 20:04:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFRvq-0004zn-Ix
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 19:56:54 +0200
+	id 1XFS3O-0008Vs-Sr
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 20:04:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754839AbaHGR4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2014 13:56:50 -0400
-Received: from mail-pd0-f176.google.com ([209.85.192.176]:62469 "EHLO
-	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754803AbaHGR4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2014 13:56:48 -0400
-Received: by mail-pd0-f176.google.com with SMTP id y10so5578945pdj.21
-        for <git@vger.kernel.org>; Thu, 07 Aug 2014 10:56:48 -0700 (PDT)
+	id S1751214AbaHGSEj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2014 14:04:39 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:41558 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750763AbaHGSEi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2014 14:04:38 -0400
+Received: by mail-pa0-f53.google.com with SMTP id rd3so5731594pab.26
+        for <git@vger.kernel.org>; Thu, 07 Aug 2014 11:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=Z262wVcLT1ikFV2zrULewQ++FY925qwqcCtpQbUa4qc=;
-        b=rOAzy2QO+BVrWu6NyG1IPafS2tXP9nIvSyvl/SP/ot20QQcodl3rd42hB4noWuvQek
-         7aT/EuPS27FBIE7cMnNkxi4pobUBenC/+dH8UM2uqiuX/XAezqDf7soGuk7TL+NU00WU
-         cZfpJD+4Rf+8TGZFfwIMY1z/GLCuwvQ4oJ83TfOBLJtlfzeEj2+pQvU4SEvaDj2tK/YT
-         +RLNjstInVzXdZsgEwJ3kz50duwmL77yxurcdK3JZpWxnlV9w/iB4i6JgXxATglXX0Ad
-         xoN4moftcQ/AgzMZUxbYuOE9pW+xyY5C9vT8iF+hvcF1tEDdT1EkhCpZZq132lOpsCwr
-         rA1Q==
-X-Received: by 10.68.229.166 with SMTP id sr6mr3481846pbc.33.1407434208289;
-        Thu, 07 Aug 2014 10:56:48 -0700 (PDT)
-Received: from [127.0.0.1] ([223.176.226.83])
-        by mx.google.com with ESMTPSA id za9sm615736pac.25.2014.08.07.10.56.46
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=zJjEzT69pmRqDCtqgOHJDhYBzDhnvegxP3mxc0qnTzM=;
+        b=vlc4IFfUzSlHTVDHVR6koVrF+TsDOIRET4x/nnsldSZm+HhZdDnbvZheD5fcWk6RMI
+         RaFV/4SF8OxeXcDvN6Ru09T00A+xcqeu+s8BdHJ/l4q3eQk91RwrPFfAuvmAAcr3EqIS
+         ZNW0PS7uDOia3BDXOnkmgPIBMqNi1v/e6hvSk+oxVnKuoOKpMtrmSIORab/lKYQW9Gy4
+         rR4vNGcgiiWALQ5R+xuqHkyBtmn4UHoljidmaF4KFwoLLnS39HAHhZWwW6aVMbNWk20/
+         JOy/rdk3hkvPKmcjjXzxJtr5sduLRpMc0enHevsFCL6kblMzXSkdp4qTotMLNm+Xisgq
+         DdrQ==
+X-Received: by 10.70.129.162 with SMTP id nx2mr11371244pdb.73.1407434678247;
+        Thu, 07 Aug 2014 11:04:38 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:9932:b877:7123:e96a])
+        by mx.google.com with ESMTPSA id io7sm531046pbd.11.2014.08.07.11.04.37
         for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 07 Aug 2014 10:56:47 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <1407428486-19049-12-git-send-email-tanayabh@gmail.com>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Thu, 07 Aug 2014 11:04:37 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1407431617-4156-1-git-send-email-Matthieu.Moy@imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254984>
 
-Use `git_config_get_string()` instead of `git_config()` to take advantage of
-the config-set API which provides a cleaner control flow. While we are at
-it, return -1 if we find no value for the queried variable. Original code
-returned 0 for all cases, which was checked by `add_branch_desc()` in
-fmt-merge-msg.c resulting in addition of a spurious newline to the `out`
-strbuf. Now, the newline addition is skipped as -1 is returned to the caller
-if no value is found.
+Matthieu Moy wrote:
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
-v3: Changed the commit message to a more appropriate one.
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> ---
+> Valgrind confirms, one less unreachable block ;-).
 
- branch.c | 27 +++++++--------------------
- 1 file changed, 7 insertions(+), 20 deletions(-)
+This belongs in the commit message.
 
-diff --git a/branch.c b/branch.c
-index 735767d..df6b120 100644
---- a/branch.c
-+++ b/branch.c
-@@ -140,30 +140,17 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 	return 0;
- }
+[...]
+> --- a/builtin/log.c
+> +++ b/builtin/log.c
+> @@ -857,20 +857,21 @@ static void add_branch_description(struct strbuf *buf, const char *branch_name)
+>  {
+>  	struct strbuf desc = STRBUF_INIT;
+>  	if (!branch_name || !*branch_name)
+>  		return;
+>  	read_branch_desc(&desc, branch_name);
+>  	if (desc.len) {
+>  		strbuf_addch(buf, '\n');
+>  		strbuf_addbuf(buf, &desc);
+>  		strbuf_addch(buf, '\n');
+>  	}
+> +	strbuf_release(&desc);
 
--struct branch_desc_cb {
--	const char *config_name;
--	const char *value;
--};
--
--static int read_branch_desc_cb(const char *var, const char *value, void *cb)
--{
--	struct branch_desc_cb *desc = cb;
--	if (strcmp(desc->config_name, var))
--		return 0;
--	free((char *)desc->value);
--	return git_config_string(&desc->value, var, value);
--}
--
- int read_branch_desc(struct strbuf *buf, const char *branch_name)
- {
--	struct branch_desc_cb cb;
-+	char *v = NULL;
- 	struct strbuf name = STRBUF_INIT;
- 	strbuf_addf(&name, "branch.%s.description", branch_name);
--	cb.config_name = name.buf;
--	cb.value = NULL;
--	git_config(read_branch_desc_cb, &cb);
--	if (cb.value)
--		strbuf_addstr(buf, cb.value);
-+	if (git_config_get_string(name.buf, &v)) {
-+		strbuf_release(&name);
-+		return -1;
-+	}
-+	strbuf_addstr(buf, v);
-+	free(v);
- 	strbuf_release(&name);
- 	return 0;
- }
--- 1.9.0.GIT
+This is an old one.  The leak was introduced by v1.7.9-rc1~1^2~12
+(format-patch: use branch description in cover letter, 2011-09-21).
+
+I was a little scared to see a leak in 'git log' code, since most of
+what log does involves looping over many commits.  Luckily this one is
+only used in make_cover_letter to create a cover letter describing the
+single branch on the command line, making it is a small, one-time
+leak.
+
+Less noise from static and dynamic analysis tools is still worthwhile,
+so for what it's worth,
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
