@@ -1,148 +1,112 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v2 00/11] git_config callers rewritten with the new config-set API
-Date: Thu,  7 Aug 2014 09:21:15 -0700
-Message-ID: <1407428486-19049-1-git-send-email-tanayabh@gmail.com>
+Subject: [PATCH v2 01/11] daemon.c: replace `git_config()` with `git_config_get_bool()` family
+Date: Thu,  7 Aug 2014 09:21:16 -0700
+Message-ID: <1407428486-19049-2-git-send-email-tanayabh@gmail.com>
+References: <1407428486-19049-1-git-send-email-tanayabh@gmail.com>
 Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 18:23:02 2014
+X-From: git-owner@vger.kernel.org Thu Aug 07 18:23:04 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFQSv-0005WF-LT
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 18:22:57 +0200
+	id 1XFQT1-0005aC-Jv
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 18:23:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932134AbaHGQWy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2014 12:22:54 -0400
-Received: from mail-pa0-f52.google.com ([209.85.220.52]:60312 "EHLO
-	mail-pa0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757414AbaHGQWx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2014 12:22:53 -0400
-Received: by mail-pa0-f52.google.com with SMTP id bj1so5681155pad.39
-        for <git@vger.kernel.org>; Thu, 07 Aug 2014 09:22:52 -0700 (PDT)
+	id S932290AbaHGQW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2014 12:22:58 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:58395 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757414AbaHGQW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2014 12:22:57 -0400
+Received: by mail-pa0-f53.google.com with SMTP id rd3so5593341pab.26
+        for <git@vger.kernel.org>; Thu, 07 Aug 2014 09:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id;
-        bh=PPqDRhYfpR4GUrRPpNUobtUVUBnUbbWyYx5KCawE04g=;
-        b=hFiLOTSLqqrlpzlwvxr4Wpg0oPABnmMygKbxX/EL8i+SyGln0ue3cooTIjY+qESGCZ
-         NpKVIHMxR5cu01Vr1ydSV+pXC3zEmUvwahEBELjC6hmYKFQJKtK6VLfXF7RUcJiV151C
-         kOCy5XFbA33fMTXVTFd22WEEcbvDyL8EYnnWpYT4ieOHuBawy+mpRURywnP4li3H8QCE
-         QlSO/lKz7vJk3dfvlv0anxrECnPzsVjQE57Sb+4mFcadk7tT2SaGCPSjfPSKjPjVP8d7
-         AYwtZUkm7X58UdXzPxYOA1dKkzDbVCh8uXP6nU1VUPSx+beTQKQxmsJmL8//0iqVKBKx
-         QRYQ==
-X-Received: by 10.66.180.34 with SMTP id dl2mr18721061pac.124.1407428572577;
-        Thu, 07 Aug 2014 09:22:52 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=F1Wf+cMTq5VfRlQcmxR3apfc2hOGpJt40zYO8TJr++4=;
+        b=uJx/PuLtjVqjDj+3DvmdyeQWNZ2nPLQucgOGgbvMa7U3LxCSkXdZD2PD/NggCSlZbb
+         8V1Vu0s3uZZUQwsS/Fz6e2CHMdt4lrYHo+t721nDf1Zd1IFmT0I06gwiKeUiGtR4SGda
+         gRQb7gA+7JfB4h6qvKmEPtuScNJSQSdufylTffnPeOwAOTedKt3PPD83tN4fGY6nxi/9
+         Ujtbtx6YJr0X7UrrlhMLoIQ2hMJmXw+rs+1OFY/dLxp0dWy2qbM2n8NmEv6ZZipEa/i6
+         P5dQds5T1nqTBc/Wpbd0CjAfDOULscWQgcIUSyToPhntSFI3CXPnQx1T17W2mItq+zao
+         abKg==
+X-Received: by 10.70.129.162 with SMTP id nx2mr10853936pdb.73.1407428577389;
+        Thu, 07 Aug 2014 09:22:57 -0700 (PDT)
 Received: from localhost.localdomain ([223.176.226.83])
-        by mx.google.com with ESMTPSA id zt5sm16022338pac.31.2014.08.07.09.22.46
+        by mx.google.com with ESMTPSA id zt5sm16022338pac.31.2014.08.07.09.22.52
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 07 Aug 2014 09:22:51 -0700 (PDT)
+        Thu, 07 Aug 2014 09:22:56 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.GIT
+In-Reply-To: <1407428486-19049-1-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254964>
 
-[v2]: git_die_config() messages changed. Diff between v1 and v2 is at the bottom.
+Use `git_config_get_bool()` family instead of `git_config()` to take advantage of
+the config-set API which provides a cleaner control flow.
 
-The ta/config-set API is more or less solidified.
-
-This series builds on the top of 4c715ebb in pu (ta/config-set). On top of it,
-it also requires series [1] (Rewrite `git_config()` using config-set API) for
-proper error checking.
-
-This series is the first batch of patches which rewrites the existing callers
-using a non-callback approach.
-This series aims to,
-
-* rewrite the existing callers, as you can see from the diff stat the bew API
-  provides a much concise and clear control flow.
-
-* stress test the new API, see if any corner cases or deficiencies arise or not.
-
-The series passes all the tests, only thing to watch is that the config variables
-that have been rewritten are single valued only. Though I have tried my best to
-ascertain it, still mistakes may arise.
-
-[1]: http://thread.gmane.org/gmane.comp.version-control.git/254633/
-
-Tanay Abhra (11):
-  daemon.c: replace `git_config()` with `git_config_get_bool()` family
-  http-backend.c: replace `git_config()` with `git_config_get_bool()`
-    family
-  read-cache.c: replace `git_config()` with `git_config_get_*()` family
-  archive.c: replace `git_config()` with `git_config_get_bool()` family
-  fetchpack.c: replace `git_config()` with `git_config_get_*()` family
-  rerere.c: replace `git_config()` with `git_config_get_*()` family
-  builtin/gc.c: replace `git_config()` with `git_config_get_*()` family
-  pager.c: replace `git_config()` with `git_config_get_value()`
-  imap-send.c: replace `git_config()` with `git_config_get_*()` family
-  alias.c: replace `git_config()` with `git_config_get_string()`
-  branch.c: replace `git_config()` with `git_config_get_string()
-
- alias.c        | 25 ++++++------------------
- archive.c      | 12 +++---------
- branch.c       | 27 +++++++-------------------
- builtin/gc.c   | 51 ++++++++++++++++++++-----------------------------
- daemon.c       | 26 ++++---------------------
- fetch-pack.c   | 35 ++++++++--------------------------
- http-backend.c | 31 ++++++++++++------------------
- imap-send.c    | 60 +++++++++++++++++++++++++---------------------------------
- pager.c        | 40 +++++++++++++--------------------------
- read-cache.c   | 14 +++-----------
- rerere.c       | 43 ++++++++++++-----------------------------
- 11 files changed, 114 insertions(+), 250 deletions(-)
-
--- 
-1.9.0.GIT
-
-
--- 8< --
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 4612ef5..5173657 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -76,8 +76,8 @@ static void gc_config(void)
-    if (strcmp(prune_expire, "now")) {
-      unsigned long now = approxidate("now");
-      if (approxidate(prune_expire) >= now) {
--       error(_("Invalid %s: '%s'"), "gc.pruneexpire", prune_expire);
--       git_die_config("gc.pruneexpire");
-+       git_die_config("gc.pruneexpire", _("Invalid gc.pruneexpire: '%s'"),
-+                       prune_expire);
-      }
-    }
-  }
-
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+---
+ daemon.c | 26 ++++----------------------
+ 1 file changed, 4 insertions(+), 22 deletions(-)
 
 diff --git a/daemon.c b/daemon.c
-index fb16664..6f78b61 100644
+index e6b51ed..6f78b61 100644
 --- a/daemon.c
 +++ b/daemon.c
-@@ -342,7 +342,6 @@ static int run_service(const char *dir, struct daemon_service *service)
-    git_config_get_bool(var.buf, &enabled);
-    strbuf_release(&var);
-  }
--
-  if (!enabled) {
-    logerror("'%s': service not enabled for '%s'",
-       service->name, path);
-diff --git a/imap-send.c b/imap-send.c
-index 586bdd8..618d75b 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -1336,8 +1336,7 @@ static void git_imap_config(void)
+@@ -230,23 +230,6 @@ struct daemon_service {
+ 	int overridable;
+ };
  
-  if (!git_config_get_value("imap.host", &val)) {
-    if (!val) {
--     config_error_nonbool("imap.host");
--     git_die_config("imap.host");
-+     git_die_config("imap.host", "Missing value for 'imap.host'");
-    } else {
-      if (starts_with(val, "imap:"))
-  val += 5;
--- 8< --
+-static struct daemon_service *service_looking_at;
+-static int service_enabled;
+-
+-static int git_daemon_config(const char *var, const char *value, void *cb)
+-{
+-	const char *service;
+-
+-	if (skip_prefix(var, "daemon.", &service) &&
+-	    !strcmp(service, service_looking_at->config_name)) {
+-		service_enabled = git_config_bool(var, value);
+-		return 0;
+-	}
+-
+-	/* we are not interested in parsing any other configuration here */
+-	return 0;
+-}
+-
+ static int daemon_error(const char *dir, const char *msg)
+ {
+ 	if (!informative_errors)
+@@ -324,6 +307,7 @@ static int run_service(const char *dir, struct daemon_service *service)
+ {
+ 	const char *path;
+ 	int enabled = service->enabled;
++	struct strbuf var = STRBUF_INIT;
+ 
+ 	loginfo("Request %s for '%s'", service->name, dir);
+ 
+@@ -354,11 +338,9 @@ static int run_service(const char *dir, struct daemon_service *service)
+ 	}
+ 
+ 	if (service->overridable) {
+-		service_looking_at = service;
+-		service_enabled = -1;
+-		git_config(git_daemon_config, NULL);
+-		if (0 <= service_enabled)
+-			enabled = service_enabled;
++		strbuf_addf(&var, "daemon.%s", service->config_name);
++		git_config_get_bool(var.buf, &enabled);
++		strbuf_release(&var);
+ 	}
+ 	if (!enabled) {
+ 		logerror("'%s': service not enabled for '%s'",
+-- 
+1.9.0.GIT
