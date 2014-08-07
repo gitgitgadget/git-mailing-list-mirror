@@ -1,87 +1,80 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v9 3/8] add line number and file name info to `config_set`
-Date: Thu, 07 Aug 2014 22:11:47 +0200
-Message-ID: <vpqegwsm54s.fsf@anie.imag.fr>
-References: <1407412759-13833-1-git-send-email-tanayabh@gmail.com>
-	<1407412759-13833-4-git-send-email-tanayabh@gmail.com>
-	<53E3D494.1070606@ramsay1.demon.co.uk> <vpqlhr0m5tl.fsf@anie.imag.fr>
-	<xmqqwqakjc43.fsf@gitster.dls.corp.google.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v8 0/8] Rewrite `git_config()` using config-set API
+Date: Thu, 07 Aug 2014 13:31:13 -0700
+Message-ID: <xmqqoavwjb3i.fsf@gitster.dls.corp.google.com>
+References: <1407336792-16962-1-git-send-email-tanayabh@gmail.com>
+	<vpqy4v1vdui.fsf@anie.imag.fr>
+	<xmqq8un0ktqu.fsf@gitster.dls.corp.google.com>
+	<vpq61i4nld7.fsf@anie.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: Tanay Abhra <tanayabh@gmail.com>, git@vger.kernel.org,
 	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 07 22:12:04 2014
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Aug 07 22:31:32 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFU2Z-0000xq-GO
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 22:11:59 +0200
+	id 1XFULQ-0005Dv-PE
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 22:31:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755294AbaHGULz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2014 16:11:55 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41716 "EHLO rominette.imag.fr"
+	id S1751339AbaHGUbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2014 16:31:24 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:52090 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750955AbaHGULz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2014 16:11:55 -0400
-Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s77KBjou009254
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 7 Aug 2014 22:11:45 +0200
-Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
-	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s77KBlv9004974;
-	Thu, 7 Aug 2014 22:11:47 +0200
-In-Reply-To: <xmqqwqakjc43.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Thu, 07 Aug 2014 13:09:16 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 07 Aug 2014 22:11:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: s77KBjou009254
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1408047107.15264@mJTvZy/WY0PXxcgMkZ7osg
+	id S1750874AbaHGUbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2014 16:31:23 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 0340A2E34A;
+	Thu,  7 Aug 2014 16:31:23 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ucH2aZHcpdKXD1S1puYMNtDrLkM=; b=VdefFB
+	8s/roGeZT4YJdvFVhGC2333Tjl+BV6FIuvh/ofgWSzARhvJhs10KeJymp6RXsN5m
+	tcLV+GTPdsJ+sZK1jNXpC8xstHQ2K0baF1lwEmf7czbXWDqkbQf3aef7tSyPKvMG
+	AA7gO4oEk8/G+0QGeNd/cmDSrE4ta489QG+SY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w1vvbbbND0KBXTsTQj+jAZwTPq7cXyLl
+	dMOBwkjFRevAsoxBgBU+K7ruEfdX94R45vj6J3Pvdr2yaDxSW+YarwlXlOZzTKbS
+	N09HVGczi0DpoC2VMUebk62R+/PXA/KZCp04QiAo7gGqJdppFZ2+KoHpky3O9b+f
+	VwSDjbsOqXM=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id E6E2E2E349;
+	Thu,  7 Aug 2014 16:31:22 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 05FD92E341;
+	Thu,  7 Aug 2014 16:31:14 -0400 (EDT)
+In-Reply-To: <vpq61i4nld7.fsf@anie.imag.fr> (Matthieu Moy's message of "Thu,
+	07 Aug 2014 21:35:48 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: C73743CA-1E71-11E4-B507-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254996>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
 
-> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->
->> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
->> ...
->>>> diff --git a/cache.h b/cache.h
->>>> ...
->>>> +struct key_value_info {
->>>> +	const char *filename;
->>>> +	int linenr;
->>>> +};
->>>> +
->>>
->>> I haven't checked, but does this series now include a user for
->>> this struct outside of config.c? If not, then I think it would
->>> be better to leave the declaration in config.c until it is needed.
->>> (To make it easier to see if it is necessary in the context of the
->>> patch which will make use of it).
+>>> Why is this needed? Are you now using key_value_info outside config.c?
+>>> Or is it a leftover from a previous experiment?
 >>
->> I disagree: this patch series is essentially about introducing a new
->> API, and this struct declaration is part of the API.
+>> Has this been resolved in the new round?
 >
-> Hmm, is it?  How would the customer of the API use it?  die_config
-> and friends may internally use the information recorded using the
-> structure, but I had an impression that it is an implementation
-> detail that does not need to be exposed to the customers of the API.
-> Am I mistaken?
+> Tanay explained in another subthread why this was needed. For callers
+> iterating over the string_list who want to get the file/line info, they
+> need to be able to cast the void * pointer to struct key_value_info *.
 
-It does if you want to provide error message while iterating over the
-string_list. Not the common case, but shouldn't be forbidden either.
+For callers that want to see all the multi-values, it would be
+preferrable for the iterator to pass the filename and the linenumber
+to the callback function, instead of exposing its implementation
+detail as a single string list and telling them to pick it apart,
+no?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Not a very convincing argument, but OK for now in the sense that we
+can fix it later if we wanted to before it gets too late.
