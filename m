@@ -1,103 +1,78 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v2 11/11] branch.c: replace `git_config()` with `git_config_get_string()
-Date: Thu,  7 Aug 2014 09:21:26 -0700
-Message-ID: <1407428486-19049-12-git-send-email-tanayabh@gmail.com>
-References: <1407428486-19049-1-git-send-email-tanayabh@gmail.com>
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
+From: meanlogin@gmail.com
+Subject: possibly a spurious conflict in a three way merge
+Date: Thu, 07 Aug 2014 12:30:22 -0400
+Message-ID: <53E3A99E.1090102@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 18:23:43 2014
+X-From: git-owner@vger.kernel.org Thu Aug 07 18:30:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFQTd-0006b4-1W
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 18:23:41 +0200
+	id 1XFQZt-0008GK-Ao
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 18:30:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932493AbaHGQXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2014 12:23:34 -0400
-Received: from mail-pd0-f181.google.com ([209.85.192.181]:60435 "EHLO
-	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932463AbaHGQXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2014 12:23:30 -0400
-Received: by mail-pd0-f181.google.com with SMTP id g10so5462615pdj.40
-        for <git@vger.kernel.org>; Thu, 07 Aug 2014 09:23:30 -0700 (PDT)
+	id S932274AbaHGQaD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2014 12:30:03 -0400
+Received: from mail-qg0-f50.google.com ([209.85.192.50]:41036 "EHLO
+	mail-qg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932092AbaHGQaB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2014 12:30:01 -0400
+Received: by mail-qg0-f50.google.com with SMTP id q108so4743359qgd.9
+        for <git@vger.kernel.org>; Thu, 07 Aug 2014 09:30:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KF3vYMCPBe0rYNTFhMQ4bTXDHN7KJlqrkp2WNLnZeiU=;
-        b=dDabrRyqXEw0tb7AKRjwl3UkDejlQopqabt7x+1LuW98QBjLtUW/rQRS0N8CsRf45S
-         i1afCCGXf44DVy5E76D75OL1s1efmD3G5oL6X5KWbGp5NIbGQSAKYNOVY7D1DwmAiKgE
-         gRKuPlAyFMPWGF27yXfPdef120x8auxKJ5IXUbaLSgN1oSD801BdYg06Uy7PdyBU6pMt
-         QCfwDg0MnlcFF6dL6a8IE8q+lD1/3Jfb1bRLum7oCHgKeGJOnBtJAgeOvEovUWb/Sdbx
-         nj07tDGPjj8Nh6cxKY2KteWvVTrbBiFVG0kwOlnDkYyDGib9IcIM3kXewemVK/PFCeE7
-         rG0w==
-X-Received: by 10.70.35.207 with SMTP id k15mr18553349pdj.5.1407428609993;
-        Thu, 07 Aug 2014 09:23:29 -0700 (PDT)
-Received: from localhost.localdomain ([223.176.226.83])
-        by mx.google.com with ESMTPSA id zt5sm16022338pac.31.2014.08.07.09.23.27
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 07 Aug 2014 09:23:29 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0.GIT
-In-Reply-To: <1407428486-19049-1-git-send-email-tanayabh@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        bh=EcVnNxKiOD0Hkqwn71jlgU2mH+Bjtzz6tz3hhMmzx6Q=;
+        b=hxg4AUVR+1gLVhHZ8tl4YtH32HwoKo9JFlDw/WnL4tf9Vkn+WaRvcS8p9869jhIPyr
+         b8HqqZ4y4TKRnW2NkspVvwFSY7Zp5Qii9lBJ5WJiu1ync9cT28wl+MF7eTq6m0UNafXM
+         wU9gOn/6AmleW9Auu3exBy/1/nfbl8oYsnGJ5JGcqdjMRFLsxUuojE/tICyA6KAKSuZl
+         1iafW7pJp67H5DPEYuhaOY9/iqSfwv5w7/g6u1EYb/bL+9tp+ZqiI9bH8yZSEGrG0iI9
+         WCfTxq6F19iKXsf4kD3qpuSlc8loLCoQcczOIzxSoYoJwR6rtNN1Lx2sXIYKZMyg8Eb0
+         I7QQ==
+X-Received: by 10.224.114.74 with SMTP id d10mr3190628qaq.33.1407429000316;
+        Thu, 07 Aug 2014 09:30:00 -0700 (PDT)
+Received: from [127.0.0.1] (c-73-47-50-200.hsd1.ma.comcast.net. [73.47.50.200])
+        by mx.google.com with ESMTPSA id k109sm403358qge.2.2014.08.07.09.29.59
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 07 Aug 2014 09:29:59 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Thunderbird/31.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254975>
 
-Use `git_config_get_string()` instead of `git_config()` to take advantage of
-the config-set API which provides a cleaner control flow.
+git 2.0.4 on ubuntu 14.04 64
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
- branch.c | 27 +++++++--------------------
- 1 file changed, 7 insertions(+), 20 deletions(-)
+1. new repo
+2. commit test.txt to master:
+line1
+line1
 
-diff --git a/branch.c b/branch.c
-index 735767d..df6b120 100644
---- a/branch.c
-+++ b/branch.c
-@@ -140,30 +140,17 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
- 	return 0;
- }
- 
--struct branch_desc_cb {
--	const char *config_name;
--	const char *value;
--};
--
--static int read_branch_desc_cb(const char *var, const char *value, void *cb)
--{
--	struct branch_desc_cb *desc = cb;
--	if (strcmp(desc->config_name, var))
--		return 0;
--	free((char *)desc->value);
--	return git_config_string(&desc->value, var, value);
--}
--
- int read_branch_desc(struct strbuf *buf, const char *branch_name)
- {
--	struct branch_desc_cb cb;
-+	char *v = NULL;
- 	struct strbuf name = STRBUF_INIT;
- 	strbuf_addf(&name, "branch.%s.description", branch_name);
--	cb.config_name = name.buf;
--	cb.value = NULL;
--	git_config(read_branch_desc_cb, &cb);
--	if (cb.value)
--		strbuf_addstr(buf, cb.value);
-+	if (git_config_get_string(name.buf, &v)) {
-+		strbuf_release(&name);
-+		return -1;
-+	}
-+	strbuf_addstr(buf, v);
-+	free(v);
- 	strbuf_release(&name);
- 	return 0;
- }
--- 
-1.9.0.GIT
+3. branch and checkout branch1
+4. make and commit the following change to branch1:
+#line1
+#line2
+
+5. checkout master
+6. make and commit the following change to master:
+line1
+#line2
+
+7. merge branch1, git sees a conflict:
+<<<<<<< HEAD
+line1
+=======
+#line1
+ >>>>>>> branch1
+#line2
+
+Why?  The first line changed in branch1 but not in master so a 3 way 
+merge should take branch1 changes.  Beyond Compare ( used as a 
+mergetool) does not flag any conflicts.
