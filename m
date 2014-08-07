@@ -1,68 +1,112 @@
-From: Tony Finch <dot@dotat.at>
-Subject: Re: "Branch objects" (was: Re: cherry picking and merge)
-Date: Thu, 7 Aug 2014 18:47:04 +0100
-Message-ID: <alpine.LSU.2.00.1408071829470.13901@hermes-1.csi.cam.ac.uk>
-References: <CANQwDwcHSO+KwhZbo4BTcWnAWGWbJzNQ7CY2m3nq+p0t9uDeqg@mail.gmail.com> <20140806200726.GE23449@localhost> <alpine.LSU.2.00.1408071222510.13901@hermes-1.csi.cam.ac.uk> <20140807155828.GM23449@localhost> <alpine.LSU.2.00.1408071735410.23775@hermes-1.csi.cam.ac.uk>
- <20140807172207.GP23449@localhost>
+From: Tanay Abhra <tanayabh@gmail.com>
+Subject: [PATCH v3 11/11] branch.c: replace `git_config()` with `git_config_get_string()
+Date: Thu, 07 Aug 2014 23:26:42 +0530
+Message-ID: <53E3BDDA.1090208@gmail.com>
+References: <1407428486-19049-1-git-send-email-tanayabh@gmail.com> <1407428486-19049-12-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?UTF-8?Q?Jakub_Nar=C4=99bski?= <jnareb@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Mike Stump <mikestump@comcast.net>,
-	git discussion list <git@vger.kernel.org>
-To: Nico Williams <nico@cryptonector.com>
-X-From: git-owner@vger.kernel.org Thu Aug 07 19:47:16 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 07 19:56:56 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFRmV-0007KY-J4
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 19:47:15 +0200
+	id 1XFRvq-0004zn-Ix
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 19:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751892AbaHGRrK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2014 13:47:10 -0400
-Received: from ppsw-41.csi.cam.ac.uk ([131.111.8.141]:49884 "EHLO
-	ppsw-41.csi.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751573AbaHGRrJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2014 13:47:09 -0400
-X-Cam-AntiVirus: no malware found
-X-Cam-ScannerInfo: http://www.cam.ac.uk/cs/email/scanner/
-Received: from hermes-1.csi.cam.ac.uk ([131.111.8.51]:35068)
-	by ppsw-41.csi.cam.ac.uk (smtp.hermes.cam.ac.uk [131.111.8.157]:25)
-	with esmtpa (EXTERNAL:fanf2) id 1XFRmL-0003sS-Px (Exim 4.82_3-c0e5623)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 07 Aug 2014 18:47:05 +0100
-Received: from fanf2 by hermes-1.csi.cam.ac.uk (hermes.cam.ac.uk)
-	with local id 1XFRmK-00041T-W9 (Exim 4.72)
-	(return-path <fanf2@hermes.cam.ac.uk>); Thu, 07 Aug 2014 18:47:05 +0100
-X-X-Sender: fanf2@hermes-1.csi.cam.ac.uk
-In-Reply-To: <20140807172207.GP23449@localhost>
-User-Agent: Alpine 2.00 (LSU 1167 2008-08-23)
+	id S1754839AbaHGR4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2014 13:56:50 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:62469 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754803AbaHGR4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2014 13:56:48 -0400
+Received: by mail-pd0-f176.google.com with SMTP id y10so5578945pdj.21
+        for <git@vger.kernel.org>; Thu, 07 Aug 2014 10:56:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=Z262wVcLT1ikFV2zrULewQ++FY925qwqcCtpQbUa4qc=;
+        b=rOAzy2QO+BVrWu6NyG1IPafS2tXP9nIvSyvl/SP/ot20QQcodl3rd42hB4noWuvQek
+         7aT/EuPS27FBIE7cMnNkxi4pobUBenC/+dH8UM2uqiuX/XAezqDf7soGuk7TL+NU00WU
+         cZfpJD+4Rf+8TGZFfwIMY1z/GLCuwvQ4oJ83TfOBLJtlfzeEj2+pQvU4SEvaDj2tK/YT
+         +RLNjstInVzXdZsgEwJ3kz50duwmL77yxurcdK3JZpWxnlV9w/iB4i6JgXxATglXX0Ad
+         xoN4moftcQ/AgzMZUxbYuOE9pW+xyY5C9vT8iF+hvcF1tEDdT1EkhCpZZq132lOpsCwr
+         rA1Q==
+X-Received: by 10.68.229.166 with SMTP id sr6mr3481846pbc.33.1407434208289;
+        Thu, 07 Aug 2014 10:56:48 -0700 (PDT)
+Received: from [127.0.0.1] ([223.176.226.83])
+        by mx.google.com with ESMTPSA id za9sm615736pac.25.2014.08.07.10.56.46
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 07 Aug 2014 10:56:47 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <1407428486-19049-12-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254983>
 
-Nico Williams <nico@cryptonector.com> wrote:
-> On Thu, Aug 07, 2014 at 05:42:34PM +0100, Tony Finch wrote:
-> >
-> > The problem is that the production branch gets copied around: pushed to
-> > the repo server, pulled by other team members, etc. Forced pushes
-> > are accident-prone, as is resetting a rebased branch after a pull.
->
-> When I rebase and I need the old HEAD around I do something like this:
-> [...]
-> Either way I retain the old HEAD with some name.
+Use `git_config_get_string()` instead of `git_config()` to take advantage of
+the config-set API which provides a cleaner control flow. While we are at
+it, return -1 if we find no value for the queried variable. Original code
+returned 0 for all cases, which was checked by `add_branch_desc()` in
+fmt-merge-msg.c resulting in addition of a spurious newline to the `out`
+strbuf. Now, the newline addition is skipped as -1 is returned to the caller
+if no value is found.
 
-Hmm, yes, I can see that would work. However my previous workflow was
-rather branch-heavy and I found the accumulation of names annoying. I have
-not yet had enough usage out of git-repub to see if it goes too far in the
-direction of lack-of-names. A big omission is no opportunity to edit its
-commit messages.
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
+---
+v3: Changed the commit message to a more appropriate one.
 
-Tony.
--- 
-f.anthony.n.finch  <dot@dotat.at>  http://dotat.at/
-Rockall: Southwesterly becoming cyclonic in north, 5 to 7. Moderate or rough.
-Rain or showers. Moderate or good.
+ branch.c | 27 +++++++--------------------
+ 1 file changed, 7 insertions(+), 20 deletions(-)
+
+diff --git a/branch.c b/branch.c
+index 735767d..df6b120 100644
+--- a/branch.c
++++ b/branch.c
+@@ -140,30 +140,17 @@ static int setup_tracking(const char *new_ref, const char *orig_ref,
+ 	return 0;
+ }
+
+-struct branch_desc_cb {
+-	const char *config_name;
+-	const char *value;
+-};
+-
+-static int read_branch_desc_cb(const char *var, const char *value, void *cb)
+-{
+-	struct branch_desc_cb *desc = cb;
+-	if (strcmp(desc->config_name, var))
+-		return 0;
+-	free((char *)desc->value);
+-	return git_config_string(&desc->value, var, value);
+-}
+-
+ int read_branch_desc(struct strbuf *buf, const char *branch_name)
+ {
+-	struct branch_desc_cb cb;
++	char *v = NULL;
+ 	struct strbuf name = STRBUF_INIT;
+ 	strbuf_addf(&name, "branch.%s.description", branch_name);
+-	cb.config_name = name.buf;
+-	cb.value = NULL;
+-	git_config(read_branch_desc_cb, &cb);
+-	if (cb.value)
+-		strbuf_addstr(buf, cb.value);
++	if (git_config_get_string(name.buf, &v)) {
++		strbuf_release(&name);
++		return -1;
++	}
++	strbuf_addstr(buf, v);
++	free(v);
+ 	strbuf_release(&name);
+ 	return 0;
+ }
+-- 1.9.0.GIT
