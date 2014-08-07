@@ -1,118 +1,108 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: possibly a spurious conflict in a three way merge
-Date: Thu, 7 Aug 2014 11:52:43 -0700
-Message-ID: <20140807185243.GE12427@google.com>
-References: <53E3A99E.1090102@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v9 5/8] config: add `git_die_config()` to the config-set API
+Date: Thu, 07 Aug 2014 11:55:25 -0700
+Message-ID: <xmqqd2ccku3m.fsf@gitster.dls.corp.google.com>
+References: <1407412759-13833-1-git-send-email-tanayabh@gmail.com>
+	<1407412759-13833-6-git-send-email-tanayabh@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: meanlogin@gmail.com
-X-From: git-owner@vger.kernel.org Thu Aug 07 20:52:53 2014
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 07 20:56:07 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFSnz-0004GC-61
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 20:52:51 +0200
+	id 1XFSqp-0008Gw-CD
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 20:55:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087AbaHGSwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2014 14:52:47 -0400
-Received: from mail-pd0-f180.google.com ([209.85.192.180]:33543 "EHLO
-	mail-pd0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750874AbaHGSwq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2014 14:52:46 -0400
-Received: by mail-pd0-f180.google.com with SMTP id v10so3927554pde.39
-        for <git@vger.kernel.org>; Thu, 07 Aug 2014 11:52:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        bh=3hObckh0e8UvyKF+wJ+ST1j0ImY31fA73ihV3S/16CY=;
-        b=ISy7T3LB49+niV+cp5YILB9QCH+goHx1mIb5TUsHrHjtcDvZ4Mn3L0+f5TdyLLlJnF
-         xrh4jTfj1+fWAb1VCkbhYBXFoVVDNLhRjBfc9PKDd88VX4oeDrWViOX0+N352j/XPmk5
-         SJZigGEkIgao+K4yKuPo68BXODM2PoYBKPzWQxPoPYFZjqM1VnxfAn6JeJdc7kon/WT+
-         rig12Twu7/D7SDKnPBcCgS+lADRKo4Yy6khidMK0to7MHoW20gK22iaG3dcfL56prxwh
-         ud1215+qKtUYPN5wU6nPJoeIyAOUjmij37eWyNs1votUlLEAeaecS9Xunnb0AJCo2RxP
-         YSww==
-X-Received: by 10.66.164.9 with SMTP id ym9mr4168277pab.139.1407437566416;
-        Thu, 07 Aug 2014 11:52:46 -0700 (PDT)
-Received: from google.com ([2620:0:1000:5b00:9932:b877:7123:e96a])
-        by mx.google.com with ESMTPSA id am3sm609287pbd.18.2014.08.07.11.52.45
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Thu, 07 Aug 2014 11:52:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <53E3A99E.1090102@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755464AbaHGSzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2014 14:55:41 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:53483 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754964AbaHGSzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2014 14:55:39 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 84DA22FD23;
+	Thu,  7 Aug 2014 14:55:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=nZDH0QaSDzbI3T431kZcFEkXTvE=; b=Wsqgkg
+	G/H9T67MIIOoB093iT2rZtsd52n+X7ZpaNB58kp7hcbXUQ3ciX+R+2yij2qvyXGe
+	WSTerYJqaFG0FWayxkpPyLSdsaoaZ52coLQmrVyYKtWtWVs+C5xSRD1/IHY2fSrm
+	AkkJJrHFm0gpWQxooVds3Kx0BbBAHW3wwh+Oo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OUh74CajOeXJr4cKBaShS+NS3OEcNNhb
+	7iaq1pMdoKNCtloWiYpVuSDamZy+YKMH0ai3c02wP4T8GquQxrzjTa3UuPYBe0UT
+	ipSBg9pn7X/3kCY91KlVV85qPEkHJbNXVkAjaQM7EV4xP+4LJnV6Dq3q0xlrSRNF
+	LA7Nt+/hqLI=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 7AC012FD22;
+	Thu,  7 Aug 2014 14:55:33 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 9CC552FD14;
+	Thu,  7 Aug 2014 14:55:26 -0400 (EDT)
+In-Reply-To: <1407412759-13833-6-git-send-email-tanayabh@gmail.com> (Tanay
+	Abhra's message of "Thu, 7 Aug 2014 04:59:16 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 64E9CCF4-1E64-11E4-8207-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254987>
 
-Hi,
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-meanlogin@gmail.com wrote:
+> diff --git a/Documentation/technical/api-config.txt b/Documentation/technical/api-config.txt
+> index 21f280c..0d8b99b 100644
+> --- a/Documentation/technical/api-config.txt
+> +++ b/Documentation/technical/api-config.txt
+> @@ -155,6 +155,19 @@ as well as retrieval for the queried variable, including:
+>  	Similar to `git_config_get_string`, but expands `~` or `~user` into
+>  	the user's home directory when found at the beginning of the path.
+>  
+> +`git_die_config(const char *key, const char *err, ...)`::
+> +
+> +	First prints the error message specified by the caller in `err` and then
+> +	dies printing the line number and the file name of the highest priority
+> +	value for the configuration variable `key`.
 
-> 2. commit test.txt to master:
-> line1
-> line1
->
-> 3. branch and checkout branch1
-> 4. make and commit the following change to branch1:
-> #line1
-> #line2
->
-> 5. checkout master
-> 6. make and commit the following change to master:
-> line1
-> #line2
->
-> 7. merge branch1, git sees a conflict:
-> <<<<<<< HEAD
-> line1
-> =======
-> #line1
-> >>>>>>> branch1
-> #line2
->
-> Why?
+Reviewed with a wider context, I notice that this entry alone lacks
+the return type.  I am assuming that this is just an oversight, and
+adding 'void ' in front of the filename to match the next entry is
+simple enough.
 
-Thanks for a clear example.  On branch1 you made the following change:
+> +`void git_die_config_linenr(const char *key, const char *filename, int linenr)`::
+> + ...
+> +extern NORETURN void git_die_config(const char *key, const char *err, ...) __attribute__((format(printf, 2, 3)));
+> ...
+> +NORETURN __attribute__((format(printf, 2, 3)))
+> +void git_die_config(const char *key, const char *err, ...)
+> +{
 
- (a) modify lines 1 and 2
+My first reaction was that it might make the compiler unhappy to
+declare that the "err" is a printf-like format string and then to
+allow some callers to pass NULL to the function.  My build however
+does not seem to complain, so perhaps this is OK.
 
-On master, you made a different change:
-
- (b) just modify line 2
-
-The changes touch the same chunk of lines and don't produce the same
-result there.  Git is being conservative and letting you know that the
-two branches didn't agree about what line 1 should say.
-
-On the other hand, if you had a larger files and on branch1 made the
-following change:
-
- (a) modify lines 1 and 101
-
-and on master, you made a different change:
-
- (b) just modify line 101
-
-then the changes are touching different parts of the code and are
-merged independently.  The result would be a clean merge where lines 1
-and 101 are both modified.
-
-Git's conservatism can be helpful when working with code, where
-adjacent lines are likely to be affecting a single behavior and the
-conflict can help the operator to know to be extra careful.  It makes
-less sense for line-oriented input where every line is independent.
-
-If you are often making changes to a line-oriented file, it may make
-sense to set up a custom merge driver to override git's merge behavior
-for that file.  See 'Defining a custom merge driver' in
-gitattributes(5) for details about how that works.
-
-Hope that helps,
-Jonathan
+> +	const struct string_list *values;
+> +	struct key_value_info *kv_info;
+> +
+> +	if (err) {
+> +		va_list params;
+> +		va_start(params, err);
+> +		vreportf("error: ", err, params);
+> +		va_end(params);
+> +	}
+> +	values = git_config_get_value_multi(key);
+> +	kv_info = values->items[values->nr - 1].util;
+> +	git_die_config_linenr(key, kv_info->filename, kv_info->linenr);
+>  }
+>  
+>  /*
