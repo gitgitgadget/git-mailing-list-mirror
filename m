@@ -1,143 +1,240 @@
 From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v9 1/8] config.c: mark error and warnings strings for translation
-Date: Thu,  7 Aug 2014 04:59:12 -0700
-Message-ID: <1407412759-13833-2-git-send-email-tanayabh@gmail.com>
+Subject: [PATCH v9 6/8] rewrite git_config() to use the config-set API
+Date: Thu,  7 Aug 2014 04:59:17 -0700
+Message-ID: <1407412759-13833-7-git-send-email-tanayabh@gmail.com>
 References: <1407412759-13833-1-git-send-email-tanayabh@gmail.com>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+Cc: Tanay Abhra <tanayabh@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 07 14:00:25 2014
+X-From: git-owner@vger.kernel.org Thu Aug 07 14:00:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFMMl-0004lL-7g
-	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 14:00:19 +0200
+	id 1XFMN3-00057K-Oy
+	for gcvg-git-2@plane.gmane.org; Thu, 07 Aug 2014 14:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757383AbaHGMAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Aug 2014 08:00:09 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:48570 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757235AbaHGMAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Aug 2014 08:00:07 -0400
-Received: by mail-pd0-f178.google.com with SMTP id w10so5053940pde.23
-        for <git@vger.kernel.org>; Thu, 07 Aug 2014 05:00:07 -0700 (PDT)
+	id S932304AbaHGMA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Aug 2014 08:00:28 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:33341 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932184AbaHGMA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Aug 2014 08:00:26 -0400
+Received: by mail-pd0-f181.google.com with SMTP id g10so5102713pdj.40
+        for <git@vger.kernel.org>; Thu, 07 Aug 2014 05:00:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=kpBW6H38eD7q6+ioL13qmm6oEXAg5fQOUm42MCQnMc4=;
-        b=rBoToFr6Orkrlgz50dGztWVsp3RwXqavY4nPFFZdnmFq3Iai18P/+F7j5vAiifn1ji
-         U+M1F42Wf6HhmAnCxnFBswmhKZLgf+M4NtNTLL2jOX3hukKjiy+chgA2qS0DAB+WHVfQ
-         d9pX5uE311eiKlliyrnwGnK+V6Clbg/cu+veeCoukYmQCJADZ4559GY1cyS4KjzRz3GE
-         LGAwd3iGkTF6ycxnPfD5VyhvfilbxxAZLnFLkMei7WbB/QhChzbPGS+sgRi8zfvsL/qY
-         Wd5dl9SfX+wXiJuN7CYei5a+CNjrfq6pGQKsmHc73sWOEI44UYJ8C6oHQsUj9rM5S7KR
-         Ngvg==
-X-Received: by 10.68.229.166 with SMTP id sr6mr1643232pbc.33.1407412807442;
-        Thu, 07 Aug 2014 05:00:07 -0700 (PDT)
+        bh=hXM/TuLEBWAq5sRIkVtikBmQPmtnwnOEvlpYG7vj4So=;
+        b=li7CVyAktKoBR2FICtN41o3Ep1+U+NBYutJQFXepGMx9myuTxqo1mnRoPsp5myRPnE
+         IVIW5f+UEXhqKaY8+PxRQl06h73IhqRAnQnVekYlsc+CWiPkmpBEkD6SFmJ0UJYXybtH
+         iL51G2GGgzlL7+ONR6xxw2w9j4yZlp9h/mDEDabEKFys9RzKT9wOjYewhZP5YbD/7Pj1
+         U9QDqjWFzIE3lxfi/ykB1q0r42dBaCefHx706E1IxJId85uj4VlbQMXoYBkLKVxYzHDd
+         hc/ada1TGGWenTnIgT3d083sLS3nU7hZS+DfxjhhQAfn2qXTDHJLTIp8yTF9N+sBdY8R
+         iH+Q==
+X-Received: by 10.70.65.34 with SMTP id u2mr17279876pds.58.1407412825882;
+        Thu, 07 Aug 2014 05:00:25 -0700 (PDT)
 Received: from localhost.localdomain ([223.176.226.83])
-        by mx.google.com with ESMTPSA id cb8sm13997212pad.8.2014.08.07.05.00.04
+        by mx.google.com with ESMTPSA id cb8sm13997212pad.8.2014.08.07.05.00.22
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Thu, 07 Aug 2014 05:00:06 -0700 (PDT)
+        Thu, 07 Aug 2014 05:00:25 -0700 (PDT)
 X-Mailer: git-send-email 1.9.0.GIT
 In-Reply-To: <1407412759-13833-1-git-send-email-tanayabh@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/254952>
 
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Of all the functions in `git_config*()` family, `git_config()` has the
+most invocations in the whole code base. Each `git_config()` invocation
+causes config file rereads which can be avoided using the config-set API.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+Use the config-set API to rewrite `git_config()` to use the config caching
+layer to avoid config file rereads on each invocation during a git process
+lifetime. First invocation constructs the cache, and after that for each
+successive invocation, `git_config()` feeds values from the config cache
+instead of rereading the configuration files.
+
+Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
 ---
- config.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ cache.h                 | 24 +++++++++++++++++++++++
+ config.c                | 51 +++++++++++++++++++++++++++++++++++++++++--------
+ t/t4055-diff-context.sh |  2 +-
+ 3 files changed, 68 insertions(+), 9 deletions(-)
 
+diff --git a/cache.h b/cache.h
+index 89a0d51..2693a37 100644
+--- a/cache.h
++++ b/cache.h
+@@ -8,6 +8,7 @@
+ #include "gettext.h"
+ #include "convert.h"
+ #include "trace.h"
++#include "string-list.h"
+ 
+ #include SHA1_HEADER
+ #ifndef git_SHA_CTX
+@@ -1351,9 +1352,32 @@ extern int parse_config_key(const char *var,
+ 			    const char **subsection, int *subsection_len,
+ 			    const char **key);
+ 
++struct config_set_element {
++	struct hashmap_entry ent;
++	char *key;
++	struct string_list value_list;
++};
++
++struct configset_list_item {
++	struct config_set_element *e;
++	int value_index;
++};
++
++/*
++ * the contents of the list are ordered according to their
++ * position in the config files and order of parsing the files.
++ * (i.e. key-value pair at the last position of .git/config will
++ * be at the last item of the list)
++ */
++struct configset_list {
++	struct configset_list_item *items;
++	unsigned int nr, alloc;
++};
++
+ struct config_set {
+ 	struct hashmap config_hash;
+ 	int hash_initialized;
++	struct configset_list list;
+ };
+ 
+ extern void git_configset_init(struct config_set *cs);
 diff --git a/config.c b/config.c
-index a191328..34940fd 100644
+index 5ae9ab0..427850a 100644
 --- a/config.c
 +++ b/config.c
-@@ -457,9 +457,9 @@ static int git_parse_source(config_fn_t fn, void *data)
- 			break;
+@@ -35,12 +35,6 @@ struct config_source {
+ 	long (*do_ftell)(struct config_source *c);
+ };
+ 
+-struct config_set_element {
+-	struct hashmap_entry ent;
+-	char *key;
+-	struct string_list value_list;
+-};
+-
+ static struct config_source *cf;
+ 
+ static int zlib_compression_seen;
+@@ -1230,7 +1224,7 @@ int git_config_with_options(config_fn_t fn, void *data,
+ 	return ret;
+ }
+ 
+-void git_config(config_fn_t fn, void *data)
++static void git_config_raw(config_fn_t fn, void *data)
+ {
+ 	if (git_config_with_options(fn, data, NULL, 1) < 0)
+ 		/*
+@@ -1247,6 +1241,33 @@ void git_config(config_fn_t fn, void *data)
+ 		die(_("unknown error occured while reading the configuration files"));
+ }
+ 
++static void configset_iter(struct config_set *cs, config_fn_t fn, void *data)
++{
++	int i, value_index;
++	struct string_list *values;
++	struct config_set_element *entry;
++	struct configset_list *list = &cs->list;
++	struct key_value_info *kv_info;
++
++	for (i = 0; i < list->nr; i++) {
++		entry = list->items[i].e;
++		value_index = list->items[i].value_index;
++		values = &entry->value_list;
++		if (fn(entry->key, values->items[value_index].string, data) < 0) {
++			kv_info = values->items[value_index].util;
++			git_die_config_linenr(entry->key, kv_info->filename, kv_info->linenr);
++		}
++	}
++}
++
++static void git_config_check_init(void);
++
++void git_config(config_fn_t fn, void *data)
++{
++	git_config_check_init();
++	configset_iter(&the_config_set, fn, data);
++}
++
+ static struct config_set_element *configset_find_element(struct config_set *cs, const char *key)
+ {
+ 	struct config_set_element k;
+@@ -1273,6 +1294,7 @@ static int configset_add_value(struct config_set *cs, const char *key, const cha
+ {
+ 	struct config_set_element *e;
+ 	struct string_list_item *si;
++	struct configset_list_item *l_item;
+ 	struct key_value_info *kv_info = xmalloc(sizeof(*kv_info));
+ 
+ 	e = configset_find_element(cs, key);
+@@ -1288,6 +1310,12 @@ static int configset_add_value(struct config_set *cs, const char *key, const cha
+ 		hashmap_add(&cs->config_hash, e);
  	}
- 	if (cf->die_on_error)
--		die("bad config file line %d in %s", cf->linenr, cf->name);
-+		die(_("bad config file line %d in %s"), cf->linenr, cf->name);
- 	else
--		return error("bad config file line %d in %s", cf->linenr, cf->name);
-+		return error(_("bad config file line %d in %s"), cf->linenr, cf->name);
+ 	si = string_list_append_nodup(&e->value_list, value ? xstrdup(value) : NULL);
++
++	ALLOC_GROW(cs->list.items, cs->list.nr + 1, cs->list.alloc);
++	l_item = &cs->list.items[cs->list.nr++];
++	l_item->e = e;
++	l_item->value_index = e->value_list.nr - 1;
++
+ 	if (cf) {
+ 		kv_info->filename = strintern(cf->name);
+ 		kv_info->linenr = cf->linenr;
+@@ -1311,6 +1339,9 @@ void git_configset_init(struct config_set *cs)
+ {
+ 	hashmap_init(&cs->config_hash, (hashmap_cmp_fn)config_set_element_cmp, 0);
+ 	cs->hash_initialized = 1;
++	cs->list.nr = 0;
++	cs->list.alloc = 0;
++	cs->list.items = NULL;
  }
  
- static int parse_unit_factor(const char *end, uintmax_t *val)
-@@ -575,9 +575,9 @@ static void die_bad_number(const char *name, const char *value)
- 		value = "";
- 
- 	if (cf && cf->name)
--		die("bad numeric config value '%s' for '%s' in %s: %s",
-+		die(_("bad numeric config value '%s' for '%s' in %s: %s"),
- 		    value, name, cf->name, reason);
--	die("bad numeric config value '%s' for '%s': %s", value, name, reason);
-+	die(_("bad numeric config value '%s' for '%s': %s"), value, name, reason);
- }
- 
- int git_config_int(const char *name, const char *value)
-@@ -662,7 +662,7 @@ int git_config_pathname(const char **dest, const char *var, const char *value)
- 		return config_error_nonbool(var);
- 	*dest = expand_user_path(value);
- 	if (!*dest)
--		die("Failed to expand user dir in: '%s'", value);
-+		die(_("failed to expand user dir in: '%s'"), value);
- 	return 0;
- }
- 
-@@ -740,7 +740,7 @@ static int git_default_core_config(const char *var, const char *value)
- 		if (level == -1)
- 			level = Z_DEFAULT_COMPRESSION;
- 		else if (level < 0 || level > Z_BEST_COMPRESSION)
--			die("bad zlib compression level %d", level);
-+			die(_("bad zlib compression level %d"), level);
- 		zlib_compression_level = level;
- 		zlib_compression_seen = 1;
- 		return 0;
-@@ -751,7 +751,7 @@ static int git_default_core_config(const char *var, const char *value)
- 		if (level == -1)
- 			level = Z_DEFAULT_COMPRESSION;
- 		else if (level < 0 || level > Z_BEST_COMPRESSION)
--			die("bad zlib compression level %d", level);
-+			die(_("bad zlib compression level %d"), level);
- 		core_compression_level = level;
- 		core_compression_seen = 1;
- 		if (!zlib_compression_seen)
-@@ -873,7 +873,7 @@ static int git_default_core_config(const char *var, const char *value)
- 		else if (!strcmp(value, "link"))
- 			object_creation_mode = OBJECT_CREATION_USES_HARDLINKS;
- 		else
--			die("Invalid mode for object creation: %s", value);
-+			die(_("invalid mode for object creation: %s"), value);
- 		return 0;
+ void git_configset_clear(struct config_set *cs)
+@@ -1327,6 +1358,10 @@ void git_configset_clear(struct config_set *cs)
  	}
+ 	hashmap_free(&cs->config_hash, 1);
+ 	cs->hash_initialized = 0;
++	free(cs->list.items);
++	cs->list.nr = 0;
++	cs->list.alloc = 0;
++	cs->list.items = NULL;
+ }
  
-@@ -1173,7 +1173,7 @@ int git_config_early(config_fn_t fn, void *data, const char *repo_config)
+ static int config_set_callback(const char *key, const char *value, void *cb)
+@@ -1445,7 +1480,7 @@ static void git_config_check_init(void)
+ 	if (the_config_set.hash_initialized)
+ 		return;
+ 	git_configset_init(&the_config_set);
+-	git_config(config_set_callback, &the_config_set);
++	git_config_raw(config_set_callback, &the_config_set);
+ }
  
- 	switch (git_config_from_parameters(fn, data)) {
- 	case -1: /* error */
--		die("unable to parse command-line config");
-+		die(_("unable to parse command-line config"));
- 		break;
- 	case 0: /* found nothing */
- 		break;
-@@ -1514,7 +1514,7 @@ static int store_aux(const char *key, const char *value, void *cb)
- 	case KEY_SEEN:
- 		if (matches(key, value)) {
- 			if (store.seen == 1 && store.multi_replace == 0) {
--				warning("%s has multiple values", key);
-+				warning(_("%s has multiple values"), key);
- 			}
+ void git_config_clear(void)
+diff --git a/t/t4055-diff-context.sh b/t/t4055-diff-context.sh
+index cd04543..741e080 100755
+--- a/t/t4055-diff-context.sh
++++ b/t/t4055-diff-context.sh
+@@ -79,7 +79,7 @@ test_expect_success 'non-integer config parsing' '
+ test_expect_success 'negative integer config parsing' '
+ 	git config diff.context -1 &&
+ 	test_must_fail git diff 2>output &&
+-	test_i18ngrep "bad config file" output
++	test_i18ngrep "bad config variable" output
+ '
  
- 			ALLOC_GROW(store.offset, store.seen + 1,
+ test_expect_success '-U0 is valid, so is diff.context=0' '
 -- 
 1.9.0.GIT
