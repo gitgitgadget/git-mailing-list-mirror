@@ -1,134 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/8] mv: flatten error handling code block
-Date: Fri, 08 Aug 2014 10:54:05 -0700
-Message-ID: <xmqqbnrukgua.fsf@gitster.dls.corp.google.com>
-References: <1407503462-32632-1-git-send-email-pclouds@gmail.com>
-	<1407503462-32632-4-git-send-email-pclouds@gmail.com>
+From: David Turner <dturner@twopensource.com>
+Subject: Re: [PATCH 17/22] refs.c: add a backend method structure with
+ transaction functions
+Date: Fri, 08 Aug 2014 14:17:52 -0400
+Organization: Twitter
+Message-ID: <1407521872.26542.21.camel@leckie>
+References: <1407516309-27989-1-git-send-email-sahlberg@google.com>
+	 <1407516309-27989-18-git-send-email-sahlberg@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 19:54:22 2014
+To: Ronnie Sahlberg <sahlberg@google.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 20:18:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFoMt-0006Go-Pu
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 19:54:20 +0200
+	id 1XFojx-0002de-Ut
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 20:18:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750969AbaHHRyP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2014 13:54:15 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:51410 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750853AbaHHRyP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Aug 2014 13:54:15 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 5AE522E31E;
-	Fri,  8 Aug 2014 13:54:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2IeOPm9DSk8I
-	Kc9C9wbwemAPPhI=; b=QB0/2rI9fDmfyj3Wfzc458o1N5e/S6K90LdJZPBvutZ9
-	UqQtBYvSMTgfl3HqCButY7PFZGHurC13XY0dAhnDQAcNaKsD3j7HSF3o7MRztMxD
-	5y59be7dc5r2bGDeYt2BQxq8gwW1Tlz287PtfmfnOaeM17IcCEjKZ5FUB65BKJE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u6pKnt
-	dOSsPk0ysWIJFAmufZKfymUOBj31XCAZg5Qav02INOuu06ZjPumXDRljk+aKgGqH
-	GxyBSzqagRlLZdHwP5E6K3y8H19v1WGlvNZxWyGzuDpBktCBjipqkNxX64fWLQ9R
-	JRIl7EzuvYjKpFA8OUZ0zCUB8agcyntcy/CC4=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 51D682E31D;
-	Fri,  8 Aug 2014 13:54:14 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6B2CB2E313;
-	Fri,  8 Aug 2014 13:54:07 -0400 (EDT)
-In-Reply-To: <1407503462-32632-4-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Fri, 8 Aug
- 2014 20:10:57 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: FE595AA6-1F24-11E4-94C9-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751461AbaHHSSD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2014 14:18:03 -0400
+Received: from mail-qg0-f47.google.com ([209.85.192.47]:43523 "EHLO
+	mail-qg0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751002AbaHHSR7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2014 14:17:59 -0400
+Received: by mail-qg0-f47.google.com with SMTP id i50so6405662qgf.6
+        for <git@vger.kernel.org>; Fri, 08 Aug 2014 11:17:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20130820;
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:organization:content-type:mime-version
+         :content-transfer-encoding;
+        bh=0mgtzExp4/v1O9/E1EpbJMO+AkYq/2qIqoZOvojqhNo=;
+        b=FnvksHZXZGB0mcSXuM7YcchUtZL0wW/sp9gr8h+weHCxnFx/BRF3AIX6Z6OC+R8QhR
+         vDtirpLMl/ITtTi/aFxFsB6PV3M3b/8ocw+UU9kn13F0Zcz+tD5HCax9KLylWy2xsVA9
+         VcKMATizbCXo4ModR3gnTI6NXhIjkmpq1/JmEtpxIDpAMzQqejvOB6s8pEk4rCYEK3ay
+         YB6UOBHP66b2rwZo/h5fp6PrrcWeaOPICApCCKSXK6irEwEqqp7X3c569evLG78/tZ5f
+         r9WBHXlfyZW9y+okfUrh/GulnSy6jFdXopgpquMbvhXZUcKcIplQ7UyMbr6QeUQcymhU
+         RdHg==
+X-Gm-Message-State: ALoCoQmg1g5XdyqwjAieVOuBj3Pm66sFyvXUN/zom6EhFL8an/QyW57yXAirGgqE6aZEWYfuUqAO
+X-Received: by 10.229.225.131 with SMTP id is3mr40014543qcb.2.1407521878726;
+        Fri, 08 Aug 2014 11:17:58 -0700 (PDT)
+Received: from [172.17.131.24] (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
+        by mx.google.com with ESMTPSA id b2sm6720050qaq.4.2014.08.08.11.17.57
+        for <multiple recipients>
+        (version=SSLv3 cipher=RC4-SHA bits=128/128);
+        Fri, 08 Aug 2014 11:17:57 -0700 (PDT)
+In-Reply-To: <1407516309-27989-18-git-send-email-sahlberg@google.com>
+X-Mailer: Evolution 3.10.4-0ubuntu1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255061>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Fri, 2014-08-08 at 09:45 -0700, Ronnie Sahlberg wrote:
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  builtin/mv.c | 35 +++++++++++++++++------------------
->  1 file changed, 17 insertions(+), 18 deletions(-)
->
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index a7e02c0..5c6f58f 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -58,6 +58,11 @@ static const char *add_slash(const char *path)
->  	return path;
->  }
-> =20
-> +static void move_up_one(void *p, int nmemb, int size)
-> +{
-> +	memmove(p, (char*)p + size, nmemb * size);
-> +}
-> +
->  static struct lock_file lock_file;
->  #define SUBMODULE_WITH_GITDIR ((const char *)1)
-> =20
-> @@ -224,24 +229,18 @@ int cmd_mv(int argc, const char **argv, const c=
-har *prefix)
->  		else
->  			string_list_insert(&src_for_dst, dst);
-> =20
-> -		if (bad) {
-> -			if (ignore_errors) {
-> -				if (--argc > 0) {
-> -					memmove(source + i, source + i + 1,
-> -						(argc - i) * sizeof(char *));
-> -					memmove(destination + i,
-> -						destination + i + 1,
-> -						(argc - i) * sizeof(char *));
-> -					memmove(modes + i, modes + i + 1,
-> -						(argc - i) * sizeof(enum update_mode));
-> -					memmove(submodule_gitfile + i,
-> -						submodule_gitfile + i + 1,
-> -						(argc - i) * sizeof(char *));
-> -					i--;
-> -				}
-> -			} else
-> -				die (_("%s, source=3D%s, destination=3D%s"),
-> -				     bad, src, dst);
-> +		if (!bad)
-> +			continue;
-> +		if (!ignore_errors)
-> +			die (_("%s, source=3D%s, destination=3D%s"),
-> +			     bad, src, dst);
-> +		if (--argc > 0) {
-> +			int n =3D argc - i;
-> +			move_up_one(source + i, n, sizeof(*source));
-> +			move_up_one(destination + i, n, sizeof(*destination));
-> +			move_up_one(modes + i, n, sizeof(*modes));
-> +			move_up_one(submodule_gitfile + i, n, sizeof(*submodule_gitfile))=
-;
-> +			i--;
+> +struct ref_be refs_files = {
+> +	.transaction_begin		= files_transaction_begin,
+> +	.transaction_update_sha1	= files_transaction_update_sha1,
+> +	.transaction_create_sha1	= files_transaction_create_sha1,
+> +	.transaction_delete_sha1	= files_transaction_delete_sha1,
+> +	.transaction_update_reflog	= files_transaction_update_reflog,
+> +	.transaction_commit		= files_transaction_commit,
+> +	.transaction_free		= files_transaction_free,
+> +};
 
-The resulting end-of-loop code structure certainly looks a lot
-better, even if the original memmove()s were left inline without the
-helper.
-
-The helper itself however looks a bit half-hearted.  It may be more
-appropriate to go one step further to have a macro whose use looks
-like this, perhaps, to avoid the last remaining repetition?
-
-	MOVE_UP_BY_ONE(source, i, n);
-
-
->  		}
->  	}
+C99 designated initializers are unfortunately forbidden by
+CodingGuidelines.
