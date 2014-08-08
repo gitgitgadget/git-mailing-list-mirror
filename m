@@ -1,7 +1,7 @@
 From: Linus Arver <linusarver@gmail.com>
-Subject: [PATCH v2 7/7] Documentation: git-init: flesh out example
-Date: Fri,  8 Aug 2014 10:29:20 -0700
-Message-ID: <1407518960-6203-8-git-send-email-linusarver@gmail.com>
+Subject: [PATCH v2 5/7] Documentation: git-init: reword parenthetical statements
+Date: Fri,  8 Aug 2014 10:29:18 -0700
+Message-ID: <1407518960-6203-6-git-send-email-linusarver@gmail.com>
 References: <1407002817-29221-1-git-send-email-linusarver@gmail.com>
  <1407518960-6203-1-git-send-email-linusarver@gmail.com>
 Cc: Steven Drake <sdrake@xnet.co.nz>,
@@ -9,71 +9,67 @@ Cc: Steven Drake <sdrake@xnet.co.nz>,
 	<pclouds@gmail.com>, Johan Herland <johan@herland.net>,
 	Linus Arver <linusarver@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 19:30:56 2014
+X-From: git-owner@vger.kernel.org Fri Aug 08 19:30:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFo0E-00031k-Tx
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 19:30:55 +0200
+	id 1XFo0E-00031k-CP
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 19:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795AbaHHRap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2014 13:30:45 -0400
-Received: from mail-yk0-f176.google.com ([209.85.160.176]:44965 "EHLO
-	mail-yk0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752193AbaHHRal (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2014 13:30:41 -0400
-Received: by mail-yk0-f176.google.com with SMTP id 19so4069570ykq.35
-        for <git@vger.kernel.org>; Fri, 08 Aug 2014 10:30:41 -0700 (PDT)
+	id S1752199AbaHHRam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2014 13:30:42 -0400
+Received: from mail-yh0-f44.google.com ([209.85.213.44]:34057 "EHLO
+	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751012AbaHHRah (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2014 13:30:37 -0400
+Received: by mail-yh0-f44.google.com with SMTP id f73so4342588yha.3
+        for <git@vger.kernel.org>; Fri, 08 Aug 2014 10:30:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=4+RxpmNVvEF3sxCj/nderLrAkUfzEsakAMTVAihlekE=;
-        b=Rw0BC+WFPAjq0rlhkj+vCQS6xPYgLKYxrD1zZcHhrNZdFg6UvJ6S7Df2UpWB5Qj5Ed
-         15hQCT9wWgrFZE0+nt5LKAIIuKFU/CYTbRRLUyTrHvje9DRRq6xFnGpM9h0CVSOsjHhW
-         pqQrqqiO9sUTEIbaspVLjQRwD0npg/9T4hFYnuEhROKZBHV9rE1EQiKcfbLG4qnGozuZ
-         GlPLDCQzctSpPLZJe/ibrY6ekEhMmLrBVf783eHn/sxjx73wgacCDBS7zayrUUAB0mYf
-         d9aMLBFq4EF92e5TONCSxlXUbuq+75XyOAGzKKOxJ4b7nfcD2AQIixbQFOnjN2GgnwIJ
-         D4AA==
-X-Received: by 10.236.194.130 with SMTP id m2mr16207446yhn.95.1407519041055;
-        Fri, 08 Aug 2014 10:30:41 -0700 (PDT)
+        bh=lJ/yDgOS4OqSbIwAJRW1hZ0t1S2Fvbk45TsYk7PYKKw=;
+        b=woX3g9v4DSwtsiP+fNrg6eVP9w0JYZSdPMrGY+I6ymtSCMKNwUtPEYiRPnho3/uZ49
+         FqN5lvmlgPKXp1LfT2cHBvGN05Hzv6yE4mtqzmSOt+jRr0fIVIGG8aDKQvLYweNqACfH
+         WuWCo+9NLrCWOimI9xkMIkDu8AjEOyodVAgffxe2mz1s1vmev+5ZEOkqKujCAjhjm2/4
+         koqmUt88EcniFeQu0EKxPEcijetYtC9c3i2cXfDE8/6mNvSKalnHpEhhHB1WwR78Wq2W
+         wWJuUEwXkuAwQo9R/LMnnst0pnVjrnPrrizTdCiSoVaarz3OPY3S8POtnCvNqOl17dCj
+         Y4bA==
+X-Received: by 10.236.208.2 with SMTP id p2mr5214791yho.173.1407519036988;
+        Fri, 08 Aug 2014 10:30:36 -0700 (PDT)
 Received: from k0.localdomain (107-223-14-32.lightspeed.sntcca.sbcglobal.net. [107.223.14.32])
-        by mx.google.com with ESMTPSA id u47sm6776458yhm.35.2014.08.08.10.30.38
+        by mx.google.com with ESMTPSA id u47sm6776458yhm.35.2014.08.08.10.30.35
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 08 Aug 2014 10:30:40 -0700 (PDT)
+        Fri, 08 Aug 2014 10:30:36 -0700 (PDT)
 X-Mailer: git-send-email 2.0.4
 In-Reply-To: <1407518960-6203-1-git-send-email-linusarver@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255055>
-
-Add a third step `git commit` after adding files for the first time.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255056>
 
 Signed-off-by: Linus Arver <linusarver@gmail.com>
 ---
- Documentation/git-init.txt | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/git-init.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index 9f2c7d8..369f889 100644
+index 3f4e46a..21e5ad9 100644
 --- a/Documentation/git-init.txt
 +++ b/Documentation/git-init.txt
-@@ -141,10 +141,12 @@ Start a new Git repository for an existing code base::
- $ cd /path/to/my/codebase
- $ git init      <1>
- $ git add .     <2>
-+$ git commit    <3>
- ----------------
- +
- <1> Create a /path/to/my/codebase/.git directory.
- <2> Add all existing files to the index.
-+<3> Record the pristine state as the first commit in the history.
+@@ -108,8 +108,8 @@ By default, the configuration flag `receive.denyNonFastForwards` is enabled
+ in shared repositories, so that you cannot force a non fast-forwarding push
+ into it.
  
- GIT
- ---
+-If you name a (possibly non-existent) directory at the end of the command
+-line, the command is run inside the directory (possibly after creating it).
++If you provide a 'directory', the command is run inside it. If this directory
++does not exist, it will be created.
+ 
+ --
+ 
 -- 
 2.0.4
