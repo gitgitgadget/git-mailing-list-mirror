@@ -1,132 +1,114 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 10/22] refs-common.c: move read_ref, read_ref_full and ref_exists to common
-Date: Fri,  8 Aug 2014 09:44:57 -0700
-Message-ID: <1407516309-27989-11-git-send-email-sahlberg@google.com>
+Subject: [PATCH 15/22] refs-common.c: move prettify_refname to the common code
+Date: Fri,  8 Aug 2014 09:45:02 -0700
+Message-ID: <1407516309-27989-16-git-send-email-sahlberg@google.com>
 References: <1407516309-27989-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 18:47:02 2014
+X-From: git-owner@vger.kernel.org Fri Aug 08 18:47:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFnJk-0000s3-Go
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 18:47:00 +0200
+	id 1XFnJj-0000s3-0Y
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 18:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757118AbaHHQqi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2014 12:46:38 -0400
-Received: from mail-yk0-f201.google.com ([209.85.160.201]:41972 "EHLO
-	mail-yk0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756155AbaHHQpQ (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1757107AbaHHQqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2014 12:46:35 -0400
+Received: from mail-pa0-f74.google.com ([209.85.220.74]:50154 "EHLO
+	mail-pa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756310AbaHHQpQ (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 8 Aug 2014 12:45:16 -0400
-Received: by mail-yk0-f201.google.com with SMTP id 142so764805ykq.0
+Received: by mail-pa0-f74.google.com with SMTP id lj1so1475422pab.3
         for <git@vger.kernel.org>; Fri, 08 Aug 2014 09:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=/3k2m1nzmNH9+Vw3PFEeduulDeZg5Flo4cTcpPvUIws=;
-        b=NHy++gT3yewRoPenaLYOq0rVSukX0XDcGjEf/ttnK+Mb6XvQNpKihSi0qwspGGMkwT
-         zs2oTO2pcdadWtH84aI2bOCf7jn3mpLgnOT9NNIkOlqkOLeR99k7Tmkx2NEBfG55w7hM
-         hQQE+vjJguExXth7BUh/upHXM4eMtElqYSfwk9yKgi7XSw7dHKuKZD8REBXSesMAQCm2
-         HYp2aowO4ZId+laGSG4AnCeeFmgQT+9OAFAlOWm3OpFUZ1xMsdqA7GAp298/m037Eq4Y
-         opoBdI9HUszYRiZ4rs/nJFGNI5/NRrMRXpl+by8moaiokatmpddFsZZUMdHVKZkAQpOo
-         PhoQ==
+        bh=Jw6GF0nB6+dktdh2LbInHbmylcYy/JHOEddLPWIC0f0=;
+        b=gyhR3M2r97lq9dTbXAc1Lp/9qNx0vHgFjWILMBspLj7Hp2D1uHPVe5G9BP+F58gjlO
+         N76Bq/nPc/5iOFeIIoqSNaZPwvhfd+aWTeWzsnycFtixQyYf+GEYD8T/LPWYivCx7l+Z
+         5BfVXg+/jyOXiVVmVzol6WAaPIy6vYrGaptcDq2kSLfhOCJDJJLcVX7ZlT/kDKaU7Ngr
+         /H6olka6BtdYum9q1DIfvk+0DGpqGCaSWg4M6cxXa/T+m8T+YF7f/dGQM804OorrArrl
+         1ieOYL95S/NW4smD0ekgMaX6GTmYDRl72pA5Nmjyo9Ea5DdTz6GlY6sDhuv371zoo/6g
+         dGYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=/3k2m1nzmNH9+Vw3PFEeduulDeZg5Flo4cTcpPvUIws=;
-        b=CDHCZoxkhCJozQFduwrWtxhnWD114YdgRdkoBvhfE7NP3a+RCU8loA/0i9fLpLHN9y
-         ilIvKuU8JFXTuhuEai0MogGja5UK4Cm85jruaKgZizPq/9uct991M2uFVBXNT0YMy7Ot
-         wtNYCnQfJMg1/dTJ2m+uAmhIEqdrFe0IDjtB9bJtz2M9Xlz1SznRU77dkX3qdD2ijpZT
-         gx/en+4l70xTLnJv0vwfs8uMw/N4mapaVBiQ7+ylxg8Tifi4r/eoZ2d3cbIe6gJR+oHm
-         PJOZObcs151ZupOSulxDpvEbUqOfkDurhUY/NFnHfEZgXdYjPPgAOKyYBa5Qno4lFj5g
-         lovA==
-X-Gm-Message-State: ALoCoQlaUdfCQGSJB/TVNqinLHSb5G+bzO1Zq6KTjBnzxBn3CK5tkSWkgUlPQ2nxW28OjNOrgp/g
-X-Received: by 10.236.197.65 with SMTP id s41mr5385065yhn.36.1407516315707;
+        bh=Jw6GF0nB6+dktdh2LbInHbmylcYy/JHOEddLPWIC0f0=;
+        b=GhlbaqyXrDnumqIOX9H1NLqZ1Rcc79pW2ANHdklxDiYxy5EJmMTm2E7E9DJoa0L/3U
+         aDGB9wqHPVdL9BJUb9qfL1b/sZUuPLCDX+mEsqZzjSlvaZNf5JGZyQ5QIJV1tIbDv2YB
+         IpEfCssBXAdOSGu7HEN240H26rGGSC0hM5rnleq9b0LQN8AJXG7pFK/3i5iwCrN84C+f
+         jrsaok0Un0+tqnPVuNB9x2OhC2HuYt869GbQ43o9LuFJfJLHwE9DR8mjtw5eIrRp3MEu
+         nY3z5eTGfiem1JoJrc/IRLPy3/U8BGDqlmsMTs8IQjk6j3sOcSxdJeaAv1tMy3c5l0IA
+         CHsw==
+X-Gm-Message-State: ALoCoQnE3bVrvF3a5rFsJqYSREfP6wlrGWK1/xC7XRH6+ULhfglP8lG4z1mxu0FQjjjbQuT3OrRA
+X-Received: by 10.70.44.230 with SMTP id h6mr11527118pdm.7.1407516315897;
         Fri, 08 Aug 2014 09:45:15 -0700 (PDT)
 Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id a66si502686yhg.7.2014.08.08.09.45.15
+        by gmr-mx.google.com with ESMTPS id y50si504381yhk.4.2014.08.08.09.45.15
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Fri, 08 Aug 2014 09:45:15 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 8EAD031C5BD;
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id B3A5631C40F;
 	Fri,  8 Aug 2014 09:45:15 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 15F53E0E29; Fri,  8 Aug 2014 09:45:15 -0700 (PDT)
+	id 625C4E1163; Fri,  8 Aug 2014 09:45:15 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.553.geee1b3e
 In-Reply-To: <1407516309-27989-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255044>
-
-These functions do not depend on the backend implementation so we
-can move them to the common code.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255045>
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs-common.c | 18 ++++++++++++++++++
- refs.c        | 18 ------------------
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ refs-common.c | 9 +++++++++
+ refs.c        | 9 ---------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/refs-common.c b/refs-common.c
-index ab3a118..37d3d14 100644
+index 6eef80b..d8a295c 100644
 --- a/refs-common.c
 +++ b/refs-common.c
-@@ -547,3 +547,21 @@ void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_li
- 	data.msg_fmt = msg_fmt;
- 	for_each_rawref(warn_if_dangling_symref, &data);
- }
-+
-+int read_ref_full(const char *refname, unsigned char *sha1, int flags, int *ref_flag)
+@@ -3,6 +3,15 @@
+ #include "refs.h"
+ #include "string-list.h"
+ 
++const char *prettify_refname(const char *name)
 +{
-+	if (resolve_ref_unsafe(refname, sha1, flags, ref_flag))
-+		return 0;
-+	return -1;
++	return name + (
++		starts_with(name, "refs/heads/") ? 11 :
++		starts_with(name, "refs/tags/") ? 10 :
++		starts_with(name, "refs/remotes/") ? 13 :
++		0);
 +}
 +
-+int read_ref(const char *refname, unsigned char *sha1)
-+{
-+	return read_ref_full(refname, sha1, RESOLVE_REF_READING, NULL);
-+}
-+
-+int ref_exists(const char *refname)
-+{
-+	unsigned char sha1[20];
-+	return !!resolve_ref_unsafe(refname, sha1, RESOLVE_REF_READING, NULL);
-+}
+ int names_conflict(const char *refname1, const char *refname2)
+ {
+ 	for (; *refname1 && *refname1 == *refname2; refname1++, refname2++)
 diff --git a/refs.c b/refs.c
-index 40c329b..a94378e 100644
+index 6542969..fb9c614 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1514,24 +1514,6 @@ struct ref_filter {
- 	void *cb_data;
- };
+@@ -1747,15 +1747,6 @@ int for_each_rawref(each_ref_fn fn, void *cb_data)
+ 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
+ }
  
--int read_ref_full(const char *refname, unsigned char *sha1, int flags, int *ref_flag)
+-const char *prettify_refname(const char *name)
 -{
--	if (resolve_ref_unsafe(refname, sha1, flags, ref_flag))
--		return 0;
--	return -1;
+-	return name + (
+-		starts_with(name, "refs/heads/") ? 11 :
+-		starts_with(name, "refs/tags/") ? 10 :
+-		starts_with(name, "refs/remotes/") ? 13 :
+-		0);
 -}
 -
--int read_ref(const char *refname, unsigned char *sha1)
--{
--	return read_ref_full(refname, sha1, RESOLVE_REF_READING, NULL);
--}
--
--int ref_exists(const char *refname)
--{
--	unsigned char sha1[20];
--	return !!resolve_ref_unsafe(refname, sha1, RESOLVE_REF_READING, NULL);
--}
--
- static int filter_refs(const char *refname, const unsigned char *sha1, int flags,
- 		       void *data)
+ static void unlock_ref(struct ref_lock *lock)
  {
+ 	/* Do not free lock->lk -- atexit() still looks at them */
 -- 
 2.0.1.553.geee1b3e
