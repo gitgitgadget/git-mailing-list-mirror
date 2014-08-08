@@ -1,85 +1,98 @@
-From: Linus Arver <linusarver@gmail.com>
-Subject: [PATCH v2 3/7] Documentation: git-init: template directory: reword
-Date: Fri,  8 Aug 2014 10:29:16 -0700
-Message-ID: <1407518960-6203-4-git-send-email-linusarver@gmail.com>
-References: <1407002817-29221-1-git-send-email-linusarver@gmail.com>
- <1407518960-6203-1-git-send-email-linusarver@gmail.com>
-Cc: Steven Drake <sdrake@xnet.co.nz>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Johan Herland <johan@herland.net>,
-	Linus Arver <linusarver@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 19:30:56 2014
+From: Mike Stump <mikestump@comcast.net>
+Subject: Re: Rebase safely (Re: cherry picking and merge)
+Date: Fri, 8 Aug 2014 10:34:43 -0700
+Message-ID: <894B9D26-F8C5-4C82-B04C-3B31094C2293@comcast.net>
+References: <51C01AAA-3CFB-4110-BAE9-7D04CA8EE53A@comcast.net> <20140801024329.GA28914@vauxhall.crustytoothpaste.net> <53DBBFE8.8060607@gmail.com> <5AF18A76-DD3B-4B9A-BF70-EFE4BB852C3D@comcast.net> <53DBF4C9.2090905@vilain.net> <4E372CD5-33CA-4AF5-8647-F6BBC64BABA8@comcast.net> <CAK3OfOiG8kzKYRUGZJW90t-DyjWf775MfMDxzin0gw94ATS7nw@mail.gmail.com> <96B703A6-58B0-458A-8A2D-699EA8F1941B@comcast.net> <20140806194457.GD23449@localhost> <A769B84E-42D1-44AC-B0A8-0F4E68AB71FB@comcast.net> <20140807051129.GJ23449@localhost>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git discussion list <git@vger.kernel.org>
+To: Nico Williams <nico@cryptonector.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 19:35:28 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFo0C-00031k-QM
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 19:30:53 +0200
+	id 1XFo4b-0000BL-Sa
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 19:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752153AbaHHRah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2014 13:30:37 -0400
-Received: from mail-yh0-f44.google.com ([209.85.213.44]:64413 "EHLO
-	mail-yh0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750986AbaHHRad (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2014 13:30:33 -0400
-Received: by mail-yh0-f44.google.com with SMTP id f73so4357034yha.17
-        for <git@vger.kernel.org>; Fri, 08 Aug 2014 10:30:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=8oPNbElGv9yKjc/OUoYpUqvFipA7YJBGRCe5XIaX0Tg=;
-        b=lA/c1aAJNTIbD46NOGsxUuzbjWCymPPCEuqYkG51UONcn8yRCIGYOuLJaFiCeW6Lvk
-         r3HahXOcUNxOJBkIPepGzOPZ3BuNCIXvOxDNHm8YphxfaKotyiLnbDLEKBoFurQ5tRDu
-         DgF6dDbsklt+3Jf00/XheFrkrp6RSWq8WbJ/eIvYQbsvQc6CJw8Qdsk8s+cY1L+3VI9e
-         0zjBSYr4gsWf3C28WG0VElQjJ0UCf393IFpRjIo3XfRqN3pkMt/p8ETiuYPgL/9a0TaF
-         2Itj339BxewF1WZNDTwD2n2F0qYrTxwVPRFYt8oulgoo3+pP49+wMQ1mPA0P8Zh1YIXj
-         tTMw==
-X-Received: by 10.236.27.105 with SMTP id d69mr16324536yha.72.1407519033066;
-        Fri, 08 Aug 2014 10:30:33 -0700 (PDT)
-Received: from k0.localdomain (107-223-14-32.lightspeed.sntcca.sbcglobal.net. [107.223.14.32])
-        by mx.google.com with ESMTPSA id u47sm6776458yhm.35.2014.08.08.10.30.31
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 08 Aug 2014 10:30:32 -0700 (PDT)
-X-Mailer: git-send-email 2.0.4
-In-Reply-To: <1407518960-6203-1-git-send-email-linusarver@gmail.com>
+	id S1751126AbaHHRfW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Aug 2014 13:35:22 -0400
+Received: from qmta03.emeryville.ca.mail.comcast.net ([76.96.30.32]:50306 "EHLO
+	qmta03.emeryville.ca.mail.comcast.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750969AbaHHRfV convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 8 Aug 2014 13:35:21 -0400
+Received: from omta19.emeryville.ca.mail.comcast.net ([76.96.30.76])
+	by qmta03.emeryville.ca.mail.comcast.net with comcast
+	id cGbE1o0071eYJf8A3HbM0B; Fri, 08 Aug 2014 17:35:21 +0000
+Received: from [IPv6:2001:558:6045:a4:40c6:7199:cd03:b02d] ([IPv6:2001:558:6045:a4:40c6:7199:cd03:b02d])
+	by omta19.emeryville.ca.mail.comcast.net with comcast
+	id cHbL1o00B2ztT3H01HbLXG; Fri, 08 Aug 2014 17:35:20 +0000
+In-Reply-To: <20140807051129.GJ23449@localhost>
+X-Mailer: Apple Mail (2.1878.6)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+	s=q20140121; t=1407519321;
+	bh=Pj6tYmI6f46cVip0X3T2siYmHG5RO9ISlcPD66lpzYs=;
+	h=Received:Received:Content-Type:Mime-Version:Subject:From:Date:
+	 Message-Id:To;
+	b=jsTViETWLPoipvCwaMHXO0Gk6s9ujPGCYnVTcnjRYmkbOEUh8i8Yv0zyLRngH/d6i
+	 6GW5Gyq+UOz/bW65EsqC41x/iEltiP17PRtZqw/BcsXEPJFCk+YxYot5PeR2+0Z/vI
+	 GqtIaVFQaP9wZK7eR5mKtrwM72oX5/QOW5EpJqP/HQq03a3voODLf1CRC7w1ZlbVPp
+	 yopYr4w88IEdEJWZSK65zj/POZwvxgDGjsROWvo59ndlvdliMgeppchw/EQcq7XiG7
+	 TLMcEIX4aTVU1+ksyqvhumEQrVl507OKksKrwPrISoEREXGjVxpAvm03juDlKWBfAH
+	 12ebuSz3ye7SQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255058>
 
-Signed-off-by: Linus Arver <linusarver@gmail.com>
----
- Documentation/git-init.txt | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+On Aug 6, 2014, at 10:11 PM, Nico Williams <nico@cryptonector.com> wrot=
+e:
+> Nah.  Sun managed this for decades without a hitch, and for products
+> much larger than GCC.  See above.
 
-diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
-index c02ccd0..6ffe721 100644
---- a/Documentation/git-init.txt
-+++ b/Documentation/git-init.txt
-@@ -119,15 +119,15 @@ TEMPLATE DIRECTORY
- The template directory contains files and directories that will be copied to
- the `$GIT_DIR` after it is created.
- 
--The template directory used will be (in order):
-+The template directory will be one of the following (in order):
- 
-- - The argument given with the `--template` option.
-+ - the argument given with the `--template` option;
- 
-- - The contents of the `$GIT_TEMPLATE_DIR` environment variable.
-+ - the contents of the `$GIT_TEMPLATE_DIR` environment variable;
- 
-- - The `init.templatedir` configuration variable.
-+ - the `init.templatedir` configuration variable; or
- 
-- - The default template directory: `/usr/share/git-core/templates`.
-+ - the default template directory: `/usr/share/git-core/templates`.
- 
- The default template directory includes some directory structure, some
- suggested "exclude patterns", and copies of sample "hook" files.
--- 
-2.0.4
+Ok.  Ah, ok, perfect.  I see how that method of working would cure the =
+cherry-pick and merge don=92t work problem mentioned at the top of the =
+thread.
+
+> Do some experiments based on the above hardcopy.  If that doesn't
+> convince you that it works, oh well, I'll have given it a good try.
+
+Thank you for taking the time to diagram that as it appears to violate =
+everyones how to use git guide.   I see the workflow does an onto, whic=
+h was the =91fix=92 people talked about on stack overflow, and I see ju=
+st how things would work.
+
+If the old master branches are deleted and gc is run, then all the old =
+references go away, and then the refs from email and bugzilla then don=92=
+t work.  Did you guys ever remove them and then prune (or gc)?
+
+Now, the biggest issue, if that is recognized as `fixing=92 the cherry-=
+pick problem, then certainly the problem is understood to be a problem.=
+  If one recognized it as a problem, then one can envision cherry-pick =
+and merge working together so that the problem doesn=92t need fixing in=
+ the first place.  And, if it doesn=92t need fixing, then the cost of t=
+he solution isn=92t needed either.  The biggest problem with git, is th=
+at two features don=92t work nicely together when they could; in this c=
+ase, cherry-pick and merge).  Because they don=92t, it makes it hard fo=
+r people to predict what will happen when they use it.  This makes it m=
+ore expensive to use and less suitable than a system that is more predi=
+ctable.  You improve git, by fixing the problem and making the features=
+ work nicely together and making it predicable.
+
+I still favor fixing the underlying problem with cherry-pick and merge =
+not working.  :-)  That said, I see how to work around the bug with reb=
+ase, if I need to.
+
+I wish the top google hit were your guide and I wish I never saw all th=
+e other pages=85  I see now your position, and I see why all the guides=
+ are wrong, if you know just how to use rebase.  I wish the git documen=
+tation were improved to say as the first sentence under cherry-pick, th=
+is feature sucks and doesn=92t really work well, it can cause excess me=
+rge conflicts.  rebase can be used to work around the bugs in cherry-pi=
+ck for now.  And under rebase, instead of saying what it said now, that=
+ how one can can trivially and effortlessly use git, instead of saying,=
+ Do not rebase commits that you have pushed to a public repository whic=
+h I now see is wrong.
