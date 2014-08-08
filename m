@@ -1,133 +1,114 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH 04/22] refs-common.c: move delete_ref to the common code
-Date: Fri,  8 Aug 2014 09:44:51 -0700
-Message-ID: <1407516309-27989-5-git-send-email-sahlberg@google.com>
-References: <1407516309-27989-1-git-send-email-sahlberg@google.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 08 18:47:06 2014
+From: Linus Arver <linusarver@gmail.com>
+Subject: Re: [PATCH 7/7] Documentation: git-init: flesh out example
+Date: Fri, 8 Aug 2014 09:49:42 -0700
+Message-ID: <20140808164941.GC791@k0>
+References: <1407002817-29221-1-git-send-email-linusarver@gmail.com>
+ <1407002817-29221-8-git-send-email-linusarver@gmail.com>
+ <xmqqegwuoa7b.fsf@gitster.dls.corp.google.com>
+ <20140806053428.GD12559@k0>
+ <xmqqoavxms7d.fsf@gitster.dls.corp.google.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 08 18:49:58 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFnJi-0000s3-GJ
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 18:46:58 +0200
+	id 1XFnMZ-0004Rg-O3
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 18:49:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757105AbaHHQqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2014 12:46:34 -0400
-Received: from mail-oi0-f73.google.com ([209.85.218.73]:51013 "EHLO
-	mail-oi0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756210AbaHHQpQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2014 12:45:16 -0400
-Received: by mail-oi0-f73.google.com with SMTP id u20so1040995oif.4
-        for <git@vger.kernel.org>; Fri, 08 Aug 2014 09:45:15 -0700 (PDT)
+	id S1757101AbaHHQtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2014 12:49:49 -0400
+Received: from mail-yh0-f45.google.com ([209.85.213.45]:47500 "EHLO
+	mail-yh0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756784AbaHHQtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2014 12:49:47 -0400
+Received: by mail-yh0-f45.google.com with SMTP id 29so4311330yhl.32
+        for <git@vger.kernel.org>; Fri, 08 Aug 2014 09:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=moyO7g/pWZ6lGzzANMhSR7fZwymEn9hd/AFfRBUPCU4=;
-        b=nQa/XDuLijCK57ZMlhPY64N/f2cCDaNwqILmRepfJpeNEdlATVLkzEHkscUqo1wCDD
-         MWrBX5T0Vv2JVVVdmTf6zQW19hhT9h+PpuVL1Q8Rqi686EJeUxSx2DhAkwinJIE0HCZb
-         JkmVmb8e2ulWgLII3Hmbl5O6RptAoG6iszdDQecXCTz/rWaR+6BBkBLfIKnuBP+CofVL
-         cvorUzvrdS8iF8BXrwtnCob0cVHmFVtdm4ZBxKbN10ozSmfD6s805/8iP3oqV9pu3b1V
-         W7/T3l6Vj5Pi13a9u23vByvMfAIYT04P1OE2johOYJoWWb3DpluTTQNoSv8ze19H62TQ
-         jisw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=moyO7g/pWZ6lGzzANMhSR7fZwymEn9hd/AFfRBUPCU4=;
-        b=duFAaxiFryEgIPx1gesQCKXq1yplS12CrJMOmfXLG3psxGnusAn7uQE5vk7Eg9XJBy
-         9g18rthcZZm0iopcQL6GHnTZRn18ONj/ICP2qrZdiMIXJGBAEk5N8lBFz+iXTy0FoRpQ
-         jYLTyASe+Pz1sNRyzIjtredZlZWM7aEIXf9udxDtI7rJ6RxztAFRLymGEGrklZzpV3nu
-         YUW5+5QypcF2qLisi1lkeV3PUAKaK9jcGdfdTzvdCbJRt/R5nyeTZcglAZCCKE0C0eYB
-         Sq6uT7+VNMJs6s+9uoClVtbFP9Jef3hp7sZdpiu18ATRV7HhyN+tJmnbAkWUjlnZOgMg
-         o2nQ==
-X-Gm-Message-State: ALoCoQl9rZEg9WPB2TF2vCMjAv8yjw+B2tKK6QJcCTXYHaDhwdqS3SbyFDcrG6MviE9WdHqBydCC
-X-Received: by 10.42.177.5 with SMTP id bg5mr5059538icb.27.1407516315486;
-        Fri, 08 Aug 2014 09:45:15 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id z50si504804yhb.3.2014.08.08.09.45.15
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=HR6BmhVfl+It+gfe9P2RMsjHAcsvCDgnA28nyFnkuOk=;
+        b=u5IpaIRLGD5wI4BNCVanM6vIp2/sWuEw+5ghui06tuwRw1z3YdNswIgXrAlFS3jKo6
+         gtTyIPZOtPKsLK+EkdqTMSqbP3tUPlWiPHuiJSe7OAVsBuFH/UoUJPgk+x3ryJdP3wPq
+         /SdWSOUF7yCxwn2pHNd9f0LIZVazduLAuo6HCn8MU9qqENqb5kPU77oFeaZayvnXCADL
+         wqRpdDfvUNfDZNIwsrSOU1Kd5g9xSgdI2L0WAJef42yctRy5FOL2nG9dk3hOPtE8+zMg
+         3xXJhc1CpnMPVJNFPoCIt4b7A73+hTAb6gql0ccFwRQx5SG20JxIZlh/a/rAXDgDDL+f
+         TNHA==
+X-Received: by 10.236.76.105 with SMTP id a69mr16128208yhe.8.1407516586741;
+        Fri, 08 Aug 2014 09:49:46 -0700 (PDT)
+Received: from k0 (107-223-14-32.lightspeed.sntcca.sbcglobal.net. [107.223.14.32])
+        by mx.google.com with ESMTPSA id i24sm6611607yha.12.2014.08.08.09.49.44
         for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Fri, 08 Aug 2014 09:45:15 -0700 (PDT)
-Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 5339531C5BB;
-	Fri,  8 Aug 2014 09:45:15 -0700 (PDT)
-Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id E8FD5E064D; Fri,  8 Aug 2014 09:45:14 -0700 (PDT)
-X-Mailer: git-send-email 2.0.1.553.geee1b3e
-In-Reply-To: <1407516309-27989-1-git-send-email-sahlberg@google.com>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 08 Aug 2014 09:49:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <xmqqoavxms7d.fsf@gitster.dls.corp.google.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255047>
 
-This change moves delete_ref() to the refs-common.c file since this function
-does not contain any backend specific code.
+On Wed, Aug 06, 2014 at 10:41:10AM -0700, Junio C Hamano wrote:
+> Linus Arver <linusarver@gmail.com> writes:
+> 
+> > On Tue, Aug 05, 2014 at 03:14:48PM -0700, Junio C Hamano wrote:
+> >> Linus Arver <linusarver@gmail.com> writes:
+> >> 
+> >> > Signed-off-by: Linus Arver <linusarver@gmail.com>
+> >> > ---
+> >> >  Documentation/git-init.txt | 6 ++++--
+> >> >  1 file changed, 4 insertions(+), 2 deletions(-)
+> >> >
+> >> > diff --git a/Documentation/git-init.txt b/Documentation/git-init.txt
+> >> > index b94d165..16e9f9c 100644
+> >> > --- a/Documentation/git-init.txt
+> >> > +++ b/Documentation/git-init.txt
+> >> > @@ -138,10 +138,12 @@ Start a new Git repository for an existing code base::
+> >> >  $ cd /path/to/my/codebase
+> >> >  $ git init      <1>
+> >> >  $ git add .     <2>
+> >> > +$ git commit    <3>
+> >> 
+> >> I agree it is a good discipline to make the initial "pristine"
+> >> import immediately after "git add ." without doing anything else.
+> >> Perhaps the description below wants to make it more explicit?
+> >> 
+> >
+> > I could add a comment like the following:
+> >
+> >     For new repositories, creating a commit immediately after "git add
+> >     ." is good practice as it will cleanly separate any preexisting work
+> >     (done under some other VCS, for example) from any new work done with
+> >     git.
+> >
+> > Does this make sense? I am not sure how explicit you want it to be, or
+> > whether I captured what you wanted to be explained.
+> 
+> I was thinking more along the lines of
+> 
+>     <3> Record the pristine state as the first commit in the history.
+> 
+> which should suffice without becoming excessively verbose.
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- refs-common.c | 18 ++++++++++++++++++
- refs.c        | 19 -------------------
- 2 files changed, 18 insertions(+), 19 deletions(-)
+Ah yes, I like the brevity.
 
-diff --git a/refs-common.c b/refs-common.c
-index cb884b2..71ad358 100644
---- a/refs-common.c
-+++ b/refs-common.c
-@@ -25,3 +25,21 @@ int update_ref(const char *action, const char *refname,
- 	return 0;
- }
- 
-+int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
-+{
-+	struct ref_transaction *transaction;
-+	struct strbuf err = STRBUF_INIT;
-+
-+	transaction = transaction_begin(&err);
-+	if (!transaction ||
-+	    transaction_delete_sha1(transaction, refname, sha1, delopt,
-+				    sha1 && !is_null_sha1(sha1), NULL, &err) ||
-+	    transaction_commit(transaction, &err)) {
-+		error("%s", err.buf);
-+		transaction_free(transaction);
-+		strbuf_release(&err);
-+		return 1;
-+	}
-+	transaction_free(transaction);
-+	return 0;
-+}
-diff --git a/refs.c b/refs.c
-index eb66cf7..faf794c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2622,25 +2622,6 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
- 	return 0;
- }
- 
--int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
--{
--	struct ref_transaction *transaction;
--	struct strbuf err = STRBUF_INIT;
--
--	transaction = transaction_begin(&err);
--	if (!transaction ||
--	    transaction_delete_sha1(transaction, refname, sha1, delopt,
--				    sha1 && !is_null_sha1(sha1), NULL, &err) ||
--	    transaction_commit(transaction, &err)) {
--		error("%s", err.buf);
--		transaction_free(transaction);
--		strbuf_release(&err);
--		return 1;
--	}
--	transaction_free(transaction);
--	return 0;
--}
--
- struct rename_reflog_cb {
- 	struct ref_transaction *transaction;
- 	const char *refname;
--- 
-2.0.1.553.geee1b3e
+> > Actually, I would like to know if anything is special about the
+> > "root-commit"...
+> 
+> As far as Git is concerned, they are just ordinary commits without
+> any parents.  A commit in Git can have zero or more parents, so from
+> that "structural" point of view, they are not that special.
+> 
+> They are considered special by users because they represent the
+> beginning of the project history.
+
+Thank you for the insight. I won't bother adding a blurb about
+"root-commit" and what it means because they are not that special, as
+you said so yourself.
