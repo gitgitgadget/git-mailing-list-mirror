@@ -1,69 +1,128 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: Re: [PATCH v2 23/23] rebase -i: enable options --signoff, --reset-author for pick, reword
-Date: Fri, 08 Aug 2014 21:10:26 +0200
-Message-ID: <87sil6ajbx.fsf@thomasrast.ch>
-References: <53A258D2.7080806@gmail.com>
-	<cover.1407368621.git.bafain@gmail.com>
-	<ed19a079924e11edac0163837500c2e8caa2a555.1407368621.git.bafain@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] Update hard-coded header dependencies
+Date: Fri, 8 Aug 2014 14:58:26 -0700
+Message-ID: <20140808215825.GH12427@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
-	Jeff King <peff@peff.net>
-To: Fabian Ruch <bafain@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 08 21:10:36 2014
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 08 23:58:39 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFpYh-0003YT-Oj
-	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 21:10:36 +0200
+	id 1XFsBI-0005NB-7T
+	for gcvg-git-2@plane.gmane.org; Fri, 08 Aug 2014 23:58:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbaHHTKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Aug 2014 15:10:30 -0400
-Received: from ip1.thgersdorf.net ([148.251.9.194]:57837 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751157AbaHHTK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Aug 2014 15:10:29 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id CC97B4D6572;
-	Fri,  8 Aug 2014 21:10:27 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id DeC9maNnl39I; Fri,  8 Aug 2014 21:10:26 +0200 (CEST)
-Received: from linux-1gf2.thomasrast.ch (173-161-212-225-Philadelphia.hfc.comcastbusiness.net [173.161.212.225])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 740424D6664;
-	Fri,  8 Aug 2014 21:10:25 +0200 (CEST)
-In-Reply-To: <ed19a079924e11edac0163837500c2e8caa2a555.1407368621.git.bafain@gmail.com>
-	(Fabian Ruch's message of "Thu, 7 Aug 2014 01:59:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+	id S932357AbaHHV6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Aug 2014 17:58:32 -0400
+Received: from mail-pa0-f53.google.com ([209.85.220.53]:38541 "EHLO
+	mail-pa0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758177AbaHHV63 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Aug 2014 17:58:29 -0400
+Received: by mail-pa0-f53.google.com with SMTP id rd3so7963494pab.12
+        for <git@vger.kernel.org>; Fri, 08 Aug 2014 14:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        bh=k9OMyqArhyDCCG7Ap/EAVArBRZSb50KVlGlNRAGwwEk=;
+        b=QMrab/F2dxCVAphDkISMIHnL4CkReyWvLRkGL4aR0i0RBUIesDaiE5hGpIfpyp7lKH
+         ku+E/RUTkPQNOA+ViAKB9JnBBKsGAKZNSuxo0rwt4C7HeQzT+G6BzE0n5V+N3/z2QqDz
+         Bm30zQnkF0vQYW+RRDGshPg2PTKTEZ1OVXbxOXuQqolS0FGsw0s8aByfTtZVDvc2Wgqv
+         hWkLAwPf+KXin00YFZ66JmClnmt18KtHYx6jbZC5dGZnlSEmu0eBGzyyeJg4Oe2f1NSr
+         B9tiu1QPUcUkcclSss9wsW7u0siX83OFwSyzb+mS7Bu89gfFEZ5XIsSOOUB7k4uSr2Y/
+         KHIg==
+X-Received: by 10.70.118.9 with SMTP id ki9mr26822946pdb.104.1407535108727;
+        Fri, 08 Aug 2014 14:58:28 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:c044:7341:6a62:5897])
+        by mx.google.com with ESMTPSA id y4sm3983869pbt.60.2014.08.08.14.58.27
+        for <git@vger.kernel.org>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Fri, 08 Aug 2014 14:58:28 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255067>
 
-Fabian Ruch <bafain@gmail.com> writes:
+The fall-back rules used when compilers don't support the -MMD switch
+to generate makefile rules based on #includes have been out of date
+since v1.7.12.1~22^2~8 (move git_version_string into version.c,
+2012-06-02).
 
-> @@ -634,21 +644,24 @@ do_replay () {
->  		comment_for_reflog pick
->  
->  		mark_action_done
-> -		do_pick $sha1 || die_with_patch $sha1 "Could not apply $sha1... $rest"
-> +		eval do_pick $opts $sha1 \
-> +			|| die_with_patch $sha1 "Could not apply $sha1... $rest"
+Checked with 'make CHECK_HEADER_DEPENDENCIES=yes'.
 
-You had me a little puzzled at the switch to 'eval' here.  That is
-necessary to match the quoting added in 20/23, not for any change in
-this commit.  This commit is simply the first one to trigger this.
-Also, are you sure $sha1 does not require quoting through an eval?
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Maybe it's worth switching to plain
 
+	LIB_H += $(wildcard *.h)
 
-Please add tests to this patch.
+?  People using ancient compilers that never change headers wouldn't
+be hurt, people using modern compilers that do change headers also
+wouldn't be hurt, and we could stop pretending to maintain an
+up-to-date list.
 
+ Makefile | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index 2320de5..18f0fad 100644
+--- a/Makefile
++++ b/Makefile
+@@ -646,15 +646,19 @@ LIB_H += cache.h
+ LIB_H += color.h
+ LIB_H += column.h
+ LIB_H += commit.h
++LIB_H += commit-slab.h
++LIB_H += compat/apple-common-crypto.h
+ LIB_H += compat/bswap.h
+ LIB_H += compat/mingw.h
+ LIB_H += compat/obstack.h
+ LIB_H += compat/poll/poll.h
+ LIB_H += compat/precompose_utf8.h
+ LIB_H += compat/terminal.h
++LIB_H += compat/win32/alloca.h
+ LIB_H += compat/win32/dirent.h
+ LIB_H += compat/win32/pthread.h
+ LIB_H += compat/win32/syslog.h
++LIB_H += connect.h
+ LIB_H += connected.h
+ LIB_H += convert.h
+ LIB_H += credential.h
+@@ -678,6 +682,7 @@ LIB_H += grep.h
+ LIB_H += hashmap.h
+ LIB_H += help.h
+ LIB_H += http.h
++LIB_H += khash.h
+ LIB_H += kwset.h
+ LIB_H += levenshtein.h
+ LIB_H += line-log.h
+@@ -721,6 +726,7 @@ LIB_H += sha1-lookup.h
+ LIB_H += shortlog.h
+ LIB_H += sideband.h
+ LIB_H += sigchain.h
++LIB_H += split-index.h
+ LIB_H += strbuf.h
+ LIB_H += streaming.h
+ LIB_H += string-list.h
+@@ -728,6 +734,7 @@ LIB_H += submodule.h
+ LIB_H += tag.h
+ LIB_H += tar.h
+ LIB_H += thread-utils.h
++LIB_H += trace.h
+ LIB_H += transport.h
+ LIB_H += tree-walk.h
+ LIB_H += tree.h
+@@ -744,6 +751,7 @@ LIB_H += vcs-svn/repo_tree.h
+ LIB_H += vcs-svn/sliding_window.h
+ LIB_H += vcs-svn/svndiff.h
+ LIB_H += vcs-svn/svndump.h
++LIB_H += version.h
+ LIB_H += walker.h
+ LIB_H += wildmatch.h
+ LIB_H += wt-status.h
 -- 
-Thomas Rast
-tr@thomasrast.ch
