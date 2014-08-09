@@ -1,357 +1,78 @@
-From: Samuel Bronson <naesten@gmail.com>
-Subject: Re: [BUG] parse_object() does not behave as documented
-Date: Sat, 09 Aug 2014 01:43:38 -0400
-Message-ID: <87sil6w73p.fsf@naesten.mooo.com>
-References: <1405831383-22477-1-git-send-email-naesten@gmail.com>
-	<87mwc37od7.fsf@naesten.mooo.com> <87ha1zzhwu.fsf_-_@naesten.mooo.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] Add failing test: "fsck survives inflate errors"
+Date: Sat, 9 Aug 2014 13:53:12 +0700
+Message-ID: <CACsJy8B-sKKVSDZUMGLmnGUsgHZ9iQMNG-Vum4SCL1rr5Yk5Rw@mail.gmail.com>
+References: <1405831383-22477-1-git-send-email-naesten@gmail.com> <87mwc37od7.fsf@naesten.mooo.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 09 07:43:51 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Samuel Bronson <naesten@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 09 08:53:48 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XFzRV-0004Sg-F1
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Aug 2014 07:43:50 +0200
+	id 1XG0XD-00062f-M0
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Aug 2014 08:53:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751206AbaHIFnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2014 01:43:45 -0400
-Received: from mail-qc0-f170.google.com ([209.85.216.170]:36748 "EHLO
-	mail-qc0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751045AbaHIFno (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2014 01:43:44 -0400
-Received: by mail-qc0-f170.google.com with SMTP id x3so97237qcv.1
-        for <git@vger.kernel.org>; Fri, 08 Aug 2014 22:43:44 -0700 (PDT)
+	id S1751426AbaHIGxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2014 02:53:43 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:38936 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751119AbaHIGxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2014 02:53:42 -0400
+Received: by mail-ig0-f181.google.com with SMTP id h3so2071051igd.14
+        for <git@vger.kernel.org>; Fri, 08 Aug 2014 23:53:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:subject:references:date:in-reply-to:message-id:user-agent
-         :mime-version:content-type;
-        bh=zLRHlFmX75ZybXTgfRHSZ2zmFn84QAWphlfgXYCshCs=;
-        b=LJuYGacVoideoTplQSUSKXI4vEr53M41CPyJx5Nsj46oKjViAYgzVrbDC1XfyKRuCb
-         iXJF/a/yxGsRZeh1bcvlACv4QNsKhtjHUgPeo6JWLHcdazA1QRKQFbMiR/mcKBV0sVSN
-         l70/REYMOlURsyPbAPj7PsP/hWqGE+q57eTnYbbLhDoOMrNgYK4xKAfqZJJGFy1mz9b4
-         cxW+K1EEpTmU6ROlA3znbe4rQYjCrTbszWzUeWNzVFkFioJTyqGf/9Lz1iZNYU9hUYMN
-         VumrxoaR1uYiQFedzmQbHtwI+EQL1QkzAaWz9O+u7c0jXhmVpj8xUoyjVlrru/sqZ9Zz
-         7PXw==
-X-Received: by 10.224.129.6 with SMTP id m6mr44600530qas.84.1407563024024;
-        Fri, 08 Aug 2014 22:43:44 -0700 (PDT)
-Received: from hydrogen (naesten-pt.tunnel.tserv4.nyc4.ipv6.he.net. [2001:470:1f06:57::2])
-        by mx.google.com with ESMTPSA id i5sm9341498qaz.3.2014.08.08.22.43.42
-        for <git@vger.kernel.org>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Fri, 08 Aug 2014 22:43:43 -0700 (PDT)
-Received: from naesten by hydrogen with local (Exim 4.82)
-	(envelope-from <naesten@gmail.com>)
-	id 1XFzRM-0004mg-2A
-	for git@vger.kernel.org; Sat, 09 Aug 2014 01:43:40 -0400
-In-Reply-To: <87ha1zzhwu.fsf_-_@naesten.mooo.com> (Samuel Bronson's message of
-	"Tue, 29 Jul 2014 22:42:25 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=Ps1/HvDYR1NsdFO9ZaPK7hchqCVJ49uBeUp5ZlZmhW4=;
+        b=Cy/xzvF6l4XSbDOdYztFohVsZrL8DgIyKdkGIrca1ZpURrPGkQYYyt7EdR+1LX02ys
+         GkDgU9ANP6moRzyokVk9/7pN4U+9SykUJSgTdYl0616bbDIWJkPqaYoN/6hSidee/ZK6
+         1IMcnOMfCnMBnc8meBXw2oCX7Ut/ggXDV2qrEJ4FwSgK6p1dexl2U9UXCYl8eqblBoFF
+         IL8tg3du4V18Kl4dTc2cNFzb16h59Fidpm1CJDVcB5RloFDtqTshheMPsDE/ECRO2kU3
+         gE4EH39Wqk2JWaNfLxX1XPMIhjotUeII6SKlRsBi8ldkjefZq8FLHVcyZ78pexE/TUDj
+         ry8w==
+X-Received: by 10.51.17.66 with SMTP id gc2mr11686566igd.40.1407567222172;
+ Fri, 08 Aug 2014 23:53:42 -0700 (PDT)
+Received: by 10.107.13.80 with HTTP; Fri, 8 Aug 2014 23:53:12 -0700 (PDT)
+In-Reply-To: <87mwc37od7.fsf@naesten.mooo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255073>
 
-Ping?
-
-Samuel Bronson <naesten@gmail.com> writes:
-
-> [Hmm, nobody seems ot have commented on this analysis; maybe reposting
-> it with a subject containing [BUG] will help?]
+On Mon, Jul 21, 2014 at 3:43 AM, Samuel Bronson <naesten@gmail.com> wrote:
+> So, given that parse_object()'s documentation is:
 >
-> Samuel Bronson <naesten@gmail.com> writes:
+> --8<---------------cut here---------------start------------->8---
+> /*
+>  * Returns the object, having parsed it to find out what it is.
+>  *
+>  * Returns NULL if the object is missing or corrupt.
+>  */
+> --8<---------------cut here---------------end--------------->8---
 >
->> The following message is a courtesy copy of an article
->> that has been posted to gmane.comp.version-control.git as well.
->>
->> Oh, I forgot to provide any analysis of the problem.  Oops.
->>
->> It may be just as well, though; I was tired enough that I might have
->> botched it in any case.  So, have an analysis:
->>
->> While inflate errors are obviously NOT GOOD, and should perhaps be
->> instantly fatal for most commands, git fsck is something of a special
->> case because it is useful to have *it* report as many corrupt objects as
->> possible in one run.
->>
->> Unfortunately, this is not currently the case, as shown by the provided
->> testcase.
->>
->> The output for this testcase is:
->>
->> ,----
->> | checking known breakage:
->> |         hash1=ffffffffffffffffffffffffffffffffffffffff &&
->> |         hash2=fffffffffffffffffffffffffffffffffffffffe &&
->> |         mkdir -p .git/objects/ff &&
->> |         echo not-zlib >$(sha1_file $hash1) &&
->> |         test_when_finished "remove_object $hash1" &&
->> |         echo not-zlib >$(sha1_file $hash2) &&
->> |         test_when_finished "remove_object $hash2" &&
->> | 
->> |         # Return value is not documented
->> |         test_might_fail git fsck 2>out &&
->> |         cat out && echo ====== &&
->> |         grep "$hash1.*corrupt" out &&
->> |         grep "$hash2.*corrupt" out
->> | 
->> | error: inflate: data stream error (incorrect header check)
->> | error: unable to unpack ffffffffffffffffffffffffffffffffffffffff header
->> | error: inflate: data stream error (incorrect header check)
->> | fatal: loose object ffffffffffffffffffffffffffffffffffffffff (stored
->> | in .git/objects/ff/ffffffffffffffffffffffffffffffffffffff) is
->> | corrupt
->> | ======
->> | fatal: loose object ffffffffffffffffffffffffffffffffffffffff (stored
->> | in .git/objects/ff/ffffffffffffffffffffffffffffffffffffff) is
->> | corrupt
->> | not ok 5 - fsck survives inflate errors # TODO known breakage
->> `----
->>
->> If I flip it from expect_failure to expect_success and run the test with
->> -i, then go into the trash directory and run "gdb ../../git-fsck", I can
->> obtain this (thoroughly rehearsed & trimmed) gdb transcript:
->>
->> ,----
->> | % gdb ../../git-fsck
->> | GNU gdb (Debian 7.7.1-3) 7.7.1
->> ...
->> | Reading symbols from ../../git-fsck...done.
->> | (gdb) break error
->> | Breakpoint 1 at 0x813d24c: file usage.c, line 143.
->> | (gdb) break die
->> | Breakpoint 2 at 0x813d152: file usage.c, line 94.
->> | (gdb) run
->> | Starting program: /home/naesten/hacking/git/git-fsck
->> | [Thread debugging using libthread_db enabled]
->> | Using host libthread_db library
->> | "/lib/i386-linux-gnu/i686/cmov/libthread_db.so.1".
->> | Checking object directories: 100% (256/256), done.
->> | 
->> | Breakpoint 1, error (err=0x8182f7a "inflate: %s (%s)") at usage.c:143
->> | 143     {
->> | (gdb) bt
->> | #0  error (err=0x8182f7a "inflate: %s (%s)") at usage.c:143
->> | #1  0x081452ff in git_inflate (strm=0xbfffe6b8, flush=0)
->> |     at zlib.c:144
->> | #2  0x08125367 in unpack_sha1_header (stream=<optimized out>,
->> |     map=<optimized out>, mapsize=<optimized out>,
->> |     buffer=<optimized out>, bufsiz=<optimized out>)
->> |     at sha1_file.c:1515
->> | #3  0x08125546 in sha1_loose_object_info (
->> |     sha1=sha1@entry=0x82659d4 '\377' <repeats 20 times>,
->> |     oi=oi@entry=0xbfffe788) at sha1_file.c:2528
->> | #4  0x08126b2d in sha1_object_info_extended (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>, oi=0xbfffe788, flags=1)
->> |     at sha1_file.c:2565
->> | #5  0x0812666f in sha1_object_info (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>, sizep=0x0)
->> |     at sha1_file.c:2601
->> | #6  0x080f6941 in parse_object (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>) at object.c:247
->> | #7  0x080758ac in fsck_sha1 (
->> |     sha1=sha1@entry=0x82659d4 '\377' <repeats 20 times>)
->> |     at builtin/fsck.c:333
->> ...
->> | (gdb) c
->> | Continuing.
->> | error: inflate: data stream error (incorrect header check)
->> | 
->> | Breakpoint 1, error (err=0x817c525 "unable to unpack %s header")
->> |     at usage.c:143
->> | 143     {
->> | (gdb) bt
->> | #0  error (err=0x817c525 "unable to unpack %s header") at usage.c:143
->> | #1  0x08125564 in sha1_loose_object_info (
->> |     sha1=sha1@entry=0x82659d4 '\377' <repeats 20 times>,
->> |     oi=oi@entry=0xbfffe788) at sha1_file.c:2529
->> | #2  0x08126b2d in sha1_object_info_extended (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>, oi=0xbfffe788, flags=1)
->> |     at sha1_file.c:2565
->> | #3  0x0812666f in sha1_object_info (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>, sizep=0x0)
->> |     at sha1_file.c:2601
->> | #4  0x080f6941 in parse_object (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>) at object.c:247
->> ...
->> | (gdb) frame 4
->> | #4  0x080f6941 in parse_object (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>) at object.c:247
->> | warning: Source file is more recent than executable.
->> | 247 sha1_object_info(sha1, NULL) == OBJ_BLOB)) { // <-- first error
->> | (gdb) down
->> | #3  0x0812666f in sha1_object_info (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>, sizep=0x0)
->> |     at sha1_file.c:2601
->> | 2601 if (sha1_object_info_extended(sha1, &oi, LOOKUP_REPLACE_OBJECT)
->> | < 0)
->> | (gdb) fin
->> | Run till exit from #3  0x0812666f in sha1_object_info (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>, sizep=0x0)
->> |     at sha1_file.c:2601
->> | error: unable to unpack ffffffffffffffffffffffffffffffffffffffff header
->> | parse_object (sha1=0x82659d4 '\377' <repeats 20 times>)
->> |     at object.c:246
->> | 246                 (!obj && has_sha1_file(sha1) &&
->> | Value returned is $1 = -1
->> | (gdb) c
->> | Continuing.
->> | 
->> | Breakpoint 1, error (err=0x8182f7a "inflate: %s (%s)") at usage.c:143
->> | 143     {
->> | (gdb) bt
->> | #0  error (err=0x8182f7a "inflate: %s (%s)") at usage.c:143
->> | #1  0x081452ff in git_inflate (strm=0xbfffe710, flush=0)
->> |     at zlib.c:144
->> | #2  0x08125367 in unpack_sha1_header (stream=<optimized out>,
->> |     map=<optimized out>, mapsize=<optimized out>,
->> |     buffer=<optimized out>, bufsiz=<optimized out>)
->> |     at sha1_file.c:1515
->> | #3  0x08125429 in unpack_sha1_file (map=map@entry=0xb7fdc000,
->> |     mapsize=<optimized out>, type=type@entry=0xbfffe7d8,
->> |     size=0xbfffe7dc, sha1=0x82659d4 '\377' <repeats 20 times>)
->> |     at sha1_file.c:1620
->> | #4  0x08126024 in read_object (
->> |     sha1=sha1@entry=0x82659d4 '\377' <repeats 20 times>,
->> |     type=type@entry=0xbfffe7d8, size=size@entry=0xbfffe7dc)
->> |     at sha1_file.c:2667
->> | #5  0x08126c33 in read_sha1_file_extended (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>, type=0xbfffe7d8,
->> |     size=0xbfffe7dc, flag=1) at sha1_file.c:2690
->> | #6  0x080f69b8 in read_sha1_file (size=0xbfffe7dc, type=0xbfffe7d8,
->> |     sha1=0x82659d4 '\377' <repeats 20 times>) at cache.h:853
->> | #7  parse_object (sha1=0x82659d4 '\377' <repeats 20 times>)
->> |     at object.c:256
->> ...
->> | (gdb) c
->> | Continuing.
->> | error: inflate: data stream error (incorrect header check)
->> | 
->> | Breakpoint 2, die (
->> |     err=0x817cdbc "loose object %s (stored in %s) is corrupt")
->> |     at usage.c:94
->> | 94      {
->> | (gdb) bt
->> | #0  die (err=0x817cdbc "loose object %s (stored in %s) is corrupt")
->> |     at usage.c:94
->> | #1  0x08126cc1 in read_sha1_file_extended (
->> |     sha1=0x82659d4 '\377' <repeats 20 times>, type=0xbfffe7d8,
->> |     size=0xbfffe7dc, flag=1) at sha1_file.c:2705
->> | #2  0x080f69b8 in read_sha1_file (size=0xbfffe7dc, type=0xbfffe7d8,
->> |     sha1=0x82659d4 '\377' <repeats 20 times>) at cache.h:853
->> | #3  parse_object (sha1=0x82659d4 '\377' <repeats 20 times>)
->> |     at object.c:256
->> ...
->> | (gdb) frame 3
->> | #3  parse_object (sha1=0x82659d4 '\377' <repeats 20 times>)
->> |     at object.c:256
->> | 256             buffer = read_sha1_file(sha1, &type, &size); // <-- death
->> | (gdb)
->> `----
->>
->> It's probably clearest what's happened here if I just show you this ...
->>
->> From object.c:
->>
->> struct object *parse_object(const unsigned char *sha1)
->> {
->> 	unsigned long size;
->> 	enum object_type type;
->> 	int eaten;
->> 	const unsigned char *repl = lookup_replace_object(sha1);
->> 	void *buffer;
->> 	struct object *obj;
->>
->> 	obj = lookup_object(sha1);
->> 	if (obj && obj->parsed)
->> 		return obj;
->>
->> 	if ((obj && obj->type == OBJ_BLOB) ||
->> 	    (!obj && has_sha1_file(sha1) &&
->> 	     sha1_object_info(sha1, NULL) == OBJ_BLOB)) { // <-- first error
->> 		if (check_sha1_signature(repl, NULL, 0, NULL) < 0) {
->> 			error("sha1 mismatch %s", sha1_to_hex(repl));
->> 			return NULL;
->> 		}
->> 		parse_blob_buffer(lookup_blob(sha1), NULL, 0);
->> 		return lookup_object(sha1);
->> 	}
->>
->> 	buffer = read_sha1_file(sha1, &type, &size); // <-- death
->> 	if (buffer) {
->> 		if (check_sha1_signature(repl, buffer, size, typename(type)) < 0) {
->> 			free(buffer);
->> 			error("sha1 mismatch %s", sha1_to_hex(repl));
->> 			return NULL;
->> 		}
->>
->> 		obj = parse_object_buffer(sha1, type, size, buffer, &eaten);
->> 		if (!eaten)
->> 			free(buffer);
->> 		return obj;
->> 	}
->> 	return NULL;
->> }
->>
->> (I've clearly added some marginal comments to my copy. ;-)
->>
->> The first two lines of output
->>
->>> error: inflate: data stream error (incorrect header check)
->>> error: unable to unpack ffffffffffffffffffffffffffffffffffffffff header
->>
->> come from deep within the call "sha1_object_info(sha1, NULL)".
->>
->> The next two lines
->>
->>> error: inflate: data stream error (incorrect header check)
->>> fatal: loose object ffffffffffffffffffffffffffffffffffffffff (stored
->>> in .git/objects/ff/ffffffffffffffffffffffffffffffffffffff) is
->>> corrupt
->>
->> and death come from the call "read_sha1_file(sha1, &type, &size)", which
->> is fair because that's exactly what the documentation comment above
->> read_sha1_file_extended() *says* will happen:
->>
->> /*
->>  * This function dies on corrupt objects; the callers who want to
->>  * deal with them should arrange to call read_object() and give error
->>  * messages themselves.
->>  */
->>
->> So, given that parse_object()'s documentation is:
->>
->> /*
->>  * Returns the object, having parsed it to find out what it is.
->>  *
->>  * Returns NULL if the object is missing or corrupt.
->>  */
->>
->> it probably should not call read_sha1_file() on a corrupt object.
->>
->> Options for fixing this would appear to include:
->>
->> 1. Saving the result of sha1_object_info(sha1, NULL) to a variable and
->>    returning early if the object is corrupt.  (But what happens if there
->>    is corruption far enough in that it isn't seen when trying to grab
->>    the object header?)
->>
->> 2. Calling read_object() and giving our own error messages.
->>
->> 3. Making read_sha1_file_extended only *optionally* die; since it's
->>    calling die() directly.
->>
->> I'm also a bit nervous about this, though:
->>
->> static inline void *read_sha1_file(const unsigned char *sha1, enum object_type *type, unsigned long *size)
->> {
->> 	return read_sha1_file_extended(sha1, type, size, LOOKUP_REPLACE_OBJECT);
->> }
->>
->> Do we really want that happening while scanning the loose objects?
+> it probably should not call read_sha1_file() on a corrupt object.
+>
+> Options for fixing this would appear to include:
+>
+> 1. Saving the result of sha1_object_info(sha1, NULL) to a variable and
+>    returning early if the object is corrupt.  (But what happens if there
+>    is corruption far enough in that it isn't seen when trying to grab
+>    the object header?)
+>
+> 2. Calling read_object() and giving our own error messages.
+>
+> 3. Making read_sha1_file_extended only *optionally* die; since it's
+>    calling die() directly.
 
+We've been using die() quite freely (or at least used to) and there
+are many more cases that can trigger die() and parse_object() can do
+nothing about it. Adding a "gentle" flag to read_sha1_file_extended
+and pass it further down could be the first step. Patches welcome.
 -- 
-Hi! I'm a .signature virus! Copy me into your ~/.signature to help me spread!
+Duy
