@@ -1,78 +1,125 @@
-From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] Add failing test: "fsck survives inflate errors"
-Date: Sat, 9 Aug 2014 13:53:12 +0700
-Message-ID: <CACsJy8B-sKKVSDZUMGLmnGUsgHZ9iQMNG-Vum4SCL1rr5Yk5Rw@mail.gmail.com>
-References: <1405831383-22477-1-git-send-email-naesten@gmail.com> <87mwc37od7.fsf@naesten.mooo.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
+Subject: [PATCH] read-cache: check for leading symlinks when refreshing index
+Date: Sat, 09 Aug 2014 19:43:29 +0200
+Message-ID: <53E65DC1.4010502@web.de>
+References: <web-416867478@relay1.vsu.ru> <53DABD69.7010004@web.de>	<xmqqppgkw55g.fsf@gitster.dls.corp.google.com>	<53DCF14D.8040705@web.de>	<xmqqk36ptrs6.fsf@gitster.dls.corp.google.com>	<53DEBEE7.6070009@web.de> <xmqqbns0tdqu.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Samuel Bronson <naesten@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 09 08:53:48 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Nikolay Avdeev <avdeev@math.vsu.ru>, git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 09 19:44:50 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XG0XD-00062f-M0
-	for gcvg-git-2@plane.gmane.org; Sat, 09 Aug 2014 08:53:48 +0200
+	id 1XGAhC-0005vJ-R6
+	for gcvg-git-2@plane.gmane.org; Sat, 09 Aug 2014 19:44:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751426AbaHIGxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Aug 2014 02:53:43 -0400
-Received: from mail-ig0-f181.google.com ([209.85.213.181]:38936 "EHLO
-	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751119AbaHIGxm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Aug 2014 02:53:42 -0400
-Received: by mail-ig0-f181.google.com with SMTP id h3so2071051igd.14
-        for <git@vger.kernel.org>; Fri, 08 Aug 2014 23:53:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        bh=Ps1/HvDYR1NsdFO9ZaPK7hchqCVJ49uBeUp5ZlZmhW4=;
-        b=Cy/xzvF6l4XSbDOdYztFohVsZrL8DgIyKdkGIrca1ZpURrPGkQYYyt7EdR+1LX02ys
-         GkDgU9ANP6moRzyokVk9/7pN4U+9SykUJSgTdYl0616bbDIWJkPqaYoN/6hSidee/ZK6
-         1IMcnOMfCnMBnc8meBXw2oCX7Ut/ggXDV2qrEJ4FwSgK6p1dexl2U9UXCYl8eqblBoFF
-         IL8tg3du4V18Kl4dTc2cNFzb16h59Fidpm1CJDVcB5RloFDtqTshheMPsDE/ECRO2kU3
-         gE4EH39Wqk2JWaNfLxX1XPMIhjotUeII6SKlRsBi8ldkjefZq8FLHVcyZ78pexE/TUDj
-         ry8w==
-X-Received: by 10.51.17.66 with SMTP id gc2mr11686566igd.40.1407567222172;
- Fri, 08 Aug 2014 23:53:42 -0700 (PDT)
-Received: by 10.107.13.80 with HTTP; Fri, 8 Aug 2014 23:53:12 -0700 (PDT)
-In-Reply-To: <87mwc37od7.fsf@naesten.mooo.com>
+	id S1751903AbaHIRom (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Aug 2014 13:44:42 -0400
+Received: from mout.web.de ([212.227.15.4]:52897 "EHLO mout.web.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752131AbaHIRoj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Aug 2014 13:44:39 -0400
+Received: from [192.168.178.27] ([79.253.137.193]) by smtp.web.de (mrweb001)
+ with ESMTPSA (Nemesis) id 0LnBTZ-1WmrE63MUP-00hPPC; Sat, 09 Aug 2014 19:44:35
+ +0200
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <xmqqbns0tdqu.fsf@gitster.dls.corp.google.com>
+X-Provags-ID: V03:K0:17+PmQP1mq2nYtkVzeKNHzfBtNtXoKwwIf+7Up65hCIoxZZsF0f
+ WdBXHcvWLHDXyJ70zsK3a6h0GpwAnb1YVOFP579JoMVCUM+WR+A43hocb9JNu+hqZWG6aKX
+ XfKJPXG/jdoIoBBi28EXoY7ORLYTBOzKaNZMSR0s2zVa/5A5T6TdTLMI+DAI1NqtKPzlPN3
+ KaaFaJ5gpR9LPRmboe01g==
+X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255074>
 
-On Mon, Jul 21, 2014 at 3:43 AM, Samuel Bronson <naesten@gmail.com> wrote:
-> So, given that parse_object()'s documentation is:
->
-> --8<---------------cut here---------------start------------->8---
-> /*
->  * Returns the object, having parsed it to find out what it is.
->  *
->  * Returns NULL if the object is missing or corrupt.
->  */
-> --8<---------------cut here---------------end--------------->8---
->
-> it probably should not call read_sha1_file() on a corrupt object.
->
-> Options for fixing this would appear to include:
->
-> 1. Saving the result of sha1_object_info(sha1, NULL) to a variable and
->    returning early if the object is corrupt.  (But what happens if there
->    is corruption far enough in that it isn't seen when trying to grab
->    the object header?)
->
-> 2. Calling read_object() and giving our own error messages.
->
-> 3. Making read_sha1_file_extended only *optionally* die; since it's
->    calling die() directly.
+Don't add paths with leading symlinks to the index while refreshing; we
+only track those symlinks themselves.  We already ignore them while
+preloading (see read_index_preload.c).
 
-We've been using die() quite freely (or at least used to) and there
-are many more cases that can trigger die() and parse_object() can do
-nothing about it. Adding a "gentle" flag to read_sha1_file_extended
-and pass it further down could be the first step. Patches welcome.
+Reported-by: Nikolay Avdeev <avdeev@math.vsu.ru>
+Signed-off-by: Rene Scharfe <l.s.r@web.de>
+---
+ read-cache.c               |  8 ++++++++
+ t/t7515-status-symlinks.sh | 43 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
+ create mode 100755 t/t7515-status-symlinks.sh
+
+diff --git a/read-cache.c b/read-cache.c
+index 5d3c8bd..6f0057f 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1064,6 +1064,14 @@ static struct cache_entry *refresh_cache_ent(struct index_state *istate,
+ 		return ce;
+ 	}
+ 
++	if (has_symlink_leading_path(ce->name, ce_namelen(ce))) {
++		if (ignore_missing)
++			return ce;
++		if (err)
++			*err = ENOENT;
++		return NULL;
++	}
++
+ 	if (lstat(ce->name, &st) < 0) {
+ 		if (ignore_missing && errno == ENOENT)
+ 			return ce;
+diff --git a/t/t7515-status-symlinks.sh b/t/t7515-status-symlinks.sh
+new file mode 100755
+index 0000000..9f989be
+--- /dev/null
++++ b/t/t7515-status-symlinks.sh
+@@ -0,0 +1,43 @@
++#!/bin/sh
++
++test_description='git status and symlinks'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo .gitignore >.gitignore &&
++	echo actual >>.gitignore &&
++	echo expect >>.gitignore &&
++	mkdir dir &&
++	echo x >dir/file1 &&
++	echo y >dir/file2 &&
++	git add dir &&
++	git commit -m initial &&
++	git tag initial
++'
++
++test_expect_success SYMLINKS 'symlink to a directory' '
++	test_when_finished "rm symlink" &&
++	ln -s dir symlink &&
++	echo "?? symlink" >expect &&
++	git status --porcelain >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success SYMLINKS 'symlink replacing a directory' '
++	test_when_finished "rm -rf copy && git reset --hard initial" &&
++	mkdir copy &&
++	cp dir/file1 copy/file1 &&
++	echo "changed in copy" >copy/file2 &&
++	git add copy &&
++	git commit -m second &&
++	rm -rf copy &&
++	ln -s dir copy &&
++	echo " D copy/file1" >expect &&
++	echo " D copy/file2" >>expect &&
++	echo "?? copy" >>expect &&
++	git status --porcelain >actual &&
++	test_cmp expect actual
++'
++
++test_done
 -- 
-Duy
+2.0.2
