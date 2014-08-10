@@ -1,109 +1,108 @@
-From: Stefan Beller <stefanbeller@gmail.com>
-Subject: [PATCH 2/2] prepare_revision_walk: Check for return value in all places
-Date: Sun, 10 Aug 2014 23:33:26 +0200
-Message-ID: <1407706406-30455-2-git-send-email-stefanbeller@gmail.com>
-References: <1407706406-30455-1-git-send-email-stefanbeller@gmail.com>
-Cc: Stefan Beller <stefanbeller@gmail.com>
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 10 23:33:48 2014
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@plane.gmane.org
+From: Joe Perches <joe@perches.com>
+Subject: Re: [PATCH] checkpatch: Add test for commit id formatting style in
+ commit log
+Date: Sun, 10 Aug 2014 14:41:37 -0700
+Message-ID: <1407706897.4082.24.camel@joe-AO725>
+References: <20140702130210.fd40d67f0819cfb5f3e9e5ca@linux-foundation.org>
+	 <1404331746.14624.95.camel@joe-AO725>
+	 <20140702131534.c613f55f79519b3862f79e40@linux-foundation.org>
+	 <1404338448.14741.8.camel@joe-AO725>
+	 <CAMuHMdV1TXLmuAofwrUuT-KKUfkEYdXsM34VRrfhB6FxXfdeeg@mail.gmail.com>
+	 <1407706081.4082.21.camel@joe-AO725>
+	 <20140810143500.2d556ae9.akpm@linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
+	LKML <linux-kernel@vger.kernel.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andrew Morton <akpm@linux-foundation.org>
+X-From: linux-kernel-owner@vger.kernel.org Sun Aug 10 23:42:07 2014
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XGakM-0002xi-J0
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Aug 2014 23:33:46 +0200
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1XGasQ-0002Uy-GM
+	for glk-linux-kernel-3@plane.gmane.org; Sun, 10 Aug 2014 23:42:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751918AbaHJVdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2014 17:33:36 -0400
-Received: from mail-wi0-f177.google.com ([209.85.212.177]:51347 "EHLO
-	mail-wi0-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751906AbaHJVdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2014 17:33:35 -0400
-Received: by mail-wi0-f177.google.com with SMTP id ho1so3305461wib.10
-        for <git@vger.kernel.org>; Sun, 10 Aug 2014 14:33:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XQB3QlEVgO/h38ymzjs0T3Dj6A/L0L4uoSd2b6WfN1M=;
-        b=Y1N0uLtkt64r2mz1r8PMPfuftB/omNm8VpFOAyJaccnLy1umxcCjyLTZoPgD0wtXt1
-         fBmqtKvvkOIcCT2j0AOit6AF7g9rrtf7olW5GgmR1rydypbjQNGjoooFy2DW7ZtkZBd9
-         J0ZYMJvNsFzHo4ln25jzO9k/9vsK59AeNXPbKrCujWtoBvV98tbCNvEJ/4vgekkr6W1h
-         llGVkYCyRIvLTH94WeHGfPNtGD74y0vI0PMh+FlobcRfWQHqeKdmayozXBSn7d2PP8q3
-         aC8lrl0UtcI835vQQfLrNoUvrf6yA85BdNFHXVe9cwFEenxPulmFyh9YCCmNZUUAyBkL
-         ES5g==
-X-Received: by 10.194.71.132 with SMTP id v4mr13470117wju.102.1407706414380;
-        Sun, 10 Aug 2014 14:33:34 -0700 (PDT)
-Received: from localhost (ip-109-91-30-58.hsi12.unitymediagroup.de. [109.91.30.58])
-        by mx.google.com with ESMTPSA id fb12sm34839864wjc.43.2014.08.10.14.33.33
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
-        Sun, 10 Aug 2014 14:33:33 -0700 (PDT)
-X-Mailer: git-send-email 2.1.0.rc2
-In-Reply-To: <1407706406-30455-1-git-send-email-stefanbeller@gmail.com>
-Sender: git-owner@vger.kernel.org
+	id S1751868AbaHJVlo (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Sun, 10 Aug 2014 17:41:44 -0400
+Received: from smtprelay0231.hostedemail.com ([216.40.44.231]:52474 "EHLO
+	smtprelay.hostedemail.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751407AbaHJVll (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Sun, 10 Aug 2014 17:41:41 -0400
+Received: from filter.hostedemail.com (ff-bigip1 [10.5.19.254])
+	by smtprelay04.hostedemail.com (Postfix) with ESMTP id 9A53B351019;
+	Sun, 10 Aug 2014 21:41:40 +0000 (UTC)
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Spam-Summary: 10,1,0,,d41d8cd98f00b204,joe@perches.com,:::::::,RULES_HIT:41:355:379:541:599:800:960:973:982:988:989:1260:1261:1277:1311:1313:1314:1345:1359:1373:1437:1515:1516:1518:1534:1542:1593:1594:1711:1730:1747:1777:1792:2197:2199:2393:2538:2553:2559:2562:2828:3138:3139:3140:3141:3142:3304:3354:3622:3653:3865:3866:3867:3868:3870:3871:3872:3874:4250:4321:4605:5007:6119:7522:7652:7903:10007:10400:10848:10967:11026:11232:11473:11658:11914:12043:12294:12517:12519:12555:12740:21080,0,RBL:none,CacheIP:none,Bayesian:0.5,0.5,0.5,Netcheck:none,DomainCache:0,MSF:not bulk,SPF:fn,MSBL:0,DNSBL:none,Custom_rules:0:1:0
+X-HE-Tag: hand03_82ebb5de1b14b
+X-Filterd-Recvd-Size: 3535
+Received: from [192.168.1.162] (pool-71-103-235-196.lsanca.fios.verizon.net [71.103.235.196])
+	(Authenticated sender: joe@perches.com)
+	by omf03.hostedemail.com (Postfix) with ESMTPA;
+	Sun, 10 Aug 2014 21:41:39 +0000 (UTC)
+In-Reply-To: <20140810143500.2d556ae9.akpm@linux-foundation.org>
+X-Mailer: Evolution 3.10.4-0ubuntu1 
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255109>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255110>
 
-Even the documentation tells us:
-	You should check if it
-	returns any error (non-zero return code) and if it does not, you can
-	start using get_revision() to do the iteration.
+On Sun, 2014-08-10 at 14:35 -0700, Andrew Morton wrote:
+> On Sun, 10 Aug 2014 14:28:01 -0700 Joe Perches <joe@perches.com> wrote:
+> > > On Thu, Jul 3, 2014 at 12:00 AM, Joe Perches <joe@perches.com> wrote:
+> > > > Commit logs have various forms of commit id references.
+> > > >
+> > > > Try to standardize on a 12 character long lower case
+> > > > commit id along with a description of parentheses and
+> > > > the quoted subject line
+> > > >
+> > > > ie: commit 0123456789ab ("commit description")
+> > > 
+> > > Now this is in mainline, checkpatch starts complaining about my "too long"
+> > > (40 chars) commit IDs in commit messages :-(
+> > > 
+> > > 40 chars may be too long (but it's quick to copy-and-paste, as "git show"
+> > > shows that by default), but 12 sounds a bit short, as that's only 48 bits.
+> > 
+> > Right now, this test allows 12 to 16 byte length commit ids
+> > without emitting a warning.
+> > 
+> > Andrew wanted this test, I don't care how long the commit id
+> > is in the commit log.
+> 
+> Well, I mainly wanted to stop having to add "commit description" when
+> people forget it.  The length check was perhaps a bit anal.  How about
+> we make it "12 or more"?
 
-In preparation for this commit, I grepped all occurrences of
-prepare_revision_walk and added error messages, when there were none.
-
-Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
+Fine by me, just change the 16 to 40
 ---
- builtin/branch.c | 4 +++-
- builtin/commit.c | 3 ++-
- remote.c         | 3 ++-
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ scripts/checkpatch.pl | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 0591b22..ced422b 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -653,7 +653,9 @@ static int print_ref_list(int kinds, int detached, int verbose, int abbrev, stru
- 		add_pending_object(&ref_list.revs,
- 				   (struct object *) filter, "");
- 		ref_list.revs.limited = 1;
--		prepare_revision_walk(&ref_list.revs);
-+
-+		if (prepare_revision_walk(&ref_list.revs))
-+			die(_("revision walk setup failed"));
- 		if (verbose)
- 			ref_list.maxwidth = calc_maxwidth(&ref_list);
- 	}
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 7867768..bb84e1d 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1055,7 +1055,8 @@ static const char *find_author_by_nickname(const char *name)
- 	revs.mailmap = &mailmap;
- 	read_mailmap(revs.mailmap, NULL);
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 31a731e..b385bcb 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -2133,7 +2133,7 @@ sub process {
+ # Check for improperly formed commit descriptions
+ 		if ($in_commit_log &&
+ 		    $line =~ /\bcommit\s+[0-9a-f]{5,}/i &&
+-		    $line !~ /\b[Cc]ommit [0-9a-f]{12,16} \("/) {
++		    $line !~ /\b[Cc]ommit [0-9a-f]{12,40} \("/) {
+ 			$line =~ /\b(c)ommit\s+([0-9a-f]{5,})/i;
+ 			my $init_char = $1;
+ 			my $orig_commit = lc($2);
+@@ -2141,7 +2141,7 @@ sub process {
+ 			my $desc = 'commit description';
+ 		        ($id, $desc) = git_commit_info($orig_commit, $id, $desc);
+ 			ERROR("GIT_COMMIT_ID",
+-			      "Please use 12 to 16 chars for the git commit ID like: '${init_char}ommit $id (\"$desc\")'\n" . $herecurr);
++			      "Please use 12 or more chars for the git commit ID like: '${init_char}ommit $id (\"$desc\")'\n" . $herecurr);
+ 		}
  
--	prepare_revision_walk(&revs);
-+	if (prepare_revision_walk(&revs))
-+		die("revision walk setup failed");
- 	commit = get_revision(&revs);
- 	if (commit) {
- 		struct pretty_print_context ctx = {0};
-diff --git a/remote.c b/remote.c
-index 894db09..112e4d5 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1893,7 +1893,8 @@ int stat_tracking_info(struct branch *branch, int *num_ours, int *num_theirs)
- 
- 	init_revisions(&revs, NULL);
- 	setup_revisions(rev_argc, rev_argv, &revs, NULL);
--	prepare_revision_walk(&revs);
-+	if (prepare_revision_walk(&revs))
-+		die("revision walk setup failed");
- 
- 	/* ... and count the commits on each side. */
- 	*num_ours = 0;
--- 
-2.1.0.rc2
+ # Check for added, moved or deleted files
