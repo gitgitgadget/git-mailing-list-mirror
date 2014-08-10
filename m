@@ -1,73 +1,120 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Update hard-coded header dependencies
-Date: Sun, 10 Aug 2014 15:48:24 -0400
-Message-ID: <20140810194824.GC9886@peff.net>
-References: <20140808215825.GH12427@google.com>
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: Unify subcommand structure; introduce double dashes for all subcommands?
+Date: Sun, 10 Aug 2014 23:08:03 +0200
+Message-ID: <53E7DF33.50508@gmail.com>
+References: <53CFBA1A.8040600@gmail.com>	<xmqqiomodkt9.fsf@gitster.dls.corp.google.com>	<53E78F26.3000701@gmail.com> <xmqqha1k8b6v.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 10 21:48:38 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 10 23:08:19 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XGZ6b-0004bn-Jh
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Aug 2014 21:48:37 +0200
+	id 1XGaLj-00047f-4z
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Aug 2014 23:08:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751380AbaHJTse (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2014 15:48:34 -0400
-Received: from cloud.peff.net ([50.56.180.127]:49838 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751122AbaHJTsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2014 15:48:33 -0400
-Received: (qmail 945 invoked by uid 102); 10 Aug 2014 19:48:33 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (204.237.18.137)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 10 Aug 2014 14:48:33 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Aug 2014 15:48:24 -0400
-Content-Disposition: inline
-In-Reply-To: <20140808215825.GH12427@google.com>
+	id S1751406AbaHJVIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2014 17:08:06 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:46998 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751224AbaHJVIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2014 17:08:05 -0400
+Received: by mail-wg0-f50.google.com with SMTP id n12so7673532wgh.33
+        for <git@vger.kernel.org>; Sun, 10 Aug 2014 14:08:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=8gqqHG0o08gDQBUpgVeJD6hat8y6ZpHjWqUSq3Iq6ro=;
+        b=L1WaULlFmOqeZJ1W3eiv7zMrGZh/mrd4KqFth20QxkSxbohmVcaUYDtL3DoJdUSY1y
+         sF7UQ92b2Xd1/wf0dz1l4l1n/9dzqtLmFi2gkGpDFK81eAI0WS3nNEMsqkXiaNzISxlN
+         mq/TUdNe+NWZUFYr+wbrkD3E4uSSlLvdl9KIZDxXpOUBX0I6Ohaw5ko939flTsopNVYi
+         c5rln0V5A610pIS6qkIKvlUubHyAIvg8eRTedoaYQG0eQGxCMBsGC/G4SxMm9mvnWfaa
+         L9RCfOwxxjtKnDRoUFC1As27k1ft7lzQ7osAcVYMUr3RdLcsQCj77wia5N8Ff5DqXbRG
+         o/zA==
+X-Received: by 10.194.59.42 with SMTP id w10mr49200984wjq.15.1407704883163;
+        Sun, 10 Aug 2014 14:08:03 -0700 (PDT)
+Received: from [192.168.1.7] (ip-109-91-30-58.hsi12.unitymediagroup.de. [109.91.30.58])
+        by mx.google.com with ESMTPSA id u3sm35288931wif.12.2014.08.10.14.08.02
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 10 Aug 2014 14:08:02 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <xmqqha1k8b6v.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255104>
 
-On Fri, Aug 08, 2014 at 02:58:26PM -0700, Jonathan Nieder wrote:
-
-> Maybe it's worth switching to plain
+On 10.08.2014 20:13, Junio C Hamano wrote:
+> Stefan Beller <stefanbeller@gmail.com> writes:
 > 
-> 	LIB_H += $(wildcard *.h)
+>> On 23.07.2014 19:52, Junio C Hamano wrote:
+>>
+>>> Sounds familiar.  E.g. here is a similar thread about a year ago.
+>>>
+>>>   http://thread.gmane.org/gmane.comp.version-control.git/231376/focus=231478
+>>>
+>>> Further discussions to make the plan more concrete is very much
+>>> welcomed.
+>>>
+>>> Thanks.
+>>>
+>>
+>> So I'd want to add have the subcommands without double dashes ideally.
 > 
-> ?  People using ancient compilers that never change headers wouldn't
-> be hurt, people using modern compilers that do change headers also
-> wouldn't be hurt, and we could stop pretending to maintain an
-> up-to-date list.
+> That is not ideal at all, I am afraid.  A command that started only
+> with its "primary operating mode", e.g. "git tag [-s|-a] tagname
+> [object]", may have to gain "I do not want to create, I just want to
+> list" and the way to signal that has to be an option that cannot be
+> mistaken as its valid first argument (to avoid "git tag list" that
+> cannot create a tag called "list", we use "git tag --list").  You
+> could add an entirely new command "git foo" that always takes the
+> command-mode word, i.e. "git foo mode$n args", but you will be
+> typing the operating mode name all the time only to save --mode$n
+> for 2<=$n, which may not be a good economy in the end.
+> 
+> Please do not go there.
+> 
 
-Yeah, I think that makes sense. I'd imagine most of the developers are
-on a modern platform and don't use the static list at all, so we don't
-notice when it breaks (and even when you do use it, it's quite hard to
-notice anyway).
+I see your point.
+However how often do you really want to create a tag called list?
+As of now it's easy:
+	git tag list
+and for listing all tags you'd need to type:
+	git tag --list
+and if you want to create a tag called --list, I'd assume you'd go
+	git tag -- --list
+	# However:
+	fatal: '--list' is not a valid tag name.
 
-We'd have to do a multi-directory wildcard, though, to catch the header
-files stuck in compat/* and elsewhere. We could list the containing
-directories manually, but that's yet another thing to go wrong. For
-people using the git repo, it would probably be fine to do:
+So even as of now certain tag names cannot be done easily.
+Also you have to type two more dashes for an action you'd probably want
+to perform more often (as opposed to creating a tag 'list')
 
-  LIB_H += $(shell git ls-files -- '*.h')
+In my (ideal) world we'd rather have this behavior:
+ 	git tag list
+	# behaves the same as
+	git tag
 
-That wouldn't count new files a developer adds until they "git add" some
-version of the file, but that is not so bad (right now they have to add
-it to the Makefile, and anyway, I think most devs are using the computed
-dependencies).
+Now creating a tag called 'list' is not as easy, because 'list' is a
+primary operating mode name, so we need to tell git we're actually
+meaning the name as opposed to the operating mode:
+	git tag create -- list
+	# or even
+	git tag create -- --list
 
-But that doesn't work for distributed tarballs, which would have to
-convert that to a static list somehow. Maybe
 
-  LIB_H += $(shell find . -name '*.h' -print)
 
-would work?
+----
+Anyways despite my arguing, it seems you rather want to rather have the
+leading double dashes everywhere for the operating modes?
+So the plan is to not touch the parsing, but to adjust notes and stash ?
 
--Peff
+Thanks,
+Stefan
