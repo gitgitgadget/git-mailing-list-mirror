@@ -1,71 +1,71 @@
-From: Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH] checkpatch: Add test for commit id formatting style in
- commit log
-Date: Sun, 10 Aug 2014 14:35:00 -0700
-Message-ID: <20140810143500.2d556ae9.akpm@linux-foundation.org>
-References: <20140702130210.fd40d67f0819cfb5f3e9e5ca@linux-foundation.org>
-	<1404331746.14624.95.camel@joe-AO725>
-	<20140702131534.c613f55f79519b3862f79e40@linux-foundation.org>
-	<1404338448.14741.8.camel@joe-AO725>
-	<CAMuHMdV1TXLmuAofwrUuT-KKUfkEYdXsM34VRrfhB6FxXfdeeg@mail.gmail.com>
-	<1407706081.4082.21.camel@joe-AO725>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>,
-	LKML <linux-kernel@vger.kernel.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Joe Perches <joe@perches.com>
-X-From: linux-kernel-owner@vger.kernel.org Sun Aug 10 23:33:33 2014
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@plane.gmane.org
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: [PATCH 1/2] blame.c: Add translation to warning about failed revision walk
+Date: Sun, 10 Aug 2014 23:33:25 +0200
+Message-ID: <1407706406-30455-1-git-send-email-stefanbeller@gmail.com>
+Cc: Stefan Beller <stefanbeller@gmail.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 10 23:33:38 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1XGak8-0002jO-Rw
-	for glk-linux-kernel-3@plane.gmane.org; Sun, 10 Aug 2014 23:33:33 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XGakE-0002or-CF
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Aug 2014 23:33:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751900AbaHJVdW (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Sun, 10 Aug 2014 17:33:22 -0400
-Received: from mail.linuxfoundation.org ([140.211.169.12]:45188 "EHLO
-	mail.linuxfoundation.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751854AbaHJVdU (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Sun, 10 Aug 2014 17:33:20 -0400
-Received: from localhost (c-67-161-9-76.hsd1.ca.comcast.net [67.161.9.76])
-	by mail.linuxfoundation.org (Postfix) with ESMTPSA id 04EED523;
-	Sun, 10 Aug 2014 21:33:19 +0000 (UTC)
-In-Reply-To: <1407706081.4082.21.camel@joe-AO725>
-X-Mailer: Sylpheed 2.7.1 (GTK+ 2.18.9; x86_64-redhat-linux-gnu)
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1751913AbaHJVdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2014 17:33:35 -0400
+Received: from mail-wi0-f181.google.com ([209.85.212.181]:51512 "EHLO
+	mail-wi0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854AbaHJVde (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2014 17:33:34 -0400
+Received: by mail-wi0-f181.google.com with SMTP id bs8so3314476wib.2
+        for <git@vger.kernel.org>; Sun, 10 Aug 2014 14:33:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id;
+        bh=ibCoH55Y757IiI5yt21HS7uT+HYor4RBKWFRRATEIao=;
+        b=RwFgSZmrBPh3On+qUrCpXGL9svBCjxWaVu80QuBquuy/lrFR+3s3rBbam8snUI9qjL
+         shBBePb7HxrODWTB/69UHvJfOz+VJblkywlXJFqzVXD5C8EEfIBOaIu0lDudVy5kq90x
+         oUklBJEZkjfdu5DRxwBWCWcnrbLq1NJi5JlKu27pODP9/I6EN6u8rFboEyTkkP6KaQD8
+         cUfu3UrqN4zEv/qcqLPXUGND18mkPSZBe+VZSTvmBHiIs1WOh4h4rbssEUgDLBrhU72e
+         y27XciDXla0/FOSdJmh4vONfqu5T9N7c/2PqBGu0eBGxHu1CsxeYZjgeONPvoNI56ugY
+         1Fmg==
+X-Received: by 10.180.221.134 with SMTP id qe6mr20613268wic.66.1407706413037;
+        Sun, 10 Aug 2014 14:33:33 -0700 (PDT)
+Received: from localhost (ip-109-91-30-58.hsi12.unitymediagroup.de. [109.91.30.58])
+        by mx.google.com with ESMTPSA id w6sm34843787wjq.39.2014.08.10.14.33.31
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Sun, 10 Aug 2014 14:33:31 -0700 (PDT)
+X-Mailer: git-send-email 2.1.0.rc2
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255107>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255108>
 
-On Sun, 10 Aug 2014 14:28:01 -0700 Joe Perches <joe@perches.com> wrote:
+blame belonging to the group of
+ancillaryinterrogators and not to plumbinginterrogators
+should have localized error messages?
 
-> > On Thu, Jul 3, 2014 at 12:00 AM, Joe Perches <joe@perches.com> wrote:
-> > > Commit logs have various forms of commit id references.
-> > >
-> > > Try to standardize on a 12 character long lower case
-> > > commit id along with a description of parentheses and
-> > > the quoted subject line
-> > >
-> > > ie: commit 0123456789ab ("commit description")
-> > 
-> > Now this is in mainline, checkpatch starts complaining about my "too long"
-> > (40 chars) commit IDs in commit messages :-(
-> > 
-> > 40 chars may be too long (but it's quick to copy-and-paste, as "git show"
-> > shows that by default), but 12 sounds a bit short, as that's only 48 bits.
-> 
-> Right now, this test allows 12 to 16 byte length commit ids
-> without emitting a warning.
-> 
-> Andrew wanted this test, I don't care how long the commit id
-> is in the commit log.
+Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
+---
+ builtin/blame.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Well, I mainly wanted to stop having to add "commit description" when
-people forget it.  The length check was perhaps a bit anal.  How about
-we make it "12 or more"?
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 17d30d0..ca4ba6f 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2700,7 +2700,7 @@ parse_done:
+ 	 * uninteresting.
+ 	 */
+ 	if (prepare_revision_walk(&revs))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+ 
+ 	if (is_null_sha1(sb.final->object.sha1)) {
+ 		o = sb.final->util;
+-- 
+2.1.0.rc2
