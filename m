@@ -1,87 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Unify subcommand structure; introduce double dashes for all subcommands?
-Date: Sun, 10 Aug 2014 11:13:44 -0700
-Message-ID: <xmqqha1k8b6v.fsf@gitster.dls.corp.google.com>
-References: <53CFBA1A.8040600@gmail.com>
-	<xmqqiomodkt9.fsf@gitster.dls.corp.google.com>
-	<53E78F26.3000701@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/2] remote.c: don't leak the base branch name in
+ format_tracking_info
+Date: Sun, 10 Aug 2014 15:32:42 -0400
+Message-ID: <20140810193242.GA9886@peff.net>
+References: <1407679076-20300-1-git-send-email-stefanbeller@gmail.com>
+ <53E78C59.2010704@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
 To: Stefan Beller <stefanbeller@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 10 20:13:59 2014
+X-From: git-owner@vger.kernel.org Sun Aug 10 21:32:57 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XGXcz-0008WE-T9
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Aug 2014 20:13:58 +0200
+	id 1XGYrQ-0006ap-9g
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Aug 2014 21:32:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751214AbaHJSNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2014 14:13:54 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:55025 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750875AbaHJSNx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2014 14:13:53 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id C57E230D32;
-	Sun, 10 Aug 2014 14:13:52 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dEAWItESS5qkfg5Fyh9905ADD4I=; b=GongAf
-	U8CqJ4eF7gX63UaM5pjpBQ8686nUfqAVMmlnc1f39WTGiGHgqavbukjB62pqjsY0
-	IYzFDlvTfQVxD27Uh0sQKr87a1QgJQ0gRhjySNZ3YvlKktAIJbMm9+VlevnXQpye
-	aiCBTmNmxLyGaLJvVvV+SS7jYgV8/TprB80qQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UoHYUuYIv+n3ntm8h48JNAOUkp0lgdZh
-	RDfh/1OU2300RRrWnKB5LLR4lRfBy7kpo6sS7Pu51cuuLV4FrbP4o68HNtNwrmf9
-	8LeL6YjRMdTlCSvI2dy1BtkB0MjVfL8SB2aB0iBT991hheKrAdyFUMZYCIt7mV7L
-	Y/nTMjsdoBk=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BACB030D31;
-	Sun, 10 Aug 2014 14:13:52 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DF03330D27;
-	Sun, 10 Aug 2014 14:13:45 -0400 (EDT)
-In-Reply-To: <53E78F26.3000701@gmail.com> (Stefan Beller's message of "Sun, 10
-	Aug 2014 17:26:30 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 1199432E-20BA-11E4-A5DE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751209AbaHJTcw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Aug 2014 15:32:52 -0400
+Received: from cloud.peff.net ([50.56.180.127]:49817 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751122AbaHJTcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2014 15:32:51 -0400
+Received: (qmail 32542 invoked by uid 102); 10 Aug 2014 19:32:51 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (204.237.18.137)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 10 Aug 2014 14:32:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Aug 2014 15:32:42 -0400
+Content-Disposition: inline
+In-Reply-To: <53E78C59.2010704@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255100>
 
-Stefan Beller <stefanbeller@gmail.com> writes:
+On Sun, Aug 10, 2014 at 05:14:33PM +0200, Stefan Beller wrote:
 
-> On 23.07.2014 19:52, Junio C Hamano wrote:
->
->> Sounds familiar.  E.g. here is a similar thread about a year ago.
->> 
->>   http://thread.gmane.org/gmane.comp.version-control.git/231376/focus=231478
->> 
->> Further discussions to make the plan more concrete is very much
->> welcomed.
->> 
->> Thanks.
->> 
->
-> So I'd want to add have the subcommands without double dashes ideally.
+> On 10.08.2014 15:57, Stefan Beller wrote:
+> > Found by scan.coverity.com (Id: 1127809)
+> >=20
+> > Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
+> > ---
+> >  remote.c | 1 +
+> >  1 file changed, 1 insertion(+)
+> >=20
+> > diff --git a/remote.c b/remote.c
+> > index 3d6c86a..2c1458f 100644
+> > --- a/remote.c
+> > +++ b/remote.c
+> > @@ -1983,6 +1983,7 @@ int format_tracking_info(struct branch *branc=
+h, struct strbuf *sb)
+> >  			strbuf_addf(sb,
+> >  				_("  (use \"git pull\" to merge the remote branch into yours)\=
+n"));
+> >  	}
+> > +	free(base);
+> >  	return 1;
+> >  }
+> > =20
+> >=20
+>=20
+> Upon testing this one again, I get a warning
+> remote.c: In function =E2=80=98format_tracking_info=E2=80=99:
+> remote.c:1986:2: warning: passing argument 1 of =E2=80=98free=E2=80=99=
+ discards =E2=80=98const=E2=80=99 qualifier from pointer target type [e=
+nabled by default]
+>   free(base);
+>   ^
+> In file included from git-compat-util.h:103:0,
+>                  from cache.h:4,
+>                  from remote.c:1:
+> /usr/include/stdlib.h:483:13: note: expected =E2=80=98void *=E2=80=99=
+ but argument is of type =E2=80=98const char *=E2=80=99
+>  extern void free (void *__ptr) __THROW;
+>              ^
+>=20
+> Please ignore this patch.
 
-That is not ideal at all, I am afraid.  A command that started only
-with its "primary operating mode", e.g. "git tag [-s|-a] tagname
-[object]", may have to gain "I do not want to create, I just want to
-list" and the way to signal that has to be an option that cannot be
-mistaken as its valid first argument (to avoid "git tag list" that
-cannot create a tag called "list", we use "git tag --list").  You
-could add an entirely new command "git foo" that always takes the
-command-mode word, i.e. "git foo mode$n args", but you will be
-typing the operating mode name all the time only to save --mode$n
-for 2<=$n, which may not be a good economy in the end.
+I think your patch is definitely fixing a leak; it's just that the
+existing code is a little sloppy. It does:
 
-Please do not go there.
+  const char *base;
+  ...
+  base =3D branch->merge[0]->dst;
+  base =3D shorten_unambiguous_ref(base, 0);
+
+In the first assignment, "base" should be const, as we are pointing to
+somebody else's memory. But in the second, we use the same pointer to
+store newly allocated memory from shorten_unambiguous_ref.
+
+In the general case, you need two pointers to do this right. However, w=
+e
+don't actually look at "base" between the two assignments, so I think
+you could just do it as:
+
+  char *base;
+  ...
+  base =3D shorten_unambiguous_ref(branch->merge[0]->dst, 0);
+
+-Peff
