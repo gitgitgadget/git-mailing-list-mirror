@@ -1,108 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v8 0/8] Rewrite `git_config()` using config-set API
-Date: Sun, 10 Aug 2014 10:29:18 -0700
-Message-ID: <xmqqppg88d8x.fsf@gitster.dls.corp.google.com>
-References: <1407336792-16962-1-git-send-email-tanayabh@gmail.com>
-	<vpqy4v1vdui.fsf@anie.imag.fr>
-	<xmqq8un0ktqu.fsf@gitster.dls.corp.google.com>
-	<vpq61i4nld7.fsf@anie.imag.fr>
-	<xmqqoavwjb3i.fsf@gitster.dls.corp.google.com>
-	<53E4D986.6040708@gmail.com> <53E4DF6D.8070904@ramsay1.demon.co.uk>
+Subject: Re: Unify subcommand structure; introduce double dashes for all subcommands?
+Date: Sun, 10 Aug 2014 11:13:44 -0700
+Message-ID: <xmqqha1k8b6v.fsf@gitster.dls.corp.google.com>
+References: <53CFBA1A.8040600@gmail.com>
+	<xmqqiomodkt9.fsf@gitster.dls.corp.google.com>
+	<53E78F26.3000701@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sun Aug 10 19:29:32 2014
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Stefan Beller <stefanbeller@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 10 20:13:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XGWvz-0000EZ-SD
-	for gcvg-git-2@plane.gmane.org; Sun, 10 Aug 2014 19:29:32 +0200
+	id 1XGXcz-0008WE-T9
+	for gcvg-git-2@plane.gmane.org; Sun, 10 Aug 2014 20:13:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751407AbaHJR32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Aug 2014 13:29:28 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:56967 "EHLO smtp.pobox.com"
+	id S1751214AbaHJSNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Aug 2014 14:13:54 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55025 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751249AbaHJR31 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Aug 2014 13:29:27 -0400
+	id S1750875AbaHJSNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Aug 2014 14:13:53 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id BCE402F822;
-	Sun, 10 Aug 2014 13:29:26 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id C57E230D32;
+	Sun, 10 Aug 2014 14:13:52 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NJ8Q9PqS15LFVJc8PAkJYlPyI3E=; b=lDZ0tM
-	SaYo705/tdZ1i+UwTArhXkV0m1HOX8HnKYsUQZ7WHerQeMbuYaBYbgQHqujmk92D
-	qmM7mmuQXNP8LzpF9iCdo2f0gaScIbv8hReX4/ew93BqMpZKLYHU/k8Ue2Ynh24N
-	EkAZgNkV6wBNXOw0gsi+/b7RxEfdzjaZjkZzM=
+	:content-type; s=sasl; bh=dEAWItESS5qkfg5Fyh9905ADD4I=; b=GongAf
+	U8CqJ4eF7gX63UaM5pjpBQ8686nUfqAVMmlnc1f39WTGiGHgqavbukjB62pqjsY0
+	IYzFDlvTfQVxD27Uh0sQKr87a1QgJQ0gRhjySNZ3YvlKktAIJbMm9+VlevnXQpye
+	aiCBTmNmxLyGaLJvVvV+SS7jYgV8/TprB80qQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
 	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Nk9+vnh/b47whpJ9vz3K8BbMfmSPZFnd
-	K/t4AjaVYnM0JrhEW5+HAid8444lkOdb2XaD898z1ldcDGh92aErZS+hTz9C8ezY
-	MYG6md/4gRtmC1Dm9KTetwImrijBWt8oEhXds/qDo5shE6J7/T0K3Fx1aF3Fu8Yg
-	vL5le/AM8CE=
+	:content-type; q=dns; s=sasl; b=UoHYUuYIv+n3ntm8h48JNAOUkp0lgdZh
+	RDfh/1OU2300RRrWnKB5LLR4lRfBy7kpo6sS7Pu51cuuLV4FrbP4o68HNtNwrmf9
+	8LeL6YjRMdTlCSvI2dy1BtkB0MjVfL8SB2aB0iBT991hheKrAdyFUMZYCIt7mV7L
+	Y/nTMjsdoBk=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id A953B2F820;
-	Sun, 10 Aug 2014 13:29:26 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id BACB030D31;
+	Sun, 10 Aug 2014 14:13:52 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id D2F6E2F817;
-	Sun, 10 Aug 2014 13:29:19 -0400 (EDT)
-In-Reply-To: <53E4DF6D.8070904@ramsay1.demon.co.uk> (Ramsay Jones's message of
-	"Fri, 08 Aug 2014 15:32:13 +0100")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id DF03330D27;
+	Sun, 10 Aug 2014 14:13:45 -0400 (EDT)
+In-Reply-To: <53E78F26.3000701@gmail.com> (Stefan Beller's message of "Sun, 10
+	Aug 2014 17:26:30 +0200")
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: DC8317F6-20B3-11E4-8602-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: 1199432E-20BA-11E4-A5DE-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255099>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+Stefan Beller <stefanbeller@gmail.com> writes:
 
-> On 08/08/14 15:07, Tanay Abhra wrote:
-> ...
->> (cc to Ramsay)
+> On 23.07.2014 19:52, Junio C Hamano wrote:
+>
+>> Sounds familiar.  E.g. here is a similar thread about a year ago.
 >> 
->> The discussion in both threads (v8 and v9), boils down to this,
->> is the `key_value_info` struct really required to be declared public or should be
->> just an implementation detail. I will give you the context,
+>>   http://thread.gmane.org/gmane.comp.version-control.git/231376/focus=231478
+>> 
+>> Further discussions to make the plan more concrete is very much
+>> welcomed.
+>> 
+>> Thanks.
+>> 
 >
-> No, this is not the issue for me. The patch which introduces the
-> struct in cache.h does not make use of that struct in any interface.
-> It *is* an implementation detail of some code in config.c only.
->
-> I do not know how that structure will be used in future patches. ;-)
+> So I'd want to add have the subcommands without double dashes ideally.
 
-It is debatable if it is a good API that tells the users "In the
-data I return to you, there is a structure hanging there with these
-two fields. Feel free to peek into it if you need what is recorded
-in them".  But the contract between the the endgame "API" and its
-callers can include such a direct access, and then you can say that
-it is a part of the API, not just an implementation detail.
+That is not ideal at all, I am afraid.  A command that started only
+with its "primary operating mode", e.g. "git tag [-s|-a] tagname
+[object]", may have to gain "I do not want to create, I just want to
+list" and the way to signal that has to be an option that cannot be
+mistaken as its valid first argument (to avoid "git tag list" that
+cannot create a tag called "list", we use "git tag --list").  You
+could add an entirely new command "git foo" that always takes the
+command-mode word, i.e. "git foo mode$n args", but you will be
+typing the operating mode name all the time only to save --mode$n
+for 2<=$n, which may not be a good economy in the end.
 
-I think you and Tanay are both right (and I am wrong ;-).
-
-You are right in that the "API" is giving more than the callers
-converted to it at this point in the series.
-
-Tanay is right in that the way the struct will be used, which is
-illustrated by the example in the message you are responding to,
-should be in the part of this series that gives the implementation
-of the API before presenting the converted users, as the series
-deems it part of the API to let the users peek into the struct.
-
-It may turn out that we have to abstract it further when we need a
-more elaborate data structure kept in the kv-info in the future.  At
-that point it will become undesirable to keep giving the callers
-direct access to it, because direct struct access means that the
-particular aspect of the implementaiton detail will be cast in stone
-and would not allow to be replaced with some other representation
-that is more efficient for the implementation.
-
-But as I said, what we see in this series can do for now.  The
-future can come later ;-)
+Please do not go there.
