@@ -1,105 +1,129 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Sharing merge conflict resolution between multiple developers
-Date: Mon, 11 Aug 2014 11:44:11 -0700
-Message-ID: <xmqqd2c67tok.fsf@gitster.dls.corp.google.com>
-References: <CAFOYHZCiKC4TR4jFVUB=W5qbDG8XvB2Obx1ZfTH8OF3E_c5BnA@mail.gmail.com>
+Subject: Re: [PATCH v2 6/8] mv: unindent one level for directory move code
+Date: Mon, 11 Aug 2014 11:47:49 -0700
+Message-ID: <xmqq61hy7tii.fsf@gitster.dls.corp.google.com>
+References: <1407637776-19794-1-git-send-email-pclouds@gmail.com>
+	<1407637776-19794-7-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 20:44:36 2014
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 20:48:13 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XGuaA-0000x8-D6
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Aug 2014 20:44:34 +0200
+	id 1XGudZ-0002n4-UP
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Aug 2014 20:48:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753324AbaHKSoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2014 14:44:21 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:58340 "EHLO smtp.pobox.com"
+	id S1754293AbaHKSsB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Aug 2014 14:48:01 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:55207 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752799AbaHKSoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2014 14:44:21 -0400
+	id S1754128AbaHKSsA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Aug 2014 14:48:00 -0400
 Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 61ACE2FA7D;
-	Mon, 11 Aug 2014 14:44:20 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9BE482FCC5;
+	Mon, 11 Aug 2014 14:47:59 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p5XJISYHa5XOC2nQmwrZQRx6aWE=; b=B1YTbV
-	F9yVQLSQ160+fp+NNnL+atA0lQV2onzKNyV2UBJvV7KA4qTQD/+dnCQF+tAify1K
-	/ck5s6qaL8h/t85JAVpc504qGo7LVozYwGQI9HnvSk9ThgL94dlQumnEQix8Bn0q
-	JvKVzJJA6Jvxk8y4O9GN1c6K5G6/sT34dgqTg=
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=RaZ+vhp7AReCMwM9LyRaHLiWw
+	Ls=; b=LeQ9haMIb1KLHp4P9WRu9uSKkbeJzzcIBXyl7hsXTeppvt62jW+CbUfZn
+	eA60qR5WI/edhEsnn3ckoVePBGCoYmyKSxn3kBeBx2S+/cEU0sl0iEtBs83YmPYb
+	9w4L3gxIOSRkGoE8cLESasb2YA1VRv8WBrGnBKa+OAJWWl4JOU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BP+dEBcovtInVPowviFK/Xi0RuhV5aUX
-	j/Y6wjS5+SB/55a1qz2h7S8wAw0q3y/05qXpqdk+VaQvbxeGsueN+8+FqsmYi2Og
-	NBbf0WoRV7Psw8LyRdhRrKMV93L740YBmuCFuUn/sN7Qylwcf05glnSx0umSw2sE
-	FH6G7yj4iKw=
+	:subject:references:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=t12vPNdkdGF2y/C2R/O
+	Jew/b4NTj60GJ+Q2lBqh3pjWNgGsKx5iZOLZk53rTTqMi+QK5Y+vZJGDLBdNim1G
+	C490+/fj2mico9gwgPDIUxe7+OfaoWHOKsb3cFppkqqSlJROb2MnLM4yrOwWeMUA
+	Mx3GBqpg1J8F/FZNW3nh+9DQ=
 Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 588712FA7C;
-	Mon, 11 Aug 2014 14:44:20 -0400 (EDT)
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 91BE12FCC4;
+	Mon, 11 Aug 2014 14:47:59 -0400 (EDT)
 Received: from pobox.com (unknown [72.14.226.9])
 	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 6D1692FA71;
-	Mon, 11 Aug 2014 14:44:13 -0400 (EDT)
-In-Reply-To: <CAFOYHZCiKC4TR4jFVUB=W5qbDG8XvB2Obx1ZfTH8OF3E_c5BnA@mail.gmail.com>
-	(Chris Packham's message of "Mon, 11 Aug 2014 16:59:15 +1200")
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 0A06D2FCB2;
+	Mon, 11 Aug 2014 14:47:51 -0400 (EDT)
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 7D4ECBF2-2187-11E4-B2AC-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+X-Pobox-Relay-ID: FF99910A-2187-11E4-95F1-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255130>
 
-Chris Packham <judge.packham@gmail.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Is there any way where we could share the conflict resolution around
-> but still end up with a single merge commit.
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  builtin/mv.c | 47 +++++++++++++++++++++--------------------------
+>  1 file changed, 21 insertions(+), 26 deletions(-)
+>
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index dcfcb11..988945c 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -171,42 +171,37 @@ int cmd_mv(int argc, const char **argv, const c=
+har *prefix)
+>  				&& lstat(dst, &st) =3D=3D 0)
+>  			bad =3D _("cannot move directory over file");
+>  		else if (src_is_dir) {
+> +			int first =3D cache_name_pos(src, length), last;
+>  			if (first >=3D 0)
+>  				prepare_move_submodule(src, first,
+>  						       submodule_gitfile + i);
+> +			else if (index_range_of_same_dir(src, length,
+> +							 &first, &last) < 1) {
 
-One idea that immediately comes to me is to use something like
-"rerere" (not its implementation and storage, but the underlying
-idea) enhanced with the trick I use to fix-up merges in my daily
-integration cycle (look for "merge-fix" in howto/maintain-git.txt
-in Documentation/).
+The function returns (last - first), so (last - first) < 1 holds
+inside this block, right?
 
-> developer A:
->   git merge $upstream
->   <conflicts>
+>  				modes[i] =3D WORKING_DIRECTORY;
+>  				if (last - first < 1)
+>  					bad =3D _("source directory is empty");
 
-And then commit this immediately, together with conflict markers
-(i.e. "commit -a"), and discard it with "reset --hard HEAD^" *after*
-storing it somewhere safe.  And then redo the same merge, resolve
-the conflicts and commit the usual way.
+Then do you need this conditional, or it is always bad here?
 
-The difference between the final conflict resolution and the
-original conflicted state can be used as a reference for others to
-redo the same conflict resolution later elsewhere.  That can most
-easily be done by creating a commit that records the final state
-whose parent is the one you recorded the initial conflicted state.
+If it is always bad, then modes[i] do not need to be assigned to,
+either, I think.
 
-So, the "recording" phase may go something like this:
+Am I missing something?
 
-    git checkout $this
-    git merge $that
-    git commit -a -m 'merge-fix/$this-$that preimage'
-    git branch merge-fix/$this-$that
-    git reset --hard HEAD^
-    git merge $that
-    edit
-    git commit -a -m 'merge $that to $this'
-    git checkout merge-fix/$this-$that
-    git read-tree -m -u HEAD $this
-    git commit -a -m 'merge-fix/$this-$that postimage'
+> +			} else { /* last - first >=3D 1 */
+> +				int j, dst_len, n;
 
-The rough idea is "git show merge-fix/$this-$that" will show the
-"patch" you can apply on top of the conflicted state other people
-would get by running "git merge $that" while on "$this" branch.
+> +				modes[i] =3D WORKING_DIRECTORY;
+> +				n =3D argc + last - first;
+> ...
 
-"rerere" essentially does the above recording (and replaying)
-per-path and it comes with a clever indexing scheme to identify
-which previous conflict resolution would apply to the conflicts you
-see in your working tree.
+Otherwise, perhaps squash this in?
+
+diff --git a/builtin/mv.c b/builtin/mv.c
+index bf513e0..bf784cb 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -172,15 +172,14 @@ int cmd_mv(int argc, const char **argv, const cha=
+r *prefix)
+ 			bad =3D _("cannot move directory over file");
+ 		else if (src_is_dir) {
+ 			int first =3D cache_name_pos(src, length), last;
++
+ 			if (first >=3D 0)
+ 				prepare_move_submodule(src, first,
+ 						       submodule_gitfile + i);
+ 			else if (index_range_of_same_dir(src, length,
+-							 &first, &last) < 1) {
+-				modes[i] =3D WORKING_DIRECTORY;
+-				if (last - first < 1)
+-					bad =3D _("source directory is empty");
+-			} else { /* last - first >=3D 1 */
++							 &first, &last) < 1)
++				bad =3D _("source directory is empty");
++			else { /* last - first >=3D 1 */
+ 				int j, dst_len, n;
+=20
+ 				modes[i] =3D WORKING_DIRECTORY;
