@@ -1,82 +1,82 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 17/22] refs.c: add a backend method structure with
- transaction functions
-Date: Mon, 11 Aug 2014 07:56:35 -0700
-Message-ID: <CAL=YDWnbv4XNLny5WTN0b2oKAvDVXAbK536vjRVoTuig98oWFg@mail.gmail.com>
+Subject: Re: [PATCH 01/22] refs.c: create a public function for is_refname_available
+Date: Mon, 11 Aug 2014 08:00:58 -0700
+Message-ID: <CAL=YDWn=DWBbL24H2Ka5+1yXJ813aokyyfJrBDkFtvVTNO4EbQ@mail.gmail.com>
 References: <1407516309-27989-1-git-send-email-sahlberg@google.com>
-	<1407516309-27989-18-git-send-email-sahlberg@google.com>
-	<1407521872.26542.21.camel@leckie>
+	<1407516309-27989-2-git-send-email-sahlberg@google.com>
+	<1407518873.26542.20.camel@leckie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: David Turner <dturner@twopensource.com>
-X-From: git-owner@vger.kernel.org Mon Aug 11 16:56:45 2014
+X-From: git-owner@vger.kernel.org Mon Aug 11 17:01:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XGr1c-0000nM-QP
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Aug 2014 16:56:41 +0200
+	id 1XGr5t-00039w-CB
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Aug 2014 17:01:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753541AbaHKO4g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2014 10:56:36 -0400
-Received: from mail-vc0-f179.google.com ([209.85.220.179]:51188 "EHLO
-	mail-vc0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752831AbaHKO4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2014 10:56:36 -0400
-Received: by mail-vc0-f179.google.com with SMTP id hq11so11490135vcb.24
-        for <git@vger.kernel.org>; Mon, 11 Aug 2014 07:56:35 -0700 (PDT)
+	id S1753934AbaHKPBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2014 11:01:00 -0400
+Received: from mail-vc0-f169.google.com ([209.85.220.169]:38490 "EHLO
+	mail-vc0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753599AbaHKPA7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2014 11:00:59 -0400
+Received: by mail-vc0-f169.google.com with SMTP id le20so11858127vcb.28
+        for <git@vger.kernel.org>; Mon, 11 Aug 2014 08:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=28XgMnzvx7psMqr536bFcDL1pGAfsMtL2wId165zWMg=;
-        b=P8u7J0RiU7aBvD0qoLmRT1ScFLNLxr0KXzvowLzaVoUTVR9tqqIRStpbXCueCR8AnW
-         BeF/YZh+MEZe0x1hoyngDHfExu5eg4iUF4UT40vXkwnSGvKWn7djawmeMsscN756eCo+
-         BLxuJfd9sPdZO2c1q0aV44zaFnjx0mfteTOZ3EKkv+3itVH5Dr7k2YWrBWd5hdJHDDDF
-         DTOD6/YEQ1zJYNvlOt59xZZXzdhQx1fx4tWYfsfaEy6JZYnJRGL3DU324S3DfDDFp93P
-         JQRFs8I99skHpmKeAUFUgamXzVt+s1T8kOFB1Wir+UmsdagZFohmxYxsdpU4/ENs0ne9
-         pXYg==
+        bh=vmXJtQw+kuiD1U9uSOC3f8Cm/VO5knGeeB+dFhGURZM=;
+        b=mZhvxrEnmMKNy4XtYBuLJN3L/WTWAuCcBFdkkrEtLGvBRWSOCUuGn4ufbQufFWpIcI
+         hBCuN0Ym+wQvmKp5su7osduJIb/4W1IwvcrmAXrWrFTW50xSFL0i8FM1iHBuVo/mEwhA
+         kQghEuQvj+Z1nXhJ6DnevNEDT4Us0s+a5lDq/EOMDUJlGv9QZsf2ibxNGpLLNSvgAD+I
+         1QXKy5NRBoY3QwNVz3CdgQlPLZSJoxyLiQWyPXsaFkm0EBBJulihUnBAl8nA2+XwFtMf
+         rbWf63GMjkhgvhJZuacI79RGjo5eloFL2qB/tNa5GSzLLL/g2XWSfEqeziO3vhHbdwiq
+         1U5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type;
-        bh=28XgMnzvx7psMqr536bFcDL1pGAfsMtL2wId165zWMg=;
-        b=eZUN6cyMKO4p+B+zu9J+xY0Uatjfi05cu1ZoiR/RCo5qHuUH1PSyj+noYun9egvCPO
-         vQQk3KaMr2q+1IxcAuH3FibFeD0qdgVP93BPht7ZS668Fi45toH7jp9vylBwh+CX1k5f
-         /AMFxVHW0rkE4jGHSXYZMT6nhhN+6E/OreXZHAeqWHNvXEaMf1jVoEQqe6x2v0uiNvGp
-         qqgq2FEeSva+TEefpIGeQ6eVW96NwhEn3VWqYzbHz5U+/T2fFnVaAq6FZ4g5bdmzocOG
-         eeHmKcLAxus9haHf5D+yUlUxjjrurQnpL6tiD73MGFo4I+9T5sAr2eNdnkGp+FIU/Rim
-         kGSQ==
-X-Gm-Message-State: ALoCoQmeKIl/MDGR+ZCHEHboKsLK0Rcd745SmcNmmu9ePi+NrjnnoPaaPeW04gx0TF/9TsugCrJq
-X-Received: by 10.52.119.229 with SMTP id kx5mr4977315vdb.40.1407768995125;
- Mon, 11 Aug 2014 07:56:35 -0700 (PDT)
-Received: by 10.52.69.136 with HTTP; Mon, 11 Aug 2014 07:56:35 -0700 (PDT)
-In-Reply-To: <1407521872.26542.21.camel@leckie>
+        bh=vmXJtQw+kuiD1U9uSOC3f8Cm/VO5knGeeB+dFhGURZM=;
+        b=kJgDZAEoIJrS/zgCrdYIztzKfh2apb2cuqn/1FxVbSoWNPXI5GO28GOHPMikHHQSXE
+         37RxsQZbz0984xtaX0AswgQlkajtMAxgULSqtjs2545AqhUIMO4QVXRsSDanxTBmj0m/
+         zZ1XK/kQ89S3LFSZXnlF3oqUFazs801y1rUV5uxXEt5lHSDmS5tAT+EX/iKGVVhShnjn
+         2JNYNh4+h9mtHXZL5W8nX4W2hdmH8SsCEBs2IoYAPDIAdQz9gKMH2nIb9CZzQNeJcrX4
+         5K2V4jk6/NPNzCHT6hJu4S0dsIrrkR67Ya24/1P4GPVJGjh1MatvKTZs2StL3pOeOGpT
+         I+CQ==
+X-Gm-Message-State: ALoCoQlzlJwQ4VrfBYyzmICZyLyw5jD24zffRA7JFi34yYhL7WSp68TEgozMywZXDuczM+81c9ma
+X-Received: by 10.220.160.67 with SMTP id m3mr722925vcx.56.1407769258897; Mon,
+ 11 Aug 2014 08:00:58 -0700 (PDT)
+Received: by 10.52.69.136 with HTTP; Mon, 11 Aug 2014 08:00:58 -0700 (PDT)
+In-Reply-To: <1407518873.26542.20.camel@leckie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255125>
 
-On Fri, Aug 8, 2014 at 11:17 AM, David Turner <dturner@twopensource.com> wrote:
-> On Fri, 2014-08-08 at 09:45 -0700, Ronnie Sahlberg wrote:
->
->> +struct ref_be refs_files = {
->> +     .transaction_begin              = files_transaction_begin,
->> +     .transaction_update_sha1        = files_transaction_update_sha1,
->> +     .transaction_create_sha1        = files_transaction_create_sha1,
->> +     .transaction_delete_sha1        = files_transaction_delete_sha1,
->> +     .transaction_update_reflog      = files_transaction_update_reflog,
->> +     .transaction_commit             = files_transaction_commit,
->> +     .transaction_free               = files_transaction_free,
->> +};
->
-> C99 designated initializers are unfortunately forbidden by
-> CodingGuidelines.
->
+Fixed. Thanks!
 
-Right. Fixed it.
 
-Thanks.
+On Fri, Aug 8, 2014 at 10:27 AM, David Turner <dturner@twopensource.com> wrote:
+> On Fri, 2014-08-08 at 09:44 -0700, Ronnie Sahlberg wrote:
+>> + * Check is a particular refname is available for creation. skip
+>> contains
+>
+> s/Check is/Check that/'
+>
+>> + * a list of refnames to exclude from the refname collission tests.
+>
+> "collision"
+>
+>> + */
+>> +int is_refname_available(const char *refname, const char **skip, int
+>> skipnum);
+>> +
+>> +/*
+>
+>
