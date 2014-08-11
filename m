@@ -1,87 +1,191 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Sharing merge conflict resolution between multiple developers
-Date: Mon, 11 Aug 2014 16:59:15 +1200
-Message-ID: <CAFOYHZCiKC4TR4jFVUB=W5qbDG8XvB2Obx1ZfTH8OF3E_c5BnA@mail.gmail.com>
+From: Fabian Ruch <bafain@gmail.com>
+Subject: Re: [PATCH v2 02/23] rebase -i: allow squashing empty commits without
+ complaints
+Date: Mon, 11 Aug 2014 09:01:48 +0200
+Message-ID: <53E86A5C.2050202@gmail.com>
+References: <53A258D2.7080806@gmail.com>	<cover.1407368621.git.bafain@gmail.com>	<16751a4402233b6c2925bf00d7ecebdccedd0eef.1407368621.git.bafain@gmail.com> <CAPig+cSvLwcwZ_8R0nRYst9V9mfRqc-HMDhyrCoU6cxE254Agg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 11 06:59:27 2014
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Phil Hord <phil.hord@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Mon Aug 11 09:02:00 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XGhhe-0007RO-Ir
-	for gcvg-git-2@plane.gmane.org; Mon, 11 Aug 2014 06:59:26 +0200
+	id 1XGjcC-0007eJ-EB
+	for gcvg-git-2@plane.gmane.org; Mon, 11 Aug 2014 09:01:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751570AbaHKE7Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2014 00:59:16 -0400
-Received: from mail-pd0-f178.google.com ([209.85.192.178]:34409 "EHLO
-	mail-pd0-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751388AbaHKE7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2014 00:59:16 -0400
-Received: by mail-pd0-f178.google.com with SMTP id w10so10116816pde.37
-        for <git@vger.kernel.org>; Sun, 10 Aug 2014 21:59:15 -0700 (PDT)
+	id S1752391AbaHKHBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Aug 2014 03:01:52 -0400
+Received: from mail-wi0-f170.google.com ([209.85.212.170]:47860 "EHLO
+	mail-wi0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752180AbaHKHBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Aug 2014 03:01:51 -0400
+Received: by mail-wi0-f170.google.com with SMTP id f8so5050028wiw.1
+        for <git@vger.kernel.org>; Mon, 11 Aug 2014 00:01:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        bh=+3OfXh0AjQ3M9MmiK9DWVVa0tp8aiNu72IFUD6QSRsA=;
-        b=Tvthroxp+b5eXA7q4Y7StO6yAUrbZ+IfVVPdTRSs4rLj7zr7WamdNa7Tg1JLR20jJq
-         x9dOBP7zctwH5BUXVvvsWqFc8ZV+g+M7UOYuvi3S3sbUhC7LnFwogcnSLA5Z4i2bfrL7
-         Sv8/4uiLeZbqIyHhp2QdeyLc6mQvcfdmIVoJuPE9atRjArBUKX+FPssq5khZq4TmY//5
-         3bqHOayVBCYLOBe7ztwIgYaH/U7TMFGFIw3Bo3cyEQNSvyp2qSHpg6LSnvlQ3U9IydSc
-         8pmE1ZXxbh8cJ+rRiEYZeBMcfBa5cjjd0hDDe0OIRWLw108Og2Yhb5PcvQfq/4NdvIdn
-         zMAw==
-X-Received: by 10.70.62.5 with SMTP id u5mr16652687pdr.100.1407733155809; Sun,
- 10 Aug 2014 21:59:15 -0700 (PDT)
-Received: by 10.70.98.140 with HTTP; Sun, 10 Aug 2014 21:59:15 -0700 (PDT)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=cx92EgcHPL7hLaPDCtuUzlmL04p07C30JcSyMhQMyP8=;
+        b=Wf2OdUA8yGm7Fr1bH9waQdfBzWBbcmyB9/E2Ou7VDxI93MLfzAHd/dgouKO523Fz74
+         GC4XLPINYa/4dHGKHPrhaS3GMkKWeTPqpPUWo9uWjvXAMzr+Wpd7IgRDavz01JmZyNeS
+         LxvsAV3AhX79rhtdl+4fHuDPlOSx9+TasdudCmlOLp2oyvt4g6MgiXumMsvNzUoXSwA9
+         a2L8hm9RTAI42iQndbkEQksXgMTMjCHyqeBpUcnaSsb8mHpnO9WUrh0U+WvTqPYn9bVE
+         Pn/yBqwAgeCOLa4+CBFqaRgpG4M5FhtDrKZ0ZwKilJDGBmgahJbq76r+qmnoUrKLiubT
+         tA8w==
+X-Received: by 10.194.8.35 with SMTP id o3mr51476829wja.3.1407740510314;
+        Mon, 11 Aug 2014 00:01:50 -0700 (PDT)
+Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
+        by mx.google.com with ESMTPSA id xw9sm9143872wjc.32.2014.08.11.00.01.48
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Mon, 11 Aug 2014 00:01:49 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <CAPig+cSvLwcwZ_8R0nRYst9V9mfRqc-HMDhyrCoU6cxE254Agg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255117>
 
-Hi List,
+Hi Eric,
 
-At $dayjob we maintain internal forks of the a number of upstream repositories.
+Eric Sunshine writes:
+> On Wed, Aug 6, 2014 at 7:59 PM, Fabian Ruch <bafain@gmail.com> wrote:
+>> The to-do list commands `squash` and `fixup` apply the changes
+>> introduced by the named commit to the tree but instead of creating
+>> a new commit on top of the current head it replaces the previous
+>> commit with a new commit that records the updated tree. If the
+>> result is an empty commit git-rebase stops with the error message
+>>
+>>    You asked to amend the most recent commit, but doing so would make
+>>    it empty. You can repeat your command with --allow-empty, or you can
+>>    remove the commit entirely with "git reset HEAD^".
+>>
+>> This message is not very helpful because neither does git-rebase
+>> support an option `--allow-empty` nor does the messages say how to
+>> resume the rebase. Firstly, change the error message to
+>>
+>>    The squash result is empty and --keep-empty was not specified.
+>>
+>>    You can remove the squash commit now with
+>>
+>>      git reset HEAD^
+>>
+>>    Once you are down, run
+> 
+> I guess you meant: s/down/done
+> 
+> Same issue with the actually message in the code (below).
 
-Unsurprisingly updating these forks can be extremely problematic,
-especially when it's only one person doing the merge. Fortunately most
-of us are in the same physical location so it is possible to drag in
-someone who knows more about the code than the person merging but I
-can't see that scaling with remote developers.
+Fixed.
 
-Is there any way where we could share the conflict resolution around
-but still end up with a single merge commit. I'm thinking of something
-like the following workflow
+>>      git rebase --continue
+>>
+>> If the user wishes to squash a sequence of commits into one
+>> commit, f. i.
+>>
+>>    pick A
+>>    squash Revert "A"
+>>    squash A'
+>>
+>> , it does not matter for the end result that the first squash
+>> result, or any sub-sequence in general, is going to be empty. The
+>> squash message is not affected at all by which commits are created
+>> and only the commit created by the last line in the sequence will
+>> end up in the final history. Secondly, print the error message
+>> only if the whole squash sequence produced an empty commit.
+>>
+>> Lastly, since an empty squash commit is not a failure to rewrite
+>> the history as planned, issue the message above as a mere warning
+>> and interrupt the rebase with the return value zero. The
+>> interruption should be considered as a notification with the
+>> chance to undo it on the spot. Specifying the `--keep-empty`
+>> option tells git-rebase to keep empty squash commits in the
+>> rebased history without notification.
+>>
+>> Add tests.
+>>
+>> Reported-by: Peter Krefting <peter@softwolves.pp.se>
+>> Signed-off-by: Fabian Ruch <bafain@gmail.com>
+>> ---
+>> Hi,
+>>
+>> Peter Krefting is cc'd as the author of the bug report "Confusing
+>> error message in rebase when commit becomes empty" discussed on the
+>> mailing list in June. Phil Hord and Jeff King both participated in
+>> the problem discussion which ended with two proposals by Jeff.
+>>
+>> Jeff King writes:
+>>>   1. Always keep such empty commits. A user who is surprised by them
+>>>      being empty can then revisit them. Or drop them by doing another
+>>>      rebase without --keep-empty.
+>>>
+>>>   2. Notice ourselves that the end-result of the whole squash is an
+>>>      empty commit, and stop to let the user deal with it.
+>>
+>> This patch chooses the second alternative. Either way seems OK. The
+>> crucial consensus of the discussion was to silently throw away empty
+>> interim commits.
+>>
+>>    Fabian
+>>
+>>  git-rebase--interactive.sh    | 20 +++++++++++---
+>>  t/t3404-rebase-interactive.sh | 62 +++++++++++++++++++++++++++++++++++++++++++
+>>  2 files changed, 79 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+>> index 3222bf6..8820eac 100644
+>> --- a/git-rebase--interactive.sh
+>> +++ b/git-rebase--interactive.sh
+>> @@ -549,7 +549,7 @@ do_next () {
+>>                 squash|s|fixup|f)
+>>                         # This is an intermediate commit; its message will only be
+>>                         # used in case of trouble.  So use the long version:
+>> -                       do_with_author output git commit --allow-empty-message \
+>> +                       do_with_author output git commit --allow-empty-message --allow-empty \
+>>                                 --amend --no-verify -F "$squash_msg" \
+>>                                 ${gpg_sign_opt:+"$gpg_sign_opt"} ||
+>>                                 die_failed_squash $sha1 "$rest"
+>> @@ -558,18 +558,32 @@ do_next () {
+>>                         # This is the final command of this squash/fixup group
+>>                         if test -f "$fixup_msg"
+>>                         then
+>> -                               do_with_author git commit --allow-empty-message \
+>> +                               do_with_author git commit --allow-empty-message --allow-empty \
+>>                                         --amend --no-verify -F "$fixup_msg" \
+>>                                         ${gpg_sign_opt:+"$gpg_sign_opt"} ||
+>>                                         die_failed_squash $sha1 "$rest"
+>>                         else
+>>                                 cp "$squash_msg" "$GIT_DIR"/SQUASH_MSG || exit
+>>                                 rm -f "$GIT_DIR"/MERGE_MSG
+>> -                               do_with_author git commit --amend --no-verify -F "$GIT_DIR"/SQUASH_MSG -e \
+>> +                               do_with_author git commit --allow-empty --amend --no-verify -F "$GIT_DIR"/SQUASH_MSG -e \
+>>                                         ${gpg_sign_opt:+"$gpg_sign_opt"} ||
+>>                                         die_failed_squash $sha1 "$rest"
+>>                         fi
+>>                         rm -f "$squash_msg" "$fixup_msg"
+>> +                       if test -z "$keep_empty" && is_empty_commit HEAD
+>> +                       then
+>> +                               echo "$sha1" >"$state_dir"/stopped-sha
+>> +                               warn "The squash result is empty and --keep-empty was not specified."
+>> +                               warn
+>> +                               warn "You can remove the squash commit now with"
+>> +                               warn
+>> +                               warn "  git reset HEAD^"
+>> +                               warn
+>> +                               warn "Once you are down, run"
+> 
+> s/down/done/
 
-developer A:
-  git merge $upstream
-  <conflicts>
-  git mergetool ...
-  <resolves some of the conflicts>
-  git commit -m "WIP: Merge upstream" --something-like--all-but-not
+Thanks for the thorough reading.
 
-developer B:
-  git pull developer_A
-  git reset HEAD^
-  <at this point it's be nice if developer B's work tree and index
-were in the same state as developer A's before they ran 'git commit'>
-  git mergetool ...
-  <resolves the conflicts that they know about>
-  git commit -m "WIP: Merge upstream" --something-like--all-but-not
-
-developer A:
-  git pull developer_B
-  git reset HEAD^
-  git mergetool ....
-  <finishes off anything left>
-  git commit
-  <It'd be really nice if MERGE_MSG was retained through all of this>
-  git push
-
-Any thoughts on if something like this is currently possible? Is this
-something other git users would find useful?
-
-Thanks,
-Chris
+   Fabian
