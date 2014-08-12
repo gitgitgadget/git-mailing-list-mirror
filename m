@@ -1,115 +1,65 @@
 From: Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH v2 6/8] mv: unindent one level for directory move code
-Date: Tue, 12 Aug 2014 21:57:17 +0700
-Message-ID: <CACsJy8B2P-UMvbkW2HtyxrYPP8TyXnt25CYw9=ZZp6Ks+ed=yA@mail.gmail.com>
-References: <1407637776-19794-1-git-send-email-pclouds@gmail.com>
- <1407637776-19794-7-git-send-email-pclouds@gmail.com> <xmqq61hy7tii.fsf@gitster.dls.corp.google.com>
+Subject: Re: [PATCH] pack-objects: turn off bitmaps when we see --shallow lines
+Date: Tue, 12 Aug 2014 22:13:03 +0700
+Message-ID: <CACsJy8AQ4vC4QKR_y62h_Gjd619QfBg-rDB2F6HFj2fvJj41tg@mail.gmail.com>
+References: <20140812043452.GA11784@peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 12 16:57:55 2014
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 12 17:13:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHDWL-000781-4Q
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 16:57:53 +0200
+	id 1XHDlc-0006UE-2B
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 17:13:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752991AbaHLO5t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Aug 2014 10:57:49 -0400
-Received: from mail-ig0-f180.google.com ([209.85.213.180]:36371 "EHLO
-	mail-ig0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752734AbaHLO5s convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Aug 2014 10:57:48 -0400
-Received: by mail-ig0-f180.google.com with SMTP id l13so6962621iga.1
-        for <git@vger.kernel.org>; Tue, 12 Aug 2014 07:57:47 -0700 (PDT)
+	id S1753635AbaHLPNf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2014 11:13:35 -0400
+Received: from mail-ig0-f179.google.com ([209.85.213.179]:44423 "EHLO
+	mail-ig0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753626AbaHLPNe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2014 11:13:34 -0400
+Received: by mail-ig0-f179.google.com with SMTP id h18so7000073igc.12
+        for <git@vger.kernel.org>; Tue, 12 Aug 2014 08:13:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        bh=wOPGKP2PCbPW/cJmwg25G4WYVK9ztl+X+jsWI3GpYSk=;
-        b=pWepGtOvKtIYPk7RXEXLnajDPznfyRT1+Jh8/vhYcAF1GWhBdhuK5JnV/4dzMY/+Vr
-         uDJ4+a4UQz9u0BILplH160zFBd22xdReiDagQGrNpmF+8myOOWw4mperaQ8E89vhVAG5
-         08mSIEx69xNbrlFEXVYC2DBa4xepzkJQiUq5/2QF++oABP3N/v24Ye0dkyM/2eNtWa75
-         fHqaMK3yQ3SBCoS7VPAHTqsUiQ4qksQDng+leLXT44mTrttXAUgKqIfa/K6ykvoT+Vop
-         /faAUsb7rvxst+X0AecebS8wQlkGvUJEFVaRolwyxtdx4mTnfCNd5wSO8XwDBcDZrBkB
-         M6og==
-X-Received: by 10.43.129.74 with SMTP id hh10mr40473954icc.48.1407855467687;
- Tue, 12 Aug 2014 07:57:47 -0700 (PDT)
-Received: by 10.107.13.80 with HTTP; Tue, 12 Aug 2014 07:57:17 -0700 (PDT)
-In-Reply-To: <xmqq61hy7tii.fsf@gitster.dls.corp.google.com>
+         :cc:content-type;
+        bh=Gf0ZxOXVPcPxssUzDM/B2oAIu6ynslJ43WSi/O57mG4=;
+        b=Nq2dFVf4Y7p8yIwxcUG52nYP3Ic7hysbsh5tVebq+apyC6gJ8CqaCJzFo05fM7BwOq
+         SW3yUbN0JI1nEEoGFp3JrSpSAgL2bCcgR+MIzhJLmBsQo2CyVrheTTc7Z/CIef7iA8IT
+         2F79McWNYS0KuO2gvOdY/JMESFEIg5EOaTzK5i9KvFuLxOf2gA6E06fPmNIB6yr+KJk4
+         fu5+ejsAmgEmLUyo1JyVLRChhbcpdv9Rc4c5DT9HWC/WoWiLEpSc/YBgU5scKjwOJ9MY
+         8331SBBBr3aO0ufmhmhJ3jDqTtub246OsReDgwlKww4aW92qld2qBTuq86zmp2XT0B7W
+         y2nA==
+X-Received: by 10.43.129.74 with SMTP id hh10mr40585048icc.48.1407856413493;
+ Tue, 12 Aug 2014 08:13:33 -0700 (PDT)
+Received: by 10.107.13.80 with HTTP; Tue, 12 Aug 2014 08:13:03 -0700 (PDT)
+In-Reply-To: <20140812043452.GA11784@peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255148>
 
-On Tue, Aug 12, 2014 at 1:47 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->>  builtin/mv.c | 47 +++++++++++++++++++++--------------------------
->>  1 file changed, 21 insertions(+), 26 deletions(-)
->>
->> diff --git a/builtin/mv.c b/builtin/mv.c
->> index dcfcb11..988945c 100644
->> --- a/builtin/mv.c
->> +++ b/builtin/mv.c
->> @@ -171,42 +171,37 @@ int cmd_mv(int argc, const char **argv, const =
-char *prefix)
->>                               && lstat(dst, &st) =3D=3D 0)
->>                       bad =3D _("cannot move directory over file");
->>               else if (src_is_dir) {
->> +                     int first =3D cache_name_pos(src, length), las=
-t;
->>                       if (first >=3D 0)
->>                               prepare_move_submodule(src, first,
->>                                                      submodule_gitfi=
-le + i);
->> +                     else if (index_range_of_same_dir(src, length,
->> +                                                      &first, &last=
-) < 1) {
->
-> The function returns (last - first), so (last - first) < 1 holds
-> inside this block, right?
->
->>                               modes[i] =3D WORKING_DIRECTORY;
->>                               if (last - first < 1)
->>                                       bad =3D _("source directory is=
- empty");
->
-> Then do you need this conditional, or it is always bad here?
->
-> If it is always bad, then modes[i] do not need to be assigned to,
-> either, I think.
->
-> Am I missing something?
+On Tue, Aug 12, 2014 at 11:34 AM, Jeff King <peff@peff.net> wrote:
+> Arguably is_repository_shallow should return 1 if anybody has registered
+> a shallow graft, but that wouldn't be enough to fix this (we'd still
+> need to check it again _after_ reading the --shallow lines). So I think
+> this fix is fine here. I don't know if any other parts of the code would
+> care, though.
 
-No you're right.
-
->> +                     } else { /* last - first >=3D 1 */
->> +                             int j, dst_len, n;
->
->> +                             modes[i] =3D WORKING_DIRECTORY;
->> +                             n =3D argc + last - first;
->> ...
->
-> Otherwise, perhaps squash this in?
-
-Sure. But I'm having second thought about this series.
-
-mv.c is centered around files on worktree, which makes it pretty hard
-if we want to make it more like rm.c where index and worktree entries
-are treated more equally and pathspec is applied. Doing that in mv.c
-would require a lot more reorganization that makes this series
-obsolete. But on the other hand, I'm not even sure if I have time to
-pursue that. So..
---=20
+It's getting too subtle (is_repository_shallow fails to return 1).
+register_shallow() is used elsewhere too, luckily pack bitmap's use is
+still limited in pack-objects (I think).I prefer (in future) to teach
+is_repository_shallow about register_shallow and move it to right
+before get_object_list_from_bitmap() is called, and some sort of
+mechanism to say "hey I'm all set, never change shallow repo status
+again from now on, or just die if you have to do it" to protect us
+from similar bugs. But for now your fix is good (and simple).
+-- 
 Duy
