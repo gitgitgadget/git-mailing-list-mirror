@@ -1,143 +1,144 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] pack-objects: turn off bitmaps when we see --shallow lines
-Date: Tue, 12 Aug 2014 00:34:53 -0400
-Message-ID: <20140812043452.GA11784@peff.net>
+From: Panos Rontogiannis <p_ronto@hotmail.com>
+Subject: git-status rename conflict with a few git-adds following a git-mv
+ (git for windows 1.9.4)
+Date: Tue, 12 Aug 2014 12:48:53 +0300
+Message-ID: <DUB121-W21E71C6BC416DC373C068388EA0@phx.gbl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 06:35:40 2014
+Content-Type: text/plain; charset=iso-8859-7
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Aug 12 11:54:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XH3nv-00081d-UD
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 06:35:24 +0200
+	id 1XH8mR-0007r9-3S
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 11:54:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753018AbaHLEfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2014 00:35:04 -0400
-Received: from cloud.peff.net ([50.56.180.127]:50551 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751995AbaHLEfD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2014 00:35:03 -0400
-Received: (qmail 2231 invoked by uid 102); 12 Aug 2014 04:35:02 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (204.237.18.137)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Aug 2014 23:35:02 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Aug 2014 00:34:53 -0400
-Content-Disposition: inline
+	id S1752332AbaHLJyF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Aug 2014 05:54:05 -0400
+Received: from dub004-omc3s8.hotmail.com ([157.55.2.17]:62262 "EHLO
+	DUB004-OMC3S8.hotmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751478AbaHLJyE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Aug 2014 05:54:04 -0400
+X-Greylist: delayed 309 seconds by postgrey-1.27 at vger.kernel.org; Tue, 12 Aug 2014 05:54:04 EDT
+Received: from DUB121-W21 ([157.55.2.9]) by DUB004-OMC3S8.hotmail.com with Microsoft SMTPSVC(7.5.7601.22701);
+	 Tue, 12 Aug 2014 02:48:53 -0700
+X-TMN: [RgDyPOcYy9sUI4pO/RHoeEU5PV55U3P0ofJkkA5J7uA=]
+X-Originating-Email: [p_ronto@hotmail.com]
+Importance: Normal
+X-OriginalArrivalTime: 12 Aug 2014 09:48:53.0577 (UTC) FILETIME=[A084FB90:01CFB612]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255146>
 
-Reachability bitmaps do not work with shallow operations,
-because they cache a view of the object reachability that
-represents the true objects. Whereas a shallow repository
-(or a shallow operation in a repository) is inherently
-cutting off the object graph with a graft.
+Hello all,
 
-We explicitly disallow the use of bitmaps in shallow
-repositories by checking is_repository_shallow(), and we
-should continue to do that. However, we also want to
-disallow bitmaps when we are serving a fetch to a shallow
-client, since we momentarily take on their grafted view of
-the world.
+I noticed a weird rename conflict after doing the following steps:
+=A0=A0 1. Changing the extension of a file using 'git mv'.
+=A0=A0 2. Editing the file and staging the changes.
+=A0=A0 3. Creating a new file and staging it.
 
-It used to be enough to call is_repository_shallow at the
-start of pack-objects.  Upload-pack wrote the other side's
-shallow state to a temporary file and pointed the whole
-pack-objects process at this state with "git --shallow-file",
-and from the perspective of pack-objects, we really were
-in a shallow repo.  But since b790e0f (upload-pack: send
-shallow info over stdin to pack-objects, 2014-03-11), we do
-it differently: we send --shallow lines to pack-objects over
-stdin, and it registers them itself.
+Here is the Git Bash output showing the issue. The previously mentioned=
+ steps are highlighted with asterisks.
 
-This means that our is_repository_shallow check is way too
-early (we have not been told about the shallowness yet), and
-that it is insufficient (calling is_repository_shallow is
-not enough, as the shallow grafts we register do not change
-its return value). Instead, we can just turn off bitmaps
-explicitly when we see these lines.
+$ git --version
+git version 1.9.4.msysgit.0
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-Sorry not to catch this earlier. The bug is in v2.0, and I only noticed
-the regression because a very small percentage of shallow fetches from
-GitHub started failing after we deployed v2.0 a few weeks ago. It took
-me a while to figure out the reproduction recipe below. :)
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
 
-Arguably is_repository_shallow should return 1 if anybody has registered
-a shallow graft, but that wouldn't be enough to fix this (we'd still
-need to check it again _after_ reading the --shallow lines). So I think
-this fix is fine here. I don't know if any other parts of the code would
-care, though.
+nothing to commit, working directory clean
 
- builtin/pack-objects.c          |  1 +
- t/t5311-pack-bitmaps-shallow.sh | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
- create mode 100755 t/t5311-pack-bitmaps-shallow.sh
+**** STEP 1 ****
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 238b502..b59f5d8 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -2494,6 +2494,7 @@ static void get_object_list(int ac, const char **av)
- 				if (get_sha1_hex(line + 10, sha1))
- 					die("not an SHA-1 '%s'", line + 10);
- 				register_shallow(sha1);
-+				use_bitmap_index = 0;
- 				continue;
- 			}
- 			die("not a rev '%s'", line);
-diff --git a/t/t5311-pack-bitmaps-shallow.sh b/t/t5311-pack-bitmaps-shallow.sh
-new file mode 100755
-index 0000000..872a95d
---- /dev/null
-+++ b/t/t5311-pack-bitmaps-shallow.sh
-@@ -0,0 +1,39 @@
-+#!/bin/sh
-+
-+test_description='check bitmap operation with shallow repositories'
-+. ./test-lib.sh
-+
-+# We want to create a situation where the shallow, grafted
-+# view of reachability does not match reality in a way that
-+# might cause us to send insufficient objects.
-+#
-+# We do this with a history that repeats a state, like:
-+#
-+#      A    --   B    --   C
-+#    file=1    file=2    file=1
-+#
-+# and then create a shallow clone to the second commit, B.
-+# In a non-shallow clone, that would mean we already have
-+# the tree for A. But in a shallow one, we've grafted away
-+# A, and fetching A to B requires that the other side send
-+# us the tree for file=1.
-+test_expect_success 'setup shallow repo' '
-+	echo 1 >file &&
-+	git add file &&
-+	git commit -m orig &&
-+	echo 2 >file &&
-+	git commit -a -m update &&
-+	git clone --no-local --bare --depth=1 . shallow.git &&
-+	echo 1 >file &&
-+	git commit -a -m repeat
-+'
-+
-+test_expect_success 'turn on bitmaps in the parent' '
-+	git repack -adb
-+'
-+
-+test_expect_success 'shallow fetch from bitmapped repo' '
-+	(cd shallow.git && git fetch)
-+'
-+
-+test_done
--- 
-2.1.0.rc0.286.g5c67d74
+$ git mv src/documents/contact.html.md src/documents/contact.html.md.ec=
+o
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes to be committed:
+=A0 (use "git reset HEAD <file>..." to unstage)
+
+=A0=A0=A0=A0=A0=A0=A0 renamed:=A0=A0=A0 src/documents/contact.html.md -=
+> src/documents/contact.html.md.eco
+
+**** STEP 2 ****
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes to be committed:
+=A0 (use "git reset HEAD <file>..." to unstage)
+
+=A0=A0=A0=A0=A0=A0=A0 renamed:=A0=A0=A0 src/documents/contact.html.md -=
+> src/documents/contact.html.md.eco
+
+Changes not staged for commit:
+=A0 (use "git add <file>..." to update what will be committed)
+=A0 (use "git checkout -- <file>..." to discard changes in working dire=
+ctory)
+
+=A0=A0=A0=A0=A0=A0=A0 modified:=A0=A0 src/documents/contact.html.md.eco
+
+
+$ git add src/documents/contact.html.md.eco
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes to be committed:
+=A0 (use "git reset HEAD <file>..." to unstage)
+
+=A0=A0=A0=A0=A0=A0=A0 deleted:=A0=A0=A0 src/documents/contact.html.md
+=A0=A0=A0=A0=A0=A0=A0 new file:=A0=A0 src/documents/contact.html.md.eco
+
+**** STEP 3 ****
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes to be committed:
+=A0 (use "git reset HEAD <file>..." to unstage)
+
+=A0=A0=A0=A0=A0=A0=A0 deleted:=A0=A0=A0 src/documents/contact.html.md
+=A0=A0=A0=A0=A0=A0=A0 new file:=A0=A0 src/documents/contact.html.md.eco
+
+Untracked files:
+=A0 (use "git add <file>..." to include in what will be committed)
+
+=A0=A0=A0=A0=A0=A0=A0 src/partials/address.html.md
+
+
+$ git add src/partials/address.html.md
+
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+
+Changes to be committed:
+=A0 (use "git reset HEAD <file>..." to unstage)
+
+=A0=A0=A0=A0=A0=A0=A0 new file:=A0=A0 src/documents/contact.html.md.eco
+=A0=A0=A0=A0=A0=A0=A0 renamed:=A0=A0=A0 src/documents/contact.html.md -=
+> src/partials/address.html.md
+
+
+Note here that the renamed object is wrong. Also note that I haven't co=
+mmited the changes to the repo.=20
+
+The repo is cloned from "https://github.com/prontog/elm".
+
+Regards,
+
+Panos
+  		 	   		  
