@@ -1,80 +1,116 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH] mailsplit.c: remove dead code
-Date: Tue, 12 Aug 2014 18:38:38 +0200
-Message-ID: <53EA430E.8050905@web.de>
-References: <1407791481-17410-1-git-send-email-stefanbeller@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] blame.c: Add translation to warning about failed revision walk
+Date: Tue, 12 Aug 2014 09:57:58 -0700
+Message-ID: <xmqqppg563xl.fsf@gitster.dls.corp.google.com>
+References: <1407706406-30455-1-git-send-email-stefanbeller@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Stefan Beller <stefanbeller@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 12 18:39:22 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Stefan Beller <stefanbeller@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 12 18:58:14 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHF6X-00084W-FF
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 18:39:21 +0200
+	id 1XHFOn-0000Jd-G2
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 18:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753710AbaHLQjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2014 12:39:15 -0400
-Received: from mout.web.de ([212.227.17.11]:54975 "EHLO mout.web.de"
+	id S1753387AbaHLQ6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2014 12:58:09 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:54485 "EHLO smtp.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753674AbaHLQjM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2014 12:39:12 -0400
-Received: from [192.168.178.27] ([79.250.177.36]) by smtp.web.de (mrweb101)
- with ESMTPSA (Nemesis) id 0LhvyA-1WdHZo3C2U-00nDNf; Tue, 12 Aug 2014 18:39:06
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <1407791481-17410-1-git-send-email-stefanbeller@gmail.com>
-X-Provags-ID: V03:K0:Jh22quEh73iP6Xsfc+XMDllNCF+HzXb8DQev88IemKiliE7fY5r
- 9NjYWC9onnh+9hnW6cyl6a1YsqPHI+B1dX+dHdpSBXC/R735I78whpXE6KKBZRqQIt7Gvdb
- 8cZYiez9OvJKWd8hqLQRlBn2fR4ehIDFvZKUFliKlb76IcEYs9RxkHU02FwmxCVx2X5uUDC
- gu+uUbTn5P7cCi/8vYlfQ==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1753156AbaHLQ6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2014 12:58:08 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id B3EF12E925;
+	Tue, 12 Aug 2014 12:58:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=V5N0N+LLCJmXBiNiFp108Hj8O4o=; b=w70OUg
+	ypRScNrfAhPV/yzecN7KAMyK49gcAg3baX0m8HIgN/VOKGsQ0ciQuhSKAVUjp2hc
+	TlkTZjSUmsiZDOCYOkamXOfaxrjmcvRcmgO+N+CkVFHktvN/WnCzFnYAf0HXSB4W
+	yzuttDvhVNS9beCijnMn7p0uyctBM/L9428ho=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=puQzG5zxX4KemN+Oarnjg7W66jSLURsr
+	6vyf1/xSa8cxM6DgWLNXMIxFPoQY6+nFH/PGBS9txGgfRWD2VY+Y2ktFJJQQluGb
+	mcyg1/WjSgBwcA3H5aE/7RGpkjRnr8eqeXvL69eDlu5cXSSoqvJRX9/RwTpFY+Av
+	4r2Kqx3YI1c=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A8BAD2E923;
+	Tue, 12 Aug 2014 12:58:07 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 802CA2E916;
+	Tue, 12 Aug 2014 12:58:00 -0400 (EDT)
+In-Reply-To: <1407706406-30455-1-git-send-email-stefanbeller@gmail.com>
+	(Stefan Beller's message of "Sun, 10 Aug 2014 23:33:25 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D12A2086-2241-11E4-BE2B-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255156>
 
-Am 11.08.2014 um 23:11 schrieb Stefan Beller:
-> This was found by coverity. (Id: 290001)
->
-> the variable 'output' is only assigned to a value inequal to NUL,
-> after all gotos to the corrupt label.
-> Therefore we can conclude the two removed lines are actually dead code.
+Stefan Beller <stefanbeller@gmail.com> writes:
 
-After reading the above for the first time I thought it meant the 
-opposite of what's actually going on.  Perhaps it's the placement of 
-"only", the comma or a flawed understanding of grammar on my part?
+> blame belonging to the group of
+> ancillaryinterrogators and not to plumbinginterrogators
+> should have localized error messages?
 
-In any case, there is only one way to reach the label named corrupt, and 
-the variable named output is always NULL if that branch is taken.  That 
-means the removed code was a no-op.  With those two lines gone you also 
-don't need to initialize output anymore, by the way.
+Unless running under --porcelain option to be driven by scripts, we
+expect that we are talking to a human user, so using "_(msg)" is very
+much appropriate for that case.
 
-And since there is only a single goto, you could move the three 
-remaining error handling lines up to the if statement.  Keeping 
-condition and dependent code together would be an improvement, I think.
+A possibly problematic script might do something like this:
+
+	git blame --porcelain "$1" 2>&1 |
+        awk "$awkScript"
+
+and the $awkScript may check the input lines that do not match the
+expected pattern the output lines from the command follow and act on
+them, though.  _(msg) is unwelcome to such a script [*1*].
+
+I suspect the above problem is likely to be theoretical.  People
+would be more sloppy and write this instead:
+
+	git blame --porcelain "$1" |
+        awk "$awkScript"
+
+and let the problem pass unnoticed, affecting the later parts of
+their processing ;-).  And "_(msg)", not "msg", would help.
+
+
+[Footnote]
+
+*1* ... and with possible interleaving of output that came to the
+standard output and the standard error, such parsing by $awkScript
+would not be a reliable way to do this anyway.  A truly careful one
+has to be written along the lines of:
+
+	git blame --porcelain "$1" >"$tmp" &&
+        awk "$awkScript" <"$tmp"
+
+anyway.
 
 > Signed-off-by: Stefan Beller <stefanbeller@gmail.com>
 > ---
->   builtin/mailsplit.c | 2 --
->   1 file changed, 2 deletions(-)
+>  builtin/blame.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/builtin/mailsplit.c b/builtin/mailsplit.c
-> index 06296d4..b499014 100644
-> --- a/builtin/mailsplit.c
-> +++ b/builtin/mailsplit.c
-> @@ -93,8 +93,6 @@ static int split_one(FILE *mbox, const char *name, int allow_bare)
->   	return status;
->
->    corrupt:
-> -	if (output)
-> -		fclose(output);
->   	unlink(name);
->   	fprintf(stderr, "corrupt mailbox\n");
->   	exit(1);
->
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index 17d30d0..ca4ba6f 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -2700,7 +2700,7 @@ parse_done:
+>  	 * uninteresting.
+>  	 */
+>  	if (prepare_revision_walk(&revs))
+> -		die("revision walk setup failed");
+> +		die(_("revision walk setup failed"));
+>  
+>  	if (is_null_sha1(sb.final->object.sha1)) {
+>  		o = sb.final->util;
