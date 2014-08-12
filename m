@@ -1,114 +1,269 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-rebase.txt: fix -f description to match actual git behavior.
-Date: Tue, 12 Aug 2014 13:38:28 -0700
-Message-ID: <xmqqzjf94f5n.fsf@gitster.dls.corp.google.com>
-References: <87bnrq22uf.fsf@osv.gnss.ru>
-	<xmqq4mxh5w34.fsf@gitster.dls.corp.google.com>
+From: Fabian Ruch <bafain@gmail.com>
+Subject: Re: [PATCH v2 23/23] rebase -i: enable options --signoff, --reset-author
+ for pick, reword
+Date: Tue, 12 Aug 2014 23:04:12 +0200
+Message-ID: <53EA814C.2050802@gmail.com>
+References: <53A258D2.7080806@gmail.com>	<cover.1407368621.git.bafain@gmail.com>	<ed19a079924e11edac0163837500c2e8caa2a555.1407368621.git.bafain@gmail.com> <87sil6ajbx.fsf@thomasrast.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sergey Organov <sorganov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 12 22:38:44 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Michael Haggerty <mhagger@alum.mit.edu>,
+	Jeff King <peff@peff.net>
+To: Thomas Rast <tr@thomasrast.ch>
+X-From: git-owner@vger.kernel.org Tue Aug 12 23:04:26 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHIqB-0000Dl-S9
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 22:38:44 +0200
+	id 1XHJF0-0003y3-55
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 23:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754578AbaHLUij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2014 16:38:39 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:52412 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753866AbaHLUii (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2014 16:38:38 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6C8F431F94;
-	Tue, 12 Aug 2014 16:38:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lKCYVRSd72YjenKztH4XJFV6ATA=; b=DFuOeT
-	K2GtTzp3soFXZpZEMTLjTUBQ42ar/VBD0sdWcMIz33Lta9HYCSyF+s79DxAD7/Fs
-	FjWy4L9rNoQpxMgZ7uIJgqf1lSEo68QW8cdbhieztPmif7yKLLIRML+sOLsHFXyO
-	0VG3fDW8vaLqt4B1ZtK6uwEUIZkdRVnmAbEhU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wNit9tI0tMl24QC0mA+Kaj0985gDrOCe
-	8ranmj5Qc2Yacxh1TUV+I3eme3DmIvbi4t6sO+Ngo9/HLhKbfP4YskqR0k2M0NIF
-	HMmDGNvLyBkuIWUPXm9aOMcHgRGX2TxZGyumLFuXX6X++Ww9Y8j+EzejdM/6pkIq
-	E4QXSBf6mmA=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6146631F93;
-	Tue, 12 Aug 2014 16:38:37 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 673E231F7F;
-	Tue, 12 Aug 2014 16:38:30 -0400 (EDT)
-In-Reply-To: <xmqq4mxh5w34.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 12 Aug 2014 12:47:27 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 9ECBF88E-2260-11E4-9F5A-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1752448AbaHLVES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2014 17:04:18 -0400
+Received: from mail-we0-f169.google.com ([74.125.82.169]:56440 "EHLO
+	mail-we0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751631AbaHLVER (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2014 17:04:17 -0400
+Received: by mail-we0-f169.google.com with SMTP id u56so10454380wes.14
+        for <git@vger.kernel.org>; Tue, 12 Aug 2014 14:04:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=g/BnG5G2GBOb+LkUw4SLAp+GOGLgY6XkCkwf5VPCsMg=;
+        b=GaKqr57LZxD7Wb5KstCCn1UVEQgr3JBbh099XnwNgFg/1FhHY3WbXZiOpCT6yTJaSc
+         UC0RYQaqVxLmF7X/59+noMHvZP+Jrl3BszH2fvr2RmiXNPzmTmYoJJk3RPosrEPK25d4
+         CgLe+dEcIHDVAJOaVttzGshC1PeTs4QHpjSOSydGA9zHzAND5LaZPWGXTLkNO9is5zGh
+         ssWIosmvZs+Pr0SvDR9RTWTyNQAUBlwX3sr7U9tSmiPonyOm8muzyKvsebEHn9MfQKxc
+         Vaf13HNmV71jtFXmoHODmstVgQ70spitGIGjUmZwRdf10HHmPoS84/JGQGtgDFGBXfdG
+         qh1Q==
+X-Received: by 10.194.2.132 with SMTP id 4mr154783wju.49.1407877454635;
+        Tue, 12 Aug 2014 14:04:14 -0700 (PDT)
+Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
+        by mx.google.com with ESMTPSA id ga2sm11713180wjb.44.2014.08.12.14.04.13
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Tue, 12 Aug 2014 14:04:13 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <87sil6ajbx.fsf@thomasrast.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255164>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Thomas,
 
-> So I think the reasoning (i.e. "is a descendant" is not quite right)
-> is correct, but the updated text is not quite right.  Changing it
-> further to "only the committer timestamps and identities would
-> change" is probably not an improvement, either.  "Force the rebase
-> that would otherwise be a no-op" may be a better phrasing that does
-> not risk going stale even if we update what are preserved and what
-> are modified in the future.
->
-> Also I notice the sentence "Normally non-interactive...in such a
-> situation" is not helping the reader in this description very much.
-> I wonder if we should keep it if we are rewriting this paragraph.
+Thomas Rast writes:
+> Fabian Ruch <bafain@gmail.com> writes:
+>> @@ -634,21 +644,24 @@ do_replay () {
+>>  		comment_for_reflog pick
+>>  
+>>  		mark_action_done
+>> -		do_pick $sha1 || die_with_patch $sha1 "Could not apply $sha1... $rest"
+>> +		eval do_pick $opts $sha1 \
+>> +			|| die_with_patch $sha1 "Could not apply $sha1... $rest"
+> 
+> You had me a little puzzled at the switch to 'eval' here.  That is
+> necessary to match the quoting added in 20/23, not for any change in
+> this commit.  This commit is simply the first one to trigger this.
 
-How about doing it this way, perhaps?
+This patch switches to 'eval' here because it is the first time
+'opts' occurs. However, I agree that it might be confusing that
+'opts' wasn't already added to the 'do_pick' lines by 20/23. By
+"trigger" you mean that this commit is the first to actually fill
+'opts' with contents? I will move these changes to 20/23 then.
+
+> Also, are you sure $sha1 does not require quoting through an eval?
+
+At least if we can assume that it is really a SHA-1 object name. As
+such it does not contain characters interpreted by the shell, like
+backslashes, quotes or whitespace.
+
+> Please add tests to this patch.
+
+The ones I had in mind are attached below the scissors line. The
+current reroll fails the authorship checks and the 'git rebase
+--continue' test cases. As the necessary changes would obfuscate this
+sub-thread, they will be included in the next reroll.
+
+   Fabian
 
 -- >8 --
-From: Sergey Organov <sorganov@gmail.com>
-Date: Tue, 12 Aug 2014 00:22:48 +0400
-Subject: [PATCH] Documentation/git-rebase.txt: -f forces a rebase that would otherwise be a no-op
-
-"Current branch is a descendant of the commit you are rebasing onto"
-does not necessarily mean "rebase" requires "--force".  For a plain
-vanilla "history flattening" rebase, the rebase can be done without
-forcing if there is a merge between the tip of the branch being
-rebased and the commit you are rebasing onto, even if the tip is
-descendant of the other.
-
-[jc: reworded both the text and the log description]
-
-Signed-off-by: Sergey Organov <sorganov@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-rebase.txt | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 2a93c64..f14100a 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -316,11 +316,8 @@ which makes little sense.
+diff --git a/t/t3427-rebase-line-options.sh b/t/t3427-rebase-line-options.sh
+index 5881162..a5a9e66 100755
+--- a/t/t3427-rebase-line-options.sh
++++ b/t/t3427-rebase-line-options.sh
+@@ -6,10 +6,32 @@ test_description='git rebase -i with line options'
  
- -f::
- --force-rebase::
--	Force the rebase even if the current branch is a descendant
--	of the commit you are rebasing onto.  Normally non-interactive rebase will
--	exit with the message "Current branch is up to date" in such a
--	situation.
--	Incompatible with the --interactive option.
-+	Force a rebase even if the current branch is up-to-date and
-+	the command without `--force` would return without doing anything.
- +
- You may find this (or --no-ff with an interactive rebase) helpful after
- reverting a topic branch merge, as this option recreates the topic branch with
--- 
-2.1.0-rc2-238-g2566d2d
+ . "$TEST_DIRECTORY"/lib-rebase.sh
+ 
++commit_message () {
++	git cat-file commit "$1" | sed '1,/^$/d'
++}
++
++commit_authorship () {
++	git cat-file commit "$1" | sed -n '/^$/q;/^author /p'
++}
++
++authorship () {
++	echo "author $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> $GIT_AUTHOR_DATE"
++}
++
++test_diff_file () {
++	if cmp "$1" "$2" >/dev/null
++	then
++		echo "'$1' and '$2' are the same"
++		return 1
++	fi
++}
++
+ test_expect_success 'Set up repository' '
+ 	test_commit Initial &&
+ 	test_commit Commit1 &&
+-	test_commit Commit2
++	test_commit Commit2 &&
++	git checkout -b branch Commit1 &&
++	test_commit Commit2_ Commit2.t
+ '
+ 
+ test_expect_success 'Unknown option' '
+@@ -23,4 +45,137 @@ test_expect_success 'Unknown option' '
+ 	git rebase --continue
+ '
+ 
++test_msg_author () {
++	set_fake_editor &&
++	FAKE_LINES="1 $1 2" git rebase -i HEAD~2 &&
++	commit_message HEAD >actual.msg &&
++	commit_authorship HEAD >actual.author &&
++	test_cmp expected.msg actual.msg &&
++	test_cmp expected.author actual.author
++}
++
++test_msg_author_misspelled () {
++	set_cat_todo_editor &&
++	test_must_fail git rebase -i HEAD^ >todo &&
++	set_fake_editor &&
++	test_must_fail env FAKE_LINES="1 $1-misspelled 2" git rebase -i HEAD~2 &&
++	set_fixed_todo_editor "$(pwd)"/todo &&
++	FAKE_LINES="$1 1" git rebase --edit-todo &&
++	git rebase --continue &&
++	commit_message HEAD >actual.msg &&
++	commit_authorship HEAD >actual.author &&
++	test_cmp expected.msg actual.msg &&
++	test_cmp expected.author actual.author
++}
++
++test_msg_author_conflicted () {
++	set_fake_editor &&
++	test_must_fail env FAKE_LINES="$1 1" git rebase -i master &&
++	git checkout --theirs Commit2.t &&
++	git add Commit2.t &&
++	git rebase --continue &&
++	commit_message HEAD >actual.msg &&
++	commit_authorship HEAD >actual.author &&
++	test_cmp expected.msg actual.msg &&
++	test_cmp expected.author actual.author
++}
++
++test_expect_success 'Misspelled pick --signoff' '
++	git checkout -b misspelled-pick--signoff master &&
++	cat >expected.msg <<-EOF &&
++	$(commit_message HEAD)
++
++	Signed-off-by: C O Mitter <committer@example.com>
++	EOF
++	commit_authorship HEAD >expected.author &&
++	test_msg_author_misspelled pick_--signoff
++'
++
++test_expect_success 'Conflicted pick --signoff' '
++	git checkout -b conflicted-pick--signoff branch &&
++	cat >expected.msg <<-EOF &&
++	$(commit_message HEAD)
++
++	Signed-off-by: C O Mitter <committer@example.com>
++	EOF
++	commit_authorship HEAD >expected.author &&
++	test_msg_author_conflicted pick_--signoff
++'
++
++test_expect_success 'pick --signoff' '
++	git checkout -b pick--signoff master &&
++	cat >expected.msg <<-EOF &&
++	$(commit_message HEAD)
++
++	Signed-off-by: C O Mitter <committer@example.com>
++	EOF
++	commit_authorship HEAD >expected.author &&
++	test_msg_author pick_--signoff
++'
++
++test_expect_success 'reword --signoff' '
++	git checkout -b reword--signoff master &&
++	cat >expected.msg <<-EOF &&
++	$(commit_message HEAD)
++
++	Signed-off-by: C O Mitter <committer@example.com>
++	EOF
++	commit_authorship HEAD >expected.author &&
++	test_msg_author reword_--signoff
++'
++
++test_expect_success 'Misspelled pick --reset-author' '
++	git checkout -b misspelled-pick--reset-author master &&
++	commit_message HEAD >expected.msg &&
++	test_tick &&
++	authorship >expected.author &&
++	commit_authorship HEAD >original.author &&
++	test_diff_file expected.author original.author &&
++	test_msg_author_misspelled pick_--reset-author
++'
++
++test_expect_success 'Conflicted pick --reset-author' '
++	git checkout -b conflicted-pick--reset-author branch &&
++	commit_message HEAD >expected.msg &&
++	test_tick &&
++	authorship >expected.author &&
++	commit_authorship HEAD >original.author &&
++	test_diff_file expected.author original.author &&
++	test_msg_author_conflicted pick_--reset-author
++'
++
++test_expect_success 'pick --reset-author' '
++	git checkout -b pick--reset-author master &&
++	commit_message HEAD >expected.msg &&
++	test_tick &&
++	authorship >expected.author &&
++	commit_authorship HEAD >original.author &&
++	test_diff_file expected.author original.author &&
++	test_msg_author pick_--reset-author
++'
++
++test_expect_success 'pick --reset-author --signoff' '
++	git checkout -b pick--reset-author--signoff master &&
++	cat >expected.msg <<-EOF &&
++	$(commit_message HEAD)
++
++	Signed-off-by: C O Mitter <committer@example.com>
++	EOF
++	test_tick &&
++	authorship >expected.author &&
++	commit_authorship HEAD >original.author &&
++	test_diff_file expected.author original.author &&
++	test_msg_author pick_--reset-author_--signoff
++'
++
++test_expect_success 'reword --reset-author' '
++	git checkout -b reword--reset-author master &&
++	commit_message HEAD >expected.msg &&
++	test_tick &&
++	authorship >expected.author &&
++	commit_authorship HEAD >original.author &&
++	test_diff_file expected.author original.author &&
++	test_msg_author reword_--reset-author
++'
++
+ test_done
