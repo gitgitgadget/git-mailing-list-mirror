@@ -1,113 +1,157 @@
-From: "Keller, Jacob E" <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v2 5/6] stash: default listing to "--cc
- --simplify-combined-diff"
-Date: Tue, 12 Aug 2014 23:30:56 +0000
-Message-ID: <1407886257.22389.13.camel@jekeller-desk1.amr.corp.intel.com>
-References: <20140729175300.GA21536@peff.net>
-	 <20140729175725.GE31181@peff.net>
-	 <xmqqppgo2dqr.fsf@gitster.dls.corp.google.com>
-	 <xmqqtx5yy6nm.fsf@gitster.dls.corp.google.com>
-	 <20140731000907.GA22297@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/3] Re: [PATCH] unpack-tree.c: remove dead code
+Date: Tue, 12 Aug 2014 16:57:31 -0700
+Message-ID: <20140812235731.GD24621@google.com>
+References: <xmqqha1h60fy.fsf@gitster.dls.corp.google.com>
+ <1407878107-22850-1-git-send-email-stefanbeller@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"gitster@pobox.com" <gitster@pobox.com>
-To: "peff@peff.net" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 13 01:31:18 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	barkalow@iabervon.org, git@vger.kernel.org
+To: Stefan Beller <stefanbeller@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 01:57:47 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHLXA-0002eA-Nk
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 01:31:17 +0200
+	id 1XHLwk-00051e-Ps
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 01:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655AbaHLXbM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2014 19:31:12 -0400
-Received: from mga01.intel.com ([192.55.52.88]:22072 "EHLO mga01.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751793AbaHLXbL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2014 19:31:11 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101.fm.intel.com with ESMTP; 12 Aug 2014 16:31:10 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.01,852,1400050800"; 
-   d="scan'208";a="575843195"
-Received: from orsmsx101.amr.corp.intel.com ([10.22.225.128])
-  by fmsmga001.fm.intel.com with ESMTP; 12 Aug 2014 16:31:01 -0700
-Received: from orsmsx159.amr.corp.intel.com (10.22.240.24) by
- ORSMSX101.amr.corp.intel.com (10.22.225.128) with Microsoft SMTP Server (TLS)
- id 14.3.195.1; Tue, 12 Aug 2014 16:30:57 -0700
-Received: from orsmsx115.amr.corp.intel.com ([169.254.10.205]) by
- ORSMSX159.amr.corp.intel.com ([169.254.11.127]) with mapi id 14.03.0195.001;
- Tue, 12 Aug 2014 16:30:57 -0700
-Thread-Topic: [PATCH v2 5/6] stash: default listing to "--cc
- --simplify-combined-diff"
-Thread-Index: AQHPrC5920eCipduckuPz4+EhaPovpu5xEaAgBRjpIA=
-In-Reply-To: <20140731000907.GA22297@peff.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [134.134.173.156]
-Content-ID: <48FF7E3DC1EE974B9C82BB0956C6298E@intel.com>
+	id S1751422AbaHLX5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2014 19:57:35 -0400
+Received: from mail-pd0-f169.google.com ([209.85.192.169]:44743 "EHLO
+	mail-pd0-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751166AbaHLX5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2014 19:57:34 -0400
+Received: by mail-pd0-f169.google.com with SMTP id y10so13462756pdj.14
+        for <git@vger.kernel.org>; Tue, 12 Aug 2014 16:57:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        bh=z2TXsdyxeCy8+Au1RIjkmdGI9BKQYnBpOXsc1me2z78=;
+        b=GpSEYUGtaHGFufBzI+E0xxDRmGqZadAs4jLEHZYz+llRujtbLq12A7osFTuaGrA4F5
+         dosg+ys6qbkNrlxoyKADrctJkWVnxYyEIE5ZJgXGueCueRVoBqfbU6DLjNbhwaLLmN+/
+         vLbOqqpS3J1/UwOCxpza3RYtQxz8t1AwmAYdQa7UR5gOcgAeD9x4XNi9sKqtSGVw05Co
+         QQM38FGz6m1g51Jvkw0fa84P8EhCMnmLbUJYOnnsY/5Pfi2liU+RcmzKZJ6x0nf5pgf8
+         3m3DMcBAFXc+HFl/sim0NxXDLCKTK14F3e0nlrEeYlyxl/MIIezBfDKSgt96zl5iuIPS
+         qnfQ==
+X-Received: by 10.70.134.165 with SMTP id pl5mr906518pdb.20.1407887853860;
+        Tue, 12 Aug 2014 16:57:33 -0700 (PDT)
+Received: from google.com ([2620:0:1000:5b00:b597:b557:1d91:6675])
+        by mx.google.com with ESMTPSA id po5sm246852pdb.55.2014.08.12.16.57.32
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=RC4-SHA bits=128/128);
+        Tue, 12 Aug 2014 16:57:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1407878107-22850-1-git-send-email-stefanbeller@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255176>
 
-T24gV2VkLCAyMDE0LTA3LTMwIGF0IDIwOjA5IC0wNDAwLCBKZWZmIEtpbmcgd3JvdGU6DQo+IE9u
-IFdlZCwgSnVsIDMwLCAyMDE0IGF0IDEyOjQzOjA5UE0gLTA3MDAsIEp1bmlvIEMgSGFtYW5vIHdy
-b3RlOg0KPiANCj4gPiA+ICJnaXQgbG9nIC0tY2MiIGlzIG9uZSBvZiB0aGUgdGhpbmdzIEkgd2Fu
-dGVkIGZvciBhIGxvbmcgdGltZSB0byBmaXguDQo+ID4gPiBXaGVuIHRoZSB1c2VyIGV4cGxpY2l0
-bHkgYXNrcyAiLS1jYyIsIHdlIGN1cnJlbnRseSBpZ25vcmUgaXQsIGJ1dA0KPiA+ID4gYmVjYXVz
-ZSB3ZSBrbm93IHRoZSB1c2VyIHdhbnRzIHRvIHZpZXcgY29tYmluZWQgZGlmZiwgd2Ugc2hvdWxk
-IHR1cm4NCj4gPiA+ICItcCIgb24gYXV0b21hdGljYWxseS4gIEFuZCB0aGUgY2hhbmdlIHRoaXMg
-cGF0Y2ggaW50cm9kdWNlcyB3aWxsIGJlDQo+ID4gPiBicm9rZW4gd2hlbiB3ZSBmaXggImxvZyAt
-LWNjIiAoInN0YXNoIGxpc3QiIHdpbGwgZW5kIHVwIGFsd2F5cw0KPiA+ID4gc2hvd2luZyB0aGUg
-cGF0Y2gsIHdpdGhvdXQgYSB3YXkgdG8gZGlzYWJsZSBpdCkuDQo+ID4gPg0KPiA+ID4gQ2FuIHlv
-dSBtYWtlIHRoaXMgY29uZGl0aW9uYWw/ICBEbyB0aGlzIG9ubHkgd2hlbiA8b3B0aW9ucz4gYXJl
-DQo+ID4gPiBnaXZlbiB0byAiZ2l0IHN0YXNoIGxpc3QiIGNvbW1hbmQgYW5kIHRoYXQgaW5jbHVk
-ZXMgIi1wIiBvcg0KPiA+ID4gc29tZXRoaW5nPw0KPiANCj4gSSdtIGRlZmluaXRlbHkgc3ltcGF0
-aGV0aWMuIFVzaW5nICItLWNjIiB3aXRoIHRoZSBkaWZmIGZhbWlseSBfZG9lc18NCj4gaW1wbHkg
-Ii1wIiBhbHJlYWR5LCBzbyBpdCB3b3VsZCBiZSBuaWNlIHRvIGRvIHRoZSBzYW1lIGZvciB0aGUg
-bG9nDQo+IGZhbWlseS4NCj4gDQo+ID4gUGVyaGFwcyBzb21ldGhpbmcgYWxvbmcgdGhpcyBsaW5l
-Pw0KPiA+IA0KPiA+ICBnaXQtc3Rhc2guc2ggfCAxMSArKysrKysrKystLQ0KPiA+ICAxIGZpbGUg
-Y2hhbmdlZCwgOSBpbnNlcnRpb25zKCspLCAyIGRlbGV0aW9ucygtKQ0KPiA+IA0KPiA+IGRpZmYg
-LS1naXQgYS9naXQtc3Rhc2guc2ggYi9naXQtc3Rhc2guc2gNCj4gPiBpbmRleCBhZTczYmE0Li4w
-ZGIxYjE5IDEwMDc1NQ0KPiA+IC0tLSBhL2dpdC1zdGFzaC5zaA0KPiA+ICsrKyBiL2dpdC1zdGFz
-aC5zaA0KPiA+IEBAIC0yOTcsOCArMjk3LDE1IEBAIGhhdmVfc3Rhc2ggKCkgew0KPiA+ICANCj4g
-PiAgbGlzdF9zdGFzaCAoKSB7DQo+ID4gIAloYXZlX3N0YXNoIHx8IHJldHVybiAwDQo+ID4gLQln
-aXQgbG9nIC0tZm9ybWF0PSIlZ2Q6ICVncyIgLWcgLS1jYyAtLXNpbXBsaWZ5LWNvbWJpbmVkLWRp
-ZmYgXA0KPiA+IC0JCSIkQCIgJHJlZl9zdGFzaCAtLQ0KPiA+ICsJY2FzZSAiICQqICIgaW4NCj4g
-PiArCSonIC0tY2MgJyopDQo+ID4gKwkJOzsgIyB0aGUgdXNlciBrbm93cyB3aGF0IHNoZSBpcyBk
-b2luZw0KPiA+ICsJKicgLXAgJyogfCAqJyAtVScqKQ0KPiA+ICsJCXNldCB4ICItLWNjIiAiLS1z
-aW1wbGlmeS1jb21iaW5lZC1kaWZmIiAiJEAiDQo+ID4gKwkJc2hpZnQNCj4gPiArCQk7Ow0KPiA+
-ICsJZXNhYw0KPiA+ICsJZ2l0IGxvZyAtLWZvcm1hdD0iJWdkOiAlZ3MiIC1nICIkQCIgJHJlZl9z
-dGFzaCAtLQ0KPiANCj4gVWdoLiBJJ2QgZ2VuZXJhbGx5IGxpa2UgdG8gYXZvaWQgdGhpcyBzb3J0
-IG9mIGFkLWhvYyBjb21tYW5kIGxpbmUNCj4gcGFyc2luZywgYXMgaXQgaXMgZWFzeSB0byBnZXQg
-Y29uZnVzZWQgYnkgb3B0aW9uIGFyZ3VtZW50cyBvcg0KPiBldmVuIG5vbi1vcHRpb25zLiBBdCBs
-ZWFzdCB3ZSBkbyBub3QgaGF2ZSB0byB3b3JyeSBhYm91dCBwYXRoc3BlY3MgaGVyZSwNCj4gYXMg
-d2UgYWxyZWFkeSBkbyBhbiBleHBsaWNpdCAiLS0iIChzbyB3ZSBtaWdodCBiZSBjb25mdXNlZCBi
-eSB0aGVtLCBidXQNCj4gdGhleSBhcmUgYnJva2VuIGFueXdheSkuDQo+IA0KPiBTdGlsbCwgSSB3
-b25kZXIgaWYgYSBjbGVhbmVyIHNvbHV0aW9uIGlzIHRvIHByb3ZpZGUgYWx0ZXJuYXRlICJkZWZh
-dWx0DQo+IHRvIHRoaXMiIG9wdGlvbnMgZm9yIHRoZSByZXZpc2lvbi5jIG9wdGlvbiBwYXJzZXIu
-IFdlIGFscmVhZHkgaGF2ZQ0KPiAiLS1kZWZhdWx0IiB0byBwaWNrIHRoZSBkZWZhdWx0IHN0YXJ0
-aW5nIHBvaW50LiBDb3VsZCB3ZSBkbyBzb21ldGhpbmcNCj4gbGlrZSAiLS1kZWZhdWx0LW1lcmdl
-LWhhbmRsaW5nPWNjIiBvciBzb21ldGhpbmc/DQo+IA0KPiBUaGVyZSdzIGEgc2ltaWxhciBhZC1o
-b2MgcGFyc2luZyBjYXNlIGluICJzdGFzaCBzaG93Iiwgd2hlcmUgd2UgYWRkDQo+ICItLXN0YXQi
-IGlmIG5vIGFyZ3VtZW50cyBhcmUgZ2l2ZW4sIGJ1dCB3ZSBoYXZlIG5vIGNsdWUgaWYgYSBkaWZm
-IGZvcm1hdA0KPiB3YXMgZ2l2ZW4gKHNvICJnaXQgc3Rhc2ggc2hvdyAtLWNvbG9yIiBhY2NpZGVu
-dGFsbHkgdHVybnMgb24gcGF0Y2gNCj4gZm9ybWF0ISkuIFNvbWV0aGluZyBsaWtlICItLWRlZmF1
-bHQtZGlmZi1mb3JtYXQ9c3RhdCIgd291bGQgYmUgbW9yZQ0KPiByb2J1c3QuDQo+IA0KPiBJIGR1
-bm5vLiBNYXliZSBpdCBpcyBvdmVyLWVuZ2luZWVyaW5nLiBJIGp1c3QgaGF0ZSB0byBzZWUgc29s
-dXRpb25zIHRoYXQNCj4gd29yayBtb3N0IG9mIHRoZSB0aW1lIGFuZCBjcnVtYmxlIGluIHdlaXJk
-IGNvcm5lciBjYXNlcywgZXZlbiBpZiBwZW9wbGUNCj4gZG9uJ3QgaGl0IHRob3NlIGNvcm5lciBj
-YXNlcyB2ZXJ5IG9mdGVuLg0KPiANCj4gLVBlZmYNCg0KSSBhZ3JlZSB3aXRoIHlvdSBvbiB0aGlz
-IG9uZS4gVGhvc2UgY29ybmVyIGNhc2VzIHRlbmQgdG8gYml0ZSB0aGUgd29yc3QuDQoNClRoYW5r
-cywNCkpha2UNCg0KPiAtLQ0KPiBUbyB1bnN1YnNjcmliZSBmcm9tIHRoaXMgbGlzdDogc2VuZCB0
-aGUgbGluZSAidW5zdWJzY3JpYmUgZ2l0IiBpbg0KPiB0aGUgYm9keSBvZiBhIG1lc3NhZ2UgdG8g
-bWFqb3Jkb21vQHZnZXIua2VybmVsLm9yZw0KPiBNb3JlIG1ham9yZG9tbyBpbmZvIGF0ICBodHRw
-Oi8vdmdlci5rZXJuZWwub3JnL21ham9yZG9tby1pbmZvLmh0bWwNCg0KDQo=
+Stefan Beller wrote:
+
+> In line 1763 of unpack-tree.c we have a condition on the current tree
+[...]
+
+The description is describing why the patch is *correct* (i.e., not
+going to introduce a bug), while what the reader wants to know is why
+the change is *desirable*.
+
+Is this about making the code more readable, or robust, or suppressing
+a static analysis error, or something else?  What did the user or
+reader want to do that they couldn't do before and now can after this
+patch?
+
+[...]
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -1789,15 +1789,11 @@ int twoway_merge(const struct cache_entry * const *src,
+>  			/* 20 or 21 */
+>  			return merged_entry(newtree, current, o);
+>  		}
+> +		else if (o->gently) {
+> +			return  -1 ;
+> +		}
+
+(not about this patch) Elsewhere git uses the 'cuddled else':
+
+		if (foo) {
+			...
+		} else if (bar) {
+			...
+		} else {
+			...
+		}
+
+That stylefix would be a topic for a different patch, though.
+
+>  		else {
+> -			/* all other failures */
+> -			if (oldtree)
+> -				return o->gently ? -1 : reject_merge(oldtree, o);
+> -			if (current)
+> -				return o->gently ? -1 : reject_merge(current, o);
+> -			if (newtree)
+> -				return o->gently ? -1 : reject_merge(newtree, o);
+> -			return -1;
+
+Does the static analysis tool support comments like
+
+			if (oldtree)
+				...
+			if (current)
+				...
+			...
+
+			/* not reached */
+			return -1;
+
+?  That might be the simplest minimally invasive fix for what coverity
+pointed out.
+
+Now that we're looking there, though, it's worth understanding why we
+do the 'if oldtree exists, use it, else fall back to, etc' thing.  Was
+this meant as futureproofing in case commands like 'git checkout' want
+to do rename detection some day?
+
+Everywhere else in the file that reject_merge is used, it is as
+
+	return o->gently ? -1 : reject_merge(..., o);
+
+The one exception is
+
+	!current &&
+	oldtree &&
+	newtree &&
+	oldtree != newtree &&
+	!initial_checkout
+
+(#17), which seems like a bug (it should have the same check).  Would
+it make sense to inline the o->gently check into reject_merge so callers
+don't have to care?
+
+In that spirit, I suspect the simplest fix would be
+
+		else
+			return o->gently ? -1 : reject_merge(current, o);
+
+and then all calls could be replaced in a followup patch.
+
+Sensible?
+
+Thanks,
+
+Jonathan Nieder (2):
+  unpack-trees: use 'cuddled' style for if-else cascade
+  checkout -m: attempt merge when deletion of path was staged
+
+Stefan Beller (1):
+  unpack-trees: simplify 'all other failures' case
+
+ unpack-trees.c | 31 ++++++++++---------------------
+ 1 file changed, 10 insertions(+), 21 deletions(-)
