@@ -1,73 +1,143 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Sharing merge conflict resolution between multiple developers
-Date: Mon, 11 Aug 2014 18:57:44 -0700
-Message-ID: <CAPc5daW1A9OVSBPe-br-x9OeQPqj816NgMKztWMyp6gN==ojHw@mail.gmail.com>
-References: <CAFOYHZCiKC4TR4jFVUB=W5qbDG8XvB2Obx1ZfTH8OF3E_c5BnA@mail.gmail.com>
- <xmqqd2c67tok.fsf@gitster.dls.corp.google.com> <CAFOYHZAaF+Dve1DwUUd-k6Nh3+nOZzNVUQAD0quN4crRAjfCLQ@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] pack-objects: turn off bitmaps when we see --shallow lines
+Date: Tue, 12 Aug 2014 00:34:53 -0400
+Message-ID: <20140812043452.GA11784@peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: GIT <git@vger.kernel.org>
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 12 03:58:20 2014
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 12 06:35:40 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XH1Lw-0003kq-Bx
-	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 03:58:20 +0200
+	id 1XH3nv-00081d-UD
+	for gcvg-git-2@plane.gmane.org; Tue, 12 Aug 2014 06:35:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752113AbaHLB6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Aug 2014 21:58:07 -0400
-Received: from mail-la0-f48.google.com ([209.85.215.48]:45661 "EHLO
-	mail-la0-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751321AbaHLB6G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Aug 2014 21:58:06 -0400
-Received: by mail-la0-f48.google.com with SMTP id gl10so7235109lab.7
-        for <git@vger.kernel.org>; Mon, 11 Aug 2014 18:58:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=Nx0m8tTYEP8MzUxeiUrzXxbyF8HhDB7vXV/LYAcE3go=;
-        b=q4Zu0ciaLGD+0pRChinQlzSq6+3p4XYwjpZDglNiio/cmVaapfEd1G3i7vL84BWg5a
-         m4XeB6Skv4YqA/tRor6xuh/dXUsaSUPrN6i29y+oNh3CAB35vX3YJSb3nvSPYTSZJVza
-         ugNr5w+Idlu+fbj0LB/QYUq7PaaAE+LsciuTdIsL7C4L9xpswowxc1mallb9a/lmFzrK
-         VcdLRSeUhAJtaJ1cLqHlFk1hjnrYOnVZLbDeZOl9xw0qr+v1tZ+v5WrCidcgNvA1Utr/
-         hhw2qguT/gBKk9T5vo3frya04LaysMSJaUnrxuGfRDUKgmrTnyP/sY8mlX2NKjTlXkBe
-         cX2w==
-X-Received: by 10.112.16.6 with SMTP id b6mr104252lbd.74.1407808684164; Mon,
- 11 Aug 2014 18:58:04 -0700 (PDT)
-Received: by 10.112.199.74 with HTTP; Mon, 11 Aug 2014 18:57:44 -0700 (PDT)
-In-Reply-To: <CAFOYHZAaF+Dve1DwUUd-k6Nh3+nOZzNVUQAD0quN4crRAjfCLQ@mail.gmail.com>
-X-Google-Sender-Auth: 1YIaTOR0uAXbH4yqohIzBUMwv-U
+	id S1753018AbaHLEfE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2014 00:35:04 -0400
+Received: from cloud.peff.net ([50.56.180.127]:50551 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751995AbaHLEfD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2014 00:35:03 -0400
+Received: (qmail 2231 invoked by uid 102); 12 Aug 2014 04:35:02 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (204.237.18.137)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Mon, 11 Aug 2014 23:35:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 12 Aug 2014 00:34:53 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255145>
 
-On Mon, Aug 11, 2014 at 4:29 PM, Chris Packham <judge.packham@gmail.com> wrote:
+Reachability bitmaps do not work with shallow operations,
+because they cache a view of the object reachability that
+represents the true objects. Whereas a shallow repository
+(or a shallow operation in a repository) is inherently
+cutting off the object graph with a graft.
 
->> So, the "recording" phase may go something like this:
->> ...
->>     git checkout merge-fix/$this-$that
->>     git read-tree -m -u HEAD $this
->>     git commit -a -m 'merge-fix/$this-$that postimage'
->>
->> The rough idea is "git show merge-fix/$this-$that" will show the
->> "patch" you can apply on top of the conflicted state other people
->> would get by running "git merge $that" while on "$this" branch.
->
-> So how would someone else pickup that postimage and use it?
->
->   git checkout $this
->   git merge $that
->   git fetch $remote ':/merge-fix/$this-$that postimage'
->   git show ':/merge-fix/$this-$that postimage' | git apply (or patch -p1)
+We explicitly disallow the use of bitmaps in shallow
+repositories by checking is_repository_shallow(), and we
+should continue to do that. However, we also want to
+disallow bitmaps when we are serving a fetch to a shallow
+client, since we momentarily take on their grafted view of
+the world.
 
-For a simpler case that would work, but because we are not saving
-just a patch but two full trees to compare (i.e. merge-fix/$this-$that
-is the postimage, its ^1 is the preimage), you should be able to use
-the three-way merge in a similar way cherry-pick works. In fact, that
-is how rerere replays the recorded resolution, not with a "patch -p1".
+It used to be enough to call is_repository_shallow at the
+start of pack-objects.  Upload-pack wrote the other side's
+shallow state to a temporary file and pointed the whole
+pack-objects process at this state with "git --shallow-file",
+and from the perspective of pack-objects, we really were
+in a shallow repo.  But since b790e0f (upload-pack: send
+shallow info over stdin to pack-objects, 2014-03-11), we do
+it differently: we send --shallow lines to pack-objects over
+stdin, and it registers them itself.
+
+This means that our is_repository_shallow check is way too
+early (we have not been told about the shallowness yet), and
+that it is insufficient (calling is_repository_shallow is
+not enough, as the shallow grafts we register do not change
+its return value). Instead, we can just turn off bitmaps
+explicitly when we see these lines.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Sorry not to catch this earlier. The bug is in v2.0, and I only noticed
+the regression because a very small percentage of shallow fetches from
+GitHub started failing after we deployed v2.0 a few weeks ago. It took
+me a while to figure out the reproduction recipe below. :)
+
+Arguably is_repository_shallow should return 1 if anybody has registered
+a shallow graft, but that wouldn't be enough to fix this (we'd still
+need to check it again _after_ reading the --shallow lines). So I think
+this fix is fine here. I don't know if any other parts of the code would
+care, though.
+
+ builtin/pack-objects.c          |  1 +
+ t/t5311-pack-bitmaps-shallow.sh | 39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+)
+ create mode 100755 t/t5311-pack-bitmaps-shallow.sh
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 238b502..b59f5d8 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -2494,6 +2494,7 @@ static void get_object_list(int ac, const char **av)
+ 				if (get_sha1_hex(line + 10, sha1))
+ 					die("not an SHA-1 '%s'", line + 10);
+ 				register_shallow(sha1);
++				use_bitmap_index = 0;
+ 				continue;
+ 			}
+ 			die("not a rev '%s'", line);
+diff --git a/t/t5311-pack-bitmaps-shallow.sh b/t/t5311-pack-bitmaps-shallow.sh
+new file mode 100755
+index 0000000..872a95d
+--- /dev/null
++++ b/t/t5311-pack-bitmaps-shallow.sh
+@@ -0,0 +1,39 @@
++#!/bin/sh
++
++test_description='check bitmap operation with shallow repositories'
++. ./test-lib.sh
++
++# We want to create a situation where the shallow, grafted
++# view of reachability does not match reality in a way that
++# might cause us to send insufficient objects.
++#
++# We do this with a history that repeats a state, like:
++#
++#      A    --   B    --   C
++#    file=1    file=2    file=1
++#
++# and then create a shallow clone to the second commit, B.
++# In a non-shallow clone, that would mean we already have
++# the tree for A. But in a shallow one, we've grafted away
++# A, and fetching A to B requires that the other side send
++# us the tree for file=1.
++test_expect_success 'setup shallow repo' '
++	echo 1 >file &&
++	git add file &&
++	git commit -m orig &&
++	echo 2 >file &&
++	git commit -a -m update &&
++	git clone --no-local --bare --depth=1 . shallow.git &&
++	echo 1 >file &&
++	git commit -a -m repeat
++'
++
++test_expect_success 'turn on bitmaps in the parent' '
++	git repack -adb
++'
++
++test_expect_success 'shallow fetch from bitmapped repo' '
++	(cd shallow.git && git fetch)
++'
++
++test_done
+-- 
+2.1.0.rc0.286.g5c67d74
