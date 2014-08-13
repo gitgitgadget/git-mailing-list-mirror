@@ -1,106 +1,109 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 13/23] refs-common.c: move is_branch to the common code
-Date: Wed, 13 Aug 2014 13:14:57 -0700
-Message-ID: <1407960907-18189-14-git-send-email-sahlberg@google.com>
-References: <1407960907-18189-1-git-send-email-sahlberg@google.com>
-Cc: Ronnie Sahlberg <sahlberg@google.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 13 22:16:35 2014
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 2/6] sha1_file.c: do not die failing to malloc in unpack_compressed_entry
+Date: Wed, 13 Aug 2014 14:13:39 -0700
+Message-ID: <CAPc5daX3WNsSQ1epor+K7T8ePjhthGdTivecaD9GeeDnQRJCAg@mail.gmail.com>
+References: <1403610336-27761-1-git-send-email-pclouds@gmail.com>
+ <1407927454-9268-1-git-send-email-pclouds@gmail.com> <1407927454-9268-3-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Dale R. Worley" <worley@alum.mit.edu>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 23:14:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHeyD-0000NJ-Kp
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 22:16:29 +0200
+	id 1XHfs0-0008H5-3H
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 23:14:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753858AbaHMUP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 16:15:59 -0400
-Received: from mail-ig0-f202.google.com ([209.85.213.202]:33053 "EHLO
-	mail-ig0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753590AbaHMUPL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 16:15:11 -0400
-Received: by mail-ig0-f202.google.com with SMTP id r2so268790igi.5
-        for <git@vger.kernel.org>; Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
+	id S1753679AbaHMVOD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Aug 2014 17:14:03 -0400
+Received: from mail-lb0-f174.google.com ([209.85.217.174]:64907 "EHLO
+	mail-lb0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753412AbaHMVOB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Aug 2014 17:14:01 -0400
+Received: by mail-lb0-f174.google.com with SMTP id c11so267774lbj.33
+        for <git@vger.kernel.org>; Wed, 13 Aug 2014 14:14:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=6bYUij721bCk2mZYTXrwx4bjGS9VpWZGdChQHr+j8ns=;
-        b=QVP4YSSZlDZP3cxBjpcF1MqDR7QRWOBhH+p5OSW6vj/XfTXWpgQ6TqJLX1ubxH2FVz
-         j8mJQVFgBxJakJN9eLtZIJ3cR50FMtKiQf0WPyBIQ0lncH6JpXga7YPs+bbw+9cOvBU4
-         fQj9q6mCc1CTqqmNmgmDH98q++cHPDvp3/7kYCONzclkDs/4bADFnQP6hD1vQXdaR99d
-         RRidgu/fll9Dlhn+a1GU2EKPhlrzP+r4Q1FU+Fl746KxHroZIKoYqfm8E3eq4wuGMOJL
-         848kDL9TZQQ8pYiEjOZdcB9zVeQvL5Np7JTVWnwBnjWE8CvMTNu1tam9gMZn/ewy7LBb
-         qU8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=6bYUij721bCk2mZYTXrwx4bjGS9VpWZGdChQHr+j8ns=;
-        b=QMbCpDN6/hhVbWb3G0mkgvd5p14K1vUguOG1XQSKG0mPU23r9drWpt4850+Gt0cQfY
-         uRCiN1pHPz0L1TPUQNkK5Oxqft21pGJqUBmWt3S5cz00rtzeSJZyS4FqBzlsHSmfZ0lH
-         0R9GqQRiPkCcTZ8b/ZjIa7PnVXodIV+uL4Fx4IkFGujYAb7lCmi4fKpenkZTWEG0AOiT
-         +puSzT39ZCpCzbMfXii4HXluQ9Bkt4bfBJsdiVTxQrJo9QoZzfSlTa0rL+NGdcT50L3B
-         t3zx/NjvNqqm1BbuEXIR7fnajFzP/aie/SlqWMMdn+bcrrxo42OXOO0sIydsYFpG5Ei8
-         WPbg==
-X-Gm-Message-State: ALoCoQksEVwWWU+8ORRwgCOdcQC88JoveoeHN2TtEDshQACzDJprst90m5QR7g6GzVGSgS63af/x
-X-Received: by 10.182.18.8 with SMTP id s8mr3235604obd.21.1407960910730;
-        Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id y50si209196yhk.4.2014.08.13.13.15.10
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
-Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 9193131C2A9;
-	Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
-Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 6D3F3E104B; Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
-X-Mailer: git-send-email 2.0.1.556.gfa712f7
-In-Reply-To: <1407960907-18189-1-git-send-email-sahlberg@google.com>
+        d=gmail.com; s=20120113;
+        h=mime-version:sender:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=CjAtIlNnk9zSMyfJLPoCUx7NWGIbTA+VPbMcuHbFlAE=;
+        b=ntbeTey2xA+4qE+DuRlqkf4v6EkNP4CAzHj/4ss1dNgdTB4IJ9jeTOfa5bwTYRSL21
+         WeJClF5EwCHdcdy0STakKT50OlyYf4XxWWlOKAosVDMFVbRDJEDAGDxYR45NO0GgZLZP
+         q7AWPgb4AKTmJQWJrFYF/l9gjjCC+SO6o5AxAsJueWtRXru1SfsIstSrFK842BjgHt1q
+         zJ5clNZk+GUbDNLhL0rOH7RqjmaxcXmc5+dfWjtH5iI7DohciXXKMefhNUDSbHKssW6Y
+         b3i/qhl+fcRDk3gusFCG/3o85PMBuvu/WdJxIJdfugRtIbB6ibZer1aBqy1z6+YgcG++
+         KJdg==
+X-Received: by 10.112.160.38 with SMTP id xh6mr509035lbb.21.1407964440045;
+ Wed, 13 Aug 2014 14:14:00 -0700 (PDT)
+Received: by 10.112.199.74 with HTTP; Wed, 13 Aug 2014 14:13:39 -0700 (PDT)
+In-Reply-To: <1407927454-9268-3-git-send-email-pclouds@gmail.com>
+X-Google-Sender-Auth: i_WmgbsrURrcm96bYc0ud5CBDEM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255252>
 
-Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
----
- refs-common.c | 5 +++++
- refs.c        | 5 -----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+Looks very sensible. Thanks.
 
-diff --git a/refs-common.c b/refs-common.c
-index f8b79e0..5f83d7e 100644
---- a/refs-common.c
-+++ b/refs-common.c
-@@ -3,6 +3,11 @@
- #include "refs.h"
- #include "string-list.h"
- 
-+int is_branch(const char *refname)
-+{
-+	return !strcmp(refname, "HEAD") || starts_with(refname, "refs/heads/");
-+}
-+
- int update_ref(const char *action, const char *refname,
- 	       const unsigned char *sha1, const unsigned char *oldval,
- 	       int flags, struct strbuf *e)
-diff --git a/refs.c b/refs.c
-index 55bced9..70c034c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2483,11 +2483,6 @@ static int log_ref_write(const char *refname, const unsigned char *old_sha1,
- 	return 0;
- }
- 
--int is_branch(const char *refname)
--{
--	return !strcmp(refname, "HEAD") || starts_with(refname, "refs/heads/");
--}
--
- static int write_sha1_update_reflog(struct ref_lock *lock,
- 	const unsigned char *sha1, const char *logmsg)
- {
--- 
-2.0.1.556.g3edca4c
+On Wed, Aug 13, 2014 at 3:57 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc =
+Duy <pclouds@gmail.com> wrote:
+> Fewer die() gives better control to the caller, provided that the
+> caller _can_ handle it. And in unpack_compressed_entry() case, it can=
+,
+> because unpack_compressed_entry() already returns NULL if it fails to
+> inflate data.
+>
+> A side effect from this is fsck continues to run when very large blob=
+s
+> are present (and do not fit in memory).
+>
+> Noticed-by: Dale R. Worley <worley@alum.mit.edu>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  sha1_file.c      | 4 +++-
+>  t/t1050-large.sh | 6 ++++++
+>  2 files changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/sha1_file.c b/sha1_file.c
+> index 3f70b1d..330862b 100644
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -1923,7 +1923,9 @@ static void *unpack_compressed_entry(struct pac=
+ked_git *p,
+>         git_zstream stream;
+>         unsigned char *buffer, *in;
+>
+> -       buffer =3D xmallocz(size);
+> +       buffer =3D xmallocz_gentle(size);
+> +       if (!buffer)
+> +               return NULL;
+>         memset(&stream, 0, sizeof(stream));
+>         stream.next_out =3D buffer;
+>         stream.avail_out =3D size + 1;
+> diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+> index aea4936..5642f84 100755
+> --- a/t/t1050-large.sh
+> +++ b/t/t1050-large.sh
+> @@ -163,4 +163,10 @@ test_expect_success 'zip achiving, deflate' '
+>         git archive --format=3Dzip HEAD >/dev/null
+>  '
+>
+> +test_expect_success 'fsck' '
+> +       test_must_fail git fsck 2>err &&
+> +       n=3D$(grep "error: attempting to allocate .* over limit" err =
+| wc -l) &&
+> +       test "$n" -gt 1
+> +'
+> +
+>  test_done
+> --
+> 2.1.0.rc0.78.gc0d8480
+>
