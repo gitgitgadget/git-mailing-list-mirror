@@ -1,72 +1,114 @@
 From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
 Subject: Re: [PATCH] read-cache.c: Ensure unmerged entries are removed
-Date: Thu, 14 Aug 2014 00:10:03 +0200
-Message-ID: <CAPuZ2NGB710TUW4VJB5kGWjoXV+eiebv_ZYvooG=E-J-MLXywQ@mail.gmail.com>
+Date: Thu, 14 Aug 2014 00:10:21 +0200
+Message-ID: <CAPuZ2NFcJ5FFeJP=0-oG59fs=3ztenoPOGWOZKfZDdHpLGOYeA@mail.gmail.com>
 References: <1407857491-16633-1-git-send-email-jsorianopastor@gmail.com>
-	<xmqqd2c55zl6.fsf@gitster.dls.corp.google.com>
+	<1407857491-16633-2-git-send-email-jsorianopastor@gmail.com>
+	<xmqq8umt5z8i.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 00:10:12 2014
+X-From: git-owner@vger.kernel.org Thu Aug 14 00:10:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHgkF-0007DA-S0
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Aug 2014 00:10:12 +0200
+	id 1XHgkU-0007Lp-MU
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Aug 2014 00:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752109AbaHMWKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 18:10:05 -0400
-Received: from mail-pd0-f173.google.com ([209.85.192.173]:59980 "EHLO
-	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751704AbaHMWKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 18:10:04 -0400
-Received: by mail-pd0-f173.google.com with SMTP id w10so412740pde.18
-        for <git@vger.kernel.org>; Wed, 13 Aug 2014 15:10:03 -0700 (PDT)
+	id S1752754AbaHMWKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 18:10:23 -0400
+Received: from mail-pa0-f42.google.com ([209.85.220.42]:48237 "EHLO
+	mail-pa0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751704AbaHMWKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2014 18:10:22 -0400
+Received: by mail-pa0-f42.google.com with SMTP id lf10so430656pab.29
+        for <git@vger.kernel.org>; Wed, 13 Aug 2014 15:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=7Grfwtun4BFHBlJRMsgCI0R9B16D6k59qrxbbfxb680=;
-        b=ThVFeoELdR69Syr3Hj11TCrjYRc7dSc4EjoCktUzYi3pLtgfV+r5S/1Qn9EuiAHDbv
-         h4jCpn+/vG9CuRzXzsAgZZrV7bAMavDt9n2DAqdvxCcELSxU18PcBPatyBPfzs7v/LDH
-         UNzqz0e/5jf1wDK3ASvXY0wGs9wQp6/e6ZdK5AY65uXJ4EbSvfyjVpzJmj4Ft2Q1Vo+w
-         F1JTlUFEAo1B8OW9femZ3oShqDUTy6NUppGWMjq8nBLDa87hJhDMjfe2giisPAY7pdv4
-         /I/AAYXL97BrFnT13geBmeoiKV+tqtykFcQLm16dC/FV6wrsr3gTVqCGi04IMN+Enpp3
-         uH+A==
-X-Received: by 10.70.98.232 with SMTP id el8mr6273202pdb.119.1407967803482;
- Wed, 13 Aug 2014 15:10:03 -0700 (PDT)
-Received: by 10.70.43.170 with HTTP; Wed, 13 Aug 2014 15:10:03 -0700 (PDT)
-In-Reply-To: <xmqqd2c55zl6.fsf@gitster.dls.corp.google.com>
+        bh=qXvagL437eE24bPoH4MVWYtCpd8Ag95Dchk+Ql+9drE=;
+        b=mbXpKP79vVtlQDQFGmWoD7WZx5KIGyR/PzZgkNY8Rx/dQCVC2iKEuOh41mW3A7U6Vy
+         nTjXy21lfTlZ+jV8qimRYvoHqqEKm+wEigDDgbiGeCA2zbshXIqaJsAVza9StC+gLYk0
+         VZM/q7gz6m7SKyNppu3l3LDAmjvnY/f0j5dYImDtucTNN2a2UnwAzFRCPydR1jk0xo9W
+         1BI+0ha+wLCcFVaWqkErTntERLeQM4w7+URV2Po7w8AbKQIu5KVnL2xfkdzEUagh9yXI
+         L+Loi2iYsZADlDF+5vBMY1fCj5V5G0JNJNOTUje9yMPDbsfq+HCDhAMuSJKX9gKBHTmL
+         5ryA==
+X-Received: by 10.66.122.3 with SMTP id lo3mr432273pab.7.1407967821774; Wed,
+ 13 Aug 2014 15:10:21 -0700 (PDT)
+Received: by 10.70.43.170 with HTTP; Wed, 13 Aug 2014 15:10:21 -0700 (PDT)
+In-Reply-To: <xmqq8umt5z8i.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255256>
 
-On Tue, Aug 12, 2014 at 8:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Aug 12, 2014 at 8:39 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Jaime Soriano Pastor <jsorianopastor@gmail.com> writes:
 >
-> > A file in the index can be left as merged and unmerged at the same time
-> > by some tools as libgit2, this causes some undesiderable behaviours in git.
+> > Wrong implementations of tools that modify the index can left
+> > some files as merged and unmerged at the same time. Avoid undesiderable
+> > behaviours by handling this situation.
 >
-> Well, doesn't it mean that libgit2 is broken?  Have you filed a bug
-> over there yet?
+> It is understandable that the way _you_ decided to "handle the
+> situation" is so obvious to be spelled out to _you_, but that is the
+> most important design decision that needs to be described here.  Do
+> you silently remove higher-stage entries when an entry at stage 0
+> exists?  Do you silently remove stage 0 entry when higher-stage
+> entries exist?  Do you error out without doing neither?
 >
 
-Yes, exactly, I think libgit2 is broken but I wanted to double-check
-that it was still happening in their master branch, and it is. I have
-reported the bug after checking it.
-https://github.com/libgit2/libgit2/issues/2515
+Sorry, I didn't explain my decission enough, and my knowledge of git
+internals is not so good.
+The idea of my proposal is to remove higher stage entries when, after
+replacing an existing entry at stage 0, there are still entries in
+higher stages.
+
+In the problematic cases I've seen (specially git add and git reset
+--hard) the final state of both, merged and unmerged files, is that
+only an entry in stage 0 exists.
+Also, the current implementation of git checkout -f silently removes
+higher stage entries in this case.
 
 >
-> Having said that, protecting ourselves from insanity left by other
-> people is always a good idea, provided that it can be done without
-> bending overly backwards.
+> Silently removing these at runtime may not be something we would
+> want to do; after all, we do not know if the broken tool actually
+> wanted to have the higher stage entries, or the merged entry.
+>
 
+Yes, I have to agree on that, the user should have the final decission
+about what stage entry to use, although I'm not sure if in the
+previously commented cases there could be such an additional loss as
+the operations that can be modified are already intended to silently
+remove stage entries.
 
-Yes, I think the most important thing in this case is to protect git
-against this kind of inconsistencies.
+> Ideally, I think we should error out and let the users figure out
+> how to proceed (we may of course need to make sure they have the
+> necessary tools to do so, e.g. "git cat-file blob 0:$path" to
+> resurrect the contents and "git update-index --cacheinfo" to stuff
+> the contents into the stages).
+>
+
+I have also tried a couple of implementations of this patch with die()
+and warning().
+The implementation with die() would have a message like "There are
+other staged versions for merged file", and maybe some recomendation
+about how to see the blobs.
+The warning implementation could return -1, what would prevent git add
+to remove the higher-stage entries, but would still make git reset
+--hard to clean the index as it seems that it does it anyway if it
+manages to finish the call to read_index_unmerged.
+Another option would be to print the deleted entries as a warning but
+deleting them anyway.
+
+Which option would be better? And what could be a good message?
+
+BTW, I didn't know "git cat-file blob 0:$path", but I only manage to
+get "Not a valid object name" fatals. How is it supposed to be used?
+
+Thanks.
