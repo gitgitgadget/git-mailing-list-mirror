@@ -1,138 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] checkout -m: attempt merge when deletion of path was staged
-Date: Tue, 12 Aug 2014 17:38:04 -0700
-Message-ID: <CAPc5daV-p25_W9+3_HsOZ-nsab86JNVH0mABQJjX=HX6Kvjenw@mail.gmail.com>
-References: <xmqqha1h60fy.fsf@gitster.dls.corp.google.com> <1407878107-22850-1-git-send-email-stefanbeller@gmail.com>
- <20140812235731.GD24621@google.com> <20140813000317.GG24621@google.com>
+From: Thanumalayan Sankaranarayana Pillai <madthanu@cs.wisc.edu>
+Subject: Possible bug v2.0.4: git reflog after a crash
+Date: Wed, 13 Aug 2014 07:03:45 +0530
+Message-ID: <CAJ6LpRqaBpinbF7FfU6hk55EmOLZy32Rjc6M9W+WnyK3LD7MUA@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <stefanbeller@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 02:38:32 2014
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 13 03:34:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHMaE-00050l-9h
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 02:38:30 +0200
+	id 1XHNSD-00037s-2w
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 03:34:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751942AbaHMAi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Aug 2014 20:38:26 -0400
-Received: from mail-la0-f41.google.com ([209.85.215.41]:64736 "EHLO
-	mail-la0-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751471AbaHMAi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Aug 2014 20:38:26 -0400
-Received: by mail-la0-f41.google.com with SMTP id s18so8594562lam.14
-        for <git@vger.kernel.org>; Tue, 12 Aug 2014 17:38:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:sender:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        bh=xPPSVCNc1rvmzhk3xCOlx3QVXoTPCHAIwSEENZ6gwWU=;
-        b=bXiRbQ8ZauWs5rymrmhn8KQa2UZUCat5TaW5mFL9eLtLdx/iWlVxlczJCRRWoeWT+B
-         mpc388uHG51Aox1o+7VCyeN/lRx1uqchL7JcjuzDl4Jg+LMu2+HlZaLqtrmofqWzyJ09
-         glNw00LjE0SiN3jk6ML9sA71RHJ6/oU+F76Iq6ONhw5Tbj2+mmEUYSS5adHWtN/ihbiK
-         +P20O2A1oUua+ySjHXIZpCGQRfjrKJQP9s1c+69fTMWqUrUlIvPXFaru2ZxAMF1SWgKq
-         uRSdo55oCHUxG6+RkpeaE63oIx8+rmR1EYS99aepgboydpkyF94oXMb/DYFfDoAk58oD
-         aHEg==
-X-Received: by 10.112.35.79 with SMTP id f15mr98644lbj.101.1407890304530; Tue,
- 12 Aug 2014 17:38:24 -0700 (PDT)
-Received: by 10.112.199.74 with HTTP; Tue, 12 Aug 2014 17:38:04 -0700 (PDT)
-In-Reply-To: <20140813000317.GG24621@google.com>
-X-Google-Sender-Auth: Oc7FrKrj3ip56nIGt7FcW7f7HBM
+	id S1753294AbaHMBeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Aug 2014 21:34:13 -0400
+Received: from sabe.cs.wisc.edu ([128.105.6.20]:33884 "EHLO sabe.cs.wisc.edu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752152AbaHMBeM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Aug 2014 21:34:12 -0400
+Received: from mail-pa0-f44.google.com (mail-pa0-f44.google.com [209.85.220.44])
+	(authenticated bits=0)
+	by sabe.cs.wisc.edu (8.14.1/8.14.1) with ESMTP id s7D1YADg017153
+	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Tue, 12 Aug 2014 20:34:11 -0500
+Received: by mail-pa0-f44.google.com with SMTP id eu11so14030820pac.31
+        for <git@vger.kernel.org>; Tue, 12 Aug 2014 18:34:05 -0700 (PDT)
+X-Received: by 10.70.52.1 with SMTP id p1mr1090685pdo.111.1407893645573; Tue,
+ 12 Aug 2014 18:34:05 -0700 (PDT)
+Received: by 10.70.135.9 with HTTP; Tue, 12 Aug 2014 18:33:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255182>
 
-On Tue, Aug 12, 2014 at 5:03 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> twoway_merge() is missing an o->gently check in the case where a file
-> that needs to be modified is missing from the index but present in the
-> old and new trees.  As a result, in this case 'git checkout -m' errors
-> out instead of trying to perform a merge.
->
-> Fix it by checking o->gently.  While at it, inline the o->gently check
-> into reject_merge to prevent future call sites from making the same
-> mistake.
->
-> Noticed by code inspection.  The motivating case hasn't been tested.
+This is about what happens when a Git process gets killed by someone,
+or there is a system crash, and then we try to run Git again on the
+repository.
 
-That sounds sloppy X-<.  I may comment more after figuring out
-what _other_ reject_merge() caller that does not appear in the
-patch would change its behaviour with this patch.
+When I run git-commit after adding a few files to the repository, git
+updates the .git/refs/heads/master file using rename() to complete the
+commit. Just before this, git appends some meta-information to the
+.git/logs/HEAD file. If a crash happens such that one of these
+operations has been issued but the other has not, then, running
+git-reflog in the future seems to silently show wrong information.
+Specifically, the HEAD@{} and the message of one commit (either the
+in-transaction commit that was being performed during the crash, or
+the previous commit) is shown against the commit number of the other
+commit. (I am running git-2.0.4.)
 
-  side note: of course, if this were two patches, one that adds the
-  same o->gently ? -1 : reject thing to places where they forget to
-  do so, and the other that moves the gently thing to reject helper,
-  then we can read all the necessary information to judge the change
-  in the patch ;-)
+The situation can be reproduced by killing a git process between the
+append and the rename, using GDB. (Such a crash can also be caused
+when a file system buffers only one of the operations for a longer
+time and a kernel OOPS happens in-between. Typical re-ordering file
+systems such as ext4-ordered buffer the append longer than the rename,
+leading to about a 25 second window in-between).
 
-Thanks.
+A disclaimer: I am more involved in file system research than in using
+Git expertly, and only noticed this issue while examining Git for a
+research project. There is a chance that git-reflog is supposed to
+output the information it currently outputs, and I am simply expecting
+the wrong thing from it. Also, we have found a couple of places where
+Git might act wrongly in the event of a system crash if a re-ordering
+file system is used, apart from the usual fsync-before-rename
+concerns; these, however, require unusual re-orderings that are not
+done by most usual file systems. I have not reported them because I
+get the sense that Git is written for an ordered file system; do let
+me know if reporting these will be useful.
 
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> This is the most iffy of the three patches, mostly because I was too
-> lazy to write a test.  I believe it's safe as-is nonetheless.
->
-> Thanks for reading.
->
->  unpack-trees.c | 11 ++++++-----
->  1 file changed, 6 insertions(+), 5 deletions(-)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index 187b15b..6c45af7 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1178,7 +1178,8 @@ return_failed:
->  static int reject_merge(const struct cache_entry *ce,
->                         struct unpack_trees_options *o)
->  {
-> -       return add_rejected_path(o, ERROR_WOULD_OVERWRITE, ce->name);
-> +       return o->gently ? -1 :
-> +               add_rejected_path(o, ERROR_WOULD_OVERWRITE, ce->name);
->  }
->
->  static int same(const struct cache_entry *a, const struct cache_entry *b)
-> @@ -1633,7 +1634,7 @@ int threeway_merge(const struct cache_entry * const *stages,
->         /* #14, #14ALT, #2ALT */
->         if (remote && !df_conflict_head && head_match && !remote_match) {
->                 if (index && !same(index, remote) && !same(index, head))
-> -                       return o->gently ? -1 : reject_merge(index, o);
-> +                       return reject_merge(index, o);
->                 return merged_entry(remote, index, o);
->         }
->         /*
-> @@ -1641,7 +1642,7 @@ int threeway_merge(const struct cache_entry * const *stages,
->          * make sure that it matches head.
->          */
->         if (index && !same(index, head))
-> -               return o->gently ? -1 : reject_merge(index, o);
-> +               return reject_merge(index, o);
->
->         if (head) {
->                 /* #5ALT, #15 */
-> @@ -1770,7 +1771,7 @@ int twoway_merge(const struct cache_entry * const *src,
->                                 else
->                                         return merged_entry(newtree, current, o);
->                         }
-> -                       return o->gently ? -1 : reject_merge(current, o);
-> +                       return reject_merge(current, o);
->                 } else if ((!oldtree && !newtree) || /* 4 and 5 */
->                          (!oldtree && newtree &&
->                           same(current, newtree)) || /* 6 and 7 */
-> @@ -1788,7 +1789,7 @@ int twoway_merge(const struct cache_entry * const *src,
->                         /* 20 or 21 */
->                         return merged_entry(newtree, current, o);
->                 } else
-> -                       return o->gently ? -1 : reject_merge(current, o);
-> +                       return reject_merge(current, o);
->         }
->         else if (newtree) {
->                 if (oldtree && !o->initial_checkout) {
-> --
+Example wrong outputs from git reflog:
+----
+1f9cd01 HEAD@{0}: commit: test2
+1f9cd01 HEAD@{1}: commit (initial): test1
+----
+----
+4550c4a HEAD@{0}: commit (initial): test1
+----
+
+Expected output:
+----
+4550c4a HEAD@{0}: commit: test2
+1f9cd01 HEAD@{1}: commit (initial): test1
+----
+
+Thanks,
+Thanu
