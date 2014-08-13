@@ -1,135 +1,77 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH 2/3] unpack-trees: use 'cuddled' style for if-else cascade
-Date: Wed, 13 Aug 2014 07:52:13 -0700
-Message-ID: <CAL=YDWnpiUOiCTrDfcXFUUJc+uP77kfNNoN3VZ+7g2i0fvXu2A@mail.gmail.com>
-References: <xmqqha1h60fy.fsf@gitster.dls.corp.google.com>
-	<1407878107-22850-1-git-send-email-stefanbeller@gmail.com>
-	<20140812235731.GD24621@google.com>
-	<20140813000045.GF24621@google.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH/RFC v2 1/2] git_default_config() rewritten using the config-set API
+Date: Wed, 13 Aug 2014 18:00:47 +0200
+Message-ID: <vpq1tsks7kg.fsf@anie.imag.fr>
+References: <1407918122-29973-1-git-send-email-tanayabh@gmail.com>
+	<vpqppg4vdii.fsf@anie.imag.fr> <53EB58A0.10307@gmail.com>
+	<vpq4mxgtu07.fsf@anie.imag.fr> <53EB6914.2030807@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stefan Beller <stefanbeller@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes.Schindelin@gmx.de, barkalow@iabervon.org,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 16:52:24 2014
+Content-Type: text/plain
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tanay Abhra <tanayabh@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 18:00:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHZuY-0004MP-No
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 16:52:23 +0200
+	id 1XHayx-0005ur-6u
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 18:00:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753231AbaHMOwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 10:52:17 -0400
-Received: from mail-vc0-f173.google.com ([209.85.220.173]:33326 "EHLO
-	mail-vc0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752558AbaHMOwO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 10:52:14 -0400
-Received: by mail-vc0-f173.google.com with SMTP id hy10so14960981vcb.4
-        for <git@vger.kernel.org>; Wed, 13 Aug 2014 07:52:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=WjCqkghgcN4DpMPLG72tjIRYEb4VEQaUI2FYenMo9KY=;
-        b=gF4/DqLpMVBMwkKs3W3IvLr54LQZE0eSpGCRoNfFiul99YSSXIQBV9P65+bNlzTO4x
-         SAGx/fl5nKYuz+6qy4Dy/bVmu0CcgIWXSVFDNMHwa2Wf5Wyb7SEYVRBZk2wWBhiIWIYJ
-         aUJyqSUgCYfSPh8o3WV/HYo2n9SkEDKk0PHxDib7MMaS2gM72XTpTRJW+OhfLFVj21Cr
-         DP8CFySMlEiBtmlyNBZ7aRxNejDJgSsmcB/3f0IaH6LUNhU4EOGBfnfHrZV6sH+oZgbl
-         qnEgxCsPRgq3lX8gkWy9P2nfxmZnJNUACJHMrH+7gZQnpmoQoKmJ45+fXdJJvi1+pZXa
-         QRJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=WjCqkghgcN4DpMPLG72tjIRYEb4VEQaUI2FYenMo9KY=;
-        b=DLf7D0jLe1MCQbPV3ORZx0u1ruMzr4eH9NHiTXcraKAEC4HTYvnx2ZXsYVIvkkHWbZ
-         AZ/5+LdTzd485+ev9PxpI3rqP2oeOcT4mhYkg/nPcj8Q0a2whD8x8EsyvLIpfuj7gB/9
-         E3OEw4PKDMy1Ely7AiFl6Epqr/Nd4NN3DtS/j5nMKdBxSplvaMf6NofLlQa9jHtypbt8
-         d5BAxgtk++878vFL9YHbMwKreo8Ekclfp8ZJd1shGbc9Ob3wIsAGKWXGhaYZDWYmU79K
-         PKAU0MotggiwwrS0QsTFcydQVs52lgIe8r4ERhU3JHx+e8nQhwIqghkiLeEKeU/P6jaH
-         J/8Q==
-X-Gm-Message-State: ALoCoQnrGAnF2KolntPHougNhuEe7CHLTgYQPkrxLBTvp+azQrlHvHFgG4bjGt9MpEB2nmXkFDow
-X-Received: by 10.52.34.209 with SMTP id b17mr3377063vdj.49.1407941533316;
- Wed, 13 Aug 2014 07:52:13 -0700 (PDT)
-Received: by 10.52.69.136 with HTTP; Wed, 13 Aug 2014 07:52:13 -0700 (PDT)
-In-Reply-To: <20140813000045.GF24621@google.com>
+	id S1752777AbaHMQAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 12:00:55 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35602 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752090AbaHMQAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2014 12:00:54 -0400
+Received: from clopinette.imag.fr (clopinette.imag.fr [129.88.34.215])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id s7DG0jq9032222
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 13 Aug 2014 18:00:45 +0200
+Received: from anie.imag.fr (anie.imag.fr [129.88.7.32])
+	by clopinette.imag.fr (8.13.8/8.13.8) with ESMTP id s7DG0lj6025844;
+	Wed, 13 Aug 2014 18:00:47 +0200
+In-Reply-To: <53EB6914.2030807@gmail.com> (Tanay Abhra's message of "Wed, 13
+	Aug 2014 19:03:08 +0530")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.3 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 13 Aug 2014 18:00:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: s7DG0jq9032222
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1408550447.93951@Bbv5wrQ1obx3PCDYSqCnEA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255213>
 
-On Tue, Aug 12, 2014 at 5:00 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Match the predominant style in git by following K&R style for if/else
-> cascades.  Documentation/CodingStyle from linux.git explains:
->
->   Note that the closing brace is empty on a line of its own, _except_ in
->   the cases where it is followed by a continuation of the same statement,
->   ie a "while" in a do-statement or an "else" in an if-statement, like
->   this:
->
->         if (x == y) {
->                 ..
->         } else if (x > y) {
->                 ...
->         } else {
->                 ....
->         }
->
->   Rationale: K&R.
->
->   Also, note that this brace-placement also minimizes the number of empty
->   (or almost empty) lines, without any loss of readability.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Tanay Abhra <tanayabh@gmail.com> writes:
 
-Reviewed-by: Ronnie Sahlberg <sahlberg@google.com>
+> git_default_config() now uses config-set API functions to query for
+> values.
 
-> ---
->  unpack-trees.c | 12 ++++--------
->  1 file changed, 4 insertions(+), 8 deletions(-)
->
-> diff --git a/unpack-trees.c b/unpack-trees.c
-> index f4a9aa9..187b15b 100644
-> --- a/unpack-trees.c
-> +++ b/unpack-trees.c
-> @@ -1771,8 +1771,7 @@ int twoway_merge(const struct cache_entry * const *src,
->                                         return merged_entry(newtree, current, o);
->                         }
->                         return o->gently ? -1 : reject_merge(current, o);
-> -               }
-> -               else if ((!oldtree && !newtree) || /* 4 and 5 */
-> +               } else if ((!oldtree && !newtree) || /* 4 and 5 */
->                          (!oldtree && newtree &&
->                           same(current, newtree)) || /* 6 and 7 */
->                          (oldtree && newtree &&
-> @@ -1781,17 +1780,14 @@ int twoway_merge(const struct cache_entry * const *src,
->                           !same(oldtree, newtree) && /* 18 and 19 */
->                           same(current, newtree))) {
->                         return keep_entry(current, o);
-> -               }
-> -               else if (oldtree && !newtree && same(current, oldtree)) {
-> +               } else if (oldtree && !newtree && same(current, oldtree)) {
->                         /* 10 or 11 */
->                         return deleted_entry(oldtree, current, o);
-> -               }
-> -               else if (oldtree && newtree &&
-> +               } else if (oldtree && newtree &&
->                          same(current, oldtree) && !same(current, newtree)) {
->                         /* 20 or 21 */
->                         return merged_entry(newtree, current, o);
-> -               }
-> -               else
-> +               } else
->                         return o->gently ? -1 : reject_merge(current, o);
->         }
->         else if (newtree) {
-> --
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+I believe you missed a few spots:
+
+$ git grep -n 'git_default_config[^(]'
+Documentation/user-manual.txt:4287:        git_config(git_default_config);
+archive.c:416:  git_config(git_default_config, NULL);
+builtin/config.c:577:           git_config(git_default_config, NULL);
+color.h:73: * if you are just going to change to git_default_config, too.
+fetch-pack.c:880:       git_config(git_default_config, NULL);
+http.c:393:     config.cascade_fn = git_default_config;
+rerere.c:580:   git_config(git_default_config, NULL);
+rerere.c:710:   git_config(git_default_config, NULL);
+
+The following ones should probably be rewritten too:
+
+archive.c:416:  git_config(git_default_config, NULL);
+builtin/config.c:577:           git_config(git_default_config, NULL);
+fetch-pack.c:880:       git_config(git_default_config, NULL);
+rerere.c:580:   git_config(git_default_config, NULL);
+rerere.c:710:   git_config(git_default_config, NULL);
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
