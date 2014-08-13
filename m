@@ -1,91 +1,72 @@
-From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: Re: [PATCH v2 00/23] backend-struct-db
-Date: Wed, 13 Aug 2014 14:55:45 -0700
-Message-ID: <CAL=YDWkg1D1JyBhT0Jr4ur+fv3rp9tGm+a-gSYBaixaAHKQ_EQ@mail.gmail.com>
-References: <1407960907-18189-1-git-send-email-sahlberg@google.com>
-	<xmqqmwb82im7.fsf@gitster.dls.corp.google.com>
+From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
+Subject: Re: [PATCH] read-cache.c: Ensure unmerged entries are removed
+Date: Thu, 14 Aug 2014 00:10:03 +0200
+Message-ID: <CAPuZ2NGB710TUW4VJB5kGWjoXV+eiebv_ZYvooG=E-J-MLXywQ@mail.gmail.com>
+References: <1407857491-16633-1-git-send-email-jsorianopastor@gmail.com>
+	<xmqqd2c55zl6.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 23:55:52 2014
+X-From: git-owner@vger.kernel.org Thu Aug 14 00:10:12 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHgWM-0001Dj-PO
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 23:55:51 +0200
+	id 1XHgkF-0007DA-S0
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Aug 2014 00:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819AbaHMVzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 17:55:47 -0400
-Received: from mail-vc0-f171.google.com ([209.85.220.171]:54382 "EHLO
-	mail-vc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751704AbaHMVzq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 17:55:46 -0400
-Received: by mail-vc0-f171.google.com with SMTP id hq11so478646vcb.2
-        for <git@vger.kernel.org>; Wed, 13 Aug 2014 14:55:45 -0700 (PDT)
+	id S1752109AbaHMWKF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 18:10:05 -0400
+Received: from mail-pd0-f173.google.com ([209.85.192.173]:59980 "EHLO
+	mail-pd0-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751704AbaHMWKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2014 18:10:04 -0400
+Received: by mail-pd0-f173.google.com with SMTP id w10so412740pde.18
+        for <git@vger.kernel.org>; Wed, 13 Aug 2014 15:10:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20120113;
+        d=gmail.com; s=20120113;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        bh=MI6DtVSpxOI1xeAlQzY0zEeH0r04vsf4XiQ4XyBIVaM=;
-        b=PwLXieBjcHsCnmvvoOFvv0DMmCKj4jGv+D8SPwO4q5WVKCO/6pnufWG6LtpguPzPB8
-         hquLbQOAzm0wyEp+EGMLooMzuhpl5hMZ8jH/3HavF9hwKb4EwFfj5VqGZayOTOR1Ar5c
-         NpFBgi9gVQORsPhx9FZLN9QhyQnZYXPGW7BvIjDYx6eDY7Q/aqjouACypqzKsCMS4dnA
-         CjUW8gUe9v63f9YGA4S9V4/vlRqCsDSBsaNGuM/zhNGRBWWpVbvthRQH/1aKiOo3T6Dp
-         kEosfnGsOhhp3H6Kj1PCBQe1mLibQLNcFAy5KbbANb87KFuwZRT+9Je7ZtYzggk+g053
-         FOTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=MI6DtVSpxOI1xeAlQzY0zEeH0r04vsf4XiQ4XyBIVaM=;
-        b=XwrAYxh7+O8yr5w4z2hmVhw0p+MdGgFLFsPC6x91RPdn9642Oef7/iXV5fdcbsiHjp
-         FSZoWamEx5UP5WucKgceoxj221YULCWxgacEMuAzkKlgcmEcjwJZONwhNQmXsSMEUHjV
-         yzq4LsAiHg/8rqwU2EuaMQwP87SLoOqysmCjoKAfkoks14Nb1AjT63E4dcADikAC6TGR
-         wBIZ+jbe7StEl4dobnSzwO7OfGbBSGdVOtPmZZ34nXOnfTmoHoE5ZHowUDgI8BUOIoqY
-         NgXjp0bOhebngQSvMUy3K20DuQWz3zz4rAeqUsfjDsTsJ16JTpmAklfcMbqyxgJBwUbz
-         g8fQ==
-X-Gm-Message-State: ALoCoQnJ7Ibbi1IJKYtRC02qb01R7xJuOSHjsDYdI5NnqgGuMPQzMxkwOPwoYO1TxcmbTXdXCZ0D
-X-Received: by 10.221.56.5 with SMTP id wa5mr326386vcb.25.1407966945790; Wed,
- 13 Aug 2014 14:55:45 -0700 (PDT)
-Received: by 10.52.69.136 with HTTP; Wed, 13 Aug 2014 14:55:45 -0700 (PDT)
-In-Reply-To: <xmqqmwb82im7.fsf@gitster.dls.corp.google.com>
+        bh=7Grfwtun4BFHBlJRMsgCI0R9B16D6k59qrxbbfxb680=;
+        b=ThVFeoELdR69Syr3Hj11TCrjYRc7dSc4EjoCktUzYi3pLtgfV+r5S/1Qn9EuiAHDbv
+         h4jCpn+/vG9CuRzXzsAgZZrV7bAMavDt9n2DAqdvxCcELSxU18PcBPatyBPfzs7v/LDH
+         UNzqz0e/5jf1wDK3ASvXY0wGs9wQp6/e6ZdK5AY65uXJ4EbSvfyjVpzJmj4Ft2Q1Vo+w
+         F1JTlUFEAo1B8OW9femZ3oShqDUTy6NUppGWMjq8nBLDa87hJhDMjfe2giisPAY7pdv4
+         /I/AAYXL97BrFnT13geBmeoiKV+tqtykFcQLm16dC/FV6wrsr3gTVqCGi04IMN+Enpp3
+         uH+A==
+X-Received: by 10.70.98.232 with SMTP id el8mr6273202pdb.119.1407967803482;
+ Wed, 13 Aug 2014 15:10:03 -0700 (PDT)
+Received: by 10.70.43.170 with HTTP; Wed, 13 Aug 2014 15:10:03 -0700 (PDT)
+In-Reply-To: <xmqqd2c55zl6.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255255>
 
-On Wed, Aug 13, 2014 at 2:18 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ronnie Sahlberg <sahlberg@google.com> writes:
+On Tue, Aug 12, 2014 at 8:31 PM, Junio C Hamano <gitster@pobox.com> wrote:
 >
->> 15 of the patches, the refs-common.c patches, focuses on moving all backend
->> agnostic refs functions to a common file. This file will contain all
->> backend agnostic refs functions.
->>
->> The last 6 patches adds a backend structure with the methods we need to
->> describe a pluggable backend. Currently we only have one built in backend,
->> the current files based backend. These patches do not change any of the
->> behavior other than that we now call the methods through backend specific
->> wrapper functions rather than calling them directly.
->>
->> At this stage we now have a defined set of methods needed for a refs
->> backend and we can start building and adding new types of ref backends
->> to git.
+> Jaime Soriano Pastor <jsorianopastor@gmail.com> writes:
 >
-> Very nice ;-).
+> > A file in the index can be left as merged and unmerged at the same time
+> > by some tools as libgit2, this causes some undesiderable behaviours in git.
 >
-> I would have expected that refs.c would be the generic one and refs-be-*
-> would be the backend specific ones, though; that way you do not have to
-> introduce a new file refs-common.c at all, no?
+> Well, doesn't it mean that libgit2 is broken?  Have you filed a bug
+> over there yet?
 >
 
-Makes sense.
-Let me do those changes and then I will re-post sometime next week
-once I get additional feedback on it.
+Yes, exactly, I think libgit2 is broken but I wanted to double-check
+that it was still happening in their master branch, and it is. I have
+reported the bug after checking it.
+https://github.com/libgit2/libgit2/issues/2515
+
+>
+> Having said that, protecting ourselves from insanity left by other
+> people is always a good idea, provided that it can be done without
+> bending overly backwards.
 
 
-regards
-Ronnie Sahlberg
+Yes, I think the most important thing in this case is to protect git
+against this kind of inconsistencies.
