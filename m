@@ -1,88 +1,156 @@
-From: David Turner <dturner@twopensource.com>
-Subject: Re: [PATCH v4 0/1] receive-pack: optionally deny case clone refs
-Date: Wed, 13 Aug 2014 15:28:28 -0400
-Organization: Twitter
-Message-ID: <1407958108.9673.14.camel@leckie>
-References: <1402525838-31975-1-git-send-email-dturner@twitter.com>
-	 <CAL=YDW=5ynUFFLVNAG=M9x-DRyEyM2q=GPVxzxHVPYDNGHYm=A@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 3/3] checkout -m: attempt merge when deletion of path
+ was staged
+Date: Wed, 13 Aug 2014 21:30:11 +0200
+Message-ID: <53EBBCC3.4060309@kdbg.org>
+References: <xmqqha1h60fy.fsf@gitster.dls.corp.google.com>	<1407878107-22850-1-git-send-email-stefanbeller@gmail.com>	<20140812235731.GD24621@google.com>	<20140813000317.GG24621@google.com>	<xmqqzjf82sc7.fsf@gitster.dls.corp.google.com> <xmqqvbpw2p2x.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Ronnie Sahlberg <sahlberg@google.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 21:28:37 2014
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Stefan Beller <stefanbeller@gmail.com>,
+	Johannes.Schindelin@gmx.de, barkalow@iabervon.org,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 21:30:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHeDt-0004c9-Ct
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 21:28:37 +0200
+	id 1XHeFa-0005Ra-Nv
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 21:30:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753444AbaHMT2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 15:28:33 -0400
-Received: from mail-qc0-f171.google.com ([209.85.216.171]:42156 "EHLO
-	mail-qc0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752132AbaHMT2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 15:28:30 -0400
-Received: by mail-qc0-f171.google.com with SMTP id r5so207927qcx.30
-        for <git@vger.kernel.org>; Wed, 13 Aug 2014 12:28:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:organization:content-type:mime-version
-         :content-transfer-encoding;
-        bh=aJqLz14mTB23fA+O15HXRR/dvFQnNrjMWCq3spGwA88=;
-        b=jyPSoxreT+QkmjUk45E2H/nVu07ciRKUfG4t1Ok4S5jTL3/68B1PXwdsP024S0aiSG
-         NMrMiaDb8Uw4nCZulumT8TUI11I8KLaJr85T/lIjoXZwPZNppWMmMTQaQbJ7wkkaryam
-         AW05TT1QbYJ8Bwe4Jxmz3NS3ju87MLPT8aAqsfIyc81ihOS1W2VaXegVmtwftnL7yVz7
-         P0RkudYDl25AfQGXC6+gCFSWSmlH+yB7978WOQlzaZMDeGIQiEPTzbW0J/56cEHgbb3T
-         w+nYD9UsUlke+apnZj2n2rTm2K+wBbv+x8+nn9sfLcJVa+rFmRcp8kxZ5tWeBeLTCpSo
-         23MA==
-X-Gm-Message-State: ALoCoQnpgEysE2sJhDQf8aBb7FcFIy+YiNCTOAlyy13MiSUq1OPN9oCwwv5Sn+GeDh0mhYTrL2Hm
-X-Received: by 10.140.47.129 with SMTP id m1mr9584804qga.95.1407958109818;
-        Wed, 13 Aug 2014 12:28:29 -0700 (PDT)
-Received: from [172.17.131.24] (ip-66-9-26-66.autorev.intellispace.net. [66.9.26.66])
-        by mx.google.com with ESMTPSA id 106sm3013431qgo.16.2014.08.13.12.28.28
-        for <multiple recipients>
-        (version=SSLv3 cipher=RC4-SHA bits=128/128);
-        Wed, 13 Aug 2014 12:28:29 -0700 (PDT)
-In-Reply-To: <CAL=YDW=5ynUFFLVNAG=M9x-DRyEyM2q=GPVxzxHVPYDNGHYm=A@mail.gmail.com>
-X-Mailer: Evolution 3.10.4-0ubuntu1 
+	id S1752199AbaHMTaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 15:30:16 -0400
+Received: from bsmtp3.bon.at ([213.33.87.17]:56684 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751457AbaHMTaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2014 15:30:16 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 8D9DB130050;
+	Wed, 13 Aug 2014 21:30:12 +0200 (CEST)
+Received: from dx.sixt.local (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id EB9CF19F431;
+	Wed, 13 Aug 2014 21:30:11 +0200 (CEST)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <xmqqvbpw2p2x.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255226>
 
-On Wed, 2014-08-13 at 09:20 -0700, Ronnie Sahlberg wrote:
-> David,
+Am 13.08.2014 20:59, schrieb Junio C Hamano:
+> diff --git a/t/t7201-co.sh b/t/t7201-co.sh
+> index 0c9ec0a..cedbb6a 100755
+> --- a/t/t7201-co.sh
+> +++ b/t/t7201-co.sh
+> @@ -223,6 +223,23 @@ test_expect_success 'checkout --merge --conflict=diff3 <branch>' '
+>  	test_cmp two expect
+>  '
+>  
+> +test_expect_success 'switch to another branch while carrying a deletion' '
+> +
+> +	git checkout -f master && git reset --hard && git clean -f &&
+> +	git rm two &&
+> +
+> +	test_must_fail git checkout simple 2>errs &&
+> +	test_i18ngrep overwritten errs &&
+> +
+> +	git checkout --merge simple 2>errs &&
+> +	! test_i18ngrep overwritten errs &&
+
+This must be written as
+
+	test_i18ngrep ! overwritten errs &&
+
+> +	git ls-files -u &&
+> +	test_must_fail git cat-file -t :0:two &&
+> +	test "$(git cat-file -t :1:two)" = blob &&
+> +	test "$(git cat-file -t :2:two)" = blob &&
+> +	test_must_fail git cat-file -t :3:two
+> +'
+> +
+>  test_expect_success 'checkout to detach HEAD (with advice declined)' '
+>  
+>  	git config advice.detachedHead false &&
 > 
-> One possible solution can be to use the external database daemon I am
-> working of for ref transactions.
-> Since this makes all refs be stored in a dedicated database instead of
-> the filesystem you no longer are dependent on file system semantics.
-> 
-> While not in the official git trees yet I would appreciate any testing
-> and comments you may have it you want to test it.
-> https://github.com/rsahlberg/git/tree/backend-struct-db-2
-> 
-> Not for production use but seeing if it does build and works on your
-> platforms would be great.
 
-Thanks. We ultimately went with a custom hook (which also enforces other
-business rules), but I'm very excited about the new backend and hope it
-will improve performance generally.
+I see a few wrong usages in the current code base. Here's a fix.
 
-One thing you could do to increase adoption would be to make a Homebrew
-formula for tdb. Homebrew is the defacto standard Mac packaging system.
-Sadly, a large number of engineers use Macs, so this is a large barrier
--- especially since the tdb build is somewhat baroque.
+--- >8 ---
+Subject: [PATCH] tests: fix negated test_i18ngrep calls
 
-It would also be great if it didn't require a fresh clone; for a large
-organization with large repos, requiring every engineer to re-clone is
-somewhat onerous.  I assume it's straightforward to do a conversion from
-an existing set of refs but that it just hasn't been a priority for you
-yet.
+The helper function test_i18ngrep pretends that it found the expected
+results when it is running under GETTEXT_POISON. For this reason, it must
+not be used negated like so
 
-Thanks so much for working on this!
+   ! test_i18ngrep foo bar
+
+because the test case would fail under GETTEXT_POISON. The function offers
+a special syntax to test that a pattern is *not* found:
+
+   test_i18ngrep ! foo bar
+
+Convert incorrect uses to this syntax.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t4018-diff-funcname.sh | 8 ++++----
+ t/t9800-git-p4-basic.sh  | 2 +-
+ t/t9807-git-p4-submit.sh | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 34591c2..1dbaa38 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -52,15 +52,15 @@ do
+ 		echo "*.java diff=$p" >.gitattributes &&
+ 		test_expect_code 1 git diff --no-index \
+ 			A.java B.java 2>msg &&
+-		! test_i18ngrep fatal msg &&
+-		! test_i18ngrep error msg
++		test_i18ngrep ! fatal msg &&
++		test_i18ngrep ! error msg
+ 	'
+ 	test_expect_success "builtin $p wordRegex pattern compiles" '
+ 		echo "*.java diff=$p" >.gitattributes &&
+ 		test_expect_code 1 git diff --no-index --word-diff \
+ 			A.java B.java 2>msg &&
+-		! test_i18ngrep fatal msg &&
+-		! test_i18ngrep error msg
++		test_i18ngrep ! fatal msg &&
++		test_i18ngrep ! error msg
+ 	'
+ done
+ 
+diff --git a/t/t9800-git-p4-basic.sh b/t/t9800-git-p4-basic.sh
+index 665607c..5b56212 100755
+--- a/t/t9800-git-p4-basic.sh
++++ b/t/t9800-git-p4-basic.sh
+@@ -145,7 +145,7 @@ test_expect_success 'exit when p4 fails to produce marshaled output' '
+ 		test_expect_code 1 git p4 clone --dest="$git" //depot >errs 2>&1
+ 	) &&
+ 	cat errs &&
+-	! test_i18ngrep Traceback errs
++	test_i18ngrep ! Traceback errs
+ '
+ 
+ # Hide a file from p4d, make sure we catch its complaint.  This won't fail in
+diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
+index 7fab2ed..1f74a88 100755
+--- a/t/t9807-git-p4-submit.sh
++++ b/t/t9807-git-p4-submit.sh
+@@ -404,7 +404,7 @@ test_expect_success 'submit --prepare-p4-only' '
+ 		git p4 submit --prepare-p4-only >out &&
+ 		test_i18ngrep "prepared for submission" out &&
+ 		test_i18ngrep "must be deleted" out &&
+-		! test_i18ngrep "everything below this line is just the diff" out
++		test_i18ngrep ! "everything below this line is just the diff" out
+ 	) &&
+ 	(
+ 		cd "$cli" &&
+-- 
+2.0.0.12.gbcf935e
