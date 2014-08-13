@@ -1,76 +1,185 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] pack-objects: turn off bitmaps when we see --shallow
- lines
-Date: Wed, 13 Aug 2014 01:09:36 -0400
-Message-ID: <20140813050935.GA21559@peff.net>
-References: <20140812043452.GA11784@peff.net>
- <CACsJy8AQ4vC4QKR_y62h_Gjd619QfBg-rDB2F6HFj2fvJj41tg@mail.gmail.com>
+From: Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH 0/3] Re: [PATCH] unpack-tree.c: remove dead code
+Date: Wed, 13 Aug 2014 08:41:26 +0200
+Message-ID: <53EB0896.7060106@gmail.com>
+References: <xmqqha1h60fy.fsf@gitster.dls.corp.google.com> <1407878107-22850-1-git-send-email-stefanbeller@gmail.com> <20140812235731.GD24621@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Duy Nguyen <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 07:09:52 2014
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: 8bit
+Cc: gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	barkalow@iabervon.org, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 08:41:33 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHQoq-0005P6-3Z
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 07:09:52 +0200
+	id 1XHSFY-0001CJ-So
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 08:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751271AbaHMFJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 01:09:47 -0400
-Received: from cloud.peff.net ([50.56.180.127]:51147 "HELO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750742AbaHMFJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 01:09:45 -0400
-Received: (qmail 14775 invoked by uid 102); 13 Aug 2014 05:09:45 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (204.237.18.137)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.84) with ESMTPA; Wed, 13 Aug 2014 00:09:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Aug 2014 01:09:36 -0400
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AQ4vC4QKR_y62h_Gjd619QfBg-rDB2F6HFj2fvJj41tg@mail.gmail.com>
+	id S1751315AbaHMGl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 02:41:29 -0400
+Received: from mail-wg0-f50.google.com ([74.125.82.50]:36315 "EHLO
+	mail-wg0-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750717AbaHMGl2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2014 02:41:28 -0400
+Received: by mail-wg0-f50.google.com with SMTP id n12so10973779wgh.9
+        for <git@vger.kernel.org>; Tue, 12 Aug 2014 23:41:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=ttYL5bV3by1JhZMVuS/CvD/7zsHBws6F3HrglrRTXds=;
+        b=CCzl9Hz8kxYgKQG21aPqCjT3jiOTbPOsz18mZVjrc1tbnkzRYnfNLbnQY8f+1F1dsC
+         57hcvSv25TBa5pBQE61unI9n7cUlzS5WV99AEjyRcpV5ADSWFtUeY2G27aolSduC9oJC
+         DMfQtvs0OOHIBvGHviWHgrOwHWKlIFpwuHA5W23HIsQjSGtBn7IWOtUBMbrL0RA8rz4I
+         MvcQBgeckKR0ZpHqYCpKG642aS+xU5Cz2XuVyAtO4z4A70jLcbjTC/TIdUmIZAMuS/vg
+         8JyFbhV7NL4MD2LQTibyURGKZXvvjw1xM9y5EQ9eLYB3XFWH+506HeCKftujtl5SS9ql
+         J5Lw==
+X-Received: by 10.180.73.235 with SMTP id o11mr3101699wiv.41.1407912086867;
+        Tue, 12 Aug 2014 23:41:26 -0700 (PDT)
+Received: from [192.168.1.7] (ip-109-91-30-58.hsi12.unitymediagroup.de. [109.91.30.58])
+        by mx.google.com with ESMTPSA id h3sm2246239wjz.48.2014.08.12.23.41.25
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 12 Aug 2014 23:41:26 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:31.0) Gecko/20100101 Thunderbird/31.0
+In-Reply-To: <20140812235731.GD24621@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255185>
 
-On Tue, Aug 12, 2014 at 10:13:03PM +0700, Duy Nguyen wrote:
-
-> On Tue, Aug 12, 2014 at 11:34 AM, Jeff King <peff@peff.net> wrote:
-> > Arguably is_repository_shallow should return 1 if anybody has registered
-> > a shallow graft, but that wouldn't be enough to fix this (we'd still
-> > need to check it again _after_ reading the --shallow lines). So I think
-> > this fix is fine here. I don't know if any other parts of the code would
-> > care, though.
+On 13.08.2014 01:57, Jonathan Nieder wrote:
+> Stefan Beller wrote:
 > 
-> It's getting too subtle (is_repository_shallow fails to return 1).
-> register_shallow() is used elsewhere too, luckily pack bitmap's use is
-> still limited in pack-objects (I think).
+>> In line 1763 of unpack-tree.c we have a condition on the current tree
+> [...]
+> 
+> The description is describing why the patch is *correct* (i.e., not
+> going to introduce a bug), while what the reader wants to know is why
+> the change is *desirable*.
 
-It is, though I have some patches in the works to use it in more places.
+Indeed. Thanks for the reminder!
 
-I was tempted to make a check in prepare_bitmap_walk() to just return -1
-(the same as if there are no bitmaps at all) if any commit grafts are in
-use. That would also catch new callers. But the graft (and replace)
-rules are not always the same. We should not respect those features when
-packing or pruning (though I think pruning _does_ currently respect
-grafts, which seems like an accident waiting to happen).
+> 
+> Is this about making the code more readable, or robust, or suppressing
+> a static analysis error, or something else?  What did the user or
+> reader want to do that they couldn't do before and now can after this
+> patch?
 
-I think this is a good minimal fix for now, but I'll revisit the
-replace/graft/shallow issues when I add more bitmap users outside of
-pack-objects.
+In my opinion it's making the code easier to read as there are less
+lines of code with less conditionals.
+The supression of a static code analysis warning is rather a desired
+side effect, but not the main reason for the patch.
 
-> I prefer (in future) to teach is_repository_shallow about
-> register_shallow and move it to right before
-> get_object_list_from_bitmap() is called, and some sort of mechanism to
-> say "hey I'm all set, never change shallow repo status again from now
-> on, or just die if you have to do it" to protect us from similar bugs.
-> But for now your fix is good (and simple).
 
-Yeah, that sounds like a good direction for the shallow part of it.
+> 
+> [...]
+>> --- a/unpack-trees.c
+>> +++ b/unpack-trees.c
+>> @@ -1789,15 +1789,11 @@ int twoway_merge(const struct cache_entry * const *src,
+>>  			/* 20 or 21 */
+>>  			return merged_entry(newtree, current, o);
+>>  		}
+>> +		else if (o->gently) {
+>> +			return  -1 ;
+>> +		}
+> 
+> (not about this patch) Elsewhere git uses the 'cuddled else':
 
--Peff
+Yes, I intentionally used this style, as the surrounding code was
+using this style. You already added the reformatting follow up patch,
+thanks!
+
+> 
+> 		if (foo) {
+> 			...
+> 		} else if (bar) {
+> 			...
+> 		} else {
+> 			...
+> 		}
+> 
+> That stylefix would be a topic for a different patch, though.
+> 
+>>  		else {
+>> -			/* all other failures */
+>> -			if (oldtree)
+>> -				return o->gently ? -1 : reject_merge(oldtree, o);
+>> -			if (current)
+>> -				return o->gently ? -1 : reject_merge(current, o);
+>> -			if (newtree)
+>> -				return o->gently ? -1 : reject_merge(newtree, o);
+>> -			return -1;
+> 
+> Does the static analysis tool support comments like
+> 
+> 			if (oldtree)
+> 				...
+> 			if (current)
+> 				...
+> 			...
+> 
+> 			/* not reached */
+> 			return -1;
+> 
+> ?  That might be the simplest minimally invasive fix for what coverity
+> pointed out.
+
+I was looking for things like that, but either the
+extensive documentation is well hidden or there is only short
+tutorial-like documentation, which doesn't cover this case.
+
+
+> 
+> Now that we're looking there, though, it's worth understanding why we
+> do the 'if oldtree exists, use it, else fall back to, etc' thing.  Was
+> this meant as futureproofing in case commands like 'git checkout' want
+> to do rename detection some day?
+> 
+> Everywhere else in the file that reject_merge is used, it is as
+> 
+> 	return o->gently ? -1 : reject_merge(..., o);
+> 
+> The one exception is
+> 
+> 	!current &&
+> 	oldtree &&
+> 	newtree &&
+> 	oldtree != newtree &&
+> 	!initial_checkout
+> 
+> (#17), which seems like a bug (it should have the same check).  Would
+> it make sense to inline the o->gently check into reject_merge so callers
+> don't have to care?
+> 
+> In that spirit, I suspect the simplest fix would be
+> 
+> 		else
+> 			return o->gently ? -1 : reject_merge(current, o);
+> 
+> and then all calls could be replaced in a followup patch.
+> 
+> Sensible?
+
+I need to read more code to follow.
+
+Thanks for picking up my inital patch and improving. :)
+Stefan
+
+> 
+> Thanks,
+> 
+> Jonathan Nieder (2):
+>   unpack-trees: use 'cuddled' style for if-else cascade
+>   checkout -m: attempt merge when deletion of path was staged
+> 
+> Stefan Beller (1):
+>   unpack-trees: simplify 'all other failures' case
+> 
+>  unpack-trees.c | 31 ++++++++++---------------------
+>  1 file changed, 10 insertions(+), 21 deletions(-)
+> 
