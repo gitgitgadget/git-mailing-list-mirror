@@ -1,92 +1,74 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH 4/4] builtin/apply.c: replace `git_config()` with `git_config_get_string_const()`
-Date: Wed, 13 Aug 2014 01:22:02 -0700
-Message-ID: <1407918122-29973-4-git-send-email-tanayabh@gmail.com>
-References: <1407918122-29973-1-git-send-email-tanayabh@gmail.com>
-Cc: Tanay Abhra <tanayabh@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 13 10:30:35 2014
+From: =?UTF-8?B?0KDQsNC00L7RgdC70LDQsiDQmdC+0LLRh9C10LI=?= 
+	<radoslav.tm@gmail.com>
+Subject: Undefined reference to __builtin_ctzll
+Date: Wed, 13 Aug 2014 11:36:57 +0300
+Message-ID: <CAAC8vw4EzaEM13TWzEW9QUuc-qdZFhPfEA9z1=KjCE0Brzotjg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Aug 13 10:37:08 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHTx3-0006qS-NG
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 10:30:34 +0200
+	id 1XHU3N-0001IW-Lh
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 10:37:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751936AbaHMIW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 04:22:58 -0400
-Received: from mail-pa0-f51.google.com ([209.85.220.51]:35013 "EHLO
-	mail-pa0-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751592AbaHMIWy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 04:22:54 -0400
-Received: by mail-pa0-f51.google.com with SMTP id ey11so14394030pad.24
-        for <git@vger.kernel.org>; Wed, 13 Aug 2014 01:22:54 -0700 (PDT)
+	id S1751479AbaHMIg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 04:36:59 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:43644 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751420AbaHMIg5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2014 04:36:57 -0400
+Received: by mail-ig0-f176.google.com with SMTP id hn18so9464747igb.3
+        for <git@vger.kernel.org>; Wed, 13 Aug 2014 01:36:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=gEESpT7CxbXHyXsJM0r9gvUqoyJOnTX0plNpl6/tVE4=;
-        b=Boa8wZqVPfHm5kNNZ1mZOdKMejj2z1TD8gpBUc8h4lyTW/2FE4vJJIRoiRU3gVJv2r
-         xZqFWv7HUK6g3cit3HKSh4+LWj+H/qkQKGaS7DrrZdXd9VOy857lXBpcQHXHxSYCFiZU
-         dN24jQPzEfxe+trpG8SmbqyzcY89freyx8K2T8NeMIwtYHu77Fxbrz83V8FQE8cfExJv
-         qsyNBYXKJXk+HrB6QyeDUrPYXOzvZTgTrTc59dkoiF8qdaN921cQVUUpumaQJltC9hjB
-         lAHPzJnECjeOTAc2iiIRKCe1s/JsuqstYiDcH5sZXLEy+Pr7c+756SoLQnFnoIOSMamq
-         URUg==
-X-Received: by 10.70.102.66 with SMTP id fm2mr2731548pdb.102.1407918174328;
-        Wed, 13 Aug 2014 01:22:54 -0700 (PDT)
-Received: from localhost.localdomain ([117.254.222.211])
-        by mx.google.com with ESMTPSA id fm12sm1919517pdb.46.2014.08.13.01.22.50
-        for <multiple recipients>
-        (version=TLSv1.1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 13 Aug 2014 01:22:53 -0700 (PDT)
-X-Mailer: git-send-email 1.9.0.GIT
-In-Reply-To: <1407918122-29973-1-git-send-email-tanayabh@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=XvvQS3MCoYnqUgaQqYRPsexi6gZ6AjlY/ed6iFd+23s=;
+        b=cb+BEHrLY7ISgRk1DpPvRQA+yJf5fyk3HkMZNyz7Cvrs/7Zv1+2aZ4KI9V88aGCMf4
+         y+DkONKuxifdyazuulS+5EWTwtYr2ew8cLmPJ1EH0w4Ts5cYvWaNZi+jMph07/oebAjI
+         7W6Qbzm3YXl8QY1LK5cNl7fFVsDflwZl+0G6zl6TD/zbX/K4H+cVK5rlXSOEMEoJNMSc
+         XvJJKoODqva6DLv5WdItl4ugQEwvNvQ2OGkyHgr3E+ikqhSQL0WQEYuYnrjtPjrsogNP
+         7F6txzOF7jB5ThYb1SxNbVjfMxuFolVlzudwWofdn07BC1/DQ4zOnQHCWnrPfM2MeK18
+         PvZw==
+X-Received: by 10.42.84.76 with SMTP id k12mr4726035icl.18.1407919017089; Wed,
+ 13 Aug 2014 01:36:57 -0700 (PDT)
+Received: by 10.42.65.9 with HTTP; Wed, 13 Aug 2014 01:36:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255190>
 
-Use `git_config_get_string_const()` instead of `git_config()` to take
-advantage of the config-set API which provides a cleaner control flow.
+Dear GIT community,
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
- builtin/apply.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index be2b4ce..66acf32 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -4269,13 +4269,11 @@ static int apply_patch(int fd, const char *filename, int options)
- 	return 0;
- }
- 
--static int git_apply_config(const char *var, const char *value, void *cb)
-+static void git_apply_config(void)
- {
--	if (!strcmp(var, "apply.whitespace"))
--		return git_config_string(&apply_default_whitespace, var, value);
--	else if (!strcmp(var, "apply.ignorewhitespace"))
--		return git_config_string(&apply_default_ignorewhitespace, var, value);
--	return git_default_config(var, value, cb);
-+	git_config_get_string_const("apply.whitespace", &apply_default_whitespace);
-+	git_config_get_string_const("apply.ignorewhitespace", &apply_default_ignorewhitespace);
-+	git_config(git_default_config, NULL);
- }
- 
- static int option_parse_exclude(const struct option *opt,
-@@ -4423,7 +4421,7 @@ int cmd_apply(int argc, const char **argv, const char *prefix_)
- 
- 	prefix = prefix_;
- 	prefix_length = prefix ? strlen(prefix) : 0;
--	git_config(git_apply_config, NULL);
-+	git_apply_config();
- 	if (apply_default_whitespace)
- 		parse_whitespace_option(apply_default_whitespace);
- 	if (apply_default_ignorewhitespace)
--- 
-1.9.0.GIT
+I found myself in situation where I had to install GIT on Debian 3.1
+sarge.  It comes with GCC 3.3.5. I tried to built from source but the
+libgcc was not providing the ctzll function, thus I decided to put an
+implementation.
+
+
+I do not know how to post and do a nice patch (and whether somebody
+will care), but I guess, for reference I can post my solution. Just
+appended in compat/strlcpy.c the following:
+
+
+int __builtin_ctzll (long long x)
+{
+        int i;
+        for (i = 0; i < 8 * sizeof (long long); ++i)
+                if (x & ((long long) 1  << i))
+                        break;
+        return i;
+}
+
+
+I guess that some ifdef macro can be used to detect compiler version
+or missing __builtin_ctzll.
+
+
+With best regards and hopes that this can help somebody in similar situation,
+Radoslav.
