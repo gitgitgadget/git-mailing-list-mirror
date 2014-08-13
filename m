@@ -1,7 +1,7 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 01/23] refs.c: create a public function for is_refname_available
-Date: Wed, 13 Aug 2014 13:14:45 -0700
-Message-ID: <1407960907-18189-2-git-send-email-sahlberg@google.com>
+Subject: [PATCH v2 09/23] refs-common.c: move warn_if_dangling_symref* to refs-common
+Date: Wed, 13 Aug 2014 13:14:53 -0700
+Message-ID: <1407960907-18189-10-git-send-email-sahlberg@google.com>
 References: <1407960907-18189-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
@@ -11,147 +11,190 @@ Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHexu-0000CW-SN
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 22:16:11 +0200
+	id 1XHexu-0000CW-C7
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 22:16:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753896AbaHMUQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 16:16:07 -0400
-Received: from mail-yh0-f73.google.com ([209.85.213.73]:63442 "EHLO
-	mail-yh0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753442AbaHMUPL (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753880AbaHMUQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 16:16:05 -0400
+Received: from mail-pd0-f202.google.com ([209.85.192.202]:64298 "EHLO
+	mail-pd0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753531AbaHMUPL (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 13 Aug 2014 16:15:11 -0400
-Received: by mail-yh0-f73.google.com with SMTP id f73so36036yha.0
+Received: by mail-pd0-f202.google.com with SMTP id w10so83662pde.5
         for <git@vger.kernel.org>; Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=Oxzmq94n9ci+kiQNqKLrEbeYk8G8/UdOhz6qVPe6xPw=;
-        b=C62QBopmeSCZ8TWmBG+8lVYnTNYh+e4dUhplIVl7U7r6vrPO0dm9slgcFtIqdmPLib
-         hILQedcm5GLFZ0mX4K+Z/oSbWsytoA9EoeZw2TtPlqYBSf845JP/+TdkRI4za2xC7MzE
-         50R9vPY9op/wcAhPlpzQR/WxKI4FpM0je+yCVxGuvpRNVlCzvwYrWLWcaaDNcWK/LS44
-         noZzJ7XrbZjfgzFzgmaa1xLnDh50qaVft8njc4p77abBQVtY9LWyAZhnSSEQbZgmsAVO
-         xhJTwBzrshgxEfLm6wL+5stlKFEEHPynqhKq6EqBvcaX1zhv69h7REAfaAwsKOForidR
-         xAAQ==
+        bh=G5cVjPQ0SdW6BMjjmXTQ+RiAXnP+2NoqQQmq7hTxLz8=;
+        b=hPYow2UkURNO/QRFViX/9uVl/0XleDgrt7LuZ0ZCC2BImm3y1wOldSfJFkqo9mLz+L
+         z5MzlotQhjX5sxlO3LM03+e2uXFNVgYkqPUe6f+7lXTHzwtzO7uLZqsaZzGKLBZPkSXX
+         NwVV8Yj2wy2Jn9X86HJG8/gwtzjC4jF//dC3hiKJUe+eyJaO93hFpSUnBmX4bnNxkx/k
+         6DKyVAZvdt78LtJJo5bn7kUCqIq2lNjt7v/XBW6mJC+Qy/cRX/kNIzrHus5SsyRfR2kC
+         Dj56aFV0V0bElww2v6aNIIBXT4OYi1WwVKxdBigOD4xOzwFxYbDvg/leC93ZH+zNJd0G
+         fSVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=Oxzmq94n9ci+kiQNqKLrEbeYk8G8/UdOhz6qVPe6xPw=;
-        b=lkNbq6JK2gsnRJlrIod51G4NZMxK3mW7daigIYsj+XR+JU4PdiMmJAA+bPxNFRV63f
-         iNg7zHSsqp/K4Velv/ktzxJCpEcOm+zk9DpfYBK7IJvuN6+1X073FXDBRO+a0KzmtMWb
-         SP4u8MyL92pRu9PBq2RKxp+/cHTJaZ+PJkxBIiqVwviQuQ6PaJJAVAo+K0lOZhVS11Tt
-         NU/LJx6Q4QXBYhQCnoc81IbVOs+BdauBdX/SXud9GBuRrypMa06J/veMuC3iv0GroW6D
-         t5s3CCmf16sO1RpjAITPMTTgnqRw/gMiVdCsJGX4lrO2HD2HQjObTuvpPNZOq4A2M6pA
-         735A==
-X-Gm-Message-State: ALoCoQmOzd5A/JgUim4UQJ3iszNWOq40QXyKp+Jm0q39WFbmz+4EH3cNCoxweqx/30FUeO5/ARU2
-X-Received: by 10.236.28.226 with SMTP id g62mr217697yha.0.1407960910007;
+        bh=G5cVjPQ0SdW6BMjjmXTQ+RiAXnP+2NoqQQmq7hTxLz8=;
+        b=WtMhdxqQxrgoIFsvFbv+CqHeW7+TNz94yfB0gEEu8J5QvbuBPSlu+fPVMci8WJoS24
+         zlCZ/+VnEjTBGEgXoA+A4tVRJKqRzSN52K94vb/Myf1c9/qJeUkaQFWhmXBAbf8JZg5W
+         XoqZgUUrr9/rfiHXuiV3vwOQLln/tW0wN7IDlnLkamRRiczIjwtkhIDaPv4gEzymqenE
+         MxyOKHiyYIuGXEAy7pLNFoA5uJyAy2sHQNpO5FGpqfkU0vED3hpSBSqsbFGbQ1/zQdtA
+         fGdX1xVBVL65Zjl+Zhz/S0RWKC+W+0fdrzWmtyvmHfxs0ue9cy2qCMF6qDz2UoA9PYpB
+         LhRQ==
+X-Gm-Message-State: ALoCoQlYzYAiC8Ok1NhHkPXBzrNwFEoch1RUU10hN/j62DfnGQaA80cuXUTRQRnYxBuJzwI3l8qB
+X-Received: by 10.68.116.42 with SMTP id jt10mr3527779pbb.5.1407960910440;
         Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
-Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id o69si207799yhp.6.2014.08.13.13.15.10
+Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
+        by gmr-mx.google.com with ESMTPS id y50si209192yhk.4.2014.08.13.13.15.10
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id C81A75A441C;
-	Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
+	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id 22D1E31C52A;
+	Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 745CAE0C3A; Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
+	id B2903E11C5; Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.556.gfa712f7
 In-Reply-To: <1407960907-18189-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255245>
 
-Export a generic is_refname_available() function. We will need this
-as a public shared function later when we add additional refs backends
-since we want to keep using the same rules for ref naming across
-all backends.
+These functions do not use any backend specific code so we can move
+them to the common code.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs.c | 29 ++++++++++++++++++-----------
- refs.h |  6 ++++++
- 2 files changed, 24 insertions(+), 11 deletions(-)
+ refs-common.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.c        | 52 ----------------------------------------------------
+ 2 files changed, 52 insertions(+), 52 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 7e13c0f..4a22513 100644
---- a/refs.c
-+++ b/refs.c
-@@ -830,9 +830,9 @@ static int name_conflict_fn(struct ref_entry *entry, void *cb_data)
-  * operation). skip contains a list of refs we want to skip checking for
-  * conflicts with.
-  */
--static int is_refname_available(const char *refname,
--				struct ref_dir *dir,
--				const char **skip, int skipnum)
-+static int is_refname_available_dir(const char *refname,
-+				    struct ref_dir *dir,
-+				    const char **skip, int skipnum)
- {
- 	struct name_conflict_cb data;
- 	data.refname = refname;
-@@ -1238,6 +1238,18 @@ static struct ref_dir *get_loose_refs(struct ref_cache *refs)
- 	return get_ref_dir(refs->loose);
+diff --git a/refs-common.c b/refs-common.c
+index ac081e1..ab3a118 100644
+--- a/refs-common.c
++++ b/refs-common.c
+@@ -495,3 +495,55 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
+ 	free(short_name);
+ 	return xstrdup(refname);
  }
- 
-+int is_refname_available(const char *refname, const char **skip, int skipnum)
++
++struct warn_if_dangling_data {
++	FILE *fp;
++	const char *refname;
++	const struct string_list *refnames;
++	const char *msg_fmt;
++};
++
++static int warn_if_dangling_symref(const char *refname, const unsigned char *sha1,
++				   int flags, void *cb_data)
 +{
-+	if (!is_refname_available_dir(refname, get_packed_refs(&ref_cache),
-+				      skip, skipnum))
++	struct warn_if_dangling_data *d = cb_data;
++	const char *resolves_to;
++	unsigned char junk[20];
++
++	if (!(flags & REF_ISSYMREF))
 +		return 0;
 +
-+	if (!is_refname_available_dir(refname, get_loose_refs(&ref_cache),
-+				      skip, skipnum))
++	resolves_to = resolve_ref_unsafe(refname, junk, 0, NULL);
++	if (!resolves_to
++	    || (d->refname
++		? strcmp(resolves_to, d->refname)
++		: !string_list_has_string(d->refnames, resolves_to))) {
 +		return 0;
-+	return 1;
++	}
++
++	fprintf(d->fp, d->msg_fmt, refname);
++	fputc('\n', d->fp);
++	return 0;
 +}
 +
- /* We allow "recursive" symbolic refs. Only within reason, though */
- #define MAXDEPTH 5
- #define MAXREFLEN (1024)
-@@ -2168,8 +2180,8 @@ static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 	 * name is a proper prefix of our refname.
- 	 */
- 	if (missing &&
--	     !is_refname_available(refname, get_packed_refs(&ref_cache),
--				   skip, skipnum)) {
-+	     !is_refname_available_dir(refname, get_packed_refs(&ref_cache),
-+				       skip, skipnum)) {
- 		last_errno = ENOTDIR;
- 		goto error_return;
- 	}
-@@ -2676,12 +2688,7 @@ int rename_ref(const char *oldrefname, const char *newrefname, const char *logms
- 		return 1;
- 	}
- 
--	if (!is_refname_available(newrefname, get_packed_refs(&ref_cache),
--				  &oldrefname, 1))
--		return 1;
--
--	if (!is_refname_available(newrefname, get_loose_refs(&ref_cache),
--				  &oldrefname, 1))
-+	if (!is_refname_available(newrefname, &oldrefname, 1))
- 		return 1;
- 
- 	log = reflog_exists(oldrefname);
-diff --git a/refs.h b/refs.h
-index f44b5c8..d526da0 100644
---- a/refs.h
-+++ b/refs.h
-@@ -131,6 +131,12 @@ extern int ref_exists(const char *);
- extern int is_branch(const char *refname);
- 
- /*
-+ * Check that a particular refname is available for creation. skip contains
-+ * a list of refnames to exclude from the refname collision tests.
-+ */
-+int is_refname_available(const char *refname, const char **skip, int skipnum);
++void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
++{
++	struct warn_if_dangling_data data;
 +
-+/*
-  * If refname is a non-symbolic reference that refers to a tag object,
-  * and the tag can be (recursively) dereferenced to a non-tag object,
-  * store the SHA1 of the referred-to object to sha1 and return 0.  If
++	data.fp = fp;
++	data.refname = refname;
++	data.refnames = NULL;
++	data.msg_fmt = msg_fmt;
++	for_each_rawref(warn_if_dangling_symref, &data);
++}
++
++void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames)
++{
++	struct warn_if_dangling_data data;
++
++	data.fp = fp;
++	data.refname = NULL;
++	data.refnames = refnames;
++	data.msg_fmt = msg_fmt;
++	for_each_rawref(warn_if_dangling_symref, &data);
++}
+diff --git a/refs.c b/refs.c
+index 56e146f..40c329b 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1667,58 +1667,6 @@ int peel_ref(const char *refname, unsigned char *sha1)
+ 	return peel_object(base, sha1);
+ }
+ 
+-struct warn_if_dangling_data {
+-	FILE *fp;
+-	const char *refname;
+-	const struct string_list *refnames;
+-	const char *msg_fmt;
+-};
+-
+-static int warn_if_dangling_symref(const char *refname, const unsigned char *sha1,
+-				   int flags, void *cb_data)
+-{
+-	struct warn_if_dangling_data *d = cb_data;
+-	const char *resolves_to;
+-	unsigned char junk[20];
+-
+-	if (!(flags & REF_ISSYMREF))
+-		return 0;
+-
+-	resolves_to = resolve_ref_unsafe(refname, junk, 0, NULL);
+-	if (!resolves_to
+-	    || (d->refname
+-		? strcmp(resolves_to, d->refname)
+-		: !string_list_has_string(d->refnames, resolves_to))) {
+-		return 0;
+-	}
+-
+-	fprintf(d->fp, d->msg_fmt, refname);
+-	fputc('\n', d->fp);
+-	return 0;
+-}
+-
+-void warn_dangling_symref(FILE *fp, const char *msg_fmt, const char *refname)
+-{
+-	struct warn_if_dangling_data data;
+-
+-	data.fp = fp;
+-	data.refname = refname;
+-	data.refnames = NULL;
+-	data.msg_fmt = msg_fmt;
+-	for_each_rawref(warn_if_dangling_symref, &data);
+-}
+-
+-void warn_dangling_symrefs(FILE *fp, const char *msg_fmt, const struct string_list *refnames)
+-{
+-	struct warn_if_dangling_data data;
+-
+-	data.fp = fp;
+-	data.refname = NULL;
+-	data.refnames = refnames;
+-	data.msg_fmt = msg_fmt;
+-	for_each_rawref(warn_if_dangling_symref, &data);
+-}
+-
+ /*
+  * Call fn for each reference in the specified ref_cache, omitting
+  * references not in the containing_dir of base.  fn is called for all
 -- 
 2.0.1.556.g3edca4c
