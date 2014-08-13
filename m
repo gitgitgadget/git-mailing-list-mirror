@@ -1,280 +1,272 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 05/23] refs-common.c: move rename_ref to the common code
-Date: Wed, 13 Aug 2014 13:14:49 -0700
-Message-ID: <1407960907-18189-6-git-send-email-sahlberg@google.com>
+Subject: [PATCH v2 16/23] refs-common.c: move ref iterators to the common code
+Date: Wed, 13 Aug 2014 13:15:00 -0700
+Message-ID: <1407960907-18189-17-git-send-email-sahlberg@google.com>
 References: <1407960907-18189-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 13 22:15:43 2014
+X-From: git-owner@vger.kernel.org Wed Aug 13 22:15:44 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHexS-0008Pc-Dm
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 22:15:42 +0200
+	id 1XHexT-0008Pc-3N
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 22:15:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753783AbaHMUP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 16:15:26 -0400
-Received: from mail-vc0-f201.google.com ([209.85.220.201]:51241 "EHLO
-	mail-vc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753695AbaHMUPM (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753797AbaHMUP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 16:15:27 -0400
+Received: from mail-qg0-f73.google.com ([209.85.192.73]:49992 "EHLO
+	mail-qg0-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753694AbaHMUPM (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 13 Aug 2014 16:15:12 -0400
-Received: by mail-vc0-f201.google.com with SMTP id le20so35838vcb.2
-        for <git@vger.kernel.org>; Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
+Received: by mail-qg0-f73.google.com with SMTP id q107so35888qgd.0
+        for <git@vger.kernel.org>; Wed, 13 Aug 2014 13:15:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=s+Qep3j2pNOod3tR+rD4U8sTWiDtlvH5U8FQlLAclWw=;
-        b=KKuhRpCRBwkqV0MJ/PPT2LYrLMDJkumleCGPC9RayLci2rB9Z9fV1Bz/QPVrMelE4/
-         VPQ01aZtw7bET07D3LSe08b/uXlGw2NkG6o/E1+tJ/iV6W4xHNcyUFse5syvoBU0/e65
-         ZEIhe7pwizdkkJ2wzOyaUe1wm4mY74ykeV/N0q+2ASdD4QJJrNwPULDOgRuIQzltjuSC
-         YlwO4W3SDF95xwaLa4IMcN5a4arzA9cf6krstTxrLoEwALFzt7Ow62itf6dwPuQtCQ3o
-         4kZSsjrXTV0Kd0tbmT3jUf03H/qYr/fjM9Vfy8pv+Fo5KwVb9x8KmzrRWfg4uJDR45dI
-         C+Zg==
+        bh=TlUfpfpttCLbFJfmjyJS2InnRxnFltQSYuTcixJUnYM=;
+        b=mQKPP6lK61CZmCQz/27U64xj10ysrZwgykP9c2NnMiqepkvXpgC21DRlvI4E4I0T+b
+         n7/3ii9GABcU9V5hMJ+ma/miOY+wZNm7cKARoqsdL9E0lcGvQQwNzh7lsRzyBNgwtily
+         zQuGcVohP3bajhdn1sw2ZPl/DXm3I6MIOZ2Gej3aGGwOxyulv4Z1Zqc5wSQQPRkGRFWT
+         LjUnyNwZLENOcpI//t43JZauGmzgvRAZor1noJACB5LmEGdvKraIXNUYB/w1H3YLc+lg
+         THA/uT6Moqoj/yGIG6FxoBA1Vaov+XSBvXZyfdS2ZpTvYwyuNZZaGMZbdhHbQec+qYuv
+         xeNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=s+Qep3j2pNOod3tR+rD4U8sTWiDtlvH5U8FQlLAclWw=;
-        b=YQ4knscQBRtbsCNLirCdZ55NIP5pjUimIAVxJwoF/BnsDmUljpyiihm9e5rJlv2UQT
-         yy9+lJoQNAFBY2xdniRS7WBvY3Gh/9aV4PesZTlPNgnp9awVyMzFpUvOPRgMw2ABpCAE
-         uQ+plr7ULHc4/+7yVBSlYbET39fy1rsZR8hzvhPFRTn4ZD4TdwKuhtpbLh95cJ5fODMs
-         1dNuPW0qTELZT9O5Yuq/ePWs+VvDhVe96sIS9UBjhr19zgedEyQVI3c0ZFnSu1zaSfLi
-         jYnNHJQgEl9Ew3Y+agRBif1ZepWozOb8F/Vf6gd+/HDUPOcYKpm/khrjAxSsMA+hITmN
-         aABg==
-X-Gm-Message-State: ALoCoQk+IjCTQ3dcwkrvEEtJtIvx8iC8Q8qNehr8GWbGPw/4hU3p/kuun30Wrux0Op3KR6NgjI1y
-X-Received: by 10.224.0.137 with SMTP id 9mr2550593qab.5.1407960909950;
-        Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id a66si207148yhg.7.2014.08.13.13.15.09
+        bh=TlUfpfpttCLbFJfmjyJS2InnRxnFltQSYuTcixJUnYM=;
+        b=D3ytaqX58xKgb1WNNfIB2Gjva2lmPFfCCbsVfgJu/UnDjr+K9dbylCetRW8yRfWF7A
+         6acEfj1kJ5aUF32mx0h5A7XtT4awTRzDd3DO6gIhKlL8YwsJ9nzj/K92PKIFYdPV1Mbj
+         k+wQHeikiXWLvJ3uKWYjAyJ+blT1yeSjGa0nBpTbffD7kJWYscFUggvVa2Vw654oDIE3
+         8Ro/GASjDBT0U8Jeo5p7emFPEuTscnT7Fv0fcuZR7cwo7kjxSjLTecsZNscVeGc/XUAt
+         JRma7wGs96AqgtG8Ib4MQUeiAHwNFCbvFlNW9uEa4KYCWZhNrTaBQL1XCwVAq/RxPxhF
+         OP4A==
+X-Gm-Message-State: ALoCoQkrTCQMujTKNVRbO3SB7wd/41t/DGfVNESSyH5PfpkXAT6GPfYBSZOzV0dpHCAzDih/0Vn9
+X-Received: by 10.224.127.6 with SMTP id e6mr3513713qas.3.1407960910987;
+        Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id v20si209972yhe.2.2014.08.13.13.15.10
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
+        Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id B9A0231C3D9;
-	Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id C2B675A4536;
+	Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id 65E67E025A; Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
+	id A50CCE09F4; Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.556.gfa712f7
 In-Reply-To: <1407960907-18189-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255234>
-
-This change moves rename_ref() to the refs-common.c file since this function
-does not contain any backend specific code.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255235>
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs-common.c | 92 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- refs.c        | 92 -----------------------------------------------------------
- 2 files changed, 92 insertions(+), 92 deletions(-)
+ refs-common.c | 81 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs.c        | 81 -----------------------------------------------------------
+ 2 files changed, 81 insertions(+), 81 deletions(-)
 
 diff --git a/refs-common.c b/refs-common.c
-index 71ad358..f99d83e 100644
+index d8a295c..3b20db3 100644
 --- a/refs-common.c
 +++ b/refs-common.c
-@@ -43,3 +43,95 @@ int delete_ref(const char *refname, const unsigned char *sha1, int delopt)
- 	transaction_free(transaction);
- 	return 0;
- }
-+
-+struct rename_reflog_cb {
-+	struct ref_transaction *transaction;
-+	const char *refname;
-+	struct strbuf *err;
-+};
-+
-+static int rename_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+			     const char *id, unsigned long timestamp, int tz,
-+			     const char *message, void *cb_data)
-+{
-+	struct rename_reflog_cb *cb = cb_data;
-+	struct reflog_committer_info ci;
-+
-+	memset(&ci, 0, sizeof(ci));
-+	ci.id = id;
-+	ci.timestamp = timestamp;
-+	ci.tz = tz;
-+	return transaction_update_reflog(cb->transaction, cb->refname,
-+					 nsha1, osha1, &ci, message, 0,
-+					 cb->err);
-+}
-+
-+int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
-+{
-+	unsigned char sha1[20];
-+	int flag = 0, log;
-+	struct ref_transaction *transaction = NULL;
-+	struct strbuf err = STRBUF_INIT;
-+	const char *symref = NULL;
-+	struct rename_reflog_cb cb;
-+	struct reflog_committer_info ci;
-+
-+	memset(&ci, 0, sizeof(ci));
-+	ci.committer_info = git_committer_info(0);
-+
-+	symref = resolve_ref_unsafe(oldrefname, sha1,
-+				    RESOLVE_REF_READING, &flag);
-+	if (flag & REF_ISSYMREF) {
-+		error("refname %s is a symbolic ref, renaming it is not supported",
-+			oldrefname);
-+		return 1;
-+	}
-+	if (!symref) {
-+		error("refname %s not found", oldrefname);
-+		return 1;
-+	}
-+
-+	if (!is_refname_available(newrefname, &oldrefname, 1))
-+		return 1;
-+
-+	log = reflog_exists(oldrefname);
-+	transaction = transaction_begin(&err);
-+	if (!transaction)
-+		goto fail;
-+
-+	if (strcmp(oldrefname, newrefname)) {
-+		if (log && transaction_update_reflog(transaction, newrefname,
-+						     sha1, sha1, &ci, NULL,
-+						     REFLOG_TRUNCATE, &err))
-+			goto fail;
-+		cb.transaction = transaction;
-+		cb.refname = newrefname;
-+		cb.err = &err;
-+		if (log && for_each_reflog_ent(oldrefname, rename_reflog_ent,
-+					       &cb))
-+			goto fail;
-+
-+		if (transaction_delete_sha1(transaction, oldrefname, sha1,
-+					    REF_NODEREF,
-+					    1, NULL, &err))
-+			goto fail;
-+	}
-+	if (transaction_update_sha1(transaction, newrefname, sha1,
-+				    NULL, 0, 0, NULL, &err))
-+		goto fail;
-+	if (log && transaction_update_reflog(transaction, newrefname, sha1,
-+					     sha1, &ci, logmsg,
-+					     REFLOG_COMMITTER_INFO_IS_VALID,
-+					     &err))
-+		goto fail;
-+	if (transaction_commit(transaction, &err))
-+		goto fail;
-+	transaction_free(transaction);
-+	return 0;
-+
-+ fail:
-+	error("rename_ref failed: %s", err.buf);
-+	strbuf_release(&err);
-+	transaction_free(transaction);
-+	return 1;
-+}
-diff --git a/refs.c b/refs.c
-index faf794c..7d579be 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2622,98 +2622,6 @@ static int delete_ref_loose(struct ref_lock *lock, int flag, struct strbuf *err)
- 	return 0;
+@@ -668,6 +668,87 @@ out:
+ 	return cp - refname;
  }
  
--struct rename_reflog_cb {
--	struct ref_transaction *transaction;
--	const char *refname;
--	struct strbuf *err;
++/* The argument to filter_refs */
++struct ref_filter {
++	const char *pattern;
++	each_ref_fn *fn;
++	void *cb_data;
++};
++
++static int filter_refs(const char *refname, const unsigned char *sha1, int flags,
++		       void *data)
++{
++	struct ref_filter *filter = (struct ref_filter *)data;
++	if (wildmatch(filter->pattern, refname, 0, NULL))
++		return 0;
++	return filter->fn(refname, sha1, flags, filter->cb_data);
++}
++
++int for_each_tag_ref(each_ref_fn fn, void *cb_data)
++{
++	return for_each_ref_in("refs/tags/", fn, cb_data);
++}
++
++int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
++}
++
++int for_each_branch_ref(each_ref_fn fn, void *cb_data)
++{
++	return for_each_ref_in("refs/heads/", fn, cb_data);
++}
++
++int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return for_each_ref_in_submodule(submodule, "refs/heads/", fn, cb_data);
++}
++
++int for_each_remote_ref(each_ref_fn fn, void *cb_data)
++{
++	return for_each_ref_in("refs/remotes/", fn, cb_data);
++}
++
++int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++{
++	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
++}
++
++int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
++	const char *prefix, void *cb_data)
++{
++	struct strbuf real_pattern = STRBUF_INIT;
++	struct ref_filter filter;
++	int ret;
++
++	if (!prefix && !starts_with(pattern, "refs/"))
++		strbuf_addstr(&real_pattern, "refs/");
++	else if (prefix)
++		strbuf_addstr(&real_pattern, prefix);
++	strbuf_addstr(&real_pattern, pattern);
++
++	if (!has_glob_specials(pattern)) {
++		/* Append implied '/' '*' if not present. */
++		if (real_pattern.buf[real_pattern.len - 1] != '/')
++			strbuf_addch(&real_pattern, '/');
++		/* No need to check for '*', there is none. */
++		strbuf_addch(&real_pattern, '*');
++	}
++
++	filter.pattern = real_pattern.buf;
++	filter.fn = fn;
++	filter.cb_data = cb_data;
++	ret = for_each_ref(filter_refs, &filter);
++
++	strbuf_release(&real_pattern);
++	return ret;
++}
++
++int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
++{
++	return for_each_glob_ref_in(fn, pattern, NULL, cb_data);
++}
++
+ int check_refname_format(const char *refname, int flags)
+ {
+ 	int component_len, component_count = 0;
+diff --git a/refs.c b/refs.c
+index fb9c614..9aa88ef 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1377,22 +1377,6 @@ const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int fla
+ 	}
+ }
+ 
+-/* The argument to filter_refs */
+-struct ref_filter {
+-	const char *pattern;
+-	each_ref_fn *fn;
+-	void *cb_data;
 -};
 -
--static int rename_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
--			     const char *id, unsigned long timestamp, int tz,
--			     const char *message, void *cb_data)
+-static int filter_refs(const char *refname, const unsigned char *sha1, int flags,
+-		       void *data)
 -{
--	struct rename_reflog_cb *cb = cb_data;
--	struct reflog_committer_info ci;
--
--	memset(&ci, 0, sizeof(ci));
--	ci.id = id;
--	ci.timestamp = timestamp;
--	ci.tz = tz;
--	return transaction_update_reflog(cb->transaction, cb->refname,
--					 nsha1, osha1, &ci, message, 0,
--					 cb->err);
+-	struct ref_filter *filter = (struct ref_filter *)data;
+-	if (wildmatch(filter->pattern, refname, 0, NULL))
+-		return 0;
+-	return filter->fn(refname, sha1, flags, filter->cb_data);
 -}
 -
--int rename_ref(const char *oldrefname, const char *newrefname, const char *logmsg)
+ enum peel_status {
+ 	/* object was peeled successfully: */
+ 	PEEL_PEELED = 0,
+@@ -1646,36 +1630,6 @@ int for_each_ref_in_submodule(const char *submodule, const char *prefix,
+ 	return do_for_each_ref(get_ref_cache(submodule), prefix, fn, strlen(prefix), 0, cb_data);
+ }
+ 
+-int for_each_tag_ref(each_ref_fn fn, void *cb_data)
 -{
--	unsigned char sha1[20];
--	int flag = 0, log;
--	struct ref_transaction *transaction = NULL;
--	struct strbuf err = STRBUF_INIT;
--	const char *symref = NULL;
--	struct rename_reflog_cb cb;
--	struct reflog_committer_info ci;
--
--	memset(&ci, 0, sizeof(ci));
--	ci.committer_info = git_committer_info(0);
--
--	symref = resolve_ref_unsafe(oldrefname, sha1,
--				    RESOLVE_REF_READING, &flag);
--	if (flag & REF_ISSYMREF) {
--		error("refname %s is a symbolic ref, renaming it is not supported",
--			oldrefname);
--		return 1;
--	}
--	if (!symref) {
--		error("refname %s not found", oldrefname);
--		return 1;
--	}
--
--	if (!is_refname_available(newrefname, &oldrefname, 1))
--		return 1;
--
--	log = reflog_exists(oldrefname);
--	transaction = transaction_begin(&err);
--	if (!transaction)
--		goto fail;
--
--	if (strcmp(oldrefname, newrefname)) {
--		if (log && transaction_update_reflog(transaction, newrefname,
--						     sha1, sha1, &ci, NULL,
--						     REFLOG_TRUNCATE, &err))
--			goto fail;
--		cb.transaction = transaction;
--		cb.refname = newrefname;
--		cb.err = &err;
--		if (log && for_each_reflog_ent(oldrefname, rename_reflog_ent,
--					       &cb))
--			goto fail;
--
--		if (transaction_delete_sha1(transaction, oldrefname, sha1,
--					    REF_NODEREF,
--					    1, NULL, &err))
--			goto fail;
--	}
--	if (transaction_update_sha1(transaction, newrefname, sha1,
--				    NULL, 0, 0, NULL, &err))
--		goto fail;
--	if (log && transaction_update_reflog(transaction, newrefname, sha1,
--					     sha1, &ci, logmsg,
--					     REFLOG_COMMITTER_INFO_IS_VALID,
--					     &err))
--		goto fail;
--	if (transaction_commit(transaction, &err))
--		goto fail;
--	transaction_free(transaction);
--	return 0;
--
-- fail:
--	error("rename_ref failed: %s", err.buf);
--	strbuf_release(&err);
--	transaction_free(transaction);
--	return 1;
+-	return for_each_ref_in("refs/tags/", fn, cb_data);
 -}
 -
- static int close_ref(struct ref_lock *lock)
+-int for_each_tag_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+-{
+-	return for_each_ref_in_submodule(submodule, "refs/tags/", fn, cb_data);
+-}
+-
+-int for_each_branch_ref(each_ref_fn fn, void *cb_data)
+-{
+-	return for_each_ref_in("refs/heads/", fn, cb_data);
+-}
+-
+-int for_each_branch_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+-{
+-	return for_each_ref_in_submodule(submodule, "refs/heads/", fn, cb_data);
+-}
+-
+-int for_each_remote_ref(each_ref_fn fn, void *cb_data)
+-{
+-	return for_each_ref_in("refs/remotes/", fn, cb_data);
+-}
+-
+-int for_each_remote_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
+-{
+-	return for_each_ref_in_submodule(submodule, "refs/remotes/", fn, cb_data);
+-}
+-
+ int for_each_replace_ref(each_ref_fn fn, void *cb_data)
  {
- 	if (close_lock_file(lock->lk))
+ 	return do_for_each_ref(&ref_cache, "refs/replace/", fn, 13, 0, cb_data);
+@@ -1706,41 +1660,6 @@ int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
+ 	return ret;
+ }
+ 
+-int for_each_glob_ref_in(each_ref_fn fn, const char *pattern,
+-	const char *prefix, void *cb_data)
+-{
+-	struct strbuf real_pattern = STRBUF_INIT;
+-	struct ref_filter filter;
+-	int ret;
+-
+-	if (!prefix && !starts_with(pattern, "refs/"))
+-		strbuf_addstr(&real_pattern, "refs/");
+-	else if (prefix)
+-		strbuf_addstr(&real_pattern, prefix);
+-	strbuf_addstr(&real_pattern, pattern);
+-
+-	if (!has_glob_specials(pattern)) {
+-		/* Append implied '/' '*' if not present. */
+-		if (real_pattern.buf[real_pattern.len - 1] != '/')
+-			strbuf_addch(&real_pattern, '/');
+-		/* No need to check for '*', there is none. */
+-		strbuf_addch(&real_pattern, '*');
+-	}
+-
+-	filter.pattern = real_pattern.buf;
+-	filter.fn = fn;
+-	filter.cb_data = cb_data;
+-	ret = for_each_ref(filter_refs, &filter);
+-
+-	strbuf_release(&real_pattern);
+-	return ret;
+-}
+-
+-int for_each_glob_ref(each_ref_fn fn, const char *pattern, void *cb_data)
+-{
+-	return for_each_glob_ref_in(fn, pattern, NULL, cb_data);
+-}
+-
+ int for_each_rawref(each_ref_fn fn, void *cb_data)
+ {
+ 	return do_for_each_ref(&ref_cache, "", fn, 0,
 -- 
 2.0.1.556.g3edca4c
