@@ -1,511 +1,232 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 08/23] refs-common.c: move dwim and friend functions to refs common
-Date: Wed, 13 Aug 2014 13:14:52 -0700
-Message-ID: <1407960907-18189-9-git-send-email-sahlberg@google.com>
+Subject: [PATCH v2 20/23] refs.c: add methods for misc ref operations
+Date: Wed, 13 Aug 2014 13:15:04 -0700
+Message-ID: <1407960907-18189-21-git-send-email-sahlberg@google.com>
 References: <1407960907-18189-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 13 22:15:50 2014
+X-From: git-owner@vger.kernel.org Wed Aug 13 22:15:53 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHexU-0008Pc-47
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 22:15:44 +0200
+	id 1XHexc-0008V4-Gj
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 22:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753780AbaHMUPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 16:15:23 -0400
-Received: from mail-vc0-f202.google.com ([209.85.220.202]:40699 "EHLO
-	mail-vc0-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753698AbaHMUPM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 16:15:12 -0400
-Received: by mail-vc0-f202.google.com with SMTP id hq11so35589vcb.3
+	id S1753827AbaHMUPp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 16:15:45 -0400
+Received: from mail-pd0-f201.google.com ([209.85.192.201]:40433 "EHLO
+	mail-pd0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753653AbaHMUPL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Aug 2014 16:15:11 -0400
+Received: by mail-pd0-f201.google.com with SMTP id g10so84629pdj.0
         for <git@vger.kernel.org>; Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=xiofUHvO9aYkPH9PUY/Jv+GJcOEuJYWjpZtfBFBUy3E=;
-        b=Ou0xd3Kt2ER0+Zb7SJMhwJloZJcG+hJTdtoO1llfQBeCtrh34Zr3R7+nqgdMxDn4/O
-         35keEwI7I3FXAHu+/oKr13PO3hqVXPkl7tmqR84FaPF/Et+M7sNOWCCndqt3B1mff/RV
-         gVeOE5gpp+pUQRxJFgBpIRl1EnjN/GE1lTycBwE8l431YsHRU6QtS4+YlIQK3mcwhkoJ
-         6Xjhx8BxFcDYwxa2Yk98oEda9SWfmhB2qxo6StrJxpMdvgWn66CYHrLZ1+F3E3whveOy
-         L72JVYYze/wZfMuUg+chLMnO4Jgw7cQvaujG78vowJXdRw49isV2QYQ6je5wD2QluBzT
-         k9+A==
+        bh=gvFlLuH7Hqq8lsiDt7GWs7r3IObZXKv4Pf6vsUn5hOA=;
+        b=pxRK8t8oG537mYIsVIrpyH8lUjgSEdmurhsEgiZXKbcjzZqdh+0EgHYpanII9kXB7V
+         Cc3eaNghLNEFcVezZqVJFIILmXU4ILQlx2Hq+tG3OSCXOMG5gkjhWoezAhthgbGiv8zi
+         xqtxTtOMRoBOmkCi4jIzZeC+dN00TajCJ1fIa7c8zATufcDGJsm5/KINlTES6FXy7OXa
+         CxAz/EAQpt6Mf20t5TO/lFYdcjQ3C5VsfwkK6m6uEel8Vz0hvGKUpFD2Zfdsb2KJVGdK
+         8AVZZJ9Vif67O1SKlOUD25m3s/uZSnSLT5Bx1PAcXlM6p3liV2eXBwwhUhSElBVIn5G5
+         57vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=xiofUHvO9aYkPH9PUY/Jv+GJcOEuJYWjpZtfBFBUy3E=;
-        b=HVMgHIr938FCiix2Zqs+BTZZfNI3jcE4SrDZUddaBux7k3MO/W+Q630ZAhdPn2bw+e
-         mWoKYnSuQidBXxUUWAvmxFApLhO+/au4i/EdpixRCO4yv6CZRPt0citQ3cDkpBaeC8Pq
-         Z0/1FdMoEsG59tzloFylKb2441fQgtJkueAviPXNLXA4SWRFzsrLjH8LMZxqXXc7V/5a
-         6/8sqefZUl11mYNU4uabH3Nu4PdntHo8TNl/9voVyX9M7NKDH4pz9ojfG40Md7tcKFk9
-         FRPSe7q5w3XiLW/pVpLNL25+khTAwV6LYaSwMQ3NM3Ce1hs3DaaDVliCVQe0+fZvrOiw
-         W2nA==
-X-Gm-Message-State: ALoCoQlsAtLEUaheiP36slHUnkDC/QxKYKyaxAKxcAat4mA4aQJpLRZTB9C19Z3AyW3mNImMAr5X
-X-Received: by 10.236.191.37 with SMTP id f25mr200262yhn.44.1407960910384;
+        bh=gvFlLuH7Hqq8lsiDt7GWs7r3IObZXKv4Pf6vsUn5hOA=;
+        b=Goo3uHk7/cm+0E/q93HgPJjnKZj1dVi0ahkuPntIUhFQNDlQ8eKdFClmeB6p9BIwPn
+         RAbjyhjNVzVDCY8R7rTcglLsxDNSS+5L03XbU0n2/Dm05EuU4GPZr5wPL6gjK1YFVcZn
+         U+1T/LqlvzUFyPpw/sSj4pIKZDAQ5DRpaKDygDeKZyVyhxhn/Sl3OwSTWuFx5IMDDx8d
+         z8sx8o3P766RGnqi01mNV6mclq1VydzMX6BJfQXO1qkBjo2ulkQBk24/BJxHFWKol4tn
+         yFStHsQ2TYf4b+55fIBiBeXBfWdR8/avc64nBjMz2Ucnoo33YrGm9wUqP9sLO9eVwfLl
+         VeUQ==
+X-Gm-Message-State: ALoCoQnIP5oEZckO4aHkTAVh2Vvn2dVreXo0F6RmQhsALiuWhlmZhUbiLf6Dg/bhUvUH59DScVOb
+X-Received: by 10.66.66.196 with SMTP id h4mr3460498pat.22.1407960910912;
         Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
-        by gmr-mx.google.com with ESMTPS id y50si209193yhk.4.2014.08.13.13.15.10
+        by gmr-mx.google.com with ESMTPS id l23si210426yhg.1.2014.08.13.13.15.10
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
         Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 309145A4536;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id A5C465A43D3;
 	Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id C9501E0F40; Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
+	id 8600EE0AD1; Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.556.gfa712f7
 In-Reply-To: <1407960907-18189-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255237>
 
-These functions do not contain any backend specific code so we can move
-them to the common code and share across all backends.
+Add ref backend methods for:
+resolve_ref_unsafe, is_refname_available, pack_refs, peel_ref,
+create_symref, resolve_gitlink_ref.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs-common.c | 202 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- refs.c        | 202 ----------------------------------------------------------
- 2 files changed, 202 insertions(+), 202 deletions(-)
+ refs-common.c | 33 +++++++++++++++++++++++++++++++++
+ refs.c        | 22 +++++++++++++++-------
+ refs.h        | 19 +++++++++++++++++++
+ 3 files changed, 67 insertions(+), 7 deletions(-)
 
 diff --git a/refs-common.c b/refs-common.c
-index c40fa96..ac081e1 100644
+index 68152d6..d9688e2 100644
 --- a/refs-common.c
 +++ b/refs-common.c
-@@ -293,3 +293,205 @@ int ref_is_hidden(const char *refname)
- 	}
- 	return 0;
+@@ -885,3 +885,36 @@ int delete_reflog(const char *refname)
+ {
+ 	return refs->delete_reflog(refname);
  }
 +
-+static const char *ref_rev_parse_rules[] = {
-+	"%.*s",
-+	"refs/%.*s",
-+	"refs/tags/%.*s",
-+	"refs/heads/%.*s",
-+	"refs/remotes/%.*s",
-+	"refs/remotes/%.*s/HEAD",
-+	NULL
-+};
-+
-+int refname_match(const char *abbrev_name, const char *full_name)
++const char *resolve_ref_unsafe(const char *ref, unsigned char *sha1,
++			       int reading, int *flag)
 +{
-+	const char **p;
-+	const int abbrev_name_len = strlen(abbrev_name);
-+
-+	for (p = ref_rev_parse_rules; *p; p++) {
-+		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
-+			return 1;
-+		}
-+	}
-+
-+	return 0;
++	return refs->resolve_ref_unsafe(ref, sha1, reading, flag);
 +}
 +
-+/*
-+ * *string and *len will only be substituted, and *string returned (for
-+ * later free()ing) if the string passed in is a magic short-hand form
-+ * to name a branch.
-+ */
-+static char *substitute_branch_name(const char **string, int *len)
++int is_refname_available(const char *refname, const char **skip, int skipnum)
 +{
-+	struct strbuf buf = STRBUF_INIT;
-+	int ret = interpret_branch_name(*string, *len, &buf);
-+
-+	if (ret == *len) {
-+		size_t size;
-+		*string = strbuf_detach(&buf, &size);
-+		*len = size;
-+		return (char *)*string;
-+	}
-+
-+	return NULL;
++	return refs->is_refname_available(refname, skip, skipnum);
 +}
 +
-+int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
++int pack_refs(unsigned int flags, struct strbuf *err)
 +{
-+	char *last_branch = substitute_branch_name(&str, &len);
-+	const char **p, *r;
-+	int refs_found = 0;
-+
-+	*ref = NULL;
-+	for (p = ref_rev_parse_rules; *p; p++) {
-+		char fullref[PATH_MAX];
-+		unsigned char sha1_from_ref[20];
-+		unsigned char *this_result;
-+		int flag;
-+
-+		this_result = refs_found ? sha1_from_ref : sha1;
-+		mksnpath(fullref, sizeof(fullref), *p, len, str);
-+		r = resolve_ref_unsafe(fullref, this_result,
-+				       RESOLVE_REF_READING, &flag);
-+		if (r) {
-+			if (!refs_found++)
-+				*ref = xstrdup(r);
-+			if (!warn_ambiguous_refs)
-+				break;
-+		} else if ((flag & REF_ISSYMREF) && strcmp(fullref, "HEAD")) {
-+			warning("ignoring dangling symref %s.", fullref);
-+		} else if ((flag & REF_ISBROKEN) && strchr(fullref, '/')) {
-+			warning("ignoring broken ref %s.", fullref);
-+		}
-+	}
-+	free(last_branch);
-+	return refs_found;
++	return refs->pack_refs(flags, err);
 +}
 +
-+int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
++int peel_ref(const char *refname, unsigned char *sha1)
 +{
-+	char *last_branch = substitute_branch_name(&str, &len);
-+	const char **p;
-+	int logs_found = 0;
-+
-+	*log = NULL;
-+	for (p = ref_rev_parse_rules; *p; p++) {
-+		unsigned char hash[20];
-+		char path[PATH_MAX];
-+		const char *ref, *it;
-+
-+		mksnpath(path, sizeof(path), *p, len, str);
-+		ref = resolve_ref_unsafe(path, hash, RESOLVE_REF_READING, NULL);
-+		if (!ref)
-+			continue;
-+		if (reflog_exists(path))
-+			it = path;
-+		else if (strcmp(ref, path) && reflog_exists(ref))
-+			it = ref;
-+		else
-+			continue;
-+		if (!logs_found++) {
-+			*log = xstrdup(it);
-+			hashcpy(sha1, hash);
-+		}
-+		if (!warn_ambiguous_refs)
-+			break;
-+	}
-+	free(last_branch);
-+	return logs_found;
++	return refs->peel_ref(refname, sha1);
 +}
 +
-+char *shorten_unambiguous_ref(const char *refname, int strict)
++int create_symref(const char *ref_target, const char *refs_heads_master,
++		  const char *logmsg)
 +{
-+	int i;
-+	static char **scanf_fmts;
-+	static int nr_rules;
-+	char *short_name;
++	return refs->create_symref(ref_target, refs_heads_master, logmsg);
++}
 +
-+	if (!nr_rules) {
-+		/*
-+		 * Pre-generate scanf formats from ref_rev_parse_rules[].
-+		 * Generate a format suitable for scanf from a
-+		 * ref_rev_parse_rules rule by interpolating "%s" at the
-+		 * location of the "%.*s".
-+		 */
-+		size_t total_len = 0;
-+		size_t offset = 0;
-+
-+		/* the rule list is NULL terminated, count them first */
-+		for (nr_rules = 0; ref_rev_parse_rules[nr_rules]; nr_rules++)
-+			/* -2 for strlen("%.*s") - strlen("%s"); +1 for NUL */
-+			total_len += strlen(ref_rev_parse_rules[nr_rules]) - 2 + 1;
-+
-+		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
-+
-+		offset = 0;
-+		for (i = 0; i < nr_rules; i++) {
-+			assert(offset < total_len);
-+			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules] + offset;
-+			offset += snprintf(scanf_fmts[i], total_len - offset,
-+					   ref_rev_parse_rules[i], 2, "%s") + 1;
-+		}
-+	}
-+
-+	/* bail out if there are no rules */
-+	if (!nr_rules)
-+		return xstrdup(refname);
-+
-+	/* buffer for scanf result, at most refname must fit */
-+	short_name = xstrdup(refname);
-+
-+	/* skip first rule, it will always match */
-+	for (i = nr_rules - 1; i > 0 ; --i) {
-+		int j;
-+		int rules_to_fail = i;
-+		int short_name_len;
-+
-+		if (1 != sscanf(refname, scanf_fmts[i], short_name))
-+			continue;
-+
-+		short_name_len = strlen(short_name);
-+
-+		/*
-+		 * in strict mode, all (except the matched one) rules
-+		 * must fail to resolve to a valid non-ambiguous ref
-+		 */
-+		if (strict)
-+			rules_to_fail = nr_rules;
-+
-+		/*
-+		 * check if the short name resolves to a valid ref,
-+		 * but use only rules prior to the matched one
-+		 */
-+		for (j = 0; j < rules_to_fail; j++) {
-+			const char *rule = ref_rev_parse_rules[j];
-+			char refname[PATH_MAX];
-+
-+			/* skip matched rule */
-+			if (i == j)
-+				continue;
-+
-+			/*
-+			 * the short name is ambiguous, if it resolves
-+			 * (with this previous rule) to a valid ref
-+			 * read_ref() returns 0 on success
-+			 */
-+			mksnpath(refname, sizeof(refname),
-+				 rule, short_name_len, short_name);
-+			if (ref_exists(refname))
-+				break;
-+		}
-+
-+		/*
-+		 * short name is non-ambiguous if all previous rules
-+		 * haven't resolved to a valid ref
-+		 */
-+		if (j == rules_to_fail)
-+			return short_name;
-+	}
-+
-+	free(short_name);
-+	return xstrdup(refname);
++int resolve_gitlink_ref(const char *path, const char *refname,
++			unsigned char *sha1)
++{
++	return refs->resolve_gitlink_ref(path, refname, sha1);
 +}
 diff --git a/refs.c b/refs.c
-index 6181edf..56e146f 100644
+index 699b548..9439809 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1956,30 +1956,6 @@ const char *prettify_refname(const char *name)
- 		0);
+@@ -1114,7 +1114,8 @@ static struct ref_dir *get_loose_refs(struct ref_cache *refs)
+ 	return get_ref_dir(refs->loose);
  }
  
--static const char *ref_rev_parse_rules[] = {
--	"%.*s",
--	"refs/%.*s",
--	"refs/tags/%.*s",
--	"refs/heads/%.*s",
--	"refs/remotes/%.*s",
--	"refs/remotes/%.*s/HEAD",
--	NULL
--};
--
--int refname_match(const char *abbrev_name, const char *full_name)
--{
--	const char **p;
--	const int abbrev_name_len = strlen(abbrev_name);
--
--	for (p = ref_rev_parse_rules; *p; p++) {
--		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
--			return 1;
--		}
--	}
--
--	return 0;
--}
--
- static void unlock_ref(struct ref_lock *lock)
+-int is_refname_available(const char *refname, const char **skip, int skipnum)
++static int files_is_refname_available(const char *refname, const char **skip,
++				      int skipnum)
  {
- 	/* Do not free lock->lk -- atexit() still looks at them */
-@@ -2033,91 +2009,6 @@ static int remove_empty_directories(const char *file)
- 	return result;
+ 	if (!is_refname_available_dir(refname, get_packed_refs(&ref_cache),
+ 				      skip, skipnum))
+@@ -1188,7 +1189,7 @@ static int resolve_gitlink_ref_recursive(struct ref_cache *refs,
+ 	return resolve_gitlink_ref_recursive(refs, p, sha1, recursion+1);
  }
  
--/*
-- * *string and *len will only be substituted, and *string returned (for
-- * later free()ing) if the string passed in is a magic short-hand form
-- * to name a branch.
-- */
--static char *substitute_branch_name(const char **string, int *len)
--{
--	struct strbuf buf = STRBUF_INIT;
--	int ret = interpret_branch_name(*string, *len, &buf);
--
--	if (ret == *len) {
--		size_t size;
--		*string = strbuf_detach(&buf, &size);
--		*len = size;
--		return (char *)*string;
--	}
--
--	return NULL;
--}
--
--int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
--{
--	char *last_branch = substitute_branch_name(&str, &len);
--	const char **p, *r;
--	int refs_found = 0;
--
--	*ref = NULL;
--	for (p = ref_rev_parse_rules; *p; p++) {
--		char fullref[PATH_MAX];
--		unsigned char sha1_from_ref[20];
--		unsigned char *this_result;
--		int flag;
--
--		this_result = refs_found ? sha1_from_ref : sha1;
--		mksnpath(fullref, sizeof(fullref), *p, len, str);
--		r = resolve_ref_unsafe(fullref, this_result,
--				       RESOLVE_REF_READING, &flag);
--		if (r) {
--			if (!refs_found++)
--				*ref = xstrdup(r);
--			if (!warn_ambiguous_refs)
--				break;
--		} else if ((flag & REF_ISSYMREF) && strcmp(fullref, "HEAD")) {
--			warning("ignoring dangling symref %s.", fullref);
--		} else if ((flag & REF_ISBROKEN) && strchr(fullref, '/')) {
--			warning("ignoring broken ref %s.", fullref);
--		}
--	}
--	free(last_branch);
--	return refs_found;
--}
--
--int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
--{
--	char *last_branch = substitute_branch_name(&str, &len);
--	const char **p;
--	int logs_found = 0;
--
--	*log = NULL;
--	for (p = ref_rev_parse_rules; *p; p++) {
--		unsigned char hash[20];
--		char path[PATH_MAX];
--		const char *ref, *it;
--
--		mksnpath(path, sizeof(path), *p, len, str);
--		ref = resolve_ref_unsafe(path, hash, RESOLVE_REF_READING, NULL);
--		if (!ref)
--			continue;
--		if (reflog_exists(path))
--			it = path;
--		else if (strcmp(ref, path) && reflog_exists(ref))
--			it = ref;
--		else
--			continue;
--		if (!logs_found++) {
--			*log = xstrdup(it);
--			hashcpy(sha1, hash);
--		}
--		if (!warn_ambiguous_refs)
--			break;
--	}
--	free(last_branch);
--	return logs_found;
--}
--
- /* This function should make sure errno is meaningful on error */
- static struct ref_lock *lock_ref_sha1_basic(const char *refname,
- 					    const unsigned char *old_sha1,
-@@ -3703,96 +3594,3 @@ cleanup:
- 		ret = -2;
- 	return ret;
+-int resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1)
++static int files_resolve_gitlink_ref(const char *path, const char *refname, unsigned char *sha1)
+ {
+ 	int len = strlen(path), retval;
+ 	char *submodule;
+@@ -1247,7 +1248,7 @@ static const char *handle_missing_loose_ref(const char *refname,
  }
--
--char *shorten_unambiguous_ref(const char *refname, int strict)
--{
--	int i;
--	static char **scanf_fmts;
--	static int nr_rules;
--	char *short_name;
--
--	if (!nr_rules) {
--		/*
--		 * Pre-generate scanf formats from ref_rev_parse_rules[].
--		 * Generate a format suitable for scanf from a
--		 * ref_rev_parse_rules rule by interpolating "%s" at the
--		 * location of the "%.*s".
--		 */
--		size_t total_len = 0;
--		size_t offset = 0;
--
--		/* the rule list is NULL terminated, count them first */
--		for (nr_rules = 0; ref_rev_parse_rules[nr_rules]; nr_rules++)
--			/* -2 for strlen("%.*s") - strlen("%s"); +1 for NUL */
--			total_len += strlen(ref_rev_parse_rules[nr_rules]) - 2 + 1;
--
--		scanf_fmts = xmalloc(nr_rules * sizeof(char *) + total_len);
--
--		offset = 0;
--		for (i = 0; i < nr_rules; i++) {
--			assert(offset < total_len);
--			scanf_fmts[i] = (char *)&scanf_fmts[nr_rules] + offset;
--			offset += snprintf(scanf_fmts[i], total_len - offset,
--					   ref_rev_parse_rules[i], 2, "%s") + 1;
--		}
--	}
--
--	/* bail out if there are no rules */
--	if (!nr_rules)
--		return xstrdup(refname);
--
--	/* buffer for scanf result, at most refname must fit */
--	short_name = xstrdup(refname);
--
--	/* skip first rule, it will always match */
--	for (i = nr_rules - 1; i > 0 ; --i) {
--		int j;
--		int rules_to_fail = i;
--		int short_name_len;
--
--		if (1 != sscanf(refname, scanf_fmts[i], short_name))
--			continue;
--
--		short_name_len = strlen(short_name);
--
--		/*
--		 * in strict mode, all (except the matched one) rules
--		 * must fail to resolve to a valid non-ambiguous ref
--		 */
--		if (strict)
--			rules_to_fail = nr_rules;
--
--		/*
--		 * check if the short name resolves to a valid ref,
--		 * but use only rules prior to the matched one
--		 */
--		for (j = 0; j < rules_to_fail; j++) {
--			const char *rule = ref_rev_parse_rules[j];
--			char refname[PATH_MAX];
--
--			/* skip matched rule */
--			if (i == j)
--				continue;
--
--			/*
--			 * the short name is ambiguous, if it resolves
--			 * (with this previous rule) to a valid ref
--			 * read_ref() returns 0 on success
--			 */
--			mksnpath(refname, sizeof(refname),
--				 rule, short_name_len, short_name);
--			if (ref_exists(refname))
--				break;
--		}
--
--		/*
--		 * short name is non-ambiguous if all previous rules
--		 * haven't resolved to a valid ref
--		 */
--		if (j == rules_to_fail)
--			return short_name;
--	}
--
--	free(short_name);
--	return xstrdup(refname);
--}
+ 
+ /* This function needs to return a meaningful errno on failure */
+-const char *resolve_ref_unsafe(const char *refname, unsigned char *sha1, int flags, int *ref_flag)
++static const char *files_resolve_ref_unsafe(const char *refname, unsigned char *sha1, int flags, int *ref_flag)
+ {
+ 	int depth = MAXDEPTH;
+ 	ssize_t len;
+@@ -1466,7 +1467,7 @@ static enum peel_status peel_entry(struct ref_entry *entry, int repeel)
+ 	return status;
+ }
+ 
+-int peel_ref(const char *refname, unsigned char *sha1)
++static int files_peel_ref(const char *refname, unsigned char *sha1)
+ {
+ 	int flag;
+ 	unsigned char base[20];
+@@ -2080,7 +2081,7 @@ static void prune_refs(struct ref_to_prune *r)
+ 	}
+ }
+ 
+-int pack_refs(unsigned int flags, struct strbuf *err)
++static int files_pack_refs(unsigned int flags, struct strbuf *err)
+ {
+ 	struct pack_refs_cb_data cbdata;
+ 
+@@ -2453,8 +2454,9 @@ static int write_ref_sha1(struct ref_lock *lock,
+ 	return 0;
+ }
+ 
+-int create_symref(const char *ref_target, const char *refs_heads_master,
+-		  const char *logmsg)
++static int files_create_symref(const char *ref_target,
++			       const char *refs_heads_master,
++			       const char *logmsg)
+ {
+ 	const char *lockpath;
+ 	char ref[1000];
+@@ -3301,6 +3303,12 @@ struct ref_be refs_files = {
+ 	files_reflog_exists,
+ 	files_create_reflog,
+ 	files_delete_reflog,
++	files_resolve_ref_unsafe,
++	files_is_refname_available,
++	files_pack_refs,
++	files_peel_ref,
++	files_create_symref,
++	files_resolve_gitlink_ref,
+ };
+ 
+ struct ref_be *refs = &refs_files;
+diff --git a/refs.h b/refs.h
+index 302eb03..ab120c5 100644
+--- a/refs.h
++++ b/refs.h
+@@ -384,6 +384,19 @@ typedef int (*reflog_exists_fn)(const char *refname);
+ typedef int (*create_reflog_fn)(const char *refname);
+ typedef int (*delete_reflog_fn)(const char *refname);
+ 
++typedef const char *(*resolve_ref_unsafe_fn)(const char *ref,
++		unsigned char *sha1, int reading, int *flag);
++
++typedef int (*is_refname_available_fn)(const char *refname, const char **skip,
++				       int skipnum);
++typedef int (*pack_refs_fn)(unsigned int flags, struct strbuf *err);
++typedef int (*peel_ref_fn)(const char *refname, unsigned char *sha1);
++typedef int (*create_symref_fn)(const char *ref_target,
++				const char *refs_heads_master,
++				const char *logmsg);
++typedef int (*resolve_gitlink_ref_fn)(const char *path, const char *refname,
++				      unsigned char *sha1);
++
+ struct ref_be {
+ 	transaction_begin_fn transaction_begin;
+ 	transaction_update_sha1_fn transaction_update_sha1;
+@@ -398,6 +411,12 @@ struct ref_be {
+ 	reflog_exists_fn reflog_exists;
+ 	create_reflog_fn create_reflog;
+ 	delete_reflog_fn delete_reflog;
++	resolve_ref_unsafe_fn resolve_ref_unsafe;
++	is_refname_available_fn is_refname_available;
++	pack_refs_fn pack_refs;
++	peel_ref_fn peel_ref;
++	create_symref_fn create_symref;
++	resolve_gitlink_ref_fn resolve_gitlink_ref;
+ };
+ 
+ extern struct ref_be *refs;
 -- 
 2.0.1.556.g3edca4c
