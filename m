@@ -1,223 +1,187 @@
 From: Ronnie Sahlberg <sahlberg@google.com>
-Subject: [PATCH v2 22/23] refs.c: add methods for the ref iterators
-Date: Wed, 13 Aug 2014 13:15:06 -0700
-Message-ID: <1407960907-18189-23-git-send-email-sahlberg@google.com>
+Subject: [PATCH v2 07/23] refs-common.c: move the hidden refs functions to the common code
+Date: Wed, 13 Aug 2014 13:14:51 -0700
+Message-ID: <1407960907-18189-8-git-send-email-sahlberg@google.com>
 References: <1407960907-18189-1-git-send-email-sahlberg@google.com>
 Cc: Ronnie Sahlberg <sahlberg@google.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 13 22:16:05 2014
+X-From: git-owner@vger.kernel.org Wed Aug 13 22:16:09 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHexm-00009i-Ls
+	id 1XHexn-00009i-8J
 	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 22:16:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753824AbaHMUPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 16:15:43 -0400
-Received: from mail-pa0-f74.google.com ([209.85.220.74]:60256 "EHLO
-	mail-pa0-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753679AbaHMUPL (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1753850AbaHMUP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 16:15:59 -0400
+Received: from mail-vc0-f201.google.com ([209.85.220.201]:46798 "EHLO
+	mail-vc0-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753536AbaHMUPL (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 13 Aug 2014 16:15:11 -0400
-Received: by mail-pa0-f74.google.com with SMTP id lj1so83278pab.5
-        for <git@vger.kernel.org>; Wed, 13 Aug 2014 13:15:11 -0700 (PDT)
+Received: by mail-vc0-f201.google.com with SMTP id le20so36034vcb.0
+        for <git@vger.kernel.org>; Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=x5MRTaGlEUCHyBdOmPVGNo1CI2VmiY8y1ZRzDtBfxU8=;
-        b=glZENt8/4frmMNTqZoOUz7CEqRg35DGFSYwWQRvV2pNwTVA3LCjqGqdELuBy5/cqpu
-         yeYPoOZ+ikk0rz/NsdvK6zd2QAaEntMzY8ZAIdTyuTANCaWp8yyf6YXQnEPXH6WeRocS
-         9aJB1uwfx9/TUhKtfz9bNCsukXA6v3CqULIhy9nXfKfwuyBxnrSphmuU4B0qECtscdlq
-         o+ENJdgK6iKflwwWEkVUQoFybCT+yHqNjk5j6TIkKtWRBkEcWHC3cNGfG5NzzJbr0s1B
-         TJb+UqLkpde12CTtKQ67JBnSmwA/teF8WxC5U9rDcH3l7GUr/9mrHUbreZxVNCkJHuBF
-         H6FA==
+        bh=maC0ZPLjBchgjygw6FWJzNi+lKhU9NR7Nnq3Lboj3JE=;
+        b=ntGmPETFTk+Z8D///4eVhUQIcwm3syj9YnoZ1ovGP5FXJd7cgqNekUFR4cKjMdySf0
+         fdhjMY6hihRtkJZBKH1jUryWrnyNX+V2o5kWEc9GTpJIGgXaorSIf81rGNcr7TjzyGBW
+         CeFOfQfQWjhgKOLn4wikH+1hHYfWn/6drZRTVbVSPFa4wYHB0KlqcHVdZBF/akIobAq8
+         lp/jUZUIGWLd7xgfId9qKp4eib2bFuIuO8+lQh5WA558uexaXr2Oo3C+FD5ZO0CpZzbA
+         KbnPV2uLkcaoO3oCNXFoWO0qy+AyOBO9DtJUDXFWCh3RXednWRpir8gkNuYopyFBc2tt
+         ZDPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20130820;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=x5MRTaGlEUCHyBdOmPVGNo1CI2VmiY8y1ZRzDtBfxU8=;
-        b=Uce+O5pX7eC7j2p0CnrjnCll6GW3g0pj76FsB/0kc4MwZHFUqO8EQHrdQE8V/JBKWl
-         g5CZscMWZHtagNjQHZsMJ1CApD0cKOunhIeTbvxzXgB/CUwO6LZgoBwSV2JwDXLIo1/0
-         NFOryEv1zpsMZPLaWGnVQHLfWfhx0aHxmUBk1L/m2Niy30MAyL+iIcXkAFddrz22Vdwn
-         m/VDaRfEl1OjmTbGUkbGZ64E0+EVmOFRlj9TbQCkaoaEG1L6xEBun6cZ9QN1YzryjKPs
-         VhhTAWXGtwN8KaDWx+0vFF08HUw4AeLAzRXvDgZEXo9ecRFiwgko+6X+yloTSByIg19q
-         oxfQ==
-X-Gm-Message-State: ALoCoQkbFh8hGp1ycbQqYFjbULc8SaU4rmOCVSBGXJebAMMeqduH/JIu5RUPROTc4oeSf6r5NoXz
-X-Received: by 10.66.163.41 with SMTP id yf9mr3491545pab.36.1407960911049;
-        Wed, 13 Aug 2014 13:15:11 -0700 (PDT)
-Received: from corp2gmr1-1.hot.corp.google.com (corp2gmr1-1.hot.corp.google.com [172.24.189.92])
-        by gmr-mx.google.com with ESMTPS id a66si207154yhg.7.2014.08.13.13.15.11
+        bh=maC0ZPLjBchgjygw6FWJzNi+lKhU9NR7Nnq3Lboj3JE=;
+        b=WS/xwPm6oxjgnWCBrkpexFo4tDs3v5ZF3YRafpM3PJduVM6nUd2ugiq4W0F4tmlHli
+         S29j5PuY9OUp+CnZBOkB4yAPtNqimDZHR1jsXNfmXXiwTj5E5tK8fMAfSXy+TZOQzixa
+         iuEdu4AkzKf4c5GmR3xTKh4RimrEHM2aVuLmgRGZJX/BJxOeloYYz32ZAvUZGnt52H2x
+         UfPq4qqSAhwk0xf3mROpTfSolq9JOZRT0aoL/XNjxiqdqziYmDEQ61Lw0vOZrxJ48EB3
+         bsAxwGlF7AQq7R70UszH65ZOiuiRqBwriAQvfeiIzwZ0GVK7F8Y7/ih30oRpGJhSsVsV
+         jKgw==
+X-Gm-Message-State: ALoCoQm2qhZlI+9TabWSeT11xV2GhADbaKNIG+qq4/EWXepEea5rr1Hbq8nWhqT5Lgrr+VEOzltI
+X-Received: by 10.236.207.164 with SMTP id n24mr221229yho.5.1407960910365;
+        Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
+Received: from corp2gmr1-2.hot.corp.google.com (corp2gmr1-2.hot.corp.google.com [172.24.189.93])
+        by gmr-mx.google.com with ESMTPS id a66si207151yhg.7.2014.08.13.13.15.10
         for <multiple recipients>
         (version=TLSv1.1 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 13 Aug 2014 13:15:11 -0700 (PDT)
+        Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 Received: from sahlberg1.mtv.corp.google.com (sahlberg1.mtv.corp.google.com [172.27.69.52])
-	by corp2gmr1-1.hot.corp.google.com (Postfix) with ESMTP id C92FD31C2A9;
+	by corp2gmr1-2.hot.corp.google.com (Postfix) with ESMTP id 3071C5A441C;
 	Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
 Received: by sahlberg1.mtv.corp.google.com (Postfix, from userid 177442)
-	id AB40AE025A; Wed, 13 Aug 2014 13:15:10 -0700 (PDT)
+	id D3A9AE107B; Wed, 13 Aug 2014 13:15:09 -0700 (PDT)
 X-Mailer: git-send-email 2.0.1.556.gfa712f7
 In-Reply-To: <1407960907-18189-1-git-send-email-sahlberg@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255241>
+
+This change moves the hidden refs functions to the refs-common.c file since
+these functions do not contain any backend specific code.
 
 Signed-off-by: Ronnie Sahlberg <sahlberg@google.com>
 ---
- refs-common.c | 36 ++++++++++++++++++++++++++++++++++++
- refs.c        | 21 ++++++++++++++-------
- refs.h        | 19 +++++++++++++++++++
- 3 files changed, 69 insertions(+), 7 deletions(-)
+ refs-common.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ refs.c        | 43 -------------------------------------------
+ 2 files changed, 44 insertions(+), 43 deletions(-)
 
 diff --git a/refs-common.c b/refs-common.c
-index f19402b..3df725d 100644
+index 3d7354e..c40fa96 100644
 --- a/refs-common.c
 +++ b/refs-common.c
-@@ -928,3 +928,39 @@ int head_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
- {
- 	return refs->head_ref_submodule(submodule, fn, cb_data);
+@@ -1,6 +1,7 @@
+ /* common code for all ref backends */
+ #include "cache.h"
+ #include "refs.h"
++#include "string-list.h"
+ 
+ int update_ref(const char *action, const char *refname,
+ 	       const unsigned char *sha1, const unsigned char *oldval,
+@@ -249,3 +250,46 @@ int read_ref_at(const char *refname, unsigned long at_time, int cnt,
+ 
+ 	return 1;
  }
-+ 
-+int for_each_ref(each_ref_fn fn, void *cb_data)
++
++static struct string_list *hide_refs;
++
++int parse_hide_refs_config(const char *var, const char *value, const char *section)
 +{
-+	return refs->for_each_ref(fn, cb_data);
++	if (!strcmp("transfer.hiderefs", var) ||
++	    /* NEEDSWORK: use parse_config_key() once both are merged */
++	    (starts_with(var, section) && var[strlen(section)] == '.' &&
++	     !strcmp(var + strlen(section), ".hiderefs"))) {
++		char *ref;
++		int len;
++
++		if (!value)
++			return config_error_nonbool(var);
++		ref = xstrdup(value);
++		len = strlen(ref);
++		while (len && ref[len - 1] == '/')
++			ref[--len] = '\0';
++		if (!hide_refs) {
++			hide_refs = xcalloc(1, sizeof(*hide_refs));
++			hide_refs->strdup_strings = 1;
++		}
++		string_list_append(hide_refs, ref);
++	}
++	return 0;
 +}
 +
-+int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
++int ref_is_hidden(const char *refname)
 +{
-+	return refs->for_each_ref_submodule(submodule, fn, cb_data);
-+}
++	struct string_list_item *item;
 +
-+int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
-+{
-+	return refs->for_each_ref_in(prefix, fn, cb_data);
-+}
-+
-+int for_each_ref_in_submodule(const char *submodule, const char *prefix,
-+			      each_ref_fn fn, void *cb_data)
-+{
-+	return refs->for_each_ref_in_submodule(submodule, prefix, fn, cb_data);
-+}
-+
-+int for_each_rawref(each_ref_fn fn, void *cb_data)
-+{
-+	return refs->for_each_rawref(fn, cb_data);
-+}
-+
-+int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
-+{
-+	return refs->for_each_namespaced_ref(fn, cb_data);
-+}
-+
-+int for_each_replace_ref(each_ref_fn fn, void *cb_data)
-+{
-+	return refs->for_each_replace_ref(fn, cb_data);
++	if (!hide_refs)
++		return 0;
++	for_each_string_list_item(item, hide_refs) {
++		int len;
++		if (!starts_with(refname, item->string))
++			continue;
++		len = strlen(item->string);
++		if (!refname[len] || refname[len] == '/')
++			return 1;
++	}
++	return 0;
 +}
 diff --git a/refs.c b/refs.c
-index 7ad07f1..dc0467a 100644
+index 52ca0bb..6181edf 100644
 --- a/refs.c
 +++ b/refs.c
-@@ -1610,33 +1610,33 @@ static int files_head_ref_submodule(const char *submodule, each_ref_fn fn, void
- 	return do_head_ref(submodule, fn, cb_data);
+@@ -3796,46 +3796,3 @@ char *shorten_unambiguous_ref(const char *refname, int strict)
+ 	free(short_name);
+ 	return xstrdup(refname);
  }
- 
--int for_each_ref(each_ref_fn fn, void *cb_data)
-+static int files_for_each_ref(each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(&ref_cache, "", fn, 0, 0, cb_data);
- }
- 
--int for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
-+static int files_for_each_ref_submodule(const char *submodule, each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(get_ref_cache(submodule), "", fn, 0, 0, cb_data);
- }
- 
--int for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
-+static int files_for_each_ref_in(const char *prefix, each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(&ref_cache, prefix, fn, strlen(prefix), 0, cb_data);
- }
- 
--int for_each_ref_in_submodule(const char *submodule, const char *prefix,
-+static int files_for_each_ref_in_submodule(const char *submodule, const char *prefix,
- 		each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(get_ref_cache(submodule), prefix, fn, strlen(prefix), 0, cb_data);
- }
- 
--int for_each_replace_ref(each_ref_fn fn, void *cb_data)
-+static int files_for_each_replace_ref(each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(&ref_cache, "refs/replace/", fn, 13, 0, cb_data);
- }
- 
--int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
-+static int files_for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	int ret;
-@@ -1646,7 +1646,7 @@ int for_each_namespaced_ref(each_ref_fn fn, void *cb_data)
- 	return ret;
- }
- 
--int for_each_rawref(each_ref_fn fn, void *cb_data)
-+static int files_for_each_rawref(each_ref_fn fn, void *cb_data)
- {
- 	return do_for_each_ref(&ref_cache, "", fn, 0,
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
-@@ -3311,6 +3311,13 @@ struct ref_be refs_files = {
- 	files_resolve_gitlink_ref,
- 	files_head_ref,
- 	files_head_ref_submodule,
-+	files_for_each_ref,
-+	files_for_each_ref_submodule,
-+	files_for_each_ref_in,
-+	files_for_each_ref_in_submodule,
-+	files_for_each_rawref,
-+	files_for_each_namespaced_ref,
-+	files_for_each_replace_ref,
- };
- 
- struct ref_be *refs = &refs_files;
-diff --git a/refs.h b/refs.h
-index 420e9b5..249a14a 100644
---- a/refs.h
-+++ b/refs.h
-@@ -401,6 +401,18 @@ typedef int (*head_ref_fn)(each_ref_fn fn, void *cb_data);
- typedef int (*head_ref_submodule_fn)(const char *submodule, each_ref_fn fn,
- 				     void *cb_data);
- 
-+typedef int (*for_each_ref_fn)(each_ref_fn fn, void *cb_data);
-+typedef int (*for_each_ref_submodule_fn)(const char *submodule, each_ref_fn fn,
-+					 void *cb_data);
-+typedef int (*for_each_ref_in_fn)(const char *prefix, each_ref_fn fn,
-+				  void *cb_data);
-+typedef int (*for_each_ref_in_submodule_fn)(const char *submodule,
-+					    const char *prefix,
-+					    each_ref_fn fn, void *cb_data);
-+typedef int (*for_each_rawref_fn)(each_ref_fn fn, void *cb_data);
-+typedef int (*for_each_namespaced_ref_fn)(each_ref_fn fn, void *cb_data);
-+typedef int (*for_each_replace_ref_fn)(each_ref_fn fn, void *cb_data);
-+
- struct ref_be {
- 	transaction_begin_fn transaction_begin;
- 	transaction_update_sha1_fn transaction_update_sha1;
-@@ -423,6 +435,13 @@ struct ref_be {
- 	resolve_gitlink_ref_fn resolve_gitlink_ref;
- 	head_ref_fn head_ref;
- 	head_ref_submodule_fn head_ref_submodule;
-+	for_each_ref_fn for_each_ref;
-+	for_each_ref_submodule_fn for_each_ref_submodule;
-+	for_each_ref_in_fn for_each_ref_in;
-+	for_each_ref_in_submodule_fn for_each_ref_in_submodule;
-+	for_each_rawref_fn for_each_rawref;
-+	for_each_namespaced_ref_fn for_each_namespaced_ref;
-+	for_each_replace_ref_fn for_each_replace_ref;
- };
- 
- extern struct ref_be *refs;
+-
+-static struct string_list *hide_refs;
+-
+-int parse_hide_refs_config(const char *var, const char *value, const char *section)
+-{
+-	if (!strcmp("transfer.hiderefs", var) ||
+-	    /* NEEDSWORK: use parse_config_key() once both are merged */
+-	    (starts_with(var, section) && var[strlen(section)] == '.' &&
+-	     !strcmp(var + strlen(section), ".hiderefs"))) {
+-		char *ref;
+-		int len;
+-
+-		if (!value)
+-			return config_error_nonbool(var);
+-		ref = xstrdup(value);
+-		len = strlen(ref);
+-		while (len && ref[len - 1] == '/')
+-			ref[--len] = '\0';
+-		if (!hide_refs) {
+-			hide_refs = xcalloc(1, sizeof(*hide_refs));
+-			hide_refs->strdup_strings = 1;
+-		}
+-		string_list_append(hide_refs, ref);
+-	}
+-	return 0;
+-}
+-
+-int ref_is_hidden(const char *refname)
+-{
+-	struct string_list_item *item;
+-
+-	if (!hide_refs)
+-		return 0;
+-	for_each_string_list_item(item, hide_refs) {
+-		int len;
+-		if (!starts_with(refname, item->string))
+-			continue;
+-		len = strlen(item->string);
+-		if (!refname[len] || refname[len] == '/')
+-			return 1;
+-	}
+-	return 0;
+-}
 -- 
 2.0.1.556.g3edca4c
