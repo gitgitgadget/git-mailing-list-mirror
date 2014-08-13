@@ -1,90 +1,97 @@
-From: Sergey Organov <sorganov@gmail.com>
-Subject: Re: [PATCH] Documentation/git-rebase.txt: fix -f description to match actual git behavior.
-Date: Wed, 13 Aug 2014 12:56:48 +0400
-Message-ID: <87mwb8ahtb.fsf@osv.gnss.ru>
-References: <87bnrq22uf.fsf@osv.gnss.ru>
-	<xmqq4mxh5w34.fsf@gitster.dls.corp.google.com>
-	<xmqqzjf94f5n.fsf@gitster.dls.corp.google.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Undefined reference to __builtin_ctzll
+Date: Wed, 13 Aug 2014 12:15:44 +0200
+Message-ID: <CABPQNSZw4vwhF8m+TWrbuOSaV5ycRGm1oeCu42j96_T+f3xtTg@mail.gmail.com>
+References: <CAAC8vw4EzaEM13TWzEW9QUuc-qdZFhPfEA9z1=KjCE0Brzotjg@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sergey Organov <sorganov@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 13 10:56:58 2014
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: =?UTF-8?B?0KDQsNC00L7RgdC70LDQsiDQmdC+0LLRh9C10LI=?= 
+	<radoslav.tm@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 13 12:16:34 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHUMb-0001lZ-Pd
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 10:56:58 +0200
+	id 1XHVbe-0005kb-9r
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 12:16:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750776AbaHMI4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 04:56:53 -0400
-Received: from mail.javad.com ([54.86.164.124]:43289 "EHLO mail.javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750743AbaHMI4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 04:56:52 -0400
-Received: from osv.gnss.ru (unknown [89.175.180.246])
-	by mail.javad.com (Postfix) with ESMTPSA id 9695460C01;
-	Wed, 13 Aug 2014 08:56:50 +0000 (UTC)
-Received: from osv by osv.gnss.ru with local (Exim 4.72)
-	(envelope-from <s.organov@javad.com>)
-	id 1XHUMS-0002xt-UN; Wed, 13 Aug 2014 12:56:49 +0400
-In-Reply-To: <xmqqzjf94f5n.fsf@gitster.dls.corp.google.com> (Junio C. Hamano's
-	message of "Tue, 12 Aug 2014 13:38:28 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1751417AbaHMKQ1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Aug 2014 06:16:27 -0400
+Received: from mail-ig0-f171.google.com ([209.85.213.171]:48260 "EHLO
+	mail-ig0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750772AbaHMKQZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Aug 2014 06:16:25 -0400
+Received: by mail-ig0-f171.google.com with SMTP id l13so9655971iga.16
+        for <git@vger.kernel.org>; Wed, 13 Aug 2014 03:16:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=EDrzs3oO/pP2HKucumaiphSVlH1hmTizI6waqB0DWGc=;
+        b=lL0nPgruPGbPrbEXooxGKb5UyZSyh4zimKI2J0P4W5R6HABUUN55LxoLEOujYZPBSw
+         wggdHfUcgCiR871Br9+lDuCS5+XP6ore/HmUcGMo0iTXBeBdIosbdsAz0D9y0kgKVnJo
+         kNApX06zTVM4DN7UO/Fnbq18QeueUNPcYdaEwuTyOyXkHqIBP7Qdlf8Bx3uV6cFQLG4G
+         IcUWLEyGPvjr3vNGybSZValxd64ufxq4X0hnXl0dLrZWOPFLlcs+7CYc1oAJ8dCinA9Q
+         ogIhDJMzNrPOUhjDczE6sY0G18YuW9elDBo6zBmDkoMArGPqAEfKXxd148VrwlWLtOpS
+         PpSg==
+X-Received: by 10.50.4.9 with SMTP id g9mr6152731igg.42.1407924984636; Wed, 13
+ Aug 2014 03:16:24 -0700 (PDT)
+Received: by 10.64.123.5 with HTTP; Wed, 13 Aug 2014 03:15:44 -0700 (PDT)
+In-Reply-To: <CAAC8vw4EzaEM13TWzEW9QUuc-qdZFhPfEA9z1=KjCE0Brzotjg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255192>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Aug 13, 2014 at 10:36 AM, =D0=A0=D0=B0=D0=B4=D0=BE=D1=81=D0=BB=D0=
+=B0=D0=B2 =D0=99=D0=BE=D0=B2=D1=87=D0=B5=D0=B2 <radoslav.tm@gmail.com> =
+wrote:
+> Dear GIT community,
 >
->> So I think the reasoning (i.e. "is a descendant" is not quite right)
->> is correct, but the updated text is not quite right.  Changing it
->> further to "only the committer timestamps and identities would
->> change" is probably not an improvement, either.  "Force the rebase
->> that would otherwise be a no-op" may be a better phrasing that does
->> not risk going stale even if we update what are preserved and what
->> are modified in the future.
->>
->> Also I notice the sentence "Normally non-interactive...in such a
->> situation" is not helping the reader in this description very much.
->> I wonder if we should keep it if we are rewriting this paragraph.
 >
-> How about doing it this way, perhaps?
+> I found myself in situation where I had to install GIT on Debian 3.1
+> sarge.  It comes with GCC 3.3.5. I tried to built from source but the
+> libgcc was not providing the ctzll function, thus I decided to put an
+> implementation.
+>
+>
+> I do not know how to post and do a nice patch (and whether somebody
+> will care), but I guess, for reference I can post my solution. Just
+> appended in compat/strlcpy.c the following:
+>
+>
+> int __builtin_ctzll (long long x)
+> {
+>         int i;
+>         for (i =3D 0; i < 8 * sizeof (long long); ++i)
+>                 if (x & ((long long) 1  << i))
+>                         break;
+>         return i;
+> }
+>
+>
+> I guess that some ifdef macro can be used to detect compiler version
+> or missing __builtin_ctzll.
 
-[...]
+It seems __builtin_ctzll is only available in GCC 3.4.0 and beyond, so
+I think a better fix is something like this:
 
->  -f::
->  --force-rebase::
-> -	Force the rebase even if the current branch is a descendant
-> -	of the commit you are rebasing onto.  Normally non-interactive rebase will
-> -	exit with the message "Current branch is up to date" in such a
-> -	situation.
-> -	Incompatible with the --interactive option.
-> +	Force a rebase even if the current branch is up-to-date and
-> +	the command without `--force` would return without doing anything.
->  +
->  You may find this (or --no-ff with an interactive rebase) helpful after
->  reverting a topic branch merge, as this option recreates the topic branch with
+diff --git a/ewah/ewok.h b/ewah/ewok.h
+index 43adeb5..2700fa3 100644
+--- a/ewah/ewok.h
++++ b/ewah/ewok.h
+@@ -47,7 +47,7 @@ static inline uint32_t ewah_bit_popcount64(uint64_t x=
+)
+  return (x * 0x0101010101010101ULL) >> 56;
+ }
 
-It's OK with me, as in fact I think that there is no good explanation
-for current git behavior, and thus it's git behavior that should have
-been changed, not the documentation. I.e., git must not rebase anything
-when "Current branch is a descendant of the commit you are rebasing
-onto", unless -f is given. Simple, reasonable, straightforward.
-
-The version you propose at least does not lie, so it's definiteley an
-improvement. However,
-
-"Force the rebase when the command exits with "Current branch is up to
-date" message."
-
-reads even more simple and clear for me.
-
--- 
-Sergey.
+-#ifdef __GNUC__
++#if (__GNUC__ =3D=3D 3 && __GNUC_MINOR__ >=3D 4) || __GNUC__ > 3
+ #define ewah_bit_ctz64(x) __builtin_ctzll(x)
+ #else
+ static inline int ewah_bit_ctz64(uint64_t x)
