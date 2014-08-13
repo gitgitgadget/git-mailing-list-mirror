@@ -1,122 +1,107 @@
-From: Tanay Abhra <tanayabh@gmail.com>
-Subject: [PATCH v2 2/4] ll-merge.c: refactor `read_merge_config()` to use
- `git_config_string()`
-Date: Wed, 13 Aug 2014 18:13:04 +0530
-Message-ID: <53EB5D58.7000300@gmail.com>
-References: <1407918122-29973-1-git-send-email-tanayabh@gmail.com>	<1407918122-29973-2-git-send-email-tanayabh@gmail.com> <vpqfvh0vd4a.fsf@anie.imag.fr>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 23/23] rebase -i: enable options --signoff, --reset-author
+ for pick, reword
+Date: Wed, 13 Aug 2014 14:47:51 +0200
+Message-ID: <53EB5E77.8010005@alum.mit.edu>
+References: <53A258D2.7080806@gmail.com> <cover.1407368621.git.bafain@gmail.com> <ed19a079924e11edac0163837500c2e8caa2a555.1407368621.git.bafain@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Aug 13 14:43:18 2014
+Cc: Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Fabian Ruch <bafain@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 13 14:47:59 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHXtd-0000UP-Eg
-	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 14:43:17 +0200
+	id 1XHXyB-0002rU-3H
+	for gcvg-git-2@plane.gmane.org; Wed, 13 Aug 2014 14:47:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753028AbaHMMnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Aug 2014 08:43:12 -0400
-Received: from mail-pa0-f47.google.com ([209.85.220.47]:47228 "EHLO
-	mail-pa0-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753022AbaHMMnK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Aug 2014 08:43:10 -0400
-Received: by mail-pa0-f47.google.com with SMTP id kx10so14810173pab.20
-        for <git@vger.kernel.org>; Wed, 13 Aug 2014 05:43:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        bh=GbvPkHgU5D78QQWMtcwyuDxZVzM4U+s/n5CNOa8rXlE=;
-        b=vpxNjegkRZt4t/Zjxvvcy+vO7TH1Ccl5iJsMLyUken+LjZkIBc9KPaMocYyKN7xrtD
-         7FP+G5bg5N77KJXpXugFLJvwWFR7+IxSoo3NfZXvPrytkiNLhUWISSdHg7sML2l0aB7p
-         lDKkjeM/p8VSKv3Y68u3Y3RSBOxH0gAvvzY0pTe1GP3sqWxQv1MG1+E6j4Xwsnzeb5Og
-         Nt9lQ33PzSDOTkpz6UCHo/86ce2mcoRYMk2a3+Jh14eDsUH2dMPqFOvok/YSbm/HhBLA
-         KeDOs67dIqUUZMiECK1gp12PSwXuxIWrRrpRWSwz4s2TqQToeWSd8hzCZ4uvrChdtNto
-         yWXQ==
-X-Received: by 10.69.31.43 with SMTP id kj11mr3720925pbd.121.1407933789520;
-        Wed, 13 Aug 2014 05:43:09 -0700 (PDT)
-Received: from [127.0.0.1] ([117.254.223.107])
-        by mx.google.com with ESMTPSA id dk2sm2974432pdb.10.2014.08.13.05.43.07
-        for <multiple recipients>
-        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
-        Wed, 13 Aug 2014 05:43:09 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
-In-Reply-To: <vpqfvh0vd4a.fsf@anie.imag.fr>
+	id S1751370AbaHMMrz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Aug 2014 08:47:55 -0400
+Received: from alum-mailsec-scanner-3.mit.edu ([18.7.68.14]:63567 "EHLO
+	alum-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750751AbaHMMry (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Aug 2014 08:47:54 -0400
+X-AuditID: 1207440e-f79da6d0000002fc-8d-53eb5e795558
+Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
+	by alum-mailsec-scanner-3.mit.edu (Symantec Messaging Gateway) with SMTP id 90.C4.00764.97E5BE35; Wed, 13 Aug 2014 08:47:53 -0400 (EDT)
+Received: from [192.168.69.130] (p5DDB0A4F.dip0.t-ipconnect.de [93.219.10.79])
+	(authenticated bits=0)
+        (User authenticated as mhagger@ALUM.MIT.EDU)
+	by outgoing-alum.mit.edu (8.13.8/8.12.4) with ESMTP id s7DClpXP018617
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Wed, 13 Aug 2014 08:47:52 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Icedove/24.5.0
+In-Reply-To: <ed19a079924e11edac0163837500c2e8caa2a555.1407368621.git.bafain@gmail.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrEKsWRmVeSWpSXmKPExsUixO6iqFsZ9zrYYMU9Y4tDc++xW3Rd6Way
+	aOi9wmzxo6WH2eLgMUkHVo+ds+6yezzr3cPocfGSsseUe/9ZPT5vkgtgjeK2SUosKQvOTM/T
+	t0vgzji5+ztbwRmBirl/TzA2MM7k7WLk5JAQMJF4+GMKI4QtJnHh3nq2LkYuDiGBy4wSi5/1
+	MoMkhATOMUlsuRYDYvMKaEvM7LgCFmcRUJVo3nCKCcRmE9CVWNTTDGaLCgRJzP48jx2iXlDi
+	5MwnLCC2iIC5xPEds8DizAJZEu1vtoPNERZIkdiwZhPUrtmMEnNm8HUxcnBwCoRLLG9SgyjX
+	kXjX94AZwpaX2P52DvMERoFZSDbMQlI2C0nZAkbmVYxyiTmlubq5iZk5xanJusXJiXl5qUW6
+	xnq5mSV6qSmlmxgh4c23g7F9vcwhRgEORiUeXo+o18FCrIllxZW5hxglOZiURHlXBQCF+JLy
+	UyozEosz4otKc1KLDzFKcDArifCejATK8aYkVlalFuXDpKQ5WJTEedWWqPsJCaQnlqRmp6YW
+	pBbBZGU4OJQkeF1igRoFi1LTUyvSMnNKENJMHJwgw7mkRIpT81JSixJLSzLiQXEaXwyMVJAU
+	D9De9zEge4sLEnOBohCtpxgVpcR5C0ASAiCJjNI8uLGwpPWKURzoS2FeVpDtPMCEB9f9Cmgw
+	E9Dgza6vQAaXJCKkpBoYl8wL82arUj7QF9JZcH7PPsb1JzlCPTn9d7XmvHPo/mbqvNnRqs4/
+	dMvO3hqRS5aXWk+5TM9tX+/9rX16t8OCzAirE9e/Tk3X5tEt3CErvdKzi6u1bfKi 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255207>
 
-There is one slight behavior change, previously "merge.default"
-silently ignored a NULL value and didn't raise any error. But,
-in the same function, all other values raise an error on a NULL
-value. So to conform with other call sites in Git, a NULL value
-for "merge.default" raises an error.
+On 08/07/2014 01:59 AM, Fabian Ruch wrote:
+> pick and reword are atomic to-do list commands in the sense that they
+> open a new task which is closed after the respective command is
+> completed. squash and fixup are not atomic. They create a new task
+> which is not completed until the last squash or fixup is processed.
 
-Signed-off-by: Tanay Abhra <tanayabh@gmail.com>
----
-We cannot easily use the new config-set API here, because
-much of the function is dedicated to processing
-"merge.<name>.variable" which does not easily translate to
-the new API. If it were for variables like,
-"merge.summary", "merge.tool", and "merge.verbosity", we
-could use the new API.
+I don't understand the distinction that you are attempting to draw
+between "atomic" and "non-atomic" commands.  For example, in the
+following command list:
 
- ll-merge.c | 23 ++++++-----------------
- 1 file changed, 6 insertions(+), 17 deletions(-)
+    pick 1111111
+    squash 2222222
+    fixup 3333333
 
-diff --git a/ll-merge.c b/ll-merge.c
-index fb61ea6..8ea03e5 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -225,11 +225,8 @@ static int read_merge_config(const char *var, const char *value, void *cb)
- 	const char *key, *name;
- 	int namelen;
+the "pick" command doesn't seem very atomic, because the *end* result of
+the three commands is a single commit that is affected by all three
+commands.  Furthermore, if we change the example to
 
--	if (!strcmp(var, "merge.default")) {
--		if (value)
--			default_ll_merge = xstrdup(value);
--		return 0;
--	}
-+	if (!strcmp(var, "merge.default"))
-+		return git_config_string(&default_ll_merge, var, value);
+    pick 1111111
+    squash --reset-author 2222222
+    fixup --signoff 3333333
 
- 	/*
- 	 * We are not interested in anything but "merge.<name>.variable";
-@@ -254,12 +251,8 @@ static int read_merge_config(const char *var, const char *value, void *cb)
- 		ll_user_merge_tail = &(fn->next);
- 	}
+then isn't it clear that the user's intention was to apply both options,
+"--reset-author" and "--signoff", to the resulting commit?  In other
+words, it seems to me that any options on such a chain of lines should
+be collected and applied to the final commit as a whole.
 
--	if (!strcmp("name", key)) {
--		if (!value)
--			return error("%s: lacks value", var);
--		fn->description = xstrdup(value);
--		return 0;
--	}
-+	if (!strcmp("name", key))
-+		return git_config_string(&fn->description, var, value);
+> Lift the general unknown option blockade for the pick and reword
+> commands. If `do_cmd` comes across one of the options `--signoff` and
+> `--reset-author` while parsing a to-do entry and the scheduled
+> command is either `pick` or `reword`, relay the option to `do_pick`.
 
- 	if (!strcmp("driver", key)) {
- 		if (!value)
-@@ -285,12 +278,8 @@ static int read_merge_config(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
+The new user-exposed options should be documented in the git-rebase(1)
+manpage and probably also in the help text that is appended to every
+"rebase -i" todo list.
 
--	if (!strcmp("recursive", key)) {
--		if (!value)
--			return error("%s: lacks value", var);
--		fn->recursive = xstrdup(value);
--		return 0;
--	}
-+	if (!strcmp("recursive", key))
-+		return git_config_string(&fn->recursive, var, value);
+> The `do_pick` options `--gpg-sign` and `--file` are not yet supported
+> because `do_cmd` cannot handle option arguments and options with
+> spaces at the moment. It is true that edit is one of the atomic
+> commands but it displays hash information when the rebase is stopped
+> and some options rewrite the picked commit which alters that
+> information. squash and fixup still do not accept user options as the
+> interplay of `--reset-author` and the author script are yet to be
+> determined.
+> [...]
 
- 	return 0;
- }
+Michael
+
 -- 
-1.9.0.GIT
+Michael Haggerty
+mhagger@alum.mit.edu
