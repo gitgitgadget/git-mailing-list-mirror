@@ -1,141 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 6/6] diff: shortcut for diff'ing two binary SHA-1 objects
-Date: Thu, 14 Aug 2014 10:17:45 -0700
-Message-ID: <xmqqy4ur0z46.fsf@gitster.dls.corp.google.com>
-References: <1403610336-27761-1-git-send-email-pclouds@gmail.com>
-	<1407927454-9268-1-git-send-email-pclouds@gmail.com>
-	<1407927454-9268-7-git-send-email-pclouds@gmail.com>
+From: Fabian Ruch <bafain@gmail.com>
+Subject: Re: [PATCH v2 23/23] rebase -i: enable options --signoff, --reset-author
+ for pick, reword
+Date: Thu, 14 Aug 2014 19:24:15 +0200
+Message-ID: <53ECF0BF.5070200@gmail.com>
+References: <53A258D2.7080806@gmail.com> <cover.1407368621.git.bafain@gmail.com> <ed19a079924e11edac0163837500c2e8caa2a555.1407368621.git.bafain@gmail.com> <53EB5E77.8010005@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, worley@alum.mit.edu
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 14 19:18:21 2014
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <tr@thomasrast.ch>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 14 19:24:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XHyfK-0001Fh-U0
-	for gcvg-git-2@plane.gmane.org; Thu, 14 Aug 2014 19:18:19 +0200
+	id 1XHylG-0003fL-Aj
+	for gcvg-git-2@plane.gmane.org; Thu, 14 Aug 2014 19:24:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752945AbaHNRSF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Aug 2014 13:18:05 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:63772 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752800AbaHNRRz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Aug 2014 13:17:55 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 46C932F8A9;
-	Thu, 14 Aug 2014 13:17:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=gm/bb5qyrwWq
-	mdyejOCMwPbIVyU=; b=TmUuE/4/btcde7wQYLGNZJQEK47MNTe8k9lF9Iv9KIjU
-	4NbsW1fEhW2iVScDjArotTtl6Z2AqsMc5ELX3JOsF8E1tiG5/4+FaY7SK7HRm0kf
-	U42VUobY5L1eczP26FzYHf49eeBb9YrEUY5kPdDr9o2Xe1Cu915/PLDOh93DC1k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Rsgcjb
-	qfWkZ4GqKeJzCIPK3OWzQB38wB1AdDckO0+ovdm2hNh1KNT7hG5I9AgxFFeP27Te
-	M4Yi14HhbM1isCtItgp8hZS7weN520Ud7cq5r/neyp+vcl8YJcf8kdmVvI0mittr
-	npH0cPJqMNUBJJSiuZLMyRvHfHdaE9J/wVynE=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 3B71B2F8A8;
-	Thu, 14 Aug 2014 13:17:54 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 062102F88C;
-	Thu, 14 Aug 2014 13:17:46 -0400 (EDT)
-In-Reply-To: <1407927454-9268-7-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuCVRow6FpIE5n4buNYw==?= Duy"'s message of "Wed, 13
- Aug 2014 17:57:34 +0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: E9334C8E-23D6-11E4-9F13-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S932222AbaHNRYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Aug 2014 13:24:22 -0400
+Received: from mail-la0-f53.google.com ([209.85.215.53]:49675 "EHLO
+	mail-la0-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932172AbaHNRYU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Aug 2014 13:24:20 -0400
+Received: by mail-la0-f53.google.com with SMTP id gl10so1417226lab.26
+        for <git@vger.kernel.org>; Thu, 14 Aug 2014 10:24:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        bh=vrig4mikYBNYE2zn0wSQRggH7H4kbOPHcA5WY2buk+U=;
+        b=A/U8d1GmxtgGV2sXW+J9dZg9O+1fcZPBTIqLI72OElqHcgkottltToZFoTTCugX9Rr
+         yToNT7mQquVo2mSfKjha4Su1v2ZknLAk+rQf9j3cVo9b1r6mPGNTqOg0XjQVgtALmM40
+         pHxS2WGoo/sGlyPefhNWYArEe5CUi3N0XSqbetLgRRHJzJ2E/pM2mKKWCc+CdZtmLNUp
+         5gB2xY+bdAB6IQUQBe0qjk4kKR42sF3ez1PX+5Dxx5AXyU0HjhAm9s9MZRDT5ePSsAe8
+         FJ0r0yitKVDnMAaRxQhtjA1kY3WSdwVeBMHE+sgwS9knY3Vs8MzzedCiQvYEckq2Wk1R
+         1iBA==
+X-Received: by 10.152.45.42 with SMTP id j10mr6733948lam.13.1408037058108;
+        Thu, 14 Aug 2014 10:24:18 -0700 (PDT)
+Received: from client.googlemail.com (nat-wh-nan.rz.uni-karlsruhe.de. [141.70.81.135])
+        by mx.google.com with ESMTPSA id e4sm8724977lbc.29.2014.08.14.10.24.15
+        for <multiple recipients>
+        (version=TLSv1 cipher=ECDHE-RSA-RC4-SHA bits=128/128);
+        Thu, 14 Aug 2014 10:24:16 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20100101 Thunderbird/24.6.0
+In-Reply-To: <53EB5E77.8010005@alum.mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255269>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Hi,
 
-> If we are given two SHA-1 and asked to determine if they are differen=
-t
-> (but not _what_ differences), we know right away by comparing SHA-1.
->
-> A side effect of this patch is, because large files are marked binary=
-,
-> diff-tree will not need to unpack them. 'diff-index --cached' will no=
-t
-> either. But 'diff-files' still does.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  diff.c           | 13 +++++++++++++
->  t/t1050-large.sh |  8 ++++++++
->  2 files changed, 21 insertions(+)
->
-> diff --git a/diff.c b/diff.c
-> index d381a6f..b85bcfb 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -2324,6 +2324,19 @@ static void builtin_diff(const char *name_a,
->  	} else if (!DIFF_OPT_TST(o, TEXT) &&
->  	    ( (!textconv_one && diff_filespec_is_binary(one)) ||
->  	      (!textconv_two && diff_filespec_is_binary(two)) )) {
-> +		if (!one->data && !two->data &&
-> +		    S_ISREG(one->mode) && S_ISREG(two->mode) &&
-> +		    !DIFF_OPT_TST(o, BINARY)) {
-> +			if (!hashcmp(one->sha1, two->sha1)) {
-> +				if (must_show_header)
-> +					fprintf(o->file, "%s", header.buf);
-> +				goto free_ab_and_return;
-> +			}
-> +			fprintf(o->file, "%s", header.buf);
-> +			fprintf(o->file, "%sBinary files %s and %s differ\n",
-> +				line_prefix, lbl[0], lbl[1]);
-> +			goto free_ab_and_return;
-> +		}
+Michael Haggerty writes:
+> On 08/07/2014 01:59 AM, Fabian Ruch wrote:
+>> Lift the general unknown option blockade for the pick and reword
+>> commands. If `do_cmd` comes across one of the options `--signoff` and
+>> `--reset-author` while parsing a to-do entry and the scheduled
+>> command is either `pick` or `reword`, relay the option to `do_pick`.
+> 
+> The new user-exposed options should be documented in the git-rebase(1)
+> manpage and probably also in the help text that is appended to every
+> "rebase -i" todo list.
 
-A tangent.
+The next reroll will add the following paragraph to the git-rebase man
+page right after the introduction of the 'reword' command in the section
+"INTERACTIVE MODE":
 
-I think one and two can point at the same object only when this
-filepair is involved in rename/copy.  In other words, one and two
-with the same <mode,sha1,name> would not be given to this code.  And
-must-show-header would be set to true long before we get here in
-fill-metainfo in such a case.
+> The commands "pick" and "reword" understand some well-known options.
+> To add a Signed-off-by line at the end of the commit message, pass
+> the `--signoff` option. The authorship can be renewed by specifying
+> the `--reset-author` option. For instance, before you decide to
+> publish a heavily edited commit you might want to reset the
+> authorship and add your signature. You can do so on a per line basis:
+> 
+> -------------------------------------------
+> pick deadbee The oneline of this commit
+> pick --reset-author --signoff fa1afe1 The oneline of the next commit
+> ...
+> -------------------------------------------
 
-I think this new code and the original below which you copied this
-one from can probably be simplified.  It already felt wrong to see
-two copies of "fprintf(o->file "%s", header.buf)" and now we have
-four of them.  Because this is a copy-and-paste of the identical
-logic from below, I do not want you to attempt fixing this tangent
-in this patch, though.
+By saying "heavily edited commit" I tried to describe a commit that has
+been amended, reworded and reordered in such a way that the actual
+author information has become meaningless.
 
-Thanks.
+The help text at the end of every to-do list would look like this:
 
->  		if (fill_mmfile(&mf1, one) < 0 || fill_mmfile(&mf2, two) < 0)
->  			die("unable to read files to diff");
->  		/* Quite common confusing case */
-> diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-> index 711f22c..b294963 100755
-> --- a/t/t1050-large.sh
-> +++ b/t/t1050-large.sh
-> @@ -116,6 +116,14 @@ test_expect_success 'diff --stat' '
->  	git diff --stat HEAD^ HEAD
->  '
-> =20
-> +test_expect_success 'diff' '
-> +	git diff HEAD^ HEAD
-> +'
-> +
-> +test_expect_success 'diff --cached' '
-> +	git diff --cached HEAD^
-> +'
-> +
->  test_expect_success 'hash-object' '
->  	git hash-object large1
->  '
+> Commands:
+>  p, pick = use commit
+>  r, reword = use commit, but edit the commit message
+>  e, edit = use commit, but stop for amending
+>  s, squash = use commit, but meld into previous commit
+>  f, fixup = like "squash", but discard this commit's log message
+>  x, exec = run command (the rest of the line) using shell
+> 
+> Options:
+>  [pick | reword] --signoff = add a Signed-off-by line
+>  [pick | reword] --reset-author = renew authorship
+> 
+> These lines can be re-ordered; they are executed from top to bottom.
+> 
+> If you remove a line here THAT COMMIT WILL BE LOST.
+
+New about this is the "Options" headline.
+
+   Fabian
