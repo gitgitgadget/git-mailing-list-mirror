@@ -1,127 +1,113 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Understanding behavior of git blame -M
-Date: Fri, 15 Aug 2014 16:42:04 +0200
-Message-ID: <874mxderwj.fsf@fencepost.gnu.org>
-References: <71BF70CE41AEE741896AF3A5450D86F11F28C762@DEFTHW99EH3MSX.ww902.siemens.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git on Mac OS X 10.4.10
+Date: Fri, 15 Aug 2014 09:29:46 -0700
+Message-ID: <xmqqlhqp1zt1.fsf@gitster.dls.corp.google.com>
+References: <53ECA7DB.7060407@jump-ing.de> <53ECCA14.40900@web.de>
+	<53ED0257.3070505@jump-ing.de>
+	<xmqqppg21wyk.fsf@gitster.dls.corp.google.com>
+	<273241271546c07e692ae93774993f5@74d39fa044aa309eaea14b9f57fe79c>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: "Sokolov\, Konstantin \(ext\)" <konstantin.sokolov.ext@siemens.com>
-X-From: git-owner@vger.kernel.org Fri Aug 15 16:42:48 2014
+Content-Type: text/plain; charset=us-ascii
+Cc: Markus Hitter <mah@jump-ing.de>, git@vger.kernel.org
+To: "Kyle J. McKay" <mackyle@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 18:30:29 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIIiJ-0002ge-2S
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Aug 2014 16:42:43 +0200
+	id 1XIKOa-0002xe-MP
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Aug 2014 18:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751640AbaHOOmU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2014 10:42:20 -0400
-Received: from fencepost.gnu.org ([208.118.235.10]:50202 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751631AbaHOOmR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Aug 2014 10:42:17 -0400
-Received: from localhost ([127.0.0.1]:49244 helo=lola)
-	by fencepost.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <dak@gnu.org>)
-	id 1XIIhr-0001VG-PK; Fri, 15 Aug 2014 10:42:16 -0400
-Received: by lola (Postfix, from userid 1000)
-	id B8842E17E0; Fri, 15 Aug 2014 16:42:04 +0200 (CEST)
-In-Reply-To: <71BF70CE41AEE741896AF3A5450D86F11F28C762@DEFTHW99EH3MSX.ww902.siemens.net>
-	(Konstantin Sokolov's message of "Fri, 15 Aug 2014 13:40:09 +0000")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4.50 (gnu/linux)
+	id S1751643AbaHOQ36 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2014 12:29:58 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64607 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751499AbaHOQ35 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2014 12:29:57 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 8B6122FE8B;
+	Fri, 15 Aug 2014 12:29:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eRi6i7D4ti/yMSJ6Jt9hoIJxEjY=; b=GU8JKg
+	/Jl8Or8eGWzyGNKkXbGvqY7TQ6MqFnuKM3XroQD9uFqhqaMu97TsILToWWJ9vrF5
+	H0Yn/GmraUwNL98PfJgbWNj6pxwuphppjc/TSQQhONbGgjsbSnTpL+EhYQ7eI6NK
+	QlKbqhGpucm/3sc02x2t+fPN8hH8amSBjIAG0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=QnbKMF8CAOCJznJezPn1vwp/rfuB7nJp
+	cGBtyCrL5t/07GbTov9B5gaqcM7LbeEnThTlVGF3ahP9ym/mP9saLR9ZCKcbcF0e
+	NDnr1/7ASeibOg3Mudw5v/Djo6ZAZn2R69zqpMR4Jgkw1fQ5pYFZUhfvAa/HKOaT
+	MEMgU9s6E8Q=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 812512FE8A;
+	Fri, 15 Aug 2014 12:29:56 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 39B1C2FE76;
+	Fri, 15 Aug 2014 12:29:48 -0400 (EDT)
+In-Reply-To: <273241271546c07e692ae93774993f5@74d39fa044aa309eaea14b9f57fe79c>
+	(Kyle J. McKay's message of "Fri, 15 Aug 2014 00:46:11 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: 5FB8B3A4-2499-11E4-8D30-9903E9FBB39C-77302942!pb-smtp0.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255293>
 
-"Sokolov, Konstantin (ext)" <konstantin.sokolov.ext@siemens.com> writes=
-:
+"Kyle J. McKay" <mackyle@gmail.com> writes:
 
-> Hi Folks,
+> On Aug 14, 2014, at 16:18, Junio C Hamano wrote:
 >
-> I'm trying to understand the behavior of git blame -M and find that
-> the actual results differ from what I understood from the
-> documentation. I've already asked longer time ago on stackoverflow an=
-d
-> on the user mailing list without any satisfactory results. So here is
-> the example:
+>> Markus Hitter <mah@jump-ing.de> writes:
+>>
+>>>> The  <CommonCrypto/CommonHMAC.h> is in Mac OS X 10.6 .. 10.9,
+>>>> but not in 10.4 (I don't know about 10.5).
 >
-> Initial content of file.txt (2cd9f7f)
+> That header is new with 10.5
 >
-> AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-> BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-> CCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222222
-> DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-> EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-> GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-> FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+>> Is this about platform dependency, or what the end user happens to
+>> choose to install (in other words, is there an add-on users of 10.4
+>> can choose to add, which allows them to use that header)?
 >
-> Move line B to the middle (d4bbd97e):
+> Nope, it's a platform dependency.  Not available prior to 10.5.
 >
-> AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-> CCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222222
-> DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-> BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-> EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-> GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-> FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+> The below patch does the right thing.  Conveniently there's already
+> a test for 10.4 and earlier so only a single line need be added.
 >
->>git blame -s -n -f -w -M20 file.txt
-> ^2cd9f7f 1 1) AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-> ^2cd9f7f 3 2) CCCCCCCCCCCCCCCCCCCCCCCC2222222222222222222222222
-> ^2cd9f7f 4 3) DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-> d4bbd97e 4 4) BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-> ^2cd9f7f 5 5) EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-> ^2cd9f7f 6 6) GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-> ^2cd9f7f 7 7) FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+> --Kyle
+
+Nice.  Use of APPLE_COMMON_CRYPTO thing is not new to the upcoming
+release, so let me queue it for the next development cycle, not
+applying directly before curring 2.1 release today.
+
+Thanks.
+
+
 >
-> I wonder, why line B is not recognized as moved. According to the
-> documentation, I would expect git blame to report that it originates
-> from line 2 in revision 2cd9f7f. Can anybody explain the behavior?
-
-Someone had reasons.  diff_hunks in builtin/blame.c is once called with
-0 as third argument, once with 1.  Change the latter call to using 0 as
-well and you get your expected result:
-
-dak@lola:/tmp/test$ /usr/local/tmp/git/git blame -s -n -f -w -M20 file.=
-txt
-^2cab496 file.txt 1 1) AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
-A
-^2cab496 file.txt 3 2) CCCCCCCCCCCCCCCCCCCCCCCC222222222222222222222222=
-2
-^2cab496 file.txt 4 3) DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD=
-D
-^2cab496 file.txt 2 4) BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=
-B
-^2cab496 file.txt 5 5) EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE=
-E
-^2cab496 file.txt 6 6) GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG=
-G
-^2cab496 file.txt 7 7) FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF=
-=46
-
-The function diff_hunks is a wrapper for the diff engine.  Putting the
-context length explicitly into this wrapper (rather than not passing an
-argument and just setting the context length to zero anyway in the
-function) clearly indicates that somebody _wanted_ it called with
-different values.
-
-There is no documentation or rationale in the file _why_ as far as
-I=A0remember.  Maybe it can crash or end up in an infinite loop.  Maybe=
- it
-could do so at one point of time but no longer does.
-
-Maybe Git is just a puzzle from genius to genius.  Good luck figuring i=
-t
-out.
-
-I have not touched this when rewriting git-blame recently, and I am not
-interested in touching it.  I stand absolutely nothing to gain from
-working on Git.
-
---=20
-David Kastrup
+> ---- 8< ----
+> Subject: [PATCH] config.mak.uname: set NO_APPLE_COMMON_CRYPTO on older systems
+>
+> Older MacOS systems prior to 10.5 do not have the CommonCrypto
+> support Git uses so set NO_APPLE_COMMON_CRYPTO on those systems.
+>
+> Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+> ---
+>  config.mak.uname | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 7846bd76..f8e12c96 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -88,6 +88,7 @@ ifeq ($(uname_S),Darwin)
+>  	NEEDS_LIBICONV = YesPlease
+>  	ifeq ($(shell expr "$(uname_R)" : '[15678]\.'),2)
+>  		OLD_ICONV = UnfortunatelyYes
+> +		NO_APPLE_COMMON_CRYPTO = YesPlease
+>  	endif
+>  	ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
+>  		NO_STRLCPY = YesPlease
