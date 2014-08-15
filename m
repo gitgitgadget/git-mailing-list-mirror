@@ -1,66 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git on Mac OS X 10.4.10
-Date: Thu, 14 Aug 2014 16:18:59 -0700
-Message-ID: <xmqqppg21wyk.fsf@gitster.dls.corp.google.com>
-References: <53ECA7DB.7060407@jump-ing.de> <53ECCA14.40900@web.de>
-	<53ED0257.3070505@jump-ing.de>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH v3 3/6] unpack-objects: continue when fail to malloc due
+ to large objects
+Date: Fri, 15 Aug 2014 12:24:54 +0700
+Message-ID: <CACsJy8AF-NdAL-4t9k2-qrQCFFRC8T6==SvYiP14FktrxHEj=w@mail.gmail.com>
+References: <1403610336-27761-1-git-send-email-pclouds@gmail.com>
+ <1407927454-9268-1-git-send-email-pclouds@gmail.com> <1407927454-9268-4-git-send-email-pclouds@gmail.com>
+ <xmqq7g2b2ele.fsf@gitster.dls.corp.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Markus Hitter <mah@jump-ing.de>
-X-From: git-owner@vger.kernel.org Fri Aug 15 01:19:16 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Dale R. Worley" <worley@alum.mit.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 07:25:30 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XI4Id-0004TX-Rs
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Aug 2014 01:19:16 +0200
+	id 1XIA13-0004TR-N7
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Aug 2014 07:25:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932135AbaHNXTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Aug 2014 19:19:12 -0400
-Received: from smtp.pobox.com ([208.72.237.35]:61054 "EHLO smtp.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932078AbaHNXTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Aug 2014 19:19:11 -0400
-Received: from smtp.pobox.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id 6873631614;
-	Thu, 14 Aug 2014 19:19:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dp0ZMugPTrLdc8pVxNK5EyBKk8A=; b=dc3yFW
-	BY3Jt7vEEFx0tPz20FljPQ9Llsw07ZshEoFxeSzxbaOPl7Cp/Ui+Pf6Qbc8TUlYt
-	CT2YOYBD2kP1WYGSmE/N+vrbJYaJ/Fs9cYP74IDg/iGNkSTSf5zvXBtbx7jOfFqc
-	26GKGLHTAV5OxpX/XoRHCEpInvksauqa+P6M8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:references:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kF2opixqkNlotZ55VFca03o7b65ynnx0
-	VlRLhUpOj88KIu8IyEU60HZI8hLhqRi/xcGoaBWWAArcBTHrkctnErxRdajpc/wy
-	RkWzuo9uSiANDcTYSi/JoZilR1O9zopjqntEcIkPN5JbA/5Gkexo3nHt5qgvaPIZ
-	Hbphv4dgD0I=
-Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp0.pobox.com (Postfix) with ESMTP id D26BB31612;
-	Thu, 14 Aug 2014 19:19:09 -0400 (EDT)
-Received: from pobox.com (unknown [72.14.226.9])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id C6F6231603;
-	Thu, 14 Aug 2014 19:19:00 -0400 (EDT)
-In-Reply-To: <53ED0257.3070505@jump-ing.de> (Markus Hitter's message of "Thu,
-	14 Aug 2014 20:39:19 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
-X-Pobox-Relay-ID: 5FC922E2-2409-11E4-A0FA-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+	id S1751392AbaHOFZZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2014 01:25:25 -0400
+Received: from mail-ig0-f176.google.com ([209.85.213.176]:64587 "EHLO
+	mail-ig0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751245AbaHOFZZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2014 01:25:25 -0400
+Received: by mail-ig0-f176.google.com with SMTP id hn18so1025912igb.9
+        for <git@vger.kernel.org>; Thu, 14 Aug 2014 22:25:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=71X2oxjgP6lCQbzN8tPC1Tvonr2vx2FM5mIdSVmBBZ0=;
+        b=aHVXagIfLkOUC6qd7zkl2qpgOMcTHfJFfEwwpG3FAJVbPhSnO+TLeRaruLEl3HnZKf
+         KCvm3QEyWd9+ZDYeH7ZMuTQJmdbpozlhq9g9LHQ8qC0tlQPpWhLsgwVlvOj5APRKA7nG
+         O9VaQ5dxetFY2FkasxJKQMFNCgB7pPq47k6OpC2fysSCWIxJaQGBckq6IfDzZYH4ZDLy
+         zgtR8AI9MJ7yFsu3nfx26s55eGjc3RL264HotZwmN/5jummHhLmzyvV9JX9CU8wfxVTT
+         yt085qVFyXzJVlaCWuWHf5qoNGk1RL4x1n4vkqIAbhprAaRwX+SShKqJ/r4LzqJ+H57+
+         gFKg==
+X-Received: by 10.50.43.164 with SMTP id x4mr39533333igl.27.1408080324450;
+ Thu, 14 Aug 2014 22:25:24 -0700 (PDT)
+Received: by 10.107.13.80 with HTTP; Thu, 14 Aug 2014 22:24:54 -0700 (PDT)
+In-Reply-To: <xmqq7g2b2ele.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255279>
 
-Markus Hitter <mah@jump-ing.de> writes:
+On Thu, Aug 14, 2014 at 11:58 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +static void inflate_and_throw_away(unsigned long size)
+>> +{
+>
+> But more importantly, the basic structure of this loop is the same
+> as the loop we already have in the only caller of this new function,
+> not just the regular "zlib produced this much that is not yet the
+> expected size, go on reading more" and "we are at the end of the
+> stream with Z_STREAM_END, and we are done", but even to "the stream
+> is corrupt, we need to exit the loop", they are identical.  Is a
+> copy-and-paste like this the best we can do to add this "skip to the
+> end of the current stream"?  We would really want to keep the number
+> of copies of this loop down; we saw a same bug introduced on the
+> termination condition multiple times to different copies X-<.
 
->> The  <CommonCrypto/CommonHMAC.h> is in Mac OS X 10.6 .. 10.9,
->> but not in 10.4 (I don't know about 10.5).
-
-Is this about platform dependency, or what the end user happens to
-choose to install (in other words, is there an add-on users of 10.4
-can choose to add, which allows them to use that header)?
+I know. I'm the author of one of those bugs. I considered updating the
+inflate loop in get_data() to support this throw-away mode but was
+afraid I may make the same mistake like in index-pack again. I'll
+probably drop this patch and think if I can unify inflate loop (for
+other places too, not just unpack-objects).
+-- 
+Duy
