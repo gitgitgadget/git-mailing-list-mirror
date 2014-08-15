@@ -1,128 +1,174 @@
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: Git for Windows 1.9.4.msysgit.1
-Date: Fri, 15 Aug 2014 19:14:22 +0200
-Message-ID: <53EE3FEE.5090905@virtuell-zuhause.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-rebase.txt: fix -f description to match actual git behavior.
+Date: Fri, 15 Aug 2014 10:51:45 -0700
+Message-ID: <xmqq38cx1w0e.fsf@gitster.dls.corp.google.com>
+References: <87bnrq22uf.fsf@osv.gnss.ru>
+	<xmqq4mxh5w34.fsf@gitster.dls.corp.google.com>
+	<xmqqzjf94f5n.fsf@gitster.dls.corp.google.com>
+	<87d2c22cnx.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: msysGit <msysgit@googlegroups.com>
-X-From: msysgit+bncBCL7JHHTPAIPN75YT4CRUBFV4UG2M@googlegroups.com Fri Aug 15 19:14:31 2014
-Return-path: <msysgit+bncBCL7JHHTPAIPN75YT4CRUBFV4UG2M@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-wi0-f184.google.com ([209.85.212.184])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sergey Organov <sorganov@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 19:52:12 2014
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@plane.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncBCL7JHHTPAIPN75YT4CRUBFV4UG2M@googlegroups.com>)
-	id 1XIL5D-0005ss-5n
-	for gcvm-msysgit@m.gmane.org; Fri, 15 Aug 2014 19:14:31 +0200
-Received: by mail-wi0-f184.google.com with SMTP id n3sf121159wiv.1
-        for <gcvm-msysgit@m.gmane.org>; Fri, 15 Aug 2014 10:14:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=20120806;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=Yt+Pm1anGlea35/VfsVkPoKnWkbbyrzqt5wXPYncBNQ=;
-        b=yUefsOddBP87IMThl4ebbUI/IhUEg8smXrP6RFIwb86PEZehJgKGx9O8XjL2rjDIDg
-         Z3kHjHVii1BnDXPc/vB5SKsPb9fvloNpbcXqa86i7/8GLrxY4t6GLdi+fDbC8hMcOn6a
-         WRlX/yUuyK6IsKTrmZNMtG5Pgm1TWRKJxeGDxKq8or2gruUcbCzAlZQYGhE+sEU2ihB+
-         4qoP1Lwugoqrz6Iot3ZNkehBjBxVje0zJiqMs95ccb0T5HqE8mm2MiqysmSqN9kW9Kqg
-         KUKwmA8ABwDYSAXsuNugAj78C7OziAHLqMy8+T+yYTCI+sQz9Tw9/KI+Xc+3mXPu8/9I
-         vuCQ==
-X-Received: by 10.180.100.106 with SMTP id ex10mr224158wib.7.1408122870782;
-        Fri, 15 Aug 2014 10:14:30 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.180.98.225 with SMTP id el1ls126455wib.29.canary; Fri, 15 Aug
- 2014 10:14:29 -0700 (PDT)
-X-Received: by 10.194.100.3 with SMTP id eu3mr296875wjb.6.1408122869931;
-        Fri, 15 Aug 2014 10:14:29 -0700 (PDT)
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de. [2a01:488:42::50ed:84a3])
-        by gmr-mx.google.com with ESMTPS id nw2si671064lbb.0.2014.08.15.10.14.29
-        for <msysgit@googlegroups.com>
-        (version=TLSv1 cipher=RC4-SHA bits=128/128);
-        Fri, 15 Aug 2014 10:14:29 -0700 (PDT)
-Received-SPF: none (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted sender hosts) client-ip=2a01:488:42::50ed:84a3;
-Received: from p5ddc2d5e.dip0.t-ipconnect.de ([93.220.45.94] helo=[192.168.100.43]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:DHE_RSA_AES_128_CBC_SHA1:16)
-	id 1XIL5A-00070t-Fn; Fri, 15 Aug 2014 19:14:28 +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1408122869;4a313582;
-X-Original-Sender: thomas.braun@virtuell-zuhause.de
-X-Original-Authentication-Results: gmr-mx.google.com;       spf=neutral
- (google.com: thomas.braun@virtuell-zuhause.de does not designate permitted
- sender hosts) smtp.mail=thomas.braun@virtuell-zuhause.de
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-X-Google-Group-Id: 152234828034
-List-Post: <http://groups.google.com/group/msysgit/post>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <mailto:googlegroups-manage+152234828034+unsubscribe@googlegroups.com>,
- <http://groups.google.com/group/msysgit/subscribe>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255296>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1XILfc-0005ES-H5
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Aug 2014 19:52:09 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1751446AbaHORv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2014 13:51:57 -0400
+Received: from smtp.pobox.com ([208.72.237.35]:64138 "EHLO smtp.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751144AbaHORv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2014 13:51:56 -0400
+Received: from smtp.pobox.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id A090D30846;
+	Fri, 15 Aug 2014 13:51:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=n7E650j25lEDtjyS9Pg7qDoqZtk=; b=MEnFen
+	rhTmPzxivrlOp/k7UK8ivoHry+s9VN9sLP/zRh9ZZ1LmlRVaqth4OCHPtIgvsGCQ
+	ROdyiK9EamI/ABB3GTOvisGiktl0+WiV5Z2kcwLftj+oBw7tDMUMDP3Cvc2XAwWl
+	4BuCtsU9sutGQXLXzJjKkT4nIc+Ffay4RMrZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:references:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=moJoEJB0wfgN8lrnhDIIs11qemvukgwG
+	4KCRHotCaQHRP7+nssKgddhBd+4Q/G3YLiWzrVBSWhBjvc1YF8ktXWySlWc+HcQk
+	6PNYScc0Ug4NYabHLvveVX3EsLW8O25LTvLKX8SivqLZ164mOOCtyO158lDhqvSc
+	UxKz51WAOwA=
+Received: from pb-smtp0.int.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp0.pobox.com (Postfix) with ESMTP id 9676F30845;
+	Fri, 15 Aug 2014 13:51:55 -0400 (EDT)
+Received: from pobox.com (unknown [72.14.226.9])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by pb-smtp0.pobox.com (Postfix) with ESMTPSA id 1829630829;
+	Fri, 15 Aug 2014 13:51:47 -0400 (EDT)
+In-Reply-To: <87d2c22cnx.fsf@osv.gnss.ru> (Sergey Organov's message of "Fri,
+	15 Aug 2014 15:52:02 +0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.3 (gnu/linux)
+X-Pobox-Relay-ID: D397243A-24A4-11E4-8FA9-9903E9FBB39C-77302942!pb-smtp0.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255297>
 
-Hi,
+Sergey Organov <sorganov@gmail.com> writes:
 
-the Git for Windows team just released the second maintenance release of
-the Windows-specific installers for git 1.9.4.
+>> ...
+>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+>> index 2a93c64..f14100a 100644
+>> --- a/Documentation/git-rebase.txt
+>> +++ b/Documentation/git-rebase.txt
+>> @@ -316,11 +316,8 @@ which makes little sense.
+>>  
+>>  -f::
+>>  --force-rebase::
+>> -	Force the rebase even if the current branch is a descendant
+>> -	of the commit you are rebasing onto.  Normally non-interactive rebase will
+>> -	exit with the message "Current branch is up to date" in such a
+>> -	situation.
+>> -	Incompatible with the --interactive option.
+>> +	Force a rebase even if the current branch is up-to-date and
+>> +	the command without `--force` would return without doing anything.
+>>  +
+>>  You may find this (or --no-ff with an interactive rebase) helpful after
+>>  reverting a topic branch merge, as this option recreates the topic branch with
+>
+> I dig more into it, and that's what I came up with, using some of your
+> suggestions as well.
+>
+> Please notice new text on essential interaction with --preserve-merges.
+>
+> I also thought about "Force the rebase that would otherwise be a no-op",
+> and while it is future-changes-agnostic indeed, it doesn't actually
+> explain anything, so I put some explanation back.
 
-It can be downloaded from the usual place [1] and I also attached some
-(although non-gpg signed) SHA sums [2].
+A sentence "--force has no effect under --preserve-merges mode" does
+not tell the readers very much, either and leaves them wondering if
+it means "--preserve-merges mode always rebases every time it is
+asked, never noticing 'ah, the history is already in a good shape
+and there is no need to do anything further'" or "--preserve-merges
+mode ignores --force and refuses to recreate the history if the
+history is in the shape the mode deems is already desirable."
 
+I think the root cause of the issue we share in this thread, when
+trying to come up with an improvement of this part, is that we are
+trying to put more explanation to the description of --force, but if
+we step back a bit, it may be that the explanation does not belong
+there.  As far as the readers are concerned, --force is about
+forcing a rebase that would not otherwise be a no-op, but the real
+issue is that the condition under which a requested rebase becomes a
+no-op, iow, "the history is already in the desired shape, nothing to
+do", is different from mode to mode, because "the desired shape" is
+what distinguishes the modes.  Preserve-merge rebase may think that
+a history that is descendant of the "onto" commit is already in the
+desired shape while plain-vanilla rebase does not if it has a merge
+in between, for example.
 
-New Features
+The sentence that follows "Otherwise" in this version encourages the
+readers to be in a wrong mind-set that rebase is only about "making
+the branch a descendant of the 'onto' commit", which isn't the case.
 
-    Comes with Git 1.9.4 plus Windows-specific patches
-    Add vimtutor (msysgit PR #220)
-    Update OpenSSH to 6.6.1p1 and its OpenSSL to 1.0.1i (msysgit PR
-#221, #223, #224, #226, #229, #234, #236)
-    Update mingw OpenSSL to 0.9.8zb (msysgit PR #241, #242)
+The desired outcome depends on the mode (and that is why there are
+modes), and not saying that explicitly will only help spread the
+confusion, I am afraid.  Isn't it a better solution to explain what
+that no-op condition is for the mode at the place in the document
+where we describe each mode?
 
-Bugfixes
+E.g. under "--preserve-merges" heading, we may say "make sure the
+history is a descendant of the 'onto' commit; if it already is,
+nothing is done because there is no need to do anything" or
+something along that line.  The description for the plain-vanilla
+rebase may say "flatten the history on top of the 'onto' commit by
+replaying the changes in each non-merge commit; if the history is
+already a descendant of the 'onto' commit without any merge in
+between, nothing is done because there is no need to".
 
-    Checkout problem with directories exceeding MAX_PATH (PR
-msysgit/git#212, msysgit #227)
-    Backport a webdav fix from junio/maint (d9037e http-push.c: make
-CURLOPT_IOCTLDATA a usable pointer, PR msysgit/git#230)
+That would make description of the modes more understandable, too.
+The users can read what kind of resulting history they can get out
+of by using each mode in one place.
 
-Regressions
+Hmm?
 
-    git svn is/might be broken. Fixes welcome.
-
-
-Have phun,
-Thomas
-
-
-[1]:
-https://github.com/msysgit/msysgit/releases/download/Git-1.9.4-preview20140815/Git-1.9.4-preview20140815.exe
-[2]:
-SHA1(Git-1.9.4-preview20140815.exe)=
-88dd56d612431055a5c5d65c3b2f23736ad725b0
-SHA1(msysGit-netinstall-1.9.4-preview20140815.exe)=
-c2cb700839fdcea79b5401f046878de711628ccc
-SHA1(PortableGit-1.9.4-preview20140815.7z)=
-4deafc5fede624437c68d101a660a78bdb56f899
-
--- 
--- 
-*** Please reply-to-all at all times ***
-*** (do not pretend to know who is subscribed and who is not) ***
-*** Please avoid top-posting. ***
-The msysGit Wiki is here: https://github.com/msysgit/msysgit/wiki - Github accounts are free.
-
-You received this message because you are subscribed to the Google
-Groups "msysGit" group.
-To post to this group, send email to msysgit@googlegroups.com
-To unsubscribe from this group, send email to
-msysgit+unsubscribe@googlegroups.com
-For more options, and view previous threads, visit this group at
-http://groups.google.com/group/msysgit?hl=en_US?hl=en
-
---- 
-You received this message because you are subscribed to the Google Groups "msysGit" group.
-To unsubscribe from this group and stop receiving emails from it, send an email to msysgit+unsubscribe@googlegroups.com.
-For more options, visit https://groups.google.com/d/optout.
+> -- >8 --
+>
+> From: Sergey Organov <sorganov@gmail.com>
+> Date: Tue, 12 Aug 2014 00:10:19 +0400
+> Subject: [PATCH] Documentation/git-rebase.txt: fix -f description to match
+>
+> "Current branch is a descendant of the commit you are rebasing onto"
+> does not necessarily mean "rebase" requires "--force". Presence of
+> merge commit(s) makes "rebase" perform its default flattening actions
+> anyway.
+>
+> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+> ---
+>  Documentation/git-rebase.txt | 9 ++++-----
+>  1 file changed, 4 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 2a93c64..9153369 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -316,11 +316,10 @@ which makes little sense.
+>  
+>  -f::
+>  --force-rebase::
+> -	Force the rebase even if the current branch is a descendant
+> -	of the commit you are rebasing onto.  Normally non-interactive rebase will
+> -	exit with the message "Current branch is up to date" in such a
+> -	situation.
+> -	Incompatible with the --interactive option.
+> +	If --preserve-merges is given, has no effect. Otherwise forces
+> +	rebase even if the current branch is a descendant of the commit
+> +	you are rebasing onto and there are no merge commits among
+> +	those to be rebased.
+>  +
+>  You may find this (or --no-ff with an interactive rebase) helpful after
+>  reverting a topic branch merge, as this option recreates the topic branch with
