@@ -1,103 +1,93 @@
-From: "Harlan, Peter" <peter.harlan@hp.com>
-Subject: Re: Problem with Git rev-list output
-Date: Fri, 15 Aug 2014 07:26:04 +0000
-Message-ID: <AFBFD05B9DF375478FAB650FE9527BB426187E5B@G1W3782.americas.hpqcorp.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Crabtree, Andrew" <andrew.crabtree@hp.com>
-X-From: git-owner@vger.kernel.org Fri Aug 15 09:28:37 2014
+From: "Kyle J. McKay" <mackyle@gmail.com>
+Subject: Re: Git on Mac OS X 10.4.10
+Date: Fri, 15 Aug 2014 00:46:11 -0700
+Message-ID: <273241271546c07e692ae93774993f5@74d39fa044aa309eaea14b9f57fe79c>
+References: <53ECA7DB.7060407@jump-ing.de> <53ECCA14.40900@web.de> <53ED0257.3070505@jump-ing.de> <xmqqppg21wyk.fsf@gitster.dls.corp.google.com>
+Cc: Markus Hitter <mah@jump-ing.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 09:46:25 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIBwC-00074r-Oc
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Aug 2014 09:28:37 +0200
+	id 1XICDR-0005Wh-9Z
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Aug 2014 09:46:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932300AbaHOH2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2014 03:28:32 -0400
-Received: from g9t1613g.houston.hp.com ([15.240.0.71]:35577 "EHLO
-	g9t1613g.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754489AbaHOH2a convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Aug 2014 03:28:30 -0400
-Received: from g2t2353.austin.hp.com (g2t2353.austin.hp.com [15.217.128.52])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by g9t1613g.houston.hp.com (Postfix) with ESMTPS id 11F82605F4
-	for <git@vger.kernel.org>; Fri, 15 Aug 2014 07:27:52 +0000 (UTC)
-Received: from G2W4316.americas.hpqcorp.net (g2w4316.austin.hp.com [16.197.9.73])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by g2t2353.austin.hp.com (Postfix) with ESMTPS id 47F0E1A2
-	for <git@vger.kernel.org>; Fri, 15 Aug 2014 07:27:27 +0000 (UTC)
-Received: from G1W5784.americas.hpqcorp.net (16.193.26.2) by
- G2W4316.americas.hpqcorp.net (16.197.9.73) with Microsoft SMTP Server (TLS)
- id 14.3.169.1; Fri, 15 Aug 2014 07:26:05 +0000
-Received: from G1W3782.americas.hpqcorp.net ([169.254.4.191]) by
- G1W5784.americas.hpqcorp.net ([16.193.26.2]) with mapi id 14.03.0169.001;
- Fri, 15 Aug 2014 07:26:04 +0000
-Thread-Topic: Re: Problem with Git rev-list output
-Thread-Index: Ac+4WOL6WsFCQ1kITk+9Yhn8GYogVA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [15.217.50.23]
+	id S1753344AbaHOHqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2014 03:46:21 -0400
+Received: from mail-pd0-f181.google.com ([209.85.192.181]:40645 "EHLO
+	mail-pd0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753236AbaHOHqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2014 03:46:20 -0400
+Received: by mail-pd0-f181.google.com with SMTP id g10so2922554pdj.26
+        for <git@vger.kernel.org>; Fri, 15 Aug 2014 00:46:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=pjL7s5t9mchtcUCapJHvOfpc5RD5hwrCBqwQvd7XYcc=;
+        b=smlGjsZJq34hVRIbpPONTFmNVb3u3oKLCOZCaIDoEM8eEGIH8ih1AbOTnKMGqoQhp8
+         Zq44Z2V20vn/7aiDOsVvzmUjQ2CAiWfdaJ+ATCi8CXr13JgXXfJSBWjmHadB8Fu/ctID
+         eci/qzwtUKNxv7V8i/tc1kLRUsV+vVfFxoT+WvmzD5vgzDHNT0dpkeWzCNRs6svldEuU
+         UtO9HfciyPAbfgvCnlAm1d1upleDLtPXMucCgdBfGk3xkQEz58nVK9LlkXuIlOOC6nQw
+         ZJmtwaU+2cH2Z9qbUwEP/hk5CdFss2fRGMTWr5KecKIDFNtJO9I1mncjMxvgxZb93jo9
+         hr9w==
+X-Received: by 10.70.55.228 with SMTP id v4mr10842475pdp.117.1408088776956;
+        Fri, 15 Aug 2014 00:46:16 -0700 (PDT)
+Received: from localhost.localdomain (ip72-192-173-141.sd.sd.cox.net. [72.192.173.141])
+        by mx.google.com with ESMTPSA id np15sm10942821pdb.84.2014.08.15.00.46.15
+        for <multiple recipients>
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 15 Aug 2014 00:46:16 -0700 (PDT)
+In-Reply-To: <xmqqppg21wyk.fsf@gitster.dls.corp.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255282>
 
-On 2014-08-12 01:10:28 Andrew Crabtree wrote:
-> I'm seeing some oddity in one of my repositories where the root commit is being output in 'rev-list' even
-> when I pass in a reference that should exclude it from being output.
-...
-> Seeing the issue with versions of git from 1.7 to 2.1.
+On Aug 14, 2014, at 16:18, Junio C Hamano wrote:
 
-I have a small test repo on GitHub that demonstrates the problem.  I expect it is caused by the commit dates being out of sequence:
+> Markus Hitter <mah@jump-ing.de> writes:
+>
+>>> The  <CommonCrypto/CommonHMAC.h> is in Mac OS X 10.6 .. 10.9,
+>>> but not in 10.4 (I don't know about 10.5).
 
-1. Clone the "revlist" repo:
+That header is new with 10.5
 
-# git clone https://github.com/pcharlan/revlist.git                             
-Cloning into 'revlist'...
+> Is this about platform dependency, or what the end user happens to
+> choose to install (in other words, is there an add-on users of 10.4
+> can choose to add, which allows them to use that header)?
 
-2. master has six commits (with out-of-order dates):
+Nope, it's a platform dependency.  Not available prior to 10.5.
 
-# git log --pretty='%h %cd' master
-0f9e594 Sun May 20 01:01:01 2007 -0700
-1ad887b Sun May 20 01:01:01 2007 -0700
-cde7188 Sun May 20 01:01:01 2007 -0700
-51af1c0 Sun May 20 01:01:01 2007 -0700   <-- date seven years ago
-0e080e8 Tue Aug 12 11:51:19 2014 -0700  <-- present day
-77ce973 Fri May 20 01:01:01 2011 -0700  <-- three years ago
+The below patch does the right thing.  Conveniently there's already
+a test for 10.4 and earlier so only a single line need be added.
 
-3. Pruning master with origin/other (a branch with the same root and also out-of-order dates) has no effect, counter to expectation:
+--Kyle
 
-# git log --pretty='%h %cd' master ^origin/other
-0f9e594 Sun May 20 01:01:01 2007 -0700
-1ad887b Sun May 20 01:01:01 2007 -0700
-cde7188 Sun May 20 01:01:01 2007 -0700
-51af1c0 Sun May 20 01:01:01 2007 -0700
-0e080e8 Tue Aug 12 11:51:19 2014 -0700
-77ce973 Fri May 20 01:01:01 2011 -0700     <--- Reachable from origin/other
+---- 8< ----
+Subject: [PATCH] config.mak.uname: set NO_APPLE_COMMON_CRYPTO on older systems
 
-4. Pruning master with the parent of origin/other removes the root commit:
+Older MacOS systems prior to 10.5 do not have the CommonCrypto
+support Git uses so set NO_APPLE_COMMON_CRYPTO on those systems.
 
-# git log --pretty='%h %cd' master ^origin/other~
-0f9e594 Sun May 20 01:01:01 2007 -0700
-1ad887b Sun May 20 01:01:01 2007 -0700
-cde7188 Sun May 20 01:01:01 2007 -0700
-51af1c0 Sun May 20 01:01:01 2007 -0700
-0e080e8 Tue Aug 12 11:51:19 2014 -0700
+Signed-off-by: Kyle J. McKay <mackyle@gmail.com>
+---
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-Q: Is this expected behavior?  If so, and assuming that it's the dates that are throwing Git off, is there a way to tell Git to not care about the dates, or to care less than it does?
-
-Thanks,
-
---Pete
-
-Peter Harlan
-HP Networking
+diff --git a/config.mak.uname b/config.mak.uname
+index 7846bd76..f8e12c96 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -88,6 +88,7 @@ ifeq ($(uname_S),Darwin)
+ 	NEEDS_LIBICONV = YesPlease
+ 	ifeq ($(shell expr "$(uname_R)" : '[15678]\.'),2)
+ 		OLD_ICONV = UnfortunatelyYes
++		NO_APPLE_COMMON_CRYPTO = YesPlease
+ 	endif
+ 	ifeq ($(shell expr "$(uname_R)" : '[15]\.'),2)
+ 		NO_STRLCPY = YesPlease
+-- 
+1.8.5
