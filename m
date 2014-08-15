@@ -1,160 +1,103 @@
-From: Patrick Reynolds <patrick.reynolds@github.com>
-Subject: [PATCH] unblock and unignore SIGPIPE
-Date: Fri, 15 Aug 2014 00:29:25 -0500
-Message-ID: <1408080565-33234-1-git-send-email-patrick.reynolds@github.com>
-Cc: Patrick Reynolds <patrick.reynolds@github.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 15 07:29:45 2014
+From: "Harlan, Peter" <peter.harlan@hp.com>
+Subject: Re: Problem with Git rev-list output
+Date: Fri, 15 Aug 2014 07:26:04 +0000
+Message-ID: <AFBFD05B9DF375478FAB650FE9527BB426187E5B@G1W3782.americas.hpqcorp.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Crabtree, Andrew" <andrew.crabtree@hp.com>
+X-From: git-owner@vger.kernel.org Fri Aug 15 09:28:37 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIA57-0005k6-KR
-	for gcvg-git-2@plane.gmane.org; Fri, 15 Aug 2014 07:29:41 +0200
+	id 1XIBwC-00074r-Oc
+	for gcvg-git-2@plane.gmane.org; Fri, 15 Aug 2014 09:28:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751170AbaHOF3i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2014 01:29:38 -0400
-Received: from mail-qg0-f46.google.com ([209.85.192.46]:41754 "EHLO
-	mail-qg0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750778AbaHOF3h (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2014 01:29:37 -0400
-Received: by mail-qg0-f46.google.com with SMTP id z60so1867448qgd.5
-        for <git@vger.kernel.org>; Thu, 14 Aug 2014 22:29:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=/8tzlhn17tcpmczqbM8ceEzIP93I/SPRCwv8Bqr9DMg=;
-        b=d6Ij4bKMEPTDgVKbfgpJjf9MyPvsd9EumDU4Eo6hQMfekexaCf3C8oOK1xXa4nS3ly
-         qT4qS8aPv5e5biMvZizAEndYEntvrx2NAYl8AcG5Oo0S12oixq/oe4ktTpiJWQOGYp1S
-         o0QQDLaaNJiuR63282mj/7qPM6qqtFoolshqQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20130820;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=/8tzlhn17tcpmczqbM8ceEzIP93I/SPRCwv8Bqr9DMg=;
-        b=FZSuKBOq5zqVLoc5diWhd+F9Pl08CAg/ttF/eWMKasDAaB2UcwRhn/Wrx5esa9Fa66
-         gSSv/P5rWe+7ISmQZsiUOCXFgqlOQY1IFkn+NYa58KEzEC1HzunZEJlVQDpbZh5X/EQD
-         av5hQNlM48nkLwCxXzKJLCMXlO7qUP3EQi1X8QYvZwhOvXn3jGnJnwwaruAr9JlTAcxG
-         ntijOE645AQHv79DSwdWpk78HnseeLBDzYOsSGzWfc/XjZrZlMgWsJsiUffe3cYWXpz4
-         /ZKZsc/hDxvidVHpey7E8ZCAF0Idzs6z6uIjzXBKCchvr8V2WKySFio28h2Q1YQh7qre
-         x0Iw==
-X-Gm-Message-State: ALoCoQndpnhTongR2KkpSvYWAIJrWTe169Da1AJRwQrtA6G3j7WCJS9VZHcAnlEvGqxbylEINC/b
-X-Received: by 10.140.96.85 with SMTP id j79mr23688256qge.5.1408080576466;
-        Thu, 14 Aug 2014 22:29:36 -0700 (PDT)
-Received: from localhost.localdomain (ip68-1-72-35.pn.at.cox.net. [68.1.72.35])
-        by mx.google.com with ESMTPSA id j3sm7829948qgj.48.2014.08.14.22.29.35
-        for <multiple recipients>
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 14 Aug 2014 22:29:36 -0700 (PDT)
-X-Mailer: git-send-email 2.0.1
+	id S932300AbaHOH2c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2014 03:28:32 -0400
+Received: from g9t1613g.houston.hp.com ([15.240.0.71]:35577 "EHLO
+	g9t1613g.houston.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754489AbaHOH2a convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Aug 2014 03:28:30 -0400
+Received: from g2t2353.austin.hp.com (g2t2353.austin.hp.com [15.217.128.52])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by g9t1613g.houston.hp.com (Postfix) with ESMTPS id 11F82605F4
+	for <git@vger.kernel.org>; Fri, 15 Aug 2014 07:27:52 +0000 (UTC)
+Received: from G2W4316.americas.hpqcorp.net (g2w4316.austin.hp.com [16.197.9.73])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by g2t2353.austin.hp.com (Postfix) with ESMTPS id 47F0E1A2
+	for <git@vger.kernel.org>; Fri, 15 Aug 2014 07:27:27 +0000 (UTC)
+Received: from G1W5784.americas.hpqcorp.net (16.193.26.2) by
+ G2W4316.americas.hpqcorp.net (16.197.9.73) with Microsoft SMTP Server (TLS)
+ id 14.3.169.1; Fri, 15 Aug 2014 07:26:05 +0000
+Received: from G1W3782.americas.hpqcorp.net ([169.254.4.191]) by
+ G1W5784.americas.hpqcorp.net ([16.193.26.2]) with mapi id 14.03.0169.001;
+ Fri, 15 Aug 2014 07:26:04 +0000
+Thread-Topic: Re: Problem with Git rev-list output
+Thread-Index: Ac+4WOL6WsFCQ1kITk+9Yhn8GYogVA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [15.217.50.23]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255281>
 
-Blocked and ignored signals -- but not caught signals -- are inherited
-across exec.  Some callers with sloppy signal-handling behavior can call
-git with SIGPIPE blocked or ignored, even non-deterministically.  When
-SIGPIPE is blocked or ignored, several git commands can run indefinitely,
-ignoring EPIPE returns from write() calls, even when the process that
-called them has gone away.  Our specific case involved a pipe of git
-diff-tree output to a script that reads a limited amount of diff data.
+On 2014-08-12 01:10:28 Andrew Crabtree wrote:
+> I'm seeing some oddity in one of my repositories where the root commit is being output in 'rev-list' even
+> when I pass in a reference that should exclude it from being output.
+...
+> Seeing the issue with versions of git from 1.7 to 2.1.
 
-In an ideal world, git would never be called with SIGPIPE blocked or
-ignored.  But in the real world, several real potential callers, including
-Perl, Apache, and Unicorn, sometimes spawn subprocesses with SIGPIPE
-ignored.  It is easier and more productive to harden git against this
-mistake than to clean it up in every potential parent process.
+I have a small test repo on GitHub that demonstrates the problem.  I expect it is caused by the commit dates being out of sequence:
 
-Signed-off-by: Patrick Reynolds <patrick.reynolds@github.com>
----
- cache.h            |  1 +
- git.c              |  5 +++++
- setup.c            | 11 +++++++++++
- t/t0012-sigpipe.sh | 27 +++++++++++++++++++++++++++
- 4 files changed, 44 insertions(+)
- create mode 100755 t/t0012-sigpipe.sh
+1. Clone the "revlist" repo:
 
-diff --git a/cache.h b/cache.h
-index fcb511d..0a89fc1 100644
---- a/cache.h
-+++ b/cache.h
-@@ -463,6 +463,7 @@ extern int set_git_dir_init(const char *git_dir, const char *real_git_dir, int);
- extern int init_db(const char *template_dir, unsigned int flags);
- 
- extern void sanitize_stdfds(void);
-+extern void sanitize_signals(void);
- extern int daemonize(void);
- 
- #define alloc_nr(x) (((x)+16)*3/2)
-diff --git a/git.c b/git.c
-index 9c49519..d6b221b 100644
---- a/git.c
-+++ b/git.c
-@@ -611,6 +611,11 @@ int main(int argc, char **av)
- 	 */
- 	sanitize_stdfds();
- 
-+	/*
-+	 * Make sure we aren't ignoring or blocking SIGPIPE.
-+	 */
-+	sanitize_signals();
-+
- 	git_setup_gettext();
- 
- 	trace_command_performance(argv);
-diff --git a/setup.c b/setup.c
-index 0a22f8b..7aa4b01 100644
---- a/setup.c
-+++ b/setup.c
-@@ -865,3 +865,14 @@ int daemonize(void)
- 	return 0;
- #endif
- }
-+
-+/* un-ignore and un-block SIGPIPE */
-+void sanitize_signals(void)
-+{
-+	sigset_t unblock;
-+
-+	sigemptyset(&unblock);
-+	sigaddset(&unblock, SIGPIPE);
-+	sigprocmask(SIG_UNBLOCK, &unblock, NULL);
-+	signal(SIGPIPE, SIG_DFL);
-+}
-diff --git a/t/t0012-sigpipe.sh b/t/t0012-sigpipe.sh
-new file mode 100755
-index 0000000..213cde3
---- /dev/null
-+++ b/t/t0012-sigpipe.sh
-@@ -0,0 +1,27 @@
-+#!/bin/sh
-+
-+test_description='check handling of SIGPIPE'
-+. ./test-lib.sh
-+
-+test_expect_success 'create blob' '
-+	test-genrandom foo 16384 >file &&
-+	git add file
-+'
-+
-+large_git () {
-+	for i in $(test_seq 1 100); do
-+		git diff --staged --binary || return $?
-+	done
-+}
-+
-+test_expect_success 'git dies with SIGPIPE' '
-+	OUT=$( ((large_git; echo $? 1>&3) | true) 3>&1 )
-+	test "$OUT" -eq 141
-+'
-+
-+test_expect_success 'git dies with SIGPIPE even if parent ignores it' '
-+	OUT=$( ((trap "" PIPE; large_git; echo $? 1>&3) | true) 3>&1 )
-+	test "$OUT" -eq 141
-+'
-+
-+test_done
--- 
-2.0.1
+# git clone https://github.com/pcharlan/revlist.git                             
+Cloning into 'revlist'...
+
+2. master has six commits (with out-of-order dates):
+
+# git log --pretty='%h %cd' master
+0f9e594 Sun May 20 01:01:01 2007 -0700
+1ad887b Sun May 20 01:01:01 2007 -0700
+cde7188 Sun May 20 01:01:01 2007 -0700
+51af1c0 Sun May 20 01:01:01 2007 -0700   <-- date seven years ago
+0e080e8 Tue Aug 12 11:51:19 2014 -0700  <-- present day
+77ce973 Fri May 20 01:01:01 2011 -0700  <-- three years ago
+
+3. Pruning master with origin/other (a branch with the same root and also out-of-order dates) has no effect, counter to expectation:
+
+# git log --pretty='%h %cd' master ^origin/other
+0f9e594 Sun May 20 01:01:01 2007 -0700
+1ad887b Sun May 20 01:01:01 2007 -0700
+cde7188 Sun May 20 01:01:01 2007 -0700
+51af1c0 Sun May 20 01:01:01 2007 -0700
+0e080e8 Tue Aug 12 11:51:19 2014 -0700
+77ce973 Fri May 20 01:01:01 2011 -0700     <--- Reachable from origin/other
+
+4. Pruning master with the parent of origin/other removes the root commit:
+
+# git log --pretty='%h %cd' master ^origin/other~
+0f9e594 Sun May 20 01:01:01 2007 -0700
+1ad887b Sun May 20 01:01:01 2007 -0700
+cde7188 Sun May 20 01:01:01 2007 -0700
+51af1c0 Sun May 20 01:01:01 2007 -0700
+0e080e8 Tue Aug 12 11:51:19 2014 -0700
+
+Q: Is this expected behavior?  If so, and assuming that it's the dates that are throwing Git off, is there a way to tell Git to not care about the dates, or to care less than it does?
+
+Thanks,
+
+--Pete
+
+Peter Harlan
+HP Networking
