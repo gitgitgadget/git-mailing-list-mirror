@@ -1,104 +1,106 @@
-From: Jaime Soriano Pastor <jsorianopastor@gmail.com>
-Subject: Re: [PATCH] read-cache.c: Ensure unmerged entries are removed
-Date: Sat, 16 Aug 2014 16:51:41 +0200
-Message-ID: <CAPuZ2NEE0d_5Vj3MSGEJCtFBFOe75Rb+q9fk7q1YC-WcvAMb4A@mail.gmail.com>
-References: <1407857491-16633-1-git-send-email-jsorianopastor@gmail.com>
-	<1407857491-16633-2-git-send-email-jsorianopastor@gmail.com>
-	<xmqq8umt5z8i.fsf@gitster.dls.corp.google.com>
-	<CAPuZ2NFcJ5FFeJP=0-oG59fs=3ztenoPOGWOZKfZDdHpLGOYeA@mail.gmail.com>
-	<xmqqiolw2dqc.fsf@gitster.dls.corp.google.com>
-	<CAPuZ2NFJiUt1p_OfefswS8O8_BA6mQy=PStmYyNw=ABZCOQprQ@mail.gmail.com>
-	<xmqqmwb5zatx.fsf@gitster.dls.corp.google.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 16 16:52:03 2014
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH v2 2/2] convert: Stream from fd to required clean filter instead of mmap
+Date: Sat, 16 Aug 2014 18:26:08 +0200
+Message-ID: <FA3F1197-25C5-42E4-9418-1C821D430819@zib.de>
+References: <1407303134-16635-1-git-send-email-prohaska@zib.de> <1407303134-16635-3-git-send-email-prohaska@zib.de> <20140816102703.GD7857@serenity.lan>
+Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Scott Chacon <schacon@gmail.com>
+To: John Keeping <john@keeping.me.uk>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 16 18:27:01 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIfKr-0000ps-VA
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 16:52:02 +0200
+	id 1XIgol-00040n-Dl
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 18:26:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbaHPOvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Aug 2014 10:51:42 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:33964 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487AbaHPOvl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Aug 2014 10:51:41 -0400
-Received: by mail-pd0-f171.google.com with SMTP id z10so4900931pdj.16
-        for <git@vger.kernel.org>; Sat, 16 Aug 2014 07:51:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20120113;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        bh=7sVgZRaj4nRZG8dJKWkoY8BP0E22b4P7Zyw33Onj1SM=;
-        b=KeL4kUi9ipPY4qhcgJQ3IveXEzQcopdC8ZmjWNIl9DUqEHvmUSqkMXV9u60ZB7YatE
-         7AwRRznCcS8jbEbISgJ2+7ASDV1S9qkm0vtqiHVNPNutb8LhCSD7odWQruvKFRFP5o6R
-         SDwyOX5nC3Gj3KW22hCcHS3KDw4rfUDAeoFvSznHn2eC73wT8T/5SD7/EVYnQF7rVmFJ
-         n7sh6ckoH27dtGTTJq/w6ihE048HLf0Yjhc+XpqEa8KHmjBPK3MgarOAJizj8GyGhMYz
-         Lrv9SvTx5I+LrSdJIXcTni6KaP9P5A4jiIcpXe1I83pE4yxpeedYHGxP/C5ERF15soAd
-         BfIg==
-X-Received: by 10.68.215.67 with SMTP id og3mr4143753pbc.30.1408200701217;
- Sat, 16 Aug 2014 07:51:41 -0700 (PDT)
-Received: by 10.70.43.170 with HTTP; Sat, 16 Aug 2014 07:51:41 -0700 (PDT)
-In-Reply-To: <xmqqmwb5zatx.fsf@gitster.dls.corp.google.com>
+	id S1751604AbaHPQ0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Aug 2014 12:26:55 -0400
+Received: from mailer.zib.de ([130.73.108.11]:54032 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751525AbaHPQ0z convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 16 Aug 2014 12:26:55 -0400
+Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
+	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7GGQGUq016707;
+	Sat, 16 Aug 2014 18:26:16 +0200 (CEST)
+Received: from [192.168.1.200] (95-91-208-130-dynip.superkabel.de [95.91.208.130])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7GGQEQs016647
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sat, 16 Aug 2014 18:26:15 +0200 (CEST)
+In-Reply-To: <20140816102703.GD7857@serenity.lan>
+X-Mailer: Apple Mail (2.1878.6)
+X-Miltered: at mailer.zib.de with ID 53EF8628.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
+X-j-chkmail-Enveloppe: 53EF8628.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
+X-j-chkmail-Score: MSGID : 53EF8628.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
+X-j-chkmail-Status: Ham
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255324>
-
-I'd like to add some tests too for this, but I don't know how to
-reproduce this state with git commands only, is there any way to add
-entries to the index without checkings?
-Or maybe it could be done by creating a "test-" command that adds the
-entries to an index?
-
-Thanks.
-
-On Fri, Aug 15, 2014 at 11:45 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Jaime Soriano Pastor <jsorianopastor@gmail.com> writes:
->
->> On Thu, Aug 14, 2014 at 1:04 AM, Junio C Hamano <gitster@pobox.com> wrote:
->>> Being a conservative, I'd rather avoid doing any magic during
->>> read_cache() time. "ls-files -s" for example should show the four
->>> stages so that the "broken" state can be inspected.
->>>
->> Well, only read_cache_unmerged() is modified in the sent patch, so no
->> magic is done in read_cache(), I'd also avoid changes there.
->
-> Ahh, I must have overlooked that; changes being only in _unmerged()
-> variant makes me feel much better, and it probably would make much
-> of ...
->
->>> Yes, it would be more work,...
->
-> ... moot, hopefully ;-)
->
->> git reset will clean the index anyway if the loop finishes, would it
->> be ok?
->
-> Surely.
->
->> git merge is also affected by the loop in read_cache_unmerged(), but
->> any of the solutions would be enough for it as only by finishing the
->> loop with unmerged entries it will die without commiting the cache to
->> the index file.
->
-> Again, true.  The mergy operations want to start from a clean slate
-> and they call _unmerged() variant primarily to learn that there were
-> unmerged entries in the index, only to abort the operation in that
-> case, so a change to _unmerged() variant should be safe for them.
->
-> I'll take another look at your patch later, but not before the 2.1
-> final, and by that time you may already have sent a reroll ;-)
->
-> Thanks.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255325>
 
 
+On Aug 16, 2014, at 12:27 PM, John Keeping <john@keeping.me.uk> wrote:
 
--- 
-Jaime Soriano Pastor - Software Developer
+>> +test_expect_success HAVE_MAX_MEM_USAGE \
+>> +'filtering large input to small output should use little memory' '
+>> +	git config filter.devnull.clean "cat >/dev/null" &&
+>> +	git config filter.devnull.required true &&
+>> +	for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
+>> +	echo "30MB filter=devnull" >.gitattributes &&
+>> +	max_mem_usage_is_lt_KB 15000 git add 30MB
+>> +'
+> 
+> This test fails for me:
+> 
+> -- 8< --
+> expecting success: 
+>        git config filter.devnull.clean "cat >/dev/null" &&
+>        git config filter.devnull.required true &&
+>        for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
+>        echo "30MB filter=devnull" >.gitattributes &&
+>        max_mem_usage_is_lt_KB 15000 git add 30MB
+> 
+> Command used too much memory (expected limit 15000KB, actual usage 15808KB).
+> not ok 8 - filtering large input to small output should use little memory
+> -- >8 --
+> 
+> This is on Linux 3.16 x86_64 with GCC 4.8.3 and glibc 2.19.  My GCC also
+> has "-fstack-protector" and "-D_FORTIFY_SOURCE=2" enabled by default;
+> turning those off for Git decreased the memory usage by about 500KB but
+> not enough to make the test pass.  Of course, all of the libraries Git
+> is linking are also compiled with those flags...
+> 
+> Is the 15MB limit supposed to be imposed somewhere or is it just a guide
+> of how much memory we expect Git to use in this scenario?
+
+The test should confirm that the the file that is added is not mmapped to memory.  The process size should be relatively small independently of the size of the file that is added.  I wanted to keep the file size small.  The chosen sizes worked for me on Mac and Linux.
+
+A simple solution could be to increase the size of the test file and the limit.  I'd suggest to squash the diff below.  The test should still run reasonably fast with a 50 MB test file.
+
+Junio, shall I send a whole updated patch series?
+
+	Steffen
+
+
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 2cb2414..43de87d 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -243,9 +243,9 @@ test_expect_success HAVE_MAX_MEM_USAGE \
+ 'filtering large input to small output should use little memory' '
+        git config filter.devnull.clean "cat >/dev/null" &&
+        git config filter.devnull.required true &&
+-       for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
+-       echo "30MB filter=devnull" >.gitattributes &&
+-       max_mem_usage_is_lt_KB 15000 git add 30MB
++       for i in $(test_seq 1 50); do printf "%1048576d" 1; done >50MB &&
++       echo "50MB filter=devnull" >.gitattributes &&
++       max_mem_usage_is_lt_KB 35000 git add 50MB
+ '
