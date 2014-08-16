@@ -1,106 +1,272 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH v2 2/2] convert: Stream from fd to required clean filter instead of mmap
-Date: Sat, 16 Aug 2014 18:26:08 +0200
-Message-ID: <FA3F1197-25C5-42E4-9418-1C821D430819@zib.de>
-References: <1407303134-16635-1-git-send-email-prohaska@zib.de> <1407303134-16635-3-git-send-email-prohaska@zib.de> <20140816102703.GD7857@serenity.lan>
-Mime-Version: 1.0 (Mac OS X Mail 7.3 \(1878.6\))
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-	Scott Chacon <schacon@gmail.com>
-To: John Keeping <john@keeping.me.uk>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 16 18:27:01 2014
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v13 03/11] trailer: read and process config information
+Date: Sat, 16 Aug 2014 18:06:13 +0200
+Message-ID: <20140816160622.18221.2632.chriscool@tuxfamily.org>
+References: <20140816153440.18221.29179.chriscool@tuxfamily.org>
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	Josh Triplett <josh@joshtriplett.org>,
+	Thomas Rast <tr@thomasrast.ch>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Greg Kroah-Hartman <greg@kroah.com>, Jeff King <peff@peff.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 16 18:30:38 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIgol-00040n-Dl
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 18:26:59 +0200
+	id 1XIgsH-0005LP-Sy
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 18:30:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751604AbaHPQ0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Aug 2014 12:26:55 -0400
-Received: from mailer.zib.de ([130.73.108.11]:54032 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751525AbaHPQ0z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 16 Aug 2014 12:26:55 -0400
-Received: from mailsrv2.zib.de (mailsrv2.zib.de [130.73.108.14])
-	by mailer.zib.de (8.14.5/8.14.5) with ESMTP id s7GGQGUq016707;
-	Sat, 16 Aug 2014 18:26:16 +0200 (CEST)
-Received: from [192.168.1.200] (95-91-208-130-dynip.superkabel.de [95.91.208.130])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.14.5/8.14.5) with ESMTP id s7GGQEQs016647
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 16 Aug 2014 18:26:15 +0200 (CEST)
-In-Reply-To: <20140816102703.GD7857@serenity.lan>
-X-Mailer: Apple Mail (2.1878.6)
-X-Miltered: at mailer.zib.de with ID 53EF8628.000 by Joe's j-chkmail (http : // j-chkmail dot ensmp dot fr)!
-X-j-chkmail-Enveloppe: 53EF8628.000 from mailsrv2.zib.de/mailsrv2.zib.de/null/mailsrv2.zib.de/<prohaska@zib.de>
-X-j-chkmail-Score: MSGID : 53EF8628.000 on mailer.zib.de : j-chkmail score : . : R=. U=. O=. B=0.000 -> S=0.000
-X-j-chkmail-Status: Ham
+	id S1751628AbaHPQad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Aug 2014 12:30:33 -0400
+Received: from gleek.ethostream.com ([66.195.129.15]:57328 "EHLO
+	barracuda.ethostream.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751508AbaHPQab (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Aug 2014 12:30:31 -0400
+X-Greylist: delayed 1143 seconds by postgrey-1.27 at vger.kernel.org; Sat, 16 Aug 2014 12:30:30 EDT
+X-ASG-Debug-ID: 1408205475-016a7707b5114cf00001-QuoKaX
+Received: from relay.ethostream.com (www1.ethostream.com [66.195.129.11]) by barracuda.ethostream.com with ESMTP id TmqsTdo6gFKhzExG; Sat, 16 Aug 2014 11:11:15 -0500 (CDT)
+X-Barracuda-Envelope-From: chriscool@tuxfamily.org
+X-Barracuda-Apparent-Source-IP: 66.195.129.11
+Received: from ethoserver.ezone.net (unknown [10.230.15.218])
+	by relay.ethostream.com (Postfix) with ESMTPA id 7FD2589177A;
+	Sat, 16 Aug 2014 11:11:15 -0500 (CDT)
+Received: from [127.0.1.1] (unknown [10.0.7.4])
+	by ethoserver.ezone.net (Postfix) with ESMTP id 4394BC548F3;
+	Sat, 16 Aug 2014 11:11:15 -0500 (CDT)
+X-ASG-Orig-Subj: [PATCH v13 03/11] trailer: read and process config information
+X-git-sha1: f0c59db82fe484e93167e6784bf61aa00727976f 
+X-Mailer: git-mail-commits v0.5.2
+In-Reply-To: <20140816153440.18221.29179.chriscool@tuxfamily.org>
+X-Barracuda-Connect: www1.ethostream.com[66.195.129.11]
+X-Barracuda-Start-Time: 1408205475
+X-Barracuda-URL: http://66.195.129.15:8000/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at ethostream.com
+X-Barracuda-Spam-Score: 3.38
+X-Barracuda-Spam-Status: No, SCORE=3.38 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=1000.0 KILL_LEVEL=5.0 tests=FH_DATE_PAST_20XX
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.138343
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	3.38 FH_DATE_PAST_20XX      The date is grossly in the future.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255326>
 
+Read the configuration to get trailer information, and then process
+it and store it in a doubly linked list.
 
-On Aug 16, 2014, at 12:27 PM, John Keeping <john@keeping.me.uk> wrote:
+The config information is stored in the list whose first item is
+pointed to by:
 
->> +test_expect_success HAVE_MAX_MEM_USAGE \
->> +'filtering large input to small output should use little memory' '
->> +	git config filter.devnull.clean "cat >/dev/null" &&
->> +	git config filter.devnull.required true &&
->> +	for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
->> +	echo "30MB filter=devnull" >.gitattributes &&
->> +	max_mem_usage_is_lt_KB 15000 git add 30MB
->> +'
-> 
-> This test fails for me:
-> 
-> -- 8< --
-> expecting success: 
->        git config filter.devnull.clean "cat >/dev/null" &&
->        git config filter.devnull.required true &&
->        for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
->        echo "30MB filter=devnull" >.gitattributes &&
->        max_mem_usage_is_lt_KB 15000 git add 30MB
-> 
-> Command used too much memory (expected limit 15000KB, actual usage 15808KB).
-> not ok 8 - filtering large input to small output should use little memory
-> -- >8 --
-> 
-> This is on Linux 3.16 x86_64 with GCC 4.8.3 and glibc 2.19.  My GCC also
-> has "-fstack-protector" and "-D_FORTIFY_SOURCE=2" enabled by default;
-> turning those off for Git decreased the memory usage by about 500KB but
-> not enough to make the test pass.  Of course, all of the libraries Git
-> is linking are also compiled with those flags...
-> 
-> Is the 15MB limit supposed to be imposed somewhere or is it just a guide
-> of how much memory we expect Git to use in this scenario?
+static struct trailer_item *first_conf_item;
 
-The test should confirm that the the file that is added is not mmapped to memory.  The process size should be relatively small independently of the size of the file that is added.  I wanted to keep the file size small.  The chosen sizes worked for me on Mac and Linux.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ trailer.c | 185 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 185 insertions(+)
 
-A simple solution could be to increase the size of the test file and the limit.  I'd suggest to squash the diff below.  The test should still run reasonably fast with a 50 MB test file.
-
-Junio, shall I send a whole updated patch series?
-
-	Steffen
-
-
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 2cb2414..43de87d 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -243,9 +243,9 @@ test_expect_success HAVE_MAX_MEM_USAGE \
- 'filtering large input to small output should use little memory' '
-        git config filter.devnull.clean "cat >/dev/null" &&
-        git config filter.devnull.required true &&
--       for i in $(test_seq 1 30); do printf "%1048576d" 1; done >30MB &&
--       echo "30MB filter=devnull" >.gitattributes &&
--       max_mem_usage_is_lt_KB 15000 git add 30MB
-+       for i in $(test_seq 1 50); do printf "%1048576d" 1; done >50MB &&
-+       echo "50MB filter=devnull" >.gitattributes &&
-+       max_mem_usage_is_lt_KB 35000 git add 50MB
- '
+diff --git a/trailer.c b/trailer.c
+index 4940e06..2d391f3 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -272,3 +272,188 @@ static void process_trailers_lists(struct trailer_item **in_tok_first,
+ 					     arg_tok);
+ 	}
+ }
++
++static int set_where(struct conf_info *item, const char *value)
++{
++	if (!strcasecmp("after", value))
++		item->where = WHERE_AFTER;
++	else if (!strcasecmp("before", value))
++		item->where = WHERE_BEFORE;
++	else if (!strcasecmp("end", value))
++		item->where = WHERE_END;
++	else if (!strcasecmp("start", value))
++		item->where = WHERE_START;
++	else
++		return -1;
++	return 0;
++}
++
++static int set_if_exists(struct conf_info *item, const char *value)
++{
++	if (!strcasecmp("addIfDifferent", value))
++		item->if_exists = EXISTS_ADD_IF_DIFFERENT;
++	else if (!strcasecmp("addIfDifferentNeighbor", value))
++		item->if_exists = EXISTS_ADD_IF_DIFFERENT_NEIGHBOR;
++	else if (!strcasecmp("add", value))
++		item->if_exists = EXISTS_ADD;
++	else if (!strcasecmp("replace", value))
++		item->if_exists = EXISTS_REPLACE;
++	else if (!strcasecmp("doNothing", value))
++		item->if_exists = EXISTS_DO_NOTHING;
++	else
++		return -1;
++	return 0;
++}
++
++static int set_if_missing(struct conf_info *item, const char *value)
++{
++	if (!strcasecmp("doNothing", value))
++		item->if_missing = MISSING_DO_NOTHING;
++	else if (!strcasecmp("add", value))
++		item->if_missing = MISSING_ADD;
++	else
++		return -1;
++	return 0;
++}
++
++static void duplicate_conf(struct conf_info *dst, struct conf_info *src)
++{
++	*dst = *src;
++	if (src->name)
++		dst->name = xstrdup(src->name);
++	if (src->key)
++		dst->key = xstrdup(src->key);
++	if (src->command)
++		dst->command = xstrdup(src->command);
++}
++
++static struct trailer_item *get_conf_item(const char *name)
++{
++	struct trailer_item *item;
++	struct trailer_item *previous;
++
++	/* Look up item with same name */
++	for (previous = NULL, item = first_conf_item;
++	     item;
++	     previous = item, item = item->next) {
++		if (!strcasecmp(item->conf.name, name))
++			return item;
++	}
++
++	/* Item does not already exists, create it */
++	item = xcalloc(sizeof(struct trailer_item), 1);
++	duplicate_conf(&item->conf, &default_conf_info);
++	item->conf.name = xstrdup(name);
++
++	if (!previous)
++		first_conf_item = item;
++	else {
++		previous->next = item;
++		item->previous = previous;
++	}
++
++	return item;
++}
++
++enum trailer_info_type { TRAILER_KEY, TRAILER_COMMAND, TRAILER_WHERE,
++			 TRAILER_IF_EXISTS, TRAILER_IF_MISSING };
++
++static struct {
++	const char *name;
++	enum trailer_info_type type;
++} trailer_config_items[] = {
++	{ "key", TRAILER_KEY },
++	{ "command", TRAILER_COMMAND },
++	{ "where", TRAILER_WHERE },
++	{ "ifexists", TRAILER_IF_EXISTS },
++	{ "ifmissing", TRAILER_IF_MISSING }
++};
++
++static int git_trailer_default_config(const char *conf_key, const char *value, void *cb)
++{
++	const char *trailer_item, *variable_name;
++
++	if (!skip_prefix(conf_key, "trailer.", &trailer_item))
++		return 0;
++
++	variable_name = strrchr(trailer_item, '.');
++	if (!variable_name) {
++		if (!strcmp(trailer_item, "where")) {
++			if (set_where(&default_conf_info, value) < 0)
++				warning(_("unknown value '%s' for key '%s'"),
++					value, conf_key);
++		} else if (!strcmp(trailer_item, "ifexists")) {
++			if (set_if_exists(&default_conf_info, value) < 0)
++				warning(_("unknown value '%s' for key '%s'"),
++					value, conf_key);
++		} else if (!strcmp(trailer_item, "ifmissing")) {
++			if (set_if_missing(&default_conf_info, value) < 0)
++				warning(_("unknown value '%s' for key '%s'"),
++					value, conf_key);
++		} else if (!strcmp(trailer_item, "separators")) {
++			separators = xstrdup(value);
++		}
++	}
++	return 0;
++}
++
++static int git_trailer_config(const char *conf_key, const char *value, void *cb)
++{
++	const char *trailer_item, *variable_name;
++	struct trailer_item *item;
++	struct conf_info *conf;
++	char *name = NULL;
++	enum trailer_info_type type;
++	int i;
++
++	if (!skip_prefix(conf_key, "trailer.", &trailer_item))
++		return 0;
++
++	variable_name = strrchr(trailer_item, '.');
++	if (!variable_name)
++		return 0;
++
++	variable_name++;
++	for (i = 0; i < ARRAY_SIZE(trailer_config_items); i++) {
++		if (strcmp(trailer_config_items[i].name, variable_name))
++			continue;
++		name = xstrndup(trailer_item,  variable_name - trailer_item - 1);
++		type = trailer_config_items[i].type;
++		break;
++	}
++
++	if (!name)
++		return 0;
++
++	item = get_conf_item(name);
++	conf = &item->conf;
++	free(name);
++
++	switch (type) {
++	case TRAILER_KEY:
++		if (conf->key)
++			warning(_("more than one %s"), conf_key);
++		conf->key = xstrdup(value);
++		break;
++	case TRAILER_COMMAND:
++		if (conf->command)
++			warning(_("more than one %s"), conf_key);
++		conf->command = xstrdup(value);
++		break;
++	case TRAILER_WHERE:
++		if (set_where(conf, value))
++			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
++		break;
++	case TRAILER_IF_EXISTS:
++		if (set_if_exists(conf, value))
++			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
++		break;
++	case TRAILER_IF_MISSING:
++		if (set_if_missing(conf, value))
++			warning(_("unknown value '%s' for key '%s'"), value, conf_key);
++		break;
++	default:
++		die("internal bug in trailer.c");
++	}
++	return 0;
++}
+-- 
+2.0.1.674.ga7f57b7
