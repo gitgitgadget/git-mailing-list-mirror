@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH v4 2/5] sha1_file.c: do not die failing to malloc in unpack_compressed_entry
-Date: Sat, 16 Aug 2014 10:08:03 +0700
-Message-ID: <1408158486-7328-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH v4 1/5] wrapper.c: introduce gentle xmallocz that does not die()
+Date: Sat, 16 Aug 2014 10:08:02 +0700
+Message-ID: <1408158486-7328-2-git-send-email-pclouds@gmail.com>
 References: <1407927454-9268-1-git-send-email-pclouds@gmail.com>
  <1408158486-7328-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
@@ -12,97 +12,201 @@ Cc: Junio C Hamano <gitster@pobox.com>, worley@alum.mit.edu,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 16 05:08:28 2014
+X-From: git-owner@vger.kernel.org Sat Aug 16 05:08:27 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIUM0-0000vV-1d
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 05:08:28 +0200
+	id 1XIULz-0000vV-8d
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 05:08:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751424AbaHPDIX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2014 23:08:23 -0400
-Received: from mail-pd0-f171.google.com ([209.85.192.171]:50204 "EHLO
-	mail-pd0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105AbaHPDIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2014 23:08:22 -0400
-Received: by mail-pd0-f171.google.com with SMTP id z10so4299879pdj.16
-        for <git@vger.kernel.org>; Fri, 15 Aug 2014 20:08:22 -0700 (PDT)
+	id S1751398AbaHPDIS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Aug 2014 23:08:18 -0400
+Received: from mail-pd0-f176.google.com ([209.85.192.176]:45245 "EHLO
+	mail-pd0-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105AbaHPDIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2014 23:08:17 -0400
+Received: by mail-pd0-f176.google.com with SMTP id y10so4297165pdj.21
+        for <git@vger.kernel.org>; Fri, 15 Aug 2014 20:08:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20120113;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        bh=zFEPljoV35PApA1Yhg8wxKUeU04iLmVGuirNb/D8vVA=;
-        b=k3wb7oJNAEs+1iMMWNU+qr/u5pOUqzcqvx7VSSK1rL7O1FhkD1caW0V1w2YfzVpkvS
-         bCumfANDdMHze8WptYn9a4JNo+DabPaNYgASQsyj8sR7ErZ9Svk6vgsJkxpbDaDx4gmO
-         bMiAV1z7l0PqTgkSjKMbXKTHSJj26eiEaPsVOlgafbng7fS7iQUhVEaJsyc9ZJu81Pny
-         5pYNB9RAyEIQ9sdYE+jvPcuEQF/36YWLvGYogD4UYW1sSKfZTZTq4JN80kHJ9jIUd/d1
-         ztFqvqTwcYieqTYI0mOCBx31QRkFseFht3bkDg8snFTojQP0ilqJ5FrHzOlZ9Ii39Jdy
-         GRbw==
-X-Received: by 10.66.129.139 with SMTP id nw11mr17271716pab.16.1408158502387;
-        Fri, 15 Aug 2014 20:08:22 -0700 (PDT)
+        bh=lS8ODp/2kHlAjjK+Z6in93Q3c6ZZVmO9BTSbycqKSgs=;
+        b=IOiDDLa6e94Q71BsO+L53KZAKTHLKXHhco1E6G4ys/9KKYmvDuThbmNXCkAe2l4J5o
+         APOSFzH3+MdQ+VtfxlFS1tgXc6H+kdvMvuQiK9YyljK2ZOEWTUD4WQz3JEEC+NDTJfLV
+         w3WCZ6A1YaZc3cX2ommBz9HA5ZH/Tf1S6Rr5ev1zKMKrDELd57IK1Jq6J2JHRXrRRT8c
+         jJ29yudVWgkdBQBZJB1aQccine56o644xGrcxipXQKKIkslfNn3CHYlKi0k+HMgkQj03
+         VQG0TyV04KBSS+74TGSX4hvj23SZGK4pjSY/H5BcrU23QxR5ktYFf6EPxj0BndhJuZfk
+         +Inw==
+X-Received: by 10.70.5.33 with SMTP id p1mr23172013pdp.134.1408158496785;
+        Fri, 15 Aug 2014 20:08:16 -0700 (PDT)
 Received: from lanh ([115.73.215.192])
-        by mx.google.com with ESMTPSA id ex1sm14210264pdb.26.2014.08.15.20.08.19
+        by mx.google.com with ESMTPSA id bj8sm33386760pad.46.2014.08.15.20.08.13
         for <multiple recipients>
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 15 Aug 2014 20:08:21 -0700 (PDT)
-Received: by lanh (sSMTP sendmail emulation); Sat, 16 Aug 2014 10:08:20 +0700
+        Fri, 15 Aug 2014 20:08:16 -0700 (PDT)
+Received: by lanh (sSMTP sendmail emulation); Sat, 16 Aug 2014 10:08:14 +0700
 X-Mailer: git-send-email 2.1.0.rc0.78.gc0d8480
 In-Reply-To: <1408158486-7328-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255315>
 
-=46ewer die() gives better control to the caller, provided that the
-caller _can_ handle it. And in unpack_compressed_entry() case, it can,
-because unpack_compressed_entry() already returns NULL if it fails to
-inflate data.
-
-A side effect from this is fsck continues to run when very large blobs
-are present (and do not fit in memory).
-
-Noticed-by: Dale R. Worley <worley@alum.mit.edu>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- sha1_file.c      | 4 +++-
- t/t1050-large.sh | 6 ++++++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ git-compat-util.h |  1 +
+ wrapper.c         | 68 ++++++++++++++++++++++++++++++++++++++++++-----=
+--------
+ 2 files changed, 53 insertions(+), 16 deletions(-)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index 3f70b1d..8db73f0 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -1923,7 +1923,9 @@ static void *unpack_compressed_entry(struct packe=
-d_git *p,
- 	git_zstream stream;
- 	unsigned char *buffer, *in;
+diff --git a/git-compat-util.h b/git-compat-util.h
+index f587749..8785fd3 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -593,6 +593,7 @@ extern try_to_free_t set_try_to_free_routine(try_to=
+_free_t);
+ extern char *xstrdup(const char *str);
+ extern void *xmalloc(size_t size);
+ extern void *xmallocz(size_t size);
++extern void *xmallocz_gently(size_t size);
+ extern void *xmemdupz(const void *data, size_t len);
+ extern char *xstrndup(const char *str, size_t len);
+ extern void *xrealloc(void *ptr, size_t size);
+diff --git a/wrapper.c b/wrapper.c
+index bc1bfb8..dc9c8f4 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -9,16 +9,23 @@ static void do_nothing(size_t size)
 =20
--	buffer =3D xmallocz(size);
-+	buffer =3D xmallocz_gently(size);
-+	if (!buffer)
+ static void (*try_to_free_routine)(size_t size) =3D do_nothing;
+=20
+-static void memory_limit_check(size_t size)
++static int memory_limit_check(size_t size, int gentle)
+ {
+ 	static int limit =3D -1;
+ 	if (limit =3D=3D -1) {
+ 		const char *env =3D getenv("GIT_ALLOC_LIMIT");
+ 		limit =3D env ? atoi(env) * 1024 : 0;
+ 	}
+-	if (limit && size > limit)
+-		die("attempting to allocate %"PRIuMAX" over limit %d",
+-		    (intmax_t)size, limit);
++	if (limit && size > limit) {
++		if (gentle) {
++			error("attempting to allocate %"PRIuMAX" over limit %d",
++			      (intmax_t)size, limit);
++			return -1;
++		} else
++			die("attempting to allocate %"PRIuMAX" over limit %d",
++			    (intmax_t)size, limit);
++	}
++	return 0;
+ }
+=20
+ try_to_free_t set_try_to_free_routine(try_to_free_t routine)
+@@ -42,11 +49,12 @@ char *xstrdup(const char *str)
+ 	return ret;
+ }
+=20
+-void *xmalloc(size_t size)
++static void *do_xmalloc(size_t size, int gentle)
+ {
+ 	void *ret;
+=20
+-	memory_limit_check(size);
++	if (memory_limit_check(size, gentle))
 +		return NULL;
- 	memset(&stream, 0, sizeof(stream));
- 	stream.next_out =3D buffer;
- 	stream.avail_out =3D size + 1;
-diff --git a/t/t1050-large.sh b/t/t1050-large.sh
-index aea4936..5642f84 100755
---- a/t/t1050-large.sh
-+++ b/t/t1050-large.sh
-@@ -163,4 +163,10 @@ test_expect_success 'zip achiving, deflate' '
- 	git archive --format=3Dzip HEAD >/dev/null
- '
+ 	ret =3D malloc(size);
+ 	if (!ret && !size)
+ 		ret =3D malloc(1);
+@@ -55,9 +63,16 @@ void *xmalloc(size_t size)
+ 		ret =3D malloc(size);
+ 		if (!ret && !size)
+ 			ret =3D malloc(1);
+-		if (!ret)
+-			die("Out of memory, malloc failed (tried to allocate %lu bytes)",
+-			    (unsigned long)size);
++		if (!ret) {
++			if (!gentle)
++				die("Out of memory, malloc failed (tried to allocate %lu bytes)",
++				    (unsigned long)size);
++			else {
++				error("Out of memory, malloc failed (tried to allocate %lu bytes)"=
+,
++				      (unsigned long)size);
++				return NULL;
++			}
++		}
+ 	}
+ #ifdef XMALLOC_POISON
+ 	memset(ret, 0xA5, size);
+@@ -65,16 +80,37 @@ void *xmalloc(size_t size)
+ 	return ret;
+ }
 =20
-+test_expect_success 'fsck' '
-+	test_must_fail git fsck 2>err &&
-+	n=3D$(grep "error: attempting to allocate .* over limit" err | wc -l)=
- &&
-+	test "$n" -gt 1
-+'
+-void *xmallocz(size_t size)
++void *xmalloc(size_t size)
++{
++	return do_xmalloc(size, 0);
++}
 +
- test_done
++static void *do_xmallocz(size_t size, int gentle)
+ {
+ 	void *ret;
+-	if (unsigned_add_overflows(size, 1))
+-		die("Data too large to fit into virtual memory space.");
+-	ret =3D xmalloc(size + 1);
+-	((char*)ret)[size] =3D 0;
++	if (unsigned_add_overflows(size, 1)) {
++		if (gentle) {
++			error("Data too large to fit into virtual memory space.");
++			return NULL;
++		} else
++			die("Data too large to fit into virtual memory space.");
++	}
++	ret =3D do_xmalloc(size + 1, gentle);
++	if (ret)
++		((char*)ret)[size] =3D 0;
+ 	return ret;
+ }
+=20
++void *xmallocz(size_t size)
++{
++	return do_xmallocz(size, 0);
++}
++
++void *xmallocz_gently(size_t size)
++{
++	return do_xmallocz(size, 1);
++}
++
+ /*
+  * xmemdupz() allocates (len + 1) bytes of memory, duplicates "len" by=
+tes of
+  * "data" to the allocated memory, zero terminates the allocated memor=
+y,
+@@ -96,7 +132,7 @@ void *xrealloc(void *ptr, size_t size)
+ {
+ 	void *ret;
+=20
+-	memory_limit_check(size);
++	memory_limit_check(size, 0);
+ 	ret =3D realloc(ptr, size);
+ 	if (!ret && !size)
+ 		ret =3D realloc(ptr, 1);
+@@ -115,7 +151,7 @@ void *xcalloc(size_t nmemb, size_t size)
+ {
+ 	void *ret;
+=20
+-	memory_limit_check(size * nmemb);
++	memory_limit_check(size * nmemb, 0);
+ 	ret =3D calloc(nmemb, size);
+ 	if (!ret && (!nmemb || !size))
+ 		ret =3D calloc(1, 1);
 --=20
 2.1.0.rc0.78.gc0d8480
