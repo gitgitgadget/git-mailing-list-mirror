@@ -1,65 +1,65 @@
-From: Theodore Ts'o <tytso@mit.edu>
-Subject: Re: [ANNOUNCE] Git v2.1.0
-Date: Fri, 15 Aug 2014 19:18:22 -0400
-Message-ID: <20140815231822.GM10808@thunk.org>
-References: <xmqqd2c1z7zu.fsf@gitster.dls.corp.google.com>
+From: Duy Nguyen <pclouds@gmail.com>
+Subject: Re: Understanding behavior of git blame -M
+Date: Sat, 16 Aug 2014 07:06:28 +0700
+Message-ID: <CACsJy8DhfUY7uL91UGZUbC4g7WsMKkmj+7BF3xZ9RZyf8NcB4g@mail.gmail.com>
+References: <71BF70CE41AEE741896AF3A5450D86F11F28C762@DEFTHW99EH3MSX.ww902.siemens.net>
+ <874mxderwj.fsf@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 16 01:18:37 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: "Sokolov, Konstantin (ext)" <konstantin.sokolov.ext@siemens.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Aug 16 02:07:18 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIQlX-0000fr-UH
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 01:18:36 +0200
+	id 1XIRWf-0004z5-5h
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 02:07:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751306AbaHOXS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Aug 2014 19:18:27 -0400
-Received: from imap.thunk.org ([74.207.234.97]:34310 "EHLO imap.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751233AbaHOXS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Aug 2014 19:18:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=thunk.org; s=ef5046eb;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=t0GpxOm1TRaqmP5l20n/T//Abvp+pYJvxmDwAtHTyR0=;
-	b=HJ10APB+eMtxyxcDwiyc/wEWn5rd9r9Gmh7TfA1sDFg6E27OfyiI0IziBZTmUqT7nQWW6eeLX52MN8tW4UZPB7IrwNteUN5rjn8IFUwd8rHzFgirrQEx37b2oT+CM+p656ts7dYVN8w9DYc2OxmHohVbcm/XoM7e76+cT0s5sI4=;
-Received: from root (helo=closure.thunk.org)
-	by imap.thunk.org with local-esmtp (Exim 4.80)
-	(envelope-from <tytso@thunk.org>)
-	id 1XIQlL-0004f0-76; Fri, 15 Aug 2014 23:18:23 +0000
-Received: by closure.thunk.org (Postfix, from userid 15806)
-	id 3C0A05843C8; Fri, 15 Aug 2014 19:18:22 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <xmqqd2c1z7zu.fsf@gitster.dls.corp.google.com>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on imap.thunk.org); SAEximRunCond expanded to false
+	id S1751304AbaHPAHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Aug 2014 20:07:00 -0400
+Received: from mail-ig0-f181.google.com ([209.85.213.181]:38420 "EHLO
+	mail-ig0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751233AbaHPAG7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Aug 2014 20:06:59 -0400
+Received: by mail-ig0-f181.google.com with SMTP id h3so3236801igd.14
+        for <git@vger.kernel.org>; Fri, 15 Aug 2014 17:06:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        bh=oYrlN1CWydi+/1blZA1+TKoiUDhWdByr3BbW1XKn3i4=;
+        b=LgE/xKPIC2kPe0FS46bHWudHhD1aX62zptTJxnNNU9SORzXF+nQQpwshu9GkSiAWSC
+         +HEBzk+xgI9nbPXmDr6auOmf1SGRxxuSi+ZPFlHE4jESn1in73aoOewkb1cdgYsoS33Y
+         OUjVg2O9B6a8mvNPjFwpWn39GNfg9AXStHdBsA/Jsg7izUCa9VJ7u9QOaLu6e/AqElFM
+         r/323wq0sSDPEZon5m0bCA7ZmIH4pEBaTa7644Z3BYDQ7+HkVQAEsaVNin1FgxVSXlDA
+         hjThrOkSqobnGxdyGYR9W+aGpw7U9Yprz4d12nbz6UUuUMTEVWQUOJFFyOA5BMy3Vdfi
+         I7rQ==
+X-Received: by 10.51.17.66 with SMTP id gc2mr28711025igd.40.1408147618598;
+ Fri, 15 Aug 2014 17:06:58 -0700 (PDT)
+Received: by 10.107.13.80 with HTTP; Fri, 15 Aug 2014 17:06:28 -0700 (PDT)
+In-Reply-To: <874mxderwj.fsf@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255310>
 
-On Fri, Aug 15, 2014 at 03:46:29PM -0700, Junio C Hamano wrote:
-> The latest feature release Git v2.1.0 is now available at the
-> usual places.
+On Fri, Aug 15, 2014 at 9:42 PM, David Kastrup <dak@gnu.org> wrote:
+> The function diff_hunks is a wrapper for the diff engine.  Putting the
+> context length explicitly into this wrapper (rather than not passing an
+> argument and just setting the context length to zero anyway in the
+> function) clearly indicates that somebody _wanted_ it called with
+> different values.
+>
+> There is no documentation or rationale in the file _why_ as far as
+> I remember.  Maybe it can crash or end up in an infinite loop.  Maybe it
+> could do so at one point of time but no longer does.
 
-I pulled down git v2.1.0, and when I tried to build it via:
-
-   make prefix=/usr/local profile-fast
-
-The build died with this:
-
-cannot open test-results/p5302-pack-index.subtests: No such file or directory at ./aggregate.perl line 77.
-Makefile:7: recipe for target 'perf' failed
-make[2]: *** [perf] Error 2
-make[2]: Leaving directory '/usr/projects/git/git/t/perf'
-
-Not a big deal, but I thought I would mention it.
-
-Cheers,
-
-					- Ted
+Not sure if it helps, but ctxlen = 1 seems to be added back in d24bba8
+(git-pickaxe -M: blame line movements within a file. - 2006-10-19), if
+I track the changes correctly.
+-- 
+Duy
