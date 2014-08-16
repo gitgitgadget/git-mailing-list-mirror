@@ -1,9 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v13 02/11] trailer: process trailers from input message and
- arguments
-Date: Sat, 16 Aug 2014 18:06:12 +0200
-Message-ID: <20140816160622.18221.32137.chriscool@tuxfamily.org>
-References: <20140816153440.18221.29179.chriscool@tuxfamily.org>
+Subject: [PATCH v13 00/11] Add interpret-trailers builtin
+Date: Sat, 16 Aug 2014 18:06:10 +0200
+Message-ID: <20140816153440.18221.29179.chriscool@tuxfamily.org>
 Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Josh Triplett <josh@joshtriplett.org>,
 	Thomas Rast <tr@thomasrast.ch>,
@@ -15,36 +13,33 @@ Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
 	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
 	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 16 18:31:05 2014
+X-From: git-owner@vger.kernel.org Sat Aug 16 18:31:06 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIgsg-0005Tz-Fn
+	id 1XIgsf-0005Tz-UO
 	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 18:31:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751702AbaHPQao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Aug 2014 12:30:44 -0400
-Received: from gleek.ethostream.com ([66.195.129.15]:57344 "EHLO
+	id S1751653AbaHPQaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Aug 2014 12:30:39 -0400
+Received: from gleek.ethostream.com ([66.195.129.15]:57358 "EHLO
 	barracuda.ethostream.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751548AbaHPQab (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Aug 2014 12:30:31 -0400
-X-ASG-Debug-ID: 1408205475-016a7707b5114ced0001-QuoKaX
-Received: from relay.ethostream.com (www1.ethostream.com [66.195.129.11]) by barracuda.ethostream.com with ESMTP id DCNsuUe9ydXXNGfG; Sat, 16 Aug 2014 11:11:15 -0500 (CDT)
+	with ESMTP id S1751575AbaHPQac (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Aug 2014 12:30:32 -0400
+X-ASG-Debug-ID: 1408205475-016a7707b5114cef0001-QuoKaX
+Received: from relay.ethostream.com (www1.ethostream.com [66.195.129.11]) by barracuda.ethostream.com with ESMTP id K1FqDBO7hkEJyyUy; Sat, 16 Aug 2014 11:11:15 -0500 (CDT)
 X-Barracuda-Envelope-From: chriscool@tuxfamily.org
 X-Barracuda-Apparent-Source-IP: 66.195.129.11
 Received: from ethoserver.ezone.net (unknown [10.230.15.218])
-	by relay.ethostream.com (Postfix) with ESMTPA id 6E83F891779;
+	by relay.ethostream.com (Postfix) with ESMTPA id 6DFA48909A0;
 	Sat, 16 Aug 2014 11:11:15 -0500 (CDT)
 Received: from [127.0.1.1] (unknown [10.0.7.4])
-	by ethoserver.ezone.net (Postfix) with ESMTP id 36459C548C6;
+	by ethoserver.ezone.net (Postfix) with ESMTP id 1F0FBC5488F;
 	Sat, 16 Aug 2014 11:11:15 -0500 (CDT)
-X-ASG-Orig-Subj: [PATCH v13 02/11] trailer: process trailers from input message and
- arguments
-X-git-sha1: e6b0d445a4822fe07b94b304f320884dabbaee15 
+X-ASG-Orig-Subj: [PATCH v13 00/11] Add interpret-trailers builtin
 X-Mailer: git-mail-commits v0.5.2
-In-Reply-To: <20140816153440.18221.29179.chriscool@tuxfamily.org>
 X-Barracuda-Connect: www1.ethostream.com[66.195.129.11]
 X-Barracuda-Start-Time: 1408205475
 X-Barracuda-URL: http://66.195.129.15:8000/cgi-mod/mark.cgi
@@ -60,241 +55,129 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255332>
 
-Implement the logic to process trailers from the input message
-and from arguments.
+This patch series implements a new command:
 
-At the beginning trailers from the input message are in their
-own "in_tok" doubly linked list, and trailers from arguments
-are in their own "arg_tok" doubly linked list.
+        git interpret-trailers
 
-The lists are traversed and when an "arg_tok" should be "applied",
-it is removed from its list and inserted into the "in_tok" list.
+and an infrastructure to process trailers that can be reused,
+for example in "commit.c".
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- trailer.c | 210 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 210 insertions(+)
+1) Rationale:
 
-diff --git a/trailer.c b/trailer.c
-index 2adc1b7..4940e06 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -62,3 +62,213 @@ static int same_trailer(struct trailer_item *a, struct trailer_item *b)
- {
- 	return same_token(a, b) && same_value(a, b);
- }
-+
-+static void free_trailer_item(struct trailer_item *item)
-+{
-+	free(item->conf.name);
-+	free(item->conf.key);
-+	free(item->conf.command);
-+	free((char *)item->token);
-+	free((char *)item->value);
-+	free(item);
-+}
-+
-+static void update_last(struct trailer_item **last)
-+{
-+	if (*last)
-+		while ((*last)->next != NULL)
-+			*last = (*last)->next;
-+}
-+
-+static void update_first(struct trailer_item **first)
-+{
-+	if (*first)
-+		while ((*first)->previous != NULL)
-+			*first = (*first)->previous;
-+}
-+
-+static void add_arg_to_input_list(struct trailer_item *on_tok,
-+				  struct trailer_item *arg_tok,
-+				  struct trailer_item **first,
-+				  struct trailer_item **last)
-+{
-+	if (after_or_end(arg_tok->conf.where)) {
-+		arg_tok->next = on_tok->next;
-+		on_tok->next = arg_tok;
-+		arg_tok->previous = on_tok;
-+		if (arg_tok->next)
-+			arg_tok->next->previous = arg_tok;
-+		update_last(last);
-+	} else {
-+		arg_tok->previous = on_tok->previous;
-+		on_tok->previous = arg_tok;
-+		arg_tok->next = on_tok;
-+		if (arg_tok->previous)
-+			arg_tok->previous->next = arg_tok;
-+		update_first(first);
-+	}
-+}
-+
-+static int check_if_different(struct trailer_item *in_tok,
-+			      struct trailer_item *arg_tok,
-+			      int check_all)
-+{
-+	enum action_where where = arg_tok->conf.where;
-+	do {
-+		if (!in_tok)
-+			return 1;
-+		if (same_trailer(in_tok, arg_tok))
-+			return 0;
-+		/*
-+		 * if we want to add a trailer after another one,
-+		 * we have to check those before this one
-+		 */
-+		in_tok = after_or_end(where) ? in_tok->previous : in_tok->next;
-+	} while (check_all);
-+	return 1;
-+}
-+
-+static void remove_from_list(struct trailer_item *item,
-+			     struct trailer_item **first,
-+			     struct trailer_item **last)
-+{
-+	struct trailer_item *next = item->next;
-+	struct trailer_item *previous = item->previous;
-+
-+	if (next) {
-+		item->next->previous = previous;
-+		item->next = NULL;
-+	} else if (last)
-+		*last = previous;
-+
-+	if (previous) {
-+		item->previous->next = next;
-+		item->previous = NULL;
-+	} else if (first)
-+		*first = next;
-+}
-+
-+static struct trailer_item *remove_first(struct trailer_item **first)
-+{
-+	struct trailer_item *item = *first;
-+	*first = item->next;
-+	if (item->next) {
-+		item->next->previous = NULL;
-+		item->next = NULL;
-+	}
-+	return item;
-+}
-+
-+static void apply_arg_if_exists(struct trailer_item *in_tok,
-+				struct trailer_item *arg_tok,
-+				struct trailer_item *on_tok,
-+				struct trailer_item **in_tok_first,
-+				struct trailer_item **in_tok_last)
-+{
-+	switch (arg_tok->conf.if_exists) {
-+	case EXISTS_DO_NOTHING:
-+		free_trailer_item(arg_tok);
-+		break;
-+	case EXISTS_REPLACE:
-+		add_arg_to_input_list(on_tok, arg_tok,
-+				      in_tok_first, in_tok_last);
-+		remove_from_list(in_tok, in_tok_first, in_tok_last);
-+		free_trailer_item(in_tok);
-+		break;
-+	case EXISTS_ADD:
-+		add_arg_to_input_list(on_tok, arg_tok,
-+				      in_tok_first, in_tok_last);
-+		break;
-+	case EXISTS_ADD_IF_DIFFERENT:
-+		if (check_if_different(in_tok, arg_tok, 1))
-+			add_arg_to_input_list(on_tok, arg_tok,
-+					      in_tok_first, in_tok_last);
-+		else
-+			free_trailer_item(arg_tok);
-+		break;
-+	case EXISTS_ADD_IF_DIFFERENT_NEIGHBOR:
-+		if (check_if_different(on_tok, arg_tok, 0))
-+			add_arg_to_input_list(on_tok, arg_tok,
-+					      in_tok_first, in_tok_last);
-+		else
-+			free_trailer_item(arg_tok);
-+		break;
-+	}
-+}
-+
-+static void apply_arg_if_missing(struct trailer_item **in_tok_first,
-+				 struct trailer_item **in_tok_last,
-+				 struct trailer_item *arg_tok)
-+{
-+	struct trailer_item **in_tok;
-+	enum action_where where;
-+
-+	switch (arg_tok->conf.if_missing) {
-+	case MISSING_DO_NOTHING:
-+		free_trailer_item(arg_tok);
-+		break;
-+	case MISSING_ADD:
-+		where = arg_tok->conf.where;
-+		in_tok = after_or_end(where) ? in_tok_last : in_tok_first;
-+		if (*in_tok) {
-+			add_arg_to_input_list(*in_tok, arg_tok,
-+					      in_tok_first, in_tok_last);
-+		} else {
-+			*in_tok_first = arg_tok;
-+			*in_tok_last = arg_tok;
-+		}
-+		break;
-+	}
-+}
-+
-+static int find_same_and_apply_arg(struct trailer_item **in_tok_first,
-+				   struct trailer_item **in_tok_last,
-+				   struct trailer_item *arg_tok)
-+{
-+	struct trailer_item *in_tok;
-+	struct trailer_item *on_tok;
-+	struct trailer_item *following_tok;
-+
-+	enum action_where where = arg_tok->conf.where;
-+	int middle = (where == WHERE_AFTER) || (where == WHERE_BEFORE);
-+	int backwards = after_or_end(where);
-+	struct trailer_item *start_tok = backwards ? *in_tok_last : *in_tok_first;
-+
-+	for (in_tok = start_tok; in_tok; in_tok = following_tok) {
-+		following_tok = backwards ? in_tok->previous : in_tok->next;
-+		if (!same_token(in_tok, arg_tok))
-+			continue;
-+		on_tok = middle ? in_tok : start_tok;
-+		apply_arg_if_exists(in_tok, arg_tok, on_tok,
-+				    in_tok_first, in_tok_last);
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+static void process_trailers_lists(struct trailer_item **in_tok_first,
-+				   struct trailer_item **in_tok_last,
-+				   struct trailer_item **arg_tok_first)
-+{
-+	struct trailer_item *arg_tok;
-+	struct trailer_item *next_arg;
-+
-+	if (!*arg_tok_first)
-+		return;
-+
-+	for (arg_tok = *arg_tok_first; arg_tok; arg_tok = next_arg) {
-+		int applied = 0;
-+
-+		next_arg = arg_tok->next;
-+		remove_from_list(arg_tok, arg_tok_first, NULL);
-+
-+		applied = find_same_and_apply_arg(in_tok_first,
-+						  in_tok_last,
-+						  arg_tok);
-+
-+		if (!applied)
-+			apply_arg_if_missing(in_tok_first,
-+					     in_tok_last,
-+					     arg_tok);
-+	}
-+}
+This command should help with RFC 822 style headers, called
+"trailers", that are found at the end of commit messages.
+
+(Note that these headers do not follow and are not intended to
+follow many rules that are in RFC 822. For example they do not
+follow the line breaking rules, the encoding rules and probably
+many other rules.)
+
+For a long time, these trailers have become a de facto standard
+way to add helpful information into commit messages.
+
+Until now git commit has only supported the well known
+"Signed-off-by: " trailer, that is used by many projects like
+the Linux kernel and Git.
+
+It is better to keep builtin/commit.c uncontaminated by any more
+hard-wired logic, like what we have for the signed-off-by line.  Any
+new things can and should be doable in hooks, and this filter would
+help writing these hooks.
+
+And that is why the design goal of the filter is to make it at least
+as powerful as the built-in logic we have for signed-off-by lines;
+that would allow us to later eject the hard-wired logic for
+signed-off-by line from the main codepath, if/when we wanted to.
+
+Alternatively, we could build a library-ish API around this filter
+code and replace the hard-wired logic for signed-off-by line with a
+call into that API, if/when we wanted to, but that requires (in
+addition to the "at least as powerful as the built-in logic") that
+the implementation of this stand-alone filter can be cleanly made
+into a reusable library, so that is a bit higher bar to cross than
+"everything can be doable with hooks" alternative.
+
+2) Current state:
+
+Currently the usage string of this command is:
+
+git interpret-trailers [--trim-empty] [(--trailer <token>[(=|:)<value>])...] [<file>...]
+
+The following features are implemented:
+
+        - the result is printed on stdout
+        - the --trailer arguments are interpreted
+        - messages read from <file>... or stdin are interpreted
+	- the "trailer.separators" option in the config is interpreted (new)
+	- the "trailer.where" option is interpreted (new)
+	- the "trailer.ifexists" option is interpreted (new)
+	- the "trailer.ifmissing" option is interpreted (new)
+        - the "trailer.<token>.key" options are interpreted
+        - the "trailer.<token>.where" options are interpreted
+        - the "trailer.<token>.ifexist" options are interpreted
+        - the "trailer.<token>.ifmissing" options are interpreted
+        - the "trailer.<token>.command" config works
+        - $ARG can be used in commands
+        - messages can contain a patch
+        - lines in messages starting with a comment char are ignored
+        - there are 49 tests
+        - there is some documentation
+        - there are examples in the documentation
+
+3) Changes since version 12, thanks to Jakub, Michael, Johan and Junio:
+
+* "end" and "start" values for "trailer.<token>.where" have been
+  implemented
+* "end" has been made the default value for "where", but this default
+  value can be changed using the new "trailer.where" config
+  variable
+* "addIfDifferentNeighbor" is now the default value for "ifexists",
+  but this default can be changed using the new "trailer.ifexists"
+  config variable
+* the new "trailer.ifmissing" can be used to change the default value
+  for "ifmissing" (which is "add")
+* by default the only separator is ':', this can be changed by using
+  the new "trailer.separators" config variable
+* only the configured separators (or just ':' by default) are used for
+  both input parsing and output printing; the only exception is that
+  '=' is always accepted as separator when parsing
+  "--trailer '<token><sep><value>'" command line arguments, for
+  compatibility with other git commands
+* 14 tests have been added
+
+Only patches 7/11, 9/11 and 10/11 have not been changed since v12.
+
+Christian Couder (11):
+  trailer: add data structures and basic functions
+  trailer: process trailers from input message and arguments
+  trailer: read and process config information
+  trailer: process command line trailer arguments
+  trailer: parse trailers from file or stdin
+  trailer: put all the processing together and print
+  trailer: add interpret-trailers command
+  trailer: add tests for "git interpret-trailers"
+  trailer: execute command from 'trailer.<name>.command'
+  trailer: add tests for commands in config file
+  Documentation: add documentation for 'git interpret-trailers'
+
+ .gitignore                               |   1 +
+ Documentation/git-interpret-trailers.txt | 308 +++++++++++
+ Makefile                                 |   2 +
+ builtin.h                                |   1 +
+ builtin/interpret-trailers.c             |  44 ++
+ command-list.txt                         |   1 +
+ git.c                                    |   1 +
+ t/t7513-interpret-trailers.sh            | 850 +++++++++++++++++++++++++++++++
+ trailer.c                                | 830 ++++++++++++++++++++++++++++++
+ trailer.h                                |   6 +
+ 10 files changed, 2044 insertions(+)
+ create mode 100644 Documentation/git-interpret-trailers.txt
+ create mode 100644 builtin/interpret-trailers.c
+ create mode 100755 t/t7513-interpret-trailers.sh
+ create mode 100644 trailer.c
+ create mode 100644 trailer.h
+
 -- 
 2.0.1.674.ga7f57b7
