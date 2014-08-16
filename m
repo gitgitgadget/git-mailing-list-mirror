@@ -1,230 +1,503 @@
 From: =?UTF-8?B?VG9yc3RlbiBCw7ZnZXJzaGF1c2Vu?= <tboegi@web.de>
-Subject: Re: [PATCH v3 03/10] setup: convert setup_git_directory_gently_1
- et al. to strbuf
-Date: Sat, 16 Aug 2014 22:14:05 +0200
-Message-ID: <53EFBB8D.20600@web.de>
-References: <53D694A2.8030007@web.de> <53D695E0.2050209@web.de>
+Subject: [PATCH 1/2] t0027: Tests for core.eol=native, eol=lf, eol=crlf
+Date: Sat, 16 Aug 2014 22:16:58 +0200
+Message-ID: <53EFBC3A.5020805@web.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Karsten Blees <karsten.blees@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>
-To: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 16 22:14:28 2014
+Cc: tboegi@web.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 16 22:17:10 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIkMt-0000io-Ae
-	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 22:14:27 +0200
+	id 1XIkPU-000204-Nh
+	for gcvg-git-2@plane.gmane.org; Sat, 16 Aug 2014 22:17:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751730AbaHPUOX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Aug 2014 16:14:23 -0400
-Received: from mout.web.de ([212.227.15.3]:59036 "EHLO mout.web.de"
+	id S1751683AbaHPURD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Aug 2014 16:17:03 -0400
+Received: from mout.web.de ([212.227.15.3]:65226 "EHLO mout.web.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751686AbaHPUOW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Aug 2014 16:14:22 -0400
-Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb003) with
- ESMTPSA (Nemesis) id 0LsQQK-1WGq5K3r4q-0123Z9; Sat, 16 Aug 2014 22:14:11
+	id S1751576AbaHPURC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Aug 2014 16:17:02 -0400
+Received: from macce.local ([78.72.74.102]) by smtp.web.de (mrweb002) with
+ ESMTPSA (Nemesis) id 0M2dt7-1WQVMP0TQ5-00sKBX; Sat, 16 Aug 2014 22:17:00
  +0200
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <53D695E0.2050209@web.de>
-X-Provags-ID: V03:K0:ZjtaqZWNgr+XS8IH4+vcYE+Oiu2wO8dOEroNqttFDJISvXKg+/2
- fzdN0/leOQMQA2HviwU/YuUtDm1zHR8g9GFLGqInng6Ygd+l9Gkm9zcB+9B4EhqonAlUybc
- ld6bLjcddrFOi297oIhfi2olw7N4Fdc8IRivprrb4LiUGUZ+I+W2tY+SgAFxhqBExIOzhq5
- 7sShRMxAufRv2g8c0gAkg==
+X-Provags-ID: V03:K0:B0teYvqPRptMx9QjtyBv1yNw2dMe9+ZfpvV4lLonJnGWTWAgsC9
+ eUwM6bvAJnZYzy4Ehtr2qH2GWXuqA34fse1GFrf9U0Z6sv3UkDhdiOm7Wd82XiIhpij4m2Q
+ 3PTlfbl9EYe3SPQbyAdk5XEc3qWO7UnQRDdzfziXgQUrGj0lU04SSMOYJpBRkO0zc3cc6UJ
+ ZM5bqCPxQhfNx6pvlkEXA==
 X-UI-Out-Filterresults: notjunk:1;
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255340>
 
-On 2014-07-28 20.26, Ren=C3=A9 Scharfe wrote:
-> Convert setup_git_directory_gently_1() and its helper functions
-> setup_explicit_git_dir(), setup_discovered_git_dir() and
-> setup_bare_git_dir() to use a struct strbuf to hold the current worki=
-ng
-> directory.  Replacing the PATH_MAX-sized buffer used before removes a
-> path length limition on some file systems.  The functions are convert=
-ed
-> all in one go because they all read and write the variable cwd.
->=20
-> Signed-off-by: Rene Scharfe <l.s.r@web.de>
-> ---
->  setup.c | 85 +++++++++++++++++++++++++++++++++----------------------=
-----------
->  1 file changed, 43 insertions(+), 42 deletions(-)
->=20
-> diff --git a/setup.c b/setup.c
-> index 0a22f8b..c8b8a97 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -387,7 +387,7 @@ const char *read_gitfile(const char *path)
->  }
-> =20
->  static const char *setup_explicit_git_dir(const char *gitdirenv,
-> -					  char *cwd, int len,
-> +					  struct strbuf *cwd,
->  					  int *nongit_ok)
->  {
->  	const char *work_tree_env =3D getenv(GIT_WORK_TREE_ENVIRONMENT);
-> @@ -441,7 +441,7 @@ static const char *setup_explicit_git_dir(const c=
-har *gitdirenv,
->  				die_errno("Could not chdir to '%s'", git_work_tree_cfg);
->  			if (!getcwd(core_worktree, PATH_MAX))
->  				die_errno("Could not get directory '%s'", git_work_tree_cfg);
-> -			if (chdir(cwd))
-> +			if (chdir(cwd->buf))
->  				die_errno("Could not come back to cwd");
->  			set_git_work_tree(core_worktree);
->  		}
-> @@ -459,21 +459,20 @@ static const char *setup_explicit_git_dir(const=
- char *gitdirenv,
->  	worktree =3D get_git_work_tree();
-> =20
->  	/* both get_git_work_tree() and cwd are already normalized */
-> -	if (!strcmp(cwd, worktree)) { /* cwd =3D=3D worktree */
-> +	if (!strcmp(cwd->buf, worktree)) { /* cwd =3D=3D worktree */
->  		set_git_dir(gitdirenv);
->  		free(gitfile);
->  		return NULL;
->  	}
-> =20
-> -	offset =3D dir_inside_of(cwd, worktree);
-> +	offset =3D dir_inside_of(cwd->buf, worktree);
->  	if (offset >=3D 0) {	/* cwd inside worktree? */
->  		set_git_dir(real_path(gitdirenv));
->  		if (chdir(worktree))
->  			die_errno("Could not chdir to '%s'", worktree);
-> -		cwd[len++] =3D '/';
-> -		cwd[len] =3D '\0';
-> +		strbuf_addch(cwd, '/');
->  		free(gitfile);
-> -		return cwd + offset;
-> +		return cwd->buf + offset;
->  	}
-> =20
->  	/* cwd outside worktree */
-> @@ -483,7 +482,7 @@ static const char *setup_explicit_git_dir(const c=
-har *gitdirenv,
->  }
-> =20
->  static const char *setup_discovered_git_dir(const char *gitdir,
-> -					    char *cwd, int offset, int len,
-> +					    struct strbuf *cwd, int offset,
->  					    int *nongit_ok)
->  {
->  	if (check_repository_format_gently(gitdir, nongit_ok))
-> @@ -491,17 +490,17 @@ static const char *setup_discovered_git_dir(con=
-st char *gitdir,
-> =20
->  	/* --work-tree is set without --git-dir; use discovered one */
->  	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
-> -		if (offset !=3D len && !is_absolute_path(gitdir))
-> +		if (offset !=3D cwd->len && !is_absolute_path(gitdir))
->  			gitdir =3D xstrdup(real_path(gitdir));
-> -		if (chdir(cwd))
-> +		if (chdir(cwd->buf))
->  			die_errno("Could not come back to cwd");
-> -		return setup_explicit_git_dir(gitdir, cwd, len, nongit_ok);
-> +		return setup_explicit_git_dir(gitdir, cwd, nongit_ok);
->  	}
-> =20
->  	/* #16.2, #17.2, #20.2, #21.2, #24, #25, #28, #29 (see t1510) */
->  	if (is_bare_repository_cfg > 0) {
-> -		set_git_dir(offset =3D=3D len ? gitdir : real_path(gitdir));
-> -		if (chdir(cwd))
-> +		set_git_dir(offset =3D=3D cwd->len ? gitdir : real_path(gitdir));
-> +		if (chdir(cwd->buf))
->  			die_errno("Could not come back to cwd");
->  		return NULL;
->  	}
-> @@ -512,18 +511,18 @@ static const char *setup_discovered_git_dir(con=
-st char *gitdir,
->  		set_git_dir(gitdir);
->  	inside_git_dir =3D 0;
->  	inside_work_tree =3D 1;
-> -	if (offset =3D=3D len)
-> +	if (offset =3D=3D cwd->len)
->  		return NULL;
-> =20
->  	/* Make "offset" point to past the '/', and add a '/' at the end */
->  	offset++;
-> -	cwd[len++] =3D '/';
-> -	cwd[len] =3D 0;
-> -	return cwd + offset;
-> +	strbuf_addch(cwd, '/');
-> +	return cwd->buf + offset;
->  }
-> =20
->  /* #16.1, #17.1, #20.1, #21.1, #22.1 (see t1510) */
-> -static const char *setup_bare_git_dir(char *cwd, int offset, int len=
-, int *nongit_ok)
-> +static const char *setup_bare_git_dir(struct strbuf *cwd, int offset=
-,
-> +				      int *nongit_ok)
->  {
->  	int root_len;
-> =20
-> @@ -536,20 +535,20 @@ static const char *setup_bare_git_dir(char *cwd=
-, int offset, int len, int *nongi
->  	if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_work_tree_cfg) {
->  		const char *gitdir;
-> =20
-> -		gitdir =3D offset =3D=3D len ? "." : xmemdupz(cwd, offset);
-> -		if (chdir(cwd))
-> +		gitdir =3D offset =3D=3D cwd->len ? "." : xmemdupz(cwd->buf, offse=
-t);
-> +		if (chdir(cwd->buf))
->  			die_errno("Could not come back to cwd");
-> -		return setup_explicit_git_dir(gitdir, cwd, len, nongit_ok);
-> +		return setup_explicit_git_dir(gitdir, cwd, nongit_ok);
->  	}
-> =20
->  	inside_git_dir =3D 1;
->  	inside_work_tree =3D 0;
-> -	if (offset !=3D len) {
-> -		if (chdir(cwd))
-> +	if (offset !=3D cwd->len) {
-> +		if (chdir(cwd->buf))
->  			die_errno("Cannot come back to cwd");
-> -		root_len =3D offset_1st_component(cwd);
-> -		cwd[offset > root_len ? offset : root_len] =3D '\0';
-> -		set_git_dir(cwd);
-> +		root_len =3D offset_1st_component(cwd->buf);
-> +		strbuf_setlen(cwd, offset > root_len ? offset : root_len);
-> +		set_git_dir(cwd->buf);
->  	}
->  	else
->  		set_git_dir(".");
-> @@ -617,10 +616,10 @@ static const char *setup_git_directory_gently_1=
-(int *nongit_ok)
->  {
->  	const char *env_ceiling_dirs =3D getenv(CEILING_DIRECTORIES_ENVIRON=
-MENT);
->  	struct string_list ceiling_dirs =3D STRING_LIST_INIT_DUP;
-> -	static char cwd[PATH_MAX + 1];
-> +	static struct strbuf cwd =3D STRBUF_INIT;
+Add test cases for core.eol "native" and "" (unset).
+(MINGW uses CRLF, all other systems LF as native line endings)
 
+Add test cases for the attributes "eol=3Dlf" and "eol=3Dcrlf"
 
-Is there a chance to squueze this in:
+Other minor changes:
+- Use the more portable 'tr' instead of 'od -c' to convert '\n' into 'Q=
+'
+  and '\0' into 'N'
+- Style fixes for shell functions according to the coding guide lines
+- Replace "txtbin" with "attr"
 
+Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
+---
+ t/t0027-auto-crlf.sh | 220 ++++++++++++++++++++++++++++---------------=
+--------
+ 1 file changed, 120 insertions(+), 100 deletions(-)
 
-$ git diff
-diff --git a/setup.c b/setup.c
-index 526cdf6..fb61860 100644
---- a/setup.c
-+++ b/setup.c
-@@ -734,7 +734,7 @@ static const char *setup_git_directory_gently_1(int=
- *nongit_ok)
-                string_list_clear(&ceiling_dirs, 0);
-        }
-
--       if (ceil_offset < 0 && has_dos_drive_prefix(cwd))
-+       if (ceil_offset < 0 && has_dos_drive_prefix(cwd.buf))
-                ceil_offset =3D 1;
+diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+index 72dd3e8..2a4a6c1 100755
+--- a/t/t0027-auto-crlf.sh
++++ b/t/t0027-auto-crlf.sh
+@@ -10,30 +10,26 @@ then
+ 	test_done
+ fi
+=20
+-
+-compare_files()
+-{
+-	od -c <"$1" >"$1".expect &&
+-	od -c <"$2" >"$2".actual &&
++compare_files () {
++	tr '\015\000' QN <"$1" >"$1".expect &&
++	tr '\015\000' QN <"$2" >"$2".actual &&
+ 	test_cmp "$1".expect "$2".actual &&
+ 	rm "$1".expect "$2".actual
+ }
+=20
+-compare_ws_file()
+-{
++compare_ws_file () {
+ 	pfx=3D$1
+ 	exp=3D$2.expect
+ 	act=3D$pfx.actual.$3
+-	od -c <"$2" >"$exp" &&
+-	od -c <"$3" >"$act" &&
++	tr '\015\000' QN <"$2" >"$exp" &&
++	tr '\015\000' QN <"$3" >"$act" &&
+ 	test_cmp $exp $act &&
+ 	rm $exp $act
+ }
+=20
+-create_gitattributes()
+-{
+-	txtbin=3D$1
+-	case "$txtbin" in
++create_gitattributes () {
++	attr=3D$1
++	case "$attr" in
+ 		auto)
+ 		echo "*.txt text=3Dauto" >.gitattributes
+ 		;;
+@@ -43,35 +39,43 @@ create_gitattributes()
+ 		-text)
+ 		echo "*.txt -text" >.gitattributes
+ 		;;
+-		*)
++		crlf)
++		echo "*.txt eol=3Dcrlf" >.gitattributes
++		;;
++		lf)
++		echo "*.txt eol=3Dlf" >.gitattributes
++		;;
++		"")
+ 		echo >.gitattributes
+ 		;;
++		*)
++		echo >&2 invalid attribute: $attr
++		exit 1
++		;;
+ 	esac
+ }
+=20
+-create_file_in_repo()
+-{
++create_file_in_repo () {
+ 	crlf=3D$1
+-	txtbin=3D$2
+-	create_gitattributes "$txtbin" &&
++	attr=3D$2
++	create_gitattributes "$attr" &&
+ 	for f in LF CRLF LF_mix_CR CRLF_mix_LF CRLF_nul
+ 	do
+-		pfx=3Dcrlf_${crlf}_attr_${txtbin}_$f.txt &&
++		pfx=3Dcrlf_${crlf}_attr_${attr}_$f.txt &&
+ 		cp $f $pfx && git -c core.autocrlf=3D$crlf add $pfx
+ 	done &&
+ 	git commit -m "core.autocrlf $crlf"
+ }
+=20
+-check_files_in_repo()
+-{
++check_files_in_repo () {
+ 	crlf=3D$1
+-	txtbin=3D$2
++	attr=3D$2
+ 	lfname=3D$3
+ 	crlfname=3D$4
+ 	lfmixcrlf=3D$5
+ 	lfmixcr=3D$6
+ 	crlfnul=3D$7
+-	pfx=3Dcrlf_${crlf}_attr_${txtbin}_ &&
++	pfx=3Dcrlf_${crlf}_attr_${attr}_ &&
+ 	compare_files $lfname ${pfx}LF.txt &&
+ 	compare_files $crlfname ${pfx}CRLF.txt &&
+ 	compare_files $lfmixcrlf ${pfx}CRLF_mix_LF.txt &&
+@@ -80,19 +84,18 @@ check_files_in_repo()
+ }
+=20
+=20
+-check_files_in_ws()
+-{
++check_files_in_ws () {
+ 	eol=3D$1
+ 	crlf=3D$2
+-	txtbin=3D$3
++	attr=3D$3
+ 	lfname=3D$4
+ 	crlfname=3D$5
+ 	lfmixcrlf=3D$6
+ 	lfmixcr=3D$7
+ 	crlfnul=3D$8
+-	create_gitattributes $txtbin &&
++	create_gitattributes $attr &&
+ 	git config core.autocrlf $crlf &&
+-	pfx=3Deol_${eol}_crlf_${crlf}_attr_${txtbin}_ &&
++	pfx=3Deol_${eol}_crlf_${crlf}_attr_${attr}_ &&
+ 	src=3Dcrlf_false_attr__ &&
+ 	for f in LF CRLF LF_mix_CR CRLF_mix_LF CRLF_nul
+ 	do
+@@ -104,42 +107,24 @@ check_files_in_ws()
+ 		fi
+ 	done
+=20
+-
+-	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DLF" "
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$attr file=3DLF" "
+ 		compare_ws_file $pfx $lfname    ${src}LF.txt
+ 	"
+-	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DCRLF" "
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$attr file=3DCRLF" "
+ 		compare_ws_file $pfx $crlfname  ${src}CRLF.txt
+ 	"
+-	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DCRLF_mix_LF" "
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$attr file=3DCRLF_mix_LF" "
+ 		compare_ws_file $pfx $lfmixcrlf ${src}CRLF_mix_LF.txt
+ 	"
+-	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DLF_mix_CR" "
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$attr file=3DLF_mix_CR" "
+ 		compare_ws_file $pfx $lfmixcr   ${src}LF_mix_CR.txt
+ 	"
+-	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$txtbin file=3DCRLF_nul" "
++	test_expect_success "checkout core.eol=3D$eol core.autocrlf=3D$crlf g=
+itattributes=3D$attr file=3DCRLF_nul" "
+ 		compare_ws_file $pfx $crlfnul   ${src}CRLF_nul.txt
+ 	"
+ }
+=20
+ #######
+-(
+-	type od >/dev/null &&
+-	printf "line1Q\r\nline2\r\nline3" | q_to_nul >CRLF_nul &&
+-	cat >expect <<-EOF &&
+-	0000000 l i n e 1 \0 \r \n l i n e 2 \r \n l
+-	0000020 i n e 3
+-	0000024
+-EOF
+-	od -c CRLF_nul | sed -e "s/[ 	][	 ]*/ /g" -e "s/ *$//" >actual
+-	test_cmp expect actual &&
+-	rm expect actual
+-) || {
+-		skip_all=3D"od not found or od -c not usable"
+-		exit 0
+-		test_done
+-}
+-
+ test_expect_success 'setup master' '
+ 	echo >.gitattributes &&
+ 	git checkout -b master &&
+@@ -150,9 +135,10 @@ test_expect_success 'setup master' '
+ 	printf "line1\r\nline2\nline3"   >CRLF_mix_LF &&
+ 	printf "line1\nline2\rline3"     >LF_mix_CR &&
+ 	printf "line1\r\nline2\rline3"   >CRLF_mix_CR &&
++	printf "line1Q\r\nline2\r\nline3" | q_to_nul >CRLF_nul &&
+ 	printf "line1Q\nline2\nline3" | q_to_nul >LF_nul
+ '
+-#  CRLF_nul had been created above
++
+=20
+ test_expect_success 'create files' '
+ 	create_file_in_repo false "" &&
+@@ -201,7 +187,8 @@ test_expect_success 'commit -text' '
+ ######################################################################=
+##########
+ # Check how files in the repo are changed when they are checked out
+ # How to read the table below:
+-# - check_files_in_ws will check multiple files, see below
++# - check_files_in_ws will check multiple files with a combination of =
+settings
++#   and attributes (core.autocrlf=3Dinput is forbidden with core.eol=3D=
+crlf)
+ # - parameter $1 : core.eol               lf | crlf
+ # - parameter $2 : core.autocrlf          false | true | input
+ # - parameter $3 : text in .gitattributs  "" (empty) | auto | text | -=
+text
+@@ -211,55 +198,88 @@ test_expect_success 'commit -text' '
+ # - parameter $7 : reference for a file with LF and CR in the repo (do=
+es somebody uses this ?)
+ # - parameter $8 : reference for a file with CRLF and a NUL (should be=
+ handled as binary when auto)
+=20
+-check_files_in_ws lf      false  ""       LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws lf      true   ""       CRLF  CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws lf      input  ""       LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-
+-check_files_in_ws lf      false "auto"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws lf      true  "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws lf      input "auto"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-
+-check_files_in_ws lf      false "text"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws lf      true  "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
+-check_files_in_ws lf      input "text"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-
+-check_files_in_ws lf      false "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws lf      true  "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws lf      input "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-
+-###########
+-#core.autocrlf=3Dinput is forbidden with core.eol=3Dcrlf
+-check_files_in_ws crlf    false ""        LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws crlf    true  ""        CRLF  CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-
+-check_files_in_ws crlf    false "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws crlf    true  "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
+-
+-check_files_in_ws crlf    false "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
+-check_files_in_ws crlf    true  "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
+-
+-check_files_in_ws crlf    false "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws crlf    true  "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-
++#                                            What we have in the repo:
++#                														 ----------------- EOL in repo --------=
+--------
++#                														 LF    CRLF  CRLF_mix_LF  LF_mix_CR    =
+CRLF_nul
++#                   settings with checkout:
++#                   core.   core.   .gitattr
++#                    eol     acrlf
++#                                            -------------------------=
+---------------------
++#                                            What we want to have in t=
+he working tree:
+ if test_have_prereq MINGW
+ then
+-check_files_in_ws ""      false ""        LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws ""      true  ""        CRLF  CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws ""      false "auto"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws ""      true  "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws ""      false "text"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws ""      true  "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
+-check_files_in_ws ""      false "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws ""      true  "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-
+-check_files_in_ws native  false ""        LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws native  true  ""        CRLF  CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws native  false "auto"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws native  true  "auto"    CRLF  CRLF  CRLF         LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws native  false "text"    LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws native  true  "text"    CRLF  CRLF  CRLF         CRL=
+=46_mix_CR  CRLF_nul
+-check_files_in_ws native  false "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
+-check_files_in_ws native  true  "-text"   LF    CRLF  CRLF_mix_LF  LF_=
+mix_CR    CRLF_nul
++MIX_CRLF_LF=3DCRLF
++MIX_LF_CR=3DCRLF_mix_CR
++NL=3DCRLF
++else
++MIX_CRLF_LF=3DCRLF_mix_LF
++MIX_LF_CR=3DLF_mix_CR
++NL=3DLF
+ fi
++export CRLF_MIX_LF_CR MIX NL
++
++check_files_in_ws    lf      false  ""       LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      true   ""       CRLF  CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      input  ""       LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      false "auto"    LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      true  "auto"    CRLF  CRLF  CRLF         =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      input "auto"    LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      false "text"    LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      true  "text"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    lf      input "text"    LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      false "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      true  "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      input "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      false "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      true  "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      input "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    lf      false "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    lf      true  "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    lf      input "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++
++check_files_in_ws    crlf    false  ""       LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    crlf    true   ""       CRLF  CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    crlf    false "auto"    CRLF  CRLF  CRLF         =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    crlf    true  "auto"    CRLF  CRLF  CRLF         =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    crlf    false "text"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    crlf    true  "text"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    crlf    false "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    crlf    true  "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    crlf    false "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    crlf    true  "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    crlf    false "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    crlf    true  "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++
++check_files_in_ws    ""      false  ""       LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      true   ""       CRLF  CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      input  ""       LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      false "auto"    $NL   CRLF  $MIX_CRLF_LF =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      true  "auto"    CRLF  CRLF  CRLF         =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      input "auto"    LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      false "text"    $NL   CRLF  $MIX_CRLF_LF =
+$MIX_LF_CR   CRLF_nul
++check_files_in_ws    ""      true  "text"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    ""      input "text"    LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      false "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      true  "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      input "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      false "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      true  "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      input "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    ""      false "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    ""      true  "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    ""      input "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++
++check_files_in_ws    native  false  ""       LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    native  true   ""       CRLF  CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    native  false "auto"    $NL   CRLF  $MIX_CRLF_LF =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    native  true  "auto"    CRLF  CRLF  CRLF         =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    native  false "text"    $NL   CRLF  $MIX_CRLF_LF =
+$MIX_LF_CR   CRLF_nul
++check_files_in_ws    native  true  "text"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    native  false "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    native  true  "-text"   LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    native  false "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    native  true  "lf"      LF    CRLF  CRLF_mix_LF  =
+LF_mix_CR    CRLF_nul
++check_files_in_ws    native  false "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
++check_files_in_ws    native  true  "crlf"    CRLF  CRLF  CRLF         =
+CRLF_mix_CR  CRLF_nul
+=20
+ test_done
+--=20
+2.1.0.rc2.210.g636bceb
