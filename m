@@ -1,83 +1,67 @@
-From: "Jason Pyeron" <jpyeron@pdinc.us>
-Subject: RE: Location of git config on Windows
-Date: Sun, 17 Aug 2014 17:40:56 -0400
-Organization: PD Inc
-Message-ID: <C9491BC51199409292463C10D606F256@black>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Location of git config on Windows
+Date: Mon, 18 Aug 2014 00:01:45 +0200
+Message-ID: <CABPQNSZDizccths0b_RZ5FXYYq=+4_2N35DMj9h4Rha_2voekw@mail.gmail.com>
 References: <ygfvbpqooog.fsf@corbe.net>
-Reply-To: "Daniel Corbe" <corbe@corbe.net>, <git@vger.kernel.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "'Daniel Corbe'" <corbe@corbe.net>, <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Aug 17 23:41:13 2014
+Content-Type: text/plain; charset=UTF-8
+Cc: GIT Mailing-list <git@vger.kernel.org>
+To: Daniel Corbe <corbe@corbe.net>
+X-From: git-owner@vger.kernel.org Mon Aug 18 00:08:51 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XJ8CI-000222-JR
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Aug 2014 23:41:06 +0200
+	id 1XJ8d6-0007L1-CS
+	for gcvg-git-2@plane.gmane.org; Mon, 18 Aug 2014 00:08:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751482AbaHQVlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Aug 2014 17:41:01 -0400
-Received: from mail.pdinc.us ([67.90.184.27]:53529 "EHLO mail.pdinc.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751368AbaHQVlA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Aug 2014 17:41:00 -0400
-Received: from black (nsa1.pdinc.us [67.90.184.2])
-	(authenticated bits=0)
-	by mail.pdinc.us (8.12.11.20060308/8.12.11) with ESMTP id s7HLevLl005045;
-	Sun, 17 Aug 2014 17:40:57 -0400
-X-Mailer: Microsoft Office Outlook 11
+	id S1751468AbaHQWC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2014 18:02:27 -0400
+Received: from mail-ig0-f172.google.com ([209.85.213.172]:52244 "EHLO
+	mail-ig0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751368AbaHQWC0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2014 18:02:26 -0400
+Received: by mail-ig0-f172.google.com with SMTP id h15so6400346igd.11
+        for <git@vger.kernel.org>; Sun, 17 Aug 2014 15:02:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        bh=WvK++9rwE1pOIzpuy2iDsfO3H9xDUwluPh/M53rFzr0=;
+        b=L92CqcrwXSHEOlbjLBbmhmo2PP9rheTL5J3IvQYnsj7uGg8Yap4ncm4LGhOQ7Ldv/c
+         dN/pIzj6GeuzPXHG91oTex4Uoo/FMbwi9xkM0XX4vM/E2m5NRpGtXa7T/Va1rWK/VHtF
+         WJS+/zIqRRsReuz+lXsRBaOwM94IuiswEmlifmYg7oUCV0GP1vqK9JNijJpxLA6uLHMC
+         mQ3R9DbLBf+77LpYSKYPQw3Q+Q8P2aHlc+JB6KnRKOuA+IFWY4LN0Q4GNBgDYDf9frUF
+         HMW7xAv2OOKM0m2pFy6tOV6FeqhYbrwuoE+lWpKIxSLByCkeTY03koGzAgSzu69vlUHZ
+         dPTQ==
+X-Received: by 10.50.33.73 with SMTP id p9mr78978646igi.24.1408312945607; Sun,
+ 17 Aug 2014 15:02:25 -0700 (PDT)
+Received: by 10.64.123.5 with HTTP; Sun, 17 Aug 2014 15:01:45 -0700 (PDT)
 In-Reply-To: <ygfvbpqooog.fsf@corbe.net>
-Thread-Index: Ac+6WYcwicgoBRv5RmSL8LZ0mAOI7wACaUDw
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.3790.4913
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255377>
 
-> -----Original Message-----
-> From: Daniel Corbe
-> Sent: Sunday, August 17, 2014 16:18
-> 
-> 
+On Sun, Aug 17, 2014 at 10:18 PM, Daniel Corbe <corbe@corbe.net> wrote:
+>
 > I installed git on my Windows machine while it was connected to my
-> corporate network.  It picked up on that fact and used a 
-> mapped drive to
-> store its configuration file.  
-> 
+> corporate network.  It picked up on that fact and used a mapped drive to
+> store its configuration file.
+>
 > As a result, I cannot currently use git when disconnected from my
-> network.  It throws the following error message: fatal: 
-> unable to access
+> network.  It throws the following error message: fatal: unable to access
 > 'Z:\/.config/git/config': Invalid argument
-
-As a workaround, use subst command to map the Z: to another path on your system.
-
-Depending on your OS and your git usage patterns you may have to perform the operation twice at both non-privilged and priviliged prompts.
-
-Ex: 
-
- subst z: c:\Users\corbed\cached-z-drive
-
-> 
-> Obviously this value is stored in the registry somewhere 
-> because I made
-> an attempt to uninstall and reinstall git with the same results.  
-> 
+>
+> Obviously this value is stored in the registry somewhere because I made
+> an attempt to uninstall and reinstall git with the same results.
+>
 > Can someone give me some guidance here?
-> 
 
--Jason 
-
---
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
--                                                               -
-- Jason Pyeron                      PD Inc. http://www.pdinc.us -
-- Principal Consultant              10 West 24th Street #100    -
-- +1 (443) 269-1555 x333            Baltimore, Maryland 21218   -
--                                                               -
--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-This message is copyright PD Inc, subject to license 20080407P00.
+Git looks for the per-user configuration in $HOME/.gitconfig, and if
+$HOME is not set, it falls back to $HOMEDIR/$HOMEPATH/.gitconfig. My
+guess would be some of these environment variables are incorrectly set
+on your system.
