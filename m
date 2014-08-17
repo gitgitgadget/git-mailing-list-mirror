@@ -1,67 +1,69 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <l.s.r@web.de>
-Subject: Re: [PATCH] run-command: introduce CHILD_PROCESS_INIT
-Date: Sun, 17 Aug 2014 09:25:58 +0200
-Message-ID: <53F05906.9070909@web.de>
-References: <53EFE15B.7030805@web.de> <20140817071230.GB23808@peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 2/2] convert: Stream from fd to required clean filter
+ instead of mmap
+Date: Sun, 17 Aug 2014 03:27:47 -0400
+Message-ID: <20140817072746.GD23808@peff.net>
+References: <1407303134-16635-1-git-send-email-prohaska@zib.de>
+ <1407303134-16635-3-git-send-email-prohaska@zib.de>
+ <20140816102703.GD7857@serenity.lan>
+ <FA3F1197-25C5-42E4-9418-1C821D430819@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
+Content-Type: text/plain; charset=utf-8
+Cc: John Keeping <john@keeping.me.uk>,
 	Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 17 09:27:05 2014
+	Git Mailing List <git@vger.kernel.org>,
+	Scott Chacon <schacon@gmail.com>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Aug 17 09:27:55 2014
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@plane.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by plane.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1XIuro-0004Fq-Nz
-	for gcvg-git-2@plane.gmane.org; Sun, 17 Aug 2014 09:27:05 +0200
+	id 1XIusb-0004VF-PW
+	for gcvg-git-2@plane.gmane.org; Sun, 17 Aug 2014 09:27:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750897AbaHQH05 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Aug 2014 03:26:57 -0400
-Received: from mout.web.de ([212.227.17.11]:54926 "EHLO mout.web.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750818AbaHQH04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Aug 2014 03:26:56 -0400
-Received: from [192.168.178.27] ([79.253.143.177]) by smtp.web.de (mrweb103)
- with ESMTPSA (Nemesis) id 0MS2D8-1WvE8P0xdC-00TGAF; Sun, 17 Aug 2014 09:26:43
- +0200
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64; rv:31.0) Gecko/20100101 Thunderbird/31.0
-In-Reply-To: <20140817071230.GB23808@peff.net>
-X-Provags-ID: V03:K0:Omn1GsOlWsNqPLezHQ4fkhGHpMZqg07TYRb5vSR6Z1pjX0F8EuQ
- 1rRKqx1vVYI+ro5vO0hM3UNXjGN7TfE1tgYtTEUiOnA6pgtmihjCHmfFKwHBJ3r18dnFQSG
- gpte1lvHLmVP/y61WEtBU6QlZ0jor6B51R5aUSKQrvOr1aAfUTtVTm/jkFZk6QjpQdKzm1n
- Q/93lib2qjyEyWaNyMsnw==
-X-UI-Out-Filterresults: notjunk:1;
+	id S1750939AbaHQH1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Aug 2014 03:27:49 -0400
+Received: from cloud.peff.net ([50.56.180.127]:53528 "HELO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750809AbaHQH1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Aug 2014 03:27:48 -0400
+Received: (qmail 6058 invoked by uid 102); 17 Aug 2014 07:27:49 -0000
+Received: from c-71-63-4-13.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (71.63.4.13)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.84) with ESMTPA; Sun, 17 Aug 2014 02:27:49 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 17 Aug 2014 03:27:47 -0400
+Content-Disposition: inline
+In-Reply-To: <FA3F1197-25C5-42E4-9418-1C821D430819@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/255352>
 
-Am 17.08.2014 um 09:12 schrieb Jeff King:
-> On Sun, Aug 17, 2014 at 12:55:23AM +0200, Ren=C3=A9 Scharfe wrote:
->
->> Most struct child_process variables are cleared using memset right a=
-fter
->> declaration.  Provide a macro, CHILD_PROCESS_INIT, that can be used =
-to
->> initialize them statically instead.  That's shorter, doesn't require=
- a
->> function call and is slightly more readable (especially given that w=
-e
->> already have similar macros like STRBUF_INIT, ARGV_ARRAY_INIT etc.).
->
-> I think one reason we never had an INIT macro here is that you cannot
-> simply use the struct after zero-ing it anyway. That's just the first
-> step, and then you have to tweak a bunch of fields to get what you wa=
-nt.
-> So the memset is just one setup line out of many.
+On Sat, Aug 16, 2014 at 06:26:08PM +0200, Steffen Prohaska wrote:
 
-Some (or most?) of these steps could be converted to named
-initializers -- once all supported platforms provide them..
+> > Is the 15MB limit supposed to be imposed somewhere or is it just a guide
+> > of how much memory we expect Git to use in this scenario?
+> 
+> The test should confirm that the the file that is added is not mmapped
+> to memory.  The process size should be relatively small independently
+> of the size of the file that is added.  I wanted to keep the file size
+> small.  The chosen sizes worked for me on Mac and Linux.
 
-Ren=C3=A9
+Measuring memory usage seems inherently a bit flaky for the test suite.
+It's also a little out of place, as the test suite is generally about
+correctness and outcomes, and this is a performance issue.
+
+Would it make more sense to construct a t/perf test that shows off the
+change? I suppose the run-time change may not be that impressive, but it
+would be cool if t/perf could measure max memory use, too. Then we can
+just compare results between versions, which is enough to detect
+regressions.
+
+There's some prior art in the jk/pack-bitmap-reuse-deltas series (which
+is not merged), where I taught it to measure output sizes of commands.
+That should provide the necessary refactoring base, I think.
+
+-Peff
